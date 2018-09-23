@@ -93,23 +93,25 @@
 /obj/machinery/computer/cargo/express/ui_data(mob/user)
 	var/canBeacon = beacon && (isturf(beacon.loc) || ismob(beacon.loc))//is the beacon in a valid location?
 	var/list/data = list()
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		data["points"] = D.account_balance
 	data["locked"] = locked//swipe an ID to unlock
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["beaconzone"] = beacon ? get_area(beacon) : ""//where is the beacon located? outputs in the tgui
 	data["usingBeacon"] = usingBeacon //is the mode set to deliver to the beacon or the cargobay?
 	data["canBeacon"] = !usingBeacon || canBeacon //is the mode set to beacon delivery, and is the beacon in a valid location?
-	data["canBuyBeacon"] = cooldown <= 0 && SSshuttle.points >= BEACON_COST
+	data["canBuyBeacon"] = cooldown <= 0 && D.account_balance >= BEACON_COST
 	data["beaconError"] = usingBeacon && !canBeacon ? "(BEACON ERROR)" : ""//changes button text to include an error alert if necessary
 	data["hasBeacon"] = beacon != null//is there a linked beacon?
 	data["beaconName"] = beacon ? beacon.name : "No Beacon Found"
 	data["printMsg"] = cooldown > 0 ? "Print Beacon for [BEACON_COST] credits ([cooldown])" : "Print Beacon for [BEACON_COST] credits"//buttontext for printing beacons
-	data["points"] = SSshuttle.points
 	data["supplies"] = list()
 	message = "Sales are near-instantaneous - please choose carefully."
 	if(SSshuttle.supplyBlocked)
 		message = blockade_warning
 	if(usingBeacon && !beacon)
-		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed 
+		message = "BEACON ERROR: BEACON MISSING"//beacon was destroyed
 	else if (usingBeacon && !canBeacon)
 		message = "BEACON ERROR: MUST BE EXPOSED"//beacon's loc/user's loc must be a turf
 	if(obj_flags & EMAGGED)
@@ -134,13 +136,15 @@
 			if (beacon)
 				beacon.update_status(SP_READY) //turns on the beacon's ready light
 		if("printBeacon")
-			if (SSshuttle.points >= BEACON_COST)
-				cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
-				var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
-				C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
-				printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
-				beacon.name = "Supply Pod Beacon #[printed_beacons]"
-				SSshuttle.points -= BEACON_COST
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(D)
+				if(D.adjust_money(-BEACON_COST))
+					cooldown = 10//a ~ten second cooldown for printing beacons to prevent spam
+					var/obj/item/supplypod_beacon/C = new /obj/item/supplypod_beacon(drop_location())
+					C.link_console(src, usr)//rather than in beacon's Initialize(), we can assign the computer to the beacon by reusing this proc)
+					printed_beacons++//printed_beacons starts at 0, so the first one out will be called beacon # 1
+					beacon.name = "Supply Pod Beacon #[printed_beacons]"
+
 
 		if("add")//Generate Supply Order first
 			var/id = text2path(params["id"])
@@ -160,12 +164,16 @@
 			var/reason = ""
 			var/list/empty_turfs
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
+			var/points_to_check
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(D)
+				points_to_check = D.account_balance
 			if(!(obj_flags & EMAGGED))
-				if(SO.pack.cost <= SSshuttle.points)
+				if(SO.pack.cost <= points_to_check)
 					var/LZ
 					if (istype(beacon) && usingBeacon)//prioritize beacons over landing in cargobay
 						LZ = get_turf(beacon)
-						beacon.update_status(SP_LAUNCH)	
+						beacon.update_status(SP_LAUNCH)
 					else if (!usingBeacon)//find a suitable supplypod landing zone in cargobay
 						landingzone = GLOB.areas_by_type[/area/quartermaster/storage]
 						if (!landingzone)
@@ -177,14 +185,14 @@
 							LAZYADD(empty_turfs, T)
 							CHECK_TICK
 						if(empty_turfs && empty_turfs.len)
-							LZ = pick(empty_turfs)	
-					if (SO.pack.cost <= SSshuttle.points && LZ)//we need to call the cost check again because of the CHECK_TICK call
-						SSshuttle.points -= SO.pack.cost
+							LZ = pick(empty_turfs)
+					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
+						D.adjust_money(-SO.pack.cost)
 						new /obj/effect/DPtarget(LZ, podType, SO)
 						. = TRUE
 						update_icon()
 			else
-				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= SSshuttle.points) // bulk discount :^)
+				if(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS) <= points_to_check) // bulk discount :^)
 					landingzone = GLOB.areas_by_type[pick(GLOB.the_station_areas)]  //override default landing zone
 					for(var/turf/open/floor/T in landingzone.contents)
 						if(is_blocked_turf(T))
@@ -192,7 +200,8 @@
 						LAZYADD(empty_turfs, T)
 						CHECK_TICK
 					if(empty_turfs && empty_turfs.len)
-						SSshuttle.points -= SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)
+						D.adjust_money(-(SO.pack.cost * (0.72*MAX_EMAG_ROCKETS)))
+
 						SO.generateRequisition(get_turf(src))
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)

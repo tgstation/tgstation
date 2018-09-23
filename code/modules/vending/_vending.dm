@@ -22,6 +22,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/amount = 0
 	var/max_amount = 0
 	var/display_color = "blue"
+	var/custom_price
 
 /obj/machinery/vending
 	name = "\improper Vendomat"
@@ -37,6 +38,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	integrity_failure = 100
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 	circuit = /obj/item/circuitboard/machine/vendor
+	payment_department = ACCOUNT_SRV
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
 
@@ -66,6 +68,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/scan_id = 1
 	var/obj/item/coin/coin
 	var/obj/item/stack/spacecash/bill
+	var/chef_price = 10
+	var/default_price = 25
+	var/extra_price = 50
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
@@ -159,6 +164,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			R.amount = amount
 		R.max_amount = amount
 		R.display_color = pick("#ff8080","#80ff80","#8080ff")
+		R.custom_price = initial(temp.custom_price)
 		recordlist += R
 
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
@@ -230,37 +236,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
 		return
-	else if(istype(I, /obj/item/coin))
-		if(coin)
-			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
-			return
-		if(bill)
-			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
-			return
-		if(!premium.len)
-			to_chat(user, "<span class='warning'>[src] doesn't have a coin slot.</span>")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		coin = I
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		return
-	else if(istype(I, /obj/item/stack/spacecash))
-		if(coin)
-			to_chat(user, "<span class='warning'>[src] already has [coin] inserted</span>")
-			return
-		if(bill)
-			to_chat(user, "<span class='warning'>[src] already has [bill] inserted</span>")
-			return
-		var/obj/item/stack/S = I
-		if(!premium.len)
-			to_chat(user, "<span class='warning'>[src] doesn't have a bill slot.</span>")
-			return
-		S.use(1)
-		bill = new S.type(src, 1)
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
-		return
-	else if(refill_canister && istype(I, refill_canister))
+	if(refill_canister && istype(I, refill_canister))
 		if (!panel_open)
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 		else if (stat & (BROKEN|NOPOWER))
@@ -320,38 +296,55 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
+	var/onstation = FALSE
+	if(SSmapping.level_trait(z, ZTRAIT_STATION))
+		onstation = TRUE
 	var/dat = ""
+	var/datum/bank_account/account
+	var/mob/living/carbon/human/H
+	var/obj/item/card/id/C
+	if(ishuman(user))
+		H = user
+		C = H.get_idcard()
 
+	if(!C)
+		dat += "<font color = 'red'><h3>No ID Card detected!</h3></font>"
+	else if (!C.registered_account)
+		dat += "<font color = 'red'><h3>No account on registered ID card!</h3></font>"
+	if(onstation && C && C.registered_account)
+		account = C.registered_account
 	dat += "<h3>Select an item</h3>"
 	dat += "<div class='statusDisplay'>"
 	if(!product_records.len)
 		dat += "<font color = 'red'>No product loaded!</font>"
 	else
-		var/list/display_records = product_records
+		var/list/display_records = product_records + coin_records
 		if(extended_inventory)
-			display_records = product_records + hidden_records
-		if(coin || bill)
-			display_records = product_records + coin_records
-		if((coin || bill) && extended_inventory)
-			display_records = product_records + hidden_records + coin_records
+			display_records = product_records + coin_records + hidden_records
 		dat += "<ul>"
 		for (var/datum/data/vending_product/R in display_records)
+			var/price_listed = "$[default_price]"
+			var/is_hidden = hidden_records.Find(R)
+			if(is_hidden && !extended_inventory)
+				continue
+			if(coin_records.Find(R) || is_hidden)
+				price_listed = "$[extra_price]"
+			if(R.custom_price)
+				price_listed = "$[R.custom_price]"
+			if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
+				price_listed = "FREE"
 			dat += "<li>"
-			if(R.amount > 0)
+			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && iscarbon(user))))
 				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
 			else
-				dat += "<span class='linkOff'>Sold out</span> "
-			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)]</b>:</font>"
+				dat += "<span class='linkOff'>Not Available</span> "
+			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)] ([price_listed])</b>:</font>"
 			dat += " <b>[R.amount]</b>"
 			dat += "</li>"
 		dat += "</ul>"
 	dat += "</div>"
-	if(premium.len > 0)
-		dat += "<b>Change Return:</b> "
-		if (coin || bill)
-			dat += "[(coin ? coin : "")][(bill ? bill : "")]&nbsp;&nbsp;<a href='byond://?src=[REF(src)];remove_coin=1'>Remove</a>"
-		else
-			dat += "<i>No money</i>&nbsp;&nbsp;<span class='linkOff'>Remove</span>"
+	if(onstation && C && C.registered_account)
+		dat += "<b>Balance: $[account.account_balance]</b>"
 	if(istype(src, /obj/machinery/vending/snack))
 		dat += "<h3>Chef's Food Selection</h3>"
 		dat += "<div class='statusDisplay'>"
@@ -359,7 +352,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			if(dish_quants[O] > 0)
 				var/N = dish_quants[O]
 				dat += "<a href='byond://?src=[REF(src)];dispense=[sanitize(O)]'>Dispense</A> "
-				dat += "<B>[capitalize(O)]: [N]</B><br>"
+				dat += "<B>[capitalize(O)] ($[default_price]): [N]</B><br>"
 		dat += "</div>"
 
 	var/datum/browser/popup = new(user, "vending", (name))
@@ -370,20 +363,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-
-	if(href_list["remove_coin"])
-		if(!(coin || bill))
-			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
-			return
-		if(coin)
-			usr.put_in_hands(coin)
-			to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
-			coin = null
-		if(bill)
-			usr.put_in_hands(bill)
-			to_chat(usr, "<span class='notice'>You remove [bill] from [src].</span>")
-			bill = null
-
+	var/onstation = FALSE
+	if(SSmapping.level_trait(z, ZTRAIT_STATION))
+		onstation = TRUE
 
 	usr.set_machine(src)
 
@@ -392,11 +374,32 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		if(dish_quants[N] <= 0) // Sanity check, there are probably ways to press the button when it shouldn't be possible.
 			return
 		vend_ready = 0
+		if(ishuman(usr) && onstation)
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/card/id/C = H.get_idcard()
+
+			if(!C)
+				say("No card found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			else if (!C.registered_account)
+				say("No account found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			var/datum/bank_account/account = C.registered_account
+			if(!account.adjust_money(-chef_price))
+				say("You do not possess the funds to purchase this meal.")
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SRV)
+		if(D)
+			D.adjust_money(chef_price)
 		use_power(5)
 
 		dish_quants[N] = max(dish_quants[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
+				say("Thank you for supporting your local kitchen and purchasing [O]!")
 				O.forceMove(drop_location())
 				break
 		vend_ready = 1
@@ -408,62 +411,65 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
-		if((!allowed(usr)) && !(obj_flags & EMAGGED) && scan_id)	//For SECURE VENDING MACHINES YEAH
-			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
-			flick(icon_deny,src)
-			return
-
 		vend_ready = 0 //One thing at a time!!
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
+		var/list/record_to_check = product_records + coin_records
+		if(extended_inventory)
+			record_to_check = product_records + coin_records + hidden_records
 		if(!R || !istype(R) || !R.product_path)
 			vend_ready = 1
 			return
-
+		var/price_to_use = default_price
+		if(R in coin_records || R in hidden_records)
+			price_to_use = extra_price
+		if(R.custom_price)
+			price_to_use = R.custom_price
 		if(R in hidden_records)
 			if(!extended_inventory)
 				vend_ready = 1
 				return
-		else if(R in coin_records)
-			if(!(coin || bill))
-				to_chat(usr, "<span class='warning'>You need to insert money to get this item!</span>")
-				vend_ready = 1
-				return
-			if(coin && coin.string_attached)
-				if(prob(50))
-					if(usr.put_in_hands(coin))
-						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
-						coin = null
-					else
-						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
-						QDEL_NULL(coin)
-				else
-					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
-					QDEL_NULL(coin)
-			else
-				QDEL_NULL(coin)
-				QDEL_NULL(bill)
 
-		else if (!(R in product_records))
+		else if (!(R in record_to_check))
 			vend_ready = 1
 			message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 			return
-
 		if (R.amount <= 0)
-			to_chat(usr, "<span class='warning'>Sold out.</span>")
+			say("Sold out of [R.name].")
+			flick(icon_deny,src)
 			vend_ready = 1
 			return
-		else
-			R.amount--
+		if(onstation && ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/card/id/C = H.get_idcard()
 
-		if(((last_reply + 200) <= world.time) && vend_reply)
-			speak(vend_reply)
-			last_reply = world.time
-
+			if(!C)
+				say("No card found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			else if (!C.registered_account)
+				say("No account found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			var/datum/bank_account/account = C.registered_account
+			if(account.account_job && account.account_job.paycheck_department == payment_department)
+				price_to_use = 0
+			if(price_to_use && !account.adjust_money(-price_to_use))
+				say("You do not possess the funds to purchase [R.name].")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+			if(D)
+				D.adjust_money(price_to_use)
+		say("Thank you for shopping with [src]!")
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
+		R.amount--
 		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 		vend_ready = 1
 

@@ -31,6 +31,8 @@
 	var/list/datum/design/matching_designs
 	var/selected_category
 	var/screen = 1
+	var/base_price = 25
+	var/hacked_price = 50
 
 	var/list/categories = list(
 							"Tools",

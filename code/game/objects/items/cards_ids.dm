@@ -124,6 +124,8 @@
 	var/registered_name = null // The name registered_name on the card
 	var/assignment = null
 	var/access_txt // mapping aid
+	var/datum/bank_account/registered_account
+	var/obj/machinery/paystand/my_store
 
 
 
@@ -139,15 +141,56 @@
 			if("assignment","registered_name")
 				update_label()
 
+/obj/item/card/id/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/vbucks = W
+		if(registered_account)
+			var/fortnite_money = vbucks.value * vbucks.amount
+			registered_account.adjust_money(fortnite_money)
+			to_chat(user, "You insert [vbucks] into [src], adding $[fortnite_money] to your account.")
+			qdel(vbucks)
+
+
 /obj/item/card/id/attack_self(mob/user)
-	if(Adjacent(user))
-		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
-					"<span class='notice'>You show \the [src.name].</span>")
-		add_fingerprint(user)
+	if(!registered_account)
+		var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
+		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
+			to_chat(user, "The ID needs to be between 111111 and 999999.")
+			return
+		for(var/A in SSeconomy.bank_accounts)
+			var/datum/bank_account/B = A
+			if(B.account_id == new_bank_id)
+				B.bank_cards += src
+				registered_account = B
+				to_chat(user, "Your account has been assigned to this ID card.")
+				return
+		to_chat(user, "The ID provided is not a real account.")
+		return
+	var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
+	if(!amount_to_remove || amount_to_remove < 0)
+		return
+	if(registered_account.adjust_money(-amount_to_remove))
+		var/obj/item/stack/spacecash/c1/dosh = new /obj/item/stack/spacecash/c1(get_turf(user))
+		dosh.amount = amount_to_remove
+		user.put_in_hands(dosh)
+		to_chat(user, "You withdraw $[amount_to_remove].")
+		return
+	else
+		to_chat(user, "You don't have the funds for that.")
 		return
 
 /obj/item/card/id/examine(mob/user)
 	..()
+	if(registered_account)
+		to_chat(user, "The registered account belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
+		if(registered_account.account_job)
+			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
+			if(D)
+				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
+		to_chat(user, "Use your ID in-hand to pull money from your account in the form of cash.")
+		to_chat(user, "You can insert cash into your account by smashing the money against the ID.")
+		to_chat(user, "If you lose this ID card, you can reclaim your account by using a blank ID card inhand and punching in the account ID.")
+
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 
@@ -408,3 +451,52 @@ update_label("John Doe", "Clowny")
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
+
+/obj/item/card/id/departmental_budget
+	name = "departmental card (FUCK)"
+	desc = "Provides access to the departmental budget."
+	var/department_ID = ACCOUNT_CIV
+	var/department_name = ACCOUNT_CIV_NAME
+
+/obj/item/card/id/departmental_budget/Initialize()
+	. = ..()
+	var/datum/bank_account/B = SSeconomy.get_dep_account(department_ID)
+	if(B)
+		registered_account = B
+		if(!B.bank_cards.Find(src))
+			B.bank_cards += src
+		name = "departmental card ([department_name])"
+		desc = "Provides access to the [department_name]."
+	SSeconomy.dep_cards += src
+
+/obj/item/card/id/departmental_budget/Destroy()
+	SSeconomy.dep_cards -= src
+	return ..()
+
+/obj/item/card/id/departmental_budget/civ
+	department_ID = ACCOUNT_CIV
+	department_name = ACCOUNT_CIV_NAME
+
+/obj/item/card/id/departmental_budget/eng
+	department_ID = ACCOUNT_ENG
+	department_name = ACCOUNT_ENG_NAME
+
+/obj/item/card/id/departmental_budget/sci
+	department_ID = ACCOUNT_SCI
+	department_name = ACCOUNT_SCI_NAME
+
+/obj/item/card/id/departmental_budget/med
+	department_ID = ACCOUNT_MED
+	department_name = ACCOUNT_MED_NAME
+
+/obj/item/card/id/departmental_budget/srv
+	department_ID = ACCOUNT_SRV
+	department_name = ACCOUNT_SRV_NAME
+
+/obj/item/card/id/departmental_budget/car
+	department_ID = ACCOUNT_CAR
+	department_name = ACCOUNT_CAR_NAME
+
+/obj/item/card/id/departmental_budget/sec
+	department_ID = ACCOUNT_SEC
+	department_name = ACCOUNT_SEC_NAME
