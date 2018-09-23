@@ -13,17 +13,18 @@
 		/obj/effect/proc_holder/spell/target_hive/hive_add = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_remove = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_see = 0,
-		/obj/effect/proc_holder/spell/target_hive/hive_shock = 0,
+		/obj/effect/proc_holder/spell/target_hive/hive_shock = 2,
 		/obj/effect/proc_holder/spell/self/hive_drain = 4,
 		//Tier 2
-		/obj/effect/proc_holder/spell/targeted/induce_panic = 10,
-		/obj/effect/proc_holder/spell/targeted/hive_hack = 12,
-		/obj/effect/proc_holder/spell/target_hive/hive_control = 15,
+		/obj/effect/proc_holder/spell/target_hive/hive_warp = 6,
+		/obj/effect/proc_holder/spell/targeted/hive_hack = 8,
+		/obj/effect/proc_holder/spell/target_hive/hive_control = 10,
+		/obj/effect/proc_holder/spell/targeted/induce_panic = 12,
 		//Tier 3
-		/obj/effect/proc_holder/spell/targeted/hive_loyal = 20,
+		/obj/effect/proc_holder/spell/self/hive_loyal = 15,
+		/obj/effect/proc_holder/spell/targeted/hive_assim = 18,
 		/obj/effect/proc_holder/spell/targeted/forcewall/hive = 20,
-		/obj/effect/proc_holder/spell/targeted/hive_assim = 25,
-		/obj/effect/proc_holder/spell/target_hive/hive_attack = 30)
+		/obj/effect/proc_holder/spell/target_hive/hive_attack = 25)
 
 /datum/antagonist/hivemind/proc/calc_size()
 	listclearnulls(hivemembers)
@@ -42,20 +43,14 @@
 
 
 /datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/human/H)
-	var/warning = "<span class='userdanger'>We have detected an enemy hivemind via [H.real_name], we can remove them from the hive to protect our identity or probe them to discover those of our enemies!</span>"
-	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel! We will eject them, but this may take some time!</span>"
-	var/enemies = FALSE
+	var/warning = "<span class='userdanger'>We detect a surge of psionic energy from [H.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>"
+	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
 	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
-		if(enemy_hive.owner == owner)
-			continue
-		if(enemy_hive.hivemembers.Find(H))
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, enemy_hive.owner, warning), rand(500,700)) //Warn opposing hivehosts that a vessel has been assimilated
-			enemies = TRUE
 		if(H.mind == enemy_hive.owner)
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, H, user_warning), rand(500,700)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_hivemember, H), rand(1000,1400))
-	if(enemies)
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, owner, warning), rand(500,700)) //As well as the host who just added them
+			var/eject_time = rand(1400,1600) //2.5 minutes +- 10 seconds
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, H, user_warning), rand(500,1300)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, owner, warning), eject_time) //As well as the host who just added them as soon as they're ejected
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_hivemember, H), eject_time)
 	hivemembers |= H
 	calc_size()
 
