@@ -27,7 +27,7 @@
 	return account_balance >= amt
 
 /datum/bank_account/proc/adjust_money(amt)
-	if((amt < 0 && has_money((amt * -1))) || amt > 0)
+	if((amt < 0 && has_money(-amt)) || amt > 0)
 		_adjust_money(amt)
 		return TRUE
 	return FALSE
