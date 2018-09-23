@@ -142,19 +142,20 @@
 	if(cannonmode)
 		cannonmode = FALSE
 		flick("clowncar_fromfire", src)
+		icon_state = "clowncar"
 		addtimer(CALLBACK(src, .proc/LeaveCannonMode), 20)
 		playsound(src, 'sound/vehicles/clowncar_cannonmode2.ogg', 75)
 		visible_message("<span class='danger'>The [src] starts going back into mobile mode.</span>")
 	else
 		canmove = FALSE
 		flick("clowncar_tofire", src)
+		icon_state = "clowncar_fire"
 		visible_message("<span class='danger'>The [src] opens up and reveals a large cannon.</span>")
 		addtimer(CALLBACK(src, .proc/EnterCannonMode), 20)
 		playsound(src, 'sound/vehicles/clowncar_cannonmode1.ogg', 75)
 
 
 /obj/vehicle/sealed/car/clowncar/proc/EnterCannonMode()
-	icon_state = "clowncar_fire"
 	mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
 	cannonmode = TRUE
 	cannonbusy = FALSE
@@ -162,7 +163,6 @@
 		L.update_mouse_pointer()
 
 /obj/vehicle/sealed/car/clowncar/proc/LeaveCannonMode()
-	icon_state = "clowncar"
 	canmove = TRUE
 	cannonbusy = FALSE
 	mouse_pointer = null
@@ -173,6 +173,7 @@
 	if(cannonmode && return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len)
 		var/mob/living/L = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
 		mob_exit(L, TRUE)
+		flick("clowncar_recoil", src)
 		playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 		L.throw_at(A, 10, 2)
 		return COMSIG_MOB_CANCEL_CLICKON
