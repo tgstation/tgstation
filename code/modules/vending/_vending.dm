@@ -297,9 +297,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/ui_interact(mob/user)
 	var/onstation = FALSE
-	for(var/A in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		if(src.z == A)
-			onstation = TRUE
+	if(SSmapping.level_trait(z, ZTRAIT_STATION))
+		onstation = TRUE
 	var/dat = ""
 	var/datum/bank_account/account
 	var/mob/living/carbon/human/H
@@ -365,9 +364,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(..())
 		return
 	var/onstation = FALSE
-	for(var/A in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		if(src.z == A)
-			onstation = TRUE
+	if(SSmapping.level_trait(z, ZTRAIT_STATION))
+		onstation = TRUE
 
 	usr.set_machine(src)
 
@@ -441,32 +439,31 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			flick(icon_deny,src)
 			vend_ready = 1
 			return
-		if(ishuman(usr))
-			if(onstation)
-				var/mob/living/carbon/human/H = usr
-				var/obj/item/card/id/C = H.get_idcard()
+		if(onstation && ishuman(usr))
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/card/id/C = H.get_idcard()
 
-				if(!C)
-					say("No card found.")
-					flick(icon_deny,src)
-					vend_ready = 1
-					return
-				else if (!C.registered_account)
-					say("No account found.")
-					flick(icon_deny,src)
-					vend_ready = 1
-					return
-				var/datum/bank_account/account = C.registered_account
-				if(account.account_job && account.account_job.paycheck_department == payment_department)
-					price_to_use = 0
-				if(price_to_use && !account.adjust_money(-price_to_use))
-					say("You do not possess the funds to purchase [R.name].")
-					flick(icon_deny,src)
-					vend_ready = 1
-					return
-				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
-				if(D)
-					D.adjust_money(price_to_use)
+			if(!C)
+				say("No card found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			else if (!C.registered_account)
+				say("No account found.")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			var/datum/bank_account/account = C.registered_account
+			if(account.account_job && account.account_job.paycheck_department == payment_department)
+				price_to_use = 0
+			if(price_to_use && !account.adjust_money(-price_to_use))
+				say("You do not possess the funds to purchase [R.name].")
+				flick(icon_deny,src)
+				vend_ready = 1
+				return
+			var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+			if(D)
+				D.adjust_money(price_to_use)
 		say("Thank you for shopping with [src]!")
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
