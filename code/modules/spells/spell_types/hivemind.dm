@@ -220,6 +220,18 @@
 	user.setBrainLoss(0)
 
 
+/mob/living/passenger
+	name = "mind control victim"
+	real_name = "unknown conscience"
+
+/mob/living/passenger/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	to_chat(src, "<span class='warning'>You find yourself unable to speak, you aren't in control of your body!</span>")
+	return FALSE
+
+/mob/living/passenger/emote(act, m_type = null, message = null, intentional = FALSE)
+	to_chat(src, "<span class='warning'>You find yourself unable to emote, you aren't in control of your body!</span>")
+	return
+
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
 	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
@@ -228,7 +240,7 @@
 	active  = FALSE
 	var/mob/living/carbon/human/original_body //The original hivemind host
 	var/mob/living/carbon/human/vessel
-	var/mob/living/backseat //Storage for the mind controlled vessel
+	var/mob/living/passenger/backseat //Storage for the mind controlled vessel
 	var/power = 100
 	var/time_initialized = 0
 
@@ -246,7 +258,6 @@
 				vessel.mind.transfer_to(original_body, 1)
 
 	if(!QDELETED(backseat) && backseat.mind)
-		backseat.remove_trait(TRAIT_MUTE)
 		if(QDELETED(vessel))
 			backseat.ghostize(0)
 		else
@@ -289,7 +300,6 @@
 				return
 		original_body = user
 		vessel = targets[1]
-		backseat = new /mob/living()
 		to_chat(user, "<span class='notice'>We begin merging our mind with [vessel.name].</span>")
 		if(!do_mob(user,user,50))
 			to_chat(user, "<span class='notice'>We fail to assume control of the target.</span>")
@@ -299,6 +309,7 @@
 			to_chat(user, "<span class='notice'>Our vessel is too far away to control.</span>")
 			revert_cast()
 			return
+		backseat = new /mob/living()
 		if(vessel && vessel.mind && backseat)
 			var/obj/effect/proc_holder/spell/target_hive/hive_see/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_see) in user.mind.spell_list
 			if(the_spell && the_spell.active) //Uncast Hive Sight just to make things easier when casting during mind control
@@ -313,7 +324,6 @@
 			backseat.real_name = vessel.real_name
 			vessel.mind.transfer_to(backseat, 1)
 			user.mind.transfer_to(vessel, 1)
-			backseat.add_trait(TRAIT_MUTE)
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
@@ -336,7 +346,7 @@
 		else if(!is_hivemember(vessel)) //If the vessel is no longer a hive member, return to original bodies
 			to_chat(vessel, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()
-		else if(!QDELETED(original_body) && vessel.stat == DEAD) //If the original body exists and the vessel is dead, return both to body but not before killing the original
+		else if(!QDELETED(original_body) && (!vessel.ckey || vessel.stat == DEAD)) //If the original body exists and the vessel is dead/ghosted, return both to body but not before killing the original
 			original_body.adjustBrainLoss(200)
 			to_chat(vessel.mind, "<span class='warning'>Our vessel is one of us no more!</span>")
 			release_control()

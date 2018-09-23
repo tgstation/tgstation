@@ -68,7 +68,6 @@
 /datum/antagonist/hivemind/on_gain()
 
 	owner.special_role = special_role
-	apply_innate_effects()
 	check_powers()
 	forge_objectives()
 	..()
@@ -101,27 +100,20 @@
 	hive_size = -1
 	check_powers()
 
-	remove_innate_effects()
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> Your psionic powers fade, you are no longer the hivemind's host! </span>")
 	owner.special_role = null
 	..()
 
-/datum/antagonist/hivemind/proc/add_objective(var/datum/objective/O)
-	objectives += O
-
-/datum/antagonist/hivemind/proc/remove_objective(var/datum/objective/O)
-	objectives -= O
-
 /datum/antagonist/hivemind/proc/forge_objectives()
 	if(prob(65))
 		var/datum/objective/hivemind/hivesize/size_objective = new
 		size_objective.owner = owner
-		add_objective(size_objective)
+		objectives += size_objective
 	else
 		var/datum/objective/hivemind/hiveescape/hive_escape_objective = new
 		hive_escape_objective.owner = owner
-		add_objective(hive_escape_objective)
+		objectives += hive_escape_objective
 	if(prob(50))
 		var/datum/objective/hivemind/assimilate/assim_objective = new
 		assim_objective.owner = owner
@@ -130,21 +122,21 @@
 		if(!assim_objective.target) //If the prob doesn't happen or there are no implanted crew, find any target
 			assim_objective.find_target()
 		assim_objective.update_explanation_text()
-		add_objective(assim_objective)
+		objectives += assim_objective
 	else if(prob(70))
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
 		kill_objective.find_target()
-		add_objective(kill_objective)
+		objectives += kill_objective
 	else
 		var/datum/objective/maroon/maroon_objective = new
 		maroon_objective.owner = owner
 		maroon_objective.find_target()
-		add_objective(maroon_objective)
+		objectives += maroon_objective
 
 	var/datum/objective/escape/escape_objective = new
 	escape_objective.owner = owner
-	add_objective(escape_objective)
+	objectives += escape_objective
 
 	return
 
@@ -162,31 +154,9 @@
 /datum/antagonist/hivemind/roundend_report()
 	var/list/result = list()
 
-	var/greentext = TRUE
-
 	result += printplayer(owner)
 	result += "<b>Hive Size:</b> [hive_size]"
-
-	var/objectives_text = ""
-	if(objectives.len)
-		var/count = 1
-		for(var/datum/objective/objective in objectives)
-			if(objective.check_completion())
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='greentext'>Success!</span>"
-			else
-				objectives_text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
-				greentext = FALSE
-			count++
-
-	result += objectives_text
-
-	var/special_role_text = lowertext(name)
-
-	if(greentext)
-		result += "<span class='greentext'>The [special_role_text] was successful!</span>"
-	else
-		result += "<span class='redtext'>The [special_role_text] has failed!</span>"
-		SEND_SOUND(owner.current, 'sound/ambience/ambifailure.ogg')
+	result += printobjectives(objectives)
 
 	return result.Join("<br>")
 
