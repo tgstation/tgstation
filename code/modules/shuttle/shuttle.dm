@@ -307,10 +307,10 @@
 			name = "[name] [idnum]"
 	for(var/place in shuttle_areas)
 		var/area/area = place
-		SEND_SIGNAL(area, COMSIG_CONNECT_TO_SHUTTLE, src, dock, idnum, FALSE)
+		area.connect_to_shuttle(src, dock, idnum, FALSE)
 		for(var/each in place)
 			var/atom/atom = each
-			SEND_SIGNAL(atom, COMSIG_CONNECT_TO_SHUTTLE, src, dock, idnum, FALSE)
+			atom.connect_to_shuttle(src, dock, idnum, FALSE)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact

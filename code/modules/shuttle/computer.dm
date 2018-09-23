@@ -10,10 +10,6 @@
 	var/admin_controlled
 	var/no_destination_swap = 0
 
-/obj/machinery/computer/shuttle/Initialize()
-	. = ..()
-	RegisterSignal(src, COMSIG_CONNECT_TO_SHUTTLE, .proc/connect_to_shuttle)
-
 /obj/machinery/computer/shuttle/ui_interact(mob/user)
 	. = ..()
 	var/list/options = params2list(possible_destinations)
@@ -73,6 +69,6 @@
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 
-/obj/machinery/computer/shuttle/proc/connect_to_shuttle(_self, obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
