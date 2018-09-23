@@ -71,7 +71,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "basketball"
 	item_state = "basketball"
-	desc = "Here's your chance, do your dance at the Space Jam."
+	desc = "Here's your chance, do your dance at the "
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 
 /obj/item/toy/beach_ball/holoball/dodgeball
