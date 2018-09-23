@@ -1,0 +1,5 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - rscadd: "Unsecured grenade assemblies now show the number and type of beakers inside when not wearing science goggles."
+  - tweak: "Science goggles now show the type of beakers inside a grenade assembly."
