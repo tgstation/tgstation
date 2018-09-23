@@ -95,4 +95,4 @@
 
 /obj/item/gun/ballistic/automatic/atlauncher/update_icon()
 	..()
-	icon_state = "rocketlauncher[magazine ? "-[get_ammo(1)]" : ""]"
+	icon_state = "rocketlauncher[magazine ? "-[get_ammo(TRUE)]" : ""]"
