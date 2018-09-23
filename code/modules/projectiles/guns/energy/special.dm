@@ -191,6 +191,12 @@
 		else
 			progress_flash_divisor--
 
+/obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
+	if(amount)
+		. = ..()
+	else
+		. = ..(amount=1)
+
 
 /obj/item/gun/energy/plasmacutter/update_icon()
 	return
