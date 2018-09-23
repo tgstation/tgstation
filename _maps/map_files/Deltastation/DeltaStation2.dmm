@@ -30788,6 +30788,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/south,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "beS" = (
