@@ -206,7 +206,7 @@
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
-	name = "Luxury Shuttle ticket booth"
+	name = "Luxury shuttle ticket booth"
 	desc = "A forceful money collector."
 	timeleft = 0
 	var/threshold = 500
@@ -216,7 +216,6 @@
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
-		say("<span class='robot'>Welcome aboard, [mover]!</span>")
 		return TRUE
 
 	if(!isliving(mover)) //No stowaways
@@ -229,11 +228,6 @@
 /obj/effect/forcefield/luxury_shuttle/Bumped(atom/movable/AM)
 	if(!isliving(AM))
 		return ..()
-
-	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
-		return ..()
-
-	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
 	var/list/counted_money = list()
 
@@ -258,18 +252,41 @@
 		payees[AM] += S.value * S.amount
 		counted_money += S
 
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(H.get_bank_account())
+			var/datum/bank_account/account = H.get_bank_account()
+
+			if(account.account_balance < threshold)
+				payees[AM] += account.account_balance
+				account.adjust_money(-account.account_balance)
+			else
+				var/money_owed = threshold - payees[AM]
+				payees[AM] += money_owed
+				account.adjust_money(-money_owed)
+
 	if(payees[AM] >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
-		say("<span class='robot'>Thank you for your payment, [AM]!</span>")
+		payees[AM] -= threshold
+		say("<span class='robot'>Welcome aboard, [AM]!</span>")
 		approved_passengers += AM
-		payees[AM] = 0
+
+		if(payees[AM] > 0 && ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.get_bank_account())
+				var/datum/bank_account/account = H.get_bank_account()
+				account.adjust_money(payees[AM])
+				payees[AM] -= payees[AM]
+
 		check_times -= AM
 		return
 	else if (payees[AM] > 0)
 		for(var/obj/I in counted_money)
 			qdel(I)
-		say("<span class='robot'>$[payees[AM]] received, [AM]. You need $[threshold-payees[AM]] more.</span>")
+		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
+			say("<span class='robot'>$[payees[AM]] received, [AM]. You need $[threshold-payees[AM]] more.</span>")
+			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 		return ..()
 	else
 		return ..()
