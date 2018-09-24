@@ -499,11 +499,11 @@
 /proc/recursive_loc_check(atom/movable/target, type)
 	var/atom/A = target
 	while(TRUE)
-		if(!loc)
+		if(!A.loc)
 			return
 		if(istype(A.loc, type))
 			return A.loc
-		A = loc
+		A = A.loc
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
