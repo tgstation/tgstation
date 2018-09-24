@@ -236,26 +236,36 @@
 	var/list/counted_money = list()
 
 	for(var/obj/item/coin/C in AM.GetAllContents())
-		total_cash += C.value
-		counted_money += C
 		if(total_cash >= threshold)
 			break
+		total_cash += C.value
+		counted_money += C		
 	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
+		if(total_cash >= threshold)
+			break
 		total_cash += S.value * S.amount
 		counted_money += S
+	for(var/obj/item/holochip/H in AM.GetAllContents())
 		if(total_cash >= threshold)
 			break
+		total_cash += H.credits
+		counted_money += H
 
 	if(AM.pulling)
-		if(istype(AM.pulling, /obj/item/coin))
+		if(total_cash < threshold && istype(AM.pulling, /obj/item/coin))
 			var/obj/item/coin/C = AM.pulling
 			total_cash += C.value
 			counted_money += C
 
-		else if(istype(AM.pulling, /obj/item/stack/spacecash))
+		else if(total_cash < threshold && istype(AM.pulling, /obj/item/stack/spacecash))
 			var/obj/item/stack/spacecash/S = AM.pulling
 			total_cash += S.value * S.amount
 			counted_money += S
+			
+		else if(total_cash < threshold && istype(AM.pulling, /obj/item/holochip))
+			var/obj/item/holochip/H = AM.pulling
+			total_cash += H.credits
+			counted_money += H
 
 	if(total_cash >= threshold)
 		for(var/obj/I in counted_money)
