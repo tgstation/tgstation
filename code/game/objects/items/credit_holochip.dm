@@ -7,7 +7,7 @@
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	var/credits = 0
-	
+
 /obj/item/holochip/Initialize(mapload, amount)
 	. = ..()
 	credits = amount
@@ -16,7 +16,7 @@
 	. = ..()
 	to_chat(user, "<span class='notice'>It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]</span>")
 	to_chat(user, "<span class='notice'>Alt-Click to split.</span>")
-	
+
 /obj/item/holochip/proc/spend(amount, pay_anyway = FALSE)
 	if(credits >= amount)
 		credits -= amount
@@ -28,7 +28,7 @@
 		return credits
 	else
 		return 0
-	
+
 /obj/item/holochip/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/holochip))
@@ -36,7 +36,7 @@
 		credits += H.credits
 		to_chat(user, "<span class='notice'>You insert the credits into [src].</span>")
 		qdel(H)
-	
+
 /obj/item/holochip/AltClick(mob/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
@@ -46,7 +46,6 @@
 	else
 		var/new_credits = spend(split_amount, TRUE)
 		var/obj/item/holochip/H = new(user ? user : drop_location(), new_credits)
-		H.copy_evidences(src)
 		if(user)
 			if(!user.put_in_hands(H))
 				H.forceMove(user.drop_location())
