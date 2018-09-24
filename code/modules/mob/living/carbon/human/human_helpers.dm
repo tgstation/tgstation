@@ -11,8 +11,8 @@
 
 //gets assignment from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
-/mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job")
-	var/obj/item/card/id/id = get_idcard()
+/mob/living/carbon/human/proc/get_assignment(if_no_id = "No id", if_no_job = "No job", hand_first = TRUE)
+	var/obj/item/card/id/id = get_idcard(hand_first)
 	if(id)
 		. = id.assignment
 	else
@@ -27,7 +27,7 @@
 //gets name from ID or ID inside PDA or PDA itself
 //Useful when player do something with computers
 /mob/living/carbon/human/proc/get_authentification_name(if_no_id = "Unknown")
-	var/obj/item/card/id/id = get_idcard()
+	var/obj/item/card/id/id = get_idcard(FALSE)
 	if(id)
 		return id.registered_name
 	var/obj/item/pda/pda = wear_id
@@ -85,8 +85,14 @@
 		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
 
-//gets ID card object from special clothes slot or null.
-/mob/living/carbon/human/get_idcard()
+//Gets ID card object. If hand_first is false the one in the id slot is prioritized.
+/mob/living/carbon/human/get_idcard(hand_first = TRUE)
+	var/obj/item/I = get_active_held_item()
+	if(I.GetID())
+		if(hand_first)
+			return I.GetID()
+		else
+			. = I.GetID()
 	if(wear_id)
 		return wear_id.GetID()
 
