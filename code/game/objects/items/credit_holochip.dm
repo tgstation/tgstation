@@ -14,7 +14,7 @@
 
 /obj/item/holochip/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>It's loaded with [credits] credit[( total_worth > 1 ) ? "s" : ""]</span>")
+	to_chat(user, "<span class='notice'>It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]</span>")
 	
 /obj/item/holochip/proc/spend(amount, pay_anyway = FALSE)
 	if(credits >= amount)

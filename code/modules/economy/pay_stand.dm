@@ -28,7 +28,7 @@
 		var/obj/item/card/id/vbucks = W
 		if(vbucks.registered_account)
 			if(vbucks.registered_account.adjust_money(-price))
-				purchase()
+				purchase(vbucks.registered_account.account_holder)
 				to_chat(user, "Thanks for purchasing! The vendor has been informed.")
 				return
 			else
@@ -40,7 +40,7 @@
 	if(istype(W, /obj/item/holochip))
 		var/obj/item/holochip/H = W
 		if(H.spend(price, FALSE))
-			purchase()
+			purchase(user)
 			to_chat(user, "Thanks for purchasing! The vendor has been informed.")
 			return
 		else
@@ -67,7 +67,7 @@
 	else
 		return ..()
 		
-/obj/machinery/paystand/proc/purchase()
+/obj/machinery/paystand/proc/purchase(buyer)
 	my_card.registered_account.adjust_money(price)
-	my_card.registered_account.bank_card_talk("Purchase made at your vendor by [vbucks.registered_account.account_holder] for $[price].")
+	my_card.registered_account.bank_card_talk("Purchase made at your vendor by [buyer] for [price] credits.")
 	

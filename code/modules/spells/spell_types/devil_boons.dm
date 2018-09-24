@@ -23,7 +23,7 @@
 					new /obj/item/stack/sheet/mineral/gold(user.drop_location()),
 					new /obj/item/stack/sheet/mineral/silver(user.drop_location()),
 					new /obj/item/stack/sheet/mineral/diamond(user.drop_location()),
-					new /obj/item/holochip(user.drop_location(), 1000)),
+					new /obj/item/holochip(user.drop_location(), 1000))
 			C.put_in_hands(item)
 
 /obj/effect/proc_holder/spell/targeted/view_range

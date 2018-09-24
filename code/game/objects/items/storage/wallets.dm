@@ -76,5 +76,5 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/obj/item/holochip/pocket_money = new(src, rand(5,30))
+	new /obj/item/holochip(src, rand(5,30))
 	update_icon()
