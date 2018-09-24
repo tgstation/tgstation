@@ -67,7 +67,7 @@
 	yield = 3
 	rarity = 20
 	mutatelist = list()
-	reagents_add = list("condensedcapsaicin" = 0.3, "capsaicin" = 0.55, "nutriment" = 0.04)
+	reagents_add = list("condensedcapsaicin" = 0.3, "ghostchilijuice" = 0.55, "nutriment" = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili
 	seed = /obj/item/seeds/chili/ghost

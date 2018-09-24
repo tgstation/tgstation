@@ -218,6 +218,8 @@
 		. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
+	if(holder.has_reagent("ghostchilijuice"))
+		holder.remove_reagent("ghostchilijuice", 2)
 	var/datum/dna/Mdna = M.has_dna()
 	if(Mdna && Mdna.species && (Mdna.species.id == "plasmaman" || Mdna.species.id == "skeleton"))
 		M.heal_bodypart_damage(1,0, 0)
@@ -283,6 +285,34 @@
 	..()
 	. = 1
 
+/datum/reagent/consumable/homebrew coffee
+	name = "Homebrew Coffee"
+	id = "hcoffee"
+	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
+	color = "#482000" // rgb: 72, 32, 0
+	nutriment_factor = 0
+	overdose_threshold = 80
+	taste_description = "bitterness"
+	glass_icon_state = "glass_brown"
+	glass_name = "glass of coffee"
+	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
+
+/datum/reagent/consumable/coffee/overdose_process(mob/living/M)
+	M.Jitter(5)
+	..()
+
+/datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-5)
+	M.drowsyness = max(0,M.drowsyness-3)
+	M.AdjustSleeping(-80, FALSE)
+	M.AdjustSleeping(-20, FALSE) /7stun
+	//310.15 is the normal bodytemp.
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(holder.has_reagent("frostoil"))
+		holder.remove_reagent("frostoil", 5)
+	..()
+	. = 1
+
 /datum/reagent/consumable/tea
 	name = "Tea"
 	id = "tea"
@@ -302,6 +332,29 @@
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
+	. = 1
+
+/datum/reagent/consumable/homebrewtea
+	name = "Homebrew Tea"
+	id = "htea"
+	description = "Tasty black tea, it has antioxidants, it's good for you!"
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	taste_description = "tart black tea"
+	glass_icon_state = "teaglass"
+	glass_name = "glass of tea"
+	glass_desc = "Drinking it from here would not seem right."
+
+/datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-2)
+	M.drowsyness = max(0,M.drowsyness-1)
+	M.jitteriness = max(0,M.jitteriness-3)
+	M.AdjustSleeping(-20, FALSE)
+	if(M.getToxLoss() && prob(80))
+		M.adjustToxLoss(-3, 0)
+	M.adjust_bodytemperature(60 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1
 

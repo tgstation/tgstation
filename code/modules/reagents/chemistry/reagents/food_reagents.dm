@@ -236,6 +236,8 @@
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
+			if(holder.has_reagent("ghostchilijuice"))
+				holder.remove_reagent("ghostchilijuice", 4)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
@@ -712,3 +714,33 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+
+/datum/reagent/consumable/ghostchilijuice
+	name = "Ghost Chili Juice"
+	id = "ghostchiilijuice"
+	description = "A greish juice with the same properties of lava."
+	color = "#d3a308"
+	nutriment_factor = 0.0001 * REAGENTS_METABOLISM
+	taste_description = "spicy"
+
+/datum/reagent/consumable/ghostchilijuice/on_mob_life(mob/living/carbon/M)
+
+	if(prob(20))
+		M.adjust_fire_stacks(2)
+		M.IgniteMob()
+		M.say("This is spicy!")
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	..()
+/datum/reagent/consumable/ghostchilijuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(!ishuman(M) && !ismonkey(M))
+		return
+
+	var/mob/living/carbon/victim = M
+	if(!victim.can_inject(null, 0))
+		victim.emote("scream")
+		victim.blur_eyes(10)
+		victim.blind_eyes(10)
+		victim.confused = max(M.confused, 30)
+		victim.adjustFireLoss(5, 0)
+		victim.Knockdown(60)
+	..()

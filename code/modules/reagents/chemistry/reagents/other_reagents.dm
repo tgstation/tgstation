@@ -180,6 +180,9 @@
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
 	..()
+/datum/reagent/water/on_mob_life(mob/living/carbon/M)
+	if(holder.has_reagent("ghostchilijuice"))
+		holder.remove_reagent("ghostchilijuice", 1)
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
