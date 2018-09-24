@@ -36,8 +36,11 @@
 	var/alt_click = pa.Find("alt")
 
 	if(left_click && alt_click)
-		objholder = object.type
-		to_chat(c, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
+		if (istom(object))
+			objholder = object.type
+			to_chat(c, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
+		else
+			to_chat(c, "<span class='notice'>[initial(object.name)] is not a turf, object, or mob! Please select again.</span>")
 	else if(left_click)
 		if(ispath(objholder,/turf))
 			var/turf/T = get_turf(object)

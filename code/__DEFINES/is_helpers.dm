@@ -8,6 +8,8 @@
 
 #define isatom(A) (isloc(A))
 
+#define istom(A) (istype(A, /turf) || istype(A, /obj) || istype(A, /mob))
+
 #define isweakref(D) (istype(D, /datum/weakref))
 
 //Turfs
