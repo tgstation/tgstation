@@ -544,6 +544,8 @@
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
 	owner.add_trait(TRAIT_MUTE, "trance")
+	if(!owner.has_quirk(/datum/quirk/monochromatic))
+		owner.add_client_colour(/datum/client_colour/monochrome)
 	owner.visible_message("[stun ? "<span class='warning'>[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.</span>" : ""]", \
 	"<span class='warning'>[pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 	return TRUE
@@ -557,6 +559,8 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	owner.remove_trait(TRAIT_MUTE, "trance")
 	owner.dizziness = 0
+	if(!owner.has_quirk(/datum/quirk/monochromatic))
+		owner.remove_client_colour(/datum/client_colour/monochrome)
 	to_chat(owner, "<span class='warning'>You snap out of your trance!</span>")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
