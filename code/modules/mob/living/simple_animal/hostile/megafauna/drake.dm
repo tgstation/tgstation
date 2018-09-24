@@ -104,8 +104,6 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	if(swooping)
 		return
-	if(recovery_time >= world.time)
-		return
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 	
@@ -214,7 +212,7 @@ Difficulty: Medium
 			if(L in hit_list || L == src)
 				continue
 			hit_list += L
-			L.adjustFireLoss(15)
+			L.adjustFireLoss(30)
 			to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
 			
 		// deals damage to mechs
