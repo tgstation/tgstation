@@ -406,9 +406,7 @@
 
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1
-	var/acid_type = /obj/effect/acid
-	if(acidpwr >= 200) //alien acid power
-		acid_type = /obj/effect/acid/alien
+	var/acid_type = /obj/effect/acid // TODO COPYREMOVE: FIGURE OUT WHY T HIS SHIT WASNT GENERIC AND WAS LOCKED IN THE FUCKING COPYREMOVE FILES
 	var/has_acid_effect = FALSE
 	for(var/obj/O in src)
 		if(intact && O.level == 1) //hidden under the floor

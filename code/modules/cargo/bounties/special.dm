@@ -1,10 +1,3 @@
-/datum/bounty/item/alien_organs
-	name = "Alien Organs"
-	description = "Nanotrasen is interested in studying Xenomorph biology. Ship a set of organs to be thoroughly compensated."
-	reward = 25000
-	required_count = 3
-	wanted_types = list(/obj/item/organ/brain/alien, /obj/item/organ/alien, /obj/item/organ/body_egg/alien_embryo)
-
 /datum/bounty/item/syndicate_documents
 	name = "Syndicate Documents"
 	description = "Intel regarding the syndicate is highly prized at CentCom. If you find syndicate documents, ship them. You could save lives."

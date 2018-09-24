@@ -29,14 +29,14 @@
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
-	
+
 	if(target && target.current)
 		def_value = target.current
 
 	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
 	if (!new_target)
 		return
-	
+
 	if (new_target == "Free objective")
 		target = null
 	else
@@ -164,7 +164,7 @@
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
-	
+
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
 
@@ -629,22 +629,6 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		captured_amount+=1
 	for(var/mob/living/carbon/monkey/M in A)//Monkeys are almost worthless, you failure.
 		captured_amount+=0.1
-	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-		if(M.stat == DEAD)
-			captured_amount+=0.5
-			continue
-		captured_amount+=1
-	for(var/mob/living/carbon/alien/humanoid/M in A)//Aliens are worth twice as much as humans.
-		if(istype(M, /mob/living/carbon/alien/humanoid/royal/queen))//Queens are worth three times as much as humans.
-			if(M.stat == DEAD)
-				captured_amount+=1.5
-			else
-				captured_amount+=3
-			continue
-		if(M.stat == DEAD)
-			captured_amount+=1
-			continue
-		captured_amount+=2
 	return captured_amount >= target_amount
 
 /datum/objective/capture/admin_edit(mob/admin)

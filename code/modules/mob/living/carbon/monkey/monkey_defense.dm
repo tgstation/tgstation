@@ -17,16 +17,6 @@
 			var/dmg = rand(1, 5)
 			apply_damage(dmg, BRUTE, affecting)
 
-/mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
-	if(..()) //successful larva bite.
-		var/damage = rand(1, 3)
-		if(stat != DEAD)
-			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
-			if(!affecting)
-				affecting = get_bodypart(BODY_ZONE_CHEST)
-			apply_damage(damage, BRUTE, affecting)
-
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if(..())	//To allow surgery to return properly.
 		return
@@ -72,52 +62,6 @@
 				else if(dropItemToGround(get_active_held_item()))
 					playsound(src, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					visible_message("<span class='danger'>[M] has disarmed [src]!</span>", "<span class='userdanger'>[M] has disarmed [src]!</span>", null, COMBAT_MESSAGE_RANGE)
-
-/mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent.
-		if (M.a_intent == INTENT_HARM)
-			if ((prob(95) && health > 0))
-				playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-				var/damage = rand(15, 30)
-				if (damage >= 25)
-					damage = rand(20, 40)
-					if(AmountUnconscious() < 300)
-						Unconscious(rand(200, 300))
-					visible_message("<span class='danger'>[M] has wounded [name]!</span>", \
-							"<span class='userdanger'>[M] has wounded [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-				else
-					visible_message("<span class='danger'>[M] has slashed [name]!</span>", \
-							"<span class='userdanger'>[M] has slashed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-
-				var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-				log_combat(M, src, "attacked")
-				if(!affecting)
-					affecting = get_bodypart(BODY_ZONE_CHEST)
-				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
-					return 1
-				apply_damage(damage, BRUTE, affecting)
-
-			else
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] has attempted to lunge at [name]!</span>", \
-						"<span class='userdanger'>[M] has attempted to lunge at [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-
-		if (M.a_intent == INTENT_DISARM)
-			var/obj/item/I = null
-			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			if(prob(95))
-				Knockdown(20)
-				visible_message("<span class='danger'>[M] has tackled down [name]!</span>", \
-						"<span class='userdanger'>[M] has tackled down [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			else
-				I = get_active_held_item()
-				if(dropItemToGround(I))
-					visible_message("<span class='danger'>[M] has disarmed [name]!</span>", "<span class='userdanger'>[M] has disarmed [name]!</span>", null, COMBAT_MESSAGE_RANGE)
-				else
-					I = null
-			log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
-			updatehealth()
-
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
 	. = ..()

@@ -1348,8 +1348,6 @@
 	if(!prob(prb))
 		return 0
 	do_sparks(5, TRUE, src)
-	if(isalien(user))
-		return 0
 	if(electrocute_mob(user, src, src, 1, TRUE))
 		return 1
 	else

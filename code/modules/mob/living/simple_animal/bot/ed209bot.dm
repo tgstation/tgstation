@@ -453,12 +453,6 @@ Auto Patrol[]"},
 	A.preparePixelProjectile(target, src)
 	A.fire()
 
-/mob/living/simple_animal/bot/ed209/attack_alien(mob/living/carbon/alien/user)
-	..()
-	if(!isalien(target))
-		target = user
-		mode = BOT_HUNT
-
 
 /mob/living/simple_animal/bot/ed209/emp_act(severity)
 	if(severity == 2 && prob(70))

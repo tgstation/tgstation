@@ -65,7 +65,6 @@
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent("epinephrine"))
 		holder.remove_reagent("epinephrine", 2*REM)
-	C.adjustPlasma(20)
 	return ..()
 
 /datum/reagent/toxin/plasma/reaction_obj(obj/O, reac_volume)

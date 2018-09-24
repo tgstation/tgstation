@@ -197,10 +197,7 @@
 	value_mode = VALUE_MODE_NUM
 	config_entry_value = list(			//DEFAULTS
 	/mob/living/simple_animal = 1,
-	/mob/living/silicon/pai = 1,
-	/mob/living/carbon/alien/humanoid/hunter = -1,
-	/mob/living/carbon/alien/humanoid/royal/praetorian = 1,
-	/mob/living/carbon/alien/humanoid/royal/queen = 3
+	/mob/living/silicon/pai = 1
 	)
 
 /datum/config_entry/keyed_list/multiplicative_movespeed/ValidateAndSet()

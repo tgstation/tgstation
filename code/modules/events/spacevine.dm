@@ -367,8 +367,6 @@
 		SM.on_hit(src, user)
 	user_unbuckle_mob(user,user)
 
-/obj/structure/spacevine/attack_alien(mob/living/user)
-	eat(user)
 
 /datum/spacevine_controller
 	var/list/obj/structure/spacevine/vines

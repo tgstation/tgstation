@@ -62,16 +62,6 @@
 	return FALSE
 
 
-/datum/saymode/xeno
-	key = "a"
-	mode = MODE_ALIEN
-
-/datum/saymode/xeno/handle_message(mob/living/user, message, datum/language/language)
-	if(user.hivecheck())
-		user.alien_talk(message)
-	return FALSE
-
-
 /datum/saymode/vocalcords
 	key = "x"
 	mode = MODE_VOCALCORDS

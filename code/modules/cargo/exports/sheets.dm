@@ -48,11 +48,6 @@
 	unit_name = "gondola hide"
 	export_types = list(/obj/item/stack/sheet/animalhide/gondola)
 
-/datum/export/stack/skin/xeno
-	cost = 500
-	unit_name = "alien hide"
-	export_types = list(/obj/item/stack/sheet/animalhide/xeno)
-
 // Common materials.
 // For base materials, see materials.dm
 

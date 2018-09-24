@@ -168,8 +168,6 @@
 		gibtype = C.gib_type
 		if(ismonkey(C))
 			typeofskin = /obj/item/stack/sheet/animalhide/monkey
-		else if(isalien(C))
-			typeofskin = /obj/item/stack/sheet/animalhide/xeno
 
 	for (var/i=1 to meat_produced)
 		var/obj/item/reagent_containers/food/snacks/meat/slab/newmeat = new typeofmeat
