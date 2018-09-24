@@ -85,17 +85,27 @@
 		. = if_no_id	//to prevent null-names making the mob unclickable
 	return
 
-//Gets ID card object. If hand_first is false the one in the id slot is prioritized.
+//Gets ID card from a human. If hand_first is false the one in the id slot is prioritized, otherwise inventory slots go first.
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)
+	//Check hands
 	var/obj/item/I = get_active_held_item()
-	if(I.GetID())
+	if(!I)
+		I = get_inactive_held_item()
+	if(I && I.GetID())
 		if(hand_first)
 			return I.GetID()
 		else
 			. = I.GetID()
-	if(wear_id)
+			
+	//Check inventory slots		
+	if(wear_id && wear_id.GetID())
 		return wear_id.GetID()
-
+	else if(belt && belt.GetID())
+		return belt.GetID()
+	else if(l_store && l_store.GetID())
+		return l_store.GetID()
+	else if(r_store && r_store.GetID())
+		return r_store.GetID()
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	if(has_trait(TRAIT_MONKEYLIKE))
