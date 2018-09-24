@@ -138,9 +138,6 @@
 /obj/effect/dummy/chameleon/attack_slime()
 	master.disrupt()
 
-/obj/effect/dummy/chameleon/attack_alien()
-	master.disrupt()
-
 /obj/effect/dummy/chameleon/ex_act(S, T)
 	contents_explosion(S, T)
 	master.disrupt()

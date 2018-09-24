@@ -170,14 +170,6 @@
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 
-		if("xeno")
-			var/Xe
-			if(M.ckey)
-				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/carbon/alien/humanoid/sentinel)
-			else
-				Xe = pick(/mob/living/carbon/alien/humanoid/hunter,/mob/living/simple_animal/hostile/alien/sentinel)
-			new_mob = new Xe(M.loc)
-
 		if("animal")
 			var/path = pick(/mob/living/simple_animal/hostile/carp,
 							/mob/living/simple_animal/hostile/bear,

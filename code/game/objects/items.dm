@@ -324,16 +324,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	if(!user.put_in_active_hand(src, FALSE, FALSE))
 		user.dropItemToGround(src)
 
-/obj/item/attack_alien(mob/user)
-	var/mob/living/carbon/alien/A = user
-
-	if(!A.has_fine_manipulation)
-		if(src in A.contents) // To stop Aliens having items stuck in their pockets
-			A.dropItemToGround(src)
-		to_chat(user, "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
-		return
-	attack_paw(A)
-
 /obj/item/attack_ai(mob/user)
 	if(istype(src.loc, /obj/item/robot_module))
 		//If the item is part of a cyborg module, equip it
@@ -448,10 +438,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			// you can't stab someone in the eyes wearing a mask!
 			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
 			return
-
-	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
-		return
 
 	if(isbrain(M))
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")

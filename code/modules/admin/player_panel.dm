@@ -235,11 +235,6 @@
 						M_job = M.job
 					else if(ismonkey(M))
 						M_job = "Monkey"
-					else if(isalien(M)) //aliens
-						if(islarva(M))
-							M_job = "Alien larva"
-						else
-							M_job = ROLE_ALIEN
 					else
 						M_job = "Carbon-based"
 

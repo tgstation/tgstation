@@ -66,9 +66,6 @@
 /obj/singularity/attack_paw(mob/user)
 	consume(user)
 
-/obj/singularity/attack_alien(mob/user)
-	consume(user)
-
 /obj/singularity/attack_animal(mob/user)
 	consume(user)
 

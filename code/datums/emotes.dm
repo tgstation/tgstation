@@ -86,10 +86,6 @@
 		return "makes a [pick("strong ", "weak ", "")]noise."
 	if(user.mind && user.mind.miming && message_mime)
 		. = message_mime
-	if(isalienadult(user) && message_alien)
-		. = message_alien
-	else if(islarva(user) && message_larva)
-		. = message_larva
 	else if(iscyborg(user) && message_robot)
 		. = message_robot
 	else if(isAI(user) && message_AI)

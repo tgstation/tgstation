@@ -16,8 +16,8 @@
 		return FALSE //robots cannot be creative
 						//(also this surgery shouldn't be consistently successful, and cyborgs have a 100% success rate on surgery)
 	if(target.stat != DEAD)
-		return FALSE	
-	
+		return FALSE
+
 /datum/surgery_step/dissection
 	name = "dissection"
 	implements = list(/obj/item/scalpel = 60, /obj/item/kitchen/knife = 30, /obj/item/shard = 15)
@@ -25,13 +25,9 @@
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] starts dissecting [target].", "<span class='notice'>You start dissecting [target].</span>")
-	
+
 /datum/surgery_step/dissection/proc/check_value(mob/living/carbon/target)
-	if(isalienroyal(target))
-		return 10000
-	else if(isalienadult(target))
-		return 5000
-	else if(ismonkey(target))
+	if(ismonkey(target))
 		return 1000
 	else if(ishuman(target))
 		var/mob/living/carbon/human/H = target
@@ -51,7 +47,7 @@
 	target.apply_damage(80, BRUTE, L)
 	new /datum/bioware/dissected(target)
 	return TRUE
-	
+
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] dissects [target]!", "<span class='notice'>You dissect [target], but do not find anything particularly interesting.</span>")
 	SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = (check_value(target) * 0.2)))

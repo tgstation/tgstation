@@ -259,12 +259,6 @@
 /obj/effect/mob_spawn/slime/equip(mob/living/simple_animal/slime/S)
 	S.colour = mobcolour
 
-/obj/effect/mob_spawn/human/facehugger/create() //Creates a squashed facehugger
-	var/obj/item/clothing/mask/facehugger/O = new(src.loc) //variable O is a new facehugger at the location of the landmark
-	O.name = src.name
-	O.Die() //call the facehugger's death proc
-	qdel(src)
-
 /obj/effect/mob_spawn/mouse
 	name = "sleeper"
 	mob_type = 	/mob/living/simple_animal/mouse

@@ -236,63 +236,6 @@
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
 		return 1
 
-/mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(check_shields(M, 0, "the M.name"))
-		visible_message("<span class='danger'>[M] attempted to touch [src]!</span>")
-		return 0
-
-	if(..())
-		if(M.a_intent == INTENT_HARM)
-			if (w_uniform)
-				w_uniform.add_fingerprint(M)
-			var/damage = prob(90) ? 20 : 0
-			if(!damage)
-				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
-				visible_message("<span class='danger'>[M] has lunged at [src]!</span>", \
-					"<span class='userdanger'>[M] has lunged at [src]!</span>")
-				return 0
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(M.zone_selected))
-			if(!affecting)
-				affecting = get_bodypart(BODY_ZONE_CHEST)
-			var/armor_block = run_armor_check(affecting, "melee","","",10)
-
-			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-				"<span class='userdanger'>[M] has slashed at [src]!</span>")
-			log_combat(M, src, "attacked")
-			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
-				return 1
-			apply_damage(damage, BRUTE, affecting, armor_block)
-
-		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
-			var/obj/item/I = get_active_held_item()
-			if(I && dropItemToGround(I))
-				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
-						"<span class='userdanger'>[M] disarmed [src]!</span>")
-			else
-				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Knockdown(100)
-				log_combat(M, src, "tackled")
-				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
-					"<span class='userdanger'>[M] has tackled down [src]!</span>")
-
-
-/mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/L)
-
-	if(..()) //successful larva bite.
-		var/damage = rand(1, 3)
-		if(check_shields(L, damage, "the [L.name]"))
-			return 0
-		if(stat != DEAD)
-			L.amount_grown = min(L.amount_grown + damage, L.max_grown)
-			var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
-			if(!affecting)
-				affecting = get_bodypart(BODY_ZONE_CHEST)
-			var/armor_block = run_armor_check(affecting, "melee")
-			apply_damage(damage, BRUTE, affecting, armor_block)
-
-
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
 	. = ..()
 	if(.)

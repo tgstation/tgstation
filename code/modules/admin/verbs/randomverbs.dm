@@ -280,55 +280,6 @@
 		to_chat(C, "You have been [muteunmute] from [mute_string] by [key_name(usr, include_name = FALSE)].")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Mute [feedback_string]", "[P.muted & mute_type]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-//I use this proc for respawn character too. /N
-/proc/create_xeno(ckey)
-	if(!ckey)
-		var/list/candidates = list()
-		for(var/mob/M in GLOB.player_list)
-			if(M.stat != DEAD)
-				continue	//we are not dead!
-			if(!(ROLE_ALIEN in M.client.prefs.be_special))
-				continue	//we don't want to be an alium
-			if(M.client.is_afk())
-				continue	//we are afk
-			if(M.mind && M.mind.current && M.mind.current.stat != DEAD)
-				continue	//we have a live body we are tied to
-			candidates += M.ckey
-		if(candidates.len)
-			ckey = input("Pick the player you want to respawn as a xeno.", "Suitable Candidates") as null|anything in candidates
-		else
-			to_chat(usr, "<font color='red'>Error: create_xeno(): no suitable candidates.</font>")
-	if(!istext(ckey))
-		return 0
-
-	var/alien_caste = input(usr, "Please choose which caste to spawn.","Pick a caste",null) as null|anything in list("Queen","Praetorian","Hunter","Sentinel","Drone","Larva")
-	var/obj/effect/landmark/spawn_here = GLOB.xeno_spawn.len ? pick(GLOB.xeno_spawn) : null
-	var/mob/living/carbon/alien/new_xeno
-	switch(alien_caste)
-		if("Queen")
-			new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(spawn_here)
-		if("Praetorian")
-			new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(spawn_here)
-		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(spawn_here)
-		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(spawn_here)
-		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(spawn_here)
-		if("Larva")
-			new_xeno = new /mob/living/carbon/alien/larva(spawn_here)
-		else
-			return 0
-	if(!spawn_here)
-		SSjob.SendToLateJoin(new_xeno, FALSE)
-
-	new_xeno.ckey = ckey
-	var/msg = "<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>"
-	message_admins(msg)
-	admin_ticket_log(new_xeno, msg)
-	return 1
-
 /*
 If a guy was gibbed and you want to revive him, this is a good way to do so.
 Works kind of like entering the game with a new character. Character receives a new mind if they didn't have one.
@@ -356,43 +307,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	if(G_found.mind && !G_found.mind.active)	//mind isn't currently in use by someone/something
-		//Check if they were an alien
-		if(G_found.mind.assigned_role == ROLE_ALIEN)
-			if(alert("This character appears to have been an alien. Would you like to respawn them as such?",,"Yes","No")=="Yes")
-				var/turf/T
-				if(GLOB.xeno_spawn.len)
-					T = pick(GLOB.xeno_spawn)
-
-				var/mob/living/carbon/alien/new_xeno
-				switch(G_found.mind.special_role)//If they have a mind, we can determine which caste they were.
-					if("Hunter")
-						new_xeno = new /mob/living/carbon/alien/humanoid/hunter(T)
-					if("Sentinel")
-						new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(T)
-					if("Drone")
-						new_xeno = new /mob/living/carbon/alien/humanoid/drone(T)
-					if("Praetorian")
-						new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(T)
-					if("Queen")
-						new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(T)
-					else//If we don't know what special role they have, for whatever reason, or they're a larva.
-						create_xeno(G_found.ckey)
-						return
-
-				if(!T)
-					SSjob.SendToLateJoin(new_xeno, FALSE)
-
-				//Now to give them their mind back.
-				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-				new_xeno.key = G_found.key
-				to_chat(new_xeno, "You have been fully respawned. Enjoy the game.")
-				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>"
-				message_admins(msg)
-				admin_ticket_log(new_xeno, msg)
-				return	//all done. The ghost is auto-deleted
-
 		//check if they were a monkey
-		else if(findtext(G_found.real_name,"monkey"))
+		if(findtext(G_found.real_name,"monkey"))
 			if(alert("This character appears to have been a monkey. Would you like to respawn them as such?",,"Yes","No")=="Yes")
 				var/mob/living/carbon/monkey/new_monkey = new
 				SSjob.SendToLateJoin(new_monkey)

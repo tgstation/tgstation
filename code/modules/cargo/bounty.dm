@@ -162,10 +162,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	B.mark_high_priority()
 
 	/********************************Low Priority Gens********************************/
-	var/list/low_priority_strict_type_list = list( /datum/bounty/item/alien_organs,
-													/datum/bounty/item/syndicate_documents,
-													/datum/bounty/item/adamantine,
-													/datum/bounty/more_bounties)
+	var/list/low_priority_strict_type_list = list(/datum/bounty/item/syndicate_documents,
+												/datum/bounty/item/adamantine,
+												/datum/bounty/more_bounties)
 
 	for(var/low_priority_bounty in low_priority_strict_type_list)
 		try_add_bounty(new low_priority_bounty)

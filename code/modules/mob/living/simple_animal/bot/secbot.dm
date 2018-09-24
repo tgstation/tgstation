@@ -424,12 +424,6 @@ Auto Patrol: []"},
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
 
-/mob/living/simple_animal/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
-	..()
-	if(!isalien(target))
-		target = user
-		mode = BOT_HUNT
-
 /mob/living/simple_animal/bot/secbot/Crossed(atom/movable/AM)
 	if(has_gravity() && ismob(AM) && target)
 		var/mob/living/carbon/C = AM

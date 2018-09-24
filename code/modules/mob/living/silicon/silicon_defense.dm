@@ -5,23 +5,6 @@
 /mob/living/silicon/get_ear_protection()//no ears
 	return 2
 
-/mob/living/silicon/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(..()) //if harm or disarm intent
-		var/damage = 20
-		if (prob(90))
-			log_combat(M, src, "attacked")
-			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] has slashed at [src]!</span>", \
-							"<span class='userdanger'>[M] has slashed at [src]!</span>")
-			if(prob(8))
-				flash_act(affect_silicon = 1)
-			log_combat(M, src, "attacked")
-			adjustBruteLoss(damage)
-			updatehealth()
-		else
-			playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
-			visible_message("<span class='danger'>[M] took a swipe at [src]!</span>", \
-							"<span class='userdanger'>[M] took a swipe at [src]!</span>")
 
 /mob/living/silicon/attack_animal(mob/living/simple_animal/M)
 	. = ..()
@@ -49,9 +32,6 @@
 /mob/living/silicon/attack_paw(mob/living/user)
 	return attack_hand(user)
 
-/mob/living/silicon/attack_larva(mob/living/carbon/alien/larva/L)
-	if(L.a_intent == INTENT_HELP)
-		visible_message("[L.name] rubs its head against [src].")
 
 /mob/living/silicon/attack_hulk(mob/living/carbon/human/user, does_attack_animation = 0)
 	if(user.a_intent == INTENT_HARM)

@@ -87,10 +87,6 @@ IGNORE_PROC_IF_NOT_TARGET(attack_hulk)
 
 IGNORE_PROC_IF_NOT_TARGET(attack_paw)
 
-IGNORE_PROC_IF_NOT_TARGET(attack_alien)
-
-IGNORE_PROC_IF_NOT_TARGET(attack_larva)
-
 IGNORE_PROC_IF_NOT_TARGET(attack_animal)
 
 IGNORE_PROC_IF_NOT_TARGET(attack_slime)

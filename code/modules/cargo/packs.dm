@@ -1923,8 +1923,6 @@
 					/obj/item/clothing/suit/monkeysuit,
 					/obj/item/clothing/head/cardborg,
 					/obj/item/clothing/suit/cardborg,
-					/obj/item/clothing/head/xenos,
-					/obj/item/clothing/suit/xenos,
 					/obj/item/clothing/suit/hooded/ian_costume,
 					/obj/item/clothing/suit/hooded/carp_costume,
 					/obj/item/clothing/suit/hooded/bee_costume)
