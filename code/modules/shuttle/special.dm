@@ -206,14 +206,17 @@
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
+	name = "Luxury Shuttle ticket booth"
+	desc = "A forceful money collector."
 	timeleft = 0
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
-
+	var/list/payees = list()
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
+		say("<span class='robot'>Welcome aboard, [mover]!</span>")
 		return TRUE
 
 	if(!isliving(mover)) //No stowaways
@@ -232,41 +235,43 @@
 
 	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
 
-	var/total_cash = 0
 	var/list/counted_money = list()
 
 	for(var/obj/item/coin/C in AM.GetAllContents())
-		total_cash += C.value
+		payees[AM] += C.value
 		counted_money += C
-		if(total_cash >= threshold)
+		if(payees[AM] >= threshold)
 			break
 	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
-		total_cash += S.value * S.amount
+		payees[AM] += S.value * S.amount
 		counted_money += S
-		if(total_cash >= threshold)
+		if(payees[AM] >= threshold)
 			break
 
-	if(AM.pulling)
-		if(istype(AM.pulling, /obj/item/coin))
-			var/obj/item/coin/C = AM.pulling
-			total_cash += C.value
-			counted_money += C
+	if(istype(AM.pulling, /obj/item/coin))
+		var/obj/item/coin/C = AM.pulling
+		payees[AM] += C.value
+		counted_money += C
 
-		else if(istype(AM.pulling, /obj/item/stack/spacecash))
-			var/obj/item/stack/spacecash/S = AM.pulling
-			total_cash += S.value * S.amount
-			counted_money += S
+	else if(istype(AM.pulling, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/S = AM.pulling
+		payees[AM] += S.value * S.amount
+		counted_money += S
 
-	if(total_cash >= threshold)
+	if(payees[AM] >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
-
-		to_chat(AM, "Thank you for your payment! Please enjoy your flight.")
+		say("<span class='robot'>Thank you for your payment, [AM]!</span>")
 		approved_passengers += AM
+		payees[AM] = 0
 		check_times -= AM
 		return
+	else if (payees[AM] > 0)
+		for(var/obj/I in counted_money)
+			qdel(I)
+		say("<span class='robot'>$[payees[AM]] received, [AM]. You need $[threshold-payees[AM]] more.</span>")
+		return ..()
 	else
-		to_chat(AM, "<span class='warning'>You don't have enough money to enter the main shuttle. You'll have to fly coach.</span>")
 		return ..()
 
 /mob/living/simple_animal/hostile/bear/fightpit
