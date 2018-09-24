@@ -125,12 +125,9 @@
 
 //Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)
-	if(countempties)
-		return stored_ammo.len
-
 	var/boolets = 0
 	for(var/obj/item/ammo_casing/bullet in stored_ammo)
-		if(bullet && bullet.BB)
+		if(bullet && (bullet.BB || countempties))
 			boolets++
 	return boolets
 
