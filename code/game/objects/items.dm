@@ -405,16 +405,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return 0
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
-	
-//Recursively checks if an item is inside a mob, even through layers of storage. Returns the mob if it finds one.
-/obj/item/proc/is_in_mob()
-	var/atom/A = src
-	while(TRUE)
-		if(!loc || isturf(loc))
-			return
-		if(ismob(A.loc))
-			return A.loc
-		A = loc
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
