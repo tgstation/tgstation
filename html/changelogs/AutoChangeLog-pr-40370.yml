@@ -1,0 +1,5 @@
+author: "YoYoBatty"
+delete-after: True
+changes: 
+  - code_imp: "Particle accelerator control box now uses multitool_act and better ui_interact"
+  - bugfix: "Particle accelerator wires can be opened by borgs with multitools now."
