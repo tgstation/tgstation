@@ -331,7 +331,8 @@ SUBSYSTEM_DEF(shuttle)
 			break
 		var/area/A = get_area(thing)
 		if(A && !A.blob_allowed)
-
+			callShuttle = 0
+			break
 	if(callShuttle)
 		if(EMERGENCY_IDLE_OR_RECALLED)
 			emergency.request(null, set_coefficient = 2.5)
