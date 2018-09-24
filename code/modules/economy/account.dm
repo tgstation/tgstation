@@ -54,12 +54,16 @@
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
 
-/datum/bank_account/proc/bank_card_talk(fuck)
-	if(!fuck || !bank_cards.len)
+/datum/bank_account/proc/bank_card_talk(message)
+	if(!message || !bank_cards.len)
 		return
 	for(var/obj/A in bank_cards)
-		for(var/mob/M in hearers(1,get_turf(A)))
-			to_chat(M, fuck)
+		if(ismob(A.loc))
+			var/mob/card_holder = A.loc
+			to_chat(card_holder, message)
+		else if(isturf(A.loc))
+			for(var/mob/M in hearers(1,get_turf(A)))
+				to_chat(M, message)
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"
