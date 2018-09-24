@@ -304,3 +304,108 @@ GLOBAL_VAR_INIT(override_lobby_player_count,0)
 	dat += "<B>Hub Text:</B><BR><BR>"
 	dat += "[world.status]"
 	usr << browse(dat,"window=check_hub;size=300x300")
+
+/proc/key_to_ckey(key)
+	if(!key || !istext(key))
+		return
+	key = lowertext(key)
+	var/list/alphabet = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9")
+	var/newckey = ""
+	for(var/i=1,i<=length(key),i++)
+		var/theletter = copytext(key,i,i+1)
+		if(theletter in alphabet)
+			newckey += theletter
+	return newckey
+
+GLOBAL_VAR_INIT(extraplayerslotspath,"data/other_saves/extraplayerslots.sav")
+GLOBAL_VAR_CONST(min_player_slots, 3)
+GLOBAL_VAR_CONST(max_player_slots, 8)
+
+/datum/admins/proc/manage_characterslots()
+	set name = "Manage Character Slots"
+	set category = "Special Verbs"
+	var/procname = "Manage Character Slots"
+	var/onlineoroffline = alert(usr,"Is the player online or offline?",procname,"Online","Offline")
+	var/chosenkey
+	switch(onlineoroffline)
+		if("Online")
+			var/list/clientsonline = list()
+			for(var/client/C in GLOB.clients)
+				clientsonline += C.ckey
+			chosenkey = input(usr,"Choose an online player",procname,null) as null|anything in clientsonline
+			if(!(chosenkey in clientsonline))
+				return 0
+		if("Offline")
+			chosenkey = input(usr,"Enter a player ckey",procname,null) as text
+			if(!chosenkey)
+				return
+			chosenkey = key_to_ckey(chosenkey)
+		else
+			return
+	if(chosenkey && istext(chosenkey))
+		var/slotsvalue = get_playerslots(chosenkey)
+		if(!slotsvalue || slotsvalue <= GLOB.min_player_slots)
+			slotsvalue = GLOB.min_player_slots
+		var/modifyquestion = alert(usr,"player \"[chosenkey]\" has [slotsvalue] character slots. Do you wish to modify?",procname,"Yes","No")
+		if(modifyquestion == "Yes")
+			var/newvalue = input(usr,"Enter new player character slot number (between [GLOB.min_player_slots] and [GLOB.max_player_slots])",procname,slotsvalue) as num
+			if(isnum(newvalue))
+				var/returnvalue = save_playerslots(chosenkey,newvalue)
+				if(returnvalue)
+					alert(usr,"[chosenkey] now has [returnvalue] character slots.",procname,"Ok")
+
+/proc/get_playerslots(slotsckey)
+	var/path = GLOB.extraplayerslotspath
+	var/savefile/S
+	S = new /savefile(path)
+	var/list/playerslotslist
+	if(S)
+		S["playerslotslist"] >> playerslotslist
+	if(istext(slotsckey))
+		if(playerslotslist && istype(playerslotslist,/list))
+			if(slotsckey in playerslotslist)
+				var/deletefromlist = 0
+				if(playerslotslist[slotsckey])
+					var/playerslotscount = playerslotslist[slotsckey]
+					if(!isnull(playerslotscount) && isnum(playerslotscount))
+						if(playerslotscount > GLOB.min_player_slots)
+							return playerslotscount
+						else
+							deletefromlist = 1
+				else
+					deletefromlist = 1
+				if(deletefromlist)
+					playerslotslist.Remove(slotsckey)
+					S["playerslotslist"] << playerslotslist
+		return null
+	else
+		if(playerslotslist && istype(playerslotslist,/list))
+			return playerslotslist
+		return list()
+
+/proc/save_playerslots(slotsckey,newvalue = 0)
+	if(!slotsckey || !istext(slotsckey) || !isnum(newvalue))
+		return 0
+	newvalue = min(newvalue,GLOB.max_player_slots)
+	newvalue = max(newvalue,GLOB.min_player_slots)
+	newvalue = round(newvalue,1)
+	var/path = GLOB.extraplayerslotspath
+	var/savefile/S
+	S = new /savefile(path)
+	var/list/playerslotslist = list()
+	if(S && S["playerslotslist"])
+		S["playerslotslist"] >> playerslotslist
+	if(playerslotslist && istype(playerslotslist,/list))
+		if(newvalue <= GLOB.min_player_slots)
+			playerslotslist.Remove(slotsckey)
+			S["playerslotslist"] << playerslotslist
+		else
+			newvalue = round(newvalue,1)
+			playerslotslist[slotsckey] = newvalue
+			S["playerslotslist"] << playerslotslist
+			for(var/client/C in GLOB.clients)
+				if(C.ckey == slotsckey && C.prefs)
+					C.prefs.max_save_slots = newvalue
+					break
+		return newvalue
+	return 0

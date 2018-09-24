@@ -327,7 +327,7 @@ The phone will be detected by this verb if it's carried by a mob or sitting on a
 
 /datum/supply_pack/misc/phones
 	name = "Phones"
-	cost = 500
+	cost = 1000
 	contains = list(
 		/obj/item/phone/broken,
 		/obj/item/phone/broken,

@@ -121,6 +121,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/action_buttons_screen_locs = list()
 
 /datum/preferences/New(client/C)
+	max_save_slots = GLOB.min_player_slots
 	parent = C
 	custom_names["human"] = random_unique_name()
 	custom_names["ai"] = pick(GLOB.ai_names)
@@ -132,7 +133,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 8
+				max_save_slots = GLOB.max_player_slots
+			else
+				var/newsaveslots = get_playerslots(C.ckey)
+				if(isnum(newsaveslots) && newsaveslots > GLOB.min_player_slots)
+					max_save_slots = max(newsaveslots,GLOB.max_player_slots)
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
