@@ -178,9 +178,30 @@ SUBSYSTEM_DEF(shuttle)
 			Good luck.")
 			return
 		emergency = backup_shuttle
-	var/srd = CONFIG_GET(number/shuttle_refuel_delay)
-	if(world.time - SSticker.round_start_time < srd)
-		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText(srd - (world.time - SSticker.round_start_time))] before trying again.")
+	var/refuel_time = CONFIG_GET(number/shuttle_refuel_min_delay) * 2
+	// condensed names for readability of the actual equation
+	var/aa = 0 // amt_of_crew
+	var/xx = 0 // dead_crew
+	var/vv = 0.5 // mult_at_50_percent
+	var/sensors_detection = 0.15 // this * amt of crew is the amount that needs to actually be dead before we start fucking with the refueling timer or allowing a call to begin with
+
+	for(var/mob/M in GLOB.mob_list)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.mind && H.mind.assigned_role )
+				aa++
+				if(H.stat && !H.suiciding)
+					xx++
+		CHECK_TICK
+	if(!xx || xx < round((aa * sensors_detection)) && round((aa * sensors_detection)) >= 5)
+		to_chat(user, "Central Command Emergency Sensors indicate [station_name()] is operating normally. Your request for a shuttle is denied for the time being. Thank you, and have a productive shift!")
+		return
+
+	var/final_mult = (((min(aa/2,xx))*(1 - ((min(aa/2,xx)) / aa))) / (aa/4)) * vv
+	refuel_time = refuel_time * (1 - final_mult)
+
+	if(world.time - SSticker.round_start_time < refuel_time)
+		to_chat(user, "The emergency shuttle is refueling. Please wait [DisplayTimeText(refuel_time - (world.time - SSticker.round_start_time))] before trying again.")
 		return
 
 	switch(emergency.mode)
@@ -299,21 +320,23 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 			if(AI.stat || !AI.client)
 				continue
-		else if(istype(thing, /obj/machinery/computer/communications))
-			var/obj/machinery/computer/communications/C = thing
-			if(C.stat & BROKEN)
+		else if(istype(thing, /obj/machinery))
+			var/obj/machinery/C = thing
+			if(!C.is_operational())
 				continue
 
 		var/turf/T = get_turf(thing)
 		if(T && is_station_level(T.z))
 			callShuttle = 0
 			break
+		var/area/A = get_area(thing)
+		if(A && !A.blob_allowed)
 
 	if(callShuttle)
 		if(EMERGENCY_IDLE_OR_RECALLED)
 			emergency.request(null, set_coefficient = 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
-			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+			message_admins("All the communications consoles were destroyed and all methods to replace it are destroyed or inoperable. Shuttle called.")
 
 /datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
 	hostileEnvironments[bad] = TRUE
