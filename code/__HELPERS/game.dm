@@ -494,6 +494,16 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
+	
+//Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
+/proc/recursive_loc_check(atom/movable/target, type)
+	var/atom/A = target
+	while(TRUE)
+		if(!loc)
+			return
+		if(istype(A.loc, type))
+			return A.loc
+		A = loc
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
