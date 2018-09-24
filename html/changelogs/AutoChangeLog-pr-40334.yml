@@ -1,0 +1,7 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Luxury shuttle now attempts to charge humans' bank accounts in addition to taking held and dragged money"
+  - rscadd: "Luxury shuttle now attempts to return change to humans' bank accounts"
+  - rscadd: "You can now pay for the luxury shuttle in instalments (mostly useful for handless mobs)"
+  - tweak: "Luxury shuttle ticket booth messages are now spoken, so you can spend loudly"
