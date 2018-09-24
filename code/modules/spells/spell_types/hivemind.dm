@@ -502,7 +502,9 @@
 			if(!M || M.current == user)
 				continue
 			if(enemy.hivemembers.Find(target))
-				enemies += M.current.real_name
+				var/hive_name = enemy.get_real_name()
+				if(hive_name)
+					enemies += hive_name
 				enemy.remove_from_hive(target)
 				to_chat(M.current, "<span class='userdanger'>We detect a surge of psionic energy from [target.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>")
 			if(enemy.owner == target)

@@ -42,6 +42,18 @@
 			owner.RemoveSpell(power)
 
 
+/datum/antagonist/hivemind/proc/get_real_name() //Gets the real name of the host, even if they're temporarily in another one
+	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in owner.spell_list
+	var/datum/mind/M = owner
+	if(M)
+		var/mob/living/L = owner.current
+		if(L)
+			if(the_spell && the_spell.active)
+				if(the_spell.original_body)
+					return the_spell.original_body.real_name
+			return L.real_name
+	return ""
+
 /datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/human/H)
 	var/warning = "<span class='userdanger'>We detect a surge of psionic energy from [H.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>"
 	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
