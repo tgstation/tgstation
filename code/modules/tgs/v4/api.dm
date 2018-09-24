@@ -166,6 +166,7 @@
 			event_handler.HandleEvent(TGS_EVENT_PORT_SWAP, new_port)
 			if(!world.OpenPort(new_port))
 				return "Port change failed!"
+			return
 		if(TGS4_TOPIC_CHANGE_REBOOT_MODE)
 			var/new_reboot_mode = text2num(params[TGS4_PARAMETER_DATA])
 			event_handler.HandleEvent(TGS_EVENT_REBOOT_MODE_CHANGE, reboot_mode, new_reboot_mode)
