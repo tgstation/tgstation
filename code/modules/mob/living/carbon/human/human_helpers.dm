@@ -91,7 +91,7 @@
 	var/obj/item/card/id/id_card
 	var/obj/item/held_item
 	held_item = get_active_held_item()
-	if(I) //Check active hand
+	if(held_item) //Check active hand
 		id_card = held_item.GetID()
 	if(!id_card) //If there is no id, check the other hand
 		held_item = get_inactive_held_item()
