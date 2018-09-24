@@ -1284,8 +1284,8 @@
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
-				log_admin_private("[key_name(usr)] has banned [key_name(M)].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
-				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>"
+				log_admin_private("[key_name(usr)] has banned [key_name(M)]. - Reason: [key_name(M)] - This will be removed in [mins] minutes.")
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)]. - Reason: [reason] - This will be removed in [mins] minutes.</span>"
 				message_admins(msg)
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
 				if(AH)
