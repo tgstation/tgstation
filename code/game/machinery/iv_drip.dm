@@ -127,9 +127,10 @@
 
 	if(beaker)
 		// Give blood
+		var/transfer_amount = 0
 		if(mode)
 			if(beaker.reagents.total_volume)
-				var/transfer_amount = 5
+				transfer_amount = 5
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
@@ -140,10 +141,10 @@
 
 		// Take blood
 		else
-			var/amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-			amount = min(amount, 4)
+			transfer_amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
+			transfer_amount = min(transfer_amount, 4)
 			// If the beaker is full, ping
-			if(!amount)
+			if(!transfer_amount)
 				if(prob(5))
 					visible_message("[src] pings.")
 				return
@@ -152,7 +153,7 @@
 			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
 				visible_message("[src] beeps loudly.")
 				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-			attached.transfer_blood_to(beaker, amount)
+			attached.transfer_blood_to(beaker, transfer_amount)
 			update_icon()
 		if(lastuser || lastuserckey)
 			var/turf/T = get_turf(attached)
@@ -162,7 +163,7 @@
 					attackertext = "[lastuser.name]([lastuser.ckey])"
 				else if(lastuserckey)
 					attackertext = "lastckey:[lastuserckey]"
-				var/logtext = "[attackertext] has extracted amount units of blood from [attached]([attached.ckey]) at [T.x] [T.y] [T.z]"
+				var/logtext = "[attackertext] has [mode ? "injected" : "extracted"] [transfer_amount] units of blood from [attached]([attached.ckey]) with the [name] at [T.x] [T.y] [T.z]"
 				if(lastuser && attached != lastuser)
 					lastuser.log_message("<font color='red'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
 				attached.log_message("<font color='orange'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
