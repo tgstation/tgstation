@@ -647,7 +647,7 @@
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/syndicate
-	materials = list(MAT_METAL = 15000, MAT_GLASS =1 5000,MAT_DIAMOND = 10000)
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 15000, MAT_DIAMOND = 10000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
