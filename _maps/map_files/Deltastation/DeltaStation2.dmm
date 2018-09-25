@@ -72393,7 +72393,6 @@
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the singularity chamber.";
 	dir = 4;
-	layer = 4;
 	name = "Engine Containment Telescreen";
 	network = list("singularity");
 	pixel_x = -30
