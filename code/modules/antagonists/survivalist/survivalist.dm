@@ -8,6 +8,7 @@
 	var/datum/objective/survive/survive = new
 	survive.owner = owner
 	objectives += survive
+	owner.objectives |= objectives
 
 /datum/antagonist/survivalist/on_gain()
 	owner.special_role = "survivalist"

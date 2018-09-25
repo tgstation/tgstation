@@ -96,6 +96,7 @@
 	var/datum/objective/O = new /datum/objective/survive()
 	O.owner = owner
 	objectives += O
+	owner.objectives |= objectives
 
 /proc/remove_ninja(mob/living/L)
 	if(!L || !L.mind)

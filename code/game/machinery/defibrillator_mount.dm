@@ -59,10 +59,10 @@
 	if(!defib)
 		to_chat(user, "<span class='warning'>There's no defibrillator unit loaded!</span>")
 		return
-	if(defib.paddles.loc != defib)
+	if(defib.on)
 		to_chat(user, "<span class='warning'>[defib.paddles.loc == user ? "You are already" : "Someone else is"] holding [defib]'s paddles!</span>")
 		return
-	user.put_in_hands(defib.paddles)
+	defib.attack_hand(user)
 
 /obj/machinery/defibrillator_mount/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/defibrillator))
@@ -77,9 +77,6 @@
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		defib = I
 		update_icon()
-		return
-	else if(I == defib.paddles)
-		defib.paddles.snap_back()
 		return
 	var/obj/item/card/id = I.GetID()
 	if(id)

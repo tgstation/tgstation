@@ -35,6 +35,7 @@
 /area/shuttle/abandoned)
 "ae" = (
 /obj/machinery/mech_bay_recharge_port{
+	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/effect/decal/cleanable/dirt{

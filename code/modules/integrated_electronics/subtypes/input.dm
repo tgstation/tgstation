@@ -1150,9 +1150,10 @@
 	for(var/i=1 to 6)
 		set_pin_data(IC_OUTPUT, i, null)
 	var/atom/target = get_pin_data_as_type(IC_INPUT, 1, /atom)
+	var/atom/movable/acting_object = get_object()
 	if(!target)
-		target = get_turf(src)
-	if( get_dist(get_turf(target),get_turf(src)) > 1 )
+		target = acting_object.loc
+	if(!target.Adjacent(acting_object))
 		activate_pin(3)
 		return
 

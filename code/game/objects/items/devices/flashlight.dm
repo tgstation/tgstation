@@ -17,8 +17,6 @@
 
 /obj/item/flashlight/Initialize()
 	. = ..()
-	if(icon_state == "[initial(icon_state)]-on")
-		on = TRUE
 	update_brightness()
 
 /obj/item/flashlight/proc/update_brightness(mob/user = null)

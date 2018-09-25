@@ -90,10 +90,10 @@
 
 /obj/effect/proc_holder/spell/aimed/lightningbolt
 	name = "Lightning Bolt"
-	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
+	desc = "Fire a high powered lightning bolt at your foes!"
 	school = "evocation"
 	charge_max = 200
-	clothes_req = TRUE
+	clothes_req = 1
 	invocation = "UN'LTD P'WAH"
 	invocation_type = "shout"
 	cooldown_min = 30
@@ -108,10 +108,10 @@
 
 /obj/effect/proc_holder/spell/aimed/fireball
 	name = "Fireball"
-	desc = "This spell fires an explosive fireball at a target."
+	desc = "This spell fires a fireball at a target and does not require wizard garb."
 	school = "evocation"
 	charge_max = 60
-	clothes_req = FALSE
+	clothes_req = 0
 	invocation = "ONI SOMA"
 	invocation_type = "shout"
 	range = 20
@@ -126,10 +126,10 @@
 
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
-	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
+	desc = "Blazing hot rapid-fire homing cards. Banish your foes with its mystical power!"
 	school = "evocation"
 	charge_max = 50
-	clothes_req = FALSE
+	clothes_req = 0
 	invocation = "Sigi'lu M'Fan 'Tasia"
 	invocation_type = "shout"
 	range = 40
@@ -143,7 +143,7 @@
 	var/projectile_initial_spread_amount = 30
 	var/projectile_location_spread_amount = 12
 	var/datum/component/lockon_aiming/lockon_component
-	ranged_clickcd_override = TRUE
+	ranged_clickcd_override = 1
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/on_activation(mob/M)
 	QDEL_NULL(lockon_component)

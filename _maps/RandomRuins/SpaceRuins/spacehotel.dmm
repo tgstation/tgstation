@@ -125,6 +125,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "ay" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/toilet,
@@ -165,6 +166,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "aG" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/toilet,
@@ -205,6 +207,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "aO" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/toilet,
@@ -245,6 +248,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "aW" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/toilet,
@@ -283,6 +287,7 @@
 /area/ruin/unpowered/no_grav)
 "be" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -314,6 +319,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "bk" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -345,6 +351,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "bq" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -376,6 +383,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "bw" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -1051,6 +1059,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "dl" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/toilet,
@@ -1112,6 +1121,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dt" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/toilet,
@@ -1208,6 +1218,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "dI" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -1239,6 +1250,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dP" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -4257,6 +4269,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "lG" = (
 /obj/structure/window{
+	icon_state = "window";
 	dir = 1
 	},
 /obj/machinery/light{
@@ -4280,6 +4293,7 @@
 /obj/item/clothing/shoes/sandal,
 /obj/item/clothing/shoes/sandal,
 /obj/structure/window{
+	icon_state = "window";
 	dir = 1
 	},
 /turf/open/floor/plasteel/showroomfloor,

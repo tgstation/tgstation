@@ -9,6 +9,7 @@
 	var/datum/objective/martyr/normiesgetout = new
 	normiesgetout.owner = owner
 	objectives += normiesgetout
+	owner.objectives += objectives
 
 /datum/antagonist/heartbreaker/on_gain()
 	forge_objectives()

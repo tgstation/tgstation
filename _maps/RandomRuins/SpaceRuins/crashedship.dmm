@@ -342,7 +342,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Fore)
 "bu" = (
-/turf/open/floor/wood{
+/turf/open/floor/plasteel{
 	icon_state = "wood-broken"
 	},
 /area/awaymission/BMPship/Fore)

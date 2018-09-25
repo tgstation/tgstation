@@ -12,11 +12,11 @@
 	var/strength_upper_limit = 2
 	var/interface_control = 1
 	var/list/obj/structure/particle_accelerator/connected_parts
-	var/assembled = FALSE
+	var/assembled = 0
 	var/construction_state = PA_CONSTRUCTION_UNSECURED
-	var/active = FALSE
+	var/active = 0
 	var/strength = 0
-	var/powered = FALSE
+	var/powered = 0
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 
 /obj/machinery/particle_accelerator/control_box/Initialize()
@@ -34,27 +34,30 @@
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/particle_accelerator/control_box/multitool_act(mob/living/user, obj/item/I)
-	..()
-	if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
+/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(construction_state == PA_CONSTRUCTION_COMPLETE)
+		interact(user)
+	else if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
 		wires.interact(user)
-		return TRUE
 
 /obj/machinery/particle_accelerator/control_box/proc/update_state()
 	if(construction_state < PA_CONSTRUCTION_COMPLETE)
 		use_power = NO_POWER_USE
-		assembled = FALSE
-		active = FALSE
+		assembled = 0
+		active = 0
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
 			part.strength = null
-			part.powered = FALSE
+			part.powered = 0
 			part.update_icon()
 		connected_parts.Cut()
 		return
 	if(!part_scan())
 		use_power = IDLE_POWER_USE
-		active = FALSE
+		active = 0
 		connected_parts.Cut()
 
 /obj/machinery/particle_accelerator/control_box/update_icon()
@@ -134,7 +137,7 @@
 /obj/machinery/particle_accelerator/control_box/power_change()
 	..()
 	if(stat & NOPOWER)
-		active = FALSE
+		active = 0
 		use_power = NO_POWER_USE
 	else if(!stat && construction_state == PA_CONSTRUCTION_COMPLETE)
 		use_power = IDLE_POWER_USE
@@ -157,48 +160,48 @@
 	var/odir = turn(dir,180)
 	var/turf/T = loc
 
-	assembled = FALSE
+	assembled = 0
 	critical_machine = FALSE
 
 	var/obj/structure/particle_accelerator/fuel_chamber/F = locate() in orange(1,src)
 	if(!F)
-		return FALSE
+		return 0
 
 	setDir(F.dir)
 	connected_parts.Cut()
 
 	T = get_step(T,rdir)
 	if(!check_part(T, /obj/structure/particle_accelerator/fuel_chamber))
-		return FALSE
+		return 0
 	T = get_step(T,odir)
 	if(!check_part(T, /obj/structure/particle_accelerator/end_cap))
-		return FALSE
+		return 0
 	T = get_step(T,dir)
 	T = get_step(T,dir)
 	if(!check_part(T, /obj/structure/particle_accelerator/power_box))
-		return FALSE
+		return 0
 	T = get_step(T,dir)
 	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/center))
-		return FALSE
+		return 0
 	T = get_step(T,ldir)
 	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/left))
-		return FALSE
+		return 0
 	T = get_step(T,rdir)
 	T = get_step(T,rdir)
 	if(!check_part(T, /obj/structure/particle_accelerator/particle_emitter/right))
-		return FALSE
+		return 0
 
-	assembled = TRUE
+	assembled = 1
 	critical_machine = TRUE	//Only counts if the PA is actually assembled.
-	return TRUE
+	return 1
 
 /obj/machinery/particle_accelerator/control_box/proc/check_part(turf/T, type)
 	var/obj/structure/particle_accelerator/PA = locate(/obj/structure/particle_accelerator) in T
 	if(istype(PA, type) && (PA.construction_state == PA_CONSTRUCTION_COMPLETE))
 		if(PA.connect_master(src))
 			connected_parts.Add(PA)
-			return TRUE
-	return FALSE
+			return 1
+	return 0
 
 
 /obj/machinery/particle_accelerator/control_box/proc/toggle_power()
@@ -211,27 +214,20 @@
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
 			part.strength = strength
-			part.powered = TRUE
+			part.powered = 1
 			part.update_icon()
 	else
 		use_power = IDLE_POWER_USE
 		for(var/CP in connected_parts)
 			var/obj/structure/particle_accelerator/part = CP
 			part.strength = null
-			part.powered = FALSE
+			part.powered = 0
 			part.update_icon()
-	return TRUE
+	return 1
 
 
 /obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
 	. = ..()
-
-	if(construction_state == PA_CONSTRUCTION_PANEL_OPEN)
-		wires.interact(user)
-		return
-	if(construction_state != PA_CONSTRUCTION_COMPLETE)
-		return
-
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!issilicon(user))
 			user.unset_machine()

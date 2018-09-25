@@ -20,14 +20,12 @@
 	name = "sparks"
 	icon_state = "sparks"
 	anchored = TRUE
-	light_power = 1.3
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
-	light_color = LIGHT_COLOR_FIRE
+	light_range = 1
 
 /obj/effect/particle_effect/sparks/Initialize()
 	. = ..()
 	flick("sparks", src) // replay the animation
-	playsound(src, "sparks", 100, TRUE)
+	playsound(src.loc, "sparks", 100, 1)
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(300,5)

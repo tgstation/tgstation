@@ -78,14 +78,15 @@
 	scan_target = null
 	if(owner)
 		if(owner.mind)
-			for(var/datum/objective/objective_ in owner.mind.get_all_objectives())
-				if(!is_internal_objective(objective_))
-					continue
-				var/datum/objective/assassinate/internal/objective = objective_
-				var/mob/current = objective.target.current
-				if(current&&current.stat!=DEAD)
-					scan_target = current
-				break
+			if(owner.mind.objectives)
+				for(var/datum/objective/objective_ in owner.mind.objectives)
+					if(!is_internal_objective(objective_))
+						continue
+					var/datum/objective/assassinate/internal/objective = objective_
+					var/mob/current = objective.target.current
+					if(current&&current.stat!=DEAD)
+						scan_target = current
+					break
 
 /datum/status_effect/agent_pinpointer/tick()
 	if(!owner)
@@ -99,9 +100,9 @@
 	return (istype(O, /datum/objective/assassinate/internal)||istype(O, /datum/objective/destroy/internal))
 
 /datum/antagonist/traitor/proc/replace_escape_objective()
-	if(!owner || !objectives.len)
+	if(!owner||!owner.objectives)
 		return
-	for (var/objective_ in objectives)
+	for (var/objective_ in owner.objectives)
 		if(!(istype(objective_, /datum/objective/escape)||istype(objective_, /datum/objective/survive)))
 			continue
 		remove_objective(objective_)
@@ -111,9 +112,9 @@
 	add_objective(martyr_objective)
 
 /datum/antagonist/traitor/proc/reinstate_escape_objective()
-	if(!owner||!objectives.len)
+	if(!owner||!owner.objectives)
 		return
-	for (var/objective_ in objectives)
+	for (var/objective_ in owner.objectives)
 		if(!istype(objective_, /datum/objective/martyr))
 			continue
 		remove_objective(objective_)
@@ -129,7 +130,7 @@
 	if(!owner.current||owner.current.stat==DEAD)
 		return
 	to_chat(owner.current, "<span class='userdanger'> Target eliminated: [victim.name]</span>")
-	for(var/objective_ in victim.get_all_objectives())
+	for(var/objective_ in victim.objectives)
 		if(istype(objective_, /datum/objective/assassinate/internal))
 			var/datum/objective/assassinate/internal/objective = objective_
 			if(objective.target==owner)
@@ -157,7 +158,7 @@
 				var/status_text = objective.check_completion() ? "neutralised" : "active"
 				to_chat(owner.current, "<span class='userdanger'> New target added to database: [objective.target.name] ([status_text]) </span>")
 	last_man_standing = TRUE
-	for(var/objective_ in objectives)
+	for(var/objective_ in owner.objectives)
 		if(!is_internal_objective(objective_))
 			continue
 		var/datum/objective/assassinate/internal/objective = objective_
@@ -173,7 +174,7 @@
 
 /datum/antagonist/traitor/internal_affairs/proc/iaa_process()
 	if(owner&&owner.current&&owner.current.stat!=DEAD)
-		for(var/objective_ in objectives)
+		for(var/objective_ in owner.objectives)
 			if(!is_internal_objective(objective_))
 				continue
 			var/datum/objective/assassinate/internal/objective = objective_

@@ -114,10 +114,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/pickup(mob/living/user)
 	to_chat(user, "<span class='notice'>The power of Scotland protects you! You are shielded from all stuns and knockdowns.</span>")
 	user.add_stun_absorption("highlander", INFINITY, 1, " is protected by the power of Scotland!", "The power of Scotland absorbs the stun!", " is protected by the power of Scotland!")
-	user.ignore_slowdown(HIGHLANDER)
+	user.add_trait(TRAIT_IGNORESLOWDOWN, HIGHLANDER)
 
 /obj/item/claymore/highlander/dropped(mob/living/user)
-	user.unignore_slowdown(HIGHLANDER)
+	user.remove_trait(TRAIT_IGNORESLOWDOWN, HIGHLANDER)
 	if(!QDELETED(src))
 		qdel(src) //If this ever happens, it's because you lost an arm
 
@@ -246,9 +246,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
 
 		remove_item_from_storage(user)
-		if (!user.transferItemToLoc(I, S))
-			return
-		S.CheckParts(list(I))
+		qdel(I)
 		qdel(src)
 
 		user.put_in_hands(S)

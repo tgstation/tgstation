@@ -20,7 +20,8 @@
 	if(!broken_states)
 		broken_states = list("[initial(icon_state)]_dam")
 	. = ..()
-	icons = typelist("icons", icons)
+	if (!icons)
+		icons = list()
 
 
 /turf/open/floor/mineral/update_icon()

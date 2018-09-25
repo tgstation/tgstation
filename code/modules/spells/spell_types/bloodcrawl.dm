@@ -2,9 +2,9 @@
 	name = "Blood Crawl"
 	desc = "Use pools of blood to phase out of existence."
 	charge_max = 0
-	clothes_req = FALSE
+	clothes_req = 0
 	//If you couldn't cast this while phased, you'd have a problem
-	phase_allowed = TRUE
+	phase_allowed = 1
 	selection_type = "range"
 	range = 1
 	cooldown_min = 0
@@ -12,7 +12,7 @@
 	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	action_icon_state = "bloodcrawl"
 	action_background_icon_state = "bg_demon"
-	var/phased = FALSE
+	var/phased = 0
 
 /obj/effect/proc_holder/spell/bloodcrawl/choose_targets(mob/user = usr)
 	for(var/obj/effect/decal/cleanable/target in range(range, get_turf(user)))
@@ -26,10 +26,10 @@
 	if(istype(user))
 		if(phased)
 			if(user.phasein(target))
-				phased = FALSE
+				phased = 0
 		else
 			if(user.phaseout(target))
-				phased = TRUE
+				phased = 1
 		start_recharge()
 		return
 	revert_cast()

@@ -32,7 +32,7 @@
 	materials = list(MAT_DIAMOND = 1500, MAT_PLASMA = 1500)
 	build_path = /obj/item/stack/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/telesci_gps
 	name = "GPS Device"

@@ -36,7 +36,8 @@
 /area/awaymission/challenge/start)
 "ai" = (
 /obj/item/flashlight{
-	icon_state = "flashlight-on"
+	icon_state = "flashlight-on";
+	on = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/awaymission/challenge/start)

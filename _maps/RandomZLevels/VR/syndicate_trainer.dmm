@@ -916,7 +916,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/storage/box/monkeycubes/syndicate,
+/obj/item/storage/box/monkeycubes,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "fB" = (

@@ -61,8 +61,6 @@ GLOBAL_PROTECT(Banlist)
 	return 1
 
 /proc/LoadBans()
-	if(!CONFIG_GET(flag/ban_legacy_system))
-		return
 
 	GLOB.Banlist = new("data/banlist.bdb")
 	log_admin("Loading Banlist")
@@ -101,8 +99,7 @@ GLOBAL_PROTECT(Banlist)
 
 
 /proc/AddBan(key, computerid, reason, bannedby, temp, minutes, address)
-	if(!CONFIG_GET(flag/ban_legacy_system))
-		return
+
 	var/bantimestamp
 	var/ban_ckey = ckey(key)
 	if (temp)
@@ -125,6 +122,10 @@ GLOBAL_PROTECT(Banlist)
 		WRITE_FILE(GLOB.Banlist["roundid"], GLOB.round_id)
 		if (temp)
 			WRITE_FILE(GLOB.Banlist["minutes"], bantimestamp)
+		if(!temp)
+			create_message("note", key, bannedby, "Permanently banned - [reason]", null, null, 0, 0, null, 0, 0)
+		else
+			create_message("note", key, bannedby, "Banned for [minutes] minutes - [reason]", null, null, 0, 0, null, 0, 0)
 	return 1
 
 /proc/RemoveBan(foldername)

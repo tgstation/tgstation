@@ -182,10 +182,6 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
-/obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
-	name = "syndicate saboteur teleporter"
-	borg_to_spawn = "Saboteur"
-
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/R
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -195,8 +191,6 @@
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
-		if("Saboteur")
-			R = new /mob/living/silicon/robot/modules/syndicate/saboteur(T)
 		else
 			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
@@ -257,7 +251,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(T)
+	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key

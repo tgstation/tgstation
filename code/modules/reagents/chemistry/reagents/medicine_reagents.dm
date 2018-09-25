@@ -623,10 +623,10 @@
 
 /datum/reagent/medicine/morphine/on_mob_add(mob/living/L)
 	..()
-	L.ignore_slowdown(id)
+	L.add_trait(TRAIT_IGNORESLOWDOWN, id)
 
 /datum/reagent/medicine/morphine/on_mob_delete(mob/living/L)
-	L.unignore_slowdown(id)
+	L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
 	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
@@ -1189,11 +1189,11 @@
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
 	. = ..()
-	M.ignore_slowdown(id)
+	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
 	. = ..()
-	M.unignore_slowdown(id)
+	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
 
 /datum/reagent/medicine/modafinil
 	name = "Modafinil"

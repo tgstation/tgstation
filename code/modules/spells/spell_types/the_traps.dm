@@ -1,11 +1,11 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
 	name = "The Traps!"
-	desc = "Summon a number of traps around you. They will damage and enrage any enemies that step on them."
+	desc = "Summon a number of traps to confuse and knockdown your enemies, and possibly you."
 
 	charge_max = 250
 	cooldown_min = 50
 
-	clothes_req = TRUE
+	clothes_req = 1
 	invocation = "CAVERE INSIDIAS"
 	invocation_type = "shout"
 	range = 3

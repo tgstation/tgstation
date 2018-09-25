@@ -34,12 +34,11 @@
 	//If you override this method, have it return the number of objectives added.
 	if(devil_target_list.len && devil_target_list[devil]) // Is a double agent
 		var/datum/mind/target_mind = devil_target_list[devil]
-		var/datum/antagonist/devil/D = target_mind.has_antag_datum(/datum/antagonist/devil)
 		var/datum/objective/devil/outsell/outsellobjective = new
 		outsellobjective.owner = devil
 		outsellobjective.target = target_mind
 		outsellobjective.update_explanation_text()
-		D.objectives += outsellobjective
+		devil.objectives += outsellobjective
 		return 1
 	return 0
 

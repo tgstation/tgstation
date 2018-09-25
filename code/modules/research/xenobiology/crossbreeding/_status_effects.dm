@@ -589,11 +589,11 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "red"
 
 /datum/status_effect/stabilized/red/on_apply()
-	owner.ignore_slowdown("slimestatus")
+	owner.add_trait(TRAIT_IGNORESLOWDOWN,"slimestatus")
 	return ..()
 
 /datum/status_effect/stabilized/red/on_remove()
-	owner.unignore_slowdown("slimestatus")
+	owner.remove_trait(TRAIT_IGNORESLOWDOWN,"slimestatus")
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"

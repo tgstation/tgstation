@@ -130,10 +130,10 @@
 
 	if(href_list["receive"])
 		receiving = !receiving
-		temp = "<font color = #666633>-% Receiving mode changed. %-</font>"
+		temp = "<font color = #666633>-% Receiving mode changed. %-</font color>"
 	if(href_list["broadcast"])
 		broadcasting = !broadcasting
-		temp = "<font color = #666633>-% Broadcasting mode changed. %-</font>"
+		temp = "<font color = #666633>-% Broadcasting mode changed. %-</font color>"
 
 // BUS
 
@@ -152,10 +152,10 @@
 					newfreq *= 10 // shift the decimal one place
 				if(newfreq < 10000)
 					change_frequency = newfreq
-					temp = "<font color = #666633>-% New frequency to change to assigned: \"[newfreq] GHz\" %-</font>"
+					temp = "<font color = #666633>-% New frequency to change to assigned: \"[newfreq] GHz\" %-</font color>"
 			else
 				change_frequency = 0
-				temp = "<font color = #666633>-% Frequency changing deactivated %-</font>"
+				temp = "<font color = #666633>-% Frequency changing deactivated %-</font color>"
 
 
 /obj/machinery/telecomms/Topic(href, href_list)
@@ -174,7 +174,7 @@
 			if("toggle")
 
 				toggled = !toggled
-				temp = "<font color = #666633>-% [src] has been [toggled ? "activated" : "deactivated"].</font>"
+				temp = "<font color = #666633>-% [src] has been [toggled ? "activated" : "deactivated"].</font color>"
 				update_power()
 
 
@@ -182,14 +182,14 @@
 				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
 				if(newid && canAccess(usr))
 					id = newid
-					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font>"
+					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"
 
 			if("network")
 				var/newnet = stripped_input(usr, "Specify the new network for this machine. This will break all current links.", src, network)
 				if(newnet && canAccess(usr))
 
 					if(length(newnet) > 15)
-						temp = "<font color = #666633>-% Too many characters in new network tag %-</font>"
+						temp = "<font color = #666633>-% Too many characters in new network tag %-</font color>"
 
 					else
 						for(var/obj/machinery/telecomms/T in links)
@@ -197,7 +197,7 @@
 
 						network = newnet
 						links = list()
-						temp = "<font color = #666633>-% New network tag assigned: \"[network]\" %-</font>"
+						temp = "<font color = #666633>-% New network tag assigned: \"[network]\" %-</font color>"
 
 
 			if("freq")
@@ -206,18 +206,18 @@
 					if(findtext(num2text(newfreq), "."))
 						newfreq *= 10 // shift the decimal one place
 					if(newfreq == FREQ_SYNDICATE)
-						temp = "<font color = #FF0000>-% Error: Interference preventing filtering frequency: \"[newfreq] GHz\" %-</font>"
+						temp = "<font color = #FF0000>-% Error: Interference preventing filtering frequency: \"[newfreq] GHz\" %-</font color>"
 					else
 						if(!(newfreq in freq_listening) && newfreq < 10000)
 							freq_listening.Add(newfreq)
-							temp = "<font color = #666633>-% New frequency filter assigned: \"[newfreq] GHz\" %-</font>"
+							temp = "<font color = #666633>-% New frequency filter assigned: \"[newfreq] GHz\" %-</font color>"
 
 	if(href_list["delete"])
 
 		// changed the layout about to workaround a pesky runtime -- Doohl
 
 		var/x = text2num(href_list["delete"])
-		temp = "<font color = #666633>-% Removed frequency filter [x] %-</font>"
+		temp = "<font color = #666633>-% Removed frequency filter [x] %-</font color>"
 		freq_listening.Remove(x)
 
 	if(href_list["unlink"])
@@ -225,7 +225,7 @@
 		if(text2num(href_list["unlink"]) <= length(links))
 			var/obj/machinery/telecomms/T = links[text2num(href_list["unlink"])]
 			if(T)
-				temp = "<font color = #666633>-% Removed [REF(T)] [T.name] from linked entities. %-</font>"
+				temp = "<font color = #666633>-% Removed [REF(T)] [T.name] from linked entities. %-</font color>"
 
 				// Remove link entries from both T and src.
 
@@ -234,7 +234,7 @@
 				links.Remove(T)
 
 			else
-				temp = "<font color = #666633>-% Unable to locate machine to unlink from, try again. %-</font>"
+				temp = "<font color = #666633>-% Unable to locate machine to unlink from, try again. %-</font color>"
 
 	if(href_list["link"])
 
@@ -247,20 +247,20 @@
 				if(!(T in links))
 					links += T
 
-				temp = "<font color = #666633>-% Successfully linked with [REF(T)] [T.name] %-</font>"
+				temp = "<font color = #666633>-% Successfully linked with [REF(T)] [T.name] %-</font color>"
 
 			else
-				temp = "<font color = #666633>-% Unable to acquire buffer %-</font>"
+				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
 
 	if(href_list["buffer"])
 
 		P.buffer = src
-		temp = "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font>"
+		temp = "<font color = #666633>-% Successfully stored [REF(P.buffer)] [P.buffer.name] in buffer %-</font color>"
 
 
 	if(href_list["flush"])
 
-		temp = "<font color = #666633>-% Buffer successfully flushed. %-</font>"
+		temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
 		P.buffer = null
 
 	Options_Topic(href, href_list)

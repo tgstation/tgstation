@@ -12467,6 +12467,7 @@
 	icon_state = "1-8"
 	},
 /obj/structure/window{
+	icon_state = "window";
 	dir = 4
 	},
 /obj/structure/window,
@@ -17551,7 +17552,9 @@
 	req_access_txt = "25"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/wood,
+/turf/open/floor/plasteel{
+	icon_state = "wood"
+	},
 /area/crew_quarters/bar)
 "aOP" = (
 /obj/effect/landmark/blobstart,
@@ -17759,7 +17762,10 @@
 /area/hallway/secondary/entry)
 "aPw" = (
 /obj/machinery/disposal/bin,
-/obj/structure/sign/plaques/deempisi{
+/obj/structure/sign/warning/securearea{
+	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
+	icon_state = "monkey_painting";
+	name = "Mr. Deempisi portrait";
 	pixel_x = -28;
 	pixel_y = -4
 	},
@@ -20403,6 +20409,7 @@
 "aWj" = (
 /obj/structure/grille,
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/window,
@@ -20418,6 +20425,7 @@
 "aWl" = (
 /obj/structure/grille,
 /obj/structure/window{
+	icon_state = "window";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -21561,6 +21569,7 @@
 /obj/structure/table,
 /obj/item/razor,
 /obj/structure/window{
+	icon_state = "window";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -21655,6 +21664,7 @@
 	pixel_x = -2
 	},
 /obj/structure/window{
+	icon_state = "window";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -25211,6 +25221,7 @@
 	dir = 4
 	},
 /obj/structure/window{
+	icon_state = "window";
 	dir = 1
 	},
 /obj/structure/window,
@@ -25222,6 +25233,7 @@
 	dir = 4
 	},
 /obj/structure/window{
+	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -25538,6 +25550,7 @@
 /area/quartermaster/office)
 "biG" = (
 /obj/machinery/mech_bay_recharge_port{
+	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/structure/cable{
@@ -35793,7 +35806,6 @@
 	pixel_y = 10
 	},
 /obj/item/analyzer,
-/obj/item/pipe_dispenser,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGA" = (
@@ -40532,6 +40544,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bSk" = (
@@ -41366,7 +41381,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bUo" = (
@@ -41374,6 +41392,15 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/turf/open/floor/plasteel,
+/area/science/mixing)
+"bUp" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/filter{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bUq" = (
@@ -41789,13 +41816,12 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bVt" = (
 /obj/structure/table/reinforced,
-/obj/item/book/manual/wiki/toxins,
 /obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
@@ -50069,6 +50095,7 @@
 "crb" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
+	icon_state = "pump_map";
 	name = "Gas to Chamber"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -54293,6 +54320,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
+	icon_state = "pump_map";
 	name = "Cooling Loop Bypass"
 	},
 /turf/open/floor/engine,
@@ -54934,6 +54962,7 @@
 /area/science/robotics/lab)
 "cHL" = (
 /obj/machinery/mech_bay_recharge_port{
+	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/structure/cable{
@@ -55916,6 +55945,15 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"eBP" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "eHI" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -56206,6 +56244,15 @@
 "hZk" = (
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"ick" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/trinary/mixer{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/mixing)
 "ijc" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -56383,30 +56430,9 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"kwA" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "kwK" = (
 /obj/structure/table/reinforced,
-/obj/item/assembly/igniter{
-	pixel_x = 2;
-	pixel_y = -9
-	},
-/obj/item/assembly/igniter{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/obj/item/assembly/igniter{
-	pixel_x = -2;
-	pixel_y = 9
-	},
-/obj/item/assembly/igniter{
-	pixel_x = 9;
-	pixel_y = 2
-	},
+/obj/item/book/manual/wiki/toxins,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "kxC" = (
@@ -56546,11 +56572,6 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
-"lEW" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/machinery/meter,
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "lLp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -56760,8 +56781,8 @@
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "oUq" = (
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -56790,6 +56811,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "pjk" = (
@@ -57236,13 +57261,13 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
 /obj/machinery/camera{
 	c_tag = "Toxins Lab South";
 	dir = 1;
 	network = list("ss13","rd")
-	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
@@ -57450,12 +57475,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/turf/open/floor/plasteel,
-/area/science/mixing)
-"vDl" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
 	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "vGb" = (
@@ -57505,12 +57528,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
-"wfU" = (
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/science/mixing)
 "wkN" = (
 /turf/closed/wall,
 /area/science/circuit)
@@ -57546,6 +57563,7 @@
 "wHy" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
 	dir = 1;
+	icon_state = "mixer_off";
 	name = "plasma mixer"
 	},
 /turf/open/floor/plasteel,
@@ -105086,7 +105104,7 @@ bQT
 mPh
 bFU
 bSh
-vDl
+oUq
 bEC
 jHW
 caZ
@@ -105343,7 +105361,7 @@ bQT
 mPh
 bFU
 bUn
-lEW
+oUq
 bEC
 fsD
 uCq
@@ -105599,8 +105617,8 @@ dGF
 nEP
 mPh
 bFU
-bSh
-kwA
+eBP
+oUq
 bEC
 bOy
 caZ
@@ -106370,7 +106388,7 @@ dvO
 bFU
 vzp
 bFU
-bUn
+ick
 oUq
 bQZ
 ulo
@@ -106627,8 +106645,8 @@ jMF
 kOw
 bSk
 fvi
-bUn
-wfU
+bUp
+oUq
 bQZ
 tbd
 bQZ

@@ -26,10 +26,8 @@
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
 	if(value)
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(D)
-			D.adjust_money(value)
-			to_chat(user, "<span class='notice'>You deposit [I]. The Cargo Budget is now $[D.account_balance].</span>")
+		SSshuttle.points += value
+		to_chat(user, "<span class='notice'>You deposit [I]. The station now has [SSshuttle.points] credits.</span>")
 		qdel(I)
 		return
 	return ..()
@@ -41,30 +39,26 @@
 		if (stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
 			siphoning =	FALSE
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-		if(!D.has_money(200))
-			say("Cargo budget depleted. Halting siphon.")
+		if(SSshuttle.points < 200)
+			say("Station funds depleted. Halting siphon.")
 			siphoning = FALSE
-			return
-		new /obj/item/stack/spacecash/c200(drop_location()) // will autostack
-		playsound(src, 'sound/items/poster_being_created.ogg', 100, 1)
-		D.adjust_money(-200)
-		if(next_warning < world.time && prob(15))
-			var/area/A = get_area(loc)
-			var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
-			radio.talk_into(src, message, radio_channel, get_spans())
-			next_warning = world.time + minimum_time_between_warnings
+		else
+			new /obj/item/stack/spacecash/c200(drop_location()) // will autostack
+			playsound(src.loc, 'sound/items/poster_being_created.ogg', 100, 1)
+			SSshuttle.points -= 200
+			if(next_warning < world.time && prob(15))
+				var/area/A = get_area(loc)
+				var/message = "Unauthorized credit withdrawal underway in [A.map_name]!!"
+				radio.talk_into(src, message, radio_channel, get_spans())
+				next_warning = world.time + minimum_time_between_warnings
 
 /obj/machinery/computer/bank_machine/get_spans()
 	. = ..() | SPAN_ROBOT
 
 /obj/machinery/computer/bank_machine/ui_interact(mob/user)
 	. = ..()
-
 	var/dat = "[station_name()] secure vault. Authorized personnel only.<br>"
-	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-	if(D)
-		dat += "Current Balance: $[D.account_balance]<br>"
+	dat += "Current Balance: [SSshuttle.points] credits.<br>"
 	if(!siphoning)
 		dat += "<A href='?src=[REF(src)];siphon=1'>Siphon Credits</A><br>"
 	else

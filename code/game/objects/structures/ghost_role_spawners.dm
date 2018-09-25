@@ -327,7 +327,7 @@
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
 
 /datum/outfit/hotelstaff/security
-	name = "Hotel Security"
+	name = "Hotel Secuirty"
 	uniform = /obj/item/clothing/under/rank/security/blueshirt
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt

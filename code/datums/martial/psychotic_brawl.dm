@@ -24,7 +24,7 @@
 			if(A.grab_state >= GRAB_AGGRESSIVE)
 				D.grabbedby(A, 1)
 			else
-				A.start_pulling(D, supress_message = TRUE)
+				A.start_pulling(D, 1)
 				if(A.pulling)
 					D.drop_all_held_items()
 					D.stop_pulling()

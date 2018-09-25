@@ -353,7 +353,6 @@ Burning extracts:
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "rainbowknife"
-	item_state = "rainbowknife"
 	force = 15
 	throwforce = 15
 	damtype = BRUTE

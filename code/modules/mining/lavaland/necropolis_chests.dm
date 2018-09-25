@@ -273,12 +273,23 @@
 		to_chat(user, "<span class='notice'>You release the wisp. It begins to bob around your head.</span>")
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
+		user.update_sight()
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
-		icon_state = "lantern-blue"
+
+		var/mob/target
+		if(wisp.orbiting)
+			target = wisp.orbiting.orbiting
+		wisp.stop_orbit()
 		wisp.forceMove(src)
+
+		if (istype(target))
+			target.update_sight()
+			to_chat(target, "<span class='notice'>Your vision returns to normal.</span>")
+
+		icon_state = "lantern-blue"
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
 /obj/item/wisp_lantern/Initialize()
@@ -291,7 +302,7 @@
 			qdel(wisp)
 		else
 			wisp.visible_message("<span class='notice'>[wisp] has a sad feeling for a moment, then it passes.</span>")
-	return ..()
+	..()
 
 /obj/effect/wisp
 	name = "friendly wisp"
@@ -302,25 +313,6 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	var/sight_flags = SEE_MOBS
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
-
-/obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
-	. = ..()
-	if(ismob(thing))
-		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
-		var/mob/being = thing
-		being.update_sight()
-		to_chat(thing, "<span class='notice'>The wisp enhances your vision.</span>")
-
-/obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
-	. = ..()
-	if(ismob(orbits.parent))
-		UnregisterSignal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
-		to_chat(orbits.parent, "<span class='notice'>Your vision returns to normal.</span>")
-
-/obj/effect/wisp/proc/update_user_sight(mob/user)
-	user.sight |= sight_flags
-	if(!isnull(lighting_alpha))
-		user.lighting_alpha = min(user.lighting_alpha, lighting_alpha)
 
 //Red/Blue Cubes
 /obj/item/warp_cube
@@ -442,7 +434,7 @@
 
 //Immortality Talisman
 /obj/item/immortality_talisman
-	name = "\improper Immortality Talisman"
+	name = "Immortality Talisman"
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
@@ -457,6 +449,12 @@
 /datum/action/item_action/immortality
 	name = "Immortality"
 
+/obj/item/immortality_talisman/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
+
 /obj/item/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
 		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
@@ -470,8 +468,6 @@
 		user.notransform = 1
 		user.status_flags |= GODMODE
 		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
-	else
-		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 
 /obj/item/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
 	user.status_flags &= ~GODMODE
@@ -789,17 +785,19 @@
 	var/turf/T = get_turf(src)
 	var/list/contents = T.GetAllContents()
 	var/mob/dead/observer/current_spirits = list()
+	var/list/orbiters = list()
 	for(var/thing in contents)
 		var/atom/A = thing
-		A.transfer_observers_to(src)
+		if (A.orbiters)
+			orbiters += A.orbiters
 
-	for(var/i in orbiters?.orbiters)
-		if(!isobserver(i))
-			continue
-		var/mob/dead/observer/G = i
-		ghost_counter++
-		G.invisibility = 0
-		current_spirits |= G
+	for(var/thing in orbiters)
+		var/datum/orbit/O = thing
+		if (isobserver(O.orbiter))
+			var/mob/dead/observer/G = O.orbiter
+			ghost_counter++
+			G.invisibility = 0
+			current_spirits |= G
 
 	for(var/mob/dead/observer/G in spirits - current_spirits)
 		G.invisibility = GLOB.observer_default_invisibility
@@ -1019,10 +1017,21 @@
 
 	message_admins("<span class='adminnotice'>[ADMIN_LOOKUPFLW(L)] has been marked for death by [ADMIN_LOOKUPFLW(user)]!</span>")
 
-	var/datum/antagonist/blood_contract/A = new
-	L.mind.add_antag_datum(A)
-
+	var/datum/objective/survive/survive = new
+	survive.owner = L.mind
+	L.mind.objectives += survive
 	log_combat(user, L, "took out a blood contract on", src)
+	to_chat(L, "<span class='userdanger'>You've been marked for death! Don't let the demons get you! KILL THEM ALL!</span>")
+	L.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
+	var/obj/effect/mine/pickup/bloodbath/B = new(L)
+	INVOKE_ASYNC(B, /obj/effect/mine/pickup/bloodbath/.proc/mineEffect, L)
+
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H == L)
+			continue
+		to_chat(H, "<span class='userdanger'>You have an overwhelming desire to kill [L]. [L.p_theyve(TRUE)] been marked red! Whoever [L.p_they()] [L.p_were()], friend or foe, go kill [L.p_them()]!</span>")
+		H.put_in_hands(new /obj/item/kitchen/knife/butcher(H), TRUE)
+
 	qdel(src)
 
 //Colossus

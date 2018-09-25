@@ -240,20 +240,16 @@
 
 /obj/effect/spawner/lootdrop/techstorage/rnd
 	name = "RnD circuit board spawner"
-	lootcount = 12
+	lootcount = 8
 	loot = list(
 				/obj/item/circuitboard/computer/aifixer,
 				/obj/item/circuitboard/machine/rdserver,
+				/obj/item/circuitboard/computer/pandemic,
 				/obj/item/circuitboard/machine/mechfab,
 				/obj/item/circuitboard/machine/circuit_imprinter/department,
 				/obj/item/circuitboard/computer/teleporter,
 				/obj/item/circuitboard/machine/destructive_analyzer,
-				/obj/item/circuitboard/computer/rdconsole,
-				/obj/item/circuitboard/computer/nanite_chamber_control,
-				/obj/item/circuitboard/computer/nanite_cloud_controller,
-				/obj/item/circuitboard/machine/nanite_chamber,
-				/obj/item/circuitboard/machine/nanite_programmer,
-				/obj/item/circuitboard/machine/nanite_program_hub
+				/obj/item/circuitboard/computer/rdconsole
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/security
@@ -291,7 +287,7 @@
 
 /obj/effect/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
-	lootcount = 9
+	lootcount = 8
 	loot = list(
 				/obj/item/circuitboard/computer/cloning,
 				/obj/item/circuitboard/machine/clonepod,
@@ -300,8 +296,7 @@
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/clonescanner,
-				/obj/item/circuitboard/computer/pandemic
+				/obj/item/circuitboard/machine/clonescanner
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/AI

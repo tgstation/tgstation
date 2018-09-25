@@ -68,6 +68,10 @@
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
+"aq" = (
+/obj/machinery/status_display/evac,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/escape)
 "ar" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -309,36 +313,6 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
-"hD" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/shuttle/escape)
-"pb" = (
-/obj/structure/closet/radiation{
-	anchored = 1
-	},
-/obj/item/clothing/glasses/meson/engine,
-/obj/machinery/status_display/evac{
-	pixel_x = 32
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"Bi" = (
-/obj/structure/closet/radiation{
-	anchored = 1
-	},
-/obj/item/clothing/glasses/meson/engine,
-/obj/machinery/status_display/evac{
-	pixel_x = -32
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"UA" = (
-/obj/machinery/status_display/evac{
-	pixel_y = -32
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -369,13 +343,13 @@ ae
 ae
 ad
 ac
-ae
+aq
 ad
 ax
 ai
 aD
-UA
-ae
+ai
+aq
 aa
 aa
 aN
@@ -383,7 +357,7 @@ aM
 aR
 aU
 aX
-aM
+at
 ba
 bc
 be
@@ -393,7 +367,7 @@ ac
 ag
 ag
 bi
-Bi
+ag
 ag
 ag
 ai
@@ -402,12 +376,12 @@ ai
 ad
 aa
 aa
-aM
+at
 aa
 aS
 aV
 aY
-aM
+at
 ba
 bc
 be
@@ -426,13 +400,13 @@ ar
 aI
 aw
 aa
-aM
+at
 aa
 aT
 aW
 aZ
 aa
-hD
+aM
 aa
 aa
 "}
@@ -449,11 +423,11 @@ as
 as
 bk
 ad
-aM
+at
 aO
 aa
 aa
-hD
+aM
 aa
 aa
 aR
@@ -475,11 +449,11 @@ at
 aL
 aM
 aM
-hD
-hD
-hD
-hD
-hD
+aM
+aM
+aM
+aM
+aM
 bb
 bd
 aY
@@ -497,11 +471,11 @@ au
 au
 bl
 ad
-aM
+at
 aP
 aa
 aa
-hD
+aM
 aa
 aa
 aT
@@ -522,13 +496,13 @@ av
 aI
 aw
 aa
-aM
+at
 aa
 aR
 aU
 aX
 aa
-hD
+aM
 aa
 aa
 "}
@@ -537,7 +511,7 @@ ac
 ag
 ag
 bj
-pb
+ag
 ag
 ag
 ai
@@ -546,12 +520,12 @@ ai
 ad
 aa
 aa
-aM
+at
 aa
 aS
 aV
 aY
-aM
+at
 ba
 bc
 be
@@ -561,13 +535,13 @@ ae
 ae
 ad
 ac
-ae
+aq
 ad
 ax
 ai
 aE
-UA
-ae
+ai
+aq
 aa
 aa
 aQ
@@ -575,7 +549,7 @@ aM
 aT
 aW
 aZ
-aM
+at
 ba
 bc
 be

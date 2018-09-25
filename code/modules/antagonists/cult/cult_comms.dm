@@ -342,7 +342,10 @@
 	if(cooldown>world.time)
 		to_chat(owner, "<span class='cultbold'>You aren't ready to place another blood mark yet!</span>")
 		return
-	target = owner.orbiting?.parent || get_turf(owner)
+	if(owner.orbiting && owner.orbiting.orbiting)
+		target = owner.orbiting.orbiting
+	else
+		target = get_turf(owner)
 	if(!target)
 		return
 	C.cult_team.blood_target = target

@@ -43,10 +43,7 @@
 	search_objects = 1 // So that it can see through walls
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
-
-	move_force = MOVE_FORCE_EXTREMELY_STRONG
-	move_resist = MOVE_FORCE_EXTREMELY_STRONG
-	pull_force = MOVE_FORCE_EXTREMELY_STRONG
+	anchored = TRUE
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
