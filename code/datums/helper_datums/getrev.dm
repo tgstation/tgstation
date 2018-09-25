@@ -1,44 +1,40 @@
 /datum/getrev
-	var/originmastercommit
-	var/commit
-	var/list/testmerge = list()
+	var/commit  // git rev-parse HEAD
 	var/date
+	var/originmastercommit  // git rev-parse origin/master
+	var/list/testmerge = list()
 
 /datum/getrev/New()
 	testmerge = world.TgsTestMerges()
-	log_world("Running /tg/ revision:")
 	var/datum/tgs_revision_information/revinfo = world.TgsRevision()
 	if(revinfo)
 		commit = revinfo.commit
 		originmastercommit = revinfo.origin_commit
 	else
-		var/list/logs = world.file2list(".git/logs/HEAD")
-		if(logs.len)
-			logs = splittext(logs[logs.len - 1], " ")
-			date = unix2date(text2num(logs[5]))
-			commit = logs[2]
-			log_world("[commit]: [date]")
-		else
-			log_world("Unable to read git logs, revision information not available")
-			originmastercommit = commit = "Unknown"
-			date = unix2date(world.timeofday)
-			return
-		logs = world.file2list(".git/logs/refs/remotes/origin/master")
-		if(logs.len)
-			originmastercommit = splittext(logs[logs.len - 1], " ")[2]
+		commit = rustg_git_revparse("HEAD")
+		if(commit)
+			date = rustg_git_commit_date(commit)
+		originmastercommit = rustg_git_revparse("origin/master")
 
-	if(testmerge.len)
-		log_world(commit)
-		for(var/line in testmerge)
-			if(line)
-				var/datum/tgs_revision_information/test_merge/tm = line
-				var/tmcommit = tm.commit
-				log_world("Test merge active of PR #[tm.number] commit [tmcommit]")
-				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[tm.number]", "[tmcommit]"))
-		if(originmastercommit)
-			log_world("Based off origin/master commit [originmastercommit]")
-	else if(originmastercommit)
-		log_world(originmastercommit)
+	// goes to DD log and config_error.txt
+	log_world(get_log_message())
+
+/datum/getrev/proc/get_log_message()
+	var/list/msg = list()
+	msg += "Running /tg/ revision: [date]"
+	if(originmastercommit)
+		msg += "origin/master: [originmastercommit]"
+
+	for(var/line in testmerge)
+		var/datum/tgs_revision_information/test_merge/tm = line
+		msg += "Test merge active of PR #[tm.number] commit [tm.commit]"
+
+	if(commit && commit != originmastercommit)
+		msg += "HEAD: [commit]"
+	else if(!originmastercommit)
+		msg += "No commit information"
+
+	return msg.Join("\n")
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
@@ -57,28 +53,38 @@
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
+	var/list/msg = list("")
+	// Round ID
 	if(GLOB.round_id)
-		to_chat(src, "<b>Round ID:</b> [GLOB.round_id]")
-	if(GLOB.revdata.originmastercommit)
-		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
-		var/prefix = ""
-		if(GLOB.revdata.testmerge.len)
-			to_chat(src, GLOB.revdata.GetTestMergeInfo())
-			prefix = "Based off origin/master commit: "
-		var/pc = GLOB.revdata.originmastercommit
-		to_chat(src, "[prefix]<a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 11))]</a>")
-	else
-		to_chat(src, "Master revision unknown")
-	to_chat(src, "Revision: [GLOB.revdata.commit]")
+		msg += "<b>Round ID:</b> [GLOB.round_id]"
+
+	msg += "<b>BYOND Version:</b> [world.byond_version].[world.byond_build]"
+	if(DM_VERSION != world.byond_version || DM_BUILD != world.byond_build)
+		msg += "<b>Compiled with BYOND Version:</b> [DM_VERSION].[DM_BUILD]"
+
+	// Revision information
+	var/datum/getrev/revdata = GLOB.revdata
+	msg += "<b>Server revision compiled on:</b> [revdata.date]"
+	var/pc = revdata.originmastercommit
+	if(pc)
+		msg += "Master commit: <a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[pc]</a>"
+	if(revdata.testmerge.len)
+		msg += revdata.GetTestMergeInfo()
+	if(revdata.commit && revdata.commit != revdata.originmastercommit)
+		msg += "Local commit: [revdata.commit]"
+	else if(!pc)
+		msg += "No commit information"
 	if(world.TgsAvailable())
-		to_chat(src, "Server tools version: [world.TgsVersion()]")
-	to_chat(src, "<b>Current Informational Settings:</b>")
-	to_chat(src, "Protect Authority Roles From Traitor: [CONFIG_GET(flag/protect_roles_from_antagonist)]")
-	to_chat(src, "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]")
-	to_chat(src, "Enforce Human Authority: [CONFIG_GET(flag/enforce_human_authority)]")
-	to_chat(src, "Allow Latejoin Antagonists: [CONFIG_GET(flag/allow_latejoin_antagonists)]")
-	to_chat(src, "Enforce Continuous Rounds: [length(CONFIG_GET(keyed_list/continuous))] of [config.modes.len] roundtypes")
-	to_chat(src, "Allow Midround Antagonists: [length(CONFIG_GET(keyed_list/midround_antag))] of [config.modes.len] roundtypes")
+		msg += "Server tools version: [world.TgsVersion()]"
+
+	// Game mode odds
+	msg += "<br><b>Current Informational Settings:</b>"
+	msg += "Protect Authority Roles From Traitor: [CONFIG_GET(flag/protect_roles_from_antagonist)]"
+	msg += "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]"
+	msg += "Enforce Human Authority: [CONFIG_GET(flag/enforce_human_authority)]"
+	msg += "Allow Latejoin Antagonists: [CONFIG_GET(flag/allow_latejoin_antagonists)]"
+	msg += "Enforce Continuous Rounds: [length(CONFIG_GET(keyed_list/continuous))] of [config.modes.len] roundtypes"
+	msg += "Allow Midround Antagonists: [length(CONFIG_GET(keyed_list/midround_antag))] of [config.modes.len] roundtypes"
 	if(CONFIG_GET(flag/show_game_type_odds))
 		var/list/probabilities = CONFIG_GET(keyed_list/probability)
 		if(SSticker.IsRoundInProgress())
@@ -99,17 +105,18 @@
 				probs[ctag] = 1
 				prob_sum += probabilities[ctag]
 			if(current_odds_differ)
-				to_chat(src, "<b>Game Mode Odds for current round:</b>")
+				msg += "<b>Game Mode Odds for current round:</b>"
 				for(var/ctag in probs)
 					if(probabilities[ctag] > 0)
 						var/percentage = round(probabilities[ctag] / prob_sum * 100, 0.1)
-						to_chat(src, "[ctag] [percentage]%")
+						msg += "[ctag] [percentage]%"
 
-		to_chat(src, "<b>All Game Mode Odds:</b>")
+		msg += "<b>All Game Mode Odds:</b>"
 		var/sum = 0
 		for(var/ctag in probabilities)
 			sum += probabilities[ctag]
 		for(var/ctag in probabilities)
 			if(probabilities[ctag] > 0)
 				var/percentage = round(probabilities[ctag] / sum * 100, 0.1)
-				to_chat(src, "[ctag] [percentage]%")
+				msg += "[ctag] [percentage]%"
+	to_chat(src, msg.Join("<br>"))

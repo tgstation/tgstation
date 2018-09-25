@@ -81,7 +81,7 @@
 
 /obj/item/twohanded/required/cult_bastard
 	name = "bloody bastard sword"
-	desc = "An enormous sword used by Nar-Sien cultists to rapidly harvest the souls of non-believers."
+	desc = "An enormous sword used by Nar'Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
 	block_chance = 50
 	throwforce = 20
@@ -251,8 +251,8 @@
 	holder.update_action_buttons_icon()
 
 /obj/item/restraints/legcuffs/bola/cult
-	name = "nar'sien bola"
-	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'sien cultists. Throw it to trip and slow your victim."
+	name = "\improper Nar'Sien bola"
+	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sien cultists. Throw it to trip and slow your victim."
 	icon_state = "bola_cult"
 	breakouttime = 60
 	knockdown = 20
@@ -297,7 +297,7 @@
 
 /obj/item/clothing/head/culthood/alt
 	name = "cultist hood"
-	desc = "An armored hood worn by the followers of Nar-Sie."
+	desc = "An armored hood worn by the followers of Nar'Sie."
 	icon_state = "cult_hoodalt"
 	item_state = "cult_hoodalt"
 
@@ -306,7 +306,7 @@
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
-	desc = "An armored set of robes worn by the followers of Nar-Sie."
+	desc = "An armored set of robes worn by the followers of Nar'Sie."
 	icon_state = "cultrobesalt"
 	item_state = "cultrobesalt"
 
@@ -318,14 +318,14 @@
 	name = "magus helm"
 	icon_state = "magus"
 	item_state = "magus"
-	desc = "A helm worn by the followers of Nar-Sie."
+	desc = "A helm worn by the followers of Nar'Sie."
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30,"energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 10, "acid" = 10)
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar-Sie."
+	desc = "A set of armored robes worn by the followers of Nar'Sie."
 	icon_state = "magusred"
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -334,8 +334,8 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/head/helmet/space/hardsuit/cult
-	name = "\improper Nar-Sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
+	name = "\improper Nar'Sien hardened helmet"
+	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	icon_state = "cult_helmet"
 	item_state = "cult_helmet"
 	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
@@ -343,10 +343,10 @@
 	actions_types = list()
 
 /obj/item/clothing/suit/space/hardsuit/cult
-	name = "\improper Nar-Sien hardened armor"
+	name = "\improper Nar'Sien hardened armor"
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
+	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
 	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list("melee" = 70, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 40, "acid" = 75)
@@ -456,7 +456,7 @@
 			user.dropItemToGround(src, TRUE)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
-	desc = "may Nar-Sie guide you through the darkness and shield you from the light."
+	desc = "may Nar'Sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	item_state = "blindfold"
@@ -496,7 +496,7 @@
 		to_chat(user, "<span class='notice'>We have exhausted our ability to curse the shuttle.</span>")
 		return
 	if(locate(/obj/singularity/narsie) in GLOB.poi_list)
-		to_chat(user, "<span class='warning'>Nar-Sie is already on this plane, there is no delaying the end of all things.</span>")
+		to_chat(user, "<span class='warning'>Nar'Sie is already on this plane, there is no delaying the end of all things.</span>")
 		return
 
 	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
@@ -898,7 +898,7 @@
 
 /obj/item/shield/mirror
 	name = "mirror shield"
-	desc = "An infamous shield used by Nar'sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
+	desc = "An infamous shield used by Nar'Sien sects to confuse and disorient their enemies. Its edges are weighted for use as a throwing weapon - capable of disabling multiple foes with preternatural accuracy."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "mirror_shield" // eshield1 for expanded
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'

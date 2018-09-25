@@ -18,7 +18,7 @@
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
 	if(ismovableatom(parent))
 		RegisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT), .proc/play_squeak)
-		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_turf)
+		RegisterSignal(parent, COMSIG_MOVABLE_CROSSED, .proc/play_squeak_crossed)
 		RegisterSignal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)
@@ -52,7 +52,15 @@
 	else
 		steps++
 
-/datum/component/squeak/proc/play_squeak_turf()
+/datum/component/squeak/proc/play_squeak_crossed(atom/movable/AM)
+	if(isitem(AM))
+		var/obj/item/I = AM
+		if(I.item_flags & ABSTRACT)
+			return
+		else if(istype(AM, /obj/item/projectile))
+			var/obj/item/projectile/P = AM
+			if(P.original != parent)
+				return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()

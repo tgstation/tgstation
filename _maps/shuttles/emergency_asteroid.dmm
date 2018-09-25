@@ -402,6 +402,7 @@
 /obj/item/retractor,
 /obj/item/hemostat,
 /obj/item/scalpel,
+/obj/item/surgicaldrill,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "bG" = (

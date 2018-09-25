@@ -90,7 +90,6 @@
 		move_delay = old_move_delay
 	else
 		move_delay = world.time
-	var/oldloc = mob.loc
 
 	if(L.confused)
 		var/newdir = 0
@@ -108,14 +107,10 @@
 
 	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
-	if(mob.loc != oldloc)
-		move_delay += add_delay
+	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
-
-	for(var/obj/O in mob.user_movement_hooks)
-		O.intercept_user_move(direct, mob, n, oldloc)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)

@@ -67,7 +67,7 @@
 			kill_objective.find_target()
 			objectives += kill_objective
 
-			if (!(locate(/datum/objective/escape) in owner.objectives))
+			if (!(locate(/datum/objective/escape) in objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = owner
 				objectives += escape_objective
@@ -78,7 +78,7 @@
 			steal_objective.find_target()
 			objectives += steal_objective
 
-			if (!(locate(/datum/objective/escape) in owner.objectives))
+			if (!(locate(/datum/objective/escape) in objectives))
 				var/datum/objective/escape/escape_objective = new
 				escape_objective.owner = owner
 				objectives += escape_objective
@@ -94,19 +94,16 @@
 			steal_objective.find_target()
 			objectives += steal_objective
 
-			if (!(locate(/datum/objective/survive) in owner.objectives))
+			if (!(locate(/datum/objective/survive) in objectives))
 				var/datum/objective/survive/survive_objective = new
 				survive_objective.owner = owner
 				objectives += survive_objective
 
 		else
-			if (!(locate(/datum/objective/hijack) in owner.objectives))
+			if (!(locate(/datum/objective/hijack) in objectives))
 				var/datum/objective/hijack/hijack_objective = new
 				hijack_objective.owner = owner
 				objectives += hijack_objective
-
-	for(var/datum/objective/O in objectives)
-		owner.objectives += O
 
 /datum/antagonist/wizard/on_removal()
 	unregister()
@@ -220,7 +217,6 @@
 	new_objective.owner = owner
 	new_objective.target = master
 	new_objective.explanation_text = "Protect [master.current.real_name], the wizard."
-	owner.objectives += new_objective
 	objectives += new_objective
 
 //Random event wizard
@@ -288,7 +284,6 @@
 /datum/antagonist/wizard/academy/create_objectives()
 	var/datum/objective/new_objective = new("Protect Wizard Academy from the intruders")
 	new_objective.owner = owner
-	owner.objectives += new_objective
 	objectives += new_objective
 
 //Solo wizard report

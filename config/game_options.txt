@@ -258,6 +258,9 @@ EVENTS_MIN_PLAYERS_MUL 1
 ## Allow the AI job to be picked.
 ALLOW_AI
 
+## Allow the AI Multicamera feature to be used by AI players
+ALLOW_AI_MULTICAM
+
 ## Secborg ###
 ## Uncomment to prevent the security cyborg module from being chosen
 #DISABLE_SECBORG
@@ -528,3 +531,6 @@ ROUNDSTART_TRAITS
 
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
+
+## Enable the capitalist agenda on your server.
+ECONOMY

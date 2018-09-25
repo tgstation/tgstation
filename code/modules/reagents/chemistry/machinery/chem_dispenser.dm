@@ -191,7 +191,7 @@
 		return
 	switch(action)
 		if("amount")
-			if(!is_operational())
+			if(!is_operational() || QDELETED(beaker))
 				return
 			var/target = text2num(params["target"])
 			if(target in beaker.possible_transfer_amounts)
@@ -550,7 +550,7 @@
 		"ammonia",
 		"ash",
 		"diethylamine")
-	
+
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
 	. = ..()
 	component_parts = list()

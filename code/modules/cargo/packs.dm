@@ -16,8 +16,8 @@
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE
 
-/datum/supply_pack/proc/generate(turf/T)
-	var/obj/structure/closet/crate/C = new crate_type(T)
+/datum/supply_pack/proc/generate(atom/A)
+	var/obj/structure/closet/crate/C = new crate_type(A)
 	C.name = crate_name
 	if(access)
 		C.req_access = list(access)
@@ -157,6 +157,18 @@
 			continue
 		crate_value -= I.cost
 		new I.item(C)
+
+/datum/supply_pack/emergency/plasma_spacesuit
+	name = "Plasmaman Space Envirosuits"
+	desc = "Contains two space-worthy envirosuits for Plasmamen. Order now and we'll throw in two free helmets! Requires EVA access to open."
+	cost = 4000
+	access = ACCESS_EVA
+	contains = list(/obj/item/clothing/suit/space/eva/plasmaman,
+					/obj/item/clothing/suit/space/eva/plasmaman,
+					/obj/item/clothing/head/helmet/space/plasmaman,
+					/obj/item/clothing/head/helmet/space/plasmaman)
+	crate_name = "plasmaman EVA crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/emergency/plasmaman
 	name = "Plasmaman Supply Kit"

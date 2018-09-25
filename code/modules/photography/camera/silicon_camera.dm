@@ -6,6 +6,7 @@
 
 /obj/item/camera/siliconcam/ai_camera
 	name = "AI photo camera"
+	flash_enabled = FALSE
 
 /obj/item/camera/siliconcam/proc/toggle_camera_mode(mob/user)
 	if(in_camera_mode)

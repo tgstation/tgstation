@@ -388,6 +388,7 @@
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
 	illustration = null
+	var/cube_type = /obj/item/reagent_containers/food/snacks/monkeycube
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
@@ -397,7 +398,11 @@
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(src)
+		new cube_type(src)
+
+/obj/item/storage/box/monkeycubes/syndicate
+	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
+	cube_type = /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"

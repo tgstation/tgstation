@@ -41,6 +41,15 @@
 	else if(dx<0)
 		.+=360
 
+/proc/Get_Pixel_Angle(var/y, var/x)//for getting the angle when animating something's pixel_x and pixel_y
+	if(!y)
+		return (x>=0)?90:270
+	.=arctan(x/y)
+	if(y<0)
+		.+=180
+	else if(x<0)
+		.+=360
+
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
@@ -1266,7 +1275,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	invisibility = 101
 	density = FALSE
 	see_in_dark = 1e6
-	anchored = TRUE
+	move_resist = INFINITY
 	var/ready_to_die = FALSE
 
 /mob/dview/Initialize() //Properly prevents this mob from gaining huds or joining any global lists
@@ -1469,7 +1478,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/get_random_drink()
 	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,
 		/obj/item/reagent_containers/food/drinks/bottle
-		)	
+		)
 	return pick(subtypesof(/obj/item/reagent_containers/food/drinks) - blocked)
 
 //For these two procs refs MUST be ref = TRUE format like typecaches!

@@ -40,6 +40,11 @@
 		SSblackbox.ReportDeath(src)
 	if(is_devil(src))
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
+	if(is_hivemember(src))
+		remove_hivemember(src)
+	if(is_hivehost(src))
+		var/datum/antagonist/hivemind/hive = mind.has_antag_datum(/datum/antagonist/hivemind)
+		hive.destroy_hive()
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)

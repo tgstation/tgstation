@@ -86,6 +86,7 @@
 	return 0
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
+	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
@@ -96,6 +97,7 @@
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
+		return
 
 /*
 	Animals & All Unspecified

@@ -59,7 +59,7 @@
 			return
 	if(ismovableatom(A))
 		var/atom/movable/AM = A
-		if(PushAM(AM))
+		if(PushAM(AM, move_force))
 			return
 
 /mob/living/Bumped(atom/movable/AM)
@@ -176,36 +176,46 @@
 	return
 
 //Called when we want to push an atom/movable
-/mob/living/proc/PushAM(atom/movable/AM)
+/mob/living/proc/PushAM(atom/movable/AM, force = move_force)
 	if(now_pushing)
-		return 1
+		return TRUE
 	if(moving_diagonally)// no pushing during diagonal moves.
-		return 1
+		return TRUE
 	if(!client && (mob_size < MOB_SIZE_SMALL))
 		return
-	if(!AM.anchored)
-		now_pushing = 1
-		var/t = get_dir(src, AM)
-		if (istype(AM, /obj/structure/window))
-			var/obj/structure/window/W = AM
-			if(W.fulltile)
-				for(var/obj/structure/window/win in get_step(W,t))
-					now_pushing = 0
-					return
-		if(pulling == AM)
-			stop_pulling()
-		var/current_dir
-		if(isliving(AM))
-			current_dir = AM.dir
-		step(AM, t)
-		if(current_dir)
-			AM.setDir(current_dir)
-		now_pushing = 0
+	now_pushing = TRUE
+	var/t = get_dir(src, AM)
+	var/push_anchored = FALSE
+	if((AM.move_resist * MOVE_FORCE_CRUSH_RATIO) <= force)
+		if(move_crush(AM, move_force, t))
+			push_anchored = TRUE
+	if((AM.move_resist * MOVE_FORCE_FORCEPUSH_RATIO) <= force)			//trigger move_crush and/or force_push regardless of if we can push it normally
+		if(force_push(AM, move_force, t, push_anchored))
+			push_anchored = TRUE
+	if((AM.anchored && !push_anchored) || (force < (AM.move_resist * MOVE_FORCE_PUSH_RATIO)))
+		now_pushing = FALSE
+		return
+	if (istype(AM, /obj/structure/window))
+		var/obj/structure/window/W = AM
+		if(W.fulltile)
+			for(var/obj/structure/window/win in get_step(W,t))
+				now_pushing = FALSE
+				return
+	if(pulling == AM)
+		stop_pulling()
+	var/current_dir
+	if(isliving(AM))
+		current_dir = AM.dir
+	if(step(AM, t))
+		step(src, t)
+	if(current_dir)
+		AM.setDir(current_dir)
+	now_pushing = FALSE
 
-/mob/living/start_pulling(atom/movable/AM, supress_message = 0)
+/mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
 		return FALSE
-	if(!(AM.can_be_pulled(src)))
+	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
 	if(throwing || incapacitated())
 		return FALSE
@@ -890,7 +900,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		new/obj/effect/dummy/fire(src)
+		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
@@ -901,7 +911,7 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		for(var/obj/effect/dummy/fire/F in src)
+		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		clear_alert("fire")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")

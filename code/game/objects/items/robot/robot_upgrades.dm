@@ -321,6 +321,7 @@
 		deactivate_sr()
 
 /obj/item/borg/upgrade/selfrepair/dropped()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/check_dropped), 1)
 
 /obj/item/borg/upgrade/selfrepair/proc/check_dropped()
@@ -500,7 +501,7 @@
 	if (.)
 		var/obj/item/surgical_processor/SP = locate() in R.module
 		R.module.remove_module(SP, TRUE)
-		
+
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."

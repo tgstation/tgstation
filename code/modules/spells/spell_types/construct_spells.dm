@@ -7,7 +7,7 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
-	cult_req = 1
+	clothes_req = TRUE
 	charge_max = 2500
 
 
@@ -17,7 +17,7 @@
 
 	school = "transmutation"
 	charge_max = 50
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 2
@@ -37,7 +37,7 @@
 
 	school = "conjuration"
 	charge_max = 20
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -53,7 +53,7 @@
 
 	school = "conjuration"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -70,7 +70,7 @@
 
 	school = "conjuration"
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -79,11 +79,11 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
-	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
+	desc = "This spell reaches into Nar'Sie's realm, summoning one of the legendary fragments across time and space."
 
 	school = "conjuration"
 	charge_max = 2400
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
@@ -94,7 +94,7 @@
 	summon_type = list(/obj/item/soulstone)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
-	cult_req = 1
+	clothes_req = TRUE
 	charge_max = 3600
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
@@ -121,11 +121,11 @@
 
 	school = "transmutation"
 	charge_max = 250
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	jaunt_duration = 50 //in deciseconds
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "phaseshift"
@@ -143,7 +143,7 @@
 
 	school = "evocation"
 	charge_max = 400
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	proj_lifespan = 10
@@ -158,11 +158,11 @@
 
 	school = "conjuration"
 	charge_max = 200
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
 
 	smoke_spread = 3
@@ -220,7 +220,7 @@
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"
-	desc = "This spell dominates the mind of a lesser creature to the will of Nar'sie, allying it only to her direct followers."
+	desc = "This spell dominates the mind of a lesser creature to the will of Nar'Sie, allying it only to her direct followers."
 
 	charge_max = 600
 	range = 7

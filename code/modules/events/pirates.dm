@@ -29,7 +29,9 @@
 	if(fake)
 		return
 	threat = new
-	payoff = round(SSshuttle.points * 0.80)
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		payoff = round(D.account_balance * 0.80)
 	threat.title = "Business proposition"
 	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
 	threat.possible_answers = list("We'll pay.","No way.")
@@ -38,13 +40,14 @@
 
 /datum/round_event/pirates/proc/answered()
 	if(threat && threat.answered == 1)
-		if(SSshuttle.points >= payoff)
-			SSshuttle.points -= payoff
-			priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
-			paid_off = TRUE
-			return
-		else
-			priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			if(D.adjust_money(-payoff))
+				priority_announce("Thanks for the credits, landlubbers.",sender_override = ship_name)
+				paid_off = TRUE
+				return
+			else
+				priority_announce("Trying to cheat us? You'll regret this!",sender_override = ship_name)
 	if(!shuttle_spawned)
 		spawn_shuttle()
 
@@ -103,9 +106,11 @@
 /obj/machinery/shuttle_scrambler/process()
 	if(active)
 		if(is_station_level(z))
-			var/siphoned = min(SSshuttle.points,siphon_per_tick)
-			SSshuttle.points -= siphoned
-			credits_stored += siphoned
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			if(D)
+				var/siphoned = min(D.account_balance,siphon_per_tick)
+				D.adjust_money(-siphoned)
+				credits_stored += siphoned
 			interrupt_research()
 		else
 			return
@@ -188,7 +193,6 @@
 	shuttleId = "pirateship"
 	lock_override = CAMERA_LOCK_STATION
 	shuttlePortId = "pirateship_custom"
-	shuttlePortName = "custom location"
 	x_offset = 9
 	y_offset = 0
 	see_hidden = FALSE
@@ -334,7 +338,7 @@
 		if(AM == pad)
 			continue
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, dry_run = TRUE, external_report = ex)
-		
+
 	for(var/datum/export/E in ex.total_amount)
 		status_report += E.total_printout(ex,notes = FALSE) + "<br>"
 
@@ -343,12 +347,12 @@
 		return
 
 	var/datum/export_report/ex = new
-	
+
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
-	
+
 	status_report = "Sold:<br>"
 	var/value = 0
 	for(var/datum/export/E in ex.total_amount)
