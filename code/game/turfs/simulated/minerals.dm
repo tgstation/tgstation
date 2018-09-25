@@ -451,7 +451,6 @@
 		desc = "An active gibtonite reserve. Run!"
 		stage = GIBTONITE_ACTIVE
 		visible_message("<span class='danger'>There was gibtonite inside! It's going to explode!</span>")
-		var/turf/bombturf = get_turf(src)
 
 		var/notify_admins = 0
 		if(z != 5)
