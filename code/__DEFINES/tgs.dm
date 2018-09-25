@@ -7,6 +7,10 @@
 //create this define if you want to do configuration outside of this file
 #ifndef TGS_EXTERNAL_CONFIGURATION
 
+//Uncomment this if you wish to allow the game to interact with TGS 3
+//This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()()
+//#define TGS_V3_API
+
 //Comment this out once you've filled in the below
 #error TGS API unconfigured
 

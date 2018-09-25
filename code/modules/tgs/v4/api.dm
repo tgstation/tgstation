@@ -150,7 +150,8 @@
 			if(event_parameters)
 				event_call += event_parameters
 
-			event_handler.HandleEvent(arglist(event_call))
+			if(event_handler != null)
+				event_handler.HandleEvent(arglist(event_call))
 
 			. = json_encode(intercepted_message_queue)
 			intercepted_message_queue = null
@@ -165,13 +166,15 @@
 
 			//the topic still completes, miraculously
 			//I honestly didn't believe byond could do it
-			event_handler.HandleEvent(TGS_EVENT_PORT_SWAP, new_port)
+			if(event_handler != null)
+				event_handler.HandleEvent(TGS_EVENT_PORT_SWAP, new_port)
 			if(!world.OpenPort(new_port))
 				return "Port change failed!"
 			return
 		if(TGS4_TOPIC_CHANGE_REBOOT_MODE)
 			var/new_reboot_mode = text2num(params[TGS4_PARAMETER_DATA])
-			event_handler.HandleEvent(TGS_EVENT_REBOOT_MODE_CHANGE, reboot_mode, new_reboot_mode)
+			if(event_handler != null)
+				event_handler.HandleEvent(TGS_EVENT_REBOOT_MODE_CHANGE, reboot_mode, new_reboot_mode)
 			reboot_mode = new_reboot_mode
 			return
 

@@ -4,6 +4,10 @@
 		TGS_ERROR_LOG("TgsNew(): TGS API datum already set ([current_api])!")
 		return
 
+#ifdef TGS_V3_API
+	minimum_required_security_level = TGS_SECURITY_TRUSTED
+#endif
+
 	var/tgs_version = world.params[TGS_VERSION_PARAMETER]
 	if(!tgs_version)
 		return
@@ -18,7 +22,7 @@
 
 	TGS_WRITE_GLOBAL(tgs, new_api)
 
-	var/result = new_api.OnWorldNew(event_handler ? event_handler : new /datum/tgs_event_handler/tgs_default, minimum_required_security_level)
+	var/result = new_api.OnWorldNew(event_handler, minimum_required_security_level)
 	if(!result || result == TGS_UNIMPLEMENTED)
 		TGS_WRITE_GLOBAL(tgs, null)
 		TGS_ERROR_LOG("Failed to activate API!")
@@ -36,9 +40,13 @@
 
 	switch(super)
 		if(3)
+#ifndef TGS_V3_API
+			TGS_ERROR_LOG("Detected V3 API but TGS_V3_API isn't defined!")
+#else
 			switch(major)
 				if(2)
 					return /datum/tgs_api/v3210
+#endif
 		if(4)
 			switch(major)
 				if(0)
