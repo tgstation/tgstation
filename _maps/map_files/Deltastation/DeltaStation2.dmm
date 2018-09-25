@@ -9255,15 +9255,9 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/mousetraps,
-/obj/item/restraints/legcuffs/beartrap{
-	icon_state = "beartrap0"
-	},
-/obj/item/restraints/legcuffs/beartrap{
-	icon_state = "beartrap0"
-	},
-/obj/item/restraints/legcuffs/beartrap{
-	icon_state = "beartrap0"
-	},
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
+/obj/item/restraints/legcuffs/beartrap,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
@@ -9614,7 +9608,6 @@
 "awd" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	icon_state = "pump_map";
 	name = "Gas to Loop"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -11013,7 +11006,6 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	icon_state = "pump_map";
 	name = "Thermo to Gas"
 	},
 /turf/open/floor/plasteel,
@@ -12327,7 +12319,6 @@
 "aBb" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	icon_state = "pump_map";
 	name = "Atmos to Gas"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -12984,7 +12975,6 @@
 "aCn" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	icon_state = "pump_map";
 	name = "Gas to Chamber"
 	},
 /turf/open/floor/engine,
@@ -18994,7 +18984,6 @@
 "aMy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
-	icon_state = "filter_off_f";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -19707,7 +19696,6 @@
 /area/maintenance/disposal/incinerator)
 "aNP" = (
 /obj/machinery/power/turbine{
-	icon_state = "turbine";
 	dir = 8;
 	luminosity = 2
 	},
@@ -21164,7 +21152,6 @@
 "aPZ" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/syndicate{
-	icon_state = "deck_syndicate_full";
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/grimy,
@@ -56013,7 +56000,6 @@
 "bRQ" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 4
 	},
 /turf/open/space,
@@ -56026,7 +56012,6 @@
 "bRS" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 8
 	},
 /turf/open/space,
@@ -57231,7 +57216,6 @@
 "bTJ" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/diagonal{
-	icon_state = "diagonal";
 	dir = 4
 	},
 /turf/open/space,
@@ -58930,7 +58914,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/transit_tube/station{
-	icon_state = "closed_station0";
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -58968,7 +58951,6 @@
 	dir = 4
 	},
 /obj/structure/transit_tube/junction{
-	icon_state = "junction0";
 	dir = 4
 	},
 /turf/open/space,
@@ -58998,7 +58980,6 @@
 	dir = 4
 	},
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 8
 	},
 /turf/open/space,
@@ -60655,7 +60636,6 @@
 	dir = 4
 	},
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -60680,7 +60660,6 @@
 	dir = 8
 	},
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 4
 	},
 /obj/structure/sign/warning/securearea{
@@ -62064,7 +62043,6 @@
 "cap" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/curved{
-	icon_state = "curved0";
 	dir = 4
 	},
 /turf/open/space,
@@ -62072,7 +62050,6 @@
 "caq" = (
 /obj/structure/lattice,
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 8
 	},
 /turf/open/space,
@@ -78369,8 +78346,7 @@
 /area/crew_quarters/toilet/restrooms)
 "cBJ" = (
 /obj/machinery/shower{
-	dir = 8;
-	icon_state = "shower"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -80523,8 +80499,7 @@
 /area/crew_quarters/toilet/restrooms)
 "cFd" = (
 /obj/machinery/shower{
-	dir = 8;
-	icon_state = "shower"
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -88428,7 +88403,6 @@
 	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -89606,7 +89580,6 @@
 	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -101775,7 +101748,6 @@
 /area/science/robotics/mechbay)
 "dpb" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -101988,7 +101960,6 @@
 	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 8
 	},
 /obj/structure/cable/white{
@@ -102235,7 +102206,6 @@
 "dpP" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck/syndicate{
-	icon_state = "deck_syndicate_full";
 	pixel_y = 6
 	},
 /turf/open/floor/plasteel/grimy,
@@ -103073,7 +103043,6 @@
 	req_access_txt = "5"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -105017,7 +104986,6 @@
 /area/science/robotics/mechbay)
 "duY" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -108197,7 +108165,6 @@
 /area/science/research/abandoned)
 "dAr" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,

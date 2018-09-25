@@ -12030,7 +12030,7 @@
 	dir = 4
 	},
 /mob/living/simple_animal/bot/secbot/beepsky{
-	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too. ";
+	desc = "It's Officer Beepsky! Powered by a potato and a shot of whiskey, and with a sturdier reinforced chassis, too.";
 	health = 45;
 	maxHealth = 45;
 	name = "Officer Beepsky"
@@ -38131,9 +38131,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel{
-	icon_state = "wood"
-	},
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "buP" = (
 /obj/machinery/computer/slot_machine{
@@ -39185,10 +39183,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bwQ" = (
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/structure/disposalpipe/trunk{
@@ -66180,7 +66175,6 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -73692,7 +73686,7 @@
 "cMa" = (
 /obj/structure/table/wood,
 /obj/item/book/granter/spell/smoke/lesser{
-	name = "mysterious old book of "
+	name = "mysterious old book of cloud-chasing"
 	},
 /obj/item/reagent_containers/food/drinks/bottle/holywater{
 	name = "flask of holy water";

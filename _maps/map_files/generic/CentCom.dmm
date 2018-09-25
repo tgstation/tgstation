@@ -8617,7 +8617,6 @@
 	pixel_y = -2
 	},
 /obj/item/toy/cards/deck/syndicate{
-	icon_state = "deck_syndicate_full";
 	pixel_x = -6;
 	pixel_y = 6
 	},
