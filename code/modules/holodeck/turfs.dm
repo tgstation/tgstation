@@ -119,6 +119,10 @@
 	if(intact)
 		queue_smooth(src)
 
+/turf/open/floor/holofloor/wood
+	icon_state = "wood"
+	tiled_dirt = FALSE
+
 /turf/open/floor/holofloor/snow
 	gender = PLURAL
 	name = "snow"

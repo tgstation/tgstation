@@ -505,11 +505,8 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/airlock)
 "bd" = (
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK"
+/obj/structure/sign/warning/vacuum/external{
+	layer = 4
 	},
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
