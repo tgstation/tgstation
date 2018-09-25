@@ -17,6 +17,11 @@
 	. = ..()
 	chambered = new /obj/item/ammo_casing/syringegun(src)
 
+/obj/item/gun/syringe/handle_atom_del(atom/A)
+	. = ..()
+	if(A in syringes)
+		syringes.Remove(A)
+
 /obj/item/gun/syringe/recharge_newshot()
 	if(!syringes.len)
 		return
@@ -42,7 +47,7 @@
 
 	if(!S)
 		return 0
-	S.forceMove(user.loc)
+	user.put_in_hands(S)
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")
