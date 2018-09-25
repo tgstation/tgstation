@@ -13,6 +13,8 @@
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass))
+	var/mob/lastuser
+	var/lastuserckey
 
 /obj/machinery/iv_drip/Initialize()
 	. = ..()
@@ -86,6 +88,9 @@
 			attached = target
 			START_PROCESSING(SSmachines, src)
 			update_icon()
+			lastuser = usr
+			if(usr.ckey)
+				lastuserckey = usr.ckey
 		else
 			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
@@ -149,6 +154,18 @@
 				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			attached.transfer_blood_to(beaker, amount)
 			update_icon()
+		if(lastuser || lastuserckey)
+			var/turf/T = get_turf(attached)
+			if(T)
+				var/attackertext = ""
+				if(lastuser)
+					attackertext = "[lastuser.name]([lastuser.ckey])"
+				else if(lastuserckey)
+					attackertext = "lastckey:[lastuserckey]"
+				var/logtext = "[attackertext] has extracted amount units of blood from [attached]([attached.ckey]) at [T.x] [T.y] [T.z]"
+				if(lastuser && attached != lastuser)
+					lastuser.log_message("<font color='red'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
+				attached.log_message("<font color='orange'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
 	. = ..()
