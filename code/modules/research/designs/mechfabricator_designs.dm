@@ -768,6 +768,15 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/datum/design/research_module
+	name = "Cyborg Upgrade (Research Processor)"
+	id = "research_module"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/research
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 15000)
+	construction_time = 40
+	category = list("Cyborg Upgrade Modules")
+	
 //Misc
 /datum/design/mecha_tracking
 	name = "Exosuit Tracking Beacon"
