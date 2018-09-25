@@ -1,7 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - balance: "Advanced Bluespace Research has been split in Bluespace Travel and Miniaturized Bluespace Research, with the former relating to static teleporters and the latter to small devices and stock parts."
-  - balance: "Hand teleporters are now protolathe-buildable in research and engineering, requiring Miniaturized Bluespace Research."
-  - rscadd: "Added Quantum Keycards, devices that can link to a quantum pad, and can be used on any other quantum pad to teleport to its linked pad."
-  - tweak: "Bluespace Power Technology now requires Applied Bluespace Research instead of Advanced Bluespace Research."

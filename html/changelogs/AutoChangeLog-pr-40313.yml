@@ -1,8 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed vareditted bonfires not properly igniting at round start."
-  - bugfix: "Fixed vareditted pianos switching to minimoogs at round start."
-  - bugfix: "Fixed some vareddited flashlights not turning on properly at round start."
-  - bugfix: "Fixed all missing floor icons"
-  - bugfix: "Fixed bookcases at the Wild West away mission not being properly populated."

@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Sending an activation code to a nanite program will reset its timer."
-  - bugfix: "Fixed self-deactivating programs being unable to be reactivated afterwards."

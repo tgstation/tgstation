@@ -1,5 +1,0 @@
-author: "Barhandar"
-delete-after: True
-changes: 
-  - balance: "Plasma cutters now flash you (same intensity as experimental welder) when used for welding."
-  - bugfix: "Plasma cutters also use charge to weld some things (like airlock shielding). Things like vents are still free however."

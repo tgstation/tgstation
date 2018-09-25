@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Orbiting is a little more aggressive about staying in orbit. The wisp as a result now correctly follows you over shuttle moves."

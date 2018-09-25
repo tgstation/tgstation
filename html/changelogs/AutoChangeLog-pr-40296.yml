@@ -1,9 +1,0 @@
-author: "Kierany9"
-delete-after: True
-changes: 
-  - rscadd: "A new gamemode called Assimilation."
-  - rscadd: "Several probably-inhuman creatures wielding psionic powers, known only as Hivemind Hosts, have appeared onboard the station and must assimilate as many crew members as possible. Assimilated crew serve as vessels for the Host to use their powers through (and on), and as a Host gains vessels, they gain new abilities.
-remove: Vessels are not antagonists. Assimilation does not convert crew in any way."
-  - rscadd: "Assimilated crewmembers can escape this nightmare by either getting a mindshield implant or by dying. Mindshielding vessels will reveal the identity of whoever assimilated them. Mindshielded crew are initially protected, but should a Host get strong enough, they can break these implants with ease."
-  - rscadd: "Nothing is stopping Hosts from working together, but as their hives grow, so does the incentive to backstab. At 8 vessels, Hosts can probe the minds of crew and discover the identity of any other Hosts who have assimilated them, and at 18, they can steal every single vessel from a captured enemy Host."
-  - tweak: "Assimilation requires 25 players roundstart."
