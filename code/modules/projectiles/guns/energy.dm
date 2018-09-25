@@ -79,7 +79,7 @@
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	return cell.charge >= shot.e_cost
+	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !cell)

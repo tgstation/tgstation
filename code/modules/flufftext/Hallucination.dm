@@ -1096,6 +1096,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /obj/effect/hallucination/danger/chasm/Crossed(atom/movable/AM)
 	if(AM == target)
+		if(istype(target, /obj/effect/dummy/phased_mob))
+			return
 		to_chat(target, "<span class='userdanger'>You fall into the chasm!</span>")
 		target.Knockdown(40)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, target, "<span class='notice'>It's surprisingly shallow.</span>"), 15)

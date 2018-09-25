@@ -9,7 +9,7 @@
 	var/proj_icon_state = "spell"
 	var/proj_name = "a spell projectile"
 
-	var/proj_trail = 0 //if it leaves a trail
+	var/proj_trail = FALSE //if it leaves a trail
 	var/proj_trail_lifespan = 0 //deciseconds
 	var/proj_trail_icon = 'icons/obj/wizard.dmi'
 	var/proj_trail_icon_state = "trail"
@@ -17,10 +17,10 @@
 
 	var/proj_type = "/obj/effect/proc_holder/spell/targeted" //IMPORTANT use only subtypes of this
 
-	var/proj_lingering = 0 //if it lingers or disappears upon hitting an obstacle
-	var/proj_homing = 1 //if it follows the target
-	var/proj_insubstantial = 0 //if it can pass through dense objects or not
-	var/proj_trigger_range = 0 //the range from target at which the projectile triggers cast(target)
+	var/proj_lingering = FALSE //if it lingers or disappears upon hitting an obstacle
+	var/proj_homing = TRUE //if it follows the target
+	var/proj_insubstantial = FALSE //if it can pass through dense objects or not
+	var/proj_trigger_range = FALSE //the range from target at which the projectile triggers cast(target)
 
 	var/proj_lifespan = 15 //in deciseconds * proj_step_delay
 	var/proj_step_delay = 1 //lower = faster

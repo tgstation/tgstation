@@ -43,22 +43,26 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	var/moles_visible = null
 	var/dangerous = FALSE //currently used by canisters
 	var/fusion_power = 0 //How much the gas accelerates a fusion reaction
+	var/rarity = 0 // relative rarity compared to other gases, used when setting up the reactions list.
 
 /datum/gas/oxygen
 	id = "o2"
 	specific_heat = 20
 	name = "Oxygen"
+	rarity = 900
 
 /datum/gas/nitrogen
 	id = "n2"
 	specific_heat = 20
 	name = "Nitrogen"
+	rarity = 1000
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
 	fusion_power = 3
+	rarity = 700
 
 /datum/gas/plasma
 	id = "plasma"
@@ -67,6 +71,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	gas_overlay = "plasma"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
+	rarity = 800
 
 /datum/gas/water_vapor
 	id = "water_vapor"
@@ -75,6 +80,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	gas_overlay = "water_vapor"
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 8
+	rarity = 500
 
 /datum/gas/hypernoblium
 	id = "nob"
@@ -83,6 +89,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
+	rarity = 50
 
 /datum/gas/nitrous_oxide
 	id = "n2o"
@@ -91,6 +98,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	gas_overlay = "nitrous_oxide"
 	moles_visible = 1
 	dangerous = TRUE
+	rarity = 600
 
 /datum/gas/nitryl
 	id = "no2"
@@ -100,6 +108,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	fusion_power = 15
+	rarity = 100
 
 /datum/gas/tritium
 	id = "tritium"
@@ -109,6 +118,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	fusion_power = 1
+	rarity = 300
 
 /datum/gas/bz
 	id = "bz"
@@ -116,18 +126,21 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	name = "BZ"
 	dangerous = TRUE
 	fusion_power = 8
+	rarity = 400
 
 /datum/gas/stimulum
 	id = "stim"
 	specific_heat = 5
 	name = "Stimulum"
 	fusion_power = 7
+	rarity = 1
 
 /datum/gas/pluoxium
 	id = "pluox"
 	specific_heat = 80
 	name = "Pluoxium"
 	fusion_power = 10
+	rarity = 200
 
 /datum/gas/miasma
 	id = "miasma"
@@ -135,6 +148,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	name = "Miasma"
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
+	rarity = 250
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/tile_effects.dmi'

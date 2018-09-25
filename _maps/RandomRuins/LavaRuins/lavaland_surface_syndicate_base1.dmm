@@ -1260,8 +1260,8 @@
 "eQ" = (
 /obj/machinery/light/small,
 /obj/structure/table/reinforced,
-/obj/item/storage/box/monkeycubes,
-/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes/syndicate,
+/obj/item/storage/box/monkeycubes/syndicate,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

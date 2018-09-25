@@ -57,4 +57,3 @@
 /obj/item/pen/uplink/Initialize(mapload, owner, tc_amount = 20)
 	. = ..()
 	AddComponent(/datum/component/uplink, owner, TRUE, FALSE, null, tc_amount)
-	traitor_unlock_degrees = 360

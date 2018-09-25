@@ -114,13 +114,13 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		return
 
 	var/point_gain = 0
-	
+
 	/*****The Point Calculator*****/
-	
+
 	if(orig_light < 10)
 		say("Explosion not large enough for research calculations.")
 		return
-	else if(orig_light < 4500) 
+	else if(orig_light < 4500)
 		point_gain = (83300 * orig_light) / (orig_light + 3000)
 	else
 		point_gain = TECHWEB_BOMB_POINTCAP
@@ -135,9 +135,11 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 		else
 			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
 			point_gain = 1000
-
-		linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-		say("Gained [point_gain] points from explosion dataset.")
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
+		if(D)
+			D.adjust_money(point_gain)
+			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
+			say("Explosion details and mixture analyzed and sold to the highest bidder for $[point_gain], with a reward of [point_gain] points.")
 
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")

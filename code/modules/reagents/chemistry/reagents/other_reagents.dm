@@ -972,7 +972,7 @@
 /datum/reagent/fuel
 	name = "Welding fuel"
 	id = "welding_fuel"
-	description = "Required for welders. Flamable."
+	description = "Required for welders. Flammable."
 	color = "#660000" // rgb: 102, 0, 0
 	taste_description = "gross metal"
 	glass_icon_state = "dr_gibb_glass"
@@ -1245,7 +1245,7 @@
 	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
 	..()
 
-/datum/reagent/stimulum/on_mob_life(mob/living/carbon/M) 
+/datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(-2*REM, 0)
 	current_cycle++
 	holder.remove_reagent(id, 0.99)		//Gives time for the next tick of life().

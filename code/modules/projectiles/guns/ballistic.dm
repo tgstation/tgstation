@@ -46,7 +46,7 @@
 		chambered.forceMove(src)
 
 /obj/item/gun/ballistic/can_shoot()
-	if(!magazine || !magazine.ammo_count(0))
+	if(!magazine || !magazine.ammo_count(FALSE))
 		return 0
 	return 1
 
@@ -142,7 +142,7 @@
 	..()
 	to_chat(user, "It has [get_ammo()] round\s remaining.")
 
-/obj/item/gun/ballistic/proc/get_ammo(countchambered = 1)
+/obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++

@@ -32,6 +32,7 @@
 	var/chat_commands_json_path
 	var/server_commands_json_path
 	var/reboot_mode = TGS_REBOOT_MODE_NORMAL
+	var/security_level
 	
 	var/list/intercepted_message_queue
 	
@@ -48,7 +49,7 @@
 /datum/tgs_api/v4/ApiVersion()
 	return "4.0.0.0"
 
-/datum/tgs_api/v4/OnWorldNew(datum/tgs_event_handler/event_handler)
+/datum/tgs_api/v4/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)
 	json_path = world.params[TGS4_PARAM_INFO_JSON]
 	if(!json_path)
 		TGS_ERROR_LOG("Missing [TGS4_PARAM_INFO_JSON] world parameter!")
@@ -63,14 +64,14 @@
 		return
 
 	access_identifier = cached_json["accessIdentifier"]
-	instance_name = text2num(cached_json["instanceName"])
 	server_commands_json_path = cached_json["serverCommandsJson"]
 
 	if(cached_json["apiValidateOnly"])
 		TGS_INFO_LOG("Validating API and exiting...")
-		Export(TGS4_COMM_VALIDATE)
+		Export(TGS4_COMM_VALIDATE, list(TGS4_PARAMETER_DATA = "[minimum_required_security_level]"))
 		del(world)
 
+	security_level = cached_json["securityLevel"]
 	chat_channels_json_path = cached_json["chatChannelsJson"]
 	chat_commands_json_path = cached_json["chatCommandsJson"]
 	src.event_handler = event_handler
@@ -187,7 +188,7 @@
 
 		//request a new port
 		export_lock = FALSE
-		var/list/new_port_json = Export(TGS4_COMM_NEW_PORT, list("current_port" = "[world.port]"))	//stringify this on purpose
+		var/list/new_port_json = Export(TGS4_COMM_NEW_PORT, list(TGS4_PARAMETER_DATA = "[world.port]"))	//stringify this on purpose
 		
 		if(!new_port_json)
 			TGS_ERROR_LOG("No new port response from server![TGS4_PORT_CRITFAIL_MESSAGE]")
@@ -221,14 +222,13 @@
 	export_lock = FALSE
 
 /datum/tgs_api/v4/OnReboot()
-	var/json = Export(TGS4_COMM_WORLD_REBOOT)
-	var/list/result = json_decode(json)
+	var/list/result = Export(TGS4_COMM_WORLD_REBOOT)
 	if(!result)
 		return
 	
 	//okay so the standard TGS4 proceedure is: right before rebooting change the port to whatever was sent to us in the above json's data parameter
 
-	var/port = json[TGS4_PARAMETER_DATA]
+	var/port = result[TGS4_PARAMETER_DATA]
 	if(!isnum(port))
 		return	//this is valid, server may just want use to reboot
 
@@ -294,6 +294,9 @@
 	channel.is_private_channel = channel_json["isPrivateChannel"]
 	channel.custom_tag = channel_json["tag"]
 	return channel
+
+/datum/tgs_api/v4/SecurityLevel()
+	return security_level
 
 /*
 The MIT License

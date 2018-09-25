@@ -510,10 +510,12 @@
 	return parts.Join()
 
 
-/proc/printobjectives(datum/mind/ply)
+/proc/printobjectives(list/objectives)
+	if(!objectives || !objectives.len)
+		return
 	var/list/objective_parts = list()
 	var/count = 1
-	for(var/datum/objective/objective in ply.objectives)
+	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
 			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
@@ -531,10 +533,11 @@
 		return
 	sync_ranks_with_db()
 	var/list/sql_admins = list()
-	for(var/datum/admins/A in GLOB.protected_admins)
-		var/sql_ckey = sanitizeSQL(A.owner.ckey)
+	for(var/i in GLOB.protected_admins)
+		var/datum/admins/A = GLOB.protected_admins[i]
+		var/sql_ckey = sanitizeSQL(A.target)
 		var/sql_rank = sanitizeSQL(A.rank.name)
-		sql_admins = list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
+		sql_admins += list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
 	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()

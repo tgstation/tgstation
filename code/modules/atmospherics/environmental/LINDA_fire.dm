@@ -42,7 +42,7 @@
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-	else	
+	else
 		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
 		heating.temperature = exposed_temperature
 		heating.react()
@@ -250,15 +250,9 @@
 /obj/effect/hotspot/singularity_pull()
 	return
 
-/obj/effect/dummy/fire
+/obj/effect/dummy/lighting_obj/moblight/fire
 	name = "fire"
-	desc = "OWWWWWW. IT BURNS. Tell a coder if you're seeing this."
-	icon_state = "nothing"
 	light_color = LIGHT_COLOR_FIRE
 	light_range = LIGHT_RANGE_FIRE
 
-/obj/effect/dummy/fire/Initialize()
-	. = ..()
-	if(!isliving(loc))
-		return INITIALIZE_HINT_QDEL
 #undef INSUFFICIENT

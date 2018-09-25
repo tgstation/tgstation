@@ -474,6 +474,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
+	var/icon_prefix = "spearglass"
 
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
@@ -503,7 +504,7 @@
 	if(explosive)
 		icon_state = "spearbomb[wielded]"
 	else
-		icon_state = "spearglass[wielded]"
+		icon_state = "[icon_prefix][wielded]"
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
@@ -536,6 +537,13 @@
 				src.war_cry = input
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/shard/tip = locate() in parts_list
+	if (istype(tip, /obj/item/shard/plasma))
+		force_wielded = 19
+		force_unwielded = 11
+		throwforce = 21
+		icon_prefix = "spearplasma"
+	qdel(tip)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
 	if(S)
 		if(S.explosive)
@@ -825,7 +833,7 @@
 	if(!wielded)
 		return
 	if(QDELETED(mobhook))
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))	
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
 	else
 		user.TakeComponent(mobhook)
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")

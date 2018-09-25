@@ -25,7 +25,6 @@
 	pressure_resistance = 2
 	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
-	var/traitor_unlock_degrees = 0
 	var/degrees = 0
 	var/font = PEN_FONT
 

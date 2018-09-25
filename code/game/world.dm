@@ -14,7 +14,7 @@ GLOBAL_VAR(restart_counter)
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
-	TgsNew()
+	TgsNew(minimum_required_security_level = TGS_SECURITY_TRUSTED)
 
 	GLOB.revdata = new
 
