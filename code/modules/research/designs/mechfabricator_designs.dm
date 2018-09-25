@@ -593,7 +593,7 @@
 	id = "borg_upgrade_vtec"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/vtec
-	materials = list(MAT_META L= 35000 , MAT_GLASS = 12000 , MAT_URANIUM = 10000)
+	materials = list(MAT_METAL= 35000 , MAT_GLASS = 12000 , MAT_URANIUM = 10000)
 	construction_time = 80
 	category = list("Cyborg Upgrade Modules")
 
