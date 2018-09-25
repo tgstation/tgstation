@@ -61,10 +61,7 @@
 			preprime(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
-	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [src] for detonation at [ADMIN_VERBOSEJMP(T)]"
-	GLOB.bombers += message
-	message_admins(message)
-	log_game("[key_name(user)] has primed \a [src] for detonation at [AREACOORD(T)].")
+	log_bomber(user, "has primed a", src, "for detonation")
 
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
