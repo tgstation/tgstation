@@ -65,6 +65,12 @@
 	tastes = list("tofu" = 1)
 	foodtype = VEGETABLES
 
+/obj/item/reagent_containers/food/snacks/tofu/prison
+	name = "soggy tofu"
+	desc = "You refuse to eat this strange bean curd."
+	tastes = list("sour, rotten water" = 1)
+	foodtype = GROSS
+
 /obj/item/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
 	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
