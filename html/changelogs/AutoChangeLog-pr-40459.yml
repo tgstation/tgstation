@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "ID Cards now only display payday messages to the owner if they're being carried. Cards on the ground will still display them to nearby mobs."
