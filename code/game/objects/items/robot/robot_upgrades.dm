@@ -637,3 +637,29 @@
 	desc = "Allows you to to turn a cyborg into a clown, honk."
 	icon_state = "cyborg_upgrade3"
 	new_module = /obj/item/robot_module/clown
+
+/obj/item/borg/upgrade/research
+	name = "research upgrade"
+	desc = "An efficent module that uses the cyborg processor to calculate complex math equations, uses extra power to run."
+	icon_state = "graphic_card"
+	var/mob/living/silicon/robot/cyborg
+
+/obj/item/borg/upgrade/research/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/borg/upgrade/research/U = locate() in R
+		cyborg = R
+		if(U)
+			to_chat(user, "<span class='warning'>This unit is already equipped with a research module.</span>")
+		else
+			START_PROCESSING(SSobj, src)
+/obj/item/borg/upgrade/research/process()
+	if((cyborg.cell.charge > 30) && (cyborg.ckey))
+		cyborg.cell.use(30)
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = 15))
+/obj/item/borg/upgrade/research/deactivate(mob/living/silicon/robot/R, user = usr)
+    . = ..()
+    if (.)
+        var/obj/item/borg/upgrade/research/U = locate() in R
+        R.module.remove_module(U, TRUE)
+        STOP_PROCESSING(SSobj, src)
