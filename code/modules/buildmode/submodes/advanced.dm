@@ -36,7 +36,7 @@
 	var/alt_click = pa.Find("alt")
 
 	if(left_click && alt_click)
-		if ((istype(object, /turf) || istype(object, /obj) || istype(object, /mob))
+		if (istype(object, /turf || istype(object, /obj) || istype(object, /mob))
 			objholder = object.type
 			to_chat(c, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
 		else
