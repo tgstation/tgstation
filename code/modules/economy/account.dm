@@ -68,7 +68,7 @@
 				playsound(get_turf(card_holder), 'sound/machines/twobeep.ogg', 50, 1)
 				A.audible_message("[icon2html(A, hearers(A))] *[message]*", null, 1)
 		else
-			for(var/mob/M in A.loc.contents) //If inside a container with other mobs (e.g. locker)
+			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep.ogg', 50, 1)
 				if(M.can_hear())
 					to_chat(M, "[icon2html(A, M)] *[message]*")
