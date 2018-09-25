@@ -232,25 +232,35 @@
 	var/list/counted_money = list()
 
 	for(var/obj/item/coin/C in AM.GetAllContents())
-		payees[AM] += C.value
-		counted_money += C
 		if(payees[AM] >= threshold)
 			break
+		payees[AM] += C.value
+		counted_money += C		
 	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
+		if(payees[AM] >= threshold)
+			break
 		payees[AM] += S.value * S.amount
 		counted_money += S
+	for(var/obj/item/holochip/H in AM.GetAllContents())
 		if(payees[AM] >= threshold)
 			break
+		payees[AM] += H.credits
+		counted_money += H
 
-	if(istype(AM.pulling, /obj/item/coin))
+	if(payees[AM] < threshold && istype(AM.pulling, /obj/item/coin))
 		var/obj/item/coin/C = AM.pulling
 		payees[AM] += C.value
 		counted_money += C
 
-	else if(istype(AM.pulling, /obj/item/stack/spacecash))
+	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/S = AM.pulling
 		payees[AM] += S.value * S.amount
 		counted_money += S
+			
+	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/holochip))
+		var/obj/item/holochip/H = AM.pulling
+		payees[AM] += H.credits
+		counted_money += H
 
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM

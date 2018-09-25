@@ -8,6 +8,7 @@
 	var/obj/item/radio/radio
 	var/radio_channel = "Common"
 	var/minimum_time_between_warnings = 400
+	var/syphoning_credits = 0
 
 /obj/machinery/computer/bank_machine/Initialize()
 	. = ..()
@@ -25,6 +26,9 @@
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/C = I
 		value = C.value * C.amount
+	else if(istype(I, /obj/item/holochip))
+		var/obj/item/holochip/H = I
+		value = H.credits
 	if(value)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
@@ -40,14 +44,15 @@
 	if(siphoning)
 		if (stat & (BROKEN|NOPOWER))
 			say("Insufficient power. Halting siphon.")
-			siphoning =	FALSE
+			end_syphon()
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(!D.has_money(200))
 			say("Cargo budget depleted. Halting siphon.")
-			siphoning = FALSE
+			end_syphon()
 			return
-		new /obj/item/stack/spacecash/c200(drop_location()) // will autostack
+		
 		playsound(src, 'sound/items/poster_being_created.ogg', 100, 1)
+		syphoning_credits += 200
 		D.adjust_money(-200)
 		if(next_warning < world.time && prob(15))
 			var/area/A = get_area(loc)
@@ -85,4 +90,9 @@
 		siphoning = TRUE
 	if(href_list["halt"])
 		say("Station credit withdrawal halted.")
-		siphoning = FALSE
+		end_syphon()
+		
+/obj/machinery/computer/bank_machine/proc/end_syphon()
+	siphoning = FALSE
+	new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
+	syphoning_credits = 0
