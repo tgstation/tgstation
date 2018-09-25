@@ -242,8 +242,9 @@
 		payees[AM] += S.value * S.amount
 		counted_money += S
 	for(var/obj/item/holochip/H in AM.GetAllContents())
-		if(payees[AM] >= threshold)			break
-		total_cash += H.credits
+		if(payees[AM] >= threshold)
+			break
+		payees[AM] += H.credits
 		counted_money += H
 
 	if(payees[AM] < threshold && istype(AM.pulling, /obj/item/coin))
