@@ -2,6 +2,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/list/orbiters
 	var/datum/callback/orbiter_spy
+	var/datum/callback/orbited_spy
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -15,6 +16,7 @@
 
 	orbiters = list()
 	orbiter_spy = CALLBACK(src, .proc/orbiter_move_react)
+	orbited_spy = CALLBACK(src, .proc/move_react)
 
 	var/atom/master = parent
 	master.orbiters = src
@@ -22,17 +24,25 @@
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 
 /datum/component/orbiter/RegisterWithParent()
-	if(ismovableatom(parent))
-		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	var/atom/master = parent
+	if(ismovableatom(master))
+		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, orbited_spy)
+		var/atom/target = master.loc
+		while(!isturf(target))
+			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy)
+			target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
-	master.orbiters = src
+	master.orbiters = null
+	for(var/i in orbiters)
+		end_orbit(i)
 	orbiters = null
-	orbiter_spy = null
+	QDEL_NULL(orbiter_spy)
+	QDEL_NULL(orbited_spy)
 	return ..()
 
 /datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, list/arguments)
@@ -46,9 +56,17 @@
 	orbiters += newcomp.orbiters
 
 /datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
+	if(!isnull(orbiters[orbiter]))
+		return // We're already here
+	if(orbiter == parent) // Stop it, this is silly
+		if(!length(orbiters))
+			qdel(src)
+		return
+	if(orbiter.orbiting)
+		orbiter.orbiting.end_orbit(orbiter)
 	orbiters[orbiter] = lockinorbit
 	orbiter.orbiting = src
-	RegisterSignal(orbiter, list(COMSIG_MOVABLE_MOVED), orbiter_spy)
+	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, orbiter_spy)
 	var/matrix/initial_transform = matrix(orbiter.transform)
 
 	// Head first!
@@ -74,17 +92,40 @@
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter)
 	if(isnull(orbiters[orbiter]))
 		return
+	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	orbiter.SpinAnimation(0, 0)
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
-	if(!length(orbiters))
+	orbiter.orbiting = null
+	if(!length(orbiters) && !QDELING(src))
 		qdel(src)
 
+// This proc can receive signals by either the thing being directly orbited or anything holding it
 /datum/component/orbiter/proc/move_react(atom/orbited, atom/oldloc, direction)
 	var/turf/oldturf = get_turf(oldloc)
 	var/turf/newturf = get_turf(parent)
+	if(newturf == oldturf)
+		return
+	if(!newturf)
+		qdel(src)
+
+	// Handling the signals of stuff holding us (or not anymore)
+	// These are prety rarely activated, how often are you following something in a bag?
+	if(!isturf(oldloc)) // We used to be registered to it, probably
+		var/atom/target = oldloc
+		while(!isturf(target))
+			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+			target = target.loc
+	if(orbited.loc != newturf) // We want to know when anything holding us moves too
+		var/atom/target = orbited.loc
+		while(!isturf(target))
+			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy, TRUE)
+			target = target.loc
+	
 	for(var/i in orbiters)
 		var/atom/movable/thing = i
+		if(thing.loc == newturf)
+			continue
 		if(!newturf || (!orbiters[thing] && thing.loc != oldturf && thing.loc != newturf))
 			end_orbit(thing)
 			continue
@@ -99,7 +140,7 @@
 /////////////////////
 
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
-	if(!istype(A))
+	if(!istype(A) || !get_turf(A))
 		return
 
 	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
