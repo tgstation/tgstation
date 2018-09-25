@@ -381,6 +381,7 @@
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
 	var/toyswordamt = 0 //honk
+	var/obj/item/stock_parts/cell/cell
 
 /obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
 	..()
@@ -433,6 +434,26 @@
 				build_step--
 
 		if(ASSEMBLY_FOURTH_STEP)
+			if(istype(I, /obj/item/stock_parts/cell))
+				if(!can_finish_build(I, user))
+					return
+				cell = I
+				cell.forceMove(src)
+				build_step++
+			else if(istype(I, /obj/item/screwdriver)) //deconstruct
+				cut_overlay("hs_arm")
+				var/obj/item/bodypart/dropped_arm = new robot_arm(Tsec)
+				robot_arm = null
+				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
+				build_step--
+				if(toyswordamt > 0 || toyswordamt)
+					icon_state = initial(icon_state)
+					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
+					for(var/IS in 1 to toyswordamt)
+						new /obj/item/toy/sword(Tsec)
+
+
+		if(ASSEMBLY_FIFTH_STEP)
 			if(istype(I, /obj/item/melee/baton))
 				if(!can_finish_build(I, user))
 					return
@@ -440,6 +461,8 @@
 				var/mob/living/simple_animal/bot/secbot/S = new(Tsec)
 				S.name = created_name
 				S.baton_type = I.type
+				S.cell = cell
+				cell.forceMove(S)
 				S.robot_arm = robot_arm
 				qdel(I)
 				qdel(src)
@@ -468,18 +491,11 @@
 					qdel(src)
 
 			else if(istype(I, /obj/item/screwdriver)) //deconstruct
-				cut_overlay("hs_arm")
-				var/obj/item/bodypart/dropped_arm = new robot_arm(Tsec)
-				robot_arm = null
-				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
+				cell.forceMove(Tsec)
+				to_chat(user, "<span class='notice'>You detach the cell from [src].</span>")
 				build_step--
-				if(toyswordamt > 0 || toyswordamt)
-					icon_state = initial(icon_state)
-					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
-					for(var/IS in 1 to toyswordamt)
-						new /obj/item/toy/sword(Tsec)
 
-		if(ASSEMBLY_FIFTH_STEP)
+		if(6)
 			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
 				if(swordamt < 3)
 					if(!user.temporarilyRemoveItemFromInventory(I))

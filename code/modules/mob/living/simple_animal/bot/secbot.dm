@@ -16,12 +16,17 @@
 	model = "Securitron"
 	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
-	window_name = "Automatic Security Unit v1.6"
+	window_name = "Automatic Security Unit v1.7"
 	allow_pai = 0
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
 
 	var/baton_type = /obj/item/melee/baton
+	var/obj/item/stock_parts/cell/cell
+	var/stuncost = 1000 //10 stuns default, 40 with bluespace cell
+	var/charge_tick = 0
+	var/charge_delay = 10
+	var/hibernating = FALSE //turned itself off to recharge
 	var/mob/living/carbon/target
 	var/oldtarget_name
 	var/threatlevel = FALSE
@@ -32,6 +37,11 @@
 	var/weaponscheck = FALSE //If true, arrest people for weapons if they lack access
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
+
+/mob/living/simple_animal/bot/secbot/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	cell = new /obj/item/stock_parts/cell/potato(src, 10000)
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
@@ -52,7 +62,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/atom/Tsec = drop_location()
-	new /obj/item/stock_parts/cell/potato(Tsec)
+	cell.forceMove(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/S = new(Tsec)
 	S.reagents.add_reagent("whiskey", 15)
 	S.on_reagent_change(ADD_REAGENT)
@@ -80,9 +90,39 @@
 		return
 	..()
 
+/mob/living/simple_animal/bot/secbot/process()
+	if(!cell && on)
+		turn_off()
+
+	if(on)
+		cell.use(25)
+
+	if(cell.charge < stuncost && hibernating == FALSE)
+		speak("Low power in [get_area(src)]. Entering hibernation mode.", radio_channel)
+		turn_off()
+		hibernating = TRUE
+	else if(cell.charge >= stuncost && hibernating == TRUE)
+		turn_on()
+		hibernating = FALSE
+		speak("Hibernation complete. Resuming duties.", radio_channel)
+
+	if(cell.percent() < 100)
+		charge_tick++
+		if(charge_tick < charge_delay)
+			return
+		charge_tick = 0
+		cell.give(stuncost)
+
 /mob/living/simple_animal/bot/secbot/turn_off()
 	..()
 	mode = BOT_IDLE
+
+/mob/living/simple_animal/bot/secbot/turn_on()
+	if(cell.percent() <= 0)
+		return
+	if(hibernating)
+		hibernating = FALSE
+	..()
 
 /mob/living/simple_animal/bot/secbot/bot_reset()
 	..()
@@ -103,7 +143,7 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Securitron v1.6 controls</B></TT><BR><BR>
+<TT><B>Securitron v1.7 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
@@ -178,6 +218,15 @@ Auto Patrol: []"},
 		if(special_retaliate_after_attack(H))
 			return
 
+	else if(open && cell && !issilicon(H))
+		add_fingerprint(H)
+		cell.update_icon()
+		cell.add_fingerprint(H)
+		H.put_in_active_hand(cell)
+		to_chat(H, "<span class='notice'>You remove \the [cell].</span>")
+		cell = null
+		return
+
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attackby(obj/item/W, mob/user, params)
@@ -188,6 +237,15 @@ Auto Patrol: []"},
 		retaliate(user)
 		if(special_retaliate_after_attack(user))
 			return
+	if(istype(W, /obj/item/stock_parts/cell) && open)	// trying to put a cell inside
+		if(cell)
+			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
+		else
+			if(!user.transferItemToLoc(W, src))
+				return
+			user.transferItemToLoc(W, src)
+			cell = W
+			to_chat(user, "<span class='notice'>You insert \the [W].</span>")
 
 /mob/living/simple_animal/bot/secbot/emag_act(mob/user)
 	..()
@@ -246,6 +304,9 @@ Auto Patrol: []"},
 		back_to_idle()
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
+	if(cell.charge < stuncost)
+		return
+	cell.use(stuncost)
 	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 	icon_state = "secbot-c"
