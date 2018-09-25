@@ -29,6 +29,8 @@
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
 /datum/component/orbiter/Destroy()
+	var/atom/master = parent
+	master.orbiters = src
 	orbiters = null
 	orbiter_spy = null
 	return ..()
