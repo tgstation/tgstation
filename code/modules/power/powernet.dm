@@ -13,6 +13,7 @@
 	var/viewavail = 0			// the available power as it appears on the power console (gradually updated)
 	var/viewload = 0			// the load as it appears on the power console (gradually updated)
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)///////
+	var/delayedload = 0			// load applied to powernet between power ticks.
 
 /datum/powernet/New()
 	SSmachines.powernets += src
@@ -88,7 +89,8 @@
 	viewload = round(0.8 * viewload + 0.2 * load)
 
 	// reset the powernet
-	load = 0
+	load = delayedload
+	delayedload = 0
 	avail = newavail
 	newavail = 0
 

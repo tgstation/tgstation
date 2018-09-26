@@ -53,3 +53,4 @@
 	var/creamed = FALSE //to use with creampie overlays
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
 	var/lastpuke = 0
+	var/account_id

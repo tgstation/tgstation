@@ -480,6 +480,7 @@
 		if("eject")
 			if(holding)
 				if(valve_open)
+					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the <span class='boldannounce'>air</span><br>.")
 					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
 				holding.forceMove(get_turf(src))
 				holding = null

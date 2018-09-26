@@ -127,17 +127,19 @@
 	self_delay = 20
 	max_amount = 12
 
-/obj/item/stack/medical/gauze/wirecutter_act(mob/living/user, obj/item/I)
-	if(get_amount() < 2)
-		to_chat(user, "<span class='warning'>You need at least two gauze to do this!</span>")
-		return
-	new /obj/item/stack/sheet/cloth(user.drop_location())
-	user.visible_message("[user] cuts [src] into pieces of cloth with [I].", \
-				 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
-				 "<span class='italics'>You hear cutting.</span>")
-	var/obj/item/stack/medical/gauze/R = src
-	src = null
-	R.use(2)
+
+/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/wirecutters) || I.is_sharp())
+		if(get_amount() < 2)
+			to_chat(user, "<span class='warning'>You need at least two gauzes to do this!</span>")
+			return
+		new /obj/item/stack/sheet/cloth(user.drop_location())
+		user.visible_message("[user] cuts [src] into pieces of cloth with [I].", \
+					 "<span class='notice'>You cut [src] into pieces of cloth with [I].</span>", \
+					 "<span class='italics'>You hear cutting.</span>")
+		use(2)
+	else
+		return ..()
 
 /obj/item/stack/medical/gauze/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins tightening \the [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!</span>")

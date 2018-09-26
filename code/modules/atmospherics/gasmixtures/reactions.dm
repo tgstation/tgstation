@@ -1,19 +1,36 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
 
 /proc/init_gas_reactions()
-	var/list/reaction_types = list()
+	. = list()
+	for(var/type in subtypesof(/datum/gas))
+		.[type] = list()
+
 	for(var/r in subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = r
-		if(!initial(reaction.exclude))
-			reaction_types += reaction
-	reaction_types = sortList(reaction_types, /proc/cmp_gas_reactions)
+		if(initial(reaction.exclude))
+			continue
+		reaction = new r
+		var/datum/gas/reaction_key
+		for (var/req in reaction.min_requirements)
+			if (ispath(req))
+				var/datum/gas/req_gas = req
+				if (!reaction_key || initial(reaction_key.rarity) > initial(req_gas.rarity))
+					reaction_key = req_gas
+		.[reaction_key] += list(reaction)
+		sortTim(., /proc/cmp_gas_reactions, TRUE)
 
-	. = list()
-	for(var/path in reaction_types)
-		. += new path
-
-/proc/cmp_gas_reactions(datum/gas_reaction/a, datum/gas_reaction/b) //sorts in descending order of priority
-	return initial(b.priority) - initial(a.priority)
+/proc/cmp_gas_reactions(list/datum/gas_reaction/a, list/datum/gas_reaction/b) // compares lists of reactions by the maximum priority contained within the list
+	if (!length(a) || !length(b))
+		return length(b) - length(a)
+	var/maxa
+	var/maxb
+	for (var/datum/gas_reaction/R in a)
+		if (R.priority > maxa)
+			maxa = R.priority
+	for (var/datum/gas_reaction/R in b)
+		if (R.priority > maxb)
+			maxb = R.priority
+	return maxb - maxa
 
 /datum/gas_reaction
 	//regarding the requirements lists: the minimum or maximum requirements must be non-zero.
@@ -257,7 +274,7 @@
 		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
 		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_TRITIUM //60% of the gas is converted to energy, 40% to trit
 		fusion_prepare_to_die_edition_rng = 100 //Wait a minute..
-		do_explosion = TRUE			
+		do_explosion = TRUE
 		zap_range = FUSION_ZAP_RANGE_SUPER
 
 	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. The reaction is so energized that it fuses into a small amount of stimulum, and some pluoxium. Very dangerous, but super cool and super useful.
@@ -433,7 +450,7 @@
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((air.temperature*old_heat_capacity - energy_taken)/new_heat_capacity),TCMB)
-	
+
 
 /datum/gas_reaction/miaster	//dry heat sterilization: clears out pathogens in the air
 	priority = -10 //after all the heating from fires etc. is done
@@ -449,13 +466,13 @@
 /datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	// As the name says it, it needs to be dry
-	if(/datum/gas/water_vapor in cached_gases)
-		if(cached_gases[/datum/gas/water_vapor]/air.total_moles() > 0.1)
-			return
+	if(cached_gases[/datum/gas/water_vapor] && cached_gases[/datum/gas/water_vapor][MOLES]/air.total_moles() > 0.1)
+		return
 
 	//Replace miasma with oxygen
 	var/cleaned_air = min(cached_gases[/datum/gas/miasma][MOLES], 20 + (air.temperature - FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 70) / 20)
 	cached_gases[/datum/gas/miasma][MOLES] -= cleaned_air
+	ASSERT_GAS(/datum/gas/oxygen,air)
 	cached_gases[/datum/gas/oxygen][MOLES] += cleaned_air
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable

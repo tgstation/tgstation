@@ -2,7 +2,7 @@
 	var/hand_path = /obj/item/melee/touch_attack
 	var/obj/item/melee/touch_attack/attached_hand = null
 	invocation_type = "none" //you scream on connecting, not summoning
-	include_user = 1
+	include_user = TRUE
 	range = -1
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
@@ -54,7 +54,7 @@
 
 	school = "evocation"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
@@ -66,7 +66,7 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"

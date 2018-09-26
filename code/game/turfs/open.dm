@@ -4,7 +4,6 @@
 
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
-	var/list/archdrops
 	var/wet
 
 	var/footstep = null
@@ -13,8 +12,6 @@
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
-	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, archdrops)
 
 /turf/open/indestructible
 	name = "floor"
@@ -234,6 +231,7 @@
 			C.accident(I)
 
 		var/olddir = C.dir
+		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 		if(!(lube & SLIDE_ICE))
 			C.Knockdown(knockdown_amount)
 			C.stop_pulling()
@@ -247,6 +245,8 @@
 		if(lube&SLIDE)
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
 		else if(lube&SLIDE_ICE)
+			if(C.force_moving) //If we're already slipping extend it
+				qdel(C.force_moving)
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 

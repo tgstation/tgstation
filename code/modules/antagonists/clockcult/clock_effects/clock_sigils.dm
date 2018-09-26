@@ -57,7 +57,7 @@
 /obj/effect/clockwork/sigil/proc/sigil_effects(mob/living/L)
 
 
-//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar-Sian cultists are damaged and knocked down for a longer time
+//Sigil of Transgression: Stuns the first non-servant to walk on it and flashes all nearby non_servants. Nar'Sian cultists are damaged and knocked down for a longer time
 /obj/effect/clockwork/sigil/transgression
 	name = "dull sigil"
 	desc = "A dull, barely-visible golden sigil. It's as though light was carved into the ground."

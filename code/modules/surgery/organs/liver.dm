@@ -40,7 +40,7 @@
 			C.reagents.metabolize(C, can_overdose=TRUE)
 
 			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='notice'>You feel [pick("nauseated", "a dull pain in your lower body", "confused")].</span>")
+				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
@@ -64,13 +64,16 @@
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"
 	icon_state = "liver-c"
-	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
 	synthetic = TRUE
+	maxHealth = 110
+	toxTolerance = 3.3
+	toxLethality = 0.009
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"
 	icon_state = "liver-c-u"
-	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
+	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
 	maxHealth = 200 //double the health of a normal liver
 	toxTolerance = 15 //can shrug off up to 15u of toxins

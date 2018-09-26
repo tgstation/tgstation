@@ -56,8 +56,9 @@
 /datum/tgs_api/v3210/proc/file2list(filename)
 	return splittext(trim_left(trim_right(file2text(filename))), "\n")
 
-/datum/tgs_api/v3210/OnWorldNew(datum/tgs_event_handler/event_handler)	//don't use event handling in this version
+/datum/tgs_api/v3210/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)	//don't use event handling in this version
 	. = FALSE
+
 	comms_key = world.params[SERVICE_WORLD_PARAM]
 	instance_name = world.params[SERVICE_INSTANCE_PARAM]
 	if(!instance_name)
@@ -187,8 +188,11 @@
 /datum/tgs_api/v3210/ChatTargetedBroadcast(message, admin_only)
 	ExportService("[admin_only ? SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE : SERVICE_REQUEST_IRC_BROADCAST] [message]")
 
-/datum/tgs_api/v3210/ChatPrivateMessage(message, admin_only)
+/datum/tgs_api/v3210/ChatPrivateMessage(message, datum/tgs_chat_user/user)
 	return TGS_UNIMPLEMENTED
+
+/datum/tgs_api/v3210/SecurityLevel()
+	return TGS_SECURITY_TRUSTED
 
 #undef REBOOT_MODE_NORMAL
 #undef REBOOT_MODE_HARD

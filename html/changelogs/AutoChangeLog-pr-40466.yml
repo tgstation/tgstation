@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "skate bounty now accept the item version of the sakteboard"

@@ -6,7 +6,7 @@
 	var/datum/action/innate/shuttledocker_place/place_action = new
 	var/shuttleId = ""
 	var/shuttlePortId = ""
-	var/shuttlePortName = ""
+	var/shuttlePortName = "custom location"
 	var/list/jumpto_ports = list() //hashset of ports to jump to and ignore for collision purposes
 	var/obj/docking_port/stationary/my_port //the custom docking port placed by this console
 	var/obj/docking_port/mobile/shuttle_port //the mobile docking port of the connected shuttle
@@ -246,7 +246,7 @@
 		current_user.client.images -= remove_images
 		current_user.client.images += add_images
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/camera_advanced/shuttle_docker/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"

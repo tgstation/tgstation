@@ -18,7 +18,6 @@
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
-	var/list/debris = list()
 	can_be_unanchored = TRUE
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
@@ -27,7 +26,6 @@
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
 	var/rad_insulation = RAD_VERY_LIGHT_INSULATION
-	var/spawn_cleanable_shards = TRUE
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -56,22 +54,8 @@
 	ini_dir = dir
 	air_update_turf(1)
 
-	// Precreate our own debris
-
-	var/shards = 1
 	if(fulltile)
-		shards++
 		setDir()
-	var/rods = 0
-	if(reinf)
-		rods++
-		if(fulltile)
-			rods++
-
-	for(var/i in 1 to shards)
-		debris += new /obj/item/shard(src)
-	if(rods)
-		debris += new /obj/item/stack/rods(src, rods)
 
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
@@ -98,8 +82,6 @@
 
 /obj/structure/window/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
-	for(var/obj/item/shard/shard in debris)
-		shard.add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/structure/window/ratvar_act()
 	if(!fulltile)
@@ -288,16 +270,19 @@
 	if(!disassembled)
 		playsound(src, breaksound, 70, 1)
 		if(!(flags_1 & NODECONSTRUCT_1))
-			if(spawn_cleanable_shards)
-				new /obj/effect/decal/cleanable/glass(get_turf(src))
-			for(var/i in debris)
-				var/obj/item/I = i
-				I.forceMove(drop_location())
-				transfer_fingerprints_to(I)
-				debris -= I
+			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
+				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	qdel(src)
 	update_nearby_icons()
 
+/obj/structure/window/proc/spawnDebris(location)
+	. = list()
+	. += new /obj/item/shard(location)
+	. += new /obj/effect/decal/cleanable/glass(location)
+	if (reinf)
+		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	if (fulltile)
+		. += new /obj/item/shard(location)
 
 /obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
 	if(anchored)
@@ -425,7 +410,15 @@
 	explosion_block = 1
 	glass_type = /obj/item/stack/sheet/plasmaglass
 	rad_insulation = RAD_NO_INSULATION
-	spawn_cleanable_shards = FALSE
+
+/obj/structure/window/plasma/spawnDebris(location)
+	. = list()
+	. += new /obj/item/shard/plasma(location)
+	. += new /obj/effect/decal/cleanable/glass/plasma(location)
+	if (reinf)
+		. += new /obj/item/stack/rods(location, (fulltile ? 2 : 1))
+	if (fulltile)
+		. += new /obj/item/shard/plasma(location)
 
 /obj/structure/window/plasma/spawner/east
 	dir = EAST
@@ -521,7 +514,6 @@
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
-
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
 	level = 3
 	glass_amount = 2
@@ -616,17 +608,14 @@
 	var/made_glow = FALSE
 
 /obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
-	if(fulltile)
-		made_glow = TRUE
 	. = ..()
-	QDEL_LIST(debris)
-	var/amount_of_gears = 2
-	if(fulltile)
-		new /obj/effect/temp_visual/ratvar/window(get_turf(src))
-		amount_of_gears = 4
-	for(var/i in 1 to amount_of_gears)
-		debris += new /obj/item/clockwork/alloy_shards/medium/gear_bit()
 	change_construction_value(fulltile ? 2 : 1)
+
+/obj/structure/window/reinforced/clockwork/spawnDebris(location)
+	. = list()
+	var/gearcount = fulltile ? 4 : 2
+	for(var/i in 1 to gearcount)
+		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
 
 /obj/structure/window/reinforced/clockwork/setDir(direct)
 	if(!made_glow)
@@ -646,7 +635,7 @@
 
 /obj/structure/window/reinforced/clockwork/narsie_act()
 	take_damage(rand(25, 75), BRUTE)
-	if(src)
+	if(!QDELETED(src))
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
@@ -665,6 +654,17 @@
 	max_integrity = 120
 	level = 3
 	glass_amount = 2
+
+/obj/structure/window/reinforced/clockwork/spawnDebris(location)
+	. = list()
+	for(var/i in 1 to 4)
+		. += new /obj/item/clockwork/alloy_shards/medium/gear_bit(location)
+
+/obj/structure/window/reinforced/clockwork/Initialize(mapload, direct)
+	made_glow = TRUE
+	new /obj/effect/temp_visual/ratvar/window(get_turf(src))
+	return ..()
+
 
 /obj/structure/window/reinforced/clockwork/fulltile/unanchored
 	anchored = FALSE
@@ -687,7 +687,6 @@
 	decon_speed = 10
 	CanAtmosPass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
-	spawn_cleanable_shards = FALSE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	breaksound = 'sound/items/poster_ripped.ogg'
 	hitsound = 'sound/weapons/slashmiss.ogg'
@@ -696,12 +695,12 @@
 
 /obj/structure/window/paperframe/Initialize()
 	. = ..()
-	QDEL_LIST(debris)
-	var/papers = rand(1,4)
-	debris += new /obj/item/stack/sheet/mineral/wood()
-	for(var/i in 1 to papers)
-		debris += new /obj/item/paper/natural()
 	update_icon()
+
+/obj/structure/window/paperframe/spawnDebris(location)
+	. = list(new /obj/item/stack/sheet/mineral/wood(location))
+	for (var/i in 1 to rand(1,4))
+		. += new /obj/item/paper/natural(location)
 
 /obj/structure/window/paperframe/attack_hand(mob/user)
 	. = ..()

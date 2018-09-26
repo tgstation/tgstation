@@ -65,7 +65,7 @@
 	var/internal_damage = 0 //contains bitflags
 
 	var/list/operation_req_access = list()//required access level for mecha operation
-	var/list/internals_req_access = list(ACCESS_ENGINE,ACCESS_ROBOTICS)//REQUIRED ACCESS LEVEL TO OPEN CELL COMPARTMENT
+	var/list/internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE)//REQUIRED ACCESS LEVEL TO OPEN CELL COMPARTMENT
 
 	var/wreckage
 
@@ -1015,7 +1015,7 @@
 			to_chat(occupant, "[icon2html(src, occupant)] [message]")
 	return
 
-/obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null)
+/obj/mecha/log_message(message as text, message_type=LOG_GAME, color=null, log_globally)
 	log.len++
 	log[log.len] = list("time"="[station_time_timestamp()]","date","year"="[GLOB.year_integer+540]","message"="[color?"<font color='[color]'>":null][message][color?"</font>":null]")
 	..()

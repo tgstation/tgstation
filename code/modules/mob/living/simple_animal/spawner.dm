@@ -11,7 +11,7 @@
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
 	var/spawn_text = "emerges from"
 	status_flags = 0
-	anchored = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	AIStatus = AI_OFF
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -21,7 +21,6 @@
 	maxbodytemp = 350
 	layer = BELOW_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
-
 
 /mob/living/simple_animal/hostile/spawner/Destroy()
 	for(var/mob/living/simple_animal/L in spawned_mobs)

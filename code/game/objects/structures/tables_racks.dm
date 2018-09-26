@@ -115,7 +115,15 @@
 	log_combat(user, pushed_mob, "placed")
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
+	var/added_passtable = FALSE
+	if(!pushed_mob.pass_flags & PASSTABLE)
+		added_passtable = TRUE
+		pushed_mob.pass_flags |= PASSTABLE
+	pushed_mob.Move(src.loc)
+	if(added_passtable)
+		pushed_mob.pass_flags &= ~PASSTABLE
+	if(pushed_mob.loc != loc) //Something prevented the tabling
+		return
 	pushed_mob.Knockdown(40)
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")

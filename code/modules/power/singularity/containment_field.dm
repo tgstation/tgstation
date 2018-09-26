@@ -6,6 +6,7 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	density = FALSE
+	move_resist = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
 	interaction_flags_atom = NONE

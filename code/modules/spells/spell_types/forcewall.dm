@@ -1,15 +1,15 @@
 /obj/effect/proc_holder/spell/targeted/forcewall
 	name = "Forcewall"
-	desc = "Create a magical barrier that only you can pass through. Does not require wizard garb."
+	desc = "Create a magical barrier that only you can pass through."
 	school = "transmutation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = "shout"
 	sound = 'sound/magic/forcewall.ogg'
 	action_icon_state = "shield"
 	range = -1
-	include_user = 1
+	include_user = TRUE
 	cooldown_min = 50 //12 deciseconds reduction per rank
 	var/wall_type = /obj/effect/forcefield/wizard
 

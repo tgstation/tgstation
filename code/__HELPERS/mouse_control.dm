@@ -19,9 +19,11 @@
 	if(!isloc(client.mob.loc))
 		return
 	var/list/mouse_control = params2list(client.mouseParams)
-	var/cx = client.mob.x
-	var/cy = client.mob.y
-	var/cz = client.mob.z
+	var/atom/A = client.eye
+	var/turf/T = get_turf(A)
+	var/cx = T.x
+	var/cy = T.y
+	var/cz = T.z
 	if(mouse_control["screen-loc"])
 		var/x = 0
 		var/y = 0

@@ -132,9 +132,9 @@ SLIME SCANNER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.undergoing_cardiac_arrest() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject suffering from heart attack: apply defibrillator immediately!</span>")
+			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillation or other electric shock immediately!</span>")
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject suffering from liver failure: apply corazone and begin a liver transplant immediately!</span>")
+			to_chat(user, "<span class='danger'>Subject is suffering from liver failure: Apply Corazone and begin a liver transplant immediately!</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -152,11 +152,11 @@ SLIME SCANNER
 		if(advanced)
 			to_chat(user, "\t<span class='info'>Fatigue Level: [M.getStaminaLoss()]%.</span>")
 	if (M.getCloneLoss())
-		to_chat(user, "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "severe" : "minor"] cellular damage.</span>")
+		to_chat(user, "\t<span class='alert'>Subject appears to have [M.getCloneLoss() > 30 ? "Severe" : "Minor"] cellular damage.</span>")
 		if(advanced)
 			to_chat(user, "\t<span class='info'>Cellular Damage Level: [M.getCloneLoss()].</span>")
 	if (M.getBrainLoss() >= 200 || !M.getorgan(/obj/item/organ/brain))
-		to_chat(user, "\t<span class='alert'>Subject brain function is non-existent.</span>")
+		to_chat(user, "\t<span class='alert'>Subject's brain function is non-existent.</span>")
 	else if (M.getBrainLoss() >= 120)
 		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>")
 	else if (M.getBrainLoss() >= 45)
@@ -176,7 +176,7 @@ SLIME SCANNER
 						trauma_desc += "permanent "
 				trauma_desc += B.scan_desc
 				trauma_text += trauma_desc
-			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subjects appears to be suffering from [english_list(trauma_text)].</span>")
+			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>")
 		if(C.roundstart_quirks.len)
 			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
@@ -243,7 +243,7 @@ SLIME SCANNER
 		var/mob/living/carbon/human/H = M
 		var/ldamage = H.return_liver_damage()
 		if(ldamage > 10)
-			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "severe" : "minor"] liver damage detected.</span>")
+			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "Severe" : "Minor"] liver damage detected.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)

@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - bugfix: "Fixes advanced buildmode not having the picker"

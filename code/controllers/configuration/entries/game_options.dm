@@ -62,11 +62,15 @@
 
 /datum/config_entry/flag/allow_ai	// allow ai job
 
+/datum/config_entry/flag/allow_ai_multicam	// allow ai multicamera mode
+
 /datum/config_entry/flag/disable_human_mood
 
 /datum/config_entry/flag/disable_secborg	// disallow secborg module to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
+
+/datum/config_entry/flag/economy	//money money money money money money money money money money money money
 
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
 	config_entry_value = 6

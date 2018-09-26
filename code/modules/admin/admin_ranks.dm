@@ -108,6 +108,7 @@ GLOBAL_PROTECT(protected_ranks)
 	var/flag = admin_keyword_to_flag(word)
 	if(flag)
 		return ((rank.rights & flag) == flag) //true only if right has everything in flag
+
 /proc/sync_ranks_with_db()
 	set waitfor = FALSE
 
@@ -116,13 +117,14 @@ GLOBAL_PROTECT(protected_ranks)
 		return
 
 	var/list/sql_ranks = list()
-	for(var/datum/admin_rank/R in GLOB.admin_ranks)
+	for(var/datum/admin_rank/R in GLOB.protected_ranks)
 		var/sql_rank = sanitizeSQL(R.name)
 		var/sql_flags = sanitizeSQL(R.include_rights)
 		var/sql_exclude_flags = sanitizeSQL(R.exclude_rights)
 		var/sql_can_edit_flags = sanitizeSQL(R.can_edit_rights)
 		sql_ranks += list(list("rank" = "'[sql_rank]'", "flags" = "[sql_flags]", "exclude_flags" = "[sql_exclude_flags]", "can_edit_flags" = "[sql_can_edit_flags]"))
 	SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE)
+
 //load our rank - > rights associations
 /proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())

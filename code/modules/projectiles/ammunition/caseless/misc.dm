@@ -17,6 +17,6 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/energy
 
 /obj/item/ammo_casing/caseless/laser/gatling
-	projectile_type = /obj/item/projectile/beam/weak
+	projectile_type = /obj/item/projectile/beam/weak/penetrator
 	variance = 0.8
 	click_cooldown_override = 1
