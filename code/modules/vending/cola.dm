@@ -19,7 +19,7 @@
 		           /obj/item/reagent_containers/food/drinks/soda_cans/air = 1)
 	refill_canister = /obj/item/vending_refill/cola
 	default_price = 10
-	extra_price = 25
+	extra_price = 30
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
