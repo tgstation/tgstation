@@ -298,5 +298,10 @@
 				else
 					U.adjusted = DIGITIGRADE_STYLE
 				H.update_inv_w_uniform()
-		if(H.shoes && !swap_back)
-			H.dropItemToGround(H.shoes)
+		if(H.shoes)
+			var/obj/item/clothing/shoes/S = H.shoes
+			if(swap_back)
+				S.adjusted = NORMAL_STYLE
+			else
+				S.adjusted = DIGITIGRADE_STYLE
+			H.update_inv_shoes()

@@ -15,6 +15,10 @@
 	var/offset = 0
 	var/equipped_before_drop = FALSE
 
+	var/adjusted = NORMAL_STYLE
+	var/mutantrace_variation = MUTANTRACE_VARIATION
+	var/icon_override = null
+
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
@@ -54,6 +58,17 @@
 
 /obj/item/clothing/shoes/equipped(mob/user, slot)
 	. = ..()
+
+	if(mutantrace_variation && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(DIGITIGRADE in H.dna.species.species_traits)
+			adjusted = DIGITIGRADE_STYLE
+			H.update_inv_shoes()
+
+		else if(adjusted == DIGITIGRADE_STYLE)
+			adjusted = NORMAL_STYLE
+			H.update_inv_shoes()
+
 	if(offset && slot_flags & slotdefine2slotbit(slot))
 		user.pixel_y += offset
 		worn_y_dimension -= (offset * 2)
