@@ -44,7 +44,7 @@
 	var/static/list/drawings = list(".")
 	var/static/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
-	var/static/list/shapes = list(".")
+	var/static/list/shapes = list("square")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING, RANDOM_SHAPE)
 	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
@@ -209,7 +209,7 @@
 
 	var/list/Sh_items = list()
 	. += list(list(name = "Shapes", "items" = Sh_items))
-	for(var/Sh in runes)
+	for(var/Sh in shapes)
 		Sh_items += list(list("item" = Sh))
 
 	var/list/rand_items = list()
