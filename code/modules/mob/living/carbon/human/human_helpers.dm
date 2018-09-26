@@ -107,19 +107,19 @@
 	if(wear_id)
 		id_card = wear_id.GetID()
 		if(id_card)
-			return wear_id.GetID()
+			return id_card
 	else if(belt)
 		id_card = belt.GetID()
 		if(id_card)
-			return belt.GetID()
+			return id_card
 	else if(l_store)
 		id_card = l_store.GetID()
 		if(id_card)
-			return l_store.GetID()
+			return id_card
 	else if(r_store)
 		id_card = r_store.GetID()
 		if(id_card)
-			return r_store.GetID()
+			return id_card
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	if(has_trait(TRAIT_MONKEYLIKE))
