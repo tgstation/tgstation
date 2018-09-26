@@ -21,7 +21,7 @@
 
 	refill_canister = /obj/item/vending_refill/cigarette
 	default_price = 20
-	extra_price = 40
+	extra_price = 50
 	payment_department = ACCOUNT_SRV
 
 /obj/machinery/vending/cigarette/syndicate
