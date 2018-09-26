@@ -10,6 +10,7 @@
 /datum/buildmode_mode/boom/show_help(client/c)
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 	to_chat(c, "<span class='notice'>Mouse Button on obj  = Kaboom</span>")
+	to_chat(c, "<span class='notice'>NOTE: Using the \"Config/Launch Supplypod\" verb allows you to do this in an IC way (ie making a cruise missile come down from the sky and explode wherever you click!)</span>")
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 
 /datum/buildmode_mode/boom/change_settings(client/c)

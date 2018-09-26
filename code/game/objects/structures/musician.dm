@@ -335,7 +335,7 @@
 	..()
 	song = new("piano", src)
 
-	if(prob(50))
+	if(prob(50) && icon_state == initial(icon_state))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
 		icon_state = "minimoog"

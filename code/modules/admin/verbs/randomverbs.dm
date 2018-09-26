@@ -1278,23 +1278,18 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			var/turf/endT = spaceDebrisFinishLoc(startside, T.z)
 			new /obj/effect/immovablerod(startT, endT,target)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
-			///////load the supply pod up with something!
-			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
-			if (isnull(target_path))
+			var/datum/centcom_podlauncher/plaunch  = new(usr)
+			if(!holder)
 				return
-			if (target_path == "empty")//if you type "empty", spawn an empty pod
-				new /obj/effect/DPtarget(get_turf(target), null, POD_CENTCOM)
-				return
-			var/delivery = text2path(target_path)
-			if(!ispath(delivery))
-				delivery = pick_closest_path(target_path)
-				if(!delivery)
-					alert("ERROR: Incorrect / improper path given.")
-					return
-			//send the pod
-			if(iscarbon(target))
-				target.Stun(10)//takes 0.53 seconds for CentCom pod to land
-			new /obj/effect/DPtarget(get_turf(target), delivery, POD_CENTCOM)
+			plaunch.specificTarget = target
+			plaunch.launchChoice = 0
+			plaunch.damageChoice = 1
+			plaunch.explosionChoice = 1
+			plaunch.temp_pod.damage = 40//bring the mother fuckin ruckus
+			plaunch.temp_pod.explosionSize = list(0,0,0,2)
+			plaunch.temp_pod.effectStun = TRUE
+			plaunch.ui_interact(usr)
+
 		if(ADMIN_PUNISHMENT_MAZING)
 			if(!puzzle_imprison(target))
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")

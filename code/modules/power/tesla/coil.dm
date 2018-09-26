@@ -78,6 +78,9 @@
 		flick("coilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced, tesla_flags, shocked_targets)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+		if(D)
+			D.adjust_money(min(power_produced, 1))
 		if(istype(linked_techweb))
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 1)) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
@@ -113,6 +116,9 @@
 		flick("rpcoilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced, tesla_flags, shocked_things)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+		if(D)
+			D.adjust_money(min(power_produced, 3))
 		if(istype(linked_techweb))
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 3)) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)

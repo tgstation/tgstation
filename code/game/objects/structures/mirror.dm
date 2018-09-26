@@ -24,15 +24,13 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
-		var/userloc = H.loc
-
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
 		//handle facial hair (if necessary)
 		if(H.gender == MALE)
 			var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in GLOB.facial_hair_styles_list
-			if(userloc != H.loc)
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return	//no tele-grooming
 			if(new_style)
 				H.facial_hair_style = new_style
@@ -41,7 +39,7 @@
 
 		//handle normal hair
 		var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in GLOB.hair_styles_list
-		if(userloc != H.loc)
+		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return	//no tele-grooming
 		if(new_style)
 			H.hair_style = new_style
@@ -90,9 +88,9 @@
 /obj/structure/mirror/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
 
 /obj/structure/mirror/magic
@@ -131,7 +129,7 @@
 
 	var/choice = input(user, "Something to change?", "Magical Grooming") as null|anything in list("name", "race", "gender", "hair", "eyes")
 
-	if(!Adjacent(user))
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	switch(choice)
@@ -140,7 +138,7 @@
 
 			if(!newname)
 				return
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			H.real_name = newname
 			H.name = newname
@@ -156,12 +154,14 @@
 
 			if(!newrace)
 				return
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			H.set_species(newrace, icon_update=0)
 
 			if(H.dna.species.use_skintones)
 				var/new_s_tone = input(user, "Choose your skin tone:", "Race change")  as null|anything in GLOB.skin_tones
+				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					return
 
 				if(new_s_tone)
 					H.skin_tone = new_s_tone
@@ -169,6 +169,8 @@
 
 			if(MUTCOLORS in H.dna.species.species_traits)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
+				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					return
 				if(new_mutantcolor)
 					var/temp_hsv = RGBtoHSV(new_mutantcolor)
 
@@ -186,10 +188,10 @@
 		if("gender")
 			if(!(H.gender in list("male", "female"))) //blame the patriarchy
 				return
-			if(!Adjacent(user))
-				return
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
+					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+						return
 					H.gender = "female"
 					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
@@ -197,6 +199,8 @@
 
 			else
 				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
+					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+						return
 					H.gender = "male"
 					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
@@ -207,12 +211,14 @@
 
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				..()
 			else
 				var/new_hair_color = input(H, "Choose your hair color", "Hair Color","#"+H.hair_color) as color|null
+				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					return
 				if(new_hair_color)
 					H.hair_color = sanitize_hexcolor(new_hair_color)
 					H.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
@@ -225,7 +231,7 @@
 
 		if(BODY_ZONE_PRECISE_EYES)
 			var/new_eye_color = input(H, "Choose your eye color", "Eye Color","#"+H.eye_color) as color|null
-			if(!Adjacent(user))
+			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				return
 			if(new_eye_color)
 				H.eye_color = sanitize_hexcolor(new_eye_color)

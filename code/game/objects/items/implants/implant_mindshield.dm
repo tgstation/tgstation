@@ -26,6 +26,16 @@
 		if(target.mind.has_antag_datum(/datum/antagonist/brainwashed))
 			target.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 
+		if(is_hivemember(target))
+			var/warning = ""
+			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
+				if(hive.hivemembers.Find(target))
+					var/hive_name = hive.get_real_name()
+					if(hive_name)
+						warning += "[hive_name]. "
+			to_chat(target, "<span class='warning'>You hear supernatural wailing echo throughout your mind. If you listen closely you can hear... [warning]Are those... names?</span>")
+			remove_hivemember(target)
+
 		if(target.mind.has_antag_datum(/datum/antagonist/rev/head) || target.mind.unconvertable)
 			if(!silent)
 				target.visible_message("<span class='warning'>[target] seems to resist the implant!</span>", "<span class='warning'>You feel something interfering with your mental conditioning, but you resist it!</span>")

@@ -32,6 +32,12 @@
 			icon_state = "[environment_type]_dug"
 	dug = TRUE
 
+/turf/open/floor/plating/asteroid/proc/can_dig(mob/user)
+	if(!dug)
+		return TRUE
+	if(user)
+		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
+
 /turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
 
@@ -48,8 +54,7 @@
 	. = ..()
 	if(!.)
 		if(W.tool_behaviour == TOOL_SHOVEL || W.tool_behaviour == TOOL_MINING)
-			if(dug)
-				to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
+			if(!can_dig(user))
 				return TRUE
 
 			if(!isturf(user.loc))
@@ -58,6 +63,8 @@
 			to_chat(user, "<span class='notice'>You start digging...</span>")
 
 			if(W.use_tool(src, user, 40, volume=50))
+				if(!can_dig(user))
+					return TRUE
 				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				getDug()
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)

@@ -37,7 +37,9 @@
 
 	var/list/unattached_flesh
 	var/flesh_number = 0
-
+	var/datum/bank_account/current_insurance
+	fair_market_price = 5 // He nodded, because he knew I was right. Then he swiped his credit card to pay me for arresting him.
+	payment_department = ACCOUNT_MED
 /obj/machinery/clonepod/Initialize()
 	. = ..()
 
@@ -125,7 +127,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -154,7 +156,7 @@
 		icon_state = "pod_g"
 		update_icon()
 		return FALSE
-
+	current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
 
@@ -222,14 +224,29 @@
 			connected_message("Clone Ejected: Loss of power.")
 
 	else if(mob_occupant && (mob_occupant.loc == src))
-		if((mob_occupant.stat == DEAD) || (mob_occupant.suiciding) || mob_occupant.hellbound)  //Autoeject corpses and suiciding dudes.
+		if(SSeconomy.full_ancap)
+			if(!current_insurance)
+				go_out()
+				connected_message("Clone Ejected: No bank account.")
+				if(internal_radio)
+					SPEAK("The cloning of [mob_occupant.real_name] has been terminated due to no bank account to draw payment from.")
+			else if(!current_insurance.adjust_money(-fair_market_price))
+				go_out()
+				connected_message("Clone Ejected: Out of Money.")
+				if(internal_radio)
+					SPEAK("The cloning of [mob_occupant.real_name] has been ended prematurely due to being unable to pay.")
+			else
+				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+				if(D)
+					D.adjust_money(fair_market_price)
+		if(mob_occupant && (mob_occupant.stat == DEAD) || (mob_occupant.suiciding) || mob_occupant.hellbound)  //Autoeject corpses and suiciding dudes.
 			connected_message("Clone Rejected: Deceased.")
 			if(internal_radio)
 				SPEAK("The cloning of [mob_occupant.real_name] has been \
 					aborted due to unrecoverable tissue failure.")
 			go_out()
 
-		else if(mob_occupant.cloneloss > (100 - heal_level))
+		else if(mob_occupant && mob_occupant.cloneloss > (100 - heal_level))
 			mob_occupant.Unconscious(80)
 			var/dmg_mult = CONFIG_GET(number/damage_multiplier)
 			 //Slowly get that clone healed and finished.
@@ -255,7 +272,7 @@
 
 			use_power(7500) //This might need tweaking.
 
-		else if((mob_occupant.cloneloss <= (100 - heal_level)))
+		else if(mob_occupant && (mob_occupant.cloneloss <= (100 - heal_level)))
 			connected_message("Cloning Process Complete.")
 			if(internal_radio)
 				SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
@@ -355,7 +372,7 @@
 
 	if(!mob_occupant)
 		return
-
+	current_insurance = null
 	mob_occupant.remove_trait(TRAIT_STABLEHEART, "cloning")
 	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, "cloning")
 	mob_occupant.remove_trait(TRAIT_MUTE, "cloning")

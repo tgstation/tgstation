@@ -973,3 +973,8 @@
 	name = "Ore Silo (Machine Board)"
 	build_path = /obj/machinery/ore_silo
 	req_components = list()
+
+/obj/item/circuitboard/machine/paystand
+	name = "Pay Stand (Machine Board)"
+	build_path = /obj/machinery/paystand
+	req_components = list()

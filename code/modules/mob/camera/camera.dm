@@ -27,7 +27,9 @@
 	return
 
 /mob/camera/forceMove(atom/destination)
+	var/oldloc = loc
 	loc = destination
+	Moved(oldloc, NONE, TRUE)
 
 /mob/camera/emote(act, m_type=1, message = null, intentional = FALSE)
 	return
