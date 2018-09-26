@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Geneticist and Chief Medical Officer traitors can now purchase a box of gorilla cubes for 8TC."
+  - spellcheck: "Changed the clown car uplink description to mention emag interaction."
