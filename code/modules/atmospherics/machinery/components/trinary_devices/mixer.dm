@@ -96,12 +96,13 @@
 	//Get those gases, mah boiiii
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
-	var/datum/gas_mixture/air3 = airs[3]
 
 	//No temperature or below 0: do not transfer, should normally never hit this.
 	//Might want to check this for below TCMB instead.
-	if(!air1.temperature || !air2.temperature)
+	if(air1.temperature <= 0 || air2.temperature <= 0)
 		return
+
+	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -148,8 +149,6 @@
 
 	var/datum/pipeline/parent3 = parents[3]
 	parent3.update = TRUE
-
-	return
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
