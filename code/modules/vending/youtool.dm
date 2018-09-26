@@ -19,6 +19,6 @@
 		           /obj/item/weldingtool/hugetank = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 70)
 	resistance_flags = FIRE_PROOF
-	default_price = 25
+	default_price = 20
 	extra_price = 75
 	payment_department = ACCOUNT_ENG
