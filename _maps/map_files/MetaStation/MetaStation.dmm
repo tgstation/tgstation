@@ -58762,7 +58762,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cjZ" = (
-/obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
