@@ -65,8 +65,9 @@
 				to_chat(card_holder, "[icon2html(A, card_holder)] *[message]*")
 		else if(isturf(A.loc)) //If on the ground
 			for(var/mob/M in hearers(1,get_turf(A)))
-				playsound(get_turf(card_holder), 'sound/machines/twobeep.ogg', 50, TRUE)
+				playsound(A, 'sound/machines/twobeep.ogg', 50, TRUE)
 				A.audible_message("[icon2html(A, hearers(A))] *[message]*", null, 1)
+				break
 		else
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep.ogg', 50, TRUE)
