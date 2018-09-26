@@ -32,11 +32,11 @@
 	var/threatlevel = FALSE
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
-	var/declare_arrests = TRUE //When making an arrest, should it notify everyone on the security channel?
 	var/idcheck = FALSE //If true, arrest people with no IDs
 	var/weaponscheck = FALSE //If true, arrest people for weapons if they lack access
 	var/check_records = TRUE //Does it check security records?
 	var/arrest_type = FALSE //If true, don't handcuff
+	var/pacifist = FALSE //Won't try to attack if cell is insufficient
 
 /mob/living/simple_animal/bot/secbot/Initialize()
 	. = ..()
@@ -94,10 +94,15 @@
 	if(!cell && on)
 		turn_off()
 
-	if(on)
-		cell.use(25)
+	if(cell.maxcharge < stuncost && !pacifist && on)
+		speak("Cell insufficient to perform arrests. Entering civilian mode.", radio_channel)
+		pacifist = TRUE
 
-	if(cell.charge < stuncost && hibernating == FALSE)
+	if(pacifist && cell.maxcharge >= stuncost && on)
+		speak("Cell sufficient to perform arrests. Resuming duties.", radio_channel)
+		pacifist = FALSE
+
+	if(cell.charge < stuncost && !hibernating && !pacifist)
 		speak("Low power in [get_area(src)]. Entering hibernation mode.", radio_channel)
 		turn_off()
 		hibernating = TRUE
@@ -156,15 +161,16 @@ Arrest Unidentifiable Persons: []<BR>
 Arrest for Unauthorized Weapons: []<BR>
 Arrest for Warrant: []<BR>
 Operating Mode: []<BR>
-Report Arrests[]<BR>
+Silence: []<BR>
 Auto Patrol: []"},
 
 "<A href='?src=[REF(src)];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=weaponscheck'>[weaponscheck ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=[REF(src)];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
+"<A href='?src=[REF(src)];operation=silent'>[silent ? "Yes" : "No"]</A>",
 "<A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
+
 
 	return	dat
 
@@ -185,15 +191,15 @@ Auto Patrol: []"},
 		if("switchmode")
 			arrest_type = !arrest_type
 			update_controls()
-		if("declarearrests")
-			declare_arrests = !declare_arrests
+		if("silent")
+			silent = !silent
 			update_controls()
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
 	var/judgement_criteria = judgement_criteria()
 	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	threatlevel += 6
-	if(threatlevel >= 4)
+	if(threatlevel >= 4 && !pacifist)
 		target = H
 		mode = BOT_HUNT
 
@@ -233,7 +239,7 @@ Auto Patrol: []"},
 	..()
 	if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(!istype(W, /obj/item/screwdriver) && (W.force) && (!target) && (W.damtype != STAMINA) && (!pacifist)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
 		if(special_retaliate_after_attack(user))
 			return
@@ -254,7 +260,7 @@ Auto Patrol: []"},
 			to_chat(user, "<span class='danger'>You short out [src]'s target assessment circuits.</span>")
 			oldtarget_name = user.name
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
-		declare_arrests = FALSE
+		silent = TRUE
 		update_icon()
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/item/projectile/Proj)
@@ -270,10 +276,10 @@ Auto Patrol: []"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(!C.IsStun() || arrest_type)
-			stun_attack(A)
+		if(!C.IsStun())
+			stun_attack(C)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
-			cuff(A)
+			cuff(C)
 	else
 		..()
 
@@ -300,6 +306,8 @@ Auto Patrol: []"},
 	if(!C.handcuffed)
 		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 		C.update_handcuffed()
+		if(arrest_type && !pulling)
+			start_pulling(C)
 		playsound(src, "law", 50, 0)
 		back_to_idle()
 
@@ -323,9 +331,12 @@ Auto Patrol: []"},
 		threat = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 
 	log_combat(src,C,"stunned")
-	if(declare_arrests)
+	if(!silent)
 		var/area/location = get_area(src)
-		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
+		if(pulling || !arrest_type)
+			speak("Arresting level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
+		else
+			speak("Detaining level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
 	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
 							"<span class='userdanger'>[src] has stunned you!</span>")
 
@@ -339,8 +350,17 @@ Auto Patrol: []"},
 
 			walk_to(src,0)
 			look_for_perp()	// see if any criminals are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
+			if(!mode && auto_patrol && !pulling)	// still idle, and set to patrol
 				mode = BOT_START_PATROL	// switch to patrol mode
+			else if(pulling)
+				if(istype(pulling, /mob/living/carbon))
+					var/mob/living/carbon/C = pulling
+					if(!C.handcuffed)
+						stop_pulling(pulling)
+						mode = BOT_START_PATROL
+				else
+					stop_pulling(pulling)
+					mode = BOT_START_PATROL
 
 		if(BOT_HUNT)		// hunting for perp
 
@@ -377,12 +397,11 @@ Auto Patrol: []"},
 				return
 
 			if(iscarbon(target) && target.canBeHandcuffed())
-				if(!arrest_type)
-					if(!target.handcuffed)  //he's not cuffed? Try to cuff him!
-						cuff(target)
-					else
-						back_to_idle()
-						return
+				if(!target.handcuffed)  //he's not cuffed? Try to cuff him!
+					cuff(target)
+				else
+					back_to_idle()
+					return
 			else
 				back_to_idle()
 				return
@@ -447,7 +466,7 @@ Auto Patrol: []"},
 		if(!threatlevel)
 			continue
 
-		else if(threatlevel >= 4)
+		else if(threatlevel >= 4 && !pacifist)
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
@@ -487,7 +506,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/attack_alien(var/mob/living/carbon/alien/user as mob)
 	..()
-	if(!isalien(target))
+	if(!isalien(target) && !pacifist)
 		target = user
 		mode = BOT_HUNT
 
