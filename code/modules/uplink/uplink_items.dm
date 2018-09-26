@@ -1470,6 +1470,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
+/datum/uplink_item/role_restricted/gorillacubes
+	name = "Box of Gorilla Cubes"
+	desc = "A box with three Waffle Co. brand gorilla cubes. Eat big to get big. \
+			Caution: Product may rehydrate when exposed to water." 
+	item = /obj/item/storage/box/gorillacubes
+	cost = 6
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
+
 /datum/uplink_item/role_restricted/pressure_mod
 	name = "Kinetic Accelerator Pressure Mod"
 	desc = "A modification kit which allows Kinetic Accelerators to do greatly increased damage while indoors. Occupies 35% mod capacity."
@@ -1505,7 +1513,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Simply insert your bikehorn and get in, and get ready to have the funniest ride of your life! \
 			You can ram any spacemen you come across and stuff them into your car, kidnapping them and locking them inside until \
 			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
-			are very sensetive. Now with our included lube defense mechanism which will protect you against any angry shitcurity!"
+			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
+			Premium features can be unlocked with a cryptographic sequencer!"
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
 	restricted_roles = list("Clown")
