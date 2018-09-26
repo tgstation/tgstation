@@ -1249,7 +1249,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1279,22 +1279,23 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			new /obj/effect/immovablerod(startT, endT,target)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD_QUICK)
 			var/target_path = input(usr,"Enter typepath of an atom you'd like to send with the pod (type \"empty\" to send an empty pod):" ,"Typepath","/obj/item/reagent_containers/food/snacks/grown/harebell") as null|text
-			var/podType = /obj/structure/closet/supplypod/centcompod
+			var/pod = new /obj/structure/closet/supplypod/centcompod()
+			pod.damage = 40
+			pod.explosionSize = list(0,0,0,2)
+			pod.effectStun = TRUE
 			if (isnull(target_path))
 				alert("ERROR: NULL path given.")
 				return
 			if (target_path == "empty")//if you type "empty", spawn an empty pod
-				new /obj/effect/DPtarget(get_turf(target), podType)
+				new /obj/effect/DPtarget(get_turf(target), pod)
 				return
 			var/delivery = text2path(target_path)
 			if(!ispath(delivery))
 				delivery = pick_closest_path(target_path)
-				if(!delivery)
-					alert("ERROR: Incorrect / improper path given.")
-					return
-				if(iscarbon(target))	
-					target.Stun(40, ignore_canstun = TRUE)//takes 0.53 seconds for CentCom pod to land
-					new /obj/effect/DPtarget(get_turf(target), podType, delivery)
+			if(!delivery)
+				alert("ERROR: Incorrect / improper path given.")
+				return
+			new /obj/effect/DPtarget(get_turf(target), pod, delivery)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
 			var/datum/centcom_podlauncher/plaunch  = new(usr)
 			if(!holder)
