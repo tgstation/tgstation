@@ -270,18 +270,23 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(shoes)
+		var/obj/item/clothing/shoes/S = shoes
 		shoes.screen_loc = ui_shoes					//move the item to the appropriate screen loc
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
-		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
+		if(S.adjusted == DIGITIGRADE_STYLE)
+			S.alternate_worn_icon = 'icons/mob/feet_digi.dmi'
+		else if(S.adjusted == NORMAL_STYLE)
+			S.alternate_worn_icon = null
+
+		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.alternate_worn_icon) ? shoes.alternate_worn_icon : 'icons/mob/feet.dmi'))
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 			shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
 		overlays_standing[SHOES_LAYER] = shoes_overlay
-
 	apply_overlay(SHOES_LAYER)
 
 

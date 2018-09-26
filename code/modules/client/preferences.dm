@@ -1524,6 +1524,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if("tail_lizard" in pref_species.default_features)
 		character.dna.species.mutant_bodyparts |= "tail_lizard"
 
+	if(("legs" in pref_species.default_features) && character.dna.features["legs"] == "Digitigrade Legs")
+		pref_species.species_traits += DIGITIGRADE
+		character.Digitigrade_Leg_Swap(TRUE)
+	if(DIGITIGRADE in pref_species.species_traits)
+		character.Digitigrade_Leg_Swap(FALSE)
+
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
