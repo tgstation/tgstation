@@ -124,7 +124,7 @@
 
 	//Early return
 	var/datum/gas_mixture/air1 = airs[1]
-	if(!air1.temperature)
+	if(air1.temperature <= 0)
 		return
 
 	var/datum/gas_mixture/air2 = airs[2]
@@ -141,7 +141,7 @@
 
 	//Actually transfer the gas
 
-	if(!transfer_moles)
+	if(transfer_moles <= 0)
 		return
 
 	var/datum/gas_mixture/removed = air1.remove(transfer_moles)
