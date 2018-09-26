@@ -122,6 +122,26 @@
 	lefthand_file = 'icons/mob/inhands/antag/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
+	var/mob/equipped_mob
+
+/obj/item/toy/syndicateballoon/pickup(mob/user)
+	. = ..()
+	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		equipped_mob = user
+
+/obj/item/toy/syndicateballoon/dropped(mob/user)
+	. = ..()
+	if(equipped_mob)
+		SEND_SIGNAL(equipped_mob, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		equipped_mob = null
+
+/obj/item/toy/syndicateballoon/Destroy()
+	. = ..()
+	if(equipped_mob)
+		SEND_SIGNAL(equipped_mob, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+		equipped_mob = null
+
 
 /*
  * Fake singularity
