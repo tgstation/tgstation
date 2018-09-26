@@ -38,3 +38,43 @@
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
 		return ..()
+		
+/obj/machinery/computer/accounting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "accounting", name, 450, 300, master_ui, state)
+		ui.open()
+
+/obj/machinery/computer/accounting/ui_data(mob/user)
+	var/list/data = list()
+
+	data["has_id"] = !isnull(id)
+	data["id_name"] = id.name
+	
+	data["station_budget"] = SSeconomy.station_budget.account_balance
+	data["dep_budgets"] = list()
+	for(var/X in SSeconomy.generated_accounts)
+		var/datum/bank_account/department/D = X
+		var/dep_budget = list()
+		dep_budget["department"] = D.account_holder
+		dep_budget["balance"] = D.account_balance
+		dep_budget["distribution"] = SSeconomy.income_distribution[D]
+
+	return data
+
+/obj/machinery/computer/accounting/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("clear")
+			var/zone = params["zone"]
+			if(zone in priority_alarms)
+				to_chat(usr, "Priority alarm for [zone] cleared.")
+				priority_alarms -= zone
+				. = TRUE
+			if(zone in minor_alarms)
+				to_chat(usr, "Minor alarm for [zone] cleared.")
+				minor_alarms -= zone
+				. = TRUE
+	update_icon()
