@@ -17,7 +17,6 @@
 
 	var/adjusted = NORMAL_STYLE
 	var/mutantrace_variation = MUTANTRACE_VARIATION
-	var/icon_override = null
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()
