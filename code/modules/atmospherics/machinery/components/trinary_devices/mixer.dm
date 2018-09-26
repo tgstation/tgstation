@@ -93,9 +93,15 @@
 	if(!on || !(nodes[1] && nodes[2] && nodes[3]) && !is_operational())
 		return
 
+	//Get those gases, mah boiiii
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 	var/datum/gas_mixture/air3 = airs[3]
+
+	//No temperature or below 0: do not transfer, should normally never hit this.
+	//Might want to check this for below TCMB instead.
+	if(!air1.temperature || !air2.temperature)
+		return
 
 	var/output_starting_pressure = air3.return_pressure()
 
@@ -105,40 +111,32 @@
 
 	//Calculate necessary moles to transfer using PV=nRT
 
-	var/pressure_delta = target_pressure - output_starting_pressure
-	var/transfer_moles1 = 0
-	var/transfer_moles2 = 0
+	var/general_transfer = (target_pressure - output_starting_pressure) * air3.volume / R_IDEAL_GAS_EQUATION
 
-	if(air1.temperature > 0)
-		transfer_moles1 = (node1_concentration * pressure_delta) * air3.volume / (air1.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_moles1 = node1_concentration * general_transfer / air1.temperature
 
-	if(air2.temperature > 0)
-		transfer_moles2 = (node2_concentration * pressure_delta) * air3.volume / (air2.temperature * R_IDEAL_GAS_EQUATION)
+	var/transfer_moles2 = node2_concentration * general_transfer / air2.temperature
+
+	if((transfer_moles2 <= 0) || (transfer_moles1 <= 0))
+		return
+
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
 
 	if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
 		var/ratio = 0
-		if((transfer_moles1 > 0 ) && (transfer_moles2 > 0))
-			ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
-		if((transfer_moles2 == 0 ) && ( transfer_moles1 > 0))
-			ratio = air1_moles / transfer_moles1
-		if((transfer_moles1 == 0 ) && ( transfer_moles2 > 0))
-			ratio = air2_moles / transfer_moles2
-
+		ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
 		transfer_moles1 *= ratio
 		transfer_moles2 *= ratio
 
 	//Actually transfer the gas
 
-	if(transfer_moles1 > 0)
-		var/datum/gas_mixture/removed1 = air1.remove(transfer_moles1)
-		air3.merge(removed1)
+	var/datum/gas_mixture/removed1 = air1.remove(transfer_moles1)
+	air3.merge(removed1)
 
-	if(transfer_moles2 > 0)
-		var/datum/gas_mixture/removed2 = air2.remove(transfer_moles2)
-		air3.merge(removed2)
+	var/datum/gas_mixture/removed2 = air2.remove(transfer_moles2)
+	air3.merge(removed2)
 
 	if(transfer_moles1)
 		var/datum/pipeline/parent1 = parents[1]
