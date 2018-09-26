@@ -253,7 +253,12 @@
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HELP)
+		add_fingerprint(H)
 		interact(H)
+		if(auto_patrol == TRUE && bot_core.allowed(H)) //don't want people without access interrupting Beepsky
+			bot_reset() //HOLD IT!!
+			auto_patrol = FALSE
+			speak("<span class = 'robot'>Patrol stopped to interface with user.</span>", radio_channel)
 	else
 		return ..()
 
