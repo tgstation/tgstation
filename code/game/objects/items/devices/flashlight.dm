@@ -1,6 +1,7 @@
 /obj/item/flashlight
 	name = "flashlight"
 	desc = "A hand-held emergency light."
+	custom_price = 10
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
