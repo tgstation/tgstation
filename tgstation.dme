@@ -1084,6 +1084,7 @@
 #include "code\modules\admin\sound_emitter.dm"
 #include "code\modules\admin\sql_message_system.dm"
 #include "code\modules\admin\stickyban.dm"
+#include "code\modules\admin\team_panel.dm"
 #include "code\modules\admin\topic.dm"
 #include "code\modules\admin\whitelist.dm"
 #include "code\modules\admin\DB_ban\functions.dm"

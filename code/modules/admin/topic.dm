@@ -2514,6 +2514,54 @@
 		else if(answer == "no")
 			log_query_debug("[usr.key] | Reported no server hang")
 
+	else if(href_list["check_teams"])
+		if(!check_rights(R_ADMIN))
+			return
+		check_teams()
+	
+	else if(href_list["team_command"])
+		if(!check_rights(R_ADMIN))
+			return
+		switch(href_list["team_command"])
+			if("create_team")
+				admin_create_team(usr)
+			if("rename_team")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_rename(usr)
+			if("communicate")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_communicate(usr)
+			if("delete_team")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_delete(usr)
+			if("add_objective")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_add_objective(usr)
+			if("remove_objective")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(!T)
+					return
+				var/datum/objective/O = locate(href_list["tobjective"]) in T.objectives
+				if(O)
+					T.admin_remove_objective(usr,O)
+			if("add_member")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_add_member(usr)
+			if("remove_member")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(!T)
+					return
+				var/datum/mind/M = locate(href_list["tmember"]) in T.members
+				if(M)
+					T.admin_remove_member(usr,M)
+		check_teams()
+
+
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return
