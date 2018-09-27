@@ -263,6 +263,8 @@
 	M = matrix(pod.transform) //Make another matrix based on the pod
 	M.Turn(rotation) //Turn the matrix
 	pod.transform = M //Turn the actual pod (Won't be visible until endLaunch() proc tho)
+	if (!pod.effectQuiet)
+		playsound(fallingPod, 'sound/weapons/mortar_whistle.ogg', 50, 1)
 	animate(fallingPod, pixel_z = 0, pixel_x = -16, time = 3, , easing = LINEAR_EASING) //Make the pod fall! At an angle!
 	addtimer(CALLBACK(src, .proc/endLaunch), 3, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
