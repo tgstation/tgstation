@@ -254,6 +254,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Hallway
 
+/area/hallway
+	janicam_compatible = TRUE
+
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
@@ -990,6 +993,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Custodial Closet"
 	icon_state = "janitor"
 	flags_1 = NONE
+	janicam_compatible = TRUE
 
 /area/hydroponics
 	name = "Hydroponics"

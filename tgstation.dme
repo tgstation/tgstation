@@ -619,6 +619,7 @@
 #include "code\game\machinery\computer\crew.dm"
 #include "code\game\machinery\computer\dna_console.dm"
 #include "code\game\machinery\computer\gulag_teleporter.dm"
+#include "code\game\machinery\computer\janitor_camera.dm"
 #include "code\game\machinery\computer\launchpad_control.dm"
 #include "code\game\machinery\computer\law.dm"
 #include "code\game\machinery\computer\medical.dm"

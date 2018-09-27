@@ -260,7 +260,8 @@
 					/obj/item/storage/bag/trash = 1,
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,
-					/obj/item/storage/belt/janitor = 1)
+					/obj/item/storage/belt/janitor = 1,
+					/obj/item/janipermit = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/jani_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/jani_wardrobe

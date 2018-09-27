@@ -22136,6 +22136,14 @@
 	icon_state = "0-2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light_switch{
+	dir = 9;
+	pixel_x = 22
+	},
+/obj/structure/sink{
+	dir = 4;
+	pixel_x = 11
+	},
 /turf/open/floor/plasteel,
 /area/janitor)
 "aZR" = (
@@ -23535,17 +23543,7 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "bdi" = (
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/mop,
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 11
-	},
-/obj/machinery/light_switch{
-	dir = 9;
-	pixel_x = 22
-	},
-/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/camera_advanced/janitor,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bdj" = (
@@ -53808,6 +53806,11 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/department/engine)
+"dHm" = (
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel,
+/area/janitor)
 "dJm" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -86580,7 +86583,7 @@ aXO
 aYM
 aZP
 baY
-aZP
+dHm
 bdh
 bed
 aVS

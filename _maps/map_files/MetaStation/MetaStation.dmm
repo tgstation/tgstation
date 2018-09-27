@@ -30948,6 +30948,7 @@
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/janitorialcart,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bhe" = (
@@ -31905,8 +31906,8 @@
 /turf/open/floor/plasteel,
 /area/janitor)
 "biT" = (
-/obj/structure/janitorialcart,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/camera_advanced/janitor,
 /turf/open/floor/plasteel,
 /area/janitor)
 "biU" = (

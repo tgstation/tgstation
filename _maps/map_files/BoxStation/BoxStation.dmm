@@ -34542,6 +34542,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/janitorialcart,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bDs" = (
@@ -35843,7 +35844,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "bGD" = (
-/obj/structure/janitorialcart,
+/obj/machinery/computer/camera_advanced/janitor,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bGE" = (

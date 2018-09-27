@@ -18,6 +18,10 @@
 	name = "circuit board (Xenobiology Console)"
 	build_path = /obj/machinery/computer/camera_advanced/xenobio
 
+/obj/item/circuitboard/computer/janicam
+	name = "circuit board (Janitorial Console)"
+	build_path = /obj/machinery/computer/camera_advanced/janitor
+
 /obj/item/circuitboard/computer/base_construction
 	name = "circuit board (Aux Mining Base Construction Console)"
 	build_path = /obj/machinery/computer/camera_advanced/base_construction
