@@ -35,13 +35,13 @@
 	var/drawtype
 	var/text_buffer = ""
 
-	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard","heart")
+	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
 	var/static/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-	var/static/list/punctuation = list("!","?",".",",",":","/","+","-","=","<",">","%","$","*","#","&")
+	var/static/list/punctuation = list("!","?",".",",","/","+","-","=","%","#","&")
 	var/static/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
-	var/static/list/symbols = list("biohazard","radiation","firedanger","evac","space","trade","danger","electricdanger","safe","med","shop","food","peace","like","skull","nay")
-	var/static/list/drawings = list("smallsquare","square","bigsquare","splatter","snake","toilet","stickdog","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","gloves","cat","blueprint","stunbaton","beepsky","lasergun","scroll","bottle","shotgun")
-	var/static/list/oriented = list("arrow","line","thinline","shortline","body","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
+	var/static/list/symbols = list("danger","firedanger","electricdanger","biohazard","radiation","safe","evac","space","med","trade","shop","food","peace","like","skull","nay","heart","credit")
+	var/static/list/drawings = list("smallbrush","brush","largebrush","splatter","snake","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","cat","toilet","blueprint","beepsky","scroll","bottle","shotgun")
+	var/static/list/oriented = list("arrow","line","thinline","shortline","body","chevron","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
