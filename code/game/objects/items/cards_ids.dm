@@ -153,7 +153,7 @@
 			qdel(holochip)
 
 /obj/item/card/id/AltClick(mob/living/user)
-	if(Adjacent(user))
+	if(Adjacent(user) && isliving(user) && user.mind)
 		if(!registered_account)
 			var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
 			if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
