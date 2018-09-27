@@ -1,6 +1,0 @@
-author: "Floyd / Qustinnus (thx to mrdoombringer for sprite + idea)"
-delete-after: True
-changes: 
-  - rscadd: "The clowncar now comes with an inbuilt cannon that can be activated by emagging its circuits"
-  - bugfix: "cars can only kidnap if they have the CAN_KIDNAP trait"
-  - bugfix: "removes a dot too much in a to_chat in clown car actions"
