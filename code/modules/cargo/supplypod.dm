@@ -110,13 +110,13 @@
 				var/obj/item/organ/O = X
 				O.Remove(CM) //Note that this isn't the same proc as for lists
 				O.forceMove(T) //Move the organ outta the body
-				O.throw_at(destination, 3, 3) //Thow the organ at a random tile 3 spots away
+				O.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
 				sleep(1)
 			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs))
 				if (bodypart.dismemberable)
 					bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!	
-					bodypart.throw_at(destination, 3, 3)
+					bodypart.throw_at(destination, 2, 3)
 					sleep(1)		
 
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
