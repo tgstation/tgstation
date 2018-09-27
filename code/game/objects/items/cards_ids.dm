@@ -152,32 +152,33 @@
 			to_chat(user, "You insert [holochip] into [src], adding [holochip.credits] credits to your account.")
 			qdel(holochip)
 
-/obj/item/card/id/AltClick(mob/user)
-	if(!registered_account)
-		var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
-		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
-			to_chat(user, "The ID needs to be between 111111 and 999999.")
-			return
-		for(var/A in SSeconomy.bank_accounts)
-			var/datum/bank_account/B = A
-			if(B.account_id == new_bank_id)
-				B.bank_cards += src
-				registered_account = B
-				to_chat(user, "Your account has been assigned to this ID card.")
+/obj/item/card/id/AltClick(mob/living/user)
+	if(Adjacent(user))
+		if(!registered_account)
+			var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
+			if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
+				to_chat(user, "The ID needs to be between 111111 and 999999.")
 				return
-		to_chat(user, "The ID provided is not a real account.")
-		return
-	var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
-	if(!amount_to_remove || amount_to_remove < 0)
-		return
-	if(registered_account.adjust_money(-amount_to_remove))
-		var/obj/item/holochip/holochip = new (get_turf(user), amount_to_remove)
-		user.put_in_hands(holochip)
-		to_chat(user, "You withdraw [amount_to_remove] credits into a holochip.")
-		return
-	else
-		to_chat(user, "You don't have the funds for that.")
-		return
+			for(var/A in SSeconomy.bank_accounts)
+				var/datum/bank_account/B = A
+				if(B.account_id == new_bank_id)
+					B.bank_cards += src
+					registered_account = B
+					to_chat(user, "Your account has been assigned to this ID card.")
+					return
+			to_chat(user, "The ID provided is not a real account.")
+			return
+		var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
+		if(!amount_to_remove || amount_to_remove < 0)
+			return
+		if(registered_account.adjust_money(-amount_to_remove))
+			var/obj/item/holochip/holochip = new (get_turf(user), amount_to_remove)
+			user.put_in_hands(holochip)
+			to_chat(user, "You withdraw [amount_to_remove] credits into a holochip.")
+			return
+		else
+			to_chat(user, "You don't have the funds for that.")
+			return
 
 /obj/item/card/id/examine(mob/user)
 	..()
