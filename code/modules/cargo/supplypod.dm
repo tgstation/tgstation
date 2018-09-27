@@ -98,7 +98,7 @@
 		if (effectLimb && iscarbon(M)) //If effectLimb is true (which means we pop limbs off when we hit people):
 			var/mob/living/carbon/CM = M
 			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
-				if(bodypart.body_part != HEAD && bodypart.body_zone != CHEST)//we dont want to kill him, just teach em a lesson!
+				if(bodypart.body_part != HEAD && bodypart.body_part != CHEST)//we dont want to kill him, just teach em a lesson!
 					if (bodypart.dismemberable)
 						bodypart.dismember() //Using the power of flextape i've sawed this man's limb in half!
 						break
