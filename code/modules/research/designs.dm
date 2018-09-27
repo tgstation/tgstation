@@ -14,6 +14,7 @@ The currently supporting non-reagent materials. All material amounts are set as 
 - MAT_GOLD (/obj/item/stack/gold).
 - MAT_URANIUM (/obj/item/stack/uranium).
 - MAT_DIAMOND (/obj/item/stack/diamond).
+- MAT_BLUESPACE (/obj/item/stack/ore/bluespace_crystal).
 - MAT_BANANIUM (/obj/item/stack/bananium).
 (Insert new ones here)
 
@@ -65,7 +66,7 @@ other types of metals and chemistry for reagents).
 	name = "Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes."
 	icon_state = "datadisk1"
-	materials = list(MAT_METAL=300, MAT_GLASS=100)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
 	var/list/blueprints = list()
 	var/max_blueprints = 1
 
@@ -79,5 +80,5 @@ other types of metals and chemistry for reagents).
 /obj/item/disk/design_disk/adv
 	name = "Advanced Component Design Disk"
 	desc = "A disk for storing device design data for construction in lathes. This one has extra storage space."
-	materials = list(MAT_METAL=300, MAT_GLASS=100, MAT_SILVER = 50)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 100, MAT_SILVER = 50)
 	max_blueprints = 5

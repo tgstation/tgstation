@@ -71,11 +71,11 @@
 	addtimer(CALLBACK(src, .proc/set_ready_state, 1), equip_cooldown)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 8
+	equip_cooldown = 6
 	name = "\improper CH-PS \"Immolator\" laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 30
+	energy_drain = 40
 	projectile = /obj/item/projectile/beam/laser
 	fire_sound = 'sound/weapons/laser.ogg'
 	harmful = TRUE
@@ -85,16 +85,26 @@
 	name = "\improper CH-LC \"Solaris\" laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 60
+	energy_drain = 80
 	projectile = /obj/item/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/xray
+	equip_cooldown = 10
+	name = "\improper xray laser"
+	desc = "A weapon for combat exosuits. Shoots basic lasers."
+	icon_state = "mecha_laser"
+	energy_drain = 120
+	projectile = /obj/item/projectile/beam/xray
+	fire_sound = 'sound/weapons/laser.ogg'
+	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
 	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
 	desc = "A weapon for combat exosuits. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
 	icon_state = "mecha_ion"
-	energy_drain = 120
+	energy_drain = 160
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/laser.ogg'
 
@@ -281,7 +291,7 @@
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/lmg
-	projectiles = 300
+	projectiles = 120
 	projectile_energy_cost = 20
 	projectiles_per_shot = 3
 	variance = 6
@@ -385,6 +395,73 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/bolas
+	name = "bola launcher"
+	desc = "Equipment for combat exosuits. Launches energy bolas."
+	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/restraints/legcuffs/bola/energy/mech
+	fire_sound = 'sound/weapons/bolathrow.ogg'
+	projectiles = 10
+	missile_speed = 1.5
+	projectile_energy_cost = 250
+	equip_cooldown = 10
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary
+	name = "\improper incendiary grenade launcher"
+	desc = "A weapon for combat exosuits. Launches primed incendiary grenades."
+	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/grenade/chem_grenade/pyro/mechi
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 5
+	missile_speed = 1.5
+	projectile_energy_cost = 500
+	equip_cooldown = 8
+	var/det_time = 10
+	harmful = TRUE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/incendiary/proj_init(var/obj/item/grenade/chem_grenade/pyro/mechi/F)
+	var/turf/T = get_turf(src)
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
+	addtimer(CALLBACK(F, /obj/item/grenade/chem_grenade/pyro/mechi.proc/prime), det_time)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/acid
+	name = "\improper acid grenade launcher"
+	desc = "A weapon for combat exosuits. Launches primed acid grenades."
+	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/grenade/chem_grenade/mecha
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 4
+	missile_speed = 1.5
+	projectile_energy_cost = 600
+	equip_cooldown = 20
+	var/det_time = 20
+	harmful = TRUE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/acid/proj_init(var/obj/item/grenade/chem_grenade/mecha/F)
+	var/turf/T = get_turf(src)
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
+	addtimer(CALLBACK(F, /obj/item/grenade/chem_grenade/mecha.proc/prime), det_time)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/explosive
+	name = "\improper grenade launcher"
+	desc = "A weapon for combat exosuits. Launches primed explosive grenades."
+	icon_state = "mecha_grenadelnchr"
+	projectile = /obj/item/grenade/syndieminibomb/concussion/frag
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 3
+	missile_speed = 1
+	projectile_energy_cost = 2000
+	equip_cooldown = 30
+	var/det_time = 30
+	harmful = TRUE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/explosive/proj_init(var/obj/item/grenade/syndieminibomb/concussion/frag/F)
+	var/turf/T = get_turf(src)
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] fired a [src] in [ADMIN_VERBOSEJMP(T)]")
+	log_game("[key_name(chassis.occupant)] fired a [src] in [AREACOORD(T)]")
+	addtimer(CALLBACK(F, /obj/item/grenade/syndieminibomb/concussion/frag.proc/prime), det_time)
 
 //Classic extending punching glove, but weaponised!
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove
@@ -430,3 +507,23 @@
 			var/atom/movable/AM = hit_atom
 			AM.safe_throw_at(get_edge_target_turf(AM,get_dir(src, AM)), 7, 2)
 		qdel(src)
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/foam
+	name = "\improper Donksoft mech mounted lmg"
+	desc = "Oh shit"
+	icon_state = "mecha_uac2"
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	equip_cooldown = 9
+	projectile = /obj/item/projectile/bullet/reusable/foam_dart/riot
+	projectiles = 60
+	projectile_energy_cost = 30
+	projectiles_per_shot = 3
+	variance = 6
+	randomspread = 1
+
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/foam/can_attach(obj/mecha/M as obj)
+	if(..())
+		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
+			return TRUE
+	return FALSE

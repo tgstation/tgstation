@@ -771,12 +771,12 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/mech_grenade_launcher
-	id = "mech_grenade_launcher"
+/datum/techweb_node/mech_grenade_flashbang
+	id = "mech_grn_f"
 	display_name = "Exosuit Weapon (SGL-6 Grenade Launcher)"
 	description = "An advanced piece of mech weaponry"
 	prereq_ids = list("explosive_weapons")
-	design_ids = list("mech_grenade_launcher")
+	design_ids = list("mech_grn_f")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -842,6 +842,61 @@
 	design_ids = list("mech_diamond_drill")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
+
+/datum/techweb_node/mech_grenade_incendiary
+	id = "mech_grn_i"
+	display_name = "Exosuit Weapon (Incendiary Grenade Launcher)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("mecha", "explosive_weapons")
+	design_ids = list("mech_grn_i")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/mech_grenade_acid
+	id = "mech_grn_a"
+	display_name = "Exosuit Weapon (Acid Grenade Launcher)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("mecha", "explosive_weapons", "medical_weapons")
+	design_ids = list("mech_grn_a")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/mech_bola
+	id = "mech_bola"
+	display_name = "Exosuit Weapon (Bola Launcher)"
+	description = "A piece of mech weaponry"
+	prereq_ids = list("mecha", "weaponry")
+	design_ids = list("mech_bola")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/mech_grenade_explosive
+	id = "mech_grn_e"
+	display_name = "Exosuit Weapon (Explosive Grenade Launcher)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("mecha", "explosive_weapons")
+	design_ids = list("mech_grn_e")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/mech_foam_lmg
+	id = "mech_foam_lmg"
+	display_name = "Exosuit Weapon (Mech Donksoft LMG)"
+	description = "When your team needs the cavalry."
+	prereq_ids = list("mecha", "ballistic_weapons", "syndicate_basic")
+	design_ids = list("mech_foam_lmg")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/mech_xray
+	id = "mech_xray"
+	display_name = "Exosuit Weapon (X-ray Laser)"
+	description = "An advanced piece of mech weaponry"
+	prereq_ids = list("mecha", "adv_beam_weapons")
+	design_ids = list("mech_xray")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
 
 /////////////////////////Nanites/////////////////////////
 /datum/techweb_node/nanite_base

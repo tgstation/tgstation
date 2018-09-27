@@ -364,6 +364,17 @@
 		qdel(src)
 	..()
 
+
+/obj/item/restraints/legcuffs/bola/energy/mech/New()
+	..()
+	addtimer(CALLBACK(src, .proc/dissipate), 40)
+
+/obj/item/restraints/legcuffs/bola/energy/mech/proc/dissipate()
+	if(!ismob(loc))
+		do_sparks(1, TRUE, src)
+		qdel(src)
+
+
 /obj/item/restraints/legcuffs/bola/gonbola
 	name = "gonbola"
 	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
@@ -382,3 +393,4 @@
 	. = ..()
 	if(effectReference)
 		QDEL_NULL(effectReference)
+
