@@ -132,7 +132,7 @@
 	if(mapload && access_txt)
 		access = text2access(access_txt)
 
-/obj/item/card/id/AltClick(mob/user)
+/obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
 		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", "<span class='notice'>You show \the [src.name].</span>")
 	add_fingerprint(user)
@@ -152,7 +152,7 @@
 			to_chat(user, "You insert [holochip] into [src], adding [holochip.credits] credits to your account.")
 			qdel(holochip)
 
-/obj/item/card/id/attack_self(mob/user)
+/obj/item/card/id/AltClick(mob/user)
 	if(!registered_account)
 		var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
 		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
