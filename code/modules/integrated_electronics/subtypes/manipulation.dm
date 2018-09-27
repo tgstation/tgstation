@@ -369,12 +369,12 @@
 
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
 	//There shouldn't be any target required to eject all contents
+	var/mode = get_pin_data(IC_INPUT, 2)
 	if(mode == -1)
 		drop_all()
 
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(!QDELETED(AM) && !istype(AM, /obj/item/electronic_assembly) && !istype(AM, /obj/item/transfer_valve) && !istype(AM, /obj/item/twohanded) && !istype(assembly.loc, /obj/item/implant/storage))
-		var/mode = get_pin_data(IC_INPUT, 2)
 		switch(mode)
 			if(1)
 				grab(AM)
