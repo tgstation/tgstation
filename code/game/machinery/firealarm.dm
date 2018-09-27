@@ -141,7 +141,7 @@
 
 	flash_lighting_fx(FLASH_LIGHT_RANGE, flash_power, flash_color)
 	if(!timerid)
-		timerid = addtimer(CALLBACK(src, .proc/flash, world.time), 30, TIMER_STOPPABLE | TIMER_LOOP)
+		timerid = addtimer(CALLBACK(src, .proc/flash, world.time), 30, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_LOOP)
 
 /obj/machinery/firealarm/proc/reset()
 	if(!is_operational())
