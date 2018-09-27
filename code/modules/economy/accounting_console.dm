@@ -77,7 +77,7 @@
 			var/dep_id = params["target_dep"]
 			var/new_value = input("Choose a distribution percentage (0-100):", name, null) as null|num
 			if(!isnull(new_value))
-				var/prev_value = SSeconomy.income_distribution(dep_id)
+				var/prev_value = SSeconomy.income_distribution[dep_id]
 				if(SSeconomy.change_distribution(SSeconomy.get_dep_account(dep_id), new_value))
 					message_admins("[ADMIN_LOOKUPFLW(usr)] set the distribution percentage for the [SSeconomy.department_accounts[dep_id]]) from [prev_value] to [new_value].")
 					log_game("[key_name(usr)] set the distribution percentage for the [SSeconomy.department_accounts[dep_id]]) from [prev_value] to [new_value].")
