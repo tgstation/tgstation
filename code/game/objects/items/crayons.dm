@@ -6,7 +6,6 @@
 #define RANDOM_DRAWING "Random Drawing"
 #define RANDOM_ORIENTED "Random Oriented"
 #define RANDOM_RUNE "Random Rune"
-#define RANDOM_SHAPE "Random Shape"
 #define RANDOM_ANY "Random Anything"
 
 #define PAINT_NORMAL	1
@@ -36,20 +35,19 @@
 	var/drawtype
 	var/text_buffer = ""
 
-	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
+	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard","heart")
 	var/static/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/static/list/punctuation = list("!","?",".",",",":","/","+","-","=","<",">","%","$","*","#","&")
 	var/static/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
-	var/static/list/symbols = list(".")
-	var/static/list/drawings = list(".")
-	var/static/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
+	var/static/list/symbols = list("biohazard","radiation","firedanger","evac","space","trade","danger","electricdanger","safe","med","shop","food","peace","like","skull","nay")
+	var/static/list/drawings = list("smallsquare","square","bigsquare","splatter","snake","toilet","stickdog","stickman","carp","ghost","clown","taser","disk","fireaxe","toolbox","corgi","gloves","cat","blueprint","stunbaton","beepsky","lasergun","scroll","bottle","shotgun")
+	var/static/list/oriented = list("arrow","line","thinline","shortline","body","footprint","clawprint","pawprint") // These turn to face the same way as the drawer
 	var/static/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
-	var/static/list/shapes = list("square")
 	var/static/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
-		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING, RANDOM_SHAPE)
+		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER, RANDOM_SYMBOL, RANDOM_PUNCTUATION, RANDOM_DRAWING)
 	var/static/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
 
-	var/static/list/all_drawables = graffiti + letters + punctuation + numerals + symbols + drawings + oriented + runes + shapes + graffiti_large_h
+	var/static/list/all_drawables = graffiti + letters + punctuation + numerals + symbols + drawings + oriented + runes + graffiti_large_h
 
 	var/paint_mode = PAINT_NORMAL
 
@@ -207,11 +205,6 @@
 	for(var/R in runes)
 		R_items += list(list("item" = R))
 
-	var/list/Sh_items = list()
-	. += list(list(name = "Shapes", "items" = Sh_items))
-	for(var/Sh in shapes)
-		Sh_items += list(list("item" = Sh))
-
 	var/list/rand_items = list()
 	. += list(list(name = "Random", "items" = rand_items))
 	for(var/i in randoms)
@@ -309,8 +302,6 @@
 			drawing = pick(symbols)
 		if(RANDOM_DRAWING)
 			drawing = pick(drawings)
-		if(RANDOM_SHAPE)
-			drawing = pick(shapes)
 		if(RANDOM_GRAFFITI)
 			drawing = pick(graffiti)
 		if(RANDOM_RUNE)
@@ -758,7 +749,6 @@
 #undef RANDOM_PUNCTUATION
 #undef RANDOM_SYMBOL
 #undef RANDOM_DRAWING
-#undef RANDOM_SHAPE
 #undef RANDOM_NUMBER
 #undef RANDOM_ORIENTED
 #undef RANDOM_RUNE
