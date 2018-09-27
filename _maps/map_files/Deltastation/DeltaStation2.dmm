@@ -9859,6 +9859,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/janitorialcart,
 /turf/open/floor/plating,
 /area/janitor)
 "awE" = (
@@ -10622,11 +10623,11 @@
 /turf/open/floor/plasteel/white,
 /area/janitor)
 "axZ" = (
-/obj/structure/janitorialcart,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/poster/official/work_for_a_future{
 	pixel_x = 32
 	},
+/obj/machinery/computer/camera_advanced/janitor,
 /turf/open/floor/plating,
 /area/janitor)
 "aya" = (
