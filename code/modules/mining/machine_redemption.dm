@@ -183,9 +183,10 @@
 			inserted_disk = W
 			return TRUE
 			
-	if(istype(W, /obj/item/stack/ore/bluespace_crystal/refined))
-		to_chat(user, "<span class='notice'>[W] has already been refined!</span>")
-		return
+	if(istype(W, /obj/item/stack/ore))
+		if(W.refined_type == null)
+			to_chat(user, "<span class='notice'>[W] has already been refined!</span>")
+			return
 		
 	return ..()
 
