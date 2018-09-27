@@ -1,0 +1,4 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - bugfix: "Teleconsole now can be researched again."
