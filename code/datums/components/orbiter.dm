@@ -24,16 +24,16 @@
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 
 /datum/component/orbiter/RegisterWithParent()
-	var/atom/master = parent
-	if(ismovableatom(master))
-		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, orbited_spy)
-		var/atom/target = master.loc
-		while(!isturf(target))
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy)
-			target = target.loc
+	var/atom/target = parent
+	while(!isturf(target))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy)
+		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+	var/atom/target = parent
+	while(!isturf(target))
+		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+		target = target.loc
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
@@ -56,14 +56,11 @@
 	orbiters += newcomp.orbiters
 
 /datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
-	if(!isnull(orbiters[orbiter]))
-		return // We're already here
-	if(orbiter == parent) // Stop it, this is silly
-		if(!length(orbiters))
-			qdel(src)
-		return
 	if(orbiter.orbiting)
-		orbiter.orbiting.end_orbit(orbiter)
+		if(orbiter.orbiting == src)
+			orbiter.orbiting.end_orbit(orbiter, TRUE)
+		else
+			orbiter.orbiting.end_orbit(orbiter)
 	orbiters[orbiter] = lockinorbit
 	orbiter.orbiting = src
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, orbiter_spy)
@@ -89,7 +86,7 @@
 	orbiter.forceMove(get_turf(parent))
 	to_chat(orbiter, "<span class='notice'>Now orbiting [parent].</span>")
 
-/datum/component/orbiter/proc/end_orbit(atom/movable/orbiter)
+/datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
 	if(isnull(orbiters[orbiter]))
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
@@ -97,15 +94,19 @@
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
-	if(!length(orbiters) && !QDELING(src))
+	if(!refreshing && !length(orbiters) && !QDELING(src))
 		qdel(src)
 
 // This proc can receive signals by either the thing being directly orbited or anything holding it
 /datum/component/orbiter/proc/move_react(atom/orbited, atom/oldloc, direction)
+	set waitfor = FALSE // Transfer calls this directly and it doesnt care if the ghosts arent done moving
+
+	var/atom/movable/master = parent
+	if(master.loc == oldloc)
+		return
+
 	var/turf/oldturf = get_turf(oldloc)
 	var/turf/newturf = get_turf(parent)
-	if(newturf == oldturf)
-		return
 	if(!newturf)
 		qdel(src)
 
@@ -121,6 +122,9 @@
 		while(!isturf(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy, TRUE)
 			target = target.loc
+
+	if(newturf == oldturf)
+		return
 	
 	for(var/i in orbiters)
 		var/atom/movable/thing = i
@@ -140,7 +144,7 @@
 /////////////////////
 
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
-	if(!istype(A) || !get_turf(A))
+	if(!istype(A) || !get_turf(A) || A == src)
 		return
 
 	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
