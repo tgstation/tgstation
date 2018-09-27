@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Camera assembly upgrades can now only be placed in stage 3 (just before completion.)"
