@@ -83,3 +83,11 @@
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
 	SSeconomy.generated_accounts += src
+	
+/datum/bank_account/department/station
+	account_holder = "Station Budget"
+	department_id = ACCOUNT_STN
+	add_to_accounts = FALSE
+	
+/datum/bank_account/department/station/New(dep_id, budget)
+	account_balance = budget

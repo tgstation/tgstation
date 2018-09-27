@@ -1519,6 +1519,7 @@
 #include "code\modules\detectivework\footprints_and_rag.dm"
 #include "code\modules\detectivework\scanner.dm"
 #include "code\modules\economy\account.dm"
+#include "code\modules\economy\accounting_console.dm"
 #include "code\modules\economy\pay_stand.dm"
 #include "code\modules\emoji\emoji_parse.dm"
 #include "code\modules\error_handler\error_handler.dm"

@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(economy)
 	var/roundstart_paychecks = 5
 	var/initial_station_budget = 20000
 	var/department_budget_pool = 28000
-	var/datum/bank_account/department/station_budget
+	var/datum/bank_account/department/station/station_budget
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
 										ACCOUNT_SCI = ACCOUNT_SCI_NAME,
@@ -23,7 +23,8 @@ SUBSYSTEM_DEF(economy)
 	var/starting_station_tax = 30 //Percentage of income remaining on the station's account at roundstart
 										
 	var/base_station_income = 15000
-	var/next_income_bonus = 0 //Gives extra credits on the next station pay cycle, modified by external factors (bounties etc.)	
+	var/next_income_bonus = 0 //Gives extra credits on the next station pay cycle, modified by external factors (bounties etc.)
+	var/last_income = 15000 //Used for accounting consoles to track last income
 	var/datum/station_state/engineering_check = new /datum/station_state()
 	var/alive_humans_bounty = 150	//Humans detected in suit sensor network
 	var/alive_crew_bounty = 400 	//Registered crew in suit sensor network
@@ -33,12 +34,12 @@ SUBSYSTEM_DEF(economy)
 	var/list/dep_cards = list()
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
-	station_budget = new("Station Budget", initial_station_budget)
-	income_distribution[station_budget] = starting_station_tax
+	station_budget = new(null, initial_station_budget)
+	income_distribution[station_budget.department_id] = starting_station_tax
 	var/budget_to_hand_out = round(department_budget_pool / department_accounts.len)
 	for(var/A in department_accounts)
 		var/datum/bank_account/department/D = new(A, budget_to_hand_out)
-		income_distribution[D] = (100 - starting_station_tax) / department_accounts.len
+		income_distribution[D.department_id] = (100 - starting_station_tax) / department_accounts.len
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
@@ -47,6 +48,7 @@ SUBSYSTEM_DEF(economy)
 	centcomm_fund += research_bonus() // Payout based on slimes.
 	centcomm_fund += crew_status_bonus() // Payout based on crew safety, health, and mood.
 	centcomm_fund += next_income_bonus
+	last_income = centcomm_fund
 	next_income_bonus = 0
 	
 	distribute_income()
@@ -55,29 +57,29 @@ SUBSYSTEM_DEF(economy)
 		B.payday(1)
 
 /datum/controller/subsystem/economy/proc/distribute_income(income)
-	station_budget.adjust_money(income * income_distribution[station_budget])
+	station_budget.adjust_money(income * income_distribution[station_budget.department_id])
 	for(var/X in generated_accounts)
-		var/datum/bank_account/B = X
-		B.adjust_money(income * income_distribution[B])	
+		var/datum/bank_account/department/B = X
+		B.adjust_money(income * income_distribution[B.department_id])	
 
 //Change a department's income distribution. The remaining income is given to the station's account.
 /datum/controller/subsystem/economy/proc/change_distribution(datum/bank_account/department/D, new_value)
 	var/set_value = CLAMP(ROUND(new_value), 0, 100)
-	var/current_value = income_distribution[D]
+	var/current_value = income_distribution[D.department_id]
 	if(D == station_budget) //This is what's left, and isn't modified directly
 		return FALSE
 	if(set_value == current_value) //that was easy
 		return TRUE
 	else if(set_value < current_value)
 		var/difference = current_value - set_value
-		income_distribution[D] -= difference
-		income_distribution[station_budget] += difference
+		income_distribution[D.department_id] -= difference
+		income_distribution[station_budget.department_id] += difference
 		return TRUE
 	else
 		var/difference = set_value - current_value
-		if(income_distribution[station_budget] >= difference)
-			income_distribution[D] += difference
-			income_distribution[station_budget] -= difference
+		if(income_distribution[station_budget.department_id] >= difference)
+			income_distribution[D.department_id] += difference
+			income_distribution[station_budget.department_id] -= difference
 			return TRUE
 		else
 			return FALSE //out of budget

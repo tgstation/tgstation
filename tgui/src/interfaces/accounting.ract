@@ -1,0 +1,40 @@
+<ui-display title='Station Accounting'>
+	<ui-section label='Verification ID'>
+	{{#if data.has_id}}
+		<ui-button icon='eject' action='eject_id'>{{data.id_name}}</ui-button>
+	{{else}}
+		<ui-button>-------------</ui-button>
+	{{/if}}
+	</ui-section>
+	
+	{{#if data.has_id}}
+		<ui-section label='Current Station Budget'>
+			{{data.station_budget}}
+		</ui-section>
+		<ui-section label='Last Paycheck'>
+			{{data.last_income}}
+		</ui-section>
+		<ui-section label='Station Tax Rate'>
+			{{data.station_tax}}%
+		</ui-section>
+		
+		<ui-display title='Departments'>
+			{{#each data.dep_budgets}}
+				<ui-display title='{{department}}'>
+					<ui-section label='Current Budget'>
+						{{balance}}
+						<ui-button icon='plus' action='transfer_credits' params='{"target_dep": "{{dep_id}}", "giving": "1", "all": "0"}'>Add Credits</ui-button>
+						<ui-button action='transfer_credits' params='{"target_dep": "{{dep_id}}", "giving": "1", "all": "1"}'>All</ui-button>
+						{{#if data.is_captain}}
+							<ui-button icon='minus' action='transfer_credits' params='{"target_dep": "{{dep_id}}", "giving": "0", "all": "0"}'>Take Credits</ui-button>
+							<ui-button action='transfer_credits' params='{"target_dep": "{{dep_id}}", "giving": "0", "all": "1"}'>All</ui-button>
+						{{/if}}
+					</ui-section>
+					<ui-section label='Income Distribution Rate'>
+						{{distribution}}%
+						<ui-button icon='pencil' action='change_distribution' params='{"target_dep": "{{dep_id}}"}'>Set</ui-button>
+					</ui-section>
+				</ui-display>
+			{{/each}}
+		</ui-display>
+	{{/if}}
