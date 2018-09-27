@@ -124,6 +124,8 @@
 
 	//Early return
 	var/datum/gas_mixture/air1 = airs[1]
+	if(!air1)
+		return
 	if(air1.temperature <= 0)
 		return
 
