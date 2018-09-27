@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/rawketlawnchair
 	name = "84mm Rocket Propelled Grenade Launcher"
-	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm SRM-8 HE round. \
+	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to send your target out with a bang or your money back!"
 	item = /obj/item/gun/ballistic/automatic/rocketlauncher
 	cost = 8
