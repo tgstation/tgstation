@@ -322,7 +322,7 @@
 		temp = "symbol"
 	else if(drawing in drawings)
 		temp = "drawing"
-	else if(drawing in graffiti)
+	else if(drawing in graffiti|oriented)
 		temp = "graffiti"
 	else if(drawing in numerals)
 		temp = "number"
