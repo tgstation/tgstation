@@ -1,0 +1,15 @@
+author: "Whoneedspacee"
+delete-after: True
+changes: 
+  - rscadd: "new arena attack where ash drake summons lava around you"
+  - rscdel: "removed old swooping above you, instead flies above you instantly"
+  - balance: "ash drake now spawns temporary lava pools instead of meteors falling down"
+  - balance: "ash drake takes twice as long to swoop down now that he instantly goes above you"
+  - balance: "ash drake now moves twice as fast"
+  - balance: "increases the odds of lava spawns in the lava pool attack"
+  - balance: "increases fire line damage and decreases lava attacks direct damage"
+  - tweak: "ash drake fire now shoots in the direction of the target"
+  - tweak: "changes times of certain animations"
+  - tweak: "changes sounds of meteor falling to lava creation"
+  - bugfix: "a bug where ash drakes attacks did not damage mechs"
+  - imageadd: "changes meteor icon to lava creation animation from lava staff"
