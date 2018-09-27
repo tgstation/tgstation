@@ -53,7 +53,7 @@
 	if (!mat_container)
 		return
 		
-	if(istype(O, /obj/item/stack/ore/bluespace_crystal/refined))
+	if(O.refined_type == null)
 		return
 
 	ore_buffer -= O
