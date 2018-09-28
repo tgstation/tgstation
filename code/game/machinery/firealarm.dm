@@ -57,32 +57,35 @@
 
 /obj/machinery/firealarm/update_icon()
 	cut_overlays()
-
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/area/A = src.loc
 	A = A.loc
 
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
 		return
-	else
+
+	if(stat & BROKEN)
+		icon_state = "firex"
+		return
+
+	if(stat & NOPOWER)
 		icon_state = "fire0"
+		return
 
-		if(stat & BROKEN)
-			icon_state = "firex"
-			return
+	if(is_station_level(z))
+		add_overlay("overlay_[GLOB.security_level]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("overlay_[SEC_LEVEL_GREEN]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
-		if(stat & NOPOWER)
-			return
-
-		if(is_station_level(z))
-			add_overlay("overlay_[GLOB.security_level]")
-		else
-			add_overlay("overlay_[SEC_LEVEL_GREEN]")
-
-		if(detecting)
-			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
-		else
-			add_overlay("overlay_fire")
+	if(detecting)
+		add_overlay("overlay_[A.fire ? "fire" : "clear"]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[A.fire ? "fire" : "clear"]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("overlay_fire")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_fire", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
