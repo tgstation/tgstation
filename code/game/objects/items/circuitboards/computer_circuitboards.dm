@@ -50,6 +50,10 @@
 /obj/item/circuitboard/computer/card
 	name = "ID Console (Computer Board)"
 	build_path = /obj/machinery/computer/card
+	
+/obj/item/circuitboard/computer/accounting
+	name = "Accounting Console (Computer Board)"
+	build_path = /obj/machinery/computer/accounting
 
 /obj/item/circuitboard/computer/card/centcom
 	name = "CentCom ID Console (Computer Board)"
