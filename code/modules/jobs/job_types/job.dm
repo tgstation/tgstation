@@ -147,6 +147,8 @@
 /datum/job/proc/map_check()
 	return TRUE
 
+/datum/job/proc/radio_help_message(mob/M)
+	to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
 
 /datum/outfit/job
 	name = "Standard Gear"
