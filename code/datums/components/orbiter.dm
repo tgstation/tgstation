@@ -11,7 +11,7 @@
 //pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
 //lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
 /datum/component/orbiter/Initialize(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
-	if(!istype(orbiter) || !isatom(parent))
+	if(!istype(orbiter) || !isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	orbiters = list()
@@ -50,10 +50,12 @@
 		begin_orbit(arglist(arguments))
 		return
 	// The following only happens on component transfers
-	var/atom/master = parent
-	var/atom/other_master = newcomp.parent
-	newcomp.move_react(other_master.loc, master.loc) // We're moving the orbiters to where we are first
 	orbiters += newcomp.orbiters
+
+/datum/component/orbiter/PostTransfer()
+	if(!isatom(parent) || isarea(parent) || !get_turf(parent))
+		return COMPONENT_INCOMPATIBLE
+	move_react()
 
 /datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	if(orbiter.orbiting)
@@ -112,25 +114,22 @@
 
 	// Handling the signals of stuff holding us (or not anymore)
 	// These are prety rarely activated, how often are you following something in a bag?
-	if(!isturf(oldloc)) // We used to be registered to it, probably
+	if(oldloc && !isturf(oldloc)) // We used to be registered to it, probably
 		var/atom/target = oldloc
 		while(!isturf(target))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 			target = target.loc
-	if(orbited.loc != newturf) // We want to know when anything holding us moves too
+	if(orbited?.loc && orbited.loc != newturf) // We want to know when anything holding us moves too
 		var/atom/target = orbited.loc
 		while(!isturf(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy, TRUE)
 			target = target.loc
-
-	if(newturf == oldturf)
-		return
 	
 	for(var/i in orbiters)
 		var/atom/movable/thing = i
 		if(thing.loc == newturf)
 			continue
-		if(!newturf || (!orbiters[thing] && thing.loc != oldturf && thing.loc != newturf))
+		if(!newturf || (oldloc && !orbiters[thing] && thing.loc != oldturf && thing.loc != newturf))
 			end_orbit(thing)
 			continue
 		thing.forceMove(newturf)
