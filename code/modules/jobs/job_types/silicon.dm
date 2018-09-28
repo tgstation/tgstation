@@ -89,4 +89,4 @@ Cyborg
 	R.gender = NEUTER
 
 /datum/job/cyborg/radio_help_message(mob/M)
-	to_chat(M, "<b>To speak with other cyborgs and AI, use the :b button.</b>")
+	to_chat(M, "<b>Prefix your message with :b to speak with other cyborgs and AI.</b>")
