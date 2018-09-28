@@ -856,11 +856,9 @@
 	playsound(src, "sparks", 50, 1)
 
 /obj/machinery/airalarm/obj_break(damage_flag)
-	if(circuit && !(flags_1 & NODECONSTRUCT_1) && !(stat & BROKEN))
-		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)
-		stat |= BROKEN
-		update_icon()
-		set_light(0)
+	..()
+	update_icon()
+	set_light(0)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
