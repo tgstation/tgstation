@@ -6,10 +6,7 @@
 	icon_deny = "clothes-deny"
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
-	products = list(/obj/item/clothing/head/that = 2,
-		            /obj/item/clothing/head/fedora = 1,
-		            /obj/item/clothing/glasses/monocle = 1,
-		            /obj/item/clothing/suit/jacket = 2,
+	products = list(/obj/item/clothing/suit/jacket = 2,
 		            /obj/item/clothing/suit/jacket/puffer/vest = 2,
 		            /obj/item/clothing/suit/jacket/puffer = 2,
 		            /obj/item/clothing/under/suit_jacket/navy = 1,
@@ -17,7 +14,6 @@
 		            /obj/item/clothing/under/suit_jacket/burgundy = 1,
 		            /obj/item/clothing/under/suit_jacket/charcoal = 1,
 		            /obj/item/clothing/under/suit_jacket/white = 1,
-		            /obj/item/clothing/under/kilt = 1,
 		            /obj/item/clothing/under/overalls = 1,
 		            /obj/item/clothing/under/sl_suit = 1,
 		            /obj/item/clothing/under/pants/jeans = 3,
@@ -55,17 +51,11 @@
 		            /obj/item/clothing/under/skirt/blue = 1,
 		            /obj/item/clothing/under/skirt/red = 1,
 		            /obj/item/clothing/under/skirt/purple = 1,
-		            /obj/item/clothing/under/sundress = 2,
-		            /obj/item/clothing/under/stripeddress = 1,
-		            /obj/item/clothing/under/sailordress = 1,
-		            /obj/item/clothing/under/redeveninggown = 1,
-		            /obj/item/clothing/under/blacktango = 1,
 		            /obj/item/clothing/under/plaid_skirt = 1,
 		            /obj/item/clothing/under/plaid_skirt/blue = 1,
 		            /obj/item/clothing/under/plaid_skirt/purple = 1,
 		            /obj/item/clothing/under/plaid_skirt/green = 1,
 		            /obj/item/clothing/glasses/regular = 1,
-		            /obj/item/clothing/glasses/regular/jamjar = 1,
 		            /obj/item/clothing/head/sombrero = 1,
 		            /obj/item/clothing/suit/poncho = 1,
 		            /obj/item/clothing/suit/ianshirt = 1,
@@ -94,7 +84,7 @@
 		            /obj/item/clothing/head/beanie/stripedblue = 1,
 		            /obj/item/clothing/head/beanie/stripedgreen = 1,
 		            /obj/item/clothing/suit/jacket/letterman_red = 1,
-		            /obj/item/clothing/ears/headphones = 10,
+		            /obj/item/clothing/ears/headphones = 3,
 		            /obj/item/clothing/suit/apron/purple_bartender = 2,
 		            /obj/item/clothing/under/rank/bartender/purple = 2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool = 1,
@@ -107,15 +97,25 @@
 		              /obj/item/clothing/suit/vapeshirt = 1,
 		              /obj/item/clothing/under/geisha = 1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered = 1,
+		           /obj/item/clothing/glasses/regular/jamjar = 1,
+		           /obj/item/clothing/under/sundress = 2,
+		           /obj/item/clothing/under/stripeddress = 1,
+		           /obj/item/clothing/under/sailordress = 1,
+		           /obj/item/clothing/under/redeveninggown = 1,
+		           /obj/item/clothing/under/blacktango = 1,
+		           /obj/item/clothing/under/kilt = 1,
 		           /obj/item/clothing/head/mailman = 1,
 		           /obj/item/clothing/under/rank/mailman = 1,
 		           /obj/item/clothing/suit/jacket/leather = 1,
 		           /obj/item/clothing/suit/jacket/leather/overcoat = 1,
 		           /obj/item/clothing/under/pants/mustangjeans = 1,
 		           /obj/item/clothing/neck/necklace/dope = 3,
-		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1)
+		           /obj/item/clothing/suit/jacket/letterman_nanotrasen = 1,
+		           /obj/item/clothing/head/that = 2,
+		           /obj/item/clothing/head/fedora = 1,
+		           /obj/item/clothing/glasses/monocle = 1)
 	refill_canister = /obj/item/vending_refill/clothing
-	default_price = 50
+	default_price = 25
 	extra_price = 75
 	payment_department = NO_FREEBIES
 /obj/item/vending_refill/clothing
