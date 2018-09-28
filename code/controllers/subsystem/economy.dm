@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(economy)
 
 //Change a department's income distribution. The remaining income is given to the station's account.
 /datum/controller/subsystem/economy/proc/change_distribution(datum/bank_account/department/D, new_value)
-	var/set_value = CLAMP(Round(new_value), 0, 100)
+	var/set_value = CLAMP(round(new_value), 0, 100)
 	var/current_value = income_distribution[D.department_id]
 	if(D == station_budget) //This is what's left, and isn't modified directly
 		return FALSE
