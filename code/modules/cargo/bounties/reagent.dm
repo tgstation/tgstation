@@ -155,7 +155,7 @@ datum/bounty/reagent/chemical_simple/New()
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
-	description = "CentCom is requesting the chemical [name]. Ship a container of it to be rewarded."
+	description = "CentCom is in desperate need of the chemical [name]. Ship a container of it to be rewarded."
 	reward += rand(0, 4) * 500 //4000 to 6000 credits
 
 /datum/bounty/reagent/chemical_complex
