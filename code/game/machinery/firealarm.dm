@@ -29,10 +29,6 @@
 	light_range = 7
 	light_color = "#ff3232"
 
-	var/timerid
-	var/flash_power = FLASH_LIGHT_POWER
-	var/flash_color = LIGHT_COLOR_HALOGEN
-
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	var/last_alarm = 0
@@ -80,17 +76,9 @@
 	if(is_station_level(z))
 		add_overlay("overlay_[GLOB.security_level]")
 		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-		if(GLOB.security_level == SEC_LEVEL_DELTA)
-			if(!timerid)
-				flash()
-		else if(GLOB.security_level <= SEC_LEVEL_RED)
-			if(timerid)
-				deltimer(timerid)
-				timerid = null
 	else
 		add_overlay("overlay_[SEC_LEVEL_GREEN]")
 		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-
 
 	if(detecting)
 		add_overlay("overlay_[A.fire ? "fire" : "clear"]")
@@ -129,29 +117,12 @@
 	var/area/A = get_area(src)
 	A.firealert(src)
 	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
-	if(timerid)
-		return
-	flash()
-
-/obj/machinery/firealarm/proc/flash()
-	if (!powered())
-		return
-	if(!is_operational())
-		return
-
-	flash_lighting_fx(FLASH_LIGHT_RANGE, flash_power, flash_color)
-	if(!timerid)
-		timerid = addtimer(CALLBACK(src, .proc/flash, world.time), 30, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_LOOP)
 
 /obj/machinery/firealarm/proc/reset()
 	if(!is_operational())
 		return
 	var/area/A = get_area(src)
 	A.firereset(src)
-	if(!timerid)
-		return
-	deltimer(timerid)
-	timerid = null
 
 /obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
