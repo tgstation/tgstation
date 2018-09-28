@@ -111,8 +111,7 @@
 
 /obj/item/card/id
 	name = "identification card"
-	desc = "A card used to provide ID and determine access across the station. \
-	<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
@@ -130,6 +129,7 @@
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
+	desc +=  "\n<span class='notice'>Alt-click to withdraw funds from a linked account.</span>"
 	if(mapload && access_txt)
 		access = text2access(access_txt)
 
