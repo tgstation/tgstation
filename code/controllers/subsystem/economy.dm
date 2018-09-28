@@ -46,13 +46,13 @@ SUBSYSTEM_DEF(economy)
 	return ..()
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
-	var/centcomm_fund = base_station_income
-	centcomm_fund += maintenance_bonus()  //Bonus for keeping the station intact.
-	centcomm_fund += research_bonus() //Bonus for researched nodes.
-	centcomm_fund += crew_status_bonus() //Bonus based on crew safety, health, and mood.
-	centcomm_fund += crew_monitor_bonus() //Bonus for tracking people with sensors/nanites.
-	centcomm_fund += next_income_bonus
-	last_income = centcomm_fund
+	var/centcom_fund = base_station_income
+	centcom_fund += maintenance_bonus()  //Bonus for keeping the station intact.
+	centcom_fund += research_bonus() //Bonus for researched nodes.
+	centcom_fund += crew_status_bonus() //Bonus based on crew safety, health, and mood.
+	centcom_fund += crew_monitor_bonus() //Bonus for tracking people with sensors/nanites.
+	centcom_fund += next_income_bonus
+	last_income = centcom_fund
 	next_income_bonus = 0
 	
 	distribute_income()
@@ -138,7 +138,7 @@ SUBSYSTEM_DEF(economy)
 		var/cash_value = 0
 		if(crewmember["life_status"])
 			cash_value += sensors_bounty
-			if(crewmember["assignment"] && crewmember["ijob"] < 70) //Only counts real, non centcomm jobs
+			if(crewmember["assignment"] && crewmember["ijob"] < 70) //Only counts real, non centcom jobs
 				cash_value += crew_sensors_bounty
 			if(crewmember["can_track"])
 				cash_value += surveillance_bounty
