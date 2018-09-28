@@ -19,27 +19,20 @@
 	to_chat(user, "<span class='notice'>Alt-Click to split.</span>")
 
 /obj/item/holochip/update_icon()
+	name = "\improper [credits] credit holochip"
 	var/rounded_credits = credits
 	switch(credits)
 		if(1 to 4999)
 			icon_state = "holochip"
-			name = "\improper [rounded_credits] credit holochip"
-			desc = "A hard-light chip encoded with a small amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and viceversa. Keep away from magnets."
 		if(5000 to 4999000)
 			icon_state = "holochip_kilo"
 			rounded_credits = round(rounded_credits * 0.001)
-			name = "\improper [rounded_credits] kilocredit holochip"
-			desc = "A hard-light chip encoded with a large amount of credits. Typically holochips of this kind are used in high-value transactions when purely electronic channels can not be used. Still keep away from magnets."
 		if(5000000 to 4999000000)
 			icon_state = "holochip_mega"
 			rounded_credits = round(rounded_credits * 0.000001)
-			name = "\improper [rounded_credits] megacredit holochip"
-			desc = "A hard-light chip encoded with an obscene amount of credits. Rumors say that the CEO of Nanotrasen lounges in a pool full of these when off the job. Seriously, keep away from magnets."
 		if(5000000000 to INFINITY)
 			icon_state = "holochip_giga"
 			rounded_credits = round(rounded_credits * 0.000000001)
-			name = "\improper [rounded_credits] gigacredit holochip"
-			desc = "A hard-light chip encoded with a frankly bullshit amount of credits. The mere idea that this many credits have been put onto a single holochip strains credulity to the breaking point. Keep near magnets."
 	var/overlay_color = "#914792"
 	switch(rounded_credits)
 		if(0 to 9)
