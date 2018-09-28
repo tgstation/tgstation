@@ -26,8 +26,11 @@ SUBSYSTEM_DEF(economy)
 	var/next_income_bonus = 0 //Gives extra credits on the next station pay cycle, modified by external factors (bounties etc.)
 	var/last_income = 15000 //Used for accounting consoles to track last income
 	var/datum/station_state/engineering_check = new /datum/station_state()
-	var/alive_humans_bounty = 150	//Humans detected in suit sensor network
-	var/alive_crew_bounty = 400 	//Registered crew in suit sensor network
+	var/alive_humans_bounty = 100 //Credits given for every living human on station
+	var/mood_bounty = 100	//Credits given for every happy human on station
+	var/crew_safety_bounty = 1500 //Bounty for keeping people alive, multiplied by the current survival rate
+	var/sensors_bounty = 150	//Humans detected in suit sensor network
+	var/crew_sensors_bounty = 250 //Registered crew in suit sensor network
 	var/surveillance_bounty = 200 	//Crew with location tracking in suit sensor network
 	var/techweb_coeff = 0.05		//Point to credits ratio for researched nodes
 	var/list/bank_accounts = list()
@@ -44,9 +47,10 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/centcomm_fund = base_station_income
-	centcomm_fund += maintenance_bonus()  // Payout based on integrity.
-	centcomm_fund += research_bonus() // Payout based on slimes.
-	centcomm_fund += crew_status_bonus() // Payout based on crew safety, health, and mood.
+	centcomm_fund += maintenance_bonus()  //Bonus for keeping the station intact.
+	centcomm_fund += research_bonus() //Bonus for researched nodes.
+	centcomm_fund += crew_status_bonus() //Bonus based on crew safety, health, and mood.
+	centcomm_fund += crew_monitor_bonus() //Bonus for tracking people with sensors/nanites.
 	centcomm_fund += next_income_bonus
 	last_income = centcomm_fund
 	next_income_bonus = 0
@@ -98,6 +102,33 @@ SUBSYSTEM_DEF(economy)
 	return engineering_cash
 
 /datum/controller/subsystem/economy/proc/crew_status_bonus()
+	var/crew
+	var/alive_crew
+	var/cash_to_grant = 0
+	for(var/mob/m in GLOB.mob_list)
+		if(isnewplayer(m))
+			continue
+		if(m.mind)
+			if(isbrain(m) || iscameramob(m))
+				continue
+			if(ishuman(m))
+				var/mob/living/carbon/human/H = m
+				crew++
+				if(H.stat != DEAD)
+					alive_crew++
+					GET_COMPONENT_FROM(mood, /datum/component/mood, H)
+					var/medical_cash = (H.health / H.maxHealth) * alive_humans_bounty
+					if(mood)
+						var/mood_dosh = (mood.mood_level / 9) * mood_bounty
+						cash_to_grant += mood_dosh
+						medical_cash *= (mood.sanity / 100)
+					cash_to_grant += medical_cash
+		CHECK_TICK
+	var/aliveness = alive_crew / crew
+	cash_to_grant += (crew_safety_bounty * aliveness)
+	return cash_to_grant
+	
+/datum/controller/subsystem/economy/proc/crew_monitor_bonus()
 	var/cash_to_grant = 0
 	var/list/crew_list = list()
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
@@ -106,9 +137,9 @@ SUBSYSTEM_DEF(economy)
 	for(var/list/crewmember in crew_list)
 		var/cash_value = 0
 		if(crewmember["life_status"])
-			cash_value += alive_humans_bounty
+			cash_value += sensors_bounty
 			if(crewmember["assignment"] && crewmember["ijob"] < 70) //Only counts real, non centcomm jobs
-				cash_value += alive_crew_bounty
+				cash_value += crew_sensors_bounty
 			if(crewmember["can_track"])
 				cash_value += surveillance_bounty
 		cash_to_grant += cash_value
