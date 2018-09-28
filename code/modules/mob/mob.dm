@@ -306,6 +306,69 @@
 
 	face_atom(A)
 	A.examine(src)
+	
+	
+/mob/living/carbon/verb/give()
+	set category = "IC"
+	set name = "Give"
+	set src in view(1)
+
+	if(src == usr)
+		to_chat(usr,"<span class='warning'>You feel stupider, suddenly.</span>")
+		return
+
+	if(!ismonkey(src)&&!ishuman(src) || isalien(src) || src.stat || usr.stat || !src.client)
+		to_chat(usr,"<span class='warning'>[src.name] can't take anything</span>")
+		return
+
+	var/obj/item/I = usr.get_active_held_item()
+	if(!I)
+		to_chat(usr,"<span class='warning'>You don't have anything in your active hand to give to [src].</span>")
+		return
+
+	if(!usr.canUnEquip(I))
+		return
+
+	var/list/empty_hands = get_empty_held_indexes()
+	if(!empty_hands.len)
+		to_chat(usr,"<span class='warning'>[src]'s hands are full.</span>")
+		return
+
+	switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
+		if("Yes")
+			if(!I || !usr)
+				return
+			if(!Adjacent(usr))
+				to_chat(usr,"<span class='warning'>You need to stay in reaching distance while giving an object.</span>")
+				to_chat(usr,"<span class='warning'>[usr] moved too far away.</span>")
+				return
+
+			if(I != usr.get_active_held_item())
+				to_chat(usr,"<span class='warning'>You need to keep the item in your active hand.</span>")
+				to_chat(usr,"<span class='warning'>[name] seem to have given up on giving [I] to you.</span>")
+				return
+
+			if(src.lying || src.handcuffed)
+				to_chat(usr,"<span class='warning'>He is restrained.</span>")
+				return
+
+			empty_hands = get_empty_held_indexes()
+			if(!empty_hands.len)
+				to_chat(usr,"<span class='warning'>Your hands are full.</span>")
+				to_chat(usr,"<span class='warning'>Their hands are full.</span>")
+				return
+
+			if(!usr.dropItemToGround(I))
+				return
+
+			if(!put_in_hands(I))
+				to_chat(usr,"<span class='warning'>You can't take [I], so [usr] gave up!</span>")
+				to_chat(usr,"<span class='warning'>[src] can't take [I]!</span>")
+				return
+
+			src.visible_message("<span class='notice'>[usr] handed [I] to [src].</span>")
+		if("No")
+			src.visible_message("<span class='warning'>[usr] tried to hand [I] to [src] but [src] didn't want it.</span>")
 
 //same as above
 //note: ghosts can point, this is intended
@@ -766,7 +829,7 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	return
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
@@ -853,7 +916,14 @@
 	return
 
 /mob/proc/update_sight()
-	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
+	for(var/O in orbiters)
+		var/datum/orbit/orbit = O
+		var/obj/effect/wisp/wisp = orbit.orbiter
+		if (istype(wisp))
+			sight |= wisp.sight_flags
+			if(!isnull(wisp.lighting_alpha))
+				lighting_alpha = min(lighting_alpha, wisp.lighting_alpha)
+
 	sync_lighting_plane_alpha()
 
 /mob/proc/sync_lighting_plane_alpha()
@@ -870,12 +940,6 @@
 		var/obj/mecha/M = loc
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
-	else if (istype(loc, /obj/vehicle/sealed))
-		var/obj/vehicle/sealed/E = loc
-		if(E.mouse_pointer)
-			client.mouse_pointer_icon = E.mouse_pointer
-
-			
 
 /mob/proc/is_literate()
 	return 0
