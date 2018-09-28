@@ -235,7 +235,7 @@
 			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
-		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp))
+		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp) || istype(W, /obj/item/grown/rainbow_flower))
 			color_source = W
 		update_icon()
 

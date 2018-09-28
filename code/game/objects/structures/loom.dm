@@ -6,10 +6,10 @@
 	density = TRUE
 	anchored = TRUE
 
-/obj/structure/loom/attackby(obj/item/stack/W, mob/user)
-	if(istype(W,/obj/item/stack/sheet/cotton) && W.amount > 9)
+/obj/structure/loom/attackby(obj/item/stack/sheet/W, mob/user)
+	if(W.is_fabric && W.amount > 9)
 		user.show_message("<span class='notice'>You start weaving the [W.name] through the loom..</span>", 1)
-		if(W.use_tool(src, user, 50))
+		if(W.use_tool(src, user, W.pull_effort))
 			new /obj/item/stack/sheet/cloth/five(drop_location())
 			user.show_message("<span class='notice'>You weave the [W.name] into a workable fabric.</span>", 1)
 			W.amount = (W.amount - 10)

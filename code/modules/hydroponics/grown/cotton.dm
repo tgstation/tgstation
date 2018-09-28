@@ -6,8 +6,8 @@
 	plantname = "Cotton"
 	icon_harvest = "cotton-harvest"
 	product = /obj/item/grown/cotton
-	lifespan = 80
-	endurance = 50
+	lifespan = 35
+	endurance = 25
 	maturation = 15
 	production = 1
 	yield = 2
@@ -68,12 +68,12 @@
 	seed = /obj/item/seeds/cotton/durathread
 	name = "durathread bundle"
 	desc = "A tough bundle of durathread, good luck unraveling this."
-	icon_state = "cotton"
+	icon_state = "durathread"
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 3
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
-	cotton_type = /obj/item/stack/sheet/cotton
+	cotton_type = /obj/item/stack/sheet/cotton/durathread
 	cotton_name = "raw durathread"
