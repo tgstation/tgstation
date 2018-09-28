@@ -168,7 +168,7 @@
 						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
 					else
 						var/points_to_check
-						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+						var/datum/bank_account/D = SSeconomy.station_budget
 						if(D)
 							points_to_check = D.account_balance
 						if(points_to_check >= S.credit_cost)
