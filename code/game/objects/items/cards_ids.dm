@@ -129,7 +129,6 @@
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
-	desc +=  "\n<span class='notice'>Alt-click to withdraw funds from a linked account.</span>"
 	if(mapload && access_txt)
 		access = text2access(access_txt)
 
@@ -192,7 +191,7 @@
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
-		to_chat(user, "Use your ID in-hand to pull money from your account in the form of holochips.")
+		to_chat(user, "Alt-Click your ID in-hand to pull money from your account in the form of holochips.")
 		to_chat(user, "You can insert credits into your account by pressing holochips against the ID.")
 		to_chat(user, "If you lose this ID card, you can reclaim your account by using a blank ID card inhand and punching in the account ID.")
 
