@@ -153,7 +153,10 @@
 			qdel(holochip)
 
 /obj/item/card/id/AltClick(mob/living/user)
-	if(Adjacent(user) && isliving(user))
+	if(user.get_active_held_item() != src)
+		to_chat(user, "You must hold the ID in your hand to do this.")
+		return
+	if(user.canUseTopic(src, BE_CLOSE) && isliving(user))
 		if(!registered_account)
 			var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
 			if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
