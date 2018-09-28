@@ -43,10 +43,6 @@
 /datum/objective/hivemind/assimilate
 	explanation_text = "This is a bug. Error:HIVE3"
 
-/datum/objective/hivemind/assimilate/find_target_by_role(role, role_type=0, invert=0)
-	..()
-	return target
-
 /datum/objective/hivemind/assimilate/update_explanation_text()
 	if(target)
 		explanation_text = "Assimilate [target.name] into the hive and ensure they survive."
