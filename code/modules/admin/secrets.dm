@@ -60,6 +60,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=massplasmamen'>Make everyone into a plasmaman. (CANNOT BE REVERTED)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=ancap'>Anarcho-Capitalist Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
@@ -593,6 +594,27 @@
 			message_admins("[key_name_admin(usr)] has removed everyone from \
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
+		if("massplasmamen")
+			if(!check_rights(R_FUN))
+				return
+			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+				H.set_species(/datum/species/plasmaman)
+				var/uniform = H.w_uniform
+				qdel(uniform)
+				var/mask = H.wear_mask
+				qdel(mask)
+				var/helmet = H.head
+				qdel(helmet)
+				H.drop_all_held_items()
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/plasmaman(H), SLOT_W_UNIFORM)
+				H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/plasmaman(H), SLOT_HEAD)
+				H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
+				var/obj/tank = new /obj/item/tank/internals/plasmaman/belt/full
+				H.put_in_hands(tank)
+				H.internal = tank
+				H.update_internals_hud_icon(1)
+			message_admins("[key_name_admin(usr)] has made everyone into plasmamen.")
+			log_admin("[key_name(usr)] has made everyone into plasmamen.")
 
 		if("flipmovement")
 			if(!check_rights(R_FUN))
