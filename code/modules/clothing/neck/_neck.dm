@@ -215,9 +215,9 @@
 		if(user.is_holding(src))
 			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
 			var/currentHandIndex = user.get_held_index_of_item(src)
-			var/name = src.name
+			var/oldName = src.name
 			qdel(src)
 			user.put_in_hand(newBand, currentHandIndex)
-			user.visible_message("You untie [name] back into a [newBand.name]", "[user] unties [name] back into a [newBand.name]")
+			user.visible_message("You untie [oldName] back into a [newBand.name]", "[user] unties [oldName] back into a [newBand.name]")
 		else
 			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!")
