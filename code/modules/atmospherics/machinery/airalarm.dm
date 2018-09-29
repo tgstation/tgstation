@@ -218,9 +218,6 @@
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/on_construction()
-	..(dir,dir)
-
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
 	switch(buildstage)
@@ -667,7 +664,7 @@
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
-		return FALSE
+		return
 
 	var/turf/location = get_turf(src)
 	if(!location)
@@ -704,7 +701,7 @@
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
 
-	return TRUE
+	return
 
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
@@ -843,10 +840,7 @@
 	..()
 	if(stat & NOPOWER)
 		set_light(0)
-	else
-		set_light(brightness_on)
 	update_icon()
-	return
 
 /obj/machinery/airalarm/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
