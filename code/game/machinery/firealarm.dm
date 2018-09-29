@@ -74,12 +74,17 @@
 	if(stat & NOPOWER)
 		return
 
-	add_overlay("fire_[detecting && A.fire ? "on" : "off"]")
-	SSvis_overlays.add_vis_overlay(src, icon, "fire_[detecting && A.fire ? "on" : "off"]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	add_overlay("fire_overlay")
 
-	if(obj_flags & EMAGGED)
-		add_overlay("fire_emagged")
-		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	if(is_station_level(z))
+		add_overlay("fire_[GLOB.security_level]")
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("fire_[SEC_LEVEL_GREEN]")
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+
+	add_overlay("fire_[detecting && A.fire ? (obj_flags & EMAGGED) ? "emagged" : "on" : "off"]")
+	SSvis_overlays.add_vis_overlay(src, icon, "fire_[detecting && A.fire ? (obj_flags & EMAGGED) ? "emagged" : "on" : "off"]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
