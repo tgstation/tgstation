@@ -701,9 +701,6 @@
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
 
-	return
-
-
 /obj/machinery/airalarm/proc/post_alert(alert_level)
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
 
