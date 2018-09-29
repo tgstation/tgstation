@@ -121,7 +121,8 @@
     "create_verbs": [
         "spawn",
         "MAke me",
-        "creat"
+        "creat",
+		"tc trade me"
     ],
 
     "create_nouns": [
@@ -130,7 +131,9 @@
         "treaitors",
         "sheadow lings",
         "abdoocters",
-        "revinent"
+        "revinent",
+		"deval",
+		"deth squads"
     ],
 	
     "bug": [
