@@ -291,13 +291,6 @@
 			else
 				power = 1200
 				charge_max = 1200
-		for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
-			if(H.owner == user.mind)
-				continue
-			if(H.hivemembers.Find(vessel))
-				to_chat(user, "<span class='danger'>We have detected a foreign presence within this mind, it would be unwise to merge so intimately with it.</span>")
-				revert_cast()
-				return
 		original_body = user
 		vessel = targets[1]
 		to_chat(user, "<span class='notice'>We begin merging our mind with [vessel.name].</span>")
@@ -309,6 +302,13 @@
 			to_chat(user, "<span class='notice'>Our vessel is too far away to control.</span>")
 			revert_cast()
 			return
+		for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
+			if(H.owner == user.mind)
+				continue
+			if(H.owner == vessel.mind)
+				to_chat(user, "<span class='danger'>We have detected a foreign presence within this mind, it would be unwise to merge so intimately with it.</span>")
+				revert_cast()
+				return
 		backseat = new /mob/living/passenger()
 		if(vessel && vessel.mind && backseat)
 			var/obj/effect/proc_holder/spell/target_hive/hive_see/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_see) in user.mind.spell_list
