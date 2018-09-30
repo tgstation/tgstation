@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "DB queries are now async by default, the code that runs in /world/New has been adjusted to continue blocking as it apparently is not allowed to sleep."
