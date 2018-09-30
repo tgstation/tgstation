@@ -97,13 +97,12 @@
 			to_chat(dump_to, "<span class='boldwarning'>Youtube-dl retrieval failed.</span><span class='warning'> Error: [stderr]</span>")
 	return YTDL_FAILURE_UNKNOWN
 
-/client/proc/play_web_sound()
+/client/proc/play_web_sound(pitch = 1)
 	set category = "Fun"
 	set name = "Play Internet Sound"
 	if(!check_rights(R_SOUNDS))
 		return
 	var/url = input("Enter content URL (supported sites only, leave blank to stop playing)", "Play Internet Sound via youtube-dl") as text|null
-	var/pitch = input("Do you want to put in a custom pitch?", "Custom pitch", 1) as num|null
 	if(!length(url))//pressed ok with blank
 		log_admin("[key_name(src)] stopped web sound")
 		message_admins("[key_name(src)] stopped web sound")
