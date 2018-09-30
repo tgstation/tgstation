@@ -25,13 +25,13 @@
 
 /datum/component/orbiter/RegisterWithParent()
 	var/atom/target = parent
-	while(!isturf(target))
+	while(ismovableatom(target))
 		RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy)
 		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
 	var/atom/target = parent
-	while(!isturf(target))
+	while(ismovableatom(target))
 		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 		target = target.loc
 
@@ -116,12 +116,12 @@
 	// These are prety rarely activated, how often are you following something in a bag?
 	if(oldloc && !isturf(oldloc)) // We used to be registered to it, probably
 		var/atom/target = oldloc
-		while(!isturf(target))
+		while(ismovableatom(target))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 			target = target.loc
 	if(orbited?.loc && orbited.loc != newturf) // We want to know when anything holding us moves too
 		var/atom/target = orbited.loc
-		while(!isturf(target))
+		while(ismovableatom(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy, TRUE)
 			target = target.loc
 	
@@ -152,5 +152,6 @@
 	return // We're just a simple hook
 
 /atom/proc/transfer_observers_to(atom/target)
-	var/datum/component/orbiter/orbits = GetComponent(/datum/component/orbiter)
-	target.TakeComponent(orbits)
+	if(!orbiters || !istype(target) || !get_turf(target) || target == src)
+		return
+	target.TakeComponent(orbiters)
