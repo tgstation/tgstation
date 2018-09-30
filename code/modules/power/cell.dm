@@ -6,8 +6,6 @@
 	item_state = "cell"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	force = 5
-	throwforce = 5
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -21,6 +19,7 @@
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
 	container_type = INJECTABLE|DRAINABLE
+	item_flags = NOBLUDGEON
 
 /obj/item/stock_parts/cell/get_cell()
 	return src

@@ -42,6 +42,7 @@
 	var/open = FALSE//Maint panel
 	var/locked = TRUE
 	var/hacked = FALSE //Used to differentiate between being hacked by silicons and emagged by humans.
+	var/silent = FALSE //speak() won't work
 	var/text_hack = ""		//Custom text returned to a silicon upon hacking a bot.
 	var/text_dehack = "" 	//Text shown when resetting a bots hacked status to normal.
 	var/text_dehack_fail = "" //Shown when a silicon tries to reset a bot emagged with the emag item, which cannot be reset.
@@ -253,7 +254,12 @@
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_HELP)
+		add_fingerprint(H)
 		interact(H)
+		if(auto_patrol == TRUE && bot_core.allowed(H)) //don't want people without access interrupting Beepsky
+			bot_reset() //HOLD IT!!
+			auto_patrol = FALSE
+			speak("<span class = 'robot'>Patrol stopped to interface with user.</span>", radio_channel)
 	else
 		return ..()
 
@@ -343,7 +349,7 @@
 	text_dehack_fail = "You fail to reset [name]."
 
 /mob/living/simple_animal/bot/proc/speak(message,channel) //Pass a message to have the bot say() it. Pass a frequency to say it on the radio.
-	if((!on) || (!message))
+	if((!on) || (!message) || (silent))
 		return
 	if(channel && Radio.channels[channel])// Use radio if we have channel key
 		Radio.talk_into(src, message, channel, get_spans(), get_default_language())
