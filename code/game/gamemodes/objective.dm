@@ -25,7 +25,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 //Shared by few objective types
 /datum/objective/proc/admin_simple_target_pick(mob/admin)
-	var/list/possible_targets = list("Free objective")
+	var/list/possible_targets = list("Free objective","Random")
 	var/def_value
 	for(var/datum/mind/possible_target in SSticker.minds)
 		if ((possible_target != src) && ishuman(possible_target.current))
@@ -41,6 +41,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	
 	if (new_target == "Free objective")
 		target = null
+	else if (new_target == "Random")
+		find_target()
 	else
 		target = new_target.mind
 
