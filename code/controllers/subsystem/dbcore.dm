@@ -45,7 +45,7 @@ SUBSYSTEM_DEF(dbcore)
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_shutdown = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = '[sanitizeSQL(SSticker.end_state)]' WHERE id = [GLOB.round_id]")
-		query_round_shutdown.Execute()
+		query_round_shutdown.Execute(async = TRUE)
 		qdel(query_round_shutdown)
 	if(IsConnected())
 		Disconnect()
@@ -101,7 +101,7 @@ SUBSYSTEM_DEF(dbcore)
 		if(Connect())
 			log_world("Database connection established.")
 			var/datum/DBQuery/query_db_version = NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
-			query_db_version.Execute()
+			query_db_version.Execute(async = TRUE)
 			if(query_db_version.NextRow())
 				db_major = text2num(query_db_version.item[1])
 				db_minor = text2num(query_db_version.item[2])
@@ -121,10 +121,10 @@ SUBSYSTEM_DEF(dbcore)
 	if(!Connect())
 		return
 	var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-	query_round_initialize.Execute()
+	query_round_initialize.Execute(async = TRUE)
 	qdel(query_round_initialize)
 	var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-	query_round_last_id.Execute()
+	query_round_last_id.Execute(async = TRUE)
 	if(query_round_last_id.NextRow())
 		GLOB.round_id = query_round_last_id.item[1]
 	qdel(query_round_last_id)
@@ -133,7 +133,7 @@ SUBSYSTEM_DEF(dbcore)
 	if(!Connect())
 		return
 	var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
-	query_round_start.Execute()
+	query_round_start.Execute(async = TRUE)
 	qdel(query_round_start)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundEnd()
@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(dbcore)
 		return
 	var/sql_station_name = sanitizeSQL(station_name())
 	var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
-	query_round_end.Execute()
+	query_round_end.Execute(async = TRUE)
 	qdel(query_round_end)
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
@@ -283,12 +283,12 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	last_activity = activity
 	last_activity_time = world.time
 
-/datum/DBQuery/proc/warn_execute(async = FALSE)
+/datum/DBQuery/proc/warn_execute(async = TRUE)
 	. = Execute(async)
 	if(!.)
 		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
 
-/datum/DBQuery/proc/Execute(async = FALSE, log_error = TRUE)
+/datum/DBQuery/proc/Execute(async = TRUE, log_error = TRUE)
 	Activity("Execute")
 	if(in_progress)
 		CRASH("Attempted to start a new query while waiting on the old one")
@@ -361,5 +361,5 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	//strip sensitive stuff
 	if(findtext(message, ": CreateConnection("))
 		message = "CreateConnection CENSORED"
-	
+
 	log_sql("BSQL_DEBUG: [message]")
