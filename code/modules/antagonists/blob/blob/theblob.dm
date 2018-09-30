@@ -331,7 +331,7 @@
 /obj/structure/blob/proc/get_chem_name()
 	if(overmind)
 		return overmind.blob_reagent_datum.name
-	return "some kind of organic tissue."
+	return "some kind of organic tissue"
 
 /obj/structure/blob/normal
 	name = "normal blob"
