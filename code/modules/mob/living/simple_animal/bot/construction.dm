@@ -484,12 +484,12 @@
 				if(swordamt < 3)
 					if(!user.temporarilyRemoveItemFromInventory(I))
 						return
-						created_name = "General Beepsky"
-						name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
-						icon_state = "grievous_assembly"
-						to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
-						qdel(I)
-						swordamt ++
+					created_name = "General Beepsky"
+					name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
+					icon_state = "grievous_assembly"
+					to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
+					qdel(I)
+					swordamt ++
 				else
 					if(!can_finish_build(I, user))
 						return
