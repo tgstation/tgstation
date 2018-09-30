@@ -3,7 +3,7 @@
 	for (var/obj/machinery/camera/C in GLOB.cameranet.cameras)
 		L.Add(C)
 
-	camera_sort(L)
+	sortTim(L, cmp=/proc/cam_tag_sort, FALSE)
 
 	var/list/T = list()
 
@@ -138,14 +138,5 @@
 		return
 	user.switchCamera(src)
 
-/proc/camera_sort(list/L)
-	var/obj/machinery/camera/a
-	var/obj/machinery/camera/b
-
-	for (var/i = L.len, i > 0, i--)
-		for (var/j = 1 to i - 1)
-			a = L[j]
-			b = L[j + 1]
-			if (sorttext(a.c_tag, b.c_tag) < 0)
-				L.Swap(j, j + 1)
-	return L
+/proc/cam_tag_sort(obj/machinery/camera/a, obj/machinery/camera/b)
+	return sorttext(a.c_tag, b.c_tag) 
