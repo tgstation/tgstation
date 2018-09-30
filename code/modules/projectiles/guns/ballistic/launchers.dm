@@ -104,12 +104,17 @@
 
 /obj/item/gun/ballistic/automatic/rocketlauncher/attack_self(mob/living/user)
 	if(magazine)
+		if(chambered)
+			chambered.forceMove(magazine)
+			magazine.stored_ammo.Insert(1, chambered)
+			chambered = null
+		else
+			stack_trace("Removed [magazine] from [src] without a chambered round")
 		magazine.forceMove(drop_location())
 		user.put_in_hands(magazine)
 		playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, TRUE)
 		to_chat(user, "<span class='notice'>You work the [magazine] out from [src].</span>")
 		magazine = null
-		chambered = null
 	else
 		to_chat(user, "<span class='notice'>There's no rocket in [src].</span>")
 	update_icon()
