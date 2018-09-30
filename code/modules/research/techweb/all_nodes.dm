@@ -635,7 +635,7 @@
 	id = "gravity_gun"
 	display_name = "One-point Bluespace-gravitational Manipulator"
 	description = "Fancy wording for gravity gun."
-	prereq_ids = list("adv_weaponry", "micro_bluespace")
+	prereq_ids = list("adv_weaponry", "bluespace_travel")
 	design_ids = list("gravitygun", "mech_gravcatapult")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
@@ -811,7 +811,7 @@
 	id = "mech_wormhole_gen"
 	display_name = "Exosuit Module (Localized Wormhole Generator)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("micro_bluespace")
+	prereq_ids = list("bluespace_travel")
 	design_ids = list("mech_wormhole_gen")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
