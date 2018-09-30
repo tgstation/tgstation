@@ -325,7 +325,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 /datum/DBQuery/proc/slow_query_check()
 	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
-/datum/DBQuery/proc/NextRow(async)
+/datum/DBQuery/proc/NextRow(async = TRUE)
 	Activity("NextRow")
 	UNTIL(!in_progress)
 	if(!skip_next_is_complete)
