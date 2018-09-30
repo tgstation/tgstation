@@ -623,6 +623,7 @@
 
 /obj/machinery/airalarm/update_icon()
 	set_light(0)
+	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	if(stat & NOPOWER)
 		icon_state = "alarm0"
@@ -647,14 +648,17 @@
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
+			add_overlay(AALARM_OVERLAY_GREEN)
 			overlay_state = AALARM_OVERLAY_GREEN
 			light_color = LIGHT_COLOR_GREEN
 			set_light(brightness_on)
 		if(1)
+			add_overlay(AALARM_OVERLAY_WARN)
 			overlay_state = AALARM_OVERLAY_WARN
 			light_color = LIGHT_COLOR_LAVA
 			set_light(brightness_on)
 		if(2)
+			add_overlay(AALARM_OVERLAY_DANGER)
 			overlay_state = AALARM_OVERLAY_DANGER
 			light_color = LIGHT_COLOR_RED
 			set_light(brightness_on)
