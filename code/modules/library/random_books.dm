@@ -51,7 +51,7 @@
 		category = null
 	var/c = category? " AND category='[sanitizeSQL(category)]'" :""
 	var/datum/DBQuery/query_get_random_books = SSdbcore.NewQuery("SELECT * FROM [format_table_name("library")] WHERE isnull(deleted)[c] GROUP BY title ORDER BY rand() LIMIT [amount];") // isdeleted copyright (c) not me
-	if(query_get_random_books.Execute())
+	if(query_get_random_books.Execute(async = TRUE))
 		while(query_get_random_books.NextRow())
 			var/obj/item/book/B = new(location)
 			. += B

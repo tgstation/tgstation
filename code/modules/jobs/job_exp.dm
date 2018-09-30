@@ -188,7 +188,7 @@ GLOBAL_PROTECT(exp_to_update)
 
 	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[prefs.db_flags]' WHERE ckey='[sanitizeSQL(ckey)]'")
 
-	if(!flag_update.Execute())
+	if(!flag_update.Execute(async = TRUE))
 		qdel(flag_update)
 		return -1
 	qdel(flag_update)
