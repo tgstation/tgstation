@@ -132,6 +132,15 @@
 	else
 		alarm()
 
+/obj/machinery/firealarm/attack_ai()
+	if(buildstage != 2)
+		return ..()
+	var/area/A = get_area(src)
+	if(A.fire)
+		reset()
+	else
+		alarm()
+
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 
