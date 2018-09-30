@@ -202,6 +202,7 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
+	custom_price = 5
 	icon_state = "coffee"
 	list_reagents = list("ice" = 30)
 	spillable = TRUE
@@ -361,6 +362,7 @@
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
+	custom_price = 30
 	icon_state = "flask"
 	materials = list(MAT_METAL=250)
 	volume = 60
@@ -425,6 +427,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
 	desc = "Cola. in space."
+	custom_price = 10
 	icon_state = "cola"
 	list_reagents = list("cola" = 30)
 	foodtype = SUGAR
@@ -432,6 +435,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	custom_price = 10
 	icon_state = "tonic"
 	list_reagents = list("tonic" = 50)
 	foodtype = ALCOHOL
@@ -439,6 +443,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
+	custom_price = 10
 	icon_state = "sodawater"
 	list_reagents = list("sodawater" = 50)
 
