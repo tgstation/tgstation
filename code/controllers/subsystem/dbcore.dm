@@ -124,7 +124,7 @@ SUBSYSTEM_DEF(dbcore)
 	query_round_initialize.Execute()
 	qdel(query_round_initialize)
 	var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-	query_round_last_id.Execute(async = TRUE)
+	query_round_last_id.Execute()
 	if(query_round_last_id.NextRow())
 		GLOB.round_id = query_round_last_id.item[1]
 	qdel(query_round_last_id)
