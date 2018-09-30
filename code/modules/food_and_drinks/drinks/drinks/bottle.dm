@@ -21,7 +21,7 @@
 	if(bartender_check(target) && ranged)
 		return
 	var/obj/item/broken_bottle/B = new (loc)
-	if(!ranged)
+	if(!ranged && thrower)
 		thrower.put_in_hands(B)
 	B.icon_state = icon_state
 

@@ -981,7 +981,7 @@
 					L.Knockdown(60)
 				else
 					L.Knockdown(30)
-				if(D.thrower)
+				if(D?.thrower)
 					for(var/mob/living/Next in orange(2, T))
 						if(!Next.density || iscultist(Next))
 							continue

@@ -104,7 +104,7 @@
 /obj/item/reagent_containers/food/drinks/throw_impact(atom/target, datum/thrownthing/throwinfo)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		smash(target, throwinfo.thrower, TRUE)
+		smash(target, throwinfo?.thrower, TRUE)
 
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
