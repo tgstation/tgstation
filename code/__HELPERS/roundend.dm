@@ -410,11 +410,15 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
+	for(var/datum/team/A in GLOB.antagonist_teams)
+		if(!A.members)
+			continue
+		all_teams |= A
+	
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		all_teams |= A.get_team()
-		all_antagonists += A
+		all_antagonists |= A
 
 	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()

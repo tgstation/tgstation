@@ -1,0 +1,5 @@
+author: "Nanotrasen Reserve Bank"
+delete-after: True
+changes: 
+  - imageadd: "Holochips have been given a noticeable redesign, and now use a combination of color and shape to show how many credits are in an individual chip, along with using a new coloring scheme outright."
+  - tweak: "Holochips now show how many credits they contain in their name."

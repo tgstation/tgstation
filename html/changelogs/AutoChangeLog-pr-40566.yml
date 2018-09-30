@@ -1,0 +1,4 @@
+author: "basilman"
+delete-after: True
+changes: 
+  - balance: "changed the time for agent box to turn invisible from half a second to 2 seconds"

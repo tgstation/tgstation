@@ -9,9 +9,9 @@
 	return TRUE
 
 /obj/item/projectile/bullet/a84mm
-	name ="anti-armour rocket"
+	name ="\improper HEDP rocket"
 	desc = "USE A WEEL GUN"
-	icon_state= "atrocket"
+	icon_state= "84mm-hedp"
 	damage = 80
 	var/anti_armour_damage = 200
 	armour_penetration = 100
@@ -29,14 +29,14 @@
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return TRUE
 
-/obj/item/projectile/bullet/srmrocket
-	name ="SRM-8 Rocket"
+/obj/item/projectile/bullet/a84mm_he
+	name ="\improper HE rocket"
 	desc = "Boom."
 	icon_state = "missile"
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE
 
-/obj/item/projectile/bullet/srmrocket/on_hit(atom/target, blocked=0)
+/obj/item/projectile/bullet/a84mm_he/on_hit(atom/target, blocked=0)
 	..()
 	if(!isliving(target)) //if the target isn't alive, so is a wall or something
 		explosion(target, 0, 1, 2, 4)

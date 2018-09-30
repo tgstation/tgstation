@@ -25,7 +25,8 @@
 		to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		return 0
 	else
-		reagents.trans_to(mop, 5)
+		var/obj/item/mop/M = mop
+		reagents.trans_to(mop, M.mopcap)
 		to_chat(user, "<span class='notice'>You wet [mop] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return 1

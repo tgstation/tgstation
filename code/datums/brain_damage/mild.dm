@@ -192,7 +192,7 @@
 						targets += M
 				if(LAZYLEN(targets))
 					to_chat(owner, "<span class='warning'>Your arm spasms!</span>")
-					owner.log_message(" attacked someone due to a Muscle Spasm") //the following attack will log itself
+					owner.log_message(" attacked someone due to a Muscle Spasm", LOG_ATTACK) //the following attack will log itself
 					owner.ClickOn(pick(targets))
 				owner.a_intent = prev_intent
 			if(4)

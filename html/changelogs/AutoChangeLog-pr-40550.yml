@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - bugfix: "Crew Monitors now only track crew with nanites when said crewmembers are on the same (or station) z-level"

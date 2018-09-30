@@ -204,3 +204,20 @@
 /datum/brain_trauma/severe/pacifism/on_lose()
 	owner.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 	..()
+	
+/datum/brain_trauma/severe/hypnotic_stupor
+	name = "Hypnotic Stupor"
+	desc = "Patient is prone to episodes of extreme stupor that leaves them extremely suggestible."
+	scan_desc = "oneiric feedback loop"
+	gain_text = "<span class='warning'>You feel somewhat dazed.</span>"
+	lose_text = "<span class='notice'>You feel like a fog was lifted from your mind.</span>"
+
+/datum/brain_trauma/severe/hypnotic_stupor/on_lose() //hypnosis must be cleared separately, but brain surgery should get rid of both anyway
+	..()
+	owner.remove_status_effect(/datum/status_effect/trance)
+	
+/datum/brain_trauma/severe/hypnotic_stupor/on_life()
+	..()
+	if(prob(1) && !owner.has_status_effect(/datum/status_effect/trance))
+		owner.apply_status_effect(/datum/status_effect/trance, rand(100,300), FALSE)
+	

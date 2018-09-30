@@ -65,18 +65,18 @@
 					setAnchored(TRUE)
 				return
 
-	// Upgrades!
-	if(is_type_in_typecache(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
-		if(!user.transferItemToLoc(W, src))
-			return
-		to_chat(user, "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>")
-		upgrades += W
-		return
+		if(3)	// Upgrades!
+			if(is_type_in_typecache(W, possible_upgrades) && !is_type_in_list(W, upgrades)) // Is a possible upgrade and isn't in the camera already.
+				if(!user.transferItemToLoc(W, src))
+					return
+				to_chat(user, "<span class='notice'>You attach \the [W] into the assembly inner circuits.</span>")
+				upgrades += W
+				return
 
 	return ..()
 
 /obj/structure/camera_assembly/crowbar_act(mob/user, obj/item/tool)
-	if(!upgrades.len)
+	if(state != 3 || !upgrades.len)
 		return FALSE
 	var/obj/U = locate(/obj) in upgrades
 	if(U)
