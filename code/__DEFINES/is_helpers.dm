@@ -13,7 +13,7 @@
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
-GLOBAL_LIST_INIT(turfs_without_ground, typecacheoflist(list(
+GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	/turf/open/space,
 	/turf/open/chasm, 
 	/turf/open/lava, 
