@@ -132,7 +132,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	playsound(src, 'sound/effects/roll.ogg', 5, 1)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
-		if((!AM.anchored || AM == connected)
+		if(!AM.anchored || AM == connected)
 			if(ismob(AM) && !isliving(AM))
 				continue
 			AM.forceMove(src)
