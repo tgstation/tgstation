@@ -125,6 +125,8 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/turf/T = get_step(src, dir)
 	connected.setDir(dir)
 	for(var/atom/movable/AM in src)
+		if (istype(AM, /mob) && !isliving(AM))
+			continue
 		AM.forceMove(T)
 	update_icon()
 
