@@ -156,19 +156,19 @@
 	..()
 	var/turf/T = get_turf(src)
 	if(T && assembly)
-		if(assembly.anchored || !assembly.can_move())
+		var/mob/drone = get_object()
+		if(!istype(drone))
 			return
-		if(assembly.loc == T) // Check if we're held by someone.  If the loc is the floor, we're not held.
-			var/datum/integrated_io/wanted_dir = inputs[1]
-			if(isnum(wanted_dir.data))
-				if(step(assembly, wanted_dir.data))
-					activate_pin(2)
-					return
-				else
-					set_pin_data(IC_OUTPUT, 1, WEAKREF(assembly.collw))
-					push_data()
-					activate_pin(3)
-					return FALSE
+		var/datum/integrated_io/wanted_dir = inputs[1]
+		if(isnum(wanted_dir.data))
+			if(drone.Move(get_step(T, wanted_dir.data)))
+				activate_pin(2)
+				return
+			else
+				set_pin_data(IC_OUTPUT, 1, WEAKREF(assembly.collw))
+				push_data()
+				activate_pin(3)
+				return FALSE
 	return FALSE
 
 /obj/item/integrated_circuit/manipulation/grenade

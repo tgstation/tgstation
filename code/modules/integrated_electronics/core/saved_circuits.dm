@@ -124,7 +124,7 @@
 	// Save modified name
 	if(initial(name) != name)
 		assembly_params["name"] = name
-	
+
 	// Save modified description
 	if(initial(desc) != desc)
 		assembly_params["desc"] = desc
@@ -153,7 +153,7 @@
 	// Load modified name, if any.
 	if(assembly_params["name"])
 		name = assembly_params["name"]
-		
+
 	// Load modified description, if any.
 	if(assembly_params["desc"])
 		desc = assembly_params["desc"]
@@ -338,7 +338,7 @@
 	// Block 1. Assembly.
 	var/list/assembly_params = blocks["assembly"]
 	var/obj/item/electronic_assembly/assembly_path = all_assemblies[assembly_params["type"]]
-	var/obj/item/electronic_assembly/assembly = new assembly_path(null)
+	var/obj/item/electronic_assembly/assembly = new assembly_path(loc)
 	assembly.load(assembly_params)
 
 
@@ -359,6 +359,5 @@
 			var/datum/integrated_io/IO2 = assembly.get_pin_ref_list(wire[2])
 			IO.connect_pin(IO2)
 
-	assembly.forceMove(loc)
 	return assembly
 

@@ -37,6 +37,8 @@
 	max_integrity = 50
 	pass_flags = 0
 	armor = list("melee" = 50, "bullet" = 70, "laser" = 70, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 0, "acid" = 0)
+	var/atom/wrapper_path // If this isn't null the assembly will be kept inside an instance of this and will have signals rerouted to it
+	var/atom/wrapper_obj // The instance of wrapper_path
 	anchored = FALSE
 	var/can_anchor = TRUE
 	var/detail_color = COLOR_ASSEMBLY_BLACK
@@ -68,7 +70,8 @@
     tag = "assembly_[next_assembly_id++]"
 
 /obj/item/electronic_assembly/examine(mob/user)
-	. = ..()
+	if(isnull(wrapper_obj))
+		. = ..()
 	if(can_anchor)
 		to_chat(user, "<span class='notice'>The anchoring bolts [anchored ? "are" : "can be"] <b>wrenched</b> in place and the maintenance panel [opened ? "can be" : "is"] <b>screwed</b> in place.</span>")
 	else
@@ -96,6 +99,25 @@
 
 /obj/item/electronic_assembly/Initialize()
 	.=..()
+	//should the assembly exist inside another object?
+	if(!isnull(wrapper_path) && !isnull(loc))
+		wrapper_obj = new wrapper_path(loc)
+		forceMove(wrapper_obj)
+		wrapper_obj.AddComponent(/datum/component/redirect, list(
+			COMSIG_PARENT_ATTACKBY = CALLBACK(src, /obj/item/electronic_assembly/attackby),
+			COMSIG_PARENT_EXAMINE = CALLBACK(src, /obj/item/electronic_assembly/examine),
+			COMSIG_ATOM_EMP_ACT = CALLBACK(src, /obj/item/electronic_assembly/emp_act),
+			COMSIG_ATOM_ATTACK_HAND = CALLBACK(src, /obj/item/electronic_assembly/attack_hand),
+			COMSIG_ATOM_SCREWDRIVER_ACT = CALLBACK(src, /obj/item/electronic_assembly/screwdriver_act),
+			COMSIG_MOVABLE_MOVED = CALLBACK(src, /obj/item/electronic_assembly/Moved),
+			COMSIG_MOVABLE_BUMP = CALLBACK(src, /obj/item/electronic_assembly/Bump),
+			COMSIG_MOVABLE_STOP_PULLING = CALLBACK(src, /obj/item/electronic_assembly/stop_pulling),
+			COMSIG_ITEM_AFTERATTACK = CALLBACK(src, /obj/item/electronic_assembly/afterattack),
+			COMSIG_ITEM_ATTACK_SELF = CALLBACK(src, /obj/item/electronic_assembly/attack_self),
+			COMSIG_ITEM_DROPPED = CALLBACK(src, /obj/item/electronic_assembly/dropped),
+			COMSIG_ITEM_PICKUP = CALLBACK(src, /obj/item/electronic_assembly/pickup)
+			))
+
 	START_PROCESSING(SScircuit, src)
 	materials[MAT_METAL] = round((max_complexity + max_components) / 4) * SScircuit.cost_multiplier
 
@@ -302,14 +324,12 @@
 /obj/item/electronic_assembly/proc/add_allowed_scanner(ckey)
 	ckeys_allowed_to_scan[ckey] = TRUE
 
-/obj/item/electronic_assembly/proc/can_move()
-	return FALSE
-
 /obj/item/electronic_assembly/update_icon()
+	var/atom/assembly = get_object()
 	if(opened)
-		icon_state = initial(icon_state) + "-open"
+		assembly.icon_state = initial(assembly.icon_state) + "-open"
 	else
-		icon_state = initial(icon_state)
+		assembly.icon_state = initial(assembly.icon_state)
 	cut_overlays()
 	if(detail_color == COLOR_ASSEMBLY_BLACK) //Black colored overlay looks almost but not exactly like the base sprite, so just cut the overlay and avoid it looking kinda off.
 		return
@@ -591,7 +611,7 @@
 // Returns the object that is supposed to be used in attack messages, location checks, etc.
 // Override in children for special behavior.
 /obj/item/electronic_assembly/proc/get_object()
-	return src
+	return (isnull(wrapper_obj) ? src : wrapper_obj)
 
 // Returns the location to be used for dropping items.
 // Same as the regular drop_location(), but with checks being run on acting_object if necessary.
@@ -610,10 +630,10 @@
 	..()
 
 /obj/item/electronic_assembly/attack_hand(mob/user)
-	if(anchored)
+	if(anchored || ismob(wrapper_obj))
 		attack_self(user)
-		return
-	..()
+	if(isnull(wrapper_obj))
+		..()
 
 /obj/item/electronic_assembly/default //The /default electronic_assemblys are to allow the introduction of the new naming scheme without breaking old saves.
   name = "type-a electronic assembly"
@@ -666,8 +686,22 @@
 
 /obj/item/electronic_assembly/small/hook
 	name = "type-d electronic device"
+	desc = "It's a case, for building tiny-sized electronics with. This one is a pen."
+	wrapper_path = /obj/item/pen/electronic
+
+/obj/item/pen/electronic
+	name = "type-d electronic device"
+	desc = "It's a case, for building tiny-sized electronics with. This one is a pen."
+	icon = 'icons/obj/assemblies/electronic_setups.dmi'
 	icon_state = "setup_device_hook"
-	desc = "It's a case, for building tiny-sized electronics with. This one looks like it has a belt clip, but it's purely decorative."
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD)
+
+/obj/item/pen/electronic/Initialize()
+	..()
+	//sets up diagnostic hud view
+	prepare_huds()
+	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
+		diag_hud.add_to_hud(src)
 
 /obj/item/electronic_assembly/small/box
 	name = "type-e electronic device"
@@ -760,33 +794,95 @@
 	allowed_circuit_action_flags = IC_ACTION_MOVEMENT | IC_ACTION_COMBAT | IC_ACTION_LONG_RANGE
 	can_anchor = FALSE
 
-/obj/item/electronic_assembly/drone/can_move()
-	return TRUE
+/mob/living/simple_animal/electronic
+	name = "electronic drone"
+	icon = 'icons/obj/assemblies/electronic_setups.dmi'
+	layer = MOB_LAYER
+	gender = NEUTER
+	mob_biotypes = list(MOB_ROBOTIC)
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD, DIAG_CIRCUIT_HUD)
+	light_range = 3
+	stop_automated_movement = TRUE
+	wander = FALSE
+	healable = FALSE
+	maxHealth = 80
+	health = 80
+	del_on_death = TRUE
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minbodytemp = 0 //only change mintemp because circuits have issues with heat
+	sentience_type = SENTIENCE_ARTIFICIAL
+	status_flags = NONE //no default canpush
+	verb_say = "states"
+	verb_ask = "queries"
+	verb_exclaim = "declares"
+	verb_yell = "alarms"
+	initial_language_holder = /datum/language_holder/synthetic
+	bubble_icon = "machine"
+	faction = list("silicon")
+
+/mob/living/simple_animal/electronic/med_hud_set_health()
+	return //we use a different hud
+
+/mob/living/simple_animal/electronic/med_hud_set_status()
+	return //we use a different hud
 
 /obj/item/electronic_assembly/drone/default
 	name = "type-a electronic drone"
+	desc = "It's a case, for building mobile electronics with."
+	wrapper_path = /mob/living/simple_animal/electronic/default
+
+/mob/living/simple_animal/electronic/default
+	name = "type-a electronic drone"
+	icon_state = "setup_drone"
+	desc = "It's a case, for building mobile electronics with."
 
 /obj/item/electronic_assembly/drone/arms
+	name = "type-b electronic drone"
+	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."
+	wrapper_path = /mob/living/simple_animal/electronic/arms
+
+/mob/living/simple_animal/electronic/arms
 	name = "type-b electronic drone"
 	icon_state = "setup_drone_arms"
 	desc = "It's a case, for building mobile electronics with. This one is armed and dangerous."
 
 /obj/item/electronic_assembly/drone/secbot
 	name = "type-c electronic drone"
+	desc = "It's a case, for building mobile electronics with. This one resembles a Securitron."
+	wrapper_path = /mob/living/simple_animal/electronic/secbot
+
+/mob/living/simple_animal/electronic/secbot
+	name = "type-c electronic drone"
 	icon_state = "setup_drone_secbot"
 	desc = "It's a case, for building mobile electronics with. This one resembles a Securitron."
 
 /obj/item/electronic_assembly/drone/medbot
+	name = "type-d electronic drone"
+	desc = "It's a case, for building mobile electronics with. This one resembles a Medibot."
+	wrapper_path = /mob/living/simple_animal/electronic/medbot
+
+/mob/living/simple_animal/electronic/medbot
 	name = "type-d electronic drone"
 	icon_state = "setup_drone_medbot"
 	desc = "It's a case, for building mobile electronics with. This one resembles a Medibot."
 
 /obj/item/electronic_assembly/drone/genbot
 	name = "type-e electronic drone"
+	desc = "It's a case, for building mobile electronics with. This one has a generic bot design."
+	wrapper_path = /mob/living/simple_animal/electronic/genbot
+
+/mob/living/simple_animal/electronic/genbot
+	name = "type-e electronic drone"
 	icon_state = "setup_drone_genbot"
 	desc = "It's a case, for building mobile electronics with. This one has a generic bot design."
 
 /obj/item/electronic_assembly/drone/android
+	name = "type-f electronic drone"
+	desc = "It's a case, for building mobile electronics with. This one has a hominoid design."
+	wrapper_path = /mob/living/simple_animal/electronic/android
+
+/mob/living/simple_animal/electronic/android
 	name = "type-f electronic drone"
 	icon_state = "setup_drone_android"
 	desc = "It's a case, for building mobile electronics with. This one has a hominoid design."
