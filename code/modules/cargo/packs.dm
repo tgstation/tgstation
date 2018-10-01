@@ -1585,9 +1585,10 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains thirteen different seeds."
+	desc = "Big things have small beginnings. Contains fourteen different seeds."
 	cost = 1000
 	contains = list(/obj/item/seeds/chili,
+					/obj/item/seeds/cotton,
 					/obj/item/seeds/berry,
 					/obj/item/seeds/corn,
 					/obj/item/seeds/eggplant,
