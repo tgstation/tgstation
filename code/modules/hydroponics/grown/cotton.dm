@@ -49,10 +49,10 @@
 /obj/item/seeds/cotton/durathread
 	name = "pack of durathread seeds"
 	desc = "A pack of seeds that'll grow into an extremely durable thread that could easily rival plasteel if woven properly."
-	icon_state = "seed-cotton"
-	species = "cotton"
-	plantname = "Cotton"
-	icon_harvest = "cotton-harvest"
+	icon_state = "seed-durathread"
+	species = "durathread"
+	plantname = "Durathread"
+	icon_harvest = "durathread-harvest"
 	product = /obj/item/grown/cotton/durathread
 	lifespan = 80
 	endurance = 50

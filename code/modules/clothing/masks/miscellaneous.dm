@@ -229,30 +229,53 @@
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
 
-/obj/item/clothing/mask/bandana/red
+/obj/item/clothing/mask/bandana/colored
+	name = "white bandana"
+	desc = "A fine white bandana with nanotech lining."
+	icon_state = "bandgrey"
+	color = "#FFFFFF"
+
+/obj/item/clothing/mask/bandana/colored/red
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
-	icon_state = "bandred"
+	icon_state = "bandgrey"
+	color = "#DA0000"
 
-/obj/item/clothing/mask/bandana/blue
+/obj/item/clothing/mask/bandana/colored/blue
 	name = "blue bandana"
 	desc = "A fine blue bandana with nanotech lining."
-	icon_state = "bandblue"
+	icon_state = "bandgrey"
+	color = "#00B7EF"
 
-/obj/item/clothing/mask/bandana/green
+/obj/item/clothing/mask/bandana/colored/green
 	name = "green bandana"
 	desc = "A fine green bandana with nanotech lining."
-	icon_state = "bandgreen"
+	icon_state = "bandgrey"
+	color = "#A8E61D"
 
-/obj/item/clothing/mask/bandana/gold
+/obj/item/clothing/mask/bandana/colored/gold
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
-	icon_state = "bandgold"
+	icon_state = "bandgrey"
+	color = "#FFF200"
 
-/obj/item/clothing/mask/bandana/black
+/obj/item/clothing/mask/bandana/colored/purple
+	name = "purple bandana"
+	desc = "A fine purple bandana with nanotech lining."
+	icon_state = "bandgrey"
+	color = "#DA00FF"
+
+/obj/item/clothing/mask/bandana/colored/orange
+	name = "orange bandana"
+	desc = "A fine orange bandana with nanotech lining."
+	icon_state = "bandgrey"
+	color = "#FF9300"
+
+/obj/item/clothing/mask/bandana/colored/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
-	icon_state = "bandblack"
+	icon_state = "bandgrey"
+	color = "#1C1C1C"
 
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"

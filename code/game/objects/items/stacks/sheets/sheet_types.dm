@@ -226,8 +226,9 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
  * Cloth
  */
 GLOBAL_LIST_INIT(cloth_recipes, list ( \
-	new/datum/stack_recipe("grey jumpsuit", /obj/item/clothing/under/color/grey, 3), \
-	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
+	new/datum/stack_recipe("white jumpsuit", /obj/item/clothing/under/color/white, 3), \
+	new/datum/stack_recipe("white shoes", /obj/item/clothing/shoes/sneakers/white, 2), \
+	new/datum/stack_recipe("white scarf", /obj/item/clothing/neck/scarf, 1), \
 	null, \
 	new/datum/stack_recipe("backpack", /obj/item/storage/backpack, 4), \
 	new/datum/stack_recipe("duffel bag", /obj/item/storage/backpack/duffelbag, 6), \
@@ -244,7 +245,10 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("empty sandbag", /obj/item/emptysandbag, 4), \
 	null, \
 	new/datum/stack_recipe("fingerless gloves", /obj/item/clothing/gloves/fingerless, 1), \
-	new/datum/stack_recipe("black gloves", /obj/item/clothing/gloves/color/black, 3), \
+	new/datum/stack_recipe("white gloves", /obj/item/clothing/gloves/color/white, 3), \
+	new/datum/stack_recipe("white softcap", /obj/item/clothing/head/soft/mime, 2), \
+	new/datum/stack_recipe("white beanie", /obj/item/clothing/head/beanie, 2), \
+	new/datum/stack_recipe("white bandana", /obj/item/clothing/mask/bandana/colored, 1), \
 	null, \
 	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
 	))
@@ -258,6 +262,13 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
+	merge_type = /obj/item/stack/sheet/cloth
+
+/obj/item/stack/sheet/cloth/durathread
+	name = "durathread"
+	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
+	singular_name = "durathread roll"
+	icon_state = "sheet-durathread"
 	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
@@ -275,22 +286,22 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	desc = "A bundle of raw cotton ready to be spun on the loom."
 	singular_name = "raw cotton ball"
 	icon_state = "sheet-cotton"
-	item_state = "sheet-cloth"
 	is_fabric = TRUE
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cotton
 	pull_effort = 30
+	loom_result = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cotton/durathread
 	name = "raw durathread bundle"
 	desc = "A bundle of raw durathread ready to be spun on the loom."
 	singular_name = "raw durathread ball"
-	icon_state = "sheet-cotton"
-	item_state = "sheet-cloth"
+	icon_state = "sheet-durathreadraw"
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
+	loom_result = /obj/item/stack/sheet/cloth/durathread
 
 
 /*
