@@ -291,22 +291,16 @@
 								/obj/item/instrument/saxophone,
 								/obj/item/instrument/trombone,
 								/obj/item/instrument/recorder,
-								/obj/item/instrument/harmonica)
+								/obj/item/instrument/harmonica
+								)
 	var/list/display_names = list()
 	for(var/V in instruments)
 		var/atom/A = V
 		display_names += list(initial(A.name) = A)
-
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove)
+	if(!M.canUseTopic(src, BE_CLOSE))
 		return
-
-	var/index = display_names.Find(choice)
-	var/A = instruments[index]
-
-	var/instrument = new A
-
-
+	var/instrument = new display_names[choice]
 	if(instrument)
 		qdel(src)
 	M.put_in_active_hand(instrument)
