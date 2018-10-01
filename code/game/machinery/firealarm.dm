@@ -57,32 +57,35 @@
 
 /obj/machinery/firealarm/update_icon()
 	cut_overlays()
-
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/area/A = src.loc
 	A = A.loc
 
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
 		return
-	else
+
+	if(stat & BROKEN)
+		icon_state = "firex"
+		return
+
+	if(stat & NOPOWER)
 		icon_state = "fire0"
+		return
 
-		if(stat & BROKEN)
-			icon_state = "firex"
-			return
+	if(is_station_level(z))
+		add_overlay("overlay_[GLOB.security_level]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("overlay_[SEC_LEVEL_GREEN]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
-		if(stat & NOPOWER)
-			return
-
-		if(is_station_level(z))
-			add_overlay("overlay_[GLOB.security_level]")
-		else
-			add_overlay("overlay_[SEC_LEVEL_GREEN]")
-
-		if(detecting)
-			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
-		else
-			add_overlay("overlay_fire")
+	if(detecting)
+		add_overlay("overlay_[A.fire ? "fire" : "clear"]")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[A.fire ? "fire" : "clear"]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("overlay_fire")
+		SSvis_overlays.add_vis_overlay(src, icon, "overlay_fire", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -156,7 +159,7 @@
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 
-	if(istype(W, /obj/item/screwdriver) && buildstage == 2)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
 		W.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -165,7 +168,7 @@
 
 	if(panel_open)
 
-		if(istype(W, /obj/item/weldingtool) && user.a_intent == INTENT_HELP)
+		if(W.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
 			if(obj_integrity < max_integrity)
 				if(!W.tool_start_check(user, amount=0))
 					return
@@ -180,7 +183,7 @@
 
 		switch(buildstage)
 			if(2)
-				if(istype(W, /obj/item/multitool))
+				if(W.tool_behaviour == TOOL_MULTITOOL)
 					detecting = !detecting
 					if (src.detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
@@ -188,7 +191,7 @@
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 					return
 
-				else if (istype(W, /obj/item/wirecutters))
+				else if (W.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = 1
 					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
@@ -207,7 +210,7 @@
 						update_icon()
 					return
 
-				else if(istype(W, /obj/item/crowbar))
+				else if(W.tool_behaviour == TOOL_CROWBAR)
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(W.use_tool(src, user, 20, volume=50))
@@ -239,7 +242,7 @@
 					update_icon()
 					return
 
-				else if(istype(W, /obj/item/wrench))
+				else if(W.tool_behaviour == TOOL_WRENCH)
 					user.visible_message("[user] removes the fire alarm assembly from the wall.", \
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()

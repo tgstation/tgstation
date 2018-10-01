@@ -870,6 +870,12 @@
 		var/obj/mecha/M = loc
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
+	else if (istype(loc, /obj/vehicle/sealed))
+		var/obj/vehicle/sealed/E = loc
+		if(E.mouse_pointer)
+			client.mouse_pointer_icon = E.mouse_pointer
+
+			
 
 /mob/proc/is_literate()
 	return 0

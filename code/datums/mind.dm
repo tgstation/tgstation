@@ -431,40 +431,15 @@
 						else
 							target_antag = target
 
-
+		if(!GLOB.admin_objective_list)
+			generate_admin_objective_list()
 		
-		var/static/list/choices
-		if(!choices)
-			choices = list()
-		
-			var/list/allowed_types = list(
-				/datum/objective/assassinate,
-				/datum/objective/maroon,
-				/datum/objective/debrain,
-				/datum/objective/protect,
-				/datum/objective/destroy,
-				/datum/objective/hijack,
-				/datum/objective/escape,
-				/datum/objective/survive,
-				/datum/objective/martyr,
-				/datum/objective/steal,
-				/datum/objective/download,
-				/datum/objective/nuclear,
-				/datum/objective/capture,
-				/datum/objective/absorb,
-				/datum/objective/custom
-			)
-			
-			for(var/T in allowed_types)
-				var/datum/objective/X = T
-				choices[initial(X.name)] = T
-
 		if(old_objective)
-			if(old_objective.name in choices)
+			if(old_objective.name in GLOB.admin_objective_list)
 				def_value = old_objective.name
 
-		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in choices
-		selected_type = choices[selected_type]
+		var/selected_type = input("Select objective type:", "Objective type", def_value) as null|anything in GLOB.admin_objective_list
+		selected_type = GLOB.admin_objective_list[selected_type]
 		if (!selected_type)
 			return
 

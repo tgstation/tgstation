@@ -215,13 +215,18 @@
 /obj/effect/ex_act()
 	return
 
-/obj/effect/DPtarget/Initialize(mapload, podParam, var/datum/supply_order/SO = null)
+/obj/effect/DPtarget/Initialize(mapload, podParam, var/single_order = null)
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
 	pod = podParam
-	if (SO)
-		SO.generate(pod)
-	for (var/mob/living/M in podParam) //If there are any mobs in the supplypod, we want to forceMove them into the target. This is so that they can see where they are about to land, AND so that they don't get sent to the nullspace error room (as the pod is currently in nullspace)
+	if (single_order)
+		if (istype(single_order, /datum/supply_order))
+			var/datum/supply_order/SO = single_order
+			SO.generate(pod)
+		else if (istype(single_order, /atom/movable))
+			var/atom/movable/O = single_order
+			O.forceMove(pod)
+	for (var/mob/living/M in pod) //If there are any mobs in the supplypod, we want to forceMove them into the target. This is so that they can see where they are about to land, AND so that they don't get sent to the nullspace error room (as the pod is currently in nullspace)
 		M.forceMove(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this target until the pod gets a chance to hit them
 		for (var/mob/living/M in get_turf(src))

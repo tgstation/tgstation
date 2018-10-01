@@ -2,7 +2,7 @@
 	name = "credit holochip"
 	desc = "A hard-light chip encoded with an amount of credits. It is a modern replacement for physical money that can be directly converted to virtual currency and viceversa. Keep away from magnets."
 	icon = 'icons/obj/economy.dmi'
-	icon_state = "holochip_1"
+	icon_state = "holochip"
 	throwforce = 0
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
@@ -19,21 +19,42 @@
 	to_chat(user, "<span class='notice'>Alt-Click to split.</span>")
 
 /obj/item/holochip/update_icon()
+	name = "\improper [credits] credit holochip"
+	var/rounded_credits = credits
 	switch(credits)
-		if(1 to 9)
-			icon_state = "holochip_1"
-		if(10 to 99)
-			icon_state = "holochip_10"
-		if(100 to 999)
-			icon_state = "holochip_100"
-		if(1000 to 9999)
-			icon_state = "holochip_1k"
-		if(10000 to 999999)
-			icon_state = "holochip_10k"
-		if(1000000 to 999999999)
-			icon_state = "holochip_million"
-		if(1000000000 to INFINITY)
-			icon_state = "holochip_billion"
+		if(1 to 4999)
+			icon_state = "holochip"
+		if(5000 to 4999000)
+			icon_state = "holochip_kilo"
+			rounded_credits = round(rounded_credits * 0.001)
+		if(5000000 to 4999000000)
+			icon_state = "holochip_mega"
+			rounded_credits = round(rounded_credits * 0.000001)
+		if(5000000000 to INFINITY)
+			icon_state = "holochip_giga"
+			rounded_credits = round(rounded_credits * 0.000000001)
+	var/overlay_color = "#914792"
+	switch(rounded_credits)
+		if(0 to 9)
+			overlay_color = "#914792"
+		if(10 to 19)
+			overlay_color = "#BF5E0A"
+		if(20 to 49)
+			overlay_color = "#358F34"
+		if(50 to 99)
+			overlay_color = "#676767"
+		if(100 to 199)
+			overlay_color = "#009D9B"
+		if(200 to 499)
+			overlay_color = "#0153C1"
+		if(500 to 999)
+			overlay_color = "#2C2C2C"
+		if(1000 to INFINITY)
+			overlay_color = "#8E2E38"
+	cut_overlays()
+	var/mutable_appearance/holochip_overlay = mutable_appearance('icons/obj/economy.dmi', "[icon_state]-color")
+	holochip_overlay.color = overlay_color
+	add_overlay(holochip_overlay)
 
 /obj/item/holochip/proc/spend(amount, pay_anyway = FALSE)
 	if(credits >= amount)

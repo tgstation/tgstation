@@ -131,8 +131,8 @@
 		assim_objective.owner = owner
 		if(prob(25)) //Decently high chance to have to assimilate an implanted crew member
 			assim_objective.find_target_by_role(pick("Captain","Head of Security","Security Officer","Detective","Warden"))
-		if(!assim_objective.target) //If the prob doesn't happen or there are no implanted crew, find any target
-			assim_objective.find_target()
+		if(!assim_objective.target) //If the prob doesn't happen or there are no implanted crew, find any target that isn't a hivemmind host
+			assim_objective.find_target_by_role(role = ROLE_HIVE, role_type = 1, invert = 1)
 		assim_objective.update_explanation_text()
 		objectives += assim_objective
 	else if(prob(70))

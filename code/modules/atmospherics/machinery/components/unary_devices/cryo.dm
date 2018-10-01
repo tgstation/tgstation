@@ -309,7 +309,7 @@
 		|| default_deconstruction_crowbar(I))
 		update_icon()
 		return
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You can't access the maintenance panel while the pod is " \
 		+ (on ? "active" : (occupant ? "full" : "open")) + ".</span>")
 		return

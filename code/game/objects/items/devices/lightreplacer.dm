@@ -154,6 +154,8 @@
 	Emag()
 
 /obj/item/lightreplacer/attack_self(mob/user)
+	for(var/obj/machinery/light/target in user.loc)
+		ReplaceLight(target, user)
 	to_chat(user, status_string())
 
 /obj/item/lightreplacer/update_icon()

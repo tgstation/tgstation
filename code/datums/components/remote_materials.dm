@@ -74,7 +74,9 @@ handles linking back and forth.
 		_MakeLocal()
 
 /datum/component/remote_materials/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
-	if (istype(I, /obj/item/multitool))
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		if(!I.multitool_check_buffer(user, I))
+			return COMPONENT_NO_AFTERATTACK
 		var/obj/item/multitool/M = I
 		if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 			if (silo == M.buffer)

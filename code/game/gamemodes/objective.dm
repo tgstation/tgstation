@@ -1,3 +1,5 @@
+GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
+
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
 	var/datum/team/team					//An alternative to 'owner': a team. Use this when writing new code.
@@ -986,5 +988,28 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
 	command_staff_only = TRUE
 
+//Ideally this would be all of them but laziness and unusual subtypes
+/proc/generate_admin_objective_list()
+	GLOB.admin_objective_list = list()
 
-
+	var/list/allowed_types = list(
+		/datum/objective/assassinate,
+		/datum/objective/maroon,
+		/datum/objective/debrain,
+		/datum/objective/protect,
+		/datum/objective/destroy,
+		/datum/objective/hijack,
+		/datum/objective/escape,
+		/datum/objective/survive,
+		/datum/objective/martyr,
+		/datum/objective/steal,
+		/datum/objective/download,
+		/datum/objective/nuclear,
+		/datum/objective/capture,
+		/datum/objective/absorb,
+		/datum/objective/custom
+	)
+	
+	for(var/T in allowed_types)
+		var/datum/objective/X = T
+		GLOB.admin_objective_list[initial(X.name)] = T
