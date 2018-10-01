@@ -213,19 +213,6 @@
 		name = "dyed beanie"
 		desc = "The colors are a bit dodgy."
 
-/obj/item/clothing/mask/bandana/colored/machine_wash(obj/machinery/washing_machine/WM)
-	if(WM.color_source)
-		if(istype(WM.color_source, /obj/item/toy/crayon))
-			var/obj/item/toy/crayon/CR = WM.color_source
-			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
-		else
-			if(istype(WM.color_source, /obj/item/reagent_containers/food/snacks/grown/rainbow_flower/))
-				var/obj/item/reagent_containers/food/snacks/grown/rainbow_flower/RF = WM.color_source
-				add_atom_colour(RF.color, WASHABLE_COLOUR_PRIORITY)
-		name = "dyed bandana"
-		desc = "The colors are a bit dodgy."
-
-
 
 /obj/machinery/washing_machine/relaymove(mob/user)
 	container_resist(user)

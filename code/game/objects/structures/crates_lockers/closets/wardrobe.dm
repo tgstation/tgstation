@@ -39,8 +39,8 @@
 		new /obj/item/clothing/head/that(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/black(src)
-	new /obj/item/clothing/mask/bandana/colored/black(src)
-	new /obj/item/clothing/mask/bandana/colored/black(src)
+	new /obj/item/clothing/mask/bandana/black(src)
+	new /obj/item/clothing/mask/bandana/black(src)
 	if(prob(40))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	return
@@ -55,8 +55,8 @@
 		new /obj/item/clothing/under/color/green(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/black(src)
-	new /obj/item/clothing/mask/bandana/colored/green(src)
-	new /obj/item/clothing/mask/bandana/colored/green(src)
+	new /obj/item/clothing/mask/bandana/green(src)
+	new /obj/item/clothing/mask/bandana/green(src)
 	return
 
 
@@ -82,8 +82,8 @@
 		new /obj/item/clothing/under/color/yellow(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/shoes/sneakers/orange(src)
-	new /obj/item/clothing/mask/bandana/colored/gold(src)
-	new /obj/item/clothing/mask/bandana/colored/gold(src)
+	new /obj/item/clothing/mask/bandana/gold(src)
+	new /obj/item/clothing/mask/bandana/gold(src)
 	return
 
 
@@ -128,8 +128,8 @@
 	if(prob(50))
 		new /obj/item/storage/backpack/duffelbag(src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/colored/black(src)
-		new /obj/item/clothing/mask/bandana/colored/black(src)
+		new /obj/item/clothing/mask/bandana/black(src)
+		new /obj/item/clothing/mask/bandana/black(src)
 	if(prob(40))
 		new /obj/item/clothing/under/assistantformal(src)
 	if(prob(40))
@@ -162,12 +162,12 @@
 	new /obj/item/clothing/under/color/teal(src)
 	new /obj/item/clothing/under/color/lightpurple(src)
 	new /obj/item/clothing/under/color/green(src)
-	new /obj/item/clothing/mask/bandana/colored/red(src)
-	new /obj/item/clothing/mask/bandana/colored/red(src)
-	new /obj/item/clothing/mask/bandana/colored/blue(src)
-	new /obj/item/clothing/mask/bandana/colored/blue(src)
-	new /obj/item/clothing/mask/bandana/colored/gold(src)
-	new /obj/item/clothing/mask/bandana/colored/gold(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/red(src)
+	new /obj/item/clothing/mask/bandana/blue(src)
+	new /obj/item/clothing/mask/bandana/blue(src)
+	new /obj/item/clothing/mask/bandana/gold(src)
+	new /obj/item/clothing/mask/bandana/gold(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 	new /obj/item/clothing/shoes/sneakers/white(src)
