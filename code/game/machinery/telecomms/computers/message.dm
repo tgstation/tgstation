@@ -35,7 +35,7 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(istype(O, /obj/item/screwdriver) && (obj_flags & EMAGGED))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else

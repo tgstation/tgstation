@@ -83,8 +83,8 @@
 
 	return P
 
-/datum/supply_order/proc/generate(turf/T)
-	var/obj/structure/closet/crate/C = pack.generate(T)
+/datum/supply_order/proc/generate(atom/A)
+	var/obj/structure/closet/crate/C = pack.generate(A)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = generateManifest(C)
 
 	if(M.errors & MANIFEST_ERROR_ITEM)

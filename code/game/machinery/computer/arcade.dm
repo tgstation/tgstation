@@ -1084,8 +1084,7 @@
 	if(active)
 		return
 
-	message_admins("[ADMIN_LOOKUPFLW(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
-	log_game("[key_name(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
+	log_bomber(usr, "primed an explosive", src, "for detonation")
 
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1

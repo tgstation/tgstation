@@ -230,7 +230,7 @@
 	return 15
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/analyzer))
+	if(I.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
@@ -331,7 +331,7 @@
 /obj/structure/blob/proc/get_chem_name()
 	if(overmind)
 		return overmind.blob_reagent_datum.name
-	return "an unknown variant"
+	return "some kind of organic tissue"
 
 /obj/structure/blob/normal
 	name = "normal blob"
@@ -354,8 +354,13 @@
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
 		brute_resist = 0.5
-	else
+	else if (overmind)
 		icon_state = "blob"
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
+		brute_resist = 0.25
+	else
+		icon_state = "blob"
+		name = "dead blob"
+		desc = "A thick wall of lifeless tendrils."
 		brute_resist = 0.25

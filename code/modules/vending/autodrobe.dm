@@ -126,9 +126,11 @@
 		           /obj/item/clothing/shoes/roman = 1,
 		           /obj/item/shield/riot/roman/fake = 1,
 		           /obj/item/skub = 1,)
-				
-	refill_canister = /obj/item/vending_refill/autodrobe
 
+	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = 100
+	extra_price = 200
+	payment_department = ACCOUNT_SRV
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."
 	req_access = null

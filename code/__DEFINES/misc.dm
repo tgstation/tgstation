@@ -81,8 +81,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
-#define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
-#define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
+#define BE_CLOSE TRUE		//in the case of a silicon, to select if they need to be next to the atom
+#define NO_DEXTERY TRUE	//if other mobs (monkeys, aliens, etc) can use this
+#define NO_TK TRUE
 //used by canUseTopic()
 
 //singularity defines

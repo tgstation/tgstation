@@ -13,6 +13,15 @@
 //Turfs
 //#define isturf(A) (istype(A, /turf)) This is actually a byond built-in. Added here for completeness sake.
 
+GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
+	/turf/open/space,
+	/turf/open/chasm, 
+	/turf/open/lava, 
+	/turf/open/water
+	)))
+
+#define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
+
 #define isopenturf(A) (istype(A, /turf/open))
 
 #define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))

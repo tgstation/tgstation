@@ -1,5 +1,6 @@
 /obj/vehicle/sealed
 	var/enter_delay = 20
+	var/mouse_pointer
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()

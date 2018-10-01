@@ -699,7 +699,6 @@
 "bh" = (
 /obj/machinery/shower{
 	dir = 4;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/tile/blue{

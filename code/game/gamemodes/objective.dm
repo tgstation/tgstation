@@ -1,3 +1,5 @@
+GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
+
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
 	var/datum/team/team					//An alternative to 'owner': a team. Use this when writing new code.
@@ -487,9 +489,10 @@ GLOBAL_LIST_EMPTY(possible_items)
 		return
 
 	if (new_target == "custom") //Can set custom items.
-		var/obj/item/custom_target = input(admin,"Select type:","Type") as null|anything in typesof(/obj/item)
-		if (!custom_target)
+		var/custom_path = input(admin,"Search for target item type:","Type") as null|text
+		if (!custom_path)
 			return
+		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj/item)))
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input(admin,"Enter target name:", "Objective target", custom_name)
 		if (!custom_name)
@@ -985,5 +988,28 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
 	command_staff_only = TRUE
 
+//Ideally this would be all of them but laziness and unusual subtypes
+/proc/generate_admin_objective_list()
+	GLOB.admin_objective_list = list()
 
-
+	var/list/allowed_types = list(
+		/datum/objective/assassinate,
+		/datum/objective/maroon,
+		/datum/objective/debrain,
+		/datum/objective/protect,
+		/datum/objective/destroy,
+		/datum/objective/hijack,
+		/datum/objective/escape,
+		/datum/objective/survive,
+		/datum/objective/martyr,
+		/datum/objective/steal,
+		/datum/objective/download,
+		/datum/objective/nuclear,
+		/datum/objective/capture,
+		/datum/objective/absorb,
+		/datum/objective/custom
+	)
+	
+	for(var/T in allowed_types)
+		var/datum/objective/X = T
+		GLOB.admin_objective_list[initial(X.name)] = T

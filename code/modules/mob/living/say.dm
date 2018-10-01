@@ -228,7 +228,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
+	message = hear_intercept(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	show_message(message, 2, deaf_message, deaf_type)
+	return message
+
+/mob/living/proc/hear_intercept(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
 	return message
 
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode)

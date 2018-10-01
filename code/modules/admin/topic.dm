@@ -1276,6 +1276,7 @@
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
+				create_message("note", ckey(M.ckey), usr.ckey, "Banned for [mins] minutes - [reason]", null, null, 0, 0, null, 0, 0)
 				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.key].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes. The round ID is [GLOB.round_id].</span>")
@@ -1284,8 +1285,8 @@
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
-				log_admin_private("[key_name(usr)] has banned [key_name(M)].\nReason: [key_name(M)]\nThis will be removed in [mins] minutes.")
-				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis will be removed in [mins] minutes.</span>"
+				log_admin_private("[key_name(usr)] has banned [key_name(M)]. - Reason: [key_name(M)] - This will be removed in [mins] minutes.")
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)]. - Reason: [reason] - This will be removed in [mins] minutes.</span>"
 				message_admins(msg)
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
 				if(AH)
@@ -1302,6 +1303,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
+				create_message("note", ckey(M.ckey), usr.ckey, "Permanently banned - [reason]", null, null, 0, 0, null, 0, 0)
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.key].\nReason: [reason]</BIG></span>")
 				to_chat(M, "<span class='danger'>This is a permanent ban. The round ID is [GLOB.round_id].</span>")
 				var/bran = CONFIG_GET(string/banappeals)
@@ -1313,8 +1315,8 @@
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
 				ban_unban_log_save("[key_name(usr)] has permabanned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
-				log_admin_private("[key_name(usr)] has banned [key_name(M)].\nReason: [reason]\nThis is a permanent ban.")
-				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)].\nReason: [reason]\nThis is a permanent ban.</span>"
+				log_admin_private("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This is a permanent ban.")
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)]. - Reason: [reason] - This is a permanent ban.</span>"
 				message_admins(msg)
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
 				if(AH)
@@ -2511,6 +2513,54 @@
 					log_query_debug("[usr.key] | [response]")
 		else if(answer == "no")
 			log_query_debug("[usr.key] | Reported no server hang")
+
+	else if(href_list["check_teams"])
+		if(!check_rights(R_ADMIN))
+			return
+		check_teams()
+	
+	else if(href_list["team_command"])
+		if(!check_rights(R_ADMIN))
+			return
+		switch(href_list["team_command"])
+			if("create_team")
+				admin_create_team(usr)
+			if("rename_team")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_rename(usr)
+			if("communicate")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_communicate(usr)
+			if("delete_team")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_delete(usr)
+			if("add_objective")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_add_objective(usr)
+			if("remove_objective")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(!T)
+					return
+				var/datum/objective/O = locate(href_list["tobjective"]) in T.objectives
+				if(O)
+					T.admin_remove_objective(usr,O)
+			if("add_member")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(T)
+					T.admin_add_member(usr)
+			if("remove_member")
+				var/datum/team/T = locate(href_list["team"]) in GLOB.antagonist_teams
+				if(!T)
+					return
+				var/datum/mind/M = locate(href_list["tmember"]) in T.members
+				if(M)
+					T.admin_remove_member(usr,M)
+		check_teams()
+
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
