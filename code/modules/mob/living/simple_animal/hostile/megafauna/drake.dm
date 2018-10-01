@@ -272,7 +272,7 @@ Difficulty: Medium
 		sleep(0.5)
 	
 	// Ash drake flies onto its target and rains fire down upon them
-	var/descentTime = 12;
+	var/descentTime = 10;
 	if(lava_arena)
 		lava_arena()
 	
@@ -304,6 +304,8 @@ Difficulty: Medium
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
+	for(var/obj/mecha/M in orange(1, src))
+		M.take_damage(75, BRUTE, "melee", 1)
 
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
