@@ -451,20 +451,15 @@
 		desc = "An active gibtonite reserve. Run!"
 		stage = GIBTONITE_ACTIVE
 		visible_message("<span class='danger'>There was gibtonite inside! It's going to explode!</span>")
-		var/turf/bombturf = get_turf(src)
 
 		var/notify_admins = 0
 		if(z != 5)
-			notify_admins = 1
-			if(!triggered_by_explosion)
-				message_admins("[ADMIN_LOOKUPFLW(user)] has triggered a gibtonite deposit reaction at [ADMIN_VERBOSEJMP(bombturf)].")
-			else
-				message_admins("An explosion has triggered a gibtonite deposit reaction at [ADMIN_VERBOSEJMP(bombturf)].")
+			notify_admins = TRUE
 
 		if(!triggered_by_explosion)
-			log_game("[key_name(user)] has triggered a gibtonite deposit reaction at [AREACOORD(bombturf)].")
+			log_bomber(user, "has trigged a gibtonite deposit reaction via", src, null, notify_admins)
 		else
-			log_game("An explosion has triggered a gibtonite deposit reaction at [AREACOORD(bombturf)]")
+			log_bomber(null, "An explosion has triggered a gibtonite deposit reaction via", src, null, notify_admins)
 
 		countdown(notify_admins)
 
