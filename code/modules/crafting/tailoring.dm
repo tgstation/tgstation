@@ -15,6 +15,14 @@
 	time = 40
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/fannypack
+	name = "Fannypack"
+	result = /obj/item/storage/belt/fannypack
+	reqs = list(/obj/item/stack/sheet/cloth = 2,
+				/obj/item/stack/sheet/leather = 1)
+	time = 20
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/hudsunsec
 	name = "Security HUDsunglasses"
 	result = /obj/item/clothing/glasses/hud/security/sunglasses
