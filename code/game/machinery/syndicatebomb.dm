@@ -112,7 +112,7 @@
 		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench) && can_unanchor)
+	if(I.tool_behaviour == TOOL_WRENCH && can_unanchor)
 		if(!anchored)
 			if(!isturf(loc) || isspaceturf(loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
@@ -130,7 +130,7 @@
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open_panel = !open_panel
 		update_icon()
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
@@ -138,7 +138,7 @@
 	else if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
 
-	else if(istype(I, /obj/item/crowbar))
+	else if(I.tool_behaviour == TOOL_CROWBAR)
 		if(open_panel && wires.is_all_cut())
 			if(payload)
 				to_chat(user, "<span class='notice'>You carefully pry out [payload].</span>")
@@ -158,7 +158,7 @@
 			to_chat(user, "<span class='notice'>You place [payload] into [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>")
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
 
@@ -436,7 +436,7 @@
 	qdel(src)
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
+	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
 		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())

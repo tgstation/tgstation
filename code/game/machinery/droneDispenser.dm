@@ -210,13 +210,13 @@
 		icon_state = icon_on
 
 /obj/machinery/droneDispenser/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/crowbar))
+	if(I.tool_behaviour == TOOL_CROWBAR)
 		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_all()
 		I.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		if(!(stat & BROKEN))
 			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return

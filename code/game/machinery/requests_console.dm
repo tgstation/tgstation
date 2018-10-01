@@ -486,7 +486,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			messages += "<b>From:</b> [linkedsender]<BR>[message]"
 
 /obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/crowbar))
+	if(O.tool_behaviour == TOOL_CROWBAR)
 		if(open)
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			open = FALSE
@@ -495,7 +495,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			open = TRUE
 		update_icon()
 		return
-	if(istype(O, /obj/item/screwdriver))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER)
 		if(open)
 			hackState = !hackState
 			if(hackState)

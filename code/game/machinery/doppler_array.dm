@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	return PROCESS_KILL
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		if(!anchored && !isinspace())
 			anchored = TRUE
 			power_change()

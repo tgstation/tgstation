@@ -230,7 +230,7 @@
 	return 15
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/analyzer))
+	if(I.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
