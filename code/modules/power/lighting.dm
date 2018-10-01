@@ -771,11 +771,22 @@
 			icon_state = "[base_state]-broken"
 			desc = "A broken [name]."
 
-
 /obj/item/light/Initialize()
 	. = ..()
 	update()
+	
+/obj/item/light/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/caltrop, force)
 
+/obj/item/light/Crossed(mob/living/L)
+	if(istype(L) && has_gravity(loc))
+		if(L.has_trait(TRAIT_LIGHT_STEP))
+			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
+		else
+			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)	
+	if(status == LIGHT_BURNED || status == LIGHT_OK)
+		shatter()
 
 // attack bulb/tube with object
 // if a syringe, can inject plasma to make it explode
