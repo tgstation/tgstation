@@ -137,10 +137,11 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
 	fire_cone()
-	sleep(10)
-	fire_cone()
-	sleep(10)
-	fire_cone()
+	if(health < maxHealth/2)
+		sleep(10)
+		fire_cone()
+		sleep(10)
+		fire_cone()
 	SetRecoveryTime(40)
 			
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
@@ -176,7 +177,7 @@ Difficulty: Medium
 			else
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
-		sleep(22)
+		sleep(24)
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone()
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
@@ -214,7 +215,7 @@ Difficulty: Medium
 			if(L in hit_list || L == src)
 				continue
 			hit_list += L
-			L.adjustFireLoss(30)
+			L.adjustFireLoss(20)
 			to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
 			
 		// deals damage to mechs
@@ -223,7 +224,7 @@ Difficulty: Medium
 				continue
 			hit_list += M
 			M.take_damage(45, BRUTE, "melee", 1)
-		sleep(1.25)
+		sleep(1.5)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = TRUE, atom/movable/manual_target, var/swoop_cooldown = 15)
 	if(stat || swooping)
@@ -271,7 +272,7 @@ Difficulty: Medium
 		sleep(0.5)
 	
 	// Ash drake flies onto its target and rains fire down upon them
-	var/descentTime = 7;
+	var/descentTime = 12;
 	if(lava_arena)
 		lava_arena()
 	
@@ -331,7 +332,7 @@ Difficulty: Medium
 	icon_state = "lavastaff_warn"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
-	duration = 11
+	duration = 13
 
 /obj/effect/temp_visual/lava_warning/ex_act()
 	return
@@ -383,7 +384,7 @@ Difficulty: Medium
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
-	duration = 11
+	duration = 13
 
 /obj/effect/temp_visual/dragon_swoop
 	name = "certain death"
@@ -401,7 +402,7 @@ Difficulty: Medium
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
 	pixel_x = -16
-	duration = 7
+	duration = 10
 	randomdir = FALSE
 
 /obj/effect/temp_visual/dragon_flight/Initialize(mapload, negative)
