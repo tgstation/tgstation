@@ -115,6 +115,7 @@
 
 /datum/nanite_program/proc/activate()
 	activated = TRUE
+	timer_counter = activation_delay
 
 /datum/nanite_program/proc/deactivate()
 	if(passive_enabled)

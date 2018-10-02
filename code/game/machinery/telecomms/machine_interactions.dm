@@ -19,7 +19,7 @@
 	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, P))
 		return
 	// Using a multitool lets you access the receiver's interface
-	else if(istype(P, /obj/item/multitool))
+	else if(P.tool_behaviour == TOOL_MULTITOOL)
 		attack_hand(user)
 
 	else if(default_deconstruction_crowbar(P))

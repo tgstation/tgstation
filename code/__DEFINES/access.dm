@@ -6,7 +6,7 @@
 #define ACCESS_MORGUE 6
 #define ACCESS_TOX 7 //R&D department, R&D console, burn chamber on some maps
 #define ACCESS_TOX_STORAGE 8 //Toxins storage, burn chamber on some maps
-#define ACCESS_GENETICS 9 
+#define ACCESS_GENETICS 9
 #define ACCESS_ENGINE 10 //Engineering area, power monitor, power flow control console
 #define ACCESS_ENGINE_EQUIP 11 //APCs, EngiVend/YouTool, engineering equipment lockers
 #define ACCESS_MAINT_TUNNELS 12
@@ -99,3 +99,10 @@
 #define ACCESS_BLOODCULT 250
 #define ACCESS_CLOCKCULT 251
 
+
+	// Mech Access, allows maintanenace of internal components and altering keycard requirements.
+#define ACCESS_MECH_MINING 300
+#define ACCESS_MECH_MEDICAL 301
+#define ACCESS_MECH_SECURITY 302
+#define ACCESS_MECH_SCIENCE 303
+#define ACCESS_MECH_ENGINE 304

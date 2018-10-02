@@ -4030,7 +4030,7 @@
 	read_only = 1
 	},
 /obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines. This one has the initials 'C.P' marked on the front. ";
+	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines. This one has the initials 'C.P' marked on the front.";
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
@@ -4549,7 +4549,6 @@
 /area/awaymission/research/interior/bathroom)
 "iN" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,

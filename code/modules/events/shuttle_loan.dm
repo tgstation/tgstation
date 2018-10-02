@@ -56,7 +56,9 @@
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
 	dispatched = 1
-	SSshuttle.points += bonus_points
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		D.adjust_money(bonus_points)
 	endWhen = activeFor + 1
 
 	SSshuttle.supply.mode = SHUTTLE_CALL
@@ -192,7 +194,7 @@
 			if(ITS_HIP_TO)
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/hydroponics/beekeeping_fullkit]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
-				
+
 				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/bee_terrorist)
 				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
 				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
@@ -205,7 +207,7 @@
 				shuttle_spawns.Add(/obj/structure/beebox/unwrenched)
 				shuttle_spawns.Add(/obj/item/queen_bee/bought)
 				shuttle_spawns.Add(/obj/structure/closet/crate/hydroponics)
-			
+
 				for(var/i in 1 to 8)
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/bees/toxin)
 

@@ -111,6 +111,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
+	ranged_cooldown = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
 	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set

@@ -16,8 +16,8 @@
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE
 
-/datum/supply_pack/proc/generate(turf/T)
-	var/obj/structure/closet/crate/C = new crate_type(T)
+/datum/supply_pack/proc/generate(atom/A)
+	var/obj/structure/closet/crate/C = new crate_type(A)
 	C.name = crate_name
 	if(access)
 		C.req_access = list(access)

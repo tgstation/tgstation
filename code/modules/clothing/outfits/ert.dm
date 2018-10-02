@@ -27,7 +27,7 @@
 	id = /obj/item/card/id/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	back = /obj/item/storage/backpack/captain
+	back = /obj/item/storage/backpack/ert
 	belt = /obj/item/storage/belt/security/full
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
@@ -60,7 +60,7 @@
 	id = /obj/item/card/id/ert/Security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	back = /obj/item/storage/backpack/security
+	back = /obj/item/storage/backpack/ert/security
 	belt = /obj/item/storage/belt/security/full
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
@@ -94,7 +94,7 @@
 	id = /obj/item/card/id/ert/Medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	glasses = /obj/item/clothing/glasses/hud/health
-	back = /obj/item/storage/backpack/satchel/med
+	back = /obj/item/storage/backpack/ert/medical
 	belt = /obj/item/storage/belt/medical
 	r_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
@@ -130,7 +130,7 @@
 	id = /obj/item/card/id/ert/Engineer
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	glasses =  /obj/item/clothing/glasses/meson/engine
-	back = /obj/item/storage/backpack/industrial
+	back = /obj/item/storage/backpack/ert/engineer
 	belt = /obj/item/storage/belt/utility/full
 	l_pocket = /obj/item/rcd_ammo/large
 	r_hand = /obj/item/storage/firstaid/regular

@@ -105,7 +105,9 @@ D [1]/  ||
 	push_data()
 
 /datum/integrated_io/proc/handle_wire(datum/integrated_io/linked_pin, obj/item/tool, action, mob/living/user)
-	if(istype(tool, /obj/item/multitool))
+	if(tool.tool_behaviour == TOOL_MULTITOOL)
+		if(!tool.multitool_check_buffer(user, tool))
+			return
 		var/obj/item/multitool/multitool = tool
 		switch(action)
 			if("wire")

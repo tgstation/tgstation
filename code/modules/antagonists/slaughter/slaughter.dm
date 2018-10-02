@@ -51,8 +51,8 @@
 	..()
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
-	if(istype(loc, /obj/effect/dummy/slaughter))
-		bloodspell.phased = 1
+	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
+		bloodspell.phased = TRUE
 
 /mob/living/simple_animal/slaughter/Life()
 	..()

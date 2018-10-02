@@ -104,7 +104,7 @@
 /obj/item/reagent_containers/food/drinks/throw_impact(atom/target, datum/thrownthing/throwinfo)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		smash(target, throwinfo.thrower, TRUE)
+		smash(target, throwinfo?.thrower, TRUE)
 
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
@@ -206,6 +206,11 @@
 	list_reagents = list("ice" = 30)
 	spillable = TRUE
 	isGlass = FALSE
+
+/obj/item/reagent_containers/food/drinks/ice/prison
+	name = "dirty ice cup"
+	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
+	list_reagents  = list("ice" = 25, "liquidgibs" = 5)
 
 /obj/item/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
 	name = "mug"

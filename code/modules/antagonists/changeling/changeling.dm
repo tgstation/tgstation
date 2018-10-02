@@ -116,7 +116,7 @@
 			p.on_refund(owner.current)
 
 	//MOVE THIS
-	if(owner.current.hud_used)
+	if(owner.current.hud_used && owner.current.hud_used.lingstingdisplay)
 		owner.current.hud_used.lingstingdisplay.icon_state = null
 		owner.current.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
@@ -445,8 +445,6 @@
 				identity_theft.find_target()
 			objectives += identity_theft
 		escape_objective_possible = FALSE
-
-	owner.objectives |= objectives
 
 /datum/antagonist/changeling/proc/update_changeling_icons_added()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]

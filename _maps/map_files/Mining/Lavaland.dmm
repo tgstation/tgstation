@@ -3708,7 +3708,6 @@
 /area/mine/production)
 "rP" = (
 /obj/machinery/atmospherics/pipe/layer_manifold{
-	icon_state = "manifoldlayer";
 	dir = 4
 	},
 /obj/structure/cable{

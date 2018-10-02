@@ -164,7 +164,8 @@
 		dat += "Living crew limit: <a href='?_src_=holder;[HrefToken()];alter_midround_life_limit=1'>[CONFIG_GET(number/midround_antag_life_check) * 100]% of crew alive</a><BR>"
 		dat += "If limits past: <a href='?_src_=holder;[HrefToken()];toggle_noncontinuous_behavior=1'>[SSticker.mode.round_ends_with_antag_death ? "End The Round" : "Continue As Extended"]</a><BR>"
 	dat += "<a href='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>End Round Now</a><br>"
-	dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a>"
+	dat += "<a href='?_src_=holder;[HrefToken()];delay_round_end=1'>[SSticker.delay_end ? "End Round Normally" : "Delay Round End"]</a><br>"
+	dat += "<a href='?_src_=holder;[HrefToken()];check_teams=1'>Check Teams</a>"
 	var/connected_players = GLOB.clients.len
 	var/lobby_players = 0
 	var/observers = 0

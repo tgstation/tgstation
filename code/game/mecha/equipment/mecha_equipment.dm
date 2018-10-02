@@ -147,7 +147,7 @@
 		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null)
+/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)
 		chassis.log_message("([src]) [message]", message_type, color)
 	else

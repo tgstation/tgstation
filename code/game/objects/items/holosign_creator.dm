@@ -59,6 +59,12 @@
 			qdel(H)
 		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
 
+/obj/item/holosign_creator/janibarrier
+	name = "custodial holobarrier projector"
+	desc = "A holographic projector that creates hard light wet floor barriers."
+	holosign_type = /obj/structure/holosign/barrier/wetsign
+	creation_time = 20
+	max_signs = 12
 
 /obj/item/holosign_creator/security
 	name = "security holobarrier projector"

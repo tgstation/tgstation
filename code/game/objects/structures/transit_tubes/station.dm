@@ -97,7 +97,7 @@
 
 
 /obj/structure/transit_tube/station/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/crowbar))
+	if(W.tool_behaviour == TOOL_CROWBAR)
 		for(var/obj/structure/transit_tube_pod/P in loc)
 			P.deconstruct(FALSE, user)
 	else

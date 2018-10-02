@@ -43,7 +43,7 @@
 	icon_state = "holosign"
 
 /obj/structure/holosign/barrier
-	name = "holo barrier"
+	name = "holobarrier"
 	desc = "A short holographic barrier which can only be passed by walking."
 	icon_state = "holosign_sec"
 	pass_flags = LETPASSTHROW
@@ -61,6 +61,12 @@
 		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
 			return 1
 
+/obj/structure/holosign/barrier/wetsign
+	name = "wet floor holobarrier"
+	desc = "When it says walk it means walk."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "holosign"
+
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
 
@@ -69,7 +75,7 @@
 	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
 
 /obj/structure/holosign/barrier/atmos
-	name = "holo firelock"
+	name = "holofirelock"
 	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
 	icon_state = "holo_firelock"
 	density = FALSE

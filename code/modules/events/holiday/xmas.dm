@@ -79,17 +79,6 @@
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 		santa.key = C.key
 
-		santa.equipOutfit(/datum/outfit/santa)
-		santa.update_icons()
+		var/datum/antagonist/santa/A = new
+		santa.mind.add_antag_datum(A)
 
-		var/datum/objective/santa_objective = new()
-		santa_objective.explanation_text = "Bring joy and presents to the station!"
-		santa_objective.completed = 1 //lets cut our santas some slack.
-		santa_objective.owner = santa.mind
-		santa.mind.objectives += santa_objective
-		santa.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
-		var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
-		telespell.clothes_req = 0 //santa robes aren't actually magical.
-		santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
-
-		to_chat(santa, "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>")

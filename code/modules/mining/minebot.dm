@@ -104,7 +104,7 @@
 		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 		DropOre()
 		return
-	if(istype(I, /obj/item/crowbar) || istype(I, /obj/item/borg/upgrade/modkit))
+	if(I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/borg/upgrade/modkit))
 		I.melee_attack_chain(user, stored_gun, params)
 		return
 	..()
@@ -191,7 +191,7 @@
 	for(var/obj/item/stack/ore/O in contents)
 		O.forceMove(drop_location())
 
-/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount)
+/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(mode != MINEDRONE_ATTACK && amount > 0)
 		SetOffenseBehavior()
 	. = ..()

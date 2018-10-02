@@ -66,10 +66,10 @@
 	return rev_team
 
 /datum/antagonist/rev/proc/create_objectives()
-	owner.objectives |= rev_team.objectives
+	objectives |= rev_team.objectives
 
 /datum/antagonist/rev/proc/remove_objectives()
-	owner.objectives -= rev_team.objectives
+	objectives -= rev_team.objectives
 
 //Bump up to head_rev
 /datum/antagonist/rev/proc/promote()
@@ -265,7 +265,8 @@
 		new_target.update_explanation_text()
 		objectives += new_target
 	for(var/datum/mind/M in members)
-		M.objectives |= objectives
+		var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
+		R.objectives |= objectives
 
 	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
