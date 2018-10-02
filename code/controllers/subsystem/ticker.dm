@@ -16,8 +16,6 @@ SUBSYSTEM_DEF(ticker)
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
-	var/event_time = null
-	var/event = 0
 
 	var/login_music							//music played in pregame lobby
 	var/round_end_sound						//music/jingle played when the world reboots
@@ -449,8 +447,6 @@ SUBSYSTEM_DEF(ticker)
 	force_ending = SSticker.force_ending
 	hide_mode = SSticker.hide_mode
 	mode = SSticker.mode
-	event_time = SSticker.event_time
-	event = SSticker.event
 
 	login_music = SSticker.login_music
 	round_end_sound = SSticker.round_end_sound
