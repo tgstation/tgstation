@@ -112,14 +112,6 @@
 		id_card = belt.GetID()
 		if(id_card)
 			return id_card
-	else if(l_store)
-		id_card = l_store.GetID()
-		if(id_card)
-			return id_card
-	else if(r_store)
-		id_card = r_store.GetID()
-		if(id_card)
-			return id_card
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	if(has_trait(TRAIT_MONKEYLIKE))
