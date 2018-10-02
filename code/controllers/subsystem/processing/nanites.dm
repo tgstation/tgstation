@@ -6,6 +6,7 @@ PROCESSING_SUBSYSTEM_DEF(nanites)
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
 	var/list/mob/living/nanite_monitored_mobs = list()
 	var/list/datum/nanite_program/relay/nanite_relays = list()
+	var/neural_network_count = 0
 
 /datum/controller/subsystem/processing/nanites/proc/check_hardware(datum/nanite_cloud_backup/backup)
 	if(QDELETED(backup.storage) || (backup.storage.stat & (NOPOWER|BROKEN)))
