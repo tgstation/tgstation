@@ -717,7 +717,7 @@
 	var/switchcount = 0	// number of times switched
 	materials = list(MAT_GLASS=100)
 	grind_results = list("silicon" = 5, "nitrogen" = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
-	var/rigged = TRUE		// true if rigged to explode
+	var/rigged = FALSE		// true if rigged to explode
 	var/brightness = 2 //how much light it gives off
 
 /obj/item/light/suicide_act(mob/living/carbon/user)
