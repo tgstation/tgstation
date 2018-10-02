@@ -33,23 +33,20 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 /obj/item/radio/headset/examine(mob/user)
 	..()
 	
-	if(in_range(user, src))
+	if(item_flags & IN_INVENTORY && loc == user)
 		// construction of frequency description
-		var/avail_chans = "Use ; for Common"
-		if(translate_binary && channels.len)
-			avail_chans += ", use :b for Binary"
-		else if(translate_binary)
-			avail_chans += ", and use :b for Binary"	
-		if(channels.len)
-			for(var/i = 1 to channels.len - 1)
-				avail_chans += ", use [GLOB.channel_tokens[channels[i]]] for [channels[i]]"
-			avail_chans += ", and use [GLOB.channel_tokens[channels[channels.len]]] for [channels[channels.len]]"
-		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[avail_chans].")
+		var/list/avail_chans = list("Use ; for the currently tuned frequency")
+		if(translate_binary)
+			avail_chans += "use :b for Binary"
+		if(length(channels))
+			for(var/i in 1 to length(channels))
+				avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
+		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
 		
 		if(command)
 			to_chat(user, "<span class='notice'>Alt-click to toggle the high-volume mode.</span>")
 	else
-		to_chat(user, "<span class='notice'>A small screen on the headset flashes, but you're too far away to see what it says.</span>")
+		to_chat(user, "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>")
 
 /obj/item/radio/headset/Initialize()
 	. = ..()
