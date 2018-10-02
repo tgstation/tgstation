@@ -24,9 +24,9 @@
 						  <a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
 
 	if(screen==1)
-		dat += "<h3>Log contents</h3>"
-		dat += "<a href='?src=[REF(src)];return=1'>Return</a><hr>"
-		dat += "[stored_data]"
+		dat += {"<h3>Log contents</h3>"
+		<a href='?src=[REF(src)];return=1'>Return</a><hr>"
+		[stored_data]"}
 
 	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>"
 	dat += "</body></html>"
