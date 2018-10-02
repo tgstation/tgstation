@@ -128,10 +128,10 @@ Difficulty: Medium
 	while(amount > 0)
 		if(!target)
 			break
-		var/turf/T = pick(RANGE_TURFS(7, target))
+		var/turf/T = pick(RANGE_TURFS(1, target))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
-		sleep(0.4)
+		sleep(0.8)
 		
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
@@ -322,6 +322,7 @@ Difficulty: Medium
 		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")
 		return
 	swoop_attack(FALSE, A, 30)
+	lava_pools(10)
 	player_cooldown = world.time + 200 // needs seperate cooldown or cant use fire attacks
 
 /obj/item/gps/internal/dragon
@@ -378,7 +379,7 @@ Difficulty: Medium
 	opacity = 0
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	duration = 76
+	duration = 82
 	color = COLOR_DARK_ORANGE
 	
 /obj/effect/temp_visual/lava_safe
