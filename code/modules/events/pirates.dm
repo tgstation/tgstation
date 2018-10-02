@@ -345,6 +345,8 @@
 	for(var/atom/movable/AM in get_turf(pad))
 		if(AM == pad)
 			continue
+		if(ismob(AM))
+			continue
 		export_item_and_contents(AM, EXPORT_PIRATE | EXPORT_CARGO | EXPORT_CONTRABAND | EXPORT_EMAG, apply_elastic = FALSE, delete_unsold = FALSE, external_report = ex)
 
 	status_report = "Sold:<br>"
@@ -453,7 +455,7 @@
 /datum/export/pirate/cash/get_amount(obj/O)
 	var/obj/item/stack/spacecash/C = O
 	return ..() * C.amount * C.value
-	
+
 /datum/export/pirate/holochip
 	cost = 1
 	unit_name = "holochip"
