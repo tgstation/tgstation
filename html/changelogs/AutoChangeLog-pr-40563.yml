@@ -1,8 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - rscadd: "Botany can now grow cotton to produce cloth for various jumpsuits."
-  - rscadd: "Cotton can be mutated into a much more durable strand, allowing for the production of crude armor."
-  - rscadd: "Rainbow flowers, an alternative for clothing dyeing, is obtainable through cargo's exotic seed crate."
-  - rscadd: "A loom can now be crafted with some planks so you can actually weave that cotton into a usable fabric."
-  - rscadd: "Fannypacks, softcaps, beanies and scarves are now craftable with cloth and dyeable."

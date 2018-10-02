@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Tweaked Runtimestation to include uplinks as well as a room for lighting testing."

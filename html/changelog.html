@@ -55,6 +55,63 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">02 October 2018</h2>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Split chemical bounties into simple/complex ones and removed some that are disproportionately hard to acquire.</li>
+				<li class="tweak">The "More Bounties" bounty now awards five instead of three new bounties.</li>
+				<li class="tweak">Tweaked Runtimestation to include uplinks as well as a room for lighting testing.</li>
+				<li class="tweak">Tweaked lighting in some areas to better account for night lighting.</li>
+			</ul>
+			<h3 class="author">Frosty Fridge updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">CMO and Roboticist traitors can now purchase the brainwashing surgery disk.</li>
+			</ul>
+			<h3 class="author">MMMiracles updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Botany can now grow cotton to produce cloth for various jumpsuits.</li>
+				<li class="rscadd">Cotton can be mutated into a much more durable strand, allowing for the production of crude armor.</li>
+				<li class="rscadd">Rainbow flowers, an alternative for clothing dyeing, is obtainable through cargo's exotic seed crate.</li>
+				<li class="rscadd">A loom can now be crafted with some planks so you can actually weave that cotton into a usable fabric.</li>
+				<li class="rscadd">Fannypacks, softcaps, beanies and scarves are now craftable with cloth and dyeable.</li>
+			</ul>
+			<h3 class="author">MrDoomBringer updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="admin">Admins can now launch supplypods the old, slightly quicker way as well</li>
+				<li class="bugfix">The ceres shuttle will no longer overlap with centcom. The architects responsible for this issue have been sternly reprimanded.</li>
+				<li class="bugfix">morgues have had their proton packs removed and as such no longer suck in ghosts on closing.</li>
+			</ul>
+			<h3 class="author">Shdorsh updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Grabber mode -1 doesn't require a target</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Resolved a large number of instances where items would not work as their respective tool types (ie plasma cutters not working as welders.)</li>
+				<li class="bugfix">Using an item that acts as a multitool that does not have a buffer on an object that requires a buffer will now consistently provide user feedback for why it failed.</li>
+				<li class="rscadd">An antagonist holding a syndicate balloon will now receive a positive mood modifier.</li>
+				<li class="bugfix">Lights constructed by players will now respect the local APC's nightshift setting.</li>
+				<li class="bugfix">Deoxyribonucleic Saboteur now exists again.</li>
+			</ul>
+			<h3 class="author">XDTM updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added scanner gates: these buildable machines will scan any mob passing under it, and it will alert when a set condition is met.</li>
+				<li class="rscadd">Possible conditions: Wanted status, Mindshield, Nanites, Diseases, Species, or carrying guns.</li>
+				<li class="rscadd">Can be inverted, so it will alert when the condition is _not_ met, and can be id-locked to avoid tampering.</li>
+				<li class="tweak">Holding an ID in your hands uses it instead of your worn ID for authentication purposes.</li>
+				<li class="tweak">If you don't have an ID in your id slot, the belt slot will be checked as well.</li>
+			</ul>
+			<h3 class="author">YPOQ updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Wizards will no longer be stuck after using rod form while in a container</li>
+			</ul>
+			<h3 class="author">imsxz updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">plasma cutter turrets have their old damage again</li>
+				<li class="balance">plasma blasts have their dismemberment back</li>
+				<li class="bugfix">general beepsky can now properly be constructed again</li>
+			</ul>
+
 			<h2 class="date">30 September 2018</h2>
 			<h3 class="author">Mickyan updated:</h3>
 			<ul class="changes bgimages16">
@@ -1465,67 +1522,6 @@
 			<ul class="changes bgimages16">
 				<li class="rscadd">Cameras now shoot from 1x1 to 7x7, fully customizable. Alt click on them to change the size of your photos. experimental: All photos, assuming the server host turns this feature on, will be logged to disk in round logs, with their data and path stored in a json. This allows for things like Statbus, and persistence features among other things to easily grab the data and load the photo.</li>
 				<li class="rscadd">Mappers are now able to add in photo albums and wall frames with persistence! This, obviously, requires photo logging to be turned on. If this is enabled and used, these albums and frames will save the ID of the photo(s) inside them and load it the next time they're loaded in! Like secret satchels, but for photos!</li>
-			</ul>
-
-			<h2 class="date">30 July 2018</h2>
-			<h3 class="author">Anonmare updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Upload boards and AI modules, in addition to Weapon Recharger boards, are now more expensive to manufacture</li>
-			</ul>
-			<h3 class="author">Basilman updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">fixed BM Speedwagon offsets</li>
-			</ul>
-			<h3 class="author">Cobby (based off Wesoda25's idea) updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds the PENLITE holobarrier. A holographic barrier which halts individuals with bad diseases!</li>
-			</ul>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Techweb nodes that are available to exofabs by roundstart have been moved to basic research technology.</li>
-				<li class="balance">Ripley APLU circuit boards are now printable by roundstart.</li>
-				<li class="balance">Odysseus, Gygax, Durand, H.O.N.K. and Phazon mech parts have to be researched before becoming printable (same as their circuit boards).</li>
-				<li class="tweak">Arrivals shuttles no longer throw objects/players when docking.</li>
-				<li class="bugfix">Regular fedoras no longer spawn containing flasks.</li>
-				<li class="tweak">Increased the range of handheld T-ray scanners.</li>
-				<li class="balance">Cargo bounties that request irreplaceable items have been removed.</li>
-			</ul>
-			<h3 class="author">Garen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Throwers no longer deal damage</li>
-				<li class="balance">Flashlight circuits are now the same strength as a normal flashlight</li>
-				<li class="balance">Grabber circuits are now combat circuits</li>
-				<li class="rscdel">Removed smoke circuits</li>
-				<li class="rscdel">Removed all screens larger than small</li>
-				<li class="tweak">Ntnet circuits can no longer specify the passkey used, it instead always uses the access</li>
-			</ul>
-			<h3 class="author">Hate9 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added pulse multiplexer circuits, to complete the list of data transfers.</li>
-			</ul>
-			<h3 class="author">Jared-Fogle updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">NanoTrasen now officially recognizes Moth Week as a holiday.</li>
-				<li class="rscdel">Temporarily removes canvases until someone figures out how to fix them.</li>
-			</ul>
-			<h3 class="author">Mickyan updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Social anxiety trigger range decreased. Stay out of my personal space!</li>
-				<li class="bugfix">Social anxiety no longer triggers while nobody is around but you</li>
-			</ul>
-			<h3 class="author">WJohnston updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Redesigned the metastation white ship as a salvage vessel.</li>
-			</ul>
-			<h3 class="author">YoYoBatty updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">SMES power terminals not actually deleting the terminal reference when by cutting the terminal itself rather than the SMES.</li>
-				<li class="bugfix">SMES now reconnect to the grid properly after construction.</li>
-				<li class="refactor">SMES now uses wirecutter act to handle terminal deconstruction.</li>
-			</ul>
-			<h3 class="author">ninjanomnom updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Objects picked up from tables blocking throws will no longer be forever unthrowable</li>
 			</ul>
 		</div>
 

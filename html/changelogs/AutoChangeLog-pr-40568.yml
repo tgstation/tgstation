@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Split chemical bounties into simple/complex ones and removed some that are disproportionately hard to acquire."
-  - tweak: "The \"More Bounties\" bounty now awards five instead of three new bounties."

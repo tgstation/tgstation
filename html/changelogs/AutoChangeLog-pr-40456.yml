@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Holding an ID in your hands uses it instead of your worn ID for authentication purposes."
-  - tweak: "If you don't have an ID in your id slot, the belt slot will be checked as well."

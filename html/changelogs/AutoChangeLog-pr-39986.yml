@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added scanner gates: these buildable machines will scan any mob passing under it, and it will alert when a set condition is met."
-  - rscadd: "Possible conditions: Wanted status, Mindshield, Nanites, Diseases, Species, or carrying guns."
-  - rscadd: "Can be inverted, so it will alert when the condition is _not_ met, and can be id-locked to avoid tampering."
