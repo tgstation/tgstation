@@ -176,7 +176,7 @@
 	toggle_open(user)
 
 /obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
 		return
 	if(close_machine(target, user))
 		log_combat(user, target, "inserted", null, "into [src].")
