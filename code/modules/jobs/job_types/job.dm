@@ -81,10 +81,7 @@
 	if(!H)
 		return FALSE
 	if(!visualsOnly)
-		var/datum/bank_account/bank_account = new(H.real_name, src)
-		bank_account.account_holder = H.real_name
-		bank_account.account_job = src
-		bank_account.account_id = rand(111111,999999)
+		var/datum/bank_account/bank_account = new(H.registered_name, src)
 		bank_account.payday(STARTING_PAYCHECKS, TRUE)
 		H.account_id = bank_account.account_id
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
