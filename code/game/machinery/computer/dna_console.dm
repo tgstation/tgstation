@@ -16,6 +16,24 @@
 #define SCANNER_ACTION_UE 3
 #define SCANNER_ACTION_MIXED 4
 
+
+
+
+
+/*
+TODO:
+X Make mutations random for every person
+X New html
+ Make inspect work, with DISCOVER button
+ Allow single mutation disks
+Mutation activators
+Mutation injectors
+More mutations
+?Chromosomes
+?Mutation stats
+
+
+*/
 /obj/machinery/computer/scan_consolenew
 	name = "\improper DNA scanner access console"
 	desc = "Scan DNA."
@@ -30,12 +48,14 @@
 
 	var/injectorready = 0	//world timer cooldown var
 	var/current_screen = "mainmenu"
+	var/current_mutation   //what block are we inspecting? only used when screen = "info"
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
+	var/datum/techweb/stored_research
 
 	light_color = LIGHT_COLOR_BLUE
 
@@ -58,6 +78,7 @@
 		if(!isnull(connected))
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
+	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()
@@ -260,6 +281,24 @@
 							temp_html += "<a href='?src=[REF(src)];task=savedisk;num=[i];'>Save to Disk</a>"
 						else
 							temp_html += "<span class='linkOff'>Save to Disk</span>"
+		if("info")
+			if(current_mutation)
+				var/mut_name
+				var/mut_desc
+				if(ispath(current_mutation))
+					mut_name = initial(current_mutation.name)
+					mut_desc = initial(current_mutation.desc)
+				else
+					if(!(current_mutation in stored_research.discovered_mutations))
+						stored_research.discovered_mutations += current_mutation
+					mut_name = current_mutation.name
+					mut_name = current_mutation.desc
+				var/datum/mutation/M = viable_occupant.dna.mutations
+				temp_html += status
+				temp_html += buttons
+				temp_html += "<h1>Mutation: [mut_name]</h1>"
+				temp_html += "[mut_desc]"
+
 		else
 			temp_html += status
 			temp_html += buttons
@@ -294,14 +333,28 @@
 					if ((i % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
-						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
+						var/cur_block = (i / DNA_BLOCK_SIZE) + 1
+						if(!ispath(viable_occupant.dna.mutation_index[cur_block]))
+							var/mut_style = "dnaBlockNumber"
+							var/datum/mutation/M = viable_occupant.dna.mutation_index[cur_block]
+							if(M in stored_research.discovered_mutations)
+								switch(M.quality)
+									if(POSITIVE)
+										mut_style = "dnaBlockNumberGood"
+									if(NEUTRAL)
+										mut_style = "dnaBlockNumberNeutral"
+									if(NEGATIVE)
+										mut_style = "dnaBlockNumberBad"
+							temp_html += "<a class='[mut_style]' href='?src=[REF(src)];task=inspect;num=[cur_block];'>[cur_block]</a>"
+							current_mutation = M
+						else
+							temp_html += "<div class='dnaBlockNumber'>[cur_block]</div>"
 			else
 				temp_html += "----"
 			temp_html += "</div></div></div>"
 
 	popup.set_content(temp_html.Join())
 	popup.open()
-
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
@@ -391,8 +444,8 @@
 							if(buffer_slot["SE"])
 								I = new /obj/item/dnainjector/timed(loc)
 								var/powers = 0
-								for(var/datum/mutation/human/HM in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
-									if(HM.check_block_string(buffer_slot["SE"]))
+								for(var/datum/mutation/human/HM in viable_occupant.dna.mutation_index)
+									if(viable_occupant.dna.check_block_string(buffer_slot["SE"],HM))
 										I.add_mutations.Add(HM)
 										if(HM in GLOB.good_mutations)
 											powers += 1

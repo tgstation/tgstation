@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	GLOB.mutations_list[name] = src
 
 /datum/mutation/human
-	var/dna_block
+	var/locked
 	var/quality
 	var/get_chance = 100
 	var/lowest_value = 256 * 8
@@ -28,31 +28,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/proc/force_lose(mob/living/carbon/human/owner)
 	set_block(owner, 0)
 	. = on_losing(owner)
-
-/datum/mutation/human/proc/set_se(se_string, on = 1)
-	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
-		return
-	var/before = copytext(se_string, 1, ((dna_block - 1) * DNA_BLOCK_SIZE) + 1)
-	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
-	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
-	return before + injection + after
-
-/datum/mutation/human/proc/set_block(mob/living/carbon/owner, on = 1)
-	if(owner && owner.has_dna())
-		owner.dna.struc_enzymes = set_se(owner.dna.struc_enzymes, on)
-
-/datum/mutation/human/proc/check_block_string(se_string)
-	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
-		return 0
-	if(hex2num(getblock(se_string, dna_block)) >= lowest_value)
-		return 1
-
-/datum/mutation/human/proc/check_block(mob/living/carbon/human/owner, force_powers=0)
-	if(check_block_string(owner.dna.struc_enzymes))
-		if(prob(get_chance)||force_powers)
-			. = on_acquiring(owner)
-	else
-		. = on_losing(owner)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
 	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))

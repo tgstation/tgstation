@@ -108,16 +108,16 @@ SUBSYSTEM_DEF(atoms)
 	BadInitializeCalls = SSatoms.BadInitializeCalls
 
 /datum/controller/subsystem/atoms/proc/setupGenetics()
-	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
+/*	var/list/avnums = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 		avnums[i] = i
 		CHECK_TICK
-
+*/
 	for(var/A in subtypesof(/datum/mutation/human))
 		var/datum/mutation/human/B = new A()
-		if(B.dna_block == NON_SCANNABLE)
+		if(B.locked)
 			continue
-		B.dna_block = pick_n_take(avnums)
+//		B.dna_block = pick_n_take(avnums)
 		if(B.quality == POSITIVE)
 			GLOB.good_mutations |= B
 		else if(B.quality == NEGATIVE)

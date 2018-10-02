@@ -13,6 +13,7 @@
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
+	var/mutation_index = list() //List of which mutations this carbon has and its assigned block
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -106,12 +107,17 @@
 /datum/dna/proc/generate_struc_enzymes()
 	var/list/sorting = new /list(DNA_STRUC_ENZYMES_BLOCKS)
 	var/result = ""
-	for(var/datum/mutation/human/A in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
-		if(A.name == RACEMUT && ismonkey(holder))
-			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
+	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
+	shuffle_inplace(mutations_temp)
+	for(var/i to DNA_STRUC_ENZYMES_BLOCKS)
+		var/datum/mutation/M = mutations_temp[i]
+		mutation_index[M.type] = i
+	for(var/datum/mutation/human/A in mutation_index)
+		if(initial(A.name) == RACEMUT && ismonkey(holder))
+			sorting[mutation_index[A]] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
 			mutations |= A
 		else
-			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
+			sorting[mutation_index[A]] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
 
 	for(var/B in sorting)
 		result += B
@@ -314,12 +320,37 @@
 	if(!has_dna())
 		return
 
-	for(var/datum/mutation/human/A in GLOB.good_mutations | GLOB.bad_mutations | GLOB.not_good_mutations)
-		if(ismob(A.check_block(src, force_powers)))
+
+	for(var/datum/mutation/A in mutation_index)
+		if(ismob(dna.check_block(force_powers, A)))
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
 	update_mutations_overlay()
 
+/datum/dna/proc/check_block(force_power=0, datum/mutation/human/A)
+	if(check_block_string())
+		if(prob(initial(A.get_chance))||force_power)
+			if(ispath(A))
+			. = A.on_acquiring(holder)
+	else if(!ispath(A))
+		. = A.on_losing(holder)
+
+/datum/dna/proc/check_block_string(se_string, datum/mutation/A)
+	if(!se_string)
+		se_string = struc_enzymes
+	if(lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
+		return 0
+	if(hex2num(getblock(se_string, mutation_index[A])) >= inital(A.lowest_value))
+		return 1
+
+/datum/dna/proc/set_se(block, on=TRUE, datum/mutation/A)
+	if(!struc_enzymes || lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
+		return
+	var/lowest_value = initial(A.lowest_value)
+	var/before = copytext(struc_enzymes, 1, ((mutation_index[A] - 1) * DNA_BLOCK_SIZE) + 1)
+	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
+	var/after = copytext(struc_enzymes, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
+	return before + injection + after
 
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
