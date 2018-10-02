@@ -25,7 +25,8 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
-	var/rad_insulation = RAD_VERY_LIGHT_INSULATION
+	rad_insulation = RAD_VERY_LIGHT_INSULATION
+	rad_flags = RAD_PROTECT_CONTENTS
 
 /obj/structure/window/examine(mob/user)
 	..()
@@ -63,7 +64,6 @@
 
 /obj/structure/window/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/rad_insulation, rad_insulation, TRUE, FALSE)
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

@@ -16,10 +16,7 @@
 	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
-
-/obj/structure/grille/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
 /obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()

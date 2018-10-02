@@ -26,13 +26,10 @@
 
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
+	rad_insulation = RAD_EXTREME_INSULATION
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
-
-/obj/machinery/power/rad_collector/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE, FALSE)
 
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
