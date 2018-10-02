@@ -267,8 +267,14 @@
 
 
 // create a new lighting fixture
-/obj/machinery/light/Initialize()
+/obj/machinery/light/Initialize(mapload)
 	. = ..()
+
+	if(!mapload) //sync up nightshift lighting for player made lights
+		var/area/A = get_area(src)
+		var/obj/machinery/power/apc/temp_apc = A.get_apc()
+		nightshift_enabled = temp_apc?.nightshift_lights
+
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 	spawn(2)
