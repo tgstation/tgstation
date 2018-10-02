@@ -113,6 +113,11 @@
 	description = "<span class='warning'>I'm missing my family heirloom...</span>\n"
 	mood_change = -4
 
+/datum/mood_event/healsbadman
+	description = "<span class='nicegreen'>I feel a lot healthier, but also like shit.</span>\n"
+	mood_change = -4
+	timeout = 1200
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
