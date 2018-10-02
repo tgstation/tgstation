@@ -108,13 +108,13 @@ Difficulty: Medium
 	ranged_cooldown = world.time + ranged_cooldown_time
 	
 	if(prob(15 + anger_modifier) && !client)
-		if(health < maxHealth/2)
+		if(health < maxHealth*0.5)
 			swoop_attack()
 		else
 			lava_swoop()
 
 	else if(prob(10+anger_modifier) && !client)
-		if(health < maxHealth/2)
+		if(health < maxHealth*0.5)
 			triple_swoop()
 		else
 			fire_cone()
@@ -137,7 +137,7 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
 	fire_cone()
-	if(health < maxHealth/2)
+	if(health < maxHealth*0.5)
 		sleep(10)
 		fire_cone()
 		sleep(10)
