@@ -9,6 +9,13 @@
 	tracer_type = /obj/effect/projectile/tracer/plasma_cutter
 	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
 	impact_type = /obj/effect/projectile/impact/plasma_cutter
+	var/pressure_check_scaling = FALSE
+	
+/obj/item/projectile/plasma/Initialize()	
+	. = ..()	
+	if(pressure_check_scaling && !lavaland_equipment_pressure_check(get_turf(src)))	
+		name = "weakened [name]"	
+		damage *= 0.25
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
@@ -27,13 +34,17 @@
 	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 10
+	damage = 40
 	range = 9
 	mine_range = 3
-
+	dismemberment = 20
+	pressure_check_scaling = TRUE
+	
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
-	damage = 6
+	damage = 24
 	range = 7
+	dismemberment = 20
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+	pressure_check_scaling = TRUE
