@@ -28,3 +28,27 @@
 	var/turf/open/T = get_turf(src)
 	if(istype(T))
 		T.consider_pressure_difference(get_step(T,dir),strength)
+
+//Keep these rare due to cost of doing these checks
+/obj/effect/path_blocker
+	name = "magic barrier"
+	desc = "You shall not pass."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker" //todo make this actually look fine when visible
+	anchored = TRUE
+	var/list/blocked_types = list()
+	var/reverse = FALSE //Block if path not present
+
+/obj/effect/path_blocker/Initialize()
+	. = ..()
+	if(blocked_types.len)
+		blocked_types = typecacheof(blocked_types)
+
+/obj/effect/path_blocker/CanPass(atom/movable/mover, turf/target)
+	if(blocked_types.len)
+		var/list/mover_contents = mover.GetAllContents()
+		for(var/atom/movable/thing in mover_contents)
+			if(blocked_types[thing.type])
+				return reverse
+	return !reverse
+	
