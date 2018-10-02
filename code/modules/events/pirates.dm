@@ -428,6 +428,8 @@
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind || !H.mind.assigned_role) //mint condition only
 		return 0
+	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
+		return 0
 	else
 		if(H.mind.assigned_role in GLOB.command_positions)
 			return 3000
@@ -453,7 +455,7 @@
 /datum/export/pirate/cash/get_amount(obj/O)
 	var/obj/item/stack/spacecash/C = O
 	return ..() * C.amount * C.value
-	
+
 /datum/export/pirate/holochip
 	cost = 1
 	unit_name = "holochip"
