@@ -32,7 +32,7 @@
 	var/drawtype
 	var/text_buffer = ""
 
-	var/static/list/graffiti = list("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
+	var/static/list/graffiti = list("smallbrush","brush","largebrush","amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","body","cyka","star","poseur tag","prolizard","antilizard")
 	var/static/list/letters = list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
 	var/static/list/numerals = list("0","1","2","3","4","5","6","7","8","9")
 	var/static/list/oriented = list("arrow","body") // These turn to face the same way as the drawer
