@@ -441,7 +441,7 @@
 	if(ishuman(mob_occupant))
 		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
-		var/obj/item/card/id/I = C.get_idcard()
+		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
 	if(isbrain(mob_occupant))

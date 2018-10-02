@@ -883,7 +883,7 @@
 /mob/proc/can_hold_items()
 	return FALSE
 
-/mob/proc/get_idcard()
+/mob/proc/get_idcard(hand_first)
 	return
 
 
