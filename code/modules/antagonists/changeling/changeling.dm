@@ -116,7 +116,7 @@
 			p.on_refund(owner.current)
 
 	//MOVE THIS
-	if(owner.current.hud_used)
+	if(owner.current.hud_used && owner.current.hud_used.lingstingdisplay)
 		owner.current.hud_used.lingstingdisplay.icon_state = null
 		owner.current.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 

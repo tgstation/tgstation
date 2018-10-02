@@ -206,6 +206,16 @@
 	build_path = /obj/item/locator
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	
+/datum/design/quantum_keycard
+	name = "Quantum Keycard"
+	desc = "Allows for the construction of a quantum keycard."
+	id = "quantum_keycard"
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_METAL = 500, MAT_SILVER = 500, MAT_BLUESPACE = 1000)
+	build_path = /obj/item/quantum_keycard
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
@@ -294,6 +304,17 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/holobarrier_jani
+	name = "Custodial Holobarrier Projector"
+	desc = "A holograpic projector used to project hard light wet floor barriers."
+	id = "holobarrier_jani"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000, MAT_SILVER = 1000)
+	build_path = /obj/structure/holosign/barrier/wetsign
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+
 /datum/design/holosignsec
 	name = "Security Holobarrier Projector"
 	desc = "A holographic projector that creates holographic security barriers."
@@ -361,7 +382,7 @@
 	build_path = /obj/item/flashlight/seclite
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/detective_scanner
 	name = "Forensic Scanner"
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
@@ -371,7 +392,7 @@
 	build_path = /obj/item/detective_scanner
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/pepperspray
 	name = "Pepper Spray"
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly. Printed pepper sprays do not contain reagents."
@@ -381,7 +402,7 @@
 	build_path = /obj/item/reagent_containers/spray/pepper/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/bola_energy
 	name = "Energy Bola"
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
@@ -391,7 +412,7 @@
 	build_path = /obj/item/restraints/legcuffs/bola/energy
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/zipties
 	name = "Zipties"
 	desc = "Plastic, disposable zipties that can be used to restrain temporarily but are destroyed after use."
@@ -401,7 +422,7 @@
 	build_path = /obj/item/restraints/handcuffs/cable/zipties
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
-	
+
 /datum/design/evidencebag
 	name = "Evidence Bag"
 	desc = "An empty evidence bag."

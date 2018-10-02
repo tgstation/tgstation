@@ -731,6 +731,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	remove_pen()
 
 /obj/item/pda/proc/toggle_light()
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+		return
 	if(fon)
 		fon = FALSE
 		set_light(0)

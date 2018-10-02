@@ -201,7 +201,7 @@
 		update_icons()
 		Goto(target, move_to_delay, minimum_distance)
 
-/mob/living/simple_animal/hostile/jungle/seedling/adjustHealth()
+/mob/living/simple_animal/hostile/jungle/seedling/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(combatant_state == SEEDLING_STATE_ACTIVE && beam_debuff_target)
 		beam_debuff_target.remove_status_effect(/datum/status_effect/seedling_beam_indicator)

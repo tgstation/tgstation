@@ -277,6 +277,9 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("cardborg suit", /obj/item/clothing/suit/cardborg, 3), \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 	new/datum/stack_recipe("pizza box", /obj/item/pizzabox), \
+	new/datum/stack_recipe("donut box", /obj/item/storage/fancy/donut_box), \
+	new/datum/stack_recipe("egg box", /obj/item/storage/fancy/egg_box), \
+	new/datum/stack_recipe("candle box", /obj/item/storage/fancy/candle_box), \
 	new/datum/stack_recipe("folder", /obj/item/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \

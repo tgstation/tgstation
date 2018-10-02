@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - admin: "Admins can now launch supplypods the old, slightly quicker way as well"

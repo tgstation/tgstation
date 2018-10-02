@@ -56,7 +56,7 @@
 		var/mob/living/carbon/human/H = user
 		if (H.has_trait(TRAIT_MUSICIAN))
 			if (!tune_time)
-				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
+				H.visible_message("[H] tunes [src] to perfection!", "<span class='notice'>You tune [src] to perfection!</span>")
 				tune_time = 300
 				START_PROCESSING(SSobj, src)
 			else

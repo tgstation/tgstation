@@ -123,6 +123,24 @@
 	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
+/obj/item/toy/syndicateballoon/pickup(mob/user)
+	. = ..()
+	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+
+/obj/item/toy/syndicateballoon/dropped(mob/user)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+	. = ..()
+
+
+/obj/item/toy/syndicateballoon/Destroy()
+	if(ismob(loc))
+		var/mob/M = loc
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+	. = ..()
+
+
 /*
  * Fake singularity
  */
@@ -260,7 +278,7 @@
 				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
-	else if(istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"
@@ -944,6 +962,7 @@
 /obj/item/toy/cards/deck/syndicate
 	name = "suspicious looking deck of cards"
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
+	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
 	card_force = 5

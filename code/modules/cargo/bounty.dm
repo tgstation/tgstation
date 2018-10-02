@@ -21,7 +21,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 // Called when the claim button is clicked. Override to provide fancy rewards.
 /datum/bounty/proc/claim()
 	if(can_claim())
-		SSshuttle.points += reward
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			D.adjust_money(reward)
 		claimed = TRUE
 
 // If an item sent in the cargo shuttle can satisfy the bounty.
@@ -120,41 +122,41 @@ GLOBAL_LIST_EMPTY(bounties_list)
 /proc/setup_bounties()
 
 	var/pick // instead of creating it a bunch let's go ahead and toss it here, we know we're going to use it for dynamics and subtypes!
-	
+
 	/********************************Subtype Gens********************************/
 	var/list/easy_add_list_subtypes = list(/datum/bounty/item/assistant = 2,
-											/datum/bounty/item/mech = 1, 
-											/datum/bounty/item/chef = 2, 
+											/datum/bounty/item/mech = 1,
+											/datum/bounty/item/chef = 2,
 											/datum/bounty/item/security = 1,
 											/datum/bounty/virus = 1,
 											/datum/bounty/item/engineering = 1,
 											/datum/bounty/item/mining = 2,
 											/datum/bounty/item/medical = 2,
 											/datum/bounty/item/botany = 2)
-	
+
 	for(var/the_type in easy_add_list_subtypes)
 		for(var/i in 1 to easy_add_list_subtypes[the_type])
 			pick = pick(subtypesof(the_type))
 			try_add_bounty(new pick)
-	
+
 	/********************************Strict Type Gens********************************/
 	var/list/easy_add_list_strict_types = list(/datum/bounty/reagent/simple_drink = 1,
 											/datum/bounty/reagent/complex_drink = 1,
 											/datum/bounty/reagent/chemical = 1)
-											
+
 	for(var/the_strict_type in easy_add_list_strict_types)
 		for(var/i in 1 to easy_add_list_strict_types[the_strict_type])
 			try_add_bounty(new the_strict_type)
-	
+
 	/********************************Dynamic Gens********************************/
-	
+
 	for(var/i in 0 to 1)
 		if(prob(50))
 			pick = pick(subtypesof(/datum/bounty/item/slime))
 		else
 			pick = pick(subtypesof(/datum/bounty/item/science))
 		try_add_bounty(new pick)
-	
+
 	/********************************Cutoff for Non-Low Priority Bounties********************************/
 	var/datum/bounty/B = pick(GLOB.bounties_list)
 	B.mark_high_priority()
@@ -164,7 +166,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 													/datum/bounty/item/syndicate_documents,
 													/datum/bounty/item/adamantine,
 													/datum/bounty/more_bounties)
-													
+
 	for(var/low_priority_bounty in low_priority_strict_type_list)
 		try_add_bounty(new low_priority_bounty)
 

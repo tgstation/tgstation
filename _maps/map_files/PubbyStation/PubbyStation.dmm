@@ -3507,9 +3507,8 @@
 "akb" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/structure/sign/plaques/atmos{
+/obj/structure/sign/plaques/kiddie{
 	desc = "An embossed piece of paper from the University of Nanotrasen at Portpoint.";
-	icon_state = "kiddieplaque";
 	name = "\improper 'Diploma' frame";
 	pixel_y = 32
 	},
@@ -4739,7 +4738,6 @@
 /area/crew_quarters/heads/hos)
 "amA" = (
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 4
 	},
 /obj/structure/lattice/catwalk,
@@ -4757,7 +4755,6 @@
 /area/space/nearstation)
 "amD" = (
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
@@ -6935,7 +6932,6 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -8662,10 +8658,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -10121,10 +10114,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -11581,10 +11571,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -12301,7 +12288,6 @@
 /area/crew_quarters/dorms)
 "aDk" = (
 /turf/open/floor/plasteel/white/corner{
-	icon_state = "whitecorner";
 	dir = 8
 	},
 /area/crew_quarters/dorms)
@@ -15267,7 +15253,6 @@
 	icon_state = "plant-04"
 	},
 /turf/open/floor/plasteel/white/corner{
-	icon_state = "whitecorner";
 	dir = 4
 	},
 /area/hallway/primary/central)
@@ -18743,6 +18728,9 @@
 /obj/item/storage/box/beanbag,
 /obj/item/assembly/mousetrap,
 /obj/item/storage/box/mousetraps,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aSR" = (
@@ -19676,6 +19664,9 @@
 /area/hydroponics)
 "aUX" = (
 /obj/machinery/icecream_vat,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aUY" = (
@@ -20508,10 +20499,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "aWM" = (
 /obj/machinery/washing_machine,
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -21645,6 +21633,9 @@
 /obj/item/radio/intercom{
 	pixel_y = 26
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aYV" = (
@@ -22158,9 +22149,6 @@
 /area/janitor)
 "aZR" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -28
@@ -22687,6 +22675,9 @@
 	icon_state = "1-8"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/janitor)
 "bba" = (
@@ -29364,7 +29355,6 @@
 	req_one_access_txt = "5;9"
 	},
 /obj/effect/mapping_helpers/airlock/unres{
-	icon_state = "airlock_unres_helper";
 	dir = 8
 	},
 /obj/structure/cable{
@@ -31154,6 +31144,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "buW" = (
@@ -31359,7 +31350,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bvy" = (
-/obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
@@ -32880,9 +32870,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "purple"
-	},
+/turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "byK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -33853,7 +33841,6 @@
 /area/science/xenobiology)
 "bAI" = (
 /obj/structure/transit_tube/curved/flipped{
-	icon_state = "curved1";
 	dir = 4
 	},
 /turf/open/space/basic,
@@ -36145,9 +36132,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "darkpurple"
-	},
+/turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
 "bES" = (
 /obj/item/aicard,
@@ -37196,7 +37181,6 @@
 /area/medical/virology)
 "bGV" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 4
 	},
 /obj/item/radio/intercom{
@@ -38826,7 +38810,6 @@
 /area/maintenance/department/engine)
 "bKm" = (
 /obj/structure/light_construct{
-	icon_state = "tube-construct-stage1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
@@ -40278,7 +40261,6 @@
 /area/chapel/dock)
 "bNx" = (
 /obj/structure/transit_tube/station/reverse{
-	icon_state = "closed_terminus0";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -41295,8 +41277,7 @@
 /area/chapel/asteroid/monastery)
 "bQe" = (
 /obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	on = 1
+	icon_state = "lantern-on"
 	},
 /turf/open/floor/plating/asteroid,
 /area/chapel/asteroid/monastery)
@@ -41400,6 +41381,9 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
@@ -45185,6 +45169,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYJ" = (
@@ -46451,7 +46438,6 @@
 	pixel_y = -6
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
-	icon_state = "filter_off_f";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -46749,8 +46735,7 @@
 /area/chapel/main/monastery)
 "ccL" = (
 /obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	on = 1
+	icon_state = "lantern-on"
 	},
 /obj/effect/turf_decal/sand,
 /turf/open/floor/plasteel,
@@ -47073,10 +47058,10 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cdP" = (
-/obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -48016,10 +48001,7 @@
 /area/chapel/main/monastery)
 "cgM" = (
 /obj/structure/dresser,
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/grimy,
@@ -49104,8 +49086,7 @@
 /area/library)
 "clj" = (
 /obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	on = 1
+	icon_state = "lantern-on"
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/asteroid/nearstation/bomb_site)
@@ -49898,6 +49879,9 @@
 	pixel_y = 29
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "cnP" = (
@@ -52858,7 +52842,6 @@
 "czC" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lantern{
-	on = 1;
 	icon_state = "lantern-on";
 	pixel_y = 8
 	},
@@ -54995,6 +54978,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "gHZ" = (
@@ -55915,10 +55901,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "jsD" = (
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -56504,6 +56487,14 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/department/security/brig)
+"kJN" = (
+/obj/machinery/field/generator,
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#c1caff"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "kKI" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/closet,
@@ -56530,8 +56521,7 @@
 /obj/structure/table,
 /obj/machinery/microwave,
 /obj/machinery/light/small{
-	dir = 1;
-	light_color = "#ffc1c1"
+	dir = 1
 	},
 /obj/structure/noticeboard{
 	pixel_y = 32
@@ -56977,13 +56967,6 @@
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plating/airless,
-/area/engine/engineering)
-"mhl" = (
-/obj/machinery/power/emitter,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plating,
 /area/engine/engineering)
 "mlr" = (
 /obj/structure/lattice,
@@ -59071,6 +59054,13 @@
 	luminosity = 2
 	},
 /area/maintenance/department/science)
+"rqj" = (
+/obj/machinery/power/emitter,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "rrb" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -59468,10 +59458,7 @@
 /area/maintenance/department/security/brig)
 "syQ" = (
 /obj/machinery/vending/games,
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_y = 28
 	},
 /turf/open/floor/plating{
@@ -61404,9 +61391,8 @@
 /area/science/mixing/chamber)
 "xJy" = (
 /obj/structure/chair/comfy/black,
-/obj/structure/sign/plaques/atmos{
+/obj/structure/sign/plaques/kiddie{
 	desc = "An embossed piece of paper from the Third University of Harvard.";
-	icon_state = "kiddieplaque";
 	name = "\improper 'Diploma' frame";
 	pixel_y = 32
 	},
@@ -61545,6 +61531,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"ydZ" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "yfO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/yellow,
@@ -87391,11 +87390,11 @@ aUS
 aRL
 aWP
 aXQ
-aYN
+ydZ
 aZR
 aYN
 aYN
-aYN
+ydZ
 aXQ
 bfj
 bdm
@@ -88224,8 +88223,8 @@ mci
 cbX
 ceq
 ceq
+rqj
 ceq
-mhl
 ceq
 ceq
 bXk
@@ -88995,7 +88994,7 @@ tuL
 ccR
 cbV
 cbV
-ccQ
+kJN
 ccQ
 ccQ
 ccQ

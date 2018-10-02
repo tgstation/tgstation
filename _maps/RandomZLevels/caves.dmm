@@ -1394,7 +1394,6 @@
 /area/awaymission/caves/BMP_asteroid)
 "ek" = (
 /obj/structure/window{
-	icon_state = "window";
 	dir = 8
 	},
 /mob/living/simple_animal/hostile/mining_drone,
@@ -1440,7 +1439,6 @@
 /area/awaymission/caves/BMP_asteroid)
 "es" = (
 /obj/structure/window{
-	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/window,

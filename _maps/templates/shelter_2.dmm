@@ -64,7 +64,6 @@
 "n" = (
 /obj/structure/window/reinforced/survival_pod{
 	dir = 8;
-	icon_state = "pwindow";
 	layer = 3
 	},
 /obj/machinery/door/window/survival_pod{
@@ -81,7 +80,6 @@
 	name = "lusty xenomorph maid"
 	},
 /obj/structure/window/reinforced/survival_pod{
-	icon_state = "pwindow";
 	dir = 1
 	},
 /turf/open/floor/carpet/black,
@@ -101,8 +99,7 @@
 /area/survivalpod)
 "r" = (
 /obj/structure/window/reinforced/survival_pod{
-	dir = 8;
-	icon_state = "pwindow"
+	dir = 8
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)
@@ -127,7 +124,6 @@
 	pixel_y = -2
 	},
 /obj/structure/window/reinforced/survival_pod{
-	icon_state = "pwindow";
 	dir = 1
 	},
 /obj/structure/table/wood/fancy/black{
@@ -144,7 +140,6 @@
 /area/survivalpod)
 "v" = (
 /obj/structure/window/reinforced/survival_pod{
-	icon_state = "pwindow";
 	dir = 1
 	},
 /obj/structure/displaycase{
@@ -159,8 +154,7 @@
 "w" = (
 /obj/structure/window/reinforced/survival_pod{
 	density = 0;
-	dir = 9;
-	icon_state = "pwindow"
+	dir = 9
 	},
 /turf/open/floor/carpet/black,
 /area/survivalpod)

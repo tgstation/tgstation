@@ -11684,9 +11684,6 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "aAK" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/sink{
 	pixel_y = 30
 	},
@@ -12467,7 +12464,6 @@
 	icon_state = "1-8"
 	},
 /obj/structure/window{
-	icon_state = "window";
 	dir = 4
 	},
 /obj/structure/window,
@@ -16174,6 +16170,9 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/library)
 "aLg" = (
@@ -17552,9 +17551,7 @@
 	req_access_txt = "25"
 	},
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel{
-	icon_state = "wood"
-	},
+/turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aOP" = (
 /obj/effect/landmark/blobstart,
@@ -17762,10 +17759,7 @@
 /area/hallway/secondary/entry)
 "aPw" = (
 /obj/machinery/disposal/bin,
-/obj/structure/sign/warning/securearea{
-	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'";
-	icon_state = "monkey_painting";
-	name = "Mr. Deempisi portrait";
+/obj/structure/sign/plaques/deempisi{
 	pixel_x = -28;
 	pixel_y = -4
 	},
@@ -20409,7 +20403,6 @@
 "aWj" = (
 /obj/structure/grille,
 /obj/structure/window{
-	icon_state = "window";
 	dir = 8
 	},
 /obj/structure/window,
@@ -20425,7 +20418,6 @@
 "aWl" = (
 /obj/structure/grille,
 /obj/structure/window{
-	icon_state = "window";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -21569,7 +21561,6 @@
 /obj/structure/table,
 /obj/item/razor,
 /obj/structure/window{
-	icon_state = "window";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -21664,7 +21655,6 @@
 	pixel_x = -2
 	},
 /obj/structure/window{
-	icon_state = "window";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -25221,7 +25211,6 @@
 	dir = 4
 	},
 /obj/structure/window{
-	icon_state = "window";
 	dir = 1
 	},
 /obj/structure/window,
@@ -25233,7 +25222,6 @@
 	dir = 4
 	},
 /obj/structure/window{
-	icon_state = "window";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -25550,7 +25538,6 @@
 /area/quartermaster/office)
 "biG" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/structure/cable{
@@ -27570,7 +27557,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bno" = (
-/obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/rnd/production/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -32991,6 +32977,9 @@
 /obj/item/cautery{
 	pixel_x = 4
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzT" = (
@@ -36820,6 +36809,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bIJ" = (
@@ -38193,6 +38185,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bMb" = (
@@ -39002,9 +38995,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bOn" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -39263,6 +39253,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bOQ" = (
@@ -42065,6 +42056,9 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bWg" = (
@@ -42397,9 +42391,6 @@
 /obj/structure/table/glass,
 /obj/item/radio/intercom{
 	pixel_x = -25
-	},
-/obj/machinery/light{
-	dir = 8
 	},
 /obj/item/storage/box/beakers{
 	pixel_x = 2;
@@ -50082,7 +50073,6 @@
 "crb" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
-	icon_state = "pump_map";
 	name = "Gas to Chamber"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -54307,7 +54297,6 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
-	icon_state = "pump_map";
 	name = "Cooling Loop Bypass"
 	},
 /turf/open/floor/engine,
@@ -54949,7 +54938,6 @@
 /area/science/robotics/lab)
 "cHL" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/structure/cable{
@@ -55891,6 +55879,13 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"dPH" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "eit" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -56254,6 +56249,13 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"iHT" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/hydroponics/garden)
 "iNn" = (
 /obj/machinery/camera{
 	c_tag = "Kitchen Cold Room"
@@ -56663,6 +56665,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"mSB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "noK" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
@@ -57499,6 +57508,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"vIU" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/hydroponics/garden)
 "vPE" = (
 /obj/item/assembly/signaler{
 	pixel_y = 8
@@ -57562,7 +57578,6 @@
 "wHy" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
 	dir = 1;
-	icon_state = "mixer_off";
 	name = "plasma mixer"
 	},
 /turf/open/floor/plasteel,
@@ -57653,6 +57668,18 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"ydA" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/locker)
 
 (1,1,1) = {"
 aaa
@@ -72667,7 +72694,7 @@ alU
 alU
 azF
 aAP
-aAP
+vIU
 aAP
 aEF
 aFN
@@ -74209,7 +74236,7 @@ atO
 asK
 azF
 aAP
-aAP
+iHT
 aAP
 aAQ
 aFO
@@ -75512,7 +75539,7 @@ aUq
 aWq
 aXs
 aYH
-aZx
+ydA
 bbO
 aPA
 bdM
@@ -77311,7 +77338,7 @@ aQW
 aUZ
 aXx
 aYU
-aYU
+mSB
 aYU
 bbr
 bcu
@@ -82985,7 +83012,7 @@ bwg
 aJw
 aJq
 aJq
-bBi
+dPH
 aJw
 aaa
 bEU

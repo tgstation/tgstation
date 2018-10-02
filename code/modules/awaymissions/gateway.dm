@@ -158,15 +158,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			use_power(5000)
 		return
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
-		if(calibrated)
-			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
-			return
-		else
-			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
-			calibrated = TRUE
-			return
+/obj/machinery/gateway/centeraway/multitool_act(mob/living/user, obj/item/I)
+	if(calibrated)
+		to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+	else
+		to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
+		calibrated = TRUE
+	return TRUE
 
 /////////////////////////////////////Away////////////////////////
 

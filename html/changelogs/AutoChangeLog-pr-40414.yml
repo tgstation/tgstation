@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Resolved a large number of instances where items would not work as their respective tool types (ie plasma cutters not working as welders.)"
+  - bugfix: "Using an item that acts as a multitool that does not have a buffer on an object that requires a buffer will now consistently provide user feedback for why it failed."

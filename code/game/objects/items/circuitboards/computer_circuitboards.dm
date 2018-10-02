@@ -62,7 +62,7 @@
 	var/list/dept_list = list("General","Security","Medical","Science","Engineering")
 
 /obj/item/circuitboard/computer/card/minor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		target_dept = (target_dept == dept_list.len) ? 1 : (target_dept + 1)
 		to_chat(user, "<span class='notice'>You set the board to \"[dept_list[target_dept]]\".</span>")
 	else
@@ -167,7 +167,7 @@
 	build_path = /obj/machinery/computer/rdconsole/core
 
 /obj/item/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "R&D Console - Robotics (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
@@ -309,7 +309,7 @@
 	build_path = /obj/machinery/computer/libraryconsole
 
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
