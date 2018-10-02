@@ -25,9 +25,6 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
-	var/list/syndicate_coalition = list()	//list of traitor-compatible factions
-	var/list/factions = list()				//list of all factions
-	var/list/availablefactions = list()		//list of factions with openings
 	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
 	SCRIPTURE_SCRIPT = FALSE, \
 	SCRIPTURE_APPLICATION = FALSE) //list of clockcult scripture states for announcements
