@@ -1,5 +1,6 @@
 /mob/living/carbon/movement_delay()
 	. = ..()
+	. += physiology.speed_mod
 	. += grab_state * 3 //can't go fast while grabbing something.
 
 	if(!get_leg_ignore()) //ignore the fact we lack legs

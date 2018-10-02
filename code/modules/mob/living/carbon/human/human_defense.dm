@@ -462,7 +462,6 @@
 			heart.beating = TRUE
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
-	siemens_coeff *= physiology.siemens_coeff
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)

@@ -92,6 +92,7 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
+	amt *= physiology.bleed_mod
 	if(blood_volume)
 		blood_volume = max(blood_volume - amt, 0)
 		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
@@ -101,7 +102,6 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
-	amt *= physiology.bleed_mod
 	if(!(NOBLOOD in dna.species.species_traits))
 		..()
 

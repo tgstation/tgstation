@@ -2,6 +2,18 @@
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, ear damage,
 // eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, TRAIT_NEARSIGHT trait, and TRAIT_HUSK trait.
 
+/mob/living/carbon/Stun(amount, updating = 1, ignore_canstun = 0)
+	amount = physiology.stun_mod * amount
+	return ..()
+
+/mob/living/carbon/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
+	amount = physiology.stun_mod * amount
+	return ..()
+
+/mob/living/carbon/Unconscious(amount, updating = 1, ignore_canunconscious = 0)
+	amount = physiology.stun_mod * amount
+	return ..()
+
 /mob/living/carbon/damage_eyes(amount)
 	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)

@@ -79,5 +79,8 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	else
 		return A.layer - B.layer
 
+/proc/cmp_modifier_priority(datum/stat_mod/A, datum/stat_mod/B)
+	return A.priority - B.priority
+
 /proc/cmp_advdisease_resistance_asc(datum/disease/advance/A, datum/disease/advance/B)
 	return A.totalResistance() - B.totalResistance()
