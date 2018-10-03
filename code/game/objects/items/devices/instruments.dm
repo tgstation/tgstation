@@ -293,7 +293,7 @@
 								/obj/item/instrument/recorder,
 								/obj/item/instrument/harmonica
 								)
-	var/list/display_names = list()
+	var/static/list/display_names = list()
 	for(var/V in instruments)
 		var/atom/A = V
 		display_names += list(initial(A.name) = A)
