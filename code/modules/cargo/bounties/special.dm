@@ -29,7 +29,7 @@
 /datum/bounty/more_bounties
 	name = "More Bounties"
 	description = "Complete enough bounties and CentCom will issue new ones!"
-	reward = 3 // number of bounties
+	reward = 5 // number of bounties
 	var/required_bounties = 5
 
 /datum/bounty/more_bounties/can_claim()

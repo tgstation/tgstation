@@ -53,12 +53,12 @@
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	switch(state)
 		if(0)
-			if(istype(I, /obj/item/wrench))
+			if(I.tool_behaviour == TOOL_WRENCH)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
-			if(istype(I, /obj/item/crowbar))
+			if(I.tool_behaviour == TOOL_CROWBAR)
 				if(I.use_tool(src, user, 20, volume=50))
 					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
 					deconstruct(TRUE)
@@ -71,7 +71,7 @@
 					to_chat(user, "<span class='notice'>You add a shelf.</span>")
 					state = 2
 					icon_state = "book-0"
-			if(istype(I, /obj/item/wrench))
+			if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
 				anchored = FALSE
@@ -100,7 +100,7 @@
 					return
 				else
 					name = "bookcase ([sanitize(newname)])"
-			else if(istype(I, /obj/item/crowbar))
+			else if(I.tool_behaviour == TOOL_CROWBAR)
 				if(contents.len)
 					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
 				else
@@ -291,7 +291,7 @@
 					scanner.computer.inventory.Add(src)
 					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
 
-	else if(istype(I, /obj/item/kitchen/knife) || istype(I, /obj/item/wirecutters))
+	else if(istype(I, /obj/item/kitchen/knife) || I.tool_behaviour == TOOL_WIRECUTTER)
 		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")
 		if(do_after(user, 30, target = src))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")

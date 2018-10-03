@@ -240,7 +240,7 @@ Class Procs:
 	if(occupant && !state_open)
 		if(ishuman(occupant))
 			var/mob/living/carbon/human/H = occupant
-			var/obj/item/card/id/I = H.get_idcard()
+			var/obj/item/card/id/I = H.get_idcard(TRUE)
 			if(I)
 				var/datum/bank_account/insurance = I.registered_account
 				if(!insurance)

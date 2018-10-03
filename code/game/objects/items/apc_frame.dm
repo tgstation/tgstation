@@ -60,7 +60,7 @@
 
 /obj/item/wallframe/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		// For camera-building borgs
 		var/turf/T = get_step(get_turf(user), user.dir)
 		if(iswallturf(T))
@@ -69,7 +69,7 @@
 	var/metal_amt = round(materials[MAT_METAL]/MINERAL_MATERIAL_AMOUNT)
 	var/glass_amt = round(materials[MAT_GLASS]/MINERAL_MATERIAL_AMOUNT)
 
-	if(istype(W, /obj/item/wrench) && (metal_amt || glass_amt))
+	if(W.tool_behaviour == TOOL_WRENCH && (metal_amt || glass_amt))
 		to_chat(user, "<span class='notice'>You dismantle [src].</span>")
 		if(metal_amt)
 			new /obj/item/stack/sheet/metal(get_turf(src), metal_amt)

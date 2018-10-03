@@ -142,8 +142,8 @@
 
 //Janitor tank
 /obj/item/watertank/janitor
-	name = "backpack water tank"
-	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
+	name = "backpack cleaner tank"
+	desc = "A janitorial cleaner backpack with nozzle to clean blood and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
 

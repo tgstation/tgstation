@@ -256,7 +256,7 @@
 					/obj/item/caution = 6,
 					/obj/item/holosign_creator = 1,
 					/obj/item/lightreplacer = 1,
-					/obj/item/soap = 1,
+					/obj/item/soap/nanotrasen = 1,
 					/obj/item/storage/bag/trash = 1,
 					/obj/item/clothing/shoes/galoshes = 1,
 					/obj/item/watertank/janitor = 1,

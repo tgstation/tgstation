@@ -19,6 +19,7 @@
 	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	var/can_fill_from_container = TRUE
+	var/average_reagent_weight = 0 //affects the distance the reagents spray
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
@@ -42,7 +43,7 @@
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, "<span class='warning'>Not enough left!</span>")
 		return
 
 	spray(A)
@@ -142,6 +143,18 @@
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		src.reagents.clear_reagents()
+
+/obj/item/reagent_containers/spray/on_reagent_change(changetype)
+	var/total_reagent_weight
+	var/amount_of_reagents
+	for (var/datum/reagent/R in reagents.reagent_list)
+		total_reagent_weight = total_reagent_weight + R.reagent_weight
+		amount_of_reagents++
+
+	average_reagent_weight = total_reagent_weight / amount_of_reagents
+	spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+	if(stream_mode == 0)
+		current_range = spray_range
 
 //space cleaner
 /obj/item/reagent_containers/spray/cleaner

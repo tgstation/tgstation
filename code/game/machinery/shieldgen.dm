@@ -147,7 +147,7 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		W.play_tool_sound(src, 100)
 		panel_open = !panel_open
 		if(panel_open)
@@ -169,7 +169,7 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(locked)
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
@@ -345,7 +345,7 @@
 	return ..()
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())
