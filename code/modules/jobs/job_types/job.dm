@@ -145,7 +145,50 @@
 	return TRUE
 
 /datum/job/proc/map_check()
-	return TRUE
+	var/list/root_mods = SSmapping.config.jobs["[/datum/job]"]
+	var/list/mods = SSmapping.config.jobs["[type]"]
+	return CheckMods(root_mods) && CheckMods(mods)
+
+/datum/job/proc/CheckMods(list/mods)
+	. = TRUE
+	if(!mods)
+		return
+
+	var/disable_key = "disable"
+	if(mods[disable_key])
+		return FALSE
+	
+	var/add_min_access = mods["add_min_access"]
+	var/add_access = mods["add_access"]
+
+	if(add_min_access)
+		if(islist(add_min_access))
+			minimal_access += list(add_min_access)
+		else
+			minimal_access += add_min_access
+	
+	if(add_access)
+		if(islist(add_access))
+			access += list(add_access)
+		else
+			access += add_access
+
+	var/list/var_changes = mods["var_changes"]
+	for(var/I in var_changes)
+		if(I == disable_key)
+			continue
+		if(!(I in vars))
+			warning("Unrecognized map var change for [type]: [I]!")
+			continue
+		var/new_item = var_changes[I]
+		if(ispath(vars[I]))
+			var/as_path = text2path(I)
+			if(!as_path)
+				warning("Unrecognized path var change for [type]/var/[I]: [new_item]! Using verbatim")
+			else
+				new_item = as_path
+		
+		vars[I] = new_item
 
 /datum/job/proc/radio_help_message(mob/M)
 	to_chat(M, "<b>Prefix your message with :h to speak on your department's radio. To see other prefixes, look closely at your headset.</b>")

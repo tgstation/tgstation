@@ -23,6 +23,8 @@
 
 	var/minetype = "lavaland"
 
+	var/list/jobs
+
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
 		"cargo" = "cargo_box",
@@ -126,6 +128,10 @@
 		minetype = json["minetype"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
+
+	jobs = json["job_changes"]
+	if(!islist(jobs))
+		jobs = list()
 
 	defaulted = FALSE
 	return TRUE

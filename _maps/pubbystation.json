@@ -7,5 +7,19 @@
 	    "whiteship": "whiteship_pubby",
 	    "ferry": "ferry_fancy",
 	    "cargo": "cargo_box"
+    },
+    "job_changes": {
+        "/datum/job/hos": {
+            "add_access": 27,
+            "add_min_access": 27
+        },
+        "/datum/job/warden": {
+            "add_access": 27,
+            "add_min_access": 27
+        },
+        "/datum/job/officer": {
+            "add_access": 27,
+            "add_min_access": 27
+        }
     }
 }
