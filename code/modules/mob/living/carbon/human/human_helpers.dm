@@ -95,15 +95,16 @@
 		id_card = held_item.GetID()
 	if(!id_card) //If there is no id, check the other hand
 		held_item = get_inactive_held_item()
-		id_card = held_item.GetID()
-		
+		if(held_item)
+			id_card = held_item.GetID()
+
 	if(id_card)
 		if(hand_first)
 			return id_card
 		else
 			. = id_card
-			
-	//Check inventory slots		
+
+	//Check inventory slots
 	if(wear_id)
 		id_card = wear_id.GetID()
 		if(id_card)
