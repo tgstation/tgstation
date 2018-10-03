@@ -6012,7 +6012,7 @@
 "amE" = (
 /obj/structure/bed,
 /obj/effect/landmark/xeno_spawn,
-/obj/item/bedsheet,
+/obj/item/bedsheet/dorms,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "amF" = (
@@ -7459,7 +7459,6 @@
 /area/maintenance/fore/secondary)
 "aqn" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -7473,6 +7472,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aqo" = (
@@ -8263,7 +8263,6 @@
 /area/crew_quarters/fitness)
 "asu" = (
 /obj/structure/bed,
-/obj/item/bedsheet/red,
 /obj/machinery/button/door{
 	id = "Dorm5";
 	name = "Cabin Bolt Control";
@@ -8272,6 +8271,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asv" = (
@@ -8367,7 +8367,6 @@
 /area/maintenance/port/fore)
 "asL" = (
 /obj/structure/bed,
-/obj/item/bedsheet/red,
 /obj/machinery/button/door{
 	id = "Dorm6";
 	name = "Cabin Bolt Control";
@@ -8376,6 +8375,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asM" = (
@@ -8988,7 +8988,6 @@
 /area/crew_quarters/fitness)
 "auw" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -9002,6 +9001,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aux" = (
@@ -10878,7 +10878,6 @@
 /area/ai_monitored/storage/eva)
 "ayV" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -10892,6 +10891,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayW" = (
@@ -12273,7 +12273,6 @@
 /area/ai_monitored/storage/eva)
 "aCd" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -12287,6 +12286,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aCe" = (
@@ -38990,8 +38990,8 @@
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
 "bOm" = (
-/obj/item/bedsheet,
 /obj/structure/bed,
+/obj/item/bedsheet/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bOn" = (
@@ -42085,11 +42085,6 @@
 "bWj" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/medical/virology)
-"bWk" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bWl" = (
 /obj/structure/disposalpipe/segment{
@@ -98192,7 +98187,7 @@ bRQ
 bOr
 bSQ
 bWj
-bWk
+bOm
 bXc
 bYe
 bNd
@@ -98706,7 +98701,7 @@ bRQ
 bOr
 bSQ
 bWj
-bWk
+bOm
 bXc
 bYe
 bNd
