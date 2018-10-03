@@ -505,9 +505,6 @@
 /datum/action/item_action/agent_box/Trigger()
 	if(!..())
 		return FALSE
-	if(!owner.loc.AllowDrop())
-		to_chat(owner, "<span class='warning'>You think about what your grandpa always told you: There's a time and place for everything, but not now!</span>")
-		return FALSE //fuck you loser you cant do that here so stop breaking my fucking clown car
 	if(QDELETED(box))
 		if(cooldown < world.time - 100)
 			box = new(owner.drop_location())
