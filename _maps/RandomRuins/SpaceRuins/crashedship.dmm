@@ -2446,12 +2446,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Midship)
-"Mq" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/awaymission/BMPship/Fore)
 "Mx" = (
 /turf/closed/mineral/random,
 /area/awaymission/BMPship/Midship)
@@ -2463,19 +2457,10 @@
 	icon_state = "platingdmg1"
 	},
 /area/awaymission/BMPship/Midship)
-"Th" = (
-/obj/docking_port/mobile{
-	dir = 2;
-	id = "whiteship";
-	name = "Colony ship"
-	},
-/obj/docking_port/mobile,
-/turf/closed/wall/mineral/titanium/interior,
-/area/awaymission/BMPship/Fore)
 "Xc" = (
-/obj/machinery/computer/shuttle/white_ship{
-	dir = 4;
-	step_x = 0
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/awaymission/BMPship/Fore)
@@ -2867,7 +2852,7 @@ hE
 bV
 ee
 Xc
-Mq
+Xc
 ee
 bV
 aT
@@ -3212,7 +3197,7 @@ aa
 aa
 aa
 aa
-Th
+cG
 aU
 bo
 bp
