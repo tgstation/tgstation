@@ -188,12 +188,7 @@
 	var/add_min_access = mods["add_min_access"]
 	var/add_access = mods["add_access"]
 
-	var/outfit_tmp = mods["outfit_mods"]
-	var/new_outfit_path = text2path(outfit_tmp)
-	if(new_outfit_path)
-		outfit = new_outfit_path
-	else
-		outfit_mods = outfit_tmp
+	outfit_mods = mods["outfit_mods"]
 
 	if(add_min_access)
 		if(islist(add_min_access))
