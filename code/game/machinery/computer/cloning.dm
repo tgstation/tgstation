@@ -129,7 +129,9 @@
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
-	else if(istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, W))
+			return
 		var/obj/item/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/clonepod))
@@ -439,7 +441,7 @@
 	if(ishuman(mob_occupant))
 		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
-		var/obj/item/card/id/I = C.get_idcard()
+		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
 	if(isbrain(mob_occupant))

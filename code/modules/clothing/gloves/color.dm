@@ -50,7 +50,7 @@
 	item_color = "chief"		//Exists for washing machines. Is not different from black gloves in any way.
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters))
+	if(I.tool_behaviour == TOOL_WIRECUTTER)
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
 			I.play_tool_sound(src)

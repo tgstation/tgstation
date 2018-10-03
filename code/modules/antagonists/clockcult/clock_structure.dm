@@ -95,7 +95,7 @@
 		return ..()
 
 /obj/structure/destructible/clockwork/attackby(obj/item/I, mob/user, params)
-	if(is_servant_of_ratvar(user) && istype(I, /obj/item/wrench) && unanchored_icon)
+	if(is_servant_of_ratvar(user) && I.tool_behaviour == TOOL_WRENCH && unanchored_icon)
 		if(default_unfasten_wrench(user, I, 50) == SUCCESSFUL_UNFASTEN)
 			update_anchored(user)
 		return 1

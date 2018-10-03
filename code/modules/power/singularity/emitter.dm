@@ -19,6 +19,7 @@
 	active_power_usage = 300
 
 	var/icon_state_on = "emitter_+a"
+	var/icon_state_underpowered = "emitter_+u"
 	var/active = FALSE
 	var/powered = FALSE
 	var/fire_delay = 100
@@ -108,11 +109,14 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
-		icon_state = icon_state_on
+	if(active && powernet)
+		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 	else
 		icon_state = initial(icon_state)
 
+/obj/machinery/power/emitter/power_change()
+	. = ..()
+	update_icon()
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -352,6 +356,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "protoemitter"
 	icon_state_on = "protoemitter_+a"
+	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/view_range = 12

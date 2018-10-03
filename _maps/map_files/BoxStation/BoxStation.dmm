@@ -11684,9 +11684,6 @@
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "aAK" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/structure/sink{
 	pixel_y = 30
 	},
@@ -16172,6 +16169,9 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/library)
@@ -32977,6 +32977,9 @@
 /obj/item/cautery{
 	pixel_x = 4
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzT" = (
@@ -36806,6 +36809,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bIJ" = (
@@ -38179,6 +38185,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bMb" = (
@@ -38988,9 +38995,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bOn" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
@@ -39249,6 +39253,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bOQ" = (
@@ -42051,6 +42056,9 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bWg" = (
@@ -42383,9 +42391,6 @@
 /obj/structure/table/glass,
 /obj/item/radio/intercom{
 	pixel_x = -25
-	},
-/obj/machinery/light{
-	dir = 8
 	},
 /obj/item/storage/box/beakers{
 	pixel_x = 2;
@@ -55874,6 +55879,13 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"dPH" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "eit" = (
 /obj/machinery/airalarm{
 	dir = 8;
@@ -56237,6 +56249,13 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"iHT" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/hydroponics/garden)
 "iNn" = (
 /obj/machinery/camera{
 	c_tag = "Kitchen Cold Room"
@@ -56646,6 +56665,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
+"mSB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "noK" = (
 /obj/structure/girder,
 /turf/open/floor/plasteel/dark,
@@ -57482,6 +57508,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"vIU" = (
+/obj/machinery/hydroponics/soil,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/hydroponics/garden)
 "vPE" = (
 /obj/item/assembly/signaler{
 	pixel_y = 8
@@ -57635,6 +57668,18 @@
 /obj/effect/spawner/lootdrop/grille_or_trash,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"ydA" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/cafeteria,
+/area/crew_quarters/locker)
 
 (1,1,1) = {"
 aaa
@@ -72649,7 +72694,7 @@ alU
 alU
 azF
 aAP
-aAP
+vIU
 aAP
 aEF
 aFN
@@ -74191,7 +74236,7 @@ atO
 asK
 azF
 aAP
-aAP
+iHT
 aAP
 aAQ
 aFO
@@ -75494,7 +75539,7 @@ aUq
 aWq
 aXs
 aYH
-aZx
+ydA
 bbO
 aPA
 bdM
@@ -77293,7 +77338,7 @@ aQW
 aUZ
 aXx
 aYU
-aYU
+mSB
 aYU
 bbr
 bcu
@@ -82967,7 +83012,7 @@ bwg
 aJw
 aJq
 aJq
-bBi
+dPH
 aJw
 aaa
 bEU

@@ -95,7 +95,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 				return new /datum/bounty/reagent/simple_drink
 			return new /datum/bounty/reagent/complex_drink
 		if(6)
-			return new /datum/bounty/reagent/chemical
+			if(rand(2) == 1)
+				return new /datum/bounty/reagent/chemical_simple
+			return new /datum/bounty/reagent/chemical_complex
 		if(7)
 			var/subtype = pick(subtypesof(/datum/bounty/virus))
 			return new subtype
@@ -142,8 +144,9 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	/********************************Strict Type Gens********************************/
 	var/list/easy_add_list_strict_types = list(/datum/bounty/reagent/simple_drink = 1,
 											/datum/bounty/reagent/complex_drink = 1,
-											/datum/bounty/reagent/chemical = 1)
-
+											/datum/bounty/reagent/chemical_simple = 1,
+											/datum/bounty/reagent/chemical_complex = 1)
+											
 	for(var/the_strict_type in easy_add_list_strict_types)
 		for(var/i in 1 to easy_add_list_strict_types[the_strict_type])
 			try_add_bounty(new the_strict_type)

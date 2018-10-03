@@ -3461,6 +3461,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "agw" = (
@@ -20863,6 +20866,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "aOg" = (
@@ -20940,6 +20946,9 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
@@ -21220,6 +21229,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -22902,6 +22914,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
 "aSm" = (
@@ -22916,7 +22929,6 @@
 "aSn" = (
 /obj/item/storage/bag/plants/portaseeder,
 /obj/structure/table,
-/obj/machinery/light,
 /obj/item/plant_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -23635,6 +23647,7 @@
 	dir = 2
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aTI" = (
@@ -47069,6 +47082,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "bMT" = (
@@ -48105,6 +48121,9 @@
 	pixel_x = 27
 	},
 /obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -54947,7 +54966,6 @@
 /area/hydroponics)
 "ccw" = (
 /obj/machinery/hydroponics/constructable,
-/obj/machinery/light,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Hydroponics APC";
@@ -55028,6 +55046,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ccC" = (
@@ -60143,6 +60162,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmX" = (
@@ -60985,6 +61007,9 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
+	},
+/obj/machinery/light{
+	dir = 8
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 4
@@ -62072,6 +62097,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cqu" = (
@@ -64257,9 +64283,6 @@
 	name = "Genetics Requests Console";
 	pixel_y = 30
 	},
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/item/storage/box/monkeycubes,
 /obj/item/radio/headset/headset_medsci,
 /obj/item/flashlight/pen{
@@ -64835,6 +64858,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "cvy" = (
@@ -64892,6 +64918,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
@@ -70332,6 +70361,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "cGm" = (
@@ -73922,6 +73952,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/medical/virology)
 "cMz" = (
@@ -79107,6 +79138,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "ddd" = (
@@ -80465,6 +80499,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "dht" = (
@@ -84292,6 +84327,14 @@
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
+"tYS" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "uaC" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -84423,6 +84466,15 @@
 	dir = 8
 	},
 /area/engine/storage_shared)
+"vKx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "vLD" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -118710,7 +118762,7 @@ bWO
 bYg
 bWT
 caN
-ccv
+tYS
 bST
 dDr
 cgq
@@ -119738,7 +119790,7 @@ bWS
 bYi
 bWT
 caN
-ccv
+tYS
 bST
 ceZ
 cgq
@@ -125596,7 +125648,7 @@ avt
 awJ
 axS
 axY
-aCO
+vKx
 ddW
 aCT
 aEp

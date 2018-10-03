@@ -346,7 +346,7 @@
 		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 		qdel(src)
 
-	else if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+	else if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -421,7 +421,7 @@
 
 /obj/structure/girder/bronze/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(!W.tool_start_check(user, amount = 0))
 			return
 		to_chat(user, "<span class='notice'>You start slicing apart [src]...</span>")

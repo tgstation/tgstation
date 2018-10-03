@@ -87,7 +87,7 @@
 
 
 /obj/item/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
