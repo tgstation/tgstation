@@ -65,6 +65,9 @@
 	P.name = "shipping manifest - #[id] ([pack.name])"
 	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
 	P.info += "<hr/>"
+	if(paying_account)
+		P.info += "Direct purchase from [paying_account.account_holder]<br/>"
+		P.name += " - Purchased by [paying_account.account_holder]"
 	P.info += "Order #[id]<br/>"
 	P.info += "Destination: [station_name]<br/>"
 	P.info += "Item: [pack.name]<br/>"
