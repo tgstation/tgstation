@@ -1,4 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Liver damage is now healed when fully_heal is called on carbon mobs"
