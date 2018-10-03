@@ -93,19 +93,28 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		var/datum/bank_account/D
+		if(SO.paying_account) //Someone paid out of pocket
+			D = SO.paying_account
+		else
+			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			if(!D.adjust_money(-SO.pack.cost))
+				if(SO.paying_account)
+					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [SO.pack.cost]")
 				continue
+				
+		if(SO.paying_account)
+			D.bank_card_talk("Cargo order #[SO.id] has shipped. [SO.pack.cost] credits have been charged to your bank account.")
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
-		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
+		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)] has shipped.")
+			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
 
 	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)

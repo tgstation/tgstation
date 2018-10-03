@@ -63,6 +63,12 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		data["points"] = D.account_balance
+	var/obj/item/card/id/id = usr.get_idcard(TRUE)
+	if(id)
+		var/datum/bank_account/user_account
+		user_account = id.registered_account
+		if(user_account)
+			data["detected_account"] = user_account.account_holder
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
@@ -106,6 +112,7 @@
 			"orderer" = SO.orderer,
 			"reason" = SO.reason,
 			"id" = SO.id
+			"paid" = !isnull(SO.paying_account) //paid by requester
 		))
 
 	return data
@@ -149,6 +156,7 @@
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
+			var/self_paid = text2num(params["self_paid"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
@@ -165,6 +173,14 @@
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"
+				
+			var/datum/bank_account/account
+			if(self_paid)
+				var/obj/item/card/id/id = get_idcard(TRUE)
+				account = id.registered_account
+				if(!istype(account))
+					say("Invalid bank account.")
+					return
 
 			var/reason = ""
 			if(requestonly)
@@ -173,7 +189,7 @@
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
 			if(requestonly)
 				SSshuttle.requestlist += SO
