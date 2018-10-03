@@ -417,6 +417,7 @@
 #include "code\datums\diseases\advance\symptoms\headache.dm"
 #include "code\datums\diseases\advance\symptoms\heal.dm"
 #include "code\datums\diseases\advance\symptoms\itching.dm"
+#include "code\datums\diseases\advance\symptoms\nanites.dm"
 #include "code\datums\diseases\advance\symptoms\narcolepsy.dm"
 #include "code\datums\diseases\advance\symptoms\oxygen.dm"
 #include "code\datums\diseases\advance\symptoms\sensory.dm"
