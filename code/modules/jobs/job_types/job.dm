@@ -42,6 +42,8 @@
 	var/minimal_player_age = 0
 
 	var/outfit = null
+	//used by map jsons
+	var/list/outfit_mods
 
 	var/exp_requirements = 0
 
@@ -95,8 +97,33 @@
 	//Equip the rest of the gear
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 
-	if(outfit_override || outfit)
-		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
+	var/outfit_type = outfit_override || outfit
+	if(outfit_type)
+		var/datum/outfit/O = new outfit_type
+		if(outfit_mods)
+			var/list/backpack_additions = outfit_mods["add_backpack"]
+			for(var/I in backpack_additions)
+				LAZYINITLIST(O.backpack_contents)
+				O.backpack_contents[I] = O.backpack_contents[I] + backpack_additions[I]
+			var/var_changes = outfit_mods["var_changes"]
+			var/O_vars = O.vars
+			for(var/I in var_changes)
+				if(!(I in O_vars))
+					warning("Unrecognized map var change for [outfit_type]: [I]!")
+					continue
+				var/new_item = var_changes[I]
+				var/current = O_vars[I]
+				var/as_path = text2path(I)
+				if(ispath(current) || (as_path && isnull(current)))
+					if(!as_path)
+						warning("Unrecognized path var change for [outfit_type]/var/[I]: [new_item]! Using verbatim")
+					else
+						new_item = as_path
+				
+				O_vars[I] = new_item
+
+
+		H.equipOutfit(O)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
@@ -117,7 +144,7 @@
 	if(CONFIG_GET(flag/everyone_has_maint_access)) //Config has global maint access set
 		. |= list(ACCESS_MAINT_TUNNELS)
 
-/datum/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
+/datum/job/proc/yeah(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	if(H && GLOB.announcement_systems.len)
 		//timer because these should come after the captain announcement
 		SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/addtimer, CALLBACK(pick(GLOB.announcement_systems), /obj/machinery/announcement_system/proc/announce, "NEWHEAD", H.real_name, H.job, channels), 1))
@@ -161,6 +188,13 @@
 	var/add_min_access = mods["add_min_access"]
 	var/add_access = mods["add_access"]
 
+	var/outfit_tmp = mods["outfit_mods"]
+	var/new_outfit_path = text2path(outfit_tmp)
+	if(new_outfit_path)
+		outfit = new_outfit_path
+	else
+		outfit_mods = outfit_tmp
+
 	if(add_min_access)
 		if(islist(add_min_access))
 			minimal_access += list(add_min_access)
@@ -175,14 +209,13 @@
 
 	var/list/var_changes = mods["var_changes"]
 	for(var/I in var_changes)
-		if(I == disable_key)
-			continue
 		if(!(I in vars))
 			warning("Unrecognized map var change for [type]: [I]!")
 			continue
 		var/new_item = var_changes[I]
-		if(ispath(vars[I]))
-			var/as_path = text2path(I)
+		var/current = vars[I]
+		var/as_path = text2path(I)
+		if(ispath(current) || (as_path && isnull(current)))
 			if(!as_path)
 				warning("Unrecognized path var change for [type]/var/[I]: [new_item]! Using verbatim")
 			else
