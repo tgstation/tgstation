@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(economy)
 	var/science_bounty = 0
 	for(var/X in SSresearch.science_tech.researched_nodes)
 		var/value = 0
-		var/datum/techweb_node/TN = X
+		var/datum/techweb_node/TN = SSresearch.science_tech.researched_nodes[X]
 		for(var/Y in TN.research_costs)
 			value += (Y * techweb_coeff) //100 per 2000 research points spent
 		science_bounty += value
