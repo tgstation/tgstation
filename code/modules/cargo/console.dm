@@ -176,11 +176,13 @@
 				
 			var/datum/bank_account/account
 			if(self_paid)
-				var/obj/item/card/id/id = get_idcard(TRUE)
-				account = id.registered_account
-				if(!istype(account))
-					say("Invalid bank account.")
-					return
+				if(ishuman(usr))
+					var/mob/living/carbon/human/H = usr
+					var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+					account = id_card.registered_account
+					if(!istype(account))
+						say("Invalid bank account.")
+						return
 
 			var/reason = ""
 			if(requestonly)
