@@ -40,7 +40,10 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 			avail_chans += "use :b for Binary"
 		if(length(channels))
 			for(var/i in 1 to length(channels))
-				avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
+				if(i == 1)
+					avail_chans += "use :h or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
+				else
+					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
 		
 		if(command)
