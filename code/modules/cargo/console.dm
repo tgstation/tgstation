@@ -111,7 +111,7 @@
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
 			"reason" = SO.reason,
-			"id" = SO.id
+			"id" = SO.id,
 			"paid" = !isnull(SO.paying_account) //paid by requester
 		))
 
