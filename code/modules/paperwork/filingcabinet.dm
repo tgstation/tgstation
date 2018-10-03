@@ -54,7 +54,7 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(istype(P, /obj/item/wrench))
+	else if(P.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")

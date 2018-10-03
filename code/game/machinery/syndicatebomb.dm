@@ -112,7 +112,7 @@
 		. = timer_set
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench) && can_unanchor)
+	if(I.tool_behaviour == TOOL_WRENCH && can_unanchor)
 		if(!anchored)
 			if(!isturf(loc) || isspaceturf(loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
@@ -130,7 +130,7 @@
 			else
 				to_chat(user, "<span class='warning'>The bolts are locked down!</span>")
 
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open_panel = !open_panel
 		update_icon()
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
@@ -138,7 +138,7 @@
 	else if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
 
-	else if(istype(I, /obj/item/crowbar))
+	else if(I.tool_behaviour == TOOL_CROWBAR)
 		if(open_panel && wires.is_all_cut())
 			if(payload)
 				to_chat(user, "<span class='notice'>You carefully pry out [payload].</span>")
@@ -158,7 +158,7 @@
 			to_chat(user, "<span class='notice'>You place [payload] into [src].</span>")
 		else
 			to_chat(user, "<span class='warning'>[payload] is already loaded into [src]! You'll have to remove it first.</span>")
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		if(payload || !wires.is_all_cut() || !open_panel)
 			return
 
@@ -208,10 +208,8 @@
 			update_icon()
 			add_fingerprint(user)
 
-			var/turf/bombturf = get_turf(src)
 			if(payload && !istype(payload, /obj/item/bombcore/training))
-				message_admins("[ADMIN_LOOKUPFLW(user)] has primed a [name] ([payload]) for detonation at [ADMIN_VERBOSEJMP(bombturf)]</a>.")
-				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [AREACOORD(bombturf)]")
+				log_bomber(user, "has primed a", src, "for detonation (Payload: [payload.name])")
 				payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
 
 ///Bomb Subtypes///
@@ -436,7 +434,7 @@
 	qdel(src)
 
 /obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/crowbar) && beakers.len > 0)
+	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
 		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
 			B.forceMove(drop_location())
@@ -521,12 +519,8 @@
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
 		to_chat(user, "<span class='notice'>[existent] found, [detonated] triggered.</span>")
 		if(detonated)
-			var/turf/T = get_turf(src)
 			detonated--
-			var/log_str = "[ADMIN_LOOKUPFLW(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [ADMIN_VERBOSEJMP(T)]</a>."
-			GLOB.bombers += log_str
-			message_admins(log_str)
-			log_game("[key_name(user)] has remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a [name] at [AREACOORD(T)]")
+			log_bomber(user, "remotely detonated [detonated ? "syndicate bombs" : "a syndicate bomb"] using a", src)
 		detonated =	0
 		existent =	0
 		timer = world.time + BUTTON_COOLDOWN

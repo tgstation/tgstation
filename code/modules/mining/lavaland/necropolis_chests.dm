@@ -1224,7 +1224,7 @@
 			INVOKE_ASYNC(src, .proc/prepare_icon_update)
 			beacon.icon_state = "hierophant_tele_off"
 			return
-		user.log_message("teleported self from [AREACOORD(source)] to [beacon]")
+		user.log_message("teleported self from [AREACOORD(source)] to [beacon]", LOG_GAME)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(T, user)
 		new /obj/effect/temp_visual/hierophant/telegraph/teleport(source, user)
 		for(var/t in RANGE_TURFS(1, T))

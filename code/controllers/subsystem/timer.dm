@@ -38,15 +38,15 @@ SUBSYSTEM_DEF(timer)
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	var/lit = last_invoke_tick
-	var/last_check = world.time - TIMER_NO_INVOKE_WARNING
+	var/last_check = world.time - TICKS2DS(BUCKET_LEN*1.5)
 	var/list/bucket_list = src.bucket_list
 
 	if(!bucket_count)
 		last_invoke_tick = world.time
 
-	if(lit && lit < last_check && last_invoke_warning < last_check)
+	if(lit && lit < last_check && head_offset < last_check && last_invoke_warning < last_check)
 		last_invoke_warning = world.time
-		var/msg = "No regular timers processed in the last [TIMER_NO_INVOKE_WARNING] ticks[bucket_auto_reset ? ", resetting buckets" : ""]!"
+		var/msg = "No regular timers processed in the last [BUCKET_LEN*1.5] ticks[bucket_auto_reset ? ", resetting buckets" : ""]!"
 		message_admins(msg)
 		WARNING(msg)
 		if(bucket_auto_reset)

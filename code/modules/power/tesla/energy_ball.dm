@@ -150,8 +150,8 @@
 		var/obj/singularity/energy_ball/orbitingball = orbiting.parent
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len
-	..()
-	if (!loc && !QDELETED(src))
+	. = ..()
+	if (!QDELETED(src))
 		qdel(src)
 
 

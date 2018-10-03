@@ -52,6 +52,11 @@
 	mood_change = 12
 	hidden = TRUE
 
+/datum/mood_event/badass_antag
+	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
+	mood_change = 15
+	hidden = TRUE
+
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
 	mood_change = 3

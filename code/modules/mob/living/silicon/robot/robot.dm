@@ -378,7 +378,7 @@
 	return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weldingtool) && (user.a_intent != INTENT_HARM || user == src))
+	if(W.tool_behaviour == TOOL_WELDER && (user.a_intent != INTENT_HARM || user == src))
 		user.changeNext_move(CLICK_CD_MELEE)
 		if (!getBruteLoss())
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
@@ -414,7 +414,7 @@
 		else
 			to_chat(user, "The wires seem fine, there's no need to fix them.")
 
-	else if(istype(W, /obj/item/crowbar))	// crowbar means open or close the cover
+	else if(W.tool_behaviour == TOOL_CROWBAR)	// crowbar means open or close the cover
 		if(opened)
 			to_chat(user, "<span class='notice'>You close the cover.</span>")
 			opened = 0
@@ -446,12 +446,12 @@
 		else
 			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 
-	else if(istype(W, /obj/item/screwdriver) && opened && !cell)	// haxing
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		update_icons()
 
-	else if(istype(W, /obj/item/screwdriver) && opened && cell)	// radio
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER && opened && cell)	// radio
 		if(shell)
 			to_chat(user, "You cannot seem to open the radio compartment")	//Prevent AI radio key theft
 		else if(radio)
@@ -460,7 +460,7 @@
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		update_icons()
 
-	else if(istype(W, /obj/item/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
+	else if(W.tool_behaviour == TOOL_WRENCH && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
 			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
 			spark_system.start()
@@ -1163,7 +1163,10 @@
 			M.visible_message("<span class='boldwarning'>Unfortunately, [M] just can't seem to hold onto [src]!</span>")
 			return
 	if(iscarbon(M) && (!riding_datum.equip_buckle_inhands(M, 1)))
-		M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
+		if (M.get_num_arms() <= 0)
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_they()] don't have any usable arms!</span>")
+		else
+			M.visible_message("<span class='boldwarning'>[M] can't climb onto [src] because [M.p_their()] hands are full!</span>")
 		return
 	. = ..(M, force, check_loc)
 

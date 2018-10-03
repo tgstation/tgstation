@@ -59,7 +59,7 @@
 			return
 
 		// handle deconstructing the machine, if permissible
-		if (I.tool_behaviour == TOOL_CROWBAR && using_irrigation)
+		if(I.tool_behaviour == TOOL_CROWBAR && using_irrigation)
 			to_chat(user, "<span class='warning'>Disconnect the hoses first!</span>")
 			return
 		else if(default_deconstruction_crowbar(I))
@@ -784,7 +784,7 @@
 	else if(default_unfasten_wrench(user, O))
 		return
 
-	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
+	else if((O.tool_behaviour == TOOL_WIRECUTTER) && unwrenchable)
 		if (!anchored)
 			to_chat(user, "<span class='warning'>Anchor the tray first!</span>")
 			return
@@ -914,7 +914,7 @@
 	return // Has no lights
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/shovel) && !istype(O, /obj/item/shovel/spade)) //Doesn't include spades because of uprooting plants
+	if(O.tool_behaviour == TOOL_SHOVEL && !istype(O, /obj/item/shovel/spade)) //Doesn't include spades because of uprooting plants
 		to_chat(user, "<span class='notice'>You clear up [src]!</span>")
 		qdel(src)
 	else

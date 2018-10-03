@@ -129,7 +129,7 @@
 
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters) || I.is_sharp())
+	if(I.tool_behaviour == TOOL_WIRECUTTER || I.is_sharp())
 		if(get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two gauzes to do this!</span>")
 			return
