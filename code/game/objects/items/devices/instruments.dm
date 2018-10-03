@@ -298,9 +298,9 @@
 		var/atom/A = V
 		display_names += list(initial(A.name) = A)
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
+	if(!M.canUseTopic(src, BE_CLOSE) || !choice)
+		return
 	var/instrument = new display_names[choice]
 	if(instrument)
 		qdel(src)
-	if(!M.canUseTopic(src, BE_CLOSE))
-		return
 	M.put_in_active_hand(instrument)
