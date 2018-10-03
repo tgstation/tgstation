@@ -151,8 +151,11 @@
 		total_reagent_weight = total_reagent_weight + R.reagent_weight
 		amount_of_reagents++
 
-	average_reagent_weight = total_reagent_weight / amount_of_reagents
-	spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
+		average_reagent_weight = total_reagent_weight / amount_of_reagents
+		spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+	else
+		spray_range = initial(spray_range)
 	if(stream_mode == 0)
 		current_range = spray_range
 
