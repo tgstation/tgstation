@@ -3133,6 +3133,10 @@
 	},
 /obj/structure/table,
 /obj/item/soulstone,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel/airless{
 	icon_state = "whitered";
 	dir = 4
@@ -3201,6 +3205,10 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel/airless{
 	icon_state = "whitered";
 	dir = 4
@@ -3260,6 +3268,10 @@
 /obj/item/organ/brain{
 	name = "The preserved brain of Harry Houdini"
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel/airless{
 	icon_state = "whitered";
 	dir = 4
@@ -3367,6 +3379,10 @@
 /obj/structure/table,
 /obj/structure/window/reinforced,
 /obj/item/batterer,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel/airless{
 	icon_state = "whitered";
 	dir = 4
