@@ -34,7 +34,7 @@ As a Medical Doctor, you can point your penlight at people to create a medical h
 As a Medical Doctor, you can extract implants by holding an empty implant case in your offhand while performing the extraction step.
 As a Medical Doctor, clone scanning people will implant them with a health tracker that displays their vitals in the clone records. Useful to check on crew members that didn't activate suit sensors!
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
-As a Chemist, some chemicals can only be synthesized by heating up the contents in the chemical heater or manually with a lighters and similar tools.
+As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
 As a Chemist, you will be expected to supply crew with certain chemicals. For example, clonexadone and mannitol for the cryo tubes, unstable mutagen and saltpetre for botany as well as healing pills and patches for the front desk.
 As a Chemist, you can make 100u bottles from plastic sheets, the ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
 As a Chemist, you can recharge your chemical dispenser with an inducer.
