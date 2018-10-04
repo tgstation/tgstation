@@ -285,6 +285,7 @@
 	for(var/total_moles_id in cached_gases){\
 		out_var += cached_gases[total_moles_id][MOLES];\
 	}
+#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue |= T
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain

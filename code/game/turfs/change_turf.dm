@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(turf_type)
 		var/turf/newT = ChangeTurf(turf_type, baseturf_type, flags)
 		SSair.remove_from_active(newT)
-		newT.CalculateAdjacentTurfs()
+		CALCULATE_ADJACENT_TURFS(newT)
 		SSair.add_to_active(newT,1)
 
 /turf/proc/copyTurf(turf/T)
@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 //If you modify this function, ensure it works correctly with lateloaded map templates.
 /turf/proc/AfterChange(flags) //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
-	CalculateAdjacentTurfs()
+	CALCULATE_ADJACENT_TURFS(src)
 
 	//update firedoor adjacency
 	var/list/turfs_to_check = get_adjacent_open_turfs(src) | src
