@@ -246,6 +246,8 @@
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
+#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue |= T
+
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
 		"blue" = rgb(0,0,255),

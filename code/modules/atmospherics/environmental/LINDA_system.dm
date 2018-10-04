@@ -37,26 +37,6 @@
 /atom/movable/proc/BlockSuperconductivity() // objects that block air and don't let superconductivity act. Only firelocks atm.
 	return 0
 
-/turf/proc/CalculateAdjacentTurfs()
-	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-	for(var/direction in GLOB.cardinals)
-		var/turf/T = get_step(src, direction)
-		if(!T)
-			continue
-		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
-			LAZYINITLIST(atmos_adjacent_turfs)
-			LAZYINITLIST(T.atmos_adjacent_turfs)
-			atmos_adjacent_turfs[T] = TRUE
-			T.atmos_adjacent_turfs[src] = TRUE
-		else
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= T
-			if (T.atmos_adjacent_turfs)
-				T.atmos_adjacent_turfs -= src
-			UNSETEMPTY(T.atmos_adjacent_turfs)
-	UNSETEMPTY(atmos_adjacent_turfs)
-	src.atmos_adjacent_turfs = atmos_adjacent_turfs
-
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
 //	air with both of the related adjacent cardinal tiles
@@ -98,7 +78,7 @@
 
 /turf/air_update_turf(command = 0)
 	if(command)
-		CalculateAdjacentTurfs()
+		CALCULATE_ADJACENT_TURFS(src)
 	SSair.add_to_active(src,command)
 
 /atom/movable/proc/move_update_air(turf/T)
