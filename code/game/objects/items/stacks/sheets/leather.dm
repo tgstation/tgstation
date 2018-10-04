@@ -147,6 +147,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	name = "leather"
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
+	materials = list(MAT_LEATHER=MINERAL_MATERIAL_AMOUNT)
 	icon_state = "sheet-leather"
 	item_state = "sheet-leather"
 

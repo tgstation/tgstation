@@ -33,6 +33,8 @@
 	var/screen = 1
 	var/base_price = 25
 	var/hacked_price = 50
+	var/machine_name = "autolathe"
+	var/list/material_requirements = list(MAT_METAL, MAT_GLASS)
 
 	var/list/categories = list(
 							"Tools",
@@ -48,7 +50,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, material_requirements, 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -77,7 +79,7 @@
 		if(AUTOLATHE_SEARCH_MENU)
 			dat = search_win(user)
 
-	var/datum/browser/popup = new(user, "autolathe", name, 400, 500)
+	var/datum/browser/popup = new(user, "[machine_name]", name, 400, 500)
 	popup.set_content(dat)
 	popup.open()
 
@@ -87,10 +89,10 @@
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
 	if (busy)
-		to_chat(user, "<span class=\"alert\">The autolathe is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, "<span class=\"alert\">The [machine_name] is busy. Please wait for completion of previous operation.</span>")
 		return TRUE
 
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", O))
+	if(default_deconstruction_screwdriver(user, "[machine_name]_t", "[machine_name]", O))
 		updateUsrDialog()
 		return TRUE
 
@@ -170,7 +172,7 @@
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
-				icon_state = "autolathe_n"
+				icon_state = "[machine_name]_n"
 				var/time = is_stack ? 32 : 32*coeff*multiplier
 				addtimer(CALLBACK(src, .proc/make_item, power, metal_cost, glass_cost, multiplier, coeff, is_stack), time)
 
@@ -207,7 +209,7 @@
 			for(var/mat in materials_used)
 				new_item.materials[mat] = materials_used[mat] / multiplier
 			new_item.autolathe_crafted(src)
-	icon_state = "autolathe"
+	icon_state = "[machine_name]"
 	busy = FALSE
 	updateDialog()
 
