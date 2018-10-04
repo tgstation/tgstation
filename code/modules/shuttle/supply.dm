@@ -93,19 +93,23 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
+		var/price = SO.pack.cost
 		var/datum/bank_account/D
 		if(SO.paying_account) //Someone paid out of pocket
 			D = SO.paying_account
+			price *= 1.1 //TODO make this customizable by the quartermaster
 		else
 			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
-			if(!D.adjust_money(-SO.pack.cost))
+			if(!D.adjust_money(-price))
 				if(SO.paying_account)
-					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [SO.pack.cost]")
+					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
 				continue
 				
 		if(SO.paying_account)
-			D.bank_card_talk("Cargo order #[SO.id] has shipped. [SO.pack.cost] credits have been charged to your bank account.")
+			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
+			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			cargo.adjust_money(price - SO.pack.cost) //Cargo gets the handling fee
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO

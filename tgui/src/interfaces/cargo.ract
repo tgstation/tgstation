@@ -90,7 +90,7 @@
         <ui-section label='{{name}}' candystripe right>
           <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "0"}}'>{{cost}} Credits</ui-button>
 			{{#if data.detected_account}}
-				<ui-button tooltip='Pay with your bank account instead of the cargo budget.' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "1"}'>Buy Directly</ui-button>
+				<ui-button tooltip='Pay with your bank account instead of the cargo budget. Costs 10% extra for handling fees.' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "1"}'>Buy Directly</ui-button>
 			{{/if}}
         </ui-section>
       {{/each}}
