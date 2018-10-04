@@ -1,6 +1,7 @@
 // Honker
 
 /obj/item/projectile/bullet/honker
+	name = "banana"
 	damage = 0
 	knockdown = 60
 	forcedodge = TRUE
