@@ -64,7 +64,7 @@
         tooltip='This will make the supplypod target a specific atom, instead of the mouses position. Smiting does this automatically!'>Specific Target</ui-button>
         <ui-button style='{{data.effectName ? "selected" : null}}' action='effectName' tooltip-side='left'
         tooltip='Allows you to add a custom name and description.'>Custom Name/Desc</ui-button>
-        <ui-button style='{{data.effectGhosts ? "selected" : null}}' action='effectGhosts' tooltip-side='left'
+        <ui-button style='{{data.effectAnnounce ? "selected" : null}}' action='effectAnnounce' tooltip-side='left'
         tooltip='Alerts ghosts when a pod is launched. Useful if some dumb shit is aboutta come outta the pod.'>Alert Ghosts</ui-button>    </ui-section>
 
     <ui-section label='Sound?'>
