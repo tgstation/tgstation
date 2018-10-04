@@ -77,10 +77,10 @@ var/datum/action/innate/stfu/Activate()
 	var/mob/living/simple_animal/hostile/netherworld/migo/M = owner
 	if(M.hushed)
 		M.hushed = FALSE
-		to_chat(M, "<span class='notice'>You will now occasionally mimic noises in this dimension.</span>)
+		to_chat(M, "<span class='notice'>You will now occasionally mimic noises in this dimension.</span>")
 	else
 		M.hushed = TRUE
-		to_chat(M, "<span class='notice'>You decide against mimicking noises for now.</span>)
+		to_chat(M, "<span class='notice'>You decide against mimicking noises for now.</span>")
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
