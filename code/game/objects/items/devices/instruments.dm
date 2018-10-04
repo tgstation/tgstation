@@ -276,7 +276,7 @@
 	icon_state = "gangtool-red"
 	item_state = "radio"
 	var/static/list/instruments
-
+	var/static/list/display_names = list()
 /obj/item/musicbeacon/attack_self(mob/user)
 	beacon_music(user)
 
@@ -295,7 +295,6 @@
 								/obj/item/instrument/recorder,
 								/obj/item/instrument/harmonica
 								)
-		var/static/list/display_names = list()
 		for(var/V in instruments)
 			var/atom/A = V
 			display_names[initial(A.name)] = A
