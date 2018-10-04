@@ -523,10 +523,10 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 
 /datum/centcom_podlauncher/proc/supplypod_punish_log(var/mob/whom)
 	var/explosionString = "|"
-	for (var/X in explosionSize)
+	for (var/X in temp_pod.explosionSize)
 		explosionString += "[X]|"
 	var/msg = "launched [effectBurst ? "5 pods" : "a pod"][whom ? " at [whom]" : ""]. Delay=[temp_pod.landingDelay*.1]s, dmg=[temp_pod.damage]dmg, stun=[temp_pod.effectStun], boom=([explosionString])] "
 	message_admins("[key_name_admin(usr)] [msg]")
-	if (whom)
+	if (whom && whom.key)
 		admin_ticket_log(whom, "[key_name_admin(usr)] [msg]")
 	log_admin("[key_name(usr)] [msg] in [AREACOORD(whom)].")
