@@ -3137,10 +3137,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
-	},
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "iY" = (
 /obj/structure/shuttle/engine/propulsion/left,
@@ -3209,10 +3206,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
-	},
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jh" = (
 /obj/structure/cable{
@@ -3272,10 +3266,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
-	},
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jp" = (
 /obj/structure/cable{
@@ -3383,10 +3374,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
-	dir = 4
-	},
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jB" = (
 /obj/item/shard{
