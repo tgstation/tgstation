@@ -220,8 +220,6 @@
 			return 0
 		mood_events -= moodlet.category
 		qdel(moodlet)
-		if(!admin)
-			add_event(null, "heal", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 		update_mood()
 
 

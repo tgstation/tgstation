@@ -81,9 +81,10 @@
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
 			else
-				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
+				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. You feel the torment of the soul locked inside, but feel a lot healthier besides that..</span>")
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
 			H.revive(full_heal = 1)
+			add_event(null, "heal", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 			qdel(src)
 
 /obj/item/organ/regenerative_core/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
