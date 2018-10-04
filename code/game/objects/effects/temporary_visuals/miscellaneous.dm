@@ -301,6 +301,8 @@
 	pixel_x = -32
 	pixel_y = -32
 	duration = 8
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 
 /obj/effect/temp_visual/explosion/fast
 	icon_state = "explosionfast"

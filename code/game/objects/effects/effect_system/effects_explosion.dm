@@ -3,6 +3,8 @@
 	icon_state = "explosion_particle"
 	opacity = 1
 	anchored = TRUE
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 
 /obj/effect/particle_effect/expl_particles/Initialize()
 	. = ..()
@@ -28,6 +30,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_x = -32
 	pixel_y = -32
+	layer = ABOVE_LIGHTING_LAYER
+	plane = ABOVE_LIGHTING_PLANE
 
 /obj/effect/explosion/Initialize()
 	. = ..()
