@@ -96,6 +96,8 @@
 	. = ..()
 	if(.)
 		return
+	if(!is_operational()) //you cant use broken machine you chumbis
+		return
 	if(current_user)
 		to_chat(user, "The console is already in use!")
 		return
