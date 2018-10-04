@@ -91,17 +91,8 @@
 	return P
 
 /datum/supply_order/proc/generate(atom/A)
-	var/obj/structure/closet/crate/C = pack.generate(A)
+	var/obj/structure/closet/crate/C = pack.generate(A, paying_account)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = generateManifest(C)
-	
-	if(paying_account)
-		var/obj/structure/closet/crate/secure/owned/safe_crate = new(C.loc, paying_account)
-		C.forceMove(safe_crate) //Eat the weaker crate
-		C.manifest.forceMove(safe_crate) //Steal its manifest
-		safe_crate.manifest = C.manifest
-		C.manifest = null
-		safe_crate.update_icon()
-		C = safe_crate //Take its job
 
 	if(M.errors & MANIFEST_ERROR_ITEM)
 		if(istype(C, /obj/structure/closet/crate/secure) || istype(C, /obj/structure/closet/crate/large))
