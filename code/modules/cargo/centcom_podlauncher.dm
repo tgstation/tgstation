@@ -408,13 +408,19 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if(left_click) //When we left click:
 			preLaunch() //Fill the acceptableTurfs list from the orderedArea list. Then, fill up the launchList list with items from the acceptableTurfs list based on the manner of launch (ordered, random, etc)
 			if (!isnull(specificTarget))
-				target = get_turf(specificTarget) //if we have a specific mob target, then always launch the pod at the turf of the mob
+				target = get_turf(specificTarget) //if we have a specific target, then always launch the pod at the turf of the target
 			else if (target)
 				target = get_turf(target) //Make sure we're aiming at a turf rather than an item or effect or something
 			else
 				return //if target is null and we don't have a specific target, cancel
 			if (effectAnnounce)
 				deadchat_broadcast("<span class='deadsay'>A special package is being launched at the station!</span>", turf_target = target)
+			var/mob/M = locate(/mob/living, target)
+			if (M)
+				for (var/mob/bouttadie in target)
+					supplypod_punish_log(bouttadie)
+			else
+				supplypod_punish_log(null)
 			if (!effectBurst) //If we're not using burst mode, just launch normally.
 				launch(target)
 			else
@@ -428,7 +434,6 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 					else
 						launch(target) //If we couldn't locate an adjacent turf, just launch at the normal target
 					sleep(rand()*2) //looks cooler than them all appearing at once. Gives the impression of burst fire.
-			log_admin("Centcom Supplypod Launch: [key_name(user)] launched a supplypod in [AREACOORD(target)]")
 
 /datum/centcom_podlauncher/proc/refreshBay() //Called whenever the bay is switched, as well as wheneber a pod is launched
 	orderedArea = createOrderedArea(bay) //Create an ordered list full of turfs form the bay
@@ -515,3 +520,10 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	qdel(temp_pod) //Delete the temp_pod
 	qdel(selector) //Delete the selector effect
 	. = ..()
+
+/datum/centcom_podlauncher/proc/supplypod_punish_log(var/mob/whom)
+	var/msg = "launched [effectBurst ? "a pod" : "5 pods"][whom ? " at [whom]" : ""]. Delay=[temp_pod.landingDelay*10]s, dmg=[temp_pod.damage]dmg, stun=[temp_pod.effectStun], explosion=[temp_pod.explosionSize] "
+	message_admins("[key_name_admin(usr)] [msg]")
+	if (whom)
+		admin_ticket_log(whom, "[key_name_admin(usr)] [msg]")
+	log_admin("[key_name(usr)] [msg] in [AREACOORD(whom)].")
