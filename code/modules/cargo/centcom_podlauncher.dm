@@ -523,7 +523,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 
 /datum/centcom_podlauncher/proc/supplypod_punish_log(var/mob/whom)
 	var/podString = effectBurst ? "5 pods" : "a pod"
-	var/whoString = whom ? " at [whom]" : ""
+	var/whomString = whom ? " at [whom]" : ""
 	var/delayString = temp_pod.landingDelay == initial(temp_pod.landingDelay) ? "" : " Delay=[temp_pod.landingDelay*0.1]s"
 	var/damageString = temp_pod.damage == 0 ? "" : " Dmg=[temp_pod.damage]"
 	var/explosionString = ""
