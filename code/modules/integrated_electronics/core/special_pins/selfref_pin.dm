@@ -22,6 +22,3 @@
 	pin.write_data_to_pin(data)
 	..(pin)
 
-/datum/integrated_io/selfref/disconnect_pin(datum/integrated_io/pin)
-	..(pin)
-	pin.write_data_to_pin(null)
