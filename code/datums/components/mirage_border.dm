@@ -4,7 +4,7 @@
 /datum/component/mirage_border/Initialize(turf/target, direction, range=world.view)
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
-	if(!target || !direction)
+	if(!target || !istype(target) || !direction)
 		. = COMPONENT_INCOMPATIBLE
 		CRASH("[type] improperly instanced with the following args: target=\[[target]\], direction=\[[direction]\], range=\[[range]\]")
 
