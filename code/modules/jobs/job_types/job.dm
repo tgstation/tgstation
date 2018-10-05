@@ -172,7 +172,6 @@
 	return TRUE
 
 /datum/job/proc/map_check()
-	SSmapping.HACK_LoadMapConfig()
 	var/list/root_mods = SSmapping.config.jobs["[/datum/job]"]
 	var/list/mods = SSmapping.config.jobs["[type]"]
 	return CheckMods(root_mods) && CheckMods(mods)

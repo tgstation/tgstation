@@ -23,7 +23,7 @@
 
 	var/minetype = "lavaland"
 
-	var/list/jobs
+	var/list/jobs = list()
 
 	var/allow_custom_shuttles = TRUE
 	var/shuttles = list(
