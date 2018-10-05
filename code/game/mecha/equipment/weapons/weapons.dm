@@ -1,6 +1,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
 	range = RANGED
+	mecha_types = list(/obj/mecha/combat)
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
@@ -10,14 +11,11 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
-
 /obj/item/mecha_parts/mecha_equipment/weapon/proc/get_shot_amount()
 	return projectiles_per_shot
+
+/obj/item/mecha_parts/mecha_equipment/weapon/proc/create_projectile()
+	return new projectile(src)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/action(atom/target, params)
 	if(!action_checks(target))
@@ -32,7 +30,7 @@
 
 	set_ready_state(0)
 	for(var/i=1 to get_shot_amount())
-		var/obj/item/projectile/A = new projectile(curloc)
+		var/obj/item/projectile/A = create_projectile()
 		A.firer = chassis.occupant
 		A.original = target
 		if(!A.suppressed && firing_effect_type)
@@ -130,13 +128,7 @@
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 	harmful = TRUE
-
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M)
-	if(..()) //combat mech
-		return 1
-	else if(M.equipment.len < M.max_equip && istype(M))
-		return 1
-	return 0
+	mecha_types = list(/obj/mecha/working, /obj/mecha/combat)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
@@ -156,12 +148,7 @@
 	equip_cooldown = 150
 	range = MELEE|RANGED
 	kickback = FALSE
-
-/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/mecha/combat/honker/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	mecha_types = list(/obj/mecha/combat/honker)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(target, params)
 	if(!action_checks(target))
@@ -358,12 +345,7 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 20
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/can_attach(obj/mecha/combat/honker/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	mecha_types = list(/obj/mecha/combat/honker)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -375,12 +357,7 @@
 	missile_speed = 1.5
 	projectile_energy_cost = 100
 	equip_cooldown = 10
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/can_attach(obj/mecha/combat/honker/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	mecha_types = list(/obj/mecha/combat/honker)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(var/obj/item/assembly/mousetrap/armed/M)
 	M.secured = 1
@@ -400,12 +377,7 @@
 	projectiles = 10
 	projectile_energy_cost = 500
 	diags_first = TRUE
-
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/mecha/combat/honker/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	mecha_types = list(/obj/mecha/combat/honker)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/action(target)
 	. = ..()
