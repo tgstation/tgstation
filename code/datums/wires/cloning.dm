@@ -10,3 +10,11 @@
 	switch(wire)
 		if(WIRE_POWER) //Cut the power
 			C.shorted = !mend
+			
+/datum/wires/cloning/on_pulse(wire)
+	var/obj/machinery/clonepod/C = holder
+	switch(wire)
+		if(WIRE_POWER)
+			if(C.mob_occupant)
+				C.go_out() //Force eject
+				C.connected_message("Clone Ejected: Loss of power.")

@@ -148,6 +148,7 @@
 	if(is_cut(wire))
 		return
 	on_pulse(wire, user)
+	feedback(wire)
 
 /datum/wires/proc/pulse_color(color, mob/living/user)
 	pulse(get_wire(color), user)
