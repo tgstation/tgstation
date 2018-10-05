@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
 	singular_name = "durathread roll"
 	icon_state = "sheet-durathread"
-	merge_type = /obj/item/stack/sheet/cloth
+	merge_type = /obj/item/stack/sheet/cloth/durathread
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cloth_recipes
