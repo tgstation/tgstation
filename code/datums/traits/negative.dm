@@ -38,7 +38,7 @@
 	var/obj/item/heirloom_type
 
 	if(is_species(H, /datum/species/moth))
-		heirloom_type = pick(/obj/item/flashlight/lantern, /obj/item/flashlight)
+		heirloom_type = /obj/item/flashlight/lantern
 	else
 		switch(quirk_holder.mind.assigned_role)
 			//Service jobs
