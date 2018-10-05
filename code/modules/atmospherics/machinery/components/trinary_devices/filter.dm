@@ -126,8 +126,6 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	if(!air1)
 		return
-	if(air1.temperature <= 0)
-		return
 
 	var/datum/gas_mixture/air2 = airs[2]
 	var/datum/gas_mixture/air3 = airs[3]
