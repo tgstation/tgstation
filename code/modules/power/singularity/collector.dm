@@ -17,6 +17,7 @@
 	max_integrity = 350
 	integrity_failure = 80
 	circuit = /obj/item/circuitboard/machine/rad_collector
+	rad_insulation = RAD_EXTREME_INSULATION
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/stored_power = 0
 	var/active = 0
@@ -26,7 +27,7 @@
 
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
-	rad_insulation = RAD_EXTREME_INSULATION
+
 
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
