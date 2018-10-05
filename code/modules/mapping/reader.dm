@@ -302,6 +302,9 @@
 	//Instanciation
 	////////////////
 
+	//turn off base new Initialization until the whole thing is loaded
+	SSatoms.map_loader_begin()
+
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
 	//first instance the /area and remove it from the members list
 	index = members.len
@@ -326,8 +329,6 @@
 	while(!ispath(members[first_turf_index], /turf)) //find first /turf object in members
 		first_turf_index++
 
-	//turn off base new Initialization until the whole thing is loaded
-	SSatoms.map_loader_begin()
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
