@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - imageadd: "Cleaned up some rogue pixels on a couple BYOND premium exclusive ghost sprites. Thanks for supporting BYOND guys."
