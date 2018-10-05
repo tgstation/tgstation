@@ -1,8 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Caks will no longer override the bonus reagents provided in a donut when frosting them."
-  - bugfix: "Caks can no longer create frosted frosted jelly donuts."
-  - bugfix: "Jelly donuts will no longer lose their vitamins when they're frosted."
-  - bugfix: "Fixed chaos donuts potentially doubling the amount of reagents added when microwaved with something else."
-  - bugfix: "Donuts now always contain 1 sprinkles as was stated on the wiki. Frosted donuts have a chance at adding an extra sprinkle."

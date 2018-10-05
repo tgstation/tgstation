@@ -1,4 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "Fixes vehicle bug which caused you to keep special actions when you were forcemoved out of them through weird means (Admin intervention, special items)"

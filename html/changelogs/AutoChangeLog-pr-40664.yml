@@ -1,5 +1,0 @@
-author: "oranges"
-delete-after: True
-changes: 
-  - rscdel: "Mecha internal logging removed, admin only"
-  - tweak: "Mech logging overhauled to not use an internal list"

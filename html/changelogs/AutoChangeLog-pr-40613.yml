@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "a couple of things still had adv_bluespace as their techweb dependency, that's been fixed"
