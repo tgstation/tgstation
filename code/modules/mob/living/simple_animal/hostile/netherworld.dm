@@ -67,6 +67,13 @@
 /mob/living/simple_animal/hostile/netherworld/migo/Logout()
 	..()
 	hushed = FALSE
+	if(impersonation)
+		mimicvoice.Activate()
+
+/mob/living/simple_animal/hostile/netherworld/migo/GetVoice()
+	if(impersonation)
+		return impersonation
+	..()
 
 /datum/action/innate/stfu
 	name = "Toggle Mimicking"
@@ -100,7 +107,8 @@
 		return
 	var/mob/living/simple_animal/hostile/netherworld/migo/M = owner
 	if(M.impersonation)
-		to_chat(M, "<span class='notice'>You are no longer impersonating [impersonation].</span>")
+		if(client)
+			to_chat(M, "<span class='notice'>You are no longer impersonating [impersonation].</span>")
 		M.speak_emote = initial(M.speak_emote)
 		M.impersonation = NULL
 	else
@@ -109,7 +117,7 @@
 			if(t)
 				alert("I can't mimic that!")
 				return
-		to_chat(M, <span class='notice'>Attempting to tune to their speech...</span>")
+		to_chat(M, "<span class='notice'>Attempting to tune to their speech...</span>")
 		var/success = FALSE
 		var/list/new_speak_emote = list()
 		for(var/mob/speakmobs in GLOB.alive_mob_list)//this attempts to automatically copy the speak emotes of a mob you're trying to mimic
@@ -134,11 +142,6 @@
 		to_chat(M, "<span class='notice'>You morph your speech into that of [impersonation][success ? ", stealing their voice patterns as well!" : " with what will hopefully pass as a good voice pattern."</span>")
 		impersonation = t
 		speak_emote = new_speak_emote
-
-/mob/living/simple_animal/hostile/netherworld/migo/GetVoice()
-	if(impersonation)
-		return impersonation
-	..()
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
