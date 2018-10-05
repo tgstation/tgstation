@@ -37,7 +37,7 @@
 /obj/machinery/rnd/production/proc/update_designs()
 	cached_designs.Cut()
 	for(var/i in stored_research.researched_designs)
-		var/datum/design/d = stored_research.researched_designs[i]
+		var/datum/design/d = SSresearch.techweb_design_by_id(i)
 		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
 			cached_designs |= d
 
@@ -114,7 +114,7 @@
 		amount = text2num(amount)
 	if(isnull(amount))
 		amount = 1
-	var/datum/design/D = (linked_console || requires_console)? linked_console.stored_research.researched_designs[id] : get_techweb_design_by_id(id)
+	var/datum/design/D = (linked_console || requires_console)? (linked_console.stored_research.researched_designs[id]? SSresearch.techweb_design_by_id(id) : null) : SSresearch.techweb_design_by_id(id)
 	if(!istype(D))
 		return FALSE
 	if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
@@ -161,7 +161,7 @@
 /obj/machinery/rnd/production/proc/search(string)
 	matching_designs.Cut()
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(D.build_type & allowed_buildtypes) || !(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
 			continue
 		if(findtext(D.name,string))
@@ -337,7 +337,7 @@
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 	var/coeff = efficiency_coeff
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category)|| !(D.build_type & allowed_buildtypes))
 			continue
 		if(!(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
