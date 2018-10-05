@@ -56,6 +56,11 @@
 
 #define AALARM_REPORT_TIMEOUT 100
 
+#define AALARM_OVERLAY_OFF		"alarm_off"
+#define AALARM_OVERLAY_GREEN	"alarm_green"
+#define AALARM_OVERLAY_WARN		"alarm_amber"
+#define AALARM_OVERLAY_DANGER	"alarm_red"
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -78,6 +83,7 @@
 	var/aidisabled = 0
 	var/shorted = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	var/brightness_on = 1
 
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
@@ -187,9 +193,10 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
-/obj/machinery/airalarm/New(loc, ndir, nbuild)
-	..()
+/obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
+	. = ..()
 	wires = new /datum/wires/airalarm(src)
+
 	if(ndir)
 		setDir(ndir)
 
@@ -202,17 +209,14 @@
 	if(name == initial(name))
 		name = "[get_area_name(src)] Air Alarm"
 
-	update_icon()
+	power_change()
+	set_frequency(frequency)
 
 /obj/machinery/airalarm/Destroy()
 	SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
 	return ..()
-
-/obj/machinery/airalarm/Initialize(mapload)
-	. = ..()
-	set_frequency(frequency)
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -427,7 +431,6 @@
 			. = TRUE
 	update_icon()
 
-
 /obj/machinery/airalarm/proc/reset(wire)
 	switch(wire)
 		if(WIRE_POWER)
@@ -619,6 +622,17 @@
 				))
 
 /obj/machinery/airalarm/update_icon()
+	set_light(0)
+	cut_overlays()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(stat & NOPOWER)
+		icon_state = "alarm0"
+		return
+
+	if(stat & BROKEN)
+		icon_state = "alarmx"
+		return
+
 	if(panel_open)
 		switch(buildstage)
 			if(2)
@@ -629,18 +643,28 @@
 				icon_state = "alarm_b1"
 		return
 
-	if((stat & (NOPOWER|BROKEN)) || shorted)
-		icon_state = "alarmp"
-		return
-
+	icon_state = "alarm1"
+	var/overlay_state = AALARM_OVERLAY_OFF
 	var/area/A = get_area(src)
 	switch(max(danger_level, A.atmosalm))
 		if(0)
-			icon_state = "alarm0"
+			add_overlay(AALARM_OVERLAY_GREEN)
+			overlay_state = AALARM_OVERLAY_GREEN
+			light_color = LIGHT_COLOR_GREEN
+			set_light(brightness_on)
 		if(1)
-			icon_state = "alarm2" //yes, alarm2 is yellow alarm
+			add_overlay(AALARM_OVERLAY_WARN)
+			overlay_state = AALARM_OVERLAY_WARN
+			light_color = LIGHT_COLOR_LAVA
+			set_light(brightness_on)
 		if(2)
-			icon_state = "alarm1"
+			add_overlay(AALARM_OVERLAY_DANGER)
+			overlay_state = AALARM_OVERLAY_DANGER
+			light_color = LIGHT_COLOR_RED
+			set_light(brightness_on)
+
+	SSvis_overlays.add_vis_overlay(src, icon, overlay_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	update_light()
 
 /obj/machinery/airalarm/process()
 	if((stat & (NOPOWER|BROKEN)) || shorted)
@@ -680,7 +704,6 @@
 	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		mode = AALARM_MODE_SCRUBBING
 		apply_mode()
-
 
 /obj/machinery/airalarm/proc/post_alert(alert_level)
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(alarm_frequency)
@@ -817,6 +840,8 @@
 
 /obj/machinery/airalarm/power_change()
 	..()
+	if(stat & NOPOWER)
+		set_light(0)
 	update_icon()
 
 /obj/machinery/airalarm/emag_act(mob/user)
@@ -829,6 +854,7 @@
 /obj/machinery/airalarm/obj_break(damage_flag)
 	..()
 	update_icon()
+	set_light(0)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
