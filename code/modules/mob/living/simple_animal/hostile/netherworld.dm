@@ -104,7 +104,7 @@
 		M.speak_emote = initial(M.speak_emote)
 		M.impersonation = NULL
 	else
-		var/t = copytext(sanitize(input(M, "Who should I match my voice to?", "Dimensional Cords", M.name))as text | null),1,26)
+		var/t = copytext(sanitize(input(M, "Who should I match my voice to?", "Dimensional Cords", M.name)as text | null),1,26)
 		if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
 			if(t)
 				alert("I can't mimic that!")
