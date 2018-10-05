@@ -114,7 +114,7 @@
 	mood_change = -4
 
 /datum/mood_event/healsbadman
-	description = "<span class='nicegreen'>I feel a lot healthier, but also like shit.</span>\n"
+	description = "<span class='nicegreen'>You feel a lot better, but wow that was disgusting.</span>\n" //when you read the latest felinid removal PR and realize you're really not that much of a degenerate
 	mood_change = -4
 	timeout = 1200
 
