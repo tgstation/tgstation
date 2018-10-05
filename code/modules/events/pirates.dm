@@ -73,6 +73,8 @@
 
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
+	atom_of_interest = T
+
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
 			if(candidates.len > 0)

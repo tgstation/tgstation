@@ -20,7 +20,9 @@
 /datum/round_event/carp_migration/start()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
 		if(prob(95))
-			new /mob/living/simple_animal/hostile/carp(C.loc)
+			var/mob/living/simple_animal/hostile/carp/C = new (C.loc)
+			if (!atom_of_interest)
+				atom_of_interest = C //Assign the atom of interest to the first carp to spawn
 		else
 			new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
 

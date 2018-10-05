@@ -94,7 +94,14 @@
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	if(random)
 		if(alertadmins)
-			deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been randomly triggered!</span>") //STOP ASSUMING IT'S BADMINS!
+			var/msg = "<span class='deadsay'><b>[name]</b> has just been randomly triggered!</span>"
+			if (ismob(E.atom_of_interest))
+				deadchat_broadcast(msg, follow_target = E.atom_of_interest) //STOP ASSUMING IT'S BADMINS!
+			else if (isturf(E.atom_of_interest))
+				deadchat_broadcast(msg, turf_target = E.atom_of_interest)
+			else
+				notify_ghosts("[winner] is beginning to have a heart attack!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=winner, action=NOTIFY_ORBIT)
+
 		log_game("Random Event triggering: [name] ([typepath])")
 
 	return E

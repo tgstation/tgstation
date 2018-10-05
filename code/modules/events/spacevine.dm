@@ -22,6 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
+		atom_of_interest = T
 		new /datum/spacevine_controller(T) //spawn a controller at turf
 
 
