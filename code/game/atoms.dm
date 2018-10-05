@@ -292,7 +292,7 @@
 	return
 
 /atom/proc/contents_explosion(severity, target)
-	return
+	return TRUE //Return TRUE if the contents_explosion has not been overridden.
 
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
@@ -641,6 +641,8 @@
 			log_game(log_text)
 		if(LOG_GAME)
 			log_game(log_text)
+		if(LOG_MECHA)
+			log_mecha(log_text)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)

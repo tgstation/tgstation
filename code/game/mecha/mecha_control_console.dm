@@ -22,12 +22,11 @@
 			if(answer)
 				dat += {"<hr>[answer]<br/>
 						  <a href='?src=[REF(src)];send_message=[REF(TR)]'>Send message</a><br/>
-						  <a href='?src=[REF(src)];get_log=[REF(TR)]'>Show exosuit log</a> | <a style='color: #f00;' href='?src=[REF(src)];shock=[REF(TR)]'>(EMP pulse)</a><br>"}
 
 	if(screen==1)
-		dat += "<h3>Log contents</h3>"
-		dat += "<a href='?src=[REF(src)];return=1'>Return</a><hr>"
-		dat += "[stored_data]"
+		dat += {"<h3>Log contents</h3>"
+		<a href='?src=[REF(src)];return=1'>Return</a><hr>"
+		[stored_data]"}
 
 	dat += "<A href='?src=[REF(src)];refresh=1'>(Refresh)</A><BR>"
 	dat += "</body></html>"
@@ -49,10 +48,6 @@
 	if(href_list["shock"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("shock")
 		MT.shock()
-	if(href_list["get_log"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = afilter.getObj("get_log")
-		stored_data = MT.get_mecha_log()
-		screen = 1
 	if(href_list["return"])
 		screen = 0
 	updateUsrDialog()
@@ -106,13 +101,6 @@
 	if(M)
 		M.emp_act(EMP_LIGHT)
 	qdel(src)
-
-/obj/item/mecha_parts/mecha_tracking/proc/get_mecha_log()
-	if(!ismecha(loc))
-		return 0
-	var/obj/mecha/M = src.loc
-	return M.get_log_html()
-
 
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"

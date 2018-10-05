@@ -284,12 +284,8 @@
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
 	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
-		if(D.icon_state != "donut2")
-			D.name = "frosted donut"
-			D.icon_state = "donut2"
-			D.reagents.add_reagent("sprinkles", 2)
-			D.bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
-			D.filling_color = "#FF69B4"
+		if(!D.is_frosted)
+			D.frost_donut()
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()
