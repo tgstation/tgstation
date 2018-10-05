@@ -21,7 +21,7 @@
 
 /obj/vehicle/sealed/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
-	if(isliving(AM))
+	if(ismob(AM))
 		remove_occupant(AM)
 
 /obj/vehicle/sealed/proc/mob_try_enter(mob/M)
