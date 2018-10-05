@@ -292,7 +292,7 @@
 	return
 
 /atom/proc/contents_explosion(severity, target)
-	return
+	return TRUE //Return TRUE if the contents_explosion has not been overridden.
 
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
