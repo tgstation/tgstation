@@ -5,7 +5,7 @@
 /datum/wires/vending/New(atom/holder)
 	wires = list(
 		WIRE_THROW, WIRE_SHOCK, WIRE_SPEAKER,
-		WIRE_CONTRABAND, WIRE_IDSCAN
+		WIRE_CONTRABAND, WIRE_IDSCAN, WIRE_VENDED
 	)
 	add_duds(1)
 	..()

@@ -97,6 +97,9 @@
 
 /datum/wires/proc/get_wire(color)
 	return colors[color]
+	
+/datum/wires/proc/get_color(wire)
+	return colors[wire]
 
 /datum/wires/proc/get_attached(color)
 	if(assemblies[color])
@@ -180,6 +183,13 @@
 			remaining_pulses--
 			if(!remaining_pulses)
 				break
+				
+/datum/wires/proc/feedback(wire)
+	if(is_cut(wire))
+		return
+	var/obj/item/assembly/A = get_attached(get_color(wire))
+	if(A)
+		A.pulse()
 
 // Overridable Procs
 /datum/wires/proc/interactable(mob/user)

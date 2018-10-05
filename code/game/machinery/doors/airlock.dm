@@ -1101,6 +1101,7 @@
 			return FALSE
 		use_power(50)
 		playsound(src, doorOpen, 30, 1)
+		wires.feedback(WIRE_OPENED)
 		if(src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 			src.closeOther.close()
 	else

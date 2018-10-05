@@ -402,6 +402,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				say("Thank you for supporting your local kitchen and purchasing [O]!")
 				O.forceMove(drop_location())
 				break
+		wires.feedback(WIRE_VENDED)
 		vend_ready = 1
 		updateUsrDialog()
 		return
@@ -471,6 +472,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		new R.product_path(get_turf(src))
 		R.amount--
 		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
+		wires.feedback(WIRE_VENDED)
 		vend_ready = 1
 
 	else if(href_list["togglevoice"] && panel_open)

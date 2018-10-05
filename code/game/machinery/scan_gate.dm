@@ -76,6 +76,9 @@
 
 /obj/machinery/scanner_gate/proc/perform_scan(mob/living/M)
 	var/beep = FALSE
+	if(wires.is_cut(WIRE_ALARM)) //Won't detect anything
+		set_scanline("scanning", 10)
+		return
 	switch(scangate_mode)
 		if(SCANGATE_NONE)
 			return
@@ -129,6 +132,7 @@
 	var/image/I = image(icon, src, "alarm_light", layer+1)
 	flick_overlay_view(I, src, 20)
 	set_scanline("alarm", 20)
+	wires.feedback(WIRE_ALARMED)
 
 /obj/machinery/scanner_gate/can_interact(mob/user)
 	if(locked)

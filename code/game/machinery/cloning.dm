@@ -17,6 +17,7 @@
 	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
 	circuit = /obj/item/circuitboard/machine/clonepod
+	var/shorted = FALSE //Cut wires
 
 	var/heal_level //The clone is released once its health reaches this level.
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -44,6 +45,7 @@
 	. = ..()
 
 	countdown = new(src)
+	wires = new /datum/wires/clonepod(src)
 
 	if(internal_radio)
 		radio = new(src)
@@ -128,7 +130,7 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
-	if(panel_open)
+	if(panel_open || shorted)
 		return FALSE
 	if(mess || attempting)
 		return FALSE
@@ -212,13 +214,14 @@
 
 		H.suiciding = FALSE
 	attempting = FALSE
+	wires.feedback(WIRE_CLONESTARTED)
 	return TRUE
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 	var/mob/living/mob_occupant = occupant
 
-	if(!is_operational()) //Autoeject if power is lost
+	if(!is_operational() || shorted) //Autoeject if power is lost
 		if(mob_occupant)
 			go_out()
 			connected_message("Clone Ejected: Loss of power.")
@@ -276,6 +279,7 @@
 			connected_message("Cloning Process Complete.")
 			if(internal_radio)
 				SPEAK("The cloning cycle of [mob_occupant.real_name] is complete.")
+			wires.feedback(WIRE_CLONED)
 
 			// If the cloner is upgraded to debugging high levels, sometimes
 			// organs and limbs can be missing.
