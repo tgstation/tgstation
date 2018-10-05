@@ -10,6 +10,8 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/microwave
 	pass_flags = PASSTABLE
+	light_color = LIGHT_COLOR_YELLOW
+	light_power = 3
 	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
@@ -268,11 +270,13 @@
 	operating = TRUE
 	icon_state = "mw1"
 	updateUsrDialog()
+	set_light(1.5)
 
 /obj/machinery/microwave/proc/abort()
 	operating = FALSE // Turn it off again aferwards
 	icon_state = "mw"
 	updateUsrDialog()
+	set_light(0)
 	soundloop.stop()
 
 /obj/machinery/microwave/proc/stop()
@@ -298,6 +302,7 @@
 		if(prob(50))
 			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 			qdel(S)
+	set_light(0)
 	soundloop.stop()
 
 /obj/machinery/microwave/proc/broke()
@@ -310,6 +315,7 @@
 	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
+	set_light(0)
 	soundloop.stop()
 
 /obj/machinery/microwave/Topic(href, href_list)
