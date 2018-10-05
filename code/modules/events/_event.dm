@@ -114,6 +114,7 @@
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
 	var/fakeable = TRUE		//Can be faked by fake news event.
+	var/atom/atom_of_interest= null //Used for ghosts to follow the event when it starts, if possible
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
