@@ -24,4 +24,5 @@
 	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!")
 
 	user.gib()
-	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
+	playsound(src, 'sound/items/eatfood.ogg', 50, 1, -1)
+	return MANUAL_SUICIDE
