@@ -24,10 +24,10 @@
 	switch(credits)
 		if(1 to 999)
 			icon_state = "holochip"
-		if(1000 to 9999)
+		if(1000 to 999999)
 			icon_state = "holochip_kilo"
 			rounded_credits = round(rounded_credits * 0.001)
-		if(1000000 to 9999999)
+		if(1000000 to 999999999)
 			icon_state = "holochip_mega"
 			rounded_credits = round(rounded_credits * 0.000001)
 		if(1000000000 to INFINITY)
