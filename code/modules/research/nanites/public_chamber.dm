@@ -129,7 +129,7 @@
 	if(!state_open)
 		return FALSE
 
-	..()
+	..(user)
 
 	. = TRUE
 
