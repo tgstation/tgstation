@@ -1047,7 +1047,7 @@
 /obj/machinery/nuclearbomb/syndicate,
 /obj/machinery/door/window{
 	dir = 1;
-	name = "Theatre Stage"
+	name = "interior door"
 	},
 /turf/open/floor/circuit/red,
 /area/shuttle/syndicate/hallway)
