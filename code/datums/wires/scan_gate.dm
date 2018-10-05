@@ -9,6 +9,6 @@
 	var/obj/machinery/scanner_gate/S = holder
 	switch(wire)
 		if(WIRE_INVERTED) //Invert scan
-			S.reverse = !reverse
+			S.reverse = !S.reverse
 		if(WIRE_ALARM) //Invert scan
 			S.alarm_beep()

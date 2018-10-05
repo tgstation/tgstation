@@ -8,7 +8,7 @@
 #define WIRE_ACTIVATED "Feedback - Activated"
 #define WIRE_AI "AI Connection"
 #define WIRE_ALARM "Alarm"
-#define WIRE_ALARM "Feedback - Alarmed"
+#define WIRE_ALARMED "Feedback - Alarmed"
 #define WIRE_AVOIDANCE "Avoidance"
 #define WIRE_BACKUP1 "Auxiliary Power 1"
 #define WIRE_BACKUP2 "Auxiliary Power 2"
