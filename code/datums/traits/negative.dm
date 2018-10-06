@@ -51,7 +51,7 @@
 			if("Cook")
 				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
 			if("Botanist")
-				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket)
+				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants)
 			if("Bartender")
 				heirloom_type = pick(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
 			if("Curator")
@@ -77,7 +77,7 @@
 			if("Scientist")
 				heirloom_type = /obj/item/toy/plush/slimeplushie
 			if("Roboticist")
-				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //nerd
+				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //look at this nerd
 			//Medical
 			if("Chief Medical Officer")
 				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
@@ -89,16 +89,16 @@
 				heirloom_type = /obj/item/reagent_containers/syringe
 			//Engineering
 			if("Chief Engineer")
-				heirloom_type = pick(/obj/item/clothing/head/hardhat/white, /obj/item/airlock_painter)
+				heirloom_type = pick(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 			if("Station Engineer")
-				heirloom_type = pick(/obj/item/clothing/head/hardhat, /obj/item/airlock_painter)
+				heirloom_type = pick(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
 			if("Atmospheric Technician")
 				heirloom_type = pick(/obj/item/lighter, /obj/item/lighter/greyscale, /obj/item/storage/box/matches)
 			//Supply
 			if("Quartermaster")
-				heirloom_type = /obj/item/stamp
+				heirloom_type = pick(/obj/item/stamp, /obj/item/stamp/denied)
 			if("Cargo Technician")
-				heirloom_type = /obj/item/clothing/gloves/fingerless
+				heirloom_type = /obj/item/clipboard
 			if("Shaft Miner")
 				heirloom_type = pick(/obj/item/pickaxe/mini, /obj/item/shovel)
 
