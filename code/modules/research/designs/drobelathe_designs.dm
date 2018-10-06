@@ -3,12 +3,12 @@
 	name = "Nanotrasen Fashion Archives"
 	desc = "A design disk with all the latest Nanotrasen fashion. Comes with a catalog of this season's hottest attire."
 	icon_state = "datadisk1"
-	max_blueprints = 1
+	max_blueprints = 2
+	var/list/design_contents = list(new /datum/design/uniform/assistant)
 
 /obj/item/disk/design_disk/autodrobe_designs/Initialize()
 	. = ..()
-	var/datum/design/uniform/assistant/F = new
-	blueprints[1] = F
+	blueprints = design_contents
 
 //--Generic colored jumpsuits--//
 /datum/design/uniform/assistant
@@ -195,6 +195,7 @@
 /datum/design/backpack
 	name = "Backpack"
 	id = "backpack"
+	build_type = DROBELATHE
 	category = list("initial","Backpacks")
 	materials = list(MAT_CLOTH = 2500)
 	build_path = /obj/item/storage/backpack
@@ -304,3 +305,179 @@
 	name = "Botany Satchel"
 	id = "botanysatchel"
 	build_path = /obj/item/storage/backpack/satchel/hyd
+
+
+//--Gloves--//
+/datum/design/gloves
+	name = "White Gloves"
+	id = "cargouniform"
+	build_type = DROBELATHE
+	materials = list(MAT_CLOTH = 1000)
+	build_path = /obj/item/clothing/gloves/color/white
+	category = list("initial","Gloves")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/gloves/insulated
+	name = "Insulated Gloves"
+	id = "insulgloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DURATHREAD = 1000, MAT_DYE = 500)
+	build_path = /obj/item/clothing/gloves/color/yellow
+	category = list("hacked","Gloves")
+
+/datum/design/gloves/black
+	name = "Black Gloves"
+	id = "blackgloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/black
+
+/datum/design/gloves/orange
+	name = "Orange Gloves"
+	id = "orangegloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/orange
+
+/datum/design/gloves/red
+	name = "Red Gloves"
+	id = "redgloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/red
+
+/datum/design/gloves/orange
+	name = "Orange Gloves"
+	id = "orangegloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/orange
+
+/datum/design/gloves/blue
+	name = "Blue Gloves"
+	id = "bluegloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/blue
+
+/datum/design/gloves/purple
+	name = "Purple Gloves"
+	id = "purplegloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/purple
+
+/datum/design/gloves/green
+	name = "Green Gloves"
+	id = "greengloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/green
+
+/datum/design/gloves/grey
+	name = "Grey Gloves"
+	id = "greygloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/grey
+
+/datum/design/gloves/brown
+	name = "Brown Gloves"
+	id = "browngloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 250)
+	build_path = /obj/item/clothing/gloves/color/brown
+
+/datum/design/gloves/rainbow
+	name = "Rainbow Gloves"
+	id = "rainbowgloves"
+	materials = list(MAT_CLOTH = 1000, MAT_DYE = 1000)
+	build_path = /obj/item/clothing/gloves/color/rainbow
+
+
+//--Masks--//
+/datum/design/mask
+	name = "Breath Mask"
+	id = "breathmask"
+	build_type = DROBELATHE
+	materials = list(MAT_PLASTIC = 1000)
+	build_path = /obj/item/clothing/mask/breath
+	category = list("initial","Masks")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/mask/gasmask
+	name = "Gas Mask"
+	id = "gasmask"
+	materials = list(MAT_PLASTIC = 1250)
+	build_path = /obj/item/clothing/mask/gas
+
+/datum/design/mask/fakemoustache
+	name = "Fake Moustache"
+	id = "fakemoustache"
+	materials = list(MAT_PLASTIC = 1500)
+	build_path = /obj/item/clothing/mask/fakemoustache
+	category = list("hacked","Masks")
+
+/datum/design/mask/muzzle
+	name = "Muzzle"
+	id = "muzzle"
+	materials = list(MAT_LEATHER = 1500)
+	build_path = /obj/item/clothing/mask/muzzle
+	category = list("hacked","Masks")
+
+/datum/design/mask/clown
+	name = "Clown Mask"
+	id = "clownmask"
+	materials = list(MAT_PLASTIC = 1500, MAT_DYE = 500)
+	build_path = /obj/item/clothing/mask/gas/clown_hat
+
+/datum/design/mask/mime
+	name = "Mime Mask"
+	id = "mimemask"
+	materials = list(MAT_PLASTIC = 1500, MAT_DYE = 500)
+	build_path = /obj/item/clothing/mask/gas/mime
+
+/datum/design/mask/bandana
+	name = "Botany Bandana"
+	id = "botanybandana"
+	materials = list(MAT_CLOTH = 1500, MAT_DYE = 500)
+	build_path = /obj/item/clothing/mask/bandana
+
+/datum/design/mask/bandana/red
+	name = "Red Bandana"
+	id = "redbandana"
+	build_path = /obj/item/clothing/mask/bandana/red
+
+/datum/design/mask/bandana/blue
+	name = "Blue Bandana"
+	id = "bluebandana"
+	build_path = /obj/item/clothing/mask/bandana/blue
+
+/datum/design/mask/bandana/blue
+	name = "Blue Bandana"
+	id = "bluebandana"
+	build_path = /obj/item/clothing/mask/bandana/blue
+
+/datum/design/mask/bandana/green
+	name = "Green Bandana"
+	id = "greenbandana"
+	build_path = /obj/item/clothing/mask/bandana/green
+
+/datum/design/mask/bandana/gold
+	name = "Gold Bandana"
+	id = "goldbandana"
+	build_path = /obj/item/clothing/mask/bandana/gold
+
+/datum/design/mask/bandana/black
+	name = "Black Bandana"
+	id = "blackbandana"
+	build_path = /obj/item/clothing/mask/bandana/black
+
+/datum/design/mask/bandana/skull
+	name = "Skull Bandana"
+	id = "skullbandana"
+	build_path = /obj/item/clothing/mask/bandana/skull
+
+
+
+
+
+//--Shoes--//
+/datum/design/shoes
+	name = "Breath Mask"
+	id = "breathmask"
+	build_type = DROBELATHE
+	materials = list(MAT_CLOTH = 500, MAT_LEATHER = 250)
+	build_path = /obj/item/clothing/mask/breath
+	category = list("initial","Shoes")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE

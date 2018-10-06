@@ -1,20 +1,21 @@
 /obj/machinery/autolathe/drobelathe
-	name = "Drobelathe"
+	name = "Autodrobe"
 	desc = "It produces clothing using tiny internalized sweatshops."
-	icon_state = "autolathe"
+	icon_state = "autodrobe"
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
-	machine_name = "autolathe"
-	material_requirements = list(MAT_CLOTH, MAT_DURATHREAD, MAT_LEATHER, MAT_DYE)
+	machine_name = "autodrobe"
+	material_requirements = list(MAT_CLOTH, MAT_DURATHREAD, MAT_LEATHER, MAT_DYE, MAT_PLASTIC)
 
 	categories = list(
 							"Colored Jumpsuits",
 							"Departmental Uniforms",
 							"Hatwear",
+							"Masks",
 							"Backpacks",
 							"Footwear",
 							"Gloves",
@@ -31,19 +32,8 @@
 	matching_designs = list()
 
 /obj/machinery/autolathe/drobelathe/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
-	if(ispath(type_inserted, /obj/item/stack/ore/bluespace_crystal))
-		use_power(MINERAL_MATERIAL_AMOUNT / 10)
-	else
-		switch(id_inserted)
-			if (MAT_CLOTH)
-				flick("autolathe_o",src)//plays metal insertion animation
-			if (MAT_DURATHREAD)
-				flick("autolathe_r",src)//plays glass insertion animation
-			if (MAT_LEATHER)
-				flick("autolathe_r",src)//plays glass insertion animation
-			if (MAT_DYE)
-				flick("autolathe_r",src)//plays glass insertion animation
-		use_power(min(1000, amount_inserted / 100))
+	flick("[machine_name]_o",src)
+	use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
 /obj/machinery/autolathe/drobelathe/Topic(href, href_list)
@@ -77,16 +67,17 @@
 			var/durathread_cost = being_built.materials[MAT_DURATHREAD]
 			var/leather_cost = being_built.materials[MAT_LEATHER]
 			var/dye_cost = being_built.materials[MAT_DYE]
+			var/plastic_cost = being_built.materials[MAT_PLASTIC]
 
-			var/power = max(2000, (cloth_cost+durathread_cost+leather_cost+dye_cost)*multiplier/5)
+			var/power = max(2000, (cloth_cost+durathread_cost+leather_cost+dye_cost+plastic_cost)*multiplier/5)
 
 			GET_COMPONENT(materials, /datum/component/material_container)
-			if((materials.amount(MAT_CLOTH) >= cloth_cost*multiplier*coeff) && (materials.amount(MAT_DURATHREAD) >= durathread_cost*multiplier*coeff) && (materials.amount(MAT_LEATHER) >= leather_cost*multiplier*coeff) &&  (materials.amount(MAT_DYE) >= dye_cost*multiplier*coeff))
+			if((materials.amount(MAT_CLOTH) >= cloth_cost*multiplier*coeff) && (materials.amount(MAT_DURATHREAD) >= durathread_cost*multiplier*coeff) && (materials.amount(MAT_LEATHER) >= leather_cost*multiplier*coeff) &&  (materials.amount(MAT_DYE) >= dye_cost*multiplier*coeff) &&  (materials.amount(MAT_PLASTIC) >= plastic_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
 				icon_state = "[machine_name]_n"
 				var/time = is_stack ? 32 : 32*coeff*multiplier
-				addtimer(CALLBACK(src, .proc/make_clothing, power, cloth_cost, durathread_cost, leather_cost, dye_cost, multiplier, coeff, is_stack), time)
+				addtimer(CALLBACK(src, .proc/make_clothing, power, cloth_cost, durathread_cost, leather_cost, dye_cost, plastic_cost, multiplier, coeff, is_stack), time)
 
 		if(href_list["search"])
 			matching_designs.Cut()
@@ -103,11 +94,11 @@
 
 	return
 
-/obj/machinery/autolathe/drobelathe/proc/make_clothing(power, cloth_cost, durathread_cost, leather_cost, dye_cost, multiplier, coeff, is_stack)
+/obj/machinery/autolathe/drobelathe/proc/make_clothing(power, cloth_cost, durathread_cost, leather_cost, dye_cost, plastic_cost, multiplier, coeff, is_stack)
 	GET_COMPONENT(materials, /datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
-	var/list/materials_used = list(MAT_CLOTH=cloth_cost*coeff*multiplier, MAT_DURATHREAD=durathread_cost*coeff*multiplier, MAT_LEATHER=leather_cost*coeff*multiplier, MAT_DYE=dye_cost*coeff*multiplier,)
+	var/list/materials_used = list(MAT_CLOTH=cloth_cost*coeff*multiplier, MAT_DURATHREAD=durathread_cost*coeff*multiplier, MAT_LEATHER=leather_cost*coeff*multiplier, MAT_DYE=dye_cost*coeff*multiplier, MAT_PLASTIC=plastic_cost*coeff*multiplier,)
 	materials.use_amount(materials_used)
 
 	if(is_stack)
@@ -142,7 +133,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			GET_COMPONENT(materials, /datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_CLOTH] ?round(materials.amount(MAT_CLOTH)/D.materials[MAT_CLOTH]):INFINITY,D.materials[MAT_DURATHREAD]?round(materials.amount(MAT_DURATHREAD)/D.materials[MAT_DURATHREAD]):INFINITY,D.materials[MAT_LEATHER]?round(materials.amount(MAT_LEATHER)/D.materials[MAT_LEATHER]):INFINITY,D.materials[MAT_DYE]?round(materials.amount(MAT_DYE)/D.materials[MAT_DYE]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_CLOTH] ?round(materials.amount(MAT_CLOTH)/D.materials[MAT_CLOTH]):INFINITY,D.materials[MAT_DURATHREAD]?round(materials.amount(MAT_DURATHREAD)/D.materials[MAT_DURATHREAD]):INFINITY,D.materials[MAT_LEATHER]?round(materials.amount(MAT_LEATHER)/D.materials[MAT_LEATHER]):INFINITY,D.materials[MAT_DYE]?round(materials.amount(MAT_DYE)/D.materials[MAT_DYE]):INFINITY,D.materials[MAT_PLASTIC]?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -174,7 +165,7 @@
 
 		if(ispath(D.build_path, /obj/item/stack))
 			GET_COMPONENT(materials, /datum/component/material_container)
-			var/max_multiplier = min(D.maxstack, D.materials[MAT_CLOTH] ?round(materials.amount(MAT_CLOTH)/D.materials[MAT_CLOTH]):INFINITY,D.materials[MAT_DURATHREAD]?round(materials.amount(MAT_DURATHREAD)/D.materials[MAT_DURATHREAD]):INFINITY,D.materials[MAT_LEATHER]?round(materials.amount(MAT_LEATHER)/D.materials[MAT_LEATHER]):INFINITY,D.materials[MAT_DYE]?round(materials.amount(MAT_DYE)/D.materials[MAT_DYE]):INFINITY)
+			var/max_multiplier = min(D.maxstack, D.materials[MAT_CLOTH] ?round(materials.amount(MAT_CLOTH)/D.materials[MAT_CLOTH]):INFINITY,D.materials[MAT_DURATHREAD]?round(materials.amount(MAT_DURATHREAD)/D.materials[MAT_DURATHREAD]):INFINITY,D.materials[MAT_LEATHER]?round(materials.amount(MAT_LEATHER)/D.materials[MAT_LEATHER]):INFINITY,D.materials[MAT_DYE]?round(materials.amount(MAT_DYE)/D.materials[MAT_DYE]):INFINITY,D.materials[MAT_PLASTIC]?round(materials.amount(MAT_PLASTIC)/D.materials[MAT_PLASTIC]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=[REF(src)];make=[D.id];multiplier=10'>x10</a>"
 			if (max_multiplier>25 && !disabled)
@@ -202,6 +193,8 @@
 		return FALSE
 	if(D.materials[MAT_DYE] && (materials.amount(MAT_DYE) < (D.materials[MAT_DYE] * coeff * amount)))
 		return FALSE
+	if(D.materials[MAT_PLASTIC] && (materials.amount(MAT_PLASTIC) < (D.materials[MAT_PLASTIC] * coeff * amount)))
+		return FALSE
 	return TRUE
 
 /obj/machinery/autolathe/drobelathe/get_design_cost(datum/design/D)
@@ -215,6 +208,8 @@
 		dat += "[D.materials[MAT_LEATHER] * coeff] Leather"
 	if(D.materials[MAT_DYE])
 		dat += "[D.materials[MAT_DYE] * coeff] Dye"
+	if(D.materials[MAT_PLASTIC])
+		dat += "[D.materials[MAT_PLASTIC] * coeff] Plastic"
 	return dat
 
 /obj/machinery/autolathe/drobelathe/adjust_hacked(state)
