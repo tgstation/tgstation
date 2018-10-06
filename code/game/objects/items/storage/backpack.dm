@@ -40,7 +40,7 @@
 
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
-	desc = "A backpack that opens into a localized pocket of Blue Space."
+	desc = "A backpack that opens into a localized pocket of bluespace."
 	icon_state = "holdingpack"
 	item_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
