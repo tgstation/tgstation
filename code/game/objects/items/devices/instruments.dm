@@ -278,13 +278,12 @@
 	var/static/list/display_names = list()
 
 /obj/item/musicbeacon/attack_self(mob/user)
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		beacon_music(user)
 
 /obj/item/musicbeacon/proc/beacon_music(mob/M)
 	if(!display_names)
-		var/static/list/instruments
-		instruments = list(
+		var/static/list/instruments = list(
 								/obj/item/instrument/violin,
 								/obj/item/instrument/piano_synth,
 								/obj/item/instrument/guitar,
