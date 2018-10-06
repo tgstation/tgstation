@@ -1,0 +1,4 @@
+author: "Naksu"
+delete-after: True
+changes: 
+  - code_imp: "default radiation insulation is now handled by atom vars rather than a component, components can still be used."
