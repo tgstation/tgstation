@@ -193,6 +193,17 @@
 	var/list/objective
 	var/datum/mind/eminence
 
+/datum/team/clockcult/New(starting_members)
+	. = ..()
+	START_PROCESSING(SSobj,src)
+
+/datum/team/clockcult/process()
+	GLOB.scripture_states = scripture_unlock_alert(GLOB.scripture_states)
+
+/datum/team/clockcult/Destroy(force, ...)
+	STOP_PROCESSING(SSobj,src)
+	. = ..()
+	
 /datum/team/clockcult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
 		return TRUE
@@ -208,9 +219,9 @@
 	parts += " "
 	parts += "<b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
 	parts += "<b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
-	for(var/i in SSticker.scripture_states)
+	for(var/i in GLOB.scripture_states)
 		if(i != SCRIPTURE_DRIVER)
-			parts += "<b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
+			parts += "<b>[i] scripture</b> was: <b>[GLOB.scripture_states[i] ? "UN":""]LOCKED</b>"
 	if(eminence)
 		parts += "<span class='header'>The Eminence was:</span> [printplayer(eminence)]"
 	if(members.len)

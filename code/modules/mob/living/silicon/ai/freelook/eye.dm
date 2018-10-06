@@ -6,6 +6,8 @@
 /mob/camera/aiEye
 	name = "Inactive AI Eye"
 
+	icon_state = "ai_camera"
+	icon = 'icons/mob/cameramob.dmi'
 	invisibility = INVISIBILITY_MAXIMUM
 	hud_possible = list(ANTAG_HUD, AI_DETECT_HUD = HUD_LIST_LIST)
 	var/list/visibleCameraChunks = list()
@@ -172,6 +174,8 @@
 	eyeobj.ai = src
 	eyeobj.setLoc(loc)
 	eyeobj.name = "[name] (AI Eye)"
+	eyeobj.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	eyeobj.invisibility = INVISIBILITY_OBSERVER
 
 /mob/living/silicon/ai/verb/toggle_acceleration()
 	set category = "AI Commands"

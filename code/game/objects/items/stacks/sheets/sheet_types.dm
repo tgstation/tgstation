@@ -259,7 +259,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	icon_state = "sheet-cloth"
 	item_state = "sheet-cloth"
 	resistance_flags = FLAMMABLE
-	materials = list(MAT_CLOTH=MINERAL_MATERIAL_AMOUNT)
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cloth
@@ -269,8 +268,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	desc = "A fabric sown from incredibly durable threads, known for its usefulness in armor production."
 	singular_name = "durathread roll"
 	icon_state = "sheet-durathread"
-	materials = list(MAT_DURATHREAD=MINERAL_MATERIAL_AMOUNT)
-	merge_type = /obj/item/stack/sheet/cloth
+	merge_type = /obj/item/stack/sheet/cloth/durathread
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cloth_recipes
@@ -303,7 +301,6 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cotton/durathread
 	pull_effort = 70
 	loom_result = /obj/item/stack/sheet/cloth/durathread
-
 
 /*
  * Dye
