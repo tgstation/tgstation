@@ -64,6 +64,51 @@
 	UNSETEMPTY(atmos_adjacent_turfs)
 	src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
+/turf/proc/ImmediateCalculateAdjacentTurfs()
+	if (prob(50))
+		return ImmediateCalculateAdjacentTurfs_new()
+	return ImmediateCalculateAdjacentTurfs_old()
+
+/turf/proc/ImmediateCalculateAdjacentTurfs_old()
+	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+	for(var/direction in GLOB.cardinals)
+		var/turf/T = get_step(src, direction)
+		if(!T)
+			continue
+		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
+			LAZYINITLIST(atmos_adjacent_turfs)
+			LAZYINITLIST(T.atmos_adjacent_turfs)
+			atmos_adjacent_turfs[T] = TRUE
+			T.atmos_adjacent_turfs[src] = TRUE
+		else
+			if (atmos_adjacent_turfs)
+				atmos_adjacent_turfs -= T
+			if (T.atmos_adjacent_turfs)
+				T.atmos_adjacent_turfs -= src
+			UNSETEMPTY(T.atmos_adjacent_turfs)
+	UNSETEMPTY(atmos_adjacent_turfs)
+	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+
+/turf/proc/ImmediateCalculateAdjacentTurfs_new()
+	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+	for(var/direction in GLOB.cardinals)
+		var/turf/T = get_step(src, direction)
+		if(!T)
+			continue
+		if( !(blocks_air || T.blocks_air) && CANATMOSPASS(T, src) )
+			LAZYINITLIST(atmos_adjacent_turfs)
+			LAZYINITLIST(T.atmos_adjacent_turfs)
+			atmos_adjacent_turfs[T] = TRUE
+			T.atmos_adjacent_turfs[src] = TRUE
+		else
+			if (atmos_adjacent_turfs)
+				atmos_adjacent_turfs -= T
+			if (T.atmos_adjacent_turfs)
+				T.atmos_adjacent_turfs -= src
+			UNSETEMPTY(T.atmos_adjacent_turfs)
+	UNSETEMPTY(atmos_adjacent_turfs)
+	src.atmos_adjacent_turfs = atmos_adjacent_turfs
+
 //returns a list of adjacent turfs that can share air with this one.
 //alldir includes adjacent diagonal tiles that can share
 //	air with both of the related adjacent cardinal tiles
