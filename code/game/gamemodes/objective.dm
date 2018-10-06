@@ -31,14 +31,14 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
-	
+
 	if(target && target.current)
 		def_value = target.current
 
 	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
 	if (!new_target)
 		return
-	
+
 	if (new_target == "Free objective")
 		target = null
 	else if (new_target == "Random")
@@ -168,7 +168,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
-	
+
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
 
@@ -797,7 +797,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal_five_of_type/summon_magic
 	name = "steal magic"
 	explanation_text = "Steal at least five magical artefacts!"
-	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/necromantic_stone)
+	wanted_items = list()
+
+/datum/objective/steal_five_of_type/summon_magic/New()
+	wanted_items = GLOB.summoned_magic_objectives
+	..()
 
 /datum/objective/steal_five_of_type/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -1011,7 +1015,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/absorb,
 		/datum/objective/custom
 	)
-	
+
 	for(var/T in allowed_types)
 		var/datum/objective/X = T
 		GLOB.admin_objective_list[initial(X.name)] = T
