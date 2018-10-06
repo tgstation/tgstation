@@ -1,0 +1,4 @@
+author: "Memager"
+delete-after: True
+changes: 
+  - imageadd: "New ERT suit sprites!"
