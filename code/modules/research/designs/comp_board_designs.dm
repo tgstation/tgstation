@@ -111,6 +111,14 @@
 	build_path = /obj/item/circuitboard/computer/card
 	category = list("Computer Boards")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY				//Honestly should have a bridge techfab for this sometime.
+	
+/datum/design/board/accountingconsole
+	name = "Computer Design (Accounting Console)"
+	desc = "Allows for the construction of circuit boards used to build an accounting computer."
+	id = "accountingconsole"
+	build_path = /obj/item/circuitboard/computer/accounting
+	category = list("Computer Boards")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY				//Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/crewconsole
 	name = "Computer Design (Crew monitoring computer)"

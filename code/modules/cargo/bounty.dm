@@ -24,6 +24,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			D.adjust_money(reward)
+		SSeconomy.next_income_bonus += reward //extra bonus for everyone
 		claimed = TRUE
 
 // If an item sent in the cargo shuttle can satisfy the bounty.

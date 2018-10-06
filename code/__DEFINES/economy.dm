@@ -7,6 +7,7 @@
 #define PAYCHECK_HARD 100
 #define PAYCHECK_COMMAND 200
 
+#define ACCOUNT_STN "STN"
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"
 #define ACCOUNT_ENG "ENG"
