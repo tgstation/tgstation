@@ -6,16 +6,27 @@
 	icon_state = "0"
 	desc = "The framework for an artificial intelligence core."
 	max_integrity = 500
-	var/state = 0
+	var/state = EMPTY_CORE
 	var/datum/ai_laws/laws
-	var/obj/item/circuitboard/circuit = null
-	var/obj/item/mmi/brain = null
+	var/obj/item/circuitboard/aicore/circuit
+	var/obj/item/mmi/brain
 	var/can_deconstruct = TRUE
 
 /obj/structure/AIcore/Initialize()
 	. = ..()
 	laws = new
 	laws.set_laws_config()
+
+/obj/structure/AIcore/handle_atom_del(atom/A)
+	if(A == circuit)
+		circuit = null
+		if((state != GLASS_CORE) && (state != AI_READY_CORE))
+			state = EMPTY_CORE
+			update_icon()
+	if(A == brain)
+		brain = null
+	. = ..()
+
 
 /obj/structure/AIcore/Destroy()
 	if(circuit)
@@ -307,16 +318,16 @@ That prevents a few funky behaviors.
 	if(istype(card))
 		if(card.flush)
 			to_chat(user, "<span class='boldannounce'>ERROR</span>: AI flush is in progress, cannot execute transfer protocol.")
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /obj/structure/AIcore/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	if(state != AI_READY_CORE || !..())
 		return
  //Transferring a carded AI to a core.
 	if(interaction == AI_TRANS_FROM_CARD)
-		AI.control_disabled = 0
-		AI.radio_enabled = 1
+		AI.control_disabled = FALSE
+		AI.radio_enabled = TRUE
 		AI.forceMove(loc) // to replace the terminal.
 		to_chat(AI, "You have been uploaded to a stationary terminal. Remote device connection restored.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
