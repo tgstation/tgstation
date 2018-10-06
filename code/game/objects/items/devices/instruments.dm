@@ -275,13 +275,15 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	item_state = "radio"
-	var/static/list/instruments
 	var/static/list/display_names = list()
+
 /obj/item/musicbeacon/attack_self(mob/user)
-	beacon_music(user)
+	if(!M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		beacon_music(user)
 
 /obj/item/musicbeacon/proc/beacon_music(mob/M)
-	if(!instruments)
+	if(!display_names)
+		var/static/list/instruments
 		instruments = list(
 								/obj/item/instrument/violin,
 								/obj/item/instrument/piano_synth,
@@ -299,7 +301,7 @@
 			var/atom/A = V
 			display_names[initial(A.name)] = A
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
-	if(!M.canUseTopic(src, BE_CLOSE) || !choice)
+	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	var/instrument = new display_names[choice]
-	M.put_in_active_hand(instrument)
+	M.put_in_hands(instrument)
