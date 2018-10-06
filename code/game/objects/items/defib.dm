@@ -437,11 +437,11 @@
 	do_help(H, user)
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
-	if(H.suiciding || H.has_trait(TRAIT_NOCLONE) || !H.hellbound)
+	if(H.suiciding || H.has_trait(TRAIT_NOCLONE) || H.hellbound)
 		return
 	if((world.time - H.timeofdeath) > tlimit)
 		return
-	if((H.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) && (H.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
+	if((H.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (H.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return
 	if(!H.getorgan(/obj/item/organ/heart))
 		return
