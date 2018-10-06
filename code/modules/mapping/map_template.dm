@@ -38,7 +38,7 @@
 	for(var/L in turfs)
 		var/turf/B = L
 		atoms += B
-		areas |= get_area(B)
+		areas |= B.loc
 		for(var/A in B)
 			atoms += A
 			if(istype(A, /obj/structure/cable))
@@ -50,12 +50,7 @@
 		var/turf/T = L
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
-	for(var/I in areas)
-		var/area/A = I
-		if(!(A.flags_1 & INITIALIZED_1))
-			A.Initialize()
-
-	SSatoms.InitializeAtoms(atoms)
+	SSatoms.InitializeAtoms(areas|atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
