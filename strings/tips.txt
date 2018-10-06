@@ -17,7 +17,7 @@ You can recolor certain items like jumpsuits and gloves in washing machines by a
 Maintenance is full of equipment that is randomized every round. Look around and see if anything is worth using.
 Some roles cannot be antagonists by default, but antag selection is decided first. For instance, you can set Security Officer to High without affecting your chances of becoming an antag -- the game will just select a different role.
 There are many places around the station to hide contraband. A few for starters: linen boxes, toilet cisterns, body bags. Experiment to find more!
-You can use a machine in the vault to deposit cash or rob cargo department funds.
+You can use a machine in the vault to deposit cash or rob Cargo's department funds.
 As the Captain, you are one of the highest priority targets on the station. Everything from revolutions, to nuclear operatives, to traitors that need to rob you of your unique lasgun or your life are things to worry about.
 As the Captain, always take the nuclear disk and pinpointer with you every shift. It's a good idea to give one of these to another head you can trust with keeping it safe.
 As the Captain, you have absolute access and control over the station, but this does not mean that being a horrible person won't result in mutiny and a ban.
@@ -36,17 +36,17 @@ As a Medical Doctor, clone scanning people will implant them with a health track
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
 As a Chemist, you will be expected to supply crew with certain chemicals. For example, clonexadone and mannitol for the cryo tubes, unstable mutagen and saltpetre for botany as well as healing pills and patches for the front desk.
-As a Chemist, you can make 100u bottles from plastic sheets, the ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
-As a Chemist, you can recharge your chemical dispenser with an inducer.
+As a Chemist, you can make 100u bottles from plastic sheets. The ChemMaster can produce infinite 30u glass bottles as well and if researched the medical techfab can make beakers with capacity ranging from 120u to 300u.
+As a Chemist, you can recharge your chemical dispenser with an inducer or by replacing its cell.
 As a Geneticist, you can eject someone from cloning early by disabling power in genetics. Note that they will suffer more genetic damage and may lose vital organs from this.
-As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you go in critical condition, and are not considered a human by the AI while you are a hulk.
+As a Geneticist, becoming a hulk makes you capable of dealing high melee damage, stunlocking people, and punching through walls. However, you can't fire guns, will lose your hulk status if you go into critical condition, and are not considered a human by the AI while you are a hulk.
 As the Virologist, your viruses can range from healing powers so great that you can heal out of critical status, or diseases so dangerous they can kill the entire crew with airborne spontaneous combustion. Experiment!
 As the Virologist, you only require small amounts of vaccine to heal a sick patient. Work with the Chemist to distribute your cures more efficiently.
-As the Research Director, you can take AIs out of their cores by loading them into an intelliCard which let you see their laws, even ion/syndicate ones and then from there into an AI system integrity restorer computer to revive and/or repair them.
+As the Research Director, you can take AIs out of their cores by loading them into an intelliCard, which lets you see their laws, even ion/syndicate ones. It can then be placed into an AI system integrity restorer computer to revive and/or repair them.
 As the Research Director, you can lock down cyborgs instead of blowing them up. Then you can have their laws reset or if that doesn't work, safely dismantled.
 As a Scientist, you can use the mutation toxin obtained from green slimes to turn yourself into a jelly mutant. Each subspecies has unique features - for example telepathic powers, duplicating bodies or integrating slime extracts!
 As a Scientist, you can maximize the number of uses you get out of a slime by feeding it slime steroid, created from purple slimes, while alive. You can then apply extract enhancer, created from cerulean slimes, on each extract.
-As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signalling device, or if researched, hit the anomaly an anomaly analyzer. This will leave behind an anomaly core, which can be used to construct a Phazon mech or reactive armors!
+As a Scientist, you can disable anomalies by scanning them with an analyzer, then send a signal on the frequency it gives you with a remote signaling device, or if researched, hit the anomaly an anomaly analyzer. This will leave behind an anomaly core, which can be used to construct a Phazon mech or reactive armors!
 As a Scientist, researchable stock parts can seriously improve the efficiency and speed of machines around the station. In some cases, it can even unlock new functions.
 As a Scientist, you can generate research points by letting the tachyon-doppler array record increasingly large explosions.
 As a Scientist, getting drunk just enough will speed up research. Skol!
@@ -55,7 +55,7 @@ As a Roboticist, you can repair your cyborgs with a welding tool. If they have t
 As a Roboticist, you can reset a cyborg's module by cutting and mending the reset wire with a wire cutter.
 As a Roboticist, you can greatly help out Shaft Miners by building a Firefighter APLU equipped with a hydraulic clamp and plasma cutter. The mech is ash storm proof and can even walk across lava!
 As a Roboticist, you can augment people with cyborg limbs. Augmented limbs can easily be repaired with cables and welders.
-As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them or if they arent wearing agent IDs or if they arent using digital camouflage as changelings.
+As the AI, you can click on people's names to look at them. This only works if there are cameras that can see them, they aren't wearing agent IDs and aren't using digital camouflage as changelings.
 As the AI, you can quickly open and close doors by holding shift while clicking them, bolt them when holding ctrl, and even shock them while holding alt.
 As the AI, you can take pictures with your camera and upload them to newscasters.
 As a Cyborg, choose your module carefully, as only cutting and mending your reset wire will let you repick it. If possible, refrain from choosing a module until a situation that requires one occurs.
@@ -115,9 +115,9 @@ As the Mime, you can use :r and :l to speak through your ventriloquist dummy.
 As the Mime, your oath of silence is your source of power. Breaking it robs you of your powers and of your honor.
 As the Clown, if you lose your banana peel, you can still slip people with your PDA! Honk!
 As the Clown, eating bananas heals you slightly. Honk!
-As the Clown, your Holy Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
+As the Clown, your Grail is the mineral bananium, which can be given to the Roboticist to build you a fun and robust mech beloved by everyone.
 As the Clown, you can use your stamp on a sheet of cardboard as the first step of making a honkbot. Fun for the whole crew!
-As the Chaplain, your null rod has a lot of functions: it can convert water into holy water, which if spread on the ground prevents wizards from jaunting away, can destroy cultist runes by hitting them, and it also makes you magic proof!
+As the Chaplain, your null rod has anti magic functions: it can destroy cultist runes by hitting them, and it makes you immune to wizard spells and cult magic.
 As the Chaplain, your bible is also a container that can store small items. Depending on your god, your starting bible may come with a surprise!
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
 As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic seeds. These seeds can alternatively be ordered from cargo.
@@ -226,7 +226,7 @@ At which time a Devil's nameth is spake on the tongue of man, the Devil may appe
 As a Security Officer, remember that correlation does not equal causation. Someone may have just been at the wrong place at the wrong time!
 As a Security Officer, remember that you can attach a sec-lite to your taser or your helmet!
 You can swap floor tiles by holding a crowbar in one hand and a stack of tiles in the other.
-When hacking doors, cutting and mending the "test light wire" will restore power to the door.
+When hacking doors, cutting and mending a "test light wire" will restore power to the door.
 When crafting most items, you can either manually combine parts or use the crafting menu.
 Suit storage units not only remove blood and dirt from clothing, but also radiation!
 Remote devices will work when used through cameras. For example: Bluespace RPEDs and door remotes.
