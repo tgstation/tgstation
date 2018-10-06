@@ -126,10 +126,7 @@
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
-
-/obj/item/clothing/head/radiation/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
+	rad_flags = RAD_PROTECT_CONTENTS
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
@@ -148,9 +145,4 @@
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
-
-/obj/item/clothing/suit/radiation/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, FALSE)
-	// Just don't want things to be irradiated inside this
-	// Except things on the mob aren't even inside the suit so ehhhhhh
+	rad_flags = RAD_PROTECT_CONTENTS
