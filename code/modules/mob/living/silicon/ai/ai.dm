@@ -919,6 +919,7 @@
 /mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
 	if(..()) //successfully ressuscitated from death
 		icon_state = "ai"
+		set_eyeobj_visible(TRUE)
 		. = 1
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
