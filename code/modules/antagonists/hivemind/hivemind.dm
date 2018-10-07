@@ -151,10 +151,16 @@
 		versus_objective.update_explanation_text()
 		objectives += versus_objective
 	else if(prob(70))
+		var/giveit = TRUE
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
 		kill_objective.find_target()
-		objectives += kill_objective
+		for(var/datum/objective/hivemind/assimilate/ass_obj in objectives)
+			if(ass_obj.target == kill_objective.target)
+				giveit = FALSE
+				break
+		if(giveit)
+			objectives += kill_objective
 	else
 		var/datum/objective/maroon/maroon_objective = new
 		maroon_objective.owner = owner
