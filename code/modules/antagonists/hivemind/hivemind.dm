@@ -39,7 +39,8 @@
 		if(hive_size >= level && !(locate(power) in owner.spell_list))
 			var/obj/effect/proc_holder/spell/the_spell = new power(null)
 			owner.AddSpell(the_spell)
-			to_chat(owner, "<B><font size=3 color=red>We have unlocked [the_spell.name].</font> [the_spell.desc].</B>")
+			if(hive_size > 0)
+				to_chat(owner, "<B><font size=2 color=purple>We have unlocked [the_spell.name].</font> [the_spell.desc]</B>")
 		else if(hive_size < level && (locate(power) in owner.spell_list))
 			owner.RemoveSpell(power)
 
