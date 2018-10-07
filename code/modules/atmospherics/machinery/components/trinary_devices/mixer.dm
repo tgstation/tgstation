@@ -96,6 +96,10 @@
 	//Get those gases, mah boiiii
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
+
+	if(!air1 || !air2 || air1.temperature <= 0 || air2.temperature <= 0)
+		return
+
 	var/datum/gas_mixture/air3 = airs[3]
 
 	var/output_starting_pressure = air3.return_pressure()
