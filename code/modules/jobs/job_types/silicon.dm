@@ -35,6 +35,7 @@ AI
 			qdel(lateJoinCore)
 	var/mob/living/silicon/ai/AI = H
 	AI.apply_pref_name("ai", M.client)			//If this runtimes oh well jobcode is fucked.
+	AI.set_core_display_icon(null, M.client)
 
 	//we may have been created after our borg
 	if(SSticker.current_state == GAME_STATE_SETTING_UP)
