@@ -51223,6 +51223,14 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/folder/white{
+	pixel_x = 4;
+	pixel_y = -3
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bVs" = (
@@ -51938,24 +51946,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWK" = (
-/obj/structure/table/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/westright{
-	dir = 4;
-	name = "Hydroponics Desk";
-	req_one_access_txt = "30;35"
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = -3
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -51966,6 +51960,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/machinery/biogenerator,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bWL" = (
@@ -52658,10 +52653,6 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bYl" = (
-/obj/item/seeds/wheat,
-/obj/item/seeds/sugarcane,
-/obj/item/seeds/potato,
-/obj/item/seeds/apple,
 /obj/item/grown/corncob,
 /obj/item/reagent_containers/food/snacks/grown/carrot,
 /obj/item/reagent_containers/food/snacks/grown/wheat,
@@ -53268,13 +53259,17 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bZv" = (
-/obj/machinery/biogenerator,
 /obj/machinery/light_switch{
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/table/glass,
+/obj/item/seeds/wheat,
+/obj/item/seeds/sugarcane,
+/obj/item/seeds/potato,
+/obj/item/seeds/apple,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bZw" = (

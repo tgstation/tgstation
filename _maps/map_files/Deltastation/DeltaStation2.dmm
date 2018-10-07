@@ -36621,9 +36621,9 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "boz" = (
-/obj/machinery/biogenerator,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/machinery/seed_extractor,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "boA" = (
@@ -36642,10 +36642,6 @@
 	},
 /obj/structure/table,
 /turf/open/floor/plasteel,
-/area/hydroponics)
-"boD" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall,
 /area/hydroponics)
 "boE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -37907,13 +37903,17 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bqA" = (
-/obj/machinery/seed_extractor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/table/glass,
+/obj/item/book/manual/hydroponics_pod_people,
+/obj/item/paper/guides/jobs/hydroponics,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bqB" = (
-/obj/machinery/biogenerator,
+/obj/structure/table/glass,
+/obj/item/stack/packageWrap,
+/obj/item/hand_labeler,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -40342,14 +40342,21 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bum" = (
-/obj/structure/table/glass,
-/obj/machinery/light{
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/stack/packageWrap,
-/obj/item/book/manual/hydroponics_pod_people,
-/obj/item/hand_labeler,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
 /obj/effect/turf_decal/bot,
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/effect/landmark/start/botanist,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bun" = (
@@ -127653,6 +127660,12 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/engine,
 /area/science/explab)
+"oDh" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/firedoor,
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "oIl" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -128001,6 +128014,10 @@
 	dir = 9
 	},
 /area/science/circuit)
+"rwK" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "rzc" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/effect/turf_decal/bot,
@@ -162086,7 +162103,7 @@ blk
 bnm
 boC
 bqC
-bqC
+rwK
 bum
 bvD
 bwQ
@@ -162341,10 +162358,10 @@ bhG
 bjw
 bll
 bar
-boD
-bqD
-bsz
 bgk
+bqD
+oDh
+bsz
 bvE
 bar
 bar
