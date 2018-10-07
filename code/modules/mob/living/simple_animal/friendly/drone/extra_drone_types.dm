@@ -50,7 +50,7 @@
 	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
 	hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
-	W.implant(src)
+	W.implant(src, force = TRUE)
 
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
