@@ -48,7 +48,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	var/num_hosts = max( 1 , rand(0,1) + min(5, round(num_players() / 12) ) ) //1 host for every 12 players up to 72, with a 50% chance of an extra
+	var/num_hosts = max( 1 , rand(0,1) + min(6, round(num_players() / 12) ) ) //1 host for every 12 players up to 72, with a 50% chance of an extra
 
 	for(var/j = 0, j < num_hosts, j++)
 		if (!antag_candidates.len)
