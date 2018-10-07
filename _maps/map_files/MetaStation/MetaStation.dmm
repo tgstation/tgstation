@@ -51967,10 +51967,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/chair/office/dark{
-	dir = 8
-	},
-/obj/effect/landmark/start/botanist,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -83744,6 +83740,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"nSa" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/obj/effect/landmark/start/botanist,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "nSo" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -117981,7 +117993,7 @@ bQB
 bRQ
 bST
 bUf
-bVs
+nSa
 bWL
 bYe
 bZt
