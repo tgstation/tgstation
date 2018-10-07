@@ -646,10 +646,11 @@ Nothing else in the console has ID requirements.
 			max_tier = max(max_tier, tier)
 
 		l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
-		for(var/tier in 0 to max_tier)
-			l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-			l += columns["[tier]"]
-			l += "</td>[RDSCREEN_NOBREAK]"
+		if(max_tier)
+			for(var/tier in 0 to max_tier)
+				l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+				l += columns["[tier]"]
+				l += "</td>[RDSCREEN_NOBREAK]"
 		l += "</tr></table>[RDSCREEN_NOBREAK]"
 	else
 		var/list/avail = list()			//This could probably be optimized a bit later.
