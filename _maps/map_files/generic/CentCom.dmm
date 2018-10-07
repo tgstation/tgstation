@@ -1424,14 +1424,14 @@
 /turf/open/floor/holofloor/plating,
 /area/holodeck/rec_center/kobayashi)
 "dP" = (
-/obj/machinery/button/massdriver{
+/obj/machinery/button/massdriver/indestructible{
 	id = "trektorpedo1";
 	layer = 3.9;
 	name = "photon torpedo button";
 	pixel_x = -16;
 	pixel_y = -5
 	},
-/obj/machinery/button/massdriver{
+/obj/machinery/button/massdriver/indestructible{
 	id = "trektorpedo2";
 	layer = 3.9;
 	name = "photon torpedo button";
@@ -3675,14 +3675,14 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jy" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCQMLoaddoor";
 	layer = 4;
 	name = "Loading Doors";
 	pixel_x = -27;
 	pixel_y = -5
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	dir = 2;
 	id = "XCCQMLoaddoor2";
 	layer = 4;
@@ -5296,7 +5296,7 @@
 /obj/item/clipboard,
 /obj/item/folder/red,
 /obj/item/pen/red,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
 	name = "XCC Shutter 3 Control";
 	pixel_x = -24;
@@ -5310,7 +5310,7 @@
 "mT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsecdepartment";
 	layer = 3;
 	name = "CC Security Checkpoint Control";
@@ -7269,7 +7269,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/supply)
 "qq" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
 	name = "XCC Shutter 3 Control";
 	pixel_x = 24;
@@ -9039,7 +9039,7 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
 	pixel_y = -38
@@ -9199,14 +9199,14 @@
 /obj/machinery/computer/card/centcom{
 	dir = 1
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCcustoms1";
 	layer = 3.5;
 	name = "CC Customs 1 Control";
 	pixel_x = 8;
 	pixel_y = -24
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCcustoms2";
 	layer = 3.5;
 	name = "CC Customs 2 Control";
@@ -9296,7 +9296,7 @@
 /turf/open/floor/plating,
 /area/syndicate_mothership/control)
 "uL" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "nukeop_ready";
 	name = "mission launch control";
 	pixel_x = -26;
@@ -9733,26 +9733,26 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
 	pixel_x = -8;
 	pixel_y = 24;
 	req_access_txt = "2"
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
 	name = "CC Main Access Control";
 	pixel_x = 8;
 	pixel_y = 24
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec1";
 	name = "CC Shutter 1 Control";
 	pixel_x = 8;
 	pixel_y = 38
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
 	name = "XCC Shutter 3 Control";
 	pixel_x = -8;
@@ -10096,7 +10096,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "ww" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCFerry";
 	name = "Hanger Bay Shutters";
 	pixel_y = 24;
@@ -10626,7 +10626,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "xS" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec1";
 	name = "CC Shutter 1 Control";
 	pixel_y = -24
@@ -12398,7 +12398,7 @@
 /obj/machinery/computer/secure_data{
 	dir = 8
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCcustoms1";
 	layer = 3;
 	name = "CC Emergency Docks Control";
@@ -13325,7 +13325,7 @@
 /area/wizard_station)
 "DT" = (
 /obj/structure/table/reinforced,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
 	name = "CC Main Access Control"
 	},
@@ -16119,7 +16119,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
 "JT" = (
-/obj/machinery/button/flasher{
+/obj/machinery/button/flasher/indestructible{
 	id = "tdomeflash"
 	},
 /obj/structure/table/reinforced,
@@ -16340,7 +16340,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
 "Ks" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "thunderdomehea";
 	name = "Heavy Supply Control";
 	req_access_txt = "102"
@@ -16359,7 +16359,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
 "Kt" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "thunderdome";
 	name = "Main Blast Doors Control";
 	req_access_txt = "102"
@@ -16379,7 +16379,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeadmin)
 "Ku" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "thunderdomegen";
 	name = "General Supply Control";
 	req_access_txt = "102"
@@ -17304,7 +17304,7 @@
 	pixel_x = -12;
 	pixel_y = 2
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "lmrestroom";
 	name = "Lock Control";
 	pixel_y = -28
