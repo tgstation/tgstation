@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Certain toxins will no longer notify the mob of their presence with the \"You feel a dull pain in your abdomen\" message, which allowed some stealthy (and some nonharmful) toxins to be easily detected."
