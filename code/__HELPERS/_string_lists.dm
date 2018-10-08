@@ -7,7 +7,7 @@ GLOBAL_VAR(string_filename_current_key)
 
 
 /proc/strings_replacement(filename, key, directory = "strings")
-	load_strings_file(filename)
+	load_strings_file(filename, directory)
 
 	if((filename in GLOB.string_cache) && (key in GLOB.string_cache[filename]))
 		var/response = pick(GLOB.string_cache[filename][key])
