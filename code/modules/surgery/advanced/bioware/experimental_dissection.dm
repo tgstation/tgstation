@@ -8,6 +8,7 @@
 				/datum/surgery_step/dissection,
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_CHEST)
+	target_mobtypes = list(/mob/living/carbon) //Feel free to dissect devils but they're magic.
 
 /datum/surgery/advanced/experimental_dissection/can_start(mob/user, mob/living/carbon/target)
 	. = ..()
