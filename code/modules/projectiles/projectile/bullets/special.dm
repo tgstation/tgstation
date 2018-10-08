@@ -1,6 +1,7 @@
 // Honker
 
 /obj/item/projectile/bullet/honker
+	name = "banana"
 	damage = 0
 	paralyze = 60
 	forcedodge = TRUE

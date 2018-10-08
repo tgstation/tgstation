@@ -69,10 +69,8 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-
-/obj/structure/holosign/barrier/engineering/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
 	name = "holofirelock"
@@ -84,14 +82,12 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	layer = ABOVE_MOB_LAYER
 	alpha = 150
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
-
-/obj/structure/holosign/barrier/atmos/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"

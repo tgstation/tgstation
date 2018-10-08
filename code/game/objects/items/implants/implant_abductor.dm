@@ -22,7 +22,7 @@
 		if(cooldown == initial(cooldown))
 			STOP_PROCESSING(SSobj, src)
 
-/obj/item/implant/abductor/implant(mob/living/target, mob/user)
+/obj/item/implant/abductor/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(..())
 		var/obj/machinery/abductor/console/console
 		if(ishuman(target))

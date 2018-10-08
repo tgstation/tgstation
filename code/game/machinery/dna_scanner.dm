@@ -103,7 +103,7 @@
 				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 	// DNA manipulators cannot operate on severed heads or brains
-	if(isliving(occupant))
+	if(iscarbon(occupant))
 		var/obj/machinery/computer/scan_consolenew/console = locate_computer(/obj/machinery/computer/scan_consolenew)
 		if(console)
 			console.on_scanner_close()

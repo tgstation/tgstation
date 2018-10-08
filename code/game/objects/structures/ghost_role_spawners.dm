@@ -150,11 +150,11 @@
 		H.set_cloned_appearance()
 		if(!name)
 			if(has_owner)
-				H.real_name = "[initial(X.prefix)] Golem ([rand(1,999)])"
+				H.fully_replace_character_name(null, "[initial(X.prefix)] Golem ([rand(1,999)])")
 			else
-				H.real_name = H.dna.species.random_name()
+				H.fully_replace_character_name(null, H.dna.species.random_name())
 		else
-			H.real_name = name
+			H.fully_replace_character_name(null, name)
 	if(has_owner)
 		new_spawn.mind.assigned_role = "Servant Golem"
 	else

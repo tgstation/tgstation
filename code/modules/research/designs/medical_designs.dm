@@ -401,7 +401,7 @@
 	id = "implant_tracking"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
-	build_path = /obj/item/implantcase/track
+	build_path = /obj/item/implantcase/tracking
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_MEDICAL
 
@@ -467,7 +467,7 @@
 	research_icon = 'icons/obj/surgery.dmi'
 	research_icon_state = "surgery_any"
 	var/surgery
-	
+
 /datum/design/surgery/experimental_dissection
 	name = "Experimental Dissection"
 	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."

@@ -36,14 +36,13 @@
 			chassis.selected = null
 		src.update_chassis_page()
 		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
-		chassis.log_append_to_last("[src] is destroyed.",1)
+		log_message("[src] is destroyed.", LOG_MECHA)
 		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
 		chassis = null
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
-	if(chassis)
-		log_message("Critical failure", color="red")
+	log_message("Critical failure", LOG_MECHA, color="red")
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis)
@@ -113,10 +112,10 @@
 	M.equipment += src
 	chassis = M
 	forceMove(M)
-	M.log_message("[src] initialized.")
+	log_message("[src] initialized.", LOG_MECHA)
 	if(!M.selected && selectable)
 		M.selected = src
-	src.update_chassis_page()
+	update_chassis_page()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
@@ -126,7 +125,7 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		update_chassis_page()
-		chassis.log_message("[src] removed from equipment.")
+		log_message("[src] removed from equipment.", LOG_MECHA)
 		chassis = null
 		set_ready_state(1)
 	return
@@ -149,10 +148,9 @@
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)
-		chassis.log_message("([src]) [message]", message_type, color)
+		chassis.log_message("ATTACHMENT: [src] [message]", message_type, color)
 	else
 		..()
-	return
 
 
 //Used for reloading weapons/tools etc. that use some form of resource

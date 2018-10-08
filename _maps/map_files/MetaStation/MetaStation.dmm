@@ -10442,7 +10442,6 @@
 /area/crew_quarters/dorms)
 "asV" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "Cabin3";
 	name = "Cabin Bolt Control";
@@ -10454,6 +10453,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "asW" = (
@@ -10508,7 +10508,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/bed,
-/obj/item/bedsheet,
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "atb" = (
@@ -12219,7 +12219,6 @@
 /area/crew_quarters/dorms)
 "awE" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "Cabin2";
 	name = "Cabin Bolt Control";
@@ -12230,6 +12229,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "awF" = (
@@ -12247,7 +12247,6 @@
 /area/crew_quarters/dorms)
 "awG" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "Cabin5";
 	name = "Dorm Bolt Control";
@@ -12256,6 +12255,7 @@
 	specialfunctions = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "awH" = (
@@ -15324,7 +15324,6 @@
 /area/crew_quarters/dorms)
 "aCJ" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "Cabin6";
 	name = "Dorm Bolt Control";
@@ -15336,6 +15335,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "aCK" = (
@@ -17957,10 +17957,10 @@
 	specialfunctions = 4
 	},
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aHT" = (
