@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Examine text for modular computers now properly reflect their modularity and state which components are installed, as well as what is contained within those components. At this time, AI card slots, ID slots, and printers are implemented."

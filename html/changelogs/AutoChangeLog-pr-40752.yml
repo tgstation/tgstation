@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Buttons are no longer indestructible and won't cause endless tesla zap explosions. Buttons on CentCom and other special areas are still unbreakable."

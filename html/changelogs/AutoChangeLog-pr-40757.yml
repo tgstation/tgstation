@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - tweak: "Cards will now let you know if there is no registered account with the card, and how to add one."
