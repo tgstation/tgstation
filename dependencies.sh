@@ -7,7 +7,7 @@
 #note, this also needs to be changed in the Dockerfile's initial FROM command
 #If someone has an idea for how to set that version within the Dockerfile itself without any other dependencies, feel free to PR it
 export BYOND_MAJOR=512
-export BYOND_MINOR=1448
+export BYOND_MINOR=1452
 
 #rust_g git tag
 export RUST_G_VERSION=0.4.1
