@@ -115,7 +115,7 @@
 	if(Proj.damage_type == BRUTE)
 		adjustBruteLoss(Proj.damage)
 	if(Proj.damage_type == BURN)
-		adjustBurnLoss(Proj.damage)
+		adjustFireLoss(Proj.damage)
 	if(prob(Proj.damage*1.5))
 		for(var/mob/living/M in buckled_mobs)
 			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
