@@ -17,4 +17,4 @@
 	gravs += gravity
 
 /datum/component/forced_gravity/proc/turf_gravity_check(datum/source, atom/checker, list/gravs)
-	return gravity_check(parent, gravs)
+	return gravity_check(null, parent, gravs)
