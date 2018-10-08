@@ -22,7 +22,8 @@ SUBSYSTEM_DEF(adjacent_air)
 		var/turf/currT = queue[1]
 		queue.Cut(1, 2)
 
-		var/list/atmos_adjacent_turfs = currT.atmos_adjacent_turfs
+		currT.ImmediateCalculateAdjacentTurfs()
+/*		var/list/atmos_adjacent_turfs = currT.atmos_adjacent_turfs
 		for(var/direction in GLOB.cardinals)
 			var/turf/neighborT = get_step(currT, direction)
 			if(!neighborT)
@@ -42,7 +43,7 @@ SUBSYSTEM_DEF(adjacent_air)
 			neighborT.atmos_adjacent_turfs = neighbor_adjacent_turfs
 		UNSETEMPTY(atmos_adjacent_turfs)
 		// If the list was null before, our thing isn't a reference to the thing in the object, we need to assign the list back just in case.
-		currT.atmos_adjacent_turfs = atmos_adjacent_turfs
+		currT.atmos_adjacent_turfs = atmos_adjacent_turfs */
 
 		if (MC_TICK_CHECK)
 			return
