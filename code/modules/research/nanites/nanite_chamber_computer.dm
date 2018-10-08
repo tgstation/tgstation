@@ -136,7 +136,7 @@
 		if("nanite_injection")
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
 			chamber.inject_nanites()
-			log_combat(usr, occupant, "injected", null, "with nanites via [src]")
+			log_combat(usr, chamber.occupant, "injected", null, "with nanites via [src]")
 			chamber.occupant.investigate_log("was injected with nanites by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("add_program")

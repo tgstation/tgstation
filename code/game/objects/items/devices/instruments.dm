@@ -268,3 +268,39 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+
+/obj/item/musicbeacon
+	name = "express delivery beacon"
+	desc = "Summon your tool of art."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gangtool-red"
+	item_state = "radio"
+	var/static/list/display_names = list()
+
+/obj/item/musicbeacon/attack_self(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		beacon_music(user)
+
+/obj/item/musicbeacon/proc/beacon_music(mob/M)
+	if(!display_names)
+		var/static/list/instruments = list(
+								/obj/item/instrument/violin,
+								/obj/item/instrument/piano_synth,
+								/obj/item/instrument/guitar,
+								/obj/item/instrument/eguitar,
+								/obj/item/instrument/glockenspiel,
+								/obj/item/instrument/accordion,
+								/obj/item/instrument/trumpet,
+								/obj/item/instrument/saxophone,
+								/obj/item/instrument/trombone,
+								/obj/item/instrument/recorder,
+								/obj/item/instrument/harmonica
+								)
+		for(var/V in instruments)
+			var/atom/A = V
+			display_names[initial(A.name)] = A
+	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
+	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	var/instrument = new display_names[choice]
+	M.put_in_hands(instrument)

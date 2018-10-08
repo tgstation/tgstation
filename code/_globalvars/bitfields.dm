@@ -167,4 +167,8 @@ GLOBAL_LIST_INIT(bitfields, list(
 	"car_traits" = list(
 		"CAN_KIDNAP" = CAN_KIDNAP,
 		),
+	"rad_flags" = list(
+		"RAD_PROTECT_CONTENTS" = RAD_PROTECT_CONTENTS,
+		"RAD_NO_CONTAMINATE" = RAD_NO_CONTAMINATE,
+	),
 	))

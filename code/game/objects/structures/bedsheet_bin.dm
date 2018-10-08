@@ -246,6 +246,36 @@ LINEN BINS
 	new type(loc)
 	return INITIALIZE_HINT_QDEL
 
+/obj/item/bedsheet/dorms
+	icon_state = "random_bedsheet"
+	item_color = "rainbow"
+	name = "random dorms bedsheet"
+	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
+
+/obj/item/bedsheet/dorms/Initialize()
+	..()
+	var/type = pickweight(list("Colors" = 80, "Special" = 20))
+	switch(type)
+		if("Colors")
+			type = pick(list(/obj/item/bedsheet, 
+				/obj/item/bedsheet/blue,
+				/obj/item/bedsheet/green,
+				/obj/item/bedsheet/grey,
+				/obj/item/bedsheet/orange,
+				/obj/item/bedsheet/purple,
+				/obj/item/bedsheet/red,
+				/obj/item/bedsheet/yellow,
+				/obj/item/bedsheet/brown,
+				/obj/item/bedsheet/black))
+		if("Special")
+			type = pick(list(/obj/item/bedsheet/patriot,
+				/obj/item/bedsheet/rainbow,
+				/obj/item/bedsheet/ian,
+				/obj/item/bedsheet/cosmos,
+				/obj/item/bedsheet/nanotrasen))
+	new type(loc)
+	return INITIALIZE_HINT_QDEL
+
 /obj/structure/bedsheetbin
 	name = "linen bin"
 	desc = "It looks rather cosy."

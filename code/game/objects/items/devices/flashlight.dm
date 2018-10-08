@@ -341,6 +341,10 @@
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
 
+/obj/item/flashlight/lantern/heirloom_moth
+	name = "old lantern"
+	desc = "An old lantern that has seen plenty of use."
+	brightness_on = 4
 
 /obj/item/flashlight/slime
 	gender = PLURAL
@@ -358,7 +362,6 @@
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
-
 
 /obj/item/flashlight/emp/New()
 	..()

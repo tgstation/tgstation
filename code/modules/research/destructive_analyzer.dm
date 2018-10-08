@@ -102,7 +102,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		return FALSE
 
 	if (id && id != RESEARCH_MATERIAL_RECLAMATION_ID)
-		var/datum/techweb_node/TN = get_techweb_node_by_id(id)
+		var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 		if(!istype(TN))
 			return FALSE
 		var/dpath = loaded_item.type
@@ -123,7 +123,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[TN.id]", "[loaded_item.type]"))
 		if(destroy_item(loaded_item))
-			linked_console.stored_research.boost_with_path(SSresearch.techweb_nodes[TN.id], dpath)
+			linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(TN.id), dpath)
 
 	else
 		var/list/point_value = techweb_item_point_check(loaded_item)

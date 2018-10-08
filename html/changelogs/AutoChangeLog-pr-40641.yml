@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Free Golems will no longer have the incorrect name when using Envy's Knife on them."

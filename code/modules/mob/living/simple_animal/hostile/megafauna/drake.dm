@@ -108,13 +108,13 @@ Difficulty: Medium
 	ranged_cooldown = world.time + ranged_cooldown_time
 	
 	if(prob(15 + anger_modifier) && !client)
-		if(health < maxHealth/2)
+		if(health < maxHealth*0.5)
 			swoop_attack()
 		else
 			lava_swoop()
 
 	else if(prob(10+anger_modifier) && !client)
-		if(health < maxHealth/2)
+		if(health < maxHealth*0.5)
 			triple_swoop()
 		else
 			fire_cone()
@@ -128,19 +128,20 @@ Difficulty: Medium
 	while(amount > 0)
 		if(!target)
 			break
-		var/turf/T = pick(RANGE_TURFS(7, target))
+		var/turf/T = pick(RANGE_TURFS(1, target))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
-		sleep(0.4)
+		sleep(0.8)
 		
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
 	fire_cone()
-	sleep(10)
-	fire_cone()
-	sleep(10)
-	fire_cone()
+	if(health < maxHealth*0.5)
+		sleep(10)
+		fire_cone()
+		sleep(10)
+		fire_cone()
 	SetRecoveryTime(40)
 			
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
@@ -168,13 +169,15 @@ Difficulty: Medium
 			for(var/mob/living/L in T.contents)
 				if(L.client)
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
+			for(var/obj/mecha/M in T.contents)
+				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
 			else
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
-		sleep(22)
+		sleep(24)
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone()
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
@@ -212,7 +215,7 @@ Difficulty: Medium
 			if(L in hit_list || L == src)
 				continue
 			hit_list += L
-			L.adjustFireLoss(30)
+			L.adjustFireLoss(20)
 			to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
 			
 		// deals damage to mechs
@@ -221,7 +224,7 @@ Difficulty: Medium
 				continue
 			hit_list += M
 			M.take_damage(45, BRUTE, "melee", 1)
-		sleep(1.25)
+		sleep(1.5)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = TRUE, atom/movable/manual_target, var/swoop_cooldown = 15)
 	if(stat || swooping)
@@ -269,7 +272,7 @@ Difficulty: Medium
 		sleep(0.5)
 	
 	// Ash drake flies onto its target and rains fire down upon them
-	var/descentTime = 7;
+	var/descentTime = 10;
 	if(lava_arena)
 		lava_arena()
 	
@@ -301,6 +304,8 @@ Difficulty: Medium
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
 				L.throw_at(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
+	for(var/obj/mecha/M in orange(1, src))
+		M.take_damage(75, BRUTE, "melee", 1)
 
 	for(var/mob/M in range(7, src))
 		shake_camera(M, 15, 1)
@@ -317,6 +322,7 @@ Difficulty: Medium
 		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")
 		return
 	swoop_attack(FALSE, A, 30)
+	lava_pools(10)
 	player_cooldown = world.time + 200 // needs seperate cooldown or cant use fire attacks
 
 /obj/item/gps/internal/dragon
@@ -329,7 +335,7 @@ Difficulty: Medium
 	icon_state = "lavastaff_warn"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
-	duration = 11
+	duration = 13
 
 /obj/effect/temp_visual/lava_warning/ex_act()
 	return
@@ -373,7 +379,7 @@ Difficulty: Medium
 	opacity = 0
 	density = TRUE
 	CanAtmosPass = ATMOS_PASS_DENSITY
-	duration = 76
+	duration = 82
 	color = COLOR_DARK_ORANGE
 	
 /obj/effect/temp_visual/lava_safe
@@ -381,7 +387,7 @@ Difficulty: Medium
 	icon_state = "trap-earth"
 	layer = BELOW_MOB_LAYER
 	light_range = 2
-	duration = 11
+	duration = 13
 
 /obj/effect/temp_visual/dragon_swoop
 	name = "certain death"
@@ -399,7 +405,7 @@ Difficulty: Medium
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
 	pixel_x = -16
-	duration = 7
+	duration = 10
 	randomdir = FALSE
 
 /obj/effect/temp_visual/dragon_flight/Initialize(mapload, negative)

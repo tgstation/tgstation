@@ -52,7 +52,7 @@
 		return
 	timed_explosion()
 
-/obj/item/implant/explosive/implant(mob/living/target)
+/obj/item/implant/explosive/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/explosive/imp_e = X
@@ -92,7 +92,7 @@
 	heavy = 4
 	delay = 70
 
-/obj/item/implant/explosive/macro/implant(mob/living/target)
+/obj/item/implant/explosive/macro/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)
 		if(istype(X, type))
 			return 0

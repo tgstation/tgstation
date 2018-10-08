@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Updated the implant pad. Implants are now removed by alt-clicking it (no more meme hand swapping BS.) Implants will no longer disappear into the void if it didn't go into your hand. Dialog screens will now properly update when inserting and removing an implant."

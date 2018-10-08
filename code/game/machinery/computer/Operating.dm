@@ -32,7 +32,7 @@
 
 /obj/machinery/computer/operating/proc/sync_surgeries()
 	for(var/i in linked_techweb.researched_designs)
-		var/datum/design/surgery/D = linked_techweb.researched_designs[i]
+		var/datum/design/surgery/D = SSresearch.techweb_design_by_id(i)
 		if(!istype(D))
 			continue
 		advanced_surgeries |= D.surgery

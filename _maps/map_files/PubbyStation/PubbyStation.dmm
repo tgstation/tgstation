@@ -3280,10 +3280,10 @@
 /area/maintenance/department/security/brig)
 "ajE" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "ajF" = (
@@ -3687,7 +3687,6 @@
 /area/maintenance/department/security/brig)
 "akt" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "mainthideout";
 	name = "Door Bolt Control";
@@ -3696,6 +3695,7 @@
 	req_access_txt = "0";
 	specialfunctions = 4
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aku" = (
@@ -8646,12 +8646,12 @@
 /area/crew_quarters/dorms)
 "ave" = (
 /obj/structure/bed,
-/obj/item/bedsheet/nanotrasen,
 /obj/machinery/button/door{
 	id = "Dorm3Shutters";
 	name = "Privacy Shutters Control";
 	pixel_y = 26
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "avf" = (
@@ -10101,13 +10101,13 @@
 /area/crew_quarters/dorms)
 "ayj" = (
 /obj/structure/bed,
-/obj/item/bedsheet/nanotrasen,
 /obj/machinery/button/door{
 	id = "Dorm2Shutters";
 	name = "Privacy Shutters Control";
 	pixel_y = 26;
 	req_access_txt = "0"
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayk" = (
@@ -11558,13 +11558,13 @@
 /area/crew_quarters/dorms)
 "aBM" = (
 /obj/structure/bed,
-/obj/item/bedsheet/nanotrasen,
 /obj/machinery/button/door{
 	id = "Dorm1Shutters";
 	name = "Privacy Shutters Control";
 	pixel_y = 26;
 	req_access_txt = "0"
 	},
+/obj/item/bedsheet/dorms,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aBN" = (
