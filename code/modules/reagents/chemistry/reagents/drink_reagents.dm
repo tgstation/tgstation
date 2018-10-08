@@ -261,7 +261,7 @@
 /datum/reagent/consumable/coffee
 	name = "Coffee"
 	id = "coffee"
-	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
+	description = "Synthetic coffee made out of rubber."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
 	overdose_threshold = 80
@@ -285,31 +285,29 @@
 	..()
 	. = 1
 
-/datum/reagent/consumable/homebrew coffee
+/datum/reagent/consumable/homebrew_coffee
 	name = "Homebrew Coffee"
 	id = "hcoffee"
+	metabolization_rate = 0.3 * REAGENTS_METABOLISM
 	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
-	overdose_threshold = 80
 	taste_description = "bitterness"
 	glass_icon_state = "glass_brown"
 	glass_name = "glass of coffee"
 	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 
-/datum/reagent/consumable/coffee/overdose_process(mob/living/M)
-	M.Jitter(5)
-	..()
 
-/datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/homebrew_coffee/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-80, FALSE)
-	M.AdjustSleeping(-20, FALSE) /7stun
-	//310.15 is the normal bodytemp.
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.adjustStaminaLoss(-1*REM, 0)
+	0.5 * REAGENTS_METABOLISM
 	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
-	if(holder.has_reagent("frostoil"))
-		holder.remove_reagent("frostoil", 5)
 	..()
 	. = 1
 
@@ -335,26 +333,25 @@
 	..()
 	. = 1
 
-/datum/reagent/consumable/homebrewtea
+/datum/reagent/consumable/homebrew_tea
 	name = "Homebrew Tea"
 	id = "htea"
 	description = "Tasty black tea, it has antioxidants, it's good for you!"
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
-	metabolization_rate = 0.05 * REAGENTS_METABOLISM
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "tart black tea"
 	glass_icon_state = "teaglass"
 	glass_name = "glass of tea"
 	glass_desc = "Drinking it from here would not seem right."
 
-/datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/homebrew_tea/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)
 	M.AdjustSleeping(-20, FALSE)
-	if(M.getToxLoss() && prob(80))
-		M.adjustToxLoss(-3, 0)
-	M.adjust_bodytemperature(60 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjustToxLoss(-2, 0)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1
 

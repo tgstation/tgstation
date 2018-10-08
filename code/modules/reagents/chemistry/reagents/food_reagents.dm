@@ -395,6 +395,13 @@
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
+/datum/reagent/consumable/hot_coco/homebrew
+	name = "Hot Chocolate"
+	id = "hhot_coco"
+/datum/reagent/consumable/hot_coco/homebrew/on_mob_life(mob/living/carbon/M)
+	..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "choco", /datum/mood_event/choco, name)
+
 /datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	id = "mushroomhallucinogen"
