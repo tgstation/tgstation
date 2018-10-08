@@ -641,6 +641,13 @@
 	screen_loc = ui_construct_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/screen/healths/migo
+	name = "health"
+	icon = 'icons/mob/actions.dmi'
+	icon_state = "migo_health"
+	screen_loc = ui_health
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
