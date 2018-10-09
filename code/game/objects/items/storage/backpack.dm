@@ -209,6 +209,7 @@
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/satchel/med
 	name = "medical satchel"
@@ -385,6 +386,7 @@
 	desc = "A large duffel bag for holding extra tools and supplies."
 	icon_state = "duffel-eng"
 	item_state = "duffel-eng"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/duffelbag/drone
 	name = "drone duffel bag"
