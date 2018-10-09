@@ -282,7 +282,7 @@
 		beacon_music(user)
 
 /obj/item/musicbeacon/proc/beacon_music(mob/M)
-	if(!display_names)
+	if(!display_names.len)
 		var/static/list/instruments = list(
 								/obj/item/instrument/violin,
 								/obj/item/instrument/piano_synth,
@@ -302,5 +302,8 @@
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/instrument = new display_names[choice]
+	var/willruntimeifelse = display_names[choice]
+	var/instrument = new willruntimeifelse()
 	M.put_in_hands(instrument)
+	qdel(src)
+
