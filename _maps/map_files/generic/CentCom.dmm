@@ -3398,7 +3398,7 @@
 /area/centcom/supply)
 "iS" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -3879,7 +3879,7 @@
 /area/centcom/control)
 "jV" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4235,7 +4235,7 @@
 	icon_state = "plant-22"
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -5826,7 +5826,7 @@
 	req_access_txt = "109"
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -5850,7 +5850,7 @@
 	req_access_txt = "109"
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -6924,7 +6924,7 @@
 /area/centcom/ferry)
 "pM" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -6951,7 +6951,7 @@
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/glasses/eyepatch,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /turf/open/floor/plasteel/grimy,
@@ -9454,7 +9454,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -11403,7 +11403,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -12699,7 +12699,7 @@
 /obj/item/book/manual/wiki/security_space_law,
 /obj/item/taperecorder,
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -12766,7 +12766,7 @@
 "CM" = (
 /obj/structure/filingcabinet/medical,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -14853,7 +14853,7 @@
 /area/tdome/tdomeobserve)
 "Hq" = (
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/white,
@@ -14896,7 +14896,7 @@
 /area/tdome/tdomeobserve)
 "Hu" = (
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -16163,7 +16163,7 @@
 	icon_state = "plant-21"
 	},
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/neutral{
