@@ -303,4 +303,12 @@
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	var/instrument = new display_names[choice]
-	M.put_in_hands(instrument)
+	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	pod.explosionSize = list(0,0,0,2)
+	instrument.forceMove(pod)
+	if(istype(M.ears, /obj/item/radio/headset))
+		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Instrument request recieved. Your package is inbound, please stand back from the landing site.</span> Message ends.\"")
+	else
+		to_chat(H, "<span class = danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>")
+	new /obj/effect/DPtarget(get_turf(src), pod)
+	qdel(src)
