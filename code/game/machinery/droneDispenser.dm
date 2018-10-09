@@ -9,7 +9,6 @@
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
 	density = TRUE
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
 	max_integrity = 250
 	integrity_failure = 80

@@ -3,7 +3,6 @@
 	desc = "A machine for custom fitting augmentations, with in-built spraypainter."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	density = TRUE
 	obj_integrity = 200
 	max_integrity = 200

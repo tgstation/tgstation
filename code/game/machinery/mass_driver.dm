@@ -4,7 +4,6 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mass_driver"
 	use_power = IDLE_POWER_USE
-	layer = TABLE_LAYER
 	idle_power_usage = 2
 	active_power_usage = 50
 	var/power = 1

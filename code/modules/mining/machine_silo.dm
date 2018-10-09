@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "silo"
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo
 

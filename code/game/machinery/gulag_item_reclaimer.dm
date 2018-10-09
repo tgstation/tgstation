@@ -3,7 +3,6 @@
 	desc = "Used to reclaim your items after you finish your sentence at the labor camp."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_taken"
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	req_access = list(ACCESS_SECURITY) //REQACCESS TO ACCESS ALL STORED ITEMS
 	density = FALSE
 	use_power = IDLE_POWER_USE

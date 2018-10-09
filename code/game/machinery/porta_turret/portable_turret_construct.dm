@@ -13,7 +13,6 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	desc = "An unfinished covered turret frame."
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	anchored = FALSE
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process

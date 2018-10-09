@@ -2,7 +2,6 @@
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer"
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 300

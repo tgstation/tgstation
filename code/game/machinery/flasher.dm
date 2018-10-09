@@ -5,7 +5,6 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
-	layer = WALL_OBJ_LAYER
 	max_integrity = 250
 	integrity_failure = 100
 	light_color = LIGHT_COLOR_WHITE

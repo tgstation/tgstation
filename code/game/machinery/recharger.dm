@@ -3,7 +3,6 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
-	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
