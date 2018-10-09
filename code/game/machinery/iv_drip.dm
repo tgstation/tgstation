@@ -6,6 +6,7 @@
 	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null

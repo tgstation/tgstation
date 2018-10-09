@@ -6,6 +6,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	desc = "Make dark."
+	layer = WALL_OBJ_LAYER
 	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null

@@ -3,6 +3,7 @@
 	desc = "Gets rid of those pesky bloodstains, or your money back!"
 	icon = 'icons/obj/machines/washing_machine.dmi'
 	icon_state = "wm_1_0"
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	density = TRUE
 	state_open = TRUE
 	var/busy = FALSE

@@ -3,6 +3,7 @@
 /**********************Mineral processing unit console**************************/
 
 /obj/machinery/mineral
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	var/input_dir = NORTH
 	var/output_dir = SOUTH
 

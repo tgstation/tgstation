@@ -9,6 +9,7 @@
 	desc = "It grows new limbs using Synthflesh."
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 	density = TRUE
 	container_type = OPENCONTAINER
 	use_power = IDLE_POWER_USE
