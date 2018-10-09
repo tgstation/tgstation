@@ -42,7 +42,7 @@
 
 /obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
 	if (user.eye_blind)
-		user.visible_message("<span class='suicide'>[user]  is putting [src] close to [user.p_their()] eyes and turning it on ... but [user.p_theyre()] blind!</span>")
+		user.visible_message("<span class='suicide'>[user] is putting [src] close to [user.p_their()] eyes and turning it on... but [user.p_theyre()] blind!</span>")
 		return SHAME
 	user.visible_message("<span class='suicide'>[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (FIRELOSS)
@@ -477,6 +477,18 @@
 	if(!on)
 		on = TRUE
 		START_PROCESSING(SSobj, src)
+		
+/obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
+	if(!fuel)
+		user.visible_message("<span class='suicide'>[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!</span>")
+		return SHAME
+	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		user.visible_message("<span class='suicide'>[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!</span>")
+		return SHAME
+	user.visible_message("<span class='suicide'>[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	fuel = 0
+	return (FIRELOSS)
 
 /obj/item/flashlight/glowstick/red
 	name = "red glowstick"
