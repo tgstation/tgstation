@@ -99,7 +99,7 @@
 		hushed = TRUE
 		to_chat(src, "<span class='notice'>You decide against mimicking noises for now.</span>")
 
-/mob/living/simple_animal/hostile/netherworld/migo/proc/ChangeVoice()
+/mob/living/simple_animal/hostile/netherworld/migo/proc/ChangeVoice()//hey, not returning null in this is important! don't @ me!
 	set name = "Tune Voice"
 	set category = "Nether"
 	set desc = "Changes your voice to someone else. You will copy the voice patterns if the name matches them."
@@ -108,12 +108,13 @@
 			to_chat(src, "<span class='notice'>You are no longer impersonating [impersonation].</span>")
 		speak_emote = initial(speak_emote)
 		impersonation = null
+		return TRUE
 	else
 		var/t = copytext(sanitize(input(src, "Enter the name of your victim!", "Mimic", name) as text), 1, MAX_NAME_LEN)
 		if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
 			if(t)
 				alert("I can't mimic that!")
-				return
+				return FALSE
 		to_chat(src, "<span class='notice'>Attempting to tune to their speech...</span>")
 		var/success = FALSE
 		var/list/new_speak_emote = list()
@@ -124,12 +125,13 @@
 				success = TRUE
 				break
 		if(success)
-			to_chat(src, "<span class='green'>Success!</span> <span class='notice'>You manage to perfect the speech patterns of [t]!</span>")
+			to_chat(src, "<span class='green'>Success!</span> <span class='notice'>You manage to perfect the impersonation of [t]!</span>")
 		else
 			new_speak_emote += "says"
-		to_chat(src, "<span class='notice'>You tune your cords into that of [impersonation][success ? ", stealing their voice patterns as well!" : " with what will hopefully pass as a good voice pattern."]</span>")
+		to_chat(src, "<span class='notice'>You tune your cords into [t]!</span>")
 		impersonation = t
 		speak_emote = new_speak_emote
+		return TRUE
 
 /mob/living/simple_animal/hostile/netherworld/migo/proc/CreateNoise()
 	set name = "Fabricate Noise"
