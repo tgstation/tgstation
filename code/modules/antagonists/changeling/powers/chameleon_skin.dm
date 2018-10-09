@@ -12,9 +12,9 @@
 		return
 	var/datum/mutation/human/HM = GLOB.mutations_list[CHAMELEON]
 	if(HM in H.dna.mutations)
-		HM.force_lose(H)
+		H.dna.force_lose(HM)
 	else
-		HM.force_give(H)
+		H.dna.force_give(HM)
 	return TRUE
 
 /obj/effect/proc_holder/changeling/chameleon_skin/on_refund(mob/user)
@@ -22,4 +22,4 @@
 		var/mob/living/carbon/C = user
 		var/datum/mutation/human/HM = GLOB.mutations_list[CHAMELEON]
 		if(HM in C.dna.mutations)
-			HM.force_lose(C)
+			C.dna.force_lose(HM)

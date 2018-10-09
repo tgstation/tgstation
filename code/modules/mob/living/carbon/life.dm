@@ -262,12 +262,12 @@
 					vomit()
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-				
+
 
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-			
+
 
 
 
@@ -315,7 +315,7 @@
 		return
 
 	var/deceasedturf = get_turf(src)
-	
+
 	// Closed turfs don't have any air in them, so no gas building up
 	if(!istype(deceasedturf,/turf/open))
 		return
@@ -388,7 +388,7 @@
 					dna.temporary_mutations.Remove(mut)
 					continue
 				HM = GLOB.mutations_list[mut]
-				HM.force_lose(src)
+				dna.force_lose(HM)                      //if you read this i forgot to change this
 				dna.temporary_mutations.Remove(mut)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)

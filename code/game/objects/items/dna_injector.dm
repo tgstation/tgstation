@@ -35,12 +35,12 @@
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/datum/mutation/human/HM in remove_mutations)
-			HM.force_lose(M)
+			M.dna.force_lose(HM)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if(HM.name == RACEMUT)
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-			HM.force_give(M)
+			M.dna.force_give(HM)
 		if(fields)
 			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				M.real_name = fields["name"]
@@ -321,18 +321,18 @@
 			if(HM.name == RACEMUT)
 				if(ishuman(M))
 					continue
-				M = HM.force_lose(M)
+				M = M.dna.force_lose(HM)
 			else
-				HM.force_lose(M)
+				M.dna.force_lose(HM)
 		for(var/datum/mutation/human/HM in add_mutations)
 			if((HM in M.dna.mutations) && !(M.dna.temporary_mutations[HM.name]))
 				continue //Skip permanent mutations we already have.
 			if(HM.name == RACEMUT && ishuman(M))
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-				M = HM.force_give(M)
+				M = M.dna.force_give(HM)
 			else
-				HM.force_give(M)
+				M.dna.force_give(HM)
 			M.dna.temporary_mutations[HM.name] = endtime
 		if(fields)
 			if(fields["name"] && fields["UE"] && fields["blood_type"])

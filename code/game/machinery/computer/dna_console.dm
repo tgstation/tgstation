@@ -48,7 +48,7 @@ More mutations
 
 	var/injectorready = 0	//world timer cooldown var
 	var/current_screen = "mainmenu"
-	var/current_mutation   //what block are we inspecting? only used when screen = "info"
+	var/datum/mutation/human/current_mutation   //what block are we inspecting? only used when screen = "info"
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
@@ -293,7 +293,6 @@ More mutations
 						stored_research.discovered_mutations += current_mutation
 					mut_name = current_mutation.name
 					mut_name = current_mutation.desc
-				var/datum/mutation/M = viable_occupant.dna.mutations
 				temp_html += status
 				temp_html += buttons
 				temp_html += "<h1>Mutation: [mut_name]</h1>"
@@ -334,14 +333,15 @@ More mutations
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						var/cur_block = (i / DNA_BLOCK_SIZE) + 1
-						if(!ispath(viable_occupant.dna.mutation_index[cur_block]))
+						to_chat(world,"10-[cur_block]-[i]-[DNA_BLOCK_SIZE]")
+						if(viable_occupant.dna.mutation_index[cur_block-1] in viable_occupant.dna.mutations)
 							var/mut_style = "dnaBlockNumber"
-							var/datum/mutation/M = viable_occupant.dna.mutation_index[cur_block]
+							var/datum/mutation/human/M = viable_occupant.dna.mutation_index[cur_block]
 							if(M in stored_research.discovered_mutations)
-								switch(M.quality)
+								switch(initial(M.quality))
 									if(POSITIVE)
 										mut_style = "dnaBlockNumberGood"
-									if(NEUTRAL)
+									if(MINOR_NEGATIVE)
 										mut_style = "dnaBlockNumberNeutral"
 									if(NEGATIVE)
 										mut_style = "dnaBlockNumberBad"

@@ -77,7 +77,7 @@
 	if(!group)
 		return
 	for(var/datum/mutation/human/HM in group)
-		HM.force_lose(holder)
+		force_lose(HM)
 
 /datum/dna/proc/generate_uni_identity()
 	. = ""
@@ -109,14 +109,21 @@
 	var/result = ""
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
 	shuffle_inplace(mutations_temp)
-	for(var/i to DNA_STRUC_ENZYMES_BLOCKS)
+	to_chat(world,"1")
+	for(var/i in 1 to DNA_STRUC_ENZYMES_BLOCKS)
 		var/datum/mutation/M = mutations_temp[i]
 		mutation_index[M.type] = i
-	for(var/datum/mutation/human/A in mutation_index)
+		to_chat(world,"2")
+	to_chat(world,"3")
+	for(var/M in mutation_index)
+		to_chat(world,"4-[M]")
+		var/datum/mutation/human/A = M
 		if(initial(A.name) == RACEMUT && ismonkey(holder))
-			sorting[mutation_index[A]] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			mutations |= A
+			to_chat(world,"4.1")
+			sorting[mutation_index[A]] = num2hex(initial(A.lowest_value) + rand(0, 256 * 6), DNA_BLOCK_SIZE)
+			mutations |= new A()
 		else
+			to_chat(world,"4.2")
 			sorting[mutation_index[A]] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
 
 	for(var/B in sorting)
@@ -151,6 +158,27 @@
 			setblock(uni_identity, blocknumber, construct_block(GLOB.facial_hair_styles_list.Find(H.facial_hair_style), GLOB.facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
+
+/datum/dna/proc/force_give(datum/mutation/human/HM)
+	if(holder)
+		var/datum/mutation/human/A = new HM()
+		to_chat(world,"6-[A]-[HM]")
+		set_block(1, A)
+		. = A.on_acquiring(holder)
+		if(.)
+			qdel(A)
+
+/datum/dna/proc/force_lose(datum/mutation/human/HM)
+	if(holder)
+		var/datum/mutation/human/A
+		if(ispath(HM) && mutations[HM])
+			A = mutations[HM]
+		else if(!ispath(HM))
+			A = HM
+		else
+			return TRUE
+		set_block(holder, 0, HM)
+		. = A.on_losing(holder)
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -321,7 +349,7 @@
 		return
 
 
-	for(var/datum/mutation/A in mutation_index)
+	for(var/datum/mutation/A in dna.mutation_index)
 		if(ismob(dna.check_block(force_powers, A)))
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
@@ -329,28 +357,34 @@
 
 /datum/dna/proc/check_block(force_power=0, datum/mutation/human/A)
 	if(check_block_string())
-		if(prob(initial(A.get_chance))||force_power)
+		if(prob(initial(A.get_chance)) || force_power)
 			if(ispath(A))
-			. = A.on_acquiring(holder)
+				. = A.on_acquiring(holder)
 	else if(!ispath(A))
 		. = A.on_losing(holder)
 
-/datum/dna/proc/check_block_string(se_string, datum/mutation/A)
+/datum/dna/proc/check_block_string(se_string, datum/mutation/human/A)
 	if(!se_string)
 		se_string = struc_enzymes
 	if(lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return 0
-	if(hex2num(getblock(se_string, mutation_index[A])) >= inital(A.lowest_value))
+	if(hex2num(getblock(se_string, mutation_index[A])) >= initial(A.lowest_value))
 		return 1
 
-/datum/dna/proc/set_se(block, on=TRUE, datum/mutation/A)
+/datum/dna/proc/set_se(on=TRUE, datum/mutation/human/A)
 	if(!struc_enzymes || lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return
+	to_chat(world,"8-[A]")
 	var/lowest_value = initial(A.lowest_value)
 	var/before = copytext(struc_enzymes, 1, ((mutation_index[A] - 1) * DNA_BLOCK_SIZE) + 1)
 	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
-	var/after = copytext(struc_enzymes, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
+	var/after = copytext(struc_enzymes, (mutation_index[A] * DNA_BLOCK_SIZE) + 1, 0)
 	return before + injection + after
+
+
+/datum/dna/proc/set_block(on=TRUE, datum/mutation/human/A)
+	if(holder && holder.has_dna())
+		struc_enzymes = set_se(on, A)
 
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
@@ -374,25 +408,35 @@
 	if(!has_dna())
 		return
 	var/datum/mutation/human/num = pick(candidates)
-	. = num.force_give(src)
+	. = dna.force_give(num)
 
 /mob/living/carbon/proc/randmutb()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT])
-	. = HM.force_give(src)
+	var/list/possible = list()
+	for(var/A in dna.mutation_index)
+		to_chat(world,"1")
+		var/datum/mutation/human/HM = A
+		to_chat(world,"2-[HM]")
+		if(initial(HM.quality) == POSITIVE)
+			possible += HM
+	if(possible.len)
+		. = dna.force_give(pick(possible))
+		return TRUE
 
 /mob/living/carbon/proc/randmutg()
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick(GLOB.good_mutations)
-	. = HM.force_give(src)
-
-/mob/living/carbon/proc/randmutvg()
-	if(!has_dna())
-		return
-	var/datum/mutation/human/HM = pick((GLOB.good_mutations) - GLOB.mutations_list[HULK] - GLOB.mutations_list[DWARFISM])
-	. = HM.force_give(src)
+	var/list/possible = list()
+	for(var/A in dna.mutation_index)
+		to_chat(world,"1")
+		var/datum/mutation/human/HM = A
+		to_chat(world,"2-[HM]")
+		if(initial(HM.quality) == NEGATIVE)
+			possible += HM
+	if(possible.len)
+		. = dna.force_give(pick(possible))
+		return TRUE
 
 /mob/living/carbon/proc/randmuti()
 	if(!has_dna())

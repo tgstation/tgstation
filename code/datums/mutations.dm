@@ -4,10 +4,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 	var/name
 
-/datum/mutation/New()
-	GLOB.mutations_list[name] = src
-
 /datum/mutation/human
+	name = "mutation"
+	var/desc = "QAas blest"
 	var/locked
 	var/quality
 	var/get_chance = 100
@@ -20,25 +19,21 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/health_req //minimum health required to acquire the mutation
 	var/limb_req //required limbs to acquire this mutation
 	var/time_coeff = 1 //coefficient for timed mutations
+	var/datum/dna/dna
+	var/mob/living/carbon/human/owner
 
-/datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
-	set_block(owner)
-	. = on_acquiring(owner)
-
-/datum/mutation/human/proc/force_lose(mob/living/carbon/human/owner)
-	set_block(owner, 0)
-	. = on_losing(owner)
-
-/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/owner)
-	if(!owner || !istype(owner) || owner.stat == DEAD || (src in owner.dna.mutations))
+/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
+	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))
 		return TRUE
-	if(species_allowed.len && !species_allowed.Find(owner.dna.species.id))
+	if(species_allowed.len && !species_allowed.Find(H.dna.species.id))
 		return TRUE
-	if(health_req && owner.health < health_req)
+	if(health_req && H.health < health_req)
 		return TRUE
-	if(limb_req && !owner.get_bodypart(limb_req))
+	if(limb_req && !H.get_bodypart(limb_req))
 		return TRUE
-	owner.dna.mutations.Add(src)
+	owner = H
+	dna = H.dna
+	dna.mutations[src] = type
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
@@ -77,6 +72,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 			mut_overlay.Remove(get_visual_indicator(owner))
 			owner.overlays_standing[layer_used] = mut_overlay
 			owner.apply_overlay(layer_used)
+			qdel(src)
 		return 0
 	return 1
 
@@ -93,7 +89,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /mob/living/carbon/human/update_mutations_overlay()
 	for(var/datum/mutation/human/CM in dna.mutations)
 		if(CM.species_allowed.len && !CM.species_allowed.Find(dna.species.id))
-			CM.force_lose(src) //shouldn't have that mutation at all
+			dna.force_lose(CM) //shouldn't have that mutation at all
 			continue
 		if(CM.visual_indicators.len)
 			var/list/mut_overlay = list()
