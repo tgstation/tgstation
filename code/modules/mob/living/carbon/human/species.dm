@@ -1597,9 +1597,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return TRUE
 
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
-	var/list/visible_items = H.get_visible_items()
-	for(var/obj/item/I in visible_items)
-		I.extinguish()
 	return
 
 

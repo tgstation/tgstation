@@ -908,8 +908,11 @@
 	return FALSE
 
 /mob/living/proc/ExtinguishMob()
+	for(var/obj/item/I in held_items)
+		I.extinguish()
+
 	if(on_fire)
-		on_fire = 0
+		on_fire = FALSE
 		fire_stacks = 0
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
