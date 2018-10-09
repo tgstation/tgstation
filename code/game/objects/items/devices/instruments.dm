@@ -281,7 +281,7 @@
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		beacon_music(user)
 
-/obj/item/musicbeacon/proc/beacon_music(mob/M)
+/obj/item/musicbeacon/proc/beacon_music(mob/living/M)
 	if(!display_names)
 		var/static/list/instruments = list(
 								/obj/item/instrument/violin,
@@ -302,13 +302,13 @@
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/instrument = new display_names[choice]
+	var/obj/instrument = new display_names[choice]
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
 	pod.explosionSize = list(0,0,0,2)
 	instrument.forceMove(pod)
 	if(istype(M.ears, /obj/item/radio/headset))
-		to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Instrument request recieved. Your package is inbound, please stand back from the landing site.</span> Message ends.\"")
+		to_chat(M, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Instrument request recieved. Your package is inbound, please stand back from the landing site.</span> Message ends.\"")
 	else
-		to_chat(H, "<span class = danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>")
+		to_chat(M, "<span class = danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>")
 	new /obj/effect/DPtarget(get_turf(src), pod)
 	qdel(src)
