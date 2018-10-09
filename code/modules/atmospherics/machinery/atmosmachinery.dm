@@ -337,7 +337,7 @@ Pipelines + Other Objects -> Pipe network
 	//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(is_type_in_list(src, GLOB.ventcrawl_machinery))
+	if(istype(L) && is_type_in_list(src, GLOB.ventcrawl_machinery))
 		L.handle_ventcrawl(src)
 		return
 	..()

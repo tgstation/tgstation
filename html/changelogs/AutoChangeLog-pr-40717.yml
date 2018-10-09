@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Added more job specific items for the family heirloom trait."
-  - tweak: "Moths that have the heirloom trait now always have a lantern as their heirloom."

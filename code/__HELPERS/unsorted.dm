@@ -259,7 +259,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
 		if(A.stat == DEAD)
 			continue
-		if(A.control_disabled == 1)
+		if(A.control_disabled)
 			continue
 		if(check_mind)
 			if(!A.mind)

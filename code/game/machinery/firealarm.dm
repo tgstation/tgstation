@@ -58,8 +58,6 @@
 /obj/machinery/firealarm/update_icon()
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	var/area/A = src.loc
-	A = A.loc
 
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
@@ -69,23 +67,32 @@
 		icon_state = "firex"
 		return
 
+	icon_state = "fire0"
+
 	if(stat & NOPOWER)
-		icon_state = "fire0"
 		return
 
-	if(is_station_level(z))
-		add_overlay("overlay_[GLOB.security_level]")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-	else
-		add_overlay("overlay_[SEC_LEVEL_GREEN]")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	add_overlay("fire_overlay")
 
-	if(detecting)
-		add_overlay("overlay_[A.fire ? "fire" : "clear"]")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_[A.fire ? "fire" : "clear"]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	if(is_station_level(z))
+		add_overlay("fire_[GLOB.security_level]")
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[GLOB.security_level]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 	else
-		add_overlay("overlay_fire")
-		SSvis_overlays.add_vis_overlay(src, icon, "overlay_fire", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+		add_overlay("fire_[SEC_LEVEL_GREEN]")
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_[SEC_LEVEL_GREEN]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+
+	var/area/A = src.loc
+	A = A.loc
+
+	if(!detecting || !A.fire)
+		add_overlay("fire_off")
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_off", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else if(obj_flags & EMAGGED)
+		add_overlay("fire_emagged")
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_emagged", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+	else
+		add_overlay("fire_on")
+		SSvis_overlays.add_vis_overlay(src, icon, "fire_on", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()
@@ -124,37 +131,23 @@
 	var/area/A = get_area(src)
 	A.firereset(src)
 
-/obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "firealarm", name, 300, 150, master_ui, state)
-		ui.open()
-
-/obj/machinery/firealarm/ui_data(mob/user)
-	var/list/data = list()
-	data["emagged"] = obj_flags & EMAGGED ? 1 : 0
-
-	if(is_station_level(z))
-		data["seclevel"] = get_security_level()
-	else
-		data["seclevel"] = "green"
-
+/obj/machinery/firealarm/attack_hand(mob/user)
+	if(buildstage != 2)
+		return ..()
 	var/area/A = get_area(src)
-	data["alarm"] = A.fire
+	if(A.fire)
+		reset()
+	else
+		alarm()
 
-	return data
-
-/obj/machinery/firealarm/ui_act(action, params)
-	if(..() || buildstage != 2)
-		return
-	switch(action)
-		if("reset")
-			reset()
-			. = TRUE
-		if("alarm")
-			alarm()
-			. = TRUE
+/obj/machinery/firealarm/attack_ai()
+	if(buildstage != 2)
+		return ..()
+	var/area/A = get_area(src)
+	if(A.fire)
+		reset()
+	else
+		alarm()
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -320,8 +313,3 @@
 	if (!party_overlay)
 		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
 	A.add_overlay(party_overlay)
-
-/obj/machinery/firealarm/partyalarm/ui_data(mob/user)
-	. = ..()
-	var/area/A = get_area(src)
-	.["alarm"] = A && A.party
