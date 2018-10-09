@@ -113,14 +113,7 @@
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	if(!last_fire_update)
-		last_fire_update = fire_stacks
-	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
-		last_fire_update = fire_stacks
-		update_fire()
-
 	..()
-
 	if(dna)
 		dna.species.handle_fire(src)
 

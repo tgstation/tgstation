@@ -33,13 +33,6 @@
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
-/turf/open/lava/Exited(atom/movable/Obj, atom/newloc)
-	. = ..()
-	if(isliving(Obj))
-		var/mob/living/L = Obj
-		if(!islava(newloc) && !L.on_fire)
-			L.update_fire()
-
 /turf/open/lava/hitby(atom/movable/AM)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
@@ -112,7 +105,6 @@
 			var/mob/living/L = thing
 			if(L.movement_type & FLYING)
 				continue	//YOU'RE FLYING OVER IT
-
 			var/buckle_check = L.buckling
 			if(!buckle_check)
 				buckle_check = L.buckled
@@ -124,10 +116,6 @@
 				var/mob/living/live = buckle_check
 				if("lava" in live.weather_immunities)
 					continue
-
-			if(!L.on_fire)
-				L.update_fire()
-
 			var/skip_redundant = FALSE // no sense doing the processing to burn items twice, it would just return anyway.
 
 			if(L.resting || L.lying) //burn all visible non-lavaproofed items if they're lying down on the lava.

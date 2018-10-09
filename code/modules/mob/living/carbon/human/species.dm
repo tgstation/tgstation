@@ -1142,7 +1142,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(target.health >= 0 && !(target.has_trait(TRAIT_FAKEDEATH)))
 		target.help_shake_act(user)
 		if(target != user)
-			log_combat(user, target, "shook")
+			log_combat(user, target, "shaken")
 		return 1
 	else
 		var/we_breathe = !user.has_trait(TRAIT_NOBREATH)
@@ -1151,7 +1151,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(we_breathe && we_lung)
 			user.do_cpr(target)
 		else if(we_breathe && !we_lung)
-			to_chat(user, "<span class='warning'>You have no lungs to breathe with, so you cannot perform CPR.</span>")
+			to_chat(user, "<span class='warning'>You have no lungs to breathe with, so you cannot peform CPR.</span>")
 		else
 			to_chat(user, "<span class='notice'>You do not breathe, so you cannot perform CPR.</span>")
 
@@ -1270,7 +1270,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
-						"<span class='userdanger'>[user] attempted to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, target, "attempted to disarm")
 
 
@@ -1600,7 +1600,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/visible_items = H.get_visible_items()
 	for(var/obj/item/I in visible_items)
 		I.extinguish()
-	H.last_fire_update = null
 	return
 
 
