@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - balance: "Security officers who have been assigned to a department now have access to more areas inside it:"
-  - balance: "Supply: Cargo bay. Engineering: Atmospherics. Medical: Morgue, surgery and cloning. RnD: Toxins."

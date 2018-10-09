@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a runtime resulting in grown weapons not containing the correct reagents of the seed used to grow them."
