@@ -64,6 +64,35 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE	(1<<6) //doesn't take damage
 #define FREEZE_PROOF	(1<<7) //can't be frozen
 
+/obj/item/proc/clothing_resistance_flag_examine_message(mob/user)
+	if(resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, "[src] seems extremely robust! It'll probably withstand anything that could happen to it!")
+		return
+	if(resistance_flags & LAVA_PROOF)
+		to_chat(user, "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!")
+	if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+		to_chat(user, "[src] looks pretty robust! It'd probably be able to withstand acid!")
+	if(resistance_flags & FREEZE_PROOF)
+		to_chat(user, "[src] is made of cold-resistant materials.")
+
+	var/fire_resist_message = "[src] is made of fire-retardant materials."
+	if(resistance_flags & FIRE_PROOF)
+		to_chat(user, fire_resist_message)
+	else if(istype(src, /obj/item/clothing))
+		var/obj/item/clothing/C = src
+		if(C.max_heat_protection_temperature == FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+			to_chat(user, fire_resist_message)
+			return
+		fire_resist_message = "[src] is made of thermally insulated materials and offers some protection to fire."
+		if(istype(C, /obj/item/clothing/head) && C.max_heat_protection_temperature == (HELMET_MAX_TEMP_PROTECT || SPACE_HELM_MAX_TEMP_PROTECT || FIRE_HELM_MAX_TEMP_PROTECT))
+			to_chat(user, fire_resist_message)
+		else if(istype(C, /obj/item/clothing/gloves) && C.max_heat_protection_temperature == GLOVES_MAX_TEMP_PROTECT)
+			to_chat(user, fire_resist_message)
+		else if(istype(C, /obj/item/clothing/shoes) && C.max_heat_protection_temperature == SHOES_MAX_TEMP_PROTECT)
+			to_chat(user, fire_resist_message)
+		else if(istype(C, /obj/item/clothing/suit) && C.max_heat_protection_temperature == SPACE_SUIT_MAX_TEMP_PROTECT)
+			to_chat(user, fire_resist_message)
+
 //tesla_zap
 #define TESLA_MACHINE_EXPLOSIVE		(1<<0)
 #define TESLA_ALLOW_DUPLICATES		(1<<1)
