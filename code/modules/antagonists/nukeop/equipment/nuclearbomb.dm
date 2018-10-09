@@ -5,6 +5,7 @@
 	icon_state = "nuclearbomb_base"
 	anchored = FALSE
 	density = TRUE
+	layer = OBJ_LAYER
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	var/timer_set = 90
