@@ -115,6 +115,13 @@
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 10, 1)
 
+	//the fire tries to damage any exposed clothes and items
+	var/list/burning_items = get_visible_items(TRUE)
+
+	for(var/X in burning_items)
+		var/obj/item/I = X
+		I.fire_act((fire_stacks * 50)) //this is divided by %2 by fire_act()
+
 /mob/living/proc/handle_stomach()
 	return
 

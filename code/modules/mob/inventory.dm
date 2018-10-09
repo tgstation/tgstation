@@ -387,6 +387,11 @@
 		items += I
 	return items
 
+/mob/living/silicon/get_visible_items(top_layer_only)
+	return
+
+/mob/living/silicon/robot/get_visible_items(top_layer_only)
+	return get_selected_module()
 
 /mob/living/carbon/monkey/get_visible_items(top_layer_only)
 	if(top_layer_only)

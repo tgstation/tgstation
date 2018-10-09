@@ -1574,13 +1574,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!CanIgniteMob(H))
 		return
 	if(H.on_fire)
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = H.get_visible_items(TRUE)
-
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			I.fire_act((H.fire_stacks * 50)) //fire_act() divides this by %2
-
 		var/thermal_protection = H.get_thermal_protection()
 
 		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)

@@ -814,13 +814,6 @@
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
-/mob/living/carbon/ExtinguishMob()
-	for(var/X in get_equipped_items())
-		var/obj/item/I = X
-		I.acid_level = 0 //washes off the acid on our clothes
-		I.extinguish() //extinguishes our clothes
-	..()
-
 /mob/living/carbon/fakefire(var/fire_icon = "Generic_mob_burning")
 	var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 	new_fire_overlay.appearance_flags = RESET_COLOR

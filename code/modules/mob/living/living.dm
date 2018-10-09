@@ -908,9 +908,6 @@
 	return FALSE
 
 /mob/living/proc/ExtinguishMob()
-	for(var/obj/item/I in held_items)
-		I.extinguish()
-
 	if(on_fire)
 		on_fire = FALSE
 		fire_stacks = 0
@@ -920,6 +917,13 @@
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 		update_fire()
+
+	var/list/visible_items = get_visible_items()
+	for(var/X in visible_items)
+		var/obj/item/I = X
+		I.acid_level = 0 //washes off acid
+		I.extinguish() //put out any clothing and inhand items
+
 
 /mob/living/proc/adjust_fire_stacks(add_fire_stacks) //Adjusting the amount of fire_stacks we have on person
 	fire_stacks = CLAMP(fire_stacks + add_fire_stacks, -20, 20)

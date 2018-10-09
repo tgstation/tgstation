@@ -146,12 +146,5 @@
 	. = ..()
 	if(on_fire)
 
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = get_visible_items(TRUE)
-
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			I.fire_act((fire_stacks * 50))
-
 		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
