@@ -37,7 +37,7 @@
 
 		active_hotspot = new /obj/effect/hotspot(src)
 		active_hotspot.temperature = exposed_temperature
-		active_hotspot.volume = exposed_volume
+		active_hotspot.volume = exposed_volume*25
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
