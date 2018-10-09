@@ -210,7 +210,7 @@
 	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
 		return
 
-	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new 
+	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
 	SSreligion.holy_weapon_type = holy_weapon.type
@@ -422,17 +422,15 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
-		S.real_name = name
-		S.name = name
 		S.ckey = C.ckey
+		S.fully_replace_character_name(null, "The spirit of [name]")
 		S.status_flags |= GODMODE
 		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
 			name = input
-			S.real_name = input
-			S.name = input
+			S.fully_replace_character_name(null, "The spirit of [input]")
 	else
 		to_chat(user, "The blade is dormant. Maybe you can try again later.")
 		possessed = FALSE
