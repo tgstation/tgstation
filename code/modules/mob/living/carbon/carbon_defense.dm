@@ -250,27 +250,25 @@
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
-	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
+	if(lying)
+		if(buckled)
+			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+			return
+		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
+						"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+	else
+		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
+					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+	AdjustStun(-60)
+	AdjustKnockdown(-60)
+	AdjustUnconscious(-60)
+	AdjustSleeping(-100)
+	if(resting)
+		resting = 0
+		update_canmove()
 
-		if(lying)
-			if(buckled)
-				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
-				return
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
-		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
-		AdjustStun(-60)
-		AdjustKnockdown(-60)
-		AdjustUnconscious(-60)
-		AdjustSleeping(-100)
-		if(resting)
-			resting = 0
-			update_canmove()
-
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
