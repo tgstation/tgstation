@@ -44,7 +44,7 @@
 					if(prob(25))
 						affected_mob.vomit(95)
 					H.emote("cough")
-					H.Knockdown(40)
+					H.Paralyze(40)
 					H.losebreath += 4
 				if(prob(3))
 					to_chat(H, "<span class='danger'>You feel very weak and dizzy...</span>")

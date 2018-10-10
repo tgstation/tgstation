@@ -176,7 +176,7 @@ Class Procs:
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
-			L.update_canmove()
+			L.update_mobility()
 	occupant = null
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)

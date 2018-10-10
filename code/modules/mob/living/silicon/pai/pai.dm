@@ -73,7 +73,6 @@
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
-	canmove = FALSE
 	var/silent = FALSE
 	var/brightness_power = 5
 
@@ -97,7 +96,6 @@
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
-	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = P
 		P = new /obj/item/paicard(newcardloc)

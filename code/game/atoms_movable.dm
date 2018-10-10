@@ -112,7 +112,7 @@
 		grab_state = 0
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+			L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)

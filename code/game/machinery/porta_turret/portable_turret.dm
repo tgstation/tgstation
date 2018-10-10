@@ -386,8 +386,8 @@
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			//If not emagged, only target non downed carbons
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.lying))
+			//If not emagged, only target carbons that can use items
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || !(C.mobility_flags & MOBILITY_USE)))
 				continue
 
 			//If emagged, target all but dead carbons

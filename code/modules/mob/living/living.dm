@@ -217,7 +217,7 @@
 		return FALSE
 	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
-	if(throwing || incapacitated())
+	if(throwing || !(mobility_flags & MOBILITY_PULL))
 		return FALSE
 
 	AM.add_fingerprint(src)
@@ -307,8 +307,8 @@
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
-/mob/living/incapacitated(ignore_restraints, ignore_grab)
-	if(stat || IsUnconscious() || IsStun() || IsKnockdown() || (!ignore_restraints && restrained(ignore_grab)))
+/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
+	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
 		return TRUE
 
 /mob/living/proc/InCritical()
@@ -361,7 +361,7 @@
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
-	update_canmove()
+	update_mobility()
 
 /mob/proc/get_contents()
 
@@ -370,18 +370,25 @@
 	set category = "IC"
 
 	if(!resting)
-		resting = TRUE
-		to_chat(src, "<span class='notice'>You are now resting.</span>")
-		update_rest_hud_icon()
-		update_canmove()
+		set_resting(TRUE, FALSE)
 	else
 		if(do_after(src, 10, target = src))
-			to_chat(src, "<span class='notice'>You get up.</span>")
-			resting = FALSE
-			update_rest_hud_icon()
-			update_canmove()
+			set_resting(FALSE, FALSE)
 		else
 			to_chat(src, "<span class='notice'>You fail to get up.</span>")
+
+/mob/living/proc/set_resting(rest, silent = TRUE)
+	if(!silent)
+		if(rest)
+			to_chat(src, "<span class='notice'>You are now resting.</span>")
+		else
+			to_chat(src, "<span class='notice'>You get up.</span>")
+	resting = rest
+	update_resting()
+
+/mob/living/proc/update_resting()
+	update_rest_hud_icon()
+	update_mobility()
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
@@ -433,7 +440,7 @@
 		stat = UNCONSCIOUS //the mob starts unconscious,
 		blind_eyes(1)
 		updatehealth() //then we check if the mob should wake up.
-		update_canmove()
+		update_mobility()
 		update_sight()
 		clear_alert("not_enough_oxy")
 		reload_fullscreen()
@@ -455,6 +462,8 @@
 	set_disgust(0)
 	SetStun(0, FALSE)
 	SetKnockdown(0, FALSE)
+	SetImmobilized(0, FALSE)
+	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
@@ -470,7 +479,7 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
-	update_canmove()
+	update_mobility()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
 		QDEL_LIST_ASSOC_VAL(mood.mood_events)
@@ -504,7 +513,7 @@
 	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
 
-	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
+	if(!(mobility_flags & MOBILITY_STAND) && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
@@ -606,7 +615,7 @@
 		var/obj/C = loc
 		C.container_resist(src)
 
-	else if(canmove)
+	else if(mobility_flags & MOBILITY_MOVE)
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 		else if(last_special <= world.time)
@@ -953,7 +962,7 @@
 						"[C] trips over [src] and falls!", \
 						"[C] topples over [src]!", \
 						"[C] leaps out of [src]'s way!")]</span>")
-	C.Knockdown(40)
+	C.Paralyze(40)
 
 /mob/living/ConveyorMove()
 	if((movement_type & FLYING) && !stat)
@@ -965,42 +974,63 @@
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
-/mob/living/proc/update_canmove()
-	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (has_trait(TRAIT_DEATHCOMA))
-	var/move_and_fall = stat == SOFT_CRIT && !pulledby
+/mob/living/proc/update_mobility()
+	var/stat_softcrit = stat == SOFT_CRIT
+	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
+	var/conscious = !IsUnconscious() && stat_conscious && !has_trait(TRAIT_DEATHCOMA)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
-	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
+	var/paralyzed = IsParalyzed()
+	var/stun = IsStun()
+	var/knockdown = IsKnockdown()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || move_and_fall || IsStun() || chokehold)
+	var/canmove = !IsImmobilized() && !stun && conscious && !paralyzed && !buckled && (!stat_softcrit || !pulledby) && !chokehold && !IsFrozen() && (has_arms || ignore_legs || has_legs)
+	if(canmove)
+		mobility_flags |= MOBILITY_MOVE
+	else
+		mobility_flags &= ~MOBILITY_MOVE
+	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && has_legs && !(buckled && buckled.buckle_lying)
+	var/canstand = canstand_involuntary && !resting
+
+	if(canstand)
+		mobility_flags |= (MOBILITY_STAND | MOBILITY_UI | MOBILITY_PULL)
+		lying = 0
+	else
+		mobility_flags &= ~(MOBILITY_STAND | MOBILITY_UI | MOBILITY_PULL)
+		if(!lying)
+			lying = pick(90, 270)
+	var/canitem = !paralyzed && !stun && conscious && !chokehold && has_arms
+	if(canitem)
+		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
+	else
+		mobility_flags &= ~(MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
+	if(!(mobility_flags & MOBILITY_USE))
 		drop_all_held_items()
-		unset_machine()
+	if(!(mobility_flags & MOBILITY_PULL))
 		if(pulling)
 			stop_pulling()
-	else if(has_legs || ignore_legs)
-		lying = 0
-	if(buckled)
-		lying = 90*buckle_lying
-	else if(!lying)
-		if(resting)
-			fall()
-		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
-			fall(forced = 1)
-	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	if(!(mobility_flags & MOBILITY_UI))
+		unset_machine()
 	density = !lying
+	var/changed = lying == lying_prev
 	if(lying)
+		if(!lying_prev)
+			fall(!canstand_involuntary)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
 			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
 	else
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	if(!lying && lying_prev)
+	if(changed)
 		if(client)
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
-	return canmove
+
+/mob/living/proc/fall(forced)
+	if(!(mobility_flags & MOBILITY_USE))
+		drop_all_held_items()
 
 /mob/living/proc/AddAbility(obj/effect/proc_holder/A)
 	abilities.Add(A)
@@ -1039,7 +1069,7 @@
 	if(.)
 		if(client)
 			reset_perspective()
-		update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
+		update_mobility() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
 /mob/living/proc/update_z(new_z) // 1+ to register, null to unregister
 	if (registered_z != new_z)
@@ -1130,7 +1160,7 @@
 	. = ..()
 	switch(var_name)
 		if("knockdown")
-			SetKnockdown(var_value)
+			SetParalyzed(var_value)
 		if("stun")
 			SetStun(var_value)
 		if("unconscious")
