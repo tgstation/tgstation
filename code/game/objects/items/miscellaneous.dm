@@ -22,7 +22,7 @@
 	
 /obj/item/herobeacon
 	name = "heroic beacon"
-	desc = "To summon heroes from the past to protect the future"
+	desc = "To summon heroes from the past to protect the future."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	item_state = "radio"
@@ -49,7 +49,7 @@
 	qdel(src)
 
 /obj/item/storage/box/hero
-	name = "Courageous Tomb Raider - 1940's"
+	name = "Courageous Tomb Raider - 1940's."
 	
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
@@ -59,7 +59,7 @@
 	new /obj/item/melee/curator_whip(src)
 
 /obj/item/storage/box/hero/astronaut
-	name = "First Man on the Moon - 1960's"
+	name = "First Man on the Moon - 1960's."
 	
 /obj/item/storage/box/hero/astronaut/PopulateContents()
 	new /obj/item/clothing/suit/space/nasavoid(src)
@@ -68,7 +68,7 @@
 	new /obj/item/gps(src)
 	
 /obj/item/storage/box/hero/scottish
-	name = "Braveheart, the Scottish rebel - 1300's"
+	name = "Braveheart, the Scottish rebel - 1300's."
 	
 /obj/item/storage/box/hero/scottish/PopulateContents()
 	new /obj/item/clothing/under/kilt(src)
