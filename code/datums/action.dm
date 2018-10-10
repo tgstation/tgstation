@@ -487,7 +487,10 @@
 		owner.put_in_hands(I)
 		I.attack_self(owner)
 	else
-		to_chat(owner, "<span class='cultitalic'>Your hands are full!</span>")
+		if (owner.get_num_arms() <= 0)
+			to_chat(owner, "<span class='warning'>You dont have any usable hands!</span>")
+		else
+			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
 
 /datum/action/item_action/agent_box
 	name = "Deploy Box"

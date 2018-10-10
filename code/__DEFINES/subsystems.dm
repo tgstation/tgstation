@@ -22,8 +22,6 @@
 //In most cases you want a subsystem instead
 #define TIMER_LOOP				(1<<5)
 
-#define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
-
 #define TIMER_ID_NULL -1
 
 //For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.

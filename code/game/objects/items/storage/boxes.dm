@@ -404,6 +404,22 @@
 	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
 	cube_type = /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
 
+/obj/item/storage/box/gorillacubes
+	name = "gorilla cube box"
+	desc = "Waffle Co. brand gorilla cubes. Do not taunt."
+	icon_state = "monkeycubebox"
+	illustration = null
+
+/obj/item/storage/box/gorillacubes/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 3
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+
+/obj/item/storage/box/gorillacubes/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/monkeycube/gorilla(src)
+
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
 	desc = "Has so many empty IDs."
@@ -596,7 +612,7 @@
 	STR.max_items = 21
 	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
 	STR.max_combined_w_class = 21
-	STR.click_gather = TRUE
+	STR.click_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)

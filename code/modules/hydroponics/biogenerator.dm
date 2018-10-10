@@ -173,7 +173,7 @@
 			for(var/V in categories)
 				categories[V] = list()
 			for(var/V in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[V]
+				var/datum/design/D = SSresearch.techweb_design_by_id(V)
 				for(var/C in categories)
 					if(C in D.category)
 						categories[C] += D

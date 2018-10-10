@@ -33,6 +33,13 @@
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
+/turf/open/lava/Exited(atom/movable/Obj, atom/newloc)
+	. = ..()
+	if(isliving(Obj))
+		var/mob/living/L = Obj
+		if(!islava(newloc) && !L.on_fire)
+			L.update_fire()
+
 /turf/open/lava/hitby(atom/movable/AM)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
@@ -124,6 +131,9 @@
 					var/obj/O = visible_item
 					burn_items(O)
 				skip_redundant = TRUE
+
+			if(!L.on_fire)
+				L.update_fire()
 
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L

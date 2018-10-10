@@ -15,6 +15,7 @@
 	STR.max_items = 4
 	STR.can_hold = typecacheof(list(
 		/obj/item/stack/spacecash,
+		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
 		/obj/item/flashlight/pen,
@@ -75,6 +76,5 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/obj/item/stack/spacecash/c10/cash = new /obj/item/stack/spacecash/c10(src)
-	cash.amount = rand(1,5)
+	new /obj/item/holochip(src, rand(5,30))
 	update_icon()

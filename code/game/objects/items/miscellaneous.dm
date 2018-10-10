@@ -19,3 +19,10 @@
 	icon_state = "skub"
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")
+
+/obj/item/skub/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
+
+	user.gib()
+	playsound(src, 'sound/items/eatfood.ogg', 50, 1, -1)
+	return MANUAL_SUICIDE

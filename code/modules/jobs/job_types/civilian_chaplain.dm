@@ -39,11 +39,11 @@ Chaplain
 		H.put_in_hands(N)
 		return
 
-	var/new_religion = "Christianity"
+	var/new_religion = DEFAULT_RELIGION
 	if(M.client && M.client.prefs.custom_names["religion"])
 		new_religion = M.client.prefs.custom_names["religion"]
 
-	var/new_deity = "Space Jesus"
+	var/new_deity = DEFAULT_DEITY
 	if(M.client && M.client.prefs.custom_names["deity"])
 		new_deity = M.client.prefs.custom_names["deity"]
 
@@ -51,7 +51,7 @@ Chaplain
 
 
 	switch(lowertext(new_religion))
-		if("christianity")
+		if("christianity") // DEFAULT_RELIGION
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
 		if("satanism")
 			B.name = "The Unholy Bible"

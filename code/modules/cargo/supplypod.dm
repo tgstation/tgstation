@@ -92,7 +92,6 @@
 /obj/structure/closet/supplypod/proc/preOpen() //Called before the open() proc. Handles anything that occurs right as the pod lands.
 	var/turf/T = get_turf(src)
 	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
-	var/boomTotal = 0 //A counter used to check if the explosion does nothing
 	if (landingSound)
 		playsound(get_turf(src), landingSound, soundVolume, 0, 0)
 	for (var/mob/living/M in T)
@@ -108,10 +107,7 @@
 			M.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		M.adjustBruteLoss(damage)
 
-	for (var/i in B)
-		boomTotal += i //Count up all the values of the explosion
-
-	if (boomTotal != 0) //If the explosion list isn't all zeroes, call an explosion
+	if (B[1] || B[2] || B[3] || B[4]) //If the explosion list isn't all zeroes, call an explosion
 		explosion(get_turf(src), B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, "explosion", landingSound ? 15 : 80, 1)
@@ -215,13 +211,18 @@
 /obj/effect/ex_act()
 	return
 
-/obj/effect/DPtarget/Initialize(mapload, podParam, var/datum/supply_order/SO = null)
+/obj/effect/DPtarget/Initialize(mapload, podParam, var/single_order = null)
 	if (ispath(podParam)) //We can pass either a path for a pod (as expressconsoles do), or a reference to an instantiated pod (as the centcom_podlauncher does)
 		podParam = new podParam() //If its just a path, instantiate it
 	pod = podParam
-	if (SO)
-		SO.generate(pod)
-	for (var/mob/living/M in podParam) //If there are any mobs in the supplypod, we want to forceMove them into the target. This is so that they can see where they are about to land, AND so that they don't get sent to the nullspace error room (as the pod is currently in nullspace)
+	if (single_order)
+		if (istype(single_order, /datum/supply_order))
+			var/datum/supply_order/SO = single_order
+			SO.generate(pod)
+		else if (istype(single_order, /atom/movable))
+			var/atom/movable/O = single_order
+			O.forceMove(pod)
+	for (var/mob/living/M in pod) //If there are any mobs in the supplypod, we want to forceMove them into the target. This is so that they can see where they are about to land, AND so that they don't get sent to the nullspace error room (as the pod is currently in nullspace)
 		M.forceMove(src)
 	if(pod.effectStun) //If effectStun is true, stun any mobs caught on this target until the pod gets a chance to hit them
 		for (var/mob/living/M in get_turf(src))

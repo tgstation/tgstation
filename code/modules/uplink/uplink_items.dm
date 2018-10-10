@@ -220,6 +220,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/dangerous/rawketlawnchair
+	name = "84mm Rocket Propelled Grenade Launcher"
+	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
+		Guaranteed to send your target out with a bang or your money back!"
+	item = /obj/item/gun/ballistic/automatic/rocketlauncher
+	cost = 8
+	surplus = 30
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/dangerous/grenadier
 	name = "Grenadier's belt"
 	desc = "A belt of a large variety of lethally dangerous and destructive grenades."
@@ -572,6 +581,21 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
 	item = /obj/item/ammo_box/magazine/mm195x129/incen
+
+/datum/uplink_item/ammo/rocket
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/rocket/basic
+	name = "84mm HE Rocket"
+	desc = "A low-yield anti-personnel HE rocket. Gonna take you out in style!"
+	item = /obj/item/ammo_box/magazine/rocket
+	cost = 4
+
+/datum/uplink_item/ammo/rocket/hedp
+	name = "84mm HEDP Rocket"
+	desc = "A high-yield HEDP rocket; extremely effective against armored targets, as well as surrounding personnel. Strike fear into the hearts of your enemies."
+	item = /obj/item/ammo_box/magazine/rocket/hedp
+	cost = 6
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
@@ -1438,7 +1462,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor")
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist")
 	cost = 5
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
@@ -1468,6 +1492,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
 	cost = 15
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
+
+/datum/uplink_item/role_restricted/gorillacubes
+	name = "Box of Gorilla Cubes"
+	desc = "A box with three Waffle Co. brand gorilla cubes. Eat big to get big. \
+			Caution: Product may rehydrate when exposed to water."
+	item = /obj/item/storage/box/gorillacubes
+	cost = 6
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/pressure_mod
@@ -1505,7 +1537,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Simply insert your bikehorn and get in, and get ready to have the funniest ride of your life! \
 			You can ram any spacemen you come across and stuff them into your car, kidnapping them and locking them inside until \
 			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
-			are very sensetive. Now with our included lube defense mechanism which will protect you against any angry shitcurity!"
+			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
+			Premium features can be unlocked with a cryptographic sequencer!"
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
 	restricted_roles = list("Clown")

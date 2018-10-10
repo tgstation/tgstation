@@ -16,14 +16,14 @@
 	for(var/mob/living/carbon/C in targets)
 		if(user.dropItemToGround(user.get_active_held_item()))
 			var/obj/item = pick(
-					new /obj/item/coin/gold(user.loc),
-					new /obj/item/coin/diamond(user.loc),
-					new /obj/item/coin/silver(user.loc),
-					new /obj/item/clothing/accessory/medal/gold(user.loc),
-					new /obj/item/stack/sheet/mineral/gold(user.loc),
-					new /obj/item/stack/sheet/mineral/silver(user.loc),
-					new /obj/item/stack/sheet/mineral/diamond(user.loc),
-					new /obj/item/stack/spacecash/c1000(user.loc))
+					new /obj/item/coin/gold(user.drop_location()),
+					new /obj/item/coin/diamond(user.drop_location()),
+					new /obj/item/coin/silver(user.drop_location()),
+					new /obj/item/clothing/accessory/medal/gold(user.drop_location()),
+					new /obj/item/stack/sheet/mineral/gold(user.drop_location()),
+					new /obj/item/stack/sheet/mineral/silver(user.drop_location()),
+					new /obj/item/stack/sheet/mineral/diamond(user.drop_location()),
+					new /obj/item/holochip(user.drop_location(), 1000))
 			C.put_in_hands(item)
 
 /obj/effect/proc_holder/spell/targeted/view_range

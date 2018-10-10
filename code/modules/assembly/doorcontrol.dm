@@ -6,6 +6,7 @@
 	var/id = null
 	var/can_change_id = 0
 	var/cooldown = FALSE //Door cooldowns
+	var/sync_doors = TRUE
 
 /obj/item/assembly/control/examine(mob/user)
 	..()
@@ -17,7 +18,7 @@
 	var/openclose
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if(M.id == src.id)
-			if(openclose == null)
+			if(openclose == null || !sync_doors)
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
 	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)

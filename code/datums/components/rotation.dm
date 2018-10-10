@@ -89,7 +89,7 @@
 /datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
 		return
-	if(istype(I,/obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		BaseRot(user,default_rotation_direction)
 		return COMPONENT_NO_AFTERATTACK
 
@@ -124,7 +124,7 @@
 	set src in oview(1)
 	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_CLOCKWISE)
+		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
 
 /atom/movable/proc/simple_rotate_counterclockwise()
 	set name = "Rotate Counter-Clockwise"
@@ -132,7 +132,7 @@
 	set src in oview(1)
 	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_COUNTERCLOCKWISE)
+		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
 
 /atom/movable/proc/simple_rotate_flip()
 	set name = "Flip"
@@ -140,4 +140,4 @@
 	set src in oview(1)
 	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_FLIP)
+		rotcomp.HandRot(null,usr,ROTATION_FLIP)

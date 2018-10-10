@@ -127,12 +127,15 @@
 	var/datum/bank_account/registered_account
 	var/obj/machinery/paystand/my_store
 
-
-
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
 	if(mapload && access_txt)
 		access = text2access(access_txt)
+
+/obj/item/card/id/attack_self(mob/user)
+	if(Adjacent(user))
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", "<span class='notice'>You show \the [src.name].</span>")
+	add_fingerprint(user)
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -142,16 +145,19 @@
 				update_label()
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/spacecash))
-		var/obj/item/stack/spacecash/vbucks = W
+	if(istype(W, /obj/item/holochip))
+		var/obj/item/holochip/holochip = W
 		if(registered_account)
-			var/fortnite_money = vbucks.value * vbucks.amount
-			registered_account.adjust_money(fortnite_money)
-			to_chat(user, "You insert [vbucks] into [src], adding $[fortnite_money] to your account.")
-			qdel(vbucks)
+			registered_account.adjust_money(holochip.credits)
+			to_chat(user, "You insert [holochip] into [src], adding [holochip.credits] credits to your account.")
+			qdel(holochip)
 
-
-/obj/item/card/id/attack_self(mob/user)
+/obj/item/card/id/AltClick(mob/living/user)
+	if(user.get_active_held_item() != src)
+		to_chat(user, "You must hold the ID in your hand to do this.")
+		return
+	if (!user.canUseTopic(src, BE_CLOSE) || !isliving(user))
+		return
 	if(!registered_account)
 		var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
 		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
@@ -170,10 +176,9 @@
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
 	if(registered_account.adjust_money(-amount_to_remove))
-		var/obj/item/stack/spacecash/c1/dosh = new /obj/item/stack/spacecash/c1(get_turf(user))
-		dosh.amount = amount_to_remove
-		user.put_in_hands(dosh)
-		to_chat(user, "You withdraw $[amount_to_remove].")
+		var/obj/item/holochip/holochip = new (get_turf(user), amount_to_remove)
+		user.put_in_hands(holochip)
+		to_chat(user, "You withdraw [amount_to_remove] credits into a holochip.")
 		return
 	else
 		to_chat(user, "You don't have the funds for that.")
@@ -187,10 +192,11 @@
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
-		to_chat(user, "Use your ID in-hand to pull money from your account in the form of cash.")
-		to_chat(user, "You can insert cash into your account by smashing the money against the ID.")
-		to_chat(user, "If you lose this ID card, you can reclaim your account by using a blank ID card inhand and punching in the account ID.")
-
+		to_chat(user, "Alt-Click your ID in-hand to pull money from your account in the form of holochips.")
+		to_chat(user, "You can insert credits into your account by pressing holochips against the ID.")
+		to_chat(user, "If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card inhand and punching in the account ID.")
+	else
+		to_chat(user, "There is no registered account on this card. Alt-Click to add one.")
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 

@@ -22,3 +22,4 @@
 
 /datum/component/rad_insulation/proc/rad_pass(datum/source, datum/radiation_wave/wave, width)
 	wave.intensity = wave.intensity*(1-((1-amount)/width)) // The further out the rad wave goes the less it's affected by insulation (larger width)
+	return COMPONENT_RAD_WAVE_HANDLED

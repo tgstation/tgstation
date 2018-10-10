@@ -36,7 +36,7 @@
 		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>")
 	else
 		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>")
-	
+
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
@@ -55,12 +55,16 @@
 		return
 
 	if(panel_open)
-		if(istype(I, /obj/item/multitool))
+		if(I.tool_behaviour == TOOL_MULTITOOL)
+			if(!multitool_check_buffer(user, I))
+				return
 			var/obj/item/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in [I]'s buffer. It can now be saved to pads with closed panels.</span>")
 			return TRUE
-	else if(istype(I, /obj/item/multitool))
+	else if(I.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, I))
+			return
 		var/obj/item/multitool/M = I
 		if(istype(M.buffer, /obj/machinery/quantumpad))
 			if(M.buffer == src)
@@ -159,19 +163,22 @@
 			flick("qpad-beam", target_pad)
 			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
 			for(var/atom/movable/ROI in get_turf(src))
+				if(QDELETED(ROI))
+					continue //sleeps in CHECK_TICK
+				   
 				// if is anchored, don't let through
 				if(ROI.anchored)
 					if(isliving(ROI))
 						var/mob/living/L = ROI
-						if(L.buckled)
-							// TP people on office chairs
-							if(L.buckled.anchored)
-								continue
-						else
+						//only TP living mobs buckled to non anchored items
+						if(!L.buckled || L.buckled.anchored)
 							continue
+					//Don't TP ghosts
 					else if(!isobserver(ROI))
 						continue
-				do_teleport(ROI, get_turf(target_pad))
+
+				do_teleport(ROI, get_turf(target_pad),null,TRUE,null,null,null,null,TRUE)
+				CHECK_TICK
 
 /obj/machinery/quantumpad/proc/initMappedLink()
 	. = FALSE

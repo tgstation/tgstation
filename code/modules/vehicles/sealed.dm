@@ -1,5 +1,6 @@
 /obj/vehicle/sealed
 	var/enter_delay = 20
+	var/mouse_pointer
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -17,6 +18,11 @@
 	if(M == dropping)
 		mob_try_enter(M)
 	return ..()
+
+/obj/vehicle/sealed/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if(ismob(AM))
+		remove_occupant(AM)
 
 /obj/vehicle/sealed/proc/mob_try_enter(mob/M)
 	if(!istype(M))

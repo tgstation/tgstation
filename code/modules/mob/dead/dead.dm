@@ -35,7 +35,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
 		onTransitZ(old_turf?.z, new_turf?.z)
+	var/oldloc = loc
 	loc = destination
+	Moved(oldloc, NONE, TRUE)
 
 /mob/dead/Stat()
 	..()

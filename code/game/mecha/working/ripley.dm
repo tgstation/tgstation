@@ -147,7 +147,7 @@
 			occupant_message("<span class='notice'>You unload [O].</span>")
 			O.forceMove(drop_location())
 			cargo -= O
-			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
+			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]", LOG_MECHA)
 	return
 
 

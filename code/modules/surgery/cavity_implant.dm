@@ -19,7 +19,7 @@
 	if(tool)
 		if(istype(tool, /obj/item/surgical_drapes) || istype(tool, /obj/item/bedsheet))
 			var/obj/item/inactive = user.get_inactive_held_item()
-			if(istype(inactive, /obj/item/cautery) || istype(inactive, /obj/item/screwdriver) || iscyborg(user))
+			if(istype(inactive, /obj/item/cautery) || inactive.tool_behaviour == TOOL_SCREWDRIVER || iscyborg(user))
 				attempt_cancel_surgery(surgery, tool, target, user)
 				return -1
 		user.visible_message("[user] begins to insert [tool] into [target]'s [target_zone].", "<span class='notice'>You begin to insert [tool] into [target]'s [target_zone]...</span>")

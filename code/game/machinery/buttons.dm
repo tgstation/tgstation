@@ -13,6 +13,9 @@
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 70)
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+
+/obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/Initialize(mapload, ndir = 0, built = 0)
@@ -55,7 +58,7 @@
 			icon_state = skin
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(panel_open || allowed(user))
 			default_deconstruction_screwdriver(user, "button-open", "[skin]",W)
 			update_icon()
@@ -83,7 +86,7 @@
 				req_access = board.accesses
 			to_chat(user, "<span class='notice'>You add [W] to the button.</span>")
 
-		if(!device && !board && istype(W, /obj/item/wrench))
+		if(!device && !board && W.tool_behaviour == TOOL_WRENCH)
 			to_chat(user, "<span class='notice'>You start unsecuring the button frame...</span>")
 			W.play_tool_sound(src)
 			if(W.use_tool(src, user, 40))
@@ -178,15 +181,21 @@
 	desc = "A door remote control switch."
 	var/normaldoorcontrol = FALSE
 	var/specialfunctions = OPEN // Bitflag, see assembly file
+	var/sync_doors = TRUE
+
+/obj/machinery/button/door/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/door/setup_device()
 	if(!device)
 		if(normaldoorcontrol)
 			var/obj/item/assembly/control/airlock/A = new(src)
-			device = A
 			A.specialfunctions = specialfunctions
+			device = A
 		else
-			device = new /obj/item/assembly/control(src)
+			var/obj/item/assembly/control/C = new(src)
+			C.sync_doors = sync_doors
+			device = C
 	..()
 
 /obj/machinery/button/door/incinerator_vent_toxmix
@@ -221,12 +230,18 @@
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/massdriver
 
+/obj/machinery/button/massdriver/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
 	icon_state = "launcher"
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/igniter
+
+/obj/machinery/button/ignition/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/button/ignition/incinerator
 	name = "combustion chamber ignition switch"
@@ -248,6 +263,9 @@
 	skin = "launcher"
 	device_type = /obj/item/assembly/control/flasher
 
+/obj/machinery/button/flasher/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
@@ -256,6 +274,9 @@
 	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
 	id = 1
+
+/obj/machinery/button/crematorium/indestructible
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/wallframe/button
 	name = "button frame"

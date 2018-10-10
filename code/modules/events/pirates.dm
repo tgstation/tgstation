@@ -146,14 +146,8 @@
 		new /obj/effect/temp_visual/emp(get_turf(S))
 
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
-	if(credits_stored < 200)
-		to_chat(user,"<span class='notice'>Not enough credits to retrieve.</span>")
-		return
-	while(credits_stored >= 200)
-		new /obj/item/stack/spacecash/c200(drop_location())
-		credits_stored -= 200
+	new /obj/item/holochip(drop_location(), credits_stored)
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
-
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")
@@ -434,6 +428,8 @@
 	var/mob/living/carbon/human/H = AM
 	if(H.stat != CONSCIOUS || !H.mind || !H.mind.assigned_role) //mint condition only
 		return 0
+	else if("pirate" in H.faction) //can't ransom your fellow pirates to CentCom!
+		return 0
 	else
 		if(H.mind.assigned_role in GLOB.command_positions)
 			return 3000
@@ -459,3 +455,12 @@
 /datum/export/pirate/cash/get_amount(obj/O)
 	var/obj/item/stack/spacecash/C = O
 	return ..() * C.amount * C.value
+
+/datum/export/pirate/holochip
+	cost = 1
+	unit_name = "holochip"
+	export_types = list(/obj/item/holochip)
+
+/datum/export/pirate/holochip/get_cost(atom/movable/AM)
+	var/obj/item/holochip/H = AM
+	return H.credits
