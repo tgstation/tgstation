@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	var/id = ""
 	var/specific_heat = 0
 	var/name = ""
-	var/gas_overlay = "" //icon_state in icons/effects/tile_effects.dmi
+	var/gas_overlay = "" //icon_state in icons/effects/atmospherics.dmi
 	var/moles_visible = null
 	var/dangerous = FALSE //currently used by canisters
 	var/fusion_power = 0 //How much the gas accelerates a fusion reaction
@@ -151,7 +151,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	rarity = 250
 
 /obj/effect/overlay/gas
-	icon = 'icons/effects/tile_effects.dmi'
+	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE  // should only appear in vis_contents, but to be safe
 	layer = FLY_LAYER

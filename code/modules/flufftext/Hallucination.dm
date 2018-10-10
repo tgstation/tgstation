@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/turf/center
 	var/list/flood_images = list()
 	var/list/turf/flood_turfs = list()
-	var/image_icon = 'icons/effects/tile_effects.dmi'
+	var/image_icon = 'icons/effects/atmospherics.dmi'
 	var/image_state = "plasma"
 	var/radius = 0
 	var/next_expand = 0
