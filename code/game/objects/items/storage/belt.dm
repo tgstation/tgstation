@@ -321,6 +321,7 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
