@@ -333,7 +333,7 @@ More mutations
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						var/cur_block = (i / DNA_BLOCK_SIZE) + 1
-						to_chat(world,"10-[cur_block]-[i]-[DNA_BLOCK_SIZE]")
+						to_chat(world,"10-[cur_block-1]-[i]-[DNA_BLOCK_SIZE]")
 						if(viable_occupant.dna.mutation_index[cur_block-1] in viable_occupant.dna.mutations)
 							var/mut_style = "dnaBlockNumber"
 							var/datum/mutation/human/M = viable_occupant.dna.mutation_index[cur_block]

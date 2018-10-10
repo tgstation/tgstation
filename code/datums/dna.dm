@@ -163,7 +163,7 @@
 	if(holder)
 		var/datum/mutation/human/A = new HM()
 		to_chat(world,"6-[A]-[HM]")
-		set_block(1, A)
+		set_block(1, HM)
 		. = A.on_acquiring(holder)
 		if(.)
 			qdel(A)
@@ -348,27 +348,41 @@
 	if(!has_dna())
 		return
 
-
-	for(var/datum/mutation/A in dna.mutation_index)
-		if(ismob(dna.check_block(force_powers, A)))
+	to_chat(world,"10")
+	for(var/A in dna.mutation_index)
+		to_chat(world,"11-[A]")
+		var/datum/mutation/human/HM = A
+		to_chat(world,"12-[A]")
+		if(ismob(dna.check_block(force_powers, HM)))
+			to_chat(world,"13")
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
 	update_mutations_overlay()
 
 /datum/dna/proc/check_block(force_power=0, datum/mutation/human/A)
-	if(check_block_string())
-		if(prob(initial(A.get_chance)) || force_power)
-			if(ispath(A))
-				. = A.on_acquiring(holder)
-	else if(!ispath(A))
-		. = A.on_losing(holder)
+	var/datum/mutation/human/HM = get_mutation(A)
+	if(check_block_string(A))
+		if(!HM)
+			to_chat(world,"14.1")
+			if(prob(initial(A.get_chance)) || force_power)
+				to_chat(world,"15")
+				. = force_give(A)
+	else if(HM)
+		to_chat(world,"14.2")
+		. = HM.on_losing(holder)
 
-/datum/dna/proc/check_block_string(se_string, datum/mutation/human/A)
-	if(!se_string)
-		se_string = struc_enzymes
-	if(lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
+/datum/dna/proc/get_mutation(A) //return the active mutation of a type if there is one
+	to_chat(world,"17")
+	for(var/datum/mutation/human/HM in mutations)
+		to_chat(world,"19[HM]-[A]")
+		if(HM.type == A)
+			to_chat(world,"20[HM]-[A]")
+			return HM
+
+/datum/dna/proc/check_block_string(datum/mutation/human/A)
+	if(lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return 0
-	if(hex2num(getblock(se_string, mutation_index[A])) >= initial(A.lowest_value))
+	if(hex2num(getblock(struc_enzymes, mutation_index[A])) >= initial(A.lowest_value))
 		return 1
 
 /datum/dna/proc/set_se(on=TRUE, datum/mutation/human/A)
