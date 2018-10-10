@@ -131,23 +131,23 @@
 	var/area/A = get_area(src)
 	A.firereset(src)
 
-/obj/machinery/firealarm/attack_hand(mob/user)
-	if(buildstage != 2)
-		return ..()
+/obj/machinery/firealarm/proc/toggle()
 	var/area/A = get_area(src)
 	if(A.fire)
 		reset()
 	else
 		alarm()
 
+/obj/machinery/firealarm/attack_hand(mob/user)
+	if(buildstage != 2)
+		return ..()
+	add_fingerprint(user)
+	toggle()
+
 /obj/machinery/firealarm/attack_ai()
 	if(buildstage != 2)
 		return ..()
-	var/area/A = get_area(src)
-	if(A.fire)
-		reset()
-	else
-		alarm()
+	toggle()
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -191,6 +191,12 @@
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
 					return
+
+				else
+					..() // hit and toggle
+					toggle()
+					return
+
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
@@ -243,6 +249,7 @@
 					W.play_tool_sound(src)
 					qdel(src)
 					return
+
 	return ..()
 
 
