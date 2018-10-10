@@ -37,7 +37,7 @@
 /obj/item/aicard/update_icon()
 	cut_overlays()
 	if(AI)
-		name = "[initial(name)]- [AI.name]"
+		name = "[initial(name)] - [AI.name]"
 		if(AI.stat == DEAD)
 			icon_state = "[initial(icon_state)]-404"
 		else

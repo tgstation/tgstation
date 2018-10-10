@@ -157,7 +157,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return target
 
 /datum/objective/assassinate/check_completion()
-	return !considered_alive(target) || considered_afk(target)
+	return completed || (!considered_alive(target) || considered_afk(target))
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -431,6 +431,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
 		if(considered_alive(M))
+			return FALSE
+		if(M.current?.suiciding) //killing yourself ISN'T glorious.
 			return FALSE
 	return TRUE
 

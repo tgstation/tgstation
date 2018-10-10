@@ -370,15 +370,14 @@
 							return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 						// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 						var/allowed_access = null
-						var/obj/item/clothing/glasses/G = H.glasses
-						if (!(G.obj_flags |= EMAGGED))
+						var/obj/item/clothing/glasses/hud/security/G = H.glasses
+						if(istype(G) && (G.obj_flags & EMAGGED))
+							allowed_access = "@%&ERROR_%$*"
+						else //Implant and standard glasses check access
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
 								if(ACCESS_SEC_DOORS in access)
 									allowed_access = H.get_authentification_name()
-						else
-							allowed_access = "@%&ERROR_%$*"
-
 
 						if(!allowed_access)
 							to_chat(H, "<span class='warning'>ERROR: Invalid Access</span>")

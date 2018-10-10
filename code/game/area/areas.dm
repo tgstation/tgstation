@@ -463,8 +463,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/max_grav
 		for(var/i in forced_gravity)
 			max_grav = max(max_grav, i)
-		if(max_grav)
-			return max_grav
+		return max_grav
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return 0

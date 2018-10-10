@@ -32,7 +32,8 @@
 
 	if(isGlass)
 		if(prob(33))
-			new/obj/item/shard(drop_location())
+			var/obj/item/shard/S = new(drop_location())
+			target.Bumped(S)
 		playsound(src, "shatter", 70, 1)
 	else
 		B.force = 0
@@ -42,6 +43,7 @@
 	transfer_fingerprints_to(B)
 
 	qdel(src)
+	target.Bumped(B)
 
 /obj/item/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 

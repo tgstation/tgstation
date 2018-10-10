@@ -688,8 +688,8 @@
 				to_chat(user, "<span class='warning'>No AI detected in the [name] onboard computer.</span>")
 				return
 			AI.ai_restore_power()//So the AI initially has power.
-			AI.control_disabled = 1
-			AI.radio_enabled = 0
+			AI.control_disabled = TRUE
+			AI.radio_enabled = FALSE
 			AI.disconnect_shell()
 			RemoveActions(AI, TRUE)
 			occupant = null
@@ -723,8 +723,8 @@
 			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
 				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].</span>")
 				return
-			AI.control_disabled = 0
-			AI.radio_enabled = 1
+			AI.control_disabled = FALSE
+			AI.radio_enabled = TRUE
 			to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 			card.AI = null
 			ai_enter_mech(AI, interaction)
