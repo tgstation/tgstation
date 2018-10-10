@@ -150,7 +150,7 @@ Curator
 	l_pocket = /obj/item/laser_pointer
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
-		/obj/item/melee/curator_whip = 1,
+		/obj/item/herobeacon = 1,
 		/obj/item/soapstone = 1,
 		/obj/item/barcodescanner = 1
 	)
