@@ -117,6 +117,9 @@
 		return
 	. = new /list
 	var/list/gases = air.gases
+	var/total_moles = 0
+	TOTAL_MOLES(gases, total_moles)
+
 	for(var/id in gases)
 		if (nonoverlaying_gases[id])
 			continue
@@ -124,7 +127,7 @@
 		var/gas_meta = gas[GAS_META]
 		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
 		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-			. += gas_overlay
+			. += gas_overlay[CEILING((gas[MOLES] * 100) / (GAS_OPACITY_STEP * total_moles), 1)]
 
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()

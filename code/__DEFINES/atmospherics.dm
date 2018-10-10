@@ -29,6 +29,8 @@
 #define BREATH_VOLUME			0.5		//liters in a normal breath
 #define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)					//Amount of air to take a from a tile
 
+#define GAS_OPACITY_STEP		5 //opacity values step size. this means the opacity values are 0, 5, 10, 15 and so on
+
 //EXCITED GROUPS
 #define EXCITED_GROUP_BREAKDOWN_CYCLES				4		//number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
 #define EXCITED_GROUP_DISMANTLE_CYCLES				16		//number of FULL air controller ticks before an excited group dismantles and removes its turfs from active
@@ -62,7 +64,7 @@
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
-#define MOLES_GAS_VISIBLE					0.5		//Moles in a standard cell after which gases are visible
+#define MOLES_GAS_VISIBLE					0.25	//Moles in a standard cell after which gases are visible
 
 //REACTIONS
 //return values for reactions (bitflags)
@@ -245,6 +247,13 @@
 	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
+
+//prefer this to gas_mixture/total_moles in performance critical areas
+#define TOTAL_MOLES(cached_gases, out_var)\
+	out_var = 0;\
+	for(var/total_moles_id in cached_gases){\
+		out_var += cached_gases[total_moles_id][MOLES];\
+	}
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
