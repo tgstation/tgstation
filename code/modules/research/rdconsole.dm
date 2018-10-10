@@ -640,7 +640,7 @@ Nothing else in the console has ID requirements.
 		var/max_tier = 0
 		for (var/node_ in stored_research.tiers)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_)
-			var/tier = stored_research.tiers[node]
+			var/tier = stored_research.tiers[node.id]
 			LAZYINITLIST(columns["[tier]"])  // String hackery to make the numbers associative
 			columns["[tier]"] += ui_techweb_single_node(node, minimal=(tier != 1))
 			max_tier = max(max_tier, tier)
