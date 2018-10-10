@@ -46,6 +46,7 @@
 	var/poseheroicallyuntilthisworks = display_names[choice]
 	var/herobox = new poseheroicallyuntilthisworks()
 	M.put_in_hands(herobox)
+	qdel(src)
 
 /obj/item/storage/box/hero
 	name = "Courageous Tomb Raider - 1940's"
