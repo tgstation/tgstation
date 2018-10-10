@@ -1,6 +1,7 @@
 //Cold Resistance gives your entire body an orange halo, and makes you immune to the effects of vacuum and cold.
 /datum/mutation/human/cold_resistance
 	name = "Cold Resistance"
+	desc = "A strange mutation that makes the holder completely immune to hostile temperatures."
 	quality = POSITIVE
 	get_chance = 25
 	lowest_value = 256 * 12

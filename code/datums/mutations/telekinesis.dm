@@ -1,6 +1,7 @@
 //Telekinesis lets you interact with objects from range, and gives you a light blue halo around your head.
 /datum/mutation/human/telekinesis
 	name = "Telekinesis"
+	desc = "A strange mutation that allows the holder to interact with objects through thought."
 	quality = POSITIVE
 	get_chance = 20
 	lowest_value = 256 * 12

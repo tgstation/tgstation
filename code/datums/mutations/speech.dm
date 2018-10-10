@@ -3,6 +3,7 @@
 
 /datum/mutation/human/nervousness
 	name = "Nervousness"
+	desc = "Causes the holder to stutter."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
@@ -13,6 +14,7 @@
 
 /datum/mutation/human/wacky
 	name = "Wacky"
+	desc = "<span class='sans'>Unknown.</span>"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
@@ -23,6 +25,7 @@
 
 /datum/mutation/human/mute
 	name = "Mute"
+	desc = "Completely inhibits the vocal section of the brain."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel unable to express yourself at all.</span>"
 	text_lose_indication = "<span class='danger'>You feel able to speak freely again.</span>"
@@ -40,6 +43,7 @@
 
 /datum/mutation/human/smile
 	name = "Smile"
+	desc = "Causes the user to be in constant mania."
 	quality = MINOR_NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
@@ -97,6 +101,7 @@
 
 /datum/mutation/human/unintelligible
 	name = "Unintelligible"
+	desc = "partially inhibits the vocal center of the brain, severely distorting speech."
 	quality = NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
@@ -130,6 +135,7 @@
 
 /datum/mutation/human/swedish
 	name = "Swedish"
+	desc = "A horrible mutation originating from the distant past. Thought to no longer exist after the incident of 2047."
 	quality = MINOR_NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel Swedish, however that works.</span>"
@@ -149,6 +155,7 @@
 
 /datum/mutation/human/chav
 	name = "Chav"
+	desc = "Unknown"
 	quality = MINOR_NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
@@ -183,6 +190,7 @@
 
 /datum/mutation/human/elvis
 	name = "Elvis"
+	desc = "A terrifying mutation named after its 'patient-zero'."
 	quality = MINOR_NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
@@ -216,6 +224,7 @@
 
 /datum/mutation/human/stoner
 	name = "Stoner"
+	desc = "A common mutation that severely decreases intelligence."
 	quality = NEGATIVE
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel...totally chill, man!</span>"

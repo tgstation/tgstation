@@ -109,21 +109,15 @@
 	var/result = ""
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
 	shuffle_inplace(mutations_temp)
-	to_chat(world,"1")
 	for(var/i in 1 to DNA_STRUC_ENZYMES_BLOCKS)
 		var/datum/mutation/M = mutations_temp[i]
 		mutation_index[M.type] = i
-		to_chat(world,"2")
-	to_chat(world,"3")
 	for(var/M in mutation_index)
-		to_chat(world,"4-[M]")
 		var/datum/mutation/human/A = M
 		if(initial(A.name) == RACEMUT && ismonkey(holder))
-			to_chat(world,"4.1")
 			sorting[mutation_index[A]] = num2hex(initial(A.lowest_value) + rand(0, 256 * 6), DNA_BLOCK_SIZE)
 			mutations |= new A()
 		else
-			to_chat(world,"4.2")
 			sorting[mutation_index[A]] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
 
 	for(var/B in sorting)
@@ -162,7 +156,6 @@
 /datum/dna/proc/force_give(datum/mutation/human/HM)
 	if(holder)
 		var/datum/mutation/human/A = new HM()
-		to_chat(world,"6-[A]-[HM]")
 		set_block(1, HM)
 		. = A.on_acquiring(holder)
 		if(.)
@@ -348,13 +341,9 @@
 	if(!has_dna())
 		return
 
-	to_chat(world,"10")
 	for(var/A in dna.mutation_index)
-		to_chat(world,"11-[A]")
 		var/datum/mutation/human/HM = A
-		to_chat(world,"12-[A]")
 		if(ismob(dna.check_block(force_powers, HM)))
-			to_chat(world,"13")
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
 	update_mutations_overlay()
@@ -363,20 +352,14 @@
 	var/datum/mutation/human/HM = get_mutation(A)
 	if(check_block_string(A))
 		if(!HM)
-			to_chat(world,"14.1")
 			if(prob(initial(A.get_chance)) || force_power)
-				to_chat(world,"15")
 				. = force_give(A)
 	else if(HM)
-		to_chat(world,"14.2")
 		. = HM.on_losing(holder)
 
 /datum/dna/proc/get_mutation(A) //return the active mutation of a type if there is one
-	to_chat(world,"17")
 	for(var/datum/mutation/human/HM in mutations)
-		to_chat(world,"19[HM]-[A]")
 		if(HM.type == A)
-			to_chat(world,"20[HM]-[A]")
 			return HM
 
 /datum/dna/proc/check_block_string(datum/mutation/human/A)
@@ -388,7 +371,6 @@
 /datum/dna/proc/set_se(on=TRUE, datum/mutation/human/A)
 	if(!struc_enzymes || lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return
-	to_chat(world,"8-[A]")
 	var/lowest_value = initial(A.lowest_value)
 	var/before = copytext(struc_enzymes, 1, ((mutation_index[A] - 1) * DNA_BLOCK_SIZE) + 1)
 	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
@@ -429,10 +411,8 @@
 		return
 	var/list/possible = list()
 	for(var/A in dna.mutation_index)
-		to_chat(world,"1")
 		var/datum/mutation/human/HM = A
-		to_chat(world,"2-[HM]")
-		if(initial(HM.quality) == POSITIVE)
+		if(initial(HM.quality) == NEGATIVE)
 			possible += HM
 	if(possible.len)
 		. = dna.force_give(pick(possible))
@@ -443,10 +423,8 @@
 		return
 	var/list/possible = list()
 	for(var/A in dna.mutation_index)
-		to_chat(world,"1")
 		var/datum/mutation/human/HM = A
-		to_chat(world,"2-[HM]")
-		if(initial(HM.quality) == NEGATIVE)
+		if(initial(HM.quality) == POSITIVE)
 			possible += HM
 	if(possible.len)
 		. = dna.force_give(pick(possible))

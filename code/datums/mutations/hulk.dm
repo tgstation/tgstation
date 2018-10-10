@@ -1,6 +1,7 @@
 //Hulk turns your skin green, and allows you to punch through walls.
 /datum/mutation/human/hulk
 	name = "Hulk"
+	desc = "A poorly understood genome that causes the holders muscles to expand, inhibit speech and make the person green for some reason."
 	quality = POSITIVE
 	get_chance = 15
 	lowest_value = 256 * 12

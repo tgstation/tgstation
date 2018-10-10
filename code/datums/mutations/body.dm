@@ -3,6 +3,7 @@
 //Epilepsy gives a very small chance to have a seizure every life tick, knocking you unconscious.
 /datum/mutation/human/epilepsy
 	name = "Epilepsy"
+	desc = "A genetic defect that sporadicly causes seizures."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
@@ -22,6 +23,7 @@
 //Unstable DNA induces random mutations!
 /datum/mutation/human/bad_dna
 	name = "Unstable DNA"
+	desc = "Strange mutation that causes the holder to randomly mutate."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 
@@ -44,6 +46,7 @@
 //Cough gives you a chronic cough that causes you to drop items.
 /datum/mutation/human/cough
 	name = "Cough"
+	desc = "A chronic cough."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 
@@ -56,6 +59,7 @@
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
 	name = "Dwarfism"
+	desc = "A mutation believed to be the cause of dwarfism."
 	quality = POSITIVE
 	get_chance = 15
 	lowest_value = 256 * 12
@@ -80,6 +84,7 @@
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
 	name = "Clumsiness"
+	desc = "A genome that inhibits certain brainfunctions, causing the holder to appear clumsy. Honk"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 
@@ -97,6 +102,7 @@
 //Tourettes causes you to randomly stand in place and shout.
 /datum/mutation/human/tourettes
 	name = "Tourette's Syndrome"
+	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 
@@ -119,6 +125,7 @@
 //Deafness makes you deaf.
 /datum/mutation/human/deaf
 	name = "Deafness"
+	desc = "The holder of this genome is completely deaf."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to hear anything.</span>"
 
@@ -136,6 +143,7 @@
 //Monified turns you into a monkey.
 /datum/mutation/human/race
 	name = "Monkified"
+	desc = "A strange genome, believing to be what differentiates monkeys from humans."
 	quality = NEGATIVE
 	time_coeff = 2
 

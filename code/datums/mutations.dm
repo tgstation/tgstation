@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 /datum/mutation/human
 	name = "mutation"
-	var/desc = "QAas blest"
+	var/desc = "A mutation."
 	var/locked
 	var/quality
 	var/get_chance = 100
@@ -103,3 +103,11 @@ GLOBAL_LIST_EMPTY(mutations_list)
 				mut_overlay |= V
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
+
+/datum/mutation/human/proc/copy_mutation(datum/human/mutation/HM) //Not yet implemented, useful for when assigning specific stats. Note that HM might be a typepath
+	return
+
+/proc/get_initialized_mutation(B)
+	for(var/datum/mutation/human/A in GLOB.mutations_list)
+		if(A.type == B)
+			return A

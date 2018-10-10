@@ -2,6 +2,7 @@
 #define REJUVENATORS_INJECT 15
 #define REJUVENATORS_MAX 90
 #define NUMBER_OF_BUFFERS 3
+#define NUMBER_OF_MUTATIONS 6
 
 #define RADIATION_STRENGTH_MAX 15
 #define RADIATION_STRENGTH_MULTIPLIER 1			//larger has a more range
@@ -24,11 +25,13 @@
 TODO:
 X Make mutations random for every person
 X New html
- Make inspect work, with DISCOVER button
- Allow single mutation disks
+X Make mutations stable and working
+X Make inspect work, with DISCOVER button
+Allow single mutation disks
 Mutation activators
 Mutation injectors
 More mutations
+100 hours of testing and dependency restructuring
 ?Chromosomes
 ?Mutation stats
 
@@ -45,6 +48,7 @@ More mutations
 	var/radstrength = 1
 
 	var/list/buffer[NUMBER_OF_BUFFERS]
+	var/list/stored_mutations = list()
 
 	var/injectorready = 0	//world timer cooldown var
 	var/current_screen = "mainmenu"
@@ -79,6 +83,18 @@ More mutations
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
 	stored_research = SSresearch.science_tech
+	set_max_storage(NUMBER_OF_MUTATIONS)
+
+/obj/machinery/computer/scan_consolenew/proc/set_max_storage(A)
+	var/list/temp_mutations[A]
+	if(stored_mutations.len)
+		for(var/i in 1 to A)
+			var/dat = null
+			if(i <= stored_mutations.len)
+				dat = stored_mutations[i]
+			temp_mutations[i] = dat
+
+	stored_mutations = temp_mutations
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()
@@ -176,6 +192,10 @@ More mutations
 		buttons += "<a href='?src=[REF(src)];task=ejectdisk'>Eject Disk</a>"
 	else
 		buttons += "<span class='linkOff'>Eject Disk</span>"
+	if(current_screen == "mutations")
+		buttons += "<span class='linkOff'>Mutations</span>"
+	else
+		buttons += "<a href='?src=[REF(src)];task=screen;text=mutations;'>Mutations</a>"
 	if(current_screen == "buffer")
 		buttons += "<a href='?src=[REF(src)];task=screen;text=mainmenu;'>Radiation Emitter Menu</a>"
 	else
@@ -209,7 +229,6 @@ More mutations
 						temp_html += "<span class='linkOff'>Save to Disk</span>"
 					else
 						var/ui = buffer_slot["UI"]
-						var/se = buffer_slot["SE"]
 						var/ue = buffer_slot["UE"]
 						var/name = buffer_slot["name"]
 						var/label = buffer_slot["label"]
@@ -255,19 +274,6 @@ More mutations
 								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=mixed'>UI+UE Injector</a>"
 							else
 								temp_html += "<span class='linkOff'>UI+UE Injector</span>"
-						if(se)
-							temp_html += "<br>\tSE: [se] "
-							if(viable_occupant)
-								temp_html += "<a href='?src=[REF(src)];task=transferbuffer;num=[i];text=se'>Occupant</a>"
-							else
-								temp_html += "<span class='linkOff'>Occupant</span>"
-							temp_html += "<a href='?src=[REF(src)];task=setdelayed;num=[i];delayaction=[SCANNER_ACTION_SE]'>Occupant:Delayed</a>"
-							if(injectorready < world.time )
-								temp_html += "<a href='?src=[REF(src)];task=injector;num=[i];text=se'>Injector</a>"
-							else
-								temp_html += "<span class='linkOff'>Injector</span>"
-						else
-							temp_html += "<br>\tSE: No Data"
 						if(viable_occupant)
 							temp_html += "<br><a href='?src=[REF(src)];task=setbuffer;num=[i];'>Save to Buffer</a>"
 						else
@@ -283,21 +289,41 @@ More mutations
 							temp_html += "<span class='linkOff'>Save to Disk</span>"
 		if("info")
 			if(current_mutation)
-				var/mut_name
-				var/mut_desc
+				var/mut_name = "ERROR"
+				var/mut_desc = "ERROR"
 				if(ispath(current_mutation))
-					mut_name = initial(current_mutation.name)
-					mut_desc = initial(current_mutation.desc)
+					var/datum/mutation/human/HM = get_initialized_mutation(current_mutation)
+					if(HM)
+						mut_name = HM.name
+						mut_desc = HM.desc
 				else
 					if(!(current_mutation in stored_research.discovered_mutations))
-						stored_research.discovered_mutations += current_mutation
+						stored_research.discovered_mutations += current_mutation.type
 					mut_name = current_mutation.name
-					mut_name = current_mutation.desc
+					mut_desc = current_mutation.desc
 				temp_html += status
 				temp_html += buttons
 				temp_html += "<h1>Mutation: [mut_name]</h1>"
-				temp_html += "[mut_desc]"
-
+				temp_html += "<h3>[mut_desc]</h3>"
+				temp_html += "<br><br>"
+				var/succes = FALSE
+				for(var/i in stored_mutations)
+					if(!stored_mutations[i])
+						succes = TRUE
+						break
+				if(!ispath(current_mutation) && succes)
+					temp_html += "<a href='?src=[REF(src)];task=savemut;'>Store</a>"
+				else
+					temp_html += "<span class='linkOff'>Store</span>"
+			else
+				current_screen = null
+		if("mutations")
+			temp_html += status
+			temp_html += buttons
+			temp_html += "<h3>Mutation Storage:<br></h>"
+			for(var/datum/mutation/human/HM in stored_mutations)
+				temp_html += "<a href='?src=[REF(src)];task=inspect;num=[stored_mutations + DNA_STRUC_ENZYMES_BLOCKS]'>[HM.name]</a>"
+				temp_html += "<a href='?src=[REF(src)];task=deletemut;num=[stored_mutations[HM]]'>Delete</a>"
 		else
 			temp_html += status
 			temp_html += buttons
@@ -311,7 +337,7 @@ More mutations
 
 			var/max_line_len = 7*DNA_BLOCK_SIZE
 			if(viable_occupant)
-				temp_html += "<div class='dnaBlockNumber'>1</div>"
+				temp_html += generate_DBN(1, viable_occupant)
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
@@ -334,27 +360,33 @@ More mutations
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						var/cur_block = (i / DNA_BLOCK_SIZE) + 1
 						to_chat(world,"10-[cur_block-1]-[i]-[DNA_BLOCK_SIZE]")
-						if(viable_occupant.dna.mutation_index[cur_block-1] in viable_occupant.dna.mutations)
-							var/mut_style = "dnaBlockNumber"
-							var/datum/mutation/human/M = viable_occupant.dna.mutation_index[cur_block]
-							if(M in stored_research.discovered_mutations)
-								switch(initial(M.quality))
-									if(POSITIVE)
-										mut_style = "dnaBlockNumberGood"
-									if(MINOR_NEGATIVE)
-										mut_style = "dnaBlockNumberNeutral"
-									if(NEGATIVE)
-										mut_style = "dnaBlockNumberBad"
-							temp_html += "<a class='[mut_style]' href='?src=[REF(src)];task=inspect;num=[cur_block];'>[cur_block]</a>"
-							current_mutation = M
-						else
-							temp_html += "<div class='dnaBlockNumber'>[cur_block]</div>"
+						temp_html += generate_DBN(cur_block, viable_occupant)
 			else
 				temp_html += "----"
 			temp_html += "</div></div></div>"
 
 	popup.set_content(temp_html.Join())
 	popup.open()
+
+/obj/machinery/computer/scan_consolenew/proc/generate_DBN(i,mob/living/carbon/viable_occupant) //generate_dna_block_number
+	var/datum/mutation/human/M = viable_occupant.dna.get_mutation(viable_occupant.dna.mutation_index[i])
+	var/temp_html
+	if(M)
+		var/mut_style = "dnaBlockNumber"
+		if(M.type in stored_research.discovered_mutations)
+			switch(M.quality)
+				if(POSITIVE)
+					mut_style = "dnaBlockNumberGood"
+				if(MINOR_NEGATIVE)
+					mut_style = "dnaBlockNumberNeutral"
+				if(NEGATIVE)
+					mut_style = "dnaBlockNumberBad"
+		temp_html += "<a class='[mut_style]' href='?src=[REF(src)];task=inspect;num=[i];'>[i]</a>"
+		current_mutation = M
+	else
+		temp_html += "<div class='dnaBlockNumber'>[i]</div>"
+	return temp_html
+
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
@@ -411,7 +443,6 @@ More mutations
 				buffer[num] = list(
 					"label"="Buffer[num]:[viable_occupant.real_name]",
 					"UI"=viable_occupant.dna.uni_identity,
-					"SE"=viable_occupant.dna.struc_enzymes,
 					"UE"=viable_occupant.dna.unique_enzymes,
 					"name"=viable_occupant.real_name,
 					"blood_type"=viable_occupant.dna.blood_type
@@ -425,8 +456,6 @@ More mutations
 		if("transferbuffer")
 			if(num && viable_occupant)
 				switch(href_list["text"])                                                                            //Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove
-					if("se")
-						apply_buffer(SCANNER_ACTION_SE,num)
 					if("ui")
 						apply_buffer(SCANNER_ACTION_UI,num)
 					if("ue")
@@ -440,28 +469,6 @@ More mutations
 				if(istype(buffer_slot))
 					var/obj/item/dnainjector/timed/I
 					switch(href_list["text"])
-						if("se")
-							if(buffer_slot["SE"])
-								I = new /obj/item/dnainjector/timed(loc)
-								var/powers = 0
-								for(var/datum/mutation/human/HM in viable_occupant.dna.mutation_index)
-									if(viable_occupant.dna.check_block_string(buffer_slot["SE"],HM))
-										I.add_mutations.Add(HM)
-										if(HM in GLOB.good_mutations)
-											powers += 1
-										if(HM in GLOB.bad_mutations + GLOB.not_good_mutations)
-											powers -= 1 //To prevent just unlocking everything to get all powers to a syringe for max tech
-									else
-										I.remove_mutations.Add(HM)
-								var/time_coeff
-								for(var/datum/mutation/human/HM in I.add_mutations)
-									if(!time_coeff)
-										time_coeff = HM.time_coeff
-										continue
-									time_coeff = min(time_coeff,HM.time_coeff)
-								if(connected)
-									I.duration = I.duration * time_coeff * connected.damage_coeff
-									I.damage_coeff  = connected.damage_coeff
 						if("ui")
 							if(buffer_slot["UI"])
 								I = new /obj/item/dnainjector/timed(loc)
@@ -554,6 +561,31 @@ More mutations
 
 				if(connected)
 					connected.locked = locked_state
+		if("inspect")
+			var/mutloc = text2num(href_list["num"])
+			if(mutloc > DNA_STRUC_ENZYMES_BLOCKS)
+				current_mutation = stored_mutations[mutloc-DNA_STRUC_ENZYMES_BLOCKS]
+			else
+				current_mutation = viable_occupant.dna.get_mutation(viable_occupant.dna.mutation_index[mutloc])
+			current_screen = "info"
+		if("savemut")
+			var/succes = FALSE
+			for(var/i in 1 to stored_mutations.len)
+				if(!stored_mutations[i])
+					var/datum/mutation/human/HM = new current_mutation.type()
+					HM.copy_mutation(current_mutation)
+					stored_mutations[i] = HM
+					succes = TRUE
+					to_chat(usr,"<span class='notice'>Mutation succesfully stored.</span>")
+					break
+			if(!succes)
+				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
+		if("deletemut")
+			var/datum/mutation/human/HM = stored_mutations[href_list["num"]]
+			if(HM)
+				stored_mutations[href_list["num"]] = null
+				qdel(HM)
+
 
 	ui_interact(usr,last_change)
 
@@ -590,10 +622,6 @@ More mutations
 		//Each laser level reduces damage by lvl^2, so no effect on 1 lvl, 4 times less damage on 2 and 9 times less damage on 3
 		//Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove
 		switch(action)
-			if(SCANNER_ACTION_SE)
-				if(buffer_slot["SE"])
-					viable_occupant.dna.struc_enzymes = buffer_slot["SE"]
-					viable_occupant.domutcheck()
 			if(SCANNER_ACTION_UI)
 				if(buffer_slot["UI"])
 					viable_occupant.dna.uni_identity = buffer_slot["UI"]
