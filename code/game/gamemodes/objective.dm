@@ -157,7 +157,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	return target
 
 /datum/objective/assassinate/check_completion()
-	return !considered_alive(target) || considered_afk(target)
+	return completed || (!considered_alive(target) || considered_afk(target))
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
