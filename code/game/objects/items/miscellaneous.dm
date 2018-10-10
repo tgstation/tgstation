@@ -20,7 +20,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("skubbed")
 	
-	/obj/item/herobeacon
+/obj/item/herobeacon
 	name = "heroic beacon"
 	desc = "To summon heroes from the past to protect the future"
 	icon = 'icons/obj/device.dmi'
