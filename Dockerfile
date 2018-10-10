@@ -1,5 +1,6 @@
 FROM tgstation/byond:512.1452 as base
 #above version must be the same as the one in dependencies.sh
+#Cyberboss, YOU specifically are not allowed to waste any more time trying to read it from dependencies.sh
 
 FROM base as build_base
 
