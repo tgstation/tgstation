@@ -46,7 +46,7 @@ SUBSYSTEM_DEF(economy)
 							"adamantine" = 750,
 							// tier 4
 							"rainbow" = 1000)
-	var/list/bank_accounts = list()
+	var/list/bank_accounts = list() //List of normal accounts (not department accounts)
 	var/list/dep_cards = list()
 
 /datum/controller/subsystem/economy/Initialize(timeofday)

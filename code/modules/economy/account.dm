@@ -5,6 +5,7 @@
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
+	var/being_dumped = FALSE //pink levels are rising
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
