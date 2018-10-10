@@ -79,7 +79,7 @@
 			continue
 		var/amount = B.account_balance * percentage_lost 
 		bogdanoff.get_bank_account().transfer_money(B, amount)
-		B.bank_card_talk("Your funds has lost [percentage_lost]% of its value!")
+		B.bank_card_talk("You have lost [percentage_lost]% of your funds!")
 	addtimer(CALLBACK(src, .proc/dump), 150) //Drain every 15 seconds
 
 /obj/structure/checkoutmachine
