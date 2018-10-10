@@ -485,5 +485,5 @@
 				holding.forceMove(get_turf(src))
 				holding = null
 				. = TRUE
-				replace_tank(usr, true);
+				replace_tank(usr, false);
 	update_icon()
