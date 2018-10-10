@@ -75,3 +75,10 @@
 	new /obj/item/claymore/weak/ceremonial(src)
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/skub/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
+
+	user.gib()
+	playsound(src, 'sound/items/eatfood.ogg', 50, 1, -1)
+	return MANUAL_SUICIDE
