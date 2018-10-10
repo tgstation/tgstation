@@ -184,7 +184,7 @@
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 					return
 
-				else if (W.tool_behaviour == TOOL_WIRECUTTER)
+				else if(W.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = 1
 					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
@@ -192,7 +192,7 @@
 					update_icon()
 					return
 
-				else //hit and turn it on
+				else if(W.force) //hit and turn it on
 					..()
 					var/area/A = get_area(src)
 					if(!A.fire)
