@@ -68,6 +68,6 @@
 				playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 				shake_camera(L, 4, 3)
 				shake_camera(src, 2, 3)
-
+		Recall(TRUE)
 		charging = 0
 

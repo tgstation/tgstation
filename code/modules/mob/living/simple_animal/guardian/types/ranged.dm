@@ -89,6 +89,7 @@
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
 		src.snares |= S
 		to_chat(src, "<span class='danger'><B>Surveillance snare deployed!</span></B>")
+		Recall(TRUE)
 	else
 		to_chat(src, "<span class='danger'><B>You have too many snares deployed. Remove some first.</span></B>")
 

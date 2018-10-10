@@ -144,3 +144,4 @@
 	"<span class='userdanger'>Your vision is obscured by a flash of light!</span>")
 	do_teleport(A, beacon, 0)
 	new /obj/effect/temp_visual/guardian/phase(get_turf(A))
+	Recall(TRUE)

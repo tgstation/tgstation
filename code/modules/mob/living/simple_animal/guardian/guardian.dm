@@ -3,6 +3,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 #define GUARDIAN_HANDS_LAYER 1
 #define GUARDIAN_TOTAL_LAYERS 1
+#define GUARDIAN_SUMMON_COST 25
 
 /mob/living/simple_animal/hostile/guardian
 	name = "Guardian Spirit"
@@ -477,12 +478,23 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
 	var/allowguardian = FALSE
+	var/self_evoke = TRUE
+	var/evoke_self = "You draw and crush a tarot card."
+	var/evoke_others = "draws and crushes a tarot card."
 
 /obj/item/guardiancreator/attack_self(mob/living/user)
+
 	if(isguardian(user) && !allowguardian)
 		to_chat(user, "<span class='holoparasite'>[mob_name] chains are not allowed.</span>")
 		return
 	var/list/guardians = user.hasparasites()
+	if(self_evoke && used)
+		if(guardians.len)
+			user.visible_message("[user] [evoke_others]", "<span class='notice'>[evoke_self]</span>")
+			for(var/mob/living/simple_animal/hostile/guardian/P in guardians)
+				user.say("[uppertext(P.name)]!")
+				P.Manifest()
+			user.adjustStaminaLoss(GUARDIAN_SUMMON_COST)
 	if(guardians.len && !allowmultiple)
 		to_chat(user, "<span class='holoparasite'>You already have a [mob_name]!</span>")
 		return
@@ -592,7 +604,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
 	failure_message = "<span class='holoparasite bold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
-
+	self_evoke = FALSE
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
@@ -660,7 +672,29 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/storage/box/syndie_kit/guardian/PopulateContents()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
+	new /obj/item/guardian_summoner(src)
 	new /obj/item/paper/guides/antag/guardian(src)
+
+/obj/item/guardian_summoner
+	name = "holoparasite deployer"
+	desc = "Apply directly to forehead."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "guardian_summoner"
+	item_state = "gun"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+
+/obj/item/guardian_summoner/attack_self(mob/living/user)
+	if(isliving(user))
+		var/list/guardians = user.hasparasites()
+		if(guardians.len)
+			user.visible_message("[user] puts [src] to their head and pulls the trigger.", "<span class='notice'>You put [src] to your head and pull the trigger, draining yourself but manifesting your holoparasite!/span>")
+			for(var/mob/living/simple_animal/hostile/guardian/P in guardians)
+				user.say("[uppertext(P.name)]!")
+				P.Manifest()
+			user.adjustStaminaLoss(GUARDIAN_SUMMON_COST)
+		else
+			user.visible_message("[user] puts [src] to their head and pulls the trigger.", "<span class='notice'>You put [src] to your head and pull the trigger, the only result being a click.</span>")
 
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
@@ -676,6 +710,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	allowmultiple = TRUE
 	allowling = TRUE
 	random = TRUE
+	evoke_self = "You snap a fishstick in half."
+	evoke_others = "snaps a fishstick in half."
 
 /obj/item/guardiancreator/carp/choose
 	random = FALSE

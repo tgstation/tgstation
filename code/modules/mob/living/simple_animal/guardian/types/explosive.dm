@@ -43,6 +43,7 @@
 			bomb_cooldown = world.time + 200
 			B.spawner = src
 			B.disguise(A)
+			Recall(TRUE)
 		else
 			to_chat(src, "<span class='danger'><B>Your powers are on cooldown! You must wait 20 seconds between bombs.</span></B>")
 

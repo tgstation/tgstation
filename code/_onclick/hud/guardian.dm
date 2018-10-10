@@ -6,10 +6,6 @@
 	healths = new /obj/screen/healths/guardian()
 	infodisplay += healths
 
-	using = new /obj/screen/guardian/Manifest()
-	using.screen_loc = ui_hand_position(2)
-	static_inventory += using
-
 	using = new /obj/screen/guardian/Recall()
 	using.screen_loc = ui_hand_position(1)
 	static_inventory += using
@@ -53,10 +49,6 @@
 	healths = new /obj/screen/healths/guardian()
 	infodisplay += healths
 
-	using = new /obj/screen/guardian/Manifest()
-	using.screen_loc = ui_belt
-	static_inventory += using
-
 	using = new /obj/screen/guardian/Recall()
 	using.screen_loc = ui_back
 	static_inventory += using
@@ -87,16 +79,6 @@
 
 /obj/screen/guardian
 	icon = 'icons/mob/guardian.dmi'
-
-/obj/screen/guardian/Manifest
-	icon_state = "manifest"
-	name = "Manifest"
-	desc = "Spring forth into battle!"
-
-/obj/screen/guardian/Manifest/Click()
-	if(isguardian(usr))
-		var/mob/living/simple_animal/hostile/guardian/G = usr
-		G.Manifest()
 
 
 /obj/screen/guardian/Recall
