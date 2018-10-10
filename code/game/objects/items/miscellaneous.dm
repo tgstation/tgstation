@@ -65,7 +65,7 @@
 /obj/item/suspiciousphone/proc/crab17()
 	acounts_to_rob = SSeconomy.bank_accounts
 	acounts_to_rob -= bogdanoff.get_bank_account()
-	priority_announce("Protocol CRAB-17 has been activated. Get to the credit deposit machine at [get_area(checkout).name] and cash out!", sender_override = "CRAB-17 Protocol")
+	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(checkout).name] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	for(var/i in acounts_to_rob)
 		var/datum/bank_account/B = i
 		B.being_dumped = TRUE
