@@ -16,7 +16,7 @@
 	model = "Securitron"
 	bot_core_type = /obj/machinery/bot_core/secbot
 	window_id = "autosec"
-	window_name = "Automatic Security Unit v1.6"
+	window_name = "Automatic Security Unit v1.7"
 	allow_pai = 0
 	data_hud_type = DATA_HUD_SECURITY_ADVANCED
 	path_image_color = "#FF0000"
@@ -103,7 +103,7 @@
 	dat += hack(user)
 	dat += showpai(user)
 	dat += text({"
-<TT><B>Securitron v1.6 controls</B></TT><BR><BR>
+<TT><B>Securitron v1.7 controls</B></TT><BR><BR>
 Status: []<BR>
 Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
 Maintenance panel panel is [open ? "opened" : "closed"]"},
@@ -212,10 +212,10 @@ Auto Patrol: []"},
 		return
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(!C.IsStun() || arrest_type)
-			stun_attack(A)
+		if(!C.IsStun())
+			stun_attack(C)
 		else if(C.canBeHandcuffed() && !C.handcuffed)
-			cuff(A)
+			cuff(C)
 	else
 		..()
 
@@ -242,6 +242,8 @@ Auto Patrol: []"},
 	if(!C.handcuffed)
 		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 		C.update_handcuffed()
+		if(arrest_type && !pulling)
+			start_pulling(C)
 		playsound(src, "law", 50, 0)
 		back_to_idle()
 
@@ -278,8 +280,17 @@ Auto Patrol: []"},
 
 			walk_to(src,0)
 			look_for_perp()	// see if any criminals are in range
-			if(!mode && auto_patrol)	// still idle, and set to patrol
+			if(!mode && auto_patrol && !pulling)	// still idle, and set to patrol
 				mode = BOT_START_PATROL	// switch to patrol mode
+			else if(pulling)
+				if(istype(pulling, /mob/living/carbon))
+					var/mob/living/carbon/C = pulling
+					if(!C.handcuffed)
+						stop_pulling(pulling)
+						mode = BOT_START_PATROL
+				else
+					stop_pulling(pulling)
+					mode = BOT_START_PATROL
 
 		if(BOT_HUNT)		// hunting for perp
 
@@ -316,12 +327,11 @@ Auto Patrol: []"},
 				return
 
 			if(iscarbon(target) && target.canBeHandcuffed())
-				if(!arrest_type)
-					if(!target.handcuffed)  //he's not cuffed? Try to cuff him!
-						cuff(target)
-					else
-						back_to_idle()
-						return
+				if(!target.handcuffed)  //he's not cuffed? Try to cuff him!
+					cuff(target)
+				else
+					back_to_idle()
+					return
 			else
 				back_to_idle()
 				return
