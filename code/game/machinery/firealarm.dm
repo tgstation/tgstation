@@ -192,9 +192,11 @@
 					update_icon()
 					return
 
-				else
-					..() // hit and toggle
-					toggle()
+				else //hit and turn it on
+					..()
+					var/area/A = get_area(src)
+					if(!A.fire)
+						alarm()
 					return
 
 			if(1)
