@@ -306,7 +306,6 @@
 	M.AdjustKnockdown(-20, 0)
 	M.AdjustUnconscious(-20, 0)
 	M.adjustStaminaLoss(-1*REM, 0)
-	0.5 * REAGENTS_METABOLISM
 	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1

@@ -735,7 +735,7 @@
 	if(prob(20))
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
-		M.say("This is spicy!")
+		M.say("Spicy!")
 	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	..()
 /datum/reagent/consumable/ghostchilijuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -751,3 +751,9 @@
 		victim.adjustFireLoss(5, 0)
 		victim.Knockdown(60)
 	..()
+
+/datum/reagent/consumable/ghostchilijuice/reaction_turf(turf/T, reac_volume)
+	if(isfloorturf(T))
+		for(var/turf/turf in range(1,T))
+			if(!locate(/obj/effect/hotspot) in turf)
+				new /obj/effect/hotspot(T)
