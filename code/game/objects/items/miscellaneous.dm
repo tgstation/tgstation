@@ -30,11 +30,11 @@
 		for(var/V in herobox)
 			var/atom/A = V
 			display_names[initial(A.name)] = A
-			
+
 	var/choice = input(M,"What heroic outfit would you like to order?","Historic Heroes") as null|anything in display_names
-	if(!choice || !M.canUseTopic(src, NO_TK) || !in_range(M, src) || M.restrained() || !M.canmove)
+	if(!choice || !M.canUseTopic(src, NO_TK) || !in_range(M, src))
 		return
-	
+
 	var/poseheroicallyuntilthisworks = display_names[choice]
 	var/herobox = new poseheroicallyuntilthisworks()
 	M.put_in_hands(herobox)
@@ -42,7 +42,7 @@
 
 /obj/item/storage/box/hero
 	name = "Courageous Tomb Raider - 1940's."
-	
+
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
 	new /obj/item/clothing/suit/curator(src)
@@ -52,16 +52,16 @@
 
 /obj/item/storage/box/hero/astronaut
 	name = "First Man on the Moon - 1960's."
-	
+
 /obj/item/storage/box/hero/astronaut/PopulateContents()
 	new /obj/item/clothing/suit/space/nasavoid(src)
 	new /obj/item/clothing/head/helmet/space/nasavoid(src)
 	new /obj/item/tank/internals/emergency_oxygen/double(src)
 	new /obj/item/gps(src)
-	
+
 /obj/item/storage/box/hero/scottish
 	name = "Braveheart, the Scottish rebel - 1300's."
-	
+
 /obj/item/storage/box/hero/scottish/PopulateContents()
 	new /obj/item/clothing/under/kilt(src)
 	new /obj/item/claymore/weak/ceremonial(src)
