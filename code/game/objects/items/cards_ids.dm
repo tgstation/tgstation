@@ -194,8 +194,9 @@
 				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
 		to_chat(user, "Alt-Click your ID in-hand to pull money from your account in the form of holochips.")
 		to_chat(user, "You can insert credits into your account by pressing holochips against the ID.")
-		to_chat(user, "If you lose this ID card, you can reclaim your account by using a blank ID card inhand and punching in the account ID.")
-
+		to_chat(user, "If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card inhand and punching in the account ID.")
+	else
+		to_chat(user, "There is no registered account on this card. Alt-Click to add one.")
 	if(mining_points)
 		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 

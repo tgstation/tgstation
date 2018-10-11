@@ -126,9 +126,12 @@
 	set category = "Object"
 	set name = "Eject Contents"
 	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.stat || usr.restrained())
 		return
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_UI))
+			return
 	empty()
 	add_fingerprint(usr)
 

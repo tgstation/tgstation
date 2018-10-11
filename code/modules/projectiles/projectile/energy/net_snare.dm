@@ -59,7 +59,7 @@
 	name = "energy snare"
 	icon_state = "e_snare"
 	nodamage = 1
-	knockdown = 20
+	paralyze = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 
@@ -79,7 +79,7 @@
 	name = "Energy Bola"
 	icon_state = "e_snare"
 	nodamage = 1
-	knockdown = 0
+	paralyze = 0
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
 

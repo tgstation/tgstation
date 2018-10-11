@@ -350,7 +350,7 @@ SLIME SCANNER
 	set name = "Switch Verbosity"
 	set category = "Object"
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	mode = !mode

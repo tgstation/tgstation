@@ -121,10 +121,12 @@
 	B.icon = I
 	B.name = "broken [name]"
 	if(prob(33))
-		new/obj/item/shard(drop_location())
+		var/obj/item/shard/S = new(drop_location())
+		target.Bumped(S)
 	playsound(src, "shatter", 70, 1)
 	transfer_fingerprints_to(B)
 	qdel(src)
+	target.Bumped(B)
 
 
 
@@ -303,6 +305,7 @@
 	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
 	transfer_fingerprints_to(B)
 	qdel(src)
+	target.Bumped(B)
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
 	if (reagents.reagent_list.len)

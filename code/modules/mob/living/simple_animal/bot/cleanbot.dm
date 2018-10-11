@@ -86,7 +86,7 @@
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.stat != DEAD && C.lying)
+		if(C.stat != DEAD && !(C.mobility_flags & MOBILITY_STAND))
 			return C
 	else if(is_type_in_typecache(A, target_types))
 		return A
@@ -155,7 +155,7 @@
 			else
 				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
-		
+
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)

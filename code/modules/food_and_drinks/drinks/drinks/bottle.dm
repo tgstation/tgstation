@@ -32,7 +32,8 @@
 
 	if(isGlass)
 		if(prob(33))
-			new/obj/item/shard(drop_location())
+			var/obj/item/shard/S = new(drop_location())
+			target.Bumped(S)
 		playsound(src, "shatter", 70, 1)
 	else
 		B.force = 0
@@ -42,6 +43,7 @@
 	transfer_fingerprints_to(B)
 
 	qdel(src)
+	target.Bumped(B)
 
 /obj/item/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 
@@ -92,7 +94,7 @@
 	var/head_attack_message = ""
 	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
-		//Knockdown the target for the duration that we calculated and divide it by 5.
+		//Paralyze the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
 			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN) // Never knockdown more than a flash!
 
