@@ -94,7 +94,10 @@
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	if(random)
 		if(alertadmins)
-			notify_ghosts("[name] has just been randomly triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source= E.atom_of_interest, action=NOTIFY_ORBIT)
+			if (E.atom_of_interest)
+				notify_ghosts("[name] has just been randomly triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source= E.atom_of_interest, action=NOTIFY_ORBIT)
+			else 
+				notify_ghosts("[name] has just been randomly triggered!")
 		log_game("Random Event triggering: [name] ([typepath])")
 
 	return E
