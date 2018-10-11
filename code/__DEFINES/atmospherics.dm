@@ -3,13 +3,13 @@
 #define MOLES			1
 #define ARCHIVE			2
 #define GAS_META		3
-#define META_GAS_SPECIFIC_HEAT	1
-#define META_GAS_NAME			2
-#define META_GAS_MOLES_VISIBLE	3
-#define META_GAS_OVERLAY		4
-#define META_GAS_DANGER			5
-#define META_GAS_ID				6
-#define META_GAS_FUSION_POWER   7
+#define META_GAS_SPECIFIC_HEAT		1
+#define META_GAS_NAME				2
+#define META_GAS_MOLES_VISIBLE		3
+#define META_GAS_OVERLAY			4
+#define META_GAS_DANGER				5
+#define META_GAS_ID					6
+#define META_GAS_FUSION_POWER   	7
 //ATMOS
 //stuff you should probably leave well alone!
 #define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
@@ -28,8 +28,6 @@
 #define CELL_VOLUME				2500	//liters in a cell
 #define BREATH_VOLUME			0.5		//liters in a normal breath
 #define BREATH_PERCENTAGE		(BREATH_VOLUME/CELL_VOLUME)					//Amount of air to take a from a tile
-
-#define GAS_OPACITY_STEP		5 //opacity values step size. this means the opacity values are 0, 5, 10, 15 and so on
 
 //EXCITED GROUPS
 #define EXCITED_GROUP_BREAKDOWN_CYCLES				4		//number of FULL air controller ticks before an excited group breaks down (averages gas contents across turfs)
@@ -65,6 +63,9 @@
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
 #define MOLES_GAS_VISIBLE					0.25	//Moles in a standard cell after which gases are visible
+
+#define FACTOR_GAS_VISIBLE_MAX				20 //moles_visible * FACTOR_GAS_VISIBLE_MAX = Moles after which gas is at maximum visibility
+#define MOLES_GAS_VISIBLE_STEP				0.25 //Mole step for alpha updates. This means alpha can update at 0.25, 0.5, 0.75 and so on
 
 //REACTIONS
 //return values for reactions (bitflags)
