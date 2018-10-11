@@ -12,14 +12,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 
-/obj/item/skub
-	desc = "It's skub."
-	name = "skub"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "skub"
-	w_class = WEIGHT_CLASS_BULKY
-	attack_verb = list("skubbed")
-	
 /obj/item/herobeacon
 	name = "heroic beacon"
 	desc = "To summon heroes from the past to protect the future."
@@ -75,6 +67,14 @@
 	new /obj/item/claymore/weak/ceremonial(src)
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/skub
+	desc = "It's skub."
+	name = "skub"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "skub"
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("skubbed")
 
 /obj/item/skub/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] has declared themself as anti-skub! The skub tears them apart!</span>")
