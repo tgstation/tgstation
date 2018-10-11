@@ -41,7 +41,7 @@
 		target.adjustToxLoss(amt_dam_tox)
 		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
-		target.Knockdown(amt_knockdown)
+		target.Paralyze(amt_knockdown)
 		target.Unconscious(amt_unconscious)
 		target.Stun(amt_stun)
 

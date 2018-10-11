@@ -38,7 +38,7 @@
 	var/damage = rand(A.dna.species.punchdamagelow, A.dna.species.punchdamagehigh)
 
 	var/atk_verb = A.dna.species.attack_verb
-	if(D.lying)
+	if(!(D.mobility_flags & MOBILITY_STAND))
 		atk_verb = "kick"
 
 	switch(atk_verb)
@@ -74,7 +74,7 @@
 								"<span class='userdanger'>[A] has knocked [D] down!</span>")
 		D.apply_effect(40, EFFECT_KNOCKDOWN, armor_block)
 		D.forcesay(GLOB.hit_appends)
-	else if(D.lying)
+	else if(!(D.mobility_flags & MOBILITY_STAND))
 		D.forcesay(GLOB.hit_appends)
 	return 1
 

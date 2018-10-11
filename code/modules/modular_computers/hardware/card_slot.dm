@@ -9,6 +9,13 @@
 	var/obj/item/card/id/stored_card = null
 	var/obj/item/card/id/stored_card2 = null
 
+/obj/item/computer_hardware/card_slot/handle_atom_del(atom/A)
+	if(A == stored_card)
+		try_eject(1, null, TRUE)
+	if(A == stored_card2)
+		try_eject(2, null, TRUE)
+	. = ..()
+
 /obj/item/computer_hardware/card_slot/Destroy()
 	try_eject()
 	return ..()
@@ -71,7 +78,7 @@
 		if(user)
 			user.put_in_hands(stored_card)
 		else
-			stored_card.forceMove(get_turf(src))
+			stored_card.forceMove(drop_location())
 		stored_card = null
 		ejected++
 
@@ -79,7 +86,7 @@
 		if(user)
 			user.put_in_hands(stored_card2)
 		else
-			stored_card2.forceMove(get_turf(src))
+			stored_card2.forceMove(drop_location())
 		stored_card2 = null
 		ejected++
 

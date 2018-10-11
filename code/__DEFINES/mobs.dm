@@ -262,3 +262,5 @@
 
 // /obj/item/bodypart on_mob_life() retval flag
 #define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
+
+#define HUMAN_FIRE_STACK_ICON_NUM	3
