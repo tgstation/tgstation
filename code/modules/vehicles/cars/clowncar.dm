@@ -13,6 +13,8 @@
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
+	var/cannonmode = FALSE
+	var/cannonbusy = FALSE
 
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
@@ -22,13 +24,18 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.mind && H.mind.assigned_role == "Clown") //Ensures only clowns can drive the car. (Including more at once)
-			add_control_flags(M, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
+			add_control_flags(H, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
+			RegisterSignal(H, COMSIG_MOB_CLICKON, .proc/FireCannon)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/clowncar/mob_forced_enter(mob/M, silent = FALSE)
 	. = ..()
 	playsound(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
+
+/obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
+	. = ..()
+	UnregisterSignal(M, COMSIG_MOB_CLICKON)
 
 /obj/vehicle/sealed/car/clowncar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -52,7 +59,7 @@
 		var/mob/living/L = M
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
-			C.Knockdown(40) //I play to make sprites go horizontal
+			C.Paralyze(40) //I play to make sprites go horizontal
 		L.visible_message("<span class='warning'>[src] rams into [L] and sucks him up!</span>") //fuck off shezza this isn't ERP.
 		mob_forced_enter(L)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
@@ -68,6 +75,7 @@
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='danger'>You scramble the clowncar child safety lock and a panel with 6 colorful buttons appears!</span>")
 	initialize_controller_action_type(/datum/action/vehicle/sealed/RollTheDice, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/Cannon, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
@@ -128,3 +136,44 @@
 
 /obj/vehicle/sealed/car/clowncar/proc/StopDroppingOil()
 	droppingoil = FALSE
+
+/obj/vehicle/sealed/car/clowncar/proc/ToggleCannon()
+	cannonbusy = TRUE
+	if(cannonmode)
+		cannonmode = FALSE
+		flick("clowncar_fromfire", src)
+		icon_state = "clowncar"
+		addtimer(CALLBACK(src, .proc/LeaveCannonMode), 20)
+		playsound(src, 'sound/vehicles/clowncar_cannonmode2.ogg', 75)
+		visible_message("<span class='danger'>The [src] starts going back into mobile mode.</span>")
+	else
+		canmove = FALSE
+		flick("clowncar_tofire", src)
+		icon_state = "clowncar_fire"
+		visible_message("<span class='danger'>The [src] opens up and reveals a large cannon.</span>")
+		addtimer(CALLBACK(src, .proc/EnterCannonMode), 20)
+		playsound(src, 'sound/vehicles/clowncar_cannonmode1.ogg', 75)
+
+
+/obj/vehicle/sealed/car/clowncar/proc/EnterCannonMode()
+	mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
+	cannonmode = TRUE
+	cannonbusy = FALSE
+	for(var/mob/living/L in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
+		L.update_mouse_pointer()
+
+/obj/vehicle/sealed/car/clowncar/proc/LeaveCannonMode()
+	canmove = TRUE
+	cannonbusy = FALSE
+	mouse_pointer = null
+	for(var/mob/living/L in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
+		L.update_mouse_pointer()
+
+/obj/vehicle/sealed/car/clowncar/proc/FireCannon(mob/user, atom/A, params)
+	if(cannonmode && return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len)
+		var/mob/living/L = pick(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED))
+		mob_exit(L, TRUE)
+		flick("clowncar_recoil", src)
+		playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
+		L.throw_at(A, 10, 2)
+		return COMSIG_MOB_CANCEL_CLICKON

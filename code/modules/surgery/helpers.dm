@@ -10,7 +10,7 @@
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 
-	if(!M.lying && !isslime(M))	//if they're prone or a slime
+	if((M.mobility_flags & MOBILITY_STAND) && !isslime(M))	//if they're prone or a slime
 		return
 
 	var/datum/surgery/current_surgery

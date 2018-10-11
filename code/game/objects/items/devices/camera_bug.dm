@@ -178,10 +178,11 @@
 			else
 				names[M.name] = 1
 				dat += "[M.name]"
-			if(M.buckled && !M.lying)
-				dat += " (Sitting)"
-			if(M.lying)
-				dat += " (Laying down)"
+			if(!(M.mobility_flags & MOBILITY_STAND))
+				if(M.buckled)
+					dat += " (Sitting)"
+				else
+					dat += " (Laying down)"
 			dat += " <a href='?[REF(src)];track=[REF(M)]'>\[Track\]</a><br>"
 		if(length(dat) == 0)
 			dat += "No motion detected."

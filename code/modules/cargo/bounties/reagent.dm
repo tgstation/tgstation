@@ -102,16 +102,17 @@ datum/bounty/reagent/complex_drink/New()
 		/datum/reagent/consumable/ethanol/drunkenblumpkin,\
 		/datum/reagent/consumable/ethanol/fetching_fizz,\
 		/datum/reagent/consumable/ethanol/goldschlager,\
-		/datum/reagent/consumable/ethanol/hearty_punch,\
 		/datum/reagent/consumable/ethanol/manhattan_proj,\
 		/datum/reagent/consumable/ethanol/narsour,\
 		/datum/reagent/consumable/ethanol/neurotoxin,\
 		/datum/reagent/consumable/ethanol/patron,\
 		/datum/reagent/consumable/ethanol/quadruple_sec,\
-		/datum/reagent/consumable/ethanol/quintuple_sec,\
 		/datum/reagent/consumable/bluecherryshake,\
 		/datum/reagent/consumable/doctor_delight,\
-		/datum/reagent/consumable/ethanol/silencer)
+		/datum/reagent/consumable/ethanol/silencer,\
+		/datum/reagent/consumable/ethanol/peppermint_patty,\
+		/datum/reagent/consumable/ethanol/aloe,\
+		/datum/reagent/consumable/pumpkin_latte)
 		
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
@@ -119,54 +120,72 @@ datum/bounty/reagent/complex_drink/New()
 	description = "CentCom is offering a reward for talented mixologists. Ship a container of [name] to claim the prize."
 	reward += rand(0, 4) * 500
 
-/datum/bounty/reagent/chemical
-	name = "Chemical"
+/datum/bounty/reagent/chemical_simple
+	name = "Simple Chemical"
 	reward = 4000
 	required_volume = 30
 
-datum/bounty/reagent/chemical/New()
-	// Don't worry about making this comprehensive. It doesn't matter if some chems are skipped.
+datum/bounty/reagent/chemical_simple/New()
+	// Chemicals that can be mixed by a single skilled Chemist.
 	var/static/list/possible_reagents = list(\
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/clonexadone,\
-		/datum/reagent/medicine/pyroxadone,\
-		/datum/reagent/medicine/rezadone,\
 		/datum/reagent/medicine/mine_salve,\
-		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/perfluorodecalin,\
 		/datum/reagent/medicine/ephedrine,\
 		/datum/reagent/medicine/diphenhydramine,\
-		/datum/reagent/medicine/atropine,\
-		/datum/reagent/medicine/strange_reagent,\
-		/datum/reagent/medicine/regen_jelly,\
 		/datum/reagent/drug/space_drugs,\
 		/datum/reagent/drug/crank,\
-		/datum/reagent/drug/krokodil,\
-		/datum/reagent/drug/methamphetamine,\
-		/datum/reagent/drug/bath_salts,\
-		/datum/reagent/drug/aranesp,\
-		/datum/reagent/nitroglycerin,\
 		/datum/reagent/blackpowder,\
 		/datum/reagent/napalm,\
-		/datum/reagent/teslium,\
 		/datum/reagent/firefighting_foam,\
-		/datum/reagent/consumable/honey,\
 		/datum/reagent/consumable/mayonnaise,\
-		/datum/reagent/consumable/frostoil,\
-		/datum/reagent/toxin/slimejelly,\
 		/datum/reagent/toxin/itching_powder,\
-		/datum/reagent/toxin/amanitin,\
-		/datum/reagent/toxin/coniine,\
 		/datum/reagent/toxin/cyanide,\
 		/datum/reagent/toxin/heparin,\
-		/datum/reagent/toxin/skewium,\
+		/datum/reagent/medicine/pen_acid,\
+		/datum/reagent/medicine/atropine,\
+		/datum/reagent/drug/aranesp,\
+		/datum/reagent/drug/krokodil,\
+		/datum/reagent/drug/methamphetamine,\
+		/datum/reagent/teslium,\
 		/datum/reagent/toxin/anacea,\
-		/datum/reagent/toxin/mimesbane,\
 		/datum/reagent/pax)
 
 	var/reagent_type = pick(possible_reagents)
 	wanted_reagent = new reagent_type
 	name = wanted_reagent.name
 	description = "CentCom is in desperate need of the chemical [name]. Ship a container of it to be rewarded."
-	reward += rand(0, 4) * 500
+	reward += rand(0, 4) * 500 //4000 to 6000 credits
 
+/datum/bounty/reagent/chemical_complex
+	name = "Rare Chemical"
+	reward = 6000
+	required_volume = 20
+
+datum/bounty/reagent/chemical_complex/New()
+	// Reagents that require interaction with multiple departments or are a pain to mix. Lower required_volume since acquiring 30u of some is unrealistic
+	var/static/list/possible_reagents = list(\
+		/datum/reagent/medicine/pyroxadone,\
+		/datum/reagent/medicine/rezadone,\
+		/datum/reagent/medicine/regen_jelly,\
+		/datum/reagent/drug/bath_salts,\
+		/datum/reagent/hair_dye,\
+		/datum/reagent/consumable/honey,\
+		/datum/reagent/consumable/frostoil,\
+		/datum/reagent/toxin/slimejelly,\
+		/datum/reagent/teslium/energized_jelly,\
+		/datum/reagent/toxin/skewium,\
+		/datum/reagent/toxin/mimesbane,\
+		/datum/reagent/medicine/strange_reagent,\
+		/datum/reagent/nitroglycerin,\
+		/datum/reagent/medicine/rezadone,\
+		/datum/reagent/toxin/zombiepowder,\
+		/datum/reagent/toxin/ghoulpowder,\
+		/datum/reagent/mulligan)
+
+	var/reagent_type = pick(possible_reagents)
+	wanted_reagent = new reagent_type
+	name = wanted_reagent.name
+	description = "CentCom is paying premium for the chemical [name]. Ship a container of it to be rewarded."
+	reward += rand(0, 5) * 750 //6000 to 9750 credits

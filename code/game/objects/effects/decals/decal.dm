@@ -15,7 +15,7 @@
 		qdel(src)
 
 /obj/effect/decal/proc/NeverShouldHaveComeHere(turf/T)
-	return isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || ischasm(T)
+	return isclosedturf(T) || isgroundlessturf(T)
 
 /obj/effect/decal/ex_act(severity, target)
 	qdel(src)

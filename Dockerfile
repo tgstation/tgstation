@@ -1,4 +1,4 @@
-FROM tgstation/byond:512.1448 as base
+FROM tgstation/byond:512.1452 as base
 #above version must be the same as the one in dependencies.sh
 
 FROM base as build_base

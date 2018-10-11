@@ -112,6 +112,8 @@
 		M.SetUnconscious(0)
 		M.SetStun(0)
 		M.SetKnockdown(0)
+		M.SetImmobilized(0)
+		M.SetParalyzed(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
@@ -503,7 +505,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	L.lastattacker = user.real_name
 	L.lastattackerckey = user.ckey
 
-	L.Knockdown(140)
+	L.Paralyze(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
@@ -635,7 +637,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		return // Stops humans from disassembling abductor headsets.
 	return ..()
 
@@ -702,7 +704,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	framestackamount = 1
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
