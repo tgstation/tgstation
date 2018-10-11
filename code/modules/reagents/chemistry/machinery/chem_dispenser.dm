@@ -49,6 +49,14 @@
 		"bromine",
 		"stable_plasma"
 	)
+	var/list/upgrade_reagents = list(
+		"oil",
+		"ash",
+		"acetone",
+		"saltpetre",
+		"ammonia",
+		"diethylamine"
+	)
 	var/list/emagged_reagents = list(
 		"space_drugs",
 		"morphine",
@@ -346,6 +354,8 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > macrotier)
 			macrotier = M.rating
+		if (M.rating > 3)
+			dispensable_reagents |= upgrade_reagents
 	powerefficiency = round(newpowereff, 0.01)
 
 
