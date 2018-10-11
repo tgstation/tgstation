@@ -1279,6 +1279,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/codespeak_manual/unlimited
 	cost = 3
 
+/datum/uplink_item/device_tools/syndie_spawner
+	name = "Codespeak Manual"
+	desc = "Summons a gateway that will routinely teleport in Syndicate muscle - emphasis on the muscle, these guys are rather SIMPLE. The gateway self-calbrates to allow more reinforcements over time."
+	item = /obj/machinery/spawner
+	cost = 20
+	player_minimum = 40
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"

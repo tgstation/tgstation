@@ -571,6 +571,7 @@
 #include "code\game\machinery\exp_cloner.dm"
 #include "code\game\machinery\firealarm.dm"
 #include "code\game\machinery\flasher.dm"
+#include "code\game\machinery\ghostmob_spawner.dm"
 #include "code\game\machinery\gulag_item_reclaimer.dm"
 #include "code\game\machinery\gulag_teleporter.dm"
 #include "code\game\machinery\harvester.dm"
