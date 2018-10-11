@@ -22213,6 +22213,10 @@
 "ban" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/biogenerator,
+/obj/machinery/door/window/northleft{
+	name = "Hydroponics Desk";
+	req_access_txt = "35"
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bao" = (

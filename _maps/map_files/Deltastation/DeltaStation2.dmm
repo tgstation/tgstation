@@ -37930,13 +37930,12 @@
 /obj/machinery/door/firedoor,
 /obj/item/folder,
 /obj/item/pen,
-/obj/machinery/door/window/eastleft{
-	dir = 8;
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westright{
 	name = "Hydroponics Desk";
 	req_access_txt = "35"
 	},
-/obj/item/reagent_containers/food/snacks/grown/apple,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bqE" = (
@@ -39157,11 +39156,6 @@
 "bsz" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/eastright{
-	dir = 8;
-	name = "Hydroponics Desk";
-	req_access_txt = "35"
-	},
 /obj/item/seeds/lime{
 	pixel_x = 6
 	},
@@ -39173,6 +39167,10 @@
 /obj/item/reagent_containers/food/snacks/grown/watermelon,
 /obj/item/reagent_containers/food/snacks/grown/banana,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/westleft{
+	name = "Hydroponics Desk";
+	req_access_txt = "35"
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bsA" = (
@@ -127664,6 +127662,10 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/biogenerator,
+/obj/machinery/door/window/westleft{
+	name = "Hydroponics Desk";
+	req_access_txt = "35"
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "oIl" = (

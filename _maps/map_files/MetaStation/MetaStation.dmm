@@ -49992,20 +49992,18 @@
 /area/hydroponics)
 "bSV" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/eastleft{
-	dir = 1;
-	name = "Kitchen Window";
-	req_access_txt = "28"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/paper,
-/obj/machinery/door/window/eastleft{
-	dir = 2;
-	name = "Hydroponics Window";
-	req_one_access_txt = "30;35"
-	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/southleft{
+	name = "Hydroponics Window";
+	req_one_access_txt = "35"
+	},
+/obj/machinery/door/window/northleft{
+	name = "Kitchen Window";
+	req_access_txt = "28"
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bSW" = (
@@ -51208,11 +51206,6 @@
 "bVr" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/westleft{
-	dir = 4;
-	name = "Hydroponics Desk";
-	req_one_access_txt = "30;35"
-	},
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -51230,6 +51223,10 @@
 /obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
+	},
+/obj/machinery/door/window/eastleft{
+	name = "Hydroponics Desk";
+	req_access_txt = "35"
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -51961,6 +51958,10 @@
 	dir = 8
 	},
 /obj/machinery/biogenerator,
+/obj/machinery/door/window/eastright{
+	name = "Hydroponics Desk";
+	req_access_txt = "35"
+	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bWL" = (
