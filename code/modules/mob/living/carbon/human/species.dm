@@ -1139,7 +1139,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.health >= 0 && !(target.has_trait(TRAIT_FAKEDEATH)))
+	if(!((target.health < 0 || target.has_trait(TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaken")
