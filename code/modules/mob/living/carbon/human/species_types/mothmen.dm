@@ -36,7 +36,9 @@
 	return randname
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
-	..()
+	. = ..()
+	if(.) //if the mob is immune to fire, don't burn wings off.
+		return
 	if(H.dna.features["moth_wings"] != "Burnt Off" && H.bodytemperature >= 800 && H.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
 		H.dna.features["moth_wings"] = "Burnt Off"

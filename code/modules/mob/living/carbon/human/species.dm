@@ -1571,8 +1571,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
-	if(H.has_trait(TRAIT_NOFIRE))
-		return
+	if(!CanIgniteMob(H))
+		return TRUE
 	if(H.on_fire)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
