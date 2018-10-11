@@ -231,6 +231,9 @@
 	progress.update(progress.goal - things.len)
 	return FALSE
 
+/mob/proc/canUseStorage(var/atom/A)
+	return (A.Adjacent(src) && A.loc != src && ishuman(src) && stat == CONSCIOUS && !restrained() && canmove)
+
 /datum/component/storage/proc/quick_empty(mob/M)
 	var/atom/A = parent
 	if(M.canUseStorage() && A.Adjacent(M) && (A.loc != M)) && M.incapacitated())
