@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Ghosts will no longer see AI camera icons after an AI dies."
-  - bugfix: "Fixed being unable to click underneath AI camera icons."

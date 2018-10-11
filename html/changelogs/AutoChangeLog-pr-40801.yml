@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the talking sword's spirit's mind not having the correct name."
-  - tweak: "The talking sword's spirit's name is now prefixed with \"The spirit of\"."

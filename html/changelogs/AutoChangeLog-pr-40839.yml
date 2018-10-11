@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Retrieving credits from a pirate syphon now properly removes them from the syphon, instead of duplicating them."
