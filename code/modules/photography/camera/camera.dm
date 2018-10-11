@@ -163,6 +163,7 @@
 	seen = get_hear(viewr, viewc)
 	var/list/turfs = list()
 	var/list/mobs = list()
+	var/list/dead_minds = list() //Kill claiming
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 	for(var/turf/T in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
@@ -170,6 +171,15 @@
 			turfs += T
 			for(var/mob/M in T)
 				mobs += M
+				if(M.mind && M.stat == DEAD)
+					var/mob/living/carbon/human/H = M
+					if(istype(H) && H.get_face_name() == "Unknown" && H.get_visible_name() != H.mind.name) //Needs to be identifiable. What this means ? Who knows.
+						continue
+					dead_minds |= M.mind
+			var/obj/item/bodypart/head/head
+			if((head = locate(/obj/item/bodypart/head) in T))
+				if(head.brainmob && head.brainmob.mind && head.real_name != "Unknown")
+					dead_minds |= head.brainmob.mind
 			if(locate(/obj/item/areaeditor/blueprints) in T)
 				blueprints = TRUE
 	for(var/i in mobs)
@@ -186,6 +196,7 @@
 	temp.Blend(get_icon, ICON_OVERLAY)
 
 	var/datum/picture/P = new("picture", desc.Join(" "), temp, null, psize_x, psize_y, blueprints)
+	P.dead_minds = dead_minds
 	after_picture(user, P, flag)
 	blending = FALSE
 
