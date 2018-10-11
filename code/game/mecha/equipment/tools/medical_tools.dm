@@ -1,15 +1,11 @@
 // Sleeper, Medical Beam, and Syringe gun
 
 /obj/item/mecha_parts/mecha_equipment/medical
+	mecha_types = list(/obj/mecha/medical)
 
 /obj/item/mecha_parts/mecha_equipment/medical/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-
-/obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/mecha/medical/M)
-	if(..() && istype(M))
-		return 1
-
 
 /obj/item/mecha_parts/mecha_equipment/medical/attach(obj/mecha/M)
 	..()
@@ -18,11 +14,6 @@
 /obj/item/mecha_parts/mecha_equipment/medical/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mecha_parts/mecha_equipment/medical/process()
-	if(!chassis)
-		STOP_PROCESSING(SSobj, src)
-		return 1
 
 /obj/item/mecha_parts/mecha_equipment/medical/mechmedbeam/detach()
 	STOP_PROCESSING(SSobj, src)
@@ -179,7 +170,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/get_available_reagents()
 	var/output
-	var/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun) in chassis
+	var/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/SG = locate(/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun) in chassis
 	if(SG && SG.reagents && islist(SG.reagents.reagent_list))
 		for(var/datum/reagent/R in SG.reagents.reagent_list)
 			if(R.volume > 0)
@@ -187,7 +178,7 @@
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/SG)
 	if(!R || !patient || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
@@ -241,7 +232,7 @@
 ///////////////////////////////// Syringe Gun ///////////////////////////////////////////////////////////////
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun
 	name = "exosuit syringe gun"
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
 	icon = 'icons/obj/guns/projectile.dmi'
@@ -256,8 +247,11 @@
 	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
 	range = MELEE|RANGED
 	equip_cooldown = 10
+	fire_sound = 'sound/items/syringeproj.ogg'
+	kickback = FALSE
+	mecha_types = list(/obj/mecha/medical)
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/Initialize()
 	. = ..()
 	create_reagents(max_volume)
 	reagents.set_reacting(FALSE)
@@ -265,32 +259,26 @@
 	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/detach()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/detach()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Destroy()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/critfail()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/critfail()
 	..()
 	if(reagents)
 		reagents.set_reacting(TRUE)
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/mecha/medical/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
-
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/get_equip_info()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/get_equip_info()
 	var/output = ..()
 	if(output)
 		return "[output] \[<a href=\"?src=[REF(src)];toggle_mode=1\">[mode? "Analyze" : "Launch"]</a>\]<br />\[Syringes: [syringes.len]/[max_syringes] | Reagents: [reagents.total_volume]/[reagents.maximum_volume]\]<br /><a href='?src=[REF(src)];show_reagents=1'>Reagents list</a>"
 	return
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/action(atom/movable/target)
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/action(atom/movable/target)
 	if(!action_checks(target))
 		return
 	if(istype(target, /obj/item/reagent_containers/syringe))
@@ -307,56 +295,20 @@
 	if(reagents.total_volume<=0)
 		occupant_message("<span class=\"alert\">No available reagents to load syringe with.</span>")
 		return
-	var/turf/trg = get_turf(target)
-	var/obj/item/reagent_containers/syringe/mechsyringe = syringes[1]
-	mechsyringe.forceMove(get_turf(chassis))
-	reagents.trans_to(mechsyringe, min(mechsyringe.volume, reagents.total_volume))
-	syringes -= mechsyringe
-	mechsyringe.icon = 'icons/obj/chemical.dmi'
-	mechsyringe.icon_state = "syringeproj"
-	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
-	log_message("Launched [mechsyringe] from [src], targeting [target].", LOG_MECHA)
-	var/mob/originaloccupant = chassis.occupant
-	spawn(0)
-		src = null //if src is deleted, still process the syringe
-		for(var/i=0, i<6, i++)
-			if(!mechsyringe)
-				break
-			if(step_towards(mechsyringe,trg))
-				var/list/mobs = new
-				for(var/mob/living/carbon/M in mechsyringe.loc)
-					mobs += M
-				var/mob/living/carbon/M = safepick(mobs)
-				if(M)
-					var/R
-					mechsyringe.visible_message("<span class=\"attack\"> [M] was hit by the syringe!</span>")
-					if(M.can_inject(null, 1))
-						if(mechsyringe.reagents)
-							for(var/datum/reagent/A in mechsyringe.reagents.reagent_list)
-								R += A.id + " ("
-								R += num2text(A.volume) + "),"
-						mechsyringe.icon_state = initial(mechsyringe.icon_state)
-						mechsyringe.icon = initial(mechsyringe.icon)
-						mechsyringe.reagents.reaction(M, INJECT)
-						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
-						M.take_bodypart_damage(2)
-						log_combat(originaloccupant, M, "shot", "syringegun")
-					break
-				else if(mechsyringe.loc == trg)
-					mechsyringe.icon_state = initial(mechsyringe.icon_state)
-					mechsyringe.icon = initial(mechsyringe.icon)
-					mechsyringe.update_icon()
-					break
-			else
-				mechsyringe.icon_state = initial(mechsyringe.icon_state)
-				mechsyringe.icon = initial(mechsyringe.icon)
-				mechsyringe.update_icon()
-				break
-			sleep(1)
-	return 1
+	return ..()
 
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/create_projectile()
+	var/obj/item/reagent_containers/syringe/S = syringes[1]
+	var/obj/item/projectile/bullet/dart/syringe/D = new(src)
+	D.name = S.name
+	D.piercing = S.proj_piercing
+	reagents.trans_to(S, S.reagents.maximum_volume)
+	S.reagents.trans_to(D, S.reagents.maximum_volume)
+	syringes -= S
+	qdel(S)
+	return D
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/Topic(href,href_list)
 	..()
 	var/datum/topic_input/afilter = new (href,href_list)
 	if(afilter.get("toggle_mode"))
@@ -394,7 +346,7 @@
 		return
 	return
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_page()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/proc/get_reagents_page()
 	var/output = {"<html>
 						<head>
 						<title>Reagent Synthesizer</title>
@@ -422,7 +374,7 @@
 						"}
 	return output
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_form()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/proc/get_reagents_form()
 	var/r_list = get_reagents_list()
 	var/inputs
 	if(r_list)
@@ -437,14 +389,14 @@
 						"}
 	return output
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_reagents_list()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/proc/get_reagents_list()
 	var/output
 	for(var/i=1 to known_reagents.len)
 		var/reagent_id = known_reagents[i]
 		output += {"<input type="checkbox" value="[reagent_id]" name="reagent_[i]" [(reagent_id in processed_reagents)? "checked=\"1\"" : null]> [known_reagents[reagent_id]]<br />"}
 	return output
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/get_current_reagents()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/proc/get_current_reagents()
 	var/output
 	for(var/datum/reagent/R in reagents.reagent_list)
 		if(R.volume > 0)
@@ -453,7 +405,7 @@
 		output += "Total: [round(reagents.total_volume,0.001)]/[reagents.maximum_volume] - <a href=\"?src=[REF(src)];purge_all=1\">Purge All</a>"
 	return output || "None"
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S)
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/proc/load_syringe(obj/item/reagent_containers/syringe/S)
 	if(syringes.len<max_syringes)
 		if(get_dist(src,S) >= 2)
 			occupant_message("The syringe is too far away.")
@@ -475,7 +427,7 @@
 	occupant_message("[src]'s syringe chamber is full.")
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/analyze_reagents(atom/A)
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/proc/analyze_reagents(atom/A)
 	if(get_dist(src,A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
@@ -490,27 +442,27 @@
 	occupant_message("Analyzis complete.")
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/proc/add_known_reagent(r_id,r_name)
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/proc/add_known_reagent(r_id,r_name)
 	if(!(r_id in known_reagents))
 		known_reagents += r_id
 		known_reagents[r_id] = r_name
 		return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/update_equip_info()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/update_equip_info()
 	if(..())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents",get_current_reagents())
 		send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/on_reagent_change(changetype)
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/on_reagent_change(changetype)
 	..()
 	update_equip_info()
 	return
 
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/process()
+/obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun/process()
 	if(..())
 		return
 	if(!processed_reagents.len || reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))

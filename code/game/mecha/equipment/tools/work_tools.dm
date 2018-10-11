@@ -11,12 +11,7 @@
 	var/dam_force = 20
 	var/obj/mecha/working/ripley/cargo_holder
 	harmful = TRUE
-
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/mecha/working/ripley/M as obj)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+	mecha_types = list(/obj/mecha/working/ripley)
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/mecha/M as obj)
 	..()
@@ -165,6 +160,7 @@
 	equip_cooldown = 5
 	energy_drain = 0
 	range = MELEE|RANGED
+	mecha_types = list(/obj/mecha/working)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/Initialize()
 	. = ..()
@@ -216,14 +212,6 @@
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
 	return "[..()] \[[src.reagents.total_volume]\]"
-
-/obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/mecha/working/M as obj)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
-
-
 
 /obj/item/mecha_parts/mecha_equipment/rcd
 	name = "mounted RCD"
@@ -336,16 +324,11 @@
 	var/obj/structure/cable/last_piece
 	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
+	mecha_types = list(/obj/mecha/working)
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/Initialize()
 	. = ..()
 	cable = new(src, 0)
-
-/obj/item/mecha_parts/mecha_equipment/cable_layer/can_attach(obj/mecha/working/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/attach()
 	..()

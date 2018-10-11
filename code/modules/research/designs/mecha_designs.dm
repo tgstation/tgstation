@@ -372,7 +372,7 @@
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
 	id = "mech_syringe_gun"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/syringe_gun
 	materials = list(MAT_METAL=3000,MAT_GLASS=2000)
 	construction_time = 200
 	category = list("Exosuit Equipment")

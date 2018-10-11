@@ -15,6 +15,7 @@
 	var/salvageable = 1
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
+	var/list/mecha_types = list(/obj/mecha) //Mecha types this equipment can be attached to
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
@@ -40,6 +41,10 @@
 		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
 		chassis = null
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/process()
+	if(!chassis)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	log_message("Critical failure", LOG_MECHA, color="red")
@@ -105,8 +110,12 @@
 		return 0
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
-	if(M.equipment.len<M.max_equip)
-		return 1
+	if(M.equipment.len >= M.max_equip)
+		return FALSE
+	for(var/type in mecha_types)
+		if(istype(M, type))
+			return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/attach(obj/mecha/M)
 	M.equipment += src
