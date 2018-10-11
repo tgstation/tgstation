@@ -84,7 +84,9 @@
 
 /datum/objective/hivemind/assimilate_common/check_completion()
 	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
-	if(!host || !target || !target.current || !host.hivemembers.Find(target.current))
+	if(!target)
+		return TRUE
+	if(!host || !target.current || !host.hivemembers.Find(target.current))
 		return FALSE
 	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
 		if(H == host)
