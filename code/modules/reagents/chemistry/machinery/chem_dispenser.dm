@@ -49,7 +49,7 @@
 		"bromine",
 		"stable_plasma"
 	)
-	//these become available once the manipulator has been upgraded to tier 4
+	//these become available once the manipulator has been upgraded to tier 4 (femto)
 	var/list/upgrade_reagents = list(
 		"oil",
 		"ash",
