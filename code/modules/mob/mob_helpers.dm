@@ -509,3 +509,17 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(has_trait(TRAIT_DISSECTED))
 		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
+		
+/mob/living/proc/surgeries_examine()
+	. = ""
+	if(!surgeries.len)
+		return
+	for(var/datum/surgery/S in surgeries)
+		var/obj/item/bodypart/BP = S.operated_bodypart
+		var/zone = S.location
+		if(!get_location_accessible(src, zone))
+			continue
+		if(!BP)
+			. += "<span class='warning'>[src] has surgical markings where [p_their()] [parse_zone(zone)] should go!</span><br>"
+		else
+			. += "<span class='warning'>There are surgical markings on [p_their()] [BP.name]!</span><br>"
