@@ -47,6 +47,7 @@
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
+		destination.dna.mutation_index = mutation_index
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -155,7 +156,11 @@
 
 /datum/dna/proc/force_give(datum/mutation/human/HM)
 	if(holder)
-		var/datum/mutation/human/A = new HM()
+		var/path = HM
+		if(!ispath(HM))
+			path = HM.type
+		var/datum/mutation/human/A = new path()
+		A.copy_mutation(HM)
 		set_block(1, HM)
 		. = A.on_acquiring(holder)
 		if(.)
@@ -170,7 +175,7 @@
 			A = HM
 		else
 			return TRUE
-		set_block(holder, 0, HM)
+		set_block(0, HM)
 		. = A.on_losing(holder)
 
 /datum/dna/proc/mutations_say_mods(message)
@@ -379,9 +384,17 @@
 
 
 /datum/dna/proc/set_block(on=TRUE, datum/mutation/human/A)
-	if(holder && holder.has_dna())
+	if(holder && holder.has_dna() && (A in mutation_index))
 		struc_enzymes = set_se(on, A)
 
+/datum/dna/proc/activate_mutation(datum/mutation/human/HM)
+	if(!HM)
+		return
+	if(ispath(HM))
+		HM = get_initialized_mutation(HM)
+	if(!(HM.type in mutation_index)) //cant activate what we dont have, use force_give
+		return FALSE
+	return force_give(HM)
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
 /proc/getleftblocks(input,blocknumber,blocksize)

@@ -367,3 +367,21 @@
 	name = "\improper DNA injector (Human > Monkey)"
 	desc = "Will make you a flea bag."
 	add_mutations_static = list(RACEMUT)
+
+/obj/item/dnainjector/activator
+	name = "\improper DNA activator"
+	desc = "Activates the current mutation on injection, if the subject has it."
+	var/datum/mutation/human/HM
+
+/obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
+	prepare()
+
+	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
+		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
+		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
+		if(!M.dna.activate_mutation(HM))
+			log_msg += "(FAILED)"
+		log_msg += "([HM.name])"
+		log_attack("[log_msg] [loc_name(user)]")
+		return TRUE
+	return FALSE

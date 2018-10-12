@@ -52,7 +52,7 @@
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
 		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = O.dna.set_se(on=1,R)//we don't want to keep the race block inactive
+		O.dna.struc_enzymes = O.dna.set_se(1,R)//we don't want to keep the race block inactive
 
 	if(suiciding)
 		O.suiciding = suiciding

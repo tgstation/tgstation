@@ -19,7 +19,8 @@
 	padding: -3px 0 -1px 0;
 	margin: 2px 2px 0 10px;
 	text-align: center;
-}.dnaBlockNumberNeutral
+}
+.dnaBlockNumberNeutral
 {
 	font-family: Fixed, monospace;
 	float: left;
@@ -29,7 +30,8 @@
 	padding: -3px 0 -1px 0;
 	margin: 2px 2px 0 10px;
 	text-align: center;
-}.dnaBlockNumberBad
+}
+.dnaBlockNumberBad
 {
 	font-family: Fixed, monospace;
 	float: left;

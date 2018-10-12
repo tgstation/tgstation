@@ -104,8 +104,9 @@ GLOBAL_LIST_EMPTY(mutations_list)
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
 
-/datum/mutation/human/proc/copy_mutation(datum/human/mutation/HM) //Not yet implemented, useful for when assigning specific stats. Note that HM might be a typepath
-	return
+/datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM) //Not yet implemented, useful for when assigning specific stats.
+	if(ispath(HM))
+		return TRUE
 
 /proc/get_initialized_mutation(B)
 	for(var/datum/mutation/human/A in GLOB.mutations_list)

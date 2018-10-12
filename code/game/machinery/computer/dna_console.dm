@@ -320,10 +320,13 @@ More mutations
 		if("mutations")
 			temp_html += status
 			temp_html += buttons
-			temp_html += "<h3>Mutation Storage:<br></h>"
+			temp_html += "<h3>Mutation Storage:<br></h3>"
 			for(var/datum/mutation/human/HM in stored_mutations)
-				temp_html += "<a href='?src=[REF(src)];task=inspect;num=[stored_mutations + DNA_STRUC_ENZYMES_BLOCKS]'>[HM.name]</a>"
-				temp_html += "<a href='?src=[REF(src)];task=deletemut;num=[stored_mutations[HM]]'>Delete</a>"
+				var/i = stored_mutations.Find(HM)
+				temp_html += "<a href='?src=[REF(src)];task=inspect;num=[DNA_STRUC_ENZYMES_BLOCKS + i]'>[HM.name]</a>"
+				temp_html += "<a href='?src=[REF(src)];task=activator;num=[i]'>Print Activator</a>"
+				temp_html += "<a href='?src=[REF(src)];task=deletemut;num=[i]'>Delete</a>"
+				temp_html += "<br>"
 		else
 			temp_html += status
 			temp_html += buttons
@@ -369,20 +372,30 @@ More mutations
 	popup.open()
 
 /obj/machinery/computer/scan_consolenew/proc/generate_DBN(i,mob/living/carbon/viable_occupant) //generate_dna_block_number
-	var/datum/mutation/human/M = viable_occupant.dna.get_mutation(viable_occupant.dna.mutation_index[i])
+	var/mutation = viable_occupant.dna.mutation_index[i]
+	var/datum/mutation/human/M = viable_occupant.dna.get_mutation(mutation)
 	var/temp_html
+	var/path
 	if(M)
-		var/mut_style = "dnaBlockNumber"
-		if(M.type in stored_research.discovered_mutations)
-			switch(M.quality)
-				if(POSITIVE)
-					mut_style = "dnaBlockNumberGood"
-				if(MINOR_NEGATIVE)
-					mut_style = "dnaBlockNumberNeutral"
-				if(NEGATIVE)
-					mut_style = "dnaBlockNumberBad"
+		path = M.type
+	else
+		path = mutation
+	var/mut_style = "dnaBlockNumber"
+	if((path in stored_research.discovered_mutations) || M)
+		var/quality
+		if(!M)
+			var/datum/mutation/human/HM = get_initialized_mutation(mutation)
+			quality = HM.quality
+		else
+			quality = M.quality
+		switch(quality)
+			if(POSITIVE)
+				mut_style = "dnaBlockNumberGood"
+			if(MINOR_NEGATIVE)
+				mut_style = "dnaBlockNumberNeutral"
+			if(NEGATIVE)
+				mut_style = "dnaBlockNumberBad"
 		temp_html += "<a class='[mut_style]' href='?src=[REF(src)];task=inspect;num=[i];'>[i]</a>"
-		current_mutation = M
 	else
 		temp_html += "<div class='dnaBlockNumber'>[i]</div>"
 	return temp_html
@@ -581,11 +594,20 @@ More mutations
 			if(!succes)
 				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
 		if("deletemut")
-			var/datum/mutation/human/HM = stored_mutations[href_list["num"]]
+			var/mutnum = text2num(href_list["num"])
+			var/datum/mutation/human/HM = stored_mutations[mutnum]
 			if(HM)
-				stored_mutations[href_list["num"]] = null
+				stored_mutations[mutnum] = null
 				qdel(HM)
-
+		if("activator")
+			if(injectorready < world.time)
+				var/datum/mutation/human/HM = stored_mutations[text2num(href_list["num"])]
+				if(HM)
+					var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+					I.HM = new HM.type()
+					I.HM.copy_mutation(HM)
+					I.name = "[HM.name] activator"
+					injectorready = world.time + INJECTOR_TIMEOUT
 
 	ui_interact(usr,last_change)
 
