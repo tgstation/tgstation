@@ -117,9 +117,6 @@
 		return
 	. = new /list
 	var/list/gases = air.gases
-	var/total_moles = 0
-	TOTAL_MOLES(gases, total_moles)
-
 	for(var/id in gases)
 		if (nonoverlaying_gases[id])
 			continue
