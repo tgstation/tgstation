@@ -178,16 +178,15 @@ Credit where due:
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
-	var/list/spread_out_spawns = GLOB.servant_spawns
+	var/list/spread_out_spawns = GLOB.servant_spawns.Copy()
 	for(var/S in servants_to_serve)
 		if(!spread_out_spawns.len) //cycle through the list again if we've used all the inital spawnpoints.
-			spread_out_spawns = GLOB.servant_spawns
+			spread_out_spawns = GLOB.servant_spawns.Copy()
 		var/datum/mind/servant = S
 		log_game("[key_name(servant)] was made an initial servant of Ratvar")
 		var/mob/living/L = servant.current
-		var/turf/T = pick(spread_out_spawns)
+		var/turf/T = pick_n_take(spread_out_spawns)
 		L.forceMove(T)
-		spread_out_spawns.Remove(T)
 		greet_servant(L)
 		equip_servant(L)
 		add_servant_of_ratvar(L, TRUE)
