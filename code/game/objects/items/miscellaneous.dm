@@ -21,7 +21,7 @@
 	var/static/list/display_names = list()
 
 /obj/item/herobeacon/attack_self(mob/user)
-	if(user.canUseTopic(src, NO_TK))
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		beacon_hero(user)
 
 /obj/item/herobeacon/proc/beacon_hero(mob/M)
@@ -32,7 +32,7 @@
 			display_names[initial(A.name)] = A
 
 	var/choice = input(M,"What heroic outfit would you like to order?","Historic Heroes") as null|anything in display_names
-	if(!choice || !M.canUseTopic(src, NO_TK) || !in_range(M, src))
+	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
 	var/poseheroicallyuntilthisworks = display_names[choice]
