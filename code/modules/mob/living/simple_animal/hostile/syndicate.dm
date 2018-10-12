@@ -85,6 +85,16 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
 
+/mob/living/simple_animal/hostile/syndicate/melee/reinforcement // Traitor Gateway
+	name = "Syndicate Thug"
+	desc = "Didn't make the cut for the Nuclear Operator Group."
+
+/mob/living/simple_animal/hostile/syndicate/melee/reinforcement/Initialize()
+	. = ..()
+	var/the_spell = new /obj/effect/proc_holder/spell/targeted/rod_form/stab_form(null)
+	AddSpell(the_spell)
+
+
 /mob/living/simple_animal/hostile/syndicate/melee/space
 	icon_state = "syndicate_space_knife"
 	icon_living = "syndicate_space_knife"
@@ -180,6 +190,15 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/infiltrator //shuttle loan event
 	projectilesound = 'sound/weapons/gunshot_silenced.ogg'
 	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
+
+/mob/living/simple_animal/hostile/syndicate/ranged/reinforcement // Traitor Gateway
+	name = "Syndicate Gunman"
+	desc = "Didn't make the cut for the Nuclear Operator Group."
+
+/mob/living/simple_animal/hostile/syndicate/ranged/reinforcement/Initialize()
+	. = ..()
+	var/the_spell = new /obj/effect/proc_holder/spell/targeted/forcewall/sandbag(null)
+	AddSpell(the_spell)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicate_space_pistol"

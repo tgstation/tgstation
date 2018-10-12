@@ -38,3 +38,20 @@
 		if(M.anti_magic_check())
 			return TRUE
 	return FALSE
+
+/obj/effect/proc_holder/spell/targeted/forcewall/sandbag
+	name = "Deploy Sandbags"
+	desc = "Deploys sandbags to help fortify your location. Ranged weapon fire is blocked by sandbags unless fired adjacent to them."
+	school = "transmutation"
+	charge_max = 1200
+	invocation = "Deploying Sandbags!"
+	invocation_type = "shout"
+	sound = 'sound/magic/forcewall.ogg'
+	action_icon = 'icons/mob/actions/actions_items.dmi'
+	action_icon_state = "deploy_box"
+	range = -1
+	include_user = TRUE
+	wall_type = /obj/structure/barricade/sandbags
+
+/obj/effect/proc_holder/spell/targeted/forcewall/sandbag/cast(list/targets,mob/user = usr)
+	new wall_type(get_turf(user))

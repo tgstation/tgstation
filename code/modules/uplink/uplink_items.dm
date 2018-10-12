@@ -1281,7 +1281,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/device_tools/syndie_spawner
 	name = "Syndicate Gateway"
-	desc = "Summons a gateway that will routinely teleport in Syndicate muscle - emphasis on the muscle, these guys are rather SIMPLE. The gateway self-calibrates to allow more reinforcements over time."
+	desc = "A gateway that will routinely teleport in Syndicate muscle - emphasis on the muscle, these guys are rather SIMPLE. The gateway self-calibrates to allow more reinforcements over time."
 	item = /obj/machinery/spawner
 	cost = 20
 	player_minimum = 40

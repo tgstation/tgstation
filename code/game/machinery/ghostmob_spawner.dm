@@ -20,6 +20,7 @@
 /obj/machinery/spawner/proc/reinforce(var/repeat = TRUE)
 	if(!QDELETED(src))
 		light_color = LIGHT_COLOR_RED
+		icon_state = "mob_teleporter_active"
 		update_light()
 		var/list/mob/dead/observer/finalists = pollGhostCandidates("Would you like to be a Syndicate reinforcement?", ROLE_TRAITOR, null, ROLE_TRAITOR, 100, POLL_IGNORE_SYNDICATE)
 		if(LAZYLEN(finalists) && !QDELETED(src))
@@ -29,19 +30,17 @@
 				if(prob(4))
 					S = new /mob/living/simple_animal/hostile/syndicate/ranged/smg(get_turf(src))
 				else
-					S = new /mob/living/simple_animal/hostile/syndicate/ranged(get_turf(src))
+					S = new /mob/living/simple_animal/hostile/syndicate/ranged/reinforcement(get_turf(src))
 			else
 				if(prob(10))
 					S = new /mob/living/simple_animal/hostile/syndicate/melee/sword(get_turf(src))
 				else
-					S = new /mob/living/simple_animal/hostile/syndicate/melee(get_turf(src))
+					S = new /mob/living/simple_animal/hostile/syndicate/melee/reinforcement(get_turf(src))
 			S.key = winner.key
 			do_sparks(4, TRUE, src)
 		if(repeat)
 			light_color = LIGHT_COLOR_CYAN
+			icon_state = "mob_teleporter_on"
 			update_light()
 			cooldown = max(600, cooldown - 300)
 			addtimer(CALLBACK(src, .proc/reinforce), cooldown, TIMER_UNIQUE)
-
-
-
