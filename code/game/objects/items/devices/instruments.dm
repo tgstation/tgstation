@@ -302,8 +302,8 @@
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/willruntimeifelse = display_names[choice]
-	var/instrument = new willruntimeifelse()
+	var/middlevar = display_names[choice]
+	var/instrument = new middlevar()
 	M.put_in_hands(instrument)
 	qdel(src)
 
