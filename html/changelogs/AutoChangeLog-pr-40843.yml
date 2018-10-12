@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "You will no longer hit an organ harvester after using a screwdriver or crowbar on them."

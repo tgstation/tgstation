@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - rscadd: "RDs can now attempt to recreate last year's Feats of Strength challenge."

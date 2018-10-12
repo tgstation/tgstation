@@ -121,7 +121,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 /mob/camera/aiEye/pic_in_pic
 	name = "Secondary AI Eye"
 	invisibility = INVISIBILITY_OBSERVER
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_ICON
 	icon_state = "ai_pip_camera"
 	var/obj/screen/movable/pic_in_pic/ai/screen
 	var/list/cameras_telegraphed = list()
