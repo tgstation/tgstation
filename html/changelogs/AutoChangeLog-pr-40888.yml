@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "AI Eyes are no longer be visible on AI disconnect"
