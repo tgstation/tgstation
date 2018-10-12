@@ -772,7 +772,11 @@
 /mob/proc/canUseStorage()
 	if (get_num_arms() <= 0)
 		return FALSE
-	return (stat == CONSCIOUS && !restrained() && canmove)
+	if (stat != CONSCIOUS)
+		return FALSE
+	if (restrained() || !canmove)
+		return FALSE
+	return TRUE
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
