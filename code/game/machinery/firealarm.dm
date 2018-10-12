@@ -73,6 +73,7 @@
 		return
 
 	add_overlay("fire_overlay")
+	SSvis_overlays.add_vis_overlay(src, icon, "fire_overlay", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
 
 	if(is_station_level(z))
 		add_overlay("fire_[GLOB.security_level]")
