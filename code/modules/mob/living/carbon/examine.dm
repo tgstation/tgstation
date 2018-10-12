@@ -89,6 +89,8 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
 
+	msg += common_trait_examine()
+
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(mood)
 		switch(mood.shown_mood)
