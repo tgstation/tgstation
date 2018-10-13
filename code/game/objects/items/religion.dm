@@ -66,6 +66,8 @@
 	H.adjustFireLoss(-15)
 	H.AdjustStun(-40)
 	H.AdjustKnockdown(-40)
+	H.AdjustImmobilized(-40)
+	H.AdjustParalyzed(-40)
 	H.AdjustUnconscious(-40)
 	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
 

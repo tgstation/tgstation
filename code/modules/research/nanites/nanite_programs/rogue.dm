@@ -116,4 +116,4 @@
 		host_mob.drop_all_held_items()
 	else if(prob(4))
 		to_chat(host_mob, "<span class='warning'>You can't feel your legs!</span>")
-		host_mob.Knockdown(30)
+		host_mob.Paralyze(30)

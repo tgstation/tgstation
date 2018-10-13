@@ -498,7 +498,7 @@
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
 			flash_color(L, flash_color="#960000", flash_time=20)
-			L.Knockdown(40)
+			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1,src)
 		return 0
 

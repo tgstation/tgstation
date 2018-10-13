@@ -243,6 +243,14 @@
 	item_state = "skull"
 	strip_delay = 100
 
+/obj/item/clothing/head/helmet/durathread
+	name = "makeshift helmet"
+	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
+	icon_state = "durathread"
+	item_state = "durathread"
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
+	strip_delay = 60
+
 //LightToggle
 
 /obj/item/clothing/head/helmet/update_icon()

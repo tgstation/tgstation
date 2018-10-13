@@ -91,12 +91,14 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
+	var/severity
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			if(!threat || D.severity > threat) //a buffing virus gets an icon
-				threat = D.severity
-	return threat
+			if(!threat || get_disease_severity_value(D.severity) > threat) //a buffing virus gets an icon
+				threat = get_disease_severity_value(D.severity)
+				severity = D.severity
+	return severity
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
@@ -222,7 +224,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudno_id"
-	if(wear_id)
+	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
 

@@ -50,13 +50,13 @@
 
 // taken from /mob/living/carbon/human/interactive/
 /mob/living/carbon/monkey/proc/IsDeadOrIncap(checkDead = TRUE)
-	if(!canmove)
+	if(!(mobility_flags & MOBILITY_FLAGS_INTERACTION))
 		return 1
 	if(health <= 0 && checkDead)
 		return 1
 	if(IsUnconscious())
 		return 1
-	if(IsStun() || IsKnockdown())
+	if(IsStun() || IsParalyzed())
 		return 1
 	if(stat)
 		return 1
@@ -143,7 +143,7 @@
 				pickupTimer = 0
 			else
 				INVOKE_ASYNC(src, .proc/walk2derpless, pickupTarget.loc)
-				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target				
+				if(Adjacent(pickupTarget) || Adjacent(pickupTarget.loc)) // next to target
 					drop_all_held_items() // who cares about these items, i want that one!
 					if(isturf(pickupTarget.loc)) // on floor
 						equip_item(pickupTarget)
@@ -167,7 +167,7 @@
 							battle_screech()
 							retaliate(L)
 							return TRUE
-						else 
+						else
 							bodyDisposal = locate(/obj/machinery/disposal/) in around
 							if(bodyDisposal)
 								target = L

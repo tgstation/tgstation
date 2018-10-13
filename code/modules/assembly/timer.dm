@@ -113,10 +113,8 @@
 	if(href_list["time"])
 		timing = text2num(href_list["time"])
 		if(timing && istype(holder, /obj/item/transfer_valve))
-			var/timer_message = "[ADMIN_LOOKUPFLW(usr)] activated [src] attachment on [holder]."
-			message_admins(timer_message)
-			GLOB.bombers += timer_message
-			log_game("[key_name(usr)] activated [src] attachment on [holder]")
+			log_bomber(usr, "activated a", src, "attachment on [holder]")
+
 		update_icon()
 	if(href_list["repeat"])
 		loop = text2num(href_list["repeat"])

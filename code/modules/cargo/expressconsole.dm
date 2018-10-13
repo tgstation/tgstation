@@ -20,7 +20,7 @@
 	var/list/meme_pack_data
 	var/obj/item/supplypod_beacon/beacon //the linked supplypod beacon
 	var/area/landingzone = /area/quartermaster/storage //where we droppin boys
-	var/podType = /obj/structure/closet/supplypod //0 is your standard supply supplypod (requires dissassembly after landing), 1 is the bluespace supply pod (teleports out after landing)
+	var/podType = /obj/structure/closet/supplypod
 	var/cooldown = 0 //cooldown to prevent printing supplypod beacon spam
 	var/locked = TRUE //is the console locked? unlock with ID
 	var/usingBeacon = FALSE //is the console in beacon mode? exists to let beacon know when a pod may come in
@@ -157,7 +157,7 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
-				rank = H.get_assignment()
+				rank = H.get_assignment(hand_first = TRUE)
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"

@@ -38,7 +38,7 @@
 	. = ..()
 	verbs += /mob/living/proc/lay_down
 
-/mob/living/simple_animal/pet/cat/update_canmove()
+/mob/living/simple_animal/pet/cat/update_mobility()
 	..()
 	if(client && stat != DEAD)
 		if (resting)
@@ -48,7 +48,6 @@
 			icon_state = "[icon_living]"
 			collar_type = "[initial(collar_type)]"
 	regenerate_icons()
-
 
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"
@@ -172,21 +171,18 @@
 			emote("me", 1, pick("stretches out for a belly rub.", "wags its tail.", "lies down."))
 			icon_state = "[icon_living]_rest"
 			collar_type = "[initial(collar_type)]_rest"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			emote("me", 1, pick("sits down.", "crouches on its hind legs.", "looks alert."))
 			icon_state = "[icon_living]_sit"
 			collar_type = "[initial(collar_type)]_sit"
-			resting = 1
-			update_canmove()
+			set_resting(TRUE)
 		else if (prob(1))
 			if (resting)
 				emote("me", 1, pick("gets up and meows.", "walks around.", "stops resting."))
 				icon_state = "[icon_living]"
 				collar_type = "[initial(collar_type)]"
-				resting = 0
-				update_canmove()
+				set_resting(FALSE)
 			else
 				emote("me", 1, pick("grooms its fur.", "twitches its whiskers.", "shakes out its coat."))
 
@@ -284,12 +280,8 @@
 	if(health < maxHealth)
 		adjustBruteLoss(-8) //Fast life regen
 	for(var/obj/item/reagent_containers/food/snacks/donut/D in range(1, src)) //Frosts nearby donuts!
-		if(D.icon_state != "donut2")
-			D.name = "frosted donut"
-			D.icon_state = "donut2"
-			D.reagents.add_reagent("sprinkles", 2)
-			D.bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
-			D.filling_color = "#FF69B4"
+		if(!D.is_frosted)
+			D.frost_donut()
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()
