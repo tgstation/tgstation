@@ -48,7 +48,7 @@
 /datum/chemical_reaction/hot_coco
 	name = "Hot Coco"
 	id = "hot_coco"
-	results = list("hot_coco" = 5, "choco_flavour" = 2)
+	results = list("hot_coco" = 5, "choco_syrup" = 2)
 	required_reagents = list("water" = 5, "cocoa" = 1)
 
 /datum/chemical_reaction/coffee
