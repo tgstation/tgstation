@@ -416,7 +416,7 @@ SUBSYSTEM_DEF(job)
 		H.mind.assigned_role = rank
 
 	if(job)
-		var/new_mob = job.equip(H, null, null, joined_late)
+		var/new_mob = job.equip(H, null, null, joined_late , null, M.client)
 		if(ismob(new_mob))
 			H = new_mob
 			if(!joined_late)
