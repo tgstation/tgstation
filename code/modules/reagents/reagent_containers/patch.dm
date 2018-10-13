@@ -14,6 +14,8 @@
 /obj/item/reagent_containers/pill/patch/attack(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/obj/item/bodypart/affecting = L.get_bodypart(check_zone(user.zone_selected))
+		if(!L.can_inject(user, 1, affecting)) //like monkey code, thickmaterial stops patches
+			return
 		if(!affecting)
 			to_chat(user, "<span class='warning'>The limb is missing!</span>")
 			return
