@@ -12,7 +12,7 @@
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
-	reagents_add = list("water" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
+	reagents_add = list("water" = 0.2, "vitamin" = 0.08, "nutriment" = 0.4)
 
 /obj/item/seeds/watermelon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -45,7 +45,7 @@
 	plantname = "Holy Melon Vines"
 	product = /obj/item/reagent_containers/food/snacks/grown/holymelon
 	mutatelist = list()
-	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon

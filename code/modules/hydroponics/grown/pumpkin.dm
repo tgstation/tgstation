@@ -14,7 +14,7 @@
 	icon_dead = "pumpkin-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/pumpkin/blumpkin)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.2)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.4)
 
 /obj/item/reagent_containers/food/snacks/grown/pumpkin
 	seed = /obj/item/seeds/pumpkin

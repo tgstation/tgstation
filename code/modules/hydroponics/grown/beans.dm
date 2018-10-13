@@ -15,7 +15,7 @@
 	icon_dead = "soybean-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/soya/koi)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.05, "cooking_oil" = 0.03) //Vegetable oil!
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1, "cooking_oil" = 0.03) //Vegetable oil!
 
 /obj/item/reagent_containers/food/snacks/grown/soybeans
 	seed = /obj/item/seeds/soya
@@ -40,7 +40,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/koibeans
 	potency = 10
 	mutatelist = list()
-	reagents_add = list("carpotoxin" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05)
+	reagents_add = list("carpotoxin" = 0.1, "vitamin" = 0.08, "nutriment" = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/koibeans

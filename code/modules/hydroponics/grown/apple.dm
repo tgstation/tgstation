@@ -14,7 +14,7 @@
 	icon_dead = "apple-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/apple/gold)
-	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
 
 /obj/item/reagent_containers/food/snacks/grown/apple
 	seed = /obj/item/seeds/apple
@@ -39,7 +39,7 @@
 	maturation = 10
 	production = 10
 	mutatelist = list()
-	reagents_add = list("gold" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+	reagents_add = list("gold" = 0.2, "vitamin" = 0.08, "nutriment" = 0.2)
 	rarity = 40 // Alchemy!
 
 /obj/item/reagent_containers/food/snacks/grown/apple/gold

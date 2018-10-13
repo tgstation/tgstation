@@ -14,7 +14,7 @@
 	growthstages = 4
 	rarity = 30
 	var/list/mutations = list()
-	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.02)
+	reagents_add = list("charcoal" = 0.04, "nutriment" = 0.04)
 
 /obj/item/seeds/kudzu/Copy()
 	var/obj/item/seeds/kudzu/S = ..()
