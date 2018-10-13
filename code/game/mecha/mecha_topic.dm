@@ -281,7 +281,8 @@
 
 	if (href_list["change_name"])
 		var/newname = copytext(sanitize(input(occupant, "Choose new exosuit name", "Rename exosuit", "") as null|text),1,MAX_NAME_LEN)
-		name = newname ? newname : initial(name)
+		if(!isnull(newname))
+			name = newname ? newname : initial(name)
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access
