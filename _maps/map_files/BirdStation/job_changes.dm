@@ -43,8 +43,6 @@
 	..()
 	supervisors = "the captain and the head of personnel"
 
-/datum/outfit/job/New()
-	box = /obj/item/weapon/storage/box/birdsurv
 
 /datum/job/assistant // Here so assistant appears on the top of the select job list.
 
@@ -67,9 +65,6 @@
 /datum/job/hos/New()
 	..()
 
-/datum/outfit/job/hos/New()
-	box = /obj/item/weapon/storage/box/birdsec
-
 /datum/job/officer/New()
 	..()
 	MAP_JOB_CHECK
@@ -78,17 +73,11 @@
 	access += list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
 	minimal_access += list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
 
-/datum/outfit/job/officer/New()
-	box = /obj/item/weapon/storage/box/birdsec
-
 /datum/job/detective/New()
 	..()
 	MAP_JOB_CHECK
 	access += list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
 	minimal_access += list(ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG, ACCESS_ARMORY, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_WEAPONS, ACCESS_FORENSICS_LOCKERS)
-
-/datum/outfit/job/detective/New()
-	box = /obj/item/weapon/storage/box/birdsec
 
 //Medbay
 
@@ -110,9 +99,6 @@
 	spawn_positions = 4
 	access += list(ACCESS_EVA, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT)
 	minimal_access += list(ACCESS_EVA, ACCESS_ENGINE, ACCESS_ENGINE_EQUIP, ACCESS_TECH_STORAGE, ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS, ACCESS_CONSTRUCTION, ACCESS_ATMOSPHERICS, ACCESS_TCOMSAT)
-
-/datum/outfit/job/engineer/New()
-	box = /obj/item/weapon/storage/box/birdeng
 
 //Science
 
