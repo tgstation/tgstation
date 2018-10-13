@@ -395,10 +395,13 @@
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/consumable/hot_coco/choco_flavour
-	name = "Hot Chocolate"
-	id = "choco_flavour"
-/datum/reagent/consumable/hot_coco/choco_flavour/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/choco_syrup
+	name = "Chocolate Syrup"
+	id = "choco_syrup"
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#403010" // rgb: 64, 48, 16
+
+/datum/reagent/consumable/choco_syrup/on_mob_life(mob/living/carbon/M)
 	..()
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "choco", /datum/mood_event/choco, name)
 
