@@ -46,5 +46,5 @@
 /datum/round_event/anomaly/start()
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
-		var/obj/effect/anomaly/newAnomaly = new anomaly_path(T)
+		new anomaly_path(T)
 	atom_of_interest = newAnomaly

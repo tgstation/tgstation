@@ -19,13 +19,11 @@
 
 /datum/round_event/carp_migration/start()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
+		var/mob/living/simple_animal/hostile/carp
 		if(prob(95))
-			var/mob/living/simple_animal/hostile/carp/fish = new (C.loc)
-			if (!atom_of_interest)
-				atom_of_interest = fish //Assign the atom of interest to the first carp to spawn
+			fish = new (C.loc)
 		else
-			if (!atom_of_interest)
-				atom_of_interest = fish //Assign the atom of interest to the first carp to spawn
-			new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
+			fish = new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
 
-
+		if (!atom_of_interest)
+			atom_of_interest = fish //Assign the atom of interest to the first carp to spawn
