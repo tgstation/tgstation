@@ -402,11 +402,12 @@
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is trying to eat \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
-	crushed_can.icon_state = icon_state
-	qdel(src)
-	return BRUTELOSS
+	user.visible_message("<span class='suicide'>[user] takes a big sip! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(user.loc,'sound/items/drink.ogg', 80, 1)
+	reagents.clear_reagents() //a big sip
+	user.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "Yep.. Orion Trail was a good game."))
+	sleep(10) //dramatic pause
+	return TOXLOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
@@ -416,7 +417,6 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 	..()
-
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
