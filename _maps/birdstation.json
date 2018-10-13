@@ -1,0 +1,11 @@
+{
+    "map_name": "Birdboat Station",
+    "map_path": "map_files/BirdStation",
+    "map_file": "BirdStation2.dmm",
+    "shuttles": {
+	    "cargo": "cargo_birdboat",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_birdboat"
+    }
+}

@@ -1,0 +1,172 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"b" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"c" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"d" = (
+/obj/machinery/vending/clothing,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"e" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"f" = (
+/obj/structure/closet/wardrobe/grey,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"g" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"h" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"i" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"j" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"k" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"l" = (
+/obj/item/beacon,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"m" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"n" = (
+/obj/machinery/camera/autoname{
+	dir = 1;
+	network = list("SS13")
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"p" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Arrivals Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"q" = (
+/obj/structure/shuttle/engine/propulsion/burst/right{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"r" = (
+/obj/docking_port/mobile/arrivals{
+	name = "birdboat arrivals shuttle"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+a
+a
+b
+b
+b
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+j
+j
+j
+m
+a
+"}
+(3,1,1) = {"
+a
+d
+k
+k
+k
+j
+p
+"}
+(4,1,1) = {"
+a
+e
+k
+k
+k
+n
+a
+"}
+(5,1,1) = {"
+b
+f
+j
+j
+l
+j
+b
+"}
+(6,1,1) = {"
+a
+g
+k
+k
+k
+j
+a
+"}
+(7,1,1) = {"
+a
+h
+k
+k
+k
+j
+p
+"}
+(8,1,1) = {"
+a
+i
+j
+j
+j
+i
+a
+"}
+(9,1,1) = {"
+q
+a
+a
+r
+a
+a
+q
+"}
