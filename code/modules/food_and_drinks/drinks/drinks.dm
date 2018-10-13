@@ -405,8 +405,8 @@
 	user.visible_message("<span class='suicide'>[user] takes a big sip! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc,'sound/items/drink.ogg', 80, 1)
 	reagents.clear_reagents() //a big sip
-	user.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "Yep.. Orion Trail was a good game."))
-	sleep(10) //dramatic pause
+	user.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like Singularity engines anymore.'"))
+	sleep(20) //dramatic pause	
 	return TOXLOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
