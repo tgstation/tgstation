@@ -334,10 +334,6 @@
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
-	taste_description = "tart black tea"
-	glass_icon_state = "teaglass"
-	glass_name = "glass of tea"
-	glass_desc = "Drinking it from here would not seem right."
 
 /datum/reagent/consumable/antioxidant/on_mob_life(mob/living/carbon/M)
 	M.AdjustSleeping(-20, FALSE)
