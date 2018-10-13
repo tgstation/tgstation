@@ -293,10 +293,6 @@
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
 	taste_description = "bitterness"
-	glass_icon_state = "glass_brown"
-	glass_name = "glass of coffee"
-	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
-
 
 /datum/reagent/consumable/caffeine/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
@@ -344,11 +340,9 @@
 	glass_desc = "Drinking it from here would not seem right."
 
 /datum/reagent/consumable/antioxidant/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
 	M.AdjustSleeping(-20, FALSE)
-	M.adjustToxLoss(-2, 0)
+	M.adjustToxLoss(-1, 0)
+	M.adjustOxyLoss(-2, 0)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1
