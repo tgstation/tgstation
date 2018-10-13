@@ -40,6 +40,7 @@
 		dried_type = src.type
 
 	if(seed)
+		volume = seed.volume
 		for(var/datum/plant_gene/trait/T in seed.genes)
 			T.on_new(src, loc)
 		seed.prepare_result(src)

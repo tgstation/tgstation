@@ -24,14 +24,13 @@
 	var/potency = 10				// The 'power' of a plant. Generally effects the amount of reagent in a plant, also used in other ways.
 	var/growthstages = 6			// Amount of growth sprites the plant has.
 	var/rarity = 0					// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
+	var/volume = 10					// Amount of units the plant can hold.
 	var/list/mutatelist = list()	// The type of plants that this plant can mutate into.
 	var/list/genes = list()			// Plant genes are stored here, see plant_genes.dm for more info.
 	var/list/reagents_add = list()
 	// A list of reagents to add to product.
-	// Format: "reagent_id" = potency multiplier
-	// Stronger reagents must always come first to avoid being displaced by weaker ones.
-	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
-
+	// Format: "reagent_id" = volume multiplier
+	// Total amount of any reagent in plant is calculated by formula: round(potency/2) and cannot be lower than 10
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
@@ -79,6 +78,7 @@
 	S.potency = potency
 	S.weed_rate = weed_rate
 	S.weed_chance = weed_chance
+	S.volume = volume
 	S.genes = list()
 	for(var/g in genes)
 		var/datum/plant_gene/G = g
@@ -142,6 +142,9 @@
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	var/product_name
+	volume = round(potency/2, 1)
+	if(volume<10)
+		volume = 10
 	while(t_amount < getYield())
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		result.Add(t_prod) // User gets a consumable
@@ -157,12 +160,13 @@
 
 
 /obj/item/seeds/proc/prepare_result(var/obj/item/T)
+	volume = round(potency/2, 1)
+	if(volume<10)
+		volume = 10
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
-
 	for(var/rid in reagents_add)
-		var/amount = 1 + round(potency * reagents_add[rid], 1)
-
+		var/amount = round(volume * reagents_add[rid], 1)
 		var/list/data = null
 		if(rid == "blood") // Hack to make blood in plants always O-
 			data = list("blood_type" = "O-")
