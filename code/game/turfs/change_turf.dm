@@ -1,6 +1,7 @@
 // This is a list of turf types we dont want to assign to baseturfs unless through initialization or explicitly
 GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	/turf/open/space,
+	/turf/baseturf_bottom,
 	)))
 
 /turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, flags)
@@ -220,7 +221,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			newT.assemble_baseturfs(initial(fake_turf_type.baseturfs)) // The baseturfs list is created like roundstart
 			if(!length(newT.baseturfs))
 				newT.baseturfs = list(baseturfs)
-			newT.baseturfs -= newT.baseturfs & GLOB.blacklisted_automated_baseturfs
+			newT.baseturfs -= GLOB.blacklisted_automated_baseturfs
 			newT.baseturfs.Insert(1, old_baseturfs) // The old baseturfs are put underneath
 			return newT
 		if(!length(baseturfs))
