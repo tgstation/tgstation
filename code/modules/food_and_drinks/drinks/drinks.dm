@@ -402,11 +402,17 @@
 	isGlass = FALSE
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] takes a big sip! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(!reagents.total_volume)
+		user.visible_message("<span class='warning'>[user] is trying to take a big sip from [src]... The can is empty!</span>")
+		return SHAME
+	if(!is_drainable())
+		open_soda()
+		sleep(10)
+	user.visible_message("<span class='suicide'>[user] takes a big sip from [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(user.loc,'sound/items/drink.ogg', 80, 1)
 	reagents.clear_reagents() //a big sip
-	user.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like Singularity engines anymore.'"))
-	sleep(20) //dramatic pause	
+	user.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "They don't make em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make em like singularity engines anymore.'"))
+	sleep(20) //dramatic pause
 	return TOXLOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
@@ -418,13 +424,16 @@
 		qdel(src)
 	..()
 
+/obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
+	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
+	container_type = OPENCONTAINER
+	playsound(src, "can_open", 50, 1)
+	spillable = TRUE
+	return
+
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
-		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		container_type = OPENCONTAINER
-		playsound(src, "can_open", 50, 1)
-		spillable = TRUE
-		return
+		open_soda()
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
