@@ -395,9 +395,9 @@
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/consumable/hot_coco/homebrew
+/datum/reagent/consumable/hot_coco/choco_flavour
 	name = "Hot Chocolate"
-	id = "hhot_coco"
+	id = "choco_flavour"
 /datum/reagent/consumable/hot_coco/homebrew/on_mob_life(mob/living/carbon/M)
 	..()
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "choco", /datum/mood_event/choco, name)
@@ -726,30 +726,28 @@
 	name = "Ghost Chili Juice"
 	id = "ghostchiilijuice"
 	description = "A greish juice with the same properties of lava."
-	color = "#d3a308"
+	color = "#bfaf90" //rgb 191, 175, 144
 	nutriment_factor = 0.0001 * REAGENTS_METABOLISM
-	taste_description = "spicy"
+	taste_description = "lava"
 
 /datum/reagent/consumable/ghostchilijuice/on_mob_life(mob/living/carbon/M)
 
-	if(prob(20))
+	if(prob(5))
 		M.adjust_fire_stacks(2)
 		M.IgniteMob()
 		M.say("Spicy!")
 	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	..()
 /datum/reagent/consumable/ghostchilijuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	M.adjustFireLoss(reac_volume/5, 0)
 	if(!ishuman(M) && !ismonkey(M))
 		return
-
-	var/mob/living/carbon/victim = M
-	if(!victim.can_inject(null, 0))
-		victim.emote("scream")
-		victim.blur_eyes(10)
-		victim.blind_eyes(10)
-		victim.confused = max(M.confused, 30)
-		victim.adjustFireLoss(5, 0)
-		victim.Knockdown(60)
+	if(!M.is_eyes_covered())
+		M.emote("scream")
+		M.blur_eyes(10)
+		M.blind_eyes(10)
+		M.confused = max(M.confused, 30)
+		M.Knockdown(100)
 	..()
 
 /datum/reagent/consumable/ghostchilijuice/reaction_turf(turf/T, reac_volume)

@@ -48,19 +48,19 @@
 /datum/chemical_reaction/hot_coco
 	name = "Hot Coco"
 	id = "hot_coco"
-	results = list("hot_coco" = 5)
+	results = list("hot_coco" = 5, "choco_flavour" = 2)
 	required_reagents = list("water" = 5, "cocoa" = 1)
 
 /datum/chemical_reaction/coffee
 	name = "Coffee"
 	id = "coffee"
-	results = list("coffee" = 5)
+	results = list("coffee" = 5, "caffeine" = 2)
 	required_reagents = list("coffeepowder" = 1, "water" = 5)
 
 /datum/chemical_reaction/tea
 	name = "Tea"
 	id = "tea"
-	results = list("tea" = 5)
+	results = list("tea" = 5, "antioxidant" = 2)
 	required_reagents = list("teapowder" = 1, "water" = 5)
 
 /datum/chemical_reaction/soysauce

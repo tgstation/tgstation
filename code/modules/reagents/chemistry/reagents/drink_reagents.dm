@@ -261,7 +261,7 @@
 /datum/reagent/consumable/coffee
 	name = "Coffee"
 	id = "coffee"
-	description = "Synthetic coffee made out of rubber."
+	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
 	overdose_threshold = 80
@@ -285,11 +285,11 @@
 	..()
 	. = 1
 
-/datum/reagent/consumable/homebrew_coffee
-	name = "Homebrew Coffee"
-	id = "hcoffee"
-	metabolization_rate = 0.3 * REAGENTS_METABOLISM
-	description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
+/datum/reagent/consumable/caffeine
+	name = "Caffeine"
+	id = "caffeine"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	description = "Essence of coffee."
 	color = "#482000" // rgb: 72, 32, 0
 	nutriment_factor = 0
 	taste_description = "bitterness"
@@ -332,13 +332,13 @@
 	..()
 	. = 1
 
-/datum/reagent/consumable/homebrew_tea
-	name = "Homebrew Tea"
-	id = "htea"
-	description = "Tasty black tea, it has antioxidants, it's good for you!"
+/datum/reagent/consumable/antioxidant
+	name = "Antioxidants"
+	id = "antioxidant"
+	description = "Antioxidants are good for your liver."
 	color = "#101000" // rgb: 16, 16, 0
 	nutriment_factor = 0
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	taste_description = "tart black tea"
 	glass_icon_state = "teaglass"
 	glass_name = "glass of tea"
