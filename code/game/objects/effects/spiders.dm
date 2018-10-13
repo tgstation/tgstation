@@ -48,6 +48,14 @@
 		return prob(30)
 	return TRUE
 
+/obj/structure/spider/stickyweb/nonstick
+	name = "fake webbing"
+	desc = "Convincing enough for someone's front yard, at least."
+	max_integrity = 5
+
+/obj/structure/spider/stickyweb/nonstick/CanPass(atom/movable/mover, turf/target)
+	return TRUE
+
 /obj/structure/spider/eggcluster
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life."

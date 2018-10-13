@@ -511,6 +511,14 @@
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
+/obj/item/toy/plush/spiderplushie
+	name = "spider plushie"
+	desc = "An 'adorable' plastic toy that resembles a spider. Scare the medbay nurses with this."
+	icon_state = "spiderling"
+	icon = 'icons/effects/effects.dmi'
+	attack_verb = list("bitten", "hissed", "webbed")
+	squeak_override = list('sound/weapons/bite.ogg' = 1)
+
 /obj/item/toy/plush/awakenedplushie
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
