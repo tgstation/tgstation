@@ -298,7 +298,7 @@
 	glass_desc = "Don't drop it, or you'll send scalding liquid and glass shards everywhere."
 
 
-/datum/reagent/consumable/homebrew_coffee/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/caffeine/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
 	M.AdjustSleeping(-80, FALSE)
@@ -344,7 +344,7 @@
 	glass_name = "glass of tea"
 	glass_desc = "Drinking it from here would not seem right."
 
-/datum/reagent/consumable/homebrew_tea/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/antioxidant/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-2)
 	M.drowsyness = max(0,M.drowsyness-1)
 	M.jitteriness = max(0,M.jitteriness-3)

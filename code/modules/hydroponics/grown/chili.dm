@@ -79,6 +79,7 @@
 	bitesize_mod = 4
 	foodtype = FRUIT
 	juice_results = list("ghostchilijuice" = 0)
+	tastes = list("burning" = 1)
 	wine_power = 50
 
 /obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)

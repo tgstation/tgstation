@@ -26,4 +26,4 @@
 /datum/mood_event/choco
 	description = "<span class='nicegreen'>This chocolate is amazing!</span>\n"
 	mood_change = 5
-	timeout = 100
+	timeout = 1500

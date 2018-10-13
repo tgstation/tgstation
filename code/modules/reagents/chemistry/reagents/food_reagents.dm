@@ -398,7 +398,7 @@
 /datum/reagent/consumable/hot_coco/choco_flavour
 	name = "Hot Chocolate"
 	id = "choco_flavour"
-/datum/reagent/consumable/hot_coco/homebrew/on_mob_life(mob/living/carbon/M)
+/datum/reagent/consumable/hot_coco/choco_flavour/on_mob_life(mob/living/carbon/M)
 	..()
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "choco", /datum/mood_event/choco, name)
 
