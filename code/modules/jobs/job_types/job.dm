@@ -84,7 +84,7 @@
 		var/obj/item/card/id/I = H.wear_id ? H.wear_id.GetID() : null
 		var/datum/bank_account/bank_account
 		if(I)
-			/bank_account = new(I.registered_name, src)
+			bank_account = new(I.registered_name, src)
 		else
 			bank_account = new(H.real_name, src)
 		bank_account.payday(STARTING_PAYCHECKS, TRUE)
