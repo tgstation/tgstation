@@ -3436,6 +3436,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "agu" = (
@@ -3897,6 +3898,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "ahg" = (
@@ -4394,6 +4396,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "ahZ" = (
@@ -4900,6 +4903,10 @@
 /area/maintenance/disposal/incinerator)
 "aiX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aiY" = (
@@ -5467,6 +5474,10 @@
 "ajW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/holopad,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "ajX" = (
@@ -5970,6 +5981,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
+	},
 /turf/open/floor/plasteel,
 /area/security/main)
 "akO" = (
@@ -6072,6 +6086,9 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -6260,6 +6277,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -7023,6 +7044,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "amw" = (
@@ -7530,11 +7553,36 @@
 	pixel_x = -2;
 	pixel_y = 3
 	},
+/obj/item/paper,
 /turf/open/floor/plasteel,
 /area/security/main)
 "any" = (
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn,
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/lollipop,
+/obj/item/reagent_containers/food/snacks/lollipop{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/gumball,
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /obj/structure/table/reinforced,
-/obj/item/paper,
 /turf/open/floor/plasteel,
 /area/security/main)
 "anz" = (
@@ -7614,10 +7662,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "anG" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "anH" = (
@@ -8299,6 +8349,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aoU" = (
@@ -8311,6 +8363,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aoV" = (
@@ -8886,6 +8940,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/fitness/recreation)
 "aqe" = (
@@ -11429,6 +11484,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "avc" = (
@@ -11474,6 +11532,9 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -11537,6 +11598,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avm" = (
@@ -11780,6 +11842,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -12309,6 +12375,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -13313,6 +13383,10 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
@@ -14723,6 +14797,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aBC" = (
@@ -14799,6 +14875,9 @@
 	},
 /obj/effect/turf_decal/bot{
 	dir = 1
+	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
 	},
 /turf/open/floor/plasteel{
 	dir = 1
@@ -15269,6 +15348,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aCD" = (
@@ -15320,6 +15400,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aCJ" = (
@@ -15658,6 +15739,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aDB" = (
@@ -15954,6 +16036,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aDY" = (
@@ -16522,6 +16605,11 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-4"
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = -8
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aFf" = (
@@ -16531,6 +16619,8 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aFg" = (
@@ -17027,6 +17117,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aGb" = (
@@ -17042,6 +17133,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aGc" = (
@@ -17342,6 +17434,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet/restrooms)
 "aGE" = (
@@ -17404,6 +17498,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aGK" = (
@@ -18467,6 +18562,7 @@
 	},
 /obj/item/gavelblock,
 /obj/item/gavelhammer,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "aIM" = (
@@ -18687,6 +18783,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "aJh" = (
@@ -18936,6 +19033,10 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 2
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -19196,6 +19297,7 @@
 /obj/structure/table,
 /obj/item/seeds/tower,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
 "aKu" = (
@@ -19530,6 +19632,8 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aLk" = (
@@ -19550,6 +19654,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aLm" = (
@@ -19772,6 +19877,7 @@
 	pixel_y = 27
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aLO" = (
@@ -19781,6 +19887,7 @@
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aLP" = (
@@ -20159,6 +20266,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aMK" = (
@@ -20393,6 +20501,11 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -20754,6 +20867,8 @@
 	},
 /obj/structure/closet/crate/internals,
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aNU" = (
@@ -21039,6 +21154,11 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
+/mob/living/simple_animal/hostile/skeleton{
+	desc = "A crude animatronic covered with plastic bones. Rattles just like the real thing!";
+	faction = list("friendly");
+	name = "animatronic skeleton"
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aOz" = (
@@ -21072,6 +21192,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -21490,6 +21614,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aPq" = (
@@ -21519,6 +21644,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aPs" = (
@@ -21600,6 +21726,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "aPB" = (
@@ -21791,6 +21918,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aPV" = (
@@ -22005,17 +22133,21 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aQv" = (
 /obj/structure/table,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -2;
-	pixel_y = -1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 10
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -22154,6 +22286,9 @@
 /area/security/courtroom)
 "aQJ" = (
 /obj/machinery/vending/coffee,
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aQK" = (
@@ -22231,6 +22366,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aQP" = (
@@ -22305,6 +22441,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -22760,6 +22900,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aRT" = (
@@ -22885,6 +23026,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
 "aSk" = (
@@ -22897,6 +23039,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/hydroponics/garden)
 "aSl" = (
@@ -23348,6 +23492,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aTg" = (
@@ -23361,6 +23506,8 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aTh" = (
@@ -23533,6 +23680,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = -8
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aTz" = (
@@ -23545,6 +23695,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = -8
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
@@ -23979,6 +24132,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aUr" = (
@@ -24279,6 +24433,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "aUO" = (
@@ -24293,6 +24448,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "aUP" = (
@@ -24334,10 +24491,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "aUS" = (
-/obj/machinery/vending/clothing,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -24347,6 +24504,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/vending/clothing{
+	default_price = 5;
+	extra_price = 25
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
@@ -24603,6 +24764,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "aVz" = (
@@ -24913,6 +25075,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aWb" = (
@@ -24925,6 +25088,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aWc" = (
@@ -24950,12 +25114,19 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aWe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -24975,6 +25146,9 @@
 "aWh" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -25113,6 +25287,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "aWs" = (
@@ -25173,6 +25350,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "aWy" = (
@@ -25621,6 +25799,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXw" = (
@@ -25690,6 +25869,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXC" = (
@@ -26046,6 +26226,7 @@
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/dark,
 /area/storage/tech)
 "aYj" = (
@@ -26507,6 +26688,10 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/holopad,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aZf" = (
@@ -27416,6 +27601,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "baC" = (
@@ -27496,6 +27682,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "baJ" = (
@@ -27670,6 +27857,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "baX" = (
@@ -27684,6 +27872,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "baY" = (
@@ -28317,6 +28506,7 @@
 /area/hallway/primary/port)
 "bbX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bbY" = (
@@ -28783,6 +28973,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bcW" = (
@@ -28989,6 +29180,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bdm" = (
@@ -29124,6 +29316,7 @@
 	pixel_y = 30
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bdB" = (
@@ -29231,6 +29424,9 @@
 /obj/item/storage/secure/safe{
 	pixel_x = 6;
 	pixel_y = 28
+	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
@@ -29881,6 +30077,8 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "beZ" = (
@@ -30233,6 +30431,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
 "bfL" = (
@@ -30252,6 +30451,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/starboard)
 "bfM" = (
@@ -31467,6 +31667,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bhW" = (
@@ -31487,6 +31688,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bhX" = (
@@ -31539,6 +31741,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bib" = (
@@ -31552,6 +31755,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bic" = (
@@ -32089,6 +32294,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bjm" = (
@@ -32284,6 +32490,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -32682,6 +32891,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bko" = (
@@ -32793,6 +33003,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bkw" = (
@@ -32808,6 +33019,8 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bkx" = (
@@ -32816,6 +33029,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bky" = (
@@ -32945,6 +33159,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bkJ" = (
@@ -33022,6 +33239,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bkR" = (
@@ -33080,6 +33298,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bkW" = (
@@ -33160,6 +33379,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bld" = (
@@ -33170,6 +33390,8 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "ble" = (
@@ -33197,6 +33419,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "blg" = (
@@ -33775,6 +33998,7 @@
 	req_access_txt = "28"
 	},
 /obj/structure/table/wood,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bmp" = (
@@ -34104,6 +34328,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bmY" = (
@@ -34172,6 +34399,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bnf" = (
@@ -34554,15 +34782,45 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/mob/living/simple_animal/hostile/skeleton{
+	desc = "A crude animatronic covered with plastic bones. Rattles just like the real thing!";
+	faction = list("friendly");
+	name = "animatronic skeleton"
+	},
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
 "bnQ" = (
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn,
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/lollipop,
+/obj/item/reagent_containers/food/snacks/lollipop{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/gumball,
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/chips,
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/port)
 "bnR" = (
 /obj/machinery/vending/coffee,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port)
 "bnS" = (
@@ -34603,6 +34861,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bnV" = (
@@ -34707,6 +34966,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "boe" = (
@@ -34760,6 +35020,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -35211,6 +35475,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bpg" = (
@@ -35684,6 +35949,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bqe" = (
@@ -35721,6 +35987,7 @@
 	pixel_x = -28;
 	pixel_y = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port)
 "bqj" = (
@@ -35992,6 +36259,9 @@
 /obj/structure/filingcabinet/chestdrawer{
 	pixel_y = 2
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bqH" = (
@@ -36208,6 +36478,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "brb" = (
@@ -36484,6 +36756,8 @@
 /obj/structure/sign/warning/securearea{
 	pixel_x = 32
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 2
 	},
@@ -36880,6 +37154,7 @@
 "bsm" = (
 /obj/item/beacon,
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bsn" = (
@@ -36911,6 +37186,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bsq" = (
@@ -37062,6 +37338,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bsG" = (
@@ -37403,6 +37680,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "btk" = (
@@ -37816,6 +38094,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/port)
 "bud" = (
@@ -38077,6 +38356,7 @@
 	pixel_x = 9;
 	pixel_y = -9
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "buH" = (
@@ -38159,6 +38439,7 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "buR" = (
@@ -38186,6 +38467,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "buU" = (
@@ -38230,6 +38512,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark/corner{
 	dir = 1
 	},
@@ -38806,6 +39089,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bwi" = (
@@ -38822,6 +39106,10 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table/wood,
+/obj/item/stamp/hop{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwk" = (
@@ -38885,15 +39173,32 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwp" = (
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn,
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/lollipop,
+/obj/item/reagent_containers/food/snacks/lollipop{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/gumball,
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/stamp/hop{
-	pixel_x = -4;
-	pixel_y = 4
-	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwq" = (
@@ -39034,6 +39339,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/storage/fancy/donut_box,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bwE" = (
@@ -39165,8 +39471,30 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bwN" = (
-/obj/machinery/light{
-	dir = 1
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn,
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/lollipop,
+/obj/item/reagent_containers/food/snacks/lollipop{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/gumball,
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = 7;
+	pixel_y = 4
 	},
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -39175,6 +39503,10 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bwO" = (
@@ -39210,6 +39542,10 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bwR" = (
@@ -39627,6 +39963,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bxJ" = (
@@ -39641,6 +39978,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "bxK" = (
@@ -39937,8 +40275,32 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "byr" = (
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/candy{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn,
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/lollipop,
+/obj/item/reagent_containers/food/snacks/lollipop{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/gumball,
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = 7;
+	pixel_y = 4
+	},
 /obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "bys" = (
@@ -39987,6 +40349,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "byx" = (
@@ -40055,6 +40418,7 @@
 	},
 /obj/structure/table/wood/poker,
 /obj/item/clothing/head/fedora,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "byE" = (
@@ -40921,6 +41285,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "bAn" = (
@@ -41034,6 +41399,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
 	},
 /turf/open/floor/plasteel/dark/corner,
 /area/hallway/primary/starboard)
@@ -41415,6 +41783,7 @@
 "bBv" = (
 /obj/structure/chair/comfy/black,
 /obj/effect/landmark/start/assistant,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/library)
 "bBw" = (
@@ -42210,6 +42579,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bDf" = (
@@ -42238,6 +42608,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
@@ -42339,6 +42712,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bDq" = (
@@ -42383,6 +42759,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bDv" = (
@@ -42534,6 +42911,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/wood/poker,
 /obj/item/clothing/mask/cigarette/cigar,
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bDK" = (
@@ -42754,6 +43133,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bEo" = (
@@ -42920,6 +43300,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bEG" = (
@@ -43168,6 +43549,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bEX" = (
@@ -43339,6 +43721,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bFj" = (
@@ -43617,6 +44001,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark/corner,
 /area/hallway/primary/starboard)
 "bFF" = (
@@ -43918,6 +44303,7 @@
 /turf/open/floor/wood,
 /area/library)
 "bGt" = (
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -44182,6 +44568,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bGY" = (
@@ -44208,6 +44598,10 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
@@ -44685,6 +45079,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "bId" = (
@@ -44822,6 +45219,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bIl" = (
@@ -44974,6 +45372,7 @@
 	pixel_y = -24
 	},
 /obj/machinery/light,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "bIA" = (
@@ -44998,6 +45397,7 @@
 /obj/item/clothing/glasses/regular/hipster{
 	name = "Hipster Glasses"
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bIE" = (
@@ -45413,6 +45813,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bJD" = (
@@ -45608,6 +46010,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/command)
 "bJS" = (
@@ -45739,6 +46143,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "bKb" = (
@@ -45859,10 +46266,12 @@
 	},
 /obj/item/clothing/mask/cigarette/pipe,
 /obj/structure/table/wood,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKo" = (
 /obj/machinery/vending/cigarette,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/carpet,
 /area/crew_quarters/bar)
 "bKp" = (
@@ -46492,6 +46901,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bLI" = (
@@ -46599,7 +47009,10 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bLS" = (
-/obj/machinery/vending/autodrobe,
+/obj/machinery/vending/autodrobe{
+	default_price = 5;
+	extra_price = 25
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bLT" = (
@@ -46850,6 +47263,7 @@
 	dir = 5
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bMw" = (
@@ -46887,6 +47301,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "bMA" = (
@@ -47054,6 +47469,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -47274,11 +47693,14 @@
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNj" = (
-/obj/structure/showcase/perfect_employee,
 /obj/structure/sign/plaques/kiddie/perfect_man{
 	pixel_y = 32
 	},
 /obj/structure/window/reinforced,
+/obj/structure/showcase/perfect_employee{
+	icon = 'icons/mob/animal.dmi';
+	icon_state = "old"
+	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNk" = (
@@ -47404,6 +47826,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bNu" = (
@@ -47772,6 +48195,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bOo" = (
@@ -47918,6 +48342,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bOC" = (
@@ -47925,6 +48353,10 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bOD" = (
@@ -48534,6 +48966,7 @@
 "bPU" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/vending/games,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/library)
 "bPV" = (
@@ -48697,13 +49130,18 @@
 "bQk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bQl" = (
 /obj/structure/table/wood,
-/obj/item/toy/plush/carpplushie{
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie{
 	color = "red";
-	name = "Nanotrasen wildlife department space carp plushie"
+	name = "nanotrasen wildlife preserve spider"
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -48854,6 +49292,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bQA" = (
@@ -49099,6 +49538,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/library)
 "bRl" = (
@@ -49186,6 +49626,8 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bRx" = (
@@ -49259,6 +49701,7 @@
 	},
 /obj/item/clothing/mask/cigarette/cigar/cohiba,
 /obj/structure/table/wood,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bRD" = (
@@ -49816,6 +50259,8 @@
 /obj/machinery/newscaster{
 	pixel_x = -32
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/wood,
 /area/library)
 "bSy" = (
@@ -49862,6 +50307,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bSE" = (
@@ -50230,6 +50676,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/library)
 "bTx" = (
@@ -50243,6 +50690,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/wood,
 /area/library)
 "bTy" = (
@@ -50318,6 +50767,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTI" = (
@@ -50410,6 +50860,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTQ" = (
@@ -50422,6 +50876,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTR" = (
@@ -50433,6 +50891,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -50458,6 +50920,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTU" = (
@@ -50532,6 +50995,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTZ" = (
@@ -50607,6 +51071,7 @@
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "bUg" = (
@@ -51087,6 +51552,10 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L5"
 	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bVh" = (
@@ -51098,6 +51567,10 @@
 	},
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -51304,6 +51777,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel{
 	dir = 2
 	},
@@ -51790,6 +52264,10 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWz" = (
@@ -51894,6 +52372,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWH" = (
@@ -51903,6 +52382,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bWI" = (
@@ -51934,6 +52414,10 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 5;
+	pixel_y = -5
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -52465,6 +52949,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bXR" = (
@@ -52472,6 +52957,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bXS" = (
@@ -52509,6 +52995,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bXX" = (
@@ -53104,6 +53591,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bZa" = (
@@ -53230,6 +53720,7 @@
 	pixel_x = -27
 	},
 /obj/structure/table/glass,
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bZs" = (
@@ -53606,6 +54097,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "caj" = (
@@ -53636,6 +54128,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cak" = (
@@ -53695,6 +54188,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "caq" = (
@@ -53730,6 +54224,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cau" = (
@@ -53811,6 +54306,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "caB" = (
@@ -53841,6 +54337,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "caC" = (
@@ -53939,6 +54436,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "caJ" = (
@@ -54736,6 +55234,10 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cbY" = (
@@ -54909,6 +55411,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "ccr" = (
@@ -54998,6 +55501,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "ccz" = (
@@ -55458,6 +55962,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cdz" = (
@@ -55469,6 +55974,10 @@
 "cdA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -55506,6 +56015,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -55893,11 +56403,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "ceA" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/firealarm{
 	dir = 4;
@@ -55918,6 +56423,39 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/glass/bowl,
+/obj/item/reagent_containers/food/snacks/candy{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/candy{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/snacks/gumball{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/snacks/lollipop,
+/obj/item/reagent_containers/food/snacks/lollipop,
+/obj/item/reagent_containers/food/snacks/candy_corn,
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/candy_corn{
+	pixel_x = 4;
+	pixel_y = 7
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -56067,6 +56605,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "ceQ" = (
@@ -56125,6 +56664,8 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "ceV" = (
@@ -56459,6 +57000,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "cfI" = (
@@ -56530,6 +57072,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
@@ -56660,7 +57205,6 @@
 "cfS" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/reagent_containers/food/drinks/britcup,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -56846,6 +57390,7 @@
 	name = "biohazard containment door"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/science/research)
 "cgj" = (
@@ -57568,6 +58113,7 @@
 	pixel_y = 32
 	},
 /obj/structure/chair/stool,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -57956,6 +58502,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cis" = (
@@ -57965,6 +58513,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cit" = (
@@ -58533,6 +59082,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cjF" = (
@@ -59447,6 +59997,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cly" = (
@@ -59462,6 +60013,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "clz" = (
@@ -60310,6 +60862,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -60439,6 +60992,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cnC" = (
@@ -60764,6 +61318,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "coa" = (
@@ -60802,6 +61360,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 29
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
@@ -60812,6 +61371,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/junction/flip,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -62249,6 +62809,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cqD" = (
@@ -62261,6 +62822,7 @@
 "cqE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cqF" = (
@@ -62334,6 +62896,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cqM" = (
@@ -62671,6 +63234,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "crx" = (
@@ -63412,6 +63977,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "csM" = (
@@ -63531,6 +64097,7 @@
 	dir = 8;
 	sortType = 28
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -63550,6 +64117,10 @@
 	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "csY" = (
@@ -63720,6 +64291,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms/room_a)
 "cts" = (
@@ -63847,6 +64419,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "ctF" = (
@@ -63862,6 +64435,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "ctH" = (
@@ -63904,6 +64479,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 6
 	},
@@ -63917,6 +64493,8 @@
 /area/science/research)
 "ctP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "ctQ" = (
@@ -64232,6 +64810,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cur" = (
@@ -64254,6 +64833,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/dark,
 /area/medical/genetics)
 "cus" = (
@@ -64425,6 +65005,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/medical/genetics)
 "cuA" = (
@@ -64509,6 +65090,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cuL" = (
@@ -64767,6 +65349,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "cvt" = (
@@ -65599,6 +66182,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cwP" = (
@@ -66024,6 +66610,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cxC" = (
@@ -66166,6 +66753,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "cxW" = (
@@ -66466,6 +67054,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cyy" = (
@@ -66905,6 +67494,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "czp" = (
@@ -67021,6 +67611,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 8
 	},
+/obj/item/reagent_containers/food/drinks/britcup,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "czF" = (
@@ -67494,6 +68085,8 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cAu" = (
@@ -67502,6 +68095,10 @@
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
@@ -67514,6 +68111,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cAw" = (
@@ -67793,6 +68391,7 @@
 	name = "Station Intercom (Medbay)";
 	pixel_x = 30
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "cBb" = (
@@ -68131,6 +68730,7 @@
 	pixel_y = 5
 	},
 /obj/structure/table/glass,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -68139,8 +68739,8 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -30
 	},
-/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/table/glass,
+/obj/item/clothing/head/hardhat/pumpkinhead,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -68188,6 +68788,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
@@ -68302,6 +68904,7 @@
 "cCs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/firedoor,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cCt" = (
@@ -69099,6 +69702,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -69278,6 +69882,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cEh" = (
@@ -69845,6 +70450,7 @@
 /area/science/research)
 "cFm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -70994,6 +71600,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cHb" = (
@@ -71348,6 +71955,7 @@
 	pixel_y = 8
 	},
 /obj/structure/table/glass,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/side{
 	dir = 10
 	},
@@ -71546,6 +72154,8 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cHX" = (
@@ -71572,6 +72182,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cHZ" = (
@@ -72054,6 +72666,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cIR" = (
@@ -72371,6 +72984,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "cJz" = (
@@ -72385,6 +72999,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
 "cJA" = (
@@ -72398,6 +73013,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/hallway/secondary/exit/departure_lounge)
@@ -72600,6 +73218,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cJR" = (
@@ -73751,10 +74370,13 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/structure/spider/cocoon,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cMf" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cMg" = (
@@ -74229,6 +74851,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "cMR" = (
@@ -74429,6 +75058,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "cNi" = (
@@ -75643,6 +76273,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cPP" = (
@@ -75683,6 +76314,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cPU" = (
@@ -75851,6 +76483,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cQn" = (
@@ -75885,6 +76518,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cQr" = (
@@ -76091,6 +76725,7 @@
 "cQM" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cQN" = (
@@ -76112,6 +76747,7 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "cQR" = (
@@ -80701,6 +81337,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dhJ" = (
@@ -80848,6 +81485,9 @@
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
+/obj/effect/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "dhX" = (
@@ -80859,6 +81499,7 @@
 /obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "dhZ" = (
@@ -80901,6 +81542,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel/white/corner,
 /area/hallway/secondary/entry)
 "did" = (
@@ -81543,6 +82185,17 @@
 	},
 /turf/open/floor/plating,
 /area/chapel/main)
+"dkj" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "dlI" = (
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
@@ -81553,6 +82206,14 @@
 "dlV" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/department/science/xenobiology)
+"dmf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "dmq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -82671,6 +83332,8 @@
 	pixel_x = -32
 	},
 /obj/effect/landmark/event_spawn,
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/wood,
 /area/library)
 "dDl" = (
@@ -82916,6 +83579,33 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"dIP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
+"dJR" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "dLK" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -82932,12 +83622,25 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "dQV" = (
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
+"dTQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -82947,6 +83650,21 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"eaf" = (
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "ecs" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -82997,6 +83715,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"esH" = (
+/mob/living/simple_animal/hostile/skeleton{
+	desc = "A crude animatronic covered with plastic bones. Rattles just like the real thing!";
+	faction = list("friendly");
+	name = "animatronic skeleton"
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "etr" = (
 /obj/machinery/vr_sleeper,
 /turf/open/floor/plasteel,
@@ -83048,11 +83774,60 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"fgH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/red{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "fwb" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
+"fxd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"fyz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/toy/plush/spiderplushie,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"fyI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"fzi" = (
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/wood,
+/area/library)
 "fDD" = (
 /obj/machinery/light_switch{
 	pixel_y = -25
@@ -83068,6 +83843,13 @@
 "fEQ" = (
 /turf/closed/wall,
 /area/science/nanite)
+"fEV" = (
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "fFM" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -83093,6 +83875,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"fIm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "fIp" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
@@ -83102,6 +83892,31 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"fNp" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/wood,
+/area/crew_quarters/bar)
+"fQM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
+"geo" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/wood,
+/area/library)
 "gjC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -83119,6 +83934,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"glX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "gnZ" = (
 /obj/item/radio/intercom{
 	pixel_y = -30
@@ -83134,6 +83959,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"goC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "gqA" = (
 /obj/machinery/button/door{
 	dir = 2;
@@ -83147,6 +83982,16 @@
 /obj/item/clothing/suit/apron/chef,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"gqO" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
 "gra" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -83162,6 +84007,28 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"gtd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/crayon{
+	color = "#fc0404"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains. They have a fake aura about them."
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "gtr" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -83199,6 +84066,19 @@
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"gMF" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 2
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "gNe" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -83220,6 +84100,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"gWg" = (
+/mob/living/simple_animal/crab/evil/kreb,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "gXY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -83260,6 +84144,32 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
+"hAg" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
+"hEB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "hIt" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -83276,6 +84186,29 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"hQg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"hQV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "hSZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -83285,6 +84218,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"hUq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "ifN" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -83294,6 +84238,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"ikn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "ioI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -83354,6 +84311,13 @@
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"jdU" = (
+/obj/structure/bookcase{
+	name = "bookcase"
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/wood,
+/area/bridge/showroom/corporate)
 "jeV" = (
 /obj/machinery/conveyor/inverted{
 	dir = 10;
@@ -83434,6 +84398,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"kdL" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = -8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "kfu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -83448,15 +84421,42 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"kmc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "krD" = (
 /turf/closed/wall,
 /area/science/circuit)
+"ksJ" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/wood,
+/area/bridge/showroom/corporate)
 "kwI" = (
 /obj/item/wrench,
 /obj/item/clothing/suit/apron,
 /obj/item/clothing/accessory/armband/hydro,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "kxk" = (
@@ -83494,6 +84494,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
+"kCu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/structure/spider/cocoon,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "kCw" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/tile/neutral{
@@ -83533,6 +84544,21 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"kUj" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel/dark,
+/area/hallway/primary/central)
 "kVo" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -83550,6 +84576,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"lkC" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "llb" = (
 /obj/structure/table/reinforced,
 /obj/item/integrated_circuit_printer,
@@ -83571,6 +84607,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"ltM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "lzk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -83583,6 +84627,26 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"lBP" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/landmark/event_spawn,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"lFM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "lGS" = (
 /obj/docking_port/stationary/public_mining_dock,
 /turf/open/floor/plating,
@@ -83595,6 +84659,11 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"lNK" = (
+/obj/structure/bodycontainer/morgue,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "lNZ" = (
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
@@ -83624,6 +84693,25 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tcommsat/server)
+"lXR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "lYP" = (
 /obj/machinery/door/airlock/research{
 	name = "Nanite Laboratory";
@@ -83635,6 +84723,26 @@
 	},
 /turf/open/floor/plating,
 /area/science/nanite)
+"lZi" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"mgQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "mjJ" = (
 /obj/machinery/nuclearbomb/beer{
 	pixel_x = 2;
@@ -83642,6 +84750,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"mnu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
 "mom" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -83651,6 +84768,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"mqX" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "msD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -83686,6 +84814,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"mBu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
+"mTc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "mWg" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -83704,6 +84845,16 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/circuit)
+"nrY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "nyo" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-4"
@@ -83725,6 +84876,40 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"nBX" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
+"nDI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"nHK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "nIb" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
@@ -83770,6 +84955,20 @@
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
+"nZb" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "obb" = (
 /obj/structure/target_stake,
 /obj/effect/turf_decal/stripes/line{
@@ -83825,6 +85024,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"oku" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "oub" = (
 /obj/structure/sign/poster/official/random,
 /turf/closed/wall,
@@ -83861,6 +85070,30 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"oMO" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
+"oMY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel/white/corner,
+/area/hallway/secondary/entry)
+"oNR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "oRL" = (
 /obj/docking_port/stationary{
 	dir = 2;
@@ -83884,6 +85117,31 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"oWH" = (
+/obj/structure/closet/wardrobe/mixed,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/locker)
+"oXM" = (
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains. They have a fake aura about them."
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "oZg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -83895,12 +85153,41 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"oZB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/aft)
+"pfD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/mob/living/simple_animal/hostile/skeleton{
+	desc = "A crude animatronic covered with plastic bones. Rattles just like the real thing!";
+	faction = list("friendly");
+	name = "animatronic skeleton"
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "pmZ" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"pvy" = (
+/obj/structure/window/reinforced,
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead,
+/turf/open/floor/plasteel/dark,
+/area/bridge)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -83978,6 +85265,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"pVj" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "qcZ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -84002,6 +85299,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
+"qil" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "qom" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84036,6 +85341,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"qKT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "qLf" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
@@ -84091,6 +85407,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"qUI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "qVR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
@@ -84100,6 +85426,40 @@
 	},
 /turf/open/floor/wood,
 /area/library)
+"rbl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
+"rih" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/crew_quarters/dorms)
+"rqe" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_x = 4
+	},
+/turf/open/floor/plasteel/dark/corner,
+/area/hallway/primary/starboard)
+"rsc" = (
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel/white,
+/area/science/research)
 "rxn" = (
 /obj/machinery/power/apc/auto_name/south{
 	pixel_y = -26
@@ -84135,6 +85495,22 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"rEb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "rGl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -84143,6 +85519,16 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"rHC" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/command)
 "rQK" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84185,6 +85571,15 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/engine/storage_shared)
+"sbm" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = -8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "sdi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -84211,6 +85606,33 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"soH" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"srN" = (
+/obj/effect/landmark/event_spawn,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
+"stz" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "svg" = (
 /obj/structure/lattice,
 /obj/structure/girder/reinforced,
@@ -84225,6 +85647,17 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/circuit)
+"sFi" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "sFv" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -84266,6 +85699,13 @@
 "sJW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
+"sSl" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "thn" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/purple,
@@ -84278,6 +85718,24 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/mixing/chamber)
+"tlP" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/exit/departure_lounge)
+"tsu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "tsx" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -84287,6 +85745,26 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"twf" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"tCy" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "tDM" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
@@ -84304,6 +85782,17 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"tGf" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "tPk" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84333,6 +85822,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/structure/spider/stickyweb/nonstick,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "uaC" = (
@@ -84364,6 +85854,12 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"uur" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/delivery,
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "uEH" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Shared Engineering Storage";
@@ -84391,6 +85887,17 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"uJi" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uJU" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84398,6 +85905,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"uKp" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "uRM" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -84408,6 +85922,20 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"uRW" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/crayon{
+	color = "#fc0404"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/obj/effect/decal/remains/human{
+	desc = "They look like human remains. They have a fake aura about them."
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "uTS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -84445,6 +85973,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"vkD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "vlx" = (
 /obj/machinery/vr_sleeper,
 /obj/effect/turf_decal/tile/neutral{
@@ -84452,6 +85991,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"vrc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "vxq" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
@@ -84479,6 +86029,15 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"vUL" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/skeleton{
+	desc = "A crude animatronic covered with plastic bones. Rattles just like the real thing!";
+	faction = list("friendly");
+	name = "animatronic skeleton"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "vWK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -84487,6 +86046,19 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"waJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "wiZ" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -84511,6 +86083,13 @@
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
+"wzT" = (
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "wFH" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -84567,6 +86146,60 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"wRM" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"wWF" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = -8
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"xah" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 2
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/structure/spider/cocoon,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
+"xdl" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead{
+	pixel_y = 13
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
+"xjy" = (
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "xkG" = (
 /obj/item/integrated_electronics/wirer,
 /obj/structure/table/reinforced,
@@ -84600,6 +86233,14 @@
 	},
 /turf/open/floor/plating,
 /area/library)
+"xxT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "xyp" = (
 /obj/docking_port/stationary{
 	dheight = 1;
@@ -84612,10 +86253,31 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"xzi" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old{
+	desc = "Almost looks like the real thing, honestly.";
+	name = "fake blood"
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "xAp" = (
 /obj/structure/chair/comfy,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"xCx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/spider/stickyweb/nonstick,
+/obj/item/toy/plush/spiderplushie,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "xEf" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp{
@@ -84642,6 +86304,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/circuit)
+"xWH" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/item/clothing/head/hardhat/pumpkinhead,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "ybn" = (
 /obj/structure/chair/comfy/brown,
 /obj/effect/landmark/blobstart,
@@ -95856,7 +97527,7 @@ cYL
 aVz
 aWW
 aWT
-baa
+uur
 aVs
 aaa
 aaa
@@ -96882,7 +98553,7 @@ cYE
 cYK
 cYQ
 aVB
-aWZ
+rbl
 aVs
 aVs
 aVs
@@ -98429,7 +100100,7 @@ aYI
 bae
 bbJ
 bcV
-bbJ
+oMY
 bgv
 biv
 bjW
@@ -104088,7 +105759,7 @@ bgP
 biL
 bko
 bbN
-bnV
+waJ
 dCN
 apA
 bue
@@ -104604,7 +106275,7 @@ bkq
 bmi
 boc
 bqt
-bsy
+nZb
 buh
 bwd
 bwd
@@ -104859,7 +106530,7 @@ bgS
 biM
 bkr
 bat
-bnV
+dkj
 bql
 awL
 bue
@@ -104877,7 +106548,7 @@ bzE
 bue
 bPS
 bPR
-bBs
+geo
 bBs
 bue
 bWd
@@ -105132,7 +106803,7 @@ bzE
 bLk
 bML
 bue
-bzE
+fzi
 bRj
 bSB
 qVR
@@ -106640,7 +108311,7 @@ aHr
 aIz
 aJP
 aLg
-aMB
+esH
 aMB
 aMB
 aMB
@@ -106906,7 +108577,7 @@ aTb
 aUp
 aJO
 aXv
-aYU
+lZi
 baF
 bcb
 bdx
@@ -106918,14 +108589,14 @@ aYU
 boj
 bqy
 bsK
-buj
+xxT
 bwh
 bxY
 bzI
 buj
 bCW
-buj
-buj
+xxT
+xxT
 cVd
 buj
 buj
@@ -107185,8 +108856,8 @@ bEB
 baG
 bHW
 baG
-dCH
-baG
+lBP
+mqX
 bdP
 baG
 baG
@@ -107411,7 +109082,7 @@ aDu
 aIC
 aJN
 aLj
-aME
+sSl
 aNW
 aPp
 aQw
@@ -107424,13 +109095,13 @@ aYW
 baH
 bcc
 bdz
-bfi
-bfi
+tsu
+tsu
 bfi
 bky
 bmn
 bfi
-bqA
+sFi
 bqA
 bul
 bfi
@@ -107440,9 +109111,9 @@ bfi
 bCY
 bEC
 bHX
-bHX
+fyz
 bJC
-bHX
+vrc
 bMR
 bOn
 bPY
@@ -107450,7 +109121,7 @@ bRo
 bHX
 bTF
 bVa
-bWj
+nDI
 bXK
 bYU
 bZZ
@@ -107668,7 +109339,7 @@ aHu
 aID
 aJN
 dhI
-aME
+ltM
 aNW
 dCt
 aQx
@@ -107721,7 +109392,7 @@ cjM
 cll
 cmt
 cnB
-cam
+mTc
 cdz
 crx
 csv
@@ -107929,7 +109600,7 @@ aME
 aNX
 aPq
 aPq
-aPq
+pfD
 aTf
 aUt
 aVS
@@ -107963,7 +109634,7 @@ bJD
 bJD
 bGy
 bTH
-aYX
+xjy
 bWl
 bXK
 bYW
@@ -108466,7 +110137,7 @@ bkz
 bzM
 bBB
 bDa
-bEE
+kmc
 bGA
 bIa
 bJF
@@ -108478,7 +110149,7 @@ bRq
 bSE
 bTI
 aYX
-bWj
+nDI
 bXL
 bYX
 cae
@@ -108735,7 +110406,7 @@ bRr
 bSF
 bTI
 aYX
-bWj
+xCx
 bXL
 bYY
 caf
@@ -109276,7 +110947,7 @@ cyd
 cyY
 cAa
 ctA
-cCf
+lNK
 cCU
 cDY
 cEU
@@ -109536,7 +111207,7 @@ ctA
 cCg
 cCV
 cDZ
-cCj
+fEV
 cCj
 cCe
 cgJ
@@ -109790,10 +111461,10 @@ cyf
 cyZ
 cAc
 ctA
+fEV
 cCj
-cCj
-cDY
-cCj
+rEb
+oXM
 cCj
 cCe
 cHJ
@@ -109991,7 +111662,7 @@ aUz
 aVY
 aXG
 aZe
-baQ
+twf
 bci
 aaf
 aaf
@@ -110021,7 +111692,7 @@ bSH
 bTI
 bVc
 aXR
-bXN
+kdL
 bZa
 cak
 cbV
@@ -110747,7 +112418,7 @@ azE
 aCl
 aDx
 dCo
-aGg
+glX
 aHx
 aaa
 aJS
@@ -110762,7 +112433,7 @@ aUv
 aWa
 aXC
 aYX
-baQ
+twf
 bci
 aaf
 bfs
@@ -110779,7 +112450,7 @@ bye
 bux
 bfv
 bDh
-bEN
+dIP
 bGF
 aaf
 aaf
@@ -110792,7 +112463,7 @@ bSI
 bTG
 aYX
 aXR
-bXN
+kdL
 bZa
 can
 cbY
@@ -110830,14 +112501,14 @@ cJB
 cKz
 cLp
 cMe
-cMT
+gqO
 cMT
 cMT
 cOV
 cMT
 cPR
 cQn
-cQK
+oMO
 cPv
 aaa
 aaf
@@ -111003,7 +112674,7 @@ azF
 aBa
 aCm
 aDw
-aEO
+nBX
 aGh
 aHx
 aaa
@@ -111019,7 +112690,7 @@ aUw
 aWb
 aXJ
 aZf
-baQ
+xah
 bci
 aaf
 bft
@@ -111252,7 +112923,7 @@ apL
 dCh
 ass
 adY
-auW
+xdl
 awd
 axf
 ahx
@@ -111306,7 +112977,7 @@ bSK
 bTO
 bVe
 bWr
-bXN
+stz
 bZa
 cap
 cca
@@ -111348,7 +113019,7 @@ cMV
 cMV
 cMV
 cOX
-cMV
+tlP
 cPT
 cQn
 cQK
@@ -111540,7 +113211,7 @@ bfv
 bhk
 bjc
 dCK
-bmB
+pvy
 bou
 bqL
 bsV
@@ -111555,7 +113226,7 @@ bGH
 bGH
 bJO
 bLw
-bTZ
+jdU
 dDf
 bQi
 bRz
@@ -111778,7 +113449,7 @@ aEQ
 aGj
 aHz
 aII
-aJT
+pVj
 aLy
 aMJ
 aHz
@@ -111806,7 +113477,7 @@ bjc
 byf
 bzV
 bBI
-bDk
+hEB
 bEP
 bGI
 bGH
@@ -111825,11 +113496,11 @@ bZf
 caq
 caq
 cdG
-caq
+mBu
 cgb
 chg
 chg
-chg
+oZB
 clx
 cmD
 cnN
@@ -111847,7 +113518,7 @@ czf
 cAh
 cBe
 chg
-chg
+oZB
 cEg
 cFa
 cFZ
@@ -112070,11 +113741,11 @@ bIj
 bJQ
 bLx
 bNf
-bOz
+ksJ
 bQk
 bRB
 bSI
-bTP
+gtd
 bVh
 bWu
 aWf
@@ -112293,18 +113964,18 @@ aGl
 aHB
 aIK
 aJV
-aIK
+gMF
 aHB
 aHB
 aPA
-aJV
+nHK
 aHB
-aHB
+fgH
 aUE
 aWg
 aXO
 aZk
-baT
+nrY
 bci
 aaf
 bfu
@@ -112343,7 +114014,7 @@ cas
 cgc
 chh
 chh
-chh
+lFM
 cly
 cmE
 cnP
@@ -112352,21 +114023,21 @@ cpa
 crH
 csL
 ctG
-cgc
+mgQ
 cvG
-chh
+lFM
 cxB
 cyo
 czh
 cAj
-ctG
+mnu
 cCm
 cpa
 cEh
 cFc
 chh
-chh
-cvG
+lFM
+dTQ
 cIG
 cJG
 cKF
@@ -112568,7 +114239,7 @@ bfv
 bho
 bjc
 bjc
-bmB
+pvy
 box
 bqO
 bsZ
@@ -112581,14 +114252,14 @@ bDk
 bEP
 bGH
 bGH
-bJP
+rHC
 bLw
 bTZ
 dDg
 bQg
 bRD
 bLw
-bTP
+lXR
 bVj
 bWw
 bXU
@@ -112818,7 +114489,7 @@ aHD
 aWi
 aXQ
 aZm
-baT
+nrY
 bci
 aaf
 bfw
@@ -112848,7 +114519,7 @@ bSM
 bTR
 bVk
 bWx
-bXV
+uKp
 bZj
 cat
 ccd
@@ -113074,8 +114745,8 @@ aIT
 aHD
 aWj
 aXR
-aYX
-baT
+xjy
+ikn
 bci
 aaf
 bft
@@ -113331,8 +115002,8 @@ aTm
 aHD
 aWk
 aXS
-aYX
-baT
+xjy
+ikn
 bci
 aaf
 bft
@@ -113359,10 +115030,10 @@ bOF
 dip
 bRG
 bSI
-bTS
+hQg
 aYX
 aXR
-bXV
+sbm
 bZj
 cav
 ccf
@@ -113844,7 +115515,7 @@ aRZ
 aIT
 aUG
 aHD
-aXS
+vkD
 aYX
 baT
 bci
@@ -114133,11 +115804,11 @@ bGM
 bTV
 bVm
 bWA
-bXV
+wWF
 bZj
 cay
 cci
-cdM
+hAg
 ceR
 izu
 chm
@@ -115107,7 +116778,7 @@ apV
 arq
 asG
 ajD
-auW
+xdl
 awp
 axs
 ayF
@@ -115147,7 +116818,7 @@ bwD
 byr
 bAe
 bcj
-bDj
+kCu
 bFb
 bGQ
 bGM
@@ -115158,10 +116829,10 @@ bOK
 bQu
 bRL
 bSO
-bTI
+qUI
 aYX
-bWB
-aVU
+hQV
+eaf
 bZo
 bZo
 cck
@@ -115415,10 +117086,10 @@ bOL
 bQv
 bRL
 bSO
-bTI
+qUI
 aYX
 bWB
-aVW
+kUj
 bZo
 caC
 ccl
@@ -115675,7 +117346,7 @@ bSO
 bTI
 aYX
 bWB
-aVW
+kUj
 bZo
 caD
 ccm
@@ -115702,7 +117373,7 @@ czq
 cAv
 cBp
 cCs
-ctP
+qil
 cEp
 cFm
 cGi
@@ -116157,7 +117828,7 @@ aSd
 aTs
 aUL
 aSe
-aXS
+goC
 aYX
 baT
 bcj
@@ -116416,7 +118087,7 @@ aUM
 aWo
 aXS
 aYX
-baT
+qKT
 bcj
 bcj
 bcj
@@ -116443,7 +118114,7 @@ bcg
 bcg
 bcg
 bcg
-bTS
+hQg
 aYX
 bWF
 bYb
@@ -116687,7 +118358,7 @@ btj
 buL
 bdO
 byv
-bcl
+dmf
 bBQ
 bDz
 bFg
@@ -116957,7 +118628,7 @@ aWf
 aWf
 dCT
 aWf
-aWf
+lkC
 bVo
 bWH
 bYc
@@ -117196,13 +118867,13 @@ bjn
 bkS
 bmK
 boK
-brc
+uJi
 brc
 buM
 bwJ
 byw
 byw
-byw
+fxd
 bDB
 bFi
 bGX
@@ -117210,8 +118881,8 @@ bIs
 bKd
 bIs
 bNu
-bIs
-bIs
+fIm
+fIm
 bIs
 bSR
 bUc
@@ -117435,10 +119106,10 @@ aJa
 axC
 bbG
 aMY
-aOu
+wzT
 aOv
 aQR
-dCv
+srN
 aTw
 aUM
 aWs
@@ -117692,7 +119363,7 @@ aJb
 axC
 bah
 aMY
-aOv
+oNR
 aOw
 aQR
 aOu
@@ -117707,7 +119378,7 @@ bdR
 aZt
 bhE
 bjp
-bkU
+oku
 bmM
 boM
 brd
@@ -118000,7 +119671,7 @@ ciQ
 ckp
 clQ
 bZn
-ccd
+rsc
 cpv
 cqN
 crS
@@ -118486,7 +120157,7 @@ bmO
 bmO
 bwN
 byz
-bAj
+xWH
 bBU
 bwO
 dDb
@@ -119247,7 +120918,7 @@ bbh
 duo
 dnh
 bfK
-bhE
+fQM
 bjp
 bkU
 bmP
@@ -119259,10 +120930,10 @@ bwQ
 bwO
 bAn
 bBT
-bwO
+dJR
 bFk
 bwO
-bBT
+tCy
 bKj
 bLN
 bLK
@@ -119726,7 +121397,7 @@ ahV
 aiQ
 dhp
 alg
-alg
+wRM
 anF
 aoT
 aqc
@@ -119751,7 +121422,7 @@ aNd
 aOD
 aPK
 aQV
-aOv
+vUL
 aTz
 aUM
 aUM
@@ -119776,7 +121447,7 @@ byC
 byC
 bFq
 bBX
-bBX
+fNp
 bKk
 bLP
 bNC
@@ -119977,7 +121648,7 @@ aaf
 aaa
 acQ
 afu
-agu
+soH
 ahg
 ahg
 ahg
@@ -120010,7 +121681,7 @@ aPL
 aQZ
 aSh
 aTA
-aUT
+oWH
 aUM
 aYh
 aCM
@@ -120256,7 +121927,7 @@ aBx
 aCE
 aDZ
 aFl
-aGI
+fyI
 aHO
 aJg
 aKo
@@ -120277,7 +121948,7 @@ dnh
 dnh
 bhE
 bjp
-bkU
+oku
 alq
 boV
 brm
@@ -120532,7 +122203,7 @@ aaa
 aaa
 aaa
 bfN
-bhK
+tGf
 bju
 bkZ
 alq
@@ -120762,7 +122433,7 @@ arC
 asX
 auh
 avl
-asX
+rih
 axG
 ayN
 aAf
@@ -121526,7 +123197,7 @@ aiV
 aiV
 aiV
 amA
-anK
+hUq
 aoZ
 aqj
 arB
@@ -122038,7 +123709,7 @@ ahm
 ahZ
 aiX
 ajW
-aiX
+uRW
 aiX
 anL
 aoZ
@@ -122294,7 +123965,7 @@ agz
 ahn
 aia
 aiY
-aiY
+xzi
 all
 amC
 amC
@@ -122883,7 +124554,7 @@ apX
 ckz
 ciL
 dwY
-ciL
+gWg
 ciL
 cgs
 csc
@@ -124142,7 +125813,7 @@ bxb
 byQ
 bAz
 bCf
-bty
+rqe
 bFE
 bHo
 bIH
