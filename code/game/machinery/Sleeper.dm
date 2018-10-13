@@ -90,15 +90,15 @@
 	close_machine(target)
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
-	if(!state_open && !occupant)
-		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-			return
 	if(state_open)
 		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
 	if(occupant)
 		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
+	if(!state_open && !occupant)
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+			return
 	if(default_change_direction_wrench(user, I))
 		return
 	if(default_pry_open(I))
