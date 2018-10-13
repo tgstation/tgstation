@@ -738,6 +738,7 @@
 		M.say("Spicy!")
 	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	..()
+
 /datum/reagent/consumable/ghostchilijuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.adjustFireLoss(reac_volume/5, 0)
 	if(!ishuman(M) && !ismonkey(M))
