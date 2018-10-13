@@ -143,9 +143,10 @@
 	var/list/result = list()
 	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 	var/product_name
-	volume = round(potency/2, 1)
-	if(volume<10)
-		volume = 10
+	if(species != "ocannabis")
+		volume = round(potency/2, 1)
+		if(volume<10)
+			volume = 10
 	while(t_amount < getYield())
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		result.Add(t_prod) // User gets a consumable
@@ -161,6 +162,18 @@
 
 
 /obj/item/seeds/proc/prepare_result(var/obj/item/T)
+	if(species == "ocannabis")
+		if(!T.reagents)
+			CRASH("[T] has no reagents.")
+		for(var/rid in reagents_add)
+			var/amount = 1 + round(potency * reagents_add[rid], 1)
+			var/list/data = null
+			if(rid == "blood") // Hack to make blood in plants always O-
+				data = list("blood_type" = "O-")
+
+			T.reagents.add_reagent(rid, amount, data)
+
+		return
 	volume = round(potency/2, 1)
 	if(volume<10)
 		volume = 10
@@ -176,6 +189,7 @@
 			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
 				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
 				data = grown_edible.tastes
+
 
 		T.reagents.add_reagent(rid, amount, data)
 
