@@ -725,7 +725,7 @@
 /datum/reagent/consumable/ghostchilijuice
 	name = "Ghost Chili Juice"
 	id = "ghostchiilijuice"
-	description = "A greish juice with the same properties of lava."
+	description = "A greish juice with the same properties as lava."
 	color = "#bfaf90" //rgb 191, 175, 144
 	nutriment_factor = 0.0001 * REAGENTS_METABOLISM
 	taste_description = "lava"
@@ -744,7 +744,8 @@
 	if(!ishuman(M) && !ismonkey(M))
 		return
 	if(!M.is_eyes_covered())
-		M.emote("scream")
+		if(prob(10))
+			M.emote("scream")
 		M.blur_eyes(10)
 		M.blind_eyes(10)
 		M.confused = max(M.confused, 30)
