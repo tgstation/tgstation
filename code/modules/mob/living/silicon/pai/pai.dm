@@ -12,6 +12,7 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
+	var/obj/item/instrument/recorder/P
 
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
