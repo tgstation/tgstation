@@ -1,7 +1,6 @@
 /datum/round_event_control/anomaly
 	name = "Anomaly: Energetic Flux"
 	typepath = /datum/round_event/anomaly
-	anomalypath = 
 
 	min_players = 1
 	max_occurrences = 0 //This one probably shouldn't occur! It'd work, but it wouldn't be very fun.
@@ -9,7 +8,7 @@
 
 /datum/round_event/anomaly
 	var/area/impact_area
-	var/obj/effect/anomaly/anomaly_path
+	var/obj/effect/anomaly/anomaly_path = /obj/effect/anomaly/flux
 	announceWhen	= 1
 
 
