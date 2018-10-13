@@ -269,7 +269,7 @@
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
 		if("loudness")
-			P.interact(src)
+			internal_instrument.interact(src)
 
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
@@ -631,4 +631,4 @@
 	return dat
 // Loudness Booster
 /mob/living/silicon/pai/proc/softwareLoudness()
-	P = new(src)
+	internal_instrument = new(src)
