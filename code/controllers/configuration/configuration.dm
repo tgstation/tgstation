@@ -232,7 +232,7 @@
 					mode_false_report_weight[M.report_type] = M.false_report_weight
 				else
 					//"impossible" modes will still falsly show up occasionally, else they'll stick out like a sore thumb if an admin decides to force a disabled gamemode.
-					mode_false_report_weight[M.report_type] = Min(1, M.false_report_weight)
+					mode_false_report_weight[M.report_type] = min(1, M.false_report_weight)
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
