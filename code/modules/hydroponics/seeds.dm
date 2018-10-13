@@ -30,6 +30,7 @@
 	var/list/reagents_add = list()
 	// A list of reagents to add to product.
 	// Format: "reagent_id" = volume multiplier
+	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: round(potency/2) and cannot be lower than 10
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
