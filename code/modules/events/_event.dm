@@ -93,11 +93,6 @@
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	if(random)
-		if(alertadmins)
-			if (E.atom_of_interest)
-				notify_ghosts("[name] has just been randomly triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source= E.atom_of_interest, action=NOTIFY_ORBIT)
-			else 
-				notify_ghosts("[name] has just been randomly triggered!")
 		log_game("Random Event triggering: [name] ([typepath])")
 
 	return E
@@ -117,7 +112,7 @@
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
 	var/fakeable = TRUE		//Can be faked by fake news event.
-	var/atom/atom_of_interest= null //Used for ghosts to follow the event when it starts, if possible
+	var/atom/atom_of_interest = null //Used for ghosts to follow the event when it starts, if possible
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -133,6 +128,17 @@
 //Allows you to start before announcing or vice versa.
 //Only called once.
 /datum/round_event/proc/start()
+	return
+
+//Called after start()
+//Lets the ghosts know that the event has started, and provides a follow link to a mob if possible
+//Only called once.
+/datum/round_event/proc/announce_to_ghosts()
+	if(control.alertadmins)
+		if (atom_of_interest)
+			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT)
+		else 
+			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!")
 	return
 
 //Called when the tick is equal to the announceWhen variable.
@@ -168,6 +174,7 @@
 	if(activeFor == startWhen)
 		processing = FALSE
 		start()
+		announce_to_ghosts()
 		processing = TRUE
 
 	if(activeFor == announceWhen)
