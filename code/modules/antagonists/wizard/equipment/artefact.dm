@@ -180,6 +180,10 @@
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
+	for(var/mob/dead/observer/ghost in GLOB.player_list) //We put them back in their body
+		if(ghost.mind && ghost.mind.current == M && ghost.client)
+			M.ckey = ghost.ckey
+			break
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
