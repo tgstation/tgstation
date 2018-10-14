@@ -22,8 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		atom_of_interest = T
-		new /datum/spacevine_controller(T) //spawn a controller at turf
+		new /datum/spacevine_controller(T, event = src) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -372,6 +371,7 @@
 	eat(user)
 
 /datum/spacevine_controller
+	var/datum/round_event/spacevine/linkedEvent
 	var/list/obj/structure/spacevine/vines
 	var/list/growth_queue
 	var/spread_multiplier = 5
@@ -379,7 +379,8 @@
 	var/list/vine_mutations_list
 	var/mutativeness = 1
 
-/datum/spacevine_controller/New(turf/location, list/muts, potency, production)
+/datum/spacevine_controller/New(turf/location, list/muts, potency, production, var/event = null)
+	linkedEvent = event
 	vines = list()
 	growth_queue = list()
 	spawn_spacevine_piece(location, null, muts)
@@ -415,6 +416,8 @@
 
 /datum/spacevine_controller/proc/spawn_spacevine_piece(turf/location, obj/structure/spacevine/parent, list/muts)
 	var/obj/structure/spacevine/SV = new(location)
+	if (linkedEvent && !linkedEvent.atom_of_interest)
+		linkedEvent.atom_of_interest = SV
 	growth_queue += SV
 	vines += SV
 	SV.master = src

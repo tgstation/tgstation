@@ -17,9 +17,9 @@
 
 	var/holidayID = ""				//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 									//anything with a (non-null) holidayID which does not match holiday, cannot run.
-	var/wizardevent = 0
-
-	var/alertadmins = 1				//should we let the admins know this event is firing
+	var/wizardevent = FALSE
+	var/random = FALSE				//If the event has occured randomly, or if it was forced by an admin or in-game occurance
+	var/alert_observers = TRUE		//should we let the ghosts and admins know this event is firing
 									//should be disabled on events that fire a lot
 
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
@@ -33,7 +33,7 @@
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
-	wizardevent = 1
+	wizardevent = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
@@ -59,7 +59,7 @@
 		return EVENT_CANT_RUN
 
 	triggering = TRUE
-	if (alertadmins)
+	if (alert_observers)
 		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(100)
 		var/gamemode = SSticker.mode.config_tag
@@ -84,7 +84,7 @@
 		log_admin_private("[key_name(usr)] cancelled event [name].")
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
-/datum/round_event_control/proc/runEvent(random)
+/datum/round_event_control/proc/runEvent()
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
@@ -134,11 +134,13 @@
 //Lets the ghosts know that the event has started, and provides a follow link to a mob if possible
 //Only called once.
 /datum/round_event/proc/announce_to_ghosts()
-	if(control.alertadmins)
+	if(control.max_occurrences == 0) //Event will not spawn
+		return
+	if(control.alert_observers)
 		if (atom_of_interest)
-			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT)
+			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", header="Event Triggered", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT)
 		else 
-			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!")
+			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", header="Event Triggered")
 	return
 
 //Called when the tick is equal to the announceWhen variable.
