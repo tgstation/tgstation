@@ -13,7 +13,7 @@
 
 /obj/machinery/washing_machine/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT), CALLBACK(src, .proc/clean_blood))
+	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
@@ -40,6 +40,24 @@
 	busy = TRUE
 	update_icon()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/machinery/washing_machine/process()
+	if (!busy)
+		animate(src, transform=matrix(), time=2)
+		return PROCESS_KILL
+	if (anchored)
+		if (prob(5))
+			var/matrix/M = new
+			M.Translate(rand(-1, 1), rand(0, 1))
+			animate(src, transform=M, time=1)
+			animate(transform=matrix(), time=1)
+	else
+		if (prob(1))
+			step(src, pick(GLOB.cardinals))
+		var/matrix/M = new
+		M.Translate(rand(-3, 3), rand(-1, 3))
+		animate(src, transform=M, time=2)
 
 /obj/machinery/washing_machine/proc/clean_blood()
 	if(!busy)
@@ -76,6 +94,10 @@
 		if(istype(WM.color_source, /obj/item/toy/crayon))
 			var/obj/item/toy/crayon/CR = WM.color_source
 			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
+		else
+			if(istype(WM.color_source, /obj/item/reagent_containers/food/snacks/grown/rainbow_flower/))
+				var/obj/item/reagent_containers/food/snacks/grown/rainbow_flower/RF = WM.color_source
+				add_atom_colour(RF.color, WASHABLE_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
 	gib()
@@ -110,6 +132,21 @@
 			can_adjust = initial(U.can_adjust)
 			if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
 				toggle_jumpsuit_adjust()
+
+//dyed clothing results//
+
+/obj/item/storage/belt/fannypack/machine_wash(obj/machinery/washing_machine/WM)
+	if(WM.color_source)
+		var/wash_color = WM.color_source.item_color
+		for(var/T in typesof(/obj/item/storage/belt/fannypack))
+			var/obj/item/storage/belt/fannypack/FP = T
+			if(wash_color == initial(FP.item_color))
+				item_state = initial(FP.item_state)
+				icon_state = initial(FP.icon_state)
+				item_color = wash_color
+				name = initial(FP.name)
+				desc = "The colors are a bit dodgy."
+				break
 
 /obj/item/clothing/gloves/color/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
@@ -152,17 +189,29 @@
 				desc = "The colors are a bit dodgy."
 				break
 
-/obj/item/clothing/head/soft/machine_wash(obj/machinery/washing_machine/WM)
+/obj/item/clothing/neck/scarf/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
-		var/wash_color = WM.color_source.item_color
-		for(var/T in typesof(/obj/item/clothing/head/soft))
-			var/obj/item/clothing/head/soft/H = T
-			if(wash_color == initial(H.item_color))
-				icon_state = initial(H.icon_state)
-				item_color = wash_color
-				name = initial(H.name)
-				desc = "The colors are a bit dodgy."
-				break
+		if(istype(WM.color_source, /obj/item/toy/crayon))
+			var/obj/item/toy/crayon/CR = WM.color_source
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
+		else
+			if(istype(WM.color_source, /obj/item/reagent_containers/food/snacks/grown/rainbow_flower/))
+				var/obj/item/reagent_containers/food/snacks/grown/rainbow_flower/RF = WM.color_source
+				add_atom_colour(RF.color, WASHABLE_COLOUR_PRIORITY)
+		name = "dyed scarf"
+		desc = "The colors are a bit dodgy."
+
+/obj/item/clothing/head/beanie/machine_wash(obj/machinery/washing_machine/WM)
+	if(WM.color_source)
+		if(istype(WM.color_source, /obj/item/toy/crayon))
+			var/obj/item/toy/crayon/CR = WM.color_source
+			add_atom_colour(CR.paint_color, WASHABLE_COLOUR_PRIORITY)
+		else
+			if(istype(WM.color_source, /obj/item/reagent_containers/food/snacks/grown/rainbow_flower/))
+				var/obj/item/reagent_containers/food/snacks/grown/rainbow_flower/RF = WM.color_source
+				add_atom_colour(RF.color, WASHABLE_COLOUR_PRIORITY)
+		name = "dyed beanie"
+		desc = "The colors are a bit dodgy."
 
 
 /obj/machinery/washing_machine/relaymove(mob/user)
@@ -188,6 +237,9 @@
 		add_overlay("wm_panel")
 
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/user, params)
+	if(panel_open && !busy && default_unfasten_wrench(user, W))
+		return
+
 	if(default_deconstruction_screwdriver(user, null, null, W))
 		update_icon()
 		return
@@ -210,7 +262,7 @@
 			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return 1
 
-		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp))
+		if(istype(W, /obj/item/toy/crayon) || istype(W, /obj/item/stamp) || istype(W, /obj/item/reagent_containers/food/snacks/grown/rainbow_flower))
 			color_source = W
 		update_icon()
 

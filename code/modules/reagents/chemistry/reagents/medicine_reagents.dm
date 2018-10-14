@@ -47,9 +47,11 @@
 	M.remove_all_traits()
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetKnockdown(0, 0)
-	M.SetStun(0, 0)
-	M.SetUnconscious(0, 0)
+	M.SetKnockdown(0, FALSE)
+	M.SetStun(0, FALSE)
+	M.SetUnconscious(0, FALSE)
+	M.SetParalyzed(0, FALSE)
+	M.SetImmobilized(0, FALSE)
 	M.silent = FALSE
 	M.dizziness = 0
 	M.disgust = 0
@@ -68,11 +70,11 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/adminordrazine/nanites
-	name = "Nanites"
-	id = "nanites"
-	description = "Tiny nanomachines capable of rapid cellular regeneration."
-	taste_description = "sludge"
+/datum/reagent/medicine/adminordrazine/quantum_heal
+	name = "Quantum Medicine"
+	id = "quantum_heal"
+	description = "Rare and experimental particles, that apparently swap the user's body with one from an alternate dimension where it's completely healthy."
+	taste_description = "science"
 
 /datum/reagent/medicine/synaptizine
 	name = "Synaptizine"
@@ -82,9 +84,11 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
-	M.AdjustUnconscious(-20, 0)
+	M.AdjustStun(-20, FALSE)
+	M.AdjustKnockdown(-20, FALSE)
+	M.AdjustUnconscious(-20, FALSE)
+	M.AdjustImmobilized(-20, FALSE)
+	M.AdjustParalyzed(-20, FALSE)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -554,10 +558,8 @@
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
-	M.AdjustUnconscious(-20, 0)
-	M.adjustStaminaLoss(-1*REM, 0)
+	M.AdjustAllImmobility(-20, FALSE)
+	M.adjustStaminaLoss(-1*REM, FALSE)
 	..()
 	return TRUE
 
@@ -623,10 +625,10 @@
 
 /datum/reagent/medicine/morphine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.ignore_slowdown(id)
 
 /datum/reagent/medicine/morphine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.unignore_slowdown(id)
 	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
@@ -763,9 +765,7 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustStun(-20, 0)
-		M.AdjustKnockdown(-20, 0)
-		M.AdjustUnconscious(-20, 0)
+		M.AdjustAllImmobility(-20, FALSE)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -803,7 +803,7 @@
 				M.updatehealth()
 				if(M.revive())
 					M.emote("gasp")
-					add_logs(M, M, "revived", src)
+					log_combat(M, M, "revived", src)
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
@@ -880,9 +880,7 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustStun(-60, 0)
-	M.AdjustKnockdown(-60, 0)
-	M.AdjustUnconscious(-60, 0)
+	M.AdjustAllImmobility(-60, FALSE)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -1104,20 +1102,20 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/miningnanites
-	name = "Nanites"
-	id = "miningnanites"
-	description = "It's mining magic. We don't have to explain it."
+/datum/reagent/medicine/lavaland_extract
+	name = "Lavaland Extract"
+	id = "lavaland_extract"
+	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
 	can_synth = FALSE
 
-/datum/reagent/medicine/miningnanites/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
 	M.heal_bodypart_damage(5,5)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/miningnanites/overdose_process(mob/living/M)
+/datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
 	M.adjustBruteLoss(3*REM, 0)
 	M.adjustFireLoss(3*REM, 0)
 	M.adjustToxLoss(3*REM, 0)
@@ -1133,9 +1131,7 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustUnconscious(-20, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, FALSE)
 	M.adjustStaminaLoss(-1, 0)
 	..()
 	return TRUE
@@ -1189,11 +1185,11 @@
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
 	. = ..()
-	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	M.ignore_slowdown(id)
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
 	. = ..()
-	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	M.unignore_slowdown(id)
 
 /datum/reagent/medicine/modafinil
 	name = "Modafinil"
@@ -1217,9 +1213,7 @@
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
-		M.AdjustStun(-5, 0)
-		M.AdjustKnockdown(-5, 0)
-		M.AdjustUnconscious(-5, 0)
+		M.AdjustAllImmobility(-5, FALSE)
 		M.adjustStaminaLoss(-0.5*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
@@ -1250,7 +1244,7 @@
 			if(prob(20))
 				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
-				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+				M.Paralyze(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)

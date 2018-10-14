@@ -84,7 +84,7 @@ GLOBAL_LIST(round_end_notifiees)
 	if(!SSticker.IsRoundInProgress() && SSticker.HasRoundStarted())
 		return "[sender.mention], the round has already ended!"
 	LAZYINITLIST(GLOB.round_end_notifiees)
-	GLOB.round_end_notifiees[sender] = TRUE
+	GLOB.round_end_notifiees[sender.mention] = TRUE
 	return "I will notify [sender.mention] when the round ends."
 
 /datum/tgs_chat_command/sdql

@@ -40,7 +40,7 @@
 	fibers = null
 	return TRUE
 
-/datum/component/forensics/proc/clean_act(strength)
+/datum/component/forensics/proc/clean_act(datum/source, strength)
 	if(strength >= CLEAN_STRENGTH_FINGERPRINTS)
 		wipe_fingerprints()
 	if(strength >= CLEAN_STRENGTH_BLOOD)
@@ -57,7 +57,7 @@
 	return TRUE
 
 /datum/component/forensics/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
-	if(!M)
+	if(!isliving(M))
 		return
 	add_hiddenprint(M)
 	if(ishuman(M))
@@ -123,7 +123,7 @@
 	return TRUE
 
 /datum/component/forensics/proc/add_hiddenprint(mob/living/M)
-	if(!M || !M.key)
+	if(!isliving(M) || !M.key)
 		return
 	var/hasgloves = ""
 	if(ishuman(M))

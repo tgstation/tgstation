@@ -1,6 +1,9 @@
-#define LIST_MODE_NUM 0
-#define LIST_MODE_TEXT 1
-#define LIST_MODE_FLAG 2
+#define VALUE_MODE_NUM 0
+#define VALUE_MODE_TEXT 1
+#define VALUE_MODE_FLAG 2
+
+#define KEY_MODE_TEXT 0
+#define KEY_MODE_TYPE 1
 
 /datum/config_entry
 	var/name	//read-only, this is determined by the last portion of the derived entry type
@@ -14,6 +17,8 @@
 
 	var/protection = NONE
 	var/abstract_type = /datum/config_entry	//do not instantiate if type matches this
+
+	var/vv_VAS = TRUE		//Force validate and set on VV. VAS proccall guard will run regardless.
 
 	var/dupes_allowed = FALSE
 
@@ -37,52 +42,29 @@
 		. &= !(protection & CONFIG_ENTRY_HIDDEN)
 
 /datum/config_entry/vv_edit_var(var_name, var_value)
-	var/static/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified), NAMEOF(src, dupes_allowed))
+	var/static/list/banned_edits = list(NAMEOF(src, name), NAMEOF(src, vv_VAS), NAMEOF(src, default), NAMEOF(src, resident_file), NAMEOF(src, protection), NAMEOF(src, abstract_type), NAMEOF(src, modified), NAMEOF(src, dupes_allowed))
 	if(var_name == NAMEOF(src, config_entry_value))
 		if(protection & CONFIG_ENTRY_LOCKED)
 			return FALSE
-		. = ValidateAndSet("[var_value]")
-		if(.)
-			datum_flags |= DF_VAR_EDITED
-		return
+		if(vv_VAS)
+			. = ValidateAndSet("[var_value]")
+			if(.)
+				datum_flags |= DF_VAR_EDITED
+			return
+		else
+			return ..()
 	if(var_name in banned_edits)
 		return FALSE
 	return ..()
 
 /datum/config_entry/proc/VASProcCallGuard(str_val)
-	. = !(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	. = !((protection & CONFIG_ENTRY_LOCKED) && IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
 	if(!.)
 		log_admin_private("Config set of [type] to [str_val] attempted by [key_name(usr)]")
 
 /datum/config_entry/proc/ValidateAndSet(str_val)
 	VASProcCallGuard(str_val)
 	CRASH("Invalid config entry type!")
-
-/datum/config_entry/proc/ValidateKeyedList(str_val, list_mode, splitter)
-	str_val = trim(str_val)
-	var/key_pos = findtext(str_val, splitter)
-	var/key_name = null
-	var/key_value = null
-
-	if(key_pos || list_mode == LIST_MODE_FLAG)
-		key_name = lowertext(copytext(str_val, 1, key_pos))
-		key_value = copytext(str_val, key_pos + 1)
-		var/temp
-		var/continue_check
-		switch(list_mode)
-			if(LIST_MODE_FLAG)
-				temp = TRUE
-				continue_check = TRUE
-			if(LIST_MODE_NUM)
-				temp = text2num(key_value)
-				continue_check = !isnull(temp)
-			if(LIST_MODE_TEXT)
-				temp = key_value
-				continue_check = temp
-		if(continue_check && ValidateListEntry(key_name, temp))
-			config_entry_value[key_name] = temp
-			return TRUE
-	return FALSE
 
 /datum/config_entry/proc/ValidateListEntry(key_name, key_value)
 	return TRUE
@@ -156,44 +138,59 @@
 	config_entry_value = new_list
 	return TRUE
 
-/datum/config_entry/keyed_flag_list
-	abstract_type = /datum/config_entry/keyed_flag_list
+/datum/config_entry/keyed_list
+	abstract_type = /datum/config_entry/keyed_list
 	config_entry_value = list()
 	dupes_allowed = TRUE
-
-/datum/config_entry/keyed_flag_list/ValidateAndSet(str_val)
-	if(!VASProcCallGuard(str_val))
-		return FALSE
-	return ValidateKeyedList(str_val, LIST_MODE_FLAG, " ")
-
-/datum/config_entry/keyed_number_list
-	abstract_type = /datum/config_entry/keyed_number_list
-	config_entry_value = list()
-	dupes_allowed = TRUE
+	vv_VAS = FALSE			//VAS will not allow things like deleting from lists, it'll just bug horribly.
+	var/key_mode
+	var/value_mode
 	var/splitter = " "
 
-/datum/config_entry/keyed_number_list/vv_edit_var(var_name, var_value)
-	return var_name != "splitter" && ..()
+/datum/config_entry/keyed_list/New()
+	. = ..()
+	if(isnull(key_mode) || isnull(value_mode))
+		CRASH("Keyed list of type [type] created with null key or value mode!")
 
-/datum/config_entry/keyed_number_list/ValidateAndSet(str_val)
+/datum/config_entry/keyed_list/ValidateAndSet(str_val)
 	if(!VASProcCallGuard(str_val))
 		return FALSE
-	return ValidateKeyedList(str_val, LIST_MODE_NUM, splitter)
 
-/datum/config_entry/keyed_string_list
-	abstract_type = /datum/config_entry/keyed_string_list
-	config_entry_value = list()
-	dupes_allowed = TRUE
-	var/splitter = " "
+	str_val = trim(str_val)
+	var/key_pos = findtext(str_val, splitter)
+	var/key_name = null
+	var/key_value = null
 
-/datum/config_entry/keyed_string_list/vv_edit_var(var_name, var_value)
+	if(key_pos || value_mode == VALUE_MODE_FLAG)
+		key_name = lowertext(copytext(str_val, 1, key_pos))
+		key_value = copytext(str_val, key_pos + 1)
+		var/new_key
+		var/new_value
+		var/continue_check_value
+		var/continue_check_key
+		switch(key_mode)
+			if(KEY_MODE_TEXT)
+				new_key = key_name
+				continue_check_key = new_key
+			if(KEY_MODE_TYPE)
+				new_key = key_name
+				if(!ispath(new_key))
+					new_key = text2path(new_key)
+				continue_check_key = ispath(new_key)
+		switch(value_mode)
+			if(VALUE_MODE_FLAG)
+				new_value = TRUE
+				continue_check_value = TRUE
+			if(VALUE_MODE_NUM)
+				new_value = text2num(key_value)
+				continue_check_value = !isnull(new_value)
+			if(VALUE_MODE_TEXT)
+				new_value = key_value
+				continue_check_value = new_value
+		if(continue_check_value && continue_check_key && ValidateListEntry(new_key, new_value))
+			config_entry_value[new_key] = new_value
+			return TRUE
+	return FALSE
+
+/datum/config_entry/keyed_list/vv_edit_var(var_name, var_value)
 	return var_name != "splitter" && ..()
-
-/datum/config_entry/keyed_string_list/ValidateAndSet(str_val)
-	if(!VASProcCallGuard(str_val))
-		return FALSE
-	return ValidateKeyedList(str_val, LIST_MODE_TEXT, splitter)
-
-#undef LIST_MODE_NUM
-#undef LIST_MODE_TEXT
-#undef LIST_MODE_FLAG

@@ -21,7 +21,7 @@
 		cure()
 	else if(prob(parrot.speak_chance))
 		if(parrot.speech_buffer.len)
-			affected_mob.say(pick(parrot.speech_buffer))
+			affected_mob.say(pick(parrot.speech_buffer), forced = "parrot possession")
 
 /datum/disease/parrot_possession/cure()
 	if(parrot && parrot.loc == affected_mob)

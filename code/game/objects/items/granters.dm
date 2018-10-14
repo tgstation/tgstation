@@ -122,7 +122,7 @@
 		if(do_after(user,50, user))
 			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
 			user.mind.AddSpell(S)
-			user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
+			user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
 			onlearned(user)
 		reading = FALSE
 
@@ -240,7 +240,7 @@
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Knockdown(40)
+	user.Paralyze(40)
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
@@ -330,7 +330,7 @@
 		if(do_after(user,50, user))
 			to_chat(user, "[greet]")
 			MA.teach(user)
-			user.log_message("<font color='orange'>learned the martial art [martialname] ([MA]).</font>", INDIVIDUAL_ATTACK_LOG)
+			user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
 			onlearned(user)
 		reading = FALSE
 

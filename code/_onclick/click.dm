@@ -40,7 +40,7 @@
 */
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
-		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
@@ -70,6 +70,12 @@
 	next_click = world.time + 1
 
 	if(check_click_intercept(params,A))
+		return
+
+	if(notransform)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
 
 	var/list/modifiers = params2list(params)
@@ -192,17 +198,8 @@
 
 			if (!target.loc)
 				continue
-			GET_COMPONENT_FROM(storage, /datum/component/storage, target.loc)
-			if (storage)
-				var/datum/component/storage/concrete/master = storage.master()
-				if (master)
-					next += master.parent
-					for(var/S in master.slaves)
-						var/datum/component/storage/slave = S
-						next += slave.parent
-				else
-					next += target.loc
-			else
+
+			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH))
 				next += target.loc
 
 		checking = next
@@ -274,6 +271,7 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
 /*
 	Restrained ClickOn
 

@@ -56,12 +56,12 @@
 		M.retaliate(user)
 
 	if(!C.handcuffed)
-		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
+		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
 								"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
 
 			playsound(loc, cuffsound, 30, 1, -2)
-			if(do_mob(user, C, 30) && (C.get_num_arms() >= 2 || C.get_arm_ignore()))
+			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else
@@ -69,7 +69,7 @@
 				to_chat(user, "<span class='notice'>You handcuff [C].</span>")
 				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-				add_logs(user, C, "handcuffed")
+				log_combat(user, C, "handcuffed")
 			else
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
 		else
@@ -270,9 +270,9 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				snap = 1
-				if(!C.lying)
+				if(C.mobility_flags & MOBILITY_STAND)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
+					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
 						forceMove(C)
 						C.update_inv_legcuffed()
@@ -333,14 +333,14 @@
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed && C.get_num_legs() >= 2)
+	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		forceMove(C)
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Knockdown(knockdown)
+		C.Paralyze(knockdown)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
@@ -363,3 +363,22 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
+
+/obj/item/restraints/legcuffs/bola/gonbola
+	name = "gonbola"
+	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
+	icon_state = "gonbola"
+	breakouttime = 300
+	slowdown = 0
+	var/datum/status_effect/gonbolaPacify/effectReference
+
+/obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom)
+	. = ..()
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/C = hit_atom
+		effectReference = C.apply_status_effect(STATUS_EFFECT_GONBOLAPACIFY)
+
+/obj/item/restraints/legcuffs/bola/gonbola/dropped(mob/user)
+	. = ..()
+	if(effectReference)
+		QDEL_NULL(effectReference)

@@ -31,6 +31,8 @@
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
 
+	var/tiled_dirt = FALSE // use smooth tiled dirt decal
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
 	if(var_name in banned_edits)
@@ -149,7 +151,7 @@
 		firstbump = src
 	else
 		for(var/i in contents)
-			if(i == mover) // Multi tile objects
+			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			var/atom/movable/thing = i
 			if(thing.Cross(mover))
@@ -160,6 +162,19 @@
 		mover.Bump(firstbump)
 		return FALSE
 	return TRUE
+
+/turf/Exit(atom/movable/mover, atom/newloc)
+	. = ..()
+	if(!.)
+		return FALSE
+	for(var/i in contents)
+		if(i == mover)
+			continue
+		var/atom/movable/thing = i
+		if(!thing.Uncross(mover, newloc))
+			if(thing.flags_1 & ON_BORDER_1)
+				mover.Bump(thing)
+			return FALSE
 
 /turf/Entered(atom/movable/AM)
 	..()
@@ -411,7 +426,9 @@
 	return
 
 /turf/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
+	if(isliving(faller))
+		var/mob/living/L = faller
+		L.lying = pick(90, 270)
 	if(!forced)
 		return
 	if(has_gravity(src))

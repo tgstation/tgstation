@@ -1,10 +1,10 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
-	nonabstract_req = 1
+	nonabstract_req = TRUE
 
-	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
-	var/invocation_area = 1 //if the invocation appends the selected area
+	var/randomise_selection = FALSE //if it lets the usr choose the teleport loc or picks it from the list
+	var/invocation_area = TRUE //if the invocation appends the selected area
 	var/sound1 = 'sound/weapons/zapbang.ogg'
 	var/sound2 = 'sound/weapons/zapbang.ogg'
 
@@ -38,10 +38,10 @@
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
 			if(!T.density)
-				var/clear = 1
+				var/clear = TRUE
 				for(var/obj/O in T)
 					if(O.density)
-						clear = 0
+						clear = FALSE
 						break
 				if(clear)
 					L+=T
@@ -55,12 +55,12 @@
 
 		var/list/tempL = L
 		var/attempt = null
-		var/success = 0
+		var/success = FALSE
 		while(tempL.len)
 			attempt = pick(tempL)
 			target.Move(attempt)
 			if(get_turf(target) == attempt)
-				success = 1
+				success = TRUE
 				break
 			else
 				tempL.Remove(attempt)
@@ -77,12 +77,12 @@
 	else
 		switch(invocation_type)
 			if("shout")
-				user.say("[invocation] [uppertext(chosenarea.name)]")
+				user.say("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
 				if(user.gender==MALE)
 					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 				else
 					playsound(user.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
 			if("whisper")
-				user.whisper("[invocation] [uppertext(chosenarea.name)]")
+				user.whisper("[invocation] [uppertext(chosenarea.name)]", forced = "spell")
 
 	return

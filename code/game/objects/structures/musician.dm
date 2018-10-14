@@ -82,7 +82,7 @@
 
 /datum/song/proc/shouldStopPlaying(mob/user)
 	if(instrumentObj)
-		if(!user.canUseTopic(instrumentObj))
+		if(!user.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return TRUE
 		return !instrumentObj.anchored		// add special cases to stop in subclasses
 	else
@@ -176,7 +176,7 @@
 					Notes are played by the names of the note, and optionally, the accidental, and/or the octave number.<br>
 					By default, every note is natural and in octave 3. Defining otherwise is remembered for each note.<br>
 					Example: <i>C,D,E,F,G,A,B</i> will play a C major scale.<br>
-					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is C3,C4,C4,C3</i><br>
+					After a note has an accidental placed, it will be remembered: <i>C,C4,C,C3</i> is <i>C3,C4,C4,C3</i><br>
 					Chords can be played simply by seperating each note with a hyphon: <i>A-C#,Cn-E,E-G#,Gn-B</i><br>
 					A pause may be denoted by an empty chord: <i>C,E,,C,G</i><br>
 					To make a chord be a different time, end it with /x, where the chord length will be length<br>
@@ -217,7 +217,7 @@
 		updateDialog(usr)		// make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(instrumentObj))
+	if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -233,11 +233,13 @@
 		var/t = ""
 		do
 			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
-			if(!in_range(instrumentObj, usr))
+			if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 				return
 
 			if(lentext(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+				if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
+					return
 				if(cont == "no")
 					break
 		while(lentext(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
@@ -268,7 +270,7 @@
 
 	else if(href_list["newline"])
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
-		if(!newline || !in_range(instrumentObj, usr))
+		if(!newline || !usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return
 		if(lines.len > MUSIC_MAXLINES)
 			return
@@ -285,7 +287,7 @@
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
 		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
-		if(!content || !in_range(instrumentObj, usr))
+		if(!content || !usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return
 		if(lentext(content) > MUSIC_MAXLINECHARS)
 			content = copytext(content, 1, MUSIC_MAXLINECHARS)
@@ -335,7 +337,7 @@
 	..()
 	song = new("piano", src)
 
-	if(prob(50))
+	if(prob(50) && icon_state == initial(icon_state))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
 		icon_state = "minimoog"

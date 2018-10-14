@@ -5,6 +5,7 @@
 	var/special_role = ROLE_BROTHER
 	var/datum/team/brother_team/team
 	antag_moodlet = /datum/mood_event/focused
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
@@ -19,7 +20,6 @@
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
 	objectives += team.objectives
-	owner.objectives += objectives
 	owner.special_role = special_role
 	finalize_brother()
 	return ..()

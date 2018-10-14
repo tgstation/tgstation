@@ -73,15 +73,8 @@
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
-	canmove = FALSE
 	var/silent = FALSE
-	var/hit_slowdown = 0
 	var/brightness_power = 5
-	var/slowdown = 0
-
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += slowdown
 
 /mob/living/silicon/pai/can_unbuckle()
 	return FALSE
@@ -103,7 +96,6 @@
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
-	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = P
 		P = new /obj/item/paicard(newcardloc)
@@ -189,7 +181,7 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
@@ -266,9 +258,9 @@
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0)
 	. = ..()
 	if(!.)
-		slowdown = 2
+		add_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE, 100, multiplicative_slowdown = 2)
 		return TRUE
-	slowdown = initial(slowdown)
+	remove_movespeed_modifier(MOVESPEED_ID_PAI_SPACEWALK_SPEEDMOD, TRUE)
 	return TRUE
 
 /mob/living/silicon/pai/examine(mob/user)
@@ -293,7 +285,5 @@
 	health = maxHealth - getBruteLoss() - getFireLoss()
 	update_stat()
 
-
 /mob/living/silicon/pai/process()
 	emitterhealth = CLAMP((emitterhealth + emitterregen), -50, emittermaxhealth)
-	hit_slowdown = CLAMP((hit_slowdown - 1), 0, 100)

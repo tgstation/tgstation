@@ -1,8 +1,8 @@
 //Xenobio control console
 /mob/camera/aiEye/remote/xenobio
-	visible_icon = 1
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "camera_target"
+	visible_icon = TRUE
+	icon = 'icons/mob/cameramob.dmi'
+	icon_state = "generic_camera"
 	var/allowed_area = null
 
 /mob/camera/aiEye/remote/xenobio/Initialize()
@@ -50,7 +50,7 @@
 	scan_action = new
 	potion_action = new
 	stored_slimes = list()
-	listener = AddComponent(/datum/component/redirect, COMSIG_ATOM_CONTENTS_DEL, CALLBACK(src, .proc/on_contents_del))
+	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
@@ -64,9 +64,9 @@
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio(get_turf(src))
 	eyeobj.origin = src
-	eyeobj.visible_icon = 1
-	eyeobj.icon = 'icons/obj/abductor.dmi'
-	eyeobj.icon_state = "camera_target"
+	eyeobj.visible_icon = TRUE
+	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon_state = "generic_camera"
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
@@ -101,7 +101,7 @@
 		potion_action.Grant(user)
 		actions += potion_action
 
-/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(atom/deleted)
+/obj/machinery/computer/camera_advanced/xenobio/proc/on_contents_del(datum/source, atom/deleted)
 	if(current_potion == deleted)
 		current_potion = null
 	if(deleted in stored_slimes)

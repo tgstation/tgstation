@@ -62,10 +62,11 @@
 		remove_noz()
 
 /obj/item/watertank/proc/remove_noz()
-	if(ismob(noz.loc))
-		var/mob/M = noz.loc
-		M.temporarilyRemoveItemFromInventory(noz, TRUE)
-	noz.forceMove(src)
+	if(!QDELETED(noz))
+		if(ismob(noz.loc))
+			var/mob/M = noz.loc
+			M.temporarilyRemoveItemFromInventory(noz, TRUE)
+		noz.forceMove(src)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -141,8 +142,8 @@
 
 //Janitor tank
 /obj/item/watertank/janitor
-	name = "backpack water tank"
-	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
+	name = "backpack cleaner tank"
+	desc = "A janitorial cleaner backpack with nozzle to clean blood and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
 

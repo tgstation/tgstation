@@ -19,13 +19,15 @@
 #define SHAME 			(1<<4)
 #define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
 
-#define EFFECT_STUN		"stun"
-#define EFFECT_KNOCKDOWN		"knockdown"
+#define EFFECT_STUN			"stun"
+#define EFFECT_KNOCKDOWN	"knockdown"
 #define EFFECT_UNCONSCIOUS	"unconscious"
+#define EFFECT_PARALYZE		"paralyze"
+#define EFFECT_IMMOBILIZE	"immobilize"
 #define EFFECT_IRRADIATE	"irradiate"
 #define EFFECT_STUTTER		"stutter"
 #define EFFECT_SLUR 		"slur"
-#define EFFECT_EYE_BLUR	"eye_blur"
+#define EFFECT_EYE_BLUR		"eye_blur"
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
@@ -63,8 +65,10 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
+//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
+#define SOFTCRIT_ADD_SLOWDOWN 4
+//slowdown when crawling
+#define CRAWLING_ADD_SLOWDOWN 2
 
 //Attack types for checking shields/hit reactions
 #define MELEE_ATTACK 1
@@ -161,3 +165,6 @@
 #define BODY_ZONE_PRECISE_R_HAND	"r_hand"
 #define BODY_ZONE_PRECISE_L_FOOT	"l_foot"
 #define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
+
+//We will round to this value in damage calculations.
+#define DAMAGE_PRECISION 0.1

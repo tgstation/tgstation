@@ -36,6 +36,8 @@
 
 /datum/config_entry/flag/log_game	// log game events
 
+/datum/config_entry/flag/log_mecha	// log mech data
+
 /datum/config_entry/flag/log_vote	// log voting
 
 /datum/config_entry/flag/log_whisper	// log client whisper
@@ -48,6 +50,8 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/log_pda	// log pda messages
+
+/datum/config_entry/flag/log_telecomms	// log telecomms messages
 
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 
@@ -324,8 +328,6 @@
 
 /datum/config_entry/flag/allow_map_voting
 
-/datum/config_entry/flag/generate_minimaps
-
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null
 	min_val = 500
@@ -410,3 +412,7 @@
 
 /datum/config_entry/string/default_view
 	config_entry_value = "15x15"
+
+/datum/config_entry/flag/log_pictures
+
+/datum/config_entry/flag/picture_logging_camera

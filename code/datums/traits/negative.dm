@@ -12,10 +12,8 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
 		return
-	else 
+	else
 		quirk_holder.blood_volume -= 0.275
-
-
 
 /datum/quirk/depression
 	name = "Depression"
@@ -26,8 +24,6 @@
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
 	mood_quirk = TRUE
-
-
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
@@ -40,21 +36,72 @@
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/heirloom_type
-	switch(quirk_holder.mind.assigned_role)
-		if("Clown")
-			heirloom_type = /obj/item/bikehorn/golden
-		if("Mime")
-			heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
-		if("Lawyer")
-			heirloom_type = /obj/item/gavelhammer
-		if("Janitor")
-			heirloom_type = /obj/item/mop
-		if("Security Officer")
-			heirloom_type = /obj/item/book/manual/wiki/security_space_law
-		if("Scientist")
-			heirloom_type = /obj/item/toy/plush/slimeplushie
-		if("Assistant")
-			heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+
+	if(is_species(H, /datum/species/moth) && prob(50))
+		heirloom_type = /obj/item/flashlight/lantern/heirloom_moth
+	else
+		switch(quirk_holder.mind.assigned_role)
+			//Service jobs
+			if("Clown")
+				heirloom_type = /obj/item/bikehorn/golden
+			if("Mime")
+				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
+			if("Janitor")
+				heirloom_type = pick(/obj/item/mop, /obj/item/caution, /obj/item/reagent_containers/glass/bucket)
+			if("Cook")
+				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
+			if("Botanist")
+				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants)
+			if("Bartender")
+				heirloom_type = pick(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
+			if("Curator")
+				heirloom_type = pick(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
+			if("Assistant")
+				heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
+			//Security/Command
+			if("Captain")
+				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
+			if("Head of Security")
+				heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			if("Warden")
+				heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			if("Security Officer")
+				heirloom_type = pick(/obj/item/book/manual/wiki/security_space_law, /obj/item/clothing/head/beret/sec)
+			if("Detective")
+				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
+			if("Lawyer")
+				heirloom_type = pick(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
+			//RnD
+			if("Research Director")
+				heirloom_type = /obj/item/toy/plush/slimeplushie
+			if("Scientist")
+				heirloom_type = /obj/item/toy/plush/slimeplushie
+			if("Roboticist")
+				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //look at this nerd
+			//Medical
+			if("Chief Medical Officer")
+				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+			if("Medical Doctor")
+				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+			if("Chemist")
+				heirloom_type = /obj/item/book/manual/wiki/chemistry
+			if("Virologist")
+				heirloom_type = /obj/item/reagent_containers/syringe
+			//Engineering
+			if("Chief Engineer")
+				heirloom_type = pick(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+			if("Station Engineer")
+				heirloom_type = pick(/obj/item/clothing/head/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+			if("Atmospheric Technician")
+				heirloom_type = pick(/obj/item/lighter, /obj/item/lighter/greyscale, /obj/item/storage/box/matches)
+			//Supply
+			if("Quartermaster")
+				heirloom_type = pick(/obj/item/stamp, /obj/item/stamp/denied)
+			if("Cargo Technician")
+				heirloom_type = /obj/item/clipboard
+			if("Shaft Miner")
+				heirloom_type = pick(/obj/item/pickaxe/mini, /obj/item/shovel)
+
 	if(!heirloom_type)
 		heirloom_type = pick(
 		/obj/item/toy/cards/deck,
@@ -111,8 +158,6 @@
 /datum/quirk/brainproblems/on_process()
 	quirk_holder.adjustBrainLoss(0.2)
 
-
-
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
@@ -130,8 +175,6 @@
 	H.put_in_hands(glasses)
 	H.equip_to_slot(glasses, SLOT_GLASSES)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
-
-
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
@@ -152,8 +195,6 @@
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
-
-
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
@@ -168,8 +209,6 @@
 		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
 		qdel(src)
 
-
-
 /datum/quirk/poor_aim
 	name = "Poor Aim"
 	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out."
@@ -177,16 +216,12 @@
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 
-
-
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
 	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
 	value = -1
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
-
-
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
@@ -220,8 +255,6 @@
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
-
-
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
@@ -247,8 +280,6 @@
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
-
-
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
@@ -260,7 +291,7 @@
 
 /datum/quirk/social_anxiety/on_process()
 	var/nearby_people = 0
-	for(var/mob/living/carbon/human/H in view(5, quirk_holder))
+	for(var/mob/living/carbon/human/H in oview(3, quirk_holder))
 		if(H.client)
 			nearby_people++
 	var/mob/living/carbon/human/H = quirk_holder

@@ -105,6 +105,10 @@
 	return TRUE
 
 /obj/item/robot_suit/screwdriver_act(mob/living/user, obj/item/I) //Swaps the power cell if you're holding a new one in your other hand.
+	. = ..()
+	if(.)
+		return TRUE
+
 	if(!chest) //can't remove a cell if there's no chest to remove it from.
 		to_chat(user, "<span class='notice'>[src] has no attached torso.</span>")
 		return
@@ -222,7 +226,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
-	else if (istype(W, /obj/item/multitool))
+	else if (W.tool_behaviour == TOOL_MULTITOOL)
 		if(check_completion())
 			Interact(user)
 		else
@@ -313,8 +317,8 @@
 			O.robot_suit = src
 
 			if(!locomotion)
-				O.lockcharge = 1
-				O.update_canmove()
+				O.lockcharge = TRUE
+				O.update_mobility()
 				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
@@ -353,7 +357,7 @@
 			O.robot_suit = src
 			if(!locomotion)
 				O.lockcharge = TRUE
-				O.update_canmove()
+				O.update_mobility()
 
 	else if(istype(W, /obj/item/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
@@ -378,7 +382,7 @@
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
-	if(!istype(item_in_hand, /obj/item/multitool))
+	if(!item_in_hand || !item_in_hand.tool_behaviour == TOOL_MULTITOOL)
 		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 

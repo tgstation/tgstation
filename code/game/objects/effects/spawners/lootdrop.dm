@@ -41,6 +41,13 @@
 				/obj/item/gun/ballistic/automatic/pistol/deagle
 				)
 
+/obj/effect/spawner/lootdrop/armory_contraband/metastation
+	loot = list(/obj/item/gun/ballistic/automatic/pistol = 5,
+				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+				/obj/item/gun/ballistic/revolver/mateba,
+				/obj/item/gun/ballistic/automatic/pistol/deagle,
+				/obj/item/storage/box/syndie_kit/throwing_weapons = 3)
+
 /obj/effect/spawner/lootdrop/gambling
 	name = "gambling valuables spawner"
 	loot = list(
@@ -228,23 +235,27 @@
 				/obj/item/circuitboard/machine/microwave,
 				/obj/item/circuitboard/machine/chem_dispenser/drinks,
 				/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
-				/obj/item/circuitboard/computer/slot_machine 
+				/obj/item/circuitboard/computer/slot_machine
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/rnd
 	name = "RnD circuit board spawner"
-	lootcount = 8
+	lootcount = 12
 	loot = list(
 				/obj/item/circuitboard/computer/aifixer,
 				/obj/item/circuitboard/machine/rdserver,
-				/obj/item/circuitboard/computer/pandemic, 
 				/obj/item/circuitboard/machine/mechfab,
 				/obj/item/circuitboard/machine/circuit_imprinter/department,
 				/obj/item/circuitboard/computer/teleporter,
-				/obj/item/circuitboard/machine/destructive_analyzer, 
-				/obj/item/circuitboard/computer/rdconsole
+				/obj/item/circuitboard/machine/destructive_analyzer,
+				/obj/item/circuitboard/computer/rdconsole,
+				/obj/item/circuitboard/computer/nanite_chamber_control,
+				/obj/item/circuitboard/computer/nanite_cloud_controller,
+				/obj/item/circuitboard/machine/nanite_chamber,
+				/obj/item/circuitboard/machine/nanite_programmer,
+				/obj/item/circuitboard/machine/nanite_program_hub
 				)
-				
+
 /obj/effect/spawner/lootdrop/techstorage/security
 	name = "security circuit board spawner"
 	lootcount = 3
@@ -253,13 +264,13 @@
 				/obj/item/circuitboard/computer/security,
 				/obj/item/circuitboard/computer/prisoner
 				)
-				
+
 /obj/effect/spawner/lootdrop/techstorage/engineering
 	name = "engineering circuit board spawner"
 	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/atmos_alert,
-				/obj/item/circuitboard/computer/stationalert, 
+				/obj/item/circuitboard/computer/stationalert,
 				/obj/item/circuitboard/computer/powermonitor
 				)
 
@@ -280,7 +291,7 @@
 
 /obj/effect/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
-	lootcount = 8
+	lootcount = 9
 	loot = list(
 				/obj/item/circuitboard/computer/cloning,
 				/obj/item/circuitboard/machine/clonepod,
@@ -289,7 +300,8 @@
 				/obj/item/circuitboard/computer/med_data,
 				/obj/item/circuitboard/machine/smoke_machine,
 				/obj/item/circuitboard/machine/chem_master,
-				/obj/item/circuitboard/machine/clonescanner
+				/obj/item/circuitboard/machine/clonescanner,
+				/obj/item/circuitboard/computer/pandemic
 				)
 
 /obj/effect/spawner/lootdrop/techstorage/AI
@@ -300,7 +312,7 @@
 				/obj/item/circuitboard/computer/borgupload,
 				/obj/item/circuitboard/aicore
 				)
-	
+
 /obj/effect/spawner/lootdrop/techstorage/command
 	name = "secure command circuit board spawner"
 	lootcount = 3
@@ -309,7 +321,7 @@
 				/obj/item/circuitboard/computer/communications,
 				/obj/item/circuitboard/computer/card
 				)
-				
+
 /obj/effect/spawner/lootdrop/techstorage/RnD_secure
 	name = "secure RnD circuit board spawner"
 	lootcount = 3

@@ -161,6 +161,7 @@
 	icon_keyboard = null
 	icon_screen = "detective_tv"
 	clockwork = TRUE //it'd look weird
+	pass_flags = PASSTABLE
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera console"
@@ -201,6 +202,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
 	circuit = null

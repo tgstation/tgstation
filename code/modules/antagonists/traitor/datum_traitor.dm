@@ -13,6 +13,7 @@
 	var/should_give_codewords = TRUE
 	var/should_equip = TRUE
 	var/traitor_kind = TRAITOR_HUMAN //Set on initial assignment
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/traitor/on_gain()
 	if(owner.current && isAI(owner.current))
@@ -54,12 +55,10 @@
 	owner.special_role = null
 	..()
 
-/datum/antagonist/traitor/proc/add_objective(var/datum/objective/O)
-	owner.objectives += O
+/datum/antagonist/traitor/proc/add_objective(datum/objective/O)
 	objectives += O
 
-/datum/antagonist/traitor/proc/remove_objective(var/datum/objective/O)
-	owner.objectives -= O
+/datum/antagonist/traitor/proc/remove_objective(datum/objective/O)
 	objectives -= O
 
 /datum/antagonist/traitor/proc/forge_traitor_objectives()
@@ -88,7 +87,7 @@
 		forge_single_objective()
 
 	if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
-		if (!(locate(/datum/objective/hijack) in owner.objectives))
+		if (!(locate(/datum/objective/hijack) in objectives))
 			var/datum/objective/hijack/hijack_objective = new
 			hijack_objective.owner = owner
 			add_objective(hijack_objective)
@@ -96,7 +95,7 @@
 
 
 	var/martyr_compatibility = 1 //You can't succeed in stealing if you're dead.
-	for(var/datum/objective/O in owner.objectives)
+	for(var/datum/objective/O in objectives)
 		if(!O.martyr_compatible)
 			martyr_compatibility = 0
 			break
@@ -108,7 +107,7 @@
 		return
 
 	else
-		if(!(locate(/datum/objective/escape) in owner.objectives))
+		if(!(locate(/datum/objective/escape) in objectives))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = owner
 			add_objective(escape_objective)
@@ -158,7 +157,7 @@
 			kill_objective.find_target()
 			add_objective(kill_objective)
 	else
-		if(prob(15) && !(locate(/datum/objective/download) in owner.objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
+		if(prob(15) && !(locate(/datum/objective/download) in objectives) && !(owner.assigned_role in list("Research Director", "Scientist", "Roboticist")))
 			var/datum/objective/download/download_objective = new
 			download_objective.owner = owner
 			download_objective.gen_amount_goal()

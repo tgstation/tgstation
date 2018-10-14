@@ -65,7 +65,9 @@
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())
-		return
+		if (on) // If it's broken, turn it off too
+			on = FALSE
+		return PROCESS_KILL
 
 	if(cell && cell.charge > 0)
 		var/turf/L = loc
@@ -107,6 +109,7 @@
 	else
 		on = FALSE
 		update_icon()
+		return PROCESS_KILL
 
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 0
@@ -149,7 +152,7 @@
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
@@ -201,6 +204,8 @@
 			mode = HEATER_MODE_STANDBY
 			usr.visible_message("[usr] switches [on ? "on" : "off"] \the [src].", "<span class='notice'>You switch [on ? "on" : "off"] \the [src].</span>")
 			update_icon()
+			if (on)
+				START_PROCESSING(SSmachines, src)
 			. = TRUE
 		if("mode")
 			setMode = params["mode"]

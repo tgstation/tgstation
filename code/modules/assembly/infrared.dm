@@ -164,9 +164,9 @@
 
 /obj/item/assembly/infra/proc/switchListener(turf/newloc)
 	QDEL_NULL(listener)
-	listener = newloc.AddComponent(/datum/component/redirect, COMSIG_ATOM_EXITED, CALLBACK(src, .proc/check_exit))
+	listener = newloc.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_EXITED = CALLBACK(src, .proc/check_exit)))
 
-/obj/item/assembly/infra/proc/check_exit(atom/movable/offender)
+/obj/item/assembly/infra/proc/check_exit(datum/source, atom/movable/offender)
 	if(QDELETED(src))
 		return
 	if(offender == src || istype(offender,/obj/effect/beam/i_beam))
@@ -192,10 +192,11 @@
 
 /obj/item/assembly/infra/Topic(href, href_list)
 	..()
-	if(usr.incapacitated() || !in_range(loc, usr))
+	if(!usr.canUseTopic(src, BE_CLOSE))
 		usr << browse(null, "window=infra")
 		onclose(usr, "infra")
 		return
+
 	if(href_list["state"])
 		on = !(on)
 		update_icon()

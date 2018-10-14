@@ -3,6 +3,7 @@
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/L = owner.current || mob_override
@@ -22,8 +23,6 @@
 	hijack_objective.explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
 	hijack_objective.owner = owner
 	objectives += hijack_objective
-
-	owner.objectives |= objectives
 
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()

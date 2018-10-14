@@ -34,6 +34,7 @@
 			return
 		if(target.anti_magic_check())
 			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
@@ -123,8 +124,8 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = 1
-	M.canmove = 0
+	M.notransform = TRUE
+	M.mobility_flags = NONE
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -152,6 +153,7 @@
 			var/robot = pick(200;/mob/living/silicon/robot,
 							/mob/living/silicon/robot/modules/syndicate,
 							/mob/living/silicon/robot/modules/syndicate/medical,
+							/mob/living/silicon/robot/modules/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -236,7 +238,7 @@
 	for(var/obj/item/W in contents)
 		new_mob.equip_to_appropriate_slot(W)
 
-	M.log_message("<font color='orange'>became [new_mob.real_name].</font>", INDIVIDUAL_ATTACK_LOG)
+	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
 	new_mob.a_intent = INTENT_HARM
 
@@ -244,7 +246,7 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
-	var/poly_msg = CONFIG_GET(keyed_string_list/policy)["polymorph"]
+	var/poly_msg = CONFIG_GET(keyed_list/policy)["polymorph"]
 	if(poly_msg)
 		to_chat(new_mob, poly_msg)
 
@@ -335,6 +337,88 @@
 			return
 	. = ..()
 
+
+/obj/item/projectile/magic/locker
+	name = "locker bolt"
+	icon_state = "locker"
+	nodamage = TRUE
+	flag = "magic"
+	var/weld = TRUE
+	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
+	var/locker_suck = TRUE
+
+/obj/item/projectile/magic/locker/prehit(atom/A)
+	if(ismob(A) && locker_suck)
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
+			qdel(src)
+			return
+		if(M.anchored)
+			return ..()
+		M.forceMove(src)
+		return FALSE
+	return ..()
+
+/obj/item/projectile/magic/locker/on_hit(target)
+	if(created)
+		return ..()
+	var/obj/structure/closet/decay/C = new(get_turf(src))
+	if(LAZYLEN(contents))
+		for(var/atom/movable/AM in contents)
+			C.insert(AM)
+		C.welded = weld
+		C.update_icon()
+	created = TRUE
+	return ..()
+
+/obj/item/projectile/magic/locker/Destroy()
+	locker_suck = FALSE
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(get_turf(src))
+	. = ..()
+
+/obj/structure/closet/decay
+	breakout_time = 600
+	icon_welded = null
+	var/magic_icon = "cursed"
+	var/weakened_icon = "decursed"
+	var/auto_destroy = TRUE
+
+/obj/structure/closet/decay/Initialize()
+	. = ..()
+	if(auto_destroy)
+		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
+	addtimer(CALLBACK(src, .proc/magicly_lock), 5)
+
+/obj/structure/closet/decay/proc/magicly_lock()
+	if(!welded)
+		return
+	icon_state = magic_icon
+	update_icon()
+
+/obj/structure/closet/decay/after_weld(weld_state)
+	if(weld_state)
+		unmagify()
+
+/obj/structure/closet/decay/proc/decay()
+	animate(src, alpha = 0, time = 30)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
+
+/obj/structure/closet/decay/open(mob/living/user)
+	. = ..()
+	if(.)
+		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
+			unmagify()
+		else
+			addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+
+/obj/structure/closet/decay/proc/unmagify()
+	icon_state = weakened_icon
+	update_icon()
+	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+	icon_welded = "welded"
+
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
@@ -347,6 +431,7 @@
 			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
 				return Bump(L)
 	..()
+
 
 /obj/item/projectile/magic/aoe/lightning
 	name = "lightning bolt"

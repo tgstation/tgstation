@@ -11,7 +11,7 @@ Burning extracts:
 	icon_state = "burning"
 
 /obj/item/slimecross/burning/Initialize()
-	..()
+	. = ..()
 	create_reagents(10)
 
 /obj/item/slimecross/burning/attack_self(mob/user)
@@ -353,6 +353,7 @@ Burning extracts:
 	desc = "A strange, transparent knife which constantly shifts color. It hums slightly when moved."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "rainbowknife"
+	item_state = "rainbowknife"
 	force = 15
 	throwforce = 15
 	damtype = BRUTE

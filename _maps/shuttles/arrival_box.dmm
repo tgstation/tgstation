@@ -92,7 +92,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "s" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -104,7 +104,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "u" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -150,6 +150,9 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
+"S" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 a
@@ -164,7 +167,7 @@ a
 a
 b
 p
-f
+S
 v
 b
 a
@@ -173,7 +176,7 @@ a
 a
 b
 q
-f
+S
 w
 b
 a
@@ -190,9 +193,9 @@ b
 (5,1,1) = {"
 b
 e
-f
-f
-f
+S
+S
+S
 x
 b
 "}
@@ -262,9 +265,9 @@ b
 (13,1,1) = {"
 c
 f
-f
-f
-f
+S
+S
+S
 f
 c
 "}

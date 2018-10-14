@@ -212,7 +212,6 @@
 		new /datum/data/mining_equipment("Monkey Cube",					/obj/item/reagent_containers/food/snacks/monkeycube,        	300),
 		new /datum/data/mining_equipment("Toolbelt",					/obj/item/storage/belt/utility,	    							350),
 		new /datum/data/mining_equipment("Royal Cape of the Liberator", /obj/item/bedsheet/rd/royal_cape, 								500),
-		new /datum/data/mining_equipment("Sulphuric Acid",				/obj/item/reagent_containers/glass/beaker/sulphuric,        	500),
 		new /datum/data/mining_equipment("Grey Slime Extract",			/obj/item/slime_extract/grey,									1000),
 		new /datum/data/mining_equipment("Modification Kit",    		/obj/item/borg/upgrade/modkit/trigger_guard,					1700),
 		new /datum/data/mining_equipment("The Liberator's Legacy",  	/obj/item/storage/box/rndboards,								2000)
@@ -234,7 +233,7 @@
 /obj/item/card/mining_point_card
 	name = "mining points card"
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
-	icon_state = "data"
+	icon_state = "data_1"
 	var/points = 500
 
 /obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
@@ -256,7 +255,7 @@
 /obj/item/card/mining_access_card
 	name = "mining access card"
 	desc = "A small card, that when used on any ID, will add mining access."
-	icon_state = "data"
+	icon_state = "data_1"
 
 /obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
@@ -264,6 +263,7 @@
 		var/obj/item/card/id/I = AM
 		I.access |=	ACCESS_MINING
 		I.access |= ACCESS_MINING_STATION
+		I.access |= ACCESS_MECH_MINING
 		I.access |= ACCESS_MINERAL_STOREROOM
 		I.access |= ACCESS_CARGO
 		to_chat(user, "You upgrade [I] with mining access.")

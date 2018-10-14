@@ -42,6 +42,7 @@
 	localMotionTargets = null
 	if(istype(A))
 		A.motioncameras -= src
+	cancelAlarm()
 	return ..()
 
 /obj/machinery/camera/proc/lostTargetRef(datum/weakref/R)

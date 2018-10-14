@@ -42,10 +42,12 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/revolver/grenadelauncher,
 	/obj/item/gun/ballistic/revolver/golden,
 	/obj/item/gun/ballistic/automatic/sniper_rifle,
+	/obj/item/gun/ballistic/automatic/rocketlauncher,
 	/obj/item/gun/medbeam,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/gravity_gun))
 
+//if you add anything that isn't covered by the typepaths below, add it to summon_magic_objective_types
 GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/spell/fireball,
 	/obj/item/book/granter/spell/smoke,
@@ -81,6 +83,21 @@ GLOBAL_LIST_INIT(summoned_special_magic, list(
 	/obj/item/necromantic_stone,
 	/obj/item/blood_contract))
 
+//everything above except for single use spellbooks, because those are for basic bitches
+GLOBAL_LIST_INIT(summoned_magic_objectives, list(
+	/obj/item/antag_spawner/contract,
+	/obj/item/blood_contract,
+	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
+	/obj/item/gun/magic,
+	/obj/item/immortality_talisman,
+	/obj/item/melee/ghost_sword,
+	/obj/item/necromantic_stone,
+	/obj/item/scrying,
+	/obj/item/spellbook,
+	/obj/item/storage/belt/wands/full,
+	/obj/item/voodoo,
+	/obj/item/warpwhistle))
+
 // If true, it's the probability of triggering "survivor" antag.
 GLOBAL_VAR_INIT(summon_guns_triggered, FALSE)
 GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
@@ -96,7 +113,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		SSticker.mode.traitors += H.mind
 
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
-		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
+		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
 
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
@@ -116,7 +133,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	if(prob(GLOB.summon_magic_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
-		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
+		H.log_message("was made into a survivalist, and trusts no one!</font>", LOG_ATTACK, color="red")
 
 	var/magic_type = pick(GLOB.summoned_magic)
 	var/lucky = FALSE

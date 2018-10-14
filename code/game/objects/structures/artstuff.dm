@@ -13,7 +13,6 @@
 	max_integrity = 60
 	var/obj/item/canvas/painting = null
 
-
 //Adding canvases
 /obj/structure/easel/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/canvas))
@@ -66,6 +65,15 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 	icon_state = "23x23"
 	whichGlobalBackup = 4
 
+//HEY YOU
+//ARE YOU READING THE CODE FOR CANVASES?
+//ARE YOU AWARE THEY CRASH HALF THE SERVER WHEN SOMEONE DRAWS ON THEM...
+//...AND NOBODY CAN FIGURE OUT WHY?
+//THEN GO ON BRAVE TRAVELER
+//TRY TO FIX THEM AND REMOVE THIS CODE
+/obj/item/canvas/Initialize()
+	..()
+	return INITIALIZE_HINT_QDEL //Delete on creation
 
 //Find the right size blank canvas
 /obj/item/canvas/proc/getGlobalBackup()
@@ -122,7 +130,6 @@ GLOBAL_LIST_INIT(globalBlankCanvases, new(AMT_OF_CANVASES))
 		//it's basically a giant etch-a-sketch
 		icon = blank
 		user.visible_message("<span class='notice'>[user] cleans the canvas.</span>","<span class='notice'>You clean the canvas.</span>")
-
 
 
 #undef AMT_OF_CANVASES

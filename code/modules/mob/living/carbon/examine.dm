@@ -89,6 +89,8 @@
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner.\n"
 
+	msg += common_trait_examine()
+
 	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
 	if(mood)
 		switch(mood.shown_mood)
@@ -104,7 +106,6 @@
 				msg += "[t_He] look[p_s()] very happy.\n"
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
 				msg += "[t_He] look[p_s()] ecstatic.\n"
-
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

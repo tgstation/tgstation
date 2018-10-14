@@ -72,9 +72,15 @@
 			SStgui.close_user_uis(occupant, src)
 		..()
 
-/obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+/obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/living/user)
+	if(!istype(user))
 		return
+	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			return
 	close_machine(target)
 
 /obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -95,7 +101,7 @@
 					SStgui.close_user_uis(occupant, src)
 					vr_human.real_mind = human_occupant.mind
 					vr_human.ckey = human_occupant.ckey
-					to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
+					to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
 				else
 					if(allow_creating_vr_humans)
 						to_chat(occupant, "<span class='warning'>Virtual avatar not found, attempting to create one...</span>")
@@ -104,7 +110,7 @@
 						if(T)
 							SStgui.close_user_uis(occupant, src)
 							build_virtual_human(occupant, T, V.vr_outfit)
-							to_chat(vr_human, "<span class='notice'>Transfer successful! you are now playing as [vr_human] in VR!</span>")
+							to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
 						else
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else
