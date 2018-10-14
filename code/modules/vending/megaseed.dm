@@ -4,6 +4,7 @@
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
 	icon_state = "seeds"
+	free_contraband = 1
 	products = list(/obj/item/seeds/ambrosia = 3,
 		            /obj/item/seeds/apple = 3,
 		            /obj/item/seeds/cotton = 3,
@@ -54,3 +55,4 @@
 	default_price = 25
 	extra_price = 50
 	payment_department = ACCOUNT_SRV
+
