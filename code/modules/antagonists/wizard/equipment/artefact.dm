@@ -182,7 +182,7 @@
 	M.set_species(/datum/species/skeleton, icon_update=0)
 	for(var/mob/dead/observer/ghost in GLOB.player_list) //We put them back in their body
 		if(ghost.mind && ghost.mind.current == M && ghost.client)
-			M.ckey = ghost.ckey
+			ghost.reenter_corpse() //This is probably safer
 			break
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
