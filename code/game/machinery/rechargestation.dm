@@ -28,6 +28,10 @@
 	for(var/obj/item/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
 
+/obj/machinery/recharge_station/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The status display reads: Recharge speed at [recharge_speed*0.5]%. Automatic repairs are [ repairs ? "available" : "unavailable"].<span>")
+
 /obj/machinery/recharge_station/process()
 	if(!is_operational())
 		return
