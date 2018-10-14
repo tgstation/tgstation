@@ -146,6 +146,7 @@
 	desc = "A janitorial cleaner backpack with nozzle to clean blood and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
+	custom_price = 100
 
 /obj/item/watertank/janitor/Initialize()
 	. = ..()
