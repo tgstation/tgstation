@@ -44,15 +44,11 @@
 
 /turf/proc/CalculateAdjacentTurfs()
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-	var/list/consider = list()
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
 		if(!isopenturf(T))
 			continue
-		consider[T] = direction
-	for(var/i in consider)
-		var/turf/T = i
-		if(!(blocks_air || T.blocks_air) && ((consider[T] & (UP|DOWN))? (CANVERTICALATMOSPASS(T, src)) : (CANATMOSPASS(T, src))) )
+		if(!(blocks_air || T.blocks_air) && ((direction & (UP|DOWN))? (CANVERTICALATMOSPASS(T, src)) : (CANATMOSPASS(T, src))) )
 			LAZYINITLIST(atmos_adjacent_turfs)
 			LAZYINITLIST(T.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[T] = TRUE
