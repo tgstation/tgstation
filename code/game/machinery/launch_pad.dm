@@ -24,6 +24,10 @@
 	range = initial(range)
 	range += E
 
+/obj/machinery/launchpad/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The status display reads: Maximum range: [range].<span>")
+
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
 		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
