@@ -134,6 +134,9 @@ LOG_MANIFEST
 ## Enable logging pictures
 # LOG_PICTURES
 
+## log mecha actions
+# LOG_MECHA
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 

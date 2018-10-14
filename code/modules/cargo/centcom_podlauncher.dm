@@ -29,6 +29,7 @@
 	var/damageChoice = 0 //Determines if we do no damage (0), custom amnt of damage (1), or gib + 5000dmg (2)
 	var/launcherActivated = FALSE //check if we've entered "launch mode" (when we click a pod is launched). Used for updating mouse cursor
 	var/effectBurst = FALSE //Effect that launches 5 at once in a 3x3 area centered on the target
+	var/effectAnnounce = TRUE
 	var/numTurfs = 0 //Counts the number of turfs with things we can launch in the chosen bay (in the centcom map)
 	var/launchCounter = 1 //Used with the "Ordered" launch mode (launchChoice = 1) to see what item is launched
 	var/specificTarget //Do we want to target a specific mob instead of where we click? Also used for smiting
@@ -81,6 +82,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	data["effectReverse"] = temp_pod.reversing //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	data["effectTarget"] = specificTarget //Launches the pod at the turf of a specific mob target, rather than wherever the user clicked. Useful for smites
 	data["effectName"] = temp_pod.adminNamed //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
+	data["effectAnnounce"] = effectAnnounce
 	data["giveLauncher"] = launcherActivated //If true, the user is in launch mode, and whenever they click a pod will be launched (either at their mouse position or at a specific target)
 	data["numObjects"] = numTurfs //Counts the number of turfs that contain a launchable object in the centcom supplypod bay
 	data["landingSound"] = temp_pod.landingSound //Admin sound to play when the pod lands
@@ -245,6 +247,9 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if("effectBurst") //Toggle: Launch 5 pods (with a very slight delay between) in a 3x3 area centered around the target
 			effectBurst = !effectBurst
 			. = TRUE
+		if("effectAnnounce") //Toggle: Launch 5 pods (with a very slight delay between) in a 3x3 area centered around the target
+			effectAnnounce = !effectAnnounce
+			. = TRUE
 		if("effectReverse") //Toggle: Don't send any items. Instead, after landing, close (taking any objects inside) and go back to the centcom bay it came from
 			temp_pod.reversing = !temp_pod.reversing
 			. = TRUE
@@ -408,7 +413,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 				target = get_turf(target) //Make sure we're aiming at a turf rather than an item or effect or something
 			else
 				return //if target is null and we don't have a specific target, cancel
-
+			if (effectAnnounce)
+				deadchat_broadcast("<span class='deadsay'>A special package is being launched at the station!</span>", turf_target = target)
 			if (!effectBurst) //If we're not using burst mode, just launch normally.
 				launch(target)
 			else

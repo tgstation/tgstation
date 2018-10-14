@@ -205,7 +205,7 @@ Doesn't work on other aliens/AI.*/
 	if(..())
 		return
 	var/p_cost = 50
-	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
+	if(!iscarbon(ranged_ability_user) || ranged_ability_user.stat)
 		remove_ranged_ability()
 		return
 

@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "The ceres shuttle will no longer overlap with centcom. The architects responsible for this issue have been sternly reprimanded."

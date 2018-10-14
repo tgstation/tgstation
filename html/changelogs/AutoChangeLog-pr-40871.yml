@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Re-added missing reagents that chem dispensers receive once their manipulator is upgraded to tier 4."

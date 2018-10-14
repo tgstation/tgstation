@@ -40,11 +40,11 @@
 //What does the implant do upon injection?
 //return 1 if the implant injects
 //return 0 if there is no room for implant / it fails
-/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE)
+/obj/item/implant/proc/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTING, args) & COMPONENT_STOP_IMPLANTING)
 		return
 	LAZYINITLIST(target.implants)
-	if(!target.can_be_implanted() || !can_be_implanted_in(target))
+	if(!force && (!target.can_be_implanted() || !can_be_implanted_in(target)))
 		return FALSE
 	for(var/X in target.implants)
 		var/obj/item/implant/imp_e = X

@@ -370,6 +370,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			target.AdjustStun(amount)
 		if("knockdown")
 			target.AdjustKnockdown(amount)
+		if("paralyze")
+			target.AdjustParalyzed(amount)
+		if("immobilize")
+			target.AdjustImmobilized(amount)
 		if("unconscious")
 			target.AdjustUnconscious(amount)
 		else

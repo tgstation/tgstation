@@ -243,7 +243,7 @@
 			//this will potentially take over existing nanites!
 			infectee.AddComponent(/datum/component/nanites, 10)
 			SEND_SIGNAL(infectee, COMSIG_NANITE_SYNC, nanites)
-			infectee.investigate_log("[key_name(infectee)] was infected by spreading nanites by [key_name(host_mob)]", INVESTIGATE_NANITES)
+			infectee.investigate_log("was infected by spreading nanites by [key_name(host_mob)] at [AREACOORD(infectee)].", INVESTIGATE_NANITES)
 
 /datum/nanite_program/mitosis
 	name = "Mitosis"

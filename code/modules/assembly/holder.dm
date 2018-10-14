@@ -14,6 +14,12 @@
 	var/obj/item/assembly/a_left = null
 	var/obj/item/assembly/a_right = null
 
+/obj/item/assembly_holder/ComponentInitialize()
+	. = ..()
+	AddComponent(
+		/datum/component/simple_rotation,
+		ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS)
+
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
 
@@ -73,7 +79,7 @@
 	if(a_right)
 		a_right.on_found(finder)
 
-/obj/item/assembly_holder/Move()
+/obj/item/assembly_holder/setDir()
 	. = ..()
 	if(a_left)
 		a_left.holder_movement()

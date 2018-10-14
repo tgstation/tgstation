@@ -86,7 +86,7 @@
 		mode() // Activate held item
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(lying && surgeries.len)
+	if(!(mobility_flags & MOBILITY_STAND) && surgeries.len)
 		if(user != src && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user,user.a_intent))
@@ -104,7 +104,7 @@
 				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
-			Knockdown(20)
+			Paralyze(20)
 			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
@@ -113,8 +113,8 @@
 		if(hurt)
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
-			victim.Knockdown(20)
-			Knockdown(20)
+			victim.Paralyze(20)
+			Paralyze(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
 				"<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
@@ -274,7 +274,7 @@
 
 /mob/living/carbon/resist_fire()
 	fire_stacks -= 5
-	Knockdown(60, TRUE, TRUE)
+	Paralyze(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put [p_them()]self out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
@@ -451,7 +451,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Knockdown(200)
+			Paralyze(200)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -464,7 +464,7 @@
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 
 	if(stun)
-		Stun(80)
+		Paralyze(80)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
@@ -502,6 +502,13 @@
 	if(dna)
 		dna.real_name = real_name
 
+/mob/living/carbon/update_mobility()
+	. = ..()
+	if(!(mobility_flags & MOBILITY_STAND))
+		add_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE, multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN)
+	else
+		remove_movespeed_modifier(MOVESPEED_ID_CARBON_CRAWLING, TRUE)
+
 //Updates the mob's health from bodyparts and mob damage variables
 /mob/living/carbon/updatehealth()
 	if(status_flags & GODMODE)
@@ -517,6 +524,7 @@
 	health = round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION)
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
 	update_stat()
+	update_mobility()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
 		become_husk("burn")
 	med_hud_set_health()
@@ -530,9 +538,9 @@
 	if(stam > DAMAGE_PRECISION)
 		var/total_health = (health - stam)
 		if(total_health <= crit_threshold && !stat)
-			if(!IsKnockdown())
+			if(!IsParalyzed())
 				to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
-			Knockdown(100)
+			Paralyze(100)
 			update_health_hud()
 
 /mob/living/carbon/update_sight()
@@ -752,7 +760,7 @@
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
-		update_canmove()
+		update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
@@ -774,6 +782,9 @@
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
 		reagents.clear_reagents()
+	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
+	if(L)
+		L.damage = 0
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = FALSE

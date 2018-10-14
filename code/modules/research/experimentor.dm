@@ -128,13 +128,13 @@
 			var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
 			var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
 			for(var/node_id in listin)
-				var/datum/techweb_node/N = get_techweb_node_by_id(node_id)
+				var/datum/techweb_node/N = SSresearch.techweb_node_by_id(node_id)
 				var/str = "<b>[N.display_name]</b>: [listin[N]] points.</b>"
-				if(SSresearch.science_tech.researched_nodes[N])
+				if(SSresearch.science_tech.researched_nodes[N.id])
 					res += str
-				else if(SSresearch.science_tech.boosted_nodes[N])
+				else if(SSresearch.science_tech.boosted_nodes[N.id])
 					boosted += str
-				if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+				if(SSresearch.science_tech.visible_nodes[N.id])	//JOY OF DISCOVERY!
 					output += str
 			output += boosted + res
 			dat += output
@@ -182,10 +182,10 @@
 			experiment(dotype,process)
 			use_power(750)
 			if(dotype != FAIL)
-				var/list/datum/techweb_node/nodes = techweb_item_boost_check(process)
+				var/list/nodes = techweb_item_boost_check(process)
 				var/picked = pickweight(nodes)		//This should work.
 				if(linked_console)
-					linked_console.stored_research.boost_with_path(picked, process.type)
+					linked_console.stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)

@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "morgues have had their proton packs removed and as such no longer suck in ghosts on closing."

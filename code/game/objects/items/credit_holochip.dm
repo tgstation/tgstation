@@ -22,20 +22,22 @@
 	name = "\improper [credits] credit holochip"
 	var/rounded_credits = credits
 	switch(credits)
-		if(1 to 4999)
+		if(1 to 999)
 			icon_state = "holochip"
-		if(5000 to 4999000)
+		if(1000 to 999999)
 			icon_state = "holochip_kilo"
 			rounded_credits = round(rounded_credits * 0.001)
-		if(5000000 to 4999000000)
+		if(1000000 to 999999999)
 			icon_state = "holochip_mega"
 			rounded_credits = round(rounded_credits * 0.000001)
-		if(5000000000 to INFINITY)
+		if(1000000000 to INFINITY)
 			icon_state = "holochip_giga"
 			rounded_credits = round(rounded_credits * 0.000000001)
 	var/overlay_color = "#914792"
 	switch(rounded_credits)
-		if(0 to 9)
+		if(0 to 4)
+			overlay_color = "#8E2E38"
+		if(5 to 9)
 			overlay_color = "#914792"
 		if(10 to 19)
 			overlay_color = "#BF5E0A"
@@ -47,10 +49,8 @@
 			overlay_color = "#009D9B"
 		if(200 to 499)
 			overlay_color = "#0153C1"
-		if(500 to 999)
+		if(500 to INFINITY)
 			overlay_color = "#2C2C2C"
-		if(1000 to INFINITY)
-			overlay_color = "#8E2E38"
 	cut_overlays()
 	var/mutable_appearance/holochip_overlay = mutable_appearance('icons/obj/economy.dmi', "[icon_state]-color")
 	holochip_overlay.color = overlay_color

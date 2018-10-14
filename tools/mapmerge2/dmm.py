@@ -370,7 +370,7 @@ def _parse(map_raw_text):
             continue
         elif in_comment_line:
             continue
-        elif char == "\t":
+        elif char in "\r\t":
             continue
 
         if char == "/" and not in_quote_block:
@@ -478,6 +478,9 @@ def _parse(map_raw_text):
 
     # grid block
     for char in it:
+        if char == "\r":
+            continue
+
         if in_coord_block:
             if char == ",":
                 if reading_coord == "x":

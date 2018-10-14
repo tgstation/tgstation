@@ -71,9 +71,7 @@
 		if("login")
 			var/mob/M = usr
 
-			var/obj/item/card/id/I = M.get_active_held_item()
-			if(!istype(I))
-				I = M.get_idcard()
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
 
 			if(I && istype(I))
 				if(check_access(I))

@@ -9,9 +9,8 @@
 //rotation_speed: how fast to rotate (how many ds should it take for a rotation to complete)
 //rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
 //pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
-//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
-/datum/component/orbiter/Initialize(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
-	if(!istype(orbiter) || !isatom(parent))
+/datum/component/orbiter/Initialize(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	if(!istype(orbiter) || !isatom(parent) || isarea(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	orbiters = list()
@@ -21,19 +20,19 @@
 	var/atom/master = parent
 	master.orbiters = src
 
-	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
+	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
 /datum/component/orbiter/RegisterWithParent()
-	var/atom/master = parent
-	if(ismovableatom(master))
-		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, orbited_spy)
-		var/atom/target = master.loc
-		while(!isturf(target))
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy)
-			target = target.loc
+	var/atom/target = parent
+	while(ismovableatom(target))
+		RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy)
+		target = target.loc
 
 /datum/component/orbiter/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+	var/atom/target = parent
+	while(ismovableatom(target))
+		UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+		target = target.loc
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
@@ -50,21 +49,20 @@
 		begin_orbit(arglist(arguments))
 		return
 	// The following only happens on component transfers
-	var/atom/master = parent
-	var/atom/other_master = newcomp.parent
-	newcomp.move_react(other_master.loc, master.loc) // We're moving the orbiters to where we are first
 	orbiters += newcomp.orbiters
 
-/datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
-	if(!isnull(orbiters[orbiter]))
-		return // We're already here
-	if(orbiter == parent) // Stop it, this is silly
-		if(!length(orbiters))
-			qdel(src)
-		return
+/datum/component/orbiter/PostTransfer()
+	if(!isatom(parent) || isarea(parent) || !get_turf(parent))
+		return COMPONENT_INCOMPATIBLE
+	move_react()
+
+/datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(orbiter.orbiting)
-		orbiter.orbiting.end_orbit(orbiter)
-	orbiters[orbiter] = lockinorbit
+		if(orbiter.orbiting == src)
+			orbiter.orbiting.end_orbit(orbiter, TRUE)
+		else
+			orbiter.orbiting.end_orbit(orbiter)
+	orbiters[orbiter] = TRUE
 	orbiter.orbiting = src
 	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, orbiter_spy)
 	var/matrix/initial_transform = matrix(orbiter.transform)
@@ -89,45 +87,45 @@
 	orbiter.forceMove(get_turf(parent))
 	to_chat(orbiter, "<span class='notice'>Now orbiting [parent].</span>")
 
-/datum/component/orbiter/proc/end_orbit(atom/movable/orbiter)
-	if(isnull(orbiters[orbiter]))
+/datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
+	if(!orbiters[orbiter])
 		return
 	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
 	orbiter.SpinAnimation(0, 0)
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
-	if(!length(orbiters) && !QDELING(src))
+	if(!refreshing && !length(orbiters) && !QDELING(src))
 		qdel(src)
 
 // This proc can receive signals by either the thing being directly orbited or anything holding it
 /datum/component/orbiter/proc/move_react(atom/orbited, atom/oldloc, direction)
-	var/turf/oldturf = get_turf(oldloc)
-	var/turf/newturf = get_turf(parent)
-	if(newturf == oldturf)
+	set waitfor = FALSE // Transfer calls this directly and it doesnt care if the ghosts arent done moving
+
+	var/atom/movable/master = parent
+	if(master.loc == oldloc)
 		return
+
+	var/turf/newturf = get_turf(parent)
 	if(!newturf)
 		qdel(src)
 
 	// Handling the signals of stuff holding us (or not anymore)
 	// These are prety rarely activated, how often are you following something in a bag?
-	if(!isturf(oldloc)) // We used to be registered to it, probably
+	if(oldloc && !isturf(oldloc)) // We used to be registered to it, probably
 		var/atom/target = oldloc
-		while(!isturf(target))
+		while(ismovableatom(target))
 			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
 			target = target.loc
-	if(orbited.loc != newturf) // We want to know when anything holding us moves too
+	if(orbited?.loc && orbited.loc != newturf) // We want to know when anything holding us moves too
 		var/atom/target = orbited.loc
-		while(!isturf(target))
+		while(ismovableatom(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy, TRUE)
 			target = target.loc
 	
 	for(var/i in orbiters)
 		var/atom/movable/thing = i
 		if(thing.loc == newturf)
-			continue
-		if(!newturf || (!orbiters[thing] && thing.loc != oldturf && thing.loc != newturf))
-			end_orbit(thing)
 			continue
 		thing.forceMove(newturf)
 		CHECK_TICK
@@ -139,15 +137,16 @@
 
 /////////////////////
 
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
-	if(!istype(A) || !get_turf(A))
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE)
+	if(!istype(A) || !get_turf(A) || A == src)
 		return
 
-	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
+	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
 /atom/movable/proc/stop_orbit(datum/component/orbiter/orbits)
 	return // We're just a simple hook
 
 /atom/proc/transfer_observers_to(atom/target)
-	var/datum/component/orbiter/orbits = GetComponent(/datum/component/orbiter)
-	target.TakeComponent(orbits)
+	if(!orbiters || !istype(target) || !get_turf(target) || target == src)
+		return
+	target.TakeComponent(orbiters)
