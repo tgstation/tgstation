@@ -1,4 +1,4 @@
-#define FIREALARM_COOLDOWN 38 // Chosen fairly arbitrarily, it is the length of the audio in FireAlarm.ogg. The actual track length is 7 seconds 8ms but but the audio stops at 6s 700ms
+#define FIREALARM_COOLDOWN 38 // Chosen fairly arbitrarily, it is the length of the audio in firealarm.ogg. The actual track length is about 3.9 seconds.
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
