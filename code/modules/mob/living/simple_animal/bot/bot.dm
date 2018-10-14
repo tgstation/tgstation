@@ -110,7 +110,7 @@
 	if(stat)
 		return FALSE
 	on = TRUE
-	canmove = TRUE
+	update_mobility()
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -118,7 +118,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
-	canmove = FALSE
+	update_mobility()
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -155,11 +155,10 @@
 		path_hud.add_to_hud(src)
 		path_hud.add_hud_to(src)
 
-/mob/living/simple_animal/bot/update_canmove()
+/mob/living/simple_animal/bot/update_mobility()
 	. = ..()
 	if(!on)
-		. = 0
-	canmove = .
+		mobility_flags = NONE
 
 /mob/living/simple_animal/bot/Destroy()
 	if(path_hud)

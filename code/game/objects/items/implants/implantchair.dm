@@ -138,8 +138,12 @@
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 
 /obj/machinery/implantchair/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
+	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !user.IsAdvancedToolUser())
 		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			return
 	close_machine(target)
 
 /obj/machinery/implantchair/close_machine(mob/living/user)

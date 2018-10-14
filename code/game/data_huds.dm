@@ -224,7 +224,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudno_id"
-	if(wear_id)
+	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
 
