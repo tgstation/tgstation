@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed moth wings burning off if a mob is ignite while in space."
-  - bugfix: "Fixed moth wings burning off if the mob had the NOFIRE trait."
-  - bugfix: "Fixed Xenos that were on fire heating up for one extra life() tick after being put out."
