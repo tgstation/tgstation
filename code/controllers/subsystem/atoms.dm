@@ -118,7 +118,7 @@ SUBSYSTEM_DEF(atoms)
 			GLOB.bad_mutations |= B
 		else if(B.quality == MINOR_NEGATIVE)
 			GLOB.not_good_mutations |= B
-		GLOB.mutations_list[B.name] = B
+		GLOB.mutations_list[B] = B.name
 		CHECK_TICK
 
 /datum/controller/subsystem/atoms/proc/InitLog()

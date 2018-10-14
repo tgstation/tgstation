@@ -13,7 +13,7 @@
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
-	var/mutation_index = list() //List of which mutations this carbon has and its assigned block
+	var/mutation_index[DNA_STRUC_ENZYMES_BLOCKS] //List of which mutations this carbon has and its assigned block
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -106,22 +106,23 @@
 	return .
 
 /datum/dna/proc/generate_struc_enzymes()
-	var/list/sorting = new /list(DNA_STRUC_ENZYMES_BLOCKS)
+	var/list/sorting[DNA_STRUC_ENZYMES_BLOCKS]
 	var/result = ""
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
 	shuffle_inplace(mutations_temp)
 	for(var/i in 1 to DNA_STRUC_ENZYMES_BLOCKS)
 		var/datum/mutation/M = mutations_temp[i]
-		mutation_index[M.type] = i
+		mutation_index[i] = M.type
 	for(var/M in mutation_index)
-		var/datum/mutation/human/A = M
-		if(initial(A.name) == RACEMUT && ismonkey(holder))
-			sorting[mutation_index[A]] = num2hex(initial(A.lowest_value) + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			mutations |= new A()
+		var/datum/mutation/human/A = get_initialized_mutation(M)
+		if(A.name == RACEMUT && ismonkey(holder))
+			sorting[mutation_index.Find(M)] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
+			mutations |= new M()
 		else
-			sorting[mutation_index[A]] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
+			sorting[mutation_index.Find(M)] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
 
 	for(var/B in sorting)
+		to_chat(world,B)
 		result += B
 	return result
 
