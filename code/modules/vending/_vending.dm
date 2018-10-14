@@ -41,6 +41,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	payment_department = ACCOUNT_SRV
 	var/active = 1		//No sales pitches if off!
 	var/vend_ready = 1	//Are we ready to vend?? Is it time??
+	var/free_contraband = 0 //Is the Contraband free for the departament?
 
 	// To be filled out at compile time
 	var/list/products	= list()	//For each, use the following pattern:
@@ -331,7 +332,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				price_listed = "$[R.custom_price]"
 			if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
 				price_listed = "FREE"
-			if(coin_records.Find(R) || is_hidden)
+				if(free_contraband && coin_records.Find(R))
+					price_listed = "$[extra_price]"
+			if(coin_records.Find(R) || is_hidden && !free_contraband)
 				price_listed = "$[extra_price]"
 			dat += "<li>"
 			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && iscarbon(user))))
@@ -454,7 +457,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			var/datum/bank_account/account = C.registered_account
 			if(account.account_job && account.account_job.paycheck_department == payment_department)
 				price_to_use = 0
-			if(coin_records.Find(R) || hidden_records.Find(R))
+				if(free_contraband && coin_records.Find(R))
+					price_to_use = extra_price
+			if(coin_records.Find(R) || hidden_records.Find(R) && !free_contraband)
 				price_to_use = extra_price
 			if(price_to_use && !account.adjust_money(-price_to_use))
 				say("You do not possess the funds to purchase [R.name].")
