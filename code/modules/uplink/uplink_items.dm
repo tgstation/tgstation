@@ -1148,7 +1148,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes."
 	item = /obj/item/powersink
-	cost = 6
+	cost = 12
 
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
