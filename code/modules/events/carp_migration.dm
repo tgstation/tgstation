@@ -19,7 +19,7 @@
 
 /datum/round_event/carp_migration/start()
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
-		var/mob/living/simple_animal/hostile/carp
+		var/mob/living/simple_animal/hostile/carp/fish
 		if(prob(95))
 			fish = new (C.loc)
 		else
