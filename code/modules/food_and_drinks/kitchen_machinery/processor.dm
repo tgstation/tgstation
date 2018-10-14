@@ -21,6 +21,10 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
+/obj/machinery/processor/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The status display reads: Outputting [rating_amount] item(s) at [rating_speed*100]% speed.<span>")
+
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
 		for(var/i = 0, i < rating_amount, i++)

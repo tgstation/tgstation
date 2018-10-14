@@ -142,6 +142,10 @@ Possible to do for anyone motivated enough:
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
 
+/obj/machinery/holopad/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The status display reads: Current projection range: [holo_range] units.<span>")
+
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return

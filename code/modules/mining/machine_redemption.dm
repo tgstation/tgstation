@@ -48,6 +48,10 @@
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
+/obj/machinery/mineral/ore_redemption/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The status display reads: Smelting [sheet_per_ore] sheet(s) per piece of ore. Reward point generation at [point_upgrade*100]%. Ore pickup rate at [ore_pickup_rate] per cycle.<span>")
+
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/mat_container = materials.mat_container
 	if (!mat_container)

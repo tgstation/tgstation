@@ -188,3 +188,4 @@
 		to_chat(user, "<span class='notice'>[src] must be closed before harvesting.</span>")
 	else if(!harvesting)
 		to_chat(user, "<span class='notice'>Alt-click [src] to start harvesting.</span>")
+	to_chat(user, "<span class='notice'>The status display reads: Harvesting at [interval/10] seconds per organ.<span>")
