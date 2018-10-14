@@ -14,10 +14,13 @@
 				M.replace_identification_name(M.name,(M.name += "ette!"))
 				M.name = M.name += "ette!"
 				M.regenerate_icons()
+			else
+				to_chat(M, "<span class='warning'>The crown only works on humans!</span>")
+				return
 			del src
 		else
 			to_chat(M, "<span class='warning'>The crown only works on males!</span>")
-			..()
+			return
 
 /obj/item/zaneq/supercrown/attack_self(mob/user)
 	femininify(user)
