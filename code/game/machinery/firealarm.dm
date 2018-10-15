@@ -1,4 +1,4 @@
-#define FIREALARM_COOLDOWN 67 // Chosen fairly arbitrarily, it is the length of the audio in FireAlarm.ogg. The actual track length is 7 seconds 8ms but but the audio stops at 6s 700ms
+#define FIREALARM_COOLDOWN 38 // Chosen fairly arbitrarily, it is the length of the audio in firealarm.ogg. The actual track length is about 3.9 seconds.
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
@@ -124,7 +124,7 @@
 	last_alarm = world.time
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	playsound(src.loc, 'sound/machines/firealarm.ogg', 75)
 
 /obj/machinery/firealarm/proc/reset()
 	if(!is_operational())
