@@ -125,7 +125,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = /obj/item/seeds/plump
@@ -149,7 +149,7 @@
 	yield = 1
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list()
-	reagents_add = list("vitamin" = 0.1, "nutriment" = 0.15)
+	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.15)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/walkingmushroom
