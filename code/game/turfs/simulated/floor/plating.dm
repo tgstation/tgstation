@@ -14,7 +14,6 @@
 	baseturfs = /turf/open/space
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	//clawfootstep = FOOTSTEP_HARD_CLAW
 
 	var/attachment_holes = TRUE
 

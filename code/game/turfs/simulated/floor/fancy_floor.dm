@@ -14,7 +14,6 @@
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
-	//clawfootstep = FOOTSTEP_WOOD_CLAW
 	tiled_dirt = FALSE
 
 /turf/open/floor/wood/examine(mob/user)
@@ -76,7 +75,6 @@
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
-	//clawfootstep = FOOTSTEP_GRASS
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 	tiled_dirt = FALSE
@@ -108,7 +106,6 @@
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
 
 /turf/open/floor/grass/snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -143,7 +140,6 @@
 	slowdown = 0
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
 
 /turf/open/floor/grass/fakebasalt/Initialize()
 	. = ..()
@@ -165,7 +161,6 @@
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_CARPET
 	barefootstep = FOOTSTEP_CARPET_BAREFOOT
-	//clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	tiled_dirt = FALSE
 
 /turf/open/floor/carpet/examine(mob/user)

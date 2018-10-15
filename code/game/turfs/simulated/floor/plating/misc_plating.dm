@@ -48,7 +48,6 @@
 	attachment_holes = FALSE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
 	tiled_dirt = FALSE
 
 /turf/open/floor/plating/ashplanet/Initialize()
@@ -82,7 +81,6 @@
 	canSmoothWith = list(/turf/open/floor/plating/ashplanet/rocky, /turf/closed)
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	//clawfootstep = FOOTSTEP_HARD_CLAW
 
 /turf/open/floor/plating/ashplanet/wateryrock
 	gender = PLURAL
@@ -92,7 +90,6 @@
 	slowdown = 2
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	//clawfootstep = FOOTSTEP_HARD_CLAW
 
 /turf/open/floor/plating/ashplanet/wateryrock/Initialize()
 	icon_state = "[icon_state][rand(1, 9)]"
@@ -107,7 +104,6 @@
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
 
 /turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -150,7 +146,6 @@
 	desc = "Like sand, but more <i>metal</i>."
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
 
 /turf/open/floor/plating/ironsand/Initialize()
 	. = ..()
@@ -176,7 +171,6 @@
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	//clawfootstep = FOOTSTEP_HARD_CLAW
 
 /turf/open/floor/plating/ice/Initialize()
 	. = ..()
@@ -215,7 +209,6 @@
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
-	//clawfootstep = FOOTSTEP_SAND
 
 /turf/open/floor/plating/snowed/cavern
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"

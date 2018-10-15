@@ -21,7 +21,6 @@
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	//clawfootstep = FOOTSTEP_HARD_CLAW
 	tiled_dirt = TRUE
 
 /turf/open/indestructible/Melt()
@@ -38,7 +37,6 @@
 	name = "squeaky floor"
 	footstep = null
 	barefootstep = null
-	//clawfootstep = null
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
@@ -55,7 +53,6 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	footstep = FOOTSTEP_LAVA
 	barefootstep = FOOTSTEP_LAVA
-	//clawfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis/Initialize()
@@ -94,7 +91,6 @@
 	icon_state = "paperfloor"
 	footstep = null
 	barefootstep = null
-	//clawfootstep = null
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/binary
@@ -104,7 +100,6 @@
 	icon_state = "binary"
 	footstep = null
 	barefootstep = null
-	//clawfootstep = null
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
@@ -118,7 +113,6 @@
 	baseturfs = /turf/open/indestructible/clock_spawn_room
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	//clawfootstep = FOOTSTEP_HARD_CLAW
 
 /turf/open/indestructible/clock_spawn_room/Entered()
 	..()
