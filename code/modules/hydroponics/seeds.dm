@@ -147,6 +147,9 @@
 	while(t_amount < getYield())
 		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
 		result.Add(t_prod) // User gets a consumable
+		t_prod.volume = round(max_volume * potency/100, 1)
+		if(t_prod.volume<10)
+			t_prod.volume = 10
 		if(!t_prod)
 			return
 		t_amount++
