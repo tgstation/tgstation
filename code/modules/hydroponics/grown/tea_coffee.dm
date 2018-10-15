@@ -33,7 +33,7 @@
 	plantname = "Tea Astra Plant"
 	product = /obj/item/reagent_containers/food/snacks/grown/tea/astra
 	mutatelist = list()
-	reagents_add = list("synaptizine" = 0.1, "vitamin" = 0.08, "teapowder" = 0.1)
+	reagents_add = list("synaptizine" = 0.1, "vitamin" = 0.04, "teapowder" = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/tea/astra
@@ -61,7 +61,7 @@
 	icon_dead = "coffee-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/coffee/robusta)
-	reagents_add = list("vitamin" = 0.08, "coffeepowder" = 0.1)
+	reagents_add = list("vitamin" = 0.04, "coffeepowder" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/coffee
 	seed = /obj/item/seeds/coffee
@@ -83,7 +83,7 @@
 	plantname = "Coffee Robusta Bush"
 	product = /obj/item/reagent_containers/food/snacks/grown/coffee/robusta
 	mutatelist = list()
-	reagents_add = list("ephedrine" = 0.1, "vitamin" = 0.08, "coffeepowder" = 0.1)
+	reagents_add = list("ephedrine" = 0.1, "vitamin" = 0.04, "coffeepowder" = 0.1)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/coffee/robusta

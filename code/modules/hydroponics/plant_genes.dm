@@ -94,7 +94,7 @@
 	S.weed_chance = value
 
 
-// Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = round(potency/2 ,1) Can't be lower than 10
+// Reagent genes store reagent ID and reagent ratio. Amount of reagent in the plant = round(max_volume * potency/100, 1) and cannot be lower than 10
 /datum/plant_gene/reagent
 	name = "Nutriment"
 	var/reagent_id = "nutriment"

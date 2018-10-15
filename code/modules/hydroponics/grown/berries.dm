@@ -15,7 +15,7 @@
 	icon_dead = "berry-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/berry/glow, /obj/item/seeds/berry/poison)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/berries
 	seed = /obj/item/seeds/berry
@@ -65,7 +65,7 @@
 	lifespan = 30
 	potency = 50
 	mutatelist = list()
-	reagents_add = list("coniine" = 0.08, "tirizene" = 0.1, "vitamin" = 0.02, "nutriment" = 0.1)
+	reagents_add = list("coniine" = 0.08, "tirizene" = 0.1, "vitamin" = 0.04, "nutriment" = 0.1)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/berries/death
@@ -181,7 +181,7 @@
 	icon_dead = "grape-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/grape/green)
-	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1, "sugar" = 0.05)
+	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/grapes
 	seed = /obj/item/seeds/grape

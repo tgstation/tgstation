@@ -149,3 +149,4 @@
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
 	wine_power = 90
+	volume = 420

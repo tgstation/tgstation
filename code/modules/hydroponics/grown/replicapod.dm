@@ -14,7 +14,7 @@
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
-	volume = 5
+	var/volume = 5
 	var/ckey = null
 	var/realName = null
 	var/datum/mind/mind = null

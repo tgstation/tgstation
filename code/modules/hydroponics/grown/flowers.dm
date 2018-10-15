@@ -79,7 +79,7 @@
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
-	reagents_add = list("nutriment" = 0.02)
+	reagents_add = list("nutriment" = 0.04)
 
 /obj/item/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -107,7 +107,7 @@
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
 	mutatelist = list(/obj/item/seeds/sunflower/moonflower, /obj/item/seeds/sunflower/novaflower)
-	reagents_add = list("cornoil" = 0.08, "nutriment" = 0.02)
+	reagents_add = list("cornoil" = 0.08, "nutriment" = 0.04)
 
 /obj/item/grown/sunflower // FLOWER POWER!
 	seed = /obj/item/seeds/sunflower
@@ -141,7 +141,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/reagent_containers/food/snacks/grown/moonflower
 	mutatelist = list()
-	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.01, "nutriment" = 0.01)
+	reagents_add = list("moonshine" = 0.2, "vitamin" = 0.01, "nutriment" = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/moonflower
