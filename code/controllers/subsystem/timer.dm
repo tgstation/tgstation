@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(timer)
 	if (!resumed)
 		timer = null
 
-	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time)
+	while (practical_offset <= BUCKET_LEN && head_offset + ((practical_offset-1)*world.tick_lag) <= world.time)
 		var/datum/timedevent/head = bucket_list[practical_offset]
 		if (!timer || !head || timer == head)
 			head = bucket_list[practical_offset]
@@ -170,7 +170,7 @@ SUBSYSTEM_DEF(timer)
 					qdel(timer)
 				continue
 
-			if (timer.timeToRun < head_offset + TICKS2DS(practical_offset))
+			if (timer.timeToRun < head_offset + TICKS2DS(practical_offset-1))
 				bucket_resolution = null //force bucket recreation
 				CRASH("[i] Invalid timer state: Timer in long run queue that would require a backtrack to transfer to short run queue. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 				if (timer.callBack && !timer.spent)
