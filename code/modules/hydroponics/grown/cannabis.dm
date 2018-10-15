@@ -79,34 +79,32 @@
 						"lipolicide" = 0.15)
 	rarity = 69
 
-/obj/item/seeds/cannabis/ultimate/harvest
-	harvest(mob/user)
-		var/obj/machinery/hydroponics/parent = loc //for ease of access
-		var/t_amount = 0
-		var/list/result = list()
-		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
-		var/product_name
-		while(t_amount < getYield())
-			var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
-			result.Add(t_prod) // User gets a consumable
-			t_amount++
-			product_name = t_prod.name
-		if(getYield() >= 1)
-			SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
-		parent.update_tray(user)
+/obj/item/seeds/cannabis/ultimate/harvest(mob/user)
+	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/t_amount = 0
+	var/list/result = list()
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/product_name
+	while(t_amount < getYield())
+		var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+		result.Add(t_prod) // User gets a consumable
+		t_amount++
+		product_name = t_prod.name
+	if(getYield() >= 1)
+		SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
+	parent.update_tray(user)
 
-		return result
+	return result
 
-	prepare_result(var/obj/item/T)
-		if(!T.reagents)
-			CRASH("[T] has no reagents.")
-		for(var/rid in reagents_add)
-			var/amount = 1 + round(potency * reagents_add[rid], 1)
-			var/list/data = null
-			if(rid == "blood") // Hack to make blood in plants always O-
-				data = list("blood_type" = "O-")
-
-			T.reagents.add_reagent(rid, amount, data)
+/obj/item/seeds/cannabis/ultimate/prepare_result(var/obj/item/reagent_containers/T)
+	if(!T.reagents)
+		CRASH("[T] has no reagents.")
+	for(var/rid in reagents_add)
+		var/amount = 1 + round(potency * reagents_add[rid], 1)
+		var/list/data = null
+		if(rid == "blood") // Hack to make blood in plants always O-
+			data = list("blood_type" = "O-")
+		T.reagents.add_reagent(rid, amount, data)
 
 // ---------------------------------------------------------------
 
