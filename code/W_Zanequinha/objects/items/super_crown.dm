@@ -1,4 +1,4 @@
- obj/item/zaneq/supercrown
+/obj/item/zaneq/supercrown
 	name = "Super Crown"
 	desc = "Genderbend time!"
 	icon_state = "super_crown"
