@@ -80,6 +80,23 @@
 	rarity = 69
 
 /obj/item/seeds/cannabis/ultimate/harvest
+	harvest(mob/user)
+		var/obj/machinery/hydroponics/parent = loc //for ease of access
+		var/t_amount = 0
+		var/list/result = list()
+		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+		var/product_name
+		while(t_amount < getYield())
+			var/obj/item/reagent_containers/food/snacks/grown/t_prod = new product(output_loc, src)
+			result.Add(t_prod) // User gets a consumable
+			t_amount++
+			product_name = t_prod.name
+		if(getYield() >= 1)
+			SSblackbox.record_feedback("tally", "food_harvested", getYield(), product_name)
+		parent.update_tray(user)
+
+		return result
+
 	prepare_result(var/obj/item/T)
 		if(!T.reagents)
 			CRASH("[T] has no reagents.")
@@ -131,5 +148,4 @@
 	name = "omega cannabis leaf"
 	desc = "You feel dizzy looking at it. What the fuck?"
 	icon_state = "ocannabis"
-	volume = 420
 	wine_power = 90

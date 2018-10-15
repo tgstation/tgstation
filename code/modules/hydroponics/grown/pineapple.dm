@@ -6,6 +6,7 @@
 	species = "pineapple"
 	plantname = "Pineapple Plant"
 	product = /obj/item/reagent_containers/food/snacks/grown/pineapple
+	max_volume = 75
 	lifespan = 40
 	endurance = 30
 	growthstages = 3
@@ -32,3 +33,4 @@
 	foodtype = FRUIT | PINEAPPLE
 	tastes = list("pineapple" = 1)
 	wine_power = 40
+	volume = 75

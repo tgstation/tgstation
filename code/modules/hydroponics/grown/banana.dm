@@ -12,7 +12,7 @@
 	icon_dead = "banana-dead"
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/banana/mime, /obj/item/seeds/banana/bluespace)
-	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.08, "nutriment" = 0.04)
+	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 
 /obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
@@ -70,7 +70,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
-	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.04)
+	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/banana/mime
@@ -100,7 +100,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport, /datum/plant_gene/trait/repeated_harvest)
-	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.08, "nutriment" = 0.04)
+	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
 	rarity = 30
 
 /obj/item/reagent_containers/food/snacks/grown/banana/bluespace

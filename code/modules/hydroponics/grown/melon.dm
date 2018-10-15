@@ -12,7 +12,8 @@
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/watermelon/holy)
-	reagents_add = list("water" = 0.2, "vitamin" = 0.08, "nutriment" = 0.4)
+	reagents_add = list("water" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
+	max_volume = 75
 
 /obj/item/seeds/watermelon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is swallowing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -35,6 +36,7 @@
 	foodtype = FRUIT
 	juice_results = list("watermelonjuice" = 0)
 	wine_power = 40
+	volume = 75
 
 // Holymelon
 /obj/item/seeds/watermelon/holy
@@ -45,8 +47,9 @@
 	plantname = "Holy Melon Vines"
 	product = /obj/item/reagent_containers/food/snacks/grown/holymelon
 	mutatelist = list()
-	reagents_add = list("holywater" = 0.2, "vitamin" = 0.04, "nutriment" = 0.2)
+	reagents_add = list("holywater" = 0.2, "vitamin" = 0.02, "nutriment" = 0.1)
 	rarity = 20
+	maxvolume = 75
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon
 	seed = /obj/item/seeds/watermelon/holy
@@ -57,6 +60,7 @@
 	dried_type = null
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
+	volume = 75
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()
