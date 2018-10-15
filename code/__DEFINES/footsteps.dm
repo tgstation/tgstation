@@ -112,6 +112,7 @@ GLOBAL_LIST_INIT(barefootstep, list(
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 ))
 //clawed footsteps lists
+/* todo: implement some other time
 GLOBAL_LIST_INIT(clawfootstep, list(
 	FOOTSTEP_WOOD_CLAW = list(list(
 		'sound/effects/footstep/woodclaw1.ogg',
@@ -149,3 +150,4 @@ GLOBAL_LIST_INIT(clawfootstep, list(
 		'sound/effects/footstep/lava2.ogg',
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 ))
+*/
