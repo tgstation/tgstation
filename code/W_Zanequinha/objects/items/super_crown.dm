@@ -30,4 +30,5 @@
 /obj/item/zaneq/supercrown/attack(mob/living/carbon/M, mob/living/carbon/user)
 	. = ..()
 	femininify(M)
+	user.visible_message("<span class='notice'>[user] femininifies the [M]!.</span>", "<span class='notice'>You femininify the [M]!</span>")
 	return .
