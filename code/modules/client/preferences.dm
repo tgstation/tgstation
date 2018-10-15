@@ -1293,6 +1293,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_moth_wings)
 						features["moth_wings"] = new_moth_wings
 
+				if("alternian_horns")
+					var/new_alternian_horns
+					new_alternian_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in GLOB.alternian_horns_list
+					if(new_alternian_horns)
+						features["alternian_horns"] = new_alternian_horns
+
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
 					if(new_s_tone)
