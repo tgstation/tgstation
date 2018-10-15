@@ -1,40 +1,44 @@
 /datum/getrev
-	var/commit  // git rev-parse HEAD
-	var/date
-	var/originmastercommit  // git rev-parse origin/master
+	var/originmastercommit
+	var/commit
 	var/list/testmerge = list()
+	var/date
 
 /datum/getrev/New()
 	testmerge = world.TgsTestMerges()
+	log_world("Running /tg/ revision:")
 	var/datum/tgs_revision_information/revinfo = world.TgsRevision()
 	if(revinfo)
 		commit = revinfo.commit
 		originmastercommit = revinfo.origin_commit
 	else
-		commit = rustg_git_revparse("HEAD")
-		if(commit)
-			date = rustg_git_commit_date(commit)
-		originmastercommit = rustg_git_revparse("origin/master")
+		var/list/logs = world.file2list(".git/logs/HEAD")
+		if(logs.len)
+			logs = splittext(logs[logs.len - 1], " ")
+			date = unix2date(text2num(logs[5]))
+			commit = logs[2]
+			log_world("[commit]: [date]")
+		else
+			log_world("Unable to read git logs, revision information not available")
+			originmastercommit = commit = "Unknown"
+			date = unix2date(world.timeofday)
+			return
+		logs = world.file2list(".git/logs/refs/remotes/origin/master")
+		if(logs.len)
+			originmastercommit = splittext(logs[logs.len - 1], " ")[2]
 
-	// goes to DD log and config_error.txt
-	log_world(get_log_message())
-
-/datum/getrev/proc/get_log_message()
-	var/list/msg = list()
-	msg += "Running /tg/ revision: [date]"
-	if(originmastercommit)
-		msg += "origin/master: [originmastercommit]"
-
-	for(var/line in testmerge)
-		var/datum/tgs_revision_information/test_merge/tm = line
-		msg += "Test merge active of PR #[tm.number] commit [tm.commit]"
-
-	if(commit && commit != originmastercommit)
-		msg += "HEAD: [commit]"
-	else if(!originmastercommit)
-		msg += "No commit information"
-
-	return msg.Join("\n")
+	if(testmerge.len)
+		log_world(commit)
+		for(var/line in testmerge)
+			if(line)
+				var/datum/tgs_revision_information/test_merge/tm = line
+				var/tmcommit = tm.commit
+				log_world("Test merge active of PR #[tm.number] commit [tmcommit]")
+				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[tm.number]", "[tmcommit]"))
+		if(originmastercommit)
+			log_world("Based off origin/master commit [originmastercommit]")
+	else if(originmastercommit)
+		log_world(originmastercommit)
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
