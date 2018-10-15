@@ -2742,6 +2742,8 @@
 #include "code\modules\VR\vr_sleeper.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
+#include "code\W_Zanequinha\objects\items\_zaneq.dm"
+#include "code\W_Zanequinha\objects\items\super_crown.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
