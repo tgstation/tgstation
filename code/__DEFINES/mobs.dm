@@ -112,7 +112,6 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
-#define BIOWARE_DISSECTION "dissected"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -262,3 +261,5 @@
 
 // /obj/item/bodypart on_mob_life() retval flag
 #define BODYPART_LIFE_UPDATE_HEALTH (1<<0)
+
+#define HUMAN_FIRE_STACK_ICON_NUM	3

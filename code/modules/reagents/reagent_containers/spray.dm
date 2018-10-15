@@ -92,9 +92,9 @@
 				break
 
 			if(stream_mode)
-				if(ismob(T))
-					var/mob/M = T
-					if(!M.lying || !range_left)
+				if(isliving(T))
+					var/mob/living/M = T
+					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
 				else if(!range_left)

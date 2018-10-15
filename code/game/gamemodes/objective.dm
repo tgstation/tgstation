@@ -785,7 +785,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal_five_of_type
 	name = "steal five of"
 	explanation_text = "Steal at least five items!"
-	var/list/wanted_items = list(/obj/item)
+	var/list/wanted_items = list()
 
 /datum/objective/steal_five_of_type/New()
 	..()

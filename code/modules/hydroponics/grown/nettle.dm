@@ -98,7 +98,7 @@
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
 		if(prob(50))
-			user.Knockdown(100)
+			user.Paralyze(100)
 			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
@@ -111,5 +111,5 @@
 		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Unconscious(force / 0.3)
-			M.Knockdown(force / 0.75)
+			M.Paralyze(force / 0.75)
 		M.drop_all_held_items()

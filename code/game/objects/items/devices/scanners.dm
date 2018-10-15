@@ -11,6 +11,7 @@ SLIME SCANNER
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	custom_price = 10
 	icon = 'icons/obj/device.dmi'
 	icon_state = "t-ray0"
 	var/on = FALSE
@@ -350,7 +351,7 @@ SLIME SCANNER
 	set name = "Switch Verbosity"
 	set category = "Object"
 
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 
 	mode = !mode
@@ -369,6 +370,7 @@ SLIME SCANNER
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "analyzer"
+	custom_price = 10
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
 	item_state = "analyzer"

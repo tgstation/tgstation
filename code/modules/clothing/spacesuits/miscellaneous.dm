@@ -167,6 +167,8 @@ Contains:
 	strip_delay = 130
 	item_flags = NODROP
 	brightness_on = 7
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team suit"
@@ -178,6 +180,8 @@ Contains:
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	slowdown = 0
 	strip_delay = 130
+	resistance_flags = FIRE_PROOF
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
