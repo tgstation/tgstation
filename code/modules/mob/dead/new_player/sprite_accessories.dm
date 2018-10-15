@@ -522,7 +522,7 @@
 
 /datum/sprite_accessory/facial_hair
 	icon = 'icons/mob/human_face.dmi'
-	gender = NEUTER
+
 // please make sure they're sorted alphabetically and categorized
 
 /datum/sprite_accessory/facial_hair/abe
@@ -611,7 +611,6 @@
 ///////////////////////////
 /datum/sprite_accessory/underwear
 	icon = 'icons/mob/underwear.dmi'
-	gender = NEUTER
 
 /datum/sprite_accessory/underwear/nude
 	name = "Nude"
@@ -791,7 +790,6 @@
 
 /datum/sprite_accessory/undershirt
 	icon = 'icons/mob/underwear.dmi'
-	gender = NEUTER
 
 /datum/sprite_accessory/undershirt/nude
 	name = "Nude"
@@ -1075,7 +1073,6 @@
 
 /datum/sprite_accessory/socks
 	icon = 'icons/mob/underwear.dmi'
-	gender = NEUTER
 
 /datum/sprite_accessory/socks/nude
 	name = "Nude"
