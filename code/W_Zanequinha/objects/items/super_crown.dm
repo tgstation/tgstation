@@ -14,6 +14,7 @@
 				M.replace_identification_name(M.name,(M.name += "ette!"))
 				M.name = M.name += "ette!"
 				M.regenerate_icons()
+				M.Knockdown(40)
 			else
 				to_chat(M, "<span class='warning'>The crown only works on humans!</span>")
 				return
@@ -29,6 +30,6 @@
 
 /obj/item/zaneq/supercrown/attack(mob/living/carbon/M, mob/living/carbon/user)
 	. = ..()
-	femininify(M)
 	user.visible_message("<span class='notice'>[user] femininifies the [M]!.</span>", "<span class='notice'>You femininify the [M]!</span>")
+	femininify(M)
 	return .
