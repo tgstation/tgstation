@@ -411,8 +411,13 @@
 	H.visible_message("<span class='suicide'>[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!</span>")
 	playsound(H.loc,'sound/items/drink.ogg', 80, 1)
 	reagents.trans_to(H, src.reagents.total_volume) //a big sip
-	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "They don't make em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make em like singularity engines anymore.'"))
+	sleep(5)
+	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "All these new fangled arcade games are too slow. I prefer the classics.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like good old fashioned singularity engines anymore."))
 	if(H.age >= 40)
+		H.Stun(50)
+		sleep(50)
+		playsound(H.loc,'sound/items/drink.ogg', 80, 1)
+		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))		
 		return MANUAL_SUICIDE
 	sleep(20) //dramatic pause
 	return TOXLOSS
