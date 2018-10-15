@@ -193,6 +193,13 @@
 	id = "refractive_nanites"
 	program_type = /datum/nanite_program/refractive
 	category = list("Augmentation Nanites")
+	
+/datum/design/nanites/reactive_hardening
+	name = "Reactive Hardening"
+	desc = "The nanites form a mesh under the host's skin that reacts to physical damage, becoming extremely durable for a limited time. Can be triggered to activate the effect manually."
+	id = "reactive_hardening_nanites"
+	program_type = /datum/nanite_program/triggered/reactive_hardening
+	category = list("Augmentation Nanites")
 
 /datum/design/nanites/coagulating
 	name = "Rapid Coagulation"

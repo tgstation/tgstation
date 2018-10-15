@@ -173,12 +173,18 @@
 
 	brute_dam += brute
 	burn_dam += burn
+	
+	SEND_SIGNAL(owner, COMSIG_LIVING_ADJUST_DAMAGE, BRUTE, brute)
+	SEND_SIGNAL(owner, COMSIG_LIVING_ADJUST_DAMAGE, BURN, burn)
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	var/current_damage = get_damage(TRUE)		//This time around, count stamina loss too.
 	var/available_damage = max_damage - current_damage
-	stamina_dam += round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
-
+	var/stamina_hit = round(CLAMP(stamina, 0, min(max_stamina_damage - stamina_dam, available_damage)), DAMAGE_PRECISION)
+	stamina_dam += stamina_hit
+	
+	SEND_SIGNAL(owner, COMSIG_LIVING_ADJUST_DAMAGE, STAMINA, stamina_hit)
+	
 	if(owner && updating_health)
 		owner.updatehealth()
 		if(stamina > DAMAGE_PRECISION)
@@ -197,6 +203,10 @@
 
 	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
 		return
+		
+	SEND_SIGNAL(owner, COMSIG_LIVING_ADJUST_DAMAGE, BRUTE, brute)
+	SEND_SIGNAL(owner, COMSIG_LIVING_ADJUST_DAMAGE, BURN, burn)
+	SEND_SIGNAL(owner, COMSIG_LIVING_ADJUST_DAMAGE, STAMINA, stamina)
 
 	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
 	burn_dam	= round(max(burn_dam - burn, 0), DAMAGE_PRECISION)
