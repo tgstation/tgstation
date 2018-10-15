@@ -342,7 +342,6 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/snow
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
-	new/datum/stack_recipe("Snow Wall", /turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
 	))
@@ -350,6 +349,22 @@ GLOBAL_LIST_INIT(snow_recipes, list ( \
 /obj/item/stack/sheet/mineral/snow/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.snow_recipes
 	. = ..()
+	
+/obj/item/stack/sheet/mineral/snow/afterattack(atom/target, mob/user, proximity)
+	. = ..()
+	if(isfloorturf(target))
+		if(amount < 5)
+			to_chat(user, "<span class='warning'>You need five blocks of snow to build a wall!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start piling snow...</span>")
+		var/turf/T = target
+		if (do_after(user, 50, target = T))
+			if(amount < 5)
+				return
+			use(5)
+			to_chat(user, "<span class='notice'>You build a snow wall.</span>")
+			T.PlaceOnTop(/turf/closed/wall/mineral/snow)
+			transfer_fingerprints_to(T)
 
 /****************************** Others ****************************/
 
