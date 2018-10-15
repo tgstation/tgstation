@@ -49,7 +49,6 @@
 	mutatelist = list()
 	reagents_add = list("holywater" = 0.2, "vitamin" = 0.02, "nutriment" = 0.1)
 	rarity = 20
-	max_volume = 75
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon
 	seed = /obj/item/seeds/watermelon/holy
@@ -60,7 +59,6 @@
 	dried_type = null
 	wine_power = 70 //Water to wine, baby.
 	wine_flavor = "divinity"
-	volume = 75
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/Initialize()
 	. = ..()
