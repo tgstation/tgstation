@@ -11,7 +11,7 @@ If you discovered this issue from playing tgstation hosted servers:
 
 ## Testmerges:
 
-<!-- If you believe the issue to be caused by a test merge [OOC tab -> Show Server Revision], report it in the pull request's comment section as well (You can refer to the issue number by prefixing said number with #. The issue number can be found beside the title after submitting it to the tracker). If None, feel free to remove this section. -->
+<!-- If you're certain the issue is to be caused by a test merge [OOC tab -> Show Server Revision], report it in the pull request's comment section rather than on the tracker(You can refer to the issue number by prefixing said number with #. The issue number can be found beside the title after submitting it to the tracker).If no testmerges are active, feel free to remove this section. -->
 
 ## Reproduction:
 
