@@ -728,7 +728,7 @@
 /datum/reagent/consumable/ghostchilijuice
 	name = "Ghost Chili Juice"
 	id = "ghostchiilijuice"
-	description = "A greish juice with the same properties as lava."
+	description = "A greysh juice with the same properties as lava."
 	color = "#bfaf90" //rgb 191, 175, 144
 	nutriment_factor = 0.0001 * REAGENTS_METABOLISM
 	taste_description = "lava"
