@@ -6,12 +6,30 @@
 	circuit = /obj/item/circuitboard/machine/protolathe/department
 	requires_console = FALSE
 	consoleless_interface = TRUE
+	var/emergency_shuttle_call = FALSE
+
+/obj/machinery/rnd/production/protolathe/department/Initialize(mapload)
+	. = ..()
+	if(emergency_shuttle_call)
+		GLOB.shuttle_caller_list += src
+
+/obj/machinery/rnd/production/protolathe/department/obj_break()
+	if(emergency_shuttle_call)
+		SSshuttle.autoEvac()
+	. = ..()
+
+/obj/machinery/rnd/production/protolathe/department/Destroy(mapload)
+	if(emergency_shuttle_call)
+		GLOB.shuttle_caller_list -= src
+		SSshuttle.autoEvac()
+	..()
 
 /obj/machinery/rnd/production/protolathe/department/engineering
 	name = "department protolathe (Engineering)"
 	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_ENGINEERING
 	department_tag = "Engineering"
 	circuit = /obj/item/circuitboard/machine/protolathe/department/engineering
+	emergency_shuttle_call = TRUE
 
 /obj/machinery/rnd/production/protolathe/department/service
 	name = "department protolathe (Service)"
@@ -42,3 +60,4 @@
 	allowed_department_flags = DEPARTMENTAL_FLAG_ALL|DEPARTMENTAL_FLAG_SECURITY
 	department_tag = "Security"
 	circuit = /obj/item/circuitboard/machine/protolathe/department/security
+	emergency_shuttle_call = TRUE

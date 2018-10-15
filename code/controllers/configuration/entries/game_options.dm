@@ -134,7 +134,7 @@
 	min_val = 0
 	max_val = 1
 
-/datum/config_entry/number/shuttle_refuel_delay
+/datum/config_entry/number/shuttle_refuel_min_delay // The minimum shuttle refuel time at 50% or more dead crewmembers
 	config_entry_value = 12000
 	min_val = 0
 

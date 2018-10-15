@@ -47,6 +47,19 @@
 	build_path = /obj/machinery/computer/communications
 	var/lastTimeUsed = 0
 
+/obj/item/circuitboard/computer/communications/Initialize(mapload)
+	. = ..()
+	GLOB.shuttle_caller_list += src
+
+/obj/item/circuitboard/computer/communications/obj_break()
+	SSshuttle.autoEvac()
+	. = ..()
+
+/obj/item/circuitboard/computer/communications/Destroy(mapload)
+	GLOB.shuttle_caller_list -= src
+	SSshuttle.autoEvac()
+	..()
+
 /obj/item/circuitboard/computer/card
 	name = "ID Console (Computer Board)"
 	build_path = /obj/machinery/computer/card

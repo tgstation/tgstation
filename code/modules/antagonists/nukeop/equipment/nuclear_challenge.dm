@@ -1,7 +1,7 @@
 #define CHALLENGE_TELECRYSTALS 280
 #define CHALLENGE_TIME_LIMIT 3000
 #define CHALLENGE_MIN_PLAYERS 50
-#define CHALLENGE_SHUTTLE_DELAY 15000 // 25 minutes, so the ops have at least 5 minutes before the shuttle is callable.
+#define CHALLENGE_SHUTTLE_DELAY 15000 // force sets the refuel delay minimum to 25 minutes, giving the operatives a minimum of 5 minutes and a maximum of 25 minutes to work provided they keep casualties down
 
 GLOBAL_LIST_EMPTY(jam_on_wardec)
 
@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(jam_on_wardec)
 		D.jammed = TRUE
 
 	new uplink_type(get_turf(user), user.key, CHALLENGE_TELECRYSTALS)
-	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
+	CONFIG_SET(number/shuttle_refuel_min_delay, max(CONFIG_GET(number/shuttle_refuel_min_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.record_feedback("amount", "nuclear_challenge_mode", 1)
 
 	qdel(src)

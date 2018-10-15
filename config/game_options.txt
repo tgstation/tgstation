@@ -189,8 +189,8 @@ MIDROUND_ANTAG WIZARD
 
 
 
-## The amount of time it takes for the emergency shuttle to be called, from round start.
-SHUTTLE_REFUEL_DELAY 12000
+## The minimum shuttle refuel time at 50% or more dead crewmembers.
+SHUTTLE_REFUEL_MIN_DELAY 12000
 
 ## Variables calculate how number of antagonists will scale to population.
 ## Used as (Antagonists = Population / Coeff)
