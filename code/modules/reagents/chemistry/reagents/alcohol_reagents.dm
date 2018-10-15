@@ -1332,7 +1332,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink that is guaranteed to knock you silly."
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.Knockdown(60, 1, 0)
+	M.Paralyze(60, 1, 0)
 	M.dizziness +=2
 	switch(current_cycle)
 		if(15 to 45)

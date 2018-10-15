@@ -2,6 +2,7 @@
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
+	custom_price = 5
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
@@ -144,10 +145,13 @@
 	add_fingerprint(user)
 	toggle()
 
-/obj/machinery/firealarm/attack_ai()
+/obj/machinery/firealarm/attack_ai(mob/user)
 	if(buildstage != 2)
 		return ..()
 	toggle()
+
+/obj/machinery/firealarm/attack_robot(mob/user)
+	return attack_ai(user)
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)

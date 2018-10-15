@@ -1,0 +1,8 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Due to a recent policy review by Nanotrasen Central Command, we have determined that personnel who have committed suicide are too great of a risk to be borged, and are making half of the Robotics staff's job redundant (we pay them good money to do that!) As such, suicide is now considered a PERMANENT decision."
+  - bugfix: "Fixed a specific scenario where ghosts would not be passed their suicider status."
+  - bugfix: "Fixed a specific scenario where brains that suicided would not have their suicider var corrected upon being revived."
+  - bugfix: "Defibrillator units will now correctly consider 180 damage in either brute or burn damage to be the cutoff for revival (down from 181.)"
+  - bugfix: "Fixed mobs suiciding in VR."

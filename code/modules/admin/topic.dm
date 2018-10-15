@@ -438,12 +438,12 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		var/delmob = 0
+		var/delmob = FALSE
 		switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
 			if("Cancel")
 				return
 			if("Yes")
-				delmob = 1
+				delmob = TRUE
 
 		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
@@ -464,6 +464,8 @@
 				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
 			if("human")
 				var/posttransformoutfit = usr.client.robust_dress_shop()
+				if (!posttransformoutfit)
+					return
 				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
 				if(posttransformoutfit && istype(newmob))
 					newmob.equipOutfit(posttransformoutfit)

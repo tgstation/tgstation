@@ -74,16 +74,17 @@
 
 //Robots on fire
 /mob/living/silicon/robot/handle_fire()
-	if(..())
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
 		return
 	if(fire_stacks > 0)
 		fire_stacks--
 		fire_stacks = max(0, fire_stacks)
 	else
 		ExtinguishMob()
+		return TRUE
 
 	//adjustFireLoss(3)
-	return
 
 /mob/living/silicon/robot/update_fire()
 	var/mutable_appearance/fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', "Generic_mob_burning")
@@ -92,11 +93,11 @@
 	else
 		cut_overlay(fire_overlay)
 
-/mob/living/silicon/robot/update_canmove()
+/mob/living/silicon/robot/update_mobility()
 	if(stat || buckled || lockcharge)
-		canmove = 0
+		mobility_flags &= ~MOBILITY_MOVE
 	else
-		canmove = 1
+		mobility_flags = MOBILITY_FLAGS_DEFAULT
 	update_transform()
 	update_action_buttons_icon()
-	return canmove
+

@@ -337,8 +337,10 @@ LINEN BINS
 	. = ..()
 	if(.)
 		return
-	if(user.lying)
-		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 	if(amount >= 1)
 		amount--
 

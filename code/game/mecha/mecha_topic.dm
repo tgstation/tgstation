@@ -280,11 +280,10 @@
 		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
 
 	if (href_list["change_name"])
-		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
-		if(newname && trim(newname))
-			name = newname
-		else
-			alert(occupant, "nope.avi")
+		var/userinput = input(occupant, "Choose new exosuit name", "Rename exosuit", "") as null|text
+		if(!isnull(userinput))
+			var/newname = copytext(sanitize(userinput),1,MAX_NAME_LEN)
+			name = newname ? newname : initial(name)
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access
@@ -337,4 +336,3 @@
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
 				log_message("Recalibration of coordination system failed with 1 error.", LOG_MECHA, color="red")
-

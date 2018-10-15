@@ -17,7 +17,7 @@ AI
 	exp_type_department = EXP_TYPE_SILICON
 	var/do_special_check = TRUE
 
-/datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly, announce, latejoin, outfit_override)
+/datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly, announce, latejoin, datum/outfit/outfit_override, client/preference_source = null)
 	. = H.AIize(latejoin)
 
 /datum/job/ai/after_spawn(mob/H, mob/M, latejoin)
@@ -81,7 +81,7 @@ Cyborg
 	exp_requirements = 120
 	exp_type = EXP_TYPE_CREW
 
-/datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, outfit_override = null)
+/datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source = null)
 	return H.Robotize(FALSE, latejoin)
 
 /datum/job/cyborg/after_spawn(mob/living/silicon/robot/R, mob/M)

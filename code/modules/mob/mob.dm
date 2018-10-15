@@ -184,7 +184,7 @@
 /mob/proc/restrained(ignore_grab)
 	return
 
-/mob/proc/incapacitated(ignore_restraints, ignore_grab)
+/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
@@ -602,8 +602,6 @@
 
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)
-		return FALSE
 	if(world.time < client.last_turn)
 		return FALSE
 	if(stat == DEAD || stat == UNCONSCIOUS)
@@ -616,8 +614,10 @@
 		return FALSE
 	return TRUE
 
-/mob/proc/fall(forced)
-	drop_all_held_items()
+/mob/living/canface()
+	if(!(mobility_flags & MOBILITY_MOVE))
+		return FALSE
+	return ..()
 
 /mob/verb/eastface()
 	set hidden = TRUE
@@ -886,7 +886,6 @@
 /mob/proc/get_idcard(hand_first)
 	return
 
-
 /mob/vv_get_dropdown()
 	. = ..()
 	. += "---"
@@ -914,3 +913,5 @@
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+

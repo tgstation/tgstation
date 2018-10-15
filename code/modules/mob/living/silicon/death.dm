@@ -10,4 +10,4 @@
 	diag_hud_set_status()
 	diag_hud_set_health()
 	update_health_hud()
-	. = ..()
+	return ..()

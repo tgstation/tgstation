@@ -1,6 +1,7 @@
 /datum/game_mode/hivemind
 	name = "Assimilation"
 	config_tag = "hivemind"
+	report_type = "hivemind"
 	antag_flag = ROLE_HIVE
 	false_report_weight = 5
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
