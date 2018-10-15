@@ -570,11 +570,12 @@
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
 	. = ..()
 	if(isliving(AM) && !(pass_flags & PASSMOB))
+		var/mob/living/L = AM
 		if(AM == original)		//specific aiming for
 			Bump(AM)
 		if(AM.density)			//blocks projectiles
 			Bump(AM)
-		if((AM.mobility_flags & MOBILITY_USE|MOBILITY_STAND|MOBILITY_MOVE) & (MOBILITY_USE|MOBILITY_MOVE))	//If they're either able to move or use items, while crawling, they're not stunned enough to avoid projectiles.
+		if((L.mobility_flags & MOBILITY_USE|MOBILITY_STAND|MOBILITY_MOVE) & (MOBILITY_USE|MOBILITY_MOVE))	//If they're either able to move or use items, while crawling, they're not stunned enough to avoid projectiles.
 			Bump(AM)
 
 /obj/item/projectile/Destroy()
