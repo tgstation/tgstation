@@ -134,7 +134,7 @@ Curator
 	outfit = /datum/outfit/job/curator
 
 	access = list(ACCESS_LIBRARY)
-	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION)
+	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION,ACCESS_EVA)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CIV
 
