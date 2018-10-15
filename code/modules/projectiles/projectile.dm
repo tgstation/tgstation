@@ -568,9 +568,14 @@
 	return list(angle, p_x, p_y)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
-	..()
-	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
-		Bump(AM)
+	. = ..()
+	if(isliving(AM) && !(pass_flags & PASSMOB))
+		if(AM == original)		//specific aiming for
+			Bump(AM)
+		if(AM.density)			//blocks projectiles
+			Bump(AM)
+		if((AM.mobility_flags & MOBILITY_USE|MOBILITY_STAND|MOBILITY_MOVE) & (MOBILITY_USE|MOBILITY_MOVE))	//If they're either able to move or use items, while crawling, they're not stunned enough to avoid projectiles.
+			Bump(AM)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)
