@@ -1521,7 +1521,10 @@
 ******ALTERNIANS******
 *********************/
 
+/datum/sprite_acessory/alternian_horns
+	icon = null
+	color_src = null
+
 /datum/sprite_acessory/alternian_horns/simple
 	name = "Simple"
-	icon = null
 	icon_state = null
