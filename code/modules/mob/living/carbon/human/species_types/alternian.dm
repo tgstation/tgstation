@@ -18,3 +18,8 @@
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
+
+/datum/species/alternian/qualifies_for_rank(rank, list/features)
+	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
+		return FALSE
+	return TRUE
