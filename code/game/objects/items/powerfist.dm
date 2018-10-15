@@ -1,12 +1,12 @@
 /obj/item/melee/powerfist
-	name = "power-fist"
+	name = "power-puncher"
 	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
 	icon_state = "powerfist"
 	item_state = "powerfist"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	flags_1 = CONDUCT_1
-	attack_verb = list("whacked", "fisted", "power-punched")
+	attack_verb = list("whacked", "power-punched")
 	force = 20
 	throwforce = 10
 	throw_range = 7
@@ -89,7 +89,7 @@
 
 	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
 
-	log_combat(user, target, "power fisted", src)
+	log_combat(user, target, "power punched", src)
 
 	user.changeNext_move(CLICK_CD_MELEE * click_delay)
 
