@@ -1,0 +1,19 @@
+<ui-notice>
+    <span>This is where you create noises. Each section has different severity of noises that come with different cooldowns.</span>
+</ui-notice>
+
+<ui-display title='A Very Noisy Menu'>
+    <ui-section label='Easy Fabrication (5 Seconds)'>
+        <ui-button style='{{data.picked == screwdriver ? "selected" : null}}' action='screwdriver'>Screwdriver</ui-button>
+        <ui-button style='{{data.picked == wrench ? "selected" : null}}' action='wrench'>Wrench</ui-button>
+    </ui-section>
+    <ui-section label='Intermediate Fabrication (30 Seconds)'>
+
+    </ui-section>
+    <ui-section label='Difficult Fabrication (2 Minutes)'>
+
+    </ui-section>
+    <ui-section label ='submit'>
+		<ui-button style='{{data.onCooldown == TRUE ? null : "selected"}}' action='submit'>Submit</ui-button>
+    </ui-section>
+</ui-display>
