@@ -1,8 +1,8 @@
-/datum/species/xenomorfo
+/datum/species/alternian
 	// raça original
-	name = "Xenomorfo"
-	id = "xenomorf"
-	say_mod = "morfs"
+	name = "Alternian Troll"
+	id = "alternian"
+	say_mod = "says"
 	blacklisted = 0
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
