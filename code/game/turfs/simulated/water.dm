@@ -13,4 +13,4 @@
 
 	footstep = FOOTSTEP_WATER
 	barefootstep = FOOTSTEP_WATER
-	clawfootstep = FOOTSTEP_WATER
+	//clawfootstep = FOOTSTEP_WATER

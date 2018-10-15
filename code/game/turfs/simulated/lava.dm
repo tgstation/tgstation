@@ -14,7 +14,7 @@
 
 	footstep = FOOTSTEP_LAVA
 	barefootstep = FOOTSTEP_LAVA
-	clawfootstep = FOOTSTEP_LAVA
+	//clawfootstep = FOOTSTEP_LAVA
 
 /turf/open/lava/ex_act(severity, target)
 	contents_explosion(severity, target)
