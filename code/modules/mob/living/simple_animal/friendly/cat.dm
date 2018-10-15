@@ -95,6 +95,11 @@
 	var/cats_deployed = 0
 	var/memory_saved = FALSE
 
+/mob/living/simple_animal/pet/cat/Runtime/witch
+	icon_state = "witchcat"
+	icon_living = "witchcat"
+	icon_dead = "witchcat_dead"
+
 /mob/living/simple_animal/pet/cat/Runtime/Initialize()
 	if(prob(5))
 		icon_state = "original"
