@@ -89,7 +89,7 @@
 
 	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
 
-	log_combat(user, target, "power fisted", src)
+	log_combat(user, target, "power punched", src)
 
 	user.changeNext_move(CLICK_CD_MELEE * click_delay)
 
