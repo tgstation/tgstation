@@ -1516,3 +1516,11 @@
 /datum/sprite_accessory/moth_wings/snow
 	name = "Snow"
 	icon_state = "snow"
+
+/********************
+******ALTERNIANS******
+*********************/
+
+/datum/sprite_acessory/alternian_horns/one
+	name = ""
+	icon_state = ""
