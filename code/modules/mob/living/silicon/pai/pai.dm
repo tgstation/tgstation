@@ -12,7 +12,7 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
-
+	var/obj/item/instrument/recorder/internal_instrument
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -83,6 +83,7 @@
 	return FALSE
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(internal_instrument)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
