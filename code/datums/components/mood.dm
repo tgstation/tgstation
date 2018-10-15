@@ -157,13 +157,13 @@
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
 	if(amount == sanity)
 		return
-	switch(amount)
-		if(minimum to maximum)
-			sanity = amount
-		if(-INFINITY to minimum)
-			sanity += 0.5
-		if(maximum to INFINITY)
-			sanity -= 0.5
+	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
+	// If the new amount would move towards the acceptable range faster then use it instead
+	if(sanity < minimum && amount < sanity + 0.5)
+		amount = sanity + 0.5
+	else if(sanity > maximum && amount > sanity - 0.5)
+		amount = sanity - 0.5
+	sanity = amount
 
 	var/mob/living/master = parent
 	switch(sanity)
@@ -173,7 +173,7 @@
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1, movetypes=(~FLYING))
-		if(SANITY_CRAZY to SANITY_DISTURBED)
+		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
 			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
 		else
