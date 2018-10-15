@@ -8,9 +8,7 @@
 #define FOOTSTEP_LAVA "lava"
 //barefoot sounds
 #define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
-#define FOOTSTEP_WOOD_CLAW "woodclaw"
 #define FOOTSTEP_HARD_BAREFOOT "hardbarefoot"
-#define FOOTSTEP_HARD_CLAW "hardclaw"
 #define FOOTSTEP_CARPET_BAREFOOT "carpetbarefoot"
 
 /*
@@ -111,43 +109,3 @@ GLOBAL_LIST_INIT(barefootstep, list(
 		'sound/effects/footstep/lava2.ogg',
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 ))
-//clawed footsteps lists
-/* todo: implement some other time
-GLOBAL_LIST_INIT(clawfootstep, list(
-	FOOTSTEP_WOOD_CLAW = list(list(
-		'sound/effects/footstep/woodclaw1.ogg',
-		'sound/effects/footstep/woodclaw2.ogg',
-		'sound/effects/footstep/woodclaw3.ogg',), 100, 0),
-	FOOTSTEP_HARD_CLAW = list(list(
-		'sound/effects/footstep/hardclaw1.ogg',
-		'sound/effects/footstep/hardclaw2.ogg',
-		'sound/effects/footstep/hardclaw3.ogg',
-		'sound/effects/footstep/hardclaw4.ogg',), 100, 0),
-	FOOTSTEP_CARPET_BAREFOOT = list(list(
-		'sound/effects/footstep/carpetbarefoot1.ogg',
-		'sound/effects/footstep/carpetbarefoot2.ogg',
-		'sound/effects/footstep/carpetbarefoot3.ogg',
-		'sound/effects/footstep/carpetbarefoot4.ogg',
-		'sound/effects/footstep/carpetbarefoot5.ogg'), 100, -1),
-	FOOTSTEP_SAND = list(list(
-		'sound/effects/footstep/asteroid1.ogg',
-		'sound/effects/footstep/asteroid2.ogg',
-		'sound/effects/footstep/asteroid3.ogg',
-		'sound/effects/footstep/asteroid4.ogg',
-		'sound/effects/footstep/asteroid5.ogg'), 75, 0),
-	FOOTSTEP_GRASS = list(list(
-		'sound/effects/footstep/grass1.ogg',
-		'sound/effects/footstep/grass2.ogg',
-		'sound/effects/footstep/grass3.ogg',
-		'sound/effects/footstep/grass4.ogg'), 75, 0),
-	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 1),
-	FOOTSTEP_LAVA = list(list(
-		'sound/effects/footstep/lava1.ogg',
-		'sound/effects/footstep/lava2.ogg',
-		'sound/effects/footstep/lava3.ogg'), 100, 0),
-))
-*/
