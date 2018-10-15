@@ -52,7 +52,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/purple/do_effect(mob/user)
 	var/area/A = get_area(get_turf(user))
 	if(A.outdoors)
-		to_chat(user, "<span class='warning'>[src] can't effect such a large area.</span>")
+		to_chat(user, "<span class='warning'>[src] can't affect such a large area.</span>")
 		return
 	user.visible_message("<span class='notice'>[src] shatters, and a healing aura fills the room briefly.</span>")
 	for(var/mob/living/carbon/C in A)
@@ -94,7 +94,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/darkpurple/do_effect(mob/user)
 	var/area/A = get_area(get_turf(user))
 	if(A.outdoors)
-		to_chat(user, "<span class='warning'>[src] can't effect such a large area.</span>")
+		to_chat(user, "<span class='warning'>[src] can't affect such a large area.</span>")
 		return
 	var/filtered = FALSE
 	for(var/turf/open/T in A)
@@ -302,7 +302,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/rainbow/do_effect(mob/user)
 	var/area/area = get_area(user.loc)
 	if(area.outdoors)
-		to_chat(user, "<span class='warning'>[src] can't effect such a large area.</span>")
+		to_chat(user, "<span class='warning'>[src] can't affect such a large area.</span>")
 		return
 	user.visible_message("<span class='warning'>[src] reflects an array of dazzling colors and light, energy rushing to nearby doors!</span>")
 	for(var/obj/machinery/door/airlock/door in area)

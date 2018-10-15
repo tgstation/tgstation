@@ -45,7 +45,7 @@ Slimecrossing Potions
 		return ..()
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] starts to feed [M] a pacification potion!</span>",
-			"<span class='userdanger'>[user] starts to feed you a love potion!</span>")
+			"<span class='userdanger'>[user] starts to feed you a pacification!</span>")
 	else
 		M.visible_message("<span class='danger'>[user] starts to drink the pacification potion!</span>",
 			"<span class='danger'>You start to drink the pacification potion!</span>")
