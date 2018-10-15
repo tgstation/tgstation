@@ -9,6 +9,8 @@
 	planetary_atmos = TRUE
 	attachment_holes = FALSE
 	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	//clawfootstep = FOOTSTEP_SAND
 	tiled_dirt = FALSE
 
 /turf/open/floor/plating/dirt/dark
