@@ -487,6 +487,8 @@
 		return 0.4
 	if(istype(target, /obj/structure/window))
 		return 0.5
+	if(istype(target, /obj/structure/blob))
+		return 0.3
 	return 1
 
 /obj/item/projectile/beam/beam_rifle/proc/handle_impact(atom/target)
