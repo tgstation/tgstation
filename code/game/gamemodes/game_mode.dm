@@ -18,6 +18,7 @@
 	var/votable = 1
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
+	var/report_type = "invalid" //gamemodes with the same report type will not show up in the command report together.
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
@@ -257,11 +258,11 @@
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
 	var/list/report_weights = config.mode_false_report_weight.Copy()
-	report_weights[config_tag] = 0 //Prevent the current mode from being falsely selected.
+	report_weights[report_type] = 0 //Prevent the current mode from being falsely selected.
 	var/list/reports = list()
 	var/Count = 0 //To compensate for missing correct report
 	if(prob(65)) // 65% chance the actual mode will appear on the list
-		reports += config.mode_reports[config_tag]
+		reports += config.mode_reports[report_type]
 		Count++
 	for(var/i in Count to rand(3,5)) //Between three and five wrong entries on the list.
 		var/false_report_type = pickweightAllowZero(report_weights)

@@ -91,6 +91,7 @@
 	var/list/multicam_screens = list()
 	var/list/all_eyes = list()
 	var/max_multicams = 6
+	var/display_icon_override
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -125,6 +126,8 @@
 
 	create_eye()
 	apply_pref_name("ai")
+
+	set_core_display_icon()
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
@@ -171,79 +174,26 @@
 	fire_stacks = 0
 	. = ..()
 
+/mob/living/silicon/ai/proc/set_core_display_icon(input, client/C)
+	if(client && !C)
+		C = client
+	if(!input && !C?.prefs?.preferred_ai_core_display)
+		icon_state = initial(icon_state)
+	else
+		var/preferred_icon = input ? input : C.prefs.preferred_ai_core_display
+		icon_state = resolve_ai_icon(preferred_icon)
+
 /mob/living/silicon/ai/verb/pick_icon()
 	set category = "AI Commands"
 	set name = "Set AI Core Display"
 	if(incapacitated())
 		return
-
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", ":thinking:", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
-	if(icontype == "Clown")
-		icon_state = "ai-clown2"
-	else if (icontype == ":thinking:")
-		icon_state = "ai-:thinking:"
-	else if(icontype == "Monochrome")
-		icon_state = "ai-mono"
-	else if(icontype == "Blue")
-		icon_state = "ai"
-	else if(icontype == "Inverted")
-		icon_state = "ai-u"
-	else if(icontype == "Firewall")
-		icon_state = "ai-magma"
-	else if(icontype == "Green")
-		icon_state = "ai-wierd"
-	else if(icontype == "Red")
-		icon_state = "ai-malf"
-	else if(icontype == "Static")
-		icon_state = "ai-static"
-	else if(icontype == "Red October")
-		icon_state = "ai-redoctober"
-	else if(icontype == "House")
-		icon_state = "ai-house"
-	else if(icontype == "Heartline")
-		icon_state = "ai-heartline"
-	else if(icontype == "Hades")
-		icon_state = "ai-hades"
-	else if(icontype == "Helios")
-		icon_state = "ai-helios"
-	else if(icontype == "President")
-		icon_state = "ai-pres"
-	else if(icontype == "Syndicat Meow")
-		icon_state = "ai-syndicatmeow"
-	else if(icontype == "Alien")
-		icon_state = "ai-alien"
-	else if(icontype == "Too Deep")
-		icon_state = "ai-toodeep"
-	else if(icontype == "Triumvirate")
-		icon_state = "ai-triumvirate"
-	else if(icontype == "Triumvirate-M")
-		icon_state = "ai-triumvirate-malf"
-	else if(icontype == "Text")
-		icon_state = "ai-text"
-	else if(icontype == "Matrix")
-		icon_state = "ai-matrix"
-	else if(icontype == "Dorf")
-		icon_state = "ai-dorf"
-	else if(icontype == "Bliss")
-		icon_state = "ai-bliss"
-	else if(icontype == "Not Malf")
-		icon_state = "ai-notmalf"
-	else if(icontype == "Fuzzy")
-		icon_state = "ai-fuzz"
-	else if(icontype == "Goon")
-		icon_state = "ai-goon"
-	else if(icontype == "Database")
-		icon_state = "ai-database"
-	else if(icontype == "Glitchman")
-		icon_state = "ai-glitchman"
-	else if(icontype == "Murica")
-		icon_state = "ai-murica"
-	else if(icontype == "Nanotrasen")
-		icon_state = "ai-nanotrasen"
-	else if(icontype == "Gentoo")
-		icon_state = "ai-gentoo"
-	else if(icontype == "Angel")
-		icon_state = "ai-angel"
+	var/ai_core_icon = input(src, "Please select a display!", "AI Core Display Screen Selection", null) as null|anything in GLOB.ai_core_display_screens
+	if(!ai_core_icon || incapacitated())
+		return
+	to_chat(src, "<span class='notice'>Core display screen set to \"[ai_core_icon]\".</span>")
+	display_icon_override = ai_core_icon
+	set_core_display_icon(ai_core_icon)
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -920,10 +870,10 @@
 			clear_fullscreen("remote_view", 0)
 
 /mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
-	if(..()) //successfully ressuscitated from death
-		icon_state = "ai"
+	. = ..()
+	if(.) //successfully ressuscitated from death
+		set_core_display_icon(display_icon_override)
 		set_eyeobj_visible(TRUE)
-		. = 1
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null

@@ -54,7 +54,7 @@
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
-		O.suiciding = suiciding
+		O.set_suicide(suiciding)
 	if(hellbound)
 		O.hellbound = hellbound
 	O.a_intent = INTENT_HARM
@@ -211,7 +211,7 @@
 		O.domutcheck()
 
 	if(suiciding)
-		O.suiciding = suiciding
+		O.set_suicide(suiciding)
 	if(hellbound)
 		O.hellbound = hellbound
 

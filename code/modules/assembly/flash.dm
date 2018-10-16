@@ -177,8 +177,8 @@
 		return
 	AOE_flash()
 
-/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
-	if(istype(H) && ishuman(user) && H.stat != DEAD)
+/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/H, mob/user)
+	if(istype(H) && H.stat != DEAD)
 		if(user.mind)
 			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
 			if(!converter)

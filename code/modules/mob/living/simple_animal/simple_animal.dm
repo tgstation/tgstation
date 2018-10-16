@@ -349,7 +349,7 @@
 	return TRUE
 
 /mob/living/simple_animal/handle_fire()
-	return
+	return TRUE
 
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
