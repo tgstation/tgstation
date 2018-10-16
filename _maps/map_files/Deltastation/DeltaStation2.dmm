@@ -21465,7 +21465,6 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/snacks/candy_corn{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/snacks/lollipop,
@@ -53017,7 +53016,6 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/snacks/candy_corn{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/snacks/lollipop,
@@ -59844,7 +59842,6 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/snacks/candy_corn{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/snacks/lollipop,
@@ -96086,7 +96083,6 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/snacks/candy_corn{
-	pixel_x = 0;
 	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/snacks/lollipop,
