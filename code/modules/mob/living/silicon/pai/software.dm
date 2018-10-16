@@ -634,4 +634,4 @@
 /mob/living/silicon/pai/proc/softwareLoudness()
 	if(!internal_instrument)
 		internal_instrument = new(src)
-	return "<h3>Sound Synthetizer</h3>
+	return "<h3>Sound Synthetizer</h3>"
