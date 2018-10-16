@@ -1520,11 +1520,10 @@
 /********************
 ******ALTERNIANS******
 *********************/
-
-/datum/sprite_acessory/alternian_horns
-	icon = null
+/datum/sprite_accessory/alternian_horns
+	icon = 'icons/mob/alternian_horns.dmi'
 	color_src = null
 
 /datum/sprite_acessory/alternian_horns/simple
 	name = "Simple"
-	icon_state = null
+	icon_state = "simple"
