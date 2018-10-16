@@ -203,6 +203,7 @@
 			else
 				msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
 
+	msg += surgeries_examine()
 
 	if(fire_stacks > 0)
 		msg += "[t_He] [t_is] covered in something flammable.\n"

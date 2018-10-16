@@ -66,7 +66,9 @@
 				msg += "[t_He] [t_is] <b>moderately</b> deformed!\n"
 			else
 				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
-
+	
+	msg += surgeries_examine()
+	
 	if(has_trait(TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
