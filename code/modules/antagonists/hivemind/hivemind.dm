@@ -7,6 +7,7 @@
 	var/special_role = ROLE_HIVE
 	var/list/hivemembers = list()
 	var/hive_size = 0
+	var/static/datum/objective/hivemind/assimilate_common/common_assimilation_obj //Make it static since we want a common target for all the antags
 
 	var/list/upgrade_tiers = list(
 		//Tier 1
@@ -40,7 +41,7 @@
 			var/obj/effect/proc_holder/spell/the_spell = new power(null)
 			owner.AddSpell(the_spell)
 			if(hive_size > 0)
-				to_chat(owner, "<B><font size=2 color=purple>We have unlocked [the_spell.name].</font> [the_spell.desc]</B>")
+				to_chat(owner, "<span class='assimilator'>We have unlocked [the_spell.name].</span><span class='bold'> [the_spell.desc]</span>")
 		else if(hive_size < level && (locate(power) in owner.spell_list))
 			owner.RemoveSpell(power)
 
@@ -144,10 +145,10 @@
 		biggest_objective.owner = owner
 		objectives += biggest_objective
 
-	if(prob(85) && istype(SSticker.mode, /datum/game_mode/hivemind) && SSticker.mode.assimilation_obj) //If the mode rolled the versus objective, add a very high chance to get this
+	if(prob(85) && common_assimilation_obj) //If the mode rolled the versus objective IE common_assimilation_obj is not null, add a very high chance to get this
 		var/datum/objective/hivemind/assimilate_common/versus_objective = new
 		versus_objective.owner = owner
-		versus_objective.target = SSticker.mode.assimilation_obj.target
+		versus_objective.target = common_assimilation_obj.target
 		versus_objective.update_explanation_text()
 		objectives += versus_objective
 	else if(prob(70))

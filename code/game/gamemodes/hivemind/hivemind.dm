@@ -1,6 +1,3 @@
-/datum/game_mode
-	var/datum/objective/hivemind/assimilate_common/assimilation_obj //Create the versus objective here since we want a common target for all the antags
-
 /datum/game_mode/hivemind
 	name = "Assimilation"
 	config_tag = "hivemind"
@@ -68,11 +65,13 @@
 
 
 /datum/game_mode/hivemind/post_setup()
-	if(hosts.len >= 4 && prob(35)) //Create the versus objective here since we want a common target for all the antags
-		assimilation_obj = new /datum/objective/hivemind/assimilate_common
-		assimilation_obj.find_target_by_role(role = ROLE_HIVE, role_type = 1, invert = 1)
 	for(var/datum/mind/i in hosts)
 		i.add_antag_datum(/datum/antagonist/hivemind)
+	if(hosts.len >= 4 && prob(35)) //Create the versus objective here since we want a common target for all the antags
+		var/datum/mind/i = pick(hosts)
+		var/datum/antagonist/hivemind/hive = i.has_antag_datum(/datum/antagonist/hivemind)
+		hive.common_assimilation_obj = new /datum/objective/hivemind/assimilate_common
+		hive.common_assimilation_obj.find_target_by_role(role = ROLE_HIVE, role_type = 1, invert = 1)
 	return ..()
 
 /datum/game_mode/hivemind/generate_report()
