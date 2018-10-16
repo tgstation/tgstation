@@ -116,9 +116,15 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
 
+#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
+
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
+#define isfox(A) (istype(A, /mob/living/simple_animal/pet/fox))
+
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
+
+#define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
@@ -131,6 +137,9 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
+
+//Human simple mobs (it's ugly, barely readable, and stupidly long how can I clean this up?)
+#define ishumansimple(A) (istype(A, /mob/living/simple_animal/hostile/cat_butcherer) || istype(A, /mob/living/simple_animal/hostile/faithless) || istype(A, /mob/living/simple_animal/hostile/nanotrasen) || istype(A, /mob/living/simple_animal/hostile/pirate) || istype(A, /mob/living/simple_animal/hostile/russian) || istype(A, /mob/living/simple_animal/hostile/syndicate) || istype(A, /mob/living/simple_animal/hostile/wizard) || istype(A, /mob/living/simple_animal/hostile/zombie) || istype(A, /mob/living/simple_animal/hostile/retaliate/clown) || istype(A, /mob/living/simple_animal/hostile/retaliate/spaceman))
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
