@@ -15,10 +15,10 @@ SUBSYSTEM_DEF(adjacent_air)
 
 /datum/controller/subsystem/adjacent_air/Initialize()
 	while(length(queue))
-		fire()
+		fire(mc_check = FALSE)
 	return ..()
 
-/datum/controller/subsystem/adjacent_air/fire(resumed = 0)
+/datum/controller/subsystem/adjacent_air/fire(resumed = FALSE, mc_check = TRUE)
 
 	var/list/queue = src.queue
 
@@ -28,5 +28,8 @@ SUBSYSTEM_DEF(adjacent_air)
 
 		currT.ImmediateCalculateAdjacentTurfs()
 
-		if (MC_TICK_CHECK)
-			return
+		if(mc_check)
+			if(MC_TICK_CHECK)
+				break
+		else
+			CHECK_TICK
