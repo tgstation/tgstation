@@ -1,11 +1,11 @@
 
 /////////////////////////////////////////
-//////////////Blue Space/////////////////
+///////////////Bluespace/////////////////
 /////////////////////////////////////////
 
 /datum/design/beacon
 	name = "Tracking Beacon"
-	desc = "A blue space tracking beacon."
+	desc = "A bluespace tracking beacon."
 	id = "beacon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 100)

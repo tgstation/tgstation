@@ -57,9 +57,9 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(issilicon(L) || iscultist(L))
-					L.Knockdown(100)
+					L.Paralyze(100)
 				else
-					L.Knockdown(40)
+					L.Paralyze(40)
 				GLOB.clockwork_vitality += L.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar
 			break_spear(T)
 	else

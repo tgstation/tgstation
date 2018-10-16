@@ -246,8 +246,5 @@
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(700,2)
 
-/obj/item/assembly/igniter/cold/flamethrower_process(turf/open/location)
-	return
-
 /obj/item/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)

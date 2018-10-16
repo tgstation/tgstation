@@ -220,10 +220,6 @@
 	if(ispath(nt))
 		if(nt == /datum/component)
 			CRASH("[nt] attempted instantiation!")
-		if(!isnum(dm))
-			CRASH("[nt]: Invalid dupe_mode ([dm])!")
-		if(dt && !ispath(dt))
-			CRASH("[nt]: Invalid dupe_type ([dt])!")
 	else
 		new_comp = nt
 		nt = new_comp.type

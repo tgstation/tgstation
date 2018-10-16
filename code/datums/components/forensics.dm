@@ -57,7 +57,7 @@
 	return TRUE
 
 /datum/component/forensics/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
-	if(!M)
+	if(!isliving(M))
 		return
 	add_hiddenprint(M)
 	if(ishuman(M))
@@ -123,7 +123,7 @@
 	return TRUE
 
 /datum/component/forensics/proc/add_hiddenprint(mob/living/M)
-	if(!M || !M.key)
+	if(!isliving(M) || !M.key)
 		return
 	var/hasgloves = ""
 	if(ishuman(M))

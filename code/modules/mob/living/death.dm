@@ -1,7 +1,7 @@
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying
 	if(stat != DEAD)
-		death(1)
+		death(TRUE)
 
 	if(!prev_lying)
 		gib_animation()
@@ -71,7 +71,7 @@
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
-	update_canmove()
+	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
 	if(!gibbed && !QDELETED(src))

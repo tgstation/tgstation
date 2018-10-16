@@ -5,9 +5,9 @@
 /datum/component/forced_gravity/Initialize(forced_value = 1)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(COMSIG_ATOM_HAS_GRAVITY, .proc/gravity_check)
+	RegisterSignal(parent, COMSIG_ATOM_HAS_GRAVITY, .proc/gravity_check)
 	if(isturf(parent))
-		RegisterSignal(COMSIG_TURF_HAS_GRAVITY, .proc/turf_gravity_check)
+		RegisterSignal(parent, COMSIG_TURF_HAS_GRAVITY, .proc/turf_gravity_check)
 
 	gravity = forced_value
 
@@ -17,4 +17,4 @@
 	gravs += gravity
 
 /datum/component/forced_gravity/proc/turf_gravity_check(datum/source, atom/checker, list/gravs)
-	return gravity_check(parent, gravs)
+	return gravity_check(null, parent, gravs)

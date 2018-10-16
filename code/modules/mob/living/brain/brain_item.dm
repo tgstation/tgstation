@@ -9,6 +9,7 @@
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
+	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
 	var/damaged_brain = FALSE //whether the brain organ is damaged.
 	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
@@ -70,6 +71,7 @@
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	brainmob.timeofhostdeath = L.timeofdeath
+	brainmob.suiciding = suicided
 	if(L.has_dna())
 		var/mob/living/carbon/C = L
 		if(!brainmob.stored_dna)
@@ -92,7 +94,9 @@
 /obj/item/organ/brain/examine(mob/user)
 	..()
 
-	if(brainmob)
+	if(suicided)
+		to_chat(user, "It's started turning slightly grey. They must not have been able to handle the stress of it all.")
+	else if(brainmob)
 		if(brainmob.client)
 			if(brainmob.health <= HEALTH_THRESHOLD_DEAD)
 				to_chat(user, "It's lifeless and severely damaged.")

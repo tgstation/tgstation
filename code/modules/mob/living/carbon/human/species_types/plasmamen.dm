@@ -52,7 +52,7 @@
 /datum/species/plasmaman/handle_fire(mob/living/carbon/human/H, no_protection)
 	if(internal_fire)
 		no_protection = TRUE
-	..()
+	. = ..()
 
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman

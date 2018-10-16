@@ -19,7 +19,6 @@
 	var/stream_range = 1 //the range of tiles the sprayer will reach when in stream mode.
 	var/stream_amount = 10 //the amount of reagents transfered when in stream mode.
 	var/can_fill_from_container = TRUE
-	var/average_reagent_weight = 0 //affects the distance the reagents spray
 	amount_per_transfer_from_this = 5
 	volume = 250
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
@@ -93,9 +92,9 @@
 				break
 
 			if(stream_mode)
-				if(ismob(T))
-					var/mob/M = T
-					if(!M.lying || !range_left)
+				if(isliving(T))
+					var/mob/living/M = T
+					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
 				else if(!range_left)
@@ -151,8 +150,11 @@
 		total_reagent_weight = total_reagent_weight + R.reagent_weight
 		amount_of_reagents++
 
-	average_reagent_weight = total_reagent_weight / amount_of_reagents
-	spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
+		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
+		spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+	else
+		spray_range = initial(spray_range)
 	if(stream_mode == 0)
 		current_range = spray_range
 

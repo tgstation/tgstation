@@ -1,0 +1,8 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - tweak: "AI core display screen can now be set in character preferences."
+  - bugfix: "AI core display screen will now be restore when revived."
+  - spellcheck: "Corrected some inconsistent capitalization in the player preferences screen."
+  - imageadd: "Readded some forgotten AI sprites."
+  - bugfix: "Fixed Hades AI death animation not playing."

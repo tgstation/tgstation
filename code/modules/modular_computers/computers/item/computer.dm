@@ -193,6 +193,8 @@
 	else if(obj_integrity < max_integrity)
 		to_chat(user, "<span class='warning'>It is damaged.</span>")
 
+	get_modular_computer_parts_examine(user)
+
 /obj/item/modular_computer/update_icon()
 	cut_overlays()
 	if(!enabled)
