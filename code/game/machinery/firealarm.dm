@@ -132,26 +132,21 @@
 	var/area/A = get_area(src)
 	A.firereset(src)
 
-/obj/machinery/firealarm/proc/toggle()
+/obj/machinery/firealarm/attack_hand(mob/user)
+	if(buildstage != 2)
+		return ..()
+	add_fingerprint(user)
 	var/area/A = get_area(src)
 	if(A.fire)
 		reset()
 	else
 		alarm()
 
-/obj/machinery/firealarm/attack_hand(mob/user)
-	if(buildstage != 2)
-		return ..()
-	add_fingerprint(user)
-	toggle()
-
 /obj/machinery/firealarm/attack_ai(mob/user)
-	if(buildstage != 2)
-		return ..()
-	toggle()
+	return attack_hand(user)
 
 /obj/machinery/firealarm/attack_robot(mob/user)
-	return attack_ai(user)
+	return attack_hand(user)
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
