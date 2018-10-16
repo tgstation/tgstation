@@ -138,7 +138,7 @@
 		return
 	if(control.alert_observers)
 		if (atom_of_interest)
-			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", header="Event Triggered", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT)
+			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT, header="Event Triggered")
 		else 
 			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", header="Event Triggered")
 	return
