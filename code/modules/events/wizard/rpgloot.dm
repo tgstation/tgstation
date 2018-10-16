@@ -8,6 +8,9 @@
 /datum/round_event/wizard/rpgloot/start()
 	var/upgrade_scroll_chance = 0
 	for(var/obj/item/I in world)
+		if(!(I.flags_1 & INITIALIZED_1))
+			continue
+
 		if(!istype(I.rpg_loot))
 			I.rpg_loot = new(I)
 
