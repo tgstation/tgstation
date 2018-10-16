@@ -159,7 +159,8 @@
 
 /obj/machinery/limbgrower/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>The status display reads: Storing up to [reagents.maximum_volume]u of synthflesh. Synthflesh consumption at [prod_coeff*100]%.<span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Storing up to [reagents.maximum_volume]u of synthflesh. Synthflesh consumption at [prod_coeff*100]%.<span>")
 
 /obj/machinery/limbgrower/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Limb Grower Menu:</h3><br>"

@@ -28,7 +28,8 @@
 	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 	if(charging)
 		to_chat(user, "Current charge: [round(charging.percent(), 1)]%.")
-	to_chat(user, "<span class='notice'>The status display reads: Charge rate at [charge_rate]J per cycle.<span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Charge rate at [charge_rate]J per cycle.<span>")
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)

@@ -26,7 +26,8 @@
 
 /obj/machinery/launchpad/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>The status display reads: Maximum range: [range].<span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Maximum range: [range].<span>")
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)

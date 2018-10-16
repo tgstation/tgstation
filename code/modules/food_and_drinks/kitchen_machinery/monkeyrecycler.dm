@@ -25,7 +25,8 @@
 
 /obj/machinery/monkey_recycler/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>The status display reads: Producing [cube_production] cube(s) for every [required_grind] monkey(s) inserted.<span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Producing [cube_production] cube(s) for every [required_grind] monkey(s) inserted.<span>")
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))

@@ -23,7 +23,8 @@
 
 /obj/machinery/processor/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>The status display reads: Outputting [rating_amount] item(s) at [rating_speed*100]% speed.<span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Outputting [rating_amount] item(s) at [rating_speed*100]% speed.<span>")
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))

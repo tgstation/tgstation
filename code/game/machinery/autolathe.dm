@@ -225,7 +225,8 @@
 /obj/machinery/autolathe/examine(mob/user)
 	..()
 	GET_COMPONENT(materials, /datum/component/material_container)
-	to_chat(user, "<span class='notice'>The status display reads: Storing up to [materials.max_amount] material units. Material consumption at [prod_coeff*100]%.<span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Storing up to [materials.max_amount] material units. Material consumption at [prod_coeff*100]%.<span>")
 
 /obj/machinery/autolathe/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Autolathe Menu:</h3><br>"

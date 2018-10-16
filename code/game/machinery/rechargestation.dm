@@ -30,7 +30,8 @@
 
 /obj/machinery/recharge_station/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>The status display reads: Recharge speed at [recharge_speed*0.5]%. Automatic repairs are [ repairs ? "available" : "unavailable"].<span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Recharge speed at [recharge_speed*0.5]%. Automatic repairs are [ repairs ? "available" : "unavailable"].<span>")
 
 /obj/machinery/recharge_station/process()
 	if(!is_operational())
