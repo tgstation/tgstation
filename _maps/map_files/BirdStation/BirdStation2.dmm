@@ -631,7 +631,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10;
-	pixel_x = 0;
 	initialize_directions = 10
 	},
 /turf/open/floor/plasteel,
@@ -773,8 +772,7 @@
 /obj/machinery/meter,
 /obj/machinery/airalarm{
 	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
+	pixel_x = -23
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	tag = "icon-manifold (WEST)";
@@ -848,7 +846,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_y = 0;
 	tag = ""
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1123,8 +1120,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
@@ -1212,8 +1208,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	tag = "icon-manifold (NORTH)";
@@ -1298,8 +1293,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	tag = "icon-connector_map (NORTH)";
@@ -1382,8 +1376,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel,
@@ -1489,8 +1482,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel,
@@ -1790,7 +1782,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_y = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -1936,8 +1927,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -1950,7 +1940,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_y = 0;
 	tag = ""
 	},
 /obj/structure/cable{
@@ -1971,7 +1960,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_y = 0;
 	tag = ""
 	},
 /obj/structure/cable{
@@ -2150,8 +2138,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /obj/structure/window/reinforced,
 /turf/open/floor/engine,
@@ -2162,7 +2149,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_y = 0;
 	tag = ""
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -3594,8 +3580,7 @@
 "iF" = (
 /obj/machinery/turretid{
 	control_area = "\improper AI Upload Chamber";
-	pixel_x = 28;
-	pixel_y = 0
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -3872,8 +3857,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -3992,8 +3976,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "AI Upload APC";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
@@ -4326,8 +4309,7 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -5470,8 +5452,7 @@
 	})
 "nd" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -5696,8 +5677,7 @@
 /area/bridge)
 "nD" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -6033,8 +6013,7 @@
 /area/maintenance/fore)
 "oz" = (
 /obj/structure/window/reinforced{
-	dir = 4;
-	pixel_x = 0
+	dir = 4
 	},
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -6241,8 +6220,7 @@
 /area/bridge)
 "oZ" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
@@ -6260,8 +6238,7 @@
 /area/bridge)
 "pb" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -6288,10 +6265,7 @@
 /area/crew_quarters/heads/hop)
 "pe" = (
 /obj/structure/table/wood,
-/obj/item/paper_bin{
-	pixel_x = 0;
-	pixel_y = 7
-	},
+/obj/item/paper_bin,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "pf" = (
@@ -6886,9 +6860,7 @@
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
-	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "tree"
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -6954,7 +6926,6 @@
 /obj/item/hand_labeler,
 /obj/machinery/status_display{
 	name = "cargo status display";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -7557,7 +7528,6 @@
 	},
 /obj/machinery/status_display{
 	name = "cargo status display";
-	pixel_x = 0;
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/brown{
@@ -7951,8 +7921,7 @@
 /obj/machinery/button/door{
 	id = "cargo blast";
 	name = "cargo blast door button";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /obj/machinery/light{
 	dir = 8
@@ -8466,8 +8435,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -9279,8 +9247,7 @@
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	
 	},
 /obj/machinery/light{
 	dir = 1
@@ -9565,8 +9532,7 @@
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	
 	},
 /obj/machinery/light{
 	dir = 8
@@ -9593,8 +9559,7 @@
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -9869,8 +9834,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -10211,8 +10175,7 @@
 	icon_state = "pointybush_4";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -10269,7 +10232,6 @@
 	icon_state = "pointybush_2";
 	layer = 4.1;
 	name = "tree";
-	pixel_x = 0;
 	pixel_y = 4
 	},
 /turf/open/floor/plating/asteroid{
@@ -11513,8 +11475,7 @@
 /area/crew_quarters/fitness)
 "Cq" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/structure/table/optable,
 /obj/item/surgical_drapes,
@@ -11624,7 +11585,6 @@
 /obj/structure/table,
 /obj/item/scalpel,
 /obj/item/retractor{
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/hemostat,
@@ -11632,8 +11592,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics)
@@ -11984,16 +11943,14 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "Dt" = (
 /obj/machinery/computer/arcade/battle,
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
@@ -12393,8 +12350,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
@@ -12617,9 +12573,7 @@
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
-	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "tree"
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12629,9 +12583,7 @@
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
-	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "tree"
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -12764,7 +12716,6 @@
 /obj/machinery/button/door{
 	id = "xenozoo shutter";
 	name = "xeno zoo shutter button";
-	pixel_x = 0;
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -13160,9 +13111,7 @@
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
-	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "tree"
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -13226,7 +13175,6 @@
 	dir = 1;
 	id = "Cell 1";
 	name = "cell 1 door timer";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -13244,7 +13192,6 @@
 	dir = 1;
 	id = "Cell 2";
 	name = "cell 2 door timer";
-	pixel_x = 0;
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
@@ -13313,7 +13260,6 @@
 "GC" = (
 /obj/structure/table/glass,
 /obj/machinery/reagentgrinder{
-	pixel_x = 0;
 	pixel_y = 8
 	},
 /obj/machinery/light{
@@ -14060,10 +14006,10 @@
 /obj/item/grenade/chem_grenade,
 /obj/item/grenade/chem_grenade,
 /obj/item/reagent_containers/glass/beaker/large{
-	pixel_y = 0
+	
 	},
 /obj/item/reagent_containers/glass/beaker/large{
-	pixel_y = 0
+	
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -14350,7 +14296,6 @@
 "Jn" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
-	pixel_x = 0;
 	pixel_y = 8
 	},
 /turf/open/floor/plasteel,
@@ -14580,9 +14525,7 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "JU" = (
-/obj/machinery/droneDispenser{
-	pixel_x = 0
-	},
+/obj/machinery/droneDispenser,
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "JV" = (
@@ -14635,7 +14578,6 @@
 /obj/structure/table,
 /obj/item/scalpel,
 /obj/item/retractor{
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/hemostat,
@@ -15947,9 +15889,7 @@
 /obj/structure/flora/ausbushes/pointybush{
 	icon_state = "pointybush_2";
 	layer = 4.1;
-	name = "tree";
-	pixel_x = 0;
-	pixel_y = 0
+	name = "tree"
 	},
 /turf/open/floor/plating/asteroid{
 	name = "dirt"
@@ -16155,7 +16095,6 @@
 /obj/machinery/button/flasher{
 	id = "permaflash";
 	name = "perma flasher button";
-	pixel_x = 0;
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel,
@@ -16276,7 +16215,6 @@
 /obj/structure/table,
 /obj/item/scalpel,
 /obj/item/retractor{
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/hemostat,
@@ -16942,7 +16880,6 @@
 /obj/structure/table,
 /obj/item/scalpel,
 /obj/item/retractor{
-	pixel_x = 0;
 	pixel_y = 5
 	},
 /obj/item/hemostat,
@@ -17053,9 +16990,7 @@
 /area/security/brig)
 "Qm" = (
 /obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_y = 0
-	},
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "Qn" = (
@@ -17371,8 +17306,7 @@
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
+	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -17425,7 +17359,6 @@
 "Rj" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
-	pixel_x = 0;
 	pixel_y = 8
 	},
 /obj/machinery/camera/autoname{
@@ -17721,8 +17654,7 @@
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
+	pixel_x = 11
 	},
 /turf/open/floor/plasteel/white,
 /area/maintenance/aft)
@@ -18142,8 +18074,7 @@
 /area/security/warden)
 "Tf" = (
 /obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
+	dir = 1
 	},
 /obj/machinery/computer/med_data{
 	dir = 8
