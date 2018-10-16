@@ -177,73 +177,47 @@
 	if(incapacitated())
 		return
 
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", ":thinking:", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Angel")
-	if(icontype == "Clown")
-		icon_state = "ai-clown2"
-	else if (icontype == ":thinking:")
-		icon_state = "ai-:thinking:"
-	else if(icontype == "Monochrome")
-		icon_state = "ai-mono"
-	else if(icontype == "Blue")
-		icon_state = "ai"
-	else if(icontype == "Inverted")
-		icon_state = "ai-u"
-	else if(icontype == "Firewall")
-		icon_state = "ai-magma"
-	else if(icontype == "Green")
-		icon_state = "ai-wierd"
-	else if(icontype == "Red")
-		icon_state = "ai-malf"
-	else if(icontype == "Static")
-		icon_state = "ai-static"
-	else if(icontype == "Red October")
-		icon_state = "ai-redoctober"
-	else if(icontype == "House")
-		icon_state = "ai-house"
-	else if(icontype == "Heartline")
-		icon_state = "ai-heartline"
-	else if(icontype == "Hades")
-		icon_state = "ai-hades"
-	else if(icontype == "Helios")
-		icon_state = "ai-helios"
-	else if(icontype == "President")
-		icon_state = "ai-pres"
-	else if(icontype == "Syndicat Meow")
-		icon_state = "ai-syndicatmeow"
-	else if(icontype == "Alien")
-		icon_state = "ai-alien"
-	else if(icontype == "Too Deep")
-		icon_state = "ai-toodeep"
-	else if(icontype == "Triumvirate")
-		icon_state = "ai-triumvirate"
-	else if(icontype == "Triumvirate-M")
-		icon_state = "ai-triumvirate-malf"
-	else if(icontype == "Text")
-		icon_state = "ai-text"
-	else if(icontype == "Matrix")
-		icon_state = "ai-matrix"
-	else if(icontype == "Dorf")
-		icon_state = "ai-dorf"
-	else if(icontype == "Bliss")
-		icon_state = "ai-bliss"
-	else if(icontype == "Not Malf")
-		icon_state = "ai-notmalf"
-	else if(icontype == "Fuzzy")
-		icon_state = "ai-fuzz"
-	else if(icontype == "Goon")
-		icon_state = "ai-goon"
-	else if(icontype == "Database")
-		icon_state = "ai-database"
-	else if(icontype == "Glitchman")
-		icon_state = "ai-glitchman"
-	else if(icontype == "Murica")
-		icon_state = "ai-murica"
-	else if(icontype == "Nanotrasen")
-		icon_state = "ai-nanotrasen"
-	else if(icontype == "Gentoo")
-		icon_state = "ai-gentoo"
-	else if(icontype == "Angel")
-		icon_state = "ai-angel"
+	var/list/iconstates = list(
+		"ai-clown2",
+		"ai-:thinking:",
+		"ai-mono",
+		"ai",
+		"ai-u",
+		"ai-magma",
+		"ai-wierd",
+		"ai-malf",
+		"ai-static",
+		"ai-redoctober",
+		"ai-house",
+		"ai-heartline",
+		"ai-hades",
+		"ai-helios",
+		"ai-pres",
+		"ai-syndicatmeow",
+		"ai-alien",
+		"ai-toodeep",
+		"ai-triumvirate",
+		"ai-triumvirate-malf",
+		"ai-text",
+		"ai-matrix",
+		"ai-dorf",
+		"ai-bliss",
+		"ai-notmalf",
+		"ai-fuzz",
+		"ai-goon",
+		"ai-database",
+		"ai-glitchman",
+		"ai-murica",
+		"ai-nanotrasen",
+		"ai-gentoo",
+		"ai-angel"
+	)
+	for(var/option in iconstates)
+		iconstates[option] = image(icon = src.icon, icon_state = option)
+
+	var/chosen_icon_state = show_radial_menu(src, src , iconstates, radius = 42)
+	if(chosen_icon_state)
+		icon_state = chosen_icon_state
 
 /mob/living/silicon/ai/Stat()
 	..()
