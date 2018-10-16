@@ -246,7 +246,13 @@
 
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };
 
-#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue |= T
+
+#ifdef TESTING
+GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
+#define CALCULATE_ADJACENT_TURFS(T) if (SSadjacent_air.queue[T]) { GLOB.atmos_adjacent_savings[1] += 1 } else { GLOB.atmos_adjacent_savings[2] += 1; SSadjacent_air.queue[T] = 1 }
+#else
+#define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
+#endif
 
 GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
