@@ -59,4 +59,4 @@
 						"<span class='userdanger'>You slide on [A]!</span>")
 
 			cooldown = world.time
-		H.Knockdown(60)
+		H.Paralyze(60)

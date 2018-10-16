@@ -32,12 +32,11 @@
 	container = null
 	return ..()
 
-/mob/living/brain/update_canmove()
+/mob/living/brain/update_mobility()
 	if(in_contents_of(/obj/mecha))
-		canmove = 1
+		mobility_flags = MOBILITY_FLAGS_DEFAULT
 	else
-		canmove = 0
-	return canmove
+		mobility_flags = NONE
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return

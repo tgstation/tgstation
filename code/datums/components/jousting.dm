@@ -54,7 +54,7 @@
 			msg += " and knocks [target] [target_buckled? "off of [target.buckled]" : "down"]"
 			if(target_buckled)
 				target.buckled.unbuckle_mob(target)
-			target.Knockdown(knockdown_time)
+			target.Paralyze(knockdown_time)
 		if(length(msg))
 			user.visible_message("<span class='danger'>[msg]!</span>")
 

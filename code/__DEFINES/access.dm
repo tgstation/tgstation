@@ -11,7 +11,6 @@
 #define ACCESS_ENGINE_EQUIP 11 //APCs, EngiVend/YouTool, engineering equipment lockers
 #define ACCESS_MAINT_TUNNELS 12
 #define ACCESS_EXTERNAL_AIRLOCKS 13
-#define ACCESS_EMERGENCY_STORAGE 14 //Not in use
 #define ACCESS_CHANGE_IDS 15
 #define ACCESS_AI_UPLOAD 16
 #define ACCESS_TELEPORTER 17
@@ -31,9 +30,7 @@
 #define ACCESS_CARGO 31
 #define ACCESS_CONSTRUCTION 32
 #define ACCESS_CHEMISTRY 33
-#define ACCESS_CARGO_BOT 34 //Not in use
 #define ACCESS_HYDROPONICS 35
-#define ACCESS_MANUFACTURING 36 //Only used on research.dmm away mission
 #define ACCESS_LIBRARY 37
 #define ACCESS_LAWYER 38
 #define ACCESS_VIROLOGY 39
@@ -44,10 +41,7 @@
 #define ACCESS_THEATRE 46
 #define ACCESS_RESEARCH 47
 #define ACCESS_MINING 48
-#define ACCESS_MINING_OFFICE 49 //Not in use
 #define ACCESS_MAILSORTING 50
-#define ACCESS_MINT 51 //Not in use
-#define ACCESS_MINT_VAULT 52 //Not in use
 #define ACCESS_VAULT 53
 #define ACCESS_MINING_STATION 54
 #define ACCESS_XENOBIOLOGY 55
