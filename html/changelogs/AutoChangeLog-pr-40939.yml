@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Chairs made of one sheet of metal now drop two rods when smashed"
