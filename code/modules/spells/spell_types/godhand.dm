@@ -70,7 +70,7 @@
 		M.visible_message("<span class='danger'>[M]'s [suit] explodes off of them into a puddle of gore!</span>")
 		M.dropItemToGround(suit)
 		qdel(suit)
-		new /obj/effect/decal/cleanable/blood/gibs(M.loc)
+		new /obj/effect/gibspawner(M.loc)
 		return ..()
 	M.gib()
 	return ..()
