@@ -113,17 +113,18 @@
 
 /turf/open/proc/tile_graphic()
 	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
-	if(air)
-		. = new /list
-		var/list/gases = air.gases
-		for(var/id in gases)
-			if (nonoverlaying_gases[id])
-				continue
-			var/gas = gases[id]
-			var/gas_meta = gas[GAS_META]
-			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-			if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-				. += gas_overlay
+	if(!air)
+		return
+	. = new /list
+	var/list/gases = air.gases
+	for(var/id in gases)
+		if (nonoverlaying_gases[id])
+			continue
+		var/gas = gases[id]
+		var/gas_meta = gas[GAS_META]
+		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
 
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()

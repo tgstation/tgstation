@@ -50,6 +50,7 @@
 #define TRAIT_NOHARDCRIT		"nohardcrit"
 #define TRAIT_NOSOFTCRIT		"nosoftcrit"
 #define TRAIT_MINDSHIELD		"mindshield"
+#define TRAIT_DISSECTED			"dissected"
 
 
 #define TRAIT_ALCOHOL_TOLERANCE	"alcohol_tolerance"

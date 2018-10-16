@@ -1,0 +1,12 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - rscadd: "Assimilation has been updated!"
+  - rscadd: "Two new objectives have been added to promote competition. Hivemind hosts may now be asked to have the biggest hive of them all at round end, or multiple hosts will be tasked with assimilating the same target, and ensuring that no-one else does."
+  - tweak: "Hivemind hosts now get four objectives instead of three."
+  - tweak: "Assimilation and kill/maroon objectives are no-longer mutually exclusive."
+  - tweak: "A description of each power is now shown in chat once it is unlocked."
+  - tweak: "Neural Shock no longer tells the target why they got shocked since this reveals the mode way too early."
+  - tweak: "Repair Protocol no longer weakens with distance, as the targets are randomly selected."
+  - tweak: "Increased the number of antagonists from 1 per 15 players to 1 per 12 players (and still with a 50% chance of one extra). Still caps at 5 (or 6 with the extra) antagonists"
+  - tweak: "Assimilation is now a continuous mode, like traitors and changelings, it doesn't end when all antagonists are dead."

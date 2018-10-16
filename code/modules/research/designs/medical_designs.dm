@@ -472,7 +472,7 @@
 	name = "Experimental Dissection"
 	desc = "A surgical procedure which deeply analyzes the biology of a corpse, and automatically adds new findings to the research database."
 	id = "surgery_exp_dissection"
-	surgery = /datum/surgery/advanced/bioware/experimental_dissection
+	surgery = /datum/surgery/advanced/experimental_dissection
 	research_icon_state = "surgery_chest"
 
 /datum/design/surgery/lobotomy

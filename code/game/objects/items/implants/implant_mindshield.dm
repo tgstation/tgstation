@@ -16,7 +16,7 @@
 	return dat
 
 
-/obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE)
+/obj/item/implant/mindshield/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	if(..())
 		if(!target.mind)
 			target.add_trait(TRAIT_MINDSHIELD, "implant")

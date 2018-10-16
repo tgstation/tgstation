@@ -1,9 +1,0 @@
-author: "Whoneedspacee"
-delete-after: True
-changes: 
-  - balance: "ash drake fire does less damage now"
-  - balance: "ash drake takes longer to swoop down now"
-  - balance: "tiles take longer to fully convert into lava now, slowing down the arena attack as well"
-  - balance: "fire breath now moves slower"
-  - balance: "triple fire breath for the lava swoop only happens below half health now"
-  - bugfix: "https://github.com/tgstation/tgstation/issues/40621#issue-365415326"

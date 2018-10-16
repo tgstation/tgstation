@@ -57,7 +57,7 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		if(!newbrain.damaged_brain) // the brain organ hasn't been beaten to death.
+		if(!newbrain.damaged_brain && !newbrain.suicided && !brainmob.suiciding) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob

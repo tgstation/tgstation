@@ -36,10 +36,10 @@ Nothing else in the console has ID requirements.
 	var/locked = FALSE
 	var/tdisk_uple = FALSE
 	var/ddisk_uple = FALSE
-	var/datum/techweb_node/selected_node
-	var/datum/design/selected_design
+	var/datum/selected_node_id
+	var/datum/selected_design_id
 	var/selected_category
-	var/list/datum/design/matching_designs
+	var/list/matching_design_ids
 	var/disk_slot_selected
 	var/searchstring = ""
 	var/searchtype = ""
@@ -88,7 +88,7 @@ Nothing else in the console has ID requirements.
 	. = ..()
 	stored_research = SSresearch.science_tech
 	stored_research.consoles_accessing[src] = TRUE
-	matching_designs = list()
+	matching_design_ids = list()
 	SyncRDevices()
 
 /obj/machinery/computer/rdconsole/Destroy()
@@ -109,9 +109,7 @@ Nothing else in the console has ID requirements.
 	if(d_disk)
 		d_disk.forceMove(get_turf(src))
 		d_disk = null
-	matching_designs = null
-	selected_node = null
-	selected_design = null
+	matching_design_ids = null
 	return ..()
 
 /obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
@@ -144,7 +142,7 @@ Nothing else in the console has ID requirements.
 	if(!stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		say("Node unlock failed: Either already researched or not available!")
 		return FALSE
-	var/datum/techweb_node/TN = SSresearch.techweb_nodes[id]
+	var/datum/techweb_node/TN = SSresearch.techweb_node_by_id(id)
 	if(!istype(TN))
 		say("Node unlock failed: Unknown error.")
 		return FALSE
@@ -153,7 +151,7 @@ Nothing else in the console has ID requirements.
 		investigate_log("[key_name(user)] researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(stored_research == SSresearch.science_tech)
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = SQLtime()))
-		if(stored_research.research_node(SSresearch.techweb_nodes[id]))
+		if(stored_research.research_node_id(id))
 			say("Successfully researched [TN.display_name].")
 			var/logname = "Unknown"
 			if(isAI(user))
@@ -286,7 +284,7 @@ Nothing else in the console has ID requirements.
 	l += ui_protolathe_header()
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 			continue
 		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
@@ -341,7 +339,8 @@ Nothing else in the console has ID requirements.
 	RDSCREEN_UI_LATHE_CHECK
 	var/list/l = list()
 	l += ui_protolathe_header()
-	for(var/datum/design/D in matching_designs)
+	for(var/id in matching_design_ids)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
@@ -437,7 +436,7 @@ Nothing else in the console has ID requirements.
 	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
 
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 			continue
 		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
@@ -470,7 +469,8 @@ Nothing else in the console has ID requirements.
 	l += ui_circuit_header()
 	l += "<div class='statusDisplay'><h3>Search results:</h3>"
 
-	for(var/datum/design/D in matching_designs)
+	for(var/id in matching_design_ids)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
@@ -530,7 +530,7 @@ Nothing else in the console has ID requirements.
 	l += "<A href='?src=[REF(src)];copy_tech=1'>Load Technology to Disk</A></div>"
 	l += "<div class='statusDisplay'><h3>Stored Technology Nodes:</h3>"
 	for(var/i in t_disk.stored_research.researched_nodes)
-		var/datum/techweb_node/N = t_disk.stored_research.researched_nodes[i]
+		var/datum/techweb_node/N = SSresearch.techweb_node_by_id(i)
 		l += "<A href='?src=[REF(src)];view_node=[i];back_screen=[screen]'>[N.display_name]</A>"
 	l += "</div>"
 	return l
@@ -556,7 +556,7 @@ Nothing else in the console has ID requirements.
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK];back_screen=[screen]'>Return to Disk Operations</A><div class='statusDisplay'>"
 	l += "<h3>Load Design to Disk:</h3>"
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		l += "[D.name] "
 		l += "<A href='?src=[REF(src)];copy_design=[disk_slot_selected];copy_design_ID=[D.id]'>Copy to Disk</A>"
 	l += "</div>"
@@ -577,7 +577,7 @@ Nothing else in the console has ID requirements.
 		for(var/id in boostable_nodes)
 			anything = TRUE
 			var/list/worth = boostable_nodes[id]
-			var/datum/techweb_node/N = get_techweb_node_by_id(id)
+			var/datum/techweb_node/N = SSresearch.techweb_node_by_id(id)
 
 			l += "<div class='statusDisplay'>[RDSCREEN_NOBREAK]"
 			if (stored_research.researched_nodes[N.id])  // already researched
@@ -639,32 +639,33 @@ Nothing else in the console has ID requirements.
 		var/list/columns = list()
 		var/max_tier = 0
 		for (var/node_ in stored_research.tiers)
-			var/datum/techweb_node/node = node_
-			var/tier = stored_research.tiers[node]
+			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_)
+			var/tier = stored_research.tiers[node.id]
 			LAZYINITLIST(columns["[tier]"])  // String hackery to make the numbers associative
 			columns["[tier]"] += ui_techweb_single_node(node, minimal=(tier != 1))
 			max_tier = max(max_tier, tier)
 
 		l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
-		for(var/tier in 0 to max_tier)
-			l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-			l += columns["[tier]"]
-			l += "</td>[RDSCREEN_NOBREAK]"
+		if(max_tier)
+			for(var/tier in 0 to max_tier)
+				l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+				l += columns["[tier]"]
+				l += "</td>[RDSCREEN_NOBREAK]"
 		l += "</tr></table>[RDSCREEN_NOBREAK]"
 	else
 		var/list/avail = list()			//This could probably be optimized a bit later.
 		var/list/unavail = list()
 		var/list/res = list()
 		for(var/v in stored_research.researched_nodes)
-			res += stored_research.researched_nodes[v]
+			res += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.available_nodes)
 			if(stored_research.researched_nodes[v])
 				continue
-			avail += stored_research.available_nodes[v]
+			avail += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.visible_nodes)
 			if(stored_research.available_nodes[v])
 				continue
-			unavail += stored_research.visible_nodes[v]
+			unavail += SSresearch.techweb_node_by_id(v)
 		l += "<h2>Technology Nodes:</h2>[RDSCREEN_NOBREAK]"
 		l += "<div><h3>Available for Research:</h3>"
 		for(var/datum/techweb_node/N in avail)
@@ -706,13 +707,14 @@ Nothing else in the console has ID requirements.
 			l += "<BR><span class='linkOff bad'>[node.price_display(stored_research)]</span>"  // red - missing prereqs
 		if(ui_mode == RDCONSOLE_UI_MODE_NORMAL)
 			l += "[node.description]"
-			for(var/i in node.designs)
-				var/datum/design/D = node.designs[i]
+			for(var/i in node.design_ids)
+				var/datum/design/D = SSresearch.techweb_design_by_id(i)
 				l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[D.icon_html(usr)]</span>[RDSCREEN_NOBREAK]"
 	l += "</div>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_nodeview()
+	var/datum/techweb_node/selected_node = SSresearch.techweb_node_by_id(selected_node_id)
 	RDSCREEN_UI_SNODE_CHECK
 	var/list/l = list()
 	if(stored_research.hidden_nodes[selected_node.id])
@@ -720,64 +722,64 @@ Nothing else in the console has ID requirements.
 		return
 
 	l += "<table><tr>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.prerequisites))
+	if (length(selected_node.prereq_ids))
 		l += "<th align='left'>Requires</th>[RDSCREEN_NOBREAK]"
 	l += "<th align='left'>Current Node</th>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.unlocks))
+	if (length(selected_node.unlock_ids))
 		l += "<th align='left'>Unlocks</th>[RDSCREEN_NOBREAK]"
 
 	l += "</tr><tr>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.prerequisites))
+	if (length(selected_node.prereq_ids))
 		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-		for (var/i in selected_node.prerequisites)
-			l += ui_techweb_single_node(selected_node.prerequisites[i])
+		for (var/i in selected_node.prereq_ids)
+			l += ui_techweb_single_node(SSresearch.techweb_node_by_id(i))
 		l += "</td>[RDSCREEN_NOBREAK]"
 	l += "<td valign='top'>[RDSCREEN_NOBREAK]"
 	l += ui_techweb_single_node(selected_node, selflink=FALSE)
 	l += "</td>[RDSCREEN_NOBREAK]"
-	if (length(selected_node.unlocks))
+	if (length(selected_node.unlock_ids))
 		l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-		for (var/i in selected_node.unlocks)
-			l += ui_techweb_single_node(selected_node.unlocks[i])
+		for (var/i in selected_node.unlock_ids)
+			l += ui_techweb_single_node(SSresearch.techweb_node_by_id(i))
 		l += "</td>[RDSCREEN_NOBREAK]"
 
 	l += "</tr></table>[RDSCREEN_NOBREAK]"
 	return l
 
 /obj/machinery/computer/rdconsole/proc/ui_techweb_designview()		//Legacy code
+	var/datum/design/selected_design = SSresearch.techweb_design_by_id(selected_design_id)
 	RDSCREEN_UI_SDESIGN_CHECK
 	var/list/l = list()
-	var/datum/design/D = selected_design
-	l += "<div><table><tr><td>[D.icon_html(usr)]</td><td><b>[D.name]</b></td></tr></table>[RDSCREEN_NOBREAK]"
-	if(D.build_type)
+	l += "<div><table><tr><td>[selected_design.icon_html(usr)]</td><td><b>[selected_design.name]</b></td></tr></table>[RDSCREEN_NOBREAK]"
+	if(selected_design.build_type)
 		var/lathes = list()
-		if(D.build_type & IMPRINTER)
+		if(selected_design.build_type & IMPRINTER)
 			lathes += "<span data-tooltip='Circuit Imprinter'>[machine_icon(/obj/machinery/rnd/production/circuit_imprinter)]</span>[RDSCREEN_NOBREAK]"
-			if (linked_imprinter && D.id in stored_research.researched_designs)
-				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[D.name]'>Imprint</A>"
-		if(D.build_type & PROTOLATHE)
+			if (linked_imprinter && stored_research.researched_designs[selected_design.id])
+				l += "<A href='?src=[REF(src)];search=1;type=imprint;to_search=[selected_design.name]'>Imprint</A>"
+		if(selected_design.build_type & PROTOLATHE)
 			lathes += "<span data-tooltip='Protolathe'>[machine_icon(/obj/machinery/rnd/production/protolathe)]</span>[RDSCREEN_NOBREAK]"
-			if (linked_lathe && D.id in stored_research.researched_designs)
-				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[D.name]'>Construct</A>"
-		if(D.build_type & AUTOLATHE)
+			if (linked_lathe && stored_research.researched_designs[selected_design.id])
+				l += "<A href='?src=[REF(src)];search=1;type=proto;to_search=[selected_design.name]'>Construct</A>"
+		if(selected_design.build_type & AUTOLATHE)
 			lathes += "<span data-tooltip='Autolathe'>[machine_icon(/obj/machinery/autolathe)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & MECHFAB)
+		if(selected_design.build_type & MECHFAB)
 			lathes += "<span data-tooltip='Exosuit Fabricator'>[machine_icon(/obj/machinery/mecha_part_fabricator)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & BIOGENERATOR)
+		if(selected_design.build_type & BIOGENERATOR)
 			lathes += "<span data-tooltip='Biogenerator'>[machine_icon(/obj/machinery/biogenerator)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & LIMBGROWER)
+		if(selected_design.build_type & LIMBGROWER)
 			lathes += "<span data-tooltip='Limbgrower'>[machine_icon(/obj/machinery/limbgrower)]</span>[RDSCREEN_NOBREAK]"
-		if(D.build_type & SMELTER)
+		if(selected_design.build_type & SMELTER)
 			lathes += "<span data-tooltip='Smelter'>[machine_icon(/obj/machinery/mineral/processing_unit)]</span>[RDSCREEN_NOBREAK]"
 		l += "Construction types:"
 		l += lathes
 		l += ""
 	l += "Required materials:"
-	var/all_mats = D.materials + D.reagents_list
+	var/all_mats = selected_design.materials + selected_design.reagents_list
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
 	l += "Unlocked by:"
-	for (var/node in D.unlocked_by)
+	for (var/node in selected_design.unlocked_by)
 		l += ui_techweb_single_node(node)
 	l += "[RDSCREEN_NOBREAK]</div>"
 	return l
@@ -1003,12 +1005,12 @@ Nothing else in the console has ID requirements.
 			return
 		say("Uploading technology disk.")
 		t_disk.stored_research.copy_research_to(stored_research)
-	if(ls["copy_design"]) //Copy design la from the research holder to the design disk.
+	if(ls["copy_design"]) //Copy design from the research holder to the design disk.
 		if(QDELETED(d_disk))
 			say("No Design Disk Inserted!")
 			return
 		var/slot = text2num(ls["copy_design"])
-		var/datum/design/D = stored_research.researched_designs[ls["copy_design_ID"]]
+		var/datum/design/D = SSresearch.techweb_design_by_id(ls["copy_design_ID"])
 		if(D)
 			var/autolathe_friendly = TRUE
 			if(D.reagents_list.len)
@@ -1035,12 +1037,12 @@ Nothing else in the console has ID requirements.
 			linked_destroy.unload_item()
 			screen = RDSCREEN_MENU
 	if(ls["view_node"])
-		selected_node = SSresearch.techweb_nodes[ls["view_node"]]
+		selected_node_id = ls["view_node"]
 		screen = RDSCREEN_TECHWEB_NODEVIEW
 	if(ls["view_design"])
-		selected_design = SSresearch.techweb_designs[ls["view_design"]]
+		selected_design_id = ls["view_design"]
 		screen = RDSCREEN_TECHWEB_DESIGNVIEW
-	if(ls["updt_design"]) //Uples the research holder with design la from the design disk.
+	if(ls["updt_design"]) //Uploads a design from disk to the techweb.
 		if(QDELETED(d_disk))
 			say("No design disk found.")
 			return
@@ -1048,9 +1050,9 @@ Nothing else in the console has ID requirements.
 		if(!n)
 			for(var/D in d_disk.blueprints)
 				if(D)
-					stored_research.add_design(D)
+					stored_research.add_design(D, TRUE)
 		else
-			stored_research.add_design(d_disk.blueprints[n])
+			stored_research.add_design(d_disk.blueprints[n], TRUE)
 
 	updateUsrDialog()
 
@@ -1079,17 +1081,17 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/proc/rescan_views()
 	var/compare
-	matching_designs.Cut()
+	matching_design_ids.Cut()
 	if(searchtype == "proto")
 		compare = PROTOLATHE
 	else if(searchtype == "imprint")
 		compare = IMPRINTER
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(D.build_type & compare))
 			continue
 		if(findtext(D.name,searchstring))
-			matching_designs.Add(D)
+			matching_design_ids.Add(D.id)
 
 /obj/machinery/computer/rdconsole/proc/check_canprint(datum/design/D, buildtype)
 	var/amount = 50
