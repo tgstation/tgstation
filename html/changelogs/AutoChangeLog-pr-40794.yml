@@ -1,4 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "Mechs now properly filter out non-ascii input, and can no longer have null names"

@@ -1,6 +1,0 @@
-author: "spook-o-log"
-delete-after: True
-changes: 
-  - rscadd: "Adds the intelliLantern, a big ol' spooky intelliCard skin"
-  - rscadd: "crafting recipe for the new intelliCard skin (requires 1 pumpkin, 1 intelliCard, 5 cables and a wirecutter as a tool)"
-  - tweak: "changed the intelliTater crafting recipe to match the intelliLantern recipe (but with a potato for obvious reasons)"
