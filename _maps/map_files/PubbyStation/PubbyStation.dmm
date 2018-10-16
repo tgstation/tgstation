@@ -19952,7 +19952,10 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/theatre)
 "aVm" = (
-/obj/machinery/vending/autodrobe,
+/obj/machinery/vending/autodrobe{
+	default_price = 5;
+	extra_price = 25
+	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = 32
 	},
@@ -28286,7 +28289,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "boz" = (
-/obj/machinery/vending/clothing,
+/obj/machinery/vending/clothing{
+	default_price = 5;
+	extra_price = 25
+	},
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = 27

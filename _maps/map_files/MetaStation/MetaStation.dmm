@@ -22284,9 +22284,7 @@
 /area/security/courtroom)
 "aQJ" = (
 /obj/machinery/vending/coffee,
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aQK" = (
@@ -25294,9 +25292,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/central)
 "aWs" = (
@@ -29434,7 +29430,7 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
-"bdN" = (
+"bdN" = (carb
 /obj/machinery/light_switch{
 	pixel_x = 28
 	},
@@ -49143,7 +49139,7 @@
 /obj/structure/spider/stickyweb/nonstick,
 /obj/item/toy/plush/spiderplushie{
 	color = "red";
-	name = "nanotrasen wildlife preserve spider"
+	name = "Nanotrasen wildlife preserve spider"
 	},
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)

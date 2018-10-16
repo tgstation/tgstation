@@ -3208,7 +3208,10 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "akL" = (
-/obj/machinery/vending/clothing,
+/obj/machinery/vending/clothing{
+	default_price = 5;
+	extra_price = 25
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -81806,7 +81809,10 @@
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "cGL" = (
-/obj/machinery/vending/clothing,
+/obj/machinery/vending/clothing{
+	default_price = 5;
+	extra_price = 25
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -81852,7 +81858,10 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/locker)
 "cGO" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe/all_access{
+	default_price = 5;
+	extra_price = 25
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -111594,6 +111603,8 @@
 /area/crew_quarters/theatre/abandoned)
 "dFl" = (
 /obj/machinery/vending/autodrobe{
+	default_price = 5;
+	extra_price = 25;
 	req_access_txt = "0"
 	},
 /obj/machinery/light/small{
