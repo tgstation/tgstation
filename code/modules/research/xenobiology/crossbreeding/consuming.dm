@@ -70,7 +70,8 @@ Consuming extracts:
 			fed = TRUE
 			M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", "<span class='warning'>[user] forces you to eat [src].</span>")
 	if(fed)
-		to_chat(M, "Tastes like [taste].")
+		if(!H.has_trait(TRAIT_AGEUSIA))
+			to_chat(M, "Tastes like [taste].")
 		playsound(get_turf(M), 'sound/items/eatfood.ogg', 20, 1)
 		if(nutrition)
 			M.reagents.add_reagent("nutriment",nutrition)
