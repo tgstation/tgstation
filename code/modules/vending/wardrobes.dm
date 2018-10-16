@@ -178,13 +178,17 @@
 	name = "CuraDrobe"
 	desc = "A lowstock vendor only capable of vending clothing for curators and librarians."
 	icon_state = "curadrobe"
-	product_ads = "Our clothes are endorsed by treasure hunters everywhere!"
+	product_ads = "Glasses for your eyes and literature for your soul, Curadrobe has it all!; Impress & enthrall your library guests with Curadrobe's extended line of pens!"
 	vend_reply = "Thank you for using the CuraDrobe!"
-	products = list(/obj/item/clothing/head/fedora/curator = 1,
-					/obj/item/clothing/suit/curator = 1,
-					/obj/item/clothing/under/rank/curator/treasure_hunter = 1,
-					/obj/item/clothing/shoes/workboots/mining = 1,
+	products = list(/obj/item/pen = 4,
+					/obj/item/pen/red = 2,
+					/obj/item/pen/blue = 2,
+					/obj/item/pen/fourcolor = 1,
+					/obj/item/pen/fountain = 2,
+					/obj/item/clothing/accessory/pocketprotector = 2,
 					/obj/item/storage/backpack/satchel/explorer = 1,
+					/obj/item/clothing/glasses/regular = 2,
+					/obj/item/clothing/glasses/regular/jamjar = 1,
 					/obj/item/storage/bag/books = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/curator_wardrobe
 	payment_department = ACCOUNT_CIV
