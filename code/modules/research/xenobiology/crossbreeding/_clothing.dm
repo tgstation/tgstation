@@ -35,8 +35,8 @@ Slimecrossing Armor
 	desc = "The lenses seem to glow slightly, and reflect light into dazzling colors."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "prismglasses"
-	var/colour = "#FFFFFF"
 	actions_types = list(/datum/action/item_action/change_prism_colour, /datum/action/item_action/place_light_prism)
+	var/glasses_color = "#FFFFFF"
 
 /obj/item/clothing/glasses/prism_glasses/item_action_slot_check(slot)
 	if(slot == SLOT_GLASSES)
@@ -51,10 +51,10 @@ Slimecrossing Armor
 	anchored = TRUE
 	max_integrity = 10
 
-/obj/structure/light_prism/Initialize(var/colour)
+/obj/structure/light_prism/Initialize(mapload, var/newcolor)
 	. = ..()
-	color = colour
-	light_color = colour
+	color = newcolor
+	light_color = newcolor
 	set_light(5)
 
 /obj/structure/light_prism/attack_hand(mob/user)
@@ -68,10 +68,10 @@ Slimecrossing Armor
 
 /datum/action/item_action/change_prism_colour/Trigger()
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
-	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.colour) as color|null
+	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
 	if(!new_color)
 		return
-	glasses.colour = new_color
+	glasses.glasses_color = new_color
 
 /datum/action/item_action/place_light_prism
 	name = "Fabricate Light Prism"
@@ -84,11 +84,11 @@ Slimecrossing Armor
 		to_chat(owner, "<span class='warning'>There isn't enough ambient energy to fabricate another light prism here.</span>")
 		return
 	if(istype(glasses))
-		if(!glasses.colour)
+		if(!glasses.glasses_color)
 			to_chat(owner, "<span class='warning'>The lens is oddly opaque...</span>")
 			return
 		to_chat(owner, "<span class='notice'>You channel nearby light into a glowing, ethereal prism.</span>")
-		new /obj/structure/light_prism(get_turf(owner), glasses.colour)
+		new /obj/structure/light_prism(get_turf(owner), glasses.glasses_color)
 
 /obj/item/clothing/head/peaceflower
 	name = "heroine bud"
@@ -121,8 +121,8 @@ Slimecrossing Armor
 	item_state = "adamsuit"
 	flags_inv = list()
 	obj_flags = IMMUTABLE_SLOW
-	var/hit_reflect_chance = 40
 	slowdown = 4
+	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/heavy/adamantine/IsReflect(def_zone)
 	if(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) && prob(hit_reflect_chance))
