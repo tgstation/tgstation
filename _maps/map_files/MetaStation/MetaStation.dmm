@@ -29429,7 +29429,7 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain/private)
-"bdN" = (carb
+"bdN" = (
 /obj/machinery/light_switch{
 	pixel_x = 28
 	},
