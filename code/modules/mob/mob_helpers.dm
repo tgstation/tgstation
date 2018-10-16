@@ -520,6 +520,6 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		if(!get_location_accessible(src, zone))
 			continue
 		if(!BP)
-			. += "<span class='warning'>[src] has surgical markings where [p_their()] [parse_zone(zone)] should go!</span><br>"
+			. += "<span class='warning'>[p_they()] [p_have()] surgical markings where [p_their()] [parse_zone(zone)] should go!</span><br>"
 		else
 			. += "<span class='warning'>There are surgical markings on [p_their()] [BP.name]!</span><br>"
