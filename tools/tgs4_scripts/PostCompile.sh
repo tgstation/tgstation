@@ -4,7 +4,7 @@ set -e
 
 #load dep exports
 #need to switch to game dir for Dockerfile weirdness
-$original_dir = $PWD
+$original_dir=$PWD
 cd $1
 . dependencies.sh
 cd $original_dir
