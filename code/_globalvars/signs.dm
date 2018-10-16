@@ -1,0 +1,13 @@
+var/const/signsRust = list("Arga","Arcer","Argo")
+var/const/signsBronze = list("Taura","Taurittanius","Taurga")
+var/const/signsGold = list("Gemnius","Gemsci","Gemza")
+var/const/signsLime = list("Canrus","Cansci","Canrist")
+var/const/signsOlive = list("Lesces","Leiborn","Lerius")
+var/const/signsJade = list("Virrus","Virnius","Virpia")
+var/const/signsTeal = list("Libun","Ligo","Limino")}
+var/const/signsCerulean = list("Scorittarius","Scorun","Scorza")
+var/const/signsIndigo = list("Sagio","Sagimino","Sagicen")
+var/const/signsPurple = list("Capriza","Capries","Capriborn")
+var/const/signsViolet = list("Aquapio","Aquaries","Aquapia")
+var/const/signsFuchsia = list("Pirius","Pittarius","Picen") //Pintius kkkk
+var/usedSigns = list()

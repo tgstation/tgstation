@@ -18,6 +18,9 @@
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 
+	//Troll Shit
+	var/sign = ""
+
 
 /datum/species/alternian/on_species_gain(mob/living/carbon/C)
 	. = ..()
