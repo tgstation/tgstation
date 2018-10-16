@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "alternian_horns" = "Simple")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain", "alternian_horns" = "simple")
 
 	var/list/custom_names = list()
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -405,7 +405,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				dat += "<h3>Alternian Horns</h3>"
 
-				dat += "<a href='?_src_=prefs;preference=moth_wings;task=input'>[features["alternian_horns"]]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=alternian_horns;task=input'>[features["alternian_horns"]]</a><BR>"
 
 				mutant_category++
 				if(mutant_category >= MAX_MUTANT_ROWS)
