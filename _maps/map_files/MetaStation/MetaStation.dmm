@@ -50997,9 +50997,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bTZ" = (
-/obj/structure/bookcase{
-	name = "bookcase"
-	},
+/obj/structure/bookcase,
 /turf/open/floor/wood,
 /area/bridge/showroom/corporate)
 "bUa" = (
