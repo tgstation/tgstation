@@ -1,18 +1,19 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"b" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/supply)
-"e" = (
+"a" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 5;
+	icon_state = "conveyor_map_inverted";
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"b" = (
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
 "f" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 6;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -26,33 +27,9 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
-"h" = (
-/obj/machinery/conveyor{
-	dir = 9;
-	id = "cargoshuttle";
-	name = "cargo shuttle conveyor belt"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"i" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargoshuttle";
-	name = "cargo shuttle conveyor belt"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
 "j" = (
 /obj/machinery/conveyor{
 	dir = 10;
-	id = "cargoshuttle";
-	name = "cargo shuttle conveyor belt"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"k" = (
-/obj/machinery/conveyor{
-	dir = 6;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -64,7 +41,7 @@
 	name = "supply dock loading door"
 	},
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -149,7 +126,7 @@
 /area/shuttle/supply)
 "A" = (
 /obj/machinery/conveyor{
-	dir = 8;
+	dir = 4;
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -182,7 +159,8 @@
 /area/shuttle/supply)
 "R" = (
 /obj/machinery/conveyor{
-	dir = 2;
+	dir = 9;
+	icon_state = "conveyor_map_inverted";
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
@@ -203,8 +181,8 @@ w
 "}
 (2,1,1) = {"
 b
-e
-P
+g
+a
 R
 n
 B
@@ -215,9 +193,9 @@ x
 "}
 (3,1,1) = {"
 b
-f
-P
+g
 G
+P
 n
 n
 n
@@ -228,8 +206,8 @@ y
 (4,1,1) = {"
 b
 A
-P
 G
+P
 n
 n
 n
@@ -239,9 +217,9 @@ y
 "}
 (5,1,1) = {"
 b
-f
-h
-j
+g
+G
+P
 n
 n
 n
@@ -252,8 +230,8 @@ y
 (6,1,1) = {"
 b
 f
-i
-k
+j
+P
 n
 p
 n

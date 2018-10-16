@@ -30,6 +30,7 @@ map deltastation
 endmap
 
 map birdstation
+	maxplayers 50
 endmap
 
 map runtimestation
