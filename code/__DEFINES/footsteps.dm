@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(clawfootstep, list(
 		'sound/effects/footstep/lava3.ogg'), 100, 0),
 ))
 
-//heavy footsteps list (todo get more sounds)
+//heavy footsteps list
 GLOBAL_LIST_INIT(heavyfootstep, list(
 	FOOTSTEP_GENERIC_HEAVY = list(list(
 		'sound/effects/footstep/heavy1.ogg',

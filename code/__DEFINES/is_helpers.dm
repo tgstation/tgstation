@@ -126,20 +126,34 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
+#define isgorilla(A) (istype(A, /mob/living/simple_animal/hostile/gorilla))
+
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 
 #define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
 
+#define isjunglemob(A) (istype(A, /mob/living/simple_animal/jungle))
+
+#define ismook(A) (istype(A, /mob/living/simple_animal/hostile/jungle/mook))
+
+#define isleaper(A) (istype(A, /mob/living/simple_animal/hostile/jungle/leaper))
+
+#define ismegaarachnid(A) (istype(A, /mob/living/simple_animal/hostile/jungle/mega_arachnid))
+
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
+
+#define isasteroidmob(A) (istype (A, /mob/living/simple_animal/asteroid/))
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-//Human simple mobs (it's ugly, barely readable, and stupidly long how can I clean this up?)
-#define ishumansimple(A) (istype(A, /mob/living/simple_animal/hostile/cat_butcherer) || istype(A, /mob/living/simple_animal/hostile/faithless) || istype(A, /mob/living/simple_animal/hostile/nanotrasen) || istype(A, /mob/living/simple_animal/hostile/pirate) || istype(A, /mob/living/simple_animal/hostile/russian) || istype(A, /mob/living/simple_animal/hostile/syndicate) || istype(A, /mob/living/simple_animal/hostile/wizard) || istype(A, /mob/living/simple_animal/hostile/zombie) || istype(A, /mob/living/simple_animal/hostile/retaliate/clown) || istype(A, /mob/living/simple_animal/hostile/retaliate/spaceman))
+#define isgiantspider(A) (istype(A, /mob/living/simple_animal/hostile/poison/giant_spider))
+
+//Human(oid) simple mobs (it's ugly, barely readable, stupidly long, and can't into newlines)
+#define ishumansimple(A) (istype(A, /mob/living/simple_animal/hostile/cat_butcherer) || istype(A, /mob/living/simple_animal/hostile/faithless) || istype(A, /mob/living/simple_animal/hostile/nanotrasen) || istype(A, /mob/living/simple_animal/hostile/pirate) || istype(A, /mob/living/simple_animal/hostile/russian) || istype(A, /mob/living/simple_animal/hostile/syndicate) || istype(A, /mob/living/simple_animal/hostile/wizard) || istype(A, /mob/living/simple_animal/hostile/zombie) || istype(A, /mob/living/simple_animal/hostile/retaliate/clown) || istype(A, /mob/living/simple_animal/hostile/retaliate/spaceman) || istype(A, /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace))
 
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
