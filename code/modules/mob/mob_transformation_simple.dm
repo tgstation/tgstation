@@ -47,7 +47,12 @@
 		D.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		client.prefs.copy_to(H)
+		if(client)
+			client.prefs.copy_to(H)
+		else if(ckey)
+			var/datum/client_cache/Cache = GLOB.Player_Client_Cache[ckey]
+			if(istype(Cache) && Cache.prefs)
+				Cache.prefs.copy_to(H)
 		H.dna.update_dna_identity()
 
 	if(mind && isliving(M))

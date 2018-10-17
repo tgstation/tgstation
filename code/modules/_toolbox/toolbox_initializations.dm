@@ -127,3 +127,25 @@ GLOBAL_LIST_EMPTY(hub_features)
 		"Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium", "Fermium", "Nobelium",\
 		"Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium", "Bohrium", "Hassium", "Meitnerium")
 	return "[pick(elements)] \Roman[rand(1,25)]"
+
+//machine circuitboards remembering variables from the machine.
+/obj/machinery/proc/upload_to_circuit_memory()
+	if(circuit)
+		for(var/V in savable_data)
+			if(V in vars)
+				circuit.saved_data[V] = vars[V]
+
+/obj/machinery/proc/download_from_circuit_memory()
+	if(circuit)
+		for(var/V in savable_data)
+			if((V in vars) && (V in circuit.saved_data))
+				vars[V] = circuit.saved_data[V]
+
+/obj/item/circuitboard
+	var/list/saved_data = list()
+
+/obj/machinery
+	var/list/savable_data = list()
+
+/obj/machinery/computer/rdconsole
+	savable_data = list("locked")

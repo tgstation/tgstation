@@ -34,6 +34,8 @@
 	network = "tcommsat"
 	autolinkers = list("common")
 
+	var/wastoggled = 0
+
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey
@@ -58,8 +60,16 @@
 	return newKey
 
 /obj/machinery/telecomms/message_server/process()
-	if(toggled && (stat & (BROKEN|NOPOWER)))
-		toggled = FALSE
+	if((stat & (BROKEN|NOPOWER)))
+		if(toggled)
+			wastoggled = toggled
+			toggled = FALSE
+	else if(wastoggled)
+		toggled = TRUE
+		wastoggled = !toggled
+
+	/*if(toggled && (stat & (BROKEN|NOPOWER)))
+		toggled = FALSE*/
 	update_icon()
 
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/pda/signal, obj/machinery/telecomms/machine_from)

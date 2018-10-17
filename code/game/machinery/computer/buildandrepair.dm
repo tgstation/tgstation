@@ -115,6 +115,9 @@
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/B = new circuit.build_path (loc, circuit)
 				B.dir = dir
+				if(istype(B,/obj/machinery))
+					var/obj/machinery/M = B
+					M.download_from_circuit_memory()
 				transfer_fingerprints_to(B)
 				qdel(src)
 				return

@@ -85,9 +85,14 @@
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
 	if(lying && surgeries.len)
 		if(user.a_intent == INTENT_HELP) //user != src &&
-			for(var/datum/surgery/S in surgeries)
-				if(S.next_step(user))
-					return 1
+			var/fail = 0
+			if(user == src && istype(I,/obj/item/organ/cyberimp))
+				user << "<span class='warning'>You can't insert this accurately enough in to your self for it to be safe.</span>"
+				fail = 1
+			if(!fail)
+				for(var/datum/surgery/S in surgeries)
+					if(S.next_step(user))
+						return 1
 	return ..()
 
 /mob/living/carbon/throw_impact(atom/hit_atom, throwingdatum)

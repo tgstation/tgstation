@@ -1382,9 +1382,9 @@
 			to_chat(usr, "<span class='notice'>You can only send ghost players back to the Lobby.</span>")
 			return
 
-		if(!M.client)
+		/*if(!M.client)
 			to_chat(usr, "<span class='warning'>[M] doesn't seem to have an active client.</span>")
-			return
+			return*/
 
 		if(alert(usr, "Send [key_name(M)] back to Lobby?", "Message", "Yes", "No") != "Yes")
 			return
@@ -2419,16 +2419,29 @@
 		if(!check_rights(R_ADMIN))
 			return
 		var/client/C = locate(href_list["client"]) in GLOB.clients
+		var/datum/client_cache/Cache
+		if(!istype(C) && istext(href_list["client"]))
+			Cache = GLOB.Player_Client_Cache[href_list["client"]]
+		var/The_related_accounts_cid
+		var/The_related_accounts_ip
+		if(istype(C))
+			The_related_accounts_cid = C.related_accounts_cid
+			The_related_accounts_ip = C.related_accounts_ip
+		else if(istype(Cache))
+			The_related_accounts_cid = Cache.related_accounts_cid
+			The_related_accounts_ip = Cache.related_accounts_ip
 		var/thing_to_check
-		if(href_list["showrelatedacc"] == "cid")
-			thing_to_check = C.related_accounts_cid
-		else
-			thing_to_check = C.related_accounts_ip
-		thing_to_check = splittext(thing_to_check, ", ")
-
-
 		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
-		dat += thing_to_check
+		if(istype(C) || istype(Cache))
+			if(href_list["showrelatedacc"] == "cid")
+				thing_to_check = The_related_accounts_cid
+			else
+				thing_to_check = The_related_accounts_ip
+			thing_to_check = splittext(thing_to_check, ", ")
+
+			dat += thing_to_check
+		else
+			thing_to_check += "Unable to locate client information"
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
 

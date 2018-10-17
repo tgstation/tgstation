@@ -109,6 +109,7 @@
 	on_deconstruction()
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(circuit) //no circuit, no computer frame
+			upload_to_circuit_memory()
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
 			A.dir = dir
 			A.circuit = circuit

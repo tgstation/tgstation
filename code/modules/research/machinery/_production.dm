@@ -92,6 +92,7 @@
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a [src]([type]).")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
+		Make_Cells_Fucking_Full_Charge_Because_Thats_So_Gay(I)
 		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/stack/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))

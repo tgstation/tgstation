@@ -31,29 +31,68 @@
 
 	var/body = "<html><head><title>Options for [M.key]</title></head>"
 	body += "<body>Options panel for <b>[M]</b>"
-	if(M.client)
-		body += " played by <b>[M.client]</b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=rank;ckey=[M.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+
+	var/datum/client_cache/Cache
+	if(M.ckey)
+		Cache = GLOB.Player_Client_Cache[M.ckey]
+	if(M.client || Cache)
+		var/playername
+		var/playerckey
+		var/playertitle = "Player"
+		if(M.client)
+			playername = "[M.client]"
+			playerckey = "[M.client.ckey]"
+			if(M.client.holder && M.client.holder.rank)
+				playertitle = "[M.client.holder.rank]"
+		else
+			playername = "[Cache.key]"
+			playerckey = "[Cache.ckey]"
+			if(Cache.holderrank)
+				playertitle = "[Cache.holderrank]"
+		//body += " played by <b>[M.client]</b> "
+		body += " played by <b>[playername]</b> "
+		//body += "\[<A href='?_src_=holder;[HrefToken()];editrights=rank;ckey=[M.client.ckey]'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
+		body += "\[<A href='?_src_=holder;[HrefToken()];editrights=rank;ckey=[playerckey]'>[playertitle]</A>\]"
 		if(CONFIG_GET(flag/use_exp_tracking))
-			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + M.client.get_exp_living() + "</a>\]"
+			var/expliving = 0
+			if(M.client)
+				expliving = M.client.get_exp_living()
+			else
+				expliving = Cache.exp_living
+			body += "\[<A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(M)]'>" + expliving + "</a>\]"
 
 	if(isnewplayer(M))
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?_src_=holder;[HrefToken()];revive=[REF(M)]'>Heal</A>\] "
 
-	if(M.client)
-		body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+	if(M.client || Cache)
+		var/player_join_date
+		var/account_join_date
+		var/refedclient
+		if(M.client)
+			player_join_date = M.client.player_join_date
+			account_join_date = M.client.account_join_date
+			refedclient = "[REF(M.client)]"
+		else
+			player_join_date = Cache.remaining_vars["player_join_date"]
+			account_join_date = Cache.remaining_vars["account_join_date"]
+			refedclient = "[Cache.ckey]"
+		//body += "<br>\[<b>First Seen:</b> [M.client.player_join_date]\]\[<b>Byond account registered on:</b> [M.client.account_join_date]\]"
+		body += "<br>\[<b>First Seen:</b> [player_join_date]\]\[<b>Byond account registered on:</b> [account_join_date]\]"
 		body += "<br><br><b>Show related accounts by:</b> "
-		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[REF(M.client)]'>CID</a> | "
-		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[REF(M.client)]'>IP</a> \]"
+		body += "\[ <a href='?_src_=holder;[HrefToken()];showrelatedacc=cid;client=[refedclient]'>CID</a> | "
+		body += "<a href='?_src_=holder;[HrefToken()];showrelatedacc=ip;client=[refedclient]'>IP</a> \]"
 		var/rep = 0
 		rep += SSpersistence.antag_rep[M.ckey]
 		body += "<br><br>Antagonist reputation: [rep]"
-		body += "<br><a href='?_src_=holder;[HrefToken()];modantagrep=add;mob=[REF(M)]'>\[increase\]</a> "
-		body += "<a href='?_src_=holder;[HrefToken()];modantagrep=subtract;mob=[REF(M)]'>\[decrease\]</a> "
-		body += "<a href='?_src_=holder;[HrefToken()];modantagrep=set;mob=[REF(M)]'>\[set\]</a> "
-		body += "<a href='?_src_=holder;[HrefToken()];modantagrep=zero;mob=[REF(M)]'>\[zero\]</a>"
+		if(M.client)
+			body += "<br><a href='?_src_=holder;[HrefToken()];modantagrep=add;mob=[REF(M)]'>\[increase\]</a> "
+			body += "<a href='?_src_=holder;[HrefToken()];modantagrep=subtract;mob=[REF(M)]'>\[decrease\]</a> "
+			body += "<a href='?_src_=holder;[HrefToken()];modantagrep=set;mob=[REF(M)]'>\[set\]</a> "
+			body += "<a href='?_src_=holder;[HrefToken()];modantagrep=zero;mob=[REF(M)]'>\[zero\]</a>"
+		else
+			body += "<br>Player Offline "
 
 
 	body += "<br><br>\[ "
@@ -83,17 +122,22 @@
 		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[REF(M)]'>Emoteban</A> | "
 
 	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[M.ckey]'>Notes | Messages | Watchlist</A> | "
-	if(M.client)
+	if(M.client || Cache)
 		body += "| <A href='?_src_=holder;[HrefToken()];sendtoprison=[REF(M)]'>Prison</A> | "
 		body += "\ <A href='?_src_=holder;[HrefToken()];sendbacktolobby=[REF(M)]'>Send back to Lobby</A> | "
-		var/muted = M.client.prefs.muted
-		body += "<br><b>Mute: </b> "
-		body += "\[<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
-		body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
-		body += "(<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
+		var/muted
+		if(M.client)
+			muted = M.client.prefs.muted
+		else if(Cache.prefs)
+			muted = Cache.prefs.muted
+		if(M.client || Cache.prefs)
+			body += "<br><b>Mute: </b> "
+			body += "\[<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_IC]'><font color='[(muted & MUTE_IC)?"red":"blue"]'>IC</font></a> | "
+			body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_OOC]'><font color='[(muted & MUTE_OOC)?"red":"blue"]'>OOC</font></a> | "
+			body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_PRAY]'><font color='[(muted & MUTE_PRAY)?"red":"blue"]'>PRAY</font></a> | "
+			body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ADMINHELP]'><font color='[(muted & MUTE_ADMINHELP)?"red":"blue"]'>ADMINHELP</font></a> | "
+			body += "<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_DEADCHAT]'><font color='[(muted & MUTE_DEADCHAT)?"red":"blue"]'>DEADCHAT</font></a>\]"
+			body += "(<A href='?_src_=holder;[HrefToken()];mute=[M.ckey];mute_type=[MUTE_ALL]'><font color='[(muted & MUTE_ALL)?"red":"blue"]'>toggle all</font></a>)"
 
 	body += "<br><br>"
 	body += "<A href='?_src_=holder;[HrefToken()];jumpto=[REF(M)]'><b>Jump to</b></A> | "
@@ -106,7 +150,7 @@
 	body += "<A href='?_src_=holder;[HrefToken()];subtlemessage=[REF(M)]'>Subtle message</A> | "
 	body += "<A href='?_src_=holder;[HrefToken()];languagemenu=[REF(M)]'>Language Menu</A>"
 
-	if (M.client)
+	if (M.client || Cache)
 		if(!isnewplayer(M))
 			body += "<br><br>"
 			body += "<b>Transformation:</b>"

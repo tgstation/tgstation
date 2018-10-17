@@ -390,6 +390,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			menuitem.Load_checked(src)
 
 	Master.UpdateTickRate()
+	save_to_cache()
 
 //////////////
 //DISCONNECT//
@@ -428,6 +429,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	Master.UpdateTickRate()
+	save_to_cache()
 	return ..()
 
 /client/Destroy()

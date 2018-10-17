@@ -16,6 +16,7 @@
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/team_amount = 2 //hard limit on brother teams if scaling is turned off
 	var/const/min_team_size = 2
+	required_players = 5
 	traitors_required = FALSE //Only teams are possible
 
 /datum/game_mode/traitor/bros/pre_setup()

@@ -29,8 +29,8 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 		return
 	else if(works_from_distance)
 		if(istype(T))
-			if(T.component_parts)
-				T.exchange_parts(user, src)
+			//if(T.component_parts)
+			if(T.exchange_parts(user, src))
 				user.Beam(T,icon_state="rped_upgrade",time=5)
 	return
 

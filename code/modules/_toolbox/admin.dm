@@ -409,3 +409,57 @@ GLOBAL_VAR_CONST(max_player_slots, 8)
 					break
 		return newvalue
 	return 0
+
+GLOBAL_LIST_EMPTY(Player_Client_Cache)
+
+/datum/client_cache
+	var/ckey
+	var/key
+	var/exp_living = 0
+	var/datum/preferences/prefs
+	var/list/remaining_vars = list()
+	var/holder
+	var/holderrank
+	var/related_accounts_cid
+	var/related_accounts_ip
+
+/datum/client_cache/proc/generate(client/C)
+	if(istype(C,/mob))
+		var/mob/M = C
+		if(M.client)
+			C = M.client
+	if(!istype(C))
+		return 0
+	if(!C.ckey || !C.key)
+		return 0
+	ckey = C.ckey
+	key = C.key
+	related_accounts_cid = C.related_accounts_cid
+	related_accounts_ip = C.related_accounts_ip
+	if(CONFIG_GET(flag/use_exp_tracking))
+		exp_living = C.get_exp_living()
+	if(C.holder)
+		holder = 1
+		holderrank = C.holder.rank
+	if(C.prefs)
+		src.prefs = C.prefs
+	var/list/skiplist = list("key","ckey")
+	for(var/V in C.vars)
+		if(V in skiplist)
+			continue
+		var/varvalue = C.vars[V]
+		if(!isnum(varvalue) && !istext(varvalue))
+			continue
+		if(varvalue == initial(C.vars[V]))
+			continue
+		remaining_vars[V] = varvalue
+	return 1
+
+/client/proc/save_to_cache()
+	var/datum/client_cache/cache = new()
+	if(cache.generate(src))
+		GLOB.Player_Client_Cache[ckey] = cache
+
+
+
+

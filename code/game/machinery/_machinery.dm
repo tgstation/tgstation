@@ -302,6 +302,7 @@ Class Procs:
 		on_deconstruction()
 		if(component_parts && component_parts.len)
 			spawn_frame(disassembled)
+			upload_to_circuit_memory()
 			for(var/obj/item/I in component_parts)
 				I.forceMove(loc)
 	qdel(src)
@@ -384,9 +385,11 @@ Class Procs:
 	return TRUE
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/W)
+	if(!component_parts)
+		return FALSE
 	if(!istype(W))
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
+	if((cant_parts_exchange()) && (!W.works_from_distance))
 		return FALSE
 	var/shouldplaysound = 0
 	if(component_parts)
@@ -417,7 +420,8 @@ Class Procs:
 								B.moveToNullspace()
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
-							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
+							W.notify_user_of_success(user,B,A)
+							//to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break
 			RefreshParts()

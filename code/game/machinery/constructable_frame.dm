@@ -175,6 +175,8 @@
 					P.play_tool_sound(src)
 					var/obj/machinery/new_machine = new src.circuit.build_path(src.loc, 1)
 					new_machine.anchored = anchored
+					qdel(new_machine.circuit)
+					new_machine.circuit = circuit
 					new_machine.on_construction()
 					for(var/obj/O in new_machine.component_parts)
 						qdel(O)
@@ -182,8 +184,9 @@
 					for(var/obj/O in src)
 						O.moveToNullspace()
 						new_machine.component_parts += O
-					circuit.moveToNullspace()
+					new_machine.circuit.moveToNullspace()
 					new_machine.RefreshParts()
+					new_machine.download_from_circuit_memory()
 					qdel(src)
 				return
 
