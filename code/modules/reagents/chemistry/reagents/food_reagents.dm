@@ -236,6 +236,8 @@
 			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("capsaicin"))
 				holder.remove_reagent("capsaicin", 5)
+			if(holder.has_reagent("ghostchilijuice"))
+				holder.remove_reagent("ghostchilijuice", 4)
 			if(isslime(M))
 				cooling = -rand(5,20)
 		if(15 to 25)
@@ -392,6 +394,16 @@
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
+
+/datum/reagent/consumable/choco_syrup
+	name = "Chocolate Syrup"
+	id = "choco_syrup"
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#403010" // rgb: 64, 48, 16
+
+/datum/reagent/consumable/choco_syrup/on_mob_life(mob/living/carbon/M)
+	..()
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "choco", /datum/mood_event/choco, name)
 
 /datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
@@ -712,3 +724,39 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+
+/datum/reagent/consumable/ghostchilijuice
+	name = "Ghost Chili Juice"
+	id = "ghostchiilijuice"
+	description = "A greysh juice with the same properties as lava."
+	color = "#bfaf90" //rgb 191, 175, 144
+	nutriment_factor = 0.0001 * REAGENTS_METABOLISM
+	taste_description = "lava"
+
+/datum/reagent/consumable/ghostchilijuice/on_mob_life(mob/living/carbon/M)
+
+	if(prob(5))
+		M.adjust_fire_stacks(2)
+		M.IgniteMob()
+		M.say("Spicy!")
+	M.adjust_bodytemperature(50 * TEMPERATURE_DAMAGE_COEFFICIENT)
+	..()
+
+/datum/reagent/consumable/ghostchilijuice/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	M.adjustFireLoss(reac_volume/5, 0)
+	if(!ishuman(M) && !ismonkey(M))
+		return
+	if(!M.is_eyes_covered())
+		if(prob(10))
+			M.emote("scream")
+		M.blur_eyes(10)
+		M.blind_eyes(10)
+		M.confused = max(M.confused, 30)
+		M.Knockdown(100)
+	..()
+
+/datum/reagent/consumable/ghostchilijuice/reaction_turf(turf/T, reac_volume)
+	if(isfloorturf(T))
+		for(var/turf/turf in range(1,T))
+			if(!locate(/obj/effect/hotspot) in turf)
+				new /obj/effect/hotspot(T)

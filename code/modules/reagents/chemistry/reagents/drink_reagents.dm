@@ -218,6 +218,8 @@
 		. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
+	if(holder.has_reagent("ghostchilijuice"))
+		holder.remove_reagent("ghostchilijuice", 2)
 	var/datum/dna/Mdna = M.has_dna()
 	if(Mdna && Mdna.species && (Mdna.species.id == "plasmaman" || Mdna.species.id == "skeleton"))
 		M.heal_bodypart_damage(1,0, 0)
@@ -283,6 +285,26 @@
 	..()
 	. = 1
 
+/datum/reagent/consumable/caffeine
+	name = "Caffeine"
+	id = "caffeine"
+	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	description = "Essence of coffee."
+	color = "#482000" // rgb: 72, 32, 0
+	nutriment_factor = 0
+	taste_description = "bitterness"
+
+/datum/reagent/consumable/caffeine/on_mob_life(mob/living/carbon/M)
+	M.dizziness = max(0,M.dizziness-5)
+	M.drowsyness = max(0,M.drowsyness-3)
+	M.AdjustSleeping(-80, FALSE)
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.adjustStaminaLoss(-1*REM, 0)
+	..()
+	. = 1
+
 /datum/reagent/consumable/tea
 	name = "Tea"
 	id = "tea"
@@ -301,6 +323,22 @@
 	M.AdjustSleeping(-20, FALSE)
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1, 0)
+	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	..()
+	. = 1
+
+/datum/reagent/consumable/antioxidant
+	name = "Antioxidants"
+	id = "antioxidant"
+	description = "Antioxidants are good for your liver."
+	color = "#101000" // rgb: 16, 16, 0
+	nutriment_factor = 0
+	metabolization_rate = 0.1 * REAGENTS_METABOLISM
+
+/datum/reagent/consumable/antioxidant/on_mob_life(mob/living/carbon/M)
+	M.AdjustSleeping(-20, FALSE)
+	M.adjustToxLoss(-1, 0)
+	M.adjustOxyLoss(-2, 0)
 	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1
