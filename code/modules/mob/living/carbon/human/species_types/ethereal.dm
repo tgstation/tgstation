@@ -14,7 +14,7 @@
 	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER)
 	default_color = "#eda495"
 	var/current_color
-	var/ethereal_charge = 100
+	var/ethereal_charge = ETHEREAL_CHARGE_FULL
 
 	var/static/r1 = 151
 	var/static/g1 = 238
@@ -42,7 +42,6 @@
 		current_color = rgb(r2 + ((r1-r2)*percent), g2 + ((g1-g2)*percent), b2 + ((b1-b2)*percent))
 		H.set_light(1 + (2 * percent), 1 + (1 * percent), current_color)
 		H.dna.features["mcolor"] = copytext(current_color, 2)
-		to_chat(world, "[percent]")
 	else
 		H.set_light(0)
 		H.dna.features["mcolor"] = rgb(128,128,128)

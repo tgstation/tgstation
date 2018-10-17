@@ -21,11 +21,11 @@
 
 //charge
 /datum/mood_event/charged
-	description = "<span class='boldwarning'>I feel the power in my veins!</span>\n"
+	description = "<span class='nicegreen'>I feel the power in my veins!</span>\n"
 	mood_change = 6
 
 /datum/mood_event/lowpower
-	description = "<span class='boldwarning'>My power is running low, I should go charge up somewhere.</span>\n"
+	description = "<span class='warning'>My power is running low, I should go charge up somewhere.</span>\n"
 	mood_change = -7
 
 /datum/mood_event/decharged
