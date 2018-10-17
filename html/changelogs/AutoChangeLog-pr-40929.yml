@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Wisps no longer get deleted when you use a telepad or other form of teleport."
