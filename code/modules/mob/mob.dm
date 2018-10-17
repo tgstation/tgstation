@@ -914,9 +914,9 @@
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
 
-/mob/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+/mob/proc/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	nutrition = max(0, nutrition + change)
 
-/mob/set_nutrition(var/change) //Seriously fuck you oldcoders.
+/mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.
 	nutrition = max(0, change)
 
