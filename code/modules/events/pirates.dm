@@ -148,6 +148,7 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	new /obj/item/holochip(drop_location(), credits_stored)
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+	credits_stored = 0
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")

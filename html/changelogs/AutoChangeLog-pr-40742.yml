@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Prebuilt AI cores will no longer drop the wrong circuit board when deconstructed."

@@ -24,6 +24,7 @@
 	var/damage = 0 //Damage that occurs to any mob under the pod when it lands.
 	var/effectStun = FALSE //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	var/effectLimb = FALSE //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
+	var/effectOrgans = FALSE //If true, yeets out every limb and organ from anyone caught under the pod when it lands
 	var/effectGib = FALSE //If true, anyone under the pod will be gibbed when it lands
 	var/effectStealth = FALSE //If true, a target icon isnt displayed on the turf where the pod will land
 	var/effectQuiet = FALSE //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
@@ -98,10 +99,26 @@
 		if (effectLimb && iscarbon(M)) //If effectLimb is true (which means we pop limbs off when we hit people):
 			var/mob/living/carbon/CM = M
 			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
-				if(bodypart.body_part != HEAD && bodypart.body_zone != CHEST)//we dont want to kill him, just teach em a lesson!
+				if(bodypart.body_part != HEAD && bodypart.body_part != CHEST)//we dont want to kill him, just teach em a lesson!
 					if (bodypart.dismemberable)
 						bodypart.dismember() //Using the power of flextape i've sawed this man's limb in half!
 						break
+		if (effectOrgans && iscarbon(M)) //effectOrgans means remove every organ in our mob
+			var/mob/living/carbon/CM = M
+			for(var/X in CM.internal_organs)
+				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
+				var/obj/item/organ/O = X
+				O.Remove(CM) //Note that this isn't the same proc as for lists
+				O.forceMove(T) //Move the organ outta the body
+				O.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
+				sleep(1)
+			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
+				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs))
+				if (bodypart.dismemberable)
+					bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!	
+					bodypart.throw_at(destination, 2, 3)
+					sleep(1)		
+
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
 			M.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
 			M.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs

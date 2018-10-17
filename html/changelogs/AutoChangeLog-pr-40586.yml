@@ -1,4 +1,0 @@
-author: "nicbn"
-delete-after: True
-changes: 
-  - tweak: "Fire alarm is now simpler. Touch it to activate, touch it to deactivate. When activated, it will blink inconsistently if it is emagged."

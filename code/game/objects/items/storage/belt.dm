@@ -27,6 +27,11 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/belt/examine(mob/user)
+	..()
+	clothing_resistance_flag_examine_message(user)
+
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
@@ -321,6 +326,7 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()

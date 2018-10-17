@@ -115,7 +115,7 @@
 	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stunforce*3)
+		user.Paralyze(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -157,7 +157,7 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Knockdown(stunforce)
+	L.Paralyze(stunforce)
 	L.apply_effect(EFFECT_STUTTER, stunforce)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)

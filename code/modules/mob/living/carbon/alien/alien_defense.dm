@@ -21,9 +21,11 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			resting = 0
+			set_resting(FALSE)
 			AdjustStun(-60)
 			AdjustKnockdown(-60)
+			AdjustImmobilized(-60)
+			AdjustParalyzed(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")

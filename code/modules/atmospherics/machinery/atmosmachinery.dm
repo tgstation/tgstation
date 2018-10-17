@@ -334,9 +334,7 @@ Pipelines + Other Objects -> Pipe network
 		user.forceMove(loc)
 		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 
-	user.canmove = FALSE
-	addtimer(VARSET_CALLBACK(user, canmove, TRUE), 1)
-
+	//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 
 /obj/machinery/atmospherics/AltClick(mob/living/L)
 	if(istype(L) && is_type_in_list(src, GLOB.ventcrawl_machinery))

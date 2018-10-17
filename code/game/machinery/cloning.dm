@@ -210,7 +210,7 @@
 
 		H.set_cloned_appearance()
 
-		H.suiciding = FALSE
+		H.set_suicide(FALSE)
 	attempting = FALSE
 	return TRUE
 
