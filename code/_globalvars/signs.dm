@@ -12,3 +12,4 @@ GLOBAL_LIST_INIT(signsIndigo, list("Sagio","Sagimino","Sagicen"))
 GLOBAL_LIST_INIT(signsPurple, list("Capriza","Capries","Capriborn"))
 GLOBAL_LIST_INIT(signsViolet, list("Aquapio","Aquaries","Aquapia"))
 GLOBAL_LIST_INIT(signsFuchsia, list("Pirius","Pittarius","Picen")) //Pintius kkkk
+GLOBAL_LIST_INIT(signSpecial, list("Rolius","Chupius"))
