@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed sechuds not updating when a user removes/inserts an ID from/into their PDA/wallet/computer while it's in their ID slot."
