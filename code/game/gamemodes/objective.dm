@@ -177,6 +177,36 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(target && !target.current)
 		explanation_text = "Assassinate [target.name], who was obliterated"
 
+/datum/objective/assassinate/confirmed
+	name = "assasinate with confirmation"
+
+/datum/objective/assassinate/confirmed/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role] and collect photo proof of their death."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/assassinate/confirmed/check_completion()
+	. = ..() //Still needs to actually be dead at the end. No clone body doubles.
+	return . && has_kill_evidence(target)
+
+/datum/objective/proc/has_kill_evidence(datum/mind/target)
+	for(var/datum/mind/O in get_owners())
+		if(!O.current)
+			continue
+		if(issilicon(O.current)) //Silicon camera snowflake. Could use some generalizing.
+			var/mob/living/silicon/S = O.current
+			if(S.aicamera)
+				for(var/datum/picture/P in S.aicamera)
+					if(target in P.dead_minds)
+						return TRUE
+		else
+			for(var/obj/item/photo/P in O.current.GetAllContents())
+				if(target in P.picture.dead_minds)
+					return TRUE
+	return FALSE
+
 /datum/objective/mutiny
 	name = "mutiny"
 	var/target_role_type=0
