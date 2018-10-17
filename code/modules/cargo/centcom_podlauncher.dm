@@ -415,12 +415,10 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 				return //if target is null and we don't have a specific target, cancel
 			if (effectAnnounce)
 				deadchat_broadcast("<span class='deadsay'>A special package is being launched at the station!</span>", turf_target = target)
-			var/mob/M = locate(/mob/living, target)
-			if (M)
-				for (var/mob/bouttadie in target)
-					supplypod_punish_log(bouttadie)
-			else
-				supplypod_punish_log(null)
+			var/list/bouttaDie = list()
+			for (var/mob/living/M in target)
+				bouttaDie.Add(M)
+			supplypod_punish_log(bouttaDie)
 			if (!effectBurst) //If we're not using burst mode, just launch normally.
 				launch(target)
 			else
@@ -521,9 +519,14 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	qdel(selector) //Delete the selector effect
 	. = ..()
 
-/datum/centcom_podlauncher/proc/supplypod_punish_log(var/mob/whom)
+/datum/centcom_podlauncher/proc/supplypod_punish_log(var/list/whoDyin)
 	var/podString = effectBurst ? "5 pods" : "a pod"
-	var/whomString = whom ? " at [whom]" : ""
+	var/whomString = ""
+	if (!isemptylist(whoDyin))
+		var/whomString = "at "
+		for (var/mob/living/M in whoDyin)
+			whomString += "[M], "
+
 	var/delayString = temp_pod.landingDelay == initial(temp_pod.landingDelay) ? "" : " Delay=[temp_pod.landingDelay*0.1]s"
 	var/damageString = temp_pod.damage == 0 ? "" : " Dmg=[temp_pod.damage]"
 	var/explosionString = ""
@@ -533,7 +536,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			explosionString += "[X]|"
 	
 	var/msg = "launched [podString][whomString].[delayString][damageString][explosionString]]"
-	message_admins("[key_name_admin(usr)] [msg]")
-	if (whom && whom.key)
-		admin_ticket_log(whom, "[key_name_admin(usr)] [msg]")
-	log_admin("[key_name(usr)] [msg] in [AREACOORD(whom)].")
+	message_admins("[key_name_admin(usr)] [msg] in [AREACOORD(whom)].")
+	if (!isemptylist(whoDyin))
+		for (var/mob/living/M in whoDyin)
+			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")
