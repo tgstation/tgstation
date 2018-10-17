@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Monkey revheads now properly count towards active revheads."
-  - bugfix: "Nonhumanoid revolutionaries will now only be considered for promotion to a head-revolutionary role if there are no human revolutionaries remaining that are valid for promotion."
