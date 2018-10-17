@@ -120,7 +120,7 @@
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(food_conversion)
-			M.nutrition += 0.3
+			M.adjust_nutrition(0.3)
 		if(prob(2))
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1

@@ -893,6 +893,10 @@
 	. = ..()
 	. *= physiology.do_after_speed
 
+/mob/living/carbon/human/updatehealth()
+	. = ..()
+	dna?.species?.spec_updatehealth(src)
+
 /mob/living/carbon/human/species
 	var/race = null
 
@@ -1001,6 +1005,9 @@
 
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
+
+/mob/living/carbon/human/species/ethereal
+	race = /datum/species/ethereal
 
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker

@@ -17,7 +17,10 @@
 
 /datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-	M.nutrition += nutriment_factor
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!(NOHUNGER in H.dna?.species?.species_traits))
+			M.nutrition += nutriment_factor
 	holder.remove_reagent(src.id, metabolization_rate)
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)

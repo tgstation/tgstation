@@ -1179,3 +1179,10 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+
+/mob/living/adjust_nutrition(var/change)
+	nutrition = min(0, nutrition + change)
+
+/mob/living/set_nutrition(var/change)
+	nutrition = min(0, change)
