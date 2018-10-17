@@ -82,6 +82,11 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
+/obj/machinery/rnd/experimentor/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Malfunction probability reduced by [badThingCoeff]%.<br>Cooldown interval between experiments at [resetTime*0.1] seconds.<span>")
+
 /obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
 	if(istype(O, /obj/item/transfer_valve))
