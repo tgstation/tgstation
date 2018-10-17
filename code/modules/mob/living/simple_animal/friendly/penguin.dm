@@ -14,10 +14,11 @@
 	speak_chance = 1
 	turns_per_move = 10
 	icon = 'icons/mob/penguins.dmi'
+	butcher_results = list(/obj/item/organ/ears/penguin = 1)
 
 	do_footstep = TRUE
 
-/mob/living/simple_animal/pet/penguin/ComponentInitialize()
+/mob/living/simple_animal/pet/penguin/Initialize()
 	. = ..()
 	AddComponent(/datum/component/waddling)
 
