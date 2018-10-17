@@ -466,7 +466,7 @@
 	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
 	radiation = 0
-	nutrition = NUTRITION_LEVEL_FED + 50
+	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
@@ -1179,10 +1179,3 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
-
-
-/mob/living/adjust_nutrition(var/change)
-	nutrition = min(0, nutrition + change)
-
-/mob/living/set_nutrition(var/change)
-	nutrition = min(0, change)

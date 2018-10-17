@@ -33,7 +33,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
+	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
@@ -914,4 +914,9 @@
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
 
+/mob/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+	nutrition = max(0, nutrition + change)
+
+/mob/set_nutrition(var/change) //Seriously fuck you oldcoders.
+	nutrition = max(0, change)
 

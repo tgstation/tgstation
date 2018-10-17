@@ -20,7 +20,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!(NOHUNGER in H.dna?.species?.species_traits))
-			M.nutrition += nutriment_factor
+			M.adjust_nutrition(nutriment_factor)
 	holder.remove_reagent(src.id, metabolization_rate)
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -654,7 +654,7 @@
 
 /datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
-		M.nutrition -= 3*nutriment_factor
+		M.adjust_nutrition(-3*nutriment_factor)
 	..()
 
 ////Lavaland Flora Reagents////
