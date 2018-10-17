@@ -200,6 +200,7 @@
 	the_event = new type(src, param)
 
 	mood_events[category] = the_event
+	the_event.category = category
 	update_mood()
 
 	if(the_event.timeout)
@@ -213,6 +214,16 @@
 	mood_events -= category
 	qdel(event)
 	update_mood()
+
+/datum/component/mood/proc/remove_temp_moods(var/admin) //Removes all temp moods
+	for(var/i in mood_events)
+		var/datum/mood_event/moodlet = mood_events[i]
+		if(!moodlet || !moodlet.timeout)
+			continue
+		mood_events -= moodlet.category
+		qdel(moodlet)
+		update_mood()
+
 
 /datum/component/mood/proc/modify_hud(datum/source)
 	var/mob/living/owner = parent
@@ -233,7 +244,6 @@
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	print_mood(user)
-
 
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
 	switch(L.nutrition)
