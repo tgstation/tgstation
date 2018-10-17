@@ -170,8 +170,8 @@
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
 	
-	for(var/mob/dead/observer/ghost in GLOB.player_list) //We put them back in their body
-		if(ghost.mind && ghost.mind.current == M && ghost.client)
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
+		if(ghost.mind && ghost.mind.current == M && ghost.client)  //the dead mobs list can contain clientless mobs
 			ghost.reenter_corpse()
 			break
 	
