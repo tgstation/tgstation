@@ -1,0 +1,5 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - tweak: "Attacking the fire alarm with anything that has force and won't deconstruct it will turn it on"
+  - bugfix: "Toggling the fire alarm now leaves fingerprints"
