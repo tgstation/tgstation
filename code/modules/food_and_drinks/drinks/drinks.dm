@@ -511,7 +511,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
 	name = "Grey Bull"
-	desc = "he drink of choice for staying up late and assisting."
+	desc = "The drink of choice for staying up late and assisting."
 	icon_state = "energy_drink"
 	list_reagents = list("grey_bull" = 30)
 	foodtype = SUGAR | JUNKFOOD
