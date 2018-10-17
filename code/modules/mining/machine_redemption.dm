@@ -51,7 +51,7 @@
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Smelting [sheet_per_ore] sheet(s) per piece of ore. Reward point generation at [point_upgrade*100]%. Ore pickup speed at [ore_pickup_rate].<span>")
+		to_chat(user, "<span class='notice'>The status display reads: Smelting [sheet_per_ore] sheet(s) per piece of ore.<br>Reward point generation at [point_upgrade*100]%.<br>Ore pickup speed at [ore_pickup_rate].<span>")
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/mat_container = materials.mat_container
