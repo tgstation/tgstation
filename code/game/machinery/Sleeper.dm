@@ -107,7 +107,7 @@
 		return
 	return FALSE
 
-/obj/machinery/sleeperwrench_act(mob/living/user, obj/item/I)
+/obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
 	if(default_change_direction_wrench(user, I))
 		return TRUE
 
