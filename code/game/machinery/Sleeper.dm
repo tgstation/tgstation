@@ -101,7 +101,7 @@
 		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
 	if(state_open)
-		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] it's maintenance hatch!</span>")
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
 		return
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		return
@@ -134,6 +134,16 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
 		ui.open()
+
+/obj/machinery/sleeper/AltClick(mob/user)
+	if(state_open)
+		close_machine()
+	else
+		open_machine()
+
+/obj/machinery/sleeper/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click [src] to [state_open ? "open" : "close"] it.</span>")
 
 /obj/machinery/sleeper/process()
 	..()
