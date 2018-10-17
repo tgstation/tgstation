@@ -81909,14 +81909,14 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -26
+	},
 /turf/open/floor/plasteel,
 /area/security/vacantcommissary)
 "cHF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -32
 	},
 /obj/machinery/camera{
 	c_tag = "Vacant Office";
@@ -81926,6 +81926,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light_switch{
+	pixel_y = -26
+	},
 /turf/open/floor/plasteel,
 /area/security/vacantcommissary)
 "cHG" = (
