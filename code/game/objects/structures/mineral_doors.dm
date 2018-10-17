@@ -24,7 +24,6 @@
 
 	var/sheetType = /obj/item/stack/sheet/metal //what we're made of
 	var/sheetAmount = 7 //how much we drop when deconstructed
-	var/is_hard_material = TRUE //if it's rock, allow it to be mined away, otherwise needs to be destroyed by axes and shit.
 
 /obj/structure/mineral_door/Initialize()
 	. = ..()
@@ -120,17 +119,14 @@
 	icon_state = "[initial(icon_state)][door_opened ? "open":""]"
 
 /obj/structure/mineral_door/attackby(obj/item/I, mob/user)
-	if(is_hard_material && I.tool_behaviour == TOOL_MINING)
-		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
-		if(I.use_tool(src, user, 40, volume=50))
-			to_chat(user, "<span class='notice'>You finish digging.</span>")
-			deconstruct(TRUE)
+	if(pickaxe_door(user, I))
+		return
 	else if(user.a_intent != INTENT_HARM)
 		return attack_hand(user)
 	else
 		return ..()
 
-/obj/structure/mineral_door/setAnchored(anchorvalue)
+/obj/structure/mineral_door/setAnchored(anchorvalue) //called in default_unfasten_wrench() chain
 	. = ..()
 	set_opacity(anchored ? !door_opened : FALSE)
 	air_update_turf(TRUE)
@@ -139,10 +135,22 @@
 	default_unfasten_wrench(user, I, 40)
 	return TRUE
 
-/obj/structure/mineral_door/welder_act(mob/living/user, obj/item/I)
-	if(!is_hard_material || (resistance_flags & FLAMMABLE)) //if it's not made of a hard material (ie not paper/wood doors)
-		return //FALSE so it gets passed to is_hot() attackby checks
 
+/////////////////////// TOOL OVERRIDES ///////////////////////
+
+
+/obj/structure/mineral_door/proc/pickaxe_door(mob/living/user, obj/item/I) //override if the door isn't supposed to be a minable mineral.
+	if(!istype(user))
+		return
+	if(I.tool_behaviour != TOOL_MINING)
+		return
+	. = TRUE
+	to_chat(user, "<span class='notice'>You start digging [src]...</span>")
+	if(I.use_tool(src, user, 40, volume=50))
+		to_chat(user, "<span class='notice'>You finish digging.</span>")
+		deconstruct(TRUE)
+
+/obj/structure/mineral_door/welder_act(mob/living/user, obj/item/I) //override if the door is supposed to be flammable.
 	. = TRUE
 	if(anchored)
 		to_chat(user, "<span class='warning'>[src] is still firmly secured to the ground!</span>")
@@ -156,10 +164,7 @@
 	user.visible_message("[user] welded [src] into pieces!", "<span class='notice'>You welded apart [src]!</span>")
 	deconstruct(TRUE)
 
-/obj/structure/mineral_door/crowbar_act(mob/living/user, obj/item/I)
-	if(is_hard_material) //only works on softer doors, such as wood or paper.
-		return
-
+/obj/structure/mineral_door/proc/crowbar_door(mob/living/user, obj/item/I) //if the door is flammable, call this in crowbar_act() so we can still decon it
 	. = TRUE
 	if(anchored)
 		to_chat(user, "<span class='warning'>[src] is still firmly secured to the ground!</span>")
@@ -172,6 +177,10 @@
 
 	user.visible_message("[user] pried [src] into pieces!", "<span class='notice'>You pried apart [src]!</span>")
 	deconstruct(TRUE)
+
+
+/////////////////////// END TOOL OVERRIDES ///////////////////////
+
 
 /obj/structure/mineral_door/deconstruct(disassembled = TRUE)
 	var/turf/T = get_turf(src)
@@ -226,7 +235,6 @@
 /obj/structure/mineral_door/transparent/plasma
 	name = "plasma door"
 	icon_state = "plasma"
-	resistance_flags = FLAMMABLE
 	sheetType = /obj/item/stack/sheet/mineral/plasma
 
 /obj/structure/mineral_door/transparent/plasma/ComponentInitialize()
@@ -268,7 +276,15 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
-	is_hard_material = FALSE
+
+/obj/structure/mineral_door/wood/pickaxe_door(mob/living/user, obj/item/I)
+	return
+
+/obj/structure/mineral_door/wood/welder_act(mob/living/user, obj/item/I)
+	return
+
+/obj/structure/mineral_door/wood/crowbar_act(mob/living/user, obj/item/I)
+	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/wood/attackby(obj/item/I, mob/living/user)
 	if(I.is_hot())
@@ -286,7 +302,6 @@
 	sheetAmount = 3
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
-	is_hard_material = FALSE
 
 /obj/structure/mineral_door/paperframe/Initialize()
 	. = ..()
@@ -296,6 +311,15 @@
 	. = ..()
 	if(obj_integrity < max_integrity)
 		to_chat(user, "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>")
+
+/obj/structure/mineral_door/paperframe/pickaxe_door(mob/living/user, obj/item/I)
+	return
+
+/obj/structure/mineral_door/paperframe/welder_act(mob/living/user, obj/item/I)
+	return
+
+/obj/structure/mineral_door/paperframe/crowbar_act(mob/living/user, obj/item/I)
+	return crowbar_door(user, I)
 
 /obj/structure/mineral_door/paperframe/attackby(obj/item/I, mob/living/user)
 	if(I.is_hot()) //BURN IT ALL DOWN JIM
