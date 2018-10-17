@@ -136,8 +136,7 @@
 			continue
 		L.Add(C)
 
-	camera_sort(L)
-
+	sortTim(L, cmp=/proc/cam_tag_sort, FALSE)
 	var/list/D = list()
 	D["Cancel"] = "Cancel"
 	for(var/obj/machinery/camera/C in L)

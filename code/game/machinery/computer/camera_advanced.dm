@@ -248,7 +248,7 @@
 			continue
 		L.Add(cam)
 
-	camera_sort(L)
+	sortTim(L, cmp=/proc/cam_tag_sort, FALSE)
 
 	var/list/T = list()
 
