@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Clowns and mimes will no longer have the incorrect name on their ID's bank account."
