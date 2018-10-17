@@ -106,7 +106,7 @@
 		user.visible_message("<span class='warning'>[user] begins to cut open [src].</span>",\
 			"<span class='notice'>You begin to cut open [src]...</span>")
 		if(do_after(user, 54, target = src))
-			drop_organs(user)
+			drop_organs(user, TRUE)
 	else
 		return ..()
 
@@ -118,7 +118,7 @@
 	pixel_y = rand(-3, 3)
 
 //empties the bodypart from its organs and other things inside it
-/obj/item/bodypart/proc/drop_organs(mob/user)
+/obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
@@ -439,7 +439,7 @@
 		qdel(cavity_item)
 	return ..()
 
-/obj/item/bodypart/chest/drop_organs(mob/user)
+/obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
 	if(cavity_item)
 		cavity_item.forceMove(user.loc)
 		cavity_item = null

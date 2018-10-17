@@ -482,10 +482,7 @@
 	update_mobility()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
-		QDEL_LIST_ASSOC_VAL(mood.mood_events)
-		mood.sanity = SANITY_GREAT
-		mood.update_mood()
-
+		mood.remove_temp_moods(admin_revive)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()

@@ -12,7 +12,6 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
-	var/obj/item/instrument/recorder/internal_instrument
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -53,6 +52,8 @@
 	var/hackprogress = 0				// Possible values: 0 - 100, >= 100 means the hack is complete and will be reset upon next check
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
+
+	var/obj/item/instrument/recorder/internal_instrument
 
 	var/holoform = FALSE
 	var/canholo = TRUE
