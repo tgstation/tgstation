@@ -157,7 +157,7 @@
 		C.reagents.metabolize(C, can_overdose=TRUE)
 	C.overeatduration = max(C.overeatduration - 2, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
-	C.adjust_nutriton(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
+	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
 		to_chat(C, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	return 1

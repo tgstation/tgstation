@@ -947,7 +947,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
-	if(NOHUNGER in dna?.species?.species_traits)
+	if(NOHUNGER in H.dna?.species?.species_traits)
 		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with

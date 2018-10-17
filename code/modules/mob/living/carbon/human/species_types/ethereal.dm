@@ -13,6 +13,7 @@
 	damage_overlay_type = null //We are too cool for regular damage overlays
 	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER)
 	var/current_color
+	var/ethereal_charge = 100
 
 	var/static/r1 = 151
 	var/static/g1 = 238
