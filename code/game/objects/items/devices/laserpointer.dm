@@ -129,21 +129,6 @@
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
-	//catpeople
-	for(var/mob/living/carbon/human/H in view(1,targloc))
-		if(H.incapacitated() || H.eye_blind )
-			continue
-		if(user.mobility_flags & MOBILITY_STAND)
-			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
-			if(prob(effectchance))
-				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
-				H.Move(targloc)
-				log_combat(user, H, "moved with a laser pointer",src)
-			else
-				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
-		else
-			H.visible_message("<span class='notice'>[H] stares at the light</span>","<span class = 'warning'> You stare at the light... </span>")
-
 	//cats!
 	for(var/mob/living/simple_animal/pet/cat/C in view(1,targloc))
 		if(prob(50))
