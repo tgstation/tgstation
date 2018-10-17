@@ -42,7 +42,7 @@
 	//begin playsound shenanigans//
 	
 	//for barefooted non-clawed mobs like monkeys
-	if(ismonkey(LM) || isgorilla(LM) || ismook(LM))
+	if(isbarefoot(LM))
 		playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
 			GLOB.barefootstep[T.barefootstep][2] * v,
 			TRUE,
@@ -50,7 +50,7 @@
 		return
 	
 	//for xenomorphs, dogs, and other clawed mobs
-	if(isalienadult(LM) || isdog(LM) || isfox(LM) || isbear(LM) || ismegaarachnid(LM))
+	if(isclawfoot(LM))
 		playsound(T, pick(GLOB.clawfootstep[T.clawfootstep][1]),
 				GLOB.clawfootstep[T.clawfootstep][2] * v,
 				TRUE,
@@ -58,7 +58,7 @@
 		return
 	
 	//for megafauna and other large and imtimidating mobs such as the bloodminer
-	if(ismegafauna(LM) || isleaper(LM))
+	if(isheavyfoot(LM))
 		playsound(T, pick(GLOB.heavyfootstep[T.heavyfootstep][1]),
 				GLOB.heavyfootstep[T.heavyfootstep][2] * v,
 				TRUE,
@@ -70,35 +70,26 @@
 		playsound(T, 'sound/effects/footstep/slime1.ogg', 15 * v)
 		return
 		
-	//for simple humanoid mobs (clowns, russians, pirates, etc.)
-	if(ishumansimple(LM) || isdevil(LM))
-		playsound(T, pick(GLOB.footstep[T.footstep][1]),
-				GLOB.footstep[T.footstep][2] * v,
-				TRUE,
-				GLOB.footstep[T.footstep][3] + e)
-		return
-	
-	if(ishuman(LM)) //for humans
-		var/mob/living/carbon/human/H = LM
-		var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
-		if(H.shoes || feetCover) //are we wearing shoes
+	//for (simple) humanoid mobs (clowns, russians, pirates, etc.)
+	if(isshoefoot(LM))
+		if(!ishuman(LM))
 			playsound(T, pick(GLOB.footstep[T.footstep][1]),
 				GLOB.footstep[T.footstep][2] * v,
 				TRUE,
 				GLOB.footstep[T.footstep][3] + e)
-		
-		//check for robo legs
-		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-		var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
-		
-		if(O.status == BODYPART_ROBOTIC) //do we have robo legs?
-			playsound(T, 'sound/effects/footstep/robot1.ogg', 5 * v)
 			return
-		
-		
-		if(!H.shoes && !feetCover) //are we NOT wearing shoes?
-			playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
-				GLOB.barefootstep[T.barefootstep][2] * v,
-				TRUE,
-				GLOB.barefootstep[T.barefootstep][3] + e)
-		return
+		if(ishuman(LM)) //for proper humans, they're special
+			var/mob/living/carbon/human/H = LM
+			var/feetCover = (H.wear_suit && (H.wear_suit.body_parts_covered & FEET)) || (H.w_uniform && (H.w_uniform.body_parts_covered & FEET))
+			
+			if(H.shoes || feetCover) //are we wearing shoes
+				playsound(T, pick(GLOB.footstep[T.footstep][1]),
+					GLOB.footstep[T.footstep][2] * v,
+					TRUE,
+					GLOB.footstep[T.footstep][3] + e)
+			
+			if(!H.shoes && !feetCover) //are we NOT wearing shoes?
+				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
+					GLOB.barefootstep[T.barefootstep][2] * v,
+					TRUE,
+					GLOB.barefootstep[T.barefootstep][3] + e)
