@@ -1114,16 +1114,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
 			. += 1 + grav_force
 
-		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
-			switch(mood.sanity)
-				if(SANITY_INSANE to SANITY_CRAZY)
-					. += 1.5
-				if(SANITY_CRAZY to SANITY_UNSTABLE)
-					. += 1
-				if(SANITY_UNSTABLE to SANITY_DISTURBED)
-					. += 0.5
-
 		if(H.has_trait(TRAIT_FAT))
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))

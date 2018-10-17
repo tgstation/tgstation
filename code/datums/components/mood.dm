@@ -9,7 +9,6 @@
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
-	var/holdmyinsanityeffect = 0 //before we edit our sanity lets take a look
 	var/obj/screen/mood/screen_obj
 
 /datum/component/mood/Initialize()
@@ -126,29 +125,23 @@
 
 	switch(mood_level)
 		if(1)
-			DecreaseSanity(0.2)
+			setSanity(sanity-0.2)
 		if(2)
-			DecreaseSanity(0.125, SANITY_CRAZY)
+			setSanity(sanity-0.125, minimum=SANITY_CRAZY)
 		if(3)
-			DecreaseSanity(0.075, SANITY_UNSTABLE)
+			setSanity(sanity-0.075, minimum=SANITY_UNSTABLE)
 		if(4)
-			DecreaseSanity(0.025, SANITY_DISTURBED)
+			setSanity(sanity-0.025, minimum=SANITY_DISTURBED)
 		if(5)
-			IncreaseSanity(0.1)
+			setSanity(sanity+0.1)
 		if(6)
-			IncreaseSanity(0.15)
+			setSanity(sanity+0.15)
 		if(7)
-			IncreaseSanity(0.20)
+			setSanity(sanity+0.2)
 		if(8)
-			IncreaseSanity(0.25, SANITY_GREAT)
+			setSanity(sanity+0.25, maximum=SANITY_GREAT)
 		if(9)
-			IncreaseSanity(0.4, SANITY_GREAT)
-
-	if(insanity_effect != holdmyinsanityeffect)
-		if(insanity_effect > holdmyinsanityeffect)
-			owner.crit_threshold += (insanity_effect - holdmyinsanityeffect)
-		else
-			owner.crit_threshold -= (holdmyinsanityeffect - insanity_effect)
+			setSanity(sanity+0.4, maximum=SANITY_GREAT)
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -158,32 +151,41 @@
 		if(prob(0.05))
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
-
-	holdmyinsanityeffect = insanity_effect
 	
 	HandleNutrition(owner)
 
-/datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
-	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
-		IncreaseSanity(0.5)
-	else
-		sanity = max(minimum, sanity - amount)
-		if(sanity < SANITY_UNSTABLE)
-			if(sanity < SANITY_CRAZY)
-				insanity_effect = (MAJOR_INSANITY_PEN)
-			else
-				insanity_effect = (MINOR_INSANITY_PEN)
+/datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
+	if(amount == sanity)
+		return
+	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
+	// If the new amount would move towards the acceptable range faster then use it instead
+	if(sanity < minimum && amount < sanity + 0.5)
+		amount = sanity + 0.5
+	else if(sanity > maximum && amount > sanity - 0.5)
+		amount = sanity - 0.5
+	sanity = amount
 
-/datum/component/mood/proc/IncreaseSanity(amount, maximum = SANITY_NEUTRAL)
-	if(sanity > maximum)
-		DecreaseSanity(0.5) //Removes some sanity to go back to our current limit.
-	else
-		sanity = min(maximum, sanity + amount)
-		if(sanity > SANITY_CRAZY)
-			if(sanity > SANITY_UNSTABLE)
-				insanity_effect = 0
-			else
-				insanity_effect = MINOR_INSANITY_PEN
+	var/mob/living/master = parent
+	switch(sanity)
+		if(SANITY_INSANE to SANITY_CRAZY)
+			setInsanityEffect(MAJOR_INSANITY_PEN)
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1.5, movetypes=(~FLYING))
+		if(SANITY_CRAZY to SANITY_UNSTABLE)
+			setInsanityEffect(MINOR_INSANITY_PEN)
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1, movetypes=(~FLYING))
+		if(SANITY_UNSTABLE to SANITY_DISTURBED)
+			setInsanityEffect(0)
+			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
+		else
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+
+/datum/component/mood/proc/setInsanityEffect(newval)
+	if(newval == insanity_effect)
+		return
+	var/mob/living/master = parent
+	master.crit_threshold = (master.crit_threshold - insanity_effect) + newval
+	insanity_effect = newval
 
 /datum/component/mood/proc/add_event(datum/source, category, type, param) //Category will override any events in the same category, should be unique unless the event is based on the same thing like hunger.
 	var/datum/mood_event/the_event
