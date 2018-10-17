@@ -629,6 +629,9 @@
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
 	return dat
+
 // Loudness Booster
 /mob/living/silicon/pai/proc/softwareLoudness()
-	internal_instrument = new(src)
+	if(!internal_instrument)
+		internal_instrument = new(src)
+	return "<h3>Sound Synthetizer</h3>"
