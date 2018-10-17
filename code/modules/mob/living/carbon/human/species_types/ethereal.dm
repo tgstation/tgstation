@@ -12,6 +12,7 @@
 	hair_color = "mutcolor"
 	damage_overlay_type = null //We are too cool for regular damage overlays
 	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER)
+	default_color = "#eda495"
 	var/current_color
 	var/ethereal_charge = 100
 
@@ -47,3 +48,30 @@
 		H.dna.features["mcolor"] = rgb(128,128,128)
 	H.update_body()
 
+/datum/species/ethereal/spec_life(mob/living/carbon/human/H)
+	.=..()
+	handle_charge(H)
+
+
+/datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/H)
+	var/charge_rate = ETHEREAL_CHARGE_FACTOR
+	var/brutemod_modifier = 1
+	adjust_charge(-charge_rate)
+	switch(ethereal_charge)
+		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
+			H.throw_alert("ethereal_charge", /obj/screen/alert/emptycell)
+			apply_damage(0.5, BRUTE)
+			brutemod_modifier *= 1.5
+		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
+			H.throw_alert("ethereal_charge", /obj/screen/alert/lowcell, 3)
+		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_ALMOSTFULL)
+			H.throw_alert("ethereal_charge", /obj/screen/alert/lowcell, 2)
+		else
+			H.clear_alert("ethereal_charge")
+	brutemod *= brutemod_modifier
+
+/datum/species/ethereal/proc/adjust_charge(var/change)
+	ethereal_charge = CLAMP(ethereal_charge + change, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)
+
+/datum/species/ethereal/proc/set_charge(var/change)
+	ethereal_charge = CLAMP(change, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)

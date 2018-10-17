@@ -162,6 +162,10 @@
 	holdmyinsanityeffect = insanity_effect
 	
 	HandleNutrition(owner)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(isethereal(H))
+			HandleCharge(H)
 
 /datum/component/mood/proc/DecreaseSanity(amount, minimum = SANITY_INSANE)
 	if(sanity < minimum) //This might make KevinZ stop fucking pinging me.
@@ -251,6 +255,18 @@
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+
+/datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
+	var/datum/species/ethereal/E = H.dna?.species
+	switch(E.ethereal_charge)
+		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
+			add_event(null, "charge", /datum/mood_event/decharged)
+		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
+			add_event(null, "charge", /datum/mood_event/lowpower)
+		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_ALMOSTFULL)
+			clear_event(null, "charge")
+		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
+			add_event(null, "charge", /datum/mood_event/charged)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
