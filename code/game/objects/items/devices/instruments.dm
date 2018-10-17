@@ -282,7 +282,7 @@
 		beacon_music(user)
 
 /obj/item/musicbeacon/proc/beacon_music(mob/M)
-	if(!display_names.len)
+	if(!display_names)
 		display_names = list()
 		var/static/list/instruments = list(
 								/obj/item/instrument/violin,
