@@ -93,23 +93,36 @@
 			return
 	close_machine(target)
 
-/obj/machinery/sleeper/attackby(obj/item/I, mob/user, params)
-	if(state_open)
-		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] its maintenance hatch!</span>")
+/obj/machinery/sleeper/screwdriver_act(mob/living/user, obj/item/I)
+	. = TRUE
+	if(..())
 		return
 	if(occupant)
 		to_chat(user, "<span class='warning'>[src] is currently occupied!</span>")
 		return
-	if(!state_open && !occupant)
-		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
-			return
+	if(state_open)
+		to_chat(user, "<span class='warning'>[src] must be closed to [panel_open ? "close" : "open"] it's maintenance hatch!</span>")
+		return
+	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+		return
+	return FALSE
+
+/obj/machinery/sleeperwrench_act(mob/living/user, obj/item/I)
 	if(default_change_direction_wrench(user, I))
-		return
+		return TRUE
+
+/obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
 	if(default_pry_open(I))
-		return
+		return TRUE
 	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+		return TRUE
+
+/obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
+	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
+	if(.)
+		I.play_tool_sound(src, 50)
+		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open [src].</span>")
+		open_machine()
 
 /obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
