@@ -42,7 +42,7 @@
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 
 	var/obj/item/flashlight/gun_light
-	var/can_flashlight = 0
+	var/can_flashlight = FALSE
 	var/obj/item/kitchen/knife/bayonet
 	var/mutable_appearance/knife_overlay
 	var/can_bayonet = FALSE
@@ -71,6 +71,26 @@
 		alight = new /datum/action/item_action/toggle_gunlight(src)
 	build_zooming()
 
+/obj/item/gun/Destroy()
+	QDEL_NULL(pin)
+	QDEL_NULL(gun_light)
+	QDEL_NULL(bayonet)
+	QDEL_NULL(chambered)
+	return ..()
+
+/obj/item/gun/handle_atom_del(atom/A)
+	if(A == pin)
+		pin = null
+	if(A == chambered)
+		chambered = null
+		update_icon()
+	if(A == bayonet)
+		bayonet = null
+		cut_overlay(knife_overlay, TRUE)
+	if(A == gun_light)
+		gun_light = null
+		update_gunlight()
+	return ..()
 
 /obj/item/gun/CheckParts(list/parts_list)
 	..()
@@ -87,6 +107,16 @@
 		to_chat(user, "It has \a [pin] installed.")
 	else
 		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
+	if(gun_light)
+		to_chat(user, "It has a [gun_light] attached to it.")
+		to_chat(user, "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+	else if(can_flashlight)
+		to_chat(user, "It has a mounting point for a flashlight.")
+	if(bayonet)
+		to_chat(user, "It has a [bayonet] attached to it.")
+		to_chat(user, "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>")
+	else if(can_bayonet)
+		to_chat(user, "It has a mounting lug for a bayonet.")
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -522,8 +552,3 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
-
-/obj/item/gun/handle_atom_del(atom/A)
-	if(A == chambered)
-		chambered = null
-		update_icon()
