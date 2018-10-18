@@ -525,7 +525,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	if (!isemptylist(whoDyin))
 		whomString = "at "
 		for (var/mob/living/M in whoDyin)
-			whomString += "[M], "
+			whomString += "[key_name(M)], "
 
 	var/delayString = temp_pod.landingDelay == initial(temp_pod.landingDelay) ? "" : " Delay=[temp_pod.landingDelay*0.1]s"
 	var/damageString = temp_pod.damage == 0 ? "" : " Dmg=[temp_pod.damage]"
