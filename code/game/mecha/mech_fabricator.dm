@@ -62,6 +62,11 @@
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
+/obj/machinery/mecha_part_fabricator/examine(mob/user)
+	..()
+	GET_COMPONENT(materials, /datum/component/material_container)
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Storing up to [materials.max_amount] material units.<br>Material consumption at [component_coeff*100]%.<br>Build time reduced by [100-time_coeff*100]%.<span>")
 
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(obj_flags & EMAGGED)
