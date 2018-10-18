@@ -326,6 +326,7 @@
 /obj/item/analyzer,
 /obj/item/analyzer,
 /obj/item/analyzer,
+/obj/item/card/id/departmental_budget/eng,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aQ" = (
@@ -336,6 +337,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"aR" = (
+/obj/structure/cable/green{
+	icon_state = "2-8"
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai{
+	name = "\improper AI Core"
+	})
 "aT" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -976,9 +985,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "cE" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4
-	},
+/obj/machinery/porta_turret/ai,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
@@ -1003,14 +1010,6 @@
 	layer = 4.1;
 	tag = "icon-plant-21"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "AI Core APC";
-	pixel_y = 24
-	},
-/obj/structure/cable/green{
-	icon_state = "0-2"
-	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
@@ -1029,25 +1028,19 @@
 	name = "\improper AI Core"
 	})
 "cJ" = (
-/obj/machinery/porta_turret/ai{
-	dir = 4
-	},
+/obj/machinery/porta_turret/ai,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior{
 	name = "\improper AI Core Lobby"
 	})
 "cK" = (
-/turf/open/floor/engine{
-	name = "high pressure o2 floor"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/engineering)
 "cL" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/engine{
-	name = "high pressure o2 floor"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/engineering)
 "cM" = (
 /turf/open/floor/plasteel/dark,
@@ -1086,14 +1079,6 @@
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
-"cR" = (
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai{
-	name = "\improper AI Core"
-	})
 "cS" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/space/basic,
@@ -1102,15 +1087,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/engine{
-	name = "high pressure o2 floor"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/engineering)
 "cU" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine{
-	name = "high pressure o2 floor"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/engineering)
 "cV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -1122,9 +1103,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "high pressure o2 floor"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/engineering)
 "cW" = (
 /obj/structure/lattice/catwalk,
@@ -1207,9 +1186,6 @@
 /area/engine/engineering)
 "df" = (
 /obj/effect/landmark/start/ai,
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
@@ -1222,9 +1198,7 @@
 /area/engine/engineering)
 "dh" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "high pressure o2 floor"
-	},
+/turf/open/floor/engine/o2,
 /area/engine/engineering)
 "di" = (
 /obj/machinery/atmospherics/components/binary/pump,
@@ -1271,16 +1245,15 @@
 	name = "\improper AI Core"
 	})
 "dn" = (
-/obj/machinery/turretid{
-	control_area = "\improper AI Core";
-	pixel_x = 24
-	},
-/obj/structure/cable/green{
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/highsecurity{
 	name = "telecomms and ai module door";
 	req_access_txt = "61"
+	},
+/obj/machinery/turretid{
+	icon_state = "control_stun";
+	name = "AI Chamber turret control";
+	pixel_x = 32;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/turret_protected/ai{
@@ -1384,7 +1357,9 @@
 	input_level = 10000;
 	output_level = 2000
 	},
-/obj/structure/cable/green,
+/obj/structure/cable/green{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
@@ -1512,6 +1487,9 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-8"
 	},
+/obj/structure/cable/green{
+	icon_state = "1-4"
+	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
@@ -1523,7 +1501,7 @@
 /turf/open/floor/engine/n2o,
 /area/engine/engineering)
 "dU" = (
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/engine/n2o,
 /area/engine/engineering)
 "dV" = (
@@ -1644,6 +1622,13 @@
 	icon_state = "camera";
 	dir = 10
 	},
+/obj/machinery/power/apc{
+	areastring = "/area/ai_monitored/turret_protected/ai";
+	dir = 1;
+	name = "AI Chamber APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/green,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
@@ -2015,17 +2000,13 @@
 	name = "\improper AI Core Lobby"
 	})
 "eY" = (
-/turf/open/floor/engine{
-	name = "high pressure plasma floor"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/engineering)
 "eZ" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/engine{
-	name = "high pressure plasma floor"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/engineering)
 "fa" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
@@ -2171,15 +2152,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/engine{
-	name = "high pressure plasma floor"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/engineering)
 "fu" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
-/turf/open/floor/engine{
-	name = "high pressure plasma floor"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/engineering)
 "fv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -2191,9 +2168,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "high pressure plasma floor"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/engineering)
 "fw" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
@@ -2317,14 +2292,19 @@
 	name = "\improper Telecommunications Chamber"
 	})
 "fM" = (
-/obj/machinery/turretid{
-	control_area = "\improper AI Core Lobby";
-	pixel_x = 24
-	},
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
 	layer = 4.1;
 	tag = "icon-plant-05"
+	},
+/obj/machinery/turretid{
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
+	enabled = 1;
+	icon_state = "control_standby";
+	name = "AI Core LobbyTurret Control";
+	pixel_x = 32;
+	req_access = null;
+	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/tcomeast{
@@ -2403,9 +2383,7 @@
 /area/engine/gravity_generator)
 "fW" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "high pressure plasma floor"
-	},
+/turf/open/floor/engine/plasma,
 /area/engine/engineering)
 "fX" = (
 /obj/machinery/camera/autoname{
@@ -2687,17 +2665,13 @@
 /turf/open/space/basic,
 /area/space)
 "gH" = (
-/turf/open/floor/engine{
-	name = "high pressure co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/engineering)
 "gI" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/engine{
-	name = "high pressure co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/engineering)
 "gJ" = (
 /obj/machinery/atmospherics/pipe/manifold/yellow/visible{
@@ -2814,15 +2788,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/engine{
-	name = "high pressure co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/engineering)
 "gX" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/turf/open/floor/engine{
-	name = "high pressure co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/engineering)
 "gY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -2834,9 +2804,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "high pressure co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/engineering)
 "gZ" = (
 /obj/structure/lattice/catwalk,
@@ -2927,9 +2895,7 @@
 /area/engine/gravity_generator)
 "hm" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "high pressure co2 floor"
-	},
+/turf/open/floor/engine/co2,
 /area/engine/engineering)
 "hn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -3041,9 +3007,7 @@
 	name = "\improper Command Hallway"
 	})
 "hz" = (
-/turf/open/floor/engine{
-	name = "high pressure n2 floor"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/engineering)
 "hA" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -3055,9 +3019,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "high pressure n2 floor"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/engineering)
 "hB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -3163,23 +3125,17 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/engine{
-	name = "high pressure n2 floor"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/engineering)
 "hO" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine{
-	name = "high pressure n2 floor"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/engineering)
 "hP" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "high pressure n2 floor"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/engineering)
 "hQ" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -3229,9 +3185,7 @@
 	})
 "hW" = (
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "high pressure n2 floor"
-	},
+/turf/open/floor/engine/n2,
 /area/engine/engineering)
 "hX" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
@@ -3431,9 +3385,7 @@
 	name = "\improper Command Hallway"
 	})
 "iq" = (
-/turf/open/floor/engine{
-	name = "high pressure air floor"
-	},
+/turf/open/floor/engine/air,
 /area/engine/engineering)
 "ir" = (
 /obj/machinery/door/poddoor{
@@ -3460,15 +3412,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/open/floor/engine{
-	name = "high pressure air floor"
-	},
+/turf/open/floor/engine/air,
 /area/engine/engineering)
 "ix" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine{
-	name = "high pressure air floor"
-	},
+/turf/open/floor/engine/air,
 /area/engine/engineering)
 "iy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
@@ -3480,9 +3428,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "high pressure air floor"
-	},
+/turf/open/floor/engine/air,
 /area/engine/engineering)
 "iz" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
@@ -5952,6 +5898,7 @@
 "ow" = (
 /obj/structure/table,
 /obj/item/soulstone/anybody,
+/obj/item/reagent_containers/food/drinks/bottle/holywater/hell,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/fore)
 "ox" = (
@@ -7637,6 +7584,7 @@
 /obj/item/paper_bin{
 	pixel_y = 5
 	},
+/obj/item/card/id/departmental_budget/car,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "sT" = (
@@ -8077,6 +8025,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
+/obj/item/storage/box/disks_plantgene,
 /turf/open/floor/plasteel/white,
 /area/hydroponics)
 "ud" = (
@@ -11486,10 +11435,6 @@
 /area/science/xenobiology)
 "Cz" = (
 /obj/structure/table,
-/obj/item/nanite_scanner{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /obj/structure/table,
 /obj/item/storage/box/disks_nanite{
 	pixel_x = 8;
@@ -16486,6 +16431,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/card/id/departmental_budget/sci,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "OY" = (
@@ -17999,6 +17945,7 @@
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/clothing/neck/stethoscope,
+/obj/item/card/id/departmental_budget/med,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "Te" = (
@@ -57397,7 +57344,7 @@ al
 cq
 cq
 cH
-cR
+cF
 df
 dn
 dA
@@ -57658,7 +57605,7 @@ cF
 cq
 cq
 cq
-cF
+aR
 ei
 cq
 cJ
