@@ -28,11 +28,37 @@
 	var/facial_hair_style = "Shaved"
 	//Eye Colouring
 
-	var/obj/item/organ/eyes/eyes = null
+	var/obj/item/organ/eyes/eyes
+	var/obj/item/organ/ears/ears
+	var/obj/item/organ/tongue/tongue
+
 
 	var/lip_style = null
 	var/lip_color = "white"
 
+
+/obj/item/bodypart/head/Destroy()
+	QDEL_NULL(brain)
+	QDEL_NULL(brainmob)
+	QDEL_NULL(eyes)
+	QDEL_NULL(ears)
+	QDEL_NULL(tongue)
+	return ..()
+
+/obj/item/bodypart/head/handle_atom_del(atom/A)
+	if(A == brain)
+		brain = null
+		update_icon_dropped()
+	if(A == brainmob)
+		brainmob = null
+	if(A == eyes)
+		eyes = null
+		update_icon_dropped()
+	if(A == ears)
+		ears = null
+	if(A == tongue)
+		tongue = null
+	return ..()
 
 /obj/item/bodypart/head/examine(mob/user)
 	..()
@@ -55,6 +81,12 @@
 
 		if(!eyes)
 			to_chat(user, "<span class='info'>[real_name]'s eyes appear to have been removed.</span>")
+
+		if(!ears)
+			to_chat(user, "<span class='info'>[real_name]'s ears appear to have been removed.</span>")
+
+		if(!tongue)
+			to_chat(user, "<span class='info'>[real_name]'s tongue appears to have been removed.</span>")
 
 
 /obj/item/bodypart/head/can_dismember(obj/item/I)
