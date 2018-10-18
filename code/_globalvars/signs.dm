@@ -12,7 +12,9 @@ GLOBAL_LIST_INIT(signsIndigo, list("Sagio","Sagimino","Sagicen"))
 GLOBAL_LIST_INIT(signsPurple, list("Capriza","Capries","Capriborn"))
 GLOBAL_LIST_INIT(signsViolet, list("Aquapio","Aquaries","Aquapia"))
 GLOBAL_LIST_INIT(signsFuchsia, list("Pirius","Pittarius","Picen")) //Pintius kkkk
-GLOBAL_LIST_INIT(signSpecial, list("Rolius","Chupius"))
+GLOBAL_LIST_INIT(signSpecial, list("Rolius","Chupius")) //troll do deul
+
+GLOBAL_LIST_INIT(allSigns, list("Arga","Arcer","Argo","Taura","Taurittanius","Taurga","Gemnius","Gemsci","Gemza","Canrus","Cansci","Canrist","Lesces","Leiborn","Lerius","Virrus","Virnius","Virpia","Libun","Ligo","Limino","Scorittarius","Scorun","Scorza","Sagio","Sagimino","Sagicen","Capriza","Capries","Capriborn","Aquapio","Aquaries","Aquapia","Pirius","Pittarius","Picen"))
 /*
 world/New()
 	..()

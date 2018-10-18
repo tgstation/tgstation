@@ -29,6 +29,8 @@
 		if(!H.dna.features["alternian_horns"])
 			H.dna.features["alternian_horns"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["alternian_horns"]) ? H.client.prefs.features["alternian_horns"] : "simple"]"
 			handle_mutant_bodyparts(H)
+		if(isalternian(C))
+			C.select_sign(C)
 
 /datum/species/alternian/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -39,3 +41,11 @@
 	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
 		return FALSE
 	return TRUE
+
+/datum/species/alternian/proc/select_sign(mob/living/carbon/human/H)
+	var/possibleSigns
+	for(var/sign in (GLOB.allSigns - GLOB.usedSigns))
+		possibleSigns += sign
+	if(isalternian(H))
+		H.sign = pick(possibleSigns)
+		H << "\blue Your sign is [H.sign]!"
