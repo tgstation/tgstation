@@ -423,7 +423,7 @@
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_positions
 
 /datum/config_entry/number/reopen_roundstart_suicide_roles_delay
-	min_val = 300
+	min_val = 30
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 

@@ -60,10 +60,10 @@ MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
 ## Unhash to enable reopening of command level positions
 #REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_POSITIONS
 
-## Define the delay for roles to be reopened after the round starts in deciseconds.
-## Has a minimum delay of 30 seconds (300ds), though it's suggested to keep over 1 min (600ds)
-## If undefined, the delay defaults to 4 minutes (2400 deciseconds).
-#REOPEN_ROUNDSTART_SUICIDE_ROLES_DELAY 2400
+## Define the delay for roles to be reopened after the round starts in seconds.
+## Has a minimum delay of 30 seconds, though it's suggested to keep over 1 min
+## If undefined, the delay defaults to 4 minutes.
+#REOPEN_ROUNDSTART_SUICIDE_ROLES_DELAY 240
 
 ## Unhash to enable a printed command report for reopened roles listing what roles were reopened.
 #REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_REPORT
