@@ -5,7 +5,7 @@
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
 	clothing_flags = THICKMATERIAL
-
+	snug_fit = TRUE
 
 /obj/item/clothing/suit/beekeeper_suit
 	name = "beekeeper suit"

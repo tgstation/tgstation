@@ -7,7 +7,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
-	var/snug_fit = FALSE //can the hat be knocked off?
+	var/snug_fit = FALSE //is the hat immune to being knocked off?
 	dynamic_hair_suffix = "+generic"
 
 /obj/item/clothing/head/Initialize()
