@@ -274,7 +274,7 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/penguin
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/penguin
 	filling_color = "#B22222"
-	tastes = list("a weird mix of beef and cod fish" = 1)
+	tastes = list("beef" = 1, "cod fish" = 1)
 
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
@@ -329,7 +329,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/steak/penguin
 	name = "penguin steak"
-	tastes = list("a weird mix of beef and cod fish" = 1)
+	tastes = list("beef" = 1, "cod fish" = 1)
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
@@ -396,7 +396,7 @@
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/penguin
 	name = "raw penguin cutlet"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/penguin
-	tastes = list("a weird mix of beef and cod fish" = 1)
+	tastes = list("beef" = 1, "cod fish" = 1)
 
 //Cooked cutlets
 
@@ -440,4 +440,4 @@
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet/penguin
 	name = "penguin cutlet"
-	tastes = list("a weird mix of beef and cod fish" = 1)
+	tastes = list("beef" = 1, "cod fish" = 1)
