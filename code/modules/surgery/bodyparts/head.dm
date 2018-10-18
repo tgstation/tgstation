@@ -43,16 +43,15 @@
 			to_chat(user, "<span class='info'>There's a pretty dumb expression on [real_name]'s face; they must have really hated life. There is no hope of recovery.</span>")
 		else if(brain.brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD)
 			to_chat(user, "<span class='info'>It seems to be leaking some kind of... clear fluid? The brain inside must be in pretty bad shape... There is no coming back from that.</span>")
-		else if(brainmob?.mind)
-			var/foundghost = FALSE
-			for(var/mob/dead/observer/G in GLOB.player_list)
-				if(G.mind == brainmob.mind)
-					foundghost = TRUE
-					if (!G.can_reenter_corpse)
-						foundghost = FALSE
-					break
-			if(!foundghost)
-				to_chat(user, "<span class='info'>This one seems particularly lifeless. Perhaps there will be a chance for it later.</span>")
+		else if(brainmob)
+			if(brainmob.get_ghost(FALSE, TRUE))
+				to_chat(user, "<span class='info'>It's muscles are still twitching slightly... It still seems to have a bit of life left to it.</span>")
+			else
+				to_chat(user, "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>")
+		else if(brain?.decoy_override)
+			to_chat(user, "<span class='info'>It seems seems particularly lifeless. Perhaps there'll be a chance for them later.</span>")
+		else
+			to_chat(user, "<span class='info'>It seems completely devoid of life.</span>")
 
 		if(!eyes)
 			to_chat(user, "<span class='info'>[real_name]'s eyes appear to have been removed.</span>")
