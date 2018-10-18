@@ -2,17 +2,19 @@
 	name = "Ethereal"
 	id = "ethereal"
 	attack_verb = "burn"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
+	attack_sound = 'sound/weapons/etherealhit.ogg'
+	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
-	exotic_bloodtype = "Liquid Electricity" //fuck you think of something better gamer
+	exotic_bloodtype = "LE" //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
-	hair_color = "mutcolor"
-	damage_overlay_type = null //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER, HAIR)
+	damage_overlay_type = "" //We are too cool for regular damage overlays
+	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER)
+	default_features = list("mcolor" = "97ee63")
+	fixed_mut_color = "97ee63"
 	default_color = "#97ee63"
+	sexes = FALSE
 	var/current_color
 	var/ethereal_charge = ETHEREAL_CHARGE_FULL
 
@@ -41,10 +43,10 @@
 		var/percent = max(H.health, 0) / 100
 		current_color = rgb(r2 + ((r1-r2)*percent), g2 + ((g1-g2)*percent), b2 + ((b1-b2)*percent))
 		H.set_light(1 + (2 * percent), 1 + (1 * percent), current_color)
-		H.dna.features["mcolor"] = copytext(current_color, 2)
+		fixed_mut_color = copytext(current_color, 2)
 	else
 		H.set_light(0)
-		H.dna.features["mcolor"] = rgb(128,128,128)
+		fixed_mut_color = rgb(128,128,128)
 	H.update_body()
 
 /datum/species/ethereal/spec_life(mob/living/carbon/human/H)
