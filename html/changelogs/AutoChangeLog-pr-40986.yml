@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - spellcheck: "Ban durations are now a little more user-friendly (to read.)"
