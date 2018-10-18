@@ -16,6 +16,9 @@
 
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
+	var/obj/item/organ/eyes/eyes
+	var/obj/item/organ/ears/ears
+	var/obj/item/organ/tongue/tongue
 
 	//Limb appearance info:
 	var/real_name = "" //Replacement name
@@ -28,18 +31,13 @@
 	var/facial_hair_style = "Shaved"
 	//Eye Colouring
 
-	var/obj/item/organ/eyes/eyes
-	var/obj/item/organ/ears/ears
-	var/obj/item/organ/tongue/tongue
-
-
 	var/lip_style = null
 	var/lip_color = "white"
 
 
 /obj/item/bodypart/head/Destroy()
+	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
 	QDEL_NULL(brain)
-	QDEL_NULL(brainmob)
 	QDEL_NULL(eyes)
 	QDEL_NULL(ears)
 	QDEL_NULL(tongue)
@@ -49,6 +47,9 @@
 	if(A == brain)
 		brain = null
 		update_icon_dropped()
+		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
+			message_admins("Brainmob: ([brainmob]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
+			log_game("Brainmob: ([brainmob]) was left stranded in [src] at [AREACOORD(src)] without a brain!")
 	if(A == brainmob)
 		brainmob = null
 	if(A == eyes)
