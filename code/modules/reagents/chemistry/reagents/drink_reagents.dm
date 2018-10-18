@@ -411,7 +411,7 @@
 /datum/reagent/consumable/grey_bull
 	name = "Grey Bull"
 	id = "grey_bull"
-	description = "The drink of choice for staying up late and assisting."
+	description = "Grey Bull, it gives you gloves!"
 	color = "#EEFF00" // rgb: 238, 255, 0
 	quality = DRINK_VERYGOOD
 	taste_description = "carbonated oil"
