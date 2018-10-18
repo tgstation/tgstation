@@ -38,7 +38,7 @@ MAP_REMOVE_JOB(lawyer)
 	supervisors = "the captain and Central Command"
 
 /datum/job/hop/get_access()
-	MAP_JOB_CHECK
+	MAP_JOB_CHECK_BASE
 	return get_all_accesses()
 
 //Security
