@@ -84,7 +84,7 @@
 			var/akey = query_ban_check.item[2]
 			var/reason = query_ban_check.item[3]
 			var/expiration = query_ban_check.item[4]
-			var/duration = query_ban_check.item[5]
+			var/duration = text2num(query_ban_check.item[5])
 			var/bantime = query_ban_check.item[6]
 			var/bantype = query_ban_check.item[7]
 			var/banid = query_ban_check.item[8]
