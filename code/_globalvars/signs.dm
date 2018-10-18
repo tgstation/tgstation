@@ -13,8 +13,8 @@ GLOBAL_LIST_INIT(signsPurple, list("Capriza","Capries","Capriborn"))
 GLOBAL_LIST_INIT(signsViolet, list("Aquapio","Aquaries","Aquapia"))
 GLOBAL_LIST_INIT(signsFuchsia, list("Pirius","Pittarius","Picen")) //Pintius kkkk
 GLOBAL_LIST_INIT(signSpecial, list("Rolius","Chupius"))
-
+/*
 world/New()
 	..()
 	for(var/i = 0; i < GLOB.signsRust.len; i++)
-		world << "Rust: [GLOB.signsRust[i]]"
+		world << "Rust: [GLOB.signsRust[i]]" */
