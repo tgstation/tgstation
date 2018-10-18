@@ -230,7 +230,7 @@
 
 /turf/closed/wall/r_wall/syndicate
 	name = "hull"
-	desc = "The outer hull of an ominous looking ship."
+	desc = "The armored hull of an ominous looking ship."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
 	explosion_block = 20

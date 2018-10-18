@@ -37,7 +37,7 @@
 "aK" = (/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/syndicate/medical)
 "aL" = (/obj/machinery/suit_storage_unit/syndicate,/obj/effect/turf_decal/stripes/line{dir = 5},/turf/open/floor/mineral/plastitanium,/area/shuttle/syndicate/eva)
 "aM" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/eva)
-"aN" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/effect/turf_decal/bot_white,/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/eva)
+"aN" = (/obj/effect/turf_decal/bot_white,/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/eva)
 "aO" = (/obj/structure/chair/comfy/shuttle{dir = 4; name = "tactical chair"},/obj/effect/turf_decal/bot_white,/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/airlock)
 "aP" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/airlock)
 "aQ" = (/obj/structure/table/reinforced,/obj/item/storage/toolbox/syndicate,/obj/item/crowbar/red,/obj/effect/turf_decal/stripes/line{dir = 9},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/syndicate/airlock)
@@ -55,7 +55,6 @@
 "bc" = (/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/airlock)
 "bd" = (/obj/structure/sign/warning/vacuum/external{layer = 4},/turf/closed/wall/mineral/plastitanium,/area/shuttle/syndicate/airlock)
 "be" = (/obj/machinery/suit_storage_unit/syndicate,/obj/effect/turf_decal/stripes/line{dir = 6},/turf/open/floor/mineral/plastitanium,/area/shuttle/syndicate/eva)
-"bf" = (/obj/structure/reagent_dispensers/fueltank,/obj/effect/turf_decal/bot_white,/turf/open/floor/plasteel/dark,/area/shuttle/syndicate/eva)
 "bg" = (/obj/structure/grille,/obj/structure/window/plastitanium,/turf/open/floor/plating,/area/shuttle/syndicate/eva)
 "bh" = (/obj/structure/grille,/obj/structure/window/plastitanium,/turf/open/floor/plating,/area/shuttle/syndicate/airlock)
 "bi" = (/obj/structure/rack,/obj/effect/turf_decal/bot_white,/obj/effect/turf_decal/stripes/line{dir = 10},/obj/item/clothing/suit/space/syndicate,/obj/item/clothing/head/helmet/space/syndicate,/turf/open/floor/mineral/plastitanium/red,/area/shuttle/syndicate/airlock)
@@ -147,7 +146,7 @@ aaaxaRaMaMaZbaazazazbbbcaPaPaTbdaa
 aaaxbeaMaMaMbgazaDazbhaOaPaPbiaBaa
 aGaJaJbkaJaJaKazaDazblbmbmbnbmbmaF
 aJbqbrbsbtbubvazaDazbwbxbybzbAbBbm
-aJbCbDbDbDbDbvbEaDbFbwbGbGbGbGbfbm
+aJbCbDbDbDbDbvbEaDbFbwbGbGbGbGbGbm
 aJbqbHbIbJbJbKbLbLbLbMbNbNbObPbQbm
 aJbRbHbSbTbTbvbUbUbUbwbVbVbWbPbXbm
 aJbYbZcacbccaJazazazbmcecfcgchcibm

@@ -679,14 +679,8 @@
 	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
-/obj/item/projectile/bullet/p50/penetrator/shuttle
-	icon_state = "gaussstrong"
-	damage = 25
-	speed = 0.3
-	range = 16
-
 /obj/machinery/porta_turret/syndicate/shuttle
-	scan_range = 8
+	scan_range = 9
 	shot_delay = 3
 	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
 	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
