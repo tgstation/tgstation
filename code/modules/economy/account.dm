@@ -9,7 +9,8 @@
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
 		SSeconomy.bank_accounts += src
-	account_holder = newname
+	if(newname)
+		account_holder = newname
 	account_job = job
 	account_id = rand(111111,999999)
 

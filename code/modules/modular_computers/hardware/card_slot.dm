@@ -64,6 +64,9 @@
 		stored_card2 = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.sec_hud_set_ID()
 
 	return TRUE
 
@@ -98,7 +101,9 @@
 			for(var/I in holder.idle_threads)
 				var/datum/computer_file/program/P = I
 				P.event_idremoved(1, slot)
-
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.sec_hud_set_ID()
 		to_chat(user, "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>")
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		return TRUE

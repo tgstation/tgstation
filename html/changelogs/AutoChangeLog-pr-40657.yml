@@ -1,0 +1,5 @@
+author: "Floyd / Qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "Legion core / aheal now only removes temp moodies"
+  - rscadd: "Legion cores now give you a bad moodlet"

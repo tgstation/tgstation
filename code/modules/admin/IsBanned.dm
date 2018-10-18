@@ -105,11 +105,11 @@
 					continue
 			var/expires = ""
 			if(text2num(duration) > 0)
-				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
+				expires = "\nThe ban is for [DisplayTimeText(duration MINUTES)] and expires on [expiration] (server time)."  //convert from minutes into deciseconds to display the amount of time in days, hours, minutes, ect.
 			else
-				expires = " The is a permanent ban."
+				expires = "\nThis is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pkey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [akey] on [bantime] during round ID [ban_round_id], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pkey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [akey] on [bantime] during round ID [ban_round_id]. [expires]"
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
 

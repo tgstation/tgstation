@@ -424,6 +424,9 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
+/atom/movable/proc/setMovetype(newval)
+	movement_type = newval
+
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
