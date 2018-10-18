@@ -83,9 +83,9 @@
     </ui-section>
 
     <ui-section label='Delay timers?'>
-        <ui-button style='{{data.fallDuration != 3 ? "selected" : null}}' action='fallDuration' tooltip-side='left'
+        <ui-button style='{{data.fallDuration != 4 ? "selected" : null}}' action='fallDuration' tooltip-side='left'
         tooltip='Set how long the animation for the pod falling lasts. Create dramatic, slow falling pods!'>Custom Falling Duration</ui-button>
-        <ui-button style='{{data.landingDelay != 5 ? "selected" : null}}' action='landingDelay' tooltip-side='left'
+        <ui-button style='{{data.landingDelay != 20 ? "selected" : null}}' action='landingDelay' tooltip-side='left'
         tooltip='Choose the amount of time it takes for the supplypod to hit the station. By default this value is 0.5 seconds.'>Custom Landing Time</ui-button>
          <ui-button style='{{data.openingDelay != 30 ? "selected" : null}}' action='openingDelay' tooltip-side='left'
         tooltip='Choose the amount of time it takes for the supplypod to open after landing. Useful for giving whatevers inside the pod a nice dramatic entrance! By default this value is 3 seconds.'>Custom Opening Time</ui-button>

@@ -33,7 +33,7 @@
 	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod. 
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/fallDuration = 4
-	var/fallingSoundLength = 10
+	var/fallingSoundLength = 11
 	var/fallingSound = 'sound/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
 	var/landingSound //Admin sound to play when the pod lands
 	var/openingSound //Admin sound to play when the pod opens
@@ -52,7 +52,7 @@
 	style = STYLE_CENTCOM
 	bluespace = TRUE
 	explosionSize = list(0,0,0,0)
-	landingDelay = 5 //Very speedy!
+	landingDelay = 20 //Very speedy!
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/closet/supplypod/Initialize()
@@ -251,7 +251,7 @@
 			M.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you aint goin nowhere, kid.
 	if (pod.effectStealth) //If effectStealth is true we want to be invisible
 		alpha = 255
-	if (pod.fallDuration == initial(pod.fallDuration) && pod.landingDelay + pod.zfallDuration < pod.fallingSoundLength)
+	if (pod.fallDuration == initial(pod.fallDuration) && pod.landingDelay + pod.fallDuration < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.landingDelay - pod.fallingSoundLength + pod.fallDuration
