@@ -1809,7 +1809,7 @@
 	name = "\improper Telecommunications Chamber"
 	})
 "eA" = (
-/obj/machinery/telecomms/allinone,
+/obj/machinery/telecomms/bus/preset_one/birdstation,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/tcomeast{
 	name = "\improper Telecommunications Chamber"
@@ -10899,6 +10899,9 @@
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
 	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/fore)
 "AW" = (
@@ -11443,15 +11446,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
-"Ct" = (
-/obj/structure/cable/cyan{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "2-4"
-	},
-/turf/open/floor/plasteel,
-/area/maintenance/fore)
 "Cu" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "maintenance door";
@@ -12865,7 +12859,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics)
 "FX" = (
-/obj/item/drone_shell,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Robotics APC";
@@ -18052,6 +18045,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable/cyan{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plasteel/white,
 /area/science/nanite)
 "TF" = (
@@ -18189,6 +18186,12 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"UI" = (
+/obj/machinery/telecomms/broadcaster/preset_left/birdstation,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/tcomeast{
+	name = "\improper Telecommunications Chamber"
+	})
 "Vd" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/white,
@@ -18204,6 +18207,12 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft{
 	name = "\improper South Hallway"
+	})
+"Vu" = (
+/obj/machinery/telecomms/processor/preset_one/birdstation,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/tcomeast{
+	name = "\improper Telecommunications Chamber"
 	})
 "VA" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -18231,9 +18240,21 @@
 /obj/structure/closet/radiation,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"VW" = (
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "VY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
@@ -18269,6 +18290,12 @@
 /obj/machinery/holopad,
 /turf/open/floor/wood,
 /area/library)
+"WG" = (
+/obj/structure/cable/cyan{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/maintenance/starboard)
 "WK" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	tag = "icon-intact (EAST)";
@@ -18334,6 +18361,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "XQ" = (
@@ -18363,6 +18393,9 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
 "Zd" = (
@@ -18371,6 +18404,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
+"Zg" = (
+/obj/machinery/telecomms/server/presets/common/birdstation,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/tcomeast{
+	name = "\improper Telecommunications Chamber"
+	})
 "Zh" = (
 /obj/machinery/nanite_program_hub,
 /turf/open/floor/plasteel/white,
@@ -18386,6 +18425,9 @@
 "Zs" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/white,
 /area/science/nanite)
@@ -18408,6 +18450,12 @@
 /obj/machinery/recycler,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"ZA" = (
+/obj/machinery/telecomms/receiver/preset_left/birdstation,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/tcomeast{
+	name = "\improper Telecommunications Chamber"
+	})
 "ZC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -18424,6 +18472,9 @@
 "ZG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/structure/cable/cyan{
+	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -55038,9 +55089,9 @@ ad
 aa
 dy
 dN
-ee
+Vu
 eA
-ee
+Zg
 fn
 fK
 dQ
@@ -56066,9 +56117,9 @@ ad
 aa
 dy
 dN
-ee
+ZA
 ez
-ee
+UI
 fn
 fM
 gl
@@ -66650,13 +66701,13 @@ je
 kj
 je
 kd
-je
+kk
 AV
-Ct
+lw
 lw
 lw
 EI
-Fu
+VW
 Ir
 Jc
 Jc
@@ -66907,13 +66958,13 @@ iQ
 iQ
 yz
 iQ
-EJ
+Cu
 YJ
 YJ
 YJ
 YJ
 YJ
-zI
+MJ
 AX
 AX
 Ca
@@ -67164,13 +67215,13 @@ wH
 xv
 xF
 iQ
-zI
+MJ
 YJ
 VH
 Xk
 Un
 YJ
-AX
+HT
 AX
 Jk
 Ca
@@ -67421,13 +67472,13 @@ wI
 xF
 yL
 iQ
-AX
+HT
 YJ
 Tx
 Zs
 Zs
 YP
-AX
+WG
 AX
 Jm
 Ca
@@ -67678,7 +67729,7 @@ wK
 xF
 yP
 iQ
-AX
+HT
 YJ
 Cz
 Zm
@@ -67935,7 +67986,7 @@ wY
 xG
 yR
 iQ
-zI
+MJ
 YJ
 ZQ
 Ws
@@ -68192,7 +68243,7 @@ iQ
 iQ
 iQ
 iQ
-AX
+HT
 YJ
 WR
 Ws
@@ -68448,8 +68499,8 @@ Ca
 ZG
 VY
 XH
-AX
-AX
+Jc
+WG
 YJ
 YJ
 YJ
