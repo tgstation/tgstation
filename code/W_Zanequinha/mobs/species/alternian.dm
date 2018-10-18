@@ -40,9 +40,7 @@
 			handle_mutant_bodyparts(H)
 
 /datum/species/alternian/check_roundstart_eligible()
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
-		return TRUE
-	return ..()
+	return TRUE
 
 /datum/species/alternian/qualifies_for_rank(rank, list/features)
 	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
@@ -51,10 +49,11 @@
 
 /datum/species/alternian/proc/select_sign(mob/living/carbon/human/H)
 	var/list/possibleSigns
+	var/mob/living/human/alternian/O = H
 	for(var/_sign in (GLOB.allSigns - GLOB.usedSigns))
 		possibleSigns += _sign
-	if(possibleSigns)
-		H.sign = pick(possibleSigns)
-		H << "\blue Your sign is [H.sign]!"
+	if(possibleSigns && O.client)
+		O.sign = pick(possibleSigns)
+		O << text("\blue Your sign is [H.sign]!")
 	else
-		H.sign = "Mutant"
+		O.sign = "Mutant"
