@@ -723,9 +723,9 @@
 					to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
 				else if(oxyloss > 30)
 					to_chat(src, "<span class='danger'>You're choking!</span>")
-
-		switch(nutrition)
-			if(!(NOHUNGER in dna?.species?.species_traits))
+		
+		if(!(NOHUNGER in dna?.species?.species_traits))
+			switch(nutrition)
 				if(NUTRITION_LEVEL_FULL to INFINITY)
 					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
 				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)

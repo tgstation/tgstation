@@ -5,14 +5,14 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
-	exotic_bloodtype = "L"
+	exotic_bloodtype = "Liquid Electricity" //fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
 	hair_color = "mutcolor"
 	damage_overlay_type = null //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER)
-	default_color = "#eda495"
+	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER, HAIR)
+	default_color = "#97ee63"
 	var/current_color
 	var/ethereal_charge = ETHEREAL_CHARGE_FULL
 
