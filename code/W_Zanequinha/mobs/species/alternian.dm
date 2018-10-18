@@ -24,7 +24,12 @@
 
 /datum/species/alternian/New()
 	.=..()
-	select_sign(mob/living/carbon/human/H)
+	post_update(mob/living/carbon/human/H)
+
+/datum/species/alternian/post_update(mob/living/carbon/human/H)
+	.=..()
+	if(H.stat != DEAD)
+		H.select_sign(H)
 
 /datum/species/alternian/on_species_gain(mob/living/carbon/C)
 	. = ..()
