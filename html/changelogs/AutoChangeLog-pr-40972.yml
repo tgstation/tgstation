@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Added more possible names that Deathsquad members spawn with."
