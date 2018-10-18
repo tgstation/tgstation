@@ -438,6 +438,4 @@
 
 /obj/item/disk/plantgene/examine(mob/user)
 	..()
-	if(gene && (istype(gene, /datum/plant_gene/core/potency)))
-		to_chat(user,"<span class='notice'>Percent is relative to potency, not maximum volume of the plant.</span>")
 	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
