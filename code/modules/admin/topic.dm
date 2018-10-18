@@ -1278,17 +1278,18 @@
 					to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
-				create_message("note", ckey(M.ckey), usr.ckey, "Banned for [mins] minutes - [reason]", null, null, 0, 0, null, 0, 0)
-				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [mins] minutes.")
+				var/ban_duration = "[DisplayTimeText(mins MINUTES)]" //convert from minutes into deciseconds to display the amount of time in days, hours, minutes.
+				create_message("note", ckey(M.ckey), usr.ckey, "Banned for [ban_duration] - [reason]", null, null, 0, 0, null, 0, 0)
+				ban_unban_log_save("[key_name(usr)] has banned [key_name(M)]. - Reason: [reason] - This will be removed in [ban_duration].")
 				to_chat(M, "<span class='boldannounce'><BIG>You have been banned by [usr.client.key].\nReason: [reason]</BIG></span>")
-				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [mins] minutes. The round ID is [GLOB.round_id].</span>")
+				to_chat(M, "<span class='danger'>This is a temporary ban, it will be removed in [ban_duration]. The round ID is [GLOB.round_id].</span>")
 				var/bran = CONFIG_GET(string/banappeals)
 				if(bran)
 					to_chat(M, "<span class='danger'>To try to resolve this matter head to [bran]</span>")
 				else
 					to_chat(M, "<span class='danger'>No ban appeals URL has been set.</span>")
-				log_admin_private("[key_name(usr)] has banned [key_name(M)]. - Reason: [key_name(M)] - This will be removed in [mins] minutes.")
-				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)]. - Reason: [reason] - This will be removed in [mins] minutes.</span>"
+				log_admin_private("[key_name(usr)] has banned [key_name(M)]. - Reason: [key_name(M)] - This will be removed in [ban_duration].")
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has banned [key_name_admin(M)]. - Reason: [reason] - This will be removed in [ban_duration].</span>"
 				message_admins(msg)
 				var/datum/admin_help/AH = M.client ? M.client.current_ticket : null
 				if(AH)
@@ -2520,7 +2521,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 		check_teams()
-	
+
 	else if(href_list["team_command"])
 		if(!check_rights(R_ADMIN))
 			return
