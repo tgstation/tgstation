@@ -3,7 +3,11 @@
 set -e
 
 #load dep exports
-. "$1/dependencies.sh"
+#need to switch to game dir for Dockerfile weirdness
+original_dir=$PWD
+cd $1
+. dependencies.sh
+cd $original_dir
 
 #find out what we have (+e is important for this)
 set +e
