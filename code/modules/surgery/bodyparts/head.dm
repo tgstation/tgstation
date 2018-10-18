@@ -33,6 +33,31 @@
 	var/lip_style = null
 	var/lip_color = "white"
 
+
+/obj/item/bodypart/head/examine(mob/user)
+	..()
+	if(status == BODYPART_ORGANIC)
+		if(!brain)
+			to_chat(user, "<span class='info'>The brain has been removed from [src].</span>")
+		else if(brain.suicided || brainmob?.suiciding)
+			to_chat(user, "<span class='info'>There's a pretty dumb expression on [real_name]'s face; they must have really hated life. There is no hope of recovery.</span>")
+		else if(brain.brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+			to_chat(user, "<span class='info'>It seems to be leaking some kind of... clear fluid? The brain inside must be in pretty bad shape... There is no coming back from that.</span>")
+		else if(brainmob?.mind)
+			var/foundghost = FALSE
+			for(var/mob/dead/observer/G in GLOB.player_list)
+				if(G.mind == brainmob.mind)
+					foundghost = TRUE
+					if (!G.can_reenter_corpse)
+						foundghost = FALSE
+					break
+			if(!foundghost)
+				to_chat(user, "<span class='info'>This one seems particularly lifeless. Perhaps there will be a chance for it later.</span>")
+
+		if(!eyes)
+			to_chat(user, "<span class='info'>[real_name]'s eyes appear to have been removed.</span>")
+
+
 /obj/item/bodypart/head/can_dismember(obj/item/I)
 	if(!((owner.stat == DEAD) || owner.InFullCritical()))
 		return FALSE
