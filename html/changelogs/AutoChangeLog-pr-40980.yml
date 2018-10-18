@@ -1,9 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "Mineral (and wood/paper) doors can now be unsecured from the ground with a wrench (the wiki is finally accurate after like 10 years.)"
-  - tweak: "Mineral doors can now be deconstructed with a welder. In the case of paper/wood doors, use a crowbar instead."
-  - bugfix: "Paper / wood doors can no longer be dug by a pickaxe."
-  - bugfix: "Attacking a paper or wood door with a lit welder will now set it alight."
-  - tweak: "Damaged paper doors can now be repaired by hitting them with paper (wasn't consistent with paper windows.)"
-  - tweak: "Paper windows will now inform you that they can be repaired when damaged."

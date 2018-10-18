@@ -1,5 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "Centcom-launched supplypods will now properly delimb you (if they are designated to do so) instead of touching you then literally yeeting all of your internal organs out of your body."
-  - admin: "Centcom can now specify if they want to yeet all of your organs out of your body with a supplypod"

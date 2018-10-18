@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "Clothing (bags, gloves, belts, uniforms, armor, ect) will now inform you if they are resistant to frost, fire, acid, and lava when examined."
