@@ -51,6 +51,10 @@
 	
 	//for xenomorphs, dogs, and other clawed mobs
 	if(isclawfoot(LM))
+		if(isalienadult(LM)) //xenos are stealthy and get quieter footsteps
+			v /= 3
+			e -= 5
+		
 		playsound(T, pick(GLOB.clawfootstep[T.clawfootstep][1]),
 				GLOB.clawfootstep[T.clawfootstep][2] * v,
 				TRUE,
