@@ -116,17 +116,9 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
 
-#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
-
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
-#define isfox(A) (istype(A, /mob/living/simple_animal/pet/fox))
-
 #define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
-
-#define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
-
-#define isgorilla(A) (istype(A, /mob/living/simple_animal/hostile/gorilla))
 
 #define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
@@ -134,38 +126,12 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
 
-#define isjunglemob(A) (istype(A, /mob/living/simple_animal/hostile/jungle))
-
-#define ismook(A) (istype(A, /mob/living/simple_animal/hostile/jungle/mook))
-
-#define isleaper(A) (istype(A, /mob/living/simple_animal/hostile/jungle/leaper))
-
-#define ismegaarachnid(A) (istype(A, /mob/living/simple_animal/hostile/jungle/mega_arachnid))
-
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
-
-#define isasteroidmob(A) (istype (A, /mob/living/simple_animal/asteroid/))
 
 #define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-#define isgiantspider(A) (istype(A, /mob/living/simple_animal/hostile/poison/giant_spider))
-
-GLOBAL_LIST_INIT(simplehuman, typecacheof(list(
-	/mob/living/simple_animal/hostile/cat_butcherer,
-	/mob/living/simple_animal/hostile/faithless,
-	/mob/living/simple_animal/hostile/nanotrasen,
-	/mob/living/simple_animal/hostile/pirate,
-	/mob/living/simple_animal/hostile/russian,
-	/mob/living/simple_animal/hostile/syndicate,
-	/mob/living/simple_animal/hostile/wizard,
-	/mob/living/simple_animal/hostile/zombie,
-	/mob/living/simple_animal/hostile/retaliate/clown,
-	/mob/living/simple_animal/hostile/retaliate/spaceman,
-	/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace
-	)))
-	
 GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	/mob/living/carbon/human/,
 	/mob/living/simple_animal/hostile/cat_butcherer,
@@ -202,10 +168,6 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 	/mob/living/simple_animal/hostile/jungle/leaper
 	)))
 
-
-//Human(oid) simple mobs
-#define ishumansimple(A) (is_type_in_typecache(A, GLOB.simplehuman))
-
 //Misc mobs
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
@@ -221,8 +183,11 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 //Footstep helpers
 #define isshoefoot(A) (is_type_in_typecache(A, GLOB.shoefootmob))
+
 #define isclawfoot(A) (is_type_in_typecache(A, GLOB.clawfootmob))
+
 #define isbarefoot(A) (is_type_in_typecache(A, GLOB.barefootmob))
+
 #define isheavyfoot(A) (is_type_in_typecache(A, GLOB.heavyfootmob))
 
 //Objects
