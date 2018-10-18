@@ -26,6 +26,11 @@
 	var/static/b2 = 149
 
 
+/datum/species/ethereal/New()
+	.=..()
+	spec_updatehealth(mob/living/carbon/human/H)
+
+
 /datum/species/ethereal/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_lizard_name(gender)
