@@ -22,6 +22,10 @@
 	var/sign = ""
 
 
+/datum/species/alternian/New()
+	.=..()
+	select_sign(mob/living/carbon/human/H)
+
 /datum/species/alternian/on_species_gain(mob/living/carbon/C)
 	. = ..()
 	if(ishuman(C))
@@ -29,8 +33,6 @@
 		if(!H.dna.features["alternian_horns"])
 			H.dna.features["alternian_horns"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["alternian_horns"]) ? H.client.prefs.features["alternian_horns"] : "simple"]"
 			handle_mutant_bodyparts(H)
-		if(isalternian(C))
-			C.select_sign(C)
 
 /datum/species/alternian/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -43,9 +45,11 @@
 	return TRUE
 
 /datum/species/alternian/proc/select_sign(mob/living/carbon/human/H)
-	var/possibleSigns
-	for(var/sign in (GLOB.allSigns - GLOB.usedSigns))
-		possibleSigns += sign
-	if(isalternian(H))
+	var/list/possibleSigns
+	for(var/_sign in (GLOB.allSigns - GLOB.usedSigns))
+		possibleSigns += _sign
+	if(possibleSigns)
 		H.sign = pick(possibleSigns)
 		H << "\blue Your sign is [H.sign]!"
+	else
+		H.sign = "Mutant"
