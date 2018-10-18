@@ -1,0 +1,23 @@
+"a" = (/turf/open/space/bluespace,/area/hilbertshotel)
+"b" = (/turf/closed/indestructible/hotelwall,/area/hilbertshotel)
+"c" = (/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"d" = (/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"e" = (/turf/closed/indestructible/hoteldoor,/area/hilbertshotel)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaa
+abbbbbbbbbbbbbba
+abcccccbccccccba
+abcccccbccccccba
+abcccccbccccccba
+abccccccccccccba
+aecccccbccccccba
+abcccccbcbbbbbba
+abcccccbddddddba
+abcccccbddddddba
+abcccccbddddddba
+abcccccbddddddba
+abcccccbddddddba
+abbbbbbbbbbbbbba
+aaaaaaaaaaaaaaaa
+"}

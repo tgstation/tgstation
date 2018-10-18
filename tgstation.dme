@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\templates\hilbertshotel.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -2545,6 +2546,7 @@
 #include "code\modules\ruins\spaceruin_code\crashedship.dm"
 #include "code\modules\ruins\spaceruin_code\deepstorage.dm"
 #include "code\modules\ruins\spaceruin_code\DJstation.dm"
+#include "code\modules\ruins\spaceruin_code\hilbertshotel.dm"
 #include "code\modules\ruins\spaceruin_code\listeningstation.dm"
 #include "code\modules\ruins\spaceruin_code\miracle.dm"
 #include "code\modules\ruins\spaceruin_code\oldstation.dm"
