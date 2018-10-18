@@ -134,6 +134,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	/mob/living/carbon/human/,
+	/mob/living/simple_animal/cow,
 	/mob/living/simple_animal/hostile/cat_butcherer,
 	/mob/living/simple_animal/hostile/faithless,
 	/mob/living/simple_animal/hostile/nanotrasen,
@@ -145,6 +146,7 @@ GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	/mob/living/simple_animal/hostile/retaliate/clown,
 	/mob/living/simple_animal/hostile/retaliate/spaceman,
 	/mob/living/simple_animal/hostile/retaliate/nanotrasenpeace,
+	/mob/living/simple_animal/hostile/retaliate/goat,
 	/mob/living/carbon/true_devil,
 	)))
 	
@@ -154,12 +156,14 @@ GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
 	/mob/living/simple_animal/pet/cat,
 	/mob/living/simple_animal/pet/dog,
 	/mob/living/simple_animal/pet/fox,
+	/mob/living/simple_animal/chicken,
 	/mob/living/simple_animal/hostile/bear,
 	/mob/living/simple_animal/hostile/jungle/mega_arachnid
 	)))
 	
 GLOBAL_LIST_INIT(barefootmob, typecacheof(list(
 	/mob/living/carbon/monkey,
+	/mob/living/simple_animal/pet/penguin,
 	/mob/living/simple_animal/hostile/gorilla,
 	/mob/living/simple_animal/hostile/jungle/mook
 	)))
