@@ -215,7 +215,7 @@
 			if(inject_chem(chem, usr))
 				. = TRUE
 				if(scrambled_chems && prob(5))
-					to_chat(usr, "<span class='warning'>Chem System Re-route detected, results may not be as expected!</span>")
+					to_chat(usr, "<span class='warning'>Chemical system re-route detected, results may not be as expected!</span>")
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
