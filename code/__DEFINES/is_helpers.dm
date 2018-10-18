@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
+#define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid) || istype(A, /mob/living/simple_animal/hostile/alien))
 
 #define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
 
@@ -150,6 +150,7 @@ GLOBAL_LIST_INIT(shoefootmob, typecacheof(list(
 	
 GLOBAL_LIST_INIT(clawfootmob, typecacheof(list(
 	/mob/living/carbon/alien/humanoid,
+	/mob/living/simple_animal/hostile/alien,
 	/mob/living/simple_animal/pet/cat,
 	/mob/living/simple_animal/pet/dog,
 	/mob/living/simple_animal/pet/fox,
