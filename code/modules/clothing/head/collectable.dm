@@ -123,6 +123,7 @@
 	desc = "WARNING! Offers no real protection, or luminosity, but damn, is it fancy!"
 	icon_state = "hardhat0_yellow"
 	item_state = "hardhat0_yellow"
+	snug_fit = TRUE
 
 	dog_fashion = /datum/dog_fashion/head
 
@@ -145,6 +146,7 @@
 	item_state = "thunderdome"
 	resistance_flags = NONE
 	flags_inv = HIDEHAIR
+	snug_fit = TRUE
 
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
@@ -153,3 +155,4 @@
 	item_state = "swat"
 	resistance_flags = NONE
 	flags_inv = HIDEHAIR
+	snug_fit = TRUE

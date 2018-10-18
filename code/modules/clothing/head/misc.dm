@@ -82,6 +82,7 @@
 	item_state = "snowman_h"
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	snug_fit = TRUE
 
 /obj/item/clothing/head/justice
 	name = "justice hat"
@@ -90,6 +91,7 @@
 	item_state = "justicered"
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	flags_cover = HEADCOVERSEYES
+	snug_fit = TRUE
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -298,6 +300,7 @@
 	desc = "When everything's going to crab, protecting your head is the best choice."
 	icon_state = "lobster_hat"
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	snug_fit = TRUE
 
 /obj/item/clothing/head/drfreezehat
 	name = "doctor freeze's wig"

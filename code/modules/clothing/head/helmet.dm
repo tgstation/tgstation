@@ -13,6 +13,7 @@
 	resistance_flags = NONE
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR
+	snug_fit = TRUE
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 

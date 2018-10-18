@@ -21,6 +21,7 @@
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
 	dog_fashion = null
+	snug_fit = TRUE
 
 /obj/item/clothing/suit/space
 	name = "space suit"
