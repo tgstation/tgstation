@@ -43,8 +43,6 @@
 	return TRUE
 
 /datum/species/alternian/qualifies_for_rank(rank, list/features)
-	if(CONFIG_GET(flag/enforce_human_authority) && (rank in GLOB.command_positions))
-		return FALSE
 	return TRUE
 
 /datum/species/alternian/proc/select_sign(mob/living/carbon/human/H)
