@@ -32,9 +32,9 @@
 	var/effectCircle = FALSE //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
 	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod. 
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
-	var/fallDuration = 3
-	var/fallingSoundLength = 3
-	var/fallingSound = 'sound/weapons/mortar_whistle.ogg'//Admin sound to play when the pod lands
+	var/fallDuration = 4
+	var/fallingSoundLength = 10
+	var/fallingSound = 'sound/weapons/mortar_long_whistle.ogg'//Admin sound to play before the pod lands
 	var/landingSound //Admin sound to play when the pod lands
 	var/openingSound //Admin sound to play when the pod opens
 	var/leavingSound //Admin sound to play when the pod leaves
@@ -251,6 +251,9 @@
 			M.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you aint goin nowhere, kid.
 	if (pod.effectStealth) //If effectStealth is true we want to be invisible
 		alpha = 255
+	if (pod.fallDuration == initial(pod.fallDuration) && pod.landingDelay + pod.zfallDuration < pod.fallingSoundLength)
+		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
+		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'
 	var/soundStartTime = pod.landingDelay - pod.fallingSoundLength + pod.fallDuration
 	if (soundStartTime < 0)
 		soundStartTime = 1
@@ -259,14 +262,14 @@
 	addtimer(CALLBACK(src, .proc/beginLaunch, pod.effectCircle), pod.landingDelay)
 
 /obj/effect/DPtarget/proc/playFallingSound()
-	playsound(src, pod.fallingSound, pod.soundVolume, 1, 3)
+	playsound(src, pod.fallingSound, pod.soundVolume, 1, 6)
 
 /obj/effect/DPtarget/proc/beginLaunch(effectCircle) //Begin the animation for the pod falling. The effectCircle param determines whether the pod gets to come in from any descent angle
 	fallingPod = new /obj/effect/DPfall(drop_location(), pod)
 	var/matrix/M = matrix(fallingPod.transform) //Create a new matrix that we can rotate
 	var/angle = effectCircle ? rand(0,360) : rand(70,110) //The angle that we can come in from
-	fallingPod.pixel_x = cos(angle)*200 //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the target
-	fallingPod.pixel_z = sin(angle)*200
+	fallingPod.pixel_x = cos(angle)*400 //Use some ADVANCED MATHEMATICS to set the animated pod's position to somewhere on the edge of a circle with the center being the target
+	fallingPod.pixel_z = sin(angle)*400
 	var/rotation = Get_Pixel_Angle(fallingPod.pixel_z, fallingPod.pixel_x) //CUSTOM HOMEBREWED proc that is just arctan with extra steps
 	M.Turn(rotation) //Turn our matrix accordingly
 	fallingPod.transform = M //Transform the animated pod according to the matrix
