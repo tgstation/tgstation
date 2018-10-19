@@ -218,10 +218,12 @@
 	desc = "This box contains injectors, it seems."
 
 /obj/item/storage/box/injectors/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/dnainjector/h2m(src)
-	for(var/i in 1 to 3)
-		new /obj/item/dnainjector/m2h(src)
+	var/static/items_inside = list(	
+									/obj/item/dnainjector/h2m = 3,
+									/obj/item/dnainjector/m2h = 3)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
@@ -286,11 +288,14 @@
 	illustration = "implant"
 
 /obj/item/storage/box/trackimp/PopulateContents()
-	for(var/i in 1 to 4)
-		new /obj/item/implantcase/tracking(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
-	new /obj/item/locator(src)
+	var/static/items_inside = list(	
+									/obj/item/implantcase/tracking = 4,
+									/obj/item/implanter = 1,
+									/obj/item/implantpad = 1,
+									/obj/item/locator = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/box/minertracker
 	name = "boxed tracking implant kit"
@@ -298,11 +303,14 @@
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/implantcase/tracking(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
-	new /obj/item/locator(src)
+	var/static/items_inside = list(	
+									/obj/item/implantcase/tracking = 3,
+									/obj/item/implanter = 1,
+									/obj/item/implantpad = 1,
+									/obj/item/locator = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/box/chemimp
 	name = "boxed chemical implant kit"
@@ -310,10 +318,13 @@
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/implantcase/chem(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
+	var/static/items_inside = list(	
+									/obj/item/implantcase/chem = 5,
+									/obj/item/implanter = 1,
+									/obj/item/implantpad = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/box/exileimp
 	name = "boxed exile implant kit"
@@ -321,9 +332,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/implantcase/exile(src)
-	new /obj/item/implanter(src)
+	var/static/items_inside = list(	
+									/obj/item/implantcase/exile = 5,
+									/obj/item/implanter = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/box/bodybags
 	name = "body bags"
@@ -1007,16 +1021,15 @@
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/capacitor(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/scanning_module(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/manipulator(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/micro_laser(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/matter_bin(src)
+	var/static/items_inside = list(	
+									/obj/item/stock_parts/capacitor = 3,
+									/obj/item/stock_parts/scanning_module = 3, 
+									/obj/item/stock_parts/manipulator = 3,
+									/obj/item/stock_parts/micro_laser = 3,
+									/obj/item/stock_parts/matter_bin = 3)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
@@ -1024,13 +1037,12 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/capacitor/quadratic(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/scanning_module/triphasic(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/manipulator/femto(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/micro_laser/quadultra(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stock_parts/matter_bin/bluespace(src)
+	var/static/items_inside = list(	
+									/obj/item/stock_parts/capacitor/quadratic = 3,
+									/obj/item/stock_parts/scanning_module/triphasic = 3,
+									/obj/item/stock_parts/manipulator/femto = 3,
+									/obj/item/stock_parts/micro_laser/quadultra = 3,
+									/obj/item/stock_parts/matter_bin/bluespace = 3)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)

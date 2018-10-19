@@ -29,13 +29,15 @@
 /obj/item/storage/firstaid/regular/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/healthanalyzer(src)
+	var/static/items_inside = list(	
+									/obj/item/stack/medical/gauze = 1,
+									/obj/item/stack/medical/bruise_pack = 2,
+									/obj/item/stack/medical/ointment = 2,
+									/obj/item/reagent_containers/hypospray/medipen = 1,
+									/obj/item/healthanalyzer = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
@@ -44,11 +46,13 @@
 /obj/item/storage/firstaid/ancient/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/stack/medical/gauze(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stack/medical/bruise_pack(src)
-	for(var/i in 1 to 3)
-		new /obj/item/stack/medical/ointment(src)
+	var/static/items_inside = list(	
+									/obj/item/stack/medical/gauze = 1,
+									/obj/item/stack/medical/bruise_pack = 3,
+									/obj/item/stack/medical/ointment= 3)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
@@ -67,12 +71,14 @@
 /obj/item/storage/firstaid/fire/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/pill/oxandrolone(src)
-	new /obj/item/reagent_containers/pill/oxandrolone(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/healthanalyzer(src)
+	var/static/items_inside = list(	
+									/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
+									/obj/item/reagent_containers/pill/oxandrolone = 2,
+									/obj/item/reagent_containers/hypospray/medipen = 1,
+									/obj/item/healthanalyzer = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
@@ -91,11 +97,13 @@
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/syringe/charcoal(src)
-	for(var/i in 1 to 2)
-		new /obj/item/storage/pill_bottle/charcoal(src)
-	new /obj/item/healthanalyzer(src)
+	var/static/items_inside = list(	
+									/obj/item/reagent_containers/syringe/charcoal = 4,
+									/obj/item/storage/pill_bottle/charcoal = 2,
+									/obj/item/healthanalyzer = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
@@ -110,11 +118,13 @@
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/salbutamol(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/healthanalyzer(src)
+	var/static/items_inside = list(	
+									/obj/item/reagent_containers/pill/salbutamol = 4,
+									/obj/item/reagent_containers/hypospray/medipen = 2,
+									/obj/item/healthanalyzer = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/firstaid/brute
 	name = "brute trauma treatment kit"
@@ -129,11 +139,13 @@
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/healthanalyzer(src)
+	var/static/items_inside = list(	
+									/obj/item/reagent_containers/pill/patch/styptic = 4,
+									/obj/item/stack/medical/gauze = 2,
+									/obj/item/healthanalyzer = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item])
+			new each_item(src)
 
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"
