@@ -73,6 +73,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	data["styleChoice"] = temp_pod.style //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod. 
 	data["effectStun"] = temp_pod.effectStun //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	data["effectLimb"] = temp_pod.effectLimb //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
+	data["effectOrgans"] = temp_pod.effectOrgans //If true, yeets the organs out of any bodies caught under the pod when it lands
 	data["effectBluespace"] = temp_pod.bluespace //If true, the pod deletes (in a shower of sparks) after landing
 	data["effectStealth"] = temp_pod.effectStealth //If true, a target icon isnt displayed on the turf where the pod will land
 	data["effectQuiet"] = temp_pod.effectQuiet //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
@@ -228,6 +229,9 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			. = TRUE
 		if("effectLimb") //Toggle: Anyone carbon mob under the pod loses a limb when it lands
 			temp_pod.effectLimb = !temp_pod.effectLimb
+			. = TRUE
+		if("effectOrgans") //Toggle: Anyone carbon mob under the pod loses a limb when it lands
+			temp_pod.effectOrgans = !temp_pod.effectOrgans
 			. = TRUE
 		if("effectBluespace") //Toggle: Deletes the pod after landing
 			temp_pod.bluespace = !temp_pod.bluespace

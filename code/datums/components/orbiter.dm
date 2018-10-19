@@ -106,7 +106,7 @@
 	if(master.loc == oldloc)
 		return
 
-	var/turf/newturf = get_turf(parent)
+	var/turf/newturf = get_turf(master)
 	if(!newturf)
 		qdel(src)
 
@@ -122,13 +122,17 @@
 		while(ismovableatom(target))
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, orbited_spy, TRUE)
 			target = target.loc
-	
+
+	var/atom/curloc = master.loc
 	for(var/i in orbiters)
 		var/atom/movable/thing = i
-		if(thing.loc == newturf)
+		if(QDELETED(thing) || thing.loc == newturf)
 			continue
 		thing.forceMove(newturf)
-		CHECK_TICK
+		if(CHECK_TICK && master.loc != curloc)
+			// We moved again during the checktick, cancel current operation
+			break
+
 
 /datum/component/orbiter/proc/orbiter_move_react(atom/movable/orbiter, atom/oldloc, direction)
 	if(orbiter.loc == get_turf(parent))

@@ -113,7 +113,7 @@
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/living/A)
 	if(boing && isliving(A) && !A.stat)
-		A.Knockdown(40)
+		A.Paralyze(40)
 		var/atom/target = get_edge_target_turf(A, get_dir(src, get_step_away(A, src)))
 		A.throw_at(target, 5, 1)
 		boing = 0

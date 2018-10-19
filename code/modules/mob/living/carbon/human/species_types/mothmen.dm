@@ -16,13 +16,12 @@
 	toxic_food = MEAT | RAW
 	mutanteyes = /obj/item/organ/eyes/moth
 
-/datum/species/moth/on_species_gain(mob/living/carbon/C)
+/datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
 	. = ..()
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(!H.dna.features["moth_wings"])
-			H.dna.features["moth_wings"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["moth_wings"]) ? H.client.prefs.features["moth_wings"] : "Plain"]"
-			handle_mutant_bodyparts(H)
+		H.dna.features["moth_wings"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["moth_wings"]) ? H.client.prefs.features["moth_wings"] : "Plain"]"
+		handle_mutant_bodyparts(H)
 
 /datum/species/moth/random_name(gender,unique,lastname)
 	if(unique)
@@ -36,7 +35,9 @@
 	return randname
 
 /datum/species/moth/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
-	..()
+	. = ..()
+	if(.) //if the mob is immune to fire, don't burn wings off.
+		return
 	if(H.dna.features["moth_wings"] != "Burnt Off" && H.bodytemperature >= 800 && H.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
 		H.dna.features["moth_wings"] = "Burnt Off"

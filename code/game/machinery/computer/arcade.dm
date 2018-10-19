@@ -529,7 +529,7 @@
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
-							M.Knockdown(60)
+							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
 							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)

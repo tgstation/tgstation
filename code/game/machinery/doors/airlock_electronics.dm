@@ -1,6 +1,7 @@
 /obj/item/electronics/airlock
 	name = "airlock electronics"
 	req_access = list(ACCESS_MAINT_TUNNELS)
+	custom_price = 5
 
 	var/list/accesses = list()
 	var/one_access = 0

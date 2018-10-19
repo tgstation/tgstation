@@ -26,12 +26,6 @@
 			the_op.assigned_role = "Clown Operative"
 			the_op.special_role = "Clown Operative"
 
-/datum/game_mode/nuclear/clown_ops/generate_report()
-	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
-			transport containing a bananium fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
-			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
-
-
 /datum/outfit/syndicate/clownop
 	name = "Clown Operative - Basic"
 	uniform = /obj/item/clothing/under/syndicate

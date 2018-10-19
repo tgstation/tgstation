@@ -204,7 +204,7 @@
 	set name = "Activate Seed Extraction"
 	set category = "Object"
 	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)
@@ -310,7 +310,7 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Knockdown(40)
+			M.Paralyze(40)
 	update_icon()
 
 /obj/item/storage/bag/tray/update_icon()

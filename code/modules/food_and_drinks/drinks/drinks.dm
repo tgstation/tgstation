@@ -204,6 +204,7 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
+	custom_price = 5
 	icon_state = "coffee"
 	list_reagents = list("ice" = 30)
 	spillable = TRUE
@@ -364,6 +365,7 @@
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
+	custom_price = 30
 	icon_state = "flask"
 	materials = list(MAT_METAL=250)
 	volume = 60
@@ -399,12 +401,26 @@
 	spillable = FALSE
 	isGlass = FALSE
 
-/obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is trying to eat \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
-	crushed_can.icon_state = icon_state
-	qdel(src)
-	return BRUTELOSS
+/obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
+	if(!reagents.total_volume)
+		H.visible_message("<span class='warning'>[H] is trying to take a big sip from [src]... The can is empty!</span>")
+		return SHAME
+	if(!is_drainable())
+		open_soda()
+		sleep(10)
+	H.visible_message("<span class='suicide'>[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!</span>")
+	playsound(H,'sound/items/drink.ogg', 80, 1)
+	reagents.trans_to(H, src.reagents.total_volume) //a big sip
+	sleep(5)
+	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "All these new fangled arcade games are too slow. I prefer the classics.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like good old fashioned singularity engines anymore."))
+	if(H.age >= 40)
+		H.Stun(50)
+		sleep(50)
+		playsound(H,'sound/items/drink.ogg', 80, 1)
+		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))		
+		return MANUAL_SUICIDE
+	sleep(20) //dramatic pause
+	return TOXLOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
@@ -415,19 +431,22 @@
 		qdel(src)
 	..()
 
+/obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
+	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
+	container_type = OPENCONTAINER
+	playsound(src, "can_open", 50, 1)
+	spillable = TRUE
+	return
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
-		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		container_type = OPENCONTAINER
-		playsound(src, "can_open", 50, 1)
-		spillable = TRUE
-		return
+		open_soda()
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
 	desc = "Cola. in space."
+	custom_price = 10
 	icon_state = "cola"
 	list_reagents = list("cola" = 30)
 	foodtype = SUGAR
@@ -435,6 +454,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/tonic
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
+	custom_price = 10
 	icon_state = "tonic"
 	list_reagents = list("tonic" = 50)
 	foodtype = ALCOHOL
@@ -442,6 +462,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/sodawater
 	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
+	custom_price = 10
 	icon_state = "sodawater"
 	list_reagents = list("sodawater" = 50)
 

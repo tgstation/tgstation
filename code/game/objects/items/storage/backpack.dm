@@ -28,6 +28,9 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 21
 
+/obj/item/storage/backpack/examine(mob/user)
+	..()
+	clothing_resistance_flag_examine_message(user)
 
 /*
  * Backpack Types
@@ -170,6 +173,7 @@
 	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
 	icon_state = "ert_commander"
 	item_state = "securitypack"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/ert/security
 	name = "emergency response team security backpack"

@@ -248,6 +248,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
 		S[savefile_slot_name] >> custom_names[custom_name_id]
 
+	S["preferred_ai_core_display"] >> preferred_ai_core_display
 	S["prefered_security_department"] >> prefered_security_department
 
 	//Jobs
@@ -384,6 +385,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
 		WRITE_FILE(S[savefile_slot_name],custom_names[custom_name_id])
 
+	WRITE_FILE(S["preferred_ai_core_display"] ,  preferred_ai_core_display)
 	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs

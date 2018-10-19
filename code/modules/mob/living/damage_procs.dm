@@ -94,6 +94,10 @@
 			Stun(effect * hit_percent)
 		if(EFFECT_KNOCKDOWN)
 			Knockdown(effect * hit_percent)
+		if(EFFECT_PARALYZE)
+			Paralyze(effect * hit_percent)
+		if(EFFECT_IMMOBILIZE)
+			Immobilize(effect * hit_percent)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
 		if(EFFECT_IRRADIATE)
@@ -110,10 +114,14 @@
 		if(EFFECT_JITTER)
 			if((status_flags & CANSTUN) && !has_trait(TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
+		if(EFFECT_PARALYZE)
+			Paralyze(effect * hit_percent)
+		if(EFFECT_IMMOBILIZE)
+			Immobilize(effect * hit_percent)
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
 	if(blocked >= 100)
 		return 0
 	if(stun)
@@ -122,6 +130,10 @@
 		apply_effect(knockdown, EFFECT_KNOCKDOWN, blocked)
 	if(unconscious)
 		apply_effect(unconscious, EFFECT_UNCONSCIOUS, blocked)
+	if(paralyze)
+		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
+	if(immobilize)
+		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
 	if(irradiate)
 		apply_effect(irradiate, EFFECT_IRRADIATE, blocked)
 	if(slur)

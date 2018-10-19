@@ -13,11 +13,11 @@
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50))//honk honk
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-			user.Knockdown(stunforce*3)
+			user.Paralyze(stunforce*3)
 			deductcharge(hitcost)
 		else
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-			user.Knockdown(stunforce*3)
+			user.Paralyze(stunforce*3)
 			deductcharge(hitcost/4)
 		return
 	else

@@ -9,7 +9,7 @@
 	layer = LARGE_MOB_LAYER
 	damage_type = BURN
 	damage = 10
-	knockdown = 20
+	paralyze = 20
 	speed = 2
 	range = 16
 	forcedodge = TRUE

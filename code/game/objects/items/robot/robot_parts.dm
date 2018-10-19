@@ -254,7 +254,7 @@
 				to_chat(user, "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>")
 				return
 
-			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
+			if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.damaged_brain || M.brain.suicided)))
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
@@ -317,8 +317,8 @@
 			O.robot_suit = src
 
 			if(!locomotion)
-				O.lockcharge = 1
-				O.update_canmove()
+				O.lockcharge = TRUE
+				O.update_mobility()
 				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
@@ -357,7 +357,7 @@
 			O.robot_suit = src
 			if(!locomotion)
 				O.lockcharge = TRUE
-				O.update_canmove()
+				O.update_mobility()
 
 	else if(istype(W, /obj/item/pen))
 		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")

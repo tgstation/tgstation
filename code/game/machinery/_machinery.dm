@@ -91,6 +91,7 @@ Class Procs:
 	verb_yell = "blares"
 	pressure_resistance = 15
 	max_integrity = 200
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -133,7 +134,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
-	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA = CALLBACK(src, .proc/power_change)))
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -176,7 +177,7 @@ Class Procs:
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
-			L.update_canmove()
+			L.update_mobility()
 	occupant = null
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)

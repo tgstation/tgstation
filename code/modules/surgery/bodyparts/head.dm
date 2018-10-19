@@ -38,7 +38,7 @@
 		return FALSE
 	return ..()
 
-/obj/item/bodypart/head/drop_organs(mob/user)
+/obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
@@ -51,6 +51,8 @@
 				brainmob.forceMove(brain)
 				brain.brainmob = brainmob
 				brainmob = null
+			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
+				brain.damaged_brain = TRUE
 			brain.forceMove(T)
 			brain = null
 			update_icon_dropped()
