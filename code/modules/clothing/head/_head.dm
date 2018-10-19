@@ -8,6 +8,7 @@
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
 	var/snug_fit = FALSE //is the hat immune to being knocked off?
+	var/anti_tinfoil_maneuver = FALSE //if the hat does something negative when worn, this should probably be set to TRUE
 	dynamic_hair_suffix = "+generic"
 
 /obj/item/clothing/head/Initialize()
@@ -38,7 +39,7 @@
 		var/mob/living/carbon/H = hit_atom
 		if(H.head)
 			var/obj/item/clothing/head/WH = H.head
-			if(!WH.snug_fit)
+			if(!WH.snug_fit && !anti_tinfoil_maneuver)
 				if(H.dropItemToGround(WH))
 					H.equip_to_slot_if_possible(src, SLOT_HEAD, 0, 1, 1)
 					H.visible_message("<span class='warning'>[src] knocks [WH] off [H]'s head!</span>", "<span class='warning'>[WH] is suddenly knocked off your head, replaced by [src]!</span>")
