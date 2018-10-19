@@ -46,6 +46,11 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		speed = M.rating
 
+/obj/machinery/reagentgrinder/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Grinding reagents at <b>[speed*100]%</b>.<span>")
+
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
 	if(A == beaker)
