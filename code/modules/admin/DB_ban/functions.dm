@@ -500,7 +500,7 @@
 			var/bantype  = query_search_bans.item[3]
 			var/reason = query_search_bans.item[4]
 			var/job = query_search_bans.item[5]
-			var/duration = query_search_bans.item[6]
+			var/duration = text2num(query_search_bans.item[6])
 			var/expiration = query_search_bans.item[7]
 			var/ban_key = query_search_bans.item[8]
 			var/a_key = query_search_bans.item[9]
@@ -521,15 +521,15 @@
 				if("PERMABAN")
 					typedesc = "<font color='red'><b>PERMABAN</b></font>"
 				if("TEMPBAN")
-					typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
+					typedesc = "<b>TEMPBAN</b><br><font size='2'>([DisplayTimeText(duration MINUTES)] [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 				if("JOB_PERMABAN")
 					typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
 				if("JOB_TEMPBAN")
-					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]"
+					typedesc = "<b>TEMP JOBBAN</b><br><font size='2'>([job])<br>([DisplayTimeText(duration MINUTES)] [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]"
 				if("ADMIN_PERMABAN")
 					typedesc = "<b>ADMIN PERMABAN</b>"
 				if("ADMIN_TEMPBAN")
-					typedesc = "<b>ADMIN TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
+					typedesc = "<b>ADMIN TEMPBAN</b><br><font size='2'>([DisplayTimeText(duration MINUTES)] [(unbanned) ? "" : "(<a href=\"byond://?src=[REF(src)];[HrefToken()];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 
 			output += "<tr bgcolor='[dcolor]'>"
 			output += "<td align='center'>[typedesc]</td>"
