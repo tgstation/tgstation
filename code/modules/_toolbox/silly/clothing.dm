@@ -61,6 +61,8 @@
 	if(loc)
 		var/obj/item/reagent_containers/food/drinks/bottle/vodka/V = new(loc)
 		V.layer = layer-0.1
+		var/obj/item/reagent_containers/food/snacks/sausage/S = new(loc)
+		S.layer = V.layer-0.1
 
 /obj/effect/mob_spawn/human/plasma_miner
 	name = "Plasma Rig Miner"
