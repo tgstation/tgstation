@@ -29898,8 +29898,6 @@
 	name = "Vacant Commissary Shutter"
 	},
 /obj/structure/noticeboard{
-	desc = "A board for pinning important notices upon.";
-	name = "notice board";
 	pixel_y = 31
 	},
 /obj/effect/turf_decal/stripes/line{
