@@ -41,7 +41,7 @@
 
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 
-	var/obj/item/flashlight/gun_light
+	var/obj/item/flashlight/seclite/gun_light
 	var/can_flashlight = FALSE
 	var/obj/item/kitchen/knife/bayonet
 	var/mutable_appearance/knife_overlay
@@ -68,16 +68,15 @@
 	if(pin)
 		pin = new pin(src)
 	if(gun_light)
-		alight = new /datum/action/item_action/toggle_gunlight(src)
+		alight = new(src)
 	build_zooming()
 
 /obj/item/gun/Destroy()
 	QDEL_NULL(pin)
 	QDEL_NULL(gun_light)
-	QDEL_NULL(alight)
 	QDEL_NULL(bayonet)
 	QDEL_NULL(chambered)
-	QDEL_NULL(zoom)
+	QDEL_NULL(azoom)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -93,6 +92,7 @@
 	if(A == gun_light)
 		gun_light = null
 		update_gunlight()
+		QDEL_NULL(alight)
 	return ..()
 
 /obj/item/gun/CheckParts(list/parts_list)
@@ -361,7 +361,7 @@
 				set_light(0)
 			gun_light = S
 			update_gunlight(user)
-			alight = new /datum/action/item_action/toggle_gunlight(src)
+			alight = new(src)
 			if(loc == user)
 				alight.Grant(user)
 	else if(istype(I, /obj/item/kitchen/knife))
@@ -398,6 +398,12 @@
 			knife_overlay = null
 	else
 		return ..()
+
+/obj/item/gun/ui_action_click(mob/user, actiontype)
+	if(actiontype == alight)
+		toggle_gunlight()
+	else
+		..()
 
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)

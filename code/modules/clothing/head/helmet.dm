@@ -15,8 +15,18 @@
 	flags_inv = HIDEHAIR
 
 	dog_fashion = /datum/dog_fashion/head/helmet
-	var/obj/item/flashlight/attached_light = null
+	var/obj/item/flashlight/seclite/attached_light
 	var/can_flashlight = FALSE
+	var/datum/action/item_action/toggle_helmet_flashlight/helm_light_action
+
+/obj/item/clothing/head/helmet/Initialize()
+	. = ..()
+	if(attached_light)
+		helm_light_action = new(src)
+
+/obj/item/clothing/head/helmet/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/examine(mob/user)
 	..()
@@ -26,6 +36,16 @@
 	else if(can_flashlight)
 		to_chat(user, "It has a mounting point for a <b>flashlight</b>.")
 
+/obj/item/clothing/head/helmet/pickup(mob/user)
+	..()
+	if(helm_light_action)
+		helm_light_action.Grant(user)
+
+/obj/item/clothing/head/helmet/dropped(mob/user)
+	..()
+	if(helm_light_action)
+		helm_light_action.Remove(user)
+
 /obj/item/clothing/head/helmet/Destroy()
 	QDEL_NULL(attached_light)
 	return ..()
@@ -34,12 +54,9 @@
 	if(A == attached_light)
 		attached_light = null
 		update_helmlight()
+		update_icon()
+		QDEL_NULL(helm_light_action)
 	return ..()
-
-
-/obj/item/clothing/head/helmet/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = TRUE
@@ -289,7 +306,7 @@
 		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_helmet_flashlight))
+	if(action == helm_light_action)
 		toggle_helmlight()
 	else
 		..()
@@ -307,28 +324,26 @@
 				attached_light = S
 				update_icon()
 				update_helmlight(user)
-				verbs += /obj/item/clothing/head/helmet/proc/toggle_helmlight
-				var/datum/action/A = new /datum/action/item_action/toggle_helmet_flashlight(src)
+				helm_light_action = new(src)
 				if(loc == user)
-					A.Grant(user)
+					helm_light_action.Grant(user)
 		return
-
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(attached_light)
-			for(var/obj/item/flashlight/seclite/S in src)
-				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
-				attached_light = null
-				S.forceMove(user.drop_location())
-				update_helmlight(user)
-				S.update_brightness(user)
-				update_icon()
-				usr.update_inv_head()
-				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
-			for(var/datum/action/item_action/toggle_helmet_flashlight/THL in actions)
-				qdel(THL)
-			return
-
 	return ..()
+
+/obj/item/clothing/head/helmet/screwdriver_act(mob/living/user, obj/item/I)
+	..()
+	if(attached_light)
+		I.play_tool_sound(src)
+		to_chat(user, "<span class='notice'>You unscrew [attached_light] from [src].</span>")
+		var/obj/item/flashlight/removed_light = attached_light
+		attached_light.forceMove(drop_location())
+		attached_light = null
+		update_helmlight(user)
+		removed_light.update_brightness(user)
+		update_icon()
+		user.update_inv_head()
+		QDEL_NULL(helm_light_action)
+		return TRUE
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
 	set name = "Toggle Helmetlight"
@@ -342,7 +357,7 @@
 	if(user.incapacitated())
 		return
 	attached_light.on = !attached_light.on
-	to_chat(user, "<span class='notice'>You toggle the helmetlight [attached_light.on ? "on":"off"].</span>")
+	to_chat(user, "<span class='notice'>You toggle the helmet-light [attached_light.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_helmlight(user)
