@@ -522,9 +522,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 /datum/centcom_podlauncher/proc/supplypod_punish_log(var/list/whoDyin)
 	var/podString = effectBurst ? "5 pods" : "a pod"
 	var/whomString = ""
-	if (!isemptylist(whoDyin))
-		whomString = "at "
-		for (var/mob/living/M in whoDyin)
+	if (LAZYLEN(whoDyin))
+		for (var/mob/living/M in whoDyin) 
 			whomString += "[key_name(M)], "
 
 	var/delayString = temp_pod.landingDelay == initial(temp_pod.landingDelay) ? "" : " Delay=[temp_pod.landingDelay*0.1]s"
