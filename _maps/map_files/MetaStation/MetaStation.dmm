@@ -29030,10 +29030,6 @@
 /turf/closed/wall,
 /area/security/vacantcommissary)
 "bdB" = (
-/obj/machinery/camera{
-	c_tag = "Custodial Closet";
-	dir = 4
-	},
 /obj/machinery/airalarm{
 	pixel_y = 28
 	},
@@ -31903,6 +31899,10 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/camera{
+	c_tag = "Vacant Commissary";
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/vacantcommissary)
 "biW" = (
