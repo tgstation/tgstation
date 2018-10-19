@@ -9055,9 +9055,7 @@
 	},
 /area/maintenance/starboard)
 "aqs" = (
-/obj/item/mmi{
-	name = "man-machine interface"
-	},
+/obj/item/mmi,
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
