@@ -74,8 +74,10 @@
 /obj/item/gun/Destroy()
 	QDEL_NULL(pin)
 	QDEL_NULL(gun_light)
+	QDEL_NULL(alight)
 	QDEL_NULL(bayonet)
 	QDEL_NULL(chambered)
+	QDEL_NULL(zoom)
 	return ..()
 
 /obj/item/gun/handle_atom_del(atom/A)
@@ -87,6 +89,7 @@
 	if(A == bayonet)
 		bayonet = null
 		cut_overlay(knife_overlay, TRUE)
+		knife_overlay = null
 	if(A == gun_light)
 		gun_light = null
 		update_gunlight()
@@ -106,17 +109,17 @@
 	if(pin)
 		to_chat(user, "It has \a [pin] installed.")
 	else
-		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
+		to_chat(user, "It doesn't have a <b>firing pin</b> installed, and won't fire.")
 	if(gun_light)
-		to_chat(user, "It has a [gun_light] attached to it.")
+		to_chat(user, "It has \a [gun_light] mounted on it.")
 		to_chat(user, "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>")
 	else if(can_flashlight)
-		to_chat(user, "It has a mounting point for a flashlight.")
+		to_chat(user, "It has a mounting point for a <b>flashlight</b>.")
 	if(bayonet)
-		to_chat(user, "It has a [bayonet] attached to it.")
+		to_chat(user, "It has \a [bayonet] affixed to it.")
 		to_chat(user, "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>")
 	else if(can_bayonet)
-		to_chat(user, "It has a mounting lug for a bayonet.")
+		to_chat(user, "It has a <b>bayonet</b> lug affixed to it.")
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()

@@ -21,10 +21,10 @@
 /obj/item/clothing/head/helmet/examine(mob/user)
 	..()
 	if(attached_light)
-		to_chat(user, "It has a [attached_light] attached to it.")
+		to_chat(user, "It has \a [attached_light] mounted on it.")
 		to_chat(user, "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>")
 	else if(can_flashlight)
-		to_chat(user, "It has a mounting point for a flashlight.")
+		to_chat(user, "It has a mounting point for a <b>flashlight</b>.")
 
 /obj/item/clothing/head/helmet/Destroy()
 	QDEL_NULL(attached_light)
