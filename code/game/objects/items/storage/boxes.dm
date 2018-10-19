@@ -436,10 +436,8 @@
 	illustration = "pda"
 
 /obj/item/storage/box/PDAs/PopulateContents()
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
+	for(var/i in 1 to 4)
+		new /obj/item/pda(src)
 	new /obj/item/cartridge/head(src)
 
 	var/newcart = pick(	/obj/item/cartridge/engineering,
@@ -1009,21 +1007,16 @@
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/capacitor(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/scanning_module(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/manipulator(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/micro_laser(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/matter_bin(src)
 
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
@@ -1031,18 +1024,13 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/capacitor/quadratic(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/scanning_module/triphasic(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/manipulator/femto(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/micro_laser/quadultra(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stock_parts/matter_bin/bluespace(src)

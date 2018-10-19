@@ -45,12 +45,10 @@
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stack/medical/bruise_pack(src)
+	for(var/i in 1 to 3)
+		new /obj/item/stack/medical/ointment(src)
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
