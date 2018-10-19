@@ -39,15 +39,16 @@
 
 /obj/structure/closet/secure_closet/engineering_electrical/PopulateContents()
 	..()
-	var/static/items_inside = list(
-									/obj/item/clothing/gloves/color/yellow = 2,
-									/obj/item/inducer = 2,
-									/obj/item/storage/toolbox/electrical = 3,
-									/obj/item/electronics/apc = 3,
-									/obj/item/multitool = 3)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item]
-			new each_item(src)
+	new /obj/item/clothing/gloves/color/yellow(src)
+	new /obj/item/clothing/gloves/color/yellow(src)
+	new /obj/item/inducer(src)
+	new /obj/item/inducer(src)
+	for(var/i in 1 to 3)
+		new /obj/item/storage/toolbox/electrical(src)
+	for(var/i in 1 to 3)
+		new /obj/item/electronics/apc(src)
+	for(var/i in 1 to 3)
+		new /obj/item/multitool(src)
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
