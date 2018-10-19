@@ -31854,7 +31854,7 @@
 	name = "Commissary Shutter Control";
 	pixel_x = -26;
 	pixel_y = 6;
-	req_access_txt = "19"
+	req_access_txt = "0"
 	},
 /obj/structure/table,
 /obj/item/stack/packageWrap,
