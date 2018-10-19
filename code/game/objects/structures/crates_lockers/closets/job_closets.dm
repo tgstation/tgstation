@@ -127,7 +127,7 @@
 									/obj/item/clothing/under/rank/security/skirt = 2,
 									/obj/item/clothing/shoes/jackboots = 3,
 									/obj/item/clothing/head/beret/sec = 3,
-									/obj/item/clothing/head/soft/sec = 3.
+									/obj/item/clothing/head/soft/sec = 3,
 									/obj/item/clothing/mask/bandana/red = 2)
 	for(var/each_item in items_inside)
 		for(var/i in 1 to items_inside[each_item])
