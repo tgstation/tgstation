@@ -11,7 +11,7 @@
 		var/turf/loccheck = get_turf(A)
 		if(is_reebe(loccheck.z))
 			user.visible_message("<span class='warning'>An unseen force knocks [user] to the ground!</span>", "<span class='big_brass'>\"I think not!\"</span>")
-			user.Knockdown(60)
+			user.Paralyze(60)
 			return
 		if(istype(loccheck.loc, /area/fabric_of_reality))
 			to_chat(user, "<span class='danger'>You can't do that here!</span>")
@@ -25,7 +25,7 @@
 			for(var/mob/living/M in T)
 				if(M.movement_type & FLYING)
 					M.visible_message("<span class='danger'>The bluespace collapse crushes the air towards it, pulling [M] towards the ground...</span>")
-					M.Knockdown(5, TRUE, TRUE)		//Overrides stun absorbs.
+					M.Paralyze(5, TRUE, TRUE)		//Overrides stun absorbs.
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
 		for (var/obj/structure/ladder/unbreakable/binary/ladder in GLOB.ladders)
 			ladder.ActivateAlmonds()

@@ -151,7 +151,7 @@
 /mob/living/simple_animal/proc/handle_automated_movement()
 	set waitfor = FALSE
 	if(!stop_automated_movement && wander)
-		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(loc) || allow_movement_on_non_turfs) && (mobility_flags & MOBILITY_MOVE))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
@@ -328,7 +328,7 @@
 		health = 0
 		icon_state = icon_dead
 		density = FALSE
-		lying = 1
+		set_resting(TRUE)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)
@@ -349,7 +349,7 @@
 	return TRUE
 
 /mob/living/simple_animal/handle_fire()
-	return
+	return TRUE
 
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
@@ -362,9 +362,10 @@
 		icon = initial(icon)
 		icon_state = icon_living
 		density = initial(density)
-		lying = 0
+		mobility_flags = MOBILITY_FLAGS_DEFAULT
+		update_mobility()
 		. = 1
-		movement_type = initial(movement_type)
+		setMovetype(initial(movement_type))
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
@@ -393,7 +394,7 @@
 		if(target)
 			return new childspawn(target)
 
-/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/simple_animal/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -417,17 +418,19 @@
 	else
 		..()
 
-/mob/living/simple_animal/update_canmove(value_otherwise = TRUE)
-	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
+/mob/living/simple_animal/update_mobility(value_otherwise = TRUE)
+	if(IsUnconscious() || IsParalyzed() || IsStun() || IsKnockdown() || IsParalyzed() || stat || resting)
 		drop_all_held_items()
-		canmove = FALSE
+		mobility_flags = NONE
 	else if(buckled)
-		canmove = FALSE
+		mobility_flags = MOBILITY_FLAGS_INTERACTION
 	else
-		canmove = value_otherwise
+		if(value_otherwise)
+			mobility_flags = MOBILITY_FLAGS_DEFAULT
+		else
+			mobility_flags = NONE
 	update_transform()
 	update_action_buttons_icon()
-	return canmove
 
 /mob/living/simple_animal/update_transform()
 	var/matrix/ntransform = matrix(transform) //aka transform.Copy()
@@ -463,7 +466,7 @@
 			return
 	sync_lighting_plane_alpha()
 
-/mob/living/simple_animal/get_idcard()
+/mob/living/simple_animal/get_idcard(hand_first)
 	return access_card
 
 /mob/living/simple_animal/OpenCraftingMenu()

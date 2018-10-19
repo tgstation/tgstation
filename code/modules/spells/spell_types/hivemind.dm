@@ -166,7 +166,6 @@
 				else
 					power *= 3
 		if(power > 50 && user.z == target.z)
-			to_chat(target, "<span class='userdanger'>You feel a sharp pain, and a foreign presence in your mind!!</span>")
 			to_chat(user, "<span class='notice'>We have overloaded the vessel for a short time!</span>")
 			target.Jitter(round(power/10))
 			target.Unconscious(power)
@@ -194,7 +193,6 @@
 	if(!hive)
 		return
 	var/iterations = 0
-	var/power = 5
 
 	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getBrainLoss())
 		to_chat(user, "<span class='notice'>We cannot heal ourselves any more with this power!</span>")
@@ -202,17 +200,17 @@
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
 	while(iterations < 7)
 		var/mob/living/carbon/human/target = pick(hive.hivemembers)
-		if(!target)
-			break
 		if(!do_mob(user,user,15))
 			to_chat(user, "<span class='warning'>Our concentration has been broken!</span>")
 			break
+		if(!target)
+			to_chat(user, "<span class='warning'>We have run out of vessels to drain.</span>")
+			break
 		target.adjustBrainLoss(5)
-		power = max(5-(round(get_dist(user, target)/40)),2)
 		if(user.getBruteLoss() > user.getFireLoss())
-			user.heal_ordered_damage(power, list(CLONE, BRUTE, BURN))
+			user.heal_ordered_damage(5, list(CLONE, BRUTE, BURN))
 		else
-			user.heal_ordered_damage(power, list(CLONE, BURN, BRUTE))
+			user.heal_ordered_damage(5, list(CLONE, BURN, BRUTE))
 		if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss()) //If we don't have any of these, stop looping
 			to_chat(user, "<span class='warning'>We finish our healing</span>")
 			break
@@ -291,13 +289,6 @@
 			else
 				power = 1200
 				charge_max = 1200
-		for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
-			if(H.owner == user.mind)
-				continue
-			if(H.hivemembers.Find(vessel))
-				to_chat(user, "<span class='danger'>We have detected a foreign presence within this mind, it would be unwise to merge so intimately with it.</span>")
-				revert_cast()
-				return
 		original_body = user
 		vessel = targets[1]
 		to_chat(user, "<span class='notice'>We begin merging our mind with [vessel.name].</span>")
@@ -309,6 +300,13 @@
 			to_chat(user, "<span class='notice'>Our vessel is too far away to control.</span>")
 			revert_cast()
 			return
+		for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
+			if(H.owner == user.mind)
+				continue
+			if(H.owner == vessel.mind)
+				to_chat(user, "<span class='danger'>We have detected a foreign presence within this mind, it would be unwise to merge so intimately with it.</span>")
+				revert_cast()
+				return
 		backseat = new /mob/living/passenger()
 		if(vessel && vessel.mind && backseat)
 			var/obj/effect/proc_holder/spell/target_hive/hive_see/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_see) in user.mind.spell_list

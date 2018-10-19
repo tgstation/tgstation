@@ -31,8 +31,8 @@
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
 		H.nutrition += light_amount * 10
-		if(H.nutrition > NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL
+		if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL)
+			H.nutrition = NUTRITION_LEVEL_ALMOST_FULL
 		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(1,1)
 			H.adjustToxLoss(-1)
@@ -52,7 +52,7 @@
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
 				H.rad_act(rand(30,80))
-				H.Knockdown(100)
+				H.Paralyze(100)
 				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
 					H.randmutb()

@@ -95,20 +95,24 @@
 
 /datum/action/proc/IsAvailable()
 	if(!owner)
-		return 0
+		return FALSE
 	if(check_flags & AB_CHECK_RESTRAINED)
 		if(owner.restrained())
-			return 0
+			return FALSE
 	if(check_flags & AB_CHECK_STUN)
-		if(owner.IsKnockdown() || owner.IsStun())
-			return 0
+		if(isliving(owner))
+			var/mob/living/L = owner
+			if(L.IsParalyzed() || L.IsStun())
+				return FALSE
 	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
-			return 0
+		if(isliving(owner))
+			var/mob/living/L = owner
+			if(!(L.mobility_flags & MOBILITY_STAND))
+				return FALSE
 	if(check_flags & AB_CHECK_CONSCIOUS)
 		if(owner.stat)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
@@ -487,7 +491,10 @@
 		owner.put_in_hands(I)
 		I.attack_self(owner)
 	else
-		to_chat(owner, "<span class='cultitalic'>Your hands are full!</span>")
+		if (owner.get_num_arms() <= 0)
+			to_chat(owner, "<span class='warning'>You dont have any usable hands!</span>")
+		else
+			to_chat(owner, "<span class='warning'>Your hands are full!</span>")
 
 /datum/action/item_action/agent_box
 	name = "Deploy Box"

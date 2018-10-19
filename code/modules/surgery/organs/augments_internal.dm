@@ -1,4 +1,3 @@
-#define STUN_SET_AMOUNT 40
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -95,22 +94,53 @@
 		ui_action_click()
 	..()
 
-
 /obj/item/organ/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
+	var/datum/component/redirect/listener
+	var/datum/callback/CB
+	var/stun_cap_amount = 40
+	var/working = FALSE
 
-/obj/item/organ/cyberimp/brain/anti_stun/on_life()
-	..()
-	if(crit_fail)
+/obj/item/organ/cyberimp/brain/anti_stun/Initialize()
+	. = ..()
+	initialize_callback()
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/initialize_callback()
+	if(CB)
 		return
+	CB = CALLBACK(src, .proc/on_signal)
 
-	if(owner.AmountStun() > STUN_SET_AMOUNT)
-		owner.SetStun(STUN_SET_AMOUNT)
-	if(owner.AmountKnockdown() > STUN_SET_AMOUNT)
-		owner.SetKnockdown(STUN_SET_AMOUNT)
+/obj/item/organ/cyberimp/brain/anti_stun/Remove()
+	. = ..()
+	QDEL_NULL(listener)
+
+/obj/item/organ/cyberimp/brain/anti_stun/Insert()
+	. = ..()
+	if(listener)
+		qdel(listener)
+	listener = owner.AddComponent(/datum/component/redirect, list(
+	COMSIG_LIVING_STATUS_STUN = CB,
+	COMSIG_LIVING_STATUS_KNOCKDOWN = CB,
+	COMSIG_LIVING_STATUS_IMMOBILIZE = CB,
+	COMSIG_LIVING_STATUS_PARALYZE = CB
+	))
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
+	if(crit_fail || working)
+		return
+	working = TRUE
+	if(owner.AmountStun() > stun_cap_amount)
+		owner.SetStun(stun_cap_amount)
+	if(owner.AmountKnockdown() > stun_cap_amount)
+		owner.SetKnockdown(stun_cap_amount)
+	if(owner.AmountImmobilized() > stun_cap_amount)
+		owner.SetImmobilized(stun_cap_amount)
+	if(owner.AmountParalyzed() > stun_cap_amount)
+		owner.SetParalyzed(stun_cap_amount)
+	working = FALSE
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
@@ -121,7 +151,6 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
-
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

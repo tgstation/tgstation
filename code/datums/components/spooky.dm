@@ -22,7 +22,7 @@
 			return //undeads are unaffected by the spook-pocalypse.
 		if(istype(H.dna.species, /datum/species/zombie))
 			H.adjustStaminaLoss(25)
-			H.Knockdown(15) //zombies can't resist the doot
+			H.Paralyze(15) //zombies can't resist the doot
 		C.Jitter(35)
 		C.stuttering = 20
 		if((!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
@@ -36,7 +36,7 @@
 
 /datum/component/spooky/proc/spectral_change(mob/living/carbon/human/H, mob/user)
 	if((H.getStaminaLoss() > 95) && (!istype(H.dna.species, /datum/species/skeleton)) && (!istype(H.dna.species, /datum/species/golem)) && (!istype(H.dna.species, /datum/species/android)) && (!istype(H.dna.species, /datum/species/jelly)))
-		H.Knockdown(20)
+		H.Paralyze(20)
 		H.set_species(/datum/species/skeleton)
 		H.visible_message("<span class='warning'>[H] has given up on life as a mortal.</span>")
 		var/T = get_turf(H)

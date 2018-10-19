@@ -529,7 +529,7 @@
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
-							M.Knockdown(60)
+							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
 							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
@@ -1084,8 +1084,7 @@
 	if(active)
 		return
 
-	message_admins("[ADMIN_LOOKUPFLW(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
-	log_game("[key_name(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
+	log_bomber(usr, "primed an explosive", src, "for detonation")
 
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1

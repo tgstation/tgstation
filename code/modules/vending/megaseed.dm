@@ -6,6 +6,7 @@
 	icon_state = "seeds"
 	products = list(/obj/item/seeds/ambrosia = 3,
 		            /obj/item/seeds/apple = 3,
+		            /obj/item/seeds/cotton = 3,
 		            /obj/item/seeds/banana = 3,
 		            /obj/item/seeds/berry = 3,
 					/obj/item/seeds/cabbage = 3,
@@ -50,6 +51,6 @@
 	premium = list(/obj/item/reagent_containers/spray/waterflower = 1)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
-	default_price = 25
+	default_price = 10
 	extra_price = 50
 	payment_department = ACCOUNT_SRV

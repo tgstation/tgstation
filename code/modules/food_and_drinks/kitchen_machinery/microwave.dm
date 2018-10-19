@@ -10,6 +10,8 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/microwave
 	pass_flags = PASSTABLE
+	light_color = LIGHT_COLOR_YELLOW
+	light_power = 3
 	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
@@ -59,8 +61,8 @@
 	if(default_deconstruction_crowbar(O))
 		return
 
-	if(src.broken > 0)
-		if(src.broken == 2 && istype(O, /obj/item/wirecutters)) // If it's broken and they're using a screwdriver
+	if(broken > 0)
+		if(broken == 2 && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a screwdriver
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
@@ -70,8 +72,8 @@
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
 				)
-				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weldingtool)) // If it's broken and they're doing the wrench
+				broken = 1 // Fix it a bit
+		else if(broken == 1 && O.tool_behaviour == TOOL_WELDER) // If it's broken and they're doing the wrench
 			user.visible_message( \
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
@@ -81,10 +83,10 @@
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
 				)
-				src.icon_state = "mw"
-				src.broken = 0 // Fix it!
-				src.dirty = 0 // just to be sure
-				src.container_type = OPENCONTAINER
+				icon_state = "mw"
+				broken = 0 // Fix it!
+				dirty = 0 // just to be sure
+				container_type = OPENCONTAINER
 				return 0 //to use some fuel
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
@@ -98,11 +100,11 @@
 				"[user] has cleaned the microwave.", \
 				"<span class='notice'>You clean the microwave.</span>" \
 			)
-			src.dirty = 0 // It's clean!
-			src.broken = 0 // just to be sure
-			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER
-			src.updateUsrDialog()
+			dirty = 0 // It's clean!
+			broken = 0 // just to be sure
+			icon_state = "mw"
+			container_type = OPENCONTAINER
+			updateUsrDialog()
 			return 1 // Disables the after-attack so we don't spray the floor/user.
 		else
 			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
@@ -119,12 +121,12 @@
 				"[user] has cleaned the microwave.", \
 				"<span class='notice'>You clean the microwave.</span>" \
 			)
-			src.dirty = 0 // It's clean!
-			src.broken = 0 // just to be sure
-			src.icon_state = "mw"
-			src.container_type = OPENCONTAINER
+			dirty = 0 // It's clean!
+			broken = 0 // just to be sure
+			icon_state = "mw"
+			container_type = OPENCONTAINER
 
-	else if(src.dirty==100) // The microwave is all dirty so can't be used!
+	else if(dirty==100) // The microwave is all dirty so can't be used!
 		to_chat(user, "<span class='warning'>It's dirty!</span>")
 		return 1
 
@@ -268,11 +270,13 @@
 	operating = TRUE
 	icon_state = "mw1"
 	updateUsrDialog()
+	set_light(1.5)
 
 /obj/machinery/microwave/proc/abort()
 	operating = FALSE // Turn it off again aferwards
 	icon_state = "mw"
 	updateUsrDialog()
+	set_light(0)
 	soundloop.stop()
 
 /obj/machinery/microwave/proc/stop()
@@ -298,6 +302,7 @@
 		if(prob(50))
 			new /obj/item/reagent_containers/food/snacks/badrecipe(src)
 			qdel(S)
+	set_light(0)
 	soundloop.stop()
 
 /obj/machinery/microwave/proc/broke()
@@ -310,6 +315,7 @@
 	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
+	set_light(0)
 	soundloop.stop()
 
 /obj/machinery/microwave/Topic(href, href_list)

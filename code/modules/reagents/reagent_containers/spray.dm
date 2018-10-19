@@ -42,7 +42,7 @@
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, "<span class='warning'>Not enough left!</span>")
 		return
 
 	spray(A)
@@ -92,9 +92,9 @@
 				break
 
 			if(stream_mode)
-				if(ismob(T))
-					var/mob/M = T
-					if(!M.lying || !range_left)
+				if(isliving(T))
+					var/mob/living/M = T
+					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
 				else if(!range_left)
@@ -142,6 +142,21 @@
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		src.reagents.clear_reagents()
+
+/obj/item/reagent_containers/spray/on_reagent_change(changetype)
+	var/total_reagent_weight
+	var/amount_of_reagents
+	for (var/datum/reagent/R in reagents.reagent_list)
+		total_reagent_weight = total_reagent_weight + R.reagent_weight
+		amount_of_reagents++
+
+	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
+		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
+		spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+	else
+		spray_range = initial(spray_range)
+	if(stream_mode == 0)
+		current_range = spray_range
 
 //space cleaner
 /obj/item/reagent_containers/spray/cleaner
