@@ -436,22 +436,21 @@
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	new /obj/item/grenade/flashbang(src)
-	for(var/i in 1 to 4)
-		new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	for(var/i in 1 to 10)
-		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	for(var/i in 1 to 4)
-		new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/facid(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/screwdriver(src)
-	new /obj/item/multitool(src)
+	var/static/items_inside = list(	
+									/obj/item/grenade/flashbang = 1,
+									/obj/item/grenade/smokebomb = 4,
+									/obj/item/grenade/empgrenade = 1,
+									/obj/item/grenade/empgrenade = 1,
+									/obj/item/grenade/syndieminibomb/concussion/frag = 10,
+									/obj/item/grenade/gluon = 4,
+									/obj/item/grenade/chem_grenade/incendiary = 2,
+									/obj/item/grenade/chem_grenade/facid = 1,
+									/obj/item/grenade/syndieminibomb = 2,
+									/obj/item/screwdriver = 1,
+									/obj/item/multitool = 1)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item]
+			new each_item(src)
 
 /obj/item/storage/belt/wands
 	name = "wand belt"
@@ -538,9 +537,12 @@
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
-	new /obj/item/gun/ballistic/revolver/detective(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/ammo_box/c38(src)
+	var/static/items_inside = list(	
+									/obj/item/gun/ballistic/revolver/detective = 1,
+									/obj/item/ammo_box/c38 = 2)
+	for(var/each_item in items_inside)
+		for(var/i in 1 to items_inside[each_item]
+			new each_item(src)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
