@@ -189,4 +189,4 @@
 	else if(!harvesting)
 		to_chat(user, "<span class='notice'>Alt-click [src] to start harvesting.</span>")
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Harvesting at [interval*0.1] seconds per organ.<span>")
+		to_chat(user, "<span class='notice'>The status display reads: Harvesting at <b>[interval*0.1]</b> seconds per organ.<span>")

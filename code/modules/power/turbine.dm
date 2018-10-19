@@ -97,7 +97,7 @@
 /obj/machinery/power/compressor/examine(mob/user)
 	..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Efficiency at [efficiency*100]%.")
+		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
 
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
@@ -184,7 +184,7 @@
 /obj/machinery/power/turbine/examine(mob/user)
 	..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Productivity at [productivity*100]%.<span>")
+		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<span>")
 
 /obj/machinery/power/turbine/locate_machinery()
 	if(compressor)

@@ -24,7 +24,7 @@
 /obj/machinery/recharger/examine(mob/user)
 	..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Charge speed at [recharge_coeff*100]%.<span>")
+		to_chat(user, "<span class='notice'>The status display reads: Charge speed at <b>[recharge_coeff*100]%</b>.<span>")
 
 /obj/machinery/recharger/proc/setCharging(new_charging)
 	charging = new_charging

@@ -42,7 +42,7 @@
 /obj/machinery/recycler/examine(mob/user)
 	..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>Reclaiming [amount_produced]% of materials salvaged.<span>")
+		to_chat(user, "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.<span>")
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
