@@ -300,7 +300,8 @@
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/obj/instrument = new display_names[choice]
+	choice = display_names[choice]
+	var/obj/instrument = new choice
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
 	pod.explosionSize = list(0,0,0,2)
 	instrument.forceMove(pod)
