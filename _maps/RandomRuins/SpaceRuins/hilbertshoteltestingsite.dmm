@@ -1,0 +1,68 @@
+"a" = (/turf/open/space/basic,/area/template_noop)
+"b" = (/turf/open/floor/plating/asteroid/airless,/area/ruin/unpowered/no_grav)
+"c" = (/turf/closed/wall/r_wall/rust,/area/ruin/space/has_grav/hilbertresearchfacility)
+"d" = (/turf/closed/wall/r_wall,/area/ruin/space/has_grav/hilbertresearchfacility)
+"e" = (/obj/machinery/porta_turret/syndicate{desc = "A ballistic machine gun auto-turret that fires bluespace bullets."; lethal_projectile = /obj/item/projectile/magic/teleport; name = "displacement turret"; stun_projectile = /obj/item/projectile/magic/teleport},/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"f" = (/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"g" = (/obj/structure/table/glass,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"h" = (/obj/structure/table/glass,/obj/item/stack/sheet/bluespace_crystal{amount = 37},/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"i" = (/obj/structure/table/glass,/obj/item/bodybag/bluespace,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"j" = (/turf/open/floor/plasteel/stairs/left,/area/ruin/space/has_grav/hilbertresearchfacility)
+"k" = (/turf/open/floor/plasteel/stairs/medium,/area/ruin/space/has_grav/hilbertresearchfacility)
+"l" = (/turf/open/floor/plasteel/stairs/right,/area/ruin/space/has_grav/hilbertresearchfacility)
+"m" = (/obj/structure/table/glass,/obj/item/reagent_containers/syringe/bluespace,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"n" = (/obj/structure/table/glass,/obj/item/stock_parts/matter_bin/bluespace,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"o" = (/turf/open/floor/plasteel/vaporwave,/area/ruin/space/has_grav/hilbertresearchfacility)
+"p" = (/obj/structure/table/glass,/obj/item/stack/cable_coil/blue,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"q" = (/obj/structure/table/glass,/obj/item/storage/backpack/holding,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"r" = (/obj/structure/table/glass,/obj/item/reagent_containers/glass/beaker/bluespace,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"s" = (/obj/structure/table/glass,/obj/item/stock_parts/subspace/crystal,/obj/item/stock_parts/subspace/transmitter,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"t" = (/obj/structure/displaycase{start_showpiece_type = /obj/item/hilbertshotel},/turf/open/floor/plasteel/vaporwave,/area/ruin/space/has_grav/hilbertresearchfacility)
+"u" = (/obj/structure/table/glass,/obj/item/analyzer,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"v" = (/obj/structure/table/glass,/obj/item/stock_parts/subspace/amplifier,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"w" = (/obj/item/paper/crumpled/docslogs,/obj/item/pen,/turf/open/floor/plasteel/vaporwave,/area/ruin/space/has_grav/hilbertresearchfacility)
+"x" = (/obj/structure/table/glass,/obj/item/assembly/signaler,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"y" = (/obj/structure/table/glass,/obj/item/slimecross/industrial/bluespace,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"z" = (/obj/machinery/door/airlock/vault{name = "secured door"; req_access = 207},/obj/effect/mapping_helpers/airlock/locked,/turf/open/floor/plasteel/grimy{icon_state = "engine"},/area/ruin/space/has_grav/hilbertresearchfacility)
+"A" = (/obj/structure/filingcabinet,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"B" = (/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"C" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"D" = (/obj/item/twohanded/required/kirbyplants/random,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"E" = (/obj/structure/chair/office/dark,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"F" = (/obj/machinery/door/window/eastleft,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"G" = (/obj/structure/table/reinforced,/obj/item/pen,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"H" = (/obj/structure/table/reinforced,/obj/item/paper/crumpled/robertsworkjournal,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"I" = (/obj/machinery/door/airlock/highsecurity{req_access = 207},/obj/effect/mapping_helpers/airlock/locked,/turf/open/floor/plasteel/grimy,/area/ruin/space/has_grav/hilbertresearchfacility)
+"J" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
+"K" = (/turf/open/floor/plasteel/stairs/left,/area/ruin/unpowered/no_grav)
+"L" = (/turf/open/floor/plasteel/stairs/medium,/area/ruin/unpowered/no_grav)
+"M" = (/turf/open/floor/plasteel/stairs/right,/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaabbbbaaaaaaaa
+aaaabbbbJJJJJJJJJJJbbbaaaaa
+aaaJJcdddcccccccdddccbbaaaa
+aaaJJcefffgghgiffffecJbbaaa
+aaaJJcffffffffffffffcJJbbaa
+aaaJJcfffffjklfffffgcJJJbaa
+aaabJcmfffnooopffffqcJJJbaa
+aaaabdrfffsotouffffgcJJJJba
+aaabJdgfffvoowxffffydJJJJba
+aabJJcgffffjklfffffgdJJJJba
+abJJJdffffffffffffffcJJJJaa
+abJJJdfffffffffffffecJJJJba
+abJJJcffffffffffffffcJJJbba
+aaabJdeffffccddccdzcddcbbba
+aaaabdcdcccdABBBCBBBBDdbbba
+aaaaabbJJJJdBBEBFBBBBBdJbba
+aaaaaaabJJJcCGHCCBBBBBcJJaa
+aaaaaaabJJJcBBBBBBBBBBdJaaa
+aaaaaaabJJJdDBBBBBBBBBcJJaa
+aaaaaaabbJJccccccddddIdbJJa
+aaaaaaabbbJJJJJbbbbbKLMbJJa
+aaaaaaaabbbbJJJJbbbbbbbbbJa
+aaaaaaaaaaaaaJJbbbbbbbbbJJa
+aaaaaaaaaaaaaaaaabbbbbbbbJa
+aaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

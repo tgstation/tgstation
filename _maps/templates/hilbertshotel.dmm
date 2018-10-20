@@ -1,6 +1,6 @@
 "a" = (/turf/open/space/bluespace,/area/hilbertshotel)
 "b" = (/turf/closed/indestructible/hotelwall,/area/hilbertshotel)
-"c" = (/obj/machinery/telecomms/relay/preset/station{icon = null; icon_state = "null"; use_power = 0},/turf/closed/indestructible/hotelwall,/area/hilbertshotel)
+"c" = (/obj/machinery/jukebox,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "d" = (/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "e" = (/obj/structure/table/wood,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "f" = (/obj/structure/table/wood,/obj/structure/showcase/machinery/tv,/obj/machinery/light/small{dir = 1},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
@@ -11,7 +11,7 @@
 "k" = (/obj/structure/chair/comfy/brown{dir = 4},/obj/machinery/light/small{dir = 8},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "l" = (/obj/structure/table/wood/poker,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "m" = (/obj/structure/chair/comfy/brown{dir = 8},/obj/machinery/light/small{dir = 4},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
-"n" = (/obj/structure/bed{pixel_y = 0},/obj/item/bedsheet/random,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"n" = (/obj/effect/landmark/xmastree,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "o" = (/obj/structure/chair/comfy/brown{dir = 1},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "p" = (/obj/structure/mineral_door/wood,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 "q" = (/obj/structure/bed{pixel_y = 0},/obj/item/bedsheet/random,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
@@ -45,18 +45,19 @@
 "S" = (/obj/structure/window/reinforced/tinted{dir = 8},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
 "T" = (/obj/structure/window/reinforced/tinted{dir = 8},/obj/structure/window/reinforced/tinted,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
 "U" = (/obj/structure/table/reinforced,/obj/structure/sink/kitchen,/obj/machinery/light/small,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"V" = (/obj/structure/table/reinforced,/obj/effect/spawner/lootdrop/three_course_meal,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaa
-abbbcbbbbbbbbbba
-abdefedbghihddba
+abbbbbbbbbbbbbba
+abdefecbghihddba
 abdddddbdddddjba
-abklllmbtddddqba
-abdooodpdddddnba
+abklllmbtdnddqba
+abdooodpdddddqba
 aIddddDbGdJrdsba
 abtdddKbubbbbbba
 abdBBBvbwwLxwwba
-abyzzzzbAwwFwCba
+abyzVzzbAwwFwCba
 abtdddMbNwRSwOba
 abHdddQbAwwTwCba
 abzzUzzbEwPxwwba

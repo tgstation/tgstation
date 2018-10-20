@@ -1,0 +1,82 @@
+"aa" = (/turf/open/space/bluespace,/area/hilbertshotel)
+"ab" = (/turf/closed/indestructible/hotelwall,/area/hilbertshotel)
+"ac" = (/obj/structure/table/wood/fancy,/obj/structure/mirror{broken = 1; desc = "Oh no, seven years of bad luck!"; icon_state = "mirror_broke"; pixel_y = 24},/obj/machinery/light/small{dir = 1},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ad" = (/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ae" = (/obj/structure/table/wood,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"af" = (/obj/structure/table/wood,/obj/structure/showcase/machinery/tv,/obj/machinery/light/small{dir = 1},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ag" = (/obj/structure/dresser,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ah" = (/obj/structure/table/wood/fancy,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ai" = (/obj/structure/table/wood/poker,/obj/item/toy/cards/deck,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aj" = (/obj/structure/table/wood/fancy{pixel_y = 0},/obj/item/flashlight/lamp/green{pixel_y = 0; step_y = 0},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ak" = (/obj/structure/chair/comfy/brown{dir = 4},/obj/machinery/light/small{dir = 8},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"al" = (/obj/structure/table/wood/poker,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"am" = (/obj/structure/chair/comfy/brown{dir = 8},/obj/machinery/light/small{dir = 4},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"an" = (/obj/machinery/light/small{dir = 8},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ao" = (/obj/structure/table/wood/fancy{pixel_y = 0},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ap" = (/obj/structure/bed{pixel_y = 0},/obj/item/bedsheet/random,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aq" = (/obj/structure/chair/comfy/brown{dir = 1},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ar" = (/obj/structure/mineral_door/wood,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"as" = (/turf/closed/indestructible/hoteldoor,/area/hilbertshotel)
+"at" = (/obj/effect/decal/cleanable/cobweb,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"au" = (/obj/machinery/light_switch{pixel_x = -32},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"av" = (/obj/machinery/light/small,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aw" = (/obj/structure/closet/cabinet{anchored = 1},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ax" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"ay" = (/obj/structure/closet/crate/bin,/obj/machinery/light/small{dir = 4},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"az" = (/obj/structure/mineral_door/paperframe,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aA" = (/obj/structure/chair/stool/bar,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aB" = (/obj/structure/extinguisher_cabinet{pixel_x = 32},/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aC" = (/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aD" = (/obj/machinery/light/small{dir = 1},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aE" = (/obj/structure/curtain,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aF" = (/obj/machinery/door/window/northleft,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aG" = (/obj/structure/table/reinforced,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aH" = (/obj/structure/table/reinforced,/obj/item/pen,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aI" = (/obj/structure/mirror{pixel_x = -32},/obj/structure/sink{dir = 8; pixel_x = -12; pixel_y = 2},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aJ" = (/obj/structure/window/reinforced/tinted{dir = 8},/obj/structure/window/reinforced/tinted{dir = 1},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aK" = (/obj/machinery/shower{dir = 8},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aL" = (/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aM" = (/obj/structure/table/wood/poker,/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aN" = (/obj/structure/toilet{dir = 8},/obj/structure/window/reinforced/tinted{dir = 1},/obj/structure/window/reinforced/tinted{dir = 8},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aO" = (/obj/structure/window/reinforced/tinted{dir = 8},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aP" = (/obj/item/bikehorn/rubberducky,/obj/machinery/light/small{dir = 4},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aQ" = (/obj/structure/table/reinforced,/obj/machinery/microwave,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aR" = (/obj/machinery/smartfridge/food,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aS" = (/obj/structure/window/reinforced/tinted{dir = 8},/obj/structure/window/reinforced/tinted,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aT" = (/obj/structure/table/reinforced,/obj/structure/sink/kitchen,/obj/machinery/light/small,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aU" = (/obj/structure/bed{pixel_y = 0},/obj/item/bedsheet/random,/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aV" = (/obj/machinery/light/small,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"aW" = (/obj/machinery/jukebox,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aX" = (/obj/machinery/light_switch{pixel_x = 32},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aY" = (/obj/structure/chair/stool/bar,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/vomit,/obj/effect/mob_spawn/human/doctorhilbert,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"aZ" = (/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"ba" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/cobweb/cobweb2,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"bb" = (/obj/structure/mirror{pixel_x = -32},/obj/structure/sink{dir = 8; pixel_x = -12; pixel_y = 2},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"bc" = (/obj/effect/decal/cleanable/blood,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"bd" = (/obj/machinery/shower{dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"be" = (/obj/machinery/light/small{dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"bf" = (/obj/effect/decal/cleanable/dirt,/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"bg" = (/obj/structure/table/reinforced,/obj/machinery/light/small{dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"bh" = (/obj/structure/table/reinforced,/obj/machinery/light/small{dir = 8},/obj/item/soap/homemade{name = "used soap"},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"bi" = (/obj/effect/decal/cleanable/vomit,/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"bj" = (/obj/structure/table/reinforced,/obj/item/soap/homemade{name = "used soap"},/turf/open/indestructible/hoteltile,/area/hilbertshotel)
+"bk" = (/obj/structure/table/reinforced,/obj/item/analyzer/hilbertsanalyzer,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+"bl" = (/obj/structure/table/reinforced,/obj/item/paper/crumpled/bloody/docsdeathnote,/turf/open/indestructible/hotelwood,/area/hilbertshotel)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaababababababababababababababaa
+aaabataeafaeaWabagahacahadaxabaa
+aaabaLadadadaLabadadadadadajabaa
+aaabakalaiaMamabanaLadaLaLapabaa
+aaabadaqaqaqadaradaLaLadadaUabaa
+aaasaLadaLadaXabauadavawadaoabaa
+aaabanadadadayabazababababababaa
+aaabadaAaYaAaBabaCaZaDaEaCbaabaa
+aaabaFaHblbkaGabbbaZaCaJbcbdabaa
+aaabbeadadbfbgabbhaCaNaOaZaPabaa
+aaabaQaLaLbfaRabaIaZbiaSaZaKabaa
+aaabaGaGaTaGaGabbjaZaVaEaCaCabaa
+aaababababababababababababababaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

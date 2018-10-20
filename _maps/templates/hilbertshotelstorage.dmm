@@ -1,0 +1,8 @@
+"a" = (/turf/closed/indestructible/hotelwall,/area/hilbertshotelstorage)
+"b" = (/turf/open/indestructible/hotelwood,/area/hilbertshotelstorage)
+
+(1,1,1) = {"
+aaa
+aba
+aaa
+"}
