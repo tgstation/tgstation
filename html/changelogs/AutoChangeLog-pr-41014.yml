@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - tweak: "Metastation: The janitorial closet has been moved in the maintenance section of the service wing"
+  - rscadd: "Metastation: Added the vacant commissary where the janitorial closet used to be"
