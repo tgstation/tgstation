@@ -142,15 +142,12 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, only_robotic = FALSE,  only_organic = FALSE)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
 	if(owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
 
-	if(only_robotic && status != BODYPART_ROBOTIC)
-		return
-
-	if(only_organic && status != BODYPART_ORGANIC)
-		return
+	if(required_status && status != required_status)
+		return FALSE
 
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
 	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
