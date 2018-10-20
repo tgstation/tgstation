@@ -1284,9 +1284,23 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A gateway that will routinely teleport in Syndicate muscle - emphasis on the muscle, these guys are rather SIMPLE. The gateway self-calibrates to allow more reinforcements over time."
 	item = /obj/machinery/spawner
 	cost = 20
-	player_minimum = 40
+	//player_minimum = 40
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/device_tools/syndie_spawner/purchase(mob/user, datum/component/uplink/U)
+	var/obj/machinery/spawner/SS = spawn_item(item, user, U)
+	var/datum/team/custom/T = new()
+	T.name = "[user]'s Syndicate"
+	T.custom_hud_state = "synd"
+	T.custom_hud = new
+	T.custom_hud.self_visible = TRUE
+	GLOB.huds += T.custom_hud //Make it show in admin hud
+	T.add_member(user.mind)
+	SS.Team = T
+	if(purchase_log_vis && U.purchase_log)
+		U.purchase_log.LogPurchase(SS, src, cost)
+
 
 // Implants
 /datum/uplink_item/implants

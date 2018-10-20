@@ -88,6 +88,9 @@
 /mob/living/simple_animal/hostile/syndicate/melee/reinforcement // Traitor Gateway
 	name = "Syndicate Thug"
 	desc = "Didn't make the cut for the Nuclear Operator Group."
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	see_in_dark = 2
 
 /mob/living/simple_animal/hostile/syndicate/melee/reinforcement/Initialize()
 	. = ..()
@@ -194,6 +197,7 @@
 /mob/living/simple_animal/hostile/syndicate/ranged/reinforcement // Traitor Gateway
 	name = "Syndicate Gunman"
 	desc = "Didn't make the cut for the Nuclear Operator Group."
+	see_in_dark = 2
 
 /mob/living/simple_animal/hostile/syndicate/ranged/reinforcement/Initialize()
 	. = ..()

@@ -46,7 +46,7 @@
 	charge_max = 1200
 	invocation = "Deploying Sandbags!"
 	invocation_type = "shout"
-	sound = 'sound/magic/forcewall.ogg'
+	sound = 'sound/items/jaws_pry.ogg'
 	action_icon = 'icons/mob/actions/actions_items.dmi'
 	action_icon_state = "deploy_box"
 	range = -1
