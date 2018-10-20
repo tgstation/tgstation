@@ -534,10 +534,6 @@
 /obj/machinery/status_display/ai,
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/medical)
-"bl" = (
-/obj/machinery/porta_turret/syndicate/shuttle,
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/shuttle/syndicate/armory)
 "bm" = (
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/armory)
@@ -1427,7 +1423,7 @@ aB
 aB
 bb
 bh
-bl
+bj
 bw
 bw
 bM

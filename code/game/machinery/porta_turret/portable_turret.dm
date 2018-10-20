@@ -690,14 +690,12 @@
 
 /obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
 	if(target)
-		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
 		shootAt(target)
 		addtimer(CALLBACK(src, .proc/shootAt, target), 5)
 		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
 		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
-		return 1
-	return
+		return TRUE
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
