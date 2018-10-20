@@ -62,12 +62,13 @@ GLOBAL_VAR_INIT(hhStorageTurf, null)
         for(var/i=0, i<hotelRoomTemp.width, i++)
             for(var/j=0, j<hotelRoomTemp.height, j++)
                 for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
-                    if(ismob(A))
-                        var/mob/M = A
-                        M.notransform = FALSE
-                    A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
+                    if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
+                        if(ismob(A))
+                            var/mob/M = A
+                            M.notransform = FALSE
+                        A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
                 turfNumber++
-        for(var/obj/abstracthotelstorage/S in storageTurf)
+        for(var/obj/item/abstracthotelstorage/S in storageTurf)
             if(S.roomNumber == roomNumber)
                 qdel(S)
         storedRooms -= "[roomNumber]"
@@ -184,7 +185,7 @@ GLOBAL_VAR_INIT(hhStorageTurf, null)
 /turf/closed/indestructible/hoteldoor/proc/storeRoom()
     var/storage[(reservation.top_right_coords[1]-reservation.bottom_left_coords[1]+1)*(reservation.top_right_coords[2]-reservation.bottom_left_coords[2]+1)]
     var/turfNumber = 1
-    var/obj/abstracthotelstorage/storageObj = new(storageTurf)
+    var/obj/item/abstracthotelstorage/storageObj = new(storageTurf)
     storageObj.roomNumber = roomnumber
     storageObj.name = "Room [roomnumber] Storage"
     for(var/i=0, i<parentSphere.hotelRoomTemp.width, i++)
@@ -221,10 +222,11 @@ GLOBAL_VAR_INIT(hhStorageTurf, null)
     noteleport = TRUE
     hidden = TRUE
 
-/obj/abstracthotelstorage
+/obj/item/abstracthotelstorage
     anchored = TRUE
     invisibility = INVISIBILITY_ABSTRACT
     resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+    item_flags = ABSTRACT
     var/roomNumber
 
 //Space Ruin stuff
