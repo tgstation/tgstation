@@ -180,7 +180,7 @@
 "H" = (
 /obj/structure/table/reinforced,
 /obj/machinery/microwave,
-/turf/open/indestructible/hoteltile,
+/turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "I" = (
 /turf/closed/indestructible/hoteldoor,
@@ -207,7 +207,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/indestructible/hoteltile,
+/turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "N" = (
 /obj/structure/table/reinforced,
@@ -230,7 +230,7 @@
 /area/hilbertshotel)
 "Q" = (
 /obj/machinery/smartfridge/food,
-/turf/open/indestructible/hoteltile,
+/turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "R" = (
 /obj/structure/toilet{
@@ -261,22 +261,12 @@
 /obj/structure/table/reinforced,
 /obj/structure/sink/kitchen,
 /obj/machinery/light/small,
-/turf/open/indestructible/hoteltile,
+/turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "V" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/lootdrop/three_course_meal,
 /turf/open/indestructible/hotelwood,
-/area/hilbertshotel)
-"W" = (
-/obj/structure/table/reinforced,
-/turf/open/indestructible/hoteltile,
-/area/hilbertshotel)
-"Y" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/indestructible/hoteltile,
 /area/hilbertshotel)
 
 (1,1,1) = {"
@@ -324,9 +314,9 @@ d
 t
 d
 y
-Y
+t
 H
-W
+z
 b
 a
 "}
@@ -341,9 +331,9 @@ d
 d
 B
 z
-w
-w
-W
+d
+d
+z
 b
 a
 "}
@@ -358,8 +348,8 @@ d
 d
 B
 V
-w
-w
+d
+d
 U
 b
 a
@@ -375,9 +365,9 @@ d
 d
 B
 z
-w
-w
-W
+d
+d
+z
 b
 a
 "}
@@ -394,7 +384,7 @@ v
 z
 M
 Q
-W
+z
 b
 a
 "}
