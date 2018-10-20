@@ -16,7 +16,6 @@
 			var/datum/objective/brainwashing/objective = new(O)
 			B.objectives += objective
 		M.add_antag_datum(B)
-
 	var/begin_message = "<span class='deadsay'><b>[L]</b> has been brainwashed with the following objectives: "
 	var/obj_message = english_list(directives)
 	var/end_message = "</b>.</span>"
@@ -30,6 +29,14 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
+
+/datum/antagonist/brainwashed/on_gain()
+	. = ..()
+	SEND_SIGNAL(owner, COMSIG_LIVING_BRAINWASHED)
+
+/datum/antagonist/brainwashed/on_removal()
+	. = ..()
+	SEND_SIGNAL(owner, COMSIG_LIVING_UNBRAINWASHED)
 
 /datum/antagonist/brainwashed/greet()
 	to_chat(owner, "<span class='warning'>Your mind reels as it begins focusing on a single purpose...</span>")

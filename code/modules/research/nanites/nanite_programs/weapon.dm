@@ -170,6 +170,12 @@
 	extra_settings = list("Directive")
 	var/cooldown = 0 //avoids spam when nanites are running low
 	var/directive = "..."
+	var/brainwashed = FALSE
+
+/datum/nanite_program/mind_control/on_mob_add()
+	. = ..()
+	//Register to signal when they get unbrainwashed, so if we're passively rewashing we can do it
+	RegisterSignal(nanites.host_mob, COMSIG_LIVING_UNBRAINWASHED, .proc/host_mob_unbrainwashed)
 
 /datum/nanite_program/mind_control/set_extra_setting(user, setting)
 	if(setting == "Directive")
@@ -182,15 +188,20 @@
 	if(setting == "Directive")
 		return directive
 
+/datum/nanite_program/mind_control/proc/host_mob_unbrainwashed()
+	//Host mob is unbrainwashed, let the passive effect rebrainwash them
+	brainwashed=FALSE
+
 /datum/nanite_program/mind_control/copy_extra_settings_to(datum/nanite_program/mind_control/target)
 	target.directive = directive
 
 /datum/nanite_program/mind_control/enable_passive_effect()
-	if(world.time < cooldown)
+	if( ( world.time < cooldown ) || brainwashed)
 		return
 	. = ..()
 	brainwash(host_mob, directive)
 	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[directive]'.")
+	brainwashed = TRUE//stop brainwashing until done
 
 /datum/nanite_program/mind_control/disable_passive_effect()
 	. = ..()
