@@ -82,7 +82,7 @@
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
 		radio.on = !radio.on
-		to_chat(user, "<span class='notice'>You toggle the [src]'s radio system [radio.on==1 ? "on" : "off"].</span>")
+		to_chat(user, "<span class='notice'>You toggle [src]'s radio system [radio.on==1 ? "on" : "off"].</span>")
 	else
 		eject_brain(user)
 		update_icon()
