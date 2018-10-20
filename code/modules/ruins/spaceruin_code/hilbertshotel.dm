@@ -5,6 +5,7 @@ GLOBAL_VAR_INIT(hhStorageTurf, null)
     desc = "A sphere of what appears to be an intricate network of bluespace. Observing it in detail seems to give you a headache as you try to comprehend the infinite amount of infinitesimally distinct points on its surface."
     icon_state = "hilbertshotel"
     w_class = WEIGHT_CLASS_SMALL
+    resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
     var/ruinSpawned = FALSE
     var/datum/map_template/hilbertshotel/hotelRoomTemp
     var/datum/map_template/hilbertshotel/empty/hotelRoomTempEmpty
@@ -263,13 +264,15 @@ GLOBAL_VAR_INIT(hhStorageTurf, null)
     ghost_usable = FALSE
     oxy_damage = 500
     mob_species = /datum/species/skeleton
-    outfit = /datum/outfit/job/rd
     id_job = "Head Researcher"
     id_access = ACCESS_RESEARCH
     id_access_list = list(ACCESS_AWAY_GENERIC3, ACCESS_RESEARCH)
-    belt = null
-    ears = null
-    back = null
+    instant = TRUE
+    id = /obj/item/card/id/silver
+    uniform = /obj/item/clothing/under/rank/research_director
+    shoes = /obj/item/clothing/shoes/sneakers/brown
+    back = /obj/item/storage/backpack/satchel/leather
+    suit = /obj/item/clothing/suit/toggle/labcoat
 
 /obj/item/paper/crumpled/docslogs
     name = "Research Logs"
