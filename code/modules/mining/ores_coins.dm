@@ -350,7 +350,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/examine(mob/user)
 	..()
 	if(value)
-		to_chat(user, "<span class='info'>Its worth [value] credit\s.</span>")
+		to_chat(user, "<span class='info'>It's worth [value] credit\s.</span>")
 
 /obj/item/coin/gold
 	name = "gold coin"
