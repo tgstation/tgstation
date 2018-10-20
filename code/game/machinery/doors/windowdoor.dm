@@ -130,7 +130,7 @@
 		return 1
 
 /obj/machinery/door/window/open(forced=FALSE)
-	if (operating == TRUE) //doors can still open when emag-disabled
+	if (operating) //doors can still open when emag-disabled
 		return 0
 	if(!forced)
 		if(!hasPower())
@@ -141,12 +141,11 @@
 	if(!operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
-	playsound(loc, 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, 1)
 	icon_state ="[base_state]open"
 	sleep(10)
 
 	density = FALSE
-//	sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 
@@ -165,7 +164,7 @@
 			return 0
 	operating = TRUE
 	do_animate("closing")
-	playsound(loc, 'sound/machines/windowdoor.ogg', 100, 1)
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, 1)
 	icon_state = base_state
 
 	density = TRUE
@@ -179,9 +178,9 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
+			playsound(src, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
@@ -266,7 +265,7 @@
 
 						var/obj/item/electronics/airlock/ae
 						if(!electronics)
-							ae = new/obj/item/electronics/airlock( loc )
+							ae = new/obj/item/electronics/airlock(drop_location())
 							if(req_one_access)
 								ae.one_access = 1
 								ae.accesses = req_one_access
