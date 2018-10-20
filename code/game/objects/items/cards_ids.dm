@@ -146,11 +146,35 @@
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/holochip))
-		var/obj/item/holochip/holochip = W
-		if(registered_account)
-			registered_account.adjust_money(holochip.credits)
-			to_chat(user, "You insert [holochip] into [src], adding [holochip.credits] credits to your account.")
-			qdel(holochip)
+		insert_money(W, user)
+		return
+	else if(istype(W, /obj/item/stack/spacecash))
+		insert_money(W, user, TRUE)
+		return
+	else if(istype(W, /obj/item/coin))
+		insert_money(W, user, TRUE)
+		return
+	else
+		return ..()
+
+/obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+	var/cash_money = I.get_item_credit_value()
+	if(!cash_money)
+		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
+		return
+
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		return
+
+	registered_account.adjust_money(cash_money)
+	if(physical_currency)
+		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
+	else
+		to_chat(user, "<span class='notice'>You insert [I] into [src], adding [cash_money] credits to the linked account.</span>")
+
+	to_chat(user, "<span class='notice'>The linked account now reports a balance of $[registered_account.account_balance].</span>")
+	qdel(I)
 
 
 /obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
