@@ -29028,7 +29028,7 @@
 "bdA" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bdB" = (
 /obj/machinery/airalarm{
 	pixel_y = 28
@@ -29045,7 +29045,7 @@
 	},
 /obj/item/storage/secure/briefcase,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bdC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -29066,7 +29066,7 @@
 	},
 /obj/item/pen,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bdD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -29094,7 +29094,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bdE" = (
 /obj/structure/closet/firecloset,
 /turf/open/floor/plating,
@@ -29907,13 +29907,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bfk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bfl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -29923,7 +29923,7 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bfm" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -29937,7 +29937,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bfn" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -30864,7 +30864,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bhb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool,
@@ -30875,12 +30875,12 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bhc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bhd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable/yellow{
@@ -30902,7 +30902,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "bhe" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
@@ -31867,7 +31867,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "biU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -31877,10 +31877,10 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plating,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "biV" = (
 /obj/machinery/power/apc{
-	areastring = "/area/security/vacantcommissary";
+	areastring = "/area/vacant_room/commissary";
 	dir = 4;
 	name = "Vacant Commissary APC";
 	pixel_x = 27;
@@ -31902,7 +31902,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "biW" = (
 /obj/item/storage/box/lights/mixed,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -77690,7 +77690,7 @@
 "cXT" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "cXZ" = (
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/window/reinforced{
@@ -81767,7 +81767,7 @@
 "dtM" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "dtP" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -83971,7 +83971,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "pvA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -84111,7 +84111,7 @@
 "qBS" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "qJZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -84184,7 +84184,7 @@
 /area/library)
 "rrB" = (
 /turf/closed/wall,
-/area/security/vacantcommissary)
+/area/vacant_room/commissary)
 "rxn" = (
 /obj/machinery/power/apc/auto_name/south{
 	pixel_y = -26
