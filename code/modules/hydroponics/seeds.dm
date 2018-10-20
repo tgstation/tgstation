@@ -156,7 +156,7 @@
 	return result
 
 
-/obj/item/seeds/proc/prepare_result(var/obj/item/reagent_containers/food/snacks/grown/T)
+/obj/item/seeds/proc/prepare_result(var/obj/item/T)
 	if(!T.reagents)
 		CRASH("[T] has no reagents.")
 
@@ -168,7 +168,9 @@
 			data = list("blood_type" = "O-")
 		if(rid == "nutriment" || rid == "vitamin")
 			// apple tastes of apple.
-			data = T.tastes
+			if(istype(T, /obj/item/reagent_containers/food/snacks/grown))
+				var/obj/item/reagent_containers/food/snacks/grown/grown_edible = T
+				data = grown_edible.tastes
 
 		T.reagents.add_reagent(rid, amount, data)
 

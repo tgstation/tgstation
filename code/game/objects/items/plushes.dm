@@ -16,6 +16,7 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent	//who initiated creation
 	var/obj/item/toy/plush/maternal_parent	//who owns, see love()
+	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp) // you cannot have sexual relations with this plush
 	var/list/scorned	= list()	//who the plush hates
 	var/list/scorned_by	= list()	//who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
@@ -203,8 +204,8 @@
 	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
 		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
 									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
-		plop(Kisser)
-		user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
+		if(plop(Kisser))
+			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
 							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
 
 	//then comes protection, or abstinence if we are catholic
@@ -271,7 +272,10 @@
 
 /obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
 	if(partner != Daddy)
-		return	//we do not have bastards in our toyshop
+		return	FALSE //we do not have bastards in our toyshop
+
+	if(is_type_in_typecache(Daddy, breeding_blacklist))
+		return FALSE // some love is forbidden
 
 	if(prob(50))	//it has my eyes
 		plush_child = new type(get_turf(loc))

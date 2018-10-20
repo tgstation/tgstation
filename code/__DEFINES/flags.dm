@@ -4,6 +4,9 @@
 #define ALL (~0) //For convenience.
 #define NONE 0
 
+//check if all bitflags specified are present
+#define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) ((flagvar & (flags)) == flags)
+
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
 // for /datum/var/datum_flags
@@ -64,6 +67,60 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define INDESTRUCTIBLE	(1<<6) //doesn't take damage
 #define FREEZE_PROOF	(1<<7) //can't be frozen
 
+/obj/item/proc/clothing_resistance_flag_examine_message(mob/user)
+	if(resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, "[src] seems extremely robust! It'll probably withstand anything that could happen to it!")
+		return
+	if(resistance_flags & LAVA_PROOF)
+		to_chat(user, "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!")
+	if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+		to_chat(user, "[src] looks pretty robust! It'd probably be able to withstand acid!")
+	if(resistance_flags & FREEZE_PROOF)
+		to_chat(user, "[src] is made of cold-resistant materials.")
+	if(resistance_flags & FIRE_PROOF)
+		to_chat(user, "[src] is made of fire-retardant materials.")
+		return TRUE
+
+/obj/item/clothing/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of fire-retardant materials.")
+		return TRUE
+
+/obj/item/clothing/head/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == (HELMET_MAX_TEMP_PROTECT || SPACE_HELM_MAX_TEMP_PROTECT || FIRE_HELM_MAX_TEMP_PROTECT))
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
+/obj/item/clothing/gloves/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == GLOVES_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
+/obj/item/clothing/shoes/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == SHOES_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
+/obj/item/clothing/suit/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == SPACE_SUIT_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
 //tesla_zap
 #define TESLA_MACHINE_EXPLOSIVE		(1<<0)
 #define TESLA_ALLOW_DUPLICATES		(1<<1)
@@ -78,3 +135,19 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMP_PROTECT_SELF (1<<0)
 #define EMP_PROTECT_CONTENTS (1<<1)
 #define EMP_PROTECT_WIRES (1<<2)
+
+//Mob mobility var flags
+#define MOBILITY_MOVE			(1<<0)		//can move
+#define MOBILITY_STAND			(1<<1)		//can, and is, standing up
+#define MOBILITY_PICKUP			(1<<2)		//can pickup items
+#define MOBILITY_USE			(1<<3)		//can hold and use items
+#define MOBILITY_UI				(1<<4)		//can use interfaces like machinery
+#define MOBILITY_STORAGE		(1<<5)		//can use storage item
+#define MOBILITY_PULL			(1<<6)		//can pull things
+
+#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
+#define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
+
+// radiation
+#define RAD_PROTECT_CONTENTS (1<<0)
+#define RAD_NO_CONTAMINATE (1<<1)

@@ -80,7 +80,7 @@
 			flame_turf(turflist)
 
 /obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !status)//Taking this apart
+	if(W.tool_behaviour == TOOL_WRENCH && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
 			weldtool.forceMove(T)
@@ -95,7 +95,7 @@
 		qdel(src)
 		return
 
-	else if(istype(W, /obj/item/screwdriver) && igniter && !lit)
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()
@@ -245,9 +245,6 @@
 
 /obj/item/assembly/igniter/proc/flamethrower_process(turf/open/location)
 	location.hotspot_expose(700,2)
-
-/obj/item/assembly/igniter/cold/flamethrower_process(turf/open/location)
-	return
 
 /obj/item/assembly/igniter/proc/ignite_turf(obj/item/flamethrower/F,turf/open/location,release_amount = 0.05)
 	F.default_ignite(location,release_amount)

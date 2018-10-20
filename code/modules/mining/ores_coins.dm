@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		GibtoniteReaction(user)
 		return
 	if(primed)
-		if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || istype(I, /obj/item/multitool))
+		if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
@@ -262,25 +262,22 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		primed = TRUE
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		icon_state = "Gibtonite active"
-		var/turf/bombturf = get_turf(src)
-		var/notify_admins = 0
+		var/notify_admins = FALSE
 		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
-			notify_admins = 1
+			notify_admins = TRUE
 
-		if(notify_admins)
-			if(triggered_by == 1)
-				message_admins("An explosion has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)].")
-			else if(triggered_by == 2)
-				message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
-			else
-				message_admins("[ADMIN_LOOKUPFLW(attacher)] has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)].")
 		if(triggered_by == 1)
-			log_game("An explosion has primed a [name] for detonation at [AREACOORD(bombturf)]")
+			log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
 		else if(triggered_by == 2)
-			log_game("A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)].")
+			var/turf/bombturf = get_turf(src)
+			if(notify_admins)
+				message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
+			var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
+			log_game(bomb_message)
+			GLOB.bombers += bomb_message
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
-			log_game("[key_name(user)] has primed a [name] for detonation at [AREACOORD(bombturf)]")
+			log_bomber(user, "has primed a", src, "for detonation", notify_admins)
 		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/twohanded/required/gibtonite/proc/detonate(notify_admins)
@@ -324,6 +321,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/cooldown = 0
 	var/value = 1
 	var/coinflip
+
+/obj/item/coin/get_item_credit_value()
+	return value
 
 /obj/item/coin/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")

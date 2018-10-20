@@ -80,7 +80,7 @@
 	if(iscultist(L))
 		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
-		L.Knockdown(80, FALSE)
+		L.Paralyze(80, FALSE)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
 	"<span class='userdanger'>[target_flashed ? "An unseen force":"The glowing sigil around you"] holds you in place!</span>")
 	L.Stun(40)
@@ -147,7 +147,7 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/M = L
 			M.uncuff()
-	L.Knockdown(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
+	L.Paralyze(50) //Completely defenseless for five seconds - mainly to give them time to read over the information they've just been presented with
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
 		C.silent += 5

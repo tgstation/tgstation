@@ -46,6 +46,8 @@
         tooltip='Anyone who is on the turf when the supplypod is launched will be stunned until the supplypod lands. They cant get away that easy!'>Stun</ui-button>
         <ui-button style='{{data.effectLimb ? "selected" : null}}' action='effectLimb' tooltip-side='left'
         tooltip='This will cause anyone caught under the pod to lose a limb, excluding their head.'>Delimb</ui-button>
+        <ui-button style='{{data.effectOrgans ? "selected" : null}}' action='effectOrgans' tooltip-side='left'
+        tooltip='This will cause anyone caught under the pod to lose all their limbs and organs in a spectacular fashion.'>Yeet Organs</ui-button>
         <ui-button style='{{data.effectBluespace ? "selected" : null}}' action='effectBluespace' tooltip-side='left'
         tooltip='Gives the supplypod an advanced Bluespace Recyling Device. After opening, the supplypod will be warped directly to the surface of a nearby NT-designated trash planet (/r/ss13).'>Bluespace</ui-button>
         <ui-button style='{{data.effectStealth ? "selected" : null}}' action='effectStealth' tooltip-side='left'
@@ -64,7 +66,8 @@
         tooltip='This will make the supplypod target a specific atom, instead of the mouses position. Smiting does this automatically!'>Specific Target</ui-button>
         <ui-button style='{{data.effectName ? "selected" : null}}' action='effectName' tooltip-side='left'
         tooltip='Allows you to add a custom name and description.'>Custom Name/Desc</ui-button>
-    </ui-section>
+        <ui-button style='{{data.effectAnnounce ? "selected" : null}}' action='effectAnnounce' tooltip-side='left'
+        tooltip='Alerts ghosts when a pod is launched. Useful if some dumb shit is aboutta come outta the pod.'>Alert Ghosts</ui-button>    </ui-section>
 
     <ui-section label='Sound?'>
         <ui-button style='{{data.landingSound ? "selected" : null}}' action='landingSound' tooltip-side='left'
@@ -122,6 +125,6 @@
 
     <ui-section>
         <ui-button style='{{data.giveLauncher ? "selected" : null}}' action='giveLauncher' tooltip-side='right'
-        tooltip='THE CODEX ASTARTES CALLS THIS MANEUVER: STEEL RAIN!!'>Enter Launch Mode</ui-button>
+        tooltip='THE CODEX ASTARTES CALLS THIS MANEUVER: STEEL RAIN'>Enter Launch Mode</ui-button>
     </ui-section>
 </ui-display>

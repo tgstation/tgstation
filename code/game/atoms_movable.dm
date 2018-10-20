@@ -112,7 +112,7 @@
 		grab_state = 0
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+			L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
@@ -423,6 +423,9 @@
 	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
+
+/atom/movable/proc/setMovetype(newval)
+	movement_type = newval
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below

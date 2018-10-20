@@ -257,7 +257,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
-	if(L.canmove)
+	if(L.mobility_flags & MOBILITY_MOVE)
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
 
@@ -422,9 +422,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(C && C.clock_team)
 			textlist += "[C.clock_team.eminence ? "There is an Eminence." : "<b>There is no Eminence! Get one ASAP!</b>"]<br>"
 		textlist += "There are currently <b>[servants]</b> servant[servants > 1 ? "s" : ""] of Ratvar.<br>"
-		for(var/i in SSticker.scripture_states)
+		for(var/i in GLOB.scripture_states)
 			if(i != SCRIPTURE_DRIVER) //ignore the always-unlocked stuff
-				textlist += "[i] Scripture: <b>[SSticker.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
+				textlist += "[i] Scripture: <b>[GLOB.scripture_states[i] ? "UNLOCKED":"LOCKED"]</b><br>"
 		var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
 		if(G)
 			var/time_info = G.get_arrival_time(FALSE)
@@ -585,7 +585,7 @@ so as to remain in compliance with the most up-to-date laws."
 	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
-	if((L.canmove) && (L.last_special <= world.time))
+	if((L.mobility_flags & MOBILITY_MOVE) && (L.last_special <= world.time))
 		return L.resist_restraints()
 
 /obj/screen/alert/restrained/buckled/Click()

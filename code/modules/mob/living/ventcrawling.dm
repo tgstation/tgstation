@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(stat)
 		to_chat(src, "You must be conscious to do this!")
 		return
-	if(lying)
+	if(IsStun() || IsParalyzed())
 		to_chat(src, "You can't vent crawl while you're stunned!")
 		return
 	if(restrained())
@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		pipes_shown += A.pipe_vision_img
 		if(client)
 			client.images += A.pipe_vision_img
-	movement_type |= VENTCRAWLING
+	setMovetype(movement_type | VENTCRAWLING)
 
 
 /mob/living/proc/remove_ventcrawl()
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 	pipes_shown.len = 0
-	movement_type &= ~VENTCRAWLING
+	setMovetype(movement_type & ~VENTCRAWLING)
 
 
 

@@ -45,7 +45,7 @@
 		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
 
 /obj/item/twohanded/required/kinetic_crusher/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/crowbar))
+	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(LAZYLEN(trophies))
 			to_chat(user, "<span class='notice'>You remove [src]'s trophies.</span>")
 			I.play_tool_sound(src)

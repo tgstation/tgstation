@@ -10,9 +10,6 @@
 		C = M
 		affecting = C.get_bodypart(check_zone(selected_zone))
 
-	if(!M.lying && !isslime(M))	//if they're prone or a slime
-		return
-
 	var/datum/surgery/current_surgery
 
 	for(var/datum/surgery/S in M.surgeries)
@@ -35,12 +32,17 @@
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb
 				continue
+			if(S.lying_required && (M.mobility_flags & MOBILITY_STAND))
+				continue
 			if(!S.can_start(user, M))
 				continue
-			for(var/path in S.species)
+			for(var/path in S.target_mobtypes)
 				if(istype(M, path))
 					available_surgeries[S.name] = S
 					break
+
+		if(!available_surgeries.len)
+			return
 
 		var/P = input("Begin which procedure?", "Surgery", null, null) as null|anything in available_surgeries
 		if(P && user && user.Adjacent(M) && (I in user))
@@ -59,6 +61,8 @@
 				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					return
 			else if(C && S.requires_bodypart)
+				return
+			if(S.lying_required && (M.mobility_flags & MOBILITY_STAND))
 				return
 			if(!S.can_start(user, M))
 				return

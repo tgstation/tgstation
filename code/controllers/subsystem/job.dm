@@ -416,7 +416,7 @@ SUBSYSTEM_DEF(job)
 		H.mind.assigned_role = rank
 
 	if(job)
-		var/new_mob = job.equip(H, null, null, joined_late)
+		var/new_mob = job.equip(H, null, null, joined_late , null, M.client)
 		if(ismob(new_mob))
 			H = new_mob
 			if(!joined_late)
@@ -429,7 +429,7 @@ SUBSYSTEM_DEF(job)
 	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
-		to_chat(M, "<b>To speak on your departments radio, use the :h button. To see others, look closely at your headset.</b>")
+		job.radio_help_message(M)
 		if(job.req_admin_notify)
 			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 		if(CONFIG_GET(number/minimal_access_threshold))
