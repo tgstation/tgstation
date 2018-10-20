@@ -100,6 +100,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	walk(src,0)
 	walk_towards(src, destination, 1)
 
+/obj/structure/closet/supplypod/prevent_content_explosion()
+	return TRUE
+
 /obj/effect/immovablerod/ex_act(severity, target)
 	return 0
 
