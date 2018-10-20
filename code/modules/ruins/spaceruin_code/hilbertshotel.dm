@@ -282,7 +282,7 @@ GLOBAL_VAR_INIT(hhStorageTurf, null)
 	It's too soon to say for sure, but this might be the start of something quite important!<br>
     I'll be sure to log any major future breakthroughs. This might be a lot more than I can manage on my own, perhaps I should hire that secreatary after all...<br>
 	<h4>Breakthrough!</h4>
-	I can't beleive it, but I did it! Just when I was certain it couldn't be done, I made the final necessary breakthrough.<br>
+	I can't believe it, but I did it! Just when I was certain it couldn't be done, I made the final necessary breakthrough.<br>
     Exploiting the effects of space dilation caused by specific bluespace structures combined with a precise use of geometric calculus, I've discovered a way to correlate an infinte amount of space within a finite area!<br>
     While the potential applications are endless, I utilized it in quite a nifty way so far by designing a system that recursively constructs subspace rooms and spatially links them to any of the infinite infinitesimally distinct points on the spheres surface.<br>
     I call it: Hilbert's Hotel!<br>
