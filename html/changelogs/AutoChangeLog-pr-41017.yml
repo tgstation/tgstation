@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a minor issue where vacant offices and the vacant commissary were being selected by GR3YT1D3 virus and EGALITARIAN events."
-  - bugfix: "Vacant rooms now have the correct ambience."
