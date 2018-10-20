@@ -949,13 +949,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(query_get_jobban.NextRow())
 			var/reason = query_get_jobban.item[1]
 			var/bantime = query_get_jobban.item[2]
-			var/duration = query_get_jobban.item[3]
+			var/duration = text2num(query_get_jobban.item[3])
 			var/expiration_time = query_get_jobban.item[4]
 			var/admin_key = query_get_jobban.item[5]
 			var/text
 			text = "<span class='redtext'>You, or another user of this computer, ([user.key]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [admin_key] on [bantime]"
-			if(text2num(duration) > 0)
-				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
+			if(duration > 0)
+				text += ". The ban is for [DisplayTimeText(duration MINUTES)] and expires on [expiration_time] (server time)"
 			text += ".</span>"
 			to_chat(user, text)
 		qdel(query_get_jobban)
