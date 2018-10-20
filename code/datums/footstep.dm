@@ -92,7 +92,7 @@
 					TRUE,
 					GLOB.footstep[T.footstep][3] + e)
 			
-			if(!H.shoes && !feetCover) //are we NOT wearing shoes?
+			if((!H.shoes && !feetCover) || !(H.mobility_flags & MOBILITY_STAND)) //are we NOT wearing shoes or are we lying/crawling (using hands to move around)?
 				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
 					GLOB.barefootstep[T.barefootstep][2] * v,
 					TRUE,
