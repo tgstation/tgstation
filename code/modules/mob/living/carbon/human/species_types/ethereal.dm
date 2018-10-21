@@ -48,10 +48,11 @@
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
 	.=..()
 	if(H.stat != DEAD && !EMPeffect)
-		var/percent = max(H.health, 0) / 100
+		var/healthpercent = max(H.health, 0) / 100
+		var/chargepercent = max(H.ethereal_charge, 0) / 100
 		if(!emageffect)
-			current_color = rgb(r2 + ((r1-r2)*percent), g2 + ((g1-g2)*percent), b2 + ((b1-b2)*percent))
-		H.set_light(1 + (2 * percent), 1 + (1 * percent), current_color)
+			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
+		H.set_light(1 + (2 * chargepercent), 1 + (1 * chargepercent), current_color)
 		fixed_mut_color = copytext(current_color, 2)
 	else
 		H.set_light(0)
