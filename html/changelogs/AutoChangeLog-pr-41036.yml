@@ -1,4 +1,0 @@
-author: "Kierany9"
-delete-after: True
-changes: 
-  - bugfix: "Finding an objective target by role now actually picks a random target"
