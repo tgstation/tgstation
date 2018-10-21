@@ -798,6 +798,9 @@
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
+	isethereal(src)
+		var/datum/species/ethereal/E = dna?.species
+		E.set_charge(ETHEREAL_CHARGE_FULL)
 	if(admin_revive)
 		regenerate_limbs()
 		regenerate_organs()
