@@ -765,3 +765,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			return "twelfth"
 		else
 			return "[number]\th"
+
+
+/proc/random_capital_letter()
+	return pick(list("Q","W","E","R","T","Y","U","I","O","P","A","S","D","F","G","H","J","K","L","Z","X","C","V","B","N","M"))

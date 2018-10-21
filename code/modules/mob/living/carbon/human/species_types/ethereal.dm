@@ -1,4 +1,4 @@
-#define ETHEREAL_COLORS list("00ffff", "ffc0cb", "9400D3", "4B0082", "0000FF", "00FF00", "FFFF00", "FF7F00", "FF0000")
+#define ETHEREAL_COLORS list("#00ffff", "#ffc0cb", "#9400D3", "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", "#FF0000")
 
 /datum/species/ethereal
 	name = "Ethereal"
@@ -39,12 +39,9 @@
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
 	if(unique)
-		return random_unique_lizard_name(gender)
+		return random_unique_ethereal_name()
 
-	var/randname = lizard_name(gender)
-
-	if(lastname)
-		randname += " [lastname]"
+	var/randname = ethereal_name()
 
 	return randname
 
@@ -64,38 +61,45 @@
 /datum/species/ethereal/spec_emp_act(mob/living/carbon/human/H, severity)
 	.=..()
 	EMPeffect = TRUE
+	spec_updatehealth(H)
+	to_chat(H, "<span class='notice'>You feel the light of your body leave you.</span>")
 	switch(severity)
 		if(EMP_LIGHT)
-			addtimer(CALLBACK(src, .proc/stop_emp), 100, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
+			addtimer(CALLBACK(src, .proc/stop_emp, H), 100, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
 		if(EMP_HEAVY)
-			addtimer(CALLBACK(src, .proc/stop_emp), 200, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
+			addtimer(CALLBACK(src, .proc/stop_emp, H), 200, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
 
 /datum/species/ethereal/spec_emag_act(mob/living/carbon/human/H, mob/user)
 	if(emageffect)
 		return
 	emageffect = TRUE
 	to_chat(user, "<span class='notice'>You tap [H] on the back with your card.</span>")
-	visible_message("<span class='danger'>[H] starts flickering in an array of colors!</span>")
-	handle_emag()
-	addtimer(CALLBACK(src, .proc/stop_emag), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //Disco mode for 30 seconds! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+	H.visible_message("<span class='danger'>[H] starts flickering in an array of colors!</span>")
+	handle_emag(H)
+	addtimer(CALLBACK(src, .proc/stop_emag, H), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //Disco mode for 30 seconds! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
 
 
 /datum/species/ethereal/spec_life(mob/living/carbon/human/H)
 	.=..()
 	handle_charge(H)
 
-/datum/species/ethereal/proc/stop_emp()
+/datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/H)
 	EMPeffect = FALSE
+	spec_updatehealth(H)
+	to_chat(H, "<span class='notice'>You feel more energized as your shine comes back.</span>")
 
-/datum/species/ethereal/proc/handle_emag()
+
+/datum/species/ethereal/proc/handle_emag(mob/living/carbon/human/H)
 	if(!emageffect)
 		return
 	current_color = pick(ETHEREAL_COLORS)
-	addtimer(CALLBACK(src, .proc/handle_emag), 30) //Call ourselves every 3 seconds to change color
+	spec_updatehealth(H)
+	addtimer(CALLBACK(src, .proc/handle_emag, H), 10) //Call ourselves every 1 seconds to change color
 
-/datum/species/ethereal/proc/stop_emag()
+/datum/species/ethereal/proc/stop_emag(mob/living/carbon/human/H)
 	emageffect = FALSE
-	visible_message("<span class='danger'>[H] stops flickering and goes back to their normal state!</span>")
+	spec_updatehealth(H)
+	H.visible_message("<span class='danger'>[H] stops flickering and goes back to their normal state!</span>")
 
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/H)
 	var/charge_rate = ETHEREAL_CHARGE_FACTOR
