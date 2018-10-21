@@ -129,8 +129,8 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 			else if(is_role)
 				possible_targets += possible_target
 				break
-
-	target = pick(possible_targets)
+	if(length(possible_targets))
+		target = pick(possible_targets)
 	update_explanation_text()
 	return target
 
