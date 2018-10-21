@@ -604,7 +604,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 770)
 	popup.set_content(dat.Join())
-	popup.open(0)
+	popup.open(FALSE)
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
@@ -734,7 +734,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Occupation Preferences</div>", width, height)
 	popup.set_window_options("can_close=0")
 	popup.set_content(HTML)
-	popup.open(0)
+	popup.open(FALSE)
 	return
 
 /datum/preferences/proc/SetJobPreferenceLevel(datum/job/job, level)
@@ -928,7 +928,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Quirk Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
-	popup.open(0)
+	popup.open(FALSE)
 	return
 
 /datum/preferences/proc/GetQuirkBalance()
