@@ -46,6 +46,8 @@
         tooltip='Anyone who is on the turf when the supplypod is launched will be stunned until the supplypod lands. They cant get away that easy!'>Stun</ui-button>
         <ui-button style='{{data.effectLimb ? "selected" : null}}' action='effectLimb' tooltip-side='left'
         tooltip='This will cause anyone caught under the pod to lose a limb, excluding their head.'>Delimb</ui-button>
+        <ui-button style='{{data.effectOrgans ? "selected" : null}}' action='effectOrgans' tooltip-side='left'
+        tooltip='This will cause anyone caught under the pod to lose all their limbs and organs in a spectacular fashion.'>Yeet Organs</ui-button>
         <ui-button style='{{data.effectBluespace ? "selected" : null}}' action='effectBluespace' tooltip-side='left'
         tooltip='Gives the supplypod an advanced Bluespace Recyling Device. After opening, the supplypod will be warped directly to the surface of a nearby NT-designated trash planet (/r/ss13).'>Bluespace</ui-button>
         <ui-button style='{{data.effectStealth ? "selected" : null}}' action='effectStealth' tooltip-side='left'

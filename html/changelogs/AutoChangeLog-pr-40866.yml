@@ -1,6 +1,0 @@
-author: "Doomloard"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the canisters eject button to use the replace tank logic"
-  - bugfix: "portable pumps eject button to use the replace tank logic"
-  - bugfix: "portable scrubber eject button to use the replace tank logic"

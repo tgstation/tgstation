@@ -1,6 +1,7 @@
 /datum/game_mode/hivemind
 	name = "Assimilation"
 	config_tag = "hivemind"
+	report_type = "hivemind"
 	antag_flag = ROLE_HIVE
 	false_report_weight = 5
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
@@ -45,7 +46,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	var/num_hosts = max( 1 , rand(0,1) + min(5, round(num_players() / 15) ) ) //1 host for every 15 players up to 75, with a 50% chance of an extra
+	var/num_hosts = max( 1 , rand(0,1) + min(5, round(num_players() / 12) ) ) //1 host for every 12 players up to 60, with a 50% chance of an extra
 
 	for(var/j = 0, j < num_hosts, j++)
 		if (!antag_candidates.len)
@@ -65,6 +66,10 @@
 
 
 /datum/game_mode/hivemind/post_setup()
+	if(hosts.len >= 4 && prob(35)) //Create the versus objective here since we want a common target for all the antags
+		var/datum/antagonist/hivemind/hive
+		hive.common_assimilation_obj = new /datum/objective/hivemind/assimilate_common
+		hive.common_assimilation_obj.find_target_by_role(role = ROLE_HIVE, role_type = TRUE, invert = TRUE)
 	for(var/datum/mind/i in hosts)
 		i.add_antag_datum(/datum/antagonist/hivemind)
 	return ..()

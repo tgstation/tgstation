@@ -84,7 +84,7 @@
 			var/akey = query_ban_check.item[2]
 			var/reason = query_ban_check.item[3]
 			var/expiration = query_ban_check.item[4]
-			var/duration = query_ban_check.item[5]
+			var/duration = text2num(query_ban_check.item[5])
 			var/bantime = query_ban_check.item[6]
 			var/bantype = query_ban_check.item[7]
 			var/banid = query_ban_check.item[8]
@@ -104,12 +104,12 @@
 					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pkey] (#[banid])</span>")
 					continue
 			var/expires = ""
-			if(text2num(duration) > 0)
-				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
+			if(duration > 0)
+				expires = "\nThe ban is for [DisplayTimeText(duration MINUTES)] and expires on [expiration] (server time)."  //convert from minutes into deciseconds to display the amount of time in days, hours, minutes, ect.
 			else
-				expires = " The is a permanent ban."
+				expires = "\nThis is a permanent ban."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pkey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [akey] on [bantime] during round ID [ban_round_id], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pkey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban (BanID #[banid]) was applied by [akey] on [bantime] during round ID [ban_round_id]. [expires]"
 
 			. = list("reason"="[bantype]", "desc"="[desc]")
 
