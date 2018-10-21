@@ -389,7 +389,7 @@
 					LAZYREMOVE(C.affecting, src)
 				effect_str -= L
 
-			if(turfs.len <= 1) //Our directional light is probably shining directly onto a wall so change to a small default light to reflect, heh, this situation
+			if(length(turfs) <= 1) //Our directional light is probably shining directly onto a wall so change to a small default light to reflect, heh, this situation
 				light_range = 2
 				for(T in view(CEILING(light_range, 1), source_turf))
 					for (thing in T.get_corners())
