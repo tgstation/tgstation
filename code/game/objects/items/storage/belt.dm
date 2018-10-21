@@ -448,7 +448,7 @@
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/screwdriver = 1,
 		/obj/item/multitool = 1)
-  generate_items_inside(items_inside,src)
+	generate_items_inside(items_inside,src)
 
 
 /obj/item/storage/belt/wands
