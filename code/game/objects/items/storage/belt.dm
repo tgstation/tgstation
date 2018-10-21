@@ -436,7 +436,7 @@
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/grenade/flashbang = 1,
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/empgrenade = 1,
@@ -536,7 +536,7 @@
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/gun/ballistic/revolver/detective = 1,
 		/obj/item/ammo_box/c38 = 2)
 	generate_items_inside(items_inside,src)
