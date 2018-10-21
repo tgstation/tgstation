@@ -434,7 +434,6 @@
 	M.AdjustSleeping(-40, FALSE)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
-	. = 1
 
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
