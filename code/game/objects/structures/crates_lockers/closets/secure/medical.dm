@@ -7,18 +7,16 @@
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	..()
 	var/static/items_inside = list(
-									/obj/item/reagent_containers/glass/beaker = 2,
-									/obj/item/reagent_containers/dropper = 2,
-									/obj/item/storage/belt/medical = 1,
-									/obj/item/storage/box/syringes = 1,
-									/obj/item/reagent_containers/glass/bottle/toxin = 1,
-									/obj/item/reagent_containers/glass/bottle/morphine = 2,
-									/obj/item/reagent_containers/glass/bottle/epinephrine= 3,
-									/obj/item/reagent_containers/glass/bottle/charcoal = 3,
-									/obj/item/storage/box/rxglasses = 1)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/dropper = 2,
+		/obj/item/storage/belt/medical = 1,
+		/obj/item/storage/box/syringes = 1,
+		/obj/item/reagent_containers/glass/bottle/toxin = 1,
+		/obj/item/reagent_containers/glass/bottle/morphine = 2,
+		/obj/item/reagent_containers/glass/bottle/epinephrine= 3,
+		/obj/item/reagent_containers/glass/bottle/charcoal = 3,
+		/obj/item/storage/box/rxglasses = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetic closet"

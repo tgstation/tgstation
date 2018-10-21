@@ -8,23 +8,21 @@
 /obj/structure/closet/gmcloset/PopulateContents()
 	..()
 	var/static/items_inside = list(
-									/obj/item/clothing/head/that = 2,
-									/obj/item/radio/headset/headset_srv = 2,
-									/obj/item/clothing/under/sl_suit = 2,
-									/obj/item/clothing/under/rank/bartender = 2,
-									/obj/item/clothing/accessory/waistcoat = 2,
-									/obj/item/clothing/head/soft/black = 2,
-									/obj/item/clothing/shoes/sneakers/black = 2,
-									/obj/item/reagent_containers/glass/rag = 2,
-									/obj/item/storage/box/beanbag = 1,
-									/obj/item/clothing/suit/armor/vest/alt = 1,
-									/obj/item/circuitboard/machine/dish_drive = 1,
-									/obj/item/clothing/glasses/sunglasses/reagent = 1,
-									/obj/item/clothing/neck/petcollar = 1,
-									/obj/item/storage/belt/bandolier = 1)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/head/that = 2,
+		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/clothing/under/sl_suit = 2,
+		/obj/item/clothing/under/rank/bartender = 2,
+		/obj/item/clothing/accessory/waistcoat = 2,
+		/obj/item/clothing/head/soft/black = 2,
+		/obj/item/clothing/shoes/sneakers/black = 2,
+		/obj/item/reagent_containers/glass/rag = 2,
+		/obj/item/storage/box/beanbag = 1,
+		/obj/item/clothing/suit/armor/vest/alt = 1,
+		/obj/item/circuitboard/machine/dish_drive = 1,
+		/obj/item/clothing/glasses/sunglasses/reagent = 1,
+		/obj/item/clothing/neck/petcollar = 1,
+		/obj/item/storage/belt/bandolier = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/chefcloset
 	name = "\proper chef's closet"
@@ -34,20 +32,18 @@
 /obj/structure/closet/chefcloset/PopulateContents()
 	..()
 	var/static/items_inside = list(
-									/obj/item/clothing/under/waiter = 2,
-									/obj/item/radio/headset/headset_srv = 2,
-									/obj/item/clothing/accessory/waistcoat = 2,
-									/obj/item/clothing/suit/apron/chef = 3,
-									/obj/item/clothing/head/soft/mime = 2,
-									/obj/item/storage/box/mousetraps = 2,
-									/obj/item/circuitboard/machine/dish_drive = 1,
-									/obj/item/clothing/suit/toggle/chef = 1,
-									/obj/item/clothing/under/rank/chef = 1,
-									/obj/item/clothing/head/chefhat = 1,
-									/obj/item/reagent_containers/glass/rag = 1)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/under/waiter = 2,
+		/obj/item/radio/headset/headset_srv = 2,
+		/obj/item/clothing/accessory/waistcoat = 2,
+		/obj/item/clothing/suit/apron/chef = 3,
+		/obj/item/clothing/head/soft/mime = 2,
+		/obj/item/storage/box/mousetraps = 2,
+		/obj/item/circuitboard/machine/dish_drive = 1,
+		/obj/item/clothing/suit/toggle/chef = 1,
+		/obj/item/clothing/under/rank/chef = 1,
+		/obj/item/clothing/head/chefhat = 1,
+		/obj/item/reagent_containers/glass/rag = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/jcloset
 	name = "custodial closet"
@@ -119,19 +115,17 @@
 
 /obj/structure/closet/wardrobe/red/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/suit/hooded/wintercoat/security = 1,
-									/obj/item/storage/backpack/security = 1,
-									/obj/item/storage/backpack/satchel/sec = 1,
-									/obj/item/storage/backpack/duffelbag/sec = 2,
-									/obj/item/clothing/under/rank/security = 3,
-									/obj/item/clothing/under/rank/security/skirt = 2,
-									/obj/item/clothing/shoes/jackboots = 3,
-									/obj/item/clothing/head/beret/sec = 3,
-									/obj/item/clothing/head/soft/sec = 3,
-									/obj/item/clothing/mask/bandana/red = 2)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/suit/hooded/wintercoat/security = 1,
+		/obj/item/storage/backpack/security = 1,
+		/obj/item/storage/backpack/satchel/sec = 1,
+		/obj/item/storage/backpack/duffelbag/sec = 2,
+		/obj/item/clothing/under/rank/security = 3,
+		/obj/item/clothing/under/rank/security/skirt = 2,
+		/obj/item/clothing/shoes/jackboots = 3,
+		/obj/item/clothing/head/beret/sec = 3,
+		/obj/item/clothing/head/soft/sec = 3.
+		/obj/item/clothing/mask/bandana/red = 2)
+	generate_items_inside(items_inside,src)
 	return
 
 /obj/structure/closet/wardrobe/cargotech
@@ -140,15 +134,13 @@
 
 /obj/structure/closet/wardrobe/cargotech/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/suit/hooded/wintercoat/cargo = 1,
-									/obj/item/clothing/under/rank/cargotech = 3,
-									/obj/item/clothing/shoes/sneakers/black = 3,
-									/obj/item/clothing/gloves/fingerless = 3,
-									/obj/item/clothing/head/soft = 3,
-									/obj/item/radio/headset/headset_cargo = 1)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/suit/hooded/wintercoat/cargo = 1,
+		/obj/item/clothing/under/rank/cargotech = 3,
+		/obj/item/clothing/shoes/sneakers/black = 3,
+		/obj/item/clothing/gloves/fingerless = 3,
+		/obj/item/clothing/head/soft = 3,
+		/obj/item/radio/headset/headset_cargo = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/wardrobe/atmospherics_yellow
 	name = "atmospherics wardrobe"
@@ -156,16 +148,14 @@
 
 /obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/accessory/pocketprotector = 1,
-									/obj/item/storage/backpack/duffelbag/engineering = 1,
-									/obj/item/storage/backpack/satchel/eng = 1,
-									/obj/item/storage/backpack/industrial = 1,
-									/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
-									/obj/item/clothing/under/rank/atmospheric_technician = 3,
-									/obj/item/clothing/shoes/sneakers/black = 3)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/accessory/pocketprotector = 1,
+		/obj/item/storage/backpack/duffelbag/engineering = 1,
+		/obj/item/storage/backpack/satchel/eng = 1,
+		/obj/item/storage/backpack/industrial = 1,
+		/obj/item/clothing/suit/hooded/wintercoat/engineering/atmos = 3,
+		/obj/item/clothing/under/rank/atmospheric_technician = 3,
+		/obj/item/clothing/shoes/sneakers/black = 3)
+	generate_items_inside(items_inside,src)
 	return
 
 /obj/structure/closet/wardrobe/engineering_yellow
@@ -174,18 +164,16 @@
 
 /obj/structure/closet/wardrobe/engineering_yellow/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/accessory/pocketprotector = 1,
-									/obj/item/storage/backpack/duffelbag/engineering = 1,
-									/obj/item/storage/backpack/industrial = 1,
-									/obj/item/storage/backpack/satchel/eng = 1,
-									/obj/item/clothing/suit/hooded/wintercoat/engineering = 1,
-									/obj/item/clothing/under/rank/engineer = 3,
-									/obj/item/clothing/suit/hazardvest = 3,
-									/obj/item/clothing/shoes/workboots = 3,
-									/obj/item/clothing/head/hardhat = 3)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/accessory/pocketprotector = 1,
+		/obj/item/storage/backpack/duffelbag/engineering = 1,
+		/obj/item/storage/backpack/industrial = 1,
+		/obj/item/storage/backpack/satchel/eng = 1,
+		/obj/item/clothing/suit/hooded/wintercoat/engineering = 1,
+		/obj/item/clothing/under/rank/engineer = 3,
+		/obj/item/clothing/suit/hazardvest = 3,
+		/obj/item/clothing/shoes/workboots = 3,
+		/obj/item/clothing/head/hardhat = 3)
+	generate_items_inside(items_inside,src)
 	return
 
 /obj/structure/closet/wardrobe/white/medical
@@ -193,24 +181,22 @@
 
 /obj/structure/closet/wardrobe/white/medical/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/accessory/pocketprotector = 1,
-									/obj/item/storage/backpack/duffelbag/med = 1,
-									/obj/item/storage/backpack/medic = 1,
-									/obj/item/storage/backpack/satchel/med = 1,
-									/obj/item/clothing/suit/hooded/wintercoat/medical = 1,
-									/obj/item/clothing/under/rank/nursesuit = 1,
-									/obj/item/clothing/head/nursehat = 1,
-									/obj/item/clothing/under/rank/medical/blue = 1,
-									/obj/item/clothing/under/rank/medical/green = 1,
-									/obj/item/clothing/under/rank/medical/purple = 1,
-									/obj/item/clothing/under/rank/medical = 3,
-									/obj/item/clothing/suit/toggle/labcoat = 3,
-									/obj/item/clothing/suit/toggle/labcoat/emt = 3,
-									/obj/item/clothing/shoes/sneakers/white = 3,
-									/obj/item/clothing/head/soft/emt = 3)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/accessory/pocketprotector = 1,
+		/obj/item/storage/backpack/duffelbag/med = 1,
+		/obj/item/storage/backpack/medic = 1,
+		/obj/item/storage/backpack/satchel/med = 1,
+		/obj/item/clothing/suit/hooded/wintercoat/medical = 1,
+		/obj/item/clothing/under/rank/nursesuit = 1,
+		/obj/item/clothing/head/nursehat = 1,
+		/obj/item/clothing/under/rank/medical/blue = 1,
+		/obj/item/clothing/under/rank/medical/green = 1,
+		/obj/item/clothing/under/rank/medical/purple = 1,
+		/obj/item/clothing/under/rank/medical = 3,
+		/obj/item/clothing/suit/toggle/labcoat = 3,
+		/obj/item/clothing/suit/toggle/labcoat/emt = 3,
+		/obj/item/clothing/shoes/sneakers/white = 3,
+		/obj/item/clothing/head/soft/emt = 3)
+	generate_items_inside(items_inside,src)
 	return
 
 /obj/structure/closet/wardrobe/robotics_black
@@ -219,15 +205,13 @@
 
 /obj/structure/closet/wardrobe/robotics_black/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/glasses/hud/diagnostic = 2,
-									/obj/item/clothing/under/rank/roboticist = 2,
-									/obj/item/clothing/suit/toggle/labcoat = 2,
-									/obj/item/clothing/shoes/sneakers/black = 2,
-									/obj/item/clothing/gloves/fingerless = 2,
-									/obj/item/clothing/head/soft/black = 2)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/glasses/hud/diagnostic = 2,
+		/obj/item/clothing/under/rank/roboticist = 2,
+		/obj/item/clothing/suit/toggle/labcoat = 2,
+		/obj/item/clothing/shoes/sneakers/black = 2,
+		/obj/item/clothing/gloves/fingerless = 2,
+		/obj/item/clothing/head/soft/black = 2)
+	generate_items_inside(items_inside,src)
 	if(prob(40))
 		new /obj/item/clothing/mask/bandana/skull(src)
 	if(prob(40))
@@ -241,15 +225,13 @@
 
 /obj/structure/closet/wardrobe/chemistry_white/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/under/rank/chemist = 2,
-									/obj/item/clothing/shoes/sneakers/white = 2,
-									/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
-									/obj/item/storage/backpack/chemistry = 2,
-									/obj/item/storage/backpack/satchel/chem = 2,
-									/obj/item/storage/bag/chemistry = 2)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/under/rank/chemist = 2,
+		/obj/item/clothing/shoes/sneakers/white = 2,
+		/obj/item/clothing/suit/toggle/labcoat/chemist = 2,
+		/obj/item/storage/backpack/chemistry = 2,
+		/obj/item/storage/backpack/satchel/chem = 2,
+		/obj/item/storage/bag/chemistry = 2)
+	generate_items_inside(items_inside,src)
 	return
 
 
@@ -259,14 +241,12 @@
 
 /obj/structure/closet/wardrobe/genetics_white/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/under/rank/geneticist = 2,
-									/obj/item/clothing/shoes/sneakers/white = 2,
-									/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
-									/obj/item/storage/backpack/genetics = 2,
-									/obj/item/storage/backpack/satchel/gen = 2)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/under/rank/geneticist = 2,
+		/obj/item/clothing/shoes/sneakers/white = 2,
+		/obj/item/clothing/suit/toggle/labcoat/genetics = 2,
+		/obj/item/storage/backpack/genetics = 2,
+		/obj/item/storage/backpack/satchel/gen = 2)
+	generate_items_inside(items_inside,src)
 	return
 
 
@@ -276,15 +256,13 @@
 
 /obj/structure/closet/wardrobe/virology_white/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/under/rank/virologist = 2,
-									/obj/item/clothing/shoes/sneakers/white = 2,
-									/obj/item/clothing/suit/toggle/labcoat/virologist = 2,
-									/obj/item/clothing/mask/surgical = 2,
-									/obj/item/storage/backpack/virology = 2,
-									/obj/item/storage/backpack/satchel/vir = 2)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/under/rank/virologist = 2,
+		/obj/item/clothing/shoes/sneakers/white = 2,
+		/obj/item/clothing/suit/toggle/labcoat/virologist = 2,
+		/obj/item/clothing/mask/surgical = 2,
+		/obj/item/storage/backpack/virology = 2,
+		/obj/item/storage/backpack/satchel/vir = 2)
+	generate_items_inside(items_inside,src)
 	return
 
 /obj/structure/closet/wardrobe/science_white
@@ -293,18 +271,16 @@
 
 /obj/structure/closet/wardrobe/science_white/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/clothing/accessory/pocketprotector = 1,
-									/obj/item/storage/backpack/science = 2,
-									/obj/item/storage/backpack/satchel/tox = 2,
-									/obj/item/clothing/suit/hooded/wintercoat/science = 1,
-									/obj/item/clothing/under/rank/scientist = 3,
-									/obj/item/clothing/suit/toggle/labcoat/science = 3,
-									/obj/item/clothing/shoes/sneakers/white = 3,
-									/obj/item/radio/headset/headset_sci = 2,
-									/obj/item/clothing/mask/gas = 3)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/clothing/accessory/pocketprotector = 1,
+		/obj/item/storage/backpack/science = 2,
+		/obj/item/storage/backpack/satchel/tox = 2,
+		/obj/item/clothing/suit/hooded/wintercoat/science = 1,
+		/obj/item/clothing/under/rank/scientist = 3,
+		/obj/item/clothing/suit/toggle/labcoat/science = 3,
+		/obj/item/clothing/shoes/sneakers/white = 3,
+		/obj/item/radio/headset/headset_sci = 2,
+		/obj/item/clothing/mask/gas = 3)
+	generate_items_inside(items_inside,src)
 	return
 
 /obj/structure/closet/wardrobe/botanist
@@ -313,16 +289,14 @@
 
 /obj/structure/closet/wardrobe/botanist/PopulateContents()
 	var/static/items_inside = list(
-									/obj/item/storage/backpack/botany = 2,
-									/obj/item/storage/backpack/satchel/hyd = 2,
-									/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
-									/obj/item/clothing/suit/apron = 2,
-									/obj/item/clothing/suit/apron/overalls = 2,
-									/obj/item/clothing/under/rank/hydroponics = 3,
-									/obj/item/clothing/mask/bandana = 3)
-	for(var/each_item in items_inside)
-		for(var/i in 1 to items_inside[each_item])
-			new each_item(src)
+		/obj/item/storage/backpack/botany = 2,
+		/obj/item/storage/backpack/satchel/hyd = 2,
+		/obj/item/clothing/suit/hooded/wintercoat/hydro = 1,
+		/obj/item/clothing/suit/apron = 2,
+		/obj/item/clothing/suit/apron/overalls = 2,
+		/obj/item/clothing/under/rank/hydroponics = 3,
+		/obj/item/clothing/mask/bandana = 3)
+	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/wardrobe/curator
 	name = "treasure hunting wardrobe"
