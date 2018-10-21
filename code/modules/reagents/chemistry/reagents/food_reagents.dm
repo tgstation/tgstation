@@ -728,7 +728,7 @@
 /datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
 	if(isethereal(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/species/ethereal/E = H?.dna.species
+		var/datum/species/ethereal/E = H.dna?.species
 		E.adjust_charge(5*REM)
 	else
 		if(prob(25)) //scp13 optimization

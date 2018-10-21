@@ -471,12 +471,15 @@
 	if(.)
 		electrocution_animation(40)
 
+/mob/living/carbon/human/emag_act(mob/user)
+	H.dna?.spec_emag_act()
 
 /mob/living/carbon/human/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
 	var/informed = FALSE
+	H.dna?.species.spec_emp_act
 	for(var/obj/item/bodypart/L in src.bodyparts)
 		if(L.status == BODYPART_ROBOTIC)
 			if(!informed)

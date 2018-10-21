@@ -1,3 +1,5 @@
+#define ETHEREAL_COLORS list("00ffff", "ffc0cb", "9400D3", "4B0082", "0000FF", "00FF00", "FFFF00", "FF7F00", "FF0000")
+
 /datum/species/ethereal
 	name = "Ethereal"
 	id = "ethereal"
@@ -19,6 +21,8 @@
 	toxic_food = NONE
 	var/current_color
 	var/ethereal_charge = ETHEREAL_CHARGE_FULL
+	var/EMPeffect = FALSE
+	var/emageffect = FALSE
 
 	var/static/r1 = 151
 	var/static/g1 = 238
@@ -46,9 +50,10 @@
 
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
 	.=..()
-	if(H.stat != DEAD)
+	if(H.stat != DEAD && !EMPeffect)
 		var/percent = max(H.health, 0) / 100
-		current_color = rgb(r2 + ((r1-r2)*percent), g2 + ((g1-g2)*percent), b2 + ((b1-b2)*percent))
+		if(!emageffect)
+			current_color = rgb(r2 + ((r1-r2)*percent), g2 + ((g1-g2)*percent), b2 + ((b1-b2)*percent))
 		H.set_light(1 + (2 * percent), 1 + (1 * percent), current_color)
 		fixed_mut_color = copytext(current_color, 2)
 	else
@@ -56,10 +61,41 @@
 		fixed_mut_color = rgb(128,128,128)
 	H.update_body()
 
+/datum/species/ethereal/spec_emp_act(mob/living/carbon/human/H, severity)
+	.=..()
+	EMPeffect = TRUE
+	switch(severity)
+		if(EMP_LIGHT)
+			addtimer(CALLBACK(src, .proc/stop_emp), 100, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 10 seconds
+		if(EMP_HEAVY)
+			addtimer(CALLBACK(src, .proc/stop_emp), 200, TIMER_UNIQUE|TIMER_OVERRIDE) //We're out for 20 seconds
+
+/datum/species/ethereal/spec_emag_act(mob/living/carbon/human/H, mob/user)
+	if(emageffect)
+		return
+	emageffect = TRUE
+	to_chat(user, "<span class='notice'>You tap [H] on the back with your card.</span>")
+	visible_message("<span class='danger'>[H] starts flickering in an array of colors!</span>")
+	handle_emag()
+	addtimer(CALLBACK(src, .proc/stop_emag), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //Disco mode for 30 seconds! This doesn't affect the ethereal at all besides either annoying some players, or making someone look badass.
+
+
 /datum/species/ethereal/spec_life(mob/living/carbon/human/H)
 	.=..()
 	handle_charge(H)
 
+/datum/species/ethereal/proc/stop_emp()
+	EMPeffect = FALSE
+
+/datum/species/ethereal/proc/handle_emag()
+	if(!emageffect)
+		return
+	current_color = pick(ETHEREAL_COLORS)
+	addtimer(CALLBACK(src, .proc/handle_emag), 30) //Call ourselves every 3 seconds to change color
+
+/datum/species/ethereal/proc/stop_emag()
+	emageffect = FALSE
+	visible_message("<span class='danger'>[H] stops flickering and goes back to their normal state!</span>")
 
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/H)
 	var/charge_rate = ETHEREAL_CHARGE_FACTOR

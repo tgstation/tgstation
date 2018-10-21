@@ -895,7 +895,7 @@
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()
-	dna?.species?.spec_updatehealth(src)
+	dna?.species.spec_updatehealth(src)
 
 /mob/living/carbon/human/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(has_trait(TRAIT_NOHUNGER))

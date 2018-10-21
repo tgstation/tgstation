@@ -108,7 +108,7 @@
 			R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 	if(isethereal(occupant))
 		var/mob/living/carbon/human/H = occupant
-		var/datum/species/ethereal/E = H?.dna.species
+		var/datum/species/ethereal/E = H.dna?.species
 		E.adjust_charge(recharge_speed / 70) //Around 3 per process if unupgraded
 
 /obj/machinery/recharge_station/proc/restock_modules()
