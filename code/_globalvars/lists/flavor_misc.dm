@@ -55,7 +55,6 @@ GLOBAL_LIST_INIT(ai_core_display_screens, list(
 	"Gentoo",
 	"Glitchman",
 	"Goon",
-	"Green",
 	"Hades",
 	"Heartline",
 	"Helios",

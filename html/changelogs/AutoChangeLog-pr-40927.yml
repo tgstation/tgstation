@@ -1,0 +1,7 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - tweak: "the order in which items are listed in certain vendors has been changed, giving priority to cheaper items and occasionally sorting by category"
+  - balance: "prices for a number of items have been changed, certain vendors have new premium merchandise in stock"
+  - balance: "decreased the amount of reagents contained in ramen cups & hot coco"
+  - bugfix: "Chaplains no longer have to pay for their equipment"

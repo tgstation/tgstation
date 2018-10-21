@@ -2,6 +2,10 @@
 
 /mob/proc/set_suicide(suicide_state)
 	suiciding = suicide_state
+	if(suicide_state)
+		GLOB.suicided_mob_list += src
+	else
+		GLOB.suicided_mob_list -= src
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()

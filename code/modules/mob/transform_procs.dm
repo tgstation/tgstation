@@ -382,7 +382,7 @@
 	R.apply_pref_name("cyborg")
 
 	if(R.mmi)
-		R.mmi.name = "Man-Machine Interface: [real_name]"
+		R.mmi.name = "[initial(R.mmi.name)]: [real_name]"
 		if(R.mmi.brain)
 			R.mmi.brain.name = "[real_name]'s brain"
 		if(R.mmi.brainmob)

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Nanite chamber interfaces will no longer give you the option to install a program if there isn't one on the inserted data disk."

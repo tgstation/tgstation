@@ -5,6 +5,7 @@
 	icon_state = "black"
 	item_color = "black"
 	desc = "A pair of black shoes."
+	custom_price = 20
 
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
@@ -120,5 +121,4 @@
 			to_chat(c, "<span class='warning'>You need help taking these off!</span>")
 			return
 	return ..()
-	
-	
+

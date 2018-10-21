@@ -87,6 +87,9 @@
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
 
+/obj/structure/closet/supplypod/prevent_content_explosion() //Useful for preventing epicenter explosions from damaging contents
+	return TRUE
+
 /obj/structure/closet/supplypod/toggle(mob/living/user) //Supplypods shouldn't be able to be manually opened under any circumstances, as the open() proc generates supply order datums
 	return
 
