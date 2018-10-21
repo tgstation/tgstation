@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - rscadd: "Added a config option to automatically reopen the job positions of players who have suicided at roundstart."
