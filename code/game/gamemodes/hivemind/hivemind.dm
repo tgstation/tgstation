@@ -69,7 +69,7 @@
 	if(hosts.len >= 4 && prob(35)) //Create the versus objective here since we want a common target for all the antags
 		var/datum/antagonist/hivemind/hive
 		hive.common_assimilation_obj = new /datum/objective/hivemind/assimilate_common
-		hive.common_assimilation_obj.find_target_by_role(role = ROLE_HIVE, role_type = 1, invert = 1)
+		hive.common_assimilation_obj.find_target_by_role(role = ROLE_HIVE, role_type = TRUE, invert = TRUE)
 	for(var/datum/mind/i in hosts)
 		i.add_antag_datum(/datum/antagonist/hivemind)
 	return ..()
