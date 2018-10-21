@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Gaps between sounds in some looping sound effects should no longer happen as much under heavy server lag."
