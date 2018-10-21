@@ -123,7 +123,7 @@
 		/obj/item/clothing/under/rank/security/skirt = 2,
 		/obj/item/clothing/shoes/jackboots = 3,
 		/obj/item/clothing/head/beret/sec = 3,
-		/obj/item/clothing/head/soft/sec = 3.
+		/obj/item/clothing/head/soft/sec = 3,
 		/obj/item/clothing/mask/bandana/red = 2)
 	generate_items_inside(items_inside,src)
 	return
