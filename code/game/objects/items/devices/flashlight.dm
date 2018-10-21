@@ -479,7 +479,7 @@
 	if(!on)
 		on = TRUE
 		START_PROCESSING(SSobj, src)
-		
+
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
 	if(!fuel)
 		user.visible_message("<span class='suicide'>[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!</span>")
@@ -558,3 +558,53 @@
 	flags_1 = CONDUCT_1
 	item_flags = DROPDEL
 	actions_types = list()
+
+/obj/item/flashlight/directional
+	name = "old flashlight"
+	desc = "This poor thing has seen better days, it only emits light in a single direction"
+	icon_state = "dlight"
+	dir = 4
+	brightness_on = 4
+	var/pointing
+	var/datum/component/mobhook
+
+/obj/item/flashlight/directional/update_brightness(mob/user = null)
+	..()
+	if(light)
+		if(user)
+			dir = user.dir //Someone is holding the light, so aim it where they are facing
+		light.directional = dir2angle(dir)
+		update_light()
+
+/obj/item/flashlight/directional/afterattack(atom/A, mob/living/user, flag, params)
+	..()
+	var/C = user.client
+	if(C)
+		dir = user.dir
+		pointing = round(mouse_angle_from_client(C), 1)
+		if(light)
+			light.directional = pointing
+			update_light()
+
+obj/item/flashlight/directional/CanItemAutoclick() //BURN THE SERVER DOWN
+	return 2
+
+obj/item/flashlight/directional/proc/on_mob_turn()
+	if(ismob(loc) && on && !pointing)
+		light.directional = 1
+		update_light()
+
+obj/item/flashlight/directional/equipped(mob/user, slot)
+	. = ..()
+	if (mobhook && mobhook.parent != user)
+		QDEL_NULL(mobhook)
+	else
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE), CALLBACK(src, .proc/on_mob_turn))
+
+obj/item/flashlight/directional/dropped()
+	. = ..()
+	QDEL_NULL(mobhook)
+
+obj/item/flashlight/directional/Destroy()
+	QDEL_NULL(mobhook) // mobhook is not our component
+	return ..()
