@@ -70,9 +70,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
             for(var/j=0, j<hotelRoomTemp.height, j++)
                 for(var/atom/movable/A in storedRooms["[roomNumber]"][turfNumber])
                     if(istype(A.loc, /obj/item/abstracthotelstorage))//Don't want to recall something thats been moved
-                        if(ismob(A))
-                            var/mob/M = A
-                            M.notransform = FALSE
                         A.forceMove(locate(roomReservation.bottom_left_coords[1] + i, roomReservation.bottom_left_coords[2] + j, roomReservation.bottom_left_coords[3]))
                 turfNumber++
         for(var/obj/item/abstracthotelstorage/S in storageTurf)
@@ -245,9 +242,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
             var/list/turfContents = list()
             for(var/atom/movable/A in locate(reservation.bottom_left_coords[1] + i, reservation.bottom_left_coords[2] + j, reservation.bottom_left_coords[3]))
                 turfContents += A
-                if(ismob(A))
-                    var/mob/M = A
-                    M.notransform = TRUE
                 A.forceMove(storageObj)
             storage[turfNumber] = turfContents
             turfNumber++
@@ -281,6 +275,12 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     item_flags = ABSTRACT
     var/roomNumber
     var/obj/item/hilbertshotel/parentSphere
+
+/obj/item/abstracthotelstorage/Entered(atom/movable/AM, atom/oldLoc)
+    . = ..()
+    if(ismob(AM))
+        var/mob/M = AM
+        M.notransform = TRUE
 
 /obj/item/abstracthotelstorage/Exited(atom/movable/AM, atom/newLoc)
     . = ..()
