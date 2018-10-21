@@ -282,6 +282,12 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/roomNumber
     var/obj/item/hilbertshotel/parentSphere
 
+/obj/item/abstracthotelstorage/Exited(atom/movable/AM, atom/newLoc)
+    . = ..()
+    if(ismob(AM))
+        var/mob/M = AM
+        M.notransform = FALSE
+
 //Space Ruin stuff
 /area/ruin/space/has_grav/hilbertresearchfacility
     name = "Hilbert Research Facility"
