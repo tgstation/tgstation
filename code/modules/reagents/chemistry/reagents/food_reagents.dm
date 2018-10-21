@@ -19,8 +19,8 @@
 	current_cycle++
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!(NOHUNGER in H.dna?.species?.species_traits))
-			M.adjust_nutrition(nutriment_factor)
+		if(!H.has_trait(TRAIT_NOHUNGER))
+			H.adjust_nutrition(nutriment_factor)
 	holder.remove_reagent(src.id, metabolization_rate)
 
 /datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -715,3 +715,23 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#eef442" // rgb: 238, 244, 66
 	taste_description = "mournful honking"
+
+
+/datum/reagent/consumable/liquidelectricity
+	name = "Liquid Electricity"
+	id = "liquidelectricity"
+	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#97ee63"
+	taste_description = "pure electrictiy"
+
+/datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
+	if(isethereal(M))
+		var/mob/living/carbon/human/H = M
+		var/datum/species/ethereal/E = H?.dna.species
+		E.adjust_charge(5*REM)
+	else
+		if(prob(25)) //scp13 optimization
+			M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
+			playsound(M, "sparks", 50, 1)
+	return ..()

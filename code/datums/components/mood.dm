@@ -252,7 +252,7 @@
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		if(NOHUNGER in H.dna?.species?.species_traits)
+		if(H.has_trait(TRAIT_NOHUNGER))
 			return FALSE //no mood events for nutrition
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)

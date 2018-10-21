@@ -4,17 +4,19 @@
 	attack_verb = "burn"
 	attack_sound = 'sound/weapons/etherealhit.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/lizard
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
 	exotic_bloodtype = "LE" //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, NOSTOMACH, NOHUNGER)
+	species_traits = list(DYNCOLORS, NOSTOMACH)
+	inherent_traits = list(TRAIT_NOHUNGER)
 	default_features = list("mcolor" = "97ee63")
 	fixed_mut_color = "97ee63"
 	default_color = "#97ee63"
-	sexes = FALSE
+	sexes = FALSE //no fetish content allowed
+	toxic_food = NONE
 	var/current_color
 	var/ethereal_charge = ETHEREAL_CHARGE_FULL
 
@@ -26,9 +28,9 @@
 	var/static/b2 = 149
 
 
-/datum/species/ethereal/New()
+/datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	.=..()
-	spec_updatehealth(mob/living/carbon/human/H)
+	spec_updatehealth(C)
 
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
@@ -61,20 +63,20 @@
 
 /datum/species/ethereal/proc/handle_charge(mob/living/carbon/human/H)
 	var/charge_rate = ETHEREAL_CHARGE_FACTOR
-	var/brutemod_modifier = 1
+	brutemod = 1.25
 	adjust_charge(-charge_rate)
 	switch(ethereal_charge)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
-			H.throw_alert("ethereal_charge", /obj/screen/alert/emptycell)
+			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 3)
 			apply_damage(0.5, BRUTE)
-			brutemod_modifier *= 1.5
+			brutemod = 1.75
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
-			H.throw_alert("ethereal_charge", /obj/screen/alert/lowcell, 3)
+			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 2)
+			brutemod = 1.5
 		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_ALMOSTFULL)
-			H.throw_alert("ethereal_charge", /obj/screen/alert/lowcell, 2)
+			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 1)
 		else
 			H.clear_alert("ethereal_charge")
-	brutemod *= brutemod_modifier
 
 /datum/species/ethereal/proc/adjust_charge(var/change)
 	ethereal_charge = CLAMP(ethereal_charge + change, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)
