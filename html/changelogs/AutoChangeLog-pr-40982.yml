@@ -1,0 +1,4 @@
+author: "GranpaWalton"
+delete-after: True
+changes: 
+  - rscadd: "Added a new premium drink to the soda machine called \"Grey Bull\" which gives temporary shock resistance"
