@@ -75,8 +75,8 @@
 		
 		if(findtext(raw_message, reg))
 			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
+			message = reg.Replace(message, "<span class='phobia'>$1</span>")
 			break
-		message = reg.Replace(message, "<span class='phobia'>$1</span>")
 	return message
 
 /datum/brain_trauma/mild/phobia/on_say(message)
