@@ -56,6 +56,9 @@
 
 	var/datum/team/cult/main_cult
 
+	var/latejoiners = 0
+	var/latejoin_slots = 0
+
 
 /datum/game_mode/cult/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -95,7 +98,36 @@
 			var/datum/antagonist/cult/C = cult_mind.has_antag_datum(/datum/antagonist/cult,TRUE)
 			if(C && C.cult_team)
 				main_cult = C.cult_team
+	addtimer(CALLBACK(src, .proc/latejoin_check), 7200)
 	..()
+
+/datum/game_mode/cult/proc/latejoin_check()
+	var/alive = 0
+	var/cultplayers = 0
+	for(var/I in GLOB.player_list)
+		var/mob/M = I
+		if(M.stat != DEAD)
+			if(iscultist(M))
+				++cultplayers
+			else
+				++alive
+	if(!alive)
+		return
+	var/ratio = cultplayers/alive
+	if(ratio <= CULT_WANING) //Opens one latejoin slot if the cult is losing and hasn't hit their latejoin limit
+		var/latejoin_limit = round(alive * 0.05) - latejoiners - latejoin_slots
+		if(latejoin_limit > 0)
+			latejoin_slots++
+	addtimer(CALLBACK(src, .proc/latejoin_check), 3000)
+
+/datum/game_mode/cult/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
+	if(latejoin_slots)
+		if(antag_flag in character.client.prefs.be_special)
+			if(!jobban_isbanned(character, ROLE_CULTIST) && !QDELETED(character))
+				if(age_check(character.client) && !(character.job in restricted_jobs) && prob(35))
+					add_cultist(character.mind, 0, equip=TRUE)
+					latejoiners++
+					latejoin_slots--
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE) //BASE
 	if (!istype(cult_mind))

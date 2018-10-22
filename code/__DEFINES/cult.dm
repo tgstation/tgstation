@@ -12,8 +12,10 @@
 //blood magic
 #define MAX_BLOODCHARGE 4
 #define RUNELESS_MAX_BLOODCHARGE 1
-#define CULT_RISEN 0.2 //percent before rise
-#define CULT_ASCENDENT 0.4 //percent before ascend
+#define CULT_RISEN 0.25 //percent before rise
+#define CULT_ASCENDENT 0.45 //percent before ascend
+#define CULT_WANING 0.1
+
 //screen locations
 #define DEFAULT_BLOODSPELLS "6:-29,4:-2"
 #define DEFAULT_BLOODTIP "14:6,14:27"

@@ -125,7 +125,8 @@
 	desc = "The air smells strangely over this sinister flooring."
 	icon_state = "plating"
 	floor_tile = null
-	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance
+	planetary_atmos = TRUE
+	var/obj/effect/clockwork/overlay/floor/bloodcult/realappearance //Effect that hides the turf from mesons
 
 
 /turf/open/floor/engine/cult/Initialize()

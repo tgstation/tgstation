@@ -520,7 +520,7 @@
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/restraints/handcuffs/energy/cult/used(C)
 				C.update_handcuffed()
-				C.silent += 5
+				C.silent += 9
 				to_chat(user, "<span class='notice'>You shackle [C].</span>")
 				log_combat(user, C, "shackled")
 				uses--
@@ -750,14 +750,14 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
+		var/list/options = list("Blood Spear (100)", "Blood Bolt Barrage (250)", "Blood Beam (500)")
 		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
 			return
 		switch(choice)
-			if("Blood Spear (150)")
-				if(uses < 150)
+			if("Blood Spear (100)")
+				if(uses < 100)
 					to_chat(user, "<span class='cultitalic'>You need 200 charges to perform this rite.</span>")
 				else
 					uses -= 150
@@ -772,8 +772,8 @@
 					else
 						user.visible_message("<span class='warning'>A [rite.name] appears at [user]'s feet!</span>", \
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
-			if("Blood Bolt Barrage (300)")
-				if(uses < 300)
+			if("Blood Bolt Barrage (250)")
+				if(uses < 250)
 					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()

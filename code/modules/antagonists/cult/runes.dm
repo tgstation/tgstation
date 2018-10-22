@@ -995,7 +995,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, "<span class='cultlarge'>An Apocalypse Rune was invoked in the [place.name], it is no longer available as a summoning site!</span>")
 			SEND_SOUND(M, 'sound/effects/pope_entry.ogg')
 	image_handler(images, duration)
-	if(intensity>=285) // Based on the prior formula, this means the cult makes up <15% of current players
+	if(intensity>=250) // Based on the prior formula, this means the cult makes up <17% of current players
 		var/outcome = rand(1,100)
 		switch(outcome)
 			if(1 to 10)
@@ -1007,8 +1007,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				var/datum/round_event_control/radiation_storm/RS = new()
 				RS.runEvent()
 			if(21 to 30)
-				var/datum/round_event_control/brand_intelligence/BI = new()
-				BI.runEvent()
+				var/datum/round_event_control/grid_check/GC = new()
+				GC.runEvent()
 			if(31 to 40)
 				var/datum/round_event_control/immovable_rod/R = new()
 				R.runEvent()
