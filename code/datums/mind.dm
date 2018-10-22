@@ -243,6 +243,7 @@
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
 		return
+	. = TRUE
 
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/pda/PDA = locate() in all_contents
@@ -290,7 +291,6 @@
 			to_chat(traitor_mob, "Unfortunately, [employer] wasn't able to get you an Uplink.")
 		. = 0
 	else
-		. = uplink_loc
 		var/datum/component/uplink/U = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 		if(!U)
 			CRASH("Uplink creation failed.")
@@ -433,7 +433,7 @@
 
 		if(!GLOB.admin_objective_list)
 			generate_admin_objective_list()
-		
+
 		if(old_objective)
 			if(old_objective.name in GLOB.admin_objective_list)
 				def_value = old_objective.name
@@ -451,7 +451,7 @@
 			target_antag.objectives += new_objective
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
-		else 
+		else
 			if(old_objective.type == selected_type)
 				//Edit the old
 				old_objective.admin_edit(usr)
