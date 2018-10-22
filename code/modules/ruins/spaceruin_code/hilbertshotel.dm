@@ -40,7 +40,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
         return
     src.forceMove(get_turf(user))
-    if(!storageTurf) 
+    if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
         if(!GLOB.hhStorageTurf)
             var/datum/map_template/hilbertshotelstorage/storageTemp = new()
             var/datum/turf_reservation/storageReservation = SSmapping.RequestBlockReservation(3, 3)
