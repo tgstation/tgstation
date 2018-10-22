@@ -26,13 +26,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/area/currentArea = get_area(src)
     if(currentArea.type == /area/ruin/space/has_grav/hilbertresearchfacility)
         ruinSpawned = TRUE
-    if(!GLOB.hhStorageTurf)
-        var/datum/map_template/hilbertshotelstorage/storageTemp = new()
-        var/datum/turf_reservation/storageReservation = SSmapping.RequestBlockReservation(3, 3)
-        storageTemp.load(locate(storageReservation.bottom_left_coords[1], storageReservation.bottom_left_coords[2], storageReservation.bottom_left_coords[3]))
-        GLOB.hhStorageTurf = locate(storageReservation.bottom_left_coords[1]+1, storageReservation.bottom_left_coords[2]+1, storageReservation.bottom_left_coords[3])
-    storageTurf = GLOB.hhStorageTurf
-
+    
 /obj/item/hilbertshotel/Destroy()
     ejectRooms()
     return ..()
@@ -46,6 +40,14 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
         return
     src.forceMove(get_turf(user))
+    if(!storageTurf) 
+        if(!GLOB.hhStorageTurf)
+            var/datum/map_template/hilbertshotelstorage/storageTemp = new()
+            var/datum/turf_reservation/storageReservation = SSmapping.RequestBlockReservation(3, 3)
+            storageTemp.load(locate(storageReservation.bottom_left_coords[1], storageReservation.bottom_left_coords[2], storageReservation.bottom_left_coords[3]))
+            GLOB.hhStorageTurf = locate(storageReservation.bottom_left_coords[1]+1, storageReservation.bottom_left_coords[2]+1, storageReservation.bottom_left_coords[3])
+        else
+            storageTurf = GLOB.hhStorageTurf
     if(tryActiveRoom(chosenRoomNumber, user))
         return
     if(tryStoredRoom(chosenRoomNumber, user))
