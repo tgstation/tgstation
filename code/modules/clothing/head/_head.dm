@@ -32,12 +32,14 @@
 		M.update_inv_head()
 
 /obj/item/clothing/head/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
-	..()
-	if(thrownthing.target_zone && thrownthing.target_zone != BODY_ZONE_HEAD)
+	. = ..()
+	if(!.)
+		return
+	if(thrownthing && thrownthing.target_zone && thrownthing.target_zone != BODY_ZONE_HEAD)
 		return
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/H = hit_atom
-		if(H.head)
+		if(H.head && istype(H.head, /obj/item/clothing/head))
 			var/obj/item/clothing/head/WH = H.head
 			if(istype(WH) && !WH.snug_fit && !anti_tinfoil_maneuver)
 				if(H.dropItemToGround(WH))
