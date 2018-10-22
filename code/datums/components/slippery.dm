@@ -2,7 +2,6 @@
 	var/force_drop_items = FALSE
 	var/knockdown_time = 0
 	var/paralyze_time = 0
-	var/intensity
 	var/lube_flags
 	var/datum/callback/callback
 
