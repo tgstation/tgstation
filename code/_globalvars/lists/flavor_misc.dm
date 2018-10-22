@@ -36,6 +36,8 @@ GLOBAL_LIST_EMPTY(wings_open_list)
 GLOBAL_LIST_EMPTY(r_wings_list)
 GLOBAL_LIST_EMPTY(moth_wings_list)
 GLOBAL_LIST_EMPTY(caps_list)
+	
+GLOBAL_LIST_INIT(color_list_ethereal, list("Regular Green" = "97ee63", "Dark Green" = "37835b", "Red" = "9c3030", "Yellow" = "fbdf56", "Blue" = "3399ff", "Cyan" = "00ffff", "Gold" = "bc7e09"))
 
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things

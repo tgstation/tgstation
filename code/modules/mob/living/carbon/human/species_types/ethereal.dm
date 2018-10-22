@@ -14,27 +14,30 @@
 	damage_overlay_type = "" //We are too cool for regular damage overlays
 	species_traits = list(DYNCOLORS, NOSTOMACH)
 	inherent_traits = list(TRAIT_NOHUNGER)
-	default_features = list("mcolor" = "97ee63")
-	fixed_mut_color = "97ee63"
-	default_color = "#97ee63"
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
 	var/current_color
 	var/ethereal_charge = ETHEREAL_CHARGE_FULL
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
-
-	var/static/r1 = 151
-	var/static/g1 = 238
-	var/static/b1 = 99
+	var/r1
+	var/g1
+	var/b1
 	var/static/r2 = 237
 	var/static/g2 = 164
-	var/static/b2 = 149
+	var/static/b2 = 149	
+	//this is shit but how do i fix it? no clue.
 
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	.=..()
-	spec_updatehealth(C)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		default_color = "#" + H.dna?.features["ethcolor"]
+		r1 = GetRedPart(default_color)
+		g1 = GetGreenPart(default_color)
+		b1 = GetBluePart(default_color)
+		spec_updatehealth(H)
 
 
 /datum/species/ethereal/random_name(gender,unique,lastname)
@@ -49,10 +52,9 @@
 	.=..()
 	if(H.stat != DEAD && !EMPeffect)
 		var/healthpercent = max(H.health, 0) / 100
-		var/chargepercent = max(H.ethereal_charge, 0) / 100
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
-		H.set_light(1 + (2 * chargepercent), 1 + (1 * chargepercent), current_color)
+		H.set_light(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
 		fixed_mut_color = copytext(current_color, 2)
 	else
 		H.set_light(0)
@@ -83,6 +85,10 @@
 /datum/species/ethereal/spec_life(mob/living/carbon/human/H)
 	.=..()
 	handle_charge(H)
+
+/datum/species/ethereal/spec_fullyheal(mob/living/carbon/human/H)
+	.=..()
+	set_charge(ETHEREAL_CHARGE_FULL)
 
 /datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/H)
 	EMPeffect = FALSE

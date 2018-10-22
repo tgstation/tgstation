@@ -28,7 +28,6 @@ Puppis
 Ophiuchus
 Carina
 Cassiopeia
-Ara
 Canes
 Fornax
 Berenices
