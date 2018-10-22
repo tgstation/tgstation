@@ -262,7 +262,9 @@
 /turf/open/indestructible/hoteltile,
 /area/hilbertshotel)
 "aW" = (
-/obj/machinery/jukebox,
+/obj/machinery/jukebox{
+	req_access = null
+	},
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aX" = (

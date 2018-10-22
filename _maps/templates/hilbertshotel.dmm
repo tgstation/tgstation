@@ -6,7 +6,9 @@
 /turf/closed/indestructible/hotelwall,
 /area/hilbertshotel)
 "c" = (
-/obj/machinery/jukebox,
+/obj/machinery/jukebox{
+	req_access = null
+	},
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "d" = (
