@@ -300,7 +300,7 @@ Chilling extracts:
 	colour = "rainbow"
 
 /obj/item/slimecross/chilling/rainbow/do_effect(mob/user)
-	var/area/area = get_area(user)
+	var/area/area = get_area(user.loc)
 	if(area.outdoors)
 		to_chat(user, "<span class='warning'>[src] can't affect such a large area.</span>")
 		return
