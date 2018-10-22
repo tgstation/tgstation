@@ -19,7 +19,8 @@ Slimecrossing Items
 	var/text = "The camera fades away"
 	if(disk)
 		text += ", leaving the disk behind!"
-		user.put_in_hands(disk)
+		if(!user.put_in_hands(disk))
+			disk.forceMove(user.drop_location())
 	else
 		text += "!"
 	to_chat(user,"<span class='notice'>[text]</span>")
@@ -130,8 +131,9 @@ Slimecrossing Items
 	icon_state = "capturedevice"
 
 /obj/item/capturedevice/attack(mob/living/M, mob/user)
-	if(contents.len)
+	if(length(contents))
 		to_chat(user, "<span class='warning'>The device already has something inside.</span>")
+		return
 	if(!isanimal(M))
 		to_chat(user, "<span class='warning'>The capture device only works on simple creatures.</span>")
 		return

@@ -102,7 +102,7 @@
 
 /datum/status_effect/frozenstasis/on_apply()
 	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/breakCube))))
-	cube = new /obj/structure/ice_stasis(get_turf(owner.loc))
+	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
 	return ..()
