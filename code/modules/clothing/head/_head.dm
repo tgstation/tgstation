@@ -39,7 +39,7 @@
 		var/mob/living/carbon/H = hit_atom
 		if(H.head)
 			var/obj/item/clothing/head/WH = H.head
-			if(!WH.snug_fit && !anti_tinfoil_maneuver)
+			if(istype(WH) && !WH.snug_fit && !anti_tinfoil_maneuver)
 				if(H.dropItemToGround(WH))
 					H.equip_to_slot_if_possible(src, SLOT_HEAD, 0, 1, 1)
 					H.visible_message("<span class='warning'>[src] knocks [WH] off [H]'s head!</span>", "<span class='warning'>[WH] is suddenly knocked off your head, replaced by [src]!</span>")
