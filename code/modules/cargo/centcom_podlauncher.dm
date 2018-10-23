@@ -32,7 +32,7 @@
 	var/effectAnnounce = TRUE
 	var/numTurfs = 0 //Counts the number of turfs with things we can launch in the chosen bay (in the centcom map)
 	var/launchCounter = 1 //Used with the "Ordered" launch mode (launchChoice = 1) to see what item is launched
-	var/specificTarget //Do we want to target a specific mob instead of where we click? Also used for smiting
+	var/atom/specificTarget //Do we want to target a specific mob instead of where we click? Also used for smiting
 	var/list/orderedArea = list() //Contains an ordered list of turfs in an area (filled in the createOrderedArea() proc), read top-left to bottom-right. Used for the "ordered" launch mode (launchChoice = 1)
 	var/list/acceptableTurfs = list() //Contians a list of turfs (in the "bay" area on centcom) that have items that can be launched. Taken from orderedArea
 	var/list/launchList = list() //Contains whatever is going to be put in the supplypod and fired. Taken from acceptableTurfs
@@ -412,13 +412,17 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if(left_click) //When we left click:
 			preLaunch() //Fill the acceptableTurfs list from the orderedArea list. Then, fill up the launchList list with items from the acceptableTurfs list based on the manner of launch (ordered, random, etc)
 			if (!isnull(specificTarget))
-				target = get_turf(specificTarget) //if we have a specific mob target, then always launch the pod at the turf of the mob
+				target = get_turf(specificTarget) //if we have a specific target, then always launch the pod at the turf of the target
 			else if (target)
 				target = get_turf(target) //Make sure we're aiming at a turf rather than an item or effect or something
 			else
 				return //if target is null and we don't have a specific target, cancel
 			if (effectAnnounce)
 				deadchat_broadcast("<span class='deadsay'>A special package is being launched at the station!</span>", turf_target = target)
+			var/list/bouttaDie = list()
+			for (var/mob/living/M in target)
+				bouttaDie.Add(M)
+			supplypod_punish_log(bouttaDie)
 			if (!effectBurst) //If we're not using burst mode, just launch normally.
 				launch(target)
 			else
@@ -432,7 +436,6 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 					else
 						launch(target) //If we couldn't locate an adjacent turf, just launch at the normal target
 					sleep(rand()*2) //looks cooler than them all appearing at once. Gives the impression of burst fire.
-			log_admin("Centcom Supplypod Launch: [key_name(user)] launched a supplypod in [AREACOORD(target)]")
 
 /datum/centcom_podlauncher/proc/refreshBay() //Called whenever the bay is switched, as well as wheneber a pod is launched
 	orderedArea = createOrderedArea(bay) //Create an ordered list full of turfs form the bay
@@ -519,3 +522,24 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	qdel(temp_pod) //Delete the temp_pod
 	qdel(selector) //Delete the selector effect
 	. = ..()
+
+/datum/centcom_podlauncher/proc/supplypod_punish_log(var/list/whoDyin)
+	var/podString = effectBurst ? "5 pods" : "a pod"
+	var/whomString = ""
+	if (LAZYLEN(whoDyin))
+		for (var/mob/living/M in whoDyin) 
+			whomString += "[key_name(M)], "
+
+	var/delayString = temp_pod.landingDelay == initial(temp_pod.landingDelay) ? "" : " Delay=[temp_pod.landingDelay*0.1]s"
+	var/damageString = temp_pod.damage == 0 ? "" : " Dmg=[temp_pod.damage]"
+	var/explosionString = ""
+	if (counterlist_sum(temp_pod.explosionSize) != 0)
+		explosionString = " Boom=|"
+		for (var/X in temp_pod.explosionSize)
+			explosionString += "[X]|"
+	
+	var/msg = "launched [podString][whomString].[delayString][damageString][explosionString]]"
+	message_admins("[key_name_admin(usr)] [msg] in [AREACOORD(specificTarget)].")
+	if (!isemptylist(whoDyin))
+		for (var/mob/living/M in whoDyin)
+			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")

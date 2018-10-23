@@ -127,7 +127,7 @@
 			M.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		M.adjustBruteLoss(damage)
 
-	if (B[1] || B[2] || B[3] || B[4]) //If the explosion list isn't all zeroes, call an explosion
+	if (counterlist_sum(explosionSize) != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(get_turf(src), B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, "explosion", landingSound ? 15 : 80, 1)
