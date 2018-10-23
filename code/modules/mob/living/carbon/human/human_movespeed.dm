@@ -33,7 +33,7 @@
 			J = C.jetpack
 		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
 			. -= 2
-		else if(istype(tT) && T.allow_thrust(0.01, H))
+		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
 
 	if(!ignoreslow && gravity)

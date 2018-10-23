@@ -236,22 +236,23 @@
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
-/obj/item/restraints/legcuffs/proc/detach(mob/M, atom/newloc)
-	if(M.legcuffed == src)
-		M.legcuffed = null
-	if(M.client)
-		M.client.screen -= src
+/obj/item/restraints/legcuffs/proc/remove(mob/living/carbon/C, atom/newloc)
+	if(!iscarbon(C))
+		return FALSE
+	if(C.legcuffed == src)
+		C.legcuffed = null
+	if(C.client)
+		C.client.screen -= src
 	layer = initial(layer)
 	plane = initial(plane)
-	forceMove(newLoc || get_turf(src))
-	dropped(M)
+	forceMove(newloc || get_turf(src))
+	dropped(C)
 	changeNext_move(0)
 	return TRUE
 
-/obj/item/restraints/legcuffs/proc/attach(mob/M)
-	if(!iscarbon(M))
+/obj/item/restraints/legcuffs/proc/attach(mob/living/carbon/C)
+	if(!iscarbon(C))
 		return FALSE
-	var/mob/living/carbon/C = M
 	if(!(C.get_num_legs(FALSE) >= 2))
 		return FALSE
 	if(C.legcuffed)
@@ -361,8 +362,8 @@
 
 /obj/item/restraints/legcuffs/bola/attach(mob/living/carbon/M)
 	if(..())
-		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Paralyze(knockdown)
+		to_chat(M, "<span class='userdanger'>\The [src] ensnares you!</span>")
+		M.Paralyze(knockdown)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"

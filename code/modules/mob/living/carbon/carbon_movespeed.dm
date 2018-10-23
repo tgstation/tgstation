@@ -6,5 +6,5 @@
 		if(!leg_amount)
 			. += 6 - 3 * get_num_arms()
 		if(legcuffed)
-			. += legcuffed_slowdown
-	add_movespeed_modifier(MOVESPEED_ID_CARBON_LIMB, TRUE, IGNORE_NOSLOW, NONE, TRUE, .)
+			. += legcuffed.slowdown
+	add_movespeed_modifier(MOVESPEED_ID_CARBON_LIMB, TRUE, MOVESPEED_MODIFIER_IGNORE_NOSLOW, NONE, TRUE, .)

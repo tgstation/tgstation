@@ -6,8 +6,8 @@
 */
 
 //ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
-/mob/proc/add_movespeed_modifier(id, update = TRUE, priority = 0, flags = SOME_MAGIC_BULLSHIT, override = FALSE, multiplicative_slowdown = 0, movetypes = ALL)
-	if(flags == SOME_MAGIC_BULLSHIT)
+/mob/proc/add_movespeed_modifier(id, update = TRUE, priority = 0, flags, override = FALSE, multiplicative_slowdown = 0, movetypes = ALL)
+	if(isnull(flags))
 		flags = MOVESPEED_MODIFIER_FLAGS_AUTO(multiplicative_slowdown)
 	var/list/temp = list(priority, flags, multiplicative_slowdown, movetypes)			//build the modification list
 	var/resort = TRUE
