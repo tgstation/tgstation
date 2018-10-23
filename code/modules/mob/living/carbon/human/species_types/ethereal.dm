@@ -86,7 +86,7 @@
 	.=..()
 	handle_charge(H)
 
-/datum/species/ethereal/spec_fullyheal(mob/living/carbon/human/H)
+/datum/species/ethereal/spec_fully_heal(mob/living/carbon/human/H)
 	.=..()
 	set_charge(ETHEREAL_CHARGE_FULL)
 

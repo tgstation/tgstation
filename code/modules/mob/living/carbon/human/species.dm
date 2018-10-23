@@ -1136,7 +1136,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/spec_fullyheal(mob/living/carbon/human/H)
+/datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
 	return
 
 /datum/species/proc/spec_emp_act(mob/living/carbon/human/H, severity)
