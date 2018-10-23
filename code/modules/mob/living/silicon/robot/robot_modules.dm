@@ -520,12 +520,12 @@
 /obj/item/robot_module/proc/synthetize_reagents()
 	..()
 	var/mob/living/silicon/robot/R = loc
-	if(can_synthetize = null) //You know nothing Jon Snow
+	if(can_synthetize == null) //You know nothing Jon Snow
 		to_chat(loc, "<span class='warning'>You need to analyze reagents first.</span>")
 	else
 		var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in basic_modules //For now it is only drinking glass. Could be added to medical maybe?
-		var/what_reagent = input(loc, "Select what to synthetize", "Synthetizer", null) as null|anything in can_synthetize)
-		if (what_reagent = null) //Skips if nothing selected
+		var/what_reagent = input(loc, "Select what to synthetize", "Synthetizer", null) as null|anything in can_synthetize
+		if (what_reagent == null) //Skips if nothing selected
 		else
 			var/trans = O.volume //How much should it synthetize? Max cap of the glass? Ask for input?
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
