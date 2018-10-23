@@ -30,9 +30,9 @@
 					/obj/item/reagent_containers/food/drinks/bottle/hcider = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 					/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
-					/obj/item/reagent_containers/food/drinks/bottle/sake = 5)
-	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12,
-					  /obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
+					/obj/item/reagent_containers/food/drinks/bottle/sake = 5,
+					/obj/item/reagent_containers/food/drinks/bottle/fernet = 5)
+	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12)
 	premium = list(/obj/item/reagent_containers/glass/bottle/ethanol = 4)
 
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"

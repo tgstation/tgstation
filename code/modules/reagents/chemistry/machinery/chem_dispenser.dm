@@ -507,14 +507,14 @@
 		"creme_de_menthe",
 		"creme_de_cacao",
 		"triple_sec",
-		"sake"
+		"sake",
+		"fernet"
 	)
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
 		"minttoxin",
-		"atomicbomb",
-		"fernet"
+		"atomicbomb"
 	)
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged

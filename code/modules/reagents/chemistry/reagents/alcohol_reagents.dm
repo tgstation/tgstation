@@ -1757,9 +1757,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A glass of pure Fernet. Only an absolute madman would drink this alone." //Hi Kevum
 
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/M)
-	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(1*REM, 0)
-	M.nutrition = max(M.nutrition - 5, 0)
 	M.overeatduration = 0
 	return ..()
 
@@ -1776,9 +1773,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A sawed-off cola bottle filled with Fernet Cola. Nothing better after eating like a lardass."
 
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M)
-	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5*REM, 0)
-	M.nutrition = max(M.nutrition - 3, 0)
 	M.overeatduration = 0
 	return ..()
 
@@ -1796,7 +1790,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A glass of Fanciulli. It's just Manhattan with Fernet."
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/carbon/M)
-	M.nutrition = max(M.nutrition - 5, 0)
 	M.overeatduration = 0
 	return ..()
 
