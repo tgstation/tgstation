@@ -36,6 +36,8 @@
 		AA.onNewMob(src)
 	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+	if(initial(movement_type) & FLYING)
+		add_trait(TRAIT_FLIGHT, ROUNDSTART_TRAIT)
 	update_config_movespeed()
 	update_movespeed(TRUE)
 
