@@ -22,22 +22,28 @@
 		gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
-
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return 0
+		if(iscyborg(user))
+			synthetize_reagents() //how the fuck do I call this
+		else
+			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		return FALSE
 
 	if(!canconsume(M, user))
-		return 0
+		return FALSE
 
 	if (!is_drainable())
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
-		return 0
+		return FALSE
 
-	if(M == user)
-		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
-		if(M.has_trait(TRAIT_VORACIOUS))
-			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
+	if(M == user || iscyborg(user)) //Because M doesn't include silicons I guess?
+		if(iscyborg(user))
+			analyze_reagents(reagents.reagent_list) //Analyze everything inside the container
+			reagents.clear_reagents() //Consumes everything
+		else
+			user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
+			if(M.has_trait(TRAIT_VORACIOUS))
+				M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
@@ -53,7 +59,7 @@
 	reagents.reaction(M, INGEST, fraction)
 	reagents.trans_to(M, gulp_size)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-	return 1
+	return TRUE
 
 /obj/item/reagent_containers/food/drinks/afterattack(obj/target, mob/user , proximity)
 	. = ..()
@@ -69,14 +75,8 @@
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
-		var/refill = reagents.get_master_reagent_id()
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
-
-		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
-			var/mob/living/silicon/robot/bro = user
-			bro.cell.use(30)
-			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
 		if (!is_refillable())

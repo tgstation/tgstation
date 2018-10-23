@@ -33,6 +33,9 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
+	/var/list/can_synthetize = list() //When borgs analyze things it list them here. They know nothing.
+	/var/list/whitelisted_reagents = list() //what reagents can borgs synthetize safely without need to emag
+	/var/list/blacklisted_reagents = list() //Add what CANNOT be synthetized, no matter if emaged or not
 
 /obj/item/robot_module/Initialize()
 	. = ..()
@@ -484,12 +487,52 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
+	whitelisted_reagents += "/datum/reagent/consumable/orangejuice" //Add here anything it can synthetize regardless of emag status
+	whitelisted_reagents +=	"/datum/reagent/consumable/tomatojuice"
+		
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/condiment/enzyme) in basic_modules
 	if(O)
 		O.reagents.add_reagent("enzyme", 2 * coeff)
+
+/obj/item/robot_module/proc/analyze_reagents(var/list/reagents_inside)
+	..() //Not sure what this does, or if I even need to do this
+	var/mob/living/silicon/robot/R = loc
+	to_chat(loc, "<span class='notice'>You start analyzing the solution.</span>")
+	var/i = 0
+	for(var/each_reagent in reagents_inside) //If there are multiple reagents
+		i += 10 //So it kinda prevents spam
+		if(each_reagent in can_synthetize) //If you can already synthetize it, no need to analyze again
+			addtimer(to_chat(loc, "<span class='notice'>You already successefully analyzed [each_reagent].</span>"), i)
+		else
+			addtimer(to_chat(loc, "<span class='notice'>Analyzing unknown reagent.</span>"), i)
+			R.cell.use(15) //Consumes energy to analyze. Not sure what happens if the borg do not have enough energy. Will consume energy even if it fails to analyze
+			addtimer(to_chat(loc, "<span class='notice'>You successefully analyzed [each_reagent]!.</span>"), 300 + i) //Add a timer to simulate analyzing
+			if(each_reagent in whitelisted_reagents || R.emmaged) //Only allowed reagents. Can be set by borg type. Except if emmaged.
+				addtimer(can_synthetize += each_reagent, 300) //Add reagent to list of things that can be synthetized
+			else if(each_reagent in blacklisted_reagents)
+				addtimer(to_chat(loc, "<span class='notice'>But it is too complex.</span>"), 300 + i) //It's not like it can know beforehand what it is
+			else
+				addtimer(to_chat(loc, "<span class='notice'>But it is forbidden, so you delete the data.</span>"), 300 + i) //Same as above
+		
+/obj/item/robot_module/proc/synthetize_reagents()
+	..()
+	var/mob/living/silicon/robot/R = loc
+	if(can_synthetize = null) //You know nothing Jon Snow
+		to_chat(loc, "<span class='warning'>You need to analyze reagents first.</span>")
+	else
+		var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in basic_modules //For now it is only drinking glass. Could be added to medical maybe?
+		var/what_reagent = input(loc, "Select what to synthetize", "Synthetizer", null) as null|anything in can_synthetize)
+		if (what_reagent = null) //Skips if nothing selected
+		else
+			var/trans = O.volume //How much should it synthetize? Max cap of the glass? Ask for input?
+			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
+			to_chat(loc, "<span class='notice'>You start synthetizing [what_reagent].</span>")
+			addtimer(O.add_reagent, what_reagent, trans), 600)
+			addtimer(to_chat(loc, "<span class='notice'>You synthetized [what_reagent]!</span>",600)
+					
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
