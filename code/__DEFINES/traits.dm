@@ -11,7 +11,7 @@
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
-#define TRAIT_IGNORESLOWDOWN	"ignoreslow"
+#define TRAIT_IGNORESLOWDOWN	"ignoreslow"			//Nullifies movespeed modifiers that don't specifically allow it.
 #define TRAIT_GOTTAGOFAST		"fast"
 #define TRAIT_GOTTAGOREALLYFAST	"2fast"
 #define TRAIT_DEATHCOMA			"deathcoma" //Causes death-like unconsciousness

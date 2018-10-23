@@ -6,7 +6,9 @@
 */
 
 //ANY ADD/REMOVE DONE IN UPDATE_MOVESPEED MUST HAVE THE UPDATE ARGUMENT SET AS FALSE!
-/mob/proc/add_movespeed_modifier(id, update = TRUE, priority = 0, flags = NONE, override = FALSE, multiplicative_slowdown = 0, movetypes = ALL)
+/mob/proc/add_movespeed_modifier(id, update = TRUE, priority = 0, flags = SOME_MAGIC_BULLSHIT, override = FALSE, multiplicative_slowdown = 0, movetypes = ALL)
+	if(flags == SOME_MAGIC_BULLSHIT)
+		flags = MOVESPEED_MODIFIER_FLAGS_AUTO(multiplicative_slowdown)
 	var/list/temp = list(priority, flags, multiplicative_slowdown, movetypes)			//build the modification list
 	var/resort = TRUE
 	if(LAZYACCESS(movespeed_modification, id))
@@ -65,7 +67,29 @@
 	cached_multiplicative_slowdown = .
 
 /mob/proc/get_movespeed_modifiers()
-	return movespeed_modification
+	var/list/considering = movespeed_modification
+	. = considering
+	var/noslow = has_trait(TRAIT_IGNORESLOWDOWN)
+	var/gravity = has_gravity(get_turf(src))
+	var/flight = (movement_flags & FLYING)
+
+	for(var/id in .)
+		var/list/data = .[id]
+		if(noslow)
+			if(!(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_IGNORE_NOSLOW))
+				. -= id
+		if(gravity)
+			if(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_NO_GRAVITY)
+				. -= id
+		else
+			if(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_REQUIRES_GRAVITY)
+				. -= id
+		if(flight)
+			if(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_NO_FLIGHT)
+				. -= id
+		else
+			if(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_REQUIRES_FLIGHT)
+				. -= id
 
 /mob/proc/movespeed_modifier_identical_check(list/mod1, list/mod2)
 	if(!islist(mod1) || !islist(mod2) || mod1.len < MOVESPEED_DATA_INDEX_MAX || mod2.len < MOVESPEED_DATA_INDEX_MAX)

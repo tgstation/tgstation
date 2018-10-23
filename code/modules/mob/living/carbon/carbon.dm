@@ -349,17 +349,22 @@
 		changeNext_move(0)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
-		legcuffed = null
-		update_inv_legcuffed()
-		if (client)
-			client.screen -= W
-		if (W)
-			W.forceMove(drop_location())
-			W.dropped(src)
+		if(istype(W, /obj/item/legcuffs))
+			var/obj/item/legcuffs/L = W
+			if(!L.detach(src))
+				return
+		else
+			legcuffed = null
+			update_inv_legcuffed()
+			if (client)
+				client.screen -= W
 			if (W)
-				W.layer = initial(W.layer)
-				W.plane = initial(W.plane)
-		changeNext_move(0)
+				W.forceMove(drop_location())
+				W.dropped(src)
+				if (W)
+					W.layer = initial(W.layer)
+					W.plane = initial(W.plane)
+			changeNext_move(0)
 
 /mob/living/carbon/proc/clear_cuffs(obj/item/I, cuff_break)
 	if(!I.loc || buckled)
@@ -382,11 +387,16 @@
 			update_handcuffed()
 			return
 		if(I == legcuffed)
-			legcuffed.forceMove(drop_location())
-			legcuffed.dropped()
-			legcuffed = null
-			update_inv_legcuffed()
-			return
+			if(istype(I, /obj/item/legcuffs))
+				var/obj/item/legcuffs/L = I
+				if(!L.detach(src))
+					return FALSE
+			else
+				legcuffed.forceMove(drop_location())
+				legcuffed.dropped()
+				legcuffed = null
+				update_inv_legcuffed()
+				return
 		else
 			dropItemToGround(I)
 			return

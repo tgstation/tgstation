@@ -124,6 +124,7 @@
 	C.update_body()
 	C.update_hair()
 	C.update_mobility()
+	C.update_limb_movespeed()
 
 	if(!Tsec)	// Tsec = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
 		qdel(src)

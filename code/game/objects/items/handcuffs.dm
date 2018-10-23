@@ -236,6 +236,32 @@
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
+/obj/item/restraints/legcuffs/proc/detach(mob/M, atom/newloc)
+	if(M.legcuffed == src)
+		M.legcuffed = null
+	if(M.client)
+		M.client.screen -= src
+	layer = initial(layer)
+	plane = initial(plane)
+	forceMove(newLoc || get_turf(src))
+	dropped(M)
+	changeNext_move(0)
+	return TRUE
+
+/obj/item/restraints/legcuffs/proc/attach(mob/M)
+	if(!iscarbon(M))
+		return FALSE
+	var/mob/living/carbon/C = M
+	if(!(C.get_num_legs(FALSE) >= 2))
+		return FALSE
+	if(C.legcuffed)
+		return FALSE
+	C.legcuffed = src
+	forceMove(C)
+	C.update_limb_movespeed()
+	C.update_inv_legcuffed()
+	return TRUE
+
 /obj/item/restraints/legcuffs/beartrap
 	name = "bear trap"
 	throw_speed = 1
@@ -272,10 +298,7 @@
 				snap = 1
 				if(C.mobility_flags & MOBILITY_STAND)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
-						C.legcuffed = src
-						forceMove(C)
-						C.update_inv_legcuffed()
+					if(attach(C))
 						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 			else if(isanimal(L))
 				var/mob/living/simple_animal/SA = L
@@ -333,12 +356,11 @@
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
-	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
-		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
-		C.legcuffed = src
-		forceMove(C)
-		C.update_inv_legcuffed()
+	if(attach(C))
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+
+/obj/item/restraints/legcuffs/bola/attach(mob/living/carbon/M)
+	if(..())
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Paralyze(knockdown)
 
