@@ -530,7 +530,7 @@
 			var/trans = O.volume //How much should it synthetize? Max cap of the glass? Ask for input?
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
 			to_chat(loc, "<span class='notice'>You start synthetizing [what_reagent].</span>")
-			addtimer(O.add_reagent, what_reagent, trans), 600)
+			addtimer(O.add_reagent(what_reagent, trans), 600)
 			addtimer(to_chat(loc, "<span class='notice'>You synthetized [what_reagent]!</span>",600)
 					
 
