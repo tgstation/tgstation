@@ -23,6 +23,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_price = 15
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -94,6 +95,7 @@
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
 	item_color = "white"
 	dog_fashion = /datum/dog_fashion/head
+	custom_price = 10
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
@@ -169,23 +171,30 @@
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
 	item_color = "stripedredscarf"
+	custom_price = 10
 
 /obj/item/clothing/neck/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
 	item_color = "stripedgreenscarf"
+	custom_price = 10
 
 /obj/item/clothing/neck/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
+	custom_price = 10
 
-/obj/item/clothing/neck/petcollar //don't really wear this though please c'mon seriously guys
+/obj/item/clothing/neck/petcollar
 	name = "pet collar"
-	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
+	desc = "It's for pets."
 	icon_state = "petcollar"
 	item_color = "petcollar"
 	var/tagname = null
+
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+	if(ishuman(M))
+		return FALSE
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)

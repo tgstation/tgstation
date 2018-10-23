@@ -35,6 +35,9 @@
 	var/grab_state = 0
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
+	var/can_be_z_moved = TRUE
+
+  
 	var/zfalling = FALSE
 
 /atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
@@ -467,6 +470,9 @@
 	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
+
+/atom/movable/proc/setMovetype(newval)
+	movement_type = newval
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below

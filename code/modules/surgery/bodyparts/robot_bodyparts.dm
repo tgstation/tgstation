@@ -147,7 +147,7 @@
 	return ..()
 
 
-/obj/item/bodypart/chest/robot/drop_organs(mob/user)
+/obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
 	if(wired)
 		new /obj/item/stack/cable_coil(user.loc, 1)
 	if(cell)
@@ -224,7 +224,7 @@
 	return ..()
 
 
-/obj/item/bodypart/head/robot/drop_organs(mob/user)
+/obj/item/bodypart/head/robot/drop_organs(mob/user, violent_removal)
 	if(flash1)
 		flash1.forceMove(user.loc)
 		flash1 = null

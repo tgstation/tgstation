@@ -304,6 +304,8 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
+	else if(materials[MAT_METAL])
+		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
 

@@ -28,13 +28,30 @@
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/corgi = 3, /obj/item/stack/sheet/animalhide/corgi = 1)
 	childtype = list(/mob/living/simple_animal/pet/dog/corgi/puppy = 95, /mob/living/simple_animal/pet/dog/corgi/puppy/void = 5)
 	animal_species = /mob/living/simple_animal/pet/dog
-	var/shaved = 0
-	var/obj/item/inventory_head
-	var/obj/item/inventory_back
-	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = FRIENDLY_SPAWN
 	can_be_held = TRUE
 	collar_type = "corgi"
+	var/obj/item/inventory_head
+	var/obj/item/inventory_back
+	var/shaved = FALSE
+	var/nofur = FALSE 		//Corgis that have risen past the material plane of existence.
+
+/mob/living/simple_animal/pet/dog/corgi/Destroy()
+	QDEL_NULL(inventory_head)
+	QDEL_NULL(inventory_back)
+	return ..()
+
+/mob/living/simple_animal/pet/dog/corgi/handle_atom_del(atom/A)
+	if(A == inventory_head)
+		inventory_head = null
+		update_corgi_fluff()
+		regenerate_icons()
+	if(A == inventory_back)
+		inventory_back = null
+		update_corgi_fluff()
+		regenerate_icons()
+	return ..()
+
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -80,9 +97,10 @@
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/dog/corgi/show_inv(mob/user)
-	user.set_machine(src)
-	if(user.stat)
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
+	user.set_machine(src)
+
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
 	if(inventory_head)
@@ -93,6 +111,10 @@
 		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=[REF(src)];remove_inv=back'>Remove</a>)"
 	else
 		dat +=	"<br><b>Back:</b> <a href='?src=[REF(src)];add_inv=back'>Nothing</a>"
+	if(pcollar)
+		dat += "<br><b>Collar:</b> [pcollar] (<a href='?src=[REF(src)];remove_inv=collar'>Remove</a>)"
+	else
+		dat += "<br><b>Collar:</b> <a href='?src=[REF(src)];add_inv=collar'>Nothing</a>"
 
 	user << browse(dat, text("window=mob[];size=325x500", real_name))
 	onclose(user, "mob[real_name]")
@@ -128,7 +150,7 @@
 		if(do_after(user, 50, target = src))
 			user.visible_message("[user] shaves [src]'s hair using \the [O].")
 			playsound(loc, 'sound/items/welder2.ogg', 20, 1)
-			shaved = 1
+			shaved = TRUE
 			icon_living = "[initial(icon_living)]_shaved"
 			icon_dead = "[initial(icon_living)]_shaved_dead"
 			if(stat == CONSCIOUS)
@@ -147,18 +169,18 @@
 		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
-	if(usr.stat)
+	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		usr << browse(null, "window=mob[]")
+		usr.unset_machine()
 		return
 
 	//Removing from inventory
 	if(href_list["remove_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
-			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
 			if(BODY_ZONE_HEAD)
 				if(inventory_head)
-					inventory_head.forceMove(drop_location())
+					usr.put_in_hands(inventory_head)
 					inventory_head = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -167,24 +189,31 @@
 					return
 			if("back")
 				if(inventory_back)
-					inventory_back.forceMove(drop_location())
+					usr.put_in_hands(inventory_back)
 					inventory_back = null
 					update_corgi_fluff()
 					regenerate_icons()
 				else
 					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
 					return
+			if("collar")
+				if(pcollar)
+					usr.put_in_hands(pcollar)
+					pcollar = null
+					update_corgi_fluff()
+					regenerate_icons()
 
 		show_inv(usr)
 
 	//Adding things to inventory
 	else if(href_list["add_inv"])
-		if(!Adjacent(usr) || !(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr)))
-			return
-
 		var/add_to = href_list["add_inv"]
 
 		switch(add_to)
+			if("collar")
+				add_collar(usr.get_active_held_item(), usr)
+				update_corgi_fluff()
+
 			if(BODY_ZONE_HEAD)
 				place_on_head(usr.get_active_held_item(),usr)
 
@@ -560,7 +589,7 @@
 	icon_state = "void_puppy"
 	icon_living = "void_puppy"
 	icon_dead = "void_puppy_dead"
-	nofur = 1
+	nofur = TRUE
 	unsuitable_atmos_damage = 0
 	minbodytemp = TCMB
 	maxbodytemp = T0C + 40

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug that would result in sechuds not showing a user's assignment as unknown if they have no ID."

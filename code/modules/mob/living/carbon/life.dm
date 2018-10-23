@@ -262,12 +262,12 @@
 					vomit()
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-				
+
 
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
-			
+
 
 
 
@@ -315,7 +315,7 @@
 		return
 
 	var/deceasedturf = get_turf(src)
-	
+
 	// Closed turfs don't have any air in them, so no gas building up
 	if(!istype(deceasedturf,/turf/open))
 		return
@@ -649,7 +649,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		death()
 		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
-			B.damaged_brain = TRUE
+			B.brain_death = TRUE
 
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//
