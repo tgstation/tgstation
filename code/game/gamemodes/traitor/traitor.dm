@@ -8,6 +8,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
+	report_type = "traitor"
 	antag_flag = ROLE_TRAITOR
 	false_report_weight = 20 //Reports of traitors are pretty common.
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances

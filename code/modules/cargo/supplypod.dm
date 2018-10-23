@@ -24,6 +24,7 @@
 	var/damage = 0 //Damage that occurs to any mob under the pod when it lands.
 	var/effectStun = FALSE //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	var/effectLimb = FALSE //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
+	var/effectOrgans = FALSE //If true, yeets out every limb and organ from anyone caught under the pod when it lands
 	var/effectGib = FALSE //If true, anyone under the pod will be gibbed when it lands
 	var/effectStealth = FALSE //If true, a target icon isnt displayed on the turf where the pod will land
 	var/effectQuiet = FALSE //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
@@ -86,6 +87,9 @@
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
 
+/obj/structure/closet/supplypod/prevent_content_explosion() //Useful for preventing epicenter explosions from damaging contents
+	return TRUE
+
 /obj/structure/closet/supplypod/toggle(mob/living/user) //Supplypods shouldn't be able to be manually opened under any circumstances, as the open() proc generates supply order datums
 	return
 
@@ -98,16 +102,32 @@
 		if (effectLimb && iscarbon(M)) //If effectLimb is true (which means we pop limbs off when we hit people):
 			var/mob/living/carbon/CM = M
 			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
-				if(bodypart.body_part != HEAD && bodypart.body_zone != CHEST)//we dont want to kill him, just teach em a lesson!
+				if(bodypart.body_part != HEAD && bodypart.body_part != CHEST)//we dont want to kill him, just teach em a lesson!
 					if (bodypart.dismemberable)
 						bodypart.dismember() //Using the power of flextape i've sawed this man's limb in half!
 						break
+		if (effectOrgans && iscarbon(M)) //effectOrgans means remove every organ in our mob
+			var/mob/living/carbon/CM = M
+			for(var/X in CM.internal_organs)
+				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs)) //Pick a random direction to toss them in
+				var/obj/item/organ/O = X
+				O.Remove(CM) //Note that this isn't the same proc as for lists
+				O.forceMove(T) //Move the organ outta the body
+				O.throw_at(destination, 2, 3) //Thow the organ at a random tile 3 spots away
+				sleep(1)
+			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
+				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs))
+				if (bodypart.dismemberable)
+					bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!	
+					bodypart.throw_at(destination, 2, 3)
+					sleep(1)		
+
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
 			M.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
 			M.gib() //After adjusting the fuck outta that brute loss we finish the job with some satisfying gibs
 		M.adjustBruteLoss(damage)
 
-	if (B[1] || B[2] || B[3] || B[4]) //If the explosion list isn't all zeroes, call an explosion
+	if (counterlist_sum(explosionSize) != 0) //If the explosion list isn't all zeroes, call an explosion
 		explosion(get_turf(src), B[1], B[2], B[3], flame_range = B[4], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod)) //less advanced equipment than bluespace pod, so larger explosion when landing
 	else if (!effectQuiet) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, "explosion", landingSound ? 15 : 80, 1)

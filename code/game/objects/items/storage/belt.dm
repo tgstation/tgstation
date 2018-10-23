@@ -27,12 +27,18 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/belt/examine(mob/user)
+	..()
+	clothing_resistance_flag_examine_message(user)
+
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_price = 50
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -555,6 +561,7 @@
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
 	item_color = "fannypackleather"
+	custom_price = 15
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

@@ -126,7 +126,7 @@
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))
-		location.hotspot_expose(1000,100,1)
+		location.hotspot_expose(1000,2500,1)
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)

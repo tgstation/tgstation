@@ -331,6 +331,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "orange juice"
 	desc = "Full of vitamins and deliciousness!"
+	custom_price = 10
 	icon_state = "orangejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -342,6 +343,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
+	custom_price = 10
 	icon_state = "cream"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -353,6 +355,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
+	custom_price = 10
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -364,6 +367,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
 	desc = "Sweet-sour goodness."
+	custom_price = 10
 	icon_state = "limejuice"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -375,6 +379,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
 	desc = "Tastes naturally minty, and imparts a very mild numbing sensation."
+	custom_price = 10
 	icon_state = "mentholbox"
 	item_state = "carton"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
@@ -385,6 +390,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/grenadine
 	name = "Jester Grenadine"
 	desc = "Contains 0% real cherries!"
+	custom_price = 10
 	icon_state = "grenadine"
 	isGlass = TRUE
 	list_reagents = list("grenadine" = 100)

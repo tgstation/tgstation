@@ -203,9 +203,9 @@
 	return FALSE					//nonliving mobs don't have hands
 
 /mob/living/put_in_hand_check(obj/item/I)
-	if(!(mobility_flags & MOBILITY_PICKUP) || !istype(I))
-		return FALSE
-	return TRUE
+	if(istype(I) && ((mobility_flags & MOBILITY_PICKUP) || (I.item_flags & ABSTRACT)))
+		return TRUE
+	return FALSE
 
 //Puts the item into our active hand if possible. returns TRUE on success.
 /mob/proc/put_in_active_hand(obj/item/I, forced = FALSE, ignore_animation = TRUE)

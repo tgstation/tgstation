@@ -787,6 +787,7 @@
 		L.damage = 0
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
+		B.brain_death = FALSE
 		B.damaged_brain = FALSE
 	for(var/thing in diseases)
 		var/datum/disease/D = thing

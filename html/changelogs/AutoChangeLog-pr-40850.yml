@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - spellcheck: "Sleepers now show a message if players try to unscrew the maintenance hatch while they're occupied or open. Fixed typos in sleeper/organ harvester messages."
+  - tweak: "Sleepers can now be pried open with crowbars."
+  - tweak: "You can open and close sleepers by alt-clicking them."

@@ -427,13 +427,7 @@
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list("mannitol", "oculine", "inacusiate",
-		"mutadone", "haloperidol")
-
-/obj/item/borg/upgrade/hypospray/high_strength
-	name = "medical cyborg high-strength hypospray"
-	desc = "An upgrade to the Medical module's hypospray, containing \
-		stronger versions of existing chemicals."
-	additional_reagents = list("oxandrolone", "sal_acid", "rezadone",
+		"mutadone", "haloperidol", "oxandrolone", "sal_acid", "rezadone",
 		"pen_acid")
 
 /obj/item/borg/upgrade/piercing_hypospray

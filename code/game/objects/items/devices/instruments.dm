@@ -272,14 +272,15 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	item_state = "radio"
-	var/static/list/display_names = list()
+	var/static/list/display_names
 
 /obj/item/musicbeacon/attack_self(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		beacon_music(user)
 
-/obj/item/musicbeacon/proc/beacon_music(mob/M)
+/obj/item/musicbeacon/proc/beacon_music(mob/living/M)
 	if(!display_names)
+		display_names = list()
 		var/static/list/instruments = list(
 								/obj/item/instrument/violin,
 								/obj/item/instrument/piano_synth,
@@ -299,5 +300,17 @@
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/instrument = new display_names[choice]
-	M.put_in_hands(instrument)
+	choice = display_names[choice]
+	var/obj/instrument = new choice
+	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	pod.explosionSize = list(0,0,0,2)
+	instrument.forceMove(pod)
+	var/msg = "<span class = danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.ears, /obj/item/radio/headset))
+			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Instrument request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
+	to_chat(M, msg)
+
+	new /obj/effect/DPtarget(get_turf(src), pod)
+	qdel(src)

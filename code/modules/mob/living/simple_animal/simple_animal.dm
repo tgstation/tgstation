@@ -349,7 +349,7 @@
 	return TRUE
 
 /mob/living/simple_animal/handle_fire()
-	return
+	return TRUE
 
 /mob/living/simple_animal/IgniteMob()
 	return FALSE
@@ -365,7 +365,7 @@
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
 		update_mobility()
 		. = 1
-		movement_type = initial(movement_type)
+		setMovetype(initial(movement_type))
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
 	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
