@@ -36,6 +36,11 @@
 	icon_state = "oxygen_fr"
 	dog_fashion = null
 
+/obj/item/tank/internals/oxygen/empty/New()
+	..()
+	air_contents.assert_gas(/datum/gas/oxygen)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
+	return
 
 /*
  * Anesthetic
@@ -109,6 +114,10 @@
 	air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 
+/obj/item/tank/internals/plasma/empty/New()
+	..()
+	air_contents.gases[/datum/gas/plasma][MOLES] = 0
+	return
 
 /*
  * Plasmaman Plasma Tank
