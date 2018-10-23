@@ -264,7 +264,7 @@
 	return
 
 /mob/proc/update_gravity()
-	return
+	update_movespeed()
 
 //bodypart selection - Cyberboss
 //8 toggles through head - eyes - mouth
