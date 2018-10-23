@@ -33,9 +33,9 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
-	/var/list/can_synthetize = list() //When borgs analyze things it list them here. They know nothing.
-	/var/list/whitelisted_reagents = list() //what reagents can borgs synthetize safely without need to emag
-	/var/list/blacklisted_reagents = list() //Add what CANNOT be synthetized, no matter if emaged or not
+	var/list/can_synthetize = list() //When borgs analyze things it list them here. They know nothing.
+	var/list/whitelisted_reagents = list() //what reagents can borgs synthetize safely without need to emag
+	var/list/blacklisted_reagents = list() //Add what CANNOT be synthetized, no matter if emaged or not
 
 /obj/item/robot_module/Initialize()
 	. = ..()
@@ -487,8 +487,8 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
-	whitelisted_reagents += /datum/reagent/consumable/orangejuice //Add here anything it can synthetize regardless of emag status
-	whitelisted_reagents +=	/datum/reagent/consumable/tomatojuice
+	whitelisted_reagents += "orangejuice" //Add here anything it can synthetize regardless of emag status
+	whitelisted_reagents +=	"tomatojuice"
 		
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
