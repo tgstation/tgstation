@@ -531,8 +531,7 @@
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
 			to_chat(loc, "<span class='notice'>You start synthetizing [what_reagent].</span>")
 			addtimer(O.add_reagent(what_reagent, trans), 600)
-			addtimer(to_chat(loc, "<span class='notice'>You synthetized [what_reagent]!</span>",600)
-					
+			addtimer(to_chat(loc, "<span class='notice'>You synthetized [what_reagent]!</span>"),600)
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
