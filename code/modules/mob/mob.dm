@@ -920,3 +920,23 @@
 /mob/setMovetype(newval)
 	. = ..()
 	update_movespeed(FALSE)
+
+/mob/add_trait(id)
+	. = ..()
+	if(.)
+		update_movespeed()
+		if(id == TRAIT_FLIGHT)
+			update_movement_type()
+
+/mob/remove_trait(id)
+	. = ..()
+	if(.)
+		update_movespeed()
+		if(id == TRAIT_FLIGHT)
+			update_movement_type()
+
+/mob/proc/update_movement_type()
+	var/newtype = GROUND
+	if(has_trait(TRAIT_FLIGHT))
+		newtype |= FLYING
+	setMovetype(newtype)

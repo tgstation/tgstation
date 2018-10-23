@@ -131,14 +131,14 @@
 	if(flight && CanFly(H))
 		stunmod = 2
 		speedmod = -0.35
-		H.setMovetype(H.movement_type | FLYING)
+		H.add_trait(TRAIT_FLIGHT, ORGAN_TRAIT)
 		override_float = TRUE
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
-		H.setMovetype(H.movement_type & ~FLYING)
+		H.remove_trait(TRAIT_FLIGHT, ORGAN_TRAIT)
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
