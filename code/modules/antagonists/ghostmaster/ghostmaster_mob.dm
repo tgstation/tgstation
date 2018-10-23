@@ -14,8 +14,8 @@
 	call_life = TRUE
 	hud_type = /datum/hud/ghostmaster
 	faction = list("spook")
-	var/spook_points = 0 //Placing traps, casting spells 
-	var/death_points = 0 //Summoning haunts
+	var/spook_points = 5 //Placing traps, casting spells 
+	var/death_points = 1 //Summoning haunts
 	var/list/haunts = list()
 	var/free_point_rate = 300
 	var/free_point_cap = 10
@@ -30,6 +30,7 @@
 	name = new_name
 	real_name = new_name
 	generate_cost_table()
+	RegisterSignal(src,COMSIG_EXORCISM_SUCCESS, .proc/bye)
 	RegisterSignal(SSdcs,COMSIG_GLOB_MOB_DEATH, .proc/check_death)
 	next_free_point = world.time + free_point_rate
 	generate_corpse()
@@ -38,6 +39,10 @@
 /mob/camera/ghostmaster/proc/check_death(mob/M,gibbed)
 	if(M.mind && !istype(M,/mob/living/simple_animal/hostile/haunt))
 		death_points++
+
+/mob/camera/ghostmaster/proc/bye()
+	to_chat(src,"<span class='userdanger'>You can feel your attachement to the world disappear. Someone has purified your remains.</span>")
+	qdel(src)
 
 /mob/camera/ghostmaster/proc/generate_corpse()
 	var/obj/effect/decal/remains/human/haunted/H = new(get_random_station_turf()) //That proc is nightmarish but eh
@@ -76,7 +81,7 @@
 		active_power.Execute(src,A)
 
 /mob/camera/ghostmaster/Destroy()
-	//Kill all haunts
+	//Kill all haunts?
 	return ..()
 
 /mob/camera/ghostmaster/Login()
