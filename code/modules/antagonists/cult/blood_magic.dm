@@ -639,6 +639,9 @@
 	name = "Ritual Aura"
 	desc = "A spell that will absorb blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Clicking the hand will potentially let you focus the spell into something stronger.</b>"
 	color = "#7D1717"
+	var/spear_cost = 50
+	var/bolt_cost = 250
+	var/beam_cost = 500
 
 /obj/item/melee/blood_magic/manipulator/afterattack(atom/target, mob/living/carbon/human/user, proximity)
 	if(proximity)
@@ -721,6 +724,13 @@
 				user.Beam(M,icon_state="sendbeam",time=10)
 		if(istype(target, /obj/effect/decal/cleanable/blood))
 			blood_draw(target, user)
+		if(istype(target, /obj/item/elder_blood))
+			user.Beam(target,icon_state="drainbeam",time=10)
+			new /obj/effect/temp_visual/cult/sparks(get_turf(target))
+			playsound(get_turf(user), 'sound/magic/enter_blood.ogg', 50)
+			to_chat(user,"<span class='cult'>Your blood rite gains 500 charges from draining the elder blood!</span>")
+			uses += 500
+			qdel(target)
 		..()
 
 /obj/item/melee/blood_magic/manipulator/proc/blood_draw(atom/target, mob/living/carbon/human/user)
@@ -750,17 +760,17 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear (100)", "Blood Bolt Barrage (250)", "Blood Beam (500)")
+		var/list/options = list("Blood Spear (50)", "Blood Bolt Barrage (250)", "Blood Beam (500)")
 		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
 			return
 		switch(choice)
-			if("Blood Spear (100)")
-				if(uses < 100)
-					to_chat(user, "<span class='cultitalic'>You need 200 charges to perform this rite.</span>")
+			if("Blood Spear (50)")
+				if(uses < spear_cost)
+					to_chat(user, "<span class='cultitalic'>You need [spear_cost] charges to perform this rite.</span>")
 				else
-					uses -= 150
+					uses -= spear_cost
 					var/turf/T = get_turf(user)
 					qdel(src)
 					var/datum/action/innate/cult/spear/S = new(user)
@@ -773,11 +783,11 @@
 						user.visible_message("<span class='warning'>A [rite.name] appears at [user]'s feet!</span>", \
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
 			if("Blood Bolt Barrage (250)")
-				if(uses < 250)
-					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
+				if(uses < bolt_cost)
+					to_chat(user, "<span class='cultitalic'>You need [bolt_cost] charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
-					uses -= 300
+					uses -= bolt_cost
 					qdel(src)
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cult'><b>Your hands glow with power!</b></span>")
@@ -785,11 +795,11 @@
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
 			if("Blood Beam (500)")
-				if(uses < 500)
-					to_chat(user, "<span class='cultitalic'>You need 600 charges to perform this rite.</span>")
+				if(uses < beam_cost)
+					to_chat(user, "<span class='cultitalic'>You need [beam_cost] charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
-					uses -= 500
+					uses -= beam_cost
 					qdel(src)
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cultlarge'><b>Your hands glow with POWER OVERWHELMING!!!</b></span>")

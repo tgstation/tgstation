@@ -6,6 +6,8 @@
 	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
 	debris = list(/obj/item/stack/sheet/runed_metal = 1)
 	var/cooldowntime = 0
+	var/relic_cost = 10
+	var/relic
 
 /obj/structure/destructible/cult/proc/conceal() //for spells that hide cult presence
 	density = FALSE
@@ -27,6 +29,9 @@
 	update_light()
 	START_PROCESSING(SSfastprocess, src)
 
+/obj/structure/destructible/cult/proc/recharge()
+	if(anchored)
+		icon_state = "[initial(icon_state)]"
 
 /obj/structure/destructible/cult/examine(mob/user)
 	..()
@@ -59,10 +64,21 @@
 		anchored = !anchored
 		density = !density
 		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
+		playsound(get_turf(src), 'sound/effects/stonedoor_openclose.ogg', 25, 1)
 		if(!anchored)
 			icon_state = "[initial(icon_state)]_off"
-		else
+		else if(cooldowntime < world.time)
 			icon_state = initial(icon_state)
+	else if(istype(I, /obj/item/stack/sheet/runed_metal) && relic && iscultist(user))
+		var/obj/item/stack/sheet/runed_metal/R = I
+		if(R.use(relic_cost))
+			var/turf/T = get_turf(src)
+			playsound(T, 'sound/magic/clockwork/fellowship_armory.ogg', 50, 1)
+			new /obj/effect/temp_visual/small_smoke(T)
+			new /obj/effect/temp_visual/cult/sparks(T)
+			new relic(T)
+		else
+			to_chat(user, "<span class='cultitalic'>You need [relic_cost] runed metal to create a Nar'sien relic!</span>")
 	else
 		return ..()
 
@@ -79,6 +95,7 @@
 	desc = "A bloodstained altar dedicated to Nar'Sie."
 	icon_state = "talismanaltar"
 	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
+	relic = /obj/item/elder_blood
 
 /obj/structure/destructible/cult/talisman/attack_hand(mob/living/user)
 	. = ..()
@@ -104,6 +121,9 @@
 			pickedtype += /obj/item/reagent_containers/glass/beaker/unholywater
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
+		icon_state = "[initial(icon_state)]_off"
+		addtimer(CALLBACK(src, .proc/recharge), 2400)
+		playsound(src, 'sound/magic/teleport_app.ogg', 50, 1)
 		for(var/N in pickedtype)
 			new N(get_turf(src))
 			to_chat(user, "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with the [choice]!</span>")
@@ -115,6 +135,7 @@
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
 	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
+	relic = /obj/item/twohanded/required/cult_bastard
 
 /obj/structure/destructible/cult/forge/attack_hand(mob/living/user)
 	. = ..()
@@ -144,11 +165,53 @@
 			pickedtype += /obj/item/shield/mirror
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
+		icon_state = "[initial(icon_state)]_off"
+		addtimer(CALLBACK(src, .proc/recharge), 2400)
+		playsound(src, 'sound/magic/teleport_app.ogg', 50, 1)
 		for(var/N in pickedtype)
 			new N(get_turf(src))
 			to_chat(user, "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating the [choice]!</span>")
 
+/obj/structure/destructible/cult/tome
+	name = "archives"
+	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
+	icon_state = "tomealtar"
+	light_range = 1.5
+	light_color = LIGHT_COLOR_FIRE
+	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
+	relic = /obj/item/clothing/glasses/hud/health/night/cultblind/relic
 
+/obj/structure/destructible/cult/tome/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	if(!iscultist(user))
+		to_chat(user, "<span class='warning'>These books won't open and it hurts to even try and read the covers.</span>")
+		return
+	if(!anchored)
+		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
+		return
+	if(cooldowntime > world.time)
+		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		return
+	var/choice = alert(user,"You flip through the black pages of the archives...",,"Zealot's Blindfold","Shuttle Curse","Veil Walker Set")
+	var/list/pickedtype = list()
+	switch(choice)
+		if("Zealot's Blindfold")
+			pickedtype += /obj/item/clothing/glasses/hud/health/night/cultblind
+		if("Shuttle Curse")
+			pickedtype += /obj/item/shuttle_curse
+		if("Veil Walker Set")
+			pickedtype += /obj/item/cult_shift
+			pickedtype += /obj/item/flashlight/flare/culttorch
+	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
+		cooldowntime = world.time + 2400
+		icon_state = "[initial(icon_state)]_off"
+		addtimer(CALLBACK(src, .proc/recharge), 2400)
+		playsound(src, 'sound/magic/teleport_app.ogg', 50, 1)
+		for(var/N in pickedtype)
+			new N(get_turf(src))
+			to_chat(user, "<span class='cultitalic'>You summon the [choice] from the archives!</span>")
 
 /obj/structure/destructible/cult/pylon
 	name = "pylon"
@@ -225,43 +288,6 @@
 				// Are we in space or something? No cult turfs or
 				// convertable turfs?
 				last_corrupt = world.time + corrupt_delay*2
-
-/obj/structure/destructible/cult/tome
-	name = "archives"
-	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
-	icon_state = "tomealtar"
-	light_range = 1.5
-	light_color = LIGHT_COLOR_FIRE
-	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
-
-/obj/structure/destructible/cult/tome/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>These books won't open and it hurts to even try and read the covers.</span>")
-		return
-	if(!anchored)
-		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with your dagger first.</span>")
-		return
-	if(cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
-		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Zealot's Blindfold","Shuttle Curse","Veil Walker Set")
-	var/list/pickedtype = list()
-	switch(choice)
-		if("Zealot's Blindfold")
-			pickedtype += /obj/item/clothing/glasses/hud/health/night/cultblind
-		if("Shuttle Curse")
-			pickedtype += /obj/item/shuttle_curse
-		if("Veil Walker Set")
-			pickedtype += /obj/item/cult_shift
-			pickedtype += /obj/item/flashlight/flare/culttorch
-	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
-		cooldowntime = world.time + 2400
-		for(var/N in pickedtype)
-			new N(get_turf(src))
-			to_chat(user, "<span class='cultitalic'>You summon the [choice] from the archives!</span>")
 
 /obj/effect/gateway
 	name = "gateway"

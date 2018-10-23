@@ -456,11 +456,16 @@
 			user.dropItemToGround(src, TRUE)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
-	desc = "may Nar'Sie guide you through the darkness and shield you from the light."
+	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
-	item_state = "blindfold"
 	flash_protect = 1
+
+/obj/item/clothing/glasses/hud/health/night/cultblind/relic
+	name = "master's gaze"
+	desc = "May Nar'Sie reveal all truths unto you."
+	icon_state = "cultblind"
+	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
 	..()
@@ -478,6 +483,12 @@
 	icon_state = "holyflask"
 	color = "#333333"
 	list_reagents = list("unholywater" = 50)
+
+/obj/item/elder_blood
+	name = "decanter of elder blood"
+	desc = "The blood has completely congealed, this could only be useful to someone versed in <b>Nar'Sien blood rites</b>."
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "narsour"
 
 /obj/item/shuttle_curse
 	name = "cursed orb"

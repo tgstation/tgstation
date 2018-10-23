@@ -118,7 +118,8 @@
 		var/latejoin_limit = round(alive * 0.05) - latejoiners - latejoin_slots
 		if(latejoin_limit > 0)
 			latejoin_slots++
-	addtimer(CALLBACK(src, .proc/latejoin_check), 3000)
+	if(world.time < 24000) //Mechanic stops working past the 40 minute mark, not intended to help late-game cult
+		addtimer(CALLBACK(src, .proc/latejoin_check), 3000)
 
 /datum/game_mode/cult/make_antag_chance(mob/living/carbon/human/character) //Assigns traitor to latejoiners
 	if(latejoin_slots)
