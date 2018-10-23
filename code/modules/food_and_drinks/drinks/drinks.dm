@@ -24,7 +24,8 @@
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 	if(!reagents || !reagents.total_volume)
 		if(iscyborg(user))
-			synthetize_reagents() //how the fuck do I call this
+			var/mob/living/silicon/robot/R = user
+			R.synthetize_reagents() //maybe this will work?
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return FALSE
@@ -38,7 +39,8 @@
 
 	if(M == user || iscyborg(user)) //Because M doesn't include silicons I guess?
 		if(iscyborg(user))
-			analyze_reagents(reagents.reagent_list) //Analyze everything inside the container
+			var/mob/living/silicon/robot/R = user
+			R.analyze_reagents(reagents.reagent_list) //Analyze everything inside the container
 			reagents.clear_reagents() //Consumes everything
 		else
 			user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")

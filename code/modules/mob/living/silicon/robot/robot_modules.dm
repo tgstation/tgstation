@@ -487,8 +487,8 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
-	whitelisted_reagents += "/datum/reagent/consumable/orangejuice" //Add here anything it can synthetize regardless of emag status
-	whitelisted_reagents +=	"/datum/reagent/consumable/tomatojuice"
+	whitelisted_reagents += /datum/reagent/consumable/orangejuice //Add here anything it can synthetize regardless of emag status
+	whitelisted_reagents +=	/datum/reagent/consumable/tomatojuice
 		
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
@@ -510,10 +510,10 @@
 			addtimer(to_chat(loc, "<span class='notice'>Analyzing unknown reagent.</span>"), i)
 			R.cell.use(15) //Consumes energy to analyze. Not sure what happens if the borg do not have enough energy. Will consume energy even if it fails to analyze
 			addtimer(to_chat(loc, "<span class='notice'>You successefully analyzed [each_reagent]!.</span>"), 300 + i) //Add a timer to simulate analyzing
-			if(each_reagent in whitelisted_reagents || R.emmaged) //Only allowed reagents. Can be set by borg type. Except if emmaged.
-				addtimer(can_synthetize += each_reagent, 300) //Add reagent to list of things that can be synthetized
-			else if(each_reagent in blacklisted_reagents)
+			if(each_reagent in blacklisted_reagents)
 				addtimer(to_chat(loc, "<span class='notice'>But it is too complex.</span>"), 300 + i) //It's not like it can know beforehand what it is
+			else if(each_reagent in whitelisted_reagents || R.emagged) //Only allowed reagents. Can be set by borg type. Except if emmaged.
+				addtimer(can_synthetize += each_reagent, 300) //Add reagent to list of things that can be synthetized
 			else
 				addtimer(to_chat(loc, "<span class='notice'>But it is forbidden, so you delete the data.</span>"), 300 + i) //Same as above
 		
