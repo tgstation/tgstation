@@ -55,7 +55,7 @@
 			if(EXORCISM_STEP_ITEM)
 				step_data["data"] = pick(/obj/item/storage/book/bible,/obj/item/storage/toolbox)
 			if(EXORCISM_STEP_PRAYER)
-				step_data["data"] = pick("RIP","happy pinning","whatever")
+				step_data["data"] = pick("rest in peace","happy pinning","whatever")
 		steps += list(step_data)
 
 /datum/exorcism/proc/reset_hints()
@@ -154,6 +154,7 @@
 	holder.visible_message("<span class='big haunt'>Was [holder] always here ?</span>")
 
 /datum/exorcism/proc/Success()
+	completed = TRUE
 	SEND_SIGNAL(holder,COMSIG_EXORCISM_SUCCESS)
 	SEND_SIGNAL(bound_spook,COMSIG_EXORCISM_SUCCESS)
 
