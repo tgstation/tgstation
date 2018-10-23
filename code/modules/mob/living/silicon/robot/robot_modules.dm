@@ -498,7 +498,6 @@
 		O.reagents.add_reagent("enzyme", 2 * coeff)
 
 /obj/item/robot_module/proc/analyze_reagents(var/list/reagents_inside)
-	..() //Not sure what this does, or if I even need to do this
 	var/mob/living/silicon/robot/R = loc
 	to_chat(loc, "<span class='notice'>You start analyzing the solution.</span>")
 	var/i = 0
@@ -518,7 +517,6 @@
 				addtimer(to_chat(loc, "<span class='notice'>But it is forbidden, so you delete the data.</span>"), 300 + i) //Same as above
 		
 /obj/item/robot_module/proc/synthetize_reagents()
-	..()
 	var/mob/living/silicon/robot/R = loc
 	if(can_synthetize == null) //You know nothing Jon Snow
 		to_chat(loc, "<span class='warning'>You need to analyze reagents first.</span>")
@@ -530,7 +528,7 @@
 			var/trans = O.volume //How much should it synthetize? Max cap of the glass? Ask for input?
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
 			to_chat(loc, "<span class='notice'>You start synthetizing [what_reagent].</span>")
-			addtimer(O.add_reagent(what_reagent, trans), 600)
+			addtimer(O.reagents.add_reagent(what_reagent, trans), 600)
 			addtimer(to_chat(loc, "<span class='notice'>You synthetized [what_reagent]!</span>"),600)
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
