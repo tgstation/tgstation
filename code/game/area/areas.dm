@@ -437,9 +437,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
-			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
-			L.client.played = TRUE
-			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
+			play_ambience(L,sound)
+
+/area/proc/play_ambience(mob/L, s)
+	SEND_SOUND(L, sound(s, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
+	L.client.played = TRUE
+	addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
 /area/Exited(atom/movable/M)
 	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)

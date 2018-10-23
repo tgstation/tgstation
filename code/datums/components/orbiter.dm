@@ -95,6 +95,7 @@
 	orbiters -= orbiter
 	orbiter.stop_orbit(src)
 	orbiter.orbiting = null
+	SEND_SIGNAL(parent,COMSIG_ORBITER_STOPPED,orbiter)
 	if(!refreshing && !length(orbiters) && !QDELING(src))
 		qdel(src)
 
