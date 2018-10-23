@@ -1,5 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - admin: "The centcom podlauncher now has better logging"
-  - bugfix: "Cancelling a supplypod smite will now not throw an error message"
