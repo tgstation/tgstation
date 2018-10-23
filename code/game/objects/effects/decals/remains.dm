@@ -31,3 +31,29 @@
 /obj/effect/decal/cleanable/robot_debris/old
 	name = "dusty robot debris"
 	desc = "Looks like nobody has touched this in a while."
+
+/obj/effect/decal/remains/human/haunted
+	desc = "Was this always here ?"
+	move_resist = MOVE_RESIST_DEFAULT // ???
+	anchored = FALSE
+	color = "purple"
+
+/obj/effect/decal/remains/human/haunted/Initialize()
+	. = ..()
+	invisibility = SEE_INVISIBLE_OBSERVER
+	RegisterSignal(src,COMSIG_EXORCISM_REVEAL,.proc/reveal)
+	RegisterSignal(src,COMSIG_EXORCISM_STEP,.proc/exostep)
+	RegisterSignal(src,COMSIG_EXORCISM_SUCCESS,.proc/bye)
+
+/obj/effect/decal/remains/human/haunted/proc/reveal(datum/source)
+	invisibility = 0
+
+/obj/effect/decal/remains/human/haunted/proc/exostep(datum/source)
+	playsound(src,'sound/effects/pray.ogg',50)
+
+/obj/effect/decal/remains/human/haunted/proc/bye()
+	playsound(src,'sound/effects/pray.ogg',80)
+	color = null
+
+/obj/effect/decal/remains/human/haunted/acid_act()
+	return
