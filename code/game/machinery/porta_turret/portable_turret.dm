@@ -635,6 +635,7 @@
 	has_cover = 0
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
+	mode = TURRET_LETHAL
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
