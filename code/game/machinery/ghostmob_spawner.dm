@@ -1,6 +1,6 @@
 
 /obj/machinery/spawner
-	name = "Syndicate reinforcements gateway"
+	name = "Syndicate gateway"
 	desc = "A gateway used by the Syndicate to bring in extra muscle."
 	anchored = TRUE
 	density = TRUE
@@ -10,9 +10,11 @@
 	light_color = LIGHT_COLOR_CYAN
 	max_integrity = 200
 	obj_integrity = 200
+	verb_say = "states coldly"
 	var/cooldown = 3000
 	var/datum/team/custom/Team
 	var/password = ""
+	var/directive = "Protect the Gateway and follow all orders from the Traitors in your group - no matter the cost!"
 
 /obj/machinery/spawner/Initialize()
 	. = ..()
@@ -21,19 +23,23 @@
 	visible_message("<span class='boldwarning'>The password is [password]. Your allies may enter this number to identify as friendly to your reinforcements!</span>")
 
 /obj/machinery/spawner/ui_interact(mob/living/user)
-	if(Team)
-		var/on_team = FALSE
+	if(Team && (user.stat == CONSCIOUS))
 		var/datum/mind/M = user.mind
-		for(var/datum/antagonist/A in M.antag_datums)
-			if(A.get_team() == Team)
-				on_team = TRUE
-		if(!on_team)
+		if(M in Team.members)
+			var/command = stripped_input(user,"Enter a new Directive for the reinforcements to obey:", " New Directive", "")
+			if(length(command)>1)
+				directive = command
+				say("New directive confirmed: [directive]")
+		else
 			var/guess = stripped_input(user,"Enter the password:", "Password", "")
 			if(guess == password)
-				Team.add_member(user.mind)
+				Team.add_member(M)
 				playsound(src, 'sound/machines/chime.ogg', 30, 1)
+				say("Success! [user], you are now an official member of [Team.name]")
 			else
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+
+
 
 /obj/machinery/spawner/proc/reinforce(var/repeat = TRUE)
 	if(!QDELETED(src))
@@ -57,6 +63,7 @@
 			S.key = winner.key
 			if(Team)
 				Team.add_member(S.mind)
+			to_chat(S, "<span class='boldwarning'>Obey the following directive: <u>[directive]</u>")
 			do_sparks(4, TRUE, src)
 		if(repeat)
 			light_color = LIGHT_COLOR_CYAN

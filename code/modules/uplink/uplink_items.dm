@@ -1291,7 +1291,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/device_tools/syndie_spawner/purchase(mob/user, datum/component/uplink/U)
 	var/obj/machinery/spawner/SS = spawn_item(item, user, U)
 	var/datum/team/custom/T = new()
-	T.name = "[user]'s Syndicate"
+	T.name = "[user]'s Syndicate Squad"
 	T.custom_hud_state = "synd"
 	T.custom_hud = new
 	T.custom_hud.self_visible = TRUE
