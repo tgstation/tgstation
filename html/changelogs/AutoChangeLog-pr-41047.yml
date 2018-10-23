@@ -1,0 +1,5 @@
+author: "BebeYoshi"
+delete-after: True
+changes: 
+  - bugfix: "Penguins drops their organs when butchered."
+  - balance: "Baby penguins only drop one meat instead of three."
