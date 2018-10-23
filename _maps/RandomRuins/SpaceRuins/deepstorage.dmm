@@ -2104,14 +2104,14 @@
 /obj/structure/table,
 /obj/machinery/button/door{
 	id = "bunkerexterior";
-	name = "exterior blastdoor access";
+	name = "exterior blast door access";
 	pixel_x = -24;
 	pixel_y = -8;
 	req_access_txt = "200"
 	},
 /obj/machinery/button/door{
 	id = "bunkerinterior";
-	name = "interior blastdoor access";
+	name = "interior blast door access";
 	pixel_x = -24;
 	req_access_txt = "200"
 	},
