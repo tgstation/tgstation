@@ -224,19 +224,23 @@
 	desc = "A wing ripped from a watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "watcher_wing"
 	denied_type = /obj/item/crusher_trophy/watcher_wing
-	bonus_value = 5
+	bonus_value = 5 // 5 seconds
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
-	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
+	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*10]</b> second\s"
 
 /obj/item/crusher_trophy/watcher_wing/on_mark_detonation(mob/living/target, mob/living/user)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/H = target
-		if(H.ranged) //briefly delay ranged attacks
-			if(H.ranged_cooldown_time >= world.time)
-				H.ranged_cooldown_time += bonus_value
+		if(H.ranged) //briefly delay ranged attacks - god i fucking love the worst comment in my life
+			if(H.ranged_cooldown >= world.time)
+				H.ranged_cooldown += bonus_value*10
 			else
-				H.ranged_cooldown_time = bonus_value + world.time
+				H.ranged_cooldown_time += bonus_value*10
+				addtimer(CALLBACK(src, .proc/remove_cooldown, H), bonus_value*10)
+
+/obj/item/crusher_trophy/watcher_wing/proc/remove_cooldown(var/mob/living/simple_animal/hostile/H)
+	H.ranged_cooldown_time = initial(H.ranged_cooldown_time)
 
 //magmawing watcher
 /obj/item/crusher_trophy/blaster_tubes/magma_wing
@@ -262,7 +266,7 @@
 	name = "icewing watcher wing"
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
-	bonus_value = 8
+	bonus_value = 8 // 8 seconds
 
 //legion
 /obj/item/crusher_trophy/legion_skull
