@@ -653,7 +653,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	anchored = FALSE
 	gasefficency = 0.125
 	explosion_power = 12
-	layer = 3.1
+	layer = 4.1
 	moveable = TRUE
 
 /obj/machinery/power/supermatter_crystal/shard/engine
