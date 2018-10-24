@@ -39,7 +39,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)) || (chosenRoomNumber == INFINITY))
         to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
         return
-    src.forceMove(get_turf(user))
+    forceMove(get_turf(user))
     if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
         if(!GLOB.hhStorageTurf)
             var/datum/map_template/hilbertshotelstorage/storageTemp = new()
