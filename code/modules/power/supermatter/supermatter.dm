@@ -55,7 +55,6 @@
 #define SUPERMATTER_WARNING_PERCENT 100
 
 #define SUPERMATTER_COUNTDOWN_TIME 30 SECONDS
-#define SUPERMATTER_SHARD_LAYER_MODIFIER 4.1
 
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
@@ -654,7 +653,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	anchored = FALSE
 	gasefficency = 0.125
 	explosion_power = 12
-	layer = SUPERMATTER_SHARD_LAYER_MODIFIER
+	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
 
 /obj/machinery/power/supermatter_crystal/shard/engine
