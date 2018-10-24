@@ -26,10 +26,11 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
+	var/list/chronosafe_items = list(/obj/item/gun/energy/chrono_gun)
 	var/list/hands_nodrop = list()
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
+	var/mutable_appearance/phase_underlay = null
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
@@ -48,6 +49,8 @@
 	camera = new /obj/effect/chronos_cam(user)
 	camera.holder = user
 	camera.chronosuit = src
+	user.reset_perspective(camera)
+	user.set_machine(camera)
 	user.remote_control = camera
 
 /obj/item/clothing/suit/space/chronos/ui_action_click()
@@ -99,9 +102,15 @@
 		for(var/obj/item/I in user.held_items)
 			if(I in hands_nodrop)
 				I.item_flags &= ~NODROP
+		hands_nodrop = null
+		if(phase_underlay && !QDELETED(phase_underlay))
+			user.underlays -= phase_underlay
+			qdel(phase_underlay)
+			phase_underlay = null
 		if(camera)
 			camera.remove_target_ui()
 			camera.forceMove(user)
+			user.reset_perspective(camera)
 		teleport_now.UpdateButtonIcon()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
@@ -130,6 +139,9 @@
 				to_chat(user, "<span class='notice'>Your [exposed_I.name] got left behind.</span>")
 
 		user.ExtinguishMob()
+
+		phase_underlay = create_phase_underlay(user)
+		user.underlays += phase_underlay
 
 		hands_nodrop = list()
 		for(var/obj/item/I in user.held_items)
@@ -166,6 +178,13 @@
 		phase_timer_id = addtimer(CALLBACK(src, .proc/finish_chronowalk, user, to_turf), 3, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
+
+/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
+	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
+	user_icon.AddAlphaMask(getFlatIcon(user))
+	var/mutable_appearance/phase = mutable_appearance(user_icon, null)
+	phase.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_APART
+	return phase
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
@@ -278,22 +297,21 @@
 		qdel(src)
 		return
 	if(user == holder)
-		if(loc == user)
-			forceMove(get_turf(user))
-		if(user.client && user.client.eye != src)
-			src.forceMove(user.drop_location())
-			user.reset_perspective(src)
+		if(loc == user || (user.client && user.client.eye != src))
+			forceMove(user.drop_location())
 			user.set_machine(src)
+			user.reset_perspective(src)
 		var/atom/step = get_step(src, direction)
 		if(step)
 			if((step.x <= TRANSITIONEDGE) || (step.x >= (world.maxx - TRANSITIONEDGE - 1)) || (step.y <= TRANSITIONEDGE) || (step.y >= (world.maxy - TRANSITIONEDGE - 1)))
-				if(!src.Move(step))
-					src.forceMove(step)
+				if(!Move(step))
+					forceMove(step)
 			else
-				src.forceMove(step)
+				forceMove(step)
 			if((x == holder.x) && (y == holder.y) && (z == holder.z))
-				remove_target_ui()
 				forceMove(user)
+				user.reset_perspective(user)
+				remove_target_ui()
 			else if(!target_ui)
 				create_target_ui()
 			phase_time = world.time + phase_time_length
@@ -301,6 +319,7 @@
 /obj/effect/chronos_cam/check_eye(mob/user)
 	if(user != holder)
 		user.unset_machine()
+		qdel(src)
 
 /obj/effect/chronos_cam/on_unset_machine(mob/user)
 	user.reset_perspective(null)
@@ -309,7 +328,7 @@
 	if(holder)
 		if(holder.remote_control == src)
 			holder.remote_control = null
-		if(holder.client && (holder.client.eye == src))
+		if(holder.client && (holder.machine == src))
 			holder.unset_machine()
 	return ..()
 
