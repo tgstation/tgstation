@@ -4,12 +4,6 @@
 /datum/wires/clonepod/New(atom/holder)
 	wires = list(WIRE_POWER, WIRE_CLONESTARTED, WIRE_CLONED)
 	..()
-
-/datum/wires/clonepod/on_cut(wire, mend)
-	var/obj/machinery/clonepod/C = holder
-	switch(wire)
-		if(WIRE_POWER) //Cut the power
-			C.shorted = !mend
 			
 /datum/wires/clonepod/on_pulse(wire)
 	var/obj/machinery/clonepod/C = holder

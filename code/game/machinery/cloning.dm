@@ -17,7 +17,6 @@
 	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
 	circuit = /obj/item/circuitboard/machine/clonepod
-	var/shorted = FALSE //Cut wires
 
 	var/heal_level //The clone is released once its health reaches this level.
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -130,7 +129,7 @@
 
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
-	if(panel_open || shorted)
+	if(panel_open || wires.is_cut(WIRE_POWER))
 		return FALSE
 	if(mess || attempting)
 		return FALSE
@@ -306,6 +305,10 @@
 			return
 
 	if(default_deconstruction_crowbar(W))
+		return
+		
+	if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
 		return
 
 	if(W.tool_behaviour == TOOL_MULTITOOL)

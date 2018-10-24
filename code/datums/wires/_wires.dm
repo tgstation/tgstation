@@ -144,19 +144,20 @@
 	for(var/wire in wires)
 		cut(wire)
 
-/datum/wires/proc/pulse(wire, user)
+/datum/wires/proc/pulse(wire, user, assembly = FALSE)
 	if(is_cut(wire))
 		return
 	on_pulse(wire, user)
-	feedback(wire)
+	if(!assembly) //prevents feedback loops
+		feedback(wire)
 
-/datum/wires/proc/pulse_color(color, mob/living/user)
-	pulse(get_wire(color), user)
+/datum/wires/proc/pulse_color(color, mob/living/user, assembly = FALSE)
+	pulse(get_wire(color), user, assembly)
 
 /datum/wires/proc/pulse_assembly(obj/item/assembly/S)
 	for(var/color in assemblies)
 		if(S == assemblies[color])
-			pulse_color(color)
+			pulse_color(color, null, TRUE)
 			return TRUE
 
 /datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
