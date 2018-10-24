@@ -241,17 +241,17 @@
 	for(var/datum/reagent/each_reagent in reagents_inside) //If there are multiple reagents
 		i += 10 //So it kinda prevents spam
 		if(each_reagent in learned_reagents) //If you can already synthetize it, no need to analyze again
-			addtimer(to_chat(loc, "<span class='notice'>You already successefully analyzed [each_reagent].</span>"), i)
+			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>You already successefully analyzed [each_reagent].</span>"), i)
 		else
-			addtimer(to_chat(loc, "<span class='notice'>Analyzing unknown reagent.</span>"), i)
+			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>Analyzing unknown reagent.</span>"), i)
 			R.cell.use(15) //Consumes energy to analyze. Not sure what happens if the borg do not have enough energy. Will consume energy even if it fails to analyze
-			addtimer(to_chat(loc, "<span class='notice'>You successefully analyzed [each_reagent]!.</span>"), 300 + i) //Add a timer to simulate analyzing
+			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>You successefully analyzed [each_reagent]!.</span>"), 300 + i) //Add a timer to simulate analyzing
 			if(!each_reagent.can_synth)
-				addtimer(to_chat(loc, "<span class='notice'>But it is too complex.</span>"), 300 + i) //It's not like it can know beforehand what it is
+				addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>But it is too complex.</span>"), 300 + i) //It's not like it can know beforehand what it is
 			else if(each_reagent in whitelisted_reagents || R.emagged || whitelisted_reagents == null) //Only allowed reagents. Can be set by borg type. Except if emmaged. If empty then allow everything
-				addtimer(learned_reagents += each_reagent, 300) //Add reagent to list of things that can be synthetized
+				addtimer(VARSET_CALLBACK(src, learned_reagents, learned_reagents.Add(list(each_reagent))), 300) //Add reagent to list of things that can be synthetized
 			else
-				addtimer(to_chat(loc, "<span class='notice'>But it is forbidden, so you delete the data.</span>"), 300 + i) //Same as above
+				addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>But it is forbidden, so you delete the data.</span>"), 300 + i) //Same as above
 		
 /obj/item/robot_module/proc/synthetize_reagents()
 	var/mob/living/silicon/robot/R = loc
@@ -265,8 +265,8 @@
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
 			var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in basic_modules //For now it is only drinking glass. Could be added to medical maybe?
 			var/trans = O.volume //How much should it synthetize? Max cap of the glass? Ask for input?
-			addtimer(O.reagents.add_reagent(what_reagent, trans), 600)
-			addtimer(to_chat(loc, "<span class='notice'>You synthetized [what_reagent]!</span>"),600)
+			addtimer(CALLBACK(O, ./reagents/proc/add_reagent/, what_reagent, trans), 600)
+			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>You synthetized [what_reagent]!</span>"),600)
 
 /obj/item/robot_module/standard
 	name = "Standard"
