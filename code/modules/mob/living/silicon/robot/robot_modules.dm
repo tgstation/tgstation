@@ -238,7 +238,7 @@
 	var/mob/living/silicon/robot/R = loc
 	to_chat(loc, "<span class='notice'>You start analyzing the solution.</span>")
 	var/i = 0
-	for(var/each_reagent in reagents_inside) //If there are multiple reagents
+	for(var/datum/reagent/each_reagent in reagents_inside) //If there are multiple reagents
 		i += 10 //So it kinda prevents spam
 		if(each_reagent in learned_reagents) //If you can already synthetize it, no need to analyze again
 			addtimer(to_chat(loc, "<span class='notice'>You already successefully analyzed [each_reagent].</span>"), i)
@@ -520,7 +520,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
-	whitelisted_reagents += list("orangejuice" , "tomatojuice") //Add here anything it can synthetize regardless of emag status
+	whitelisted_reagents.Add("orangejuice" , "tomatojuice") //Add here anything it can synthetize regardless of emag status
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
