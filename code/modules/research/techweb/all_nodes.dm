@@ -490,10 +490,8 @@
 	id = "basic_tools"
 	display_name = "Basic Tools"
 	description = "Basic mechanical, electronic, surgical and botanical tools."
-	prereq_ids = list("base")
+	starting_node = TRUE
 	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
-	export_price = 5000
 
 /datum/techweb_node/basic_mining
 	id = "basic_mining"
