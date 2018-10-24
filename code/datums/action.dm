@@ -216,9 +216,6 @@
 /datum/action/item_action/toggle_barrier_spread
 	name = "Toggle Barrier Spread"
 
-/datum/action/item_action/equip_unequip_TED_Gun
-	name = "Equip/Unequip TED Gun"
-
 /datum/action/item_action/toggle_paddles
 	name = "Toggle Paddles"
 

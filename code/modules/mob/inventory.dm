@@ -272,7 +272,7 @@
 /mob/proc/canUnEquip(obj/item/I, force)
 	if(!I)
 		return TRUE
-	if((I.item_flags & NODROP) && !force)
+	if(!I.mob_can_unequip(src) && !force)
 		return FALSE
 	return TRUE
 
@@ -312,7 +312,7 @@
 	if(!I) //If there's nothing to drop, the drop is automatically succesfull. If(unEquip) should generally be used to check for NODROP_1.
 		return TRUE
 
-	if((I.item_flags & NODROP) && !force)
+	if(!I.mob_can_unequip(src) && !force)
 		return FALSE
 
 	var/hand_index = get_held_index_of_item(I)
