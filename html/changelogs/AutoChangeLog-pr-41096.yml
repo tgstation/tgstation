@@ -1,0 +1,4 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - tweak: "Slime Management Consoles now state the number of monkeys available when you recycle a monkey."
