@@ -99,7 +99,7 @@
 	build_path = /obj/item/disk/nanite_program
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
+/*
 /datum/design/integrated_printer
 	name = "Integrated circuit printer"
 	desc = "This machine provides all necessary things for circuitry."
@@ -129,3 +129,4 @@
 	build_path = /obj/item/disk/integrated_circuit/upgrade/clone
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+*/
