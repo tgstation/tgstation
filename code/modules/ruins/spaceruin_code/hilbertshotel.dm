@@ -102,13 +102,14 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     user.forceMove(locate(roomReservation.bottom_left_coords[1] + hotelRoomTemp.landingZoneRelativeX, roomReservation.bottom_left_coords[2] + hotelRoomTemp.landingZoneRelativeY, roomReservation.bottom_left_coords[3]))
 
 /obj/item/hilbertshotel/proc/linkTurfs(var/datum/turf_reservation/currentReservation, var/currentRoomnumber)
-    var/area/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
+    var/area/hilbertshotel/currentArea = get_area(locate(currentReservation.bottom_left_coords[1], currentReservation.bottom_left_coords[2], currentReservation.bottom_left_coords[3]))
     currentArea.name = "Hilbert's Hotel Room [currentRoomnumber]"
+    currentArea.parentSphere = src
+    currentArea.storageTurf = storageTurf
+    currentArea.roomnumber = currentRoomnumber
+    currentArea.reservation = currentReservation
     for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
         door.parentSphere = src
-        door.storageTurf = storageTurf
-        door.roomnumber = currentRoomnumber
-        door.reservation = currentReservation
         door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy..."
     for(var/turf/open/space/bluespace/BSturf in currentArea)
         BSturf.parentSphere = src
@@ -212,10 +213,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     name = "Hotel Door"
     icon_state = "hoteldoor"
     explosion_block = INFINITY
-    var/roomnumber = 0
     var/obj/item/hilbertshotel/parentSphere
-    var/datum/turf_reservation/reservation
-    var/turf/storageTurf
 
 /turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
     if(!parentSphere)
@@ -224,18 +222,39 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     if(alert(user, "Hilbert's Hotel would like to remind you that while we will do everything we can to protect the belongings you leave behind, we make no guarantees of their safety while you're gone, especially that of the health of any living creatures. With that in mind, are you ready to leave?", "Exit", "Leave", "Stay") == "Leave")
         user.forceMove(get_turf(parentSphere))
         do_sparks(3, FALSE, get_turf(user))
-        var/area/currentArea = get_area(src)
-        var/stillPopulated = FALSE
-        var/list/currentLivingMobs = currentArea.GetAllContents(/mob/living) //Got to catch anyone hiding in anything
-        for(var/mob/living/L in currentLivingMobs) //Check to see if theres any sentient mobs left.
-            if(L.mind && (L != user))
-                stillPopulated = TRUE
-                break
-        if(!stillPopulated)
-            storeRoom()
 
-/turf/closed/indestructible/hoteldoor/proc/storeRoom()
-    var/storage[(reservation.top_right_coords[1]-reservation.bottom_left_coords[1]+1)*(reservation.top_right_coords[2]-reservation.bottom_left_coords[2]+1)]
+/area/hilbertshotel
+    name = "Hilbert's Hotel Room"
+    icon_state = "hilbertshotel"
+    requires_power = FALSE
+    has_gravity = TRUE
+    noteleport = TRUE
+    hidden = TRUE
+    unique = FALSE
+    dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+    ambientsounds = list('sound/ambience/servicebell.ogg')
+    var/roomnumber = 0
+    var/obj/item/hilbertshotel/parentSphere
+    var/datum/turf_reservation/reservation
+    var/turf/storageTurf
+
+/area/hilbertshotel/Exited(atom/movable/AM)
+    . = ..()
+    if(ismob(AM))
+        var/mob/M = AM
+        if(M.mind)
+            var/stillPopulated = FALSE
+            var/list/currentLivingMobs = GetAllContents(/mob/living) //Got to catch anyone hiding in anything
+            for(var/mob/living/L in currentLivingMobs) //Check to see if theres any sentient mobs left.
+                if(L.mind)
+                    stillPopulated = TRUE
+                    break
+            if(!stillPopulated)
+                storeRoom()
+
+/area/hilbertshotel/proc/storeRoom()
+    var/roomSize = (reservation.top_right_coords[1]-reservation.bottom_left_coords[1]+1)*(reservation.top_right_coords[2]-reservation.bottom_left_coords[2]+1)
+    var/storage[roomSize]
     var/turfNumber = 1
     var/obj/item/abstracthotelstorage/storageObj = new(storageTurf)
     storageObj.roomNumber = roomnumber
@@ -252,17 +271,6 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     parentSphere.storedRooms["[roomnumber]"] = storage
     parentSphere.activeRooms -= "[roomnumber]"
     qdel(reservation)
-
-/area/hilbertshotel
-    name = "Hilbert's Hotel Room"
-    icon_state = "hilbertshotel"
-    requires_power = FALSE
-    has_gravity = TRUE
-    noteleport = TRUE
-    hidden = TRUE
-    unique = FALSE
-    dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-    ambientsounds = list('sound/ambience/servicebell.ogg')
 
 /area/hilbertshotelstorage
     name = "Hilbert's Hotel Storage Room"
