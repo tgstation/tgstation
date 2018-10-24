@@ -38,7 +38,6 @@
 
 /obj/item/tank/internals/oxygen/empty/New()
 	..()
-	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
 	return
 
