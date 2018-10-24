@@ -128,7 +128,7 @@
 	category = list("AI Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/tyrant_module
+/datum/design/board/overlord_module
 	name = "Core Module Design (Overlord)"
 	desc = "Allows for the construction of a Overlord AI Module."
 	id = "overlord_module"
