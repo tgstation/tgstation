@@ -28,31 +28,11 @@
 	var/obj/machinery/buffer // simple machine buffer for device linkage
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
-	var/datum/integrated_io/selected_io = null  //functional for integrated circuits.
 	var/mode = 0
-
-/obj/item/multitool/examine(mob/user)
-	..()
-	if(selected_io)
-		to_chat(user, "<span class='notice'>Activate [src] to detach the data wire.</span>")
-	if(buffer)
-		to_chat(user, "<span class='notice'>Its buffer contains [buffer].</span>")
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!</span>")
 	return OXYLOSS//theres a reason it wasnt recommended by doctors
-
-/obj/item/multitool/attack_self(mob/user)
-	if(selected_io)
-		selected_io = null
-		to_chat(user, "<span class='notice'>You clear the wired connection from the multitool.</span>")
-	update_icon()
-
-/obj/item/multitool/update_icon()
-	if(selected_io)
-		icon_state = "multitool_red"
-	else
-		icon_state = "multitool"
 
 
 // Syndicate device disguised as a multitool; it will turn red when an AI camera is nearby.
