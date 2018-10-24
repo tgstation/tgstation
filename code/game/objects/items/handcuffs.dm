@@ -247,7 +247,7 @@
 	plane = initial(plane)
 	forceMove(newloc || get_turf(src))
 	dropped(C)
-	changeNext_move(0)
+	C.changeNext_move(0)
 	return TRUE
 
 /obj/item/restraints/legcuffs/proc/attach(mob/living/carbon/C)

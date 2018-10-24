@@ -178,12 +178,12 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Cross(atom/AM)
 	. = ..()
-	if(istype(/obj/structure/spider/stickyweb))
-		add_movespeed_modifier(MOVESPEED_MODIFIER_TARANTULA_WEB, multiplicative_slowdown = -5)
+	if(istype(AM, /obj/structure/spider/stickyweb))
+		add_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB, multiplicative_slowdown = -5)
 
-/obj/living/simple_animal/hostile/poison/giant_spider/tarantula/Uncross(atom/AM)
+/mob/living/simple_animal/hostile/poison/giant_spider/tarantula/Uncross(atom/AM)
 	. = ..()
-	if(istype(/obj/structure/spider/stickyweb))
+	if(istype(AM, /obj/structure/spider/stickyweb))
 		remove_movespeed_modifier(MOVESPEED_MODIFIER_TARANTULA_WEB)
 
 //midwives are the queen of the spiders, can send messages to all them and web faster. That rare round where you get a queen spider and turn your 'for honor' players into 'r6siege' players will be a fun one.

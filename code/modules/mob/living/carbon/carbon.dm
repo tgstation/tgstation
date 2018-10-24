@@ -349,8 +349,8 @@
 		changeNext_move(0)
 	if (legcuffed)
 		var/obj/item/W = legcuffed
-		if(istype(W, /obj/item/legcuffs))
-			var/obj/item/legcuffs/L = W
+		if(istype(W, /obj/item/restraints/legcuffs))
+			var/obj/item/restraints/legcuffs/L = W
 			if(!L.remove(src))
 				return
 		else
@@ -387,7 +387,7 @@
 			update_handcuffed()
 			return
 		if(I == legcuffed)
-			if(istype(I, /obj/item/restaints/legcuffs))
+			if(istype(I, /obj/item/restraints/legcuffs))
 				var/obj/item/restraints/legcuffs/L = I
 				if(!L.remove(src))
 					return FALSE
