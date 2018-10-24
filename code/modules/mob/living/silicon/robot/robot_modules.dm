@@ -237,15 +237,15 @@
 /obj/item/robot_module/proc/analyze_reagents(var/list/reagents_inside)
 	var/mob/living/silicon/robot/R = loc
 	to_chat(loc, "<span class='notice'>You start analyzing the solution.</span>")
-	var/Do_What = 0
-	var/Analyzed = FALSE
+	var/do_what = 0
+	var/analyzed = FALSE
 	var/i = 0
 	for(var/datum/reagent/each_reagent in reagents_inside) //If there are multiple reagents
-		Do_What = 0 //Resets on each reagent
-		Analyzed = FALSE
+		do_what = 0 //Resets on each reagent
+		analyzed = FALSE
 		i += 10 //So it kinda prevents spam
 		if(each_reagent in learned_reagents) //If you can already synthetize it, no need to analyze again
-			Analyzed = TRUE 
+			analyzed = TRUE 
 		else
 			R.cell.use(15) //Consumes energy to analyze. Not sure what happens if the borg do not have enough energy. Will consume energy even if it fails to analyze
 			if(!each_reagent.can_synth)
@@ -254,9 +254,9 @@
 				do_what = 2
 			else
 				do_what = 3
-		addtimer(CALLBACK(src, .proc/all_the_timers, R, Do_What, Analyzed, 1, each_reagent), i)
-		if (Analyzed == FALSE)
-			addtimer(CALLBACK(src, .proc/all_the_timers, Do_What, Analyzed, 2, each_reagent), 300+i)
+		addtimer(CALLBACK(src, .proc/all_the_timers, R, do_what, analyzed, 1, each_reagent), i)
+		if (analyzed == FALSE)
+			addtimer(CALLBACK(src, .proc/all_the_timers, do_what, analyzed, 2, each_reagent), 300+i)
 		
 /obj/item/robot_module/proc/synthetize_reagents()
 	var/mob/living/silicon/robot/R = loc
@@ -270,25 +270,25 @@
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
 			addtimer(CALLBACK(src, .proc/all_the_timers, FALSE, 0, 3, what_reagent), 600)
 
-/obj/item/robot_module/proc/all_the_timers(var/mob/living/silicon/robot/Who, var/Do_What, var/Analyzed, Var/Which_Timer, var/datum/reagent/What_Reagent)
-	if (Analyzed == TRUE && Which_Timer == 1)
-		to_chat(Who, "<span class='notice'>You already successefully analyzed [What_Reagent].</span>")
-	else if (Which_Timer == 1) then
-		to_chat(Who, "<span class='notice'>Analyzing unknown reagent.</span>")
-	else if (Which_Timer == 2) then	
-		to_chat(Who, "<span class='notice'>You successefully analyzed [What_Reagent]!</span>")
-		if (Do_What == 1)
-			to_chat(Who, "<span class='notice'>But it is too complex.</span>")
-		else if (Do_What == 2)
-			Who.learned_reagents.Add(list(What_Reagent))
-		else if (Do_What == 3)
-			to_chat(Who, "<span class='notice'>But it is forbidden, so you delete the data.</span>")
-	else if (Which_Timer == 3) then
-		var/obj/item/reagent_containers/S = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in Who.basic_modules
+/obj/item/robot_module/proc/all_the_timers(var/mob/living/silicon/robot/who, var/do_what, var/analyzed, var/which_timer, var/datum/reagent/what_reagent)
+	if (analyzed == TRUE && which_timer == 1)
+		to_chat(who, "<span class='notice'>You already successefully analyzed [what_reagent].</span>")
+	else if (which_timer == 1)
+		to_chat(who, "<span class='notice'>Analyzing unknown reagent.</span>")
+	else if (which_timer == 2)
+		to_chat(who, "<span class='notice'>You successefully analyzed [what_reagent]!</span>")
+		if (do_what == 1)
+			to_chat(who, "<span class='notice'>But it is too complex.</span>")
+		else if (do_what == 2)
+			who.module.learned_reagents.Add(list(what_reagent))
+		else if (do_what == 3)
+			to_chat(who, "<span class='notice'>But it is forbidden, so you delete the data.</span>")
+	else if (which_timer == 3)
+		var/obj/item/reagent_containers/S = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in who.module.basic_modules
 		if(S)
 			var/trans = S.volume
-			S.reagents.add_reagent(What_Reagent,trans)
-			to_chat(Who, "<span class='notice'>You synthetized [what_reagent]!</span>")
+			S.reagents.add_reagent(what_reagent,trans)
+			to_chat(who, "<span class='notice'>You synthetized [what_reagent]!</span>")
 		
 /obj/item/robot_module/standard
 	name = "Standard"
