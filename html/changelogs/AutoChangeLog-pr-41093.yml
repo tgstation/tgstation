@@ -1,0 +1,5 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "The deep storage bunker APCs and airlocks are now locked by default, but can be unlocked with bunker access IDs."
+  - bugfix: "Fixed the deep storage bunker's entrance camera. The scrubber and vent inside the entrance chamber can now be controlled by the adjacent air alarm."
