@@ -263,9 +263,9 @@
 		else
 			to_chat(loc, "<span class='notice'>You start synthetizing [what_reagent].</span>")
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
-			var/obj/item/reagent_containers/O = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in basic_modules //For now it is only drinking glass. Could be added to medical maybe?
-			var/trans = O.volume //How much should it synthetize? Max cap of the glass? Ask for input?
-			addtimer(CALLBACK(O, ./reagents/proc/add_reagent/, what_reagent, trans), 600)
+			var/obj/item/reagent_containers/S = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in basic_modules //For now it is only drinking glass. Could be added to medical maybe?
+			var/trans = S.volume //How much should it synthetize? Max cap of the glass? Ask for input?
+			addtimer(CALLBACK(S, ./reagents/proc/add_reagent/, what_reagent, trans), 600)
 			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>You synthetized [what_reagent]!</span>"),600)
 
 /obj/item/robot_module/standard
@@ -521,6 +521,7 @@
 	special_light_key = "service"
 	hat_offset = 0
 	whitelisted_reagents.Add(list("orangejuice" , "tomatojuice")) //Add here anything it can synthetize regardless of emag status
+
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
