@@ -237,25 +237,30 @@
 /obj/item/robot_module/proc/analyze_reagents(var/list/reagents_inside)
 	var/mob/living/silicon/robot/R = loc
 	to_chat(loc, "<span class='notice'>You start analyzing the solution.</span>")
+	var/Do_What = 0
+	var/Analyzed = FALSE
 	var/i = 0
 	for(var/datum/reagent/each_reagent in reagents_inside) //If there are multiple reagents
+		Do_What = 0 //Resets on each reagent
+		Analyzed = FALSE
 		i += 10 //So it kinda prevents spam
 		if(each_reagent in learned_reagents) //If you can already synthetize it, no need to analyze again
-			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>You already successefully analyzed [each_reagent].</span>"), i)
+			Analyzed = TRUE 
 		else
-			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>Analyzing unknown reagent.</span>"), i)
 			R.cell.use(15) //Consumes energy to analyze. Not sure what happens if the borg do not have enough energy. Will consume energy even if it fails to analyze
-			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>You successefully analyzed [each_reagent]!.</span>"), 300 + i) //Add a timer to simulate analyzing
 			if(!each_reagent.can_synth)
-				addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>But it is too complex.</span>"), 300 + i) //It's not like it can know beforehand what it is
+				do_what = 1
 			else if(each_reagent in whitelisted_reagents || R.emagged || whitelisted_reagents == null) //Only allowed reagents. Can be set by borg type. Except if emmaged. If empty then allow everything
-				addtimer(VARSET_CALLBACK(src, learned_reagents, learned_reagents.Add(list(each_reagent))), 300) //Add reagent to list of things that can be synthetized
+				do_what = 2
 			else
-				addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>But it is forbidden, so you delete the data.</span>"), 300 + i) //Same as above
+				do_what = 3
+		addtimer(CALLBACK(src, .proc/all_the_timers, R, Do_What, Analyzed, 1, each_reagent), i)
+		if (Analyzed == FALSE)
+			addtimer(CALLBACK(src, .proc/all_the_timers, Do_What, Analyzed, 2, each_reagent), 300+i)
 		
 /obj/item/robot_module/proc/synthetize_reagents()
 	var/mob/living/silicon/robot/R = loc
-	if(learned_reagents == null) //You know nothing Jon Snow
+	if(!learned_reagents.len) //You know nothing Jon Snow
 		to_chat(loc, "<span class='warning'>You need to analyze reagents first.</span>")
 	else
 		var/what_reagent = input(loc, "Select what to synthetize", "Synthetizer", null) as null|anything in learned_reagents
@@ -263,11 +268,28 @@
 		else
 			to_chat(loc, "<span class='notice'>You start synthetizing [what_reagent].</span>")
 			R.cell.use(30) //Consumes energy to synthetize. Is it tied to the ammount to be created or is it fixed?
-			var/obj/item/reagent_containers/S = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in basic_modules //For now it is only drinking glass. Could be added to medical maybe?
-			var/trans = S.volume //How much should it synthetize? Max cap of the glass? Ask for input?
-			addtimer(CALLBACK(S, ./reagents/proc/add_reagent/, what_reagent, trans), 600)
-			addtimer(CALLBACK(GLOBAL_PROC ,/proc/to_chat, loc, "<span class='notice'>You synthetized [what_reagent]!</span>"),600)
+			addtimer(CALLBACK(src, .proc/all_the_timers, FALSE, 0, 3, what_reagent), 600)
 
+/obj/item/robot_module/proc/all_the_timers(var/mob/living/silicon/robot/Who, var/Do_What, var/Analyzed, Var/Which_Timer, var/datum/reagent/What_Reagent)
+	if (Analyzed == TRUE && Which_Timer == 1)
+		to_chat(Who, "<span class='notice'>You already successefully analyzed [What_Reagent].</span>")
+	else if (Which_Timer == 1) then
+		to_chat(Who, "<span class='notice'>Analyzing unknown reagent.</span>")
+	else if (Which_Timer == 2) then	
+		to_chat(Who, "<span class='notice'>You successefully analyzed [What_Reagent]!</span>")
+		if (Do_What == 1)
+			to_chat(Who, "<span class='notice'>But it is too complex.</span>")
+		else if (Do_What == 2)
+			Who.learned_reagents.Add(list(What_Reagent))
+		else if (Do_What == 3)
+			to_chat(Who, "<span class='notice'>But it is forbidden, so you delete the data.</span>")
+	else if (Which_Timer == 3) then
+		var/obj/item/reagent_containers/S = locate(/obj/item/reagent_containers/food/drinks/drinkingglass) in Who.basic_modules
+		if(S)
+			var/trans = S.volume
+			S.reagents.add_reagent(What_Reagent,trans)
+			to_chat(Who, "<span class='notice'>You synthetized [what_reagent]!</span>")
+		
 /obj/item/robot_module/standard
 	name = "Standard"
 	basic_modules = list(
@@ -520,7 +542,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
-	whitelisted_reagents.Add(list("orangejuice" , "tomatojuice")) //Add here anything it can synthetize regardless of emag status
+	whitelisted_reagents = list("orangejuice" , "tomatojuice") //Add here anything it can synthetize regardless of emag status
 
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
