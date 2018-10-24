@@ -250,7 +250,7 @@
 			R.cell.use(15) //Consumes energy to analyze. Not sure what happens if the borg do not have enough energy. Will consume energy even if it fails to analyze
 			if(!each_reagent.can_synth)
 				do_what = 1
-			else if(each_reagent in whitelisted_reagents || R.emagged || whitelisted_reagents == null) //Only allowed reagents. Can be set by borg type. Except if emmaged. If empty then allow everything
+			else if(each_reagent in whitelisted_reagents || R.emagged || !whitelisted_reagents.len) //Only allowed reagents. Can be set by borg type. Except if emmaged. If empty then allow everything
 				do_what = 2
 			else
 				do_what = 3
@@ -542,7 +542,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
-	whitelisted_reagents = list("orangejuice" , "tomatojuice") //Add here anything it can synthetize regardless of emag status
+	//whitelisted_reagents = list("orangejuice" , "tomatojuice") //Add here anything it can synthetize regardless of emag status
 
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
