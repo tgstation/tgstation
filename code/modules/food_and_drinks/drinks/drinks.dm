@@ -37,15 +37,14 @@
 		to_chat(user, "<span class='warning'>[src]'s lid hasn't been opened!</span>")
 		return FALSE
 
-	if(M == user || iscyborg(user)) //Because M doesn't include silicons I guess?
-		if(iscyborg(user))
-			var/mob/living/silicon/robot/R = user
-			R.module.analyze_reagents(reagents.reagent_list) //Analyze everything inside the container
-			reagents.clear_reagents() //Consumes everything
-		else
-			user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
-			if(M.has_trait(TRAIT_VORACIOUS))
-				M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
+	if(M == user) //Because M doesn't include silicons I guess?
+		user.visible_message("<span class='notice'>[user] swallows a gulp of [src].</span>", "<span class='notice'>You swallow a gulp of [src].</span>")
+		if(M.has_trait(TRAIT_VORACIOUS))
+			M.changeNext_move(CLICK_CD_MELEE * 0.5) //chug! chug! chug!
+	else if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		R.module.analyze_reagents(reagents.reagent_list) //Analyze everything inside the container
+		reagents.clear_reagents() //Consumes everything
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to feed the contents of [src] to [M].</span>", "<span class='userdanger'>[user] attempts to feed the contents of [src] to [M].</span>")
