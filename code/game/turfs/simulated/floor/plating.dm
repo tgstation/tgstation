@@ -11,7 +11,7 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = FALSE
-	baseturfs = /turf/open/space
+	baseturfs = /turf/baseturf_bottom
 	footstep = FOOTSTEP_PLATING
 
 	var/attachment_holes = TRUE
