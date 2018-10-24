@@ -520,7 +520,7 @@
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
-	whitelisted_reagents.Add("orangejuice" , "tomatojuice") //Add here anything it can synthetize regardless of emag status
+	whitelisted_reagents.Add(list("orangejuice" , "tomatojuice")) //Add here anything it can synthetize regardless of emag status
 
 /obj/item/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
