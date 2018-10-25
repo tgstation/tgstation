@@ -6,14 +6,6 @@
 ////////////////
 
 /datum/species/proc/_movement_delay(mob/living/carbon/human/H)
-	. = 0	//We start at 0.
-	var/flight = 0	//Check for flight and flying items
-	var/ignoreslow = 0
-	var/gravity = 0
-	if(H.movement_type & FLYING)
-		flight = 1
-
-	gravity = H.has_gravity()
 
 	if(gravity && !flight)	//Check for chemicals and innate speedups and slowdowns if we're on the ground
 		if(H.has_trait(TRAIT_GOTTAGOFAST))
@@ -21,9 +13,6 @@
 		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
 			. -= 2
 		. += H.physiology.speed_mod
-
-	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
-		ignoreslow = 1
 
 	if(!gravity)
 		var/obj/item/tank/jetpack/J = H.back

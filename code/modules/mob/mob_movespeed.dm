@@ -71,12 +71,12 @@
 	. = considering
 	var/noslow = has_trait(TRAIT_IGNORESLOWDOWN)
 	var/gravity = has_gravity(get_turf(src))
-	var/flight = (movement_flags & FLYING)
+	var/flight = (movement_type & FLYING)
 
 	for(var/id in .)
 		var/list/data = .[id]
 		if(noslow)
-			if(!(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_IGNORE_NOSLOW))
+			if(!(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_IGNORES_NOSLOW))
 				. -= id
 		if(gravity)
 			if(data[MOVESPEED_DATA_INDEX_FLAGS] & MOVESPEED_MODIFIER_NO_GRAVITY)

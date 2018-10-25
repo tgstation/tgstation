@@ -202,7 +202,7 @@ Difficulty: Hard
 		if(!blinking && L.stat == DEAD && get_dist(src, L) > 2)
 			blink(L)
 			return
-		target_slowness += L.count_multiplicative_slowdown()
+		target_slowness += L.total_multiplicative_slowdown()
 	target_slowness = max(target_slowness, 1)
 	chaser_speed = max(1, (3 - anger_modifier * 0.04) + ((target_slowness - 1) * 0.5))
 

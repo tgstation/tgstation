@@ -98,7 +98,7 @@
 				AIproc = 0
 				break
 
-		var/sleeptime = count_multiplicative_slowdown()
+		var/sleeptime = total_multiplicative_slowdown()
 		if(sleeptime <= 0)
 			sleeptime = 1
 

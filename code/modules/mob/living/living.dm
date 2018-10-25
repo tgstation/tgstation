@@ -1022,7 +1022,7 @@
 	update_transform()
 	if(changed)
 		if(client)
-			client.move_delay = world.time + count_multiplicative_slowdown()
+			client.move_delay = world.time + total_multiplicative_slowdown()
 	lying_prev = lying
 
 /mob/living/proc/fall(forced)
