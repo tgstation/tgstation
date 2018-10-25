@@ -100286,16 +100286,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/research/abandoned)
-"dmv" = (
-/obj/effect/landmark/event_spawn,
-/turf/closed/wall/r_wall,
-/area/science/misc_lab/range)
-"dmx" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/closed/wall/r_wall,
-/area/science/misc_lab/range)
 "dmy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -101180,6 +101170,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "dok" = (
@@ -128581,12 +128572,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"xwK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/science/misc_lab/range)
 "xze" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -154559,7 +154544,7 @@ dgn
 caE
 djr
 sTI
-dmv
+saw
 doj
 lOY
 lXM
@@ -155073,7 +155058,7 @@ cKl
 caE
 cea
 djr
-dmx
+saw
 dol
 dqb
 drD
@@ -155844,7 +155829,7 @@ dgo
 caE
 djr
 djr
-xwK
+saw
 doo
 dqd
 drF
