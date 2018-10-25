@@ -264,6 +264,9 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         for(var/j=0, j<parentSphere.hotelRoomTemp.height, j++)
             var/list/turfContents = list()
             for(var/atom/movable/A in locate(reservation.bottom_left_coords[1] + i, reservation.bottom_left_coords[2] + j, reservation.bottom_left_coords[3]))
+                if(ismob(A))
+                    if(!isliving(A))
+                        continue //Don't want to store ghosts
                 turfContents += A
                 A.forceMove(storageObj)
             storage[turfNumber] = turfContents
