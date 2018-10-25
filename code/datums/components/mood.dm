@@ -190,7 +190,7 @@
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
 			sanity_level = 2
-		if(SANITY_GREAT+1 to INFINITY+1)
+		if(SANITY_GREAT+1 to INFINITY)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
 			sanity_level = 1
