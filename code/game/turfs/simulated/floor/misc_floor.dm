@@ -141,6 +141,7 @@
 	icon_state = "plating"
 	baseturfs = /turf/open/floor/clockwork
 	footstep = FOOTSTEP_PLATING
+	var/dropped_brass
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
@@ -198,7 +199,10 @@
 	return
 
 /turf/open/floor/clockwork/crowbar_act(mob/living/user, obj/item/I)
-	if(baseturfs == type)
+	if(islist(baseturfs))
+		if(type in baseturfs)
+			return TRUE
+	else if(baseturfs == type)
 		return TRUE
 	user.visible_message("<span class='notice'>[user] begins slowly prying up [src]...</span>", "<span class='notice'>You begin painstakingly prying up [src]...</span>")
 	if(I.use_tool(src, user, 70, volume=80))
@@ -207,7 +211,14 @@
 	return TRUE
 
 /turf/open/floor/clockwork/make_plating()
-	new /obj/item/stack/tile/brass(src)
+	if(!dropped_brass)
+		new /obj/item/stack/tile/brass(src)
+		dropped_brass = TRUE
+	if(islist(baseturfs))
+		if(type in baseturfs)
+			return
+	else if(baseturfs == type)
+		return
 	return ..()
 
 /turf/open/floor/clockwork/narsie_act()
