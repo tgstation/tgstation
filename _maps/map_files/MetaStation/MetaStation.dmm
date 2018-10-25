@@ -83728,7 +83728,7 @@
 /area/construction/mining/aux_base)
 "ocT" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/science/misc_lab/range)
 "ojg" = (
 /turf/closed/wall,
