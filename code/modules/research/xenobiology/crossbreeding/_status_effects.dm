@@ -199,13 +199,13 @@
 /datum/status_effect/tarfoot/on_apply()
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
-		H.physiology.speed_mod += 0.5
+		H.physiology.adjust_speedmod(0.5, H)
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
-		H.physiology.speed_mod -= 0.5
+		H.physiology.adjust_spedemod(-0.5, H)
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -519,18 +519,18 @@ datum/status_effect/stabilized/blue/on_remove()
 		mod--
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
-			H.physiology.speed_mod--
+			H.physiology.adjust_speedmod(-1, H)
 	else if(mod < 1)
 		mod++
 		var/mob/living/carbon/human/H = owner
 		if(istype(H))
-			H.physiology.speed_mod++
+			H.physiology.adjust_speedmod(1, H)
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
-		H.physiology.speed_mod += -mod //Reset the changes.
+		H.physiology.adjust_speedmod(-mod)		//Reset the changes.
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"

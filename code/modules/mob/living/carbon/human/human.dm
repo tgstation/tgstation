@@ -22,7 +22,7 @@
 
 	//initialise organs
 	create_internal_organs() //most of it is done in set_species now, this is only for parent call
-	physiology = new()
+	physiology = new(src)
 
 	handcrafting = new()
 
@@ -889,6 +889,11 @@
 		. = ..(M,force,check_loc)
 		stop_pulling()
 
+/mob/living/carbon/human/proc/update_physiology(datum/physiology/P)
+	if(!istype(P))
+		return
+	add_movespeed_modifier(MOVESPEED_ID_HUMAN_PHYSIOLOGY, override = TRUE, P.speed_mod)
+
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
@@ -1043,3 +1048,5 @@
 
 /mob/living/carbon/human/species/zombie/krokodil_addict
 	race = /datum/species/krokodil_addict
+
+

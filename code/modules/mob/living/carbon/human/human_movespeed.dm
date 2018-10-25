@@ -12,7 +12,6 @@
 			. -= 1
 		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
 			. -= 2
-		. += H.physiology.speed_mod
 
 	if(!gravity)
 		var/obj/item/tank/jetpack/J = H.back

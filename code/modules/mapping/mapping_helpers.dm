@@ -48,7 +48,7 @@
 	else
 		thing.PlaceOnBottom(null, baseturf)
 
-	
+
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"

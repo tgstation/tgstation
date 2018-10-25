@@ -27,5 +27,15 @@
 
 	var/do_after_speed = 1 //Speed mod for do_after. Lower is better. If temporarily adjusting, please only modify using *= and /=, so you don't interrupt other calculations.
 
-/datum/physiology/New()
+/datum/physiology/New(mob/living/carbon/human/H)
 	armor = new
+	if(istype(H))
+		set_speedmod(speed_mod, H)
+
+/datum/physiology/proc/set_speedmod(new_speedmod, mob/living/carbon/human/updating)
+	speed_mod = new_speedmod
+	if(updating)
+		updating.update_physiology(src)
+
+/datum/physiology/proc/adjust_speedmod(amount)
+	set_speedmod(speed_mod + amount)
