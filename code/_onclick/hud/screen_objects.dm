@@ -652,7 +652,7 @@
 
 /obj/screen/sanity
 	name = "sanity"
-	icon_state = "sanity2"
+	icon_state = "sanity3"
 	screen_loc = ui_mood
 
 /obj/screen/splash
