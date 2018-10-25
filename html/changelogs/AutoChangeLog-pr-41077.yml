@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer spam fire alarms. Also, they're logged again."
