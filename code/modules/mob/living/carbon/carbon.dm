@@ -754,7 +754,7 @@
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (has_trait(TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !has_trait(TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
 			blind_eyes(1)
-			if(health <= HEALTH_THRESHOLD_NEARDEATH)
+			if(health <= HEALTH_THRESHOLD_NEARDEATH && !has_trait(TRAIT_NODEATH))
 				add_trait(TRAIT_SIXTHSENSE, "near-death")
 			else
 				remove_trait(TRAIT_SIXTHSENSE, "near-death")
