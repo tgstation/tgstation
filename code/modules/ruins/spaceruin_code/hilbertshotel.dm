@@ -30,9 +30,19 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /obj/item/hilbertshotel/Destroy()
     ejectRooms()
     return ..()
-    
+
+/obj/item/hilbertshotel/attack(mob/living/M, mob/living/user)
+    if(M.mind)
+        to_chat(user, "<span class='notice'>You invite [M] to the hotel.</span>")
+        promptAndCheckIn(M)
+    else
+        to_chat(user, "<span class='warning'>[M] is not intelligent enough to understand how to use this device!</span>")
+
 /obj/item/hilbertshotel/attack_self(mob/user)
     . = ..()
+    promptAndCheckIn(user)
+
+/obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
     var/chosenRoomNumber = input("What number room will you be checking into?", "Room Number") as null|num
     if(!chosenRoomNumber)
         return
@@ -53,6 +63,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     if(tryStoredRoom(chosenRoomNumber, user))
         return
     sendToNewRoom(chosenRoomNumber, user)
+
 
 /obj/item/hilbertshotel/proc/tryActiveRoom(var/roomNumber, var/mob/user)
     if(activeRooms["[roomNumber]"])
@@ -215,7 +226,9 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     explosion_block = INFINITY
     var/obj/item/hilbertshotel/parentSphere
 
-/turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
+/turf/closed/indestructible/hoteldoor/proc/promptExit(mob/user)
+    if(!user.mind)
+        return
     if(!parentSphere)
         to_chat(user, "<span class='warning'>The door seems to be malfunctioned and refuses to operate!</span>")
         return
@@ -223,6 +236,28 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         user.forceMove(get_turf(parentSphere))
         do_sparks(3, FALSE, get_turf(user))
 
+//If only this could be simplified...
+/turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
+    promptExit(user)  
+
+/turf/closed/indestructible/hoteldoor/attack_animal(mob/user)
+    promptExit(user)
+
+/turf/closed/indestructible/hoteldoor/attack_paw(mob/user)
+    promptExit(user)
+
+/turf/closed/indestructible/hoteldoor/attack_hulk(mob/living/carbon/human/user, does_attack_animation)
+    promptExit(user)
+
+/turf/closed/indestructible/hoteldoor/attack_larva(mob/user)
+    promptExit(user)
+
+/turf/closed/indestructible/hoteldoor/attack_slime(mob/user)
+    promptExit(user)
+    
+/turf/closed/indestructible/hoteldoor/attack_robot(mob/user)
+    promptExit(user)
+      
 /area/hilbertshotel
     name = "Hilbert's Hotel Room"
     icon_state = "hilbertshotel"
