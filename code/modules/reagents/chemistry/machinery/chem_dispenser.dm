@@ -541,6 +541,7 @@
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	upgrade_reagents = null
 	emagged_reagents = list("plasma")
 
 
