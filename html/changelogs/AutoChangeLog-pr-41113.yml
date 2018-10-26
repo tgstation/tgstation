@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "Destruction on Lavaland will no longer reveal space in rare situations."
