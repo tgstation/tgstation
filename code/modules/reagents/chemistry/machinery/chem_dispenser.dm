@@ -459,6 +459,7 @@
 		"lemonjuice",
 		"menthol"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"thirteenloko",
 		"whiskeycola",
@@ -509,6 +510,7 @@
 		"triple_sec",
 		"sake"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
@@ -561,6 +563,7 @@
 		"ammonia",
 		"ash",
 		"diethylamine")
+	upgrade_reagents = null
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
 	. = ..()
