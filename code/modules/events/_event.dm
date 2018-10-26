@@ -134,8 +134,6 @@
 //Lets the ghosts know that the event has started, and provides a follow link to a mob if possible
 //Only called once.
 /datum/round_event/proc/announce_to_ghosts()
-	if(control.max_occurrences == 0) //Event will not spawn
-		return
 	if(control.alert_observers)
 		if (atom_of_interest)
 			notify_ghosts("[control.name] has just been[control.random ? " randomly" : ""] triggered!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT, header="Event Triggered")
@@ -176,7 +174,8 @@
 	if(activeFor == startWhen)
 		processing = FALSE
 		start()
-		announce_to_ghosts()
+		if (!istype(src, /datum/round_event/ghost_role))
+			announce_to_ghosts() //Ghost roles handle announcing after the roles have been properly spawned from the try_spawn() proc
 		processing = TRUE
 
 	if(activeFor == announceWhen)
