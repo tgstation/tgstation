@@ -204,8 +204,9 @@
 		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
 	
 /datum/quirk/nonviolent/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
+	if(iscarbon(quirk_holder) && quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
+		var/mob/living/carbon/C = quirk_holder
+		to_chat(C, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
 		C.cure_trauma_type(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
 		qdel(src)
 
