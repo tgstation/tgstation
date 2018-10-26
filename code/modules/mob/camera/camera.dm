@@ -31,7 +31,7 @@
 	loc = destination
 	Moved(oldloc, NONE, TRUE)
 
-/mob/camera/proc/canUseStorage()
+/mob/camera/canUseStorage()
 	return FALSE
 
 /mob/camera/emote(act, m_type=1, message = null, intentional = FALSE)
