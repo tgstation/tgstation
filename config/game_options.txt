@@ -324,6 +324,10 @@ SEC_START_BRIG
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
 
+## NEAR-DEATH EXPERIENCE ###
+## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
+NEAR_DEATH_EXPERIENCE
+
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
 #SILENT_AI
