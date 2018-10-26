@@ -4,7 +4,6 @@
 /datum/quirk/no_taste
 	name = "Ageusia"
 	desc = "You can't taste anything! Toxic food will still poison you."
-	value = 0
 	mob_trait = TRAIT_AGEUSIA
 	gain_text = "<span class='notice'>You can't taste anything!</span>"
 	lose_text = "<span class='notice'>You can taste again!</span>"
@@ -13,7 +12,6 @@
 /datum/quirk/pineapple_liker
 	name = "Ananas Affinity"
 	desc = "You find yourself greatly enjoying fruits of the ananas genus. You can't seem to ever get enough of their sweet goodness!"
-	value = 0
 	gain_text = "<span class='notice'>You feel an intense craving for pineapple.</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
 
@@ -31,7 +29,6 @@
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
 	desc = "You find yourself greatly detesting fruits of the ananas genus. Serious, how the hell can anyone say these things are good? And what kind of madman would even dare putting it on a pizza!?"
-	value = 0
 	gain_text = "<span class='notice'>You find yourself pondering what kind of idiot actually enjoys pineapples...</span>"
 	lose_text = "<span class='notice'>Your feelings towards pineapples seem to return to a lukewarm state.</span>"
 
@@ -49,7 +46,6 @@
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
 	desc = "You dislike food that most people enjoy, and find delicious what they don't."
-	value = 0
 	gain_text = "<span class='notice'>You start craving something that tastes strange.</span>"
 	lose_text = "<span class='notice'>You feel like eating normal food again.</span>"
 
@@ -70,7 +66,6 @@
 /datum/quirk/monochromatic
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."
-	value = 0
 	medical_record_text = "Patient is afflicted with almost complete color blindness."
 
 /datum/quirk/monochromatic/add()

@@ -3,7 +3,6 @@
 /datum/quirk/blooddeficiency
 	name = "Acute Blood Deficiency"
 	desc = "Your body can't produce enough blood to sustain itself."
-	value = -2
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
@@ -19,7 +18,6 @@
 	name = "Depression"
 	desc = "You sometimes just hate life."
 	mob_trait = TRAIT_DEPRESSION
-	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
 	medical_record_text = "Patient has a severe mood disorder causing them to experience sudden moments of sadness."
@@ -28,7 +26,6 @@
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
 	desc = "You are the current owner of an heirloom, passed down for generations. You have to keep it safe!"
-	value = -1
 	mood_quirk = TRUE
 	var/obj/item/heirloom
 	var/where
@@ -141,7 +138,6 @@
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
 	desc = "You sleep like a rock! Whenever you're put to sleep, you sleep for a little bit longer."
-	value = -1
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = "<span class='danger'>You feel sleepy.</span>"
 	lose_text = "<span class='notice'>You feel awake again.</span>"
@@ -161,7 +157,6 @@
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
-	value = -1
 	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
@@ -179,7 +174,6 @@
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
-	value = -1
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -198,7 +192,6 @@
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
-	value = -2
 	mob_trait = TRAIT_PACIFISM
 	gain_text = "<span class='danger'>You feel repulsed by the thought of violence!</span>"
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
@@ -212,21 +205,18 @@
 /datum/quirk/poor_aim
 	name = "Poor Aim"
 	desc = "You're terrible with guns and can't line up a straight shot to save your life. Dual-wielding is right out."
-	value = -1
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
 
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
 	desc = "You have a mental disorder that prevents you from being able to recognize faces at all."
-	value = -1
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
 	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
-	value = -1
 	var/slot_string = "limb"
 
 /datum/quirk/prosthetic_limb/on_spawn()
@@ -258,7 +248,6 @@
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
-	value = -2
 	//no mob trait because it's handled uniquely
 	gain_text = "<span class='userdanger'>...</span>"
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
@@ -283,7 +272,6 @@
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
-	value = -1
 	gain_text = "<span class='danger'>You start worrying about what you're saying.</span>"
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."

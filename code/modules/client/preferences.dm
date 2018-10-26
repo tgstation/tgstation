@@ -888,13 +888,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	else
 		dat += "<center><b>Choose quirk setup</b></center><br>"
-		dat += "<div align='center'>Left-click to add or remove quirks. You need negative quirks to have positive ones.<br>\
-		Quirks are applied at roundstart and cannot normally be removed.</div>"
+		dat += "<div align='center'>Left-click to add or remove quirks. Positive quirks cost points, while neutral and negative quirks are free.<br>\
+		Your character can have a maximum of [MAX_QUIRKS] quirks.</div>"
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
 		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
-		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
-		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
+		dat += "<center><b>Points remaining:</b> [GetQuirkBalance()]</center><br>"
 		for(var/V in SSquirks.quirks)
 			var/datum/quirk/T = SSquirks.quirks[V]
 			var/quirk_name = initial(T.name)
@@ -925,10 +924,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else
 				if(has_quirk)
 					dat += "<b><font color='[font_color]'>[quirk_name]</font></b> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"][quirk_cost ? " ([quirk_cost] pts.)" : ""]</a><br>"
 				else
 					dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
-					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
+					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"][quirk_cost ? " ([quirk_cost] pts.)" : ""]</a><br>"
 		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Quirks</a></center>"
 
 	user << browse(null, "window=preferences")
@@ -939,7 +938,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return
 
 /datum/preferences/proc/GetQuirkBalance()
-	var/bal = 0
+	var/bal = BASE_QUIRK_POINTS
 	for(var/V in all_quirks)
 		var/datum/quirk/T = SSquirks.quirks[V]
 		bal -= initial(T.value)
