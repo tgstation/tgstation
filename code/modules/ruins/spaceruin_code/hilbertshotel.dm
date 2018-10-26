@@ -43,13 +43,15 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     promptAndCheckIn(user)
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
-    var/chosenRoomNumber = input("What number room will you be checking into?", "Room Number") as null|num
+    var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
     if(!chosenRoomNumber)
         return
     if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)) || (chosenRoomNumber == INFINITY))
         to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
         return
-    forceMove(get_turf(user))
+    if(ismob(loc))
+        if(user == loc) //Not always the same as user
+            forceMove(get_turf(user)) 
     if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
         if(!GLOB.hhStorageTurf)
             var/datum/map_template/hilbertshotelstorage/storageTemp = new()
