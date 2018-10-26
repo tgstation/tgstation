@@ -84,6 +84,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/neutral_quirks = list()
 	var/list/all_quirks = list()
 	var/list/character_quirks = list()
+	var/free_quirk //A free 1-point quirk if you have no other point-altering quirks
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -888,13 +889,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	else
 		dat += "<center><b>Choose quirk setup</b></center><br>"
-		dat += "<div align='center'>Left-click to add or remove quirks. You need negative quirks to have positive ones.<br>\
+		dat += "<div align='center'>Left-click to add or remove quirks. You can get a 1-point quirk for free, or get points by adding disabilities.<br>\
 		Quirks are applied at roundstart and cannot normally be removed.</div>"
 		dat += "<center><a href='?_src_=prefs;preference=trait;task=close'>Done</a></center>"
 		dat += "<hr>"
 		dat += "<center><b>Current quirks:</b> [all_quirks.len ? all_quirks.Join(", ") : "None"]</center>"
 		dat += "<center>[positive_quirks.len] / [MAX_QUIRKS] max positive quirks<br>\
-		<b>Quirk balance remaining:</b> [GetQuirkBalance()]</center><br>"
+		<b>Quirk balance remaining:</b> [GetQuirkBalance()][free_quirk ? " (Using free quirk)":""]</center><br>"
 		for(var/V in SSquirks.quirks)
 			var/datum/quirk/T = SSquirks.quirks[V]
 			var/quirk_name = initial(T.name)
@@ -1016,6 +1017,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(quirk in positive_quirks)
 						positive_quirks -= quirk
 						all_quirks -= quirk
+						if(free_quirk == quirk)
+							free_quirk = null
 					else if(quirk in negative_quirks)
 						if(balance + value < 0)
 							to_chat(user, "<span class='warning'>Refunding this would cause you to go below your balance!</span>")
@@ -1023,6 +1026,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						negative_quirks -= quirk
 						all_quirks -= quirk
 					else if(value > 0)
+						if(!negative_quirks.len && !free_quirk && (value == 1))
+							free_quirk = quirk
+							positive_quirks += quirk
+							all_quirks += quirk
+							return
 						if(positive_quirks.len >= MAX_QUIRKS)
 							to_chat(user, "<span class='warning'>You can't have more than [MAX_QUIRKS] positive quirks!</span>")
 							return
@@ -1032,6 +1040,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						positive_quirks += quirk
 						all_quirks += quirk
 					else
+						free_quirk = null //If you get points you lose the free quirk
 						negative_quirks += quirk
 						all_quirks += quirk
 				SetQuirks(user)
@@ -1040,6 +1049,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				positive_quirks = list()
 				negative_quirks = list()
 				neutral_quirks = list()
+				free_quirk = null
 				SetQuirks(user)
 			else
 				SetQuirks(user)
