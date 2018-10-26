@@ -12,7 +12,7 @@
 	lose_text = "<span class='notice'>You feel more grounded.</span>"
 
 /datum/brain_trauma/mild/hallucinations/on_life()
-	if(owner.reagents.has_reagent("mindbreaker")
+	if(owner.reagents.has_reagent("mindbreaker"))
 		owner.hallucination = 0
 	else
 		owner.hallucination = min(owner.hallucination + 10, 50)
