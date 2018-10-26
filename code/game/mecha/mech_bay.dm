@@ -23,7 +23,6 @@
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/max_charge = 50
 	var/on = FALSE
-	var/repairability = 0
 	var/turf/recharging_turf = null
 
 /obj/machinery/mech_bay_recharge_port/Initialize()
