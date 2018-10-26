@@ -162,7 +162,9 @@
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
 
 /datum/quirk/nearsighted/add()
-	quirk_holder.become_nearsighted(ROUNDSTART_TRAIT)
+	if(ishuman(quirk_holder))
+		var/mob/living/carbon/human/H = quirk_holder
+		H.dna.add_mutation(BADSIGHT)
 
 /datum/quirk/nearsighted/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -192,14 +194,19 @@
 /datum/quirk/nonviolent
 	name = "Pacifist"
 	desc = "The thought of violence makes you sick. So much so, in fact, that you can't hurt anyone."
-	mob_trait = TRAIT_PACIFISM
 	gain_text = "<span class='danger'>You feel repulsed by the thought of violence!</span>"
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
 
+/datum/quirk/nonviolent/add()
+	if(iscarbon(quirk_holder))
+		var/mob/living/carbon/C = quirk_holder
+		C.gain_trauma(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
+	
 /datum/quirk/nonviolent/on_process()
 	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
 		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
+		C.cure_trauma_type(/datum/brain_trauma/severe/pacifism, TRAUMA_RESILIENCE_LOBOTOMY)
 		qdel(src)
 
 /datum/quirk/poor_aim
@@ -253,15 +260,10 @@
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
 
-/datum/quirk/insanity/on_process()
-	if(quirk_holder.reagents.has_reagent("mindbreaker"))
-		quirk_holder.hallucination = 0
-		return
-	if(prob(2)) //we'll all be mad soon enough
-		madness()
-
-/datum/quirk/insanity/proc/madness()
-	quirk_holder.hallucination += rand(10, 25)
+/datum/quirk/insanity/add()
+	if(iscarbon(quirk_holder))
+		var/mob/living/carbon/C = quirk_holder
+		C.gain_trauma(/datum/brain_trauma/mild/hallucinations, TRAUMA_RESILIENCE_LOBOTOMY)
 
 /datum/quirk/insanity/post_add() //I don't /think/ we'll need this but for newbies who think "roleplay as insane" = "license to kill" it's probably a good thing to have
 	if(!quirk_holder.mind || quirk_holder.mind.special_role)
