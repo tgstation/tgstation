@@ -233,7 +233,7 @@
 
 /datum/component/storage/proc/quick_empty(mob/M)
 	var/atom/A = parent
-	if(M.canUseStorage() && A.Adjacent(M) && (A.loc != M) && M.incapacitated())
+	if(M.canUseStorage() && (A.loc != M) && A.Adjacent(M) && M.incapacitated())
 		return
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")
