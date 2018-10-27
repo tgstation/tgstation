@@ -21,7 +21,8 @@ GLOBAL_LIST(op_se_blocks)
 GLOBAL_VAR(NULLED_SE)
 GLOBAL_VAR(NULLED_UI)
 
-GLOBAL_LIST_EMPTY(global_mutations) // list of hidden mutation things
+GLOBAL_LIST_EMPTY(all_mutations) // list of hidden mutation things
+GLOBAL_LIST_EMPTY(all_mutations_types) // same list but [type] = object instead of [name = object]. Ideally they should all be reworked to this, but it'd would fuck up so many dependencies
 
 GLOBAL_LIST_EMPTY(bad_mutations)
 GLOBAL_LIST_EMPTY(good_mutations)

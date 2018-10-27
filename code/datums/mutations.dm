@@ -21,6 +21,13 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/time_coeff = 1 //coefficient for timed mutations
 	var/datum/dna/dna
 	var/mob/living/carbon/human/owner
+	var/instability = 0 //instability the holder gets when the mutation is not native
+	var/class
+
+
+/datum/mutation/human/New(class_ = MUT_OTHER)
+	. = ..()
+	class = class_
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
 	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))
@@ -109,6 +116,4 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		return TRUE
 
 /proc/get_initialized_mutation(B)
-	for(var/datum/mutation/human/A in GLOB.mutations_list)
-		if(A.type == B)
-			return A
+	return GLOB.all_mutations_types[B]

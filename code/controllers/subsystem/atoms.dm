@@ -110,6 +110,8 @@ SUBSYSTEM_DEF(atoms)
 /datum/controller/subsystem/atoms/proc/setupGenetics()
 	for(var/A in subtypesof(/datum/mutation/human))
 		var/datum/mutation/human/B = new A()
+		GLOB.all_mutations[B.name] = B
+		GLOB.all_mutations_types[B.type] = B
 		if(B.locked)
 			continue
 		if(B.quality == POSITIVE)
@@ -118,7 +120,7 @@ SUBSYSTEM_DEF(atoms)
 			GLOB.bad_mutations |= B
 		else if(B.quality == MINOR_NEGATIVE)
 			GLOB.not_good_mutations |= B
-		GLOB.mutations_list[B] = B.name
+		GLOB.mutations_list[B.name] = B
 		CHECK_TICK
 
 /datum/controller/subsystem/atoms/proc/InitLog()

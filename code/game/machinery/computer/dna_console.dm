@@ -28,8 +28,8 @@ X New html
 X Make mutations stable and working
 X Make inspect work, with DISCOVER button
 Allow single mutation disks
-Mutation activators
-Mutation injectors
+X Mutation activators
+X Mutation injectors
 More mutations
 100 hours of testing and dependency restructuring
 ?Chromosomes
@@ -315,6 +315,10 @@ More mutations
 					temp_html += "<a href='?src=[REF(src)];task=savemut;'>Store</a>"
 				else
 					temp_html += "<span class='linkOff'>Store</span>"
+				if(!ispath(current_mutation) && current_mutation.class == MUT_EXTRA)
+					temp_html += "<a href='?src=[REF(src)];task=nullify;'>Nullify</a>"
+				else
+					temp_html += "<span class='linkOff'>Nullify</span>"
 			else
 				current_screen = null
 		if("mutations")
@@ -324,7 +328,12 @@ More mutations
 			for(var/datum/mutation/human/HM in stored_mutations)
 				var/i = stored_mutations.Find(HM)
 				temp_html += "<a href='?src=[REF(src)];task=inspect;num=[DNA_STRUC_ENZYMES_BLOCKS + i]'>[HM.name]</a>"
-				temp_html += "<a href='?src=[REF(src)];task=activator;num=[i]'>Print Activator</a>"
+				if(injectorready < world.time)
+					temp_html += "<a href='?src=[REF(src)];task=activator;num=[i]'>Print Activator</a>"
+					temp_html += "<a href='?src=[REF(src)];task=mutator;num=[i]'>Print Injector</a>"
+				else
+					temp_html += "<span class='linkOff'>Print Activator</span>"
+					temp_html += "<span class='linkOff'>Print Injector</span>"
 				temp_html += "<a href='?src=[REF(src)];task=deletemut;num=[i]'>Delete</a>"
 				temp_html += "<br>"
 		else
@@ -340,7 +349,7 @@ More mutations
 
 			var/max_line_len = 7*DNA_BLOCK_SIZE
 			if(viable_occupant)
-				temp_html += generate_DBN(1, viable_occupant)
+				temp_html += "<div class='dnaBlockNumber'>1</div>"
 				var/len = length(viable_occupant.dna.uni_identity)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
@@ -354,7 +363,7 @@ More mutations
 
 			temp_html += "<br><div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
 			if(viable_occupant)
-				temp_html += "<div class='dnaBlockNumber'>1</div>"
+				temp_html += generate_DBN(1, viable_occupant)
 				var/len = length(viable_occupant.dna.struc_enzymes)
 				for(var/i=1, i<=len, i++)
 					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
@@ -362,29 +371,40 @@ More mutations
 						temp_html += "</div><div class='clearBoth'>"
 					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
 						var/cur_block = (i / DNA_BLOCK_SIZE) + 1
-						to_chat(world,"10-[cur_block-1]-[i]-[DNA_BLOCK_SIZE]")
 						temp_html += generate_DBN(cur_block, viable_occupant)
 			else
 				temp_html += "----"
-			temp_html += "</div></div></div>"
+			temp_html += "</div></div></div><br>"
+			temp_html += "<br><div class='line'><div class='statusLabel'>Bi-Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
+			for(var/datum/mutation/human/HM in viable_occupant.dna.mutations)
+				if(HM.class == MUT_EXTRA)
+					temp_html += generate_DBN(DNA_STRUC_ENZYMES_BLOCKS+LAZYLEN(stored_mutations)+viable_occupant.dna.mutations.Find(HM),viable_occupant, "0", HM.type)
+				else if(HM.class == MUT_NORMAL)
+					temp_html += generate_DBN(viable_occupant.dna.mutation_index.Find(HM.type),viable_occupant)
+				else
+					break
+				temp_html += "<div class='dnaBlockNumber'>[HM.name]</div>"
+
+			temp_html += "</div></div></div><br><br>"
 
 	popup.set_content(temp_html.Join())
 	popup.open()
 
-/obj/machinery/computer/scan_consolenew/proc/generate_DBN(i,mob/living/carbon/viable_occupant) //generate_dna_block_number
-	var/mutation = viable_occupant.dna.mutation_index[i]
-	var/datum/mutation/human/M = viable_occupant.dna.get_mutation(mutation)
+/obj/machinery/computer/scan_consolenew/proc/generate_DBN(i,mob/living/carbon/viable_occupant,show_as, mutation_type) //generate_dna_block_number
+	if(!mutation_type)
+		mutation_type = viable_occupant.dna.mutation_index[i]
+	var/datum/mutation/human/M = viable_occupant.dna.get_mutation(mutation_type)
 	var/temp_html
 	var/path
 	if(M)
 		path = M.type
 	else
-		path = mutation
+		path = mutation_type
 	var/mut_style = "dnaBlockNumber"
 	if((path in stored_research.discovered_mutations) || M)
 		var/quality
 		if(!M)
-			var/datum/mutation/human/HM = get_initialized_mutation(mutation)
+			var/datum/mutation/human/HM = get_initialized_mutation(mutation_type)
 			quality = HM.quality
 		else
 			quality = M.quality
@@ -395,7 +415,7 @@ More mutations
 				mut_style = "dnaBlockNumberNeutral"
 			if(NEGATIVE)
 				mut_style = "dnaBlockNumberBad"
-		temp_html += "<a class='[mut_style]' href='?src=[REF(src)];task=inspect;num=[i];'>[i]</a>"
+		temp_html += "<a color=red class='[mut_style]' href='?src=[REF(src)];task=inspect;num=[i];'>[show_as ? show_as : i]</a>"
 	else
 		temp_html += "<div class='dnaBlockNumber'>[i]</div>"
 	return temp_html
@@ -576,10 +596,12 @@ More mutations
 					connected.locked = locked_state
 		if("inspect")
 			var/mutloc = text2num(href_list["num"])
-			if(mutloc > DNA_STRUC_ENZYMES_BLOCKS)
+			if(mutloc > DNA_STRUC_ENZYMES_BLOCKS + LAZYLEN(stored_mutations))
+				current_mutation = viable_occupant.dna.mutations[mutloc-DNA_STRUC_ENZYMES_BLOCKS-LAZYLEN(stored_mutations)]
+			else if(mutloc > DNA_STRUC_ENZYMES_BLOCKS)
 				current_mutation = stored_mutations[mutloc-DNA_STRUC_ENZYMES_BLOCKS]
 			else
-				current_mutation = viable_occupant.dna.get_mutation(viable_occupant.dna.mutation_index[mutloc])
+				current_mutation = get_initialized_mutation(viable_occupant.dna.mutation_index[mutloc])
 			current_screen = "info"
 		if("savemut")
 			var/succes = FALSE
@@ -608,6 +630,20 @@ More mutations
 					I.HM.copy_mutation(HM)
 					I.name = "[HM.name] activator"
 					injectorready = world.time + INJECTOR_TIMEOUT
+		if("mutator")
+			if(injectorready < world.time)
+				var/datum/mutation/human/HM = stored_mutations[text2num(href_list["num"])]
+				if(HM)
+					var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+					I.HM = new HM.type()
+					I.HM.copy_mutation(HM)
+					I.doitanyway = TRUE
+					I.name = "[HM.name] injector"
+					injectorready = world.time + INJECTOR_TIMEOUT
+		if("nullify")
+			viable_occupant.dna.force_lose(current_mutation)
+			viable_occupant.dna.update_instability(TRUE)
+			current_screen = null
 
 	ui_interact(usr,last_change)
 

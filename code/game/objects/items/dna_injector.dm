@@ -24,9 +24,10 @@
 
 /obj/item/dnainjector/proc/prepare()
 	for(var/mut_key in add_mutations_static)
-		add_mutations.Add(GLOB.mutations_list[mut_key])
+		add_mutations.Add(GLOB.all_mutations[mut_key])
 	for(var/mut_key in remove_mutations_static)
-		remove_mutations.Add(GLOB.mutations_list[mut_key])
+		var/datum/mutation/human/HM = GLOB.all_mutations[mut_key]
+		remove_mutations.Add(HM.type)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
 	prepare()
@@ -40,7 +41,10 @@
 			if(HM.name == RACEMUT)
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-			M.dna.force_give(HM)
+			if(M.dna.mutation_in_se(HM))
+				M.dna.activate_mutation(HM)
+			else
+				M.dna.force_give(HM, MUT_EXTRA)
 		if(fields)
 			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				M.real_name = fields["name"]
@@ -372,6 +376,7 @@
 	name = "\improper DNA activator"
 	desc = "Activates the current mutation on injection, if the subject has it."
 	var/datum/mutation/human/HM
+	var/doitanyway = FALSE
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	prepare()
@@ -379,9 +384,13 @@
 	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
-		if(!M.dna.activate_mutation(HM))
+
+		if(!M.dna.activate_mutation(HM) && !doitanyway)
 			log_msg += "(FAILED)"
+		else if(doitanyway)
+			M.dna.force_give(HM, MUT_EXTRA)
 		log_msg += "([HM.name])"
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE
+

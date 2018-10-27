@@ -14,6 +14,7 @@
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 	var/mutation_index[DNA_STRUC_ENZYMES_BLOCKS] //List of which mutations this carbon has and its assigned block
+	var/instability
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -59,13 +60,13 @@
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations.Copy()
 
-/datum/dna/proc/add_mutation(mutation_name)
+/datum/dna/proc/add_mutation(mutation_name, class = MUT_NORMAL)
 	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
-	HM.on_acquiring(holder)
+	force_give(HM, class)
 
 /datum/dna/proc/remove_mutation(mutation_name)
 	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
-	HM.on_losing(holder)
+	force_lose(HM.type)
 
 /datum/dna/proc/check_mutation(mutation_name)
 	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
@@ -117,7 +118,7 @@
 		var/datum/mutation/human/A = get_initialized_mutation(M)
 		if(A.name == RACEMUT && ismonkey(holder))
 			sorting[mutation_index.Find(M)] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			mutations |= new M()
+			mutations |= new M(MUT_NORMAL)
 		else
 			sorting[mutation_index.Find(M)] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
 
@@ -155,14 +156,15 @@
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
 
-/datum/dna/proc/force_give(datum/mutation/human/HM)
+/datum/dna/proc/force_give(datum/mutation/human/HM, class)
 	if(holder)
 		var/path = HM
 		if(!ispath(HM))
 			path = HM.type
-		var/datum/mutation/human/A = new path()
+		var/datum/mutation/human/A = new path(class)
 		A.copy_mutation(HM)
-		set_block(1, HM)
+		if(class == MUT_NORMAL)
+			set_block(1, HM)
 		. = A.on_acquiring(holder)
 		if(.)
 			qdel(A)
@@ -170,8 +172,12 @@
 /datum/dna/proc/force_lose(datum/mutation/human/HM)
 	if(holder)
 		var/datum/mutation/human/A
-		if(ispath(HM) && mutations[HM])
-			A = mutations[HM]
+		if(ispath(HM))
+			var/mutation = get_mutation(HM)
+			if(mutation)
+				A = mutation
+			else
+				return TRUE
 		else if(!ispath(HM))
 			A = HM
 		else
@@ -203,6 +209,28 @@
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
+
+/datum/dna/proc/update_instability(alert=FALSE)
+	instability = 0
+	for(var/datum/mutation/human/M in mutations)
+		if(M.class == MUT_EXTRA)
+			instability += M.instability
+	if(holder && alert)
+		var/message
+		switch(instability)
+			if(10 to 30)
+				message = "<span class='warning'>You shiver.</span>"
+			if(31 to 50)
+				message = "<span class='warning'>You feel cold.</span>"
+			if(51 to 70)
+				message = "<span class='warning'>It feels like your skin is moving.</span>"
+			if(71 to 90)
+				message = "<span class='warning'>You can feel your cells burning.</span>"
+			if(91 to INFINITY)
+				message = "<span class='warning'>You are filled with dread.</span>"
+		if(message)
+			to_chat(holder,message)
+
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
@@ -393,11 +421,16 @@
 		return
 	if(ispath(HM))
 		HM = get_initialized_mutation(HM)
-	if(!(HM.type in mutation_index)) //cant activate what we dont have, use force_give
+	if(!mutation_in_se(HM)) //cant activate what we dont have, use force_give
 		return FALSE
 	return force_give(HM)
 
+/datum/dna/proc/mutation_in_se(datum/mutation/human/HM)
+	if(!(HM.type in mutation_index)) //cant activate what we dont have, use force_give
+		return FALSE
+
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
+
 /proc/getleftblocks(input,blocknumber,blocksize)
 	if(blocknumber > 1)
 		return copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
