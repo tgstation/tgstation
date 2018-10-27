@@ -712,7 +712,7 @@ world
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
-	#define SET_SELF(SETVAR) \
+	#define SET_SELF(SETVAR) do { \
 		var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null); \
 		if(A.alpha<255) { \
 			SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);\
@@ -723,7 +723,8 @@ world
 			else{ \
 				SELF_ICON.Blend(A.color,ICON_MULTIPLY)} \
 		} \
-		##SETVAR=SELF_ICON;
+		##SETVAR=SELF_ICON;\
+		} while (0)
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
 	#define INDEX_Y_LOW 3
