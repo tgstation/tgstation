@@ -875,7 +875,7 @@ world
 				flat.MapColors(arglist(A.color))
 			else
 				flat.Blend(A.color, ICON_MULTIPLY)
-		
+
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
@@ -1050,7 +1050,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 		if(prefs)
 			prefs.copy_to(body,TRUE,FALSE)
 		if(J)
-			J.equip(body, TRUE, FALSE, outfit_override = outfit_override)
+			J.equip(body, TRUE, FALSE, outfit_override = outfit_override, disable_alt_appearance = prefs?.disable_alt_outfits)
 		else if (outfit_override)
 			body.equipOutfit(outfit_override,visualsOnly = TRUE)
 

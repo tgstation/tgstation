@@ -218,6 +218,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
 	S["gender"]				>> gender
+	S["disable_alt_outfits"] >> disable_alt_outfits
 	S["age"]				>> age
 	S["hair_color"]			>> hair_color
 	S["facial_hair_color"]	>> facial_hair_color
@@ -358,6 +359,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
 	WRITE_FILE(S["gender"]				, gender)
+	WRITE_FILE(S["disable_alt_outfits"]	, disable_alt_outfits)
 	WRITE_FILE(S["age"]				, age)
 	WRITE_FILE(S["hair_color"]			, hair_color)
 	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)

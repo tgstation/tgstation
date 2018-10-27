@@ -59,7 +59,7 @@
 
 	if(previewJob)
 		mannequin.job = previewJob.title
-		previewJob.equip(mannequin, TRUE)
+		previewJob.equip(mannequin, TRUE, disable_alt_appearance = disable_alt_outfits)
 	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")

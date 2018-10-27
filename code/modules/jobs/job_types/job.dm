@@ -84,7 +84,7 @@
 		return antag_rep
 
 //Don't override this unless the job transforms into a non-human (Silicons do this for example)
-/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source)
+/datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE, announce = TRUE, latejoin = FALSE, datum/outfit/outfit_override = null, client/preference_source, disable_alt_appearance)
 	if(!H)
 		return FALSE
 	if(!visualsOnly)
@@ -104,7 +104,7 @@
 		if(!outfit_to_use) //check to make sure there's no override
 
 			//here be randomized outfits
-			if(CONFIG_GET(flag/alternative_job_outfits) && has_alternative_outfits && prob(alt_outfit_probability ? alt_outfit_probability : CONFIG_GET(number/alternative_job_outfits_probability)))
+			if(CONFIG_GET(flag/alternative_job_outfits) && !(disable_alt_appearance || preference_source?.prefs?.disable_alt_outfits) && has_alternative_outfits && prob(alt_outfit_probability ? alt_outfit_probability : CONFIG_GET(number/alternative_job_outfits_probability)))
 				var/list/alt_outfits = LAZYLEN(alternative_outfits) ? alternative_outfits.Copy() : list()
 
 				var/mob_is_male = (H.gender == MALE) ? TRUE : FALSE
