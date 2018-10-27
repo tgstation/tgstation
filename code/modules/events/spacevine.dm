@@ -378,7 +378,7 @@
 	var/list/vine_mutations_list
 	var/mutativeness = 1
 
-/datum/spacevine_controller/New(turf/location, list/muts, potency, production)
+/datum/spacevine_controller/New(turf/location, list/muts, potency, production, var/event = null)
 	vines = list()
 	growth_queue = list()
 	spawn_spacevine_piece(location, null, muts)

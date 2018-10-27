@@ -13,6 +13,9 @@
 	intact = FALSE
 	baseturfs = /turf/baseturf_bottom
 	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	var/attachment_holes = TRUE
 

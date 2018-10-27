@@ -141,7 +141,10 @@
 	icon_state = "plating"
 	baseturfs = /turf/open/floor/clockwork
 	footstep = FOOTSTEP_PLATING
-	var/dropped_brass
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+  var/dropped_brass
 	var/uses_overlay = TRUE
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
