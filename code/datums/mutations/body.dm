@@ -63,6 +63,7 @@
 	quality = POSITIVE
 	get_chance = 15
 	lowest_value = 256 * 12
+	instability = 5
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
 	if(..())

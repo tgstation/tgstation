@@ -7,6 +7,7 @@
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 	time_coeff = 5
+	instability = 20
 
 /datum/mutation/human/cold_resistance/New()
 	..()
@@ -27,7 +28,3 @@
 	owner.remove_trait(TRAIT_RESISTCOLD, "cold_resistance")
 	owner.remove_trait(TRAIT_RESISTLOWPRESSURE, "cold_resistance")
 
-/datum/mutation/human/cold_resistance/on_life(mob/living/carbon/human/owner)
-	if(owner.getFireLoss())
-		if(prob(1))
-			owner.heal_bodypart_damage(0,1)   //Is this really needed?

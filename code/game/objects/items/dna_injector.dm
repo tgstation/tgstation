@@ -391,6 +391,7 @@
 			M.dna.force_give(HM, MUT_EXTRA)
 		log_msg += "([HM.name])"
 		log_attack("[log_msg] [loc_name(user)]")
+		M.dna.update_instability(TRUE)
 		return TRUE
 	return FALSE
 

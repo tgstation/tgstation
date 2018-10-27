@@ -123,7 +123,6 @@
 			sorting[mutation_index.Find(M)] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
 
 	for(var/B in sorting)
-		to_chat(world,B)
 		result += B
 	return result
 
@@ -157,7 +156,7 @@
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
 
 /datum/dna/proc/force_give(datum/mutation/human/HM, class)
-	if(holder)
+	if(holder && HM)
 		var/path = HM
 		if(!ispath(HM))
 			path = HM.type
@@ -399,22 +398,22 @@
 /datum/dna/proc/check_block_string(datum/mutation/human/A)
 	if(lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return 0
-	if(hex2num(getblock(struc_enzymes, mutation_index[A])) >= initial(A.lowest_value))
+	if(hex2num(getblock(struc_enzymes, mutation_index.Find(A))) >= initial(A.lowest_value))
 		return 1
 
-/datum/dna/proc/set_se(on=TRUE, datum/mutation/human/A)
+/datum/dna/proc/set_se(on=TRUE, mutation)
 	if(!struc_enzymes || lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return
-	var/lowest_value = initial(A.lowest_value)
-	var/before = copytext(struc_enzymes, 1, ((mutation_index[A] - 1) * DNA_BLOCK_SIZE) + 1)
+	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
+	var/lowest_value = HM.lowest_value
+	var/before = copytext(struc_enzymes, 1, ((mutation_index.Find(mutation) - 1) * DNA_BLOCK_SIZE) + 1)
 	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
-	var/after = copytext(struc_enzymes, (mutation_index[A] * DNA_BLOCK_SIZE) + 1, 0)
+	var/after = copytext(struc_enzymes, (mutation_index.Find(mutation) * DNA_BLOCK_SIZE) + 1, 0)
 	return before + injection + after
 
-
-/datum/dna/proc/set_block(on=TRUE, datum/mutation/human/A)
-	if(holder && holder.has_dna() && (A in mutation_index))
-		struc_enzymes = set_se(on, A)
+/datum/dna/proc/set_block(on=TRUE, datum/mutation/human/HM)
+	if(holder && holder.has_dna() && (HM in mutation_index))
+		struc_enzymes = set_se(on, HM)
 
 /datum/dna/proc/activate_mutation(datum/mutation/human/HM)
 	if(!HM)

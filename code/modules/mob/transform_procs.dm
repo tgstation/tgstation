@@ -52,7 +52,7 @@
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
 		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = O.dna.set_se(1,R)//we don't want to keep the race block inactive
+		O.dna.struc_enzymes = O.dna.set_se(1,R.type)//we don't want to keep the race block inactive
 
 	if(suiciding)
 		O.suiciding = suiciding
@@ -207,9 +207,8 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = O.dna.set_se(on=0, R)//we don't want to keep the race block active
-		O.domutcheck()
+		O.dna.struc_enzymes = O.dna.set_se(0, /datum/mutation/human/race)//i spent 3 hours debugging trying to figure out why I cant just use the type from the monkey mutation, with no fucking
+		O.domutcheck()												          													 	// succes even though they are the same exact fucking thing
 
 	if(suiciding)
 		O.suiciding = suiciding
