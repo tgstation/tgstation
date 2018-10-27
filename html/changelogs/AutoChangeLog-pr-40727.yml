@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - tweak: "Random Events now have a follow link for ghosts!"
