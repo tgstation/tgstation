@@ -124,12 +124,12 @@
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
-			if(!I.imp_in || !isliving(I.loc))
+			if(!I.imp_in || !isliving(I.loc) || !I.allow_teleport)
 				continue
 			else
 				var/mob/living/M = I.loc
 				if(M.stat == DEAD)
-					if(M.timeofdeath + 6000 < world.time)
+					if(M.timeofdeath + I.lifespan_postmortem < world.time)
 						continue
 				if(is_eligible(I))
 					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
