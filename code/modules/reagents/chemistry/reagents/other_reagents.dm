@@ -1246,7 +1246,6 @@
 
 /datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(-2*REM, 0)
-	. = TRUE //Update status effects.
 	..()
 
 /datum/reagent/nitryl
