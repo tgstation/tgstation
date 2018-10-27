@@ -137,7 +137,7 @@
 			L.visible_message("<span class='danger'>[acting_object] is trying to inject [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to inject you!</span>")
 			busy = TRUE
-			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
+			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject)))
 				var/fraction = min(transfer_amount/reagents.total_volume, 1)
 				reagents.reaction(L, INJECT, fraction)
 				reagents.trans_to(L, transfer_amount)
@@ -166,7 +166,7 @@
 			L.visible_message("<span class='danger'>[acting_object] is trying to take a blood sample from [L]!</span>", \
 								"<span class='userdanger'>[acting_object] is trying to take a blood sample from you!</span>")
 			busy = TRUE
-			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,null,0)))
+			if(do_atom(src, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject)))
 				if(L.transfer_blood_to(src, tramount))
 					L.visible_message("<span class='danger'>[acting_object] takes a blood sample from [L]!</span>", \
 					"<span class='userdanger'>[acting_object] takes a blood sample from you!</span>")
