@@ -48,23 +48,23 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("machine frame", /obj/structure/frame/machine, 5, time = 25, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
 	new /datum/stack_recipe_list("airlock assemblies", list( \
-		new /datum/stack_recipe("standard airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("public airlock assembly", /obj/structure/door_assembly/door_assembly_public, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("command airlock assembly", /obj/structure/door_assembly/door_assembly_com, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("security airlock assembly", /obj/structure/door_assembly/door_assembly_sec, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("engineering airlock assembly", /obj/structure/door_assembly/door_assembly_eng, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("mining airlock assembly", /obj/structure/door_assembly/door_assembly_min, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("atmospherics airlock assembly", /obj/structure/door_assembly/door_assembly_atmo, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("research airlock assembly", /obj/structure/door_assembly/door_assembly_research, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("freezer airlock assembly", /obj/structure/door_assembly/door_assembly_fre, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("science airlock assembly", /obj/structure/door_assembly/door_assembly_science, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("medical airlock assembly", /obj/structure/door_assembly/door_assembly_med, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("virology airlock assembly", /obj/structure/door_assembly/door_assembly_viro, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_mai, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("external airlock assembly", /obj/structure/door_assembly/door_assembly_ext, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("external maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_extmai, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("airtight hatch assembly", /obj/structure/door_assembly/door_assembly_hatch, 4, time = 50, one_per_turf = 1, on_floor = 1), \
-		new /datum/stack_recipe("maintenance hatch assembly", /obj/structure/door_assembly/door_assembly_mhatch, 4, time = 50, one_per_turf = 1, on_floor = 1), \
+		new /datum/stack_recipe("standard airlock assembly", /obj/structure/door_assembly, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("public airlock assembly", /obj/structure/door_assembly/door_assembly_public, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("command airlock assembly", /obj/structure/door_assembly/door_assembly_com, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("security airlock assembly", /obj/structure/door_assembly/door_assembly_sec, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("engineering airlock assembly", /obj/structure/door_assembly/door_assembly_eng, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("mining airlock assembly", /obj/structure/door_assembly/door_assembly_min, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("atmospherics airlock assembly", /obj/structure/door_assembly/door_assembly_atmo, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("research airlock assembly", /obj/structure/door_assembly/door_assembly_research, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("freezer airlock assembly", /obj/structure/door_assembly/door_assembly_fre, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("science airlock assembly", /obj/structure/door_assembly/door_assembly_science, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("medical airlock assembly", /obj/structure/door_assembly/door_assembly_med, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("virology airlock assembly", /obj/structure/door_assembly/door_assembly_viro, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_mai, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("external airlock assembly", /obj/structure/door_assembly/door_assembly_ext, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("external maintenance airlock assembly", /obj/structure/door_assembly/door_assembly_extmai, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("airtight hatch assembly", /obj/structure/door_assembly/door_assembly_hatch, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
+		new /datum/stack_recipe("maintenance hatch assembly", /obj/structure/door_assembly/door_assembly_mhatch, 4, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	)), \
 	null, \
 	new/datum/stack_recipe("firelock frame", /obj/structure/firelock_frame, 3, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
@@ -320,6 +320,23 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 	new/datum/stack_recipe("folder", /obj/item/folder), \
 	new/datum/stack_recipe("large box", /obj/structure/closet/cardboard, 4), \
 	new/datum/stack_recipe("cardboard cutout", /obj/item/cardboard_cutout, 5), \
+	new /datum/stack_recipe_list("shotgun ammo boxes", list( \
+		new /datum/stack_recipe("ammo box (12g)", /obj/item/ammo_box/shotgun, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Buckshot)", /obj/item/ammo_box/shotgun/buckshot, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Rubbershot)", /obj/item/ammo_box/shotgun/rubbershot, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Beanbag)", /obj/item/ammo_box/shotgun/beanbag, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Incendary)", /obj/item/ammo_box/shotgun/incendiary, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Dart)", /obj/item/ammo_box/shotgun/dart, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Meteorshot)", /obj/item/ammo_box/shotgun/meteorshot, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Pulse)", /obj/item/ammo_box/shotgun/pulseslug, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (FRAG-12)", /obj/item/ammo_box/shotgun/frag12, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Taser)", /obj/item/ammo_box/shotgun/stunslug, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Scatter Laser)", /obj/item/ammo_box/shotgun/laserslug, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (EMP)", /obj/item/ammo_box/shotgun/laserslug, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Cryostasis)", /obj/item/ammo_box/shotgun/noreact, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Dragonsbreath)", /obj/item/ammo_casing/shotgun/dragonsbreath, 1, time = 10), \
+		new /datum/stack_recipe("ammo box (Techshell)", /obj/item/ammo_box/shotgun/techshell, 1, time = 10), \
+	)), \
 ))
 
 /obj/item/stack/sheet/cardboard	//BubbleWrap //it's cardboard you fuck
