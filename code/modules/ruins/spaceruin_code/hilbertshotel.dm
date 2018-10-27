@@ -123,7 +123,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     currentArea.reservation = currentReservation
     for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
         door.parentSphere = src
-        door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br />Alt Click to peak through the peephole."
+        door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br />Alt-Click to look through the peephole."
     for(var/turf/open/space/bluespace/BSturf in currentArea)
         BSturf.parentSphere = src
 
