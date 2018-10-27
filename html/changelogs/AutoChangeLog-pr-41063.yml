@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed items worn by a burning mob not getting burning overlays while taking damage."
-  - bugfix: "Fixed items with special effects when lit on fire not having the effect triggered when worn by a mob."

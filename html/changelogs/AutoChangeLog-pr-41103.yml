@@ -1,4 +1,0 @@
-author: "Kierany9"
-delete-after: True
-changes: 
-  - tweak: "Electric shocks are no longer capped at a measly 90(+-5) damage, with a proper engine setup and hotwiring, electric shocks can now do up to 195(+-5). However, for the most part, shocks do less damage than before at charges under 2 MW."

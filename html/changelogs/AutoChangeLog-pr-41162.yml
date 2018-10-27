@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Manually inserting sheets into the gulag stacking machine will now properly add points to the console."

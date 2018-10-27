@@ -1,4 +1,0 @@
-author: "Poojawa"
-delete-after: True
-changes: 
-  - bugfix: "fixes getFlatIcon breaking if an overlay was a color matrix"

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "The gulag reclaimer will no longer break when a mob is gibbed, and will instead dump the mob's equipment on the ground when the console is next used."
