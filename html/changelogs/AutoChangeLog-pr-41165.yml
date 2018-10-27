@@ -1,0 +1,4 @@
+author: "Barhandar"
+delete-after: True
+changes: 
+  - bugfix: "Reagent dispensers that aren't chemdisp will no longer contain T4 chemicals."
