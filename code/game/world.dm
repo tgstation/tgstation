@@ -34,7 +34,6 @@ GLOBAL_VAR(restart_counter)
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
-	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 

@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
 	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
-	
+
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	. = (jobban_isbanned(M, ROLE_SYNDICATE) || QDELETED(M) || (job_rank && (jobban_isbanned(M,job_rank) || QDELETED(M))))
+	. = (is_banned_from(M.client.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(M))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
