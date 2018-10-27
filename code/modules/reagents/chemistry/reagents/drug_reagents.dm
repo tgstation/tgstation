@@ -361,3 +361,50 @@
 		M.adjustOxyLoss(1, 0)
 	..()
 	. = 1
+
+/datum/reagent/drug/happiness
+	name = "Happyness"
+	id = "happyness"
+	description = "Fills you with ecstasic numbness. Highly addictive. Causes sudden mood swings if overdosed."
+	reagent_state = LIQUID
+	color = "#78FFF0"
+	addiction_threshold = 10
+	overdose_threshold = 20
+
+/datum/reagent/drug/happiness/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(TRAIT_FEARLESS, id)
+	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug)
+
+/datum/reagent/drug/happiness/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_FEARLESS, id)
+	SEND_SIGNAL(L, COMSIG_CLEAR_MOOD_EVENT, "happiness_drug")
+	..()
+
+/datum/reagent/drug/happiness/on_mob_life(mob/living/carbon/M)
+	M.jitteriness = 0
+	M.confused = 0
+	M.disgust = 0
+	M.adjustBrainLoss(rand(1,2))
+	..()
+	. = 1
+
+/datum/reagent/drug/happiness/overdose_process(mob/living/M)
+	if(prob(50))
+		GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+		var/reaction = rand(1,3)
+		switch(reaction)
+			if(1)
+				M.emote("laugh")
+				if (mood)
+					mood.sanity += 50
+			if(2)
+				M.emote("sway")
+				M.Dizzy(25)
+			if(3)
+				M.emote("sulk")
+				if (mood)
+					mood.sanity -= 50
+	M.adjustBrainLoss(pick(0.5, 0.6, 0.7, 0.8, 0.9, 1))
+	..()
+	. = 1

@@ -1264,12 +1264,20 @@
 	id = "psicodine"
 	description = "Suppresses anxiety and other various forms of mental distress."
 	reagent_state = LIQUID
-	color = "#A3FBF9"
+	color = "#07E79E"
+
+/datum/reagent/drug/psicodine/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(TRAIT_FEARLESS, id)
+
+/datum/reagent/drug/psicodine/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_FEARLESS, id)
+	..()
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)
 	M.jitteriness = max(0, M.jitteriness-4)
-	M.confused = max(0, M.confused - 2)
-	M.disgust = max(0, M.disgust - 2)
+	M.confused = max(0, M.confused - 4)
+	M.disgust = max(0, M.disgust - 4)
 	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
 	if (mood)
 		if(mood.sanity <= SANITY_NEUTRAL)

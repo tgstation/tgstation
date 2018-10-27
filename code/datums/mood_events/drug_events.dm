@@ -37,3 +37,7 @@
 
 /datum/mood_event/withdrawal_critical/add_effects(drug_name)
 	description = "<span class='boldwarning'>[drug_name]! [drug_name]! [drug_name]!</span>\n"
+
+/datum/mood_event/happiness_drug
+	description = "<span class='nicegreen'>I feel nothing at all. I never want this to end.</span>\n"
+	mood_change = 100
