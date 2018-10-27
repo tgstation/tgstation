@@ -1,0 +1,7 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - bugfix: "Fixed MMIs not being able to use mecha equipment"
+  - bugfix: "Fixed MMIs not getting mecha mouse pointers"
+  - bugfix: "Fixed MMIs not getting medical HUDs in Odysseuses"
+  - tweak: "Brains can now switch to harm intent"
