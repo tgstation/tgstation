@@ -1,0 +1,5 @@
+author: "Floyd / Qustinnus (sprites by Mickyan)"
+delete-after: True
+changes: 
+  - bugfix: "sanity can now reach its highest level"
+  - imageadd: "Adds HUD icons for sanity"
