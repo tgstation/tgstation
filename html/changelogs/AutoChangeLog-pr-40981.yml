@@ -1,5 +1,0 @@
-author: "Nero1024"
-delete-after: True
-changes: 
-  - soundadd: "Bare feet will now make the correct footstep sounds."
-  - soundadd: "Other mobs will make the correct footstep sounds."

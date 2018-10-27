@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "Added some examine messages to disembodied heads indicating if it's missing eyes, or if it's brain is nonfunctional."
-  - tweak: "Added some examine messages to cyborg parts to indicate their current construction status."
-  - tweak: "You can now remove the power cell and cut the wiring out of a cyborg chest during construction."

@@ -1,9 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "Added examine messages for helmets & guns with flashlights (and bayonets.)"
-  - bugfix: "Fixed an issue where you were able to remove flashlights/bayonets that were supposed to be permanently attached to a gun."
-  - bugfix: "Fixed an issue where you were unable to remove flashlights & bayonets from certain weapons."
-  - bugfix: "Fixed a potential issue where adding a flashlight to your helmet would've caused you to lose other action buttons."
-  - bugfix: "Fixed a issue where guns with multiple action buttons would break all but one of those action buttons."
-  - tweak: "If you have both a bayonet and a flashlight attached to your gun, you'll now be given a prompt on which you'd like to remove when using a screwdriver on it."
