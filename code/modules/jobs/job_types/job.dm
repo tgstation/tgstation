@@ -43,6 +43,13 @@
 
 	var/outfit = null
 
+	var/has_alternative_outfits
+	var/list/alternative_outfits = list() //a list containing typepaths (and a weight) for alternative outfits for a role to be equipped with if alternative_job_outfits is enabled.
+									//probability alternative outfits being selected determined by alternative_job_outfits_probability config option
+	var/list/alternative_outfits_male = list()	//job outfits unique to male characters. gets added to the alternative_outfits list during selection.
+	var/list/alternative_outfits_female = list() //job outfits unique to female characters. hellooooooooooo nurse.
+	var/alt_outfit_probability //overrides config set outfit probability. should only be used if necessary, otherwise let the config handle it.
+
 	var/exp_requirements = 0
 
 	var/exp_type = ""
@@ -93,7 +100,26 @@
 	H.dna.species.before_equip_job(src, H, visualsOnly)
 
 	if(outfit_override || outfit)
-		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
+		var/outfit_to_use = outfit_override
+		if(!outfit_to_use) //check to make sure there's no override
+
+			//here be randomized outfits
+			if(CONFIG_GET(flag/alternative_job_outfits) && has_alternative_outfits && prob(alt_outfit_probability ? alt_outfit_probability : CONFIG_GET(number/alternative_job_outfits_probability)))
+				var/list/alt_outfits = LAZYLEN(alternative_outfits) ? alternative_outfits.Copy() : list()
+
+				var/mob_is_male = (H.gender == MALE) ? TRUE : FALSE
+
+				if(mob_is_male && LAZYLEN(alternative_outfits_male))
+					alt_outfits += alternative_outfits_male
+
+				else if(!mob_is_male && LAZYLEN(alternative_outfits_female))
+					alt_outfits += alternative_outfits_female
+
+				outfit_to_use = pickweight(alt_outfits)
+			else
+				outfit_to_use = outfit
+
+		H.equipOutfit(outfit_to_use, visualsOnly)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 

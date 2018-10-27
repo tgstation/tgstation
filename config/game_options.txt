@@ -553,3 +553,10 @@ MONKEYCAP 64
 
 ## Enable the capitalist agenda on your server.
 ECONOMY
+
+## Enable alternative outfits for jobs when the role is gained.
+## Outfits are based on /datum/job's alternative_outfits weighted lists.
+ALTERNATIVE_JOB_OUTFITS
+## Define the probability of getting alternative job outfits
+ALTERNATIVE_JOB_OUTFITS_PROBABILITY 30
+

@@ -40,6 +40,8 @@ Chief Medical Officer
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
+	gloves = list(/obj/item/clothing/gloves/color/latex = 5,
+					null = 50)
 	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1, /obj/item/card/id/departmental_budget/med=1)
@@ -73,11 +75,17 @@ Medical Doctor
 	selection_color = "#ffeef0"
 
 	outfit = /datum/outfit/job/doctor
+	has_alternative_outfits = TRUE
+	alternative_outfits = list(/datum/outfit/job/doctor/surgeon = 1,
+								/datum/outfit/job/doctor/emt = 3,
+								/datum/outfit/job/doctor/scrubs = 50)
+	alternative_outfits_female = list(/datum/outfit/job/doctor/nurse = 3)
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CHEMISTRY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM)
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING, ACCESS_MECH_MEDICAL, ACCESS_MINERAL_STOREROOM)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
+
 /datum/outfit/job/doctor
 	name = "Medical Doctor"
 	jobtype = /datum/job/doctor
@@ -86,7 +94,9 @@ Medical Doctor
 	ears = /obj/item/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/medical
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat
+	suit = /obj/item/clothing/suit/toggle/labcoat
+	gloves = list(/obj/item/clothing/gloves/color/latex = 5,
+					null = 50)
 	l_hand = /obj/item/storage/firstaid/regular
 	suit_store = /obj/item/flashlight/pen
 
@@ -95,6 +105,34 @@ Medical Doctor
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	chameleon_extras = /obj/item/gun/syringe
+
+/datum/outfit/job/doctor/emt
+	name = "Medical Doctor (EMT)"
+
+	head = /obj/item/clothing/head/soft/emt
+	suit = /obj/item/clothing/suit/toggle/labcoat/emt
+
+/datum/outfit/job/doctor/scrubs
+	name = "Medical Doctor (Scrubs)"
+
+	uniform = list(/obj/item/clothing/under/rank/medical/blue = 1,
+					/obj/item/clothing/under/rank/medical/green = 1,
+					/obj/item/clothing/under/rank/medical/purple = 1)
+	suit = null
+
+/datum/outfit/job/doctor/nurse
+	name = "Medical Doctor (Nurse)"
+
+	head = /obj/item/clothing/head/nursehat
+	uniform = /obj/item/clothing/under/rank/nursesuit
+	suit = null
+
+/datum/outfit/job/doctor/surgeon
+	name = "Medical Doctor (Surgeon)"
+
+	gloves = /obj/item/clothing/gloves/color/latex
+	mask = /obj/item/clothing/mask/surgical
+	suit = /obj/item/clothing/suit/apron/surgical
 
 /*
 Chemist
@@ -126,9 +164,11 @@ Chemist
 	glasses = /obj/item/clothing/glasses/science
 	belt = /obj/item/pda/chemist
 	ears = /obj/item/radio/headset/headset_med
+	gloves = list(/obj/item/clothing/gloves/color/latex = 5,
+					null = 50)
 	uniform = /obj/item/clothing/under/rank/chemist
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/chemist
+	suit = /obj/item/clothing/suit/toggle/labcoat/chemist
 	backpack = /obj/item/storage/backpack/chemistry
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
@@ -166,8 +206,8 @@ Geneticist
 	ears = /obj/item/radio/headset/headset_medsci
 	uniform = /obj/item/clothing/under/rank/geneticist
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/genetics
-	suit_store =  /obj/item/flashlight/pen
+	suit = /obj/item/clothing/suit/toggle/labcoat/genetics
+	suit_store = /obj/item/flashlight/pen
 
 	backpack = /obj/item/storage/backpack/genetics
 	satchel = /obj/item/storage/backpack/satchel/gen
@@ -203,10 +243,12 @@ Virologist
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
 	uniform = /obj/item/clothing/under/rank/virologist
+	gloves = list(/obj/item/clothing/gloves/color/latex = 5,
+					null = 50)
 	mask = /obj/item/clothing/mask/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
-	suit_store =  /obj/item/flashlight/pen
+	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
+	suit_store = /obj/item/flashlight/pen
 
 	backpack = /obj/item/storage/backpack/virology
 	satchel = /obj/item/storage/backpack/satchel/vir

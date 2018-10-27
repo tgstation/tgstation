@@ -1,28 +1,28 @@
 /datum/outfit
 	var/name = "Naked"
 
-	var/uniform = null
-	var/suit = null
+	var/list/uniform
+	var/list/suit
 	var/toggle_helmet = TRUE
-	var/back = null
-	var/belt = null
-	var/gloves = null
-	var/shoes = null
-	var/head = null
-	var/mask = null
-	var/neck = null
-	var/ears = null
-	var/glasses = null
-	var/id = null
-	var/l_pocket = null
-	var/r_pocket = null
-	var/suit_store = null
-	var/r_hand = null
-	var/l_hand = null
-	var/internals_slot = null //ID of slot containing a gas tank
-	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
-	var/list/implants = null
-	var/accessory = null
+	var/list/back
+	var/list/belt
+	var/list/gloves
+	var/list/shoes
+	var/list/head
+	var/list/mask
+	var/list/neck
+	var/list/ears
+	var/list/glasses
+	var/list/id
+	var/list/l_pocket
+	var/list/r_pocket
+	var/list/suit_store
+	var/list/r_hand
+	var/list/l_hand
+	var/internals_slot //ID of slot containing a gas tank
+	var/list/backpack_contents // In the list(path=count,otherpath=count) format
+	var/list/implants
+	var/accessory
 
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
 	var/list/chameleon_extras //extra types for chameleon outfit changes, mostly guns
@@ -35,36 +35,63 @@
 	//to be overridden for toggling internals, id binding, access etc
 	return
 
+#define TRY_EQUIP_ITEM(mob, item_to_equip, slot)\
+	var/item = (islist(item_to_equip) && item_to_equip.len > 1) ? pickweight(item_to_equip) : item_to_equip;\
+	if(ispath(item)){\
+		mob.equip_to_slot_or_del(new item(mob), slot)}
+
+#define RIGHT_HAND 0
+#define LEFT_HAND 1
+#define TRY_EQUIP_HAND(mob, item_to_equip, slot)\
+	var/item = (islist(item_to_equip) && item_to_equip.len > 1) ? pickweight(item_to_equip) : item_to_equip;\
+	if(ispath(item)){\
+		if(slot){\
+			mob.put_in_l_hand(new item(mob))}\
+		else{\
+			mob.put_in_r_hand(new item(mob))}}
+
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	pre_equip(H, visualsOnly)
 
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
-		H.equip_to_slot_or_del(new uniform(H),SLOT_W_UNIFORM)
+		TRY_EQUIP_ITEM(H, uniform, SLOT_W_UNIFORM)
+
 	if(suit)
-		H.equip_to_slot_or_del(new suit(H),SLOT_WEAR_SUIT)
+		TRY_EQUIP_ITEM(H, suit, SLOT_WEAR_SUIT)
+
 	if(back)
-		H.equip_to_slot_or_del(new back(H),SLOT_BACK)
+		TRY_EQUIP_ITEM(H, back, SLOT_BACK)
+
 	if(belt)
-		H.equip_to_slot_or_del(new belt(H),SLOT_BELT)
+		TRY_EQUIP_ITEM(H, belt, SLOT_BELT)
+
 	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H),SLOT_GLOVES)
+		TRY_EQUIP_ITEM(H, gloves, SLOT_GLOVES)
+
 	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H),SLOT_SHOES)
+		TRY_EQUIP_ITEM(H, shoes, SLOT_SHOES)
+
 	if(head)
-		H.equip_to_slot_or_del(new head(H),SLOT_HEAD)
+		TRY_EQUIP_ITEM(H, head, SLOT_HEAD)
+
 	if(mask)
-		H.equip_to_slot_or_del(new mask(H),SLOT_WEAR_MASK)
+		TRY_EQUIP_ITEM(H, mask, SLOT_WEAR_MASK)
+
 	if(neck)
-		H.equip_to_slot_or_del(new neck(H),SLOT_NECK)
+		TRY_EQUIP_ITEM(H, neck, SLOT_NECK)
+
 	if(ears)
-		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
+		TRY_EQUIP_ITEM(H, ears, SLOT_EARS)
+
 	if(glasses)
-		H.equip_to_slot_or_del(new glasses(H),SLOT_GLASSES)
+		TRY_EQUIP_ITEM(H, glasses, SLOT_GLASSES)
+
 	if(id)
-		H.equip_to_slot_or_del(new id(H),SLOT_WEAR_ID)
+		TRY_EQUIP_ITEM(H, id, SLOT_WEAR_ID)
+
 	if(suit_store)
-		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
+		TRY_EQUIP_ITEM(H, suit_store, SLOT_S_STORE)
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
@@ -74,15 +101,17 @@
 			WARNING("Unable to equip accessory [accessory] in outfit [name]. No uniform present!")
 
 	if(l_hand)
-		H.put_in_l_hand(new l_hand(H))
+		TRY_EQUIP_HAND(H, l_hand, LEFT_HAND)
 	if(r_hand)
-		H.put_in_r_hand(new r_hand(H))
+		TRY_EQUIP_HAND(H, r_hand, RIGHT_HAND)
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
-			H.equip_to_slot_or_del(new l_pocket(H),SLOT_L_STORE)
+			TRY_EQUIP_ITEM(H, l_pocket, SLOT_L_STORE)
+
 		if(r_pocket)
-			H.equip_to_slot_or_del(new r_pocket(H),SLOT_R_STORE)
+			TRY_EQUIP_ITEM(H, r_pocket, SLOT_R_STORE)
+
 		if(backpack_contents)
 			for(var/path in backpack_contents)
 				var/number = backpack_contents[path]
@@ -109,6 +138,11 @@
 
 	H.update_body()
 	return TRUE
+
+#undef LEFT_HAND
+#undef RIGHT_HAND
+#undef TRY_EQUIP_HAND
+#undef TRY_EQUIP_ITEM
 
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
