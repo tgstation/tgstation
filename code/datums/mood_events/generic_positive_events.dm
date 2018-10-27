@@ -75,3 +75,7 @@
 	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
 	mood_change = 3
 	timeout = 600
+
+/datum/mood_event/chemical_euphoria
+	description = "<span class='nicegreen'>Heh...hehehe...hehe...</span>\n"
+	mood_change = 4

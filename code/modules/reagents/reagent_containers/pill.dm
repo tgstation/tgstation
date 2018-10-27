@@ -181,6 +181,10 @@
 	name = "speedy pill"
 	list_reagents = list("aranesp" = 10)
 
+/obj/item/reagent_containers/pill/psicodine
+	name = "psicodine pill"
+	list_reagents = list("psicodine" = 10)
+
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
 	desc = "A strange pill found in the depths of maintenance"

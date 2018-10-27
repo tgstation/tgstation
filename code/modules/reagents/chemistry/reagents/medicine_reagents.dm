@@ -239,6 +239,7 @@
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
 			M.emote("scream")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/carbon/M)
@@ -287,6 +288,7 @@
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
 
@@ -391,6 +393,7 @@
 			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
 /datum/reagent/medicine/charcoal
@@ -1255,3 +1258,21 @@
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
 	return TRUE
+
+/datum/reagent/medicine/psicodine
+	name = "Psicodine"
+	id = "psicodine"
+	description = "Suppresses anxiety and other various forms of mental distress."
+	reagent_state = LIQUID
+	color = "#A3FBF9"
+
+/datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)
+	M.jitteriness = max(0, M.jitteriness-4)
+	M.confused = max(0, M.confused - 2)
+	M.disgust = max(0, M.disgust - 2)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if (mood)
+		if(mood.sanity <= SANITY_NEUTRAL)
+			mood.sanity += 10
+	..()
+	. = 1

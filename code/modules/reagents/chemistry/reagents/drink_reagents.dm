@@ -166,9 +166,15 @@
 	color = "#FF4DD2"
 	taste_description = "laughter"
 
+/datum/reagent/consumable/laughter/on_mob_add(mob/living/M)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M)
 	M.emote("laugh")
 	..()
+
+/datum/reagent/consumable/laughter/on_mob_delete(mob/living/M)
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 
 /datum/reagent/consumable/superlaughter
 	name = "Super Laughter"
@@ -178,11 +184,18 @@
 	color = "#FF4DD2"
 	taste_description = "laughter"
 
+/datum/reagent/consumable/superlaughter/on_mob_add(mob/living/M)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
+
 /datum/reagent/consumable/superlaughter/on_mob_life(mob/living/carbon/M)
 	if(prob(30))
 		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
 		M.Stun(5)
 	..()
+
+/datum/reagent/consumable/superlaughter/on_mob_delete(mob/living/M)
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+
 
 /datum/reagent/consumable/potato_juice
 	name = "Potato Juice"
