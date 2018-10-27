@@ -67,10 +67,15 @@
 	list_reagents = list("morphine" = 30)
 
 /obj/item/reagent_containers/glass/bottle/chloralhydrate
-	name = "Chloral Hydrate Bottle"
+	name = "chloral hydrate bottle"
 	desc = "A small bottle of Choral Hydrate. Mickey's Favorite!"
 	icon_state = "bottle20"
 	list_reagents = list("chloralhydrate" = 15)
+
+/obj/item/reagent_containers/glass/bottle/mannitol
+	name = "mannitol bottle"
+	desc = "A small bottle of Mannitol. Useful for healing brain damage."
+	list_reagents = list("mannitol" = 30)
 
 /obj/item/reagent_containers/glass/bottle/charcoal
 	name = "charcoal bottle"
@@ -240,7 +245,7 @@
 	name = "Rhinovirus culture bottle"
 	desc = "A small bottle. Contains XY-rhinovirus culture in synthblood medium."
 	spawned_disease = /datum/disease/advance/cold
-	
+
 /obj/item/reagent_containers/glass/bottle/flu_virion
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."

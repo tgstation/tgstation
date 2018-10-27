@@ -1,0 +1,4 @@
+author: "SouDescolado"
+delete-after: True
+changes: 
+  - refactor: "For every object that creates 3+, replaced with a for(var/i in x to y) and sometimes combined into a list"

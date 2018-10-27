@@ -285,6 +285,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		for(var/datum/disease/A in C.diseases)
 			A.cure(FALSE)
 
+	C.add_movespeed_modifier(MOVESPEED_ID_SPECIES, TRUE, 100, override=TRUE, multiplicative_slowdown=speedmod, movetypes=(~FLYING))
+
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 
@@ -295,6 +297,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		C.remove_trait(X, SPECIES_TRAIT)
+	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
@@ -1071,7 +1074,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			. -= 1
 		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
 			. -= 2
-		. += speedmod
 		. += H.physiology.speed_mod
 
 	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
@@ -1114,16 +1116,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
 			. += 1 + grav_force
 
-		GET_COMPONENT_FROM(mood, /datum/component/mood, H)
-		if(mood && !flight) //How can depression slow you down if you can just fly away from your problems?
-			switch(mood.sanity)
-				if(SANITY_INSANE to SANITY_CRAZY)
-					. += 1.5
-				if(SANITY_CRAZY to SANITY_UNSTABLE)
-					. += 1
-				if(SANITY_UNSTABLE to SANITY_DISTURBED)
-					. += 0.5
-
 		if(H.has_trait(TRAIT_FAT))
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
@@ -1139,7 +1131,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(target.health >= 0 && !(target.has_trait(TRAIT_FAKEDEATH)))
+	if(!((target.health < 0 || target.has_trait(TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
 		target.help_shake_act(user)
 		if(target != user)
 			log_combat(user, target, "shaken")
@@ -1246,7 +1238,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.apply_effect(40, EFFECT_KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
+			target.apply_effect(40, EFFECT_PARALYZE, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			log_combat(user, target, "pushed over")
 			return
@@ -1571,8 +1563,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////
 
 /datum/species/proc/handle_fire(mob/living/carbon/human/H, no_protection = FALSE)
-	if(H.has_trait(TRAIT_NOFIRE))
-		return
+	if(!CanIgniteMob(H))
+		return TRUE
 	if(H.on_fire)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
@@ -1625,8 +1617,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		for(var/X in burning_items)
 			var/obj/item/I = X
-			if(!(I.resistance_flags & FIRE_PROOF))
-				I.take_damage(H.fire_stacks, BURN, "fire", 0)
+			I.fire_act((H.fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
 
 		var/thermal_protection = H.get_thermal_protection()
 

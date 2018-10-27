@@ -51,10 +51,10 @@
 				for(var/mi in GLOB.mob_list)
 					var/mob/M = mi
 					if(M.lingcheck() == LINGHIVE_LING)
-						to_chat(M, "<i><font color=#800080>We can sense a foreign presence in the hivemind...</font></i>")
+						to_chat(M, "<span class='changeling'>We can sense a foreign presence in the hivemind...</span>")
 				target.mind.linglink = 1
 				target.say(":g AAAAARRRRGGGGGHHHHH!!")
-				to_chat(target, "<font color=#800040><span class='boldannounce'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>")
+				to_chat(target, "<span class='changeling bold'>You can now communicate in the changeling hivemind, say \":g message\" to communicate!</span>")
 				target.reagents.add_reagent("salbutamol", 40) // So they don't choke to death while you interrogate them
 				sleep(1800)
 		SSblackbox.record_feedback("nested tally", "changeling_powers", 1, list("[name]", "[i]"))

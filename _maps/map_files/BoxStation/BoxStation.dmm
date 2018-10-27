@@ -4021,7 +4021,7 @@
 "air" = (
 /obj/structure/chair,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "ais" = (
 /obj/structure/filingcabinet,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -7026,7 +7026,7 @@
 	req_access_txt = "32"
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "apf" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
@@ -7297,7 +7297,7 @@
 /area/maintenance/fore)
 "apU" = (
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "apV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -7679,7 +7679,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "aqW" = (
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -7689,12 +7689,12 @@
 	},
 /obj/structure/chair,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "aqY" = (
 /obj/structure/table/wood,
 /obj/item/pen,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "aqZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -7997,18 +7997,18 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "arS" = (
 /obj/structure/table/wood,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "arT" = (
 /turf/open/floor/plasteel,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "arU" = (
 /obj/structure/rack,
 /turf/open/floor/plasteel,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "arV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -8160,7 +8160,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "ask" = (
 /obj/structure/dresser,
 /turf/open/floor/wood,
@@ -8171,7 +8171,7 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "asm" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -8182,7 +8182,7 @@
 "asn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "aso" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Law Office Maintenance";
@@ -8429,7 +8429,7 @@
 "asU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "asV" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -8598,7 +8598,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/light,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "att" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -8610,7 +8610,7 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/plasteel,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "atv" = (
 /obj/structure/table,
 /obj/item/shard,
@@ -8712,7 +8712,7 @@
 "atK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "atL" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
@@ -8795,7 +8795,7 @@
 "atY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "atZ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
@@ -8942,7 +8942,7 @@
 "auq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "aur" = (
 /obj/machinery/door/window/eastright{
 	base_state = "left";
@@ -9282,7 +9282,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Vacant Office B APC";
-	areastring = "/area/security/vacantoffice/b";
+	areastring = "/area/vacant_room/office/office_b";
 	pixel_x = -24
 	},
 /obj/structure/disposalpipe/segment,
@@ -19274,11 +19274,11 @@
 "aTs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aTt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aTu" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -19591,11 +19591,11 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -19685,7 +19685,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUz" = (
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/airalarm{
@@ -19698,7 +19698,7 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUB" = (
 /obj/structure/bookcase/random/adult,
 /turf/open/floor/wood,
@@ -19781,25 +19781,25 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUO" = (
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUP" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUQ" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUR" = (
 /obj/structure/table/wood,
 /obj/item/pen/red,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUS" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -19834,7 +19834,7 @@
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aUX" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -20383,7 +20383,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aWg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -20399,7 +20399,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aWj" = (
 /obj/structure/grille,
 /obj/structure/window{
@@ -20430,7 +20430,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aWn" = (
 /obj/structure/closet/wardrobe/black,
 /obj/item/clothing/shoes/jackboots,
@@ -20464,19 +20464,19 @@
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aWs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aWt" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aWu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -21148,7 +21148,7 @@
 /area/quartermaster/warehouse)
 "aXL" = (
 /turf/open/floor/carpet,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aXM" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -21165,7 +21165,7 @@
 	},
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aXO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -21238,7 +21238,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aXY" = (
 /obj/structure/chair/office/dark,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -21246,13 +21246,13 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aXZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aYa" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -21295,7 +21295,7 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aYe" = (
 /obj/machinery/light_switch{
 	pixel_y = 28
@@ -21809,7 +21809,7 @@
 /obj/item/folder/blue,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "aZo" = (
 /obj/structure/sink{
 	dir = 4;
@@ -22345,7 +22345,7 @@
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "baI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -22357,7 +22357,7 @@
 	pixel_y = -29
 	},
 /turf/open/floor/wood,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "baK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -22716,7 +22716,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Vacant Office APC";
-	areastring = "/area/security/vacantoffice";
+	areastring = "/area/vacant_room/office";
 	pixel_x = -24
 	},
 /obj/structure/cable{
@@ -52644,7 +52644,7 @@
 /area/maintenance/disposal/incinerator)
 "czK" = (
 /turf/closed/wall,
-/area/security/vacantoffice)
+/area/vacant_room/office)
 "czN" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
@@ -53516,7 +53516,7 @@
 /area/security/processing)
 "cCi" = (
 /turf/closed/wall,
-/area/security/vacantoffice/b)
+/area/vacant_room/office/office_b)
 "cCj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4

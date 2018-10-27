@@ -67,6 +67,9 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/open_shuttle_manipulator, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
 	/client/proc/toggleprayers,
+	/client/proc/toggle_prayer_sound,
+	/client/proc/colorasay,
+	/client/proc/resetasaycolor,
 	/client/proc/toggleadminhelpsound,
 	/client/proc/respawn_character,
 	/datum/admins/proc/open_borgopanel

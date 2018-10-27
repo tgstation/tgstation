@@ -5,8 +5,8 @@
 	var/list/steps = list()									//Steps in a surgery
 	var/step_in_progress = 0								//Actively performing a Surgery
 	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
-	var/list/species = list(/mob/living/carbon/human)		//Acceptable Species
-	var/location = BODY_ZONE_CHEST									//Surgery location
+	var/list/target_mobtypes = list(/mob/living/carbon/human)		//Acceptable Species
+	var/location = BODY_ZONE_CHEST							//Surgery location
 	var/requires_bodypart_type = BODYPART_ORGANIC			//Prevents you from performing an operation on incorrect limbs. 0 for any limb type
 	var/list/possible_locs = list() 						//Multiple locations
 	var/ignore_clothes = 0									//This surgery ignores clothes
@@ -15,6 +15,7 @@
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
 	var/requires_real_bodypart = 0							//Some surgeries don't work on limbs that don't really exist
+	var/lying_required = TRUE								//Does the vicitm needs to be lying down.
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()

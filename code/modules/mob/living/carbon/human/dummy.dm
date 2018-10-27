@@ -27,8 +27,6 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotkey]
 	if(istype(D))
 		UNTIL(!D.in_use)
-	else
-		pass()
 	if(QDELETED(D))
 		D = new
 		GLOB.human_dummy_list[slotkey] = D

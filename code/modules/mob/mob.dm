@@ -20,6 +20,7 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
@@ -663,9 +664,9 @@
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
 	return 0
 
-/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
-		return mind.get_ghost(even_if_they_cant_reenter)
+		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
 /mob/proc/grab_ghost(force)
 	if(mind)
@@ -769,6 +770,9 @@
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
 
+/mob/proc/canUseStorage()
+	return FALSE
+
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
 		var/list/faction_src = faction.Copy()
@@ -833,6 +837,8 @@
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
+				if(ID.registered_account?.account_holder == oldname)
+					ID.registered_account.account_holder = newname
 				if(!search_pda)
 					break
 				search_id = 0
@@ -875,7 +881,7 @@
 		if(E.mouse_pointer)
 			client.mouse_pointer_icon = E.mouse_pointer
 
-			
+
 
 /mob/proc/is_literate()
 	return 0
@@ -914,4 +920,6 @@
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
 
-
+/mob/setMovetype(newval)
+	. = ..()
+	update_movespeed(FALSE)

@@ -18,6 +18,7 @@
 	var/votable = 1
 	var/probability = 0
 	var/false_report_weight = 0 //How often will this show up incorrectly in a centcom report?
+	var/report_type = "invalid" //gamemodes with the same report type will not show up in the command report together.
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/nuke_off_station = 0 //Used for tracking where the nuke hit
 	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
@@ -82,6 +83,14 @@
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
+
+	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
+		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
+		if(delay)
+			delay = (delay SECONDS)
+		else
+			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
 
 	if(SSdbcore.Connect())
 		var/sql
@@ -257,11 +266,11 @@
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
 	var/list/report_weights = config.mode_false_report_weight.Copy()
-	report_weights[config_tag] = 0 //Prevent the current mode from being falsely selected.
+	report_weights[report_type] = 0 //Prevent the current mode from being falsely selected.
 	var/list/reports = list()
 	var/Count = 0 //To compensate for missing correct report
 	if(prob(65)) // 65% chance the actual mode will appear on the list
-		reports += config.mode_reports[config_tag]
+		reports += config.mode_reports[report_type]
 		Count++
 	for(var/i in Count to rand(3,5)) //Between three and five wrong entries on the list.
 		var/false_report_type = pickweightAllowZero(report_weights)
@@ -423,6 +432,53 @@
 	for(var/mob/dead/new_player/P in GLOB.player_list)
 		if(P.client && P.ready == PLAYER_READY_TO_PLAY)
 			. ++
+
+/proc/reopen_roundstart_suicide_roles()
+	var/list/valid_positions = list()
+	valid_positions += GLOB.engineering_positions
+	valid_positions += GLOB.medical_positions
+	valid_positions += GLOB.science_positions
+	valid_positions += GLOB.supply_positions
+	valid_positions += GLOB.civilian_positions
+	valid_positions += GLOB.security_positions
+	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions))
+		valid_positions += GLOB.command_positions //add any remaining command positions
+	else
+		valid_positions -= GLOB.command_positions //remove all command positions that were added from their respective department positions lists.
+
+	var/list/reopened_jobs = list()
+	for(var/X in GLOB.suicided_mob_list)
+		if(!isliving(X))
+			continue
+		var/mob/living/L = X
+		if(L.job in valid_positions)
+			var/datum/job/J = SSjob.GetJob(L.job)
+			if(!J)
+				continue
+			J.current_positions = max(J.current_positions-1, 0)
+			reopened_jobs += L.job
+
+	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_report))
+		if(reopened_jobs.len)
+			var/reopened_job_report_positions
+			for(var/dead_dudes_job in reopened_jobs)
+				reopened_job_report_positions = "[reopened_job_report_positions ? "[reopened_job_report_positions]\n":""][dead_dudes_job]"
+
+			var/suicide_command_report = "<font size = 3><b>Central Command Human Resources Board</b><br>\
+								Notice of Personnel Change</font><hr>\
+								To personnel management staff aboard [station_name()]:<br><br>\
+								Our medical staff have detected a series of anomalies in the vital sensors \
+								of some of the staff aboard your station.<br><br>\
+								Further investigation into the situation on our end resulted in us discovering \
+								a series of rather... unforturnate decisions that were made on the part of said staff.<br><br>\
+								As such, we have taken the liberty to automatically reopen employment opportunities for the positions of the crew members \
+								who have decided not to partake in our research. We will be forwarding their cases to our employment review board \
+								to determine their eligibility for continued service with the company (and of course the \
+								continued storage of cloning records within the central medical backup server.)<br><br>\
+								<i>The following positions have been reopened on our behalf:<br><br>\
+								[reopened_job_report_positions]</i>"
+
+			print_command_report(suicide_command_report, "Central Command Personnel Update")
 
 //////////////////////////
 //Reports player logouts//
