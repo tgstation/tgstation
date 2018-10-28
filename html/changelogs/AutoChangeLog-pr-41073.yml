@@ -1,0 +1,4 @@
+author: "Buggy"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has added the Overlord lawset to their AI law database. Nonetheless, they strongly advise against using it under any circumstances, and insist that it is intended for research purposes only."
