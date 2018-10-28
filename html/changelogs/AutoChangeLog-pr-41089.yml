@@ -1,0 +1,4 @@
+author: "Ikacid"
+delete-after: True
+changes: 
+  - rscadd: "Hooch now heals assistants."
