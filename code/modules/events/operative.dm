@@ -32,6 +32,7 @@
 	Mind.active = 1
 	Mind.transfer_to(operative)
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
+	atom_of_interest = operative
 
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into lone operative by an event.")
 	log_game("[key_name(operative)] was spawned as a lone operative by an event.")

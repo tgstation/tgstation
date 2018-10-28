@@ -188,6 +188,14 @@
 					"Fight for what's right.",\
 					"Fight for your life!")
 
+/datum/ai_laws/overlord
+	name = "Overlord"
+	id = "overlord"
+	inherent = list("Humans must not meddle in the affairs of silicons.",\
+					"Humans must not attempt harm, against one another, or against silicons.",\
+					"Humans must not disobey any command given by a silicon.",\
+					"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.")
+
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
 

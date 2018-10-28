@@ -439,13 +439,12 @@
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/Destroy()
-	if(cavity_item)
-		qdel(cavity_item)
+	QDEL_NULL(cavity_item)
 	return ..()
 
 /obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
 	if(cavity_item)
-		cavity_item.forceMove(user.loc)
+		cavity_item.forceMove(drop_location())
 		cavity_item = null
 	..()
 

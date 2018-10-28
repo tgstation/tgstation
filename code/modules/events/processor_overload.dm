@@ -29,6 +29,8 @@
 /datum/round_event/processor_overload/start()
 	for(var/obj/machinery/telecomms/processor/P in GLOB.telecomms_list)
 		if(prob(10))
+			if (!atom_of_interest)
+				atom_of_interest = P //Set the atom of interest to the first processor to blow
 			// Damage the surrounding area to indicate that it popped
 			explosion(get_turf(P), 0, 0, 2)
 			// Only a level 1 explosion actually damages the machine

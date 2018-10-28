@@ -301,7 +301,7 @@
 
 	qdel(src)
 
-/mob/living/carbon/human/AIize()
+/mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
 		return
 	for(var/t in bodyparts)
@@ -309,7 +309,7 @@
 
 	return ..()
 
-/mob/living/carbon/AIize()
+/mob/living/carbon/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
 		return
 	notransform = TRUE
@@ -321,7 +321,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/proc/AIize(transfer_after = TRUE)
+/mob/proc/AIize(transfer_after = TRUE, client/preference_source)
 	var/list/turf/landmark_loc = list()
 	for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
@@ -348,6 +348,9 @@
 
 	. = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 
+	if(preference_source)
+		apply_pref_name("ai",preference_source)
+
 	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
@@ -372,14 +375,15 @@
 	R.gender = gender
 	R.invisibility = 0
 
+	if(client)
+		R.updatename(client)
+
 	if(mind)		//TODO
 		if(!transfer_after)
 			mind.active = FALSE
 		mind.transfer_to(R)
 	else if(transfer_after)
 		R.key = key
-
-	R.apply_pref_name("cyborg")
 
 	if(R.mmi)
 		R.mmi.name = "[initial(R.mmi.name)]: [real_name]"
