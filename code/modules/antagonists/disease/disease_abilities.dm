@@ -358,9 +358,6 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 /datum/disease_ability/symptom/medium/deafness
 	symptoms = list(/datum/symptom/deafness)
 
-/datum/disease_ability/symptom/powerful/narcolepsy
-	symptoms = list(/datum/symptom/narcolepsy)
-
 /datum/disease_ability/symptom/medium/fever
 	symptoms = list(/datum/symptom/fever)
 
@@ -426,6 +423,9 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 
 /datum/disease_ability/symptom/powerful/inorganic_adaptation
 	symptoms = list(/datum/symptom/inorganic_adaptation)
+
+/datum/disease_ability/symptom/powerful/narcolepsy
+	symptoms = list(/datum/symptom/narcolepsy)
 
 /****HEALING SUBTYPE****/
 
