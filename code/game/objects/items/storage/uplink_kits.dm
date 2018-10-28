@@ -120,12 +120,8 @@
 		if("ninja") // 33 tc worth
 			new /obj/item/katana(src) // Unique , hard to tell how much tc this is worth. 8 tc?
 			new /obj/item/implanter/adrenalin(src) // 8 tc
-			new /obj/item/throwing_star(src) // ~5 tc for all 6
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
-			new /obj/item/throwing_star(src)
+			for(var/i in 1 to 6)
+				new /obj/item/throwing_star(src) // ~5 tc for all 6
 			new /obj/item/storage/belt/chameleon(src) // Unique but worth at least 2 tc
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
@@ -207,11 +203,8 @@
 	name = "boxed EMP kit"
 
 /obj/item/storage/box/syndie_kit/emp/PopulateContents()
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/empgrenade(src)
 	new /obj/item/implanter/emp(src)
 
 /obj/item/storage/box/syndie_kit/chemical
@@ -284,11 +277,8 @@
 //5*(2*4) = 5*8 = 45, 45 damage if you hit one person with all 5 stars.
 //Not counting the damage it will do while embedded (2*4 = 8, at 15% chance)
 /obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
-	new /obj/item/throwing_star(src)
+	for(var/i in 1 to 5)
+		new /obj/item/throwing_star(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 

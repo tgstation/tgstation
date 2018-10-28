@@ -122,7 +122,7 @@
 	if(suicided)
 		to_chat(user, "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>")
 	else if(brainmob)
-		if(brainmob.client)
+		if(brainmob.get_ghost(FALSE, TRUE))
 			if(brain_death || brainmob.health <= HEALTH_THRESHOLD_DEAD)
 				to_chat(user, "<span class='info'>It's lifeless and severely damaged.</span>")
 			else if(damaged_brain)
