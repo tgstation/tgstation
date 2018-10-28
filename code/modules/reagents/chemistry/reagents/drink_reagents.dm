@@ -186,7 +186,6 @@
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
 	..()
 
-
 /datum/reagent/consumable/potato_juice
 	name = "Potato Juice"
 	id = "potato"
