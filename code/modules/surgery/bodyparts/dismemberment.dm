@@ -158,6 +158,14 @@
 	LB.eyes = src
 	..()
 
+/obj/item/organ/ears/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.ears = src
+	..()
+
+/obj/item/organ/tongue/transfer_to_limb(obj/item/bodypart/head/LB, mob/living/carbon/human/C)
+	LB.tongue = src
+	..()
+
 /obj/item/bodypart/chest/drop_limb(special)
 	if(special)
 		..()
@@ -311,6 +319,13 @@
 			brainmob = null //Set head brainmob var to null
 		brain.Insert(C) //Now insert the brain proper
 		brain = null //No more brain in the head
+
+	if(tongue)
+		tongue = null
+	if(ears)
+		ears = null
+	if(eyes)
+		eyes = null
 
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C

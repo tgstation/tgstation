@@ -104,7 +104,7 @@
 					addclientmessage(ckey,"<span class='adminnotice'>You have been allowed to bypass a matching ban on [pkey] (#[banid])</span>")
 					continue
 			var/expires = ""
-			if(text2num(duration) > 0)
+			if(duration > 0)
 				expires = "\nThe ban is for [DisplayTimeText(duration MINUTES)] and expires on [expiration] (server time)."  //convert from minutes into deciseconds to display the amount of time in days, hours, minutes, ect.
 			else
 				expires = "\nThis is a permanent ban."

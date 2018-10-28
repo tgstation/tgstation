@@ -6,10 +6,12 @@
 	var/sanity = 100 //Current sanity
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
+	var/sanity_level = 5 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/datum/mood_event/list/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
+	var/obj/screen/sanity/screen_obj_sanity
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -119,6 +121,7 @@
 			screen_obj.icon_state = "mood_insane"
 		else
 			screen_obj.icon_state = "mood[mood_level]"
+		screen_obj_sanity.icon_state = "sanity[sanity_level]"
 
 /datum/component/mood/process() //Called on SSmood process
 	var/mob/living/owner = parent
@@ -141,7 +144,7 @@
 		if(8)
 			setSanity(sanity+0.25, maximum=SANITY_GREAT)
 		if(9)
-			setSanity(sanity+0.4, maximum=SANITY_GREAT)
+			setSanity(sanity+0.4, maximum=INFINITY)
 
 	if(owner.has_trait(TRAIT_DEPRESSION))
 		if(prob(0.05))
@@ -170,15 +173,28 @@
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
 			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1.5, movetypes=(~FLYING))
+			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
 			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1, movetypes=(~FLYING))
+			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
 			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
-		else
+			sanity_level = 4
+		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
 			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			sanity_level = 3
+		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			sanity_level = 2
+		if(SANITY_GREAT+1 to INFINITY)
+			setInsanityEffect(0)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			sanity_level = 1
+	update_mood_icon()
 
 /datum/component/mood/proc/setInsanityEffect(newval)
 	if(newval == insanity_effect)
@@ -229,7 +245,9 @@
 	var/mob/living/owner = parent
 	var/datum/hud/hud = owner.hud_used
 	screen_obj = new
+	screen_obj_sanity = new
 	hud.infodisplay += screen_obj
+	hud.infodisplay += screen_obj_sanity
 	RegisterSignal(hud, COMSIG_PARENT_QDELETED, .proc/unmodify_hud)
 	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
@@ -240,7 +258,9 @@
 	var/datum/hud/hud = owner.hud_used
 	if(hud && hud.infodisplay)
 		hud.infodisplay -= screen_obj
+		hud.infodisplay -= screen_obj_sanity
 	QDEL_NULL(screen_obj)
+	QDEL_NULL(screen_obj_sanity)
 
 /datum/component/mood/proc/hud_click(datum/source, location, control, params, mob/user)
 	print_mood(user)

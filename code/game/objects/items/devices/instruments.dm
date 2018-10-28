@@ -272,7 +272,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
 	item_state = "radio"
-	var/static/list/display_names = list()
+	var/static/list/display_names
 
 /obj/item/musicbeacon/attack_self(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
@@ -280,6 +280,7 @@
 
 /obj/item/musicbeacon/proc/beacon_music(mob/living/M)
 	if(!display_names)
+		display_names = list()
 		var/static/list/instruments = list(
 								/obj/item/instrument/violin,
 								/obj/item/instrument/piano_synth,
@@ -299,7 +300,8 @@
 	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	var/obj/instrument = new display_names[choice]
+	choice = display_names[choice]
+	var/obj/instrument = new choice
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
 	pod.explosionSize = list(0,0,0,2)
 	instrument.forceMove(pod)
