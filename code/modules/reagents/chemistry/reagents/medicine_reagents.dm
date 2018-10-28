@@ -1276,12 +1276,13 @@
 	..()
 
 /datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)
-	M.jitteriness = max(0, M.jitteriness-4)
-	M.confused = max(0, M.confused - 4)
-	M.disgust = max(0, M.disgust - 4)
+	M.jitteriness = max(0, M.jitteriness-6)
+	M.dizziness = max(0, M.dizziness-6)
+	M.confused = max(0, M.confused-6)
+	M.disgust = max(0, M.disgust-6)
 	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
 	if (mood)
 		if(mood.sanity <= SANITY_NEUTRAL)
-			mood.sanity += 10
+			mood.sanity = min(mood.sanity+5, SANITY_NEUTRAL)
 	..()
 	. = 1

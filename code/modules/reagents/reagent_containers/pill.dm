@@ -157,7 +157,7 @@
 
 /obj/item/reagent_containers/pill/psicodine
 	name = "psicodine pill"
-	desc = "Used to treat mental instability."
+	desc = "Used to treat mental instability and traumas."
 	list_reagents = list("psicodine" = 10)
 	icon_state = "pill22"
 	roundstart = 1

@@ -39,7 +39,7 @@
 	description = "<span class='boldwarning'>[drug_name]! [drug_name]! [drug_name]!</span>\n"
 
 /datum/mood_event/happiness_drug
-	description = "<span class='nicegreen'>I feel nothing at all. I never want this to end.</span>\n"
+	description = "<span class='nicegreen'>I can't feel anything and I never want this to end.</span>\n"
 	mood_change = 50
 
 /datum/mood_event/happiness_drug_good_od

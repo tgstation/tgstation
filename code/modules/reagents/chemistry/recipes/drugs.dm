@@ -44,6 +44,6 @@
 /datum/chemical_reaction/happiness
 	name = "Happiness"
 	id = "happiness"
-	results = list("happiness" = 5)
+	results = list("happiness" = 4)
 	required_reagents = list("nitrous_oxide" = 2, "epinephrine" = 1, "ethanol" = 1)
 	required_catalysts = list("plasma" = 5)

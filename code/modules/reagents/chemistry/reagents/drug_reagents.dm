@@ -367,7 +367,7 @@
 	id = "happiness"
 	description = "Fills you with ecstasic numbness and causes minor brain damage. Highly addictive. If overdosed causes sudden mood swings."
 	reagent_state = LIQUID
-	color = "#78FFF0"
+	color = "#FFF378"
 	addiction_threshold = 10
 	overdose_threshold = 20
 
@@ -385,7 +385,7 @@
 	M.jitteriness = 0
 	M.confused = 0
 	M.disgust = 0
-	M.adjustBrainLoss(rand(0,0.5))
+	M.adjustBrainLoss(0.2)
 	..()
 	. = 1
 
