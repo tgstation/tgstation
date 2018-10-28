@@ -42,6 +42,7 @@
 /obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
 	if(!SSreligion.holy_armor_type)
 		..()
+		playsound(src, 'sound/effects/pray-chaplain.ogg', 40, 1)
 		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 		SSreligion.holy_armor_type = choice
 	else
