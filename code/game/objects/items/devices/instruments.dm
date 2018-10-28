@@ -267,7 +267,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 /obj/item/choice_beacon/music
-	name = "express delivery beacon"
+	name = "instrument delivery beacon"
 	desc = "Summon your tool of art."
 	icon_state = "gangtool-red"
 
