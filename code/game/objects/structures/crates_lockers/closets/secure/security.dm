@@ -307,4 +307,4 @@
 /obj/structure/closet/secure_closet/lethalshots/PopulateContents()
 	..()
 	for(var/i in 1 to 3)
-		new /obj/item/storage/box/lethalshot(src)
+		new /obj/item/ammo_box/shotgun/buckshot(src)

@@ -2,6 +2,23 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/structure/rack,
+/obj/machinery/light{
+	dir = 4;
+	light_color = "#e8eaff"
+	},
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = 32
+	},
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/turf/open/floor/plasteel/dark,
+/area/security/armory)
 "aad" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating{
@@ -3062,35 +3079,6 @@
 "aji" = (
 /obj/structure/cable{
 	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel/dark,
-/area/security/armory)
-"ajj" = (
-/obj/structure/rack,
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/machinery/light{
-	dir = 4;
-	light_color = "#e8eaff"
-	},
-/obj/structure/sign/warning/nosmoking{
-	pixel_x = 32
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
@@ -85034,7 +85022,7 @@ abI
 ahL
 aim
 aiO
-ajj
+aab
 ajT
 akP
 alA

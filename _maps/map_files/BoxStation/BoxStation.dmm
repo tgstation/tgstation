@@ -2144,6 +2144,42 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
+"aeD" = (
+/obj/structure/rack,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/ammo_box/shotgun/rubbershot{
+	step_x = 0;
+	step_y = 0
+	},
+/obj/item/ammo_box/shotgun/rubbershot{
+	step_x = 0;
+	step_y = 0
+	},
+/obj/item/ammo_box/shotgun/rubbershot{
+	step_x = 0;
+	step_y = 0
+	},
+/obj/item/ammo_box/shotgun/rubbershot{
+	step_x = 0;
+	step_y = 0
+	},
+/obj/item/ammo_box/shotgun/rubbershot{
+	step_x = 0;
+	step_y = 0
+	},
+/obj/item/ammo_box/shotgun/rubbershot{
+	step_x = 0;
+	step_y = 0
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/security/armory)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -49928,39 +49964,6 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"cqG" = (
-/obj/structure/rack,
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/security/armory)
 "cqJ" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
@@ -86538,7 +86541,7 @@ abn
 ack
 adk
 adK
-cqG
+aeD
 aeX
 ago
 agS

@@ -3764,12 +3764,6 @@
 "agT" = (
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
 /obj/item/gun/ballistic/shotgun/riot{
 	pixel_x = -3;
 	pixel_y = 3
@@ -3786,6 +3780,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "agU" = (
