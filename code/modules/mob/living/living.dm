@@ -410,11 +410,11 @@
 /mob/living/proc/can_inject()
 	return TRUE
 
-/mob/living/is_injectable(allowmobs = TRUE)
-	return (allowmobs && reagents && can_inject())
+/mob/living/is_injectable(mob/user, allowmobs = TRUE)
+	return (allowmobs && reagents && can_inject(user))
 
-/mob/living/is_drawable(allowmobs = TRUE)
-	return (allowmobs && reagents && can_inject())
+/mob/living/is_drawable(mob/user, allowmobs = TRUE)
+	return (allowmobs && reagents && can_inject(user))
 
 /mob/living/proc/get_organ_target()
 	var/mob/shooter = src
