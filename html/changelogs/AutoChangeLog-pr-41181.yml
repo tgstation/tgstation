@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Pandemic computers will no longer have a clickable empty button if the beaker is already empty."
+  - tweak: "Pandemic computers can now be alt-clicked to eject the contained beaker."
