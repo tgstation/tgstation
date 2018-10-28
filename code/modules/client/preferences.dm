@@ -224,7 +224,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Custom Job Preferences:</b><BR>"
 			dat += "<a href='?_src_=prefs;preference=ai_core_icon;task=input'><b>Preferred AI Core Display:</b> [preferred_ai_core_display]</a><br>"
 			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR>"
-			dat += "<a href='?_src_=prefs;preference=alternative_outfits'><b>Disable Alternative Job Outfits:</b> [disable_alt_outfits ? "Yes" : "No"]</a><BR>"
+			if(CONFIG_GET(flag/alternative_job_outfits))
+				dat += "<a href='?_src_=prefs;preference=alternative_outfits'><b>Disable Alternative Job Outfits:</b> [disable_alt_outfits ? "Yes" : "No"]</a><BR>"
 			dat += "</td>"
 			dat += "<td valign='center'>"
 
