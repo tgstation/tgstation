@@ -23,7 +23,7 @@
 	if(canUseBeacon(user))
 		generate_options(user)
 
-/obj/item/choice_beacon/proc/generate_display_names()
+/obj/item/choice_beacon/proc/generate_display_names() // return the list that will be used in the choice selection. entries should be in (type.name = type) fashion. see choice_beacon/hero for how this is done.
 	return list()
 
 /obj/item/choice_beacon/proc/canUseBeacon(mob/living/user)
