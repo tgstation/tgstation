@@ -63,18 +63,6 @@
 	icon_state = "platingdmg2"
 	},
 /area/shuttle/caravan/freighter3)
-"al" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
-/turf/open/floor/plasteel/airless,
-/area/shuttle/caravan/freighter3)
-"am" = (
-/obj/effect/turf_decal/bot_white,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/secure/gear,
-/obj/item/ammo_box/shotgun/rubbershot,
-/turf/open/floor/plasteel/airless/dark,
-/area/shuttle/caravan/freighter2)
 "an" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
@@ -95,22 +83,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"aq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
-	environment_smash = 0
-	},
-/turf/open/floor/plasteel/airless,
-/area/shuttle/caravan/freighter2)
-"ar" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
-/turf/open/floor/plasteel/airless,
-/area/shuttle/caravan/freighter3)
 "as" = (
 /obj/structure/fluff/broken_flooring{
 	dir = 4;
@@ -118,16 +90,6 @@
 	},
 /turf/template_noop,
 /area/template_noop)
-"at" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/pirate/ranged/space{
-	environment_smash = 0
-	},
-/turf/open/floor/plasteel/airless,
-/area/shuttle/caravan/freighter2)
 "av" = (
 /obj/effect/turf_decal/bot_white/right,
 /obj/structure/cable/yellow{
@@ -224,6 +186,14 @@
 	},
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter3)
+"aP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/mob/living/simple_animal/hostile/pirate/ranged/space{
+	environment_smash = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
+/area/shuttle/caravan/freighter2)
 "aQ" = (
 /obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide,
@@ -518,6 +488,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter3)
+"gT" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
+/area/shuttle/caravan/freighter3)
 "gU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -713,6 +688,13 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
+/area/shuttle/caravan/freighter2)
+"hV" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/secure/gear,
+/obj/,
+/turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "hW" = (
 /obj/effect/turf_decal/bot_white,
@@ -934,6 +916,14 @@
 	icon_state = "floorscorched1"
 	},
 /area/shuttle/caravan/freighter3)
+"iD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
+/area/shuttle/caravan/freighter3)
 "iF" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/airless/dark,
@@ -1137,6 +1127,16 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
+/area/shuttle/caravan/freighter2)
+"jL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/pirate/ranged/space{
+	environment_smash = 0
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/airless,
 /area/shuttle/caravan/freighter2)
 "jN" = (
 /turf/open/floor/plasteel/airless{
@@ -3640,7 +3640,7 @@ aa
 aa
 ho
 hS
-aq
+aP
 iU
 jq
 jI
@@ -3795,11 +3795,11 @@ bs
 bs
 bs
 hr
-am
+hV
 iu
 iX
 jt
-at
+jL
 jX
 kf
 aa
@@ -5405,7 +5405,7 @@ aa
 aa
 gb
 jA
-al
+gT
 hw
 ib
 iB
@@ -5512,7 +5512,7 @@ gv
 gV
 hy
 id
-ar
+iD
 jc
 jy
 aa
