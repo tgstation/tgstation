@@ -125,6 +125,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/level_max = 4 //The max possible level_max is 4
 	var/cooldown_min = 0 //This defines what spell quickened four times has as a cooldown. Make sure to set this for every spell
 	var/player_lock = TRUE //If it can be used by simple mobs
+	var/body_bound = FALSE //TRUE if you dont want the spell leaving the body, I.E. mindswap
 
 	var/overlay = 0
 	var/overlay_icon = 'icons/obj/wizard.dmi'

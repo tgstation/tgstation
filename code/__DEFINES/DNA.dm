@@ -28,6 +28,10 @@
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
+#define RADIOACTIVE	"Radioactivity"
+#define GLOWY		"Glowy"
+#define TELEPATHY	"Telepathy"
+#define FIREBREATH	"Fire Breath"
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

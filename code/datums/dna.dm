@@ -15,6 +15,7 @@
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 	var/mutation_index[DNA_STRUC_ENZYMES_BLOCKS] //List of which mutations this carbon has and its assigned block
 	var/instability
+	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to cheese all the powers.
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -74,6 +75,7 @@
 
 /datum/dna/proc/remove_all_mutations()
 	remove_mutation_group(mutations)
+	scrambled = FALSE
 
 /datum/dna/proc/remove_mutation_group(list/group)
 	if(!group)
@@ -111,9 +113,15 @@
 	var/result = ""
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
 	shuffle_inplace(mutations_temp)
-	for(var/i in 1 to DNA_STRUC_ENZYMES_BLOCKS)
+	var/start_at = 1
+	if(species)
+		var/datum/mutation/human/M = GLOB.all_mutations[species.inert_mutation]
+		mutation_index[1] = M.type
+		start_at = 2
+	for(var/i in start_at to DNA_STRUC_ENZYMES_BLOCKS)
 		var/datum/mutation/M = mutations_temp[i]
 		mutation_index[i] = M.type
+	shuffle_inplace(mutation_index)
 	for(var/M in mutation_index)
 		var/datum/mutation/human/A = get_initialized_mutation(M)
 		if(A.name == RACEMUT && ismonkey(holder))
@@ -155,7 +163,7 @@
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
 
-/datum/dna/proc/force_give(datum/mutation/human/HM, class)
+/datum/dna/proc/force_give(datum/mutation/human/HM, class = MUT_EXTRA)
 	if(holder && HM)
 		var/path = HM
 		if(!ispath(HM))
@@ -425,8 +433,8 @@
 	return force_give(HM)
 
 /datum/dna/proc/mutation_in_se(datum/mutation/human/HM)
-	if(!(HM.type in mutation_index)) //cant activate what we dont have, use force_give
-		return FALSE
+	if(HM.type in mutation_index) //cant activate what we dont have, use force_give
+		return TRUE
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
 
@@ -452,28 +460,32 @@
 	var/datum/mutation/human/num = pick(candidates)
 	. = dna.force_give(num)
 
-/mob/living/carbon/proc/randmutb()
+/mob/living/carbon/proc/randmutb(scrambled)
 	if(!has_dna())
 		return
 	var/list/possible = list()
-	for(var/A in dna.mutation_index)
-		var/datum/mutation/human/HM = A
-		if(initial(HM.quality) == NEGATIVE)
-			possible += HM
+	for(var/datum/mutation/human/A in GLOB.bad_mutations)
+		if(A.type in dna.mutation_index)
+			possible += A
+
 	if(possible.len)
-		. = dna.force_give(pick(possible))
+		. = dna.activate_mutation(pick(possible))
+		if(scrambled)
+			dna.scrambled = TRUE
 		return TRUE
 
-/mob/living/carbon/proc/randmutg()
+/mob/living/carbon/proc/randmutg(scrambled)
 	if(!has_dna())
 		return
 	var/list/possible = list()
-	for(var/A in dna.mutation_index)
-		var/datum/mutation/human/HM = A
-		if(initial(HM.quality) == POSITIVE)
-			possible += HM
+	for(var/datum/mutation/human/A in GLOB.good_mutations)
+		if(A.type in dna.mutation_index)
+			possible += A
+
 	if(possible.len)
-		. = dna.force_give(pick(possible))
+		. = dna.activate_mutation(pick(possible))
+		if(scrambled)
+			dna.scrambled = TRUE
 		return TRUE
 
 /mob/living/carbon/proc/randmuti()

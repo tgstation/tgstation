@@ -384,7 +384,6 @@
 	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
-
 		if(!M.dna.activate_mutation(HM) && !doitanyway)
 			log_msg += "(FAILED)"
 		else if(doitanyway)

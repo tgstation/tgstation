@@ -44,6 +44,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/inert_mutation = RACEMUT
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -295,6 +296,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		C.remove_trait(X, SPECIES_TRAIT)
+	if(inert_mutation != new_species.inert_mutation)
+		var/datum/mutation/human/oldHM = GLOB.all_mutations[inert_mutation]
+		var/datum/mutation/human/newHM = GLOB.all_mutations[new_species.inert_mutation]
+		C.dna.mutation_index[C.dna.mutation_index.Find(oldHM.type)] = newHM.type
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 

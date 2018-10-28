@@ -28,6 +28,8 @@
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
 	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
 	if(prob(95))
@@ -147,6 +149,7 @@
 	desc = "A strange genome, believing to be what differentiates monkeys from humans."
 	quality = NEGATIVE
 	time_coeff = 2
+	locked = TRUE //Species specific, keep out of actual gene pool
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -156,3 +159,21 @@
 /datum/mutation/human/race/on_losing(mob/living/carbon/monkey/owner)
 	if(owner && istype(owner) && owner.stat != DEAD && (owner.dna.mutations.Remove(src)))
 		. = owner.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_KEEPSE)
+
+/datum/mutation/human/glow
+	name = "Glowy"
+	desc = "You permanently emit a light with a random color and intensity."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
+	instability = 5
+	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
+	var/glow = 1.5
+
+/datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	glowth = new(owner)
+	glowth.set_light(glow, glow, dna.features["mcolor"])
+
+/datum/mutation/human/glow/on_losing(mob/living/carbon/monkey/owner)
+	qdel(glowth)

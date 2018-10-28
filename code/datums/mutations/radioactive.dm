@@ -2,8 +2,7 @@
 	name = "Radioactivity"
 	desc = "A volatile mutation that causes the host to sent out deadly beta radiation. This affects both the hosts and his surroundings."
 	quality = NEGATIVE
-	get_chance = 25
-	text_gain_indication = "<span class='notice'>You can feel it in your bones!</span>"
+	text_gain_indication = "<span class='warning'>You can feel it in your bones!</span>"
 	time_coeff = 5
 	instability = 5
 

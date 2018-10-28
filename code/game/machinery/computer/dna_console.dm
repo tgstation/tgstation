@@ -347,45 +347,50 @@ More mutations
 			temp_html += "<h3>Irradiate Subject</h3>"
 			temp_html += "<div class='line'><div class='statusLabel'>Unique Identifier:</div><div class='statusValue'><div class='clearBoth'>"
 
-			var/max_line_len = 7*DNA_BLOCK_SIZE
-			if(viable_occupant)
-				temp_html += "<div class='dnaBlockNumber'>1</div>"
-				var/len = length(viable_occupant.dna.uni_identity)
-				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
-						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
-						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
+			if(viable_occupant.dna.scrambled)
+				temp_html += "<div class='line'>Genetic structure has been damaged. Please initiate restoration protocal."
+				temp_html += "<a href='?src=[REF(src)];task=restore;'>Restore.</a>"
 			else
-				temp_html += "----"
-			temp_html += "</div></div></div><br>"
-
-			temp_html += "<br><div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
-			if(viable_occupant)
-				temp_html += generate_DBN(1, viable_occupant)
-				var/len = length(viable_occupant.dna.struc_enzymes)
-				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
-						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
-						var/cur_block = (i / DNA_BLOCK_SIZE) + 1
-						temp_html += generate_DBN(cur_block, viable_occupant)
-			else
-				temp_html += "----"
-			temp_html += "</div></div></div><br>"
-			temp_html += "<br><div class='line'><div class='statusLabel'>Bi-Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
-			for(var/datum/mutation/human/HM in viable_occupant.dna.mutations)
-				if(HM.class == MUT_EXTRA)
-					temp_html += generate_DBN(DNA_STRUC_ENZYMES_BLOCKS+LAZYLEN(stored_mutations)+viable_occupant.dna.mutations.Find(HM),viable_occupant, "0", HM.type)
-				else if(HM.class == MUT_NORMAL)
-					temp_html += generate_DBN(viable_occupant.dna.mutation_index.Find(HM.type),viable_occupant)
+				var/max_line_len = 7*DNA_BLOCK_SIZE
+				if(viable_occupant)
+					temp_html += "<div class='dnaBlockNumber'>1</div>"
+					var/len = length(viable_occupant.dna.uni_identity)
+					for(var/i=1, i<=len, i++)
+						temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
+						if ((i % max_line_len) == 0)
+							temp_html += "</div><div class='clearBoth'>"
+						if((i % DNA_BLOCK_SIZE) == 0 && i < len)
+							temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 				else
-					break
-				temp_html += "<div class='dnaBlockNumber'>[HM.name]</div>"
+					temp_html += "----"
+				temp_html += "</div></div></div><br>"
 
-			temp_html += "</div></div></div><br><br>"
+				temp_html += "<br><div class='line'><div class='statusLabel'>Structural Enzymes:</div><div class='statusValue'><div class='clearBoth'>"
+				if(viable_occupant)
+					temp_html += generate_DBN(1, viable_occupant)
+					var/len = length(viable_occupant.dna.struc_enzymes)
+					for(var/i=1, i<=len, i++)
+						temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulsese;num=[i];'>[copytext(viable_occupant.dna.struc_enzymes,i,i+1)]</a>"
+						if ((i % max_line_len) == 0)
+							temp_html += "</div><div class='clearBoth'>"
+						if((i % DNA_BLOCK_SIZE) == 0 && i < len)
+							var/cur_block = (i / DNA_BLOCK_SIZE) + 1
+							temp_html += generate_DBN(cur_block, viable_occupant)
+				else
+					temp_html += "----"
+				temp_html += "</div></div></div><br>"
+				if(viable_occupant)
+					temp_html += "<br><div class='line'><div class='statusLabel'>Active Mutations:</div><div class='statusValue'><div class='clearBoth'>"
+					for(var/datum/mutation/human/HM in viable_occupant.dna.mutations)
+						if(HM.class == MUT_EXTRA)
+							temp_html += generate_DBN(DNA_STRUC_ENZYMES_BLOCKS+LAZYLEN(stored_mutations)+viable_occupant.dna.mutations.Find(HM),viable_occupant, "0", HM.type)
+						else if(HM.class == MUT_NORMAL)
+							temp_html += generate_DBN(viable_occupant.dna.mutation_index.Find(HM.type),viable_occupant)
+						else
+							break
+						temp_html += "<div class='dnaBlockNumber'>[HM.name]</div>"
+
+					temp_html += "</div></div></div><br><br>"
 
 	popup.set_content(temp_html.Join())
 	popup.open()
@@ -400,7 +405,6 @@ More mutations
 		path = M.type
 	else
 		path = mutation_type
-	var/mut_style = "dnaBlockNumber"
 	if((path in stored_research.discovered_mutations) || M)
 		var/quality
 		if(!M)
@@ -408,14 +412,15 @@ More mutations
 			quality = HM.quality
 		else
 			quality = M.quality
+		var/thing
 		switch(quality)
 			if(POSITIVE)
-				mut_style = "dnaBlockNumberGood"
+				thing = "+"
 			if(MINOR_NEGATIVE)
-				mut_style = "dnaBlockNumberNeutral"
+				thing = "/"
 			if(NEGATIVE)
-				mut_style = "dnaBlockNumberBad"
-		temp_html += "<a color=red class='[mut_style]' href='?src=[REF(src)];task=inspect;num=[i];'>[show_as ? show_as : i]</a>"
+				thing = "-"
+		temp_html += "<a color=red class='dnaBlockNumber' href='?src=[REF(src)];task=inspect;num=[i];'>[thing][show_as ? show_as : i]</a>"
 	else
 		temp_html += "<div class='dnaBlockNumber'>[i]</div>"
 	return temp_html
@@ -639,11 +644,15 @@ More mutations
 					I.HM.copy_mutation(HM)
 					I.doitanyway = TRUE
 					I.name = "[HM.name] injector"
-					injectorready = world.time + INJECTOR_TIMEOUT
+					injectorready = world.time + INJECTOR_TIMEOUT*5
 		if("nullify")
-			viable_occupant.dna.force_lose(current_mutation)
-			viable_occupant.dna.update_instability(TRUE)
-			current_screen = null
+			if(viable_occupant)
+				viable_occupant.dna.force_lose(current_mutation)
+				viable_occupant.dna.update_instability(TRUE)
+				current_screen = null
+		if("restore")
+			if(viable_occupant && viable_occupant.dna.scrambled)
+				viable_occupant.dna.remove_all_mutations() //Scrambled is set back to FALSE in this proc
 
 	ui_interact(usr,last_change)
 

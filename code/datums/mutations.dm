@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/mutable_appearance/visual_indicators = list()
+	var/obj/effect/proc_holder/spell/power
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
 	var/health_req //minimum health required to acquire the mutation
@@ -51,6 +52,12 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		owner.remove_overlay(layer_used)
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
+	if(power)
+		power = new power()
+		power.action_background_icon_state = "bg_tech_blue_on"
+		power.panel = "Genetic"
+		power.body_bound = TRUE
+		owner.AddSpell(power)
 
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
 	return
@@ -79,6 +86,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 			mut_overlay.Remove(get_visual_indicator(owner))
 			owner.overlays_standing[layer_used] = mut_overlay
 			owner.apply_overlay(layer_used)
+			if(power)
+				owner.RemoveSpell(power)
 			qdel(src)
 		return 0
 	return 1

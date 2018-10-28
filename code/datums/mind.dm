@@ -433,7 +433,7 @@
 
 		if(!GLOB.admin_objective_list)
 			generate_admin_objective_list()
-		
+
 		if(old_objective)
 			if(old_objective.name in GLOB.admin_objective_list)
 				def_value = old_objective.name
@@ -451,7 +451,7 @@
 			target_antag.objectives += new_objective
 			message_admins("[key_name_admin(usr)] added a new objective for [current]: [new_objective.explanation_text]")
 			log_admin("[key_name(usr)] added a new objective for [current]: [new_objective.explanation_text]")
-		else 
+		else
 			if(old_objective.type == selected_type)
 				//Edit the old
 				old_objective.admin_edit(usr)
@@ -640,6 +640,8 @@
 /datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
+		if(S.body_bound)
+			continue
 		S.action.Grant(new_character)
 
 /datum/mind/proc/disrupt_spells(delay, list/exceptions = New())
