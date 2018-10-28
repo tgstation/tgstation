@@ -154,6 +154,13 @@
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
+
+/obj/item/reagent_containers/pill/psicodine
+	name = "psicodine pill"
+	desc = "Used to treat mental instability."
+	list_reagents = list("psicodine" = 10)
+	icon_state = "pill22"
+	roundstart = 1
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
@@ -181,9 +188,12 @@
 	name = "speedy pill"
 	list_reagents = list("aranesp" = 10)
 
-/obj/item/reagent_containers/pill/psicodine
-	name = "psicodine pill"
-	list_reagents = list("psicodine" = 10)
+/obj/item/reagent_containers/pill/happiness
+	name = "happiness pill"
+	desc = "It has a creepy smiling face on it."
+	icon_state = "pill_happy"
+	list_reagents = list("happiness" = 10)
+
 
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"

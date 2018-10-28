@@ -40,4 +40,13 @@
 
 /datum/mood_event/happiness_drug
 	description = "<span class='nicegreen'>I feel nothing at all. I never want this to end.</span>\n"
+	mood_change = 50
+
+/datum/mood_event/happiness_drug_good_od
+	description = "<span class='nicegreen'>YES! YES!! YES!!!</span>\n"
 	mood_change = 100
+
+/datum/mood_event/happiness_drug_bad_od
+	description = "<span class='boldwarning'>NO! NO!! NO!!!</span>\n"
+	mood_change = -100
+	timeout = 300

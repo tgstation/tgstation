@@ -1265,12 +1265,13 @@
 	description = "Suppresses anxiety and other various forms of mental distress."
 	reagent_state = LIQUID
 	color = "#07E79E"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
-/datum/reagent/drug/psicodine/on_mob_add(mob/living/L)
+/datum/reagent/medicine/psicodine/on_mob_add(mob/living/L)
 	..()
 	L.add_trait(TRAIT_FEARLESS, id)
 
-/datum/reagent/drug/psicodine/on_mob_delete(mob/living/L)
+/datum/reagent/medicine/psicodine/on_mob_delete(mob/living/L)
 	L.remove_trait(TRAIT_FEARLESS, id)
 	..()
 
