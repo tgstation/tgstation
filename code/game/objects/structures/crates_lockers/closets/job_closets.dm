@@ -23,7 +23,7 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/reagent_containers/glass/rag(src)
 	new /obj/item/reagent_containers/glass/rag(src)
-	new /obj/item/storage/box/beanbag(src)
+	new /obj/item/ammo_box/shotgun/beanbag(src)
 	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/circuitboard/machine/dish_drive(src)
 	new /obj/item/clothing/glasses/sunglasses/reagent(src)

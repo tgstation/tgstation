@@ -212,7 +212,7 @@
 					/obj/item/clothing/head/soft/black = 2,
 					/obj/item/clothing/shoes/sneakers/black = 2,
 					/obj/item/reagent_containers/glass/rag = 2,
-					/obj/item/storage/box/beanbag = 1,
+					/obj/item/ammo_box/shotgun/beanbag = 1,
 					/obj/item/clothing/suit/armor/vest/alt = 1,
 					/obj/item/circuitboard/machine/dish_drive = 1,
 					/obj/item/clothing/glasses/sunglasses/reagent = 1,
