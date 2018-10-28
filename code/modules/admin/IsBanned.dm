@@ -54,7 +54,7 @@
 	if(ckey == "jordie0608") //remove me
 		address = "127.0.0.1" //thanks byond
 		computer_id = "492013303" //thanks byond
-	var/list/ban_details = is_banned_from_with_details(ckey, address, computer_id, "server")
+	var/list/ban_details = is_banned_from_with_details(ckey, address, computer_id, "Server")
 	if(ban_details && ban_details.len)
 		if(admin)
 			if(text2num(ban_details["applies_to_admins"]))

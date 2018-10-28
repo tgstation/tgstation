@@ -130,11 +130,11 @@
 			Ban type
 			<br>
 			<label class='inputlabel radio'>Server
-			<input type='radio' id='server' name='radioban' value='server'[role == "server" ? " checked" : ""][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
+			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
 			<div class='inputbox'></div></label>
 			<br>
 			<label class='inputlabel radio'>Role
-			<input type='radio' id='role' name='radioban' value='role'[role == "server" ? "" : " checked"][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
+			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
 			<div class='inputbox'></div></label>
 		</div>
 		<div class='column right'>
@@ -341,7 +341,7 @@
 			error_state += "No severity was selected."
 		switch(href_list["radioban"])
 			if("server")
-				roles_to_ban += "server"
+				roles_to_ban += "Server"
 			if("role")
 				if(href_list[href_list.len] == "roleban_delimiter")
 					error_state += "Role ban was selected but no roles to ban were selected."
@@ -445,9 +445,9 @@
 	var/time_message = "[DisplayTimeText(duration MINUTES)]"
 	if(duration > 1) //pluralize the interval if necessary
 		time_message += "s"
-	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [player_key]."
-	log_admin_private("[kn] [msg][roles_to_ban[1] == "server" ? "" : " Roles: [roles_to_ban.Join(", ")]"]")
-	message_admins("[kna] [msg][roles_to_ban[1] == "server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]")
+	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [player_key]."
+	log_admin_private("[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"]")
+	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]")
 	if(applies_to_admins)
 		send2irc("BAN ALERT","[kn] [msg]")
 	create_message("note", player_ckey, null, reason, null, null, 0, 0, null, 0, severity)
@@ -457,16 +457,16 @@
 	appeal_url = CONFIG_GET(string/banappeals)
 	if(C)
 		build_ban_cache(C)
-		to_chat(C, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
-		if(roles_to_ban[1] == "server")
+		to_chat(C, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
+		if(roles_to_ban[1] == "Server")
 			if(AH)
 				AH.Resolve()
 			qdel(C)
 	for(var/client/i in GLOB.clients - C)
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
-			to_chat(i, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
-			if(roles_to_ban[1] == "server")
+			to_chat(i, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
+			if(roles_to_ban[1] == "Server")
 				qdel(i)
 
 /datum/admins/proc/unban_panel(player_key, admin_key, player_ip, player_cid, page = 0)
