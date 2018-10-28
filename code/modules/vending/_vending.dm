@@ -49,6 +49,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 	var/product_slogans = ""	//String of slogans separated by semicolons, optional
 	var/product_ads = ""		//String of small ad messages in the vending screen - random chance
+	var/datum/language/vending_language = /datum/language/common //Language that vending machine messages will be in
 	var/list/product_records = list()
 	var/list/hidden_records = list()
 	var/list/coin_records = list()
@@ -379,18 +380,18 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			var/obj/item/card/id/C = H.get_idcard(TRUE)
 
 			if(!C)
-				say("No card found.")
+				speak("No card found.")
 				flick(icon_deny,src)
 				vend_ready = 1
 				return
 			else if (!C.registered_account)
-				say("No account found.")
+				speak("No account found.")
 				flick(icon_deny,src)
 				vend_ready = 1
 				return
 			var/datum/bank_account/account = C.registered_account
 			if(!account.adjust_money(-chef_price))
-				say("You do not possess the funds to purchase this meal.")
+				speak("You do not possess the funds to purchase this meal.")
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SRV)
 		if(D)
 			D.adjust_money(chef_price)
@@ -399,7 +400,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		dish_quants[N] = max(dish_quants[N] - 1, 0)
 		for(var/obj/O in contents)
 			if(O.name == N)
-				say("Thank you for supporting your local kitchen and purchasing [O]!")
+				speak("Thank you for supporting your local kitchen and purchasing [O]!")
 				O.forceMove(drop_location())
 				break
 		vend_ready = 1
@@ -433,7 +434,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			message_admins("Vending machine exploit attempted by [ADMIN_LOOKUPFLW(usr)]!")
 			return
 		if (R.amount <= 0)
-			say("Sold out of [R.name].")
+			speak("Sold out of [R.name].")
 			flick(icon_deny,src)
 			vend_ready = 1
 			return
@@ -442,12 +443,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			var/obj/item/card/id/C = H.get_idcard(TRUE)
 
 			if(!C)
-				say("No card found.")
+				speak("No card found.")
 				flick(icon_deny,src)
 				vend_ready = 1
 				return
 			else if (!C.registered_account)
-				say("No account found.")
+				speak("No account found.")
 				flick(icon_deny,src)
 				vend_ready = 1
 				return
@@ -457,14 +458,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			if(coin_records.Find(R) || hidden_records.Find(R))
 				price_to_use = extra_price
 			if(price_to_use && !account.adjust_money(-price_to_use))
-				say("You do not possess the funds to purchase [R.name].")
+				speak("You do not possess the funds to purchase [R.name].")
 				flick(icon_deny,src)
 				vend_ready = 1
 				return
 			var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 			if(D)
 				D.adjust_money(price_to_use)
-		say("Thank you for shopping with [src]!")
+		speak("Thank you for shopping with [src]!")
 		use_power(5)
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
@@ -503,7 +504,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!message)
 		return
 
-	say(message)
+	say(message, language = vending_language)
 
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
