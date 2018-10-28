@@ -1262,10 +1262,11 @@
 /datum/reagent/medicine/psicodine
 	name = "Psicodine"
 	id = "psicodine"
-	description = "Suppresses anxiety and other various forms of mental distress."
+	description = "Suppresses anxiety and other various forms of mental distress. Overdose causes hallucinations and minor toxin damage."
 	reagent_state = LIQUID
 	color = "#07E79E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 30
 
 /datum/reagent/medicine/psicodine/on_mob_add(mob/living/L)
 	..()
@@ -1284,5 +1285,11 @@
 	if (mood)
 		if(mood.sanity <= SANITY_NEUTRAL)
 			mood.sanity = min(mood.sanity+5, SANITY_NEUTRAL)
+	..()
+	. = 1
+
+/datum/reagent/medicine/psicodine/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 5), 60)
+	M.adjustToxLoss(1, 0)
 	..()
 	. = 1
