@@ -402,7 +402,7 @@
 			if(3)
 				M.emote("frown")
 				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "happiness_drug", /datum/mood_event/happiness_drug_bad_od)
-	M.adjustBrainLoss(rand(0,1))
+	M.adjustBrainLoss(0.5)
 	..()
 	. = 1
 
