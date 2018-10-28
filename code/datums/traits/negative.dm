@@ -320,6 +320,6 @@
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/sunglasses/blindfold/white/glasses = new(get_turf(H))
-	if(!H.equip_to_slot(glasses, SLOT_GLASSES)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
-		H.put_in_hands(glasses)
+	H.put_in_hands(glasses)
+	H.equip_to_slot(glasses, SLOT_GLASSES) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
 	H.regenerate_icons()
