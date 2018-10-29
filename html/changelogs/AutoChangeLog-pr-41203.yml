@@ -1,0 +1,4 @@
+author: "Barhandar"
+delete-after: True
+changes: 
+  - bugfix: "Pumpkin meteors on Halloween now replace catastrophic meteor waves, instead of ALL OF THEM."
