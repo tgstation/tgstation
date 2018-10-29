@@ -127,6 +127,9 @@
 	if(statpanel("Status"))
 		stat(null, "Scare Points: [spook_points]")
 		stat(null, "Death Points: [death_points]")
+		if(active_power)
+			stat(null,"Active Power : [active_power.name]")
+
 
 /mob/camera/ghostmaster/Move(NewLoc, Dir = 0)
 	forceMove(NewLoc)

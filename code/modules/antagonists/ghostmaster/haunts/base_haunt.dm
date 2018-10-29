@@ -24,7 +24,8 @@
 	if(!message || !can_speak_basic(message))
 		return
 	haunt_talk(src, message)
-	//emote spooky noises here
+	playsound(src,'sound/effects/ghost.ogg')
+	audible_message("<span class='notice'>[src] calls out in haunting tone.</span>")
 	return
 
 /mob/living/simple_animal/hostile/haunt/proc/generate_corpse()
@@ -40,7 +41,7 @@
 	if(exorcism)
 		var/hint = exorcism.give_hint()
 		audible_message("<span class='big haunt'>[hint]</span>")
-	if(!exorcism.completed)
+	if(exorcism && !exorcism.completed)
 		bench_time()
 	else
 		. = ..()

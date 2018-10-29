@@ -33,10 +33,13 @@
 	var/max_collect_count = 10
 	var/max_junk = 20
 	var/list/obj/item/junk = list()
+	var/datum/action/innate/poltergeist_collect/collect_action
 
 /mob/living/simple_animal/hostile/haunt/poltergeist/Initialize()
 	. = ..()
 	RegisterSignal(src,COMSIG_ORBITER_STOPPED,.proc/check_junk)
+	collect_action = new
+	collect_action.Grant(src)
 
 	alpha = min_alpha
 	animate(src, alpha = max_alpha, time = 50, easing = SINE_EASING, loop = -1)
@@ -139,3 +142,14 @@
 	for(var/obj/item/I in junk)
 		orb.end_orbit(I)
 	. = ..()
+
+
+/datum/action/innate/poltergeist_collect
+	name = "Collect Junk"
+	desc = "Pick up items lying around, if there are no items, rips out floor tiles."
+	check_flags = AB_CHECK_CONSCIOUS
+
+/datum/action/innate/poltergeist_collect/Activate()
+	var/mob/living/simple_animal/hostile/haunt/poltergeist/P = owner
+	if(P.next_collect < world.time)
+		P.collect_junk()

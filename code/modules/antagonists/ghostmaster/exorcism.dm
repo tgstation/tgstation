@@ -30,7 +30,7 @@
 /datum/exorcism/proc/generate(step_count = 5, req_count = 1)
 	//Todo more reveal methods.
 	reveal_method = REVEAL_WORD
-	reveal_data = pick("swordfish","beetlejuice","hunter2")
+	reveal_data = pick("swordfish","beetlejuice","appear spirit")
 
 	var/list/possible_reqs = list(EXORCISM_REQ_AREA,EXORCISM_REQ_CANDLE,EXORCISM_REQ_HOLY_GROUND)
 	for(var/i in 1 to req_count)
@@ -55,7 +55,7 @@
 			if(EXORCISM_STEP_ITEM)
 				step_data["data"] = pick(/obj/item/storage/book/bible,/obj/item/storage/toolbox)
 			if(EXORCISM_STEP_PRAYER)
-				step_data["data"] = pick("rest in peace","happy pinning","whatever")
+				step_data["data"] = pick("rest in peace","happy pinning","goodbye")
 		steps += list(step_data)
 
 /datum/exorcism/proc/reset_hints()
