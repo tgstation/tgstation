@@ -42,7 +42,7 @@
 								var search = lsearch\[0\];
 								if ( search.innerText.toLowerCase().indexOf(filter) == -1 )
 								{
-									td.innerHTML = "";
+									tr.innerHTML = "";
 									i--;
 								}
 							}catch(err) {   }
@@ -54,7 +54,6 @@
 					var debug = document.getElementById("debug");
 
 					locked_tabs = new Array();
-
 				}
 
 				function expand(id,job,name,real_name,old_names,key,ip,antagonist,ref){
