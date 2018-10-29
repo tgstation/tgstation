@@ -176,7 +176,7 @@
 		to_chat(user, "\A [O.name]")
 	if(beaker)
 		if(!length(beaker.reagents?.reagent_list))
-			to_chat(user, "\A [beaker] (empty)")
+			to_chat(user, "An empty [beaker]")
 		else if(user.can_see_reagents() || issilicon(user))
 			to_chat(user, "\A [beaker] containing:")
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
