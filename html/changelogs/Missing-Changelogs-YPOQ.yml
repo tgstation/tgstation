@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - fix: "Fixed a bug that caused fire extinguishers to often fail to extinguish people."
