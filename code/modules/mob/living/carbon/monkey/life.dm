@@ -166,8 +166,7 @@
 
 	for(var/X in burning_items)
 		var/obj/item/I = X
-		if(!(I.resistance_flags & FIRE_PROOF))
-			I.take_damage(fire_stacks, BURN, "fire", 0)
+		I.fire_act((fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
 
 	adjust_bodytemperature(BODYTEMP_HEATING_MAX)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)

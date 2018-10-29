@@ -51,8 +51,11 @@
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 
-/obj/item/gun/ballistic/automatic/ui_action_click()
-	burst_select()
+/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		..()
 
 /obj/item/gun/ballistic/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
@@ -106,7 +109,6 @@
 /obj/item/gun/ballistic/automatic/c20r/afterattack()
 	. = ..()
 	empty_alarm()
-	return
 
 /obj/item/gun/ballistic/automatic/c20r/update_icon()
 	..()
@@ -167,8 +169,8 @@
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
-		. = ..()
-		return
+		return ..()
+
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))

@@ -1004,23 +1004,24 @@
 					if(!severity)
 						return
 					var/msg
+					var/fancy_jobban_duration = DisplayTimeText(mins MINUTES)
 					for(var/job in notbannedlist)
 						if(!DB_ban_record(BANTYPE_JOB_TEMP, M, mins, reason, job))
 							to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
 							return
 						if(M.client)
 							jobban_buildcache(M.client)
-						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes. reason: [reason]")
-						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [mins] minutes.")
+						ban_unban_log_save("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [fancy_jobban_duration]. reason: [reason]")
+						log_admin_private("[key_name(usr)] temp-jobbanned [key_name(M)] from [job] for [fancy_jobban_duration].")
 						if(!msg)
 							msg = job
 						else
 							msg += ", [job]"
 					create_message("note", M.key, null, "Banned  from [msg] - [reason]", null, null, 0, 0, null, 0, severity)
-					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes.</span>")
+					message_admins("<span class='adminnotice'>[key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [fancy_jobban_duration].</span>")
 					to_chat(M, "<span class='boldannounce'><BIG>You have been [(msg == ("ooc" || "appearance")) ? "banned" : "jobbanned"] by [usr.client.key] from: [msg].</BIG></span>")
 					to_chat(M, "<span class='boldannounce'>The reason is: [reason]</span>")
-					to_chat(M, "<span class='danger'>This jobban will be lifted in [mins] minutes.</span>")
+					to_chat(M, "<span class='danger'>This jobban will be lifted in [fancy_jobban_duration].</span>")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
@@ -1601,7 +1602,7 @@
 
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)].")
-		H.AIize()
+		H.AIize(H.client)
 
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))

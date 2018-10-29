@@ -141,7 +141,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/away{
 	dir = 2;
 	name = "Recycling APC";
 	pixel_y = -24
@@ -182,7 +182,7 @@
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/stack/packageWrap,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/away{
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -398,7 +398,7 @@
 "aZ" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/away{
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
@@ -691,7 +691,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/away{
 	dir = 2;
 	name = "Kitchen APC";
 	pixel_y = -24
@@ -888,7 +888,7 @@
 /area/ruin/space/has_grav/deepstorage/hydroponics)
 "ch" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/away{
 	dir = 8;
 	pixel_x = 24
 	},
@@ -943,7 +943,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cm" = (
 /obj/structure/table,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/away{
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -998,7 +998,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "cs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/away{
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/freezer,
@@ -1705,7 +1705,7 @@
 /obj/item/radio{
 	pixel_x = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/away{
 	dir = 8;
 	pixel_x = 24
 	},
@@ -1759,7 +1759,7 @@
 	dir = 4
 	},
 /obj/structure/cable/yellow,
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/away{
 	dir = 2;
 	name = "Main Area APC";
 	pixel_y = -24
@@ -1947,7 +1947,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "ep" = (
 /obj/machinery/door/poddoor{
 	id = "bunkerinterior"
@@ -1955,7 +1955,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "eq" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
@@ -2025,11 +2025,7 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "ey" = (
 /obj/structure/closet/cabinet,
-/obj/item/card/id/away{
-	desc = "A specialized ID meant for accessing some sort of specific door.";
-	icon_state = "centcom";
-	name = "bunker access ID"
-	},
+/obj/item/card/id/away/deep_storage,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/deepstorage/dorm)
 "ez" = (
@@ -2087,7 +2083,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "eG" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 6
@@ -2097,7 +2093,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "eH" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
 	dir = 4
@@ -2108,14 +2104,14 @@
 /obj/structure/table,
 /obj/machinery/button/door{
 	id = "bunkerexterior";
-	name = "exterior blastdoor access";
+	name = "exterior blast door access";
 	pixel_x = -24;
 	pixel_y = -8;
 	req_access_txt = "200"
 	},
 /obj/machinery/button/door{
 	id = "bunkerinterior";
-	name = "interior blastdoor access";
+	name = "interior blast door access";
 	pixel_x = -24;
 	req_access_txt = "200"
 	},
@@ -2131,7 +2127,7 @@
 	},
 /obj/machinery/computer/security/telescreen{
 	dir = 1;
-	name = "Bunker Entrance";
+	name = "Bunker Entrance monitor";
 	network = list("bunker1");
 	pixel_y = 2
 	},
@@ -2173,7 +2169,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/away{
 	dir = 1;
 	name = "Airlock Control APC";
 	pixel_y = 24
@@ -2247,13 +2243,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/deepstorage)
-"eS" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/deepstorage)
 "eT" = (
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -2372,7 +2361,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "fh" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "bunkershutter"
@@ -2420,7 +2409,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/away{
 	pixel_y = 23
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2452,7 +2441,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "fs" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden{
 	dir = 4
@@ -2463,7 +2452,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/away{
 	dir = 4;
 	pixel_x = -24
 	},
@@ -2503,7 +2492,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
+/obj/machinery/power/apc/away{
 	dir = 8;
 	name = "Power and Atmospherics APC";
 	pixel_x = -25;
@@ -2558,7 +2547,7 @@
 /obj/structure/cable/yellow,
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
-	name = "Dormory APC";
+	name = "Dormitory APC";
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2572,7 +2561,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "fG" = (
 /obj/machinery/door/poddoor{
 	id = "bunkerexterior"
@@ -2580,7 +2569,7 @@
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "fH" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -2679,6 +2668,7 @@
 /area/ruin/space/has_grav/deepstorage)
 "fU" = (
 /obj/machinery/camera{
+	c_tag = "Bunker entrance";
 	network = list("bunker1")
 	},
 /obj/structure/sign/warning/securearea{
@@ -2788,7 +2778,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/away{
 	dir = 8;
 	pixel_x = 24
 	},
@@ -3161,7 +3151,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
-/obj/machinery/airalarm/unlocked{
+/obj/machinery/airalarm/away{
 	pixel_y = 23
 	},
 /turf/open/floor/light,
@@ -3216,7 +3206,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/ruin/space/has_grav/deepstorage)
+/area/ruin/space/has_grav/deepstorage/airlock)
 "hl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
 /obj/structure/cable/yellow{
@@ -3314,6 +3304,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/crusher)
+"Rs" = (
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/ruin/space/has_grav/deepstorage/airlock)
 
 (1,1,1) = {"
 aa
@@ -4383,8 +4378,8 @@ dF
 hh
 eo
 eF
-bz
-bz
+Rs
+Rs
 hk
 fF
 fS
@@ -4435,7 +4430,7 @@ dG
 dW
 ep
 eG
-eS
+fj
 fg
 fr
 fG
