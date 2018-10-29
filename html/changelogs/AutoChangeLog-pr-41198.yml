@@ -1,0 +1,5 @@
+author: "Basilman"
+delete-after: True
+changes: 
+  - bugfix: "fixed blindness identification blindfold changing color more than once"
+  - bugfix: "fixed blindfold item being split in your inventory"
