@@ -18,13 +18,16 @@
 			return TRUE
 	else
 		player_ckey = sanitizeSQL(player_ckey)
+		var/admin_where
+		if(GLOB.admin_datums[player_ckey] || GLOB.deadmins[player_ckey])
+			admin_where = " AND applies_to_admins = 1"
 		var/sql_roles
 		if(islist(roles))
 			sql_roles = jointext(roles, "', '")
 		else
 			sql_roles = roles
 		sql_roles = sanitizeSQL(sql_roles)
-		var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("ban")] WHERE ckey = '[player_ckey]' AND role IN ('[sql_roles]') AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
+		var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("ban")] WHERE ckey = '[player_ckey]' AND role IN ('[sql_roles]') AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())[admin_where]")
 		if(!query_check_ban.warn_execute())
 			qdel(query_check_ban)
 			return
@@ -64,12 +67,17 @@
 	if(C && istype(C))
 		C.ban_cache = list()
 		var/player_key = sanitizeSQL(C.ckey)
-		var/datum/DBQuery/query_build_ban_cache = SSdbcore.NewQuery("SELECT role, reason FROM [format_table_name("ban")] WHERE ckey = '[player_key]' AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
+		var/is_admin = FALSE
+		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
+			is_admin = TRUE
+		var/datum/DBQuery/query_build_ban_cache = SSdbcore.NewQuery("SELECT role, applies_to_admins FROM [format_table_name("ban")] WHERE ckey = '[player_key]' AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
 		if(!query_build_ban_cache.warn_execute())
 			qdel(query_build_ban_cache)
 			return
 		while(query_build_ban_cache.NextRow())
-			C.ban_cache[query_build_ban_cache.item[1]] = query_build_ban_cache.item[2]
+			if(is_admin && !text2num(query_build_ban_cache.item[1]))
+				continue
+			C.ban_cache[query_build_ban_cache.item[1]] = TRUE
 		qdel(query_build_ban_cache)
 
 /datum/admins/proc/ban_panel(player_key, player_ip, player_cid, role, duration = 1440, applies_to_admins, reason, edit_id, page, admin_key)
