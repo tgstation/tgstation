@@ -164,7 +164,7 @@ RLD
 
 	if(!usr.canUseTopic(src, BE_CLOSE))
 		return
-	
+
 	toggle_window_type(usr)
 
 /obj/item/construction/rcd/proc/toggle_window_type(mob/user)
@@ -425,19 +425,19 @@ RLD
 /obj/item/construction/rcd/attack_self(mob/user)
 	..()
 	var/list/choices = list(
-		"Airlock" = image(icon = 'icons/obj/interface.dmi', icon_state = "airlock"),
-		"Deconstruct" = image(icon= 'icons/obj/interface.dmi', icon_state = "delete"),
-		"Grilles & Windows" = image(icon = 'icons/obj/interface.dmi', icon_state = "grillewindow"),
-		"Floors & Walls" = image(icon = 'icons/obj/interface.dmi', icon_state = "wallfloor")
+		"Airlock" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlock"),
+		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
+		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
 	)
 	if(mode == RCD_AIRLOCK)
 		choices += list(
-		"Change Access" = image(icon = 'icons/obj/interface.dmi', icon_state = "access"),
-		"Change Airlock Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "airlocktype")
+		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
+		"Change Airlock Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlocktype")
 		)
 	else if(mode == RCD_WINDOWGRILLE)
 		choices += list(
-			"Change Window Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "windowtype")
+			"Change Window Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowtype")
 		)
 	var/choice = show_radial_menu(user,src,choices, custom_check = CALLBACK(src,.proc/check_menu,user))
 	if(!check_menu(user))
