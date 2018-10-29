@@ -250,16 +250,15 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(current_user)
 		current_user.images -= menu_holder
 
-/datum/radial_menu/proc/wait(atom/user = null, atom/anchor = null, require_near = FALSE)
+/datum/radial_menu/proc/wait(atom/user, atom/anchor, require_near = FALSE)
 	while (current_user && !finished && !selected_choice)
 		if(custom_check_callback && next_check < world.time)
 			if(!custom_check_callback.Invoke())
 				return
 			else
 				next_check = world.time + check_delay
-		if(require_near && user && anchor)
-			if(!in_range(anchor, user))
-				return
+		if(require_near && user && anchor && !in_range(anchor, user))
+			return
 		stoplag(1)
 
 /datum/radial_menu/Destroy()

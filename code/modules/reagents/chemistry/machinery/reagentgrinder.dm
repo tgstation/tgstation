@@ -1,12 +1,3 @@
-GLOBAL_LIST_INIT(reagentgrinder_radial_grind, list(
-	"grind" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind"),
-	"juice" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_juice"),
-	"eject" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject")))
-
-GLOBAL_LIST_INIT(reagentgrinder_radial_mix, list(
-	"mix" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_mix"),
-	"eject" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject")))
-
 #define MILK_TO_BUTTER_COEFF 15
 
 /obj/machinery/reagentgrinder
@@ -131,18 +122,35 @@ GLOBAL_LIST_INIT(reagentgrinder_radial_mix, list(
 		holdingitems[I] = TRUE
 		return FALSE
 
-//obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
-/obj/machinery/reagentgrinder/attack_hand(mob/user)
+/obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
 	if(operating)
 		return
 
-	if(stat & (NOPOWER|BROKEN) || !beaker || (!length(holdingitems) && !beaker.reagents.total_volume))
+	var/list/options = list("eject" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject"))
+
+	if(isAI(user))
+		if(stat & (NOPOWER|BROKEN))
+			return
+		if(!length(holdingitems) && !beaker)
+			examine(user)
+			return
+		options["examine"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_examine")
+	else if(stat & (NOPOWER|BROKEN) || !beaker)
 		eject(user)
 		return
 
-	var/option = show_radial_menu(user, src, length(holdingitems) ? GLOB.reagentgrinder_radial_grind : GLOB.reagentgrinder_radial_mix, require_near = TRUE)
+	if(length(holdingitems))
+		options["grind"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
+		options["juice"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_juice")
+	else if(beaker?.reagents?.total_volume)
+		options["mix"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_mix")
+	else if(!isAI(user))
+		eject(user)
+		return
+
+	var/option = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	if(operating || !beaker || stat & (NOPOWER|BROKEN))
 		return
@@ -156,6 +164,23 @@ GLOBAL_LIST_INIT(reagentgrinder_radial_mix, list(
 			juice(user)
 		if("mix")
 			mix(user)
+		if("examine")
+			examine(user)
+
+/obj/machinery/reagentgrinder/examine(mob/user)
+	. = ..()
+	if(beaker || length(holdingitems))
+		to_chat(user, "It contains:")
+	for(var/i in holdingitems)
+		var/obj/item/O = i
+		to_chat(user, "\A [O.name]")
+	if(beaker)
+		if(length(beaker.reagents?.reagent_list) && (user.can_see_reagents() || issilicon(user)))
+			to_chat(user, "\A [beaker] containing:")
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				to_chat(user, "[R.volume] units of [R.name]")
+		else
+			to_chat(user, "\A [beaker]")
 
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
 	for(var/i in holdingitems)
