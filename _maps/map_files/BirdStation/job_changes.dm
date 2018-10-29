@@ -1,4 +1,4 @@
-#define JOB_MODIFICATION_MAP_NAME "BirdStation"
+#define JOB_MODIFICATION_MAP_NAME "Birdboat Station"
 
 //Removed jobs
 MAP_REMOVE_JOB(atmos)
@@ -13,6 +13,7 @@ MAP_REMOVE_JOB(roboticist)
 MAP_REMOVE_JOB(chaplain)
 MAP_REMOVE_JOB(warden)
 MAP_REMOVE_JOB(lawyer)
+
 
 //Job changes
 
@@ -38,7 +39,8 @@ MAP_REMOVE_JOB(lawyer)
 	supervisors = "the captain and Central Command"
 
 /datum/job/hop/get_access()
-	MAP_JOB_CHECK_BASE
+	. = ..()
+	MAP_JOB_CHECK
 	return get_all_accesses()
 
 //Security
@@ -135,4 +137,3 @@ MAP_REMOVE_JOB(lawyer)
 	..()
 	MAP_JOB_CHECK
 	supervisors = "nobody but yourself" //Honk
-
