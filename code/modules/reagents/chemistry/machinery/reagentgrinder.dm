@@ -140,16 +140,16 @@
 		options["eject"] = radial_eject
 
 	if(isAI(user))
-		if(stat & (NOPOWER|BROKEN))
+		if(stat & NOPOWER)
 			return
 		options["examine"] = radial_examine
 
-	if(!(stat & BROKEN))
-		if(length(holdingitems))
-			options["grind"] = radial_grind
-			options["juice"] = radial_juice
-		else if(beaker?.reagents?.total_volume)
-			options["mix"] = radial_mix
+	// if there is no power or it's broken, the procs will fail but the buttons will still show
+	if(length(holdingitems))
+		options["grind"] = radial_grind
+		options["juice"] = radial_juice
+	else if(beaker?.reagents?.total_volume)
+		options["mix"] = radial_mix
 
 	var/choice
 
@@ -162,7 +162,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & (NOPOWER|BROKEN)))
+	if(operating || (isAI(user) && stat & NOPOWER))
 		return
 
 	switch(choice)
