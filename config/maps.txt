@@ -22,7 +22,7 @@ map metastation
 	#voteweight 0.5
 endmap
 
-map pubbystation	
+map pubbystation
 endmap
 
 map deltastation
@@ -30,5 +30,4 @@ map deltastation
 endmap
 
 map runtimestation	
-
 endmap
