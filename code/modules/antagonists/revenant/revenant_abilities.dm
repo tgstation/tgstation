@@ -142,7 +142,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/revenant/New()
 	..()
 	if(locked)
-		name = "[initial(name)] ([unlock_amount]E)"
+		name = "[initial(name)] ([unlock_amount]SE)"
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
@@ -154,7 +154,7 @@
 	if(user.inhibited)
 		return FALSE
 	if(locked)
-		if(user.essence <= unlock_amount)
+		if(user.essence_excess <= unlock_amount)
 			return FALSE
 	if(user.essence <= cast_amount)
 		return FALSE
@@ -168,7 +168,7 @@
 			locked = FALSE
 		return TRUE
 	if(locked)
-		if(!user.castcheck(-unlock_amount))
+		if (!user.unlock(unlock_amount))
 			charge_counter = charge_max
 			return FALSE
 		name = "[initial(name)] ([cast_amount]E)"
@@ -194,6 +194,7 @@
 	charge_max = 200
 	range = 5
 	stun = 30
+	unlock_amount = 25
 	cast_amount = 40
 	var/shock_range = 2
 	var/shock_damage = 15
@@ -236,7 +237,7 @@
 	range = 4
 	stun = 20
 	reveal = 40
-	unlock_amount = 75
+	unlock_amount = 10
 	cast_amount = 30
 	action_icon_state = "defile"
 
@@ -287,7 +288,7 @@
 	charge_max = 200
 	range = 4
 	cast_amount = 60
-	unlock_amount = 200
+	unlock_amount = 125
 	action_icon_state = "malfunction"
 
 //A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
@@ -334,7 +335,7 @@
 	charge_max = 200
 	range = 3
 	cast_amount = 50
-	unlock_amount = 200
+	unlock_amount = 75
 	action_icon_state = "blight"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
