@@ -205,7 +205,7 @@
 /datum/status_effect/tarfoot/on_remove()
 	var/mob/living/carbon/human/H = owner
 	if(istype(H))
-		H.physiology.adjust_spedemod(-0.5, H)
+		H.physiology.adjust_speedmod(-0.5, H)
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"

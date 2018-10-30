@@ -140,6 +140,7 @@
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		I.equipped(src, slot)
+		update_item_slowdown()
 
 	return not_handled //For future deeper overrides
 
@@ -223,6 +224,7 @@
 		s_store = null
 		if(!QDELETED(src))
 			update_inv_s_store()
+	update_item_slowdown()
 
 /mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
 	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))

@@ -8,9 +8,9 @@
 //flags - Note that requires overrides ignore.
 #define MOVESPEED_MODIFIER_IGNORES_NOSLOW			(1 << 0)			//Modifier is not ignored when noslow is active.
 #define MOVESPEED_MODIFIER_REQUIRES_GRAVITY			(1 << 1)			//Modifier only works with gravity active.
-#define MOVESPEED_MODIFIER_NO_GRAVITY				(1 << 2)			//Modifier does not work with gravity inactive.
+#define MOVESPEED_MODIFIER_NO_GRAVITY				(1 << 2)			//Modifier does not work with gravity active.
 #define MOVESPEED_MODIFIER_REQUIRES_FLIGHT			(1 << 3)			//Modifier only works with flight active.
-#define MOVESPEED_MODIFIER_NO_FLIGHT				(1 << 4)			//Modifier does not work flight active.
+#define MOVESPEED_MODIFIER_NO_FLIGHT				(1 << 4)			//Modifier does not work with flight active.
 
 #define MOVESPEED_MODIFIER_FLAGS_DEFAULT_POSITIVE (MOVESPEED_MODIFIER_IGNORES_NOSLOW | MOVESPEED_MODIFIER_REQUIRES_GRAVITY)
 #define MOVESPEED_MODIFIER_FLAGS_DEFAULT_NEGATIVE (MOVESPEED_MODIFIER_REQUIRES_GRAVITY)
@@ -35,6 +35,8 @@
 
 #define MOVESPEED_ID_HUMAN_ITEM							"HUMAN_ITEM"
 #define MOVESPEED_ID_HUMAN_PHYSIOLOGY					"HUMAN_PHYSIOLOGY"
+#define MOVESPEED_ID_HUMAN_HEALTH						"HUMAN_HEALTH"
+#define MOVESPEED_ID_HUMAN_HEALTH_FLYING				"HUMAN_HEALTH_FLYING"
 
 #define MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD			"MONKEY_REAGENT_SPEEDMOD"
 #define MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD		"MONKEY_TEMPERATURE_SPEEDMOD"

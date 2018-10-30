@@ -7,7 +7,7 @@
 
 	if (!turf_source)
 		return
-		
+
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || open_sound_channel()
 
