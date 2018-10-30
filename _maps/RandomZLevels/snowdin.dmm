@@ -6592,7 +6592,7 @@
 	},
 /obj/item/restraints/handcuffs,
 /obj/item/assembly/flash,
-/obj/item/storage/box/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
 /obj/structure/fireaxecabinet{
 	pixel_y = 32
 	},
@@ -7701,9 +7701,9 @@
 /area/awaymission/snowdin/post/cavern2)
 "qJ" = (
 /obj/structure/rack,
-/obj/item/storage/box/rubbershot,
+/obj/item/ammo_box/shotgun/rubbershot,
 /obj/machinery/light/small,
-/obj/item/storage/box/rubbershot{
+/obj/item/ammo_box/shotgun/rubbershot{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -7711,8 +7711,8 @@
 /area/awaymission/snowdin/post/secpost)
 "qK" = (
 /obj/structure/rack,
-/obj/item/storage/box/lethalshot,
-/obj/item/storage/box/lethalshot{
+/obj/item/ammo_box/shotgun/buckshot,
+/obj/item/ammo_box/shotgun/buckshot{
 	pixel_x = 2;
 	pixel_y = 2
 	},
