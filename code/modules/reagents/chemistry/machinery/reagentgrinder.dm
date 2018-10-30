@@ -134,7 +134,10 @@
 	if(operating)
 		return
 
-	var/list/options = list("eject" = radial_eject)
+	var/list/options = list()
+
+	if(beaker || length(holdingitems))
+		options["eject"] = radial_eject
 
 	if(isAI(user))
 		if(stat & (NOPOWER|BROKEN))
