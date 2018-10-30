@@ -269,7 +269,7 @@
 	..()
 	new /obj/item/storage/box/firingpins(src)
 	for(var/i in 1 to 3)
-		new /obj/item/storage/box/rubbershot(src)
+		new /obj/item/ammo_box/shotgun/rubbershot(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/ballistic/shotgun/riot(src)
 
