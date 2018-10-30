@@ -90,6 +90,9 @@
 /obj/item/organ/brain/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 
+	if(istype(O, /obj/item/organ_storage))
+		return //Borg organ bags shouldn't be killing brains
+
 	if(damaged_brain && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
