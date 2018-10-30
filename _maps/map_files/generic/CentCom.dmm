@@ -14635,7 +14635,7 @@
 /area/tdome/tdomeobserve)
 "GR" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/beanbag,
+/obj/item/ammo_box/shotgun/beanbag,
 /obj/item/gun/ballistic/revolver/doublebarrel,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
