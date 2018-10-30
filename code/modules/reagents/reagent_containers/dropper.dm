@@ -20,8 +20,8 @@
 			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
 
-		if(!target.is_injectable())
-			to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
+		if(!target.is_injectable(user))
+			to_chat(user, "<span class='warning'>You cannot transfer reagents to [target]!</span>")
 			return
 
 		var/trans = 0
@@ -77,7 +77,7 @@
 
 	else
 
-		if(!target.is_drawable(FALSE)) //No drawing from mobs here
+		if(!target.is_drawable(user, FALSE)) //No drawing from mobs here
 			to_chat(user, "<span class='notice'>You cannot directly remove reagents from [target].</span>")
 			return
 

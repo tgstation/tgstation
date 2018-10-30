@@ -43,7 +43,7 @@
 	icon_state = "pulse_carbine"
 	item_state = null
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
-	can_flashlight = 1
+	can_flashlight = TRUE
 	flight_x_offset = 18
 	flight_y_offset = 12
 

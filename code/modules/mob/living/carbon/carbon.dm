@@ -754,12 +754,17 @@
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (has_trait(TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !has_trait(TRAIT_NOHARDCRIT)))
 			stat = UNCONSCIOUS
 			blind_eyes(1)
+			if(CONFIG_GET(flag/near_death_experience) && health <= HEALTH_THRESHOLD_NEARDEATH && !has_trait(TRAIT_NODEATH))
+				add_trait(TRAIT_SIXTHSENSE, "near-death")
+			else
+				remove_trait(TRAIT_SIXTHSENSE, "near-death")
 		else
 			if(health <= crit_threshold && !has_trait(TRAIT_NOSOFTCRIT))
 				stat = SOFT_CRIT
 			else
 				stat = CONSCIOUS
 			adjust_blindness(-1)
+			remove_trait(TRAIT_SIXTHSENSE, "near-death")
 		update_mobility()
 	update_damage_hud()
 	update_health_hud()

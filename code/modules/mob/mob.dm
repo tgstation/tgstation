@@ -664,9 +664,9 @@
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
 	return 0
 
-/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
-		return mind.get_ghost(even_if_they_cant_reenter)
+		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
 /mob/proc/grab_ghost(force)
 	if(mind)
@@ -770,6 +770,9 @@
 /mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
 
+/mob/proc/canUseStorage()
+	return FALSE
+
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
 		var/list/faction_src = faction.Copy()
@@ -800,10 +803,15 @@
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
 		return 0
+
+	log_played_names(ckey,newname)
+
 	real_name = newname
 	name = newname
 	if(mind)
 		mind.name = newname
+		if(mind.key)
+			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment. 
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.

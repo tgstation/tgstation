@@ -17,7 +17,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 50)
 	build_path = /obj/item/crowbar
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/flashlight
@@ -50,7 +50,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 20)
 	build_path = /obj/item/multitool
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/analyzer
@@ -59,7 +59,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
 	build_path = /obj/item/analyzer
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/tscanner
@@ -68,7 +68,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/t_scanner
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/weldingtool
@@ -77,7 +77,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 70, MAT_GLASS = 20)
 	build_path = /obj/item/weldingtool
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/mini_weldingtool
@@ -94,7 +94,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 75)
 	build_path = /obj/item/screwdriver
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/wirecutters
@@ -103,7 +103,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 80)
 	build_path = /obj/item/wirecutters
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/wrench
@@ -112,7 +112,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 150)
 	build_path = /obj/item/wrench
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/welding_helmet
@@ -129,7 +129,7 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 5)
 	build_path = /obj/item/stack/cable_coil/random
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	maxstack = 30
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
@@ -216,7 +216,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 2000)
 	build_path = /obj/item/pipe_painter
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/airlock_painter
@@ -225,7 +225,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/airlock_painter
-	category = list("initial","Tools","Tool Designs")
+	category = list("Tools","Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/metal
@@ -334,7 +334,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL=50)
 	build_path = /obj/item/cultivator
-	category = list("initial","Misc", "Tool Designs")
+	category = list("Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/plant_analyzer
@@ -343,7 +343,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
 	build_path = /obj/item/plant_analyzer
-	category = list("initial","Misc", "Tool Designs")
+	category = list("Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/shovel
@@ -352,7 +352,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 50)
 	build_path = /obj/item/shovel
-	category = list("initial","Misc", "Tool Designs")
+	category = list("Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/spade
@@ -361,7 +361,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 50)
 	build_path = /obj/item/shovel/spade
-	category = list("initial","Misc", "Tool Designs")
+	category = list("Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/hatchet
@@ -370,7 +370,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 15000)
 	build_path = /obj/item/hatchet
-	category = list("initial","Misc", "Tool Designs")
+	category = list("Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/foilhat
@@ -387,7 +387,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
 	build_path = /obj/item/scalpel
-	category = list("initial", "Medical", "Tool Designs")
+	category = list( "Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/circular_saw
@@ -396,7 +396,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 6000)
 	build_path = /obj/item/circular_saw
-	category = list("initial", "Medical", "Tool Designs")
+	category = list("Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/surgicaldrill
@@ -405,7 +405,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 6000)
 	build_path = /obj/item/surgicaldrill
-	category = list("initial", "Medical", "Tool Designs")
+	category = list("Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/retractor
@@ -414,7 +414,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 3000)
 	build_path = /obj/item/retractor
-	category = list("initial", "Medical", "Tool Designs")
+	category = list("Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/cautery
@@ -423,7 +423,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 750)
 	build_path = /obj/item/cautery
-	category = list("initial", "Medical", "Tool Designs")
+	category = list("Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/hemostat
@@ -432,7 +432,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
 	build_path = /obj/item/hemostat
-	category = list("initial", "Medical", "Tool Designs")
+	category = list("Medical", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/beaker

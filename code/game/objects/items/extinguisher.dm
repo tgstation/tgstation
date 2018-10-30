@@ -171,7 +171,7 @@
 			W.reagents = R
 			R.my_atom = W
 			reagents.trans_to(W,1)
-	
+
 		//Make em move dat ass, hun
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
 
@@ -192,7 +192,7 @@
 		for(var/A in get_turf(W))
 			W.reagents.reaction(A)
 		if(W.loc == my_target)
-			break
+			particles -= W
 	if(repetition < power)
 		repetition++
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, particles, repetition), 2)
