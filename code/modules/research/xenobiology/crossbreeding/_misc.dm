@@ -82,7 +82,6 @@ Slimecrossing Items
 	desc = "A square bar that sadly <i>looks</i> like chocolate, packaged in a nondescript grey wrapper. Has saved soldiers' lives before - usually by stopping bullets."
 	icon_state = "rationpack"
 	bitesize = 3
-	eatverb = "choke down"
 	junkiness = 15
 	filling_color = "#964B00"
 	tastes = list("cardboard" = 3, "sadness" = 3)

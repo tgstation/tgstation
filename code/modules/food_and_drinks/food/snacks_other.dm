@@ -77,7 +77,7 @@
 
 /obj/item/reagent_containers/food/snacks/popcorn/Initialize()
 	. = ..()
-	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
+	eatverb = pick("bite","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
 	name = "loaded baked potato"
