@@ -536,6 +536,11 @@
 			if(input)
 				src.war_cry = input
 
+/obj/item/twohanded/spear/isInCraftingBlacklist(datum/crafting_recipe/R)
+	if (istype(R, datum/crafting_recipe/lance) && explosive) //Cant attempt to use explosive lances in the lance crafting recipe
+		return FALSE //could just directly return the conditional but this is more readable here imo
+	return TRUE
+
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
 	if (istype(tip, /obj/item/shard/plasma))
