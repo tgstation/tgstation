@@ -43,6 +43,13 @@
 	description = "Various tools fit for basic mech units"
 	design_ids = list("mech_drill", "mech_mscanner", "mech_extinguisher", "mech_cable_layer")
 
+/datum/techweb_node/basic_tools
+	id = "basic_tools"
+	starting_node = TRUE
+	display_name = "Basic Tools"
+	description = "Basic mechanical, electronic, surgical and botanical tools."
+	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet")
+
 /////////////////////////Biotech/////////////////////////
 /datum/techweb_node/biotech
 	id = "biotech"
@@ -486,13 +493,6 @@
 	export_price = 5000
 
 ////////////////////////Tools////////////////////////
-
-/datum/techweb_node/basic_tools
-	id = "basic_tools"
-	display_name = "Basic Tools"
-	description = "Basic mechanical, electronic, surgical and botanical tools."
-	starting_node = TRUE
-	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter", "scalpel", "circular_saw", "surgicaldrill", "retractor", "cautery", "hemostat", "cultivator", "plant_analyzer", "shovel", "spade", "hatchet")
 
 /datum/techweb_node/basic_mining
 	id = "basic_mining"
