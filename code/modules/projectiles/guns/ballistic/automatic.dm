@@ -43,7 +43,7 @@
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
 
-				playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
+				playsound(src, 'sound/weapons/autoguninsert.ogg', 60, TRUE)
 				chamber_round()
 				A.update_icon()
 				update_icon()
