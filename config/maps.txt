@@ -28,6 +28,5 @@ endmap
 map deltastation
 	minplayers 50
 endmap
-
 map runtimestation	
 endmap
