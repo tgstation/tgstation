@@ -3,10 +3,6 @@
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
-"ab" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/indestructible/rock/snow,
-/area/awaymission/snowdin/cave/mountain)
 "ac" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -16019,7 +16015,7 @@ ac
 ac
 "}
 (2,1,1) = {"
-ab
+ac
 ac
 ac
 ac
