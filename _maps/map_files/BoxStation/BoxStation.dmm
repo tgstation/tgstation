@@ -2155,8 +2155,12 @@
 	dir = 4
 	},
 /obj/item/ammo_box/shotgun/rubbershot{
-	step_x = 0;
-	step_y = 0
+	step_x = -3;
+	step_y = 3
+	},
+/obj/item/ammo_box/shotgun/rubbershot{
+	step_x = -3;
+	step_y = 3
 	},
 /obj/item/ammo_box/shotgun/rubbershot{
 	step_x = 0;
@@ -2167,16 +2171,12 @@
 	step_y = 0
 	},
 /obj/item/ammo_box/shotgun/rubbershot{
-	step_x = 0;
-	step_y = 0
+	step_x = 3;
+	step_y = -3
 	},
 /obj/item/ammo_box/shotgun/rubbershot{
-	step_x = 0;
-	step_y = 0
-	},
-/obj/item/ammo_box/shotgun/rubbershot{
-	step_x = 0;
-	step_y = 0
+	step_x = 3;
+	step_y = -3
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
