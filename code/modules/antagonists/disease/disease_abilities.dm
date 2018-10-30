@@ -269,25 +269,25 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 /datum/disease_ability/symptom/mild
 	cost = 2
 	required_total_points = 4
-	category = "Symptom (Mild)"
+	category = "Symptom (Weak)"
 
 /datum/disease_ability/symptom/medium
 	cost = 4
 	required_total_points = 8
-	category = "Symptom (Med)"
+	category = "Symptom"
 
 /datum/disease_ability/symptom/medium/heal
 	cost = 5
-	category = "Symptom (Med+)"
+	category = "Symptom (+)"
 
 /datum/disease_ability/symptom/powerful
 	cost = 4
 	required_total_points = 16
-	category = "Symptom (Powerful)"
+	category = "Symptom (Strong)"
 
 /datum/disease_ability/symptom/powerful/heal
 	cost = 8
-	category = "Symptom (Powerful+)"
+	category = "Symptom (Strong+)"
 
 
 /******MILD******/
