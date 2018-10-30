@@ -537,7 +537,7 @@
 				src.war_cry = input
 
 /obj/item/twohanded/spear/isInCraftingBlacklist(datum/crafting_recipe/R)
-	if (istype(R, datum/crafting_recipe/lance) && explosive) //Cant attempt to use explosive lances in the lance crafting recipe
+	if (istype(R, /datum/crafting_recipe/lance) && explosive) //Cant attempt to use explosive lances in the lance crafting recipe
 		return FALSE //could just directly return the conditional but this is more readable here imo
 	return TRUE
 
