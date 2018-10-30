@@ -1,5 +1,0 @@
-author: "Barhandar"
-delete-after: True
-changes: 
-  - balance: "Basic tools are now a starting node and do not need researching."
-  - tweak: "Autolathe tools can now be printed again without needing a design disk."

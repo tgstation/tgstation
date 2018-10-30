@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an exploit allowing you to teleport ammo out of a magazine."
-  - bugfix: "Fixed magazine loading sounds playing at the incorrect location if you load the magazine via TK."
