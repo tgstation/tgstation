@@ -81,6 +81,16 @@
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/effects/clownstep1.ogg'=1,'sound/effects/clownstep2.ogg'=1), 50)
 
+/obj/item/clothing/shoes/clown_shoes/attack_hand(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(src == C.shoes)
+			if(user.has_trait(TRAIT_CLUMSY))
+				to_chat(user, "<span class='notice'>You clumsily fiddle with the velcro straps. (This will take around one minute and you need to stay still.)</span>")
+				if (!do_after(user, 600, target = user))
+					return
+	..()
+
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
 	if(user.mind && user.mind.assigned_role == "Clown")
