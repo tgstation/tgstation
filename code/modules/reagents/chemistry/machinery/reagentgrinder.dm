@@ -18,6 +18,12 @@
 	var/speed = 1
 	var/list/holdingitems
 
+	var/static/radial_examine = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_examine")
+	var/static/radial_eject = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject")
+	var/static/radial_grind = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
+	var/static/radial_juice = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_juice")
+	var/static/radial_mix = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_mix")
+
 /obj/machinery/reagentgrinder/Initialize()
 	. = ..()
 	holdingitems = list()
@@ -128,34 +134,35 @@
 	if(operating)
 		return
 
-	var/list/options = list("eject" = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject"))
+	var/list/options = list("eject" = radial_eject)
 
 	if(isAI(user))
 		if(stat & (NOPOWER|BROKEN))
 			return
-		if(!length(holdingitems) && !beaker)
-			examine(user)
-			return
-		options["examine"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_examine")
-	else if(stat & (NOPOWER|BROKEN) || !beaker)
-		eject(user)
+		options["examine"] = radial_examine
+
+	if(!(stat & BROKEN))
+		if(length(holdingitems))
+			options["grind"] = radial_grind
+			options["juice"] = radial_juice
+		else if(beaker?.reagents?.total_volume)
+			options["mix"] = radial_mix
+
+	var/choice
+
+	if(length(options) < 1)
+		return
+	if(length(options) == 1)
+		for(var/key in options)
+			choice = key
+	else
+		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+
+	// post choice verification
+	if(operating || (isAI(user) && stat & (NOPOWER|BROKEN)))
 		return
 
-	if(length(holdingitems))
-		options["grind"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_grind")
-		options["juice"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_juice")
-	else if(beaker?.reagents?.total_volume)
-		options["mix"] = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_mix")
-	else if(!isAI(user))
-		eject(user)
-		return
-
-	var/option = show_radial_menu(user, src, options, require_near = !issilicon(user))
-
-	if(operating || !beaker || stat & (NOPOWER|BROKEN))
-		return
-
-	switch(option)
+	switch(choice)
 		if("eject")
 			eject(user)
 		if("grind")
@@ -225,7 +232,7 @@
 
 /obj/machinery/reagentgrinder/proc/juice()
 	power_change()
-	if(!beaker || (beaker && (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)))
+	if(!beaker || stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
 	operate_for(50, juicing = TRUE)
 	for(var/obj/item/i in holdingitems)
@@ -244,7 +251,7 @@
 
 /obj/machinery/reagentgrinder/proc/grind()
 	power_change()
-	if(!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
+	if(!beaker || stat & (NOPOWER|BROKEN) || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
 	operate_for(60)
 	for(var/i in holdingitems)
@@ -266,13 +273,13 @@
 /obj/machinery/reagentgrinder/proc/mix(mob/user)
 	//For butter and other things that would change upon shaking or mixing
 	power_change()
-	if(!beaker)
+	if(!beaker || stat & (NOPOWER|BROKEN))
 		return
 	operate_for(50, juicing = TRUE)
 	addtimer(CALLBACK(src, /obj/machinery/reagentgrinder/proc/mix_complete), 50)
 
 /obj/machinery/reagentgrinder/proc/mix_complete()
-	if(beaker && beaker.reagents.total_volume)
+	if(beaker?.reagents.total_volume)
 		//Recipe to make Butter
 		var/butter_amt = FLOOR(beaker.reagents.get_reagent_amount("milk") / MILK_TO_BUTTER_COEFF, 1)
 		beaker.reagents.remove_reagent("milk", MILK_TO_BUTTER_COEFF * butter_amt)
