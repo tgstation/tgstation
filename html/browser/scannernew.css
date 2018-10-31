@@ -9,39 +9,6 @@
 	margin: 2px 2px 0 10px;
 	text-align: center;
 }
-.dnaBlockNumberGood
-{
-	font-family: Fixed, monospace;
-	float: left;
-	color: #00fd00;
-	background: #363636;
-	width: 20px;
-	padding: -3px 0 -1px 0;
-	margin: 2px 2px 0 10px;
-	text-align: center;
-}
-.dnaBlockNumberNeutral
-{
-	font-family: Fixed, monospace;
-	float: left;
-	color: #ffff00;
-	background: #363636;
-	width: 20px;
-	padding: -3px 0 -1px 0;
-	margin: 2px 2px 0 10px;
-	text-align: center;
-}
-.dnaBlockNumberBad
-{
-	font-family: Fixed, monospace;
-	float: left;
-	color: #ff0000;
-	background: #363636;
-	width: 20px;
-	padding: -3px 0 -1px 0;
-	margin: 2px 2px 0 10px;
-	text-align: center;
-}
 .dnaBlock
 {
 	font-family: Fixed, monospace;
