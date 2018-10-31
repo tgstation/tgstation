@@ -113,12 +113,13 @@
 		update_icon()
 
 /obj/item/ammo_box/update_icon()
+	var/shells_left = stored_ammo.len
 	switch(multiple_sprites)
 		if(1)
-			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
+			icon_state = "[initial(icon_state)]-[shells_left]"
 		if(2)
-			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
+	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
 	for (var/material in bullet_cost)
 		var/material_amount = bullet_cost[material]
 		material_amount = (material_amount*stored_ammo.len) + base_cost[material]
