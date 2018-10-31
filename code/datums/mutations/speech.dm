@@ -45,7 +45,6 @@
 	name = "Smile"
 	desc = "Causes the user to be in constant mania."
 	quality = MINOR_NEGATIVE
-	locked = TRUE
 	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
 	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
 
@@ -101,9 +100,8 @@
 
 /datum/mutation/human/unintelligible
 	name = "Unintelligible"
-	desc = "partially inhibits the vocal center of the brain, severely distorting speech."
+	desc = "Partially inhibits the vocal center of the brain, severely distorting speech."
 	quality = NEGATIVE
-	locked = TRUE
 	text_gain_indication = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
 	text_lose_indication = "<span class='danger'>Your mind feels more clear.</span>"
 
@@ -156,7 +154,6 @@
 	name = "Chav"
 	desc = "Unknown"
 	quality = MINOR_NEGATIVE
-	locked = TRUE
 	text_gain_indication = "<span class='notice'>Ye feel like a reet prat like, innit?</span>"
 	text_lose_indication = "<span class='notice'>You no longer feel like being rude and sassy.</span>"
 
