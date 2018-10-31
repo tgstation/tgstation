@@ -43,6 +43,9 @@
 	QDEL_NULL(internal)
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
+	return TRUE
+
 /mob/living/simple_animal/hostile/megafauna/death(gibbed)
 	if(health > 0)
 		return
