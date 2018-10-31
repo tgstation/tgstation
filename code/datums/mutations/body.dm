@@ -3,7 +3,7 @@
 //Epilepsy gives a very small chance to have a seizure every life tick, knocking you unconscious.
 /datum/mutation/human/epilepsy
 	name = "Epilepsy"
-	desc = "A genetic defect that sporadicly causes seizures."
+	desc = "A genetic defect that sporadically causes seizures."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
@@ -87,7 +87,7 @@
 //Clumsiness has a very large amount of small drawbacks depending on item.
 /datum/mutation/human/clumsy
 	name = "Clumsiness"
-	desc = "A genome that inhibits certain brainfunctions, causing the holder to appear clumsy. Honk"
+	desc = "A genome that inhibits certain brain functions, causing the holder to appear clumsy. Honk"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel lightheaded.</span>"
 

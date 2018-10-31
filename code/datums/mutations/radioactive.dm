@@ -1,6 +1,6 @@
 /datum/mutation/human/radioactive
 	name = "Radioactivity"
-	desc = "A volatile mutation that causes the host to sent out deadly beta radiation. This affects both the hosts and his surroundings."
+	desc = "A volatile mutation that causes the host to sent out deadly beta radiation. This affects both the hosts and their surroundings."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You can feel it in your bones!</span>"
 	time_coeff = 5

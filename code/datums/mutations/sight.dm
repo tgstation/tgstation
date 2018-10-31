@@ -19,7 +19,7 @@
 //Blind makes you blind. Who knew?
 /datum/mutation/human/blind
 	name = "Blindness"
-	desc = "Completely inhibits perihpheral brain function."
+	desc = "Completely inhibits peripheral brain function."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
 

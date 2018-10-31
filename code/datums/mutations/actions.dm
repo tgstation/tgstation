@@ -1,6 +1,6 @@
 /datum/mutation/human/telepathy
 	name = "Telepathy"
-	desc = "A rare mutation that allows the user to telephaticly communicate to others."
+	desc = "A rare mutation that allows the user to telepathically communicate to others."
 	quality = POSITIVE
 	lowest_value = 256 * 12
 	get_chance = 70
@@ -51,7 +51,7 @@
 		if(C.is_mouth_covered())
 			C.adjust_fire_stacks(2)
 			C.IgniteMob()
-			to_chat(C,"<span class='warning'>Something infront of your mouth caught fire!</span>")
+			to_chat(C,"<span class='warning'>Something in front of your mouth caught fire!</span>")
 			return FALSE
 
 /obj/item/projectile/magic/aoe/fireball/firebreath
