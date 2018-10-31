@@ -981,6 +981,7 @@
 	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
 	var/conscious = !IsUnconscious() && stat_conscious && !has_trait(TRAIT_DEATHCOMA)
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
+	var/restrained = restrained()
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/paralyzed = IsParalyzed()
@@ -996,13 +997,17 @@
 	var/canstand = canstand_involuntary && !resting
 
 	if(canstand)
-		mobility_flags |= (MOBILITY_STAND | MOBILITY_UI | MOBILITY_PULL)
+		mobility_flags |= MOBILITY_STAND
 		lying = 0
+		if(!restrained)
+			mobility_flags |= (MOBILITY_UI | MOBILITY_PULL)
+		else
+			mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL)
 	else
 		mobility_flags &= ~(MOBILITY_STAND | MOBILITY_UI | MOBILITY_PULL)
 		if(!lying)
 			lying = pick(90, 270)
-	var/canitem = !paralyzed && !stun && conscious && !chokehold && has_arms
+	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
 	if(canitem)
 		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
 	else
