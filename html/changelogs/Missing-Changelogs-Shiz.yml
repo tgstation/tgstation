@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - fix: "Droppers will now work properly when squirting the contents into the eyes of a mob while wearing only the body part of a hardsuit and no helmet."
+  - fix: "You can now examine bars of soap to tell how many uses (roughly) are left."
