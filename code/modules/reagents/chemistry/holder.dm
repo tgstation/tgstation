@@ -509,6 +509,7 @@
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
+		SEND_SIGNAL(A,COMSIG_ATOM_REAGENT_BEFORE_REACTION,R, volume_modifier)
 		switch(react_type)
 			if("LIVING")
 				var/touch_protection = 0

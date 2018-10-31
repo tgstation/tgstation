@@ -343,6 +343,8 @@ h1.alert, h2.alert		{color: #000000;}
 .umbra_emphasis			{color: #5000A0;	font-weight: bold;	font-style: italic;}
 .umbra_large			{color: #5000A0; font-size: 24px; font-weight: bold; font-style: italic;}
 
+.haunt					{color: #823abb}
+
 .deconversion_message	{color: #5000A0; font-size: 24px; font-style: italic;}
 
 .brass					{color: #BE8700;}

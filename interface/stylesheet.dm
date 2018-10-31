@@ -184,4 +184,5 @@ h1.alert, h2.alert		{color: #000000;}
 
 .monkeyhive				{color: #774704;}
 .monkeylead				{color: #774704;	font-size: 2;}
+.haunt					{color: #823abb}
 </style>"}
