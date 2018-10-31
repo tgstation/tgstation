@@ -132,7 +132,7 @@
 						if(nutri_check.nutriment_factor >0)
 							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
 							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
-			reagents.trans_to(H, reagents.total_volume)
+			reagents.trans_to(H, reagents.total_volume, transfered_by = user)
 			qdel(src)
 
 /obj/effect/decal/cleanable/vomit/old

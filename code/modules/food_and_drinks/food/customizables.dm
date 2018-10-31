@@ -51,7 +51,7 @@
 				S.generate_trash(get_turf(user))
 			ingredients += S
 			mix_filling_color(S)
-			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
+			S.reagents.trans_to(src,min(S.reagents.total_volume, 15), transfered_by = user) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
 			foodtype |= S.foodtype
 			update_overlays(S)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
@@ -81,7 +81,7 @@
 /obj/item/reagent_containers/food/snacks/customizable/proc/initialize_custom_food(obj/item/BASE, obj/item/I, mob/user)
 	if(istype(BASE, /obj/item/reagent_containers))
 		var/obj/item/reagent_containers/RC = BASE
-		RC.reagents.trans_to(src,RC.reagents.total_volume)
+		RC.reagents.trans_to(src,RC.reagents.total_volume, transfered_by = user)
 	for(var/obj/O in BASE.contents)
 		contents += O
 	if(I && user)
@@ -251,7 +251,7 @@
 		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")
 		finished = 1
 		name = "[customname] sandwich"
-		BS.reagents.trans_to(src, BS.reagents.total_volume)
+		BS.reagents.trans_to(src, BS.reagents.total_volume, transfered_by = user)
 		ingMax = ingredients.len //can't add more ingredients after that
 		var/mutable_appearance/TOP = mutable_appearance(icon, "[BS.icon_state]")
 		TOP.pixel_y = 2 * ingredients.len + 3
