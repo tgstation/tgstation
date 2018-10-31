@@ -631,8 +631,7 @@ More mutations
 				var/datum/mutation/human/HM = stored_mutations[text2num(href_list["num"])]
 				if(HM)
 					var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
-					I.HM = new HM.type()
-					I.HM.copy_mutation(HM)
+					I.add_mutations += HM.type
 					I.name = "[HM.name] activator"
 					injectorready = world.time + INJECTOR_TIMEOUT
 		if("mutator")
@@ -640,8 +639,7 @@ More mutations
 				var/datum/mutation/human/HM = stored_mutations[text2num(href_list["num"])]
 				if(HM)
 					var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
-					I.HM = new HM.type()
-					I.HM.copy_mutation(HM)
+					I.add_mutations += HM.type
 					I.doitanyway = TRUE
 					I.name = "[HM.name] injector"
 					injectorready = world.time + INJECTOR_TIMEOUT*5

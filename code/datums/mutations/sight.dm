@@ -37,7 +37,7 @@
 //X-ray Vision lets you see through walls.
 /datum/mutation/human/x_ray
 	name = "X Ray Vision"
-	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later
+	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
 	quality = POSITIVE
 	get_chance = 25
 	lowest_value = 256 * 12

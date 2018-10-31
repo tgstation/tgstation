@@ -73,7 +73,7 @@
 
 //no fiddling with genetics to get out of this one
 /datum/brain_trauma/mild/speech_impediment/on_life()
-	if(!(GLOB.mutations_list[UNINTELLIGIBLE] in owner.dna.mutations))
+	if(!(owner.dna.check_mutation(UNINTELLIGIBLE)))
 		on_gain()
 	..()
 

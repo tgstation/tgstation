@@ -3,35 +3,35 @@
 #define CHECK_DNA_AND_SPECIES(C) if((!(C.dna)) || (!(C.dna.species))) return
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
-#define HULK		"Hulk"
-#define XRAY		"X Ray Vision"
-#define COLDRES		"Cold Resistance"
-#define TK			"Telekinesis"
-#define NERVOUS		"Nervousness"
-#define EPILEPSY	"Epilepsy"
-#define MUTATE		"Unstable DNA"
-#define COUGH		"Cough"
-#define DWARFISM	"Dwarfism"
-#define CLOWNMUT	"Clumsiness"
-#define TOURETTES	"Tourettes Syndrome"
-#define DEAFMUT		"Deafness"
-#define BLINDMUT	"Blindness"
-#define RACEMUT		"Monkified"
-#define BADSIGHT	"Near Sightness"
-#define LASEREYES	"Laser Eyes"
-#define CHAMELEON	"Chameleon"
-#define WACKY		"Wacky"
-#define MUT_MUTE	"Mute"
-#define SMILE		"Smile"
-#define STONER		"Stoner"
-#define UNINTELLIGIBLE		"Unintelligible"
-#define SWEDISH		"Swedish"
-#define CHAV		"Chav"
-#define ELVIS		"Elvis"
-#define RADIOACTIVE	"Radioactivity"
-#define GLOWY		"Glowy"
-#define TELEPATHY	"Telepathy"
-#define FIREBREATH	"Fire Breath"
+#define HULK		/datum/mutation/human/hulk
+#define XRAY		/datum/mutation/human/x_ray
+#define COLDRES		/datum/mutation/human/cold_resistance
+#define TK			/datum/mutation/human/telekinesis
+#define NERVOUS		/datum/mutation/human/nervousness
+#define EPILEPSY	/datum/mutation/human/epilepsy
+#define MUTATE		/datum/mutation/human/bad_dna
+#define COUGH		/datum/mutation/human/cough
+#define DWARFISM	/datum/mutation/human/dwarfism
+#define CLOWNMUT	/datum/mutation/human/clumsy
+#define TOURETTES	/datum/mutation/human/tourettes
+#define DEAFMUT		/datum/mutation/human/deaf
+#define BLINDMUT	/datum/mutation/human/blind
+#define RACEMUT		/datum/mutation/human/race
+#define BADSIGHT	/datum/mutation/human/nearsight
+#define LASEREYES	/datum/mutation/human/laser_eyes
+#define CHAMELEON	/datum/mutation/human/chameleon
+#define WACKY		/datum/mutation/human/wacky
+#define MUT_MUTE	/datum/mutation/human/mute
+#define SMILE		/datum/mutation/human/smile
+#define STONER		/datum/mutation/human/stoner
+#define UNINTELLIGIBLE		/datum/mutation/human/unintelligible
+#define SWEDISH		/datum/mutation/human/swedish
+#define CHAV		/datum/mutation/human/chav
+#define ELVIS		/datum/mutation/human/elvis
+#define RADIOACTIVE	/datum/mutation/human/radioactive
+#define GLOWY		/datum/mutation/human/glow
+#define TELEPATHY	/datum/mutation/human/telepath
+#define FIREBREATH	/datum/mutation/human/firebreath
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

@@ -297,9 +297,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	for(var/X in inherent_traits)
 		C.remove_trait(X, SPECIES_TRAIT)
 	if(inert_mutation != new_species.inert_mutation)
-		var/datum/mutation/human/oldHM = GLOB.all_mutations[inert_mutation]
-		var/datum/mutation/human/newHM = GLOB.all_mutations[new_species.inert_mutation]
-		C.dna.mutation_index[C.dna.mutation_index.Find(oldHM.type)] = newHM.type
+		C.dna.mutation_index[C.dna.mutation_index.Find(inert_mutation)] = new_species.inert_mutation
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 

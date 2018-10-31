@@ -23,12 +23,18 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/datum/dna/dna
 	var/mob/living/carbon/human/owner
 	var/instability = 0 //instability the holder gets when the mutation is not native
-	var/class
+	var/class           //Decides player accesibility, sorta
+	var/timed = FALSE   //Boolean to easily check if we're going to self destruct
+	//MUT_NORMAL - A mutation that can be activated and deactived with structural enzymes
+	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
+	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
-
-/datum/mutation/human/New(class_ = MUT_OTHER)
+/datum/mutation/human/New(class_ = MUT_OTHER, timer)
 	. = ..()
 	class = class_
+	if(timer)
+		addtimer(CALLBACK(src, .proc/remove), timer)
+		timed = TRUE
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
 	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))
@@ -121,8 +127,13 @@ GLOBAL_LIST_EMPTY(mutations_list)
 				apply_overlay(CM.layer_used)
 
 /datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM) //Not yet implemented, useful for when assigning specific stats.
-	if(ispath(HM))
-		return TRUE
+
+/datum/mutation/human/proc/remove()
+	if(dna)
+		dna.force_lose(src)
+	else
+		qdel(src)
+
 
 /proc/get_initialized_mutation(B)
-	return GLOB.all_mutations_types[B]
+	return GLOB.all_mutations[B]
