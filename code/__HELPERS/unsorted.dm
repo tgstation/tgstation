@@ -259,7 +259,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
 		if(A.stat == DEAD)
 			continue
-		if(A.control_disabled == 1)
+		if(A.control_disabled)
 			continue
 		if(check_mind)
 			if(!A.mind)
@@ -739,10 +739,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return locate(final_x, final_y, T.z)
 
 //Finds the distance between two atoms, in pixels
-//centered = 0 counts from turf edge to edge
-//centered = 1 counts from turf center to turf center
+//centered = FALSE counts from turf edge to edge
+//centered = TRUE counts from turf center to turf center
 //of course mathematically this is just adding world.icon_size on again
-/proc/getPixelDistance(atom/A, atom/B, centered = 1)
+/proc/getPixelDistance(atom/A, atom/B, centered = TRUE)
 	if(!istype(A)||!istype(B))
 		return 0
 	. = bounds_dist(A, B) + sqrt((((A.pixel_x+B.pixel_x)**2) + ((A.pixel_y+B.pixel_y)**2)))
@@ -832,7 +832,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 	/*This can be used to add additional effects on interactions between mobs depending on how the mobs are facing each other, such as adding a crit damage to blows to the back of a guy's head.
 	Given how click code currently works (Nov '13), the initiating mob will be facing the target mob most of the time
 	That said, this proc should not be used if the change facing proc of the click code is overridden at the same time*/
-	if(!ismob(target) || target.lying)
+	if(!ismob(target) || !(target.mobility_flags & MOBILITY_STAND))
 	//Make sure we are not doing this for things that can't have a logical direction to the players given that the target would be on their side
 		return FALSE
 	if(initator.dir == target.dir) //mobs are facing the same direction
@@ -906,18 +906,18 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 //If one of them is a match, then A is facing B
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
-		return 0
+		return FALSE
 	if(isliving(A))
 		var/mob/living/LA = A
-		if(LA.lying)
-			return 0
+		if(!(LA.mobility_flags & MOBILITY_STAND))
+			return FALSE
 	var/goal_dir = get_dir(A,B)
 	var/clockwise_A_dir = turn(A.dir, -45)
 	var/anticlockwise_A_dir = turn(A.dir, 45)
 
 	if(A.dir == goal_dir || clockwise_A_dir == goal_dir || anticlockwise_A_dir == goal_dir)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /*
@@ -1531,3 +1531,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/i in L)
 		if(condition.Invoke(i))
 			. |= i
+/proc/generate_items_inside(list/items_list,var/where_to)
+	for(var/each_item in items_list)
+		for(var/i in 1 to items_list[each_item])
+			new each_item(where_to)

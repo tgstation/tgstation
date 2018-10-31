@@ -121,14 +121,14 @@
 			if(!isnull(threshold))
 				chamber.set_safety(CLAMP(round(threshold, 1),0,500))
 				playsound(src, "terminal_type", 25, 0)
-				investigate_log("[key_name(chamber.occupant)]'s nanites' safety threshold was set to [threshold] by [key_name(usr)].", INVESTIGATE_NANITES)
+				chamber.occupant.investigate_log("'s nanites' safety threshold was set to [threshold] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("set_cloud")
 			var/cloud_id = input("Set cloud ID (1-100, 0 to disable):", name, null) as null|num
 			if(!isnull(cloud_id))
 				chamber.set_cloud(CLAMP(round(cloud_id, 1),0,100))
 				playsound(src, "terminal_type", 25, 0)
-				investigate_log("[key_name(chamber.occupant)]'s nanites' cloud id was set to [cloud_id] by [key_name(usr)].", INVESTIGATE_NANITES)
+				chamber.occupant.investigate_log("'s nanites' cloud id was set to [cloud_id] by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("connect_chamber")
 			find_chamber()
@@ -136,14 +136,15 @@
 		if("nanite_injection")
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
 			chamber.inject_nanites()
-			investigate_log("[key_name(chamber.occupant)] was injected with nanites by [key_name(usr)] using a nanite chamber.", INVESTIGATE_NANITES)
+			log_combat(usr, chamber.occupant, "injected", null, "with nanites via [src]")
+			chamber.occupant.investigate_log("was injected with nanites by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("add_program")
-			if(!disk || !chamber || !chamber.occupant)
+			if(!disk?.program || !chamber || !chamber.occupant)
 				return
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
 			chamber.install_program(disk.program)
-			investigate_log("Program of type [disk.program.type] was installed into [key_name(chamber.occupant)]'s nanites with a nanite chamber by [key_name(usr)].", INVESTIGATE_NANITES)
+			chamber.occupant.investigate_log("had program of type [disk.program.type] installed by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE
 		if("remove_program")
 			if(!chamber || !chamber.occupant)
@@ -154,5 +155,5 @@
 			if(LAZYLEN(nanite_programs))
 				var/datum/nanite_program/P = nanite_programs[text2num(params["program_id"])]
 				chamber.uninstall_program(P)
-				investigate_log("Program of type [P.type] was uninstalled from [key_name(chamber.occupant)]'s nanites with a nanite chamber by [key_name(usr)].", INVESTIGATE_NANITES)
+				chamber.occupant.investigate_log("had program of type [P.type] uninstalled by [key_name(usr)] via [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
 			. = TRUE

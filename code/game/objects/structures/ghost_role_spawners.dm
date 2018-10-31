@@ -19,7 +19,7 @@
 /obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
 	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
-	new_spawn.real_name = plant_name
+	new_spawn.fully_replace_character_name(null,plant_name)
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude" //You're a plant, partner
@@ -42,13 +42,14 @@
 	roundstart = FALSE
 	death = FALSE
 	anchored = FALSE
+	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
 	assignedrole = "Ash Walker"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
-	new_spawn.real_name = random_unique_lizard_name(gender)
+	new_spawn.fully_replace_character_name(null,random_unique_lizard_name(gender))
 	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
 
 	new_spawn.grant_language(/datum/language/draconic)
@@ -91,7 +92,7 @@
 	return ..()
 
 /obj/effect/mob_spawn/human/exile/special(mob/living/new_spawn)
-	new_spawn.real_name = "Wish Granter's Victim ([rand(1,999)])"
+	new_spawn.fully_replace_character_name(null,"Wish Granter's Victim ([rand(1,999)])")
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
@@ -114,6 +115,7 @@
 	roundstart = FALSE
 	death = FALSE
 	anchored = FALSE
+	move_resist = MOVE_FORCE_NORMAL
 	density = FALSE
 	var/has_owner = FALSE
 	var/can_transfer = TRUE //if golems can switch bodies to this new shell
@@ -150,11 +152,11 @@
 		H.set_cloned_appearance()
 		if(!name)
 			if(has_owner)
-				H.real_name = "[initial(X.prefix)] Golem ([rand(1,999)])"
+				H.fully_replace_character_name(null, "[initial(X.prefix)] Golem ([rand(1,999)])")
 			else
-				H.real_name = H.dna.species.random_name()
+				H.fully_replace_character_name(null, H.dna.species.random_name())
 		else
-			H.real_name = name
+			H.fully_replace_character_name(null, name)
 	if(has_owner)
 		new_spawn.mind.assigned_role = "Servant Golem"
 	else
@@ -272,8 +274,7 @@
 	assignedrole = "Escaped Prisoner"
 
 /obj/effect/mob_spawn/human/prisoner_transport/special(mob/living/L)
-	L.real_name = "NTP #LL-0[rand(111,999)]" //Nanotrasen Prisoner #Lavaland-(numbers)
-	L.name = L.real_name
+	L.fully_replace_character_name(null,"NTP #LL-0[rand(111,999)]") //Nanotrasen Prisoner #Lavaland-(numbers)
 
 /obj/effect/mob_spawn/human/prisoner_transport/Initialize(mapload)
 	. = ..()
@@ -368,8 +369,7 @@
 
 /obj/effect/mob_spawn/human/demonic_friend/special(mob/living/L)
 	if(!QDELETED(owner.current) && owner.current.stat != DEAD)
-		L.real_name = "[owner.name]'s best friend"
-		L.name = L.real_name
+		L.fully_replace_character_name(null,"[owner.name]'s best friend")
 		soullink(/datum/soullink/oneway, owner.current, L)
 		spell.friend = L
 		spell.charge_counter = spell.charge_max

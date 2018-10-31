@@ -90,10 +90,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/value = 0
 	var/purchases = 0
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 		if(D)
 			if(!D.adjust_money(-SO.pack.cost))
 				continue
@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [D.account_balance] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -147,4 +147,4 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		D.adjust_money(ex.total_value[E])
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [D.account_balance - presale_points] credits. Contents: [ex.exported_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("Shuttle contents sold for [D.account_balance - presale_points] credits. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

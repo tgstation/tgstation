@@ -391,7 +391,7 @@
 
 
 /mob/living/simple_animal/parrot/handle_automated_movement()
-	if(!isturf(src.loc) || !canmove || buckled)
+	if(!isturf(src.loc) || !(mobility_flags & MOBILITY_MOVE) || buckled)
 		return //If it can't move, dont let it move. (The buckled check probably isn't necessary thanks to canmove)
 
 	if(client && stat == CONSCIOUS && parrot_state != icon_living)

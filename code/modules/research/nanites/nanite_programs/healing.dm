@@ -219,12 +219,12 @@
 		return FALSE
 	if((world.time - C.timeofdeath) > 1800) //too late
 		return FALSE
-	if((C.getBruteLoss() > 180) || (C.getFireLoss() > 180) || !C.can_be_revived()) //too damaged
+	if((C.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (C.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE) || !C.can_be_revived()) //too damaged
 		return FALSE
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
 	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.damaged_brain)
+	if(QDELETED(BR) || BR.brain_death || BR.damaged_brain || BR.suicided)
 		return FALSE
 	if(C.get_ghost())
 		return FALSE

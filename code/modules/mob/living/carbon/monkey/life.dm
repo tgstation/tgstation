@@ -21,7 +21,7 @@
 				else if(resisting)
 					resisting = FALSE
 				else if((mode == MONKEY_IDLE && !pickupTarget && !prob(MONKEY_SHENANIGAN_PROB)) || !handle_combat())
-					if(prob(25) && canmove && isturf(loc) && !pulledby)
+					if(prob(25) && (mobility_flags & MOBILITY_MOVE) && isturf(loc) && !pulledby)
 						step(src, pick(GLOB.cardinals))
 					else if(prob(1))
 						emote(pick("scratch","jump","roll","tail"))
@@ -31,9 +31,9 @@
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
 		if(radiation > RAD_MOB_KNOCKDOWN && prob(RAD_MOB_KNOCKDOWN_PROB))
-			if(!IsKnockdown())
+			if(!IsParalyzed())
 				emote("collapse")
-			Knockdown(RAD_MOB_KNOCKDOWN_AMOUNT)
+			Paralyze(RAD_MOB_KNOCKDOWN_AMOUNT)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")
 		if(radiation > RAD_MOB_MUTATE)
 			if(prob(1))
@@ -145,28 +145,28 @@
 
 /mob/living/carbon/monkey/handle_fire()
 	. = ..()
-	if(on_fire)
+	if(.) //if the mob isn't on fire anymore
+		return
 
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = list()
-		//HEAD//
-		var/obj/item/clothing/head_clothes = null
-		if(wear_mask)
-			head_clothes = wear_mask
-		if(wear_neck)
-			head_clothes = wear_neck
-		if(head)
-			head_clothes = head
-		if(head_clothes)
-			burning_items += head_clothes
+	//the fire tries to damage the exposed clothes and items
+	var/list/burning_items = list()
+	//HEAD//
+	var/obj/item/clothing/head_clothes = null
+	if(wear_mask)
+		head_clothes = wear_mask
+	if(wear_neck)
+		head_clothes = wear_neck
+	if(head)
+		head_clothes = head
+	if(head_clothes)
+		burning_items += head_clothes
 
-		if(back)
-			burning_items += back
+	if(back)
+		burning_items += back
 
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			if(!(I.resistance_flags & FIRE_PROOF))
-				I.take_damage(fire_stacks, BURN, "fire", 0)
+	for(var/X in burning_items)
+		var/obj/item/I = X
+		I.fire_act((fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
 
-		adjust_bodytemperature(BODYTEMP_HEATING_MAX)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
+	adjust_bodytemperature(BODYTEMP_HEATING_MAX)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)

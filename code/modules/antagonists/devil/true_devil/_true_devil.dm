@@ -172,7 +172,7 @@
 				log_combat(M, src, "attacked")
 				updatehealth()
 			if ("disarm")
-				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
+				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

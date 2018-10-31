@@ -71,9 +71,7 @@
 		if("login")
 			var/mob/M = usr
 
-			var/obj/item/card/id/I = M.get_active_held_item()
-			if(!istype(I))
-				I = M.get_idcard()
+			var/obj/item/card/id/I = M.get_idcard(TRUE)
 
 			if(I && istype(I))
 				if(check_access(I))
@@ -564,7 +562,8 @@
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=[REF(src)];operation=enableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
 
 		if(STATE_PURCHASE)
-			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			dat += "Budget: [D.account_balance] Credits.<BR>"
 			dat += "<BR>"
 			dat += "<b>Caution: Purchasing dangerous shuttles may lead to mutiny and/or death.</b><br>"
 			dat += "<BR>"

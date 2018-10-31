@@ -52,7 +52,7 @@
 		return
 	timed_explosion()
 
-/obj/item/implant/explosive/implant(mob/living/target)
+/obj/item/implant/explosive/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)
 		if(istype(X, type))
 			var/obj/item/implant/explosive/imp_e = X
@@ -71,7 +71,7 @@
 	sleep(delay*0.25)
 	if(imp_in && !imp_in.stat)
 		imp_in.visible_message("<span class='warning'>[imp_in] doubles over in pain!</span>")
-		imp_in.Knockdown(140)
+		imp_in.Paralyze(140)
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
 	sleep(delay*0.25)
 	playsound(loc, 'sound/items/timer.ogg', 30, 0)
@@ -92,7 +92,7 @@
 	heavy = 4
 	delay = 70
 
-/obj/item/implant/explosive/macro/implant(mob/living/target)
+/obj/item/implant/explosive/macro/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	for(var/X in target.implants)
 		if(istype(X, type))
 			return 0

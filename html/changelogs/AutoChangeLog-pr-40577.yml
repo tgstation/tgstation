@@ -1,4 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "squeezed a little bit more perf out of atmos"

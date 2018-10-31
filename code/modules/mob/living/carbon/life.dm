@@ -648,7 +648,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 		death()
 		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
-			B.damaged_brain = TRUE
+			B.brain_death = TRUE
 
 /////////////////////////////////////
 //MONKEYS WITH TOO MUCH CHOLOESTROL//

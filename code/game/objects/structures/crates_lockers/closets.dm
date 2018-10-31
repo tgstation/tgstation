@@ -223,7 +223,7 @@
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
-			if(istype(W, /obj/item/weldingtool))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
 					return
 
@@ -243,7 +243,7 @@
 				return
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
-	else if(istype(W, /obj/item/weldingtool) && can_weld_shut)
+	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		if(!W.tool_start_check(user, amount=0))
 			return
 
@@ -257,7 +257,7 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [W].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/wrench) && anchorable)
+	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
 		if(isinspace() && !anchored)
 			return
 		setAnchored(!anchored)
@@ -265,8 +265,11 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.item_flags & NOBLUDGEON))
-		if(W.GetID() || !toggle(user))
+	else if(user.a_intent != INTENT_HARM)
+		var/item_is_id = W.GetID()
+		if(!item_is_id && !(W.item_flags & NOBLUDGEON))
+			return FALSE
+		if(item_is_id || !toggle(user))
 			togglelock(user)
 	else
 		return FALSE
@@ -277,7 +280,7 @@
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/living/user)
 	if(!istype(O) || O.anchored || istype(O, /obj/screen))
 		return
-	if(!istype(user) || user.incapacitated() || user.lying)
+	if(!istype(user) || user.incapacitated() || !(user.mobility_flags & MOBILITY_STAND))
 		return
 	if(!Adjacent(user) || !user.Adjacent(O))
 		return
@@ -306,7 +309,7 @@
 							 	 "<span class='italics'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Knockdown(40)
+				L.Paralyze(40)
 			O.forceMove(T)
 			close()
 	else
@@ -323,11 +326,11 @@
 		return
 	container_resist(user)
 
-/obj/structure/closet/attack_hand(mob/user)
+/obj/structure/closet/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
 		return
-	if(user.lying && get_dist(src, user) > 0)
+	if(!(user.mobility_flags & MOBILITY_STAND) && get_dist(src, user) > 0)
 		return
 
 	if(!toggle(user))
@@ -349,7 +352,7 @@
 	set category = "Object"
 	set name = "Toggle Open"
 
-	if(!usr.canmove || usr.stat || usr.restrained())
+	if(!usr.incapacitated())
 		return
 
 	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))

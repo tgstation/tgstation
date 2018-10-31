@@ -41,11 +41,8 @@
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/instrument/ui_interact(mob/user)
-	if(!user)
-		return
-
-	if(!isliving(user) || user.stat || user.restrained() || user.lying)
+/obj/item/instrument/ui_interact(mob/living/user)
+	if(!isliving(user) || user.stat || user.restrained() || !(user.mobility_flags & MOBILITY_STAND))
 		return
 
 	user.set_machine(src)
@@ -268,3 +265,52 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+
+/obj/item/musicbeacon
+	name = "express delivery beacon"
+	desc = "Summon your tool of art."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gangtool-red"
+	item_state = "radio"
+	var/static/list/display_names
+
+/obj/item/musicbeacon/attack_self(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		beacon_music(user)
+
+/obj/item/musicbeacon/proc/beacon_music(mob/living/M)
+	if(!display_names)
+		display_names = list()
+		var/static/list/instruments = list(
+								/obj/item/instrument/violin,
+								/obj/item/instrument/piano_synth,
+								/obj/item/instrument/guitar,
+								/obj/item/instrument/eguitar,
+								/obj/item/instrument/glockenspiel,
+								/obj/item/instrument/accordion,
+								/obj/item/instrument/trumpet,
+								/obj/item/instrument/saxophone,
+								/obj/item/instrument/trombone,
+								/obj/item/instrument/recorder,
+								/obj/item/instrument/harmonica
+								)
+		for(var/V in instruments)
+			var/atom/A = V
+			display_names[initial(A.name)] = A
+	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
+	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	choice = display_names[choice]
+	var/obj/instrument = new choice
+	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
+	pod.explosionSize = list(0,0,0,2)
+	instrument.forceMove(pod)
+	var/msg = "<span class = danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(istype(H.ears, /obj/item/radio/headset))
+			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Instrument request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
+	to_chat(M, msg)
+
+	new /obj/effect/DPtarget(get_turf(src), pod)
+	qdel(src)

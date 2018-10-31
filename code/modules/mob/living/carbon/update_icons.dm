@@ -6,8 +6,8 @@
 	var/changed = 0
 	if(lying != lying_prev && rotate_on_lying)
 		changed++
-		ntransform.TurnTo(lying_prev,lying)
-		if(lying == 0) //Lying to standing
+		ntransform.TurnTo(lying_prev , lying)
+		if(!lying) //Lying to standing
 			final_pixel_y = get_standard_pixel_y_offset()
 		else //if(lying != 0)
 			if(lying_prev == 0) //Standing to lying
@@ -23,8 +23,7 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)
-		floating = 0  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
-
+		floating = FALSE  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
 
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
@@ -86,7 +85,7 @@
 
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
-	if(on_fire)
+	if(on_fire || islava(loc))
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 		new_fire_overlay.appearance_flags = RESET_COLOR
 		overlays_standing[FIRE_LAYER] = new_fire_overlay

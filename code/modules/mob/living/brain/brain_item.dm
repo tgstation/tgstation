@@ -9,9 +9,11 @@
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
 	attack_verb = list("attacked", "slapped", "whacked")
+	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
-	var/damaged_brain = FALSE //whether the brain organ is damaged.
-	var/decoy_override = FALSE	//I apologize to the security players, and myself, who abused this, but this is going to go.
+	var/brain_death = FALSE //if the brainmob was intentionally killed by attacking the brain after removal, or by severe braindamage
+	var/damaged_brain = FALSE //if the brain was injured after removal. Can be healed with mannitol.
+	var/decoy_override = FALSE	//if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
 
 	var/list/datum/brain_trauma/traumas = list()
 
@@ -70,6 +72,7 @@
 	brainmob.name = L.real_name
 	brainmob.real_name = L.real_name
 	brainmob.timeofhostdeath = L.timeofdeath
+	brainmob.suiciding = suicided
 	if(L.has_dna())
 		var/mob/living/carbon/C = L
 		if(!brainmob.stored_dna)
@@ -86,25 +89,61 @@
 
 /obj/item/organ/brain/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(brainmob)
+
+	if(istype(O, /obj/item/organ_storage))
+		return //Borg organ bags shouldn't be killing brains
+
+	if(damaged_brain && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
+		. = TRUE //don't do attack animation.
+		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
+			to_chat(user, "<span class='warning'>[src] is far too damaged, there's nothing else we can do for it!</span>")
+			return
+
+		if(!O.reagents.has_reagent("mannitol", 10))
+			to_chat(user, "<span class='warning'>There's not enough mannitol in [O] to restore [src]!</span>")
+			return
+
+		user.visible_message("[user] starts to pour the contents of [O] onto [src].", "<span class='notice'>You start to slowly pour the contents of [O] onto [src].</span>")
+		if(!do_after(user, 60, TRUE, src))
+			to_chat(user, "<span class='warning'>You failed to pour [O] onto [src]!</span>")
+			return
+
+		user.visible_message("[user] pours the contents of [O] onto [src], causing it to reform it's original shape and turn a slightly brighter shade of pink.", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform it's original shape and turn a slightly brighter shade of pink.</span>")
+		damaged_brain = FALSE //heal the superficial damage.
+
+		O.reagents.clear_reagents()
+		return
+
+	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		O.attack(brainmob, user) //Oh noooeeeee
+
+	damaged_brain = TRUE //brain was attacked, they're pretty fragile.
 
 /obj/item/organ/brain/examine(mob/user)
 	..()
 
-	if(brainmob)
-		if(brainmob.client)
-			if(brainmob.health <= HEALTH_THRESHOLD_DEAD)
-				to_chat(user, "It's lifeless and severely damaged.")
+	if(suicided)
+		to_chat(user, "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>")
+	else if(brainmob)
+		if(brainmob.get_ghost(FALSE, TRUE))
+			if(brain_death || brainmob.health <= HEALTH_THRESHOLD_DEAD)
+				to_chat(user, "<span class='info'>It's lifeless and severely damaged.</span>")
+			else if(damaged_brain)
+				to_chat(user, "<span class='info'>It seems to still have a bit of energy within it, but it's rather damaged... You may be able to restore it with some <b>mannitol</b>.</span>")
 			else
-				to_chat(user, "You can feel the small spark of life still left in this one.")
+				to_chat(user, "<span class='info'>You can feel the small spark of life still left in this one.</span>")
+		else if(damaged_brain)
+			to_chat(user, "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>")
 		else
-			to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later.")
+			to_chat(user, "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>")
 	else
 		if(decoy_override)
-			to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later.")
+			if(damaged_brain)
+				to_chat(user, "<span class='info'>It seems particularly lifeless and is rather damaged... You may be able to restore it with some <b>mannitol</b> incase it becomes functional again later.</span>")
+			else
+				to_chat(user, "<span class='info'>This one seems particularly lifeless. Perhaps it will regain some of its luster later.</span>")
 		else
-			to_chat(user, "This one is completely devoid of life.")
+			to_chat(user, "<span class='info'>This one is completely devoid of life.</span>")
 
 /obj/item/organ/brain/attack(mob/living/carbon/C, mob/user)
 	if(!istype(C))

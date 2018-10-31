@@ -251,7 +251,7 @@
 		M.emote("deathgasp")
 	M.fakedeath("regenerative_coma")
 	M.update_stat()
-	M.update_canmove()
+	M.update_mobility()
 	addtimer(CALLBACK(src, .proc/uncoma, M), 300)
 
 /datum/symptom/heal/coma/proc/uncoma(mob/living/M)
@@ -260,7 +260,7 @@
 	active_coma = FALSE
 	M.cure_fakedeath("regenerative_coma")
 	M.update_stat()
-	M.update_canmove()
+	M.update_mobility()
 
 /datum/symptom/heal/coma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power

@@ -85,14 +85,11 @@
 	..()
 	if(!QDELETED(src)) //wasn't deleted by the projectile's effects.
 		if(!P.nodamage && ((P.damage_type == BURN) || (P.damage_type == BRUTE)))
-			var/boom_message = "[ADMIN_LOOKUPFLW(P.firer)] triggered a fueltank explosion via projectile."
-			GLOB.bombers += boom_message
-			message_admins(boom_message)
-			P.firer.log_message("triggered a fueltank explosion via projectile.", LOG_ATTACK)
+			log_bomber(P.firer, "detonated a", src, "via projectile")
 			boom()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weldingtool))
+	if(I.tool_behaviour == TOOL_WELDER)
 		if(!reagents.has_reagent("welding_fuel"))
 			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return
@@ -106,14 +103,10 @@
 			playsound(src, 'sound/effects/refill.ogg', 50, 1)
 			W.update_icon()
 		else
-			var/turf/T = get_turf(src)
 			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 
-			var/message_admins = "[ADMIN_LOOKUPFLW(user)] triggered a fueltank explosion via welding tool at [ADMIN_VERBOSEJMP(T)]."
-			GLOB.bombers += message_admins
-			message_admins(message_admins)
+			log_bomber(user, "detonated a", src, "via welding tool")
 
-			user.log_message("triggered a fueltank explosion via welding tool.", LOG_ATTACK)
 			boom()
 		return
 	return ..()

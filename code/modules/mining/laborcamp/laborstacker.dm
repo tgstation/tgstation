@@ -142,6 +142,11 @@ GLOBAL_LIST(labor_sheet_values)
 	points += inp.point_value * inp.amount
 	..()
 
+/obj/machinery/mineral/stacking_machine/laborstacker/attackby(obj/item/I, mob/living/user)
+	if(istype(I, /obj/item/stack/sheet) && user.canUnEquip(I))
+		var/obj/item/stack/sheet/inp = I
+		points += inp.point_value * inp.amount
+	return ..()
 
 /**********************Point Lookup Console**************************/
 /obj/machinery/mineral/labor_points_checker

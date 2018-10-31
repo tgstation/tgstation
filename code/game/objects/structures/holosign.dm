@@ -69,10 +69,8 @@
 
 /obj/structure/holosign/barrier/engineering
 	icon_state = "holosign_engi"
-
-/obj/structure/holosign/barrier/engineering/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos
 	name = "holofirelock"
@@ -84,14 +82,12 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	layer = ABOVE_MOB_LAYER
 	alpha = 150
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
 
 /obj/structure/holosign/barrier/atmos/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
-
-/obj/structure/holosign/barrier/atmos/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_LIGHT_INSULATION)
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
@@ -127,15 +123,14 @@
 	if(ishuman(mover))
 		var/mob/living/carbon/human/sickboi = mover
 		var/threat = sickboi.check_virus()
-		switch(threat)
-			if(DISEASE_SEVERITY_MINOR, DISEASE_SEVERITY_MEDIUM, DISEASE_SEVERITY_HARMFUL, DISEASE_SEVERITY_DANGEROUS, DISEASE_SEVERITY_BIOHAZARD)
-				if(buzzcd < world.time)
-					playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,1,4)
-					buzzcd = (world.time + 60)
-				icon_state = "holo_medical-deny"
-				return FALSE
-			else
-				return TRUE //nice or benign diseases!
+		if(get_disease_severity_value(threat) > get_disease_severity_value(DISEASE_SEVERITY_MINOR))
+			if(buzzcd < world.time)
+				playsound(get_turf(src),'sound/machines/buzz-sigh.ogg',65,1,4)
+				buzzcd = (world.time + 60)
+			icon_state = "holo_medical-deny"
+			return FALSE
+		else
+			return TRUE //nice or benign diseases!
 	return TRUE
 
 /obj/structure/holosign/barrier/medical/attack_hand(mob/living/user)

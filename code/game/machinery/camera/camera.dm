@@ -181,7 +181,7 @@
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
-		if(istype(I, /obj/item/analyzer))
+		if(I.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay())
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return

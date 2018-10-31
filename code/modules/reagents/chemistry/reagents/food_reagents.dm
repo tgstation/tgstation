@@ -136,7 +136,7 @@
 	return TRUE
 
 /datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
-	if(!istype(T))
+	if(!istype(T) || isgroundlessturf(T))
 		return
 	if(reac_volume >= 5)
 		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
@@ -319,7 +319,7 @@
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
-			victim.Knockdown(60)
+			victim.Paralyze(60)
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
@@ -332,7 +332,7 @@
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Knockdown(100)
+			victim.Paralyze(100)
 		victim.update_damage_hud()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)

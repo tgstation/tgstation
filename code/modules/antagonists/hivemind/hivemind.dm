@@ -7,6 +7,7 @@
 	var/special_role = ROLE_HIVE
 	var/list/hivemembers = list()
 	var/hive_size = 0
+	var/static/datum/objective/hivemind/assimilate_common/common_assimilation_obj //Make it static since we want a common target for all the antags
 
 	var/list/upgrade_tiers = list(
 		//Tier 1
@@ -37,7 +38,10 @@
 	for(var/power in upgrade_tiers)
 		var/level = upgrade_tiers[power]
 		if(hive_size >= level && !(locate(power) in owner.spell_list))
-			owner.AddSpell(new power(null))
+			var/obj/effect/proc_holder/spell/the_spell = new power(null)
+			owner.AddSpell(the_spell)
+			if(hive_size > 0)
+				to_chat(owner, "<span class='assimilator'>We have unlocked [the_spell.name].</span><span class='bold'> [the_spell.desc]</span>")
 		else if(hive_size < level && (locate(power) in owner.spell_list))
 			owner.RemoveSpell(power)
 
@@ -126,20 +130,38 @@
 		var/datum/objective/hivemind/hiveescape/hive_escape_objective = new
 		hive_escape_objective.owner = owner
 		objectives += hive_escape_objective
-	if(prob(50))
+
+	if(prob(85))
 		var/datum/objective/hivemind/assimilate/assim_objective = new
 		assim_objective.owner = owner
 		if(prob(25)) //Decently high chance to have to assimilate an implanted crew member
 			assim_objective.find_target_by_role(pick("Captain","Head of Security","Security Officer","Detective","Warden"))
 		if(!assim_objective.target) //If the prob doesn't happen or there are no implanted crew, find any target that isn't a hivemmind host
-			assim_objective.find_target_by_role(role = ROLE_HIVE, role_type = 1, invert = 1)
+			assim_objective.find_target_by_role(role = ROLE_HIVE, role_type = TRUE, invert = TRUE)
 		assim_objective.update_explanation_text()
 		objectives += assim_objective
+	else
+		var/datum/objective/hivemind/biggest/biggest_objective = new
+		biggest_objective.owner = owner
+		objectives += biggest_objective
+
+	if(prob(85) && common_assimilation_obj) //If the mode rolled the versus objective IE common_assimilation_obj is not null, add a very high chance to get this
+		var/datum/objective/hivemind/assimilate_common/versus_objective = new
+		versus_objective.owner = owner
+		versus_objective.target = common_assimilation_obj.target
+		versus_objective.update_explanation_text()
+		objectives += versus_objective
 	else if(prob(70))
+		var/giveit = TRUE
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
 		kill_objective.find_target()
-		objectives += kill_objective
+		for(var/datum/objective/hivemind/assimilate/ass_obj in objectives)
+			if(ass_obj.target == kill_objective.target)
+				giveit = FALSE
+				break
+		if(giveit)
+			objectives += kill_objective
 	else
 		var/datum/objective/maroon/maroon_objective = new
 		maroon_objective.owner = owner
@@ -157,8 +179,8 @@
 	to_chat(owner.current, "<b>Your psionic powers will grow by assimilating the crew into your hive. Use the Assimilate Vessel spell on a stationary \
 		target, and after ten seconds he will be one of the hive. This is completely silent and safe to use, and failing will reset the cooldown. As \
 		you assimilate the crew, you will gain more powers to use. Most are silent and won't help you in a fight, but grant you great power over your \
-		vessels. There are other hiveminds onboard the station, collaboration is possible, but a strong enough hivemind can reap many rewards from a \
-		well planned betrayal.</b>")
+		vessels. Hover your mouse over a power's action icon for an extended description on what it does. There are other hiveminds onboard the station, \
+		collaboration is possible, but a strong enough hivemind can reap many rewards from a well planned betrayal.</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	owner.announce_objectives()
@@ -184,4 +206,4 @@
 	return result.Join("<br>")
 
 /datum/antagonist/hivemind/is_gamemode_hero()
-	return SSticker.mode.name == "hivemind"
+	return SSticker.mode.name == "Assimilation"

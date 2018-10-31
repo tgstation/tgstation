@@ -708,7 +708,7 @@ More mutations
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	if(delayed_action && connected)
+	if(delayed_action && get_viable_occupant())
 		to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?

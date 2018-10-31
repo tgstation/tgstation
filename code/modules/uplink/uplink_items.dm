@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 7.12x82mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
@@ -429,8 +429,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \
-			are dirt cheap but are half as effective as .357 rounds."
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -539,7 +538,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
 	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
-			These bullets pack less punch than 1.95mm rounds, but they still offer more power than .45 ammo."
+			These bullets pack less punch than 7.12mm rounds, but they still offer more power than .45 ammo."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
@@ -558,29 +557,29 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
-	name = "1.95x129mm Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use with the L6 SAW. \
+	name = "7.12x82mm Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/mm195x129
+	item = /obj/item/ammo_box/magazine/mm712x82
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "1.95x129mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "7.12x82mm (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/mm195x129/hollow
+	item = /obj/item/ammo_box/magazine/mm712x82/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "1.95x129mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "7.12x82mm (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
-	item = /obj/item/ammo_box/magazine/mm195x129/ap
+	item = /obj/item/ammo_box/magazine/mm712x82/ap
 	cost = 9
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "1.95x129mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "7.12x82mm (Incendiary) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/mm195x129/incen
+	item = /obj/item/ammo_box/magazine/mm712x82/incen
 
 /datum/uplink_item/ammo/rocket
 	include_modes = list(/datum/game_mode/nuclear)
@@ -777,7 +776,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	cant_discount = TRUE
-	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -1462,7 +1460,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor")
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist")
 	cost = 5
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
@@ -1497,7 +1495,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/role_restricted/gorillacubes
 	name = "Box of Gorilla Cubes"
 	desc = "A box with three Waffle Co. brand gorilla cubes. Eat big to get big. \
-			Caution: Product may rehydrate when exposed to water." 
+			Caution: Product may rehydrate when exposed to water."
 	item = /obj/item/storage/box/gorillacubes
 	cost = 6
 	restricted_roles = list("Geneticist", "Chief Medical Officer")

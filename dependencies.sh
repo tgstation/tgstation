@@ -3,11 +3,12 @@
 #Project dependencies file
 #Final authority on what's required to fully build the project
 
-#byond version
-#note, this also needs to be changed in the Dockerfile's initial FROM command
-#If someone has an idea for how to set that version within the Dockerfile itself without any other dependencies, feel free to PR it
-export BYOND_MAJOR=512
-export BYOND_MINOR=1448
+# byond version
+# Extracted from the Dockerfile. Change by editing Dockerfile's FROM command.
+LIST=($(sed -n 's/.*byond:\([0-9]\+\)\.\([0-9]\+\).*/\1 \2/p' Dockerfile))
+export BYOND_MAJOR=${LIST[0]}
+export BYOND_MINOR=${LIST[1]}
+unset LIST
 
 #rust_g git tag
 export RUST_G_VERSION=0.4.1
