@@ -298,12 +298,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		C.remove_trait(X, SPECIES_TRAIT)
-<<<<<<< HEAD
 	if(inert_mutation != new_species.inert_mutation)
 		C.dna.mutation_index[C.dna.mutation_index.Find(inert_mutation)] = new_species.inert_mutation
-=======
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
->>>>>>> upstream/master
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
 
