@@ -2249,10 +2249,6 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid)
-"gW" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/indestructible/rock,
-/area/space/nearstation)
 "gX" = (
 /obj/effect/baseturf_helper/lava,
 /turf/closed/mineral/volcanic,
@@ -2534,7 +2530,7 @@ aa
 aa
 aa
 aa
-gW
+aa
 "}
 (2,1,1) = {"
 aa

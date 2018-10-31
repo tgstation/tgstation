@@ -32,6 +32,25 @@
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
 
+/obj/item/soap/examine(mob/user)
+	. = ..()
+	var/max_uses = initial(uses)
+	var/msg = "It looks like it just came out of the package."
+	if(uses != max_uses)
+		var/percentage_left = uses / max_uses
+		switch(percentage_left)
+			if(0 to 14)
+				msg = "There's just a tiny bit left of what it used to be, you're not sure it'll last much longer."
+			if(15 to 29)
+				msg = "It's dissolved quite a bit, but there's still some life to it."
+			if(30 to 49)
+				msg = "It's past its prime, but it's definitely still good."
+			if(50 to 74)
+				msg = "It's started to get a little smaller than it used to be, but it'll definitely still last for a while."
+			else
+				msg = "It's seen some light use, but it's still pretty fresh."
+	to_chat(user, "<span class='notice'>[msg]</span>")
+
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
 	grind_results = list("plasma" = 10, "lye" = 10)
@@ -63,7 +82,7 @@
 /obj/item/soap/proc/decreaseUses(mob/user)
 	uses--
 	if(uses <= 0)
-		to_chat(user, "<span class='warning'>The soap runs out!</span>")
+		to_chat(user, "<span class='warning'>[src] crumbles into tiny bits!</span>")
 		qdel(src)
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
@@ -137,7 +156,7 @@
 
 /obj/item/bikehorn/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] solemnly points [src] at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 	return (BRUTELOSS)
 
 //air horn

@@ -81919,7 +81919,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Vacant Office";
+	c_tag = "Vacant Commissary";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/brown{

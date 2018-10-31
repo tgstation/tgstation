@@ -90,6 +90,9 @@
 /obj/item/organ/brain/attackby(obj/item/O, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 
+	if(istype(O, /obj/item/organ_storage))
+		return //Borg organ bags shouldn't be killing brains
+
 	if(damaged_brain && O.is_drainable() && O.reagents.has_reagent("mannitol")) //attempt to heal the brain
 		. = TRUE //don't do attack animation.
 		if(brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD) //if the brain is fucked anyway, do nothing
@@ -122,7 +125,7 @@
 	if(suicided)
 		to_chat(user, "<span class='info'>It's started turning slightly grey. They must not have been able to handle the stress of it all.</span>")
 	else if(brainmob)
-		if(brainmob.client)
+		if(brainmob.get_ghost(FALSE, TRUE))
 			if(brain_death || brainmob.health <= HEALTH_THRESHOLD_DEAD)
 				to_chat(user, "<span class='info'>It's lifeless and severely damaged.</span>")
 			else if(damaged_brain)
