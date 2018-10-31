@@ -17,26 +17,6 @@
 #define SCANNER_ACTION_UE 3
 #define SCANNER_ACTION_MIXED 4
 
-
-
-
-
-/*
-TODO:
-X Make mutations random for every person
-X New html
-X Make mutations stable and working
-X Make inspect work, with DISCOVER button
-Allow single mutation disks
-X Mutation activators
-X Mutation injectors
-More mutations
-100 hours of testing and dependency restructuring
-?Chromosomes
-?Mutation stats
-
-
-*/
 /obj/machinery/computer/scan_consolenew
 	name = "\improper DNA scanner access console"
 	desc = "Scan DNA."
@@ -388,7 +368,7 @@ More mutations
 							temp_html += generate_DBN(viable_occupant.dna.mutation_index.Find(HM.type),viable_occupant)
 						else
 							break
-						temp_html += "<div class='dnaBlockNumber'>[HM.name]</div>"
+						temp_html += "[HM.name]"
 
 					temp_html += "</div></div></div><br><br>"
 
