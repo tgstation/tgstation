@@ -783,6 +783,7 @@
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
+	update_mobility()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
