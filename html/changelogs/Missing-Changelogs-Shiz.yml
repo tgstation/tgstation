@@ -1,6 +1,5 @@
 author: "ShizCalev"
 delete-after: True
 changes: 
-  - tweak: "Engineering techweb node now requires basic tools to be researched first."
-  - fix: "Droppers will now work when squirting into the eyes if a mob is wearing a hardsuit but doesn't have eye protection on."
+  - fix: "Droppers will now work properly when squirting the contents into the eyes of a mob while wearing only the body part of a hardsuit and no helmet."
   - fix: "You can now examine bars of soap to tell how many uses (roughly) are left."
