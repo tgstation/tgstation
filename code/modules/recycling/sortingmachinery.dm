@@ -147,6 +147,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "cargotagger"
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
+	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -183,8 +184,9 @@
 	onclose(user, "destTagScreen")
 
 /obj/item/destTagger/attack_self(mob/user)
-	openwindow(user)
-	return
+	if(!locked_destination)
+		openwindow(user)
+		return
 
 /obj/item/destTagger/Topic(href, href_list)
 	add_fingerprint(usr)
