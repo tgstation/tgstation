@@ -11,13 +11,23 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 	idle_power_usage = 5
 	active_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
-	var/grinded = 0
+	var/stored_matter = 0
 	var/cube_production = 0.2
+	var/obj/machinery/computer/camera_advanced/xenobio/connected = list()
 	
 /obj/machinery/monkey_recycler/Initialize(mapload)
 	. = ..()
 	if (!GLOB.monkey_recycler_default && mapload && is_station_level(z))
 		GLOB.monkey_recycler_default = src
+
+/obj/machinery/monkey_recycler/Destroy()
+	if (GLOB.monkey_recycler_default == src)
+		GLOB.monkey_recycler_default = null
+	for(var/C in connected)
+		var/obj/machinery/computer/camera_advanced/xenobio/console = C
+		console.connected_recycler = null
+	
+	return ..()
 
 /obj/machinery/monkey_recycler/RefreshParts()	//Ranges from 0.2 to 0.8 per monkey recycled
 	cube_production = 0
@@ -25,7 +35,7 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 		cube_production += B.rating * 0.1
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		cube_production += M.rating * 0.1
-	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cube_production] cube(s) for every monkey inserted."
+	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cube_production] cubes for every monkey inserted."
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
@@ -67,20 +77,20 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	use_power(500)
-	grinded++
+	stored_matter += cube_production
 	addtimer(VARSET_CALLBACK(src, pixel_x, initial(pixel_x)))
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, "<span class='notice'>The machine now has [grinded] monkey\s worth of material stored.</span>"))
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, user, "<span class='notice'>The machine now has [stored_matter] monkey\s worth of material stored.</span>"))
 
 /obj/machinery/monkey_recycler/interact(mob/user)
-	if(grinded >= required_grind)
-		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
+	if(stored_matter >= 1)
+		to_chat(user, "<span class='notice'>The machine hisses loudly as it condenses the ground monkey meat. After a moment, it dispenses a brand new monkey cube.</span>")
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
-		grinded -= required_grind
-		for(var/i = 0, i < cube_production, i++)
+		for(var/i in 1 to FLOOR(stored_matter, 1))
 			new /obj/item/reagent_containers/food/snacks/monkeycube(src.loc)
-		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
+			stored_matter--
+		to_chat(user, "<span class='notice'>The machine's display flashes that it has [stored_matter] monkeys worth of material left.</span>")
 	else
-		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")
+		to_chat(user, "<span class='danger'>The machine needs at least 1 monkey worth of material to produce a monkey cube. It currently has [stored_matter].</span>")
 
 /obj/machinery/monkey_recycler/multitool_act(mob/living/user, obj/item/multitool/I)
 	if (istype(I))

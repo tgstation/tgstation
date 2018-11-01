@@ -31,7 +31,7 @@
 
 	var/datum/component/redirect/listener
 
-	var/obj/machinery/monkey_recycler
+	var/obj/machinery/monkey_recycler/connected_recycler
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
@@ -52,8 +52,8 @@
 	potion_action = new
 	stored_slimes = list()
 	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
-	if(!monkey_recycler)
-		monkey_recycler = GLOB.monkey_recycler_default
+	connected_recycler = GLOB.monkey_recycler_default
+	connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
@@ -142,7 +142,8 @@
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
 	if (istype(I) && istype(I.buffer,/obj/machinery/monkey_recycler))
 		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
-		monkey_recycler = I.buffer
+		connected_recycler = I.buffer
+		connected_recycler.connected += src
 		return TRUE
 
 /datum/action/innate/slime_place
@@ -208,8 +209,10 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc, TRUE, owner)
 			if (!QDELETED(food))
 				food.LAssailant = C
-				X.monkeys --
-				to_chat(owner, "[X] now has [X.monkeys] monkeys left.")
+				X.monkeys--
+				to_chat(owner, "[X] now has [X.monkeys] monkeys stored.")
+		else
+			to_chat(owner, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
@@ -225,18 +228,19 @@
 	var/mob/living/C = owner
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/obj/machinery/monkey_recycler/recycler = X.connected_recycler
 
-	if(!X.monkey_recycler)
-		to_chat(owner, "<span class='notice'>There is no connected monkey recycler.</span>")
+	if(!recycler)
+		to_chat(owner, "<span class='notice'>There is no connected monkey recycler.  Use a multitool to link one.</span>")
 		return
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
-				X.monkey_recycler.use_power(500)
-				X.monkeys += X.monkey_recycler.cube_production
-				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
+				recycler.use_power(500)
+				X.monkeys += recycler.cube_production
 				qdel(M)
+				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
