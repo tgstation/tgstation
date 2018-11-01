@@ -112,7 +112,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/cigbutt
 	var/lastHolder = null
-	var/smoketime = 300
+	var/smoketime = 150
 	var/chem_volume = 30
 	var/list/list_reagents = list("nicotine" = 15)
 	heat = 1000
@@ -212,7 +212,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-
+var/counter = 0 // There is no way this is the best way of doing this
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
 	var/mob/living/M = loc
@@ -227,7 +227,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 	open_flame()
 	if(reagents && reagents.total_volume)
-		handle_reagents()
+		counter++
+		if (counter == 6)
+			handle_reagents()
+			counter = 0
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
@@ -350,8 +353,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
-	smoketime = 1500
+	smoketime = 325
 	chem_volume = 40
+	list_reagents = list("nicotine" = 30)
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -359,9 +363,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	smoketime = 2000
+	smoketime = 500
 	chem_volume = 80
-
+	list_reagents =list("nicotine" = 50)
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
@@ -369,8 +373,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	smoketime = 7200
+	smoketime = 1000
 	chem_volume = 50
+	list_reagents =list("nicotine" = 40)
 
 /obj/item/cigbutt
 	name = "cigarette butt"
