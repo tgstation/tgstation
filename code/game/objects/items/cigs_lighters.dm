@@ -115,6 +115,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 150
 	var/chem_volume = 30
 	var/list/list_reagents = list("nicotine" = 15)
+	var/dragtime = 100
 	var/nextdragtime = 0
 	heat = 1000
 
@@ -226,11 +227,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	open_flame()
-	if(reagents && reagents.total_volume)
-		nextdragtime++
-		if (nextdragtime == 6)
-			handle_reagents()
-			nextdragtime = 0
+	if((reagents && reagents.total_volume) && (nextdragtime <= world.time))
+		nextdragtime = world.time + dragtime
+		handle_reagents()
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)

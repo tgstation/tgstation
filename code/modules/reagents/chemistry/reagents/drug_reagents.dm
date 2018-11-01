@@ -45,7 +45,7 @@
 	taste_description = "smoke"
 	trippy = FALSE
 	overdose_threshold=10
-	metabolization_rate = 0.115 * REAGENTS_METABOLISM
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
