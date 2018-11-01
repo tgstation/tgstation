@@ -171,10 +171,12 @@
 	if(G.death_points < death_cost)
 		to_chat(G,"<span class='warning'>Not enough death points!</span>")
 		return
-	var/result = effect(A,G)
-	if(!result)
-		return
 	G.spook_points -= spook_cost
 	G.death_points -= death_cost
+	var/result = effect(A,G)
+	if(!result) //if it failed return the cost.
+		G.spook_points += spook_cost
+		G.death_points += death_cost
+		return
 	if(spam_safety)
 		G.active_power = null
