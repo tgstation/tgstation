@@ -1203,16 +1203,6 @@
 	crate_name = "\improper APLU Ripley circuit crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/circuitry
-	name = "Circuitry Starter Pack Crate"
-	desc = "Journey into the mysterious world of Circuitry with this starter pack. Contains a circuit printer, analyzer, debugger and wirer. Power cells not included."
-	cost = 1000
-	contains = list(/obj/item/integrated_electronics/analyzer,
-					/obj/item/integrated_circuit_printer,
-					/obj/item/integrated_electronics/debugger,
-					/obj/item/integrated_electronics/wirer)
-	crate_name = "circuitry starter pack crate"
-
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
 	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Toxins access to open."
