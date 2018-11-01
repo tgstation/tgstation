@@ -20,8 +20,8 @@
 	retreat_distance = 3
 	minimum_distance = 3
 
-	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_lower = 1
+	melee_damage_upper = 1
 	del_on_death = TRUE
 
 	pass_flags = LETPASSTHROW //Keeps cheese away.
