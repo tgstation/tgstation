@@ -1,7 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Revenants now only use stolen essence to unlock new spells. No more counting corpses or waiting for regen before draining."
-  - tweak: "Spell unlock costs adjusted accordingly, defile upped from 0 to a cost of 10."
-  - balance: "Reduced blight cost to 75, more in line with its underwhelming nature."
-  - tweak: "Drain targets in soft-crit will be stunned, to prevent them crawling away."
