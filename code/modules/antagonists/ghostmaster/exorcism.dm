@@ -66,6 +66,7 @@
 	shown_hints["reveal"] = FALSE
 
 /datum/exorcism/proc/RegisterCorpse(obj/O)
+	AddComponent(/datum/component/stationloving, FALSE, FALSE)
 	holder = O
 	if(reveal_method == REVEAL_WORD && !(O.flags_1 & HEAR_1))
 		O.flags_1 |= HEAR_1
@@ -88,7 +89,7 @@
 		Reveal()
 	else if(revealed && in_range(speaker,holder))
 		var/list/current = steps[current_step]
-		if(current == EXORCISM_STEP_PRAYER && findtext(message,current["data"]))
+		if(current["step"] == EXORCISM_STEP_PRAYER && findtext(message,current["data"]))
 			if(check_requirements())
 				next_step()
 			else
@@ -155,6 +156,7 @@
 
 /datum/exorcism/proc/Success()
 	completed = TRUE
+	qdel(holder.GetComponent(/datum/component/stationloving))
 	SEND_SIGNAL(holder,COMSIG_EXORCISM_SUCCESS)
 	SEND_SIGNAL(bound_spook,COMSIG_EXORCISM_SUCCESS)
 

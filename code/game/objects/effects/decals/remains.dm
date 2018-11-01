@@ -57,3 +57,8 @@
 
 /obj/effect/decal/remains/human/haunted/acid_act()
 	return
+
+/obj/effect/decal/remains/human/haunted/can_be_pulled(user, grab_state, force)
+	if(istype(user,/mob/living/simple_animal/hostile/haunt))
+		return FALSE
+	return ..()
