@@ -51,6 +51,8 @@
 				to_chat(src, "<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>")
 				if(target.stat != DEAD)
 					to_chat(target, "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>")
+				if(target.stat == SOFT_CRIT)
+					target.stun(46)
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
