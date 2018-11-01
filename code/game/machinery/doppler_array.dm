@@ -6,6 +6,8 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
+	var/cooldown = 10
+	var/next_announce = 0
 	var/integrated = FALSE
 	var/max_dist = 150
 	verb_say = "states coldly"
@@ -50,8 +52,10 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 												  took,orig_dev_range,orig_heavy_range,orig_light_range)
 	if(stat & NOPOWER)
 		return FALSE
+	if(next_announce > world.time)
+		return
+	next_announce = world.time + cooldown
 	var/turf/zone = get_turf(src)
-
 	if(zone.z != epicenter.z)
 		return FALSE
 
