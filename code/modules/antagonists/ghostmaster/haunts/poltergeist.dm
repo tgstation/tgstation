@@ -22,6 +22,7 @@
 
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	del_on_death = TRUE
 
 	pass_flags = LETPASSTHROW //Keeps cheese away.
 
@@ -80,7 +81,7 @@
 		return ..()
 
 /mob/living/simple_animal/hostile/haunt/poltergeist/proc/collect_junk(rip_floors = TRUE)
-	if(next_collect > world.time)
+	if(next_collect > world.time || IsParalyzed())
 		return
 	next_collect = world.time + collect_cooldown
 	clean_junk()
