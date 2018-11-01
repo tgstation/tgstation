@@ -2,7 +2,7 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys inserted."
+	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 0.2 cubes for every monkey inserted."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
