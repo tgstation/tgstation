@@ -31,6 +31,7 @@
 
 	var/datum/component/redirect/listener
 
+	var/obj/machinery/monkey_recycler
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
@@ -51,6 +52,8 @@
 	potion_action = new
 	stored_slimes = list()
 	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
+	if(!monkey_recycler)
+		monkey_recycler = GLOB.monkey_recycler_default
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
@@ -136,6 +139,12 @@
 		return
 	..()
 
+/obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I) && istype(I.buffer,/obj/machinery/monkey_recycler))
+		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
+		monkey_recycler = I.buffer
+		return TRUE
+
 /datum/action/innate/slime_place
 	name = "Place Slimes"
 	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
@@ -217,11 +226,15 @@
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
+	if(!X.monkey_recycler)
+		to_chat(owner, "<span class='notice'>There is no connected monkey recycler.</span>")
+		return
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
-				X.monkeys = round(X.monkeys + 0.2,0.1)
+				X.monkey_recycler.use_power(500)
+				X.monkeys += X.monkey_recycler.cube_production
 				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 				qdel(M)
 	else

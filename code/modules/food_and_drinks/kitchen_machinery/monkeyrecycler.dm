@@ -1,6 +1,8 @@
+GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
+
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys inserted." // except it literally never does
+	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 1 cube for every 5 monkeys inserted."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
@@ -10,19 +12,20 @@
 	active_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
 	var/grinded = 0
-	var/required_grind = 5
-	var/cube_production = 1
+	var/cube_production = 0.2
+	
+/obj/machinery/monkey_recycler/Initialize(mapload)
+	. = ..()
+	if (!GLOB.monkey_recycler_default && mapload && is_station_level(z))
+		GLOB.monkey_recycler_default = src
 
-/obj/machinery/monkey_recycler/RefreshParts()
-	var/req_grind = 5
-	var/cubes_made = 1
+/obj/machinery/monkey_recycler/RefreshParts()	//Ranges from 0.2 to 0.8 per monkey recycled
+	cube_production = 0
 	for(var/obj/item/stock_parts/manipulator/B in component_parts)
-		req_grind -= B.rating
+		cube_production += B.rating * 0.1
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
-		cubes_made = M.rating
-	cube_production = cubes_made
-	required_grind = req_grind
-	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
+		cube_production += M.rating * 0.1
+	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cube_production] cube(s) for every monkey inserted."
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
@@ -78,3 +81,9 @@
 		to_chat(user, "<span class='notice'>The machine's display flashes that it has [grinded] monkeys worth of material left.</span>")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")
+
+/obj/machinery/monkey_recycler/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I))
+		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
+		I.buffer = src
+		return TRUE
