@@ -63,7 +63,7 @@ Bonus
 	if(M)
 		if(!M.has_dna())
 			return
-		archived_dna = M.dna.struc_enzymes
+		archived_dna = M.dna.mutation_index
 
 // Give them back their old DNA when cured.
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
@@ -74,5 +74,5 @@ Bonus
 		if(M && archived_dna)
 			if(!M.has_dna())
 				return
-			M.dna.struc_enzymes = archived_dna
+			M.dna.mutation_index = archived_dna
 			M.domutcheck()

@@ -111,6 +111,7 @@ SUBSYSTEM_DEF(atoms)
 	for(var/A in subtypesof(/datum/mutation/human))
 		var/datum/mutation/human/B = new A()
 		GLOB.all_mutations[B.type] = B
+		GLOB.full_sequences[B.type] = generate_gene_sequence(0,B.blocks,B.difficulty)
 		if(B.locked)
 			continue
 		if(B.quality == POSITIVE)

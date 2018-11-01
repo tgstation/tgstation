@@ -23,8 +23,10 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/datum/dna/dna
 	var/mob/living/carbon/human/owner
 	var/instability = 0 //instability the holder gets when the mutation is not native
-	var/class           //Decides player accesibility, sorta
+	var/blocks = 2 //Amount of those big blocks with gene sequences
+	var/difficulty = 4 //Amount of missing sequences. Sometimes it removes an entire sequence for 2 points
 	var/timed = FALSE   //Boolean to easily check if we're going to self destruct
+	var/class           //Decides player accesibility, sorta
 	//MUT_NORMAL - A mutation that can be activated and deactived with structural enzymes
 	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate

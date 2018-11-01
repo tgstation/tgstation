@@ -57,7 +57,7 @@
 				var/datum/disease/dnaspread/DS = D
 				DS.strain_data["name"] = H.real_name
 				DS.strain_data["UI"] = H.dna.uni_identity
-				DS.strain_data["SE"] = H.dna.struc_enzymes
+				DS.strain_data["SE"] = H.dna.mutation_index
 			else
 				D = new virus_type()
 		else

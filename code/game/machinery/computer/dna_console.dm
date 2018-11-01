@@ -5,7 +5,7 @@
 #define NUMBER_OF_MUTATIONS 6
 
 #define RADIATION_STRENGTH_MAX 15
-#define RADIATION_STRENGTH_MULTIPLIER 1			//larger has a more range
+#define RADIATION_STRENGTH_MULTIPLIER 1			//larger has more range
 
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate

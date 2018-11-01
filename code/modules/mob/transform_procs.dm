@@ -49,9 +49,8 @@
 	O.updateappearance(icon_update=0)
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
 		O.dna.mutation_index = dna.mutation_index
-		O.dna.struc_enzymes = O.dna.set_se(1, /datum/mutation/human/race)//we don't want to keep the race block inactive
+		O.dna.set_se(1, /datum/mutation/human/race)//we don't want to keep the race block inactive
 
 	if(suiciding)
 		O.set_suicide(suiciding)
@@ -205,9 +204,8 @@
 	O.name = O.real_name
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
 		O.dna.mutation_index = dna.mutation_index
-		O.dna.struc_enzymes = O.dna.set_se(0, /datum/mutation/human/race)//i spent 3 hours debugging trying to figure out why I cant just use the type from the monkey mutation, with no fucking
+		O.dna.set_se(0, /datum/mutation/human/race)//i spent 3 hours debugging trying to figure out why I cant just use the type from the monkey mutation, with no fucking
 		O.domutcheck()												          													 	// succes even though they are the same exact fucking thing
 
 	if(suiciding)

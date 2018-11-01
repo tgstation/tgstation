@@ -2,7 +2,6 @@
 /////////////////////////// DNA DATUM
 /datum/dna
 	var/unique_enzymes
-	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
 	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
@@ -48,12 +47,11 @@
 	destination.dna.real_name = real_name
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
-		destination.dna.struc_enzymes = struc_enzymes
 		destination.dna.mutation_index = mutation_index
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
-	new_dna.struc_enzymes = struc_enzymes
+	new_dna.mutation_index = mutation_index
 	new_dna.uni_identity = uni_identity
 	new_dna.blood_type = blood_type
 	new_dna.features = features.Copy()
@@ -107,29 +105,44 @@
 	return .
 
 /datum/dna/proc/generate_struc_enzymes()
-	var/list/sorting[DNA_STRUC_ENZYMES_BLOCKS]
-	var/result = ""
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
+	mutation_index.Cut()
 	shuffle_inplace(mutations_temp)
 	var/start_at = 1
 	if(species)
-		mutation_index[1] = species.inert_mutation
+		mutation_index[species.inert_mutation] = create_sequence(species.inert_mutation, FALSE)
 		start_at = 2
 	for(var/i in start_at to DNA_STRUC_ENZYMES_BLOCKS)
-		var/datum/mutation/M = mutations_temp[i]
-		mutation_index[i] = M.type
+		var/datum/mutation/human/M = mutations_temp[i]
+		if((M.type == RACEMUT) && ismonkey(holder))
+			mutations |= new M.type(MUT_NORMAL)
+			mutation_index[M.type] = get_sequence(M.type)
+		mutation_index[M.type] = create_sequence(M.type, FALSE,M.difficulty)
 	shuffle_inplace(mutation_index)
-	for(var/M in mutation_index)
-		var/datum/mutation/human/A = get_initialized_mutation(M)
-		if((M == RACEMUT) && ismonkey(holder))
-			sorting[mutation_index.Find(M)] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			mutations |= new M(MUT_NORMAL)
-		else
-			sorting[mutation_index.Find(M)] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
 
-	for(var/B in sorting)
-		result += B
-	return result
+//Used to generate original gene sequences for every mutation
+/proc/generate_gene_sequence(length=2)
+	var/static/list/active_sequences = list("AT","TA","GC","CG")
+	var/sequence
+	for(var/i in 1 to length*DNA_SEQUENCE_LENGTH)
+		sequence += pick(active_sequences)
+	return sequence
+
+//Used to create a chipped gene sequence
+/proc/create_sequence(mutation, active, difficulty=4)
+	var/sequence = get_sequence(mutation)
+	if(active)
+		return sequence
+	var/list/annihilate_sequence = splittext(sequence,"")
+	for(var/i in 1 to difficulty)
+		annihilate_sequence[rand(1,LAZYLEN(annihilate_sequence))] = "X"
+	var/destroyed_sequence
+	for(var/i in 1 to LAZYLEN(annihilate_sequence))
+		destroyed_sequence += annihilate_sequence[i]
+	return destroyed_sequence
+
+/proc/get_sequence(mutation)
+	return GLOB.full_sequences[mutation]
 
 /datum/dna/proc/generate_unique_enzymes()
 	. = ""
@@ -164,7 +177,7 @@
 /datum/dna/proc/force_give(datum/mutation/human/HM)
 	if(holder && HM)
 		if(HM.class == MUT_NORMAL)
-			set_block(1, HM)
+			set_se(1, HM)
 		. = HM.on_acquiring(holder)
 		if(.)
 			qdel(HM)
@@ -172,7 +185,7 @@
 //Use remove_mutation instead
 /datum/dna/proc/force_lose(datum/mutation/human/HM)
 	if(holder && (HM in mutations))
-		set_block(0, HM)
+		set_se(0, HM)
 		return HM.on_losing(holder)
 
 /datum/dna/proc/mutations_say_mods(message)
@@ -195,7 +208,7 @@
 
 
 /datum/dna/proc/is_same_as(datum/dna/D)
-	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
+	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
@@ -235,7 +248,7 @@
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	struc_enzymes = generate_struc_enzymes()
+	generate_struc_enzymes()
 	features = random_features()
 
 
@@ -299,7 +312,7 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, se, newreal_name, newblood_type, datum/species/mrace, newfeatures)
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
 
 	if(newfeatures)
 		dna.features = newfeatures
@@ -320,8 +333,8 @@
 		dna.uni_identity = ui
 		updateappearance(icon_update=0)
 
-	if(se)
-		dna.struc_enzymes = se
+	if(LAZYLEN(mutation_index))
+		dna.mutation_index = mutation_index
 		domutcheck()
 
 	if(mrace || newfeatures || ui)
@@ -375,14 +388,14 @@
 
 	update_mutations_overlay()
 
-/datum/dna/proc/check_block(force_power=0, datum/mutation/human/A)
-	var/datum/mutation/human/HM = get_mutation(A)
-	if(check_block_string(A))
+/datum/dna/proc/check_block(force_power=0, mutation)
+	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
+	if(check_block_string(mutation))
 		if(!HM)
-			if(prob(initial(A.get_chance)) || force_power)
-				. = add_mutation(A, MUT_NORMAL)
-	else if(HM)
-		. = force_lose(HM)
+			if(prob(HM.get_chance) || force_power)
+				. = add_mutation(mutation, MUT_NORMAL)
+		return
+	. = remove_mutation(HM)
 
 //Return the active mutation of a type if there is one
 /datum/dna/proc/get_mutation(A)
@@ -390,23 +403,22 @@
 		if(HM.type == A)
 			return HM
 
-/datum/dna/proc/check_block_string(datum/mutation/human/A)
-	if(lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
+/datum/dna/proc/check_block_string(mutation)
+	if((LAZYLEN(mutation_index) < DNA_STRUC_ENZYMES_BLOCKS) || !(mutation in mutation_index))
 		return 0
-	if(hex2num(getblock(struc_enzymes, mutation_index.Find(A))) >= initial(A.lowest_value))
-		return 1
+	return is_gene_active(mutation)
+
+/datum/dna/proc/is_gene_active(mutation)
+	return (mutation_index[mutation] == get_sequence(mutation))
 
 /datum/dna/proc/set_se(on=TRUE, datum/mutation/human/HM)
-	if(!struc_enzymes || lentext(struc_enzymes) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
+	if(!HM || !(HM.type in mutation_index) || (LAZYLEN(mutation_index) < DNA_STRUC_ENZYMES_BLOCKS))
 		return
-	var/before = copytext(struc_enzymes, 1, ((mutation_index.Find(HM.type) - 1) * DNA_BLOCK_SIZE) + 1)
-	var/injection = num2hex(on ? rand(HM.lowest_value, (256 * 16) - 1) : rand(0, HM.lowest_value - 1), DNA_BLOCK_SIZE)
-	var/after = copytext(struc_enzymes, (mutation_index.Find(HM.type) * DNA_BLOCK_SIZE) + 1, 0)
-	return before + injection + after
-
-/datum/dna/proc/set_block(on=TRUE, datum/mutation/human/HM)
-	if(holder && holder.has_dna() && (HM.type in mutation_index))
-		struc_enzymes = set_se(on, HM)
+	. = TRUE
+	if(on)
+		mutation_index[HM.type] = get_sequence(HM.type)
+	else if(get_sequence(HM.type) == mutation_index[HM.type])
+		mutation_index[HM.type] = create_sequence(HM.type, FALSE, HM.difficulty)
 
 /datum/dna/proc/activate_mutation(mutation)
 	if(!mutation)
@@ -493,7 +505,7 @@
 	if(se)
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 			if(prob(probability))
-				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
+				generate_struc_enzymes()
 		M.domutcheck()
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
