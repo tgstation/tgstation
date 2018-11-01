@@ -1,0 +1,5 @@
+author: "The Dreamweaver"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen has received word of a high-tech research facility that may contain advancements in bluespace-based research. Any crew members who become aware of its whereabouts are to report it to CentCom immediately and are restricted from sharing said info."
+  - refactor: "The turf reservation system now dynamically creates new z levels if the current reserved levels are full."
