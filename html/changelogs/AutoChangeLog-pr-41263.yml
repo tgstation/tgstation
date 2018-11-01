@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Buckled mobs will no longer go prone when killed/stunned/ect."
