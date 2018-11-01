@@ -115,6 +115,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 150
 	var/chem_volume = 30
 	var/list/list_reagents = list("nicotine" = 15)
+	var/nextdragtime = 0
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
@@ -212,7 +213,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-var/counter = 0 // There is no way this is the best way of doing this
 /obj/item/clothing/mask/cigarette/process()
 	var/turf/location = get_turf(src)
 	var/mob/living/M = loc
@@ -227,10 +227,10 @@ var/counter = 0 // There is no way this is the best way of doing this
 		return
 	open_flame()
 	if(reagents && reagents.total_volume)
-		counter++
-		if (counter == 6)
+		nextdragtime++
+		if (nextdragtime == 6)
 			handle_reagents()
-			counter = 0
+			nextdragtime = 0
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit)
