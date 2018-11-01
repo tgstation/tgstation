@@ -97,7 +97,7 @@
 	icon_door = "black"
 
 /obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
-	new /obj/item/holybeacon(src)
+	new /obj/item/choice_beacon/holy(src)
 	new /obj/item/clothing/accessory/pocketprotector/cosmetology(src)
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/sneakers/black(src)
