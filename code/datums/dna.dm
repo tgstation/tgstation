@@ -110,13 +110,14 @@
 	shuffle_inplace(mutations_temp)
 	var/start_at = 1
 	if(species)
-		mutation_index[species.inert_mutation] = create_sequence(species.inert_mutation, FALSE)
+		if((species.inert_mutation == RACEMUT) && ismonkey(holder))
+			mutations |= new species.inert_mutation(MUT_NORMAL)
+			mutation_index[species.inert_mutation] = get_sequence(species.inert_mutation)
+		else
+			mutation_index[species.inert_mutation] = create_sequence(species.inert_mutation, FALSE)
 		start_at = 2
 	for(var/i in start_at to DNA_STRUC_ENZYMES_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
-		if((M.type == RACEMUT) && ismonkey(holder))
-			mutations |= new M.type(MUT_NORMAL)
-			mutation_index[M.type] = get_sequence(M.type)
 		mutation_index[M.type] = create_sequence(M.type, FALSE,M.difficulty)
 	shuffle_inplace(mutation_index)
 
@@ -133,13 +134,12 @@
 	var/sequence = get_sequence(mutation)
 	if(active)
 		return sequence
-	var/list/annihilate_sequence = splittext(sequence,"")
-	for(var/i in 1 to difficulty)
+	var/list/annihilate_sequence = string2list(sequence)
+	while(difficulty)
 		annihilate_sequence[rand(1,LAZYLEN(annihilate_sequence))] = "X"
-	var/destroyed_sequence
-	for(var/i in 1 to LAZYLEN(annihilate_sequence))
-		destroyed_sequence += annihilate_sequence[i]
-	return destroyed_sequence
+		difficulty--
+	return annihilate_sequence.Join()
+
 
 /proc/get_sequence(mutation)
 	return GLOB.full_sequences[mutation]
@@ -212,6 +212,15 @@
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
+
+
+/datum/dna/proc/get_gene_list(mutation)
+	return string2list(mutation_index[mutation])
+
+/datum/dna/proc/update_from_gene_list(mutation, list/sequence)
+	if(!LAZYLEN(sequence) || !mutation)
+		return
+	mutation_index[mutation] = sequence.Join()
 
 /datum/dna/proc/update_instability(alert=FALSE)
 	instability = 0
@@ -377,25 +386,23 @@
 /mob/proc/domutcheck()
 	return
 
-/mob/living/carbon/domutcheck(force_powers=0) //Set force_powers to 1 to bypass the power chance
+/mob/living/carbon/domutcheck()
 	if(!has_dna())
 		return
 
-	for(var/A in dna.mutation_index)
-		var/datum/mutation/human/HM = A
-		if(ismob(dna.check_block(force_powers, HM)))
+	for(var/mutation in dna.mutation_index)
+		if(ismob(dna.check_block(mutation)))
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
 	update_mutations_overlay()
 
-/datum/dna/proc/check_block(force_power=0, mutation)
-	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
+/datum/dna/proc/check_block(mutation)
+	var/datum/mutation/human/HM = get_mutation(mutation)
 	if(check_block_string(mutation))
 		if(!HM)
-			if(prob(HM.get_chance) || force_power)
-				. = add_mutation(mutation, MUT_NORMAL)
+			. = add_mutation(mutation, MUT_NORMAL)
 		return
-	. = remove_mutation(HM)
+	. = force_lose(HM)
 
 //Return the active mutation of a type if there is one
 /datum/dna/proc/get_mutation(A)
@@ -404,7 +411,7 @@
 			return HM
 
 /datum/dna/proc/check_block_string(mutation)
-	if((LAZYLEN(mutation_index) < DNA_STRUC_ENZYMES_BLOCKS) || !(mutation in mutation_index))
+	if((LAZYLEN(mutation_index) > DNA_STRUC_ENZYMES_BLOCKS) || !(mutation in mutation_index))
 		return 0
 	return is_gene_active(mutation)
 
@@ -505,7 +512,7 @@
 	if(se)
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 			if(prob(probability))
-				generate_struc_enzymes()
+				M.dna.generate_struc_enzymes()
 		M.domutcheck()
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
