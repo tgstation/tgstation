@@ -50,9 +50,11 @@
 
 /obj/effect/decal/remains/human/haunted/proc/exostep(datum/source)
 	playsound(src,'sound/effects/pray.ogg',50)
+	visible_message("<span class='haunt'>[src] start [pick("rattling","moaning","whispering","glowing","smoking")].</span>")
 
 /obj/effect/decal/remains/human/haunted/proc/bye()
 	playsound(src,'sound/effects/pray.ogg',80)
+	visible_message("<span class='haunt big'>[src] uncanny aura disappears.</span>")
 	color = null
 
 /obj/effect/decal/remains/human/haunted/acid_act()

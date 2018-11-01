@@ -66,8 +66,8 @@
 	shown_hints["reveal"] = FALSE
 
 /datum/exorcism/proc/RegisterCorpse(obj/O)
-	AddComponent(/datum/component/stationloving, FALSE, FALSE)
 	holder = O
+	holder.AddComponent(/datum/component/stationloving, FALSE, FALSE)
 	if(reveal_method == REVEAL_WORD && !(O.flags_1 & HEAR_1))
 		O.flags_1 |= HEAR_1
 	RegisterSignal(O,COMSIG_MOVABLE_HEAR,.proc/check_reveal_hear)
@@ -115,6 +115,9 @@
 				next_step()
 			else
 				Fizzle()
+		if(EXORCISM_STEP_REAGENT)
+			if(!I.reagents)
+				Fizzle()
 		else
 			Fizzle() //Don't hit it with random stuff.
 
@@ -145,6 +148,7 @@
 
 /datum/exorcism/proc/next_step()
 	SEND_SIGNAL(holder,COMSIG_EXORCISM_STEP)
+
 	current_step++
 	if(current_step > steps.len)
 		Success()
@@ -195,10 +199,13 @@
 					continue
 				return FALSE
 			if(EXORCISM_REQ_CANDLE)
+				var/found = FALSE
 				for(var/obj/item/candle/C in view(3,holder))
 					if(C.lit)
-						continue
-				return FALSE
+						found = TRUE
+						break
+				if(!found)
+					return FALSE
 			if(EXORCISM_REQ_HOLY_GROUND)
 				var/turf/T = get_turf(holder)
 				if(istype(get_area(T),/area/chapel))
