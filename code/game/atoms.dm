@@ -604,9 +604,6 @@
 /atom/proc/analyzer_act(mob/living/user, obj/item/I)
 	return
 
-/atom/proc/isInCraftingBlacklist(datum/crafting_recipe/R)
-	return
-	
 /atom/proc/GenerateTag()
 	return
 

@@ -54,11 +54,11 @@
 /datum/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
 	contents = contents["other"]
 	main_loop:
-		for(var/atom/A in R.reqs)
-			if (A.isInCraftingBlacklist(R))
-				continue
+		for(var/A in R.reqs)
 			var/needed_amount = R.reqs[A]
 			for(var/B in contents)
+				//if(R.blacklist.Find(B))
+				//	continue
 				if(ispath(B, A))
 					if(contents[B] >= R.reqs[A])
 						continue main_loop

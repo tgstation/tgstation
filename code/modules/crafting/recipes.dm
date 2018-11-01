@@ -2,6 +2,7 @@
 /datum/crafting_recipe
 	var/name = "" //in-game display name
 	var/reqs[] = list() //type paths of items consumed associated with how many are needed
+	var/blacklist[] = list() //type paths of items explicitly not allowed as an ingredient
 	var/result //type path of item resulting from this craft
 	var/tools[] = list() //type paths of items needed but not consumed
 	var/time = 30 //time in deciseconds
@@ -38,6 +39,7 @@
 	result = /obj/item/twohanded/spear
 	reqs = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
+	blacklist = list(/obj/item/twohanded/spear/explosive)
 	parts = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
