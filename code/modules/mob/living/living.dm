@@ -1004,9 +1004,19 @@
 		else
 			mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL)
 	else
-		mobility_flags &= ~(MOBILITY_STAND | MOBILITY_UI | MOBILITY_PULL)
-		if(!lying)
-			lying = pick(90, 270)
+		mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL)
+
+		var/should_be_lying = (buckled && (buckled.buckle_lying != -1)) ? buckled.buckle_lying : TRUE //make lying match buckle_lying if it's not -1, else lay down
+
+		if(should_be_lying)
+			mobility_flags &= ~MOBILITY_STAND
+			if(!lying) //force them on the ground
+				lying = pick(90, 270)
+		else
+			mobility_flags |= MOBILITY_STAND //important to add this back, otherwise projectiles will pass through the mob while they're upright.
+			if(lying) //stand them back up
+				lying = 0
+
 	var/canitem = !paralyzed && !stun && conscious && !chokehold && !restrained && has_arms
 	if(canitem)
 		mobility_flags |= (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE)
