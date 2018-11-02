@@ -1,6 +1,0 @@
-author: "nicbn"
-delete-after: True
-changes: 
-  - bugfix: "The close radial icon is now clickable in the middle and more visible."
-  - bugfix: "Dropping or throwing RCD will make radial close."
-  - tweak: "The change AI display verb will change your camera to the core so that you can choose it."
