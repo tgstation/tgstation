@@ -161,7 +161,7 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.trans_to(M, reagents.total_volume)
+				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 
 
 /obj/item/pen/sleepy/Initialize()

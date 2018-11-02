@@ -47,7 +47,7 @@
 						safe_thing.create_reagents(100)
 
 					reagents.reaction(safe_thing, TOUCH, fraction)
-					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this)
+					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this, transfered_by = user)
 
 					target.visible_message("<span class='danger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>", \
 											"<span class='userdanger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>")
@@ -71,7 +71,7 @@
 					R += num2text(A.volume) + "),"
 			log_combat(user, M, "squirted", R)
 
-		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
 		update_icon()
 
@@ -85,7 +85,7 @@
 			to_chat(user, "<span class='warning'>[target] is empty!</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the solution.</span>")
 

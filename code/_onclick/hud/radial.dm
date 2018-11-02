@@ -33,6 +33,14 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	name = "Close Menu"
 	icon_state = "radial_center"
 
+/obj/screen/radial/center/MouseEntered(location, control, params)
+	. = ..()
+	icon_state = "radial_center_focus"
+
+/obj/screen/radial/center/MouseExited(location, control, params)
+	. = ..()
+	icon_state = "radial_center"
+
 /obj/screen/radial/center/Click(location, control, params)
 	if(usr.client == parent.current_user)
 		parent.finished = TRUE
@@ -252,6 +260,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /datum/radial_menu/proc/wait(atom/user, atom/anchor, require_near = FALSE)
 	while (current_user && !finished && !selected_choice)
+		if(require_near && !in_range(anchor, user))
+			return
 		if(custom_check_callback && next_check < world.time)
 			if(!custom_check_callback.Invoke())
 				return
