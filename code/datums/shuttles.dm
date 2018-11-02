@@ -260,8 +260,9 @@
 /datum/map_template/shuttle/emergency/donut
 	suffix = "donut"
 	name = "Donutstation Emergency Shuttle"
-	description = "A modified version of Box Station's emergency shuttle, designed to better suite the unique dock of Donutstation."
-	admin_notes = "Boxstation shuttle layout with airlocks on each side of the shuttle."
+	description = "The perfect spearhead for any crude joke involving the station's shape, this shuttle supports a separate containment cell for prisoners and a compact medical wing."
+	admin_notes = "Has airlocks on both sides of the shuttle and will probably intersect near the front on some stations that build past departures."
+	credit_cost = 2500
 
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
