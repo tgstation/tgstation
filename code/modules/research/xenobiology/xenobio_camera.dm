@@ -210,10 +210,11 @@
 			if (!QDELETED(food))
 				food.LAssailant = C
 				X.monkeys--
+				X.monkeys = FLOOR(x.monkeys, 0.1)		//Prevents rounding errors
 				to_chat(owner, "[X] now has [X.monkeys] monkeys stored.")
 		else
 			to_chat(owner, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
-	else
+	else 
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
@@ -239,6 +240,7 @@
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
 				recycler.use_power(500)
 				X.monkeys += recycler.cube_production
+				X.monkeys = FLOOR(x.monkeys, 0.1)		//Prevents rounding errors	
 				qdel(M)
 				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 	else

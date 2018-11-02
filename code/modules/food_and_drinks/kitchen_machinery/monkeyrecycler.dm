@@ -13,7 +13,7 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
 	var/stored_matter = 0
 	var/cube_production = 0.2
-	var/obj/machinery/computer/camera_advanced/xenobio/connected = list()
+	var/list/connected = list()			//Keeps track of connected xenobio consoles, for deletion in /Destroy() 
 	
 /obj/machinery/monkey_recycler/Initialize(mapload)
 	. = ..()
