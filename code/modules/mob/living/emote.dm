@@ -409,7 +409,7 @@
 		. = FALSE
 
 /datum/emote/living/custom/run_emote(mob/user, params, type_override = null)
-	if(user.client && is_banned_from(user.client.ckey, "emote"))
+	if(is_banned_from(user.ckey, "Emote"))
 		to_chat(user, "You cannot send custom emotes (banned).")
 		return FALSE
 	else if(QDELETED(user))

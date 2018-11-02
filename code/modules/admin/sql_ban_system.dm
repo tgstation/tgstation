@@ -75,7 +75,7 @@
 			qdel(query_build_ban_cache)
 			return
 		while(query_build_ban_cache.NextRow())
-			if(is_admin && !text2num(query_build_ban_cache.item[1]))
+			if(is_admin && !text2num(query_build_ban_cache.item[2]))
 				continue
 			C.ban_cache[query_build_ban_cache.item[1]] = TRUE
 		qdel(query_build_ban_cache)
@@ -87,7 +87,7 @@
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
 	panel.add_script("banpaneljs", 'html/admin/banpanel.js')
-	var/list/output = list("<form method='get' action='?src=[REF(src)]'>")
+	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>
 	<label class='inputlabel checkbox'>Key:
 	<input type='checkbox' id='keycheck' name='keycheck' value='1'[player_key ? " checked": ""]>
@@ -199,14 +199,14 @@
 				banned_from += query_get_banned_roles.item[1]
 			qdel(query_get_banned_roles)
 		var/break_counter = 0
-		output += "<div class='row'><div class='column'><div class='rolegroup command'>Command</div><div class='content'>"
+		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' onClick='toggle_checkboxes(this, \"_dep\")'>Command</label><div class='content'>"
 		//all heads are listed twice so have a javascript call to toggle both their checkboxes when one is pressed
 		//for simplicity this also includes the captain even though it doesn't do anything
 		for(var/job in GLOB.command_positions)
-			if(break_counter == 3)
+			if(break_counter > 0 && (break_counter % 3 == 0))
 				output += "<br>"
 			output += {"<label class='inputlabel checkbox'>[job]
-						<input type='checkbox' id='[job]' name='[job]' onClick='toggle_checkboxes(this)' value='1'>
+						<input type='checkbox' id='[job]_com' name='[job]' class='Command' onClick='toggle_head(this, \"_dep\")' value='1'>
 						<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
 			"}
 			break_counter++
@@ -220,17 +220,17 @@
 							"Silicon" = GLOB.nonhuman_positions) //another cheat for simplicity
 		for(var/department in job_lists)
 			//the first element is the department head so they need the same javascript call as above
-			output += "<div class='column'><div class='rolegroup [ckey(department)]'>[department]</div><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
 			output += {"<label class='inputlabel checkbox'>[job_lists[department][1]]
-						<input type='checkbox' id='[job_lists[department][1]]' name='[job_lists[department][1]]' onClick='toggle_checkboxes(this)' value='1'>
+						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' onClick='toggle_head(this, \"_com\")' value='1'>
 						<div class='inputbox[(job_lists[department][1] in banned_from) ? " banned" : ""]'></div></label>
 			"}
 			break_counter = 1
 			for(var/job in job_lists[department] - job_lists[department][1]) //skip the first element since it's already been done
-				if(break_counter == 3)
+				if(break_counter % 3 == 0)
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
-							<input type='checkbox' id='[job]' name='[job]' value='1'>
+							<input type='checkbox' name='[job]' class='[department]' value='1'>
 							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
 				"}
 				break_counter++
@@ -245,13 +245,13 @@
 									ROLE_REV_HEAD, ROLE_SERVANT_OF_RATVAR, ROLE_SYNDICATE,
 									ROLE_TRAITOR, ROLE_WIZARD)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
 		for(var/department in long_job_lists)
-			output += "<div class='column'><div class='rolegroup long [ckey(department)]'>[department]</div><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
-				if(break_counter == 10)
+				if(break_counter > 0 && (break_counter % 10 == 0))
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
-							<input type='checkbox' id='[job]' name='[job]' value='1'>
+							<input type='checkbox' name='[job]' class='[department]' value='1'>
 							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
 				"}
 				break_counter++
@@ -485,7 +485,7 @@
 		return
 	var/datum/browser/unban_panel = new(usr, "unbanpanel", "Unbanning Panel", 850, 600)
 	unban_panel.add_stylesheet("unbanpanelcss", 'html/admin/unbanpanel.css')
-	var/list/output = list("<div class='searchbar'>")
+	var/list/output = list("<div class='searchbar'>[HrefTokenFormField()]")
 	output += {"<form method='get' action='?src=[REF(src)]'>
 	<input type='hidden' name='src' value='[REF(src)]'>
 	Key:<input type='text' name='searchunbankey' size='18' value='[player_key]'>

@@ -33,6 +33,7 @@
     border: none;
     text-align: center;
     outline: none;
+    display: inline-block;
 }
 
 .long {
@@ -184,13 +185,6 @@
     background: #b4b4b4;
 }
 
-.arrow {
-    position: absolute;
-    top: 7px;
-    right: 2px;
-    width: 0;
-    height: 0;
-    border-width: 8px 5px 0 5px;
-    border-style: solid;
-    border-color: #000 transparent transparent transparent;
+.hidden {
+    display: none;
 }

@@ -51,9 +51,6 @@
 		log_world(msg)
 		message_admins(msg)
 		return
-	if(ckey == "jordie0608") //remove me
-		address = "127.0.0.1" //thanks byond
-		computer_id = "492013303" //thanks byond
 	var/list/ban_details = is_banned_from_with_details(ckey, address, computer_id, "Server")
 	if(ban_details && ban_details.len)
 		if(admin)
@@ -70,7 +67,7 @@
 		var/expires = "This is a permanent ban."
 		if(ban_details["expiration_time"])
 			expires = " The ban is for [DisplayTimeText(text2num(ban_details["duration"]) MINUTES)] and expires on [ban_details["expiration_time"]] (server time)."
-		var/desc = {"Reason: You, or another user of this computer or connection ([ban_details["key"]]) is banned from playing here.
+		var/desc = {"You, or another user of this computer or connection ([ban_details["key"]]) is banned from playing here.
 		The ban reason is: [ban_details["reason"]]
 		This ban (BanID #[ban_details["id"]]) was applied by [ban_details["admin_key"]] on [ban_details["bantime"]] during round ID [ban_details["round_id"]].
 		[expires]"}
