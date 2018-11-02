@@ -22,7 +22,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "match_unlit"
 	var/lit = FALSE
 	var/burnt = FALSE
-	var/smoketime = 5
+	var/smoketime = 5 // 10 seconds
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 	grind_results = list("phosphorus" = 2)
@@ -106,17 +106,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	grind_results = list()
+	var/dragtime = 100
+	var/nextdragtime = 0
 	var/lit = FALSE
 	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
 	var/icon_off = "cigoff"
 	var/type_butt = /obj/item/cigbutt
 	var/lastHolder = null
-	var/smoketime = 150
+	var/smoketime = 180 // 1 is 2 seconds, so a single cigarette will last 6 minutes.
 	var/chem_volume = 30
 	var/list/list_reagents = list("nicotine" = 15)
-	var/dragtime = 100
-	var/nextdragtime = 0
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
@@ -307,7 +307,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/cigbutt/roach
 	throw_speed = 0.5
 	item_state = "spliffoff"
-	smoketime = 180
+	smoketime = 120 // four minutes
 	chem_volume = 50
 	list_reagents = null
 
@@ -352,7 +352,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	type_butt = /obj/item/cigbutt/cigarbutt
 	throw_speed = 0.5
 	item_state = "cigaroff"
-	smoketime = 325
+	smoketime = 300 // 11 minutes
 	chem_volume = 40
 	list_reagents = list("nicotine" = 30)
 
@@ -362,7 +362,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	smoketime = 500
+	smoketime = 600 // 20 minutes
 	chem_volume = 80
 	list_reagents =list("nicotine" = 50)
 
@@ -372,7 +372,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
-	smoketime = 1000
+	smoketime = 900 // 30 minutes
 	chem_volume = 50
 	list_reagents =list("nicotine" = 40)
 

@@ -41,10 +41,10 @@
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	addiction_threshold = 5
+	addiction_threshold = 10
 	taste_description = "smoke"
 	trippy = FALSE
-	overdose_threshold=10
+	overdose_threshold=15
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
@@ -62,8 +62,8 @@
 	. = 1
 
 /datum/reagent/drug/nicotine/overdose_process(mob/living/M)
-	M.adjustToxLoss(0.05*REM, 0)
-	M.adjustOxyLoss(0.2*REM, 0)
+	M.adjustToxLoss(0.1*REM, 0)
+	M.adjustOxyLoss(1.1*REM, 0)
 	..()
 	. = 1
 
