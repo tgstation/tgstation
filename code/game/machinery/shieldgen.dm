@@ -250,7 +250,7 @@
 	var/turf/T = get_turf(src)
 
 	var/obj/structure/cable/power/C = T.get_cable_node()
-	var/datum/powernet/PN
+	var/datum/cablenet/power/PN
 	if(C)
 		PN = C.powernet //find the powernet of the connected cable
 

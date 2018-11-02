@@ -11,7 +11,7 @@
 	icon = 'icons/obj/power.dmi'
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/datum/powernet/powernet = null
+	var/datum/cablenet/power/powernet = null
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
@@ -237,7 +237,7 @@
 
 
 //remove the old powernet and replace it with a new one throughout the network.
-/proc/propagate_network(obj/O, datum/powernet/PN)
+/proc/propagate_network(obj/O, datum/cablenet/power/PN)
 	var/list/worklist = list()
 	var/list/found_machines = list()
 	var/index = 1
@@ -269,7 +269,7 @@
 
 
 //Merge two powernets, the bigger (in cable length term) absorbing the other
-/proc/merge_powernets(datum/powernet/net1, datum/powernet/net2)
+/proc/merge_powernets(datum/cablenet/power/net1, datum/cablenet/power/net2)
 	if(!net1 || !net2) //if one of the powernet doesn't exist, return
 		return
 
@@ -320,10 +320,10 @@
 		var/obj/structure/cable/power/Cable = power_source
 		power_source = Cable.powernet
 
-	var/datum/powernet/PN
+	var/datum/cablenet/power/PN
 	var/obj/item/stock_parts/cell/cell
 
-	if(istype(power_source, /datum/powernet))
+	if(istype(power_source, /datum/cablenet/power))
 		PN = power_source
 	else if(istype(power_source, /obj/item/stock_parts/cell))
 		cell = power_source
@@ -359,7 +359,7 @@
 
 	if (source_area)
 		source_area.use_power(drained_energy/GLOB.CELLRATE)
-	else if (istype(power_source, /datum/powernet))
+	else if (istype(power_source, /datum/cablenet/power))
 		var/drained_power = drained_energy/GLOB.CELLRATE //convert from "joules" to "watts"
 		PN.delayedload += (min(drained_power, max(PN.newavail - PN.delayedload, 0)))
 	else if (istype(power_source, /obj/item/stock_parts/cell))

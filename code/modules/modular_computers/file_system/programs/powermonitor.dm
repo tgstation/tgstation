@@ -60,7 +60,7 @@
 	if(world.time >= next_record)
 		next_record = world.time + record_interval
 
-		var/datum/powernet/connected_powernet = get_powernet()
+		var/datum/cablenet/power/connected_powernet = get_powernet()
 
 		var/list/supply = history["supply"]
 		if(connected_powernet)
@@ -75,7 +75,7 @@
 			demand.Cut(1, 2)
 
 /datum/computer_file/program/power_monitor/ui_data()
-	var/datum/powernet/connected_powernet = get_powernet()
+	var/datum/cablenet/power/connected_powernet = get_powernet()
 	var/list/data = get_header_data()
 	data["stored"] = record_size
 	data["interval"] = record_interval / 10

@@ -12,13 +12,13 @@ SUBSYSTEM_DEF(machines)
 	return ..()
 
 /datum/controller/subsystem/machines/proc/makepowernets()
-	for(var/datum/powernet/PN in powernets)
+	for(var/datum/cablenet/power/PN in powernets)
 		qdel(PN)
 	powernets.Cut()
 
 	for(var/obj/structure/cable/power/PC in GLOB.power_cable_list)
 		if(!PC.powernet)
-			var/datum/powernet/NewPN = new()
+			var/datum/cablenet/power/NewPN = new()
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
@@ -28,7 +28,7 @@ SUBSYSTEM_DEF(machines)
 
 /datum/controller/subsystem/machines/fire(resumed = 0)
 	if (!resumed)
-		for(var/datum/powernet/Powernet in powernets)
+		for(var/datum/cablenet/power/Powernet in powernets)
 			Powernet.reset() //reset the power state.
 		src.currentrun = processing.Copy()
 
@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(machines)
 	for(var/A in cables)
 		var/obj/structure/cable/power/PC = A
 		if(!PC.powernet)
-			var/datum/powernet/NewPN = new()
+			var/datum/cablenet/power/NewPN = new()
 			NewPN.add_cable(PC)
 			propagate_network(PC,PC.powernet)
 
