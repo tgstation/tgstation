@@ -148,7 +148,7 @@
 	if(length(holdingitems))
 		options["grind"] = radial_grind
 		options["juice"] = radial_juice
-	else if(beaker?.reagents?.total_volume)
+	else if(beaker?.reagents.total_volume)
 		options["mix"] = radial_mix
 
 	var/choice
@@ -185,7 +185,7 @@
 		var/obj/item/O = i
 		to_chat(user, "\A [O.name]")
 	if(beaker)
-		if(!length(beaker.reagents?.reagent_list))
+		if(!length(beaker.reagents.reagent_list))
 			to_chat(user, "An empty [beaker]")
 		else if(user.can_see_reagents() || issilicon(user))
 			to_chat(user, "\A [beaker] containing:")
