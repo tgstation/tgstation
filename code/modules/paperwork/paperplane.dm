@@ -90,7 +90,7 @@
 		return
 	var/mob/living/carbon/human/H = hit_atom
 	if(prob(2))
-		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
+		if(H.is_eyes_covered())
 			return
 		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
 		H.adjust_blurriness(6)
