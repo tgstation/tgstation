@@ -29,7 +29,6 @@
 
 	scientist.mind.add_antag_datum(/datum/antagonist/abductor/scientist, T)
 	agent.mind.add_antag_datum(/datum/antagonist/abductor/agent, T)
-	announce_to_ghosts(agent)
 
 	spawned_mobs += list(agent, scientist)
 

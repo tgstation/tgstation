@@ -62,7 +62,6 @@
 
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 		new_xeno.key = C.key
-		announce_to_ghosts(new_xeno)
 
 		spawncount--
 		successSpawn = TRUE
