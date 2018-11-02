@@ -14,4 +14,14 @@
 	font-family: Fixed, monospace;
 	float: left;
 }
-
+.discovered
+{
+	border: 1px solid blue;
+}
+div>table {
+	float: left;
+}
+td
+{
+	text-align: center;
+}

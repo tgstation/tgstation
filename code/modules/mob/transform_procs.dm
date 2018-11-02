@@ -50,7 +50,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
-		O.dna.set_se(1, /datum/mutation/human/race)//we don't want to keep the race block inactive
+		O.dna.set_se(1, get_initialized_mutation(RACEMUT))
 
 	if(suiciding)
 		O.set_suicide(suiciding)
@@ -205,8 +205,8 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
-		O.dna.set_se(0, /datum/mutation/human/race)//i spent 3 hours debugging trying to figure out why I cant just use the type from the monkey mutation, with no fucking
-		O.domutcheck()												          													 	// succes even though they are the same exact fucking thing
+		O.dna.set_se(0, get_initialized_mutation(RACEMUT))
+		O.domutcheck()
 
 	if(suiciding)
 		O.set_suicide(suiciding)

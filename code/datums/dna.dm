@@ -402,7 +402,7 @@
 		if(!HM)
 			. = add_mutation(mutation, MUT_NORMAL)
 		return
-	. = force_lose(HM)
+	return force_lose(HM)
 
 //Return the active mutation of a type if there is one
 /datum/dna/proc/get_mutation(A)
