@@ -3,6 +3,7 @@
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
 	icon = 'icons/obj/power_cond/cables.dmi'
 	icon_state = "0-1"
+	cable_item_type = /obj/item/stack/cable_coil/power
 
 	var/datum/powernet/powernet
 	var/obj/item/stack/cable_coil/power/stored

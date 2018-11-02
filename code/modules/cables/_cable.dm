@@ -42,91 +42,42 @@ By design, d1 is the smallest direction and d2 is the highest
 	anchored = TRUE
 	layer = WIRE_LAYER
 	level = ATOM_LEVEL_UNDERFLOOR
-	var/d1 = NONE
-	var/d2 = NORTH
-
-
-
-/obj/structure/cable/power
-	name = "power cable"
-	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
-	icon = 'icons/obj/power_cond/cables.dmi'
-	icon_state = "0-1"
-	level = 1 //is underfloor
-	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
-	anchored = TRUE
-	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
-	var/d1 = 0   // cable direction 1 (see above)
-	var/d2 = 1   // cable direction 2 (see above)
-	var/datum/powernet/powernet
-	var/obj/item/stack/cable_coil/power/stored
-
-	var/cable_color = "red"
 	color = "#ff0000"
+	var/d1			//Direction define, if null it will try to initialize from icon_state. Knot cables should have D1 as none.
+	var/d2			//Same as above.
+	var/cable_item_type = /obj/item/stack/cable_coil
+	var/cable_color = "red"
 
-/obj/structure/cable/power/yellow
-	cable_color = "yellow"
-	color = "#ffff00"
-
-/obj/structure/cable/power/green
-	cable_color = "green"
-	color = "#00aa00"
-
-/obj/structure/cable/power/blue
-	cable_color = "blue"
-	color = "#1919c8"
-
-/obj/structure/cable/power/pink
-	cable_color = "pink"
-	color = "#ff3cc8"
-
-/obj/structure/cable/power/orange
-	cable_color = "orange"
-	color = "#ff8000"
-
-/obj/structure/cable/power/cyan
-	cable_color = "cyan"
-	color = "#00ffff"
-
-/obj/structure/cable/power/white
-	cable_color = "white"
-	color = "#ffffff"
+/obj/structure/cable/proc/set_color(newcolor)
+	color = GLOB.cable_colors[newcolor] || color
 
 // the power cable object
-/obj/structure/cable/power/Initialize(mapload, param_color)
+/obj/structure/cable/Initialize(mapload, param_color, dir1, dir2)
 	. = ..()
+	d1 = dir1
+	d2 = dir2
 
-	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
-	var/dash = findtext(icon_state, "-")
-	d1 = text2num( copytext( icon_state, 1, dash ) )
-	d2 = text2num( copytext( icon_state, dash+1 ) )
-
+	var/icon_state_resolved = FALSE
+	//Fill in d1/d2 if icon state has it but it doesn't.
+	if(isnull(d1) || isnull(d2))
+		var/dash = findtext(icon_state, "-")
+		d1 = text2num(copytext(icon_state, 1, dash))
+		d2 = text2num(copytext(icon_state, dash+1))
 	var/turf/T = get_turf(src)			// hide if turf is not intact
-	if(level==1)
+	if(level == ATOM_LEVEL_UNDERFLOOR)
 		hide(T.intact)
 	GLOB.cable_list += src //add it to the global cable list
-
-	if(d1)
-		stored = new/obj/item/stack/cable_coil/power(null,2,cable_color)
-	else
-		stored = new/obj/item/stack/cable_coil/power(null,1,cable_color)
-
-	var/list/cable_colors = GLOB.cable_colors
-	cable_color = param_color || cable_color || pick(cable_colors)
-	if(cable_colors[cable_color])
-		cable_color = cable_colors[cable_color]
+	set_color(param_color || cable_color || pick(GLOB.cable_colors))
 	update_icon()
 
 /obj/structure/cable/power/Destroy()					// called when a cable is deleted
-	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
 	GLOB.cable_list -= src							//remove it from global cable list
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/power/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = loc
-		stored.forceMove(T)
+		var/obj/item/stack/cable_coil = new(cable_item_type, d1? 2 : 1, cable_color)
 	qdel(src)
 
 ///////////////////////////////////
