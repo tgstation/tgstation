@@ -485,8 +485,8 @@
 		return
 	var/datum/browser/unban_panel = new(usr, "unbanpanel", "Unbanning Panel", 850, 600)
 	unban_panel.add_stylesheet("unbanpanelcss", 'html/admin/unbanpanel.css')
-	var/list/output = list("<div class='searchbar'>[HrefTokenFormField()]")
-	output += {"<form method='get' action='?src=[REF(src)]'>
+	var/list/output = list("<div class='searchbar'>")
+	output += {"<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]
 	<input type='hidden' name='src' value='[REF(src)]'>
 	Key:<input type='text' name='searchunbankey' size='18' value='[player_key]'>
 	Admin Key:<input type='text' name='searchunbanadminkey' size='18' value='[admin_key]'>
