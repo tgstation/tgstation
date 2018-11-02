@@ -25,5 +25,4 @@
 		else
 			fish = new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
 
-		if (!atom_of_interest)
-			atom_of_interest = fish //Assign the atom of interest to the first carp to spawn
+		announce_to_ghosts(fish) //Gonna be a lot of announcements kek
