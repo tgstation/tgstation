@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "You can no longer try to tactically reload rocket launchers, making it become invisible and breaking it's rocket."
+  - bugfix: "You can no longer unload a rocket with TK"
+  - tweak: "Suiciding while holding a rocket launcher will now cause you to blow yourself up with it."
