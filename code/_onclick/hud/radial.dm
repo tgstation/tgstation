@@ -267,8 +267,6 @@ GLOBAL_LIST_EMPTY(radial_menus)
 				return
 			else
 				next_check = world.time + check_delay
-		if(require_near && user && anchor && !in_range(anchor, user))
-			return
 		stoplag(1)
 
 /datum/radial_menu/Destroy()
