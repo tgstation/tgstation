@@ -219,7 +219,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2";
 	pixel_y = 1
 	},
@@ -433,7 +433,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -483,7 +483,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -496,10 +496,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -515,7 +515,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -531,7 +531,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -548,7 +548,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/airalarm/all_access{
@@ -572,13 +572,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -601,7 +601,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -618,7 +618,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -641,7 +641,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -659,7 +659,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -678,7 +678,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -697,7 +697,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -846,7 +846,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -885,7 +885,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -937,7 +937,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1048,7 +1048,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1089,7 +1089,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1126,7 +1126,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1272,7 +1272,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1293,7 +1293,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1342,7 +1342,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1409,7 +1409,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1469,7 +1469,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1489,7 +1489,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1512,7 +1512,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
@@ -1534,10 +1534,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1590,7 +1590,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -1613,7 +1613,7 @@
 /obj/machinery/power/smes/engineering{
 	charge = 1e+006
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
@@ -1623,13 +1623,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1688,7 +1688,7 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1741,7 +1741,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1761,7 +1761,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2";
 	pixel_y = 1
 	},
@@ -1773,7 +1773,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1825,7 +1825,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -1875,7 +1875,7 @@
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/engine)
@@ -1884,7 +1884,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -2079,7 +2079,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -2106,7 +2106,7 @@
 /obj/machinery/light/small/built{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -2158,7 +2158,7 @@
 	name = "dust"
 	},
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -2303,7 +2303,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2317,7 +2317,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2333,7 +2333,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2346,10 +2346,10 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -2360,7 +2360,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -2375,7 +2375,7 @@
 /obj/machinery/door/airlock/medical{
 	name = "Medbay Storage"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2402,7 +2402,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2421,7 +2421,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -2436,13 +2436,13 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -2458,7 +2458,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2477,7 +2477,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2491,7 +2491,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2508,7 +2508,7 @@
 	name = "dust"
 	},
 /obj/machinery/light/small,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/spider/stickyweb,
@@ -2522,7 +2522,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2546,7 +2546,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2575,7 +2575,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2755,7 +2755,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter{
@@ -2797,7 +2797,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Frigate Cargo APC";
@@ -2916,7 +2916,7 @@
 	name = "dust"
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/apc{
 	name = "Frigate Medbay APC";
 	pixel_y = -24;
@@ -3116,7 +3116,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,

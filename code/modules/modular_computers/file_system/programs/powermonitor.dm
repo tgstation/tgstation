@@ -16,7 +16,7 @@
 	ui_y = 1000
 
 	var/has_alert = 0
-	var/obj/structure/cable/attached_wire
+	var/obj/structure/cable/power/attached_wire
 	var/obj/machinery/power/apc/local_apc
 	var/list/history = list()
 	var/record_size = 60
@@ -39,7 +39,7 @@
 
 /datum/computer_file/program/power_monitor/proc/search() //keep in sync with /obj/machinery/computer/monitor's version
 	var/turf/T = get_turf(computer)
-	attached_wire = locate(/obj/structure/cable) in T
+	attached_wire = locate(/obj/structure/cable/power) in T
 	if(attached_wire)
 		return
 	var/area/A = get_area(computer) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead

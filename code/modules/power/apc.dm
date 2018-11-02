@@ -589,7 +589,7 @@
 				return
 			if (C.get_amount() >= 10 && !terminal && opened && has_electronics)
 				var/turf/T = get_turf(src)
-				var/obj/structure/cable/N = T.get_cable_node()
+				var/obj/structure/cable/power/N = T.get_cable_node()
 				if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE))
 					do_sparks(5, TRUE, src)
 					return

@@ -230,7 +230,7 @@
 	var/maximum_stored_power = 500
 	var/locked = TRUE
 	var/shield_range = 8
-	var/obj/structure/cable/attached // the attached cable
+	var/obj/structure/cable/power/attached // the attached cable
 
 /obj/machinery/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
 	name = "xenobiology shield wall generator"
@@ -249,7 +249,7 @@
 		return
 	var/turf/T = get_turf(src)
 
-	var/obj/structure/cable/C = T.get_cable_node()
+	var/obj/structure/cable/power/C = T.get_cable_node()
 	var/datum/powernet/PN
 	if(C)
 		PN = C.powernet //find the powernet of the connected cable

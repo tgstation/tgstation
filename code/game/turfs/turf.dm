@@ -107,7 +107,7 @@
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
-		for(var/obj/structure/cable/LC in src)
+		for(var/obj/structure/cable/power/LC in src)
 			if(!LC.d1 || !LC.d2)
 				LC.handlecable(C, user)
 				return
@@ -119,7 +119,7 @@
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
-		for(var/obj/structure/cable/LC in src)
+		for(var/obj/structure/cable/power/LC in src)
 			if(!LC.d1 || !LC.d2)
 				LC.attackby(C,user)
 				return

@@ -1944,7 +1944,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "ed" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/command{
@@ -2555,7 +2555,7 @@
 	req_access = null;
 	start_charge = 100
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -2567,7 +2567,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fh" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/extinguisher_cabinet{
@@ -2582,7 +2582,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fi" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2595,7 +2595,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fj" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -2608,7 +2608,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "fk" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -2620,7 +2620,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fl" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/tile/green,
@@ -2736,7 +2736,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/dark{
@@ -2744,7 +2744,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fx" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -2759,7 +2759,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fy" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -2770,7 +2770,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fz" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -2911,7 +2911,7 @@
 /turf/closed/wall,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "fP" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -3024,7 +3024,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gb" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -3087,7 +3087,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gj" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -3133,7 +3133,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gp" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -3145,7 +3145,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gq" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -3261,7 +3261,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gH" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -3329,7 +3329,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "gQ" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -3959,7 +3959,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "hW" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -3997,7 +3997,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "hZ" = (
 /obj/machinery/gateway,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -4201,7 +4201,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iu" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/window{
@@ -4407,7 +4407,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "iM" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -4439,7 +4439,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "iP" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
@@ -4645,7 +4645,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ji" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -4855,7 +4855,7 @@
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jD" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -5008,7 +5008,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jV" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
@@ -5028,7 +5028,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jW" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small{
@@ -5047,10 +5047,10 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jX" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction/flip{
@@ -5069,7 +5069,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jY" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -5084,7 +5084,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jZ" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -5098,7 +5098,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "ka" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -5113,7 +5113,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "kb" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -5128,7 +5128,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "kc" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -5228,7 +5228,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "kl" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5327,7 +5327,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ku" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -5841,7 +5841,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lm" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/junction,
@@ -5878,7 +5878,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lp" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel{
@@ -5886,7 +5886,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lq" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -5897,10 +5897,10 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lr" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/machinery/airalarm/all_access{
@@ -5919,7 +5919,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ls" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5930,7 +5930,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lt" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -5964,7 +5964,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lv" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -5973,7 +5973,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lw" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -5985,7 +5985,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "lx" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6000,7 +6000,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "ly" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6014,7 +6014,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lz" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -6026,7 +6026,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lA" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm{
@@ -6049,7 +6049,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lB" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6066,7 +6066,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lC" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6082,7 +6082,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "lD" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6100,7 +6100,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "lE" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -6115,10 +6115,10 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lF" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -6136,7 +6136,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lG" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
@@ -6156,7 +6156,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lH" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
@@ -6349,7 +6349,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "lW" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -6457,7 +6457,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mg" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -6657,7 +6657,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "my" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -6716,7 +6716,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mE" = (
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
@@ -6783,7 +6783,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/research)
 "mK" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -6797,10 +6797,10 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "mL" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel{
@@ -7060,7 +7060,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/engineering)
 "nj" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -7159,7 +7159,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ns" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7173,7 +7173,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nt" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7188,7 +7188,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nu" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7202,7 +7202,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nv" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7217,7 +7217,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "nw" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7240,7 +7240,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nx" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7351,7 +7351,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nI" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -7363,7 +7363,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "nJ" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -7374,13 +7374,13 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "nK" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7391,7 +7391,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "nL" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -7406,7 +7406,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/research)
 "nN" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -7575,7 +7575,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oa" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7590,7 +7590,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ob" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7611,7 +7611,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oc" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7632,7 +7632,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "od" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7652,7 +7652,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oe" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7672,7 +7672,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "of" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7687,7 +7687,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "og" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/light/small{
@@ -7708,7 +7708,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oh" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/airalarm/all_access{
@@ -7732,7 +7732,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oi" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7747,7 +7747,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oj" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7765,7 +7765,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ok" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7788,7 +7788,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ol" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7805,7 +7805,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "om" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7821,7 +7821,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "on" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7835,7 +7835,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oo" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction/yjunction{
@@ -7854,7 +7854,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "op" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7871,7 +7871,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oq" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -7885,10 +7885,10 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "or" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/junction/yjunction{
@@ -7901,7 +7901,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "os" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7912,7 +7912,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ot" = (
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/smes{
 	charge = 1.5e+006;
 	input_level = 10000;
@@ -7925,7 +7925,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ou" = (
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/smes{
 	charge = 1.5e+006;
 	input_level = 30000;
@@ -7938,7 +7938,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ov" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -7949,7 +7949,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ow" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -8216,7 +8216,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oT" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/airalarm/all_access{
@@ -8236,7 +8236,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "oU" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -8258,7 +8258,7 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating{
@@ -8274,10 +8274,10 @@
 	name = "S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
 	},
 /obj/item/wrench,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating{
@@ -8292,7 +8292,7 @@
 	desc = "A portable generator for emergency backup power.";
 	name = "P.A.C.M.A.N.-type portable generator"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating{
@@ -8300,7 +8300,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "oY" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -8324,7 +8324,7 @@
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pb" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -8336,7 +8336,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "pc" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -8433,7 +8433,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pk" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -8581,7 +8581,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "pz" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -8596,7 +8596,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pA" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -8610,10 +8610,10 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pB" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -8627,7 +8627,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pC" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -8638,7 +8638,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "pD" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -8668,7 +8668,7 @@
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pG" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -8868,7 +8868,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qc" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -8903,7 +8903,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qf" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -9130,7 +9130,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qE" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/monitor/secret{
@@ -9150,10 +9150,10 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qF" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -9168,7 +9168,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qG" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -9179,7 +9179,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qH" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -9296,7 +9296,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "qO" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -9394,7 +9394,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "qX" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -9470,7 +9470,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rf" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -9612,7 +9612,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "rp" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/highcap/fifteen_k{
@@ -9730,7 +9730,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "ry" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -9851,7 +9851,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "rK" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -9891,10 +9891,10 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rO" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -9915,7 +9915,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/firedoor,
@@ -9924,7 +9924,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rQ" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -9941,7 +9941,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rR" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -9958,7 +9958,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rS" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -9976,7 +9976,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rT" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/airalarm/all_access{
@@ -9996,7 +9996,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rU" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10014,7 +10014,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rV" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10035,7 +10035,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rW" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10057,7 +10057,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "rX" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10075,7 +10075,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rY" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10089,7 +10089,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rZ" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10101,7 +10101,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sa" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10226,7 +10226,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "sj" = (
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 2;
 	locked = 0;
@@ -10437,7 +10437,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "sD" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -10556,7 +10556,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sN" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -10669,7 +10669,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "sV" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
@@ -10775,7 +10775,7 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/undergroundoutpost45/engineering)
 "tg" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10787,7 +10787,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "th" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10801,7 +10801,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ti" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10816,7 +10816,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tj" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -10880,7 +10880,7 @@
 /turf/closed/wall/r_wall/rust,
 /area/awaymission/undergroundoutpost45/research)
 "tr" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -10909,7 +10909,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "tu" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -10954,7 +10954,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tx" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -11042,7 +11042,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "tD" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
@@ -11144,7 +11144,7 @@
 /turf/closed/wall/rust,
 /area/awaymission/undergroundoutpost45/research)
 "tO" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -11159,7 +11159,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tP" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -11173,7 +11173,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tQ" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/junction/flip{
@@ -11189,7 +11189,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tR" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -11202,7 +11202,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tS" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -11217,7 +11217,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tT" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -11233,7 +11233,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tU" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -11248,7 +11248,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "tV" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -11296,7 +11296,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "ua" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11330,7 +11330,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "ue" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -11381,7 +11381,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uj" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/binary/pump/on{
@@ -11598,7 +11598,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uC" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -11633,7 +11633,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uG" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -11792,7 +11792,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "uW" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -11861,7 +11861,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "vb" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -12021,7 +12021,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "vr" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -12050,7 +12050,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vt" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -12062,7 +12062,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vu" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/structure/disposalpipe/segment{
@@ -12076,10 +12076,10 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vv" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/structure/disposalpipe/segment{
@@ -12093,7 +12093,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vw" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -12104,7 +12104,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vx" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -12116,7 +12116,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vy" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -12128,7 +12128,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vz" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/engineering{
@@ -12140,7 +12140,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vA" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
@@ -12148,7 +12148,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vB" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel{
@@ -12232,7 +12232,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "vO" = (
 /obj/machinery/door/firedoor,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -12290,7 +12290,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "vT" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
@@ -12474,7 +12474,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wi" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -12498,7 +12498,7 @@
 "wk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating{
@@ -12507,10 +12507,10 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "wl" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating{
@@ -12518,11 +12518,11 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wm" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/machinery/door/airlock/command/glass{
@@ -12608,7 +12608,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wv" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -12688,7 +12688,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wA" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment{
@@ -12729,7 +12729,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wD" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -12738,7 +12738,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wE" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12747,11 +12747,11 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wF" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -12808,7 +12808,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wJ" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -12881,7 +12881,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "wP" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -12893,7 +12893,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "wQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -12962,7 +12962,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "wU" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small{
@@ -13030,7 +13030,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/tile/brown,
@@ -13083,7 +13083,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "xd" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -13107,7 +13107,7 @@
 /obj/machinery/newscaster{
 	pixel_y = -28
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -13160,7 +13160,7 @@
 	req_access_txt = "201"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
@@ -13225,7 +13225,7 @@
 	dir = 1;
 	name = "primary power monitoring console"
 	},
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13286,7 +13286,7 @@
 	dir = 8;
 	pixel_x = 23
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -13326,7 +13326,7 @@
 /area/awaymission/undergroundoutpost45/mining)
 "xt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
@@ -13388,7 +13388,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel{
@@ -13468,7 +13468,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel{
@@ -13483,7 +13483,7 @@
 	name = "Mining EVA";
 	req_access_txt = "201"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
@@ -13495,7 +13495,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
@@ -13506,7 +13506,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel{
@@ -13554,7 +13554,7 @@
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plasteel{
@@ -13562,10 +13562,10 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xR" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /turf/open/floor/mech_bay_recharge_floor,
@@ -13574,7 +13574,7 @@
 /obj/machinery/mech_bay_recharge_port{
 	dir = 8
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,

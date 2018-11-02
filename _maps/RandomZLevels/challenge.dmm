@@ -1005,7 +1005,7 @@
 /area/awaymission/challenge/end)
 "cZ" = (
 /obj/machinery/gateway,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -1041,7 +1041,7 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dc" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/dark,
@@ -1110,10 +1110,10 @@
 /turf/open/floor/plating,
 /area/awaymission/challenge/end)
 "dm" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-4"
 	},
 /mob/living/simple_animal/hostile/syndicate{
@@ -1122,7 +1122,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/challenge/end)
 "dn" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/dark,
@@ -1136,7 +1136,7 @@
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "dq" = (
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/smes/magical,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
@@ -1144,7 +1144,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
+/obj/structure/cable/power,
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
 "ds" = (

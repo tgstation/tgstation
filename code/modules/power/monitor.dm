@@ -11,7 +11,7 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/computer/powermonitor
 
-	var/obj/structure/cable/attached_wire
+	var/obj/structure/cable/power/attached_wire
 	var/obj/machinery/power/apc/local_apc
 
 	var/list/history = list()
@@ -46,7 +46,7 @@
 
 /obj/machinery/computer/monitor/proc/search() //keep in sync with /datum/computer_file/program/power_monitor's version
 	var/turf/T = get_turf(src)
-	attached_wire = locate(/obj/structure/cable) in T
+	attached_wire = locate(/obj/structure/cable/power) in T
 	if(attached_wire)
 		return
 	var/area/A = get_area(src) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead

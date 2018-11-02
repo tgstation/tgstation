@@ -36,7 +36,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable/power/yellow{
 	icon_state = "0-4"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -86,7 +86,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
 	},
@@ -99,7 +99,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable/power/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/syndicate{
@@ -474,7 +474,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2"
 	},
 /obj/item/stack/sheet/metal/twenty,
@@ -539,7 +539,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/caravan/syndicate3)
 "US" = (
-/obj/structure/cable/yellow{
+/obj/structure/cable/power/yellow{
 	icon_state = "1-8"
 	},
 /obj/effect/decal/cleanable/dirt,

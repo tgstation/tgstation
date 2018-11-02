@@ -46,7 +46,7 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 
 /************************************Structure rotate procs************************************/
 
-/obj/structure/cable/shuttleRotate(rotation, params)
+/obj/structure/cable/power/shuttleRotate(rotation, params)
 	params &= ~ROTATE_DIR
 	. = ..()
 	if(d1)

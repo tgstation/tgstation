@@ -107,14 +107,14 @@
 	dir = 1;
 	name = "cabin APC"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aw" = (
 /obj/machinery/power/smes/magical,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -128,7 +128,7 @@
 	icon_state = "turbine";
 	name = "geothermal generator"
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -175,13 +175,13 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aF" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,

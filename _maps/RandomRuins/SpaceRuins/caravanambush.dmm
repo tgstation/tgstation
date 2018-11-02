@@ -92,7 +92,7 @@
 /area/template_noop)
 "av" = (
 /obj/effect/turf_decal/bot_white/right,
-/obj/structure/cable/yellow{
+/obj/structure/cable/power/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
@@ -238,7 +238,7 @@
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable/yellow{
+/obj/structure/cable/power/yellow{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
@@ -479,7 +479,7 @@
 /obj/machinery/power/smes{
 	charge = 0
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable/power/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -605,7 +605,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -742,7 +742,7 @@
 	anchored = 1
 	},
 /obj/item/wrench,
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -833,7 +833,7 @@
 /obj/machinery/power/smes{
 	charge = 0
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable/power/yellow,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -947,7 +947,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1036,7 +1036,7 @@
 	anchored = 1
 	},
 /obj/item/wrench,
-/obj/structure/cable,
+/obj/structure/cable/power,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},

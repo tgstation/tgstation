@@ -39,5 +39,5 @@ SUBSYSTEM_DEF(squeak)
 	for(var/turf/open/floor/plating/T in all_turfs)
 		if(is_blocked_turf(T))
 			continue
-		if(locate(/obj/structure/cable) in T)
+		if(locate(/obj/structure/cable/power) in T)
 			exposed_wires += T

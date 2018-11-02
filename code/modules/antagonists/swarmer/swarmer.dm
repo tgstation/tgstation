@@ -314,7 +314,7 @@
 	to_chat(S, "<span class='warning'>Destroying this object would cause a chain reaction. Aborting.</span>")
 	return FALSE
 
-/obj/structure/cable/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+/obj/structure/cable/power/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 	return FALSE
 
@@ -398,7 +398,7 @@
 	. = ..()
 	var/turf/here = get_turf(src)
 	for(var/A in here.contents)
-		var/obj/structure/cable/C = A
+		var/obj/structure/cable/power/C = A
 		if(istype(C))
 			to_chat(S, "<span class='warning'>Disrupting the power grid would bring no benefit to us. Aborting.</span>")
 			return FALSE

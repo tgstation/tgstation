@@ -4,7 +4,7 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
 	item_state = "rcl-0"
-	var/obj/structure/cable/last
+	var/obj/structure/cable/power/last
 	var/obj/item/stack/cable_coil/loaded
 	opacity = FALSE
 	force = 5 //Plastic is soft
@@ -132,7 +132,7 @@
 	if(!active)
 		last = null
 	else if(!last)
-		for(var/obj/structure/cable/C in get_turf(user))
+		for(var/obj/structure/cable/power/C in get_turf(user))
 			if(C.d1 == FALSE || C.d2 == FALSE)
 				last = C
 				break

@@ -32,10 +32,10 @@
 	for (var/datum/powernet/PN in GLOB.powernets)
 		if (!PN.nodes || !PN.nodes.len)
 			if(PN.cables && (PN.cables.len > 1))
-				var/obj/structure/cable/C = PN.cables[1]
+				var/obj/structure/cable/power/C = PN.cables[1]
 				to_chat(usr, "Powernet with no nodes! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]")
 
 		if (!PN.cables || (PN.cables.len < 10))
 			if(PN.cables && (PN.cables.len > 1))
-				var/obj/structure/cable/C = PN.cables[1]
+				var/obj/structure/cable/power/C = PN.cables[1]
 				to_chat(usr, "Powernet with fewer than 10 cables! (number [PN.number]) - example cable at [ADMIN_VERBOSEJMP(C)]")

@@ -65,7 +65,7 @@
 		if(!T || !istype(T))
 			return 0
 
-		var/obj/structure/cable/C = T.get_cable_node()
+		var/obj/structure/cable/power/C = T.get_cable_node()
 		if(!C || !C.powernet)
 			return 0
 

@@ -333,7 +333,7 @@
 	icon_state = "mecha_wire"
 	var/datum/callback/event
 	var/turf/old_turf
-	var/obj/structure/cable/last_piece
+	var/obj/structure/cable/power/last_piece
 	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
 
@@ -434,12 +434,12 @@
 	if(equip_ready || !istype(new_turf) || !dismantleFloor(new_turf))
 		return reset()
 	var/fdirn = turn(chassis.dir,180)
-	for(var/obj/structure/cable/LC in new_turf)		// check to make sure there's not a cable there already
+	for(var/obj/structure/cable/power/LC in new_turf)		// check to make sure there's not a cable there already
 		if(LC.d1 == fdirn || LC.d2 == fdirn)
 			return reset()
 	if(!use_cable(1))
 		return reset()
-	var/obj/structure/cable/NC = new(new_turf, "red")
+	var/obj/structure/cable/power/NC = new(new_turf, "red")
 	NC.d1 = 0
 	NC.d2 = fdirn
 	NC.update_icon()

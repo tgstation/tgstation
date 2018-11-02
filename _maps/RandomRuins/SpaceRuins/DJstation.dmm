@@ -54,7 +54,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "an" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes/magical{
@@ -64,13 +64,13 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ao" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ap" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
@@ -80,7 +80,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "aq" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /obj/item/storage/box/lights/mixed,
@@ -90,7 +90,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/djstation)
 "ar" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,

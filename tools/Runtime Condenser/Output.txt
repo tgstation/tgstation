@@ -431,7 +431,7 @@ proc name: get fuel (/obj/item/weapon/weldingtool/proc/get_fuel)
 
 /obj/machinery/computer/rdconsole/core - 1 time(s).
 
-/obj/structure/cable/yellow - 1 time(s).
+/obj/structure/cable/power/yellow - 1 time(s).
 
 /obj/machinery/disposal/bin - 1 time(s).
 

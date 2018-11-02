@@ -66,7 +66,7 @@
 	if(prob(chew_probability))
 		var/turf/open/floor/F = get_turf(src)
 		if(istype(F) && !F.intact)
-			var/obj/structure/cable/C = locate() in F
+			var/obj/structure/cable/power/C = locate() in F
 			if(C && prob(15))
 				if(C.avail())
 					visible_message("<span class='warning'>[src] chews through the [C]. It's toast!</span>")

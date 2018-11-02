@@ -1,7 +1,7 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	var/level = 2
+	var/_level = ATOM_LEVEL_DEFAULT
 	var/article  // If non-null, overrides a/an/some in all cases
 
 	var/flags_1 = NONE

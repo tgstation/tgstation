@@ -120,7 +120,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/power/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
 		return FALSE
 
@@ -166,7 +166,7 @@
 		T = get_step(loc,card)
 		cdir = get_dir(T,loc)
 
-		for(var/obj/structure/cable/C in T)
+		for(var/obj/structure/cable/power/C in T)
 			if(C.powernet)
 				continue
 			if(C.d1 == cdir || C.d2 == cdir)
@@ -186,7 +186,7 @@
 		T = get_step(loc,card)
 		cdir = get_dir(T,loc)
 
-		for(var/obj/structure/cable/C in T)
+		for(var/obj/structure/cable/power/C in T)
 			if(C.d1 == cdir || C.d2 == cdir)
 				. += C
 	return .
@@ -194,7 +194,7 @@
 //returns all the NODES (O-X) cables WITHOUT a powernet in the turf the machine is located at
 /obj/machinery/power/proc/get_indirect_connections()
 	. = list()
-	for(var/obj/structure/cable/C in loc)
+	for(var/obj/structure/cable/power/C in loc)
 		if(C.powernet)
 			continue
 		if(C.d1 == 0) // the cable is a node cable
@@ -225,8 +225,8 @@
 				if(d == 0)
 					. += P
 
-		else if(istype(AM, /obj/structure/cable))
-			var/obj/structure/cable/C = AM
+		else if(istype(AM, /obj/structure/cable/power))
+			var/obj/structure/cable/power/C = AM
 
 			if(!unmarked || !C.powernet)
 				if(C.d1 == d || C.d2 == d)
@@ -249,8 +249,8 @@
 		P = worklist[index] //get the next power object found
 		index++
 
-		if( istype(P, /obj/structure/cable))
-			var/obj/structure/cable/C = P
+		if( istype(P, /obj/structure/cable/power))
+			var/obj/structure/cable/power/C = P
 			if(C.powernet != PN) //add it to the powernet, if it isn't already there
 				PN.add_cable(C)
 			worklist |= C.get_connections() //get adjacents power objects, with or without a powernet
@@ -283,7 +283,7 @@
 		net2 = temp
 
 	//merge net2 into net1
-	for(var/obj/structure/cable/Cable in net2.cables) //merge cables
+	for(var/obj/structure/cable/power/Cable in net2.cables) //merge cables
 		net1.add_cable(Cable)
 
 	for(var/obj/machinery/power/Node in net2.nodes) //merge power machines
@@ -316,8 +316,8 @@
 	if(istype(power_source, /area))
 		source_area = power_source
 		power_source = source_area.get_apc()
-	if(istype(power_source, /obj/structure/cable))
-		var/obj/structure/cable/Cable = power_source
+	if(istype(power_source, /obj/structure/cable/power))
+		var/obj/structure/cable/power/Cable = power_source
 		power_source = Cable.powernet
 
 	var/datum/powernet/PN
@@ -376,7 +376,7 @@
 /turf/proc/get_cable_node()
 	if(!can_have_cabling())
 		return null
-	for(var/obj/structure/cable/C in src)
+	for(var/obj/structure/cable/power/C in src)
 		if(C.d1 == 0)
 			return C
 	return null

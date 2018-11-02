@@ -974,22 +974,22 @@
 /area/awaymission/centcomAway/courtroom)
 "fM" = (
 /obj/machinery/power/smes,
-/obj/structure/cable,
-/obj/structure/cable{
+/obj/structure/cable/power,
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "fN" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "4-8"
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "fO" = (
 /obj/machinery/power/smes,
-/obj/structure/cable,
-/obj/structure/cable{
+/obj/structure/cable/power,
+/obj/structure/cable/power{
 	icon_state = "0-8"
 	},
 /turf/open/indestructible,
@@ -1407,7 +1407,7 @@
 /area/awaymission/centcomAway/courtroom)
 "ih" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-2"
 	},
 /turf/open/indestructible,

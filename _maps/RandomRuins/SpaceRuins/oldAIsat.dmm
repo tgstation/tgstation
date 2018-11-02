@@ -49,7 +49,7 @@
 	pixel_x = 1;
 	pixel_y = 26
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating/airless,
@@ -58,7 +58,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "2-8"
 	},
 /turf/open/floor/plating/airless,
@@ -103,7 +103,7 @@
 /turf/template_noop,
 /area/space/nearstation)
 "au" = (
-/obj/structure/cable{
+/obj/structure/cable/power{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating/airless,

@@ -15,7 +15,7 @@
 	req_access = null;
 	req_access_txt = "150"
 	},
-/obj/structure/cable/yellow{
+/obj/structure/cable/power/yellow{
 	icon_state = "0-2"
 	},
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
@@ -76,7 +76,7 @@
 	dir = 1;
 	network = list("caravansyndicate1")
 	},
-/obj/structure/cable/yellow,
+/obj/structure/cable/power/yellow,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "wV" = (

@@ -24,7 +24,7 @@
 	var/const/CLAMPED_OFF = 1
 	var/const/OPERATING = 2
 
-	var/obj/structure/cable/attached		// the attached cable
+	var/obj/structure/cable/power/attached		// the attached cable
 
 /obj/item/powersink/update_icon()
 	icon_state = "powersink[mode == OPERATING]"
