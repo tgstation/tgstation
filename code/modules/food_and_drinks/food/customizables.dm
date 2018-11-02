@@ -277,7 +277,7 @@
 
 /obj/item/reagent_containers/food/snacks/customizable/soup/Initialize()
 	. = ..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = pick("slurp","sip","inhale","drink")
 
 
 

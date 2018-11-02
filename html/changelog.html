@@ -55,6 +55,83 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">01 November 2018</h2>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Buckled mobs will no longer go prone when killed/stunned/ect.</li>
+			</ul>
+			<h3 class="author">Skoglol updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Revenants now only use stolen essence to unlock new spells. No more counting corpses or waiting for regen before draining.</li>
+				<li class="tweak">Spell unlock costs adjusted accordingly, defile upped from 0 to a cost of 10.</li>
+				<li class="balance">Reduced blight cost to 75, more in line with its underwhelming nature.</li>
+				<li class="tweak">Drain targets in soft-crit will be stunned, to prevent them crawling away.</li>
+				<li class="bugfix">Ghosts can no longer examine the inner workings of modular computers.</li>
+			</ul>
+			<h3 class="author">The Dreamweaver updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Nanotrasen has received word of a high-tech research facility that may contain advancements in bluespace-based research. Any crew members who become aware of its whereabouts are to report it to CentCom immediately and are restricted from sharing said info.</li>
+				<li class="refactor">The turf reservation system now dynamically creates new z levels if the current reserved levels are full.</li>
+			</ul>
+
+			<h2 class="date">31 October 2018</h2>
+			<h3 class="author">Cyberboss updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Allows Grilles to be built on space turf.</li>
+			</ul>
+			<h3 class="author">Shdorsh updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Circuitry module</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="spellcheck">Suiciding with a gun will now say 'You pull the trigger', instead of referring to you in the third person.</li>
+				<li class="spellcheck">Ammoboxes will no longer say 'there are 1 shell left'.</li>
+				<li class="bugfix">The really black suit is now a -really- black suit.</li>
+				<li class="fix">Droppers will now work properly when squirting the contents into the eyes of a mob while wearing only the body part of a hardsuit and no helmet.</li>
+				<li class="fix">You can now examine bars of soap to tell how many uses (roughly) are left.</li>
+			</ul>
+			<h3 class="author">Skoglol updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Multitool powernet readout now includes load and excess.</li>
+				<li class="bugfix">Eating is now more gramatically correct</li>
+			</ul>
+			<h3 class="author">YPOQ updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="fix">Fixed a bug that caused fire extinguishers to often fail to extinguish people.</li>
+			</ul>
+
+			<h2 class="date">30 October 2018</h2>
+			<h3 class="author">Barhandar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Basic tools are now a starting node and do not need researching.</li>
+				<li class="tweak">Autolathe tools can now be printed again without needing a design disk.</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed an exploit allowing you to teleport ammo out of a magazine.</li>
+				<li class="bugfix">Fixed magazine loading sounds playing at the incorrect location if you load the magazine via TK.</li>
+			</ul>
+			<h3 class="author">Zxaber updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed borg organ bags causing brain damage when picking up brains.</li>
+			</ul>
+
+			<h2 class="date">29 October 2018</h2>
+			<h3 class="author">Barhandar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Pumpkin meteors on Halloween now replace catastrophic meteor waves, instead of ALL OF THEM.</li>
+			</ul>
+			<h3 class="author">Basilman updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed blindness identification blindfold changing color more than once</li>
+				<li class="bugfix">fixed blindfold item being split in your inventory</li>
+			</ul>
+			<h3 class="author">cyclowns updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes stimulum and nitryl reagents running out too fast</li>
+			</ul>
+
 			<h2 class="date">28 October 2018</h2>
 			<h3 class="author">Buggy updated:</h3>
 			<ul class="changes bgimages16">
@@ -1604,25 +1681,6 @@
 				<li class="bugfix">Broken components left over from the signal origin refactor should be fixed.</li>
 				<li class="bugfix">Lava isn't a safe place to throw your flammable shit anymore</li>
 				<li class="bugfix">The computer screen overlay being rotated incorrectly after construction has been fixed.</li>
-			</ul>
-
-			<h2 class="date">28 August 2018</h2>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The 10 second anti spam cooldown of night shift lighting now works properly.</li>
-				<li class="spellcheck">Added an examine message to APCs that mentions Alt-click and Ctrl-click (silicons only) behavior.</li>
-			</ul>
-			<h3 class="author">Garen updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">adds a signal for screwdriver_act</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">Multiple copies of a shuttle each get their own area instances (affects APCs and air alarms).</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The forcefield projector is now available ingame in the engineering protolathe. It can project up to 3 forcefields which act as transparent walls, and share a pool of health which is recharged over time. The projector must remain within 7 tiles of the forcefields to keep them active.</li>
 			</ul>
 		</div>
 

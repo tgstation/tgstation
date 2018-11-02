@@ -74,3 +74,6 @@
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk
 		if(MC_AI)
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_card
+
+/obj/item/modular_computer/processor/attack_ghost(mob/user)
+	ui_interact(user)

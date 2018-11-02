@@ -68,7 +68,7 @@
 
 /datum/quirk/musician/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/musicbeacon/B = new(get_turf(H))
+	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	H.put_in_hands(B)
 	H.equip_to_slot(B, SLOT_IN_BACKPACK)
 	var/obj/item/musicaltuner/musicaltuner = new(get_turf(H))

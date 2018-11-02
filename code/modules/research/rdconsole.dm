@@ -779,8 +779,8 @@ Nothing else in the console has ID requirements.
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
 	l += "Unlocked by:"
-	for (var/node in selected_design.unlocked_by)
-		l += ui_techweb_single_node(node)
+	for (var/i in selected_design.unlocked_by)
+		l += ui_techweb_single_node(SSresearch.techweb_node_by_id(i))
 	l += "[RDSCREEN_NOBREAK]</div>"
 	return l
 
