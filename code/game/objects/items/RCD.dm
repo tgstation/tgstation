@@ -138,6 +138,7 @@ RLD
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_price = 150
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
@@ -156,7 +157,17 @@ RLD
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/construction/rcd/verb/toggle_window_type(mob/user)
+/obj/item/construction/rcd/verb/toggle_window_type_verb()
+	set name = "RCD : Toggle Window Type"
+	set category = "Object"
+	set src in view(1)
+
+	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+	
+	toggle_window_type(usr)
+
+/obj/item/construction/rcd/proc/toggle_window_type(mob/user)
 	var/window_type_name
 	if (window_type == /obj/structure/window/fulltile)
 		window_type = /obj/structure/window/reinforced/fulltile
@@ -254,7 +265,7 @@ RLD
 		return FALSE
 	return TRUE
 
-/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)	
+/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)
 	if(!user)
 		return
 

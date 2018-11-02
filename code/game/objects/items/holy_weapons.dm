@@ -16,42 +16,39 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/holybeacon
+/obj/item/choice_beacon/holy
 	name = "armaments beacon"
 	desc = "Contains a set of armaments for the chaplain."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "gangtool-red"
-	item_state = "radio"
 
-/obj/item/holybeacon/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
-		beacon_armor(user)
+/obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
+	if(user.mind && user.mind.isholy)
+		return ..()
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+		return FALSE
 
-/obj/item/holybeacon/proc/beacon_armor(mob/M)
-	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
-	var/list/display_names = list()
-	for(var/V in holy_armor_list)
-		var/atom/A = V
-		display_names += list(initial(A.name) = A)
+/obj/item/choice_beacon/holy/generate_display_names()
+	var/static/list/holy_item_list
+	if(!holy_item_list)
+		holy_item_list = list()
+		var/list/templist = typesof(/obj/item/storage/box/holy)
+		for(var/V in templist)
+			var/atom/A = V
+			holy_item_list[initial(A.name)] = A
+	return holy_item_list
 
-	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || SSreligion.holy_armor_type)
+/obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
+	if(!SSreligion.holy_armor_type)
+		..()
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
+		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
+		SSreligion.holy_armor_type = choice
+	else
+		to_chat(M, "<span class='warning'>A selection has already been made. Self-Destructing...</span>")
 		return
 
-	var/index = display_names.Find(choice)
-	var/A = holy_armor_list[index]
-
-	SSreligion.holy_armor_type = A
-	var/holy_armor_box = new A
-
-	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
-
-	if(holy_armor_box)
-		qdel(src)
-		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -117,7 +114,6 @@
 	icon_state = "witchhunter"
 	item_state = "witchhunter"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
@@ -207,10 +203,10 @@
 			display_names[initial(rodtype.name)] = rodtype
 
 	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !M.canmove || reskinned)
+	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.incapacitated() || reskinned)
 		return
 
-	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new 
+	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
 	holy_weapon = new A
 
 	SSreligion.holy_weapon_type = holy_weapon.type
@@ -422,17 +418,15 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		var/mob/living/simple_animal/shade/S = new(src)
-		S.real_name = name
-		S.name = name
 		S.ckey = C.ckey
+		S.fully_replace_character_name(null, "The spirit of [name]")
 		S.status_flags |= GODMODE
 		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
 			name = input
-			S.real_name = input
-			S.name = input
+			S.fully_replace_character_name(null, "The spirit of [input]")
 	else
 		to_chat(user, "The blade is dormant. Maybe you can try again later.")
 		possessed = FALSE

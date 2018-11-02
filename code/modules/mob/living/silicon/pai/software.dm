@@ -20,6 +20,7 @@
 															"universal translator" = 35,
 															//"projection array" = 15
 															"remote signaller" = 5,
+															"loudness booster" = 25
 															)
 
 /mob/living/silicon/pai/proc/paiInterface()
@@ -64,6 +65,8 @@
 				left_part = softwareCamera()
 			if("signaller")
 				left_part = softwareSignal()
+			if("loudness")
+				left_part = softwareLoudness()
 
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
@@ -265,6 +268,9 @@
 				var/turf/T = get_turf(loc)
 				cable = new /obj/item/pai_cable(T)
 				T.visible_message("<span class='warning'>A port on [src] opens to reveal [cable], which promptly falls to the floor.</span>", "<span class='italics'>You hear the soft click of something light and hard falling to the ground.</span>")
+		if("loudness")
+			internal_instrument.interact(src)
+
 	//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
 	paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 	return
@@ -297,6 +303,8 @@
 			dat += "<a href='byond://?src=[REF(src)];software=[s]'>Camera Jack</a> <br>"
 		if(s == "remote signaller")
 			dat += "<a href='byond://?src=[REF(src)];software=signaller;sub=0'>Remote Signaller</a> <br>"
+		if(s == "loudness booster")
+			dat += "<a href='byond://?src=[REF(src)];software=loudness;sub=0'>Loudness Booster</a> <br>"
 	dat += "<br>"
 
 	// Advanced
@@ -621,3 +629,9 @@
 	dat += "<br><br>"
 	dat += "Messages: <hr> [pda.tnote]"
 	return dat
+
+// Loudness Booster
+/mob/living/silicon/pai/proc/softwareLoudness()
+	if(!internal_instrument)
+		internal_instrument = new(src)
+	return "<h3>Sound Synthetizer</h3>"

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Everything spawned by summon magic (with the exception of single-use spellbooks) now count towards the \"Steal at least five magical artefacts\" objective."

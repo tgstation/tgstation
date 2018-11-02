@@ -19,4 +19,4 @@
 		var/mob/living/carbon/human/winner = pickweight(heart_attack_contestants)
 		var/datum/disease/D = new /datum/disease/heart_failure()
 		winner.ForceContractDisease(D, FALSE, TRUE)
-		notify_ghosts("[winner] is beginning to have a heart attack!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=winner, action=NOTIFY_ORBIT)
+		atom_of_interest = winner

@@ -46,7 +46,7 @@
 	if(mind)
 		if(mind.martial_art && !incapacitated(FALSE, TRUE) && mind.martial_art.can_use(src) && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
-				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
+				if((mobility_flags & MOBILITY_USE) && dna && !dna.check_mutation(HULK)) //But only if they're otherwise able to use items, and hulks can't do it
 					if(mind.martial_art.deflection_chance >= 100) //if they can NEVER be hit, lets clue sec in ;)
 						visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					else
@@ -219,7 +219,7 @@
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-			Knockdown(100)
+			Paralyze(100)
 			log_combat(M, src, "tackled")
 			visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 				"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -272,7 +272,7 @@
 						"<span class='userdanger'>[M] disarmed [src]!</span>")
 			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, 1, -1)
-				Knockdown(100)
+				Paralyze(100)
 				log_combat(M, src, "tackled")
 				visible_message("<span class='danger'>[M] has tackled down [src]!</span>", \
 					"<span class='userdanger'>[M] has tackled down [src]!</span>")
@@ -481,10 +481,10 @@
 			switch(severity)
 				if(1)
 					L.receive_damage(0,10)
-					Stun(200)
+					Paralyze(200)
 				if(2)
 					L.receive_damage(0,5)
-					Stun(100)
+					Paralyze(100)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	var/list/damaged = list()
@@ -642,108 +642,107 @@
 	if(!istype(M))
 		return
 
-	if(health >= 0)
-		if(src == M)
-			visible_message("[src] examines [p_them()]self.", \
-				"<span class='notice'>You check yourself for injuries.</span>")
+	if(src == M)
+		visible_message("[src] examines [p_them()]self.", \
+			"<span class='notice'>You check yourself for injuries.</span>")
 
-			var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			for(var/X in bodyparts)
-				var/obj/item/bodypart/LB = X
-				missing -= LB.body_zone
-				if(LB.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
-					continue
-				var/limb_max_damage = LB.max_damage
-				var/status = ""
-				var/brutedamage = LB.brute_dam
-				var/burndamage = LB.burn_dam
-				if(hallucination)
-					if(prob(30))
-						brutedamage += rand(30,40)
-					if(prob(30))
-						burndamage += rand(30,40)
+		var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/LB = X
+			missing -= LB.body_zone
+			if(LB.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
+				continue
+			var/limb_max_damage = LB.max_damage
+			var/status = ""
+			var/brutedamage = LB.brute_dam
+			var/burndamage = LB.burn_dam
+			if(hallucination)
+				if(prob(30))
+					brutedamage += rand(30,40)
+				if(prob(30))
+					burndamage += rand(30,40)
 
-				if(has_trait(TRAIT_SELF_AWARE))
-					status = "[brutedamage] brute damage and [burndamage] burn damage"
-					if(!brutedamage && !burndamage)
-						status = "no damage"
-
-				else
-					if(brutedamage > 0)
-						status = LB.light_brute_msg
-					if(brutedamage > (limb_max_damage*0.4))
-						status = LB.medium_brute_msg
-					if(brutedamage > (limb_max_damage*0.8))
-						status = LB.heavy_brute_msg
-					if(brutedamage > 0 && burndamage > 0)
-						status += " and "
-
-					if(burndamage > (limb_max_damage*0.8))
-						status += LB.heavy_burn_msg
-					else if(burndamage > (limb_max_damage*0.2))
-						status += LB.medium_burn_msg
-					else if(burndamage > 0)
-						status += LB.light_burn_msg
-
-					if(status == "")
-						status = "OK"
-				var/no_damage
-				if(status == "OK" || status == "no damage")
-					no_damage = TRUE
-				to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
-
-				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
-
-			for(var/t in missing)
-				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
-
-			if(bleed_rate)
-				to_chat(src, "<span class='danger'>You are bleeding!</span>")
-			if(getStaminaLoss())
-				if(getStaminaLoss() > 30)
-					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
-				else
-					to_chat(src, "<span class='info'>You feel fatigued.</span>")
 			if(has_trait(TRAIT_SELF_AWARE))
-				if(toxloss)
-					if(toxloss > 10)
-						to_chat(src, "<span class='danger'>You feel sick.</span>")
-					else if(toxloss > 20)
-						to_chat(src, "<span class='danger'>You feel nauseated.</span>")
-					else if(toxloss > 40)
-						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
-				if(oxyloss)
-					if(oxyloss > 10)
-						to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
-					else if(oxyloss > 20)
-						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
-					else if(oxyloss > 30)
-						to_chat(src, "<span class='danger'>You're choking!</span>")
+				status = "[brutedamage] brute damage and [burndamage] burn damage"
+				if(!brutedamage && !burndamage)
+					status = "no damage"
 
-			switch(nutrition)
-				if(NUTRITION_LEVEL_FULL to INFINITY)
-					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
-				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-					to_chat(src, "<span class='info'>You're well fed!</span>")
-				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-					to_chat(src, "<span class='info'>You're not hungry.</span>")
-				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-					to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
-				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-					to_chat(src, "<span class='info'>You feel quite hungry.</span>")
-				if(0 to NUTRITION_LEVEL_STARVING)
-					to_chat(src, "<span class='danger'>You're starving!</span>")
+			else
+				if(brutedamage > 0)
+					status = LB.light_brute_msg
+				if(brutedamage > (limb_max_damage*0.4))
+					status = LB.medium_brute_msg
+				if(brutedamage > (limb_max_damage*0.8))
+					status = LB.heavy_brute_msg
+				if(brutedamage > 0 && burndamage > 0)
+					status += " and "
 
-			if(roundstart_quirks.len)
-				to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
-		else
-			if(wear_suit)
-				wear_suit.add_fingerprint(M)
-			else if(w_uniform)
-				w_uniform.add_fingerprint(M)
+				if(burndamage > (limb_max_damage*0.8))
+					status += LB.heavy_burn_msg
+				else if(burndamage > (limb_max_damage*0.2))
+					status += LB.medium_burn_msg
+				else if(burndamage > 0)
+					status += LB.light_burn_msg
 
-			..()
+				if(status == "")
+					status = "OK"
+			var/no_damage
+			if(status == "OK" || status == "no damage")
+				no_damage = TRUE
+			to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
+
+			for(var/obj/item/I in LB.embedded_objects)
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+
+		for(var/t in missing)
+			to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
+
+		if(bleed_rate)
+			to_chat(src, "<span class='danger'>You are bleeding!</span>")
+		if(getStaminaLoss())
+			if(getStaminaLoss() > 30)
+				to_chat(src, "<span class='info'>You're completely exhausted.</span>")
+			else
+				to_chat(src, "<span class='info'>You feel fatigued.</span>")
+		if(has_trait(TRAIT_SELF_AWARE))
+			if(toxloss)
+				if(toxloss > 10)
+					to_chat(src, "<span class='danger'>You feel sick.</span>")
+				else if(toxloss > 20)
+					to_chat(src, "<span class='danger'>You feel nauseated.</span>")
+				else if(toxloss > 40)
+					to_chat(src, "<span class='danger'>You feel very unwell!</span>")
+			if(oxyloss)
+				if(oxyloss > 10)
+					to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
+				else if(oxyloss > 20)
+					to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
+				else if(oxyloss > 30)
+					to_chat(src, "<span class='danger'>You're choking!</span>")
+
+		switch(nutrition)
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				to_chat(src, "<span class='info'>You're completely stuffed!</span>")
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				to_chat(src, "<span class='info'>You're well fed!</span>")
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				to_chat(src, "<span class='info'>You're not hungry.</span>")
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+				to_chat(src, "<span class='info'>You feel quite hungry.</span>")
+			if(0 to NUTRITION_LEVEL_STARVING)
+				to_chat(src, "<span class='danger'>You're starving!</span>")
+
+		if(roundstart_quirks.len)
+			to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
+	else
+		if(wear_suit)
+			wear_suit.add_fingerprint(M)
+		else if(w_uniform)
+			w_uniform.add_fingerprint(M)
+
+		..()
 
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)

@@ -17,6 +17,11 @@
 	desc = "A stylish upgrade (?) to the intelliCard."
 	icon_state = "aitater"
 
+/obj/item/aicard/aispook
+	name = "intelliLantern"
+	desc = "A spoOoOoky upgrade to the intelliCard."
+	icon_state = "aispook"
+
 /obj/item/aicard/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!</span>")
 	return BRUTELOSS
@@ -37,7 +42,7 @@
 /obj/item/aicard/update_icon()
 	cut_overlays()
 	if(AI)
-		name = "[initial(name)]- [AI.name]"
+		name = "[initial(name)] - [AI.name]"
 		if(AI.stat == DEAD)
 			icon_state = "[initial(icon_state)]-404"
 		else

@@ -327,8 +327,9 @@
 // mousedrop a crate to load the bot
 // can load anything if hacked
 /mob/living/simple_animal/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
+	var/mob/living/L = user
 
-	if(user.incapacitated() || user.lying)
+	if(user.incapacitated() || (istype(L) && !(L.mobility_flags & MOBILITY_STAND)))
 		return
 
 	if(!istype(AM))
@@ -633,7 +634,7 @@
 				if(!paicard)
 					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(160)
+					L.Paralyze(160)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()

@@ -2414,8 +2414,7 @@
 	},
 /obj/machinery/button/door{
 	id = "packerMine";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Midship)
@@ -2441,8 +2440,7 @@
 	},
 /obj/machinery/button/door{
 	id = "packerMed";
-	pixel_x = -24;
-	pixel_y = 0
+	pixel_x = -24
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/BMPship/Midship)

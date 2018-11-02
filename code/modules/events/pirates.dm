@@ -73,14 +73,18 @@
 
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
+
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
 			if(candidates.len > 0)
 				var/mob/M = candidates[1]
 				spawner.create(M.ckey)
 				candidates -= M
+				if (!atom_of_interest)
+					atom_of_interest = M
 			else
-				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
+				if (!atom_of_interest)
+					atom_of_interest = spawner
 
 	priority_announce("Unidentified armed ship detected near the station.")
 
@@ -148,6 +152,7 @@
 /obj/machinery/shuttle_scrambler/proc/dump_loot(mob/user)
 	new /obj/item/holochip(drop_location(), credits_stored)
 	to_chat(user,"<span class='notice'>You retrieve the siphoned credits!</span>")
+	credits_stored = 0
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
 	priority_announce("Data theft signal detected, source registered on local gps units.")

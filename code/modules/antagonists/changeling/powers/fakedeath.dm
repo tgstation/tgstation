@@ -15,7 +15,7 @@
 		user.tod = station_time_timestamp()
 	user.fakedeath("changeling") //play dead
 	user.update_stat()
-	user.update_canmove()
+	user.update_mobility()
 
 	addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE

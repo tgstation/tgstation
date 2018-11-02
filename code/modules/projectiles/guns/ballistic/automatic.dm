@@ -43,7 +43,7 @@
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
 
-				playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
+				playsound(src, 'sound/weapons/autoguninsert.ogg', 60, TRUE)
 				chamber_round()
 				A.update_icon()
 				update_icon()
@@ -51,8 +51,11 @@
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 
-/obj/item/gun/ballistic/automatic/ui_action_click()
-	burst_select()
+/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		..()
 
 /obj/item/gun/ballistic/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
@@ -106,7 +109,6 @@
 /obj/item/gun/ballistic/automatic/c20r/afterattack()
 	. = ..()
 	empty_alarm()
-	return
 
 /obj/item/gun/ballistic/automatic/c20r/update_icon()
 	..()
@@ -167,8 +169,8 @@
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
-		. = ..()
-		return
+		return ..()
+
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
@@ -274,12 +276,12 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 1.95x129mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/mm195x129
+	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	var/cover_open = FALSE

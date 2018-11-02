@@ -91,8 +91,8 @@
 	else
 		return
 	new_owner.add_antag_datum(src)
-	log_admin("[key_name(usr)] made [key_name(new_owner.current)] [name] on [choice]!")
-	message_admins("[key_name_admin(usr)] made [key_name_admin(new_owner.current)] [name] on [choice] !")
+	log_admin("[key_name(usr)] made [key_name(new_owner)] [name] on [choice]!")
+	message_admins("[key_name_admin(usr)] made [key_name_admin(new_owner)] [name] on [choice] !")
 
 /datum/antagonist/abductor/get_admin_commands()
 	. = ..()

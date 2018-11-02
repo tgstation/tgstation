@@ -9,11 +9,13 @@
 
 //Recover from stuns.
 /obj/effect/proc_holder/changeling/adrenaline/sting_action(mob/living/user)
-	to_chat(user, "<span class='notice'>Energy rushes through us.[user.lying ? " We arise." : ""]</span>")
+	to_chat(user, "<span class='notice'>Energy rushes through us.[(!(user.mobility_flags & MOBILITY_STAND)) ? " We arise." : ""]</span>")
 	user.SetSleeping(0)
 	user.SetUnconscious(0)
 	user.SetStun(0)
 	user.SetKnockdown(0)
+	user.SetImmobilized(0)
+	user.SetParalyzed(0)
 	user.reagents.add_reagent("changelingadrenaline", 10)
 	user.reagents.add_reagent("changelinghaste", 2) //For a really quick burst of speed
 	user.adjustStaminaLoss(-75)

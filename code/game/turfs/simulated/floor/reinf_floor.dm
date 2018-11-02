@@ -7,6 +7,9 @@
 	heat_capacity = INFINITY
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 
 /turf/open/floor/engine/examine(mob/user)

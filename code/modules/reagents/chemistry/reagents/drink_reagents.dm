@@ -408,6 +408,33 @@
 	..()
 	. = 1
 
+/datum/reagent/consumable/grey_bull
+	name = "Grey Bull"
+	id = "grey_bull"
+	description = "Grey Bull, it gives you gloves!"
+	color = "#EEFF00" // rgb: 238, 255, 0
+	quality = DRINK_VERYGOOD
+	taste_description = "carbonated oil"
+	glass_icon_state = "grey_bull_glass"
+	glass_name = "glass of Grey Bull"
+	glass_desc = "Surprisingly it isnt grey."
+
+/datum/reagent/consumable/grey_bull/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(TRAIT_SHOCKIMMUNE, id)
+
+/datum/reagent/consumable/grey_bull/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_SHOCKIMMUNE, id)
+	..()
+
+/datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M)
+	M.Jitter(20)
+	M.dizziness +=1
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
+
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
 	id = "spacemountainwind"

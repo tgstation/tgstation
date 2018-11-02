@@ -75,7 +75,7 @@
 		message_admins("[key_name_admin(src)] decided not to answer [key_name_admin(H)]'s [sender] request.")
 		return
 
-	log_directed_talk(src, H, input, LOG_ADMIN, "reply")
+	log_directed_talk(mob, H, input, LOG_ADMIN, "reply")
 	message_admins("[key_name_admin(src)] replied to [key_name_admin(H)]'s [sender] message with: \"[input]\"")
 	to_chat(H, "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from [sender == "Syndicate" ? "your benefactor" : "Central Command"].  Message as follows[sender == "Syndicate" ? ", agent." : ":"] <span class='bold'>[input].</span> Message ends.\"")
 
@@ -1283,8 +1283,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			pod.damage = 40
 			pod.explosionSize = list(0,0,0,2)
 			pod.effectStun = TRUE
-			if (isnull(target_path))
-				alert("ERROR: NULL path given.")
+			if (isnull(target_path)) //The user pressed "Cancel"
 				return
 			if (target_path != "empty")//if you didn't type empty, we want to load the pod with a delivery
 				var/delivery = text2path(target_path)
@@ -1292,6 +1291,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 					delivery = pick_closest_path(target_path)
 					if(!delivery)
 						alert("ERROR: Incorrect / improper path given.")
+						return
 				new delivery(pod)
 			new /obj/effect/DPtarget(get_turf(target), pod)
 		if(ADMIN_PUNISHMENT_SUPPLYPOD)
@@ -1306,17 +1306,20 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			plaunch.temp_pod.explosionSize = list(0,0,0,2)
 			plaunch.temp_pod.effectStun = TRUE
 			plaunch.ui_interact(usr)
+			return //We return here because punish_log() is handled by the centcom_podlauncher datum
 
 		if(ADMIN_PUNISHMENT_MAZING)
 			if(!puzzle_imprison(target))
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
 
-	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
-	message_admins(msg)
-	admin_ticket_log(target, msg)
-	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")
+	punish_log(target, punishment)
 
+/client/proc/punish_log(var/whom, var/punishment)
+	var/msg = "[key_name_admin(usr)] punished [key_name_admin(whom)] with [punishment]."
+	message_admins(msg)
+	admin_ticket_log(whom, msg)
+	log_admin("[key_name(usr)] punished [key_name(whom)] with [punishment].")
 
 /client/proc/trigger_centcom_recall()
 	if(!check_rights(R_ADMIN))
@@ -1347,7 +1350,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=[REF(C.mob)]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
-	
+
 /obj/effect/temp_visual/fireball
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"

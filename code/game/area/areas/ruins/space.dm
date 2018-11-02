@@ -212,7 +212,7 @@
 	icon_state = "storage_wing"
 
 /area/ruin/space/has_grav/deepstorage/dorm
-	name = "Deep Storage Dormory"
+	name = "Deep Storage Dormitory"
 	icon_state = "crew_quarters"
 
 /area/ruin/space/has_grav/deepstorage/kitchen

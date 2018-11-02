@@ -35,6 +35,7 @@
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
+	custom_price = 5
 	icon_state = "airalarm_electronics"
 
 /obj/item/wallframe/airalarm
@@ -163,6 +164,9 @@
 
 /obj/machinery/airalarm/syndicate //general syndicate access
 	req_access = list(ACCESS_SYNDICATE)
+
+/obj/machinery/airalarm/away //general away mission access
+	req_access = list(ACCESS_AWAY_GENERAL)
 
 /obj/machinery/airalarm/directional/north //Pixel offsets get overwritten on New()
 	dir = SOUTH

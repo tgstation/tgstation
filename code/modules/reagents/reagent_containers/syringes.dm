@@ -81,7 +81,7 @@
 					target.visible_message("<span class='danger'>[user] is trying to take a blood sample from [target]!</span>", \
 									"<span class='userdanger'>[user] is trying to take a blood sample from [target]!</span>")
 					busy = TRUE
-					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
+					if(!do_mob(user, target, extra_checks=CALLBACK(L, /mob/living/proc/can_inject, user, TRUE)))
 						busy = FALSE
 						return
 					if(reagents.total_volume >= reagents.maximum_volume)
@@ -97,7 +97,7 @@
 					to_chat(user, "<span class='warning'>[target] is empty!</span>")
 					return
 
-				if(!target.is_drawable())
+				if(!target.is_drawable(user))
 					to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target]!</span>")
 					return
 
@@ -117,7 +117,7 @@
 				to_chat(user, "<span class='notice'>[src] is empty.</span>")
 				return
 
-			if(!L && !target.is_injectable()) //only checks on non-living mobs, due to how can_inject() handles
+			if(!L && !target.is_injectable(user)) //only checks on non-living mobs, due to how can_inject() handles
 				to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
 				return
 
@@ -131,7 +131,7 @@
 				if(L != user)
 					L.visible_message("<span class='danger'>[user] is trying to inject [L]!</span>", \
 											"<span class='userdanger'>[user] is trying to inject [L]!</span>")
-					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject,user,1)))
+					if(!do_mob(user, L, extra_checks=CALLBACK(L, /mob/living/proc/can_inject, user, TRUE)))
 						return
 					if(!reagents.total_volume)
 						return

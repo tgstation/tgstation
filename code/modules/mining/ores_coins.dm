@@ -322,6 +322,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/value = 1
 	var/coinflip
 
+/obj/item/coin/get_item_credit_value()
+	return value
+
 /obj/item/coin/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
 	if (!attack_self(user))
