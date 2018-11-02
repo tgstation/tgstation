@@ -504,26 +504,39 @@
 		force_unwielded = 11
 		throwforce = 21
 		icon_prefix = "spearplasma"
-	qdel(tip)
-
-	var/obj/item/grenade/G = locate() in contents
-	if(G)
-		var/obj/item/twohanded/spear/explosive/S = new(G)
-		S.force_wielded = force_wielded
-		S.force_unwielded = force_unwielded
-		S.throwforce = throwforce
-		S.icon_prefix = icon_prefix
-		return
 	update_icon()
+	qdel(tip)
+	var/obj/item/twohanded/spear/S = locate() in parts_list	
+	if(S)
+		if (istype(S, /obj/item/twohanded/spear/explosive))
+			var/obj/item/twohanded/spear/explosive/lance = S 
+			lance.explosive.forceMove(get_turf(src)) //Sanity check. This shouldn't really happen, as explosive lances are blacklisted from spear construction.
+		parts_list -= S
+		qdel(S)
+	var/obj/item/grenade/G = locate() in parts_list
+	if(G)
+		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
+		lance.force_wielded = force_wielded
+		lance.force_unwielded = force_unwielded
+		lance.throwforce = throwforce
+		lance.icon_prefix = icon_prefix
+		qdel(src)
+	..()
+	
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
 	var/obj/item/grenade/explosive = null
 
-/obj/item/twohanded/spear/explosive/Initialize(obj/item/grenade/G)
+/obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
 	. = ..()
+	if (!G)
+		G = new() //For admin-spawned explosive lances
+	G.forceMove(src)
 	explosive = G
+
 	desc = "A makeshift spear with [G] attached to it"
+	update_icon()
 
 /obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
