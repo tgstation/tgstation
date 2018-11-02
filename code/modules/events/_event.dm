@@ -136,7 +136,7 @@
 	message_admins("meme")
 	if(control.alert_observers)
 		if (atom_of_interest)
-			notify_ghosts("[atom_of_interest] has just been spawned from [control.name]!", enter_link="<a href=?src=[REF(atom_of_interest)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something Spawned")
+			notify_ghosts("[atom_of_interest] has just been spawned from [control.name]!", enter_link="<a href=?src=[REF(src)];orbit=1>(Click to orbit)</a>", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something Spawned")
 	return
 
 //Called when the tick is equal to the announceWhen variable.

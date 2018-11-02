@@ -5,6 +5,7 @@
 	min_players = 2
 	earliest_start = 10 MINUTES
 	max_occurrences = 6
+	var/hasAnnounced = FALSE
 
 /datum/round_event/carp_migration
 	announceWhen	= 3
@@ -18,11 +19,16 @@
 
 
 /datum/round_event/carp_migration/start()
+	var/mob/living/simple_animal/hostile/carp/fish
 	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
-		var/mob/living/simple_animal/hostile/carp/fish
 		if(prob(95))
 			fish = new (C.loc)
 		else
 			fish = new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
+			fishannounce(fish) //Prefer to announce the megacarps over the regular fishies
+	fishannounce(fish)
 
-		announce_to_ghosts(fish) //Gonna be a lot of announcements kek
+/datum/round_event/carp_migration/proc/fishannounce(atom/fish)	
+	if (!hasAnnounced)
+		announce_to_ghosts(fish) //Only anounce the first fish
+		hasAnnounced = TRUE
