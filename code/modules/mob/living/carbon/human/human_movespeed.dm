@@ -3,10 +3,10 @@
 	var/health_deficiency = (100 - health - staminaloss)
 	if(health_deficiency >= 40)
 		add_movespeed_modifier(MOVESPEED_ID_HUMAN_HEALTH, override = TRUE, flags = MOVESPEED_MODIFIER_NO_FLIGHT, multiplicative_slowdown = health_deficiency / 25)
-		add_movespeed_modifier(MOVESPEED_ID_HUMAN_HEALTH_FLIGHT, override = TRUE, flags = MOVESPEED_MODIFIER_REQUIRES_FLIGHT, multiplicative_slowdown = health_deficiency / 75)
+		add_movespeed_modifier(MOVESPEED_ID_HUMAN_HEALTH_FLYING, override = TRUE, flags = MOVESPEED_MODIFIER_REQUIRES_FLIGHT, multiplicative_slowdown = health_deficiency / 75)
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_HUMAN_HEALTH)
-		remove_movespeed_modifier(MOVESPEED_ID_HUMAN_HEALTH_FLIGHT)
+		remove_movespeed_modifier(MOVESPEED_ID_HUMAN_HEALTH_FLYING)
 
 /mob/living/carbon/human/proc/update_item_slowdown()
 	. = 0
@@ -29,10 +29,14 @@
 		. -= 1
 	else if(has_trait(TRAIT_GOTTAGOREALLYFAST))
 		. -= 2
-	add_movespeed_modifier(MOVESPEED_ID_HUMAN_TRAIT, override = TRUE, flags = (MOVESPEED_MODIFIER_REQUIRES_GRAIVTY|MOVESPEED_MODIFIER_NO_FLIGHT), multiplicative_slowdown = .)
+	if(has_trait(TRAIT_FAT))
+		. += 1.5
+	add_movespeed_modifier(MOVESPEED_ID_TRAITS, override = TRUE, flags = (MOVESPEED_MODIFIER_REQUIRES_GRAVITY|MOVESPEED_MODIFIER_NO_FLIGHT), multiplicative_slowdown = .)
 
 /mob/living/carbon/human/movement_delay()
 	return species:_movement_delay() + ..()			//YES I KNOW THIS IS BANNED THIS IS A WIP PR!
+
+
 //THIS ENTIRE FILE IS WIP
 ////////////////
 // MOVE SPEED //
@@ -51,18 +55,16 @@
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
 
-		if(CONFIG_GET(flag/disable_human_mood))
-			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
-			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
-				. += hungry / 50
+	if(CONFIG_GET(flag/disable_human_mood))
+		var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
+		if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
+			. += hungry / 50
 
-		//Moving in high gravity is very slow (Flying too)
-		if(gravity > STANDARD_GRAVITY)
-			var/grav_force = min(gravity - STANDARD_GRAVITY,3)
-			. += 1 + grav_force
+	//Moving in high gravity is very slow (Flying too)
+	if(gravity > STANDARD_GRAVITY)
+		var/grav_force = min(gravity - STANDARD_GRAVITY,3)
+		. += 1 + grav_force
 
-		if(H.has_trait(TRAIT_FAT))
-			. += (1.5 - flight)
-		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
-			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+	if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
+		. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 	return .
