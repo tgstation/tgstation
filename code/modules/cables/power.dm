@@ -39,35 +39,14 @@
 	cable_color = "white"
 	color = "#ffffff"
 
-// the power cable object
-/obj/structure/cable/power/Initialize(mapload, param_color)
+/obj/structure/cable/power/Initialize()
 	. = ..()
-
-	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
-	var/dash = findtext(icon_state, "-")
-	d1 = text2num( copytext( icon_state, 1, dash ) )
-	d2 = text2num( copytext( icon_state, dash+1 ) )
-
-	var/turf/T = get_turf(src)			// hide if turf is not intact
-	if(level==1)
-		hide(T.intact)
-	GLOB.cable_list += src //add it to the global cable list
-
-	if(d1)
-		stored = new/obj/item/stack/cable_coil/power(null,2,cable_color)
-	else
-		stored = new/obj/item/stack/cable_coil/power(null,1,cable_color)
-
-	var/list/cable_colors = GLOB.cable_colors
-	cable_color = param_color || cable_color || pick(cable_colors)
-	if(cable_colors[cable_color])
-		cable_color = cable_colors[cable_color]
-	update_icon()
+	GLOB.power_cable_list += src //add it to the global cable list
 
 /obj/structure/cable/power/Destroy()					// called when a cable is deleted
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
-	GLOB.cable_list -= src							//remove it from global cable list
+	GLOB.power_cable_list -= src
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/power/deconstruct(disassembled = TRUE)
@@ -76,64 +55,16 @@
 		stored.forceMove(T)
 	qdel(src)
 
-///////////////////////////////////
-// General procedures
-///////////////////////////////////
-
-//If underfloor, hide the cable
-/obj/structure/cable/power/hide(i)
-
-	if(level == 1 && isturf(loc))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
-
-/obj/structure/cable/power/update_icon()
-	icon_state = "[d1]-[d2]"
-	color = null
-	add_atom_colour(cable_color, FIXED_COLOUR_PRIORITY)
-
-/obj/structure/cable/power/proc/handlecable(obj/item/W, mob/user, params)
-	var/turf/T = get_turf(src)
-	if(T.intact)
-		return
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
-		if (shock(user, 50))
-			return
-		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
-		stored.add_fingerprint(user)
-		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
-		deconstruct()
-		return
-
-	else if(istype(W, /obj/item/stack/cable_coil/power))
-		var/obj/item/stack/cable_coil/power/coil = W
-		if (coil.get_amount() < 1)
-			to_chat(user, "<span class='warning'>Not enough cable!</span>")
-			return
-		coil.cable_join(src, user)
-
-	else if(istype(W, /obj/item/twohanded/rcl))
-		var/obj/item/twohanded/rcl/R = W
-		if(R.loaded)
-			R.loaded.cable_join(src, user)
-			R.is_empty(user)
-
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
+/obj/structure/cable/power/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(powernet && (powernet.avail > 0))		// is it powered?
 			to_chat(user, "<span class='danger'>[DisplayPower(powernet.avail)] in power network.</span>")
 		else
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
 		shock(user, 5, 0.2)
-
-	add_fingerprint(user)
-
-// Items usable on a cable :
-//   - Wirecutters : cut it duh !
-//   - Cable coil : merge cables
-//   - Multitool : get the power currently passing through the cable
-//
-/obj/structure/cable/power/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
+		add_fingerprint(user)
+		return
+	return ..()
 
 
 // shock the user with probability prb

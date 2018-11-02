@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(cable_list)					    //Index for all cables, so that powernets don't have to look through the entire world all the time
+GLOBAL_LIST_EMPTY(power_power_cable_list)					    //Index for all cables, so that powernets don't have to look through the entire world all the time
 GLOBAL_LIST_EMPTY(portals)					        //list of all /obj/effect/portal
 GLOBAL_LIST_EMPTY(airlocks)					        //list of all airlocks
 GLOBAL_LIST_EMPTY(mechas_list)				        //list of all mechs. Used by hostile mobs target tracking.

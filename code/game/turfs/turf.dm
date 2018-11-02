@@ -105,7 +105,7 @@
 		return
 	user.Move_Pulled(src)
 
-/turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
+/turf/proc/handleRCL(obj/item/twohanded/rcl/power/C, mob/user)
 	if(C.loaded)
 		for(var/obj/structure/cable/power/LC in src)
 			if(!LC.d1 || !LC.d2)
@@ -126,7 +126,7 @@
 		coil.place_turf(src, user)
 		return TRUE
 
-	else if(istype(C, /obj/item/twohanded/rcl))
+	else if(istype(C, /obj/item/twohanded/rcl/power))
 		handleRCL(C, user)
 
 	return FALSE

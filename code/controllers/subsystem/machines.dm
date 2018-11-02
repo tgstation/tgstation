@@ -16,7 +16,7 @@ SUBSYSTEM_DEF(machines)
 		qdel(PN)
 	powernets.Cut()
 
-	for(var/obj/structure/cable/power/PC in GLOB.cable_list)
+	for(var/obj/structure/cable/power/PC in GLOB.power_cable_list)
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)

@@ -66,39 +66,33 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/turf/T = get_turf(src)			// hide if turf is not intact
 	if(level == ATOM_LEVEL_UNDERFLOOR)
 		hide(T.intact)
-	GLOB.cable_list += src //add it to the global cable list
 	set_color(param_color || cable_color || pick(GLOB.cable_colors))
 	update_icon()
 
-/obj/structure/cable/power/Destroy()					// called when a cable is deleted
-	GLOB.cable_list -= src							//remove it from global cable list
+/obj/structure/cable/Destroy()					// called when a cable is deleted
 	return ..()									// then go ahead and delete the cable
 
-/obj/structure/cable/power/deconstruct(disassembled = TRUE)
+/obj/structure/cable/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/turf/T = loc
-		var/obj/item/stack/cable_coil = new(cable_item_type, d1? 2 : 1, cable_color)
+		var/obj/item/stack/cable_coil/C = new(cable_item_type, d1? 2 : 1, cable_color)
+		transfer_fingerprints_to(C)
 	qdel(src)
 
-///////////////////////////////////
-// General procedures
-///////////////////////////////////
-
 //If underfloor, hide the cable
-/obj/structure/cable/power/hide(i)
-
-	if(level == 1 && isturf(loc))
+/obj/structure/cable/hide(i)
+	if(level == ATOM_LEVEL_UNDERFLOOR && isturf(loc))
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
-/obj/structure/cable/power/update_icon()
+/obj/structure/cable/update_icon()
 	icon_state = "[d1]-[d2]"
 	color = null
 	add_atom_colour(cable_color, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/cable/power/proc/handlecable(obj/item/W, mob/user, params)
-	var/turf/T = get_turf(src)
-	if(T.intact)
+/obj/structure/cable/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
+	if(handlecable(W, user, params))
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
@@ -108,105 +102,38 @@ By design, d1 is the smallest direction and d2 is the highest
 		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
+	return ..()
 
-	else if(istype(W, /obj/item/stack/cable_coil/power))
+/obj/structure/cable/power/handlecable(obj/item/W, mob/user, params)
+	var/turf/T = get_turf(src)
+	if(T.intact)
+		return FALSE
+
+	else if(istype(W, cable_item_type))
 		var/obj/item/stack/cable_coil/power/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, "<span class='warning'>Not enough cable!</span>")
-			return
+			return TRUE
 		coil.cable_join(src, user)
 
 	else if(istype(W, /obj/item/twohanded/rcl))
 		var/obj/item/twohanded/rcl/R = W
-		if(R.loaded)
+		if(istype(R.loaded, cable_item_Type)
 			R.loaded.cable_join(src, user)
 			R.is_empty(user)
-
-	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='danger'>[DisplayPower(powernet.avail)] in power network.</span>")
-		else
-			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
-		shock(user, 5, 0.2)
-
-	add_fingerprint(user)
-
-// Items usable on a cable :
-//   - Wirecutters : cut it duh !
-//   - Cable coil : merge cables
-//   - Multitool : get the power currently passing through the cable
-//
-/obj/structure/cable/power/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
-
+			return TRUE
+	return TRUE
 
 // shock the user with probability prb
-/obj/structure/cable/power/proc/shock(mob/user, prb, siemens_coeff = 1)
-	if(!prob(prb))
-		return 0
-	if (electrocute_mob(user, powernet, src, siemens_coeff))
-		do_sparks(5, TRUE, src)
-		return 1
-	else
-		return 0
+/obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
+	return
 
-/obj/structure/cable/power/singularity_pull(S, current_size)
+/obj/structure/cable/singularity_pull(S, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
-/obj/structure/cable/power/proc/update_stored(length = 1, colorC = "red")
-	stored.amount = length
-	stored.item_color = colorC
-	stored.update_icon()
 
-////////////////////////////////////////////
-// Power related
-///////////////////////////////////////////
-
-// All power generation handled in add_avail()
-// Machines should use add_load(), surplus(), avail()
-// Non-machines should use add_delayedload(), delayed_surplus(), newavail()
-
-/obj/structure/cable/power/proc/add_avail(amount)
-	if(powernet)
-		powernet.newavail += amount
-
-/obj/structure/cable/power/proc/add_load(amount)
-	if(powernet)
-		powernet.load += amount
-
-/obj/structure/cable/power/proc/surplus()
-	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
-	else
-		return 0
-
-/obj/structure/cable/power/proc/avail()
-	if(powernet)
-		return powernet.avail
-	else
-		return 0
-
-/obj/structure/cable/power/proc/add_delayedload(amount)
-	if(powernet)
-		powernet.delayedload += amount
-
-/obj/structure/cable/power/proc/delayed_surplus()
-	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
-	else
-		return 0
-
-/obj/structure/cable/power/proc/newavail()
-	if(powernet)
-		return powernet.newavail
-	else
-		return 0
-
-/////////////////////////////////////////////////
-// Cable laying helpers
-////////////////////////////////////////////////
 
 //handles merging diagonally matching cables
 //for info : direction^3 is flipping horizontally, direction^12 is flipping vertically
@@ -432,8 +359,9 @@ By design, d1 is the smallest direction and d2 is the highest
 
 GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15)))
 
-/obj/item/stack/cable_coil/power
+/obj/item/stack/cable_coil
 	name = "cable coil"
+	desc = "A coil of industrial grade flexible superconductor wiring."
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
@@ -442,9 +370,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_amount = MAXCOIL
 	amount = MAXCOIL
-	merge_type = /obj/item/stack/cable_coil/power // This is here to let its children merge between themselves
+	merge_type = /obj/item/stack/cable_coil
 	item_color = "red"
-	desc = "A coil of insulated power cable."
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -455,25 +382,36 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("copper" = 2) //2 copper per cable in the coil
+	grind_results = list("copper" = 2) //2 copper per cable in the coil. Also, great superconductor..
 	usesound = 'sound/items/deconstruct.ogg'
+	var/can_change_color = FALSE
 
-/obj/item/stack/cable_coil/power/cyborg
-	is_cyborg = 1
-	materials = list()
-	cost = 1
-
-/obj/item/stack/cable_coil/power/cyborg/attack_self(mob/user)
+/obj/item/stack/cable_coil/attack_self(mob/user)
+	. = ..()
+	if(!can_change_color)
+		return
 	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
 	item_color = cable_color
 	update_icon()
 
-/obj/item/stack/cable_coil/power/suicide_act(mob/user)
+/obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
+
+/obj/item/stack/cable_coil/power
+	merge_type = /obj/item/stack/cable_coil/power
+	desc = "A coil of insulated power cable."
+
+/obj/item/stack/cable_coil/power/cyborg
+	is_cyborg = TRUE
+	materials = list()
+	can_change_color = TRUE
+	cost = 1
+
+
 
 /obj/item/stack/cable_coil/power/Initialize(mapload, new_amount = null, param_color = null)
 	. = ..()
