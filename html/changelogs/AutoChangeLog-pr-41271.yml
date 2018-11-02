@@ -1,0 +1,4 @@
+author: "karma"
+delete-after: True
+changes: 
+  - bugfix: "being able to pick up blood crawl items if they are dropped and being unable to drop them for the rest of the round is now fixed"
