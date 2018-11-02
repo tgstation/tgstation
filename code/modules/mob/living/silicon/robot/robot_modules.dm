@@ -105,7 +105,7 @@
 			S.cost = 250
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/medical)
 
-		else if(istype(S, /obj/item/stack/cable_coil))
+		else if(istype(S, /obj/item/stack/cable_coil/power))
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wire)
 
@@ -314,7 +314,7 @@
 		/obj/item/stack/sheet/rglass/cyborg,
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
-		/obj/item/stack/cable_coil/cyborg)
+		/obj/item/stack/cable_coil/power/cyborg)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
@@ -617,7 +617,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/destTagger/borg,
-		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/stack/cable_coil/power/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon,
 		)

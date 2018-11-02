@@ -436,8 +436,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	grind_results = list("sodiumchloride" = 4)
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
+	if(istype(W, /obj/item/stack/cable_coil/power))
+		var/obj/item/stack/cable_coil/power/CC = W
 		if(string_attached)
 			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
 			return
@@ -456,7 +456,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(!string_attached)
 		return TRUE
 
-	new /obj/item/stack/cable_coil(drop_location(), 1)
+	new /obj/item/stack/cable_coil/power(drop_location(), 1)
 	overlays = list()
 	string_attached = null
 	to_chat(user, "<span class='notice'>You detach the string from the coin.</span>")

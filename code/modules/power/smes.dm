@@ -98,7 +98,7 @@
 		return
 
 	//building and linking a terminal
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(istype(I, /obj/item/stack/cable_coil/power))
 		var/dir = get_dir(user,src)
 		if(dir & (dir-1))//we don't want diagonal click
 			return
@@ -117,7 +117,7 @@
 			return
 
 
-		var/obj/item/stack/cable_coil/C = I
+		var/obj/item/stack/cable_coil/power/C = I
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return

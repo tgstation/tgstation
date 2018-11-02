@@ -562,7 +562,7 @@
 			update_icon()
 	else if (W.GetID())
 		togglelock(user)
-	else if (istype(W, /obj/item/stack/cable_coil) && opened)
+	else if (istype(W, /obj/item/stack/cable_coil/power) && opened)
 		var/turf/host_turf = get_turf(src)
 		if(!host_turf)
 			throw EXCEPTION("attackby on APC when it's not on a turf")
@@ -577,7 +577,7 @@
 			to_chat(user, "<span class='warning'>There is nothing to wire!</span>")
 			return
 
-		var/obj/item/stack/cable_coil/C = W
+		var/obj/item/stack/cable_coil/power/C = W
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need ten lengths of cable for APC!</span>")
 			return

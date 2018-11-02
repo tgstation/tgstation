@@ -163,13 +163,13 @@
 						name = "secure windoor assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
+			else if(istype(W, /obj/item/stack/cable_coil/power) && anchored)
 				user.visible_message("[user] wires the windoor assembly.", "<span class='notice'>You start to wire the windoor assembly...</span>")
 
 				if(do_after(user, 40, target = src))
 					if(!src || !anchored || src.state != "01")
 						return
-					var/obj/item/stack/cable_coil/CC = W
+					var/obj/item/stack/cable_coil/power/CC = W
 					if(!CC.use(1))
 						to_chat(user, "<span class='warning'>You need more cable to do this!</span>")
 						return
@@ -193,7 +193,7 @@
 						return
 
 					to_chat(user, "<span class='notice'>You cut the windoor wires.</span>")
-					new/obj/item/stack/cable_coil(get_turf(user), 1)
+					new/obj/item/stack/cable_coil/power(get_turf(user), 1)
 					state = "01"
 					if(secure)
 						name = "secure anchored windoor assembly"

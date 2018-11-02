@@ -126,8 +126,8 @@
 					state = CIRCUIT_CORE
 					update_icon()
 					return
-				if(istype(P, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/C = P
+				if(istype(P, /obj/item/stack/cable_coil/power))
+					var/obj/item/stack/cable_coil/power/C = P
 					if(C.get_amount() >= 5)
 						playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 						to_chat(user, "<span class='notice'>You start to add cables to the frame...</span>")
@@ -147,7 +147,7 @@
 						to_chat(user, "<span class='notice'>You remove the cables.</span>")
 						state = SCREWED_CORE
 						update_icon()
-						new /obj/item/stack/cable_coil(drop_location(), 5)
+						new /obj/item/stack/cable_coil/power(drop_location(), 5)
 					return
 
 				if(istype(P, /obj/item/stack/sheet/rglass))
@@ -277,7 +277,7 @@
 	if(state == GLASS_CORE)
 		new /obj/item/stack/sheet/rglass(loc, 2)
 	if(state >= CABLED_CORE)
-		new /obj/item/stack/cable_coil(loc, 5)
+		new /obj/item/stack/cable_coil/power(loc, 5)
 	if(circuit)
 		circuit.forceMove(loc)
 		circuit = null

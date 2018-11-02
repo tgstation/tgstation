@@ -71,7 +71,7 @@
 
 		//3
 		list(
-			"key" = /obj/item/stack/cable_coil,
+			"key" = /obj/item/stack/cable_coil/power,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The hydraulic systems are active."
@@ -288,7 +288,7 @@
 
 		//3
 		list(
-			"key" = /obj/item/stack/cable_coil,
+			"key" = /obj/item/stack/cable_coil/power,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The hydraulic systems are active."
@@ -584,7 +584,7 @@
 
 		//3
 		list(
-			"key" = /obj/item/stack/cable_coil,
+			"key" = /obj/item/stack/cable_coil/power,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The hydraulic systems are active."
@@ -933,7 +933,7 @@
 
 		//3
 		list(
-			"key" = /obj/item/stack/cable_coil,
+			"key" = /obj/item/stack/cable_coil/power,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The hydraulic systems are active."
@@ -1229,7 +1229,7 @@
 
 		//3
 		list(
-			"key" = /obj/item/stack/cable_coil,
+			"key" = /obj/item/stack/cable_coil/power,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The hydraulic systems are active."
@@ -1327,7 +1327,7 @@
 
 		//16
 		list(
-			"key" = /obj/item/stack/cable_coil,
+			"key" = /obj/item/stack/cable_coil/power,
 			"amount" = 5,
 			"back_key" = TOOL_CROWBAR,
 			"desc" = "The bluespace crystal is installed."
@@ -1584,7 +1584,7 @@
 
 		//3
 		list(
-			"key" = /obj/item/stack/cable_coil,
+			"key" = /obj/item/stack/cable_coil/power,
 			"amount" = 5,
 			"back_key" = TOOL_SCREWDRIVER,
 			"desc" = "The hydraulic systems are active."

@@ -206,9 +206,9 @@
 			state=2
 			to_chat(user, "<span class='notice'>You close the hatch to the power unit.</span>")
 		return
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil/power))
 		if(state == 3 && (internal_damage & MECHA_INT_SHORT_CIRCUIT))
-			var/obj/item/stack/cable_coil/CC = W
+			var/obj/item/stack/cable_coil/power/CC = W
 			if(CC.use(2))
 				clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 				to_chat(user, "<span class='notice'>You replace the fused wires.</span>")

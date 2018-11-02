@@ -356,7 +356,7 @@
 					return
 				user.visible_message("<span class='notice'>[user] removes the wires from [src].</span>", \
 									 "<span class='notice'>You remove the wiring from [src], exposing the circuit board.</span>")
-				new/obj/item/stack/cable_coil(get_turf(src), 5)
+				new/obj/item/stack/cable_coil/power(get_turf(src), 5)
 				constructionStep = CONSTRUCTION_GUTTED
 				update_icon()
 				return
@@ -388,8 +388,8 @@
 				constructionStep = CONSTRUCTION_NOCIRCUIT
 				update_icon()
 				return
-			if(istype(C, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/B = C
+			if(istype(C, /obj/item/stack/cable_coil/power))
+				var/obj/item/stack/cable_coil/power/B = C
 				if(B.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need more wires to add wiring to [src].</span>")
 					return

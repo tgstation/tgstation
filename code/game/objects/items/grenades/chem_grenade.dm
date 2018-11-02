@@ -98,8 +98,8 @@
 		stage_change(WIRED)
 		to_chat(user, "<span class='notice'>You add [A] to the [initial(name)] assembly.</span>")
 
-	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = I
+	else if(stage == EMPTY && istype(I, /obj/item/stack/cable_coil/power))
+		var/obj/item/stack/cable_coil/power/C = I
 		if (C.use(1))
 			det_time = 50 // In case the cable_coil was removed and readded.
 			stage_change(WIRED)
@@ -128,7 +128,7 @@
 			nadeassembly.master = null
 			nadeassembly = null
 		else // If "nadeassembly = null && stage == WIRED", then it most have been cable_coil that was used.
-			new /obj/item/stack/cable_coil(get_turf(src),1)
+			new /obj/item/stack/cable_coil/power(get_turf(src),1)
 		stage_change(EMPTY)
 		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
 	else

@@ -127,11 +127,11 @@
 				return
 			src.cell = W
 			to_chat(user, "<span class='notice'>You insert the cell.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil/power))
 		if(src.wired)
 			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/power/coil = W
 		if (coil.use(1))
 			src.wired = 1
 			to_chat(user, "<span class='notice'>You insert the wire.</span>")
@@ -149,7 +149,7 @@
 
 /obj/item/bodypart/chest/robot/drop_organs(mob/user)
 	if(wired)
-		new /obj/item/stack/cable_coil(user.loc, 1)
+		new /obj/item/stack/cable_coil/power(user.loc, 1)
 	if(cell)
 		cell.forceMove(user.loc)
 		cell = null

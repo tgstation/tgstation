@@ -141,8 +141,8 @@
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/coil = W
+			if(istype(W, /obj/item/stack/cable_coil/power))
+				var/obj/item/stack/cable_coil/power/coil = W
 				if(coil.get_amount() < 1)
 					to_chat(user, "<span class='warning'>You need one length of cable to wire the ED-209!</span>")
 					return

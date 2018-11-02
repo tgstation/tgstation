@@ -121,7 +121,7 @@
 				name = "airlock assembly"
 				setAnchored(FALSE)
 
-	else if(istype(W, /obj/item/stack/cable_coil) && state == AIRLOCK_ASSEMBLY_NEEDS_WIRES && anchored )
+	else if(istype(W, /obj/item/stack/cable_coil/power) && state == AIRLOCK_ASSEMBLY_NEEDS_WIRES && anchored )
 		if(!W.tool_start_check(user, amount=1))
 			return
 
@@ -142,7 +142,7 @@
 			if(state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS)
 				return
 			to_chat(user, "<span class='notice'>You cut the wires from the airlock assembly.</span>")
-			new/obj/item/stack/cable_coil(get_turf(user), 1)
+			new/obj/item/stack/cable_coil/power(get_turf(user), 1)
 			state = AIRLOCK_ASSEMBLY_NEEDS_WIRES
 			name = "secured airlock assembly"
 

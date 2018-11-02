@@ -366,7 +366,7 @@
 			return TRUE
 	return ..()
 
-/obj/item/stack/cable_coil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//Wiring would be too effective as a resource
+/obj/item/stack/cable_coil/power/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)//Wiring would be too effective as a resource
 	to_chat(S, "<span class='warning'>This object does not contain enough materials to work with.</span>")
 	return FALSE
 

@@ -80,7 +80,7 @@
 			else if(istype(P, /obj/item/circuitboard))
 				to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
 				return
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(istype(P, /obj/item/stack/cable_coil/power))
 				if(!P.tool_start_check(user, amount=5))
 					return
 
@@ -143,7 +143,7 @@
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
-				new /obj/item/stack/cable_coil(drop_location(), 5)
+				new /obj/item/stack/cable_coil/power(drop_location(), 5)
 				return
 
 		if(3)
@@ -271,7 +271,7 @@
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(state >= 2)
-			new /obj/item/stack/cable_coil(loc , 5)
+			new /obj/item/stack/cable_coil/power(loc , 5)
 		for(var/X in components)
 			var/obj/item/I = X
 			I.forceMove(loc)

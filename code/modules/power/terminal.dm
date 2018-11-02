@@ -69,7 +69,7 @@
 			do_sparks(5, TRUE, master)
 			return
 
-		new /obj/item/stack/cable_coil(drop_location(), 10)
+		new /obj/item/stack/cable_coil/power(drop_location(), 10)
 		to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 		qdel(src)
 

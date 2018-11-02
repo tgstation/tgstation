@@ -39,7 +39,7 @@
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/metal (loc, 2)
-	new /obj/item/stack/cable_coil (loc, 2)
+	new /obj/item/stack/cable_coil/power (loc, 2)
 	qdel(src)
 
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -83,8 +83,8 @@
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
 			panel_open = FALSE
 
-	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/C = I
+	else if(istype(I, /obj/item/stack/cable_coil/power) && panel_open)
+		var/obj/item/stack/cable_coil/power/C = I
 		if(obj_flags & EMAGGED) //Emagged, not broken by EMP
 			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
 			return

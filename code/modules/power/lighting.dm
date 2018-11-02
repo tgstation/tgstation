@@ -118,8 +118,8 @@
 					qdel(src)
 				return
 
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/coil = W
+			if(istype(W, /obj/item/stack/cable_coil/power))
+				var/obj/item/stack/cable_coil/power/coil = W
 				if(coil.use(1))
 					icon_state = "[fixture_type]-construct-stage2"
 					stage = 2
@@ -136,7 +136,7 @@
 			if(W.tool_behaviour == TOOL_WIRECUTTER)
 				stage = 1
 				icon_state = "[fixture_type]-construct-stage1"
-				new /obj/item/stack/cable_coil(drop_location(), 1, "red")
+				new /obj/item/stack/cable_coil/power(drop_location(), 1, "red")
 				user.visible_message("[user.name] removes the wiring from [src].", \
 					"<span class='notice'>You remove the wiring from [src].</span>", "<span class='italics'>You hear clicking.</span>")
 				W.play_tool_sound(src, 100)
@@ -488,7 +488,7 @@
 				break_light_tube()
 			if(status != LIGHT_EMPTY)
 				drop_light_tube()
-			new /obj/item/stack/cable_coil(loc, 1, "red")
+			new /obj/item/stack/cable_coil/power(loc, 1, "red")
 		transfer_fingerprints_to(newlight)
 		if(cell)
 			newlight.cell = cell

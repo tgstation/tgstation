@@ -77,7 +77,7 @@
 					chest.cell.forceMove(T)
 					chest.cell = null
 				chest.forceMove(T)
-				new /obj/item/stack/cable_coil(T, 1)
+				new /obj/item/stack/cable_coil/power(T, 1)
 				chest.wired = FALSE
 				chest = null
 			if(l_arm)

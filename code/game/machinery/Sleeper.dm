@@ -228,7 +228,7 @@
 	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
-	component_parts += new /obj/item/stack/cable_coil(null)
+	component_parts += new /obj/item/stack/cable_coil/power(null)
 	RefreshParts()
 
 /obj/machinery/sleeper/clockwork

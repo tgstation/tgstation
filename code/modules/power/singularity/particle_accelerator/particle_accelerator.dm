@@ -79,8 +79,8 @@
 					"You remove the external bolts.")
 				construction_state = PA_CONSTRUCTION_UNSECURED
 				did_something = TRUE
-			else if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/CC = W
+			else if(istype(W, /obj/item/stack/cable_coil/power))
+				var/obj/item/stack/cable_coil/power/CC = W
 				if(CC.use(1))
 					user.visible_message("[user.name] adds wires to the [name].", \
 						"You add some wires.")

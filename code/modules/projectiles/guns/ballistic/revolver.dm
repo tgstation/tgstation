@@ -316,8 +316,8 @@
 
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/attackby(obj/item/A, mob/user, params)
 	..()
-	if(istype(A, /obj/item/stack/cable_coil) && !sawn_off)
-		var/obj/item/stack/cable_coil/C = A
+	if(istype(A, /obj/item/stack/cable_coil/power) && !sawn_off)
+		var/obj/item/stack/cable_coil/power/C = A
 		if(C.use(10))
 			slot_flags = ITEM_SLOT_BACK
 			to_chat(user, "<span class='notice'>You tie the lengths of cable to the shotgun, making a sling.</span>")
@@ -334,7 +334,7 @@
 /obj/item/gun/ballistic/revolver/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()
 	if(. && slung) //sawing off the gun removes the sling
-		new /obj/item/stack/cable_coil(get_turf(src), 10)
+		new /obj/item/stack/cable_coil/power(get_turf(src), 10)
 		slung = 0
 		update_icon()
 

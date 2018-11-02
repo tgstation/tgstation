@@ -19,7 +19,7 @@
 //clamp bleeders
 /datum/surgery_step/clamp_bleeders
 	name = "clamp bleeders"
-	implements = list(/obj/item/hemostat = 100, TOOL_WIRECUTTER = 60, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil = 15)
+	implements = list(/obj/item/hemostat = 100, TOOL_WIRECUTTER = 60, /obj/item/stack/packageWrap = 35, /obj/item/stack/cable_coil/power = 15)
 	time = 24
 
 /datum/surgery_step/clamp_bleeders/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

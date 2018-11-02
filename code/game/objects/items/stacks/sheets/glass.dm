@@ -44,8 +44,8 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
+	if(istype(W, /obj/item/stack/cable_coil/power))
+		var/obj/item/stack/cable_coil/power/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
 			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
 			return

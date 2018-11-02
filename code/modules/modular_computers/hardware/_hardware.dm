@@ -33,7 +33,7 @@
 
 /obj/item/computer_hardware/attackby(obj/item/I, mob/living/user)
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
-	if(istype(I, /obj/item/stack/cable_coil))
+	if(istype(I, /obj/item/stack/cable_coil/power))
 		var/obj/item/stack/S = I
 		if(obj_integrity == max_integrity)
 			to_chat(user, "<span class='warning'>\The [src] doesn't seem to require repairs.</span>")

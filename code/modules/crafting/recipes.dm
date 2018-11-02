@@ -25,7 +25,7 @@
 	name = "IED"
 	result = /obj/item/grenade/iedcasing
 	reqs = list(/datum/reagent/fuel = 50,
-				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/cable_coil/power = 1,
 				/obj/item/assembly/igniter = 1,
 				/obj/item/reagent_containers/food/drinks/soda_cans = 1)
 	parts = list(/obj/item/reagent_containers/food/drinks/soda_cans = 1)
@@ -117,7 +117,7 @@
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(/obj/item/organ/tail/lizard = 1,
-	            /obj/item/stack/cable_coil = 1)
+	            /obj/item/stack/cable_coil/power = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -126,7 +126,7 @@
 	name = "Cat O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip/kitty
 	reqs = list(/obj/item/organ/tail/cat = 1,
-	            /obj/item/stack/cable_coil = 1)
+	            /obj/item/stack/cable_coil/power = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -140,7 +140,7 @@
 				/obj/item/bodypart/l_leg/robot = 1,
 				/obj/item/bodypart/r_leg/robot = 1,
 				/obj/item/stack/sheet/metal = 1,
-				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/cable_coil/power = 1,
 				/obj/item/gun/energy/e_gun/advtaser = 1,
 				/obj/item/stock_parts/cell = 1,
 				/obj/item/assembly/prox_sensor = 1)
@@ -282,7 +282,7 @@
 	result = /obj/item/ammo_casing/shotgun/improvised
 	reqs = list(/obj/item/grenade/chem_grenade = 1,
 				/obj/item/stack/sheet/metal = 1,
-				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/cable_coil/power = 1,
 				/datum/reagent/fuel = 10)
 	tools = list(TOOL_SCREWDRIVER)
 	time = 5
@@ -316,7 +316,7 @@
 	name = "Chainsaw"
 	result = /obj/item/twohanded/required/chainsaw
 	reqs = list(/obj/item/circular_saw = 1,
-				/obj/item/stack/cable_coil = 3,
+				/obj/item/stack/cable_coil/power = 3,
 				/obj/item/stack/sheet/plasteel = 5)
 	tools = list(TOOL_WELDER)
 	time = 50
@@ -424,7 +424,7 @@
 
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
-	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/stack/sheet/plastic = 4)
+	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil/power = 1, /obj/item/stack/sheet/plastic = 4)
 	result = /obj/item/toy/sword
 	category = CAT_MISC
 
@@ -599,7 +599,7 @@
 	time = 5
 	reqs = list(/obj/item/stack/sheet/metal = 1,
 				  /obj/item/stack/tile/plasteel = 1,
-				  /obj/item/stack/cable_coil = 2,
+				  /obj/item/stack/cable_coil/power = 2,
 				  /obj/item/assembly/igniter = 1)
 	category = CAT_MISC
 
@@ -631,7 +631,7 @@
 	time = 150 // Building a functioning guillotine takes time
 	reqs = list(/obj/item/stack/sheet/plasteel = 3,
 		        /obj/item/stack/sheet/mineral/wood = 20,
-		        /obj/item/stack/cable_coil = 10)
+		        /obj/item/stack/cable_coil/power = 10)
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
 
@@ -647,6 +647,6 @@
 	name = "Improvised Jetpack"
 	result = /obj/item/tank/jetpack/improvised
 	time = 30
-	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
+	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil/power = 30)//red oxygen tank so it looks right
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)

@@ -194,13 +194,13 @@
 				else if (W.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = 1
 					W.play_tool_sound(src)
-					new /obj/item/stack/cable_coil(user.loc, 5)
+					new /obj/item/stack/cable_coil/power(user.loc, 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
 					return
 			if(1)
-				if(istype(W, /obj/item/stack/cable_coil))
-					var/obj/item/stack/cable_coil/coil = W
+				if(istype(W, /obj/item/stack/cable_coil/power))
+					var/obj/item/stack/cable_coil/power/coil = W
 					if(coil.get_amount() < 5)
 						to_chat(user, "<span class='warning'>You need more cable for this!</span>")
 					else
@@ -278,7 +278,7 @@
 			var/obj/item/I = new /obj/item/electronics/firealarm(loc)
 			if(!disassembled)
 				I.obj_integrity = I.max_integrity * 0.5
-		new /obj/item/stack/cable_coil(loc, 3)
+		new /obj/item/stack/cable_coil/power(loc, 3)
 	qdel(src)
 
 /obj/machinery/firealarm/proc/update_fire_light(fire)

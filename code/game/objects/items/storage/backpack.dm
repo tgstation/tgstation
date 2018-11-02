@@ -398,7 +398,7 @@
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
-	new /obj/item/stack/cable_coil/random(src)
+	new /obj/item/stack/cable_coil/power/random(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 

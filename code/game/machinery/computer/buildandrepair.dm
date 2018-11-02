@@ -68,7 +68,7 @@
 				state = 1
 				icon_state = "1"
 				return
-			if(istype(P, /obj/item/stack/cable_coil))
+			if(istype(P, /obj/item/stack/cable_coil/power))
 				if(!P.tool_start_check(user, amount=5))
 					return
 				to_chat(user, "<span class='notice'>You start adding cables to the frame...</span>")
@@ -85,7 +85,7 @@
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 2
 				icon_state = "2"
-				var/obj/item/stack/cable_coil/A = new (drop_location(), 5)
+				var/obj/item/stack/cable_coil/power/A = new (drop_location(), 5)
 				A.add_fingerprint(user)
 				return
 
@@ -128,7 +128,7 @@
 			new /obj/item/shard(drop_location())
 			new /obj/item/shard(drop_location())
 		if(state >= 3)
-			new /obj/item/stack/cable_coil(drop_location(), 5)
+			new /obj/item/stack/cable_coil/power(drop_location(), 5)
 	..()
 
 /obj/structure/frame/computer/AltClick(mob/user)

@@ -51,7 +51,7 @@ GLOBAL_VAR_INIT(hsboxspawn, TRUE)
 			"Spawn 50 Plasteel"					= "hsbplasteel",
 			"Spawn 50 Reinforced Glass"         = "hsbrglass",
 			"Spawn 50 Glass"					= "hsbglass",
-			"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/stack/cable_coil]",
+			"Spawn Full Cable Coil"				= "hsbspawn&path=[/obj/item/stack/cable_coil/power]",
 			"Spawn Hyper Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/hyper]",
 			"Spawn Inf. Capacity Power Cell"	= "hsbspawn&path=[/obj/item/stock_parts/cell/infinite]",
 			"Spawn Rapid Construction Device"	= "hsbrcd",

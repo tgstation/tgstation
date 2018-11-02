@@ -719,7 +719,7 @@
 			if(W.tool_behaviour == TOOL_WIRECUTTER && panel_open && wires.is_all_cut())
 				W.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
-				new /obj/item/stack/cable_coil(loc, 5)
+				new /obj/item/stack/cable_coil/power(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
@@ -748,8 +748,8 @@
 						update_icon()
 				return
 
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/cable = W
+			if(istype(W, /obj/item/stack/cable_coil/power))
+				var/obj/item/stack/cable_coil/power/cable = W
 				if(cable.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five lengths of cable to wire the air alarm!</span>")
 					return
@@ -836,7 +836,7 @@
 		var/obj/item/I = new /obj/item/electronics/airalarm(loc)
 		if(!disassembled)
 			I.obj_integrity = I.max_integrity * 0.5
-		new /obj/item/stack/cable_coil(loc, 3)
+		new /obj/item/stack/cable_coil/power(loc, 3)
 	qdel(src)
 
 #undef AALARM_MODE_SCRUBBING

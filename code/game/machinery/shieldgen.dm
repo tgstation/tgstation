@@ -154,8 +154,8 @@
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 		else
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil) && (stat & BROKEN) && panel_open)
-		var/obj/item/stack/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil/power) && (stat & BROKEN) && panel_open)
+		var/obj/item/stack/cable_coil/power/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
 			return

@@ -396,9 +396,9 @@
 		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
 		return
 
-	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
+	else if(istype(W, /obj/item/stack/cable_coil/power) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/power/coil = W
 		if (getFireLoss() > 0 || getToxLoss() > 0)
 			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
@@ -743,7 +743,7 @@
 		robot_suit.l_leg = null
 		robot_suit.r_leg.forceMove(T)
 		robot_suit.r_leg = null
-		new /obj/item/stack/cable_coil(T, robot_suit.chest.wired)
+		new /obj/item/stack/cable_coil/power(T, robot_suit.chest.wired)
 		robot_suit.chest.forceMove(T)
 		robot_suit.chest.wired = 0
 		robot_suit.chest = null
@@ -764,7 +764,7 @@
 		new /obj/item/robot_suit(T)
 		new /obj/item/bodypart/l_leg/robot(T)
 		new /obj/item/bodypart/r_leg/robot(T)
-		new /obj/item/stack/cable_coil(T, 1)
+		new /obj/item/stack/cable_coil/power(T, 1)
 		new /obj/item/bodypart/chest/robot(T)
 		new /obj/item/bodypart/l_arm/robot(T)
 		new /obj/item/bodypart/r_arm/robot(T)

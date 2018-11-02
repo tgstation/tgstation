@@ -30,7 +30,7 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
+				  /obj/item/stack/cable_coil/power = 5)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/hudsunsecremoval
@@ -48,7 +48,7 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
+				  /obj/item/stack/cable_coil/power = 5)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/hudsunmedremoval
@@ -66,7 +66,7 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/science = 1,
 				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
+				  /obj/item/stack/cable_coil/power = 5)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/beergogglesremoval

@@ -334,7 +334,7 @@
 	var/datum/callback/event
 	var/turf/old_turf
 	var/obj/structure/cable/power/last_piece
-	var/obj/item/stack/cable_coil/cable
+	var/obj/item/stack/cable_coil/power/cable
 	var/max_cable = 1000
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/Initialize()
@@ -361,7 +361,7 @@
 		chassis.events.clearEvent("onMove",event)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/cable_layer/action(var/obj/item/stack/cable_coil/target)
+/obj/item/mecha_parts/mecha_equipment/cable_layer/action(var/obj/item/stack/cable_coil/power/target)
 	if(!action_checks(target))
 		return
 	if(istype(target) && target.amount)
@@ -394,7 +394,7 @@
 			m = min(m, cable.amount)
 			if(m)
 				use_cable(m)
-				new /obj/item/stack/cable_coil(get_turf(chassis), m)
+				new /obj/item/stack/cable_coil/power(get_turf(chassis), m)
 		else
 			occupant_message("There's no more cable on the reel.")
 	return

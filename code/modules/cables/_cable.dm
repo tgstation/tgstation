@@ -59,7 +59,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d1 = 0   // cable direction 1 (see above)
 	var/d2 = 1   // cable direction 2 (see above)
 	var/datum/powernet/powernet
-	var/obj/item/stack/cable_coil/stored
+	var/obj/item/stack/cable_coil/power/stored
 
 	var/cable_color = "red"
 	color = "#ff0000"
@@ -107,9 +107,9 @@ By design, d1 is the smallest direction and d2 is the highest
 	GLOB.cable_list += src //add it to the global cable list
 
 	if(d1)
-		stored = new/obj/item/stack/cable_coil(null,2,cable_color)
+		stored = new/obj/item/stack/cable_coil/power(null,2,cable_color)
 	else
-		stored = new/obj/item/stack/cable_coil(null,1,cable_color)
+		stored = new/obj/item/stack/cable_coil/power(null,1,cable_color)
 
 	var/list/cable_colors = GLOB.cable_colors
 	cable_color = param_color || cable_color || pick(cable_colors)
@@ -158,8 +158,8 @@ By design, d1 is the smallest direction and d2 is the highest
 		deconstruct()
 		return
 
-	else if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil/power))
+		var/obj/item/stack/cable_coil/power/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, "<span class='warning'>Not enough cable!</span>")
 			return
@@ -481,7 +481,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15)))
 
-/obj/item/stack/cable_coil
+/obj/item/stack/cable_coil/power
 	name = "cable coil"
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_amount = MAXCOIL
 	amount = MAXCOIL
-	merge_type = /obj/item/stack/cable_coil // This is here to let its children merge between themselves
+	merge_type = /obj/item/stack/cable_coil/power // This is here to let its children merge between themselves
 	item_color = "red"
 	desc = "A coil of insulated power cable."
 	throwforce = 0
@@ -507,24 +507,24 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	grind_results = list("copper" = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
 
-/obj/item/stack/cable_coil/cyborg
+/obj/item/stack/cable_coil/power/cyborg
 	is_cyborg = 1
 	materials = list()
 	cost = 1
 
-/obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
+/obj/item/stack/cable_coil/power/cyborg/attack_self(mob/user)
 	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
 	item_color = cable_color
 	update_icon()
 
-/obj/item/stack/cable_coil/suicide_act(mob/user)
+/obj/item/stack/cable_coil/power/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
 		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	else
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/cable_coil/power/Initialize(mapload, new_amount = null, param_color = null)
 	. = ..()
 
 	var/list/cable_colors = GLOB.cable_colors
@@ -543,7 +543,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 
 //you can use wires to heal robotics
-/obj/item/stack/cable_coil/attack(mob/living/carbon/human/H, mob/user)
+/obj/item/stack/cable_coil/power/attack(mob/living/carbon/human/H, mob/user)
 	if(!istype(H))
 		return ..()
 
@@ -560,23 +560,23 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		return ..()
 
 
-/obj/item/stack/cable_coil/update_icon()
+/obj/item/stack/cable_coil/power/update_icon()
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
 	name = "cable [amount < 3 ? "piece" : "coil"]"
 	color = null
 	add_atom_colour(item_color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/stack/cable_coil/attack_hand(mob/user)
+/obj/item/stack/cable_coil/power/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
-	var/obj/item/stack/cable_coil/new_cable = ..()
+	var/obj/item/stack/cable_coil/power/new_cable = ..()
 	if(istype(new_cable))
 		new_cable.item_color = item_color
 		new_cable.update_icon()
 
 //add cables to the stack
-/obj/item/stack/cable_coil/proc/give(extra)
+/obj/item/stack/cable_coil/power/proc/give(extra)
 	if(amount + extra > max_amount)
 		amount = max_amount
 	else
@@ -589,12 +589,12 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 // Cable laying procedures
 //////////////////////////////////////////////
 
-/obj/item/stack/cable_coil/proc/get_new_cable(location)
+/obj/item/stack/cable_coil/power/proc/get_new_cable(location)
 	var/path = /obj/structure/cable/power
 	return new path(location, item_color)
 
 // called when cable_coil is clicked on a turf
-/obj/item/stack/cable_coil/proc/place_turf(turf/T, mob/user, dirnew)
+/obj/item/stack/cable_coil/power/proc/place_turf(turf/T, mob/user, dirnew)
 	if(!isturf(user.loc))
 		return
 
@@ -646,14 +646,14 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 	if(C.shock(user, 50))
 		if(prob(50)) //fail
-			new /obj/item/stack/cable_coil(get_turf(C), 1, C.color)
+			new /obj/item/stack/cable_coil/power(get_turf(C), 1, C.color)
 			C.deconstruct()
 
 	return C
 
 // called when cable_coil is click on an installed obj/cable
 // or click on a turf that already contains a "node" cable
-/obj/item/stack/cable_coil/proc/cable_join(obj/structure/cable/power/C, mob/user, var/showerror = TRUE)
+/obj/item/stack/cable_coil/power/proc/cable_join(obj/structure/cable/power/C, mob/user, var/showerror = TRUE)
 	var/turf/U = user.loc
 	if(!isturf(U))
 		return
@@ -778,50 +778,50 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 // Misc.
 /////////////////////////////
 
-/obj/item/stack/cable_coil/red
+/obj/item/stack/cable_coil/power/red
 	item_color = "red"
 	color = "#ff0000"
 
-/obj/item/stack/cable_coil/yellow
+/obj/item/stack/cable_coil/power/yellow
 	item_color = "yellow"
 	color = "#ffff00"
 
-/obj/item/stack/cable_coil/blue
+/obj/item/stack/cable_coil/power/blue
 	item_color = "blue"
 	color = "#1919c8"
 
-/obj/item/stack/cable_coil/green
+/obj/item/stack/cable_coil/power/green
 	item_color = "green"
 	color = "#00aa00"
 
-/obj/item/stack/cable_coil/pink
+/obj/item/stack/cable_coil/power/pink
 	item_color = "pink"
 	color = "#ff3ccd"
 
-/obj/item/stack/cable_coil/orange
+/obj/item/stack/cable_coil/power/orange
 	item_color = "orange"
 	color = "#ff8000"
 
-/obj/item/stack/cable_coil/cyan
+/obj/item/stack/cable_coil/power/cyan
 	item_color = "cyan"
 	color = "#00ffff"
 
-/obj/item/stack/cable_coil/white
+/obj/item/stack/cable_coil/power/white
 	item_color = "white"
 
-/obj/item/stack/cable_coil/random
+/obj/item/stack/cable_coil/power/random
 	item_color = null
 	color = "#ffffff"
 
 
-/obj/item/stack/cable_coil/random/five
+/obj/item/stack/cable_coil/power/random/five
 	amount = 5
 
-/obj/item/stack/cable_coil/cut
+/obj/item/stack/cable_coil/power/cut
 	amount = null
 	icon_state = "coil2"
 
-/obj/item/stack/cable_coil/cut/Initialize(mapload)
+/obj/item/stack/cable_coil/power/cut/Initialize(mapload)
 	. = ..()
 	if(!amount)
 		amount = rand(1,2)
@@ -829,37 +829,37 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	pixel_y = rand(-2,2)
 	update_icon()
 
-/obj/item/stack/cable_coil/cut/red
+/obj/item/stack/cable_coil/power/cut/red
 	item_color = "red"
 	color = "#ff0000"
 
-/obj/item/stack/cable_coil/cut/yellow
+/obj/item/stack/cable_coil/power/cut/yellow
 	item_color = "yellow"
 	color = "#ffff00"
 
-/obj/item/stack/cable_coil/cut/blue
+/obj/item/stack/cable_coil/power/cut/blue
 	item_color = "blue"
 	color = "#1919c8"
 
-/obj/item/stack/cable_coil/cut/green
+/obj/item/stack/cable_coil/power/cut/green
 	item_color = "green"
 	color = "#00aa00"
 
-/obj/item/stack/cable_coil/cut/pink
+/obj/item/stack/cable_coil/power/cut/pink
 	item_color = "pink"
 	color = "#ff3ccd"
 
-/obj/item/stack/cable_coil/cut/orange
+/obj/item/stack/cable_coil/power/cut/orange
 	item_color = "orange"
 	color = "#ff8000"
 
-/obj/item/stack/cable_coil/cut/cyan
+/obj/item/stack/cable_coil/power/cut/cyan
 	item_color = "cyan"
 	color = "#00ffff"
 
-/obj/item/stack/cable_coil/cut/white
+/obj/item/stack/cable_coil/power/cut/white
 	item_color = "white"
 
-/obj/item/stack/cable_coil/cut/random
+/obj/item/stack/cable_coil/power/cut/random
 	item_color = null
 	color = "#ffffff"

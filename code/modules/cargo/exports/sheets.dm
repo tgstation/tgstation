@@ -91,7 +91,7 @@
 /datum/export/stack/cable
 	cost = 0.2
 	unit_name = "cable piece"
-	export_types = list(/obj/item/stack/cable_coil)
+	export_types = list(/obj/item/stack/cable_coil/power)
 
 // Weird Stuff
 

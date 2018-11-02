@@ -45,7 +45,7 @@
 		/obj/item/wrench,
 		/obj/item/multitool,
 		/obj/item/flashlight,
-		/obj/item/stack/cable_coil,
+		/obj/item/stack/cable_coil/power,
 		/obj/item/t_scanner,
 		/obj/item/analyzer,
 		/obj/item/geiger_counter,
@@ -69,7 +69,7 @@
 	new /obj/item/crowbar/power(src)
 	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil/power(src,30,pick("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/analyzer(src)
 	//much roomier now that we've managed to remove two tools
@@ -81,7 +81,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil/power(src,30,pick("red","yellow","orange"))
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -90,7 +90,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil/power(src,30,pick("red","yellow","orange"))
 
 
 /obj/item/storage/belt/utility/atmostech/PopulateContents()
@@ -109,7 +109,7 @@
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src, 30, "yellow")
+	new /obj/item/stack/cable_coil/power(src, 30, "yellow")
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -229,7 +229,7 @@
 		/obj/item/wrench,
 		/obj/item/multitool,
 		/obj/item/flashlight,
-		/obj/item/stack/cable_coil,
+		/obj/item/stack/cable_coil/power,
 		/obj/item/analyzer,
 		/obj/item/extinguisher/mini,
 		/obj/item/radio,
@@ -388,7 +388,7 @@
 	new /obj/item/crowbar/abductor(src)
 	new /obj/item/wirecutters/abductor(src)
 	new /obj/item/multitool/abductor(src)
-	new /obj/item/stack/cable_coil(src,30,"white")
+	new /obj/item/stack/cable_coil/power(src,30,"white")
 
 /obj/item/storage/belt/military/army
 	name = "army belt"

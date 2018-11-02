@@ -47,8 +47,8 @@
 				return
 		if(2)
 			// State 2
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/C = W
+			if(istype(W, /obj/item/stack/cable_coil/power))
+				var/obj/item/stack/cable_coil/power/C = W
 				if(C.use(2))
 					to_chat(user, "<span class='notice'>You add wires to the assembly.</span>")
 					state = 3
@@ -119,7 +119,7 @@
 	if(state != 3)
 		return FALSE
 
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	new /obj/item/stack/cable_coil/power(drop_location(), 2)
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You cut the wires from the circuits.</span>")
 	state = 2
