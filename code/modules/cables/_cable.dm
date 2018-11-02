@@ -385,6 +385,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	grind_results = list("copper" = 2) //2 copper per cable in the coil. Also, great superconductor..
 	usesound = 'sound/items/deconstruct.ogg'
 	var/can_change_color = FALSE
+	var/cable_path = /obj/structure/cable
 
 /obj/item/stack/cable_coil/attack_self(mob/user)
 	. = ..()
@@ -401,19 +402,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
 
-/obj/item/stack/cable_coil/power
-	merge_type = /obj/item/stack/cable_coil/power
-	desc = "A coil of insulated power cable."
-
-/obj/item/stack/cable_coil/power/cyborg
-	is_cyborg = TRUE
-	materials = list()
-	can_change_color = TRUE
-	cost = 1
-
-
-
-/obj/item/stack/cable_coil/power/Initialize(mapload, new_amount = null, param_color = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null, param_color = null)
 	. = ..()
 
 	var/list/cable_colors = GLOB.cable_colors
@@ -425,29 +414,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	pixel_y = rand(-2,2)
 	update_icon()
 	recipes = GLOB.cable_coil_recipes
-
-///////////////////////////////////
-// General procedures
-///////////////////////////////////
-
-
-//you can use wires to heal robotics
-/obj/item/stack/cable_coil/power/attack(mob/living/carbon/human/H, mob/user)
-	if(!istype(H))
-		return ..()
-
-	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
-	if(affecting && affecting.status == BODYPART_ROBOTIC)
-		if(user == H)
-			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H]'s [affecting.name].</span>")
-			if(!do_mob(user, H, 50))
-				return
-		if(item_heal_robotic(H, user, 0, 15))
-			use(1)
-		return
-	else
-		return ..()
-
 
 /obj/item/stack/cable_coil/power/update_icon()
 	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
@@ -471,8 +437,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	else
 		amount += extra
 	update_icon()
-
-
 
 ///////////////////////////////////////////////
 // Cable laying procedures
@@ -662,93 +626,3 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 
 		C.denode()// this call may have disconnected some cables that terminated on the centre of the turf, if so split the powernets.
 		return
-
-//////////////////////////////
-// Misc.
-/////////////////////////////
-
-/obj/item/stack/cable_coil/power/red
-	item_color = "red"
-	color = "#ff0000"
-
-/obj/item/stack/cable_coil/power/yellow
-	item_color = "yellow"
-	color = "#ffff00"
-
-/obj/item/stack/cable_coil/power/blue
-	item_color = "blue"
-	color = "#1919c8"
-
-/obj/item/stack/cable_coil/power/green
-	item_color = "green"
-	color = "#00aa00"
-
-/obj/item/stack/cable_coil/power/pink
-	item_color = "pink"
-	color = "#ff3ccd"
-
-/obj/item/stack/cable_coil/power/orange
-	item_color = "orange"
-	color = "#ff8000"
-
-/obj/item/stack/cable_coil/power/cyan
-	item_color = "cyan"
-	color = "#00ffff"
-
-/obj/item/stack/cable_coil/power/white
-	item_color = "white"
-
-/obj/item/stack/cable_coil/power/random
-	item_color = null
-	color = "#ffffff"
-
-
-/obj/item/stack/cable_coil/power/random/five
-	amount = 5
-
-/obj/item/stack/cable_coil/power/cut
-	amount = null
-	icon_state = "coil2"
-
-/obj/item/stack/cable_coil/power/cut/Initialize(mapload)
-	. = ..()
-	if(!amount)
-		amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
-	update_icon()
-
-/obj/item/stack/cable_coil/power/cut/red
-	item_color = "red"
-	color = "#ff0000"
-
-/obj/item/stack/cable_coil/power/cut/yellow
-	item_color = "yellow"
-	color = "#ffff00"
-
-/obj/item/stack/cable_coil/power/cut/blue
-	item_color = "blue"
-	color = "#1919c8"
-
-/obj/item/stack/cable_coil/power/cut/green
-	item_color = "green"
-	color = "#00aa00"
-
-/obj/item/stack/cable_coil/power/cut/pink
-	item_color = "pink"
-	color = "#ff3ccd"
-
-/obj/item/stack/cable_coil/power/cut/orange
-	item_color = "orange"
-	color = "#ff8000"
-
-/obj/item/stack/cable_coil/power/cut/cyan
-	item_color = "cyan"
-	color = "#00ffff"
-
-/obj/item/stack/cable_coil/power/cut/white
-	item_color = "white"
-
-/obj/item/stack/cable_coil/power/cut/random
-	item_color = null
-	color = "#ffffff"
