@@ -354,7 +354,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigaroff"
 	smoketime = 300 // 11 minutes
 	chem_volume = 40
-	list_reagents = list("nicotine" = 30)
+	list_reagents = list("nicotine" = 25)
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -364,7 +364,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	smoketime = 600 // 20 minutes
 	chem_volume = 80
-	list_reagents =list("nicotine" = 50)
+	list_reagents =list("nicotine" = 40)
 
 /obj/item/clothing/mask/cigarette/cigar/havana
 	name = "premium Havanian cigar"
@@ -374,7 +374,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "cigar2off"
 	smoketime = 900 // 30 minutes
 	chem_volume = 50
-	list_reagents =list("nicotine" = 40)
+	list_reagents =list("nicotine" = 15)
 
 /obj/item/cigbutt
 	name = "cigarette butt"
