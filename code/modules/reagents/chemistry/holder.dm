@@ -168,17 +168,20 @@
 	if(amount < 0)
 		return
 
+	var/atom/target_atom
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
+		target_atom = R.my_atom
 	else
 		if(!target.reagents)
 			return
 		R = target.reagents
+		target_atom = target
 
-	if(transfered_by)
-		target.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-		log_combat(transfered_by, target, "transferred reagents ([log_list()]) from [my_atom] to")
+	if(transfered_by && target_atom)
+		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
+		log_combat(transfered_by, target_atom, "transferred reagents ([log_list()]) from [my_atom] to")
 
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
