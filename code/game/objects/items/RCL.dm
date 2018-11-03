@@ -5,7 +5,7 @@
 	icon_state = "rcl-0"
 	item_state = "rcl-0"
 	var/obj/structure/cable/power/last
-	var/obj/item/stack/cable_coil/power/loaded
+	var/obj/item/stack/cable_coil/loaded
 	opacity = FALSE
 	force = 5 //Plastic is soft
 	throwforce = 5
@@ -23,8 +23,8 @@
 	var/datum/component/mobhook
 
 /obj/item/twohanded/rcl/power/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/cable_coil/power))
-		var/obj/item/stack/cable_coil/power/C = W
+	if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
 
 		if(!loaded)
 			if(!user.transferItemToLoc(W, src))
@@ -34,7 +34,9 @@
 				loaded = W //W.loc is src at this point.
 				loaded.max_amount = max_amount //We store a lot.
 				return
-
+		else if(loaded.type != W.type)
+			to_chat(user, "<span class='warning'>[W] is not the same type of cable as what's loaded!</span>")
+			return
 		if(loaded.amount < max_amount)
 			var/transfer_amount = min(max_amount - loaded.amount, C.amount)
 			C.use(transfer_amount)
@@ -52,10 +54,10 @@
 				var/diff = loaded.amount % 30
 				if(diff)
 					loaded.use(diff)
-					new /obj/item/stack/cable_coil/power(get_turf(user), diff)
+					new loaded.type(get_turf(user), diff)
 				else
 					loaded.use(30)
-					new /obj/item/stack/cable_coil/power(get_turf(user), 30)
+					new loaded.type(get_turf(user), 30)
 			qdel(src)
 			return
 
@@ -64,10 +66,10 @@
 			var/diff = loaded.amount % 30
 			if(diff)
 				loaded.use(diff)
-				new /obj/item/stack/cable_coil/power(get_turf(user), diff)
+				new loaded.type(get_turf(user), diff)
 			else
 				loaded.use(30)
-				new /obj/item/stack/cable_coil/power(get_turf(user), 30)
+				new loaded.type(get_turf(user), 30)
 		loaded.max_amount = initial(loaded.max_amount)
 		if(!user.put_in_hands(loaded))
 			loaded.forceMove(get_turf(user))

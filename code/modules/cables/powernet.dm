@@ -3,7 +3,7 @@
 // each contiguous network of cables & nodes
 /////////////////////////////////////
 /datum/cablenet/power
-	var/list/machines = list()		// all connected machines
+	var/list/obj/machinery/power/machines = list()		// all connected machines
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
@@ -18,18 +18,18 @@
 
 /datum/cablenet/power/Destroy()
 	//Go away references, you suck!
-	for(var/obj/structure/cable/power/C in cables)
-		C.powernet = null
-	cables.Cut()
-	for(var/obj/machinery/power/M in nodes)
+	for(var/obj/machinery/power/M in machines)
 		M.powernet = null
-	nodes.Cut()
-
+	machines.Cut()
 	SSmachines.powernets -= src
 	return ..()
 
 /datum/cablenet/power/is_empty()
 	return ..() && !machines.len
+
+/datum/cablenet/power/propagate_network()
+	. = ..()
+
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
@@ -39,7 +39,6 @@
 	M.powernet = null
 	if(is_empty())//the powernet is now empty...
 		qdel(src)///... delete it
-
 
 //add a power machine to the current powernet
 //Warning : this proc DON'T check if the machine exists
