@@ -139,62 +139,33 @@
 /obj/item/gun/ballistic/rocketlauncher/update_icon()
 	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"
 
-/obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/user)
+/obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
+	user.visible_message("<span class='warning'>[user] aims [src] at the ground! It looks like they're about to perform a sick rocket jump!<span>", \
+		"<span class='userdanger'>You aim [src] at the ground, ready to perform a bisnasty rocket jump...</span>")
 	if(can_shoot())
-		handle_suicide(user, user, null, TRUE)
+		if(chambered && chambered.BB)
+			chambered.BB.damage *= 5
+		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, 1, 5)
+		user.Stun(75)
+		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
+		sleep(70)
+		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)
+		sleep(5)
+		process_fire(user, user, TRUE)
 		if(!QDELETED(user)) //if they weren't gibbed by the explosion, take care of them for good.
 			user.gib()
 		return MANUAL_SUICIDE
 	else
-		user.visible_message("<span class='warning'>[user] points [src] at [user.p_their()] head, ready to pull the trigger. This is gonna be messy.</span>", \
-			"<span class='userdanger'>You point [src] at your head, ready to pull the trigger. This is gonna be messy.</span>")
 		sleep(5)
 		shoot_with_empty_chamber(user)
 		sleep(20)
-		user.visible_message("<span class='warning'>[user]'s looks about the room realizing [user.p_theyre()] still there. [user.p_they(TRUE)] proceed to shove [src] further down their throat and choke [user.p_them()]self with it!</span>", \
-			"<span class='userdanger'>You look around after realizing you're still here, then proceed to choke yourself with [src]!</span>")
+		user.visible_message("<span class='warning'>[user]'s looks about the room realizing [user.p_theyre()] still there. [user.p_they(TRUE)] proceed to shove [src] down their throat and choke [user.p_them()]self with it!</span>", \
+			"<span class='userdanger'>You look around after realizing you're still here, then proceed to choke yourself to death with [src]!</span>")
 		sleep(20)
 		return OXYLOSS
 
-/obj/item/gun/ballistic/rocketlauncher/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
-	if(!ishuman(user) || !ishuman(target))
-		return
 
-	if(semicd)
-		return
 
-	if(user == target)
-		user.visible_message("<span class='warning'>[user] aims [src] at the ground! It looks like they're about to perform a sick rocket jump!<span>", \
-			"<span class='userdanger'>You aim [src] at the ground, ready to perform a bisnasty rocket jump...</span>")
-	else
-		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger. This is gonna be messy.</span>", \
-			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger. This is gonna be messy.</span>")
 
-	semicd = TRUE
+
 	
-	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
-		if(user)
-			if(user == target)
-				user.visible_message("<span class='notice'>[user] decided not to perform a sick rocket jump.</span>")
-			else if(target && target.Adjacent(user))
-				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
-		semicd = FALSE
-		return
-
-	semicd = FALSE
-
-	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[(user == target) ? "You pull" : "[user] pulls"] the trigger!</span>")
-
-	if(chambered && chambered.BB)
-		chambered.BB.damage *= 5
-	playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, 1, 5)
-	M = matrix(pod.transform) //Make another matrix based on the pod
-	M.Turn(rotation) //Turn the matrix
-	pod.transform = M
-	user.Paralyze(75)
-	user.emote("flip")
-	animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING) //Animate our rising pod
-	sleep(70)
-	animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING) //Animate our rising pod
-	sleep(5)
-	process_fire(target, user, TRUE, params)
