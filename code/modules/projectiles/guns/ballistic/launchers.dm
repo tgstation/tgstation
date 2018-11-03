@@ -140,11 +140,9 @@
 	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
-	user.visible_message("<span class='warning'>[user] aims [src] at the ground! It looks like they're about to perform a sick rocket jump!<span>", \
+	user.visible_message("<span class='warning'>[user] aims [src] at the ground! It looks like [user.p_theyre()] about to perform a sick rocket jump!<span>", \
 		"<span class='userdanger'>You aim [src] at the ground, ready to perform a bisnasty rocket jump...</span>")
 	if(can_shoot())
-		if(chambered && chambered.BB)
-			chambered.BB.damage *= 5
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, 1, 5)
 		user.Stun(75)
 		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
