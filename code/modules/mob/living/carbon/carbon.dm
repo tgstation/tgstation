@@ -457,10 +457,13 @@
 		if(message)
 			visible_message("<span class='danger'>[src] throws up all over [p_them()]self!</span>", \
 							"<span class='userdanger'>You throw up all over yourself!</span>")
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomitself)
 		distance = 0
 	else
 		if(message)
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
+			if(!isflyperson(src))
+				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomit)
 
 	if(stun)
 		Paralyze(80)
