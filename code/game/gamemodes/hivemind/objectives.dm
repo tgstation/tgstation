@@ -58,3 +58,39 @@
 		if(M == target)
 			return considered_alive(target)
 	return FALSE
+
+/datum/objective/hivemind/biggest
+	explanation_text = "End the round with more vessels than any other hivemind host."
+
+/datum/objective/hivemind/biggest/check_completion()
+	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
+	if(!host)
+		return FALSE
+	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
+		if(H == host)
+			continue
+		if(H.hive_size >= host.hive_size)
+			return FALSE
+	return TRUE
+
+/datum/objective/hivemind/assimilate_common
+	explanation_text = "This is a bug. Error:HIVE3"
+
+/datum/objective/hivemind/assimilate_common/update_explanation_text()
+	if(target)
+		explanation_text = "Ensure that you are the only host assimilating [target.name] at the end of the round."
+	else
+		explanation_text = "Free Objective."
+
+/datum/objective/hivemind/assimilate_common/check_completion()
+	var/datum/antagonist/hivemind/host = owner.has_antag_datum(/datum/antagonist/hivemind)
+	if(!target)
+		return TRUE
+	if(!host || !target.current || !host.hivemembers.Find(target.current))
+		return FALSE
+	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
+		if(H == host)
+			continue
+		if(H.hivemembers.Find(target.current))
+			return FALSE
+	return TRUE

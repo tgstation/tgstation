@@ -36,6 +36,9 @@
 
 	var/datum/component/orbiter/orbiters
 
+	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
+	var/rad_insulation = RAD_NO_INSULATION
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -205,10 +208,10 @@
 /atom/proc/is_open_container()
 	return is_refillable() && is_drainable()
 
-/atom/proc/is_injectable(allowmobs = TRUE)
+/atom/proc/is_injectable(mob/user, allowmobs = TRUE)
 	return reagents && (container_type & (INJECTABLE | REFILLABLE))
 
-/atom/proc/is_drawable(allowmobs = TRUE)
+/atom/proc/is_drawable(mob/user, allowmobs = TRUE)
 	return reagents && (container_type & (DRAWABLE | DRAINABLE))
 
 /atom/proc/is_refillable()
@@ -291,8 +294,11 @@
 		to_chat(user, "<span class='warning'>You can't move while buckled to [src]!</span>")
 	return
 
+/atom/proc/prevent_content_explosion()
+	return FALSE
+
 /atom/proc/contents_explosion(severity, target)
-	return
+	return //For handling the effects of explosions on contents that would not normally be effected
 
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
@@ -641,6 +647,8 @@
 			log_game(log_text)
 		if(LOG_GAME)
 			log_game(log_text)
+		if(LOG_MECHA)
+			log_mecha(log_text)
 		else
 			stack_trace("Invalid individual logging type: [message_type]. Defaulting to [LOG_GAME] (LOG_GAME).")
 			log_game(log_text)

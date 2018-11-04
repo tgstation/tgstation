@@ -29,9 +29,8 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
-	Stun(22, ignore_canstun = TRUE)
+	notransform = TRUE
+	Paralyze(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -55,7 +54,7 @@
 		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
 
 	if(suiciding)
-		O.suiciding = suiciding
+		O.set_suicide(suiciding)
 	if(hellbound)
 		O.hellbound = hellbound
 	O.a_intent = INTENT_HARM
@@ -183,9 +182,9 @@
 
 
 	//Make mob invisible and spawn animation
-	notransform = 1
-	canmove = 0
-	Stun(22, ignore_canstun = TRUE)
+	notransform = TRUE
+	Paralyze(22, ignore_canstun = TRUE)
+
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
@@ -212,7 +211,7 @@
 		O.domutcheck()
 
 	if(suiciding)
-		O.suiciding = suiciding
+		O.set_suicide(suiciding)
 	if(hellbound)
 		O.hellbound = hellbound
 
@@ -302,7 +301,7 @@
 
 	qdel(src)
 
-/mob/living/carbon/human/AIize()
+/mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
 		return
 	for(var/t in bodyparts)
@@ -310,19 +309,19 @@
 
 	return ..()
 
-/mob/living/carbon/AIize()
+/mob/living/carbon/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
 		return
+	notransform = TRUE
+	Paralyze(1, ignore_canstun = TRUE)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/proc/AIize(transfer_after = TRUE)
+/mob/proc/AIize(transfer_after = TRUE, client/preference_source)
 	var/list/turf/landmark_loc = list()
 	for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
@@ -349,19 +348,23 @@
 
 	. = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 
+	if(preference_source)
+		apply_pref_name("ai",preference_source)
+
 	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
 	if (notransform)
 		return
+	notransform = TRUE
+	Paralyze(1, ignore_canstun = TRUE)
+
 	for(var/obj/item/W in src)
 		if(delete_items)
 			qdel(W)
 		else
 			dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -372,6 +375,9 @@
 	R.gender = gender
 	R.invisibility = 0
 
+	if(client)
+		R.updatename(client)
+
 	if(mind)		//TODO
 		if(!transfer_after)
 			mind.active = FALSE
@@ -379,10 +385,8 @@
 	else if(transfer_after)
 		R.key = key
 
-	R.apply_pref_name("cyborg")
-
 	if(R.mmi)
-		R.mmi.name = "Man-Machine Interface: [real_name]"
+		R.mmi.name = "[initial(R.mmi.name)]: [real_name]"
 		if(R.mmi.brain)
 			R.mmi.brain.name = "[real_name]'s brain"
 		if(R.mmi.brainmob)
@@ -399,11 +403,11 @@
 /mob/living/carbon/human/proc/Alienize()
 	if (notransform)
 		return
+	notransform = TRUE
+	mobility_flags = NONE
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -429,11 +433,11 @@
 /mob/living/carbon/human/proc/slimeize(reproduce as num)
 	if (notransform)
 		return
+	notransform = TRUE
+	mobility_flags = NONE
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -468,11 +472,11 @@
 /mob/living/carbon/human/proc/corgize()
 	if (notransform)
 		return
+	notransform = TRUE
+	Paralyze(1, ignore_canstun = TRUE)
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)	//this really should not be necessary
@@ -489,6 +493,8 @@
 /mob/living/carbon/proc/gorillize()
 	if(notransform)
 		return
+	notransform = TRUE
+	Paralyze(1, ignore_canstun = TRUE)
 
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
 
@@ -498,8 +504,6 @@
 		dropItemToGround(W, TRUE)
 
 	regenerate_icons()
-	notransform = TRUE
-	canmove = FALSE
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
@@ -523,12 +527,13 @@
 
 	if(notransform)
 		return
+	notransform = TRUE
+	Paralyze(1, ignore_canstun = TRUE)
+
 	for(var/obj/item/W in src)
 		dropItemToGround(W)
 
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 

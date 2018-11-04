@@ -132,7 +132,7 @@
 						if(nutri_check.nutriment_factor >0)
 							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
 							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
-			reagents.trans_to(H, reagents.total_volume)
+			reagents.trans_to(H, reagents.total_volume, transfered_by = user)
 			qdel(src)
 
 /obj/effect/decal/cleanable/vomit/old
@@ -203,20 +203,20 @@
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
 	desc = "The herpes of arts and crafts."
-	icon = 'icons/effects/tile_effects.dmi'
+	icon = 'icons/effects/atmospherics.dmi'
 	gender = NEUTER
 
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"
-	icon_state = "plasma"
+	icon_state = "plasma_old"
 
 /obj/effect/decal/cleanable/glitter/white
 	name = "white glitter"
-	icon_state = "nitrous_oxide"
+	icon_state = "nitrous_oxide_old"
 
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
-	icon_state = "freon"
+	icon_state = "freon_old"
 
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"

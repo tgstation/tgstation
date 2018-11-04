@@ -113,9 +113,19 @@
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	..()
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
+		return
+
 	if(dna)
-		dna.species.handle_fire(src)
+		. = dna.species.handle_fire(src) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
+
+	if(!last_fire_update)
+		last_fire_update = fire_stacks
+	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
+		last_fire_update = fire_stacks
+		update_fire()
+
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
@@ -137,6 +147,7 @@
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(!dna || !dna.species.ExtinguishMob(src))
+		last_fire_update = null
 		..()
 //END FIRE CODE
 

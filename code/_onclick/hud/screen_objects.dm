@@ -157,7 +157,7 @@
 		var/image/item_overlay = image(holding)
 		item_overlay.alpha = 92
 
-		if(!user.can_equip(holding, slot_id, disable_warning = TRUE))
+		if(!user.can_equip(holding, slot_id, TRUE))
 			item_overlay.color = "#FF0000"
 		else
 			item_overlay.color = "#00ff00"
@@ -648,6 +648,11 @@
 /obj/screen/mood
 	name = "mood"
 	icon_state = "mood5"
+	screen_loc = ui_mood
+
+/obj/screen/sanity
+	name = "sanity"
+	icon_state = "sanity3"
 	screen_loc = ui_mood
 
 /obj/screen/splash

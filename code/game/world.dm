@@ -97,6 +97,7 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
+	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
@@ -192,7 +193,6 @@ GLOBAL_VAR(restart_counter)
 	qdel(src)	//shut it down
 
 /world/Reboot(reason = 0, fast_track = FALSE)
-	TgsReboot()
 	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
@@ -201,6 +201,8 @@ GLOBAL_VAR(restart_counter)
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
+	
+	TgsReboot()
 
 	if(TEST_RUN_PARAMETER in params)
 		FinishTestRun()

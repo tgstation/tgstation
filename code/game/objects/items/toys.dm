@@ -61,7 +61,7 @@
 		else if(reagents.total_volume >= 10)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		else
-			A.reagents.trans_to(src, 10)
+			A.reagents.trans_to(src, 10, transfered_by = user)
 			to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_icon()
@@ -76,7 +76,7 @@
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
-				I.reagents.trans_to(src, 10)
+				I.reagents.trans_to(src, 10, transfered_by = user)
 				update_icon()
 	else if(I.is_sharp())
 		balloon_burst()
@@ -677,8 +677,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
-	if(user.lying)
-		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 	var/choice = null
 	if(cards.len == 0)
 		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
@@ -745,7 +747,7 @@
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/living/M = usr
-	if(!istype(M) || usr.incapacitated() || usr.lying)
+	if(!istype(M) || !(M.mobility_flags & MOBILITY_PICKUP))
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
@@ -791,9 +793,11 @@
 /obj/item/toy/cards/cardhand/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.stat || !ishuman(usr) || !usr.canmove)
+	if(usr.stat || !ishuman(usr))
 		return
 	var/mob/living/carbon/human/cardUser = usr
+	if(!(cardUser.mobility_flags & MOBILITY_USE))
+		return
 	var/O = src
 	if(href_list["pick"])
 		if (cardUser.is_holding(src))
@@ -932,8 +936,8 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
+	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
 

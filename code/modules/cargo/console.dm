@@ -173,7 +173,7 @@
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"
-				
+
 			var/datum/bank_account/account
 			if(self_paid)
 				if(ishuman(usr))
@@ -185,7 +185,7 @@
 						return
 
 			var/reason = ""
-			if(requestonly)
+			if(requestonly && !self_paid)
 				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
@@ -193,7 +193,7 @@
 			var/turf/T = get_turf(src)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if(requestonly)
+			if(requestonly && !self_paid)
 				SSshuttle.requestlist += SO
 			else
 				SSshuttle.shoppinglist += SO

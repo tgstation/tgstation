@@ -188,7 +188,12 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-
+	
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
+		if(ghost.mind && ghost.mind.current == M && ghost.client)  //the dead mobs list can contain clientless mobs
+			ghost.reenter_corpse()
+			break
+	
 	if(!M.mind || !M.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
@@ -261,7 +266,7 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Knockdown(40)
+			target.Paralyze(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
@@ -380,7 +385,7 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.canmove = TRUE
+	user.update_mobility()
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -389,7 +394,7 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = FALSE
+	user.mobility_flags &= ~MOBILITY_MOVE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -405,7 +410,7 @@
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			user.forceMove(potential_T)
-			user.canmove = 0
+			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break
 		breakout += 1

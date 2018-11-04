@@ -286,7 +286,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
-	for(var/mob/living/i_scream in GetAllContents())
+	for(var/i_scream in GetAllContents(/mob/living))
 		var/obj/item/reagent_containers/food/snacks/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)
@@ -343,8 +343,12 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		var/mob/M = O
 		if(M.buckled)
 			return
-	if(!ismob(user) || user.lying || user.incapacitated())
+	if(!ismob(user) || user.incapacitated())
 		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			return
 	O.forceMove(src.loc)
 	if (user != O)
 		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")

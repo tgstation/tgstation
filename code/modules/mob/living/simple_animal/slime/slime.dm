@@ -61,6 +61,8 @@
 	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
+	
+	do_footstep = TRUE
 
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
@@ -161,8 +163,8 @@
 	var/mod = 0
 	if(bodytemperature >= 330.23) // 135 F or 57.08 C
 		mod = -1	// slimes become supercharged at high temperatures
-	else if(bodytemperature < 183.222)
-		mod = (283.222 - bodytemperature) / 10 * 1.75
+	else if(bodytemperature < 283.222)
+		mod = ((283.222 - bodytemperature) / 10) * 1.75
 	if(mod)
 		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
 
@@ -456,13 +458,13 @@
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
-		canmove = 0
+		mobility_flags &= ~MOBILITY_MOVE
 		if(user)
 			step_away(src,user,15)
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		update_canmove()
+		update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

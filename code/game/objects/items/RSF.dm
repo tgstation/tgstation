@@ -65,14 +65,14 @@ RSF
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 
-	if(matter < 1)
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
-		return
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 200)
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 			return
+	else if (matter < 1)
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
+		return
 
 	var/turf/T = get_turf(A)
 	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)

@@ -106,7 +106,7 @@
 		user.visible_message("<span class='warning'>[user] begins to cut open [src].</span>",\
 			"<span class='notice'>You begin to cut open [src]...</span>")
 		if(do_after(user, 54, target = src))
-			drop_organs(user)
+			drop_organs(user, TRUE)
 	else
 		return ..()
 
@@ -118,7 +118,7 @@
 	pixel_y = rand(-3, 3)
 
 //empties the bodypart from its organs and other things inside it
-/obj/item/bodypart/proc/drop_organs(mob/user)
+/obj/item/bodypart/proc/drop_organs(mob/user, violent_removal)
 	var/turf/T = get_turf(src)
 	if(status != BODYPART_ROBOTIC)
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
@@ -142,9 +142,13 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
 	if(owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
+
+	if(required_status && status != required_status)
+		return FALSE
+
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
 	brute = round(max(brute * dmg_mlt, 0),DAMAGE_PRECISION)
 	burn = round(max(burn * dmg_mlt, 0),DAMAGE_PRECISION)
@@ -229,7 +233,7 @@
 	disabled = new_disabled
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
-	owner.update_canmove()
+	owner.update_mobility()
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
@@ -435,13 +439,12 @@
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/Destroy()
-	if(cavity_item)
-		qdel(cavity_item)
+	QDEL_NULL(cavity_item)
 	return ..()
 
-/obj/item/bodypart/chest/drop_organs(mob/user)
+/obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
 	if(cavity_item)
-		cavity_item.forceMove(user.loc)
+		cavity_item.forceMove(drop_location())
 		cavity_item = null
 	..()
 

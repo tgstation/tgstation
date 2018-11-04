@@ -122,7 +122,11 @@
 	if(!on || !(nodes[1] && nodes[2] && nodes[3]) || !is_operational())
 		return
 
+	//Early return
 	var/datum/gas_mixture/air1 = airs[1]
+	if(!air1 || air1.temperature <= 0)
+		return
+
 	var/datum/gas_mixture/air2 = airs[2]
 	var/datum/gas_mixture/air3 = airs[3]
 
@@ -132,43 +136,40 @@
 		//No need to transfer if target is already full!
 		return
 
-	//Calculate necessary moles to transfer using PV=nRT
-
-	var/pressure_delta = target_pressure - output_starting_pressure
-	var/transfer_moles
-
-	if(air1.temperature > 0)
-		transfer_moles = pressure_delta*air3.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+	//Calculate necessary moles to transfer using PV=nRT, no need to create a new var that will be used only once (delta)
+	var/transfer_moles = (target_pressure - output_starting_pressure)*air3.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
 	//Actually transfer the gas
 
-	if(transfer_moles > 0)
-		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
+	if(transfer_moles <= 0)
+		return
 
-		if(!removed)
-			return
+	var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 
-		var/filtering = TRUE
-		if(!ispath(filter_type))
-			if(filter_type)
-				filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
-			else
-				filtering = FALSE
+	if(!removed)
+		return
 
-		if(filtering && removed.gases[filter_type])
-			var/datum/gas_mixture/filtered_out = new
+	var/filtering = TRUE
+	if(!ispath(filter_type))
+		if(filter_type)
+			filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
+		else
+			filtering = FALSE
 
-			filtered_out.temperature = removed.temperature
-			filtered_out.add_gas(filter_type)
-			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
+	if(filtering && removed.gases[filter_type])
+		var/datum/gas_mixture/filtered_out = new
 
-			removed.gases[filter_type][MOLES] = 0
-			removed.garbage_collect()
+		filtered_out.temperature = removed.temperature
+		filtered_out.add_gas(filter_type)
+		filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 
-			var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
-			target.merge(filtered_out)
+		removed.gases[filter_type][MOLES] = 0
+		removed.garbage_collect()
 
-		air3.merge(removed)
+		var/datum/gas_mixture/target = (air2.return_pressure() < target_pressure ? air2 : air1) //if there's no room for the filtered gas; just leave it in air1
+		target.merge(filtered_out)
+
+	air3.merge(removed)
 
 	update_parents()
 

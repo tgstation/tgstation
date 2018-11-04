@@ -148,7 +148,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!proximity || lit) //can't dip if cigarette is lit (it will heat the reagents in the glass instead)
 		return
 	if(istype(glass))	//you can dip cigarettes into beakers
-		if(glass.reagents.trans_to(src, chem_volume))	//if reagents were transfered, show the message
+		if(glass.reagents.trans_to(src, chem_volume, transfered_by = user))	//if reagents were transfered, show the message
 			to_chat(user, "<span class='notice'>You dip \the [src] into \the [glass].</span>")
 		else			//if not, either the beaker was empty, or the cigarette was full
 			if(!glass.reagents.total_volume)
@@ -440,7 +440,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				packeditem = 1
 				name = "[O.name]-packed [initial(name)]"
 				if(O.reagents)
-					O.reagents.trans_to(src, O.reagents.total_volume)
+					O.reagents.trans_to(src, O.reagents.total_volume, transfered_by = user)
 				qdel(O)
 			else
 				to_chat(user, "<span class='warning'>It has to be dried first!</span>")
@@ -689,7 +689,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(O.dry)
 			var/obj/item/clothing/mask/cigarette/rollie/R = new /obj/item/clothing/mask/cigarette/rollie(user.loc)
 			R.chem_volume = target.reagents.total_volume
-			target.reagents.trans_to(R, R.chem_volume)
+			target.reagents.trans_to(R, R.chem_volume, transfered_by = user)
 			qdel(target)
 			qdel(src)
 			user.put_in_active_hand(R)
@@ -733,7 +733,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(O.is_drainable())
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
-				O.reagents.trans_to(src,25)
+				O.reagents.trans_to(src,25, transfered_by = user)
 				to_chat(user, "<span class='notice'>You add the contents of [O] to [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>[O] is empty!</span>")
@@ -859,7 +859,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
 			playsound(get_turf(src), 'sound/effects/pop_expl.ogg', 50, 0)
 			M.apply_damage(20, BURN, BODY_ZONE_HEAD)
-			M.Knockdown(300, 1, 0)
+			M.Paralyze(300, 1, 0)
 			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
 			sp.set_up(5, 1, src)
 			sp.start()

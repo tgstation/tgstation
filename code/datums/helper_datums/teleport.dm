@@ -9,7 +9,13 @@
 // no_effects: disable the default effectin/effectout of sparks
 /proc/do_teleport(atom/movable/teleatom, atom/destination, precision=null, force_teleport=TRUE, datum/effect_system/effectin=null, datum/effect_system/effectout=null, asoundin=null, asoundout=null, no_effects=FALSE)
 	// teleporting most effects just deletes them
-	if(iseffect(teleatom) && !istype(teleatom, /obj/effect/dummy/chameleon))
+	var/static/list/delete_atoms = typecacheof(list(
+		/obj/effect,
+		)) - typecacheof(list(
+		/obj/effect/dummy/chameleon,
+		/obj/effect/wisp,
+		))
+	if(delete_atoms[teleatom.type])
 		qdel(teleatom)
 		return FALSE
 

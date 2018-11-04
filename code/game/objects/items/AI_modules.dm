@@ -613,3 +613,10 @@ AI MODULES
 /obj/item/aiModule/core/full/hulkamania
 	name = "'H.O.G.A.N.' Core AI Module"
 	law_id = "hulkamania"
+
+
+/******************Overlord***************/
+
+/obj/item/aiModule/core/full/overlord
+	name = "'Overlord' Core AI Module"
+	law_id = "overlord"

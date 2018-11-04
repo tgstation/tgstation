@@ -34,7 +34,7 @@
 
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
-	if(. && mob_has_gravity()) //floating is easy
+	if(. && (movement_type & FLOATING)) //floating is easy
 		if(has_trait(TRAIT_NOHUNGER))
 			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)

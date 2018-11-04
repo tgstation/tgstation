@@ -28,6 +28,9 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 21
 
+/obj/item/storage/backpack/examine(mob/user)
+	..()
+	clothing_resistance_flag_examine_message(user)
 
 /*
  * Backpack Types
@@ -40,7 +43,7 @@
 
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
-	desc = "A backpack that opens into a localized pocket of Blue Space."
+	desc = "A backpack that opens into a localized pocket of bluespace."
 	icon_state = "holdingpack"
 	item_state = "holdingpack"
 	resistance_flags = FIRE_PROOF
@@ -170,6 +173,7 @@
 	desc = "A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team."
 	icon_state = "ert_commander"
 	item_state = "securitypack"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/ert/security
 	name = "emergency response team security backpack"
@@ -204,11 +208,15 @@
 /obj/item/storage/backpack/satchel/leather/withwallet/PopulateContents()
 	new /obj/item/storage/wallet/random(src)
 
+/obj/item/storage/backpack/satchel/fireproof
+	resistance_flags = FIRE_PROOF
+
 /obj/item/storage/backpack/satchel/eng
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/satchel/med
 	name = "medical satchel"
@@ -385,6 +393,7 @@
 	desc = "A large duffel bag for holding extra tools and supplies."
 	icon_state = "duffel-eng"
 	item_state = "duffel-eng"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/duffelbag/drone
 	name = "drone duffel bag"
@@ -412,12 +421,16 @@
 	for(var/i in 1 to 10)
 		new /obj/item/reagent_containers/food/snacks/pie/cream(src)
 
+/obj/item/storage/backpack/fireproof
+	resistance_flags = FIRE_PROOF
+
 /obj/item/storage/backpack/duffelbag/syndie
 	name = "suspicious looking duffel bag"
 	desc = "A large duffel bag for holding extra tactical supplies."
 	icon_state = "duffel-syndie"
 	item_state = "duffel-syndieammo"
 	slowdown = 0
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/backpack/duffelbag/syndie/ComponentInitialize()
 	. = ..()

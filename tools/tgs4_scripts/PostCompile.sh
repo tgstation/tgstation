@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
 #load dep exports
-. "$1/dependencies.sh"
+#need to switch to game dir for Dockerfile weirdness
+original_dir=$PWD
+cd $1
+. dependencies.sh
+cd $original_dir
 
 #find out what we have (+e is important for this)
 set +e
@@ -92,6 +96,7 @@ shopt -s extglob dotglob
 mv !(build) build
 shopt -u dotglob
 
+chmod +x build/tools/deploy.sh
 build/tools/deploy.sh $1 $1/build
 
 rm -rf build

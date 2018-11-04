@@ -29,12 +29,12 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	var/floating = FALSE
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
+	var/can_be_z_moved = TRUE
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
@@ -112,7 +112,7 @@
 		grab_state = 0
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+			L.update_mobility()// mob gets up if it was lyng down in a chokehold
 
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
@@ -424,6 +424,9 @@
 		var/atom/movable/AM = item
 		AM.onTransitZ(old_z,new_z)
 
+/atom/movable/proc/setMovetype(newval)
+	movement_type = newval
+
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
 //Return 0 to have src start/keep drifting in a no-grav area and 1 to stop/not start drifting
@@ -701,14 +704,14 @@
 /atom/movable/proc/float(on)
 	if(throwing)
 		return
-	if(on && !floating)
+	if(on && !(movement_type & FLOATING))
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		floating = TRUE
-	else if (!on && floating)
+		setMovetype(movement_type | FLOATING)
+	else if (!on && (movement_type & FLOATING))
 		animate(src, pixel_y = initial(pixel_y), time = 10)
-		floating = FALSE
+		setMovetype(movement_type & ~FLOATING)
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

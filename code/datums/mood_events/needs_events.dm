@@ -4,7 +4,7 @@
 	mood_change = -4
 
 /datum/mood_event/wellfed
-	description = "<span class='nicegreen'>My belly feels round and full.</span>\n"
+	description = "<span class='nicegreen'>I'm stuffed!</span>\n"
 	mood_change = 6
 
 /datum/mood_event/fed

@@ -1,8 +1,8 @@
 //Xenobio control console
 /mob/camera/aiEye/remote/xenobio
-	visible_icon = 1
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "camera_target"
+	visible_icon = TRUE
+	icon = 'icons/mob/cameramob.dmi'
+	icon_state = "generic_camera"
 	var/allowed_area = null
 
 /mob/camera/aiEye/remote/xenobio/Initialize()
@@ -64,9 +64,9 @@
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio(get_turf(src))
 	eyeobj.origin = src
-	eyeobj.visible_icon = 1
-	eyeobj.icon = 'icons/obj/abductor.dmi'
-	eyeobj.icon_state = "camera_target"
+	eyeobj.visible_icon = TRUE
+	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon_state = "generic_camera"
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
@@ -222,6 +222,7 @@
 			if(M.stat)
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
 				X.monkeys = round(X.monkeys + 0.2,0.1)
+				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 				qdel(M)
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")

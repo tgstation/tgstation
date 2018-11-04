@@ -24,7 +24,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/effect/portal,
 		/obj/item/shared_storage,
 		/obj/structure/extraction_point,
-		/obj/machinery/syndicatebomb
+		/obj/machinery/syndicatebomb,
+		/obj/item/hilbertshotel
 	)))
 
 /obj/docking_port/mobile/supply
@@ -121,7 +122,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [D.account_balance] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)

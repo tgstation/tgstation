@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	var/turf/center
 	var/list/flood_images = list()
 	var/list/turf/flood_turfs = list()
-	var/image_icon = 'icons/effects/tile_effects.dmi'
+	var/image_icon = 'icons/effects/atmospherics.dmi'
 	var/image_state = "plasma"
 	var/radius = 0
 	var/next_expand = 0
@@ -216,7 +216,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
 	if(A == target && target.stat!=DEAD)
-		target.Knockdown(100)
+		target.Paralyze(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
 /datum/hallucination/xeno_attack
@@ -303,7 +303,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		shake_camera(target, 2, 1)
 		if(bubblegum.Adjacent(target) && !charged)
 			charged = TRUE
-			target.Knockdown(80)
+			target.Paralyze(80)
 			target.adjustStaminaLoss(40)
 			step_away(target, bubblegum)
 			shake_camera(target, 4, 3)
@@ -1099,7 +1099,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(istype(target, /obj/effect/dummy/phased_mob))
 			return
 		to_chat(target, "<span class='userdanger'>You fall into the chasm!</span>")
-		target.Knockdown(40)
+		target.Paralyze(40)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/to_chat, target, "<span class='notice'>It's surprisingly shallow.</span>"), 15)
 		QDEL_IN(src, 30)
 
@@ -1133,7 +1133,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	set waitfor = FALSE
 	..()
 	target.set_screwyhud(SCREWYHUD_DEAD)
-	target.Knockdown(300)
+	target.Paralyze(300)
 	target.silent += 10
 	to_chat(target, "<span class='deadsay'><b>[target.real_name]</b> has died at <b>[get_area_name(target)]</b>.</span>")
 	if(prob(50))
@@ -1151,7 +1151,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			 "i[prob(50)?" fucking":""] hate [pick("blood cult", "clock cult", "revenants", "this round","this","myself","admins","you")]")]\"</span>")
 	sleep(rand(70,90))
 	target.set_screwyhud(SCREWYHUD_NONE)
-	target.SetKnockdown(0)
+	target.SetParalyzed(0)
 	target.silent = FALSE
 	qdel(src)
 
@@ -1238,7 +1238,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/shock/proc/shock_drop()
 	target.jitteriness = max(target.jitteriness - 990, 10) //Still jittery, but vastly less
-	target.Knockdown(60)
+	target.Paralyze(60)
 
 /datum/hallucination/husks
 

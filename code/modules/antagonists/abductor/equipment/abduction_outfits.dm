@@ -34,7 +34,7 @@
 	name = "Abductor Agent"
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
-	suit_store = /obj/item/abductor_baton
+	suit_store = /obj/item/abductor/baton
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(

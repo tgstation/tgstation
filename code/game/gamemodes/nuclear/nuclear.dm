@@ -1,6 +1,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	report_type = "nuclear"
 	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
@@ -57,12 +58,6 @@
 	if (nukes_left == 0)
 		return TRUE
 	return ..()
-
-/datum/game_mode/proc/are_operatives_dead()
-	for(var/datum/mind/operative_mind in get_antag_minds(/datum/antagonist/nukeop))
-		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
-			return FALSE
-	return TRUE
 
 /datum/game_mode/nuclear/check_finished()
 	//Keep the round going if ops are dead but bomb is ticking.
@@ -121,7 +116,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/storage/backpack
+	back = /obj/item/storage/backpack/fireproof
 	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	id = /obj/item/card/id/syndicate
