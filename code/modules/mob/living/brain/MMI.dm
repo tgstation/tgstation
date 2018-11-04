@@ -61,6 +61,9 @@
 			brainmob.stat = CONSCIOUS //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
 			GLOB.alive_mob_list += brainmob
+		if(!newbrain.brain_death && newbrain.damaged_brain && !newbrain.suicided && !brainmob.suiciding) // the brain is damaged, but not from a suicider
+			to_chat(user, "<span class='warning'>[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage.</span>")
+			playsound(src, "sound/machines/synth_no.ogg", 5, TRUE)
 		else
 			to_chat(user, "<span class='warning'>[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again.</span>")
 			playsound(src, "sound/weapons/smg_empty_alarm.ogg", 5, TRUE)
@@ -190,6 +193,7 @@
 
 /obj/item/mmi/examine(mob/user)
 	..()
+	to_chat(user, "<span class='notice'>There is a switch to toggle the radio system.</span>")
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
