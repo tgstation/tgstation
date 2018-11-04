@@ -106,6 +106,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	grind_results = list()
+	heat = 1000
 	var/dragtime = 100
 	var/nextdragtime = 0
 	var/lit = FALSE
@@ -117,7 +118,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 180 // 1 is 2 seconds, so a single cigarette will last 6 minutes.
 	var/chem_volume = 30
 	var/list/list_reagents = list("nicotine" = 15)
-	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
