@@ -145,6 +145,7 @@
 	if(can_shoot())
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, 1, 5)
 		user.Stun(75)
+		user.put_in_active_hand(src, TRUE)
 		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
 		sleep(70)
 		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)
