@@ -101,7 +101,9 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "A" = (
-/obj/mecha/working/ripley,
+/obj/mecha/working/ripley{
+	ruin_mecha = 1
+	},
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "B" = (
