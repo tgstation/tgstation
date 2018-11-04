@@ -1,5 +1,6 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
 GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
+#define MAX_ROOM_NUMBER 65535
 
 /obj/item/hilbertshotel
     name = "Hilbert's Hotel"
@@ -26,7 +27,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/area/currentArea = get_area(src)
     if(currentArea.type == /area/ruin/space/has_grav/hilbertresearchfacility)
         ruinSpawned = TRUE
-    
+
 /obj/item/hilbertshotel/Destroy()
     ejectRooms()
     return ..()
@@ -46,12 +47,15 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
     if(!chosenRoomNumber)
         return
-    if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)) || (chosenRoomNumber == INFINITY))
+    if(chosenRoomNumber > MAX_ROOM_NUMBER)
+        to_chat(user, "<span class='warning'>You have to check out the first [MAX_ROOM_NUMBER] rooms before you can go to a higher numbered one!</span>")
+        return
+    if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
         to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
         return
     if(ismob(loc))
         if(user == loc) //Not always the same as user
-            forceMove(get_turf(user)) 
+            forceMove(get_turf(user))
     if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
         if(!GLOB.hhStorageTurf)
             var/datum/map_template/hilbertshotelstorage/storageTemp = new()
@@ -123,7 +127,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     currentArea.reservation = currentReservation
     for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
         door.parentSphere = src
-        door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br />Alt-Click to look through the peephole."
+        door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br /><span class='info'>Alt-Click to look through the peephole.</span>"
     for(var/turf/open/space/bluespace/BSturf in currentArea)
         BSturf.parentSphere = src
 
@@ -240,7 +244,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 //If only this could be simplified...
 /turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
-    promptExit(user)  
+    promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_animal(mob/user)
     promptExit(user)
@@ -256,7 +260,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /turf/closed/indestructible/hoteldoor/attack_slime(mob/user)
     promptExit(user)
-    
+
 /turf/closed/indestructible/hoteldoor/attack_robot(mob/user)
     if(get_dist(get_turf(src), get_turf(user)) <= 1)
         promptExit(user)
@@ -384,13 +388,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
             to_chat(user, "<span class='warning'>It's to far away to scan!</span>")
             return
         var/obj/item/hilbertshotel/sphere = target
-        if(sphere.activeRooms.len) 
+        if(sphere.activeRooms.len)
             to_chat(user, "Currently Occupied Rooms:")
             for(var/roomnumber in sphere.activeRooms)
                 to_chat(user, roomnumber)
         else
             to_chat(user, "No currenty occupied rooms.")
-        if(sphere.storedRooms.len) 
+        if(sphere.storedRooms.len)
             to_chat(user, "Vacated Rooms:")
             for(var/roomnumber in sphere.storedRooms)
                 to_chat(user, roomnumber)
@@ -419,8 +423,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     name = "Research Logs"
 
 /obj/item/paper/crumpled/docslogs/Initialize()
-    . = ..()   
-    GLOB.hhmysteryRoomNumber = rand(1, 65535)
+    . = ..()
+    GLOB.hhmysteryRoomNumber = rand(1, MAX_ROOM_NUMBER)
     info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
 	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
@@ -486,3 +490,5 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     Lay your head to rest, it soon becomes clear<br>
     There's always more room around every bend<br>
     Not all that's countable has an end...<i>"}
+
+#undef MAX_ROOM_NUMBER
