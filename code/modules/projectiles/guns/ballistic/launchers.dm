@@ -144,12 +144,13 @@
 		"<span class='userdanger'>You aim [src] at the ground to perform a bisnasty rocket jump...</span>")
 	if(can_shoot())
 		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, 1, 5)
+		item_flags |= NODROP
 		user.Stun(75)
-		user.put_in_active_hand(src, TRUE)
 		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
 		sleep(70)
 		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)
 		sleep(5)
+		item_flags &= ~NODROP
 		process_fire(user, user, TRUE)
 		if(!QDELETED(user)) //if they weren't gibbed by the explosion, take care of them for good.
 			user.gib()
