@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Borg ion thrusters now stop draining charge when you can move without them."
