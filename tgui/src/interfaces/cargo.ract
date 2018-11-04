@@ -19,9 +19,6 @@
   <ui-section label='Credits'>
     <span>{{Math.floor(adata.points)}}</span>
   </ui-section>
-  <ui-section label='Detected Account'>
-    <span>{{data.detected_account}}</span>
-  </ui-section>
   <ui-section label='CentCom Message'>
       <span>{{data.message}}</span>
   </ui-section>
@@ -89,9 +86,7 @@
       {{#each packs}}
         <ui-section label='{{name}}' candystripe right>
           <ui-button tooltip='{{desc}}' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "0"}}'>{{cost}} Credits</ui-button>
-			{{#if data.detected_account}}
 				<ui-button tooltip='Pay with your bank account instead of the cargo budget. Costs 10% extra for handling fees.' tooltip-side='left' action='add' params='{"id": "{{id}}","self_paid": "1"}'>Buy Directly</ui-button>
-			{{/if}}
         </ui-section>
       {{/each}}
     </tab>

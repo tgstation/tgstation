@@ -63,12 +63,6 @@
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		data["points"] = D.account_balance
-	var/obj/item/card/id/id = usr.get_idcard(TRUE)
-	if(id)
-		var/datum/bank_account/user_account
-		user_account = id.registered_account
-		if(user_account)
-			data["detected_account"] = user_account.account_holder
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
@@ -179,6 +173,9 @@
 				if(ishuman(usr))
 					var/mob/living/carbon/human/H = usr
 					var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+					if(!istype(id_card))
+						say("No ID card detected.")
+						return
 					account = id_card.registered_account
 					if(!istype(account))
 						say("Invalid bank account.")
@@ -197,6 +194,8 @@
 				SSshuttle.requestlist += SO
 			else
 				SSshuttle.shoppinglist += SO
+				if(self_paid)
+					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])

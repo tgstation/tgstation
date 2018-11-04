@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				if(SO.paying_account)
 					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
 				continue
-				
+
 		if(SO.paying_account)
 			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
@@ -122,7 +122,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [D.account_balance] credits left.", INVESTIGATE_CARGO)
+	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
