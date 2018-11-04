@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Using your SecHUD just adjust wanted status of a mob while not adjacent to them will no longer give you a useless out of range warning."
-  - bugfix: "Trying to strip or equip a mob while while not in range will now close the inventory menu."
-  - bugfix: "Trying to strip a non-human carbon mob while handcuffed/not in range will no longer give you duplicate warnings."

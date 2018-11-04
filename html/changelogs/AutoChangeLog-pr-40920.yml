@@ -1,7 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Most upgradeable machines now show their upgrade status when examined while standing right next to them."
-  - tweak: "Added examine messages to teleporter stations that hint at their multitool/wirecutter interactions."
-  - tweak: "Renamed teleporter stations from `station` to `teleporter station`."
-  - code_imp: "Changed the teleporter hub `accurate` var to `accuracy`; the old name misled people into thinking that it was a boolean."

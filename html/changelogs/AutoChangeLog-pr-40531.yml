@@ -1,6 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - soundadd: "Supplypods sound a bit nicer as the land now."
-  - admin: "admins can now adjust the animation duration for centcom-launched supplypods"
-  - admin: "admins can adjust any sounds that are played as the supplypod lands"

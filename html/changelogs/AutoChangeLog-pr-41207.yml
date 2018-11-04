@@ -1,9 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - rscadd: "Added various new moodlets"
-  - rscadd: "Most notably, the Laughter chemical and breathing small quantities of N2O can improve mood"
-  - rscadd: "Psicodine: a new chemical that can restore sanity levels to normal and temporarily suppress phobias"
-  - rscadd: "Happiness: a homemade drug that supposedly gives a feeling of total bliss and.. emptiness? That can't be healthy... watch out for side effects."
-  - bugfix: "The suffocation moodlet now triggers correctly"
-  - bugfix: "The drunk moodlet now clears as soon as the drunkenness wears off"
