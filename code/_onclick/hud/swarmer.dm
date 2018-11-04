@@ -35,7 +35,7 @@
 
 /obj/screen/swarmer/RepairSelf
 	icon_state = "ui_self_repair"
-	name = "Repair self"
+	name = "Repair self (Costs 10 Resources)"
 	desc = "Repairs damage to our body."
 
 /obj/screen/swarmer/RepairSelf/Click()

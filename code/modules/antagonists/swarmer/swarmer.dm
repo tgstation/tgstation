@@ -653,8 +653,15 @@
 	set desc = "Attempts to repair damage to our body. You will have to remain motionless until repairs are complete."
 	if(!isturf(loc))
 		return
+	if(resources < 10)
+		to_chat(src, "<span class='warning'>We do not have the resources for this!</span>")
+		return
 	to_chat(src, "<span class='info'>Attempting to repair damage to our body, stand by...</span>")
 	if(do_mob(src, src, 100))
+		if(resources < 10)
+			to_chat(src, "<span class='warning'>You do not have the necessary resources to repair yourself.</span>")
+			return
+		resources -= 10
 		adjustHealth(-100)
 		to_chat(src, "<span class='info'>We successfully repaired ourselves.</span>")
 
