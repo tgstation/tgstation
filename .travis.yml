@@ -39,7 +39,6 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - libstdc++6:i386
-            - libssl-dev:i386
             - gcc-multilib
             - g++-7
             - g++-7-multilib
