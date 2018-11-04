@@ -1,0 +1,13 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed x-ray cameras going invisible when in use by a camera monitor."
+  - bugfix: "Fixed cameras having the incorrect icon when an xray module is installed after construction."
+  - bugfix: "Fixed cameras not having the correct name when proximity sensors are installed after construction."
+  - bugfix: "Fixed camera assemblies not passing their upgrades to a camera during construction."
+  - bugfix: "Fixed camera assemblies consuming your entire stack of plasma sheets when upgrading it with EMP shielding instead of just 1 sheet."
+  - bugfix: "Fixed upgrades within a camera assembly disappearing into bluespace when wrenched."
+  - bugfix: "Fixed upgraded cameras having their internal upgrades deleted while still functioning not updating the camera's attributes (mostly for admins.)"
+  - tweak: "Welding/unwelding a camera assembly to/from a wall now consumes 3 fuel."
+  - tweak: "Deconstructing a camera assembly with upgrades within it will now give you a prompt on what you'd like to remove."
+  - tweak: "Added examination text to cameras and camera assemblies to detail their current construction status and upgrades."
