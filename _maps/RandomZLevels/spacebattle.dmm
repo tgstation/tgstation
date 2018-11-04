@@ -844,9 +844,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dL" = (
-/obj/mecha/working/ripley/firefighter{
-	ruin_mecha = 1
-	},
+/obj/mecha/working/ripley/firefighter,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dM" = (
