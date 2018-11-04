@@ -3,5 +3,4 @@
 
 /obj/mecha/working/Initialize()
 	. = ..()
-	if(!ruin_mecha)
-		trackers += new /obj/item/mecha_parts/mecha_tracking(src)
+	trackers += new /obj/item/mecha_parts/mecha_tracking(src)
