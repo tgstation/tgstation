@@ -4,7 +4,6 @@
 	icon_state = "blob_shield"
 	desc = "A solid wall of slightly twitching tendrils."
 	var/damaged_desc = "A wall of twitching tendrils."
-	var/damaged_icon = "blob_shield_damaged"
 	max_integrity = 150
 	brute_resist = 0.2
 	explosion_block = 3
@@ -42,7 +41,7 @@
 	flags_1 = CHECK_RICOCHET_1
 	point_return = 8
 	max_integrity = 50
-	brute_resist = 0
+	brute_resist = 1
 	explosion_block = 2
 
 /obj/structure/blob/shield/reflective/handle_ricochet(obj/item/projectile/P)

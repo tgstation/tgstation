@@ -123,7 +123,7 @@
 		if(!can_buy(15))
 			return
 		if(S.obj_integrity < S.max_integrity * 0.5)
-			to_chat(src, "<span class='warning'>This shield blob is too damage to be modified properly!</span>")
+			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified properly!</span>")
 			return
 		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced intregrity.</span>")
 		S.change_to(/obj/structure/blob/shield/reflective, src)
