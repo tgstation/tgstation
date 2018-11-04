@@ -5,7 +5,7 @@
 	desc = "A solid wall of slightly twitching tendrils."
 	var/damaged_desc = "A wall of twitching tendrils."
 	max_integrity = 150
-	brute_resist = 0.2
+	brute_resist = 0.25
 	explosion_block = 3
 	point_return = 4
 	atmosblock = TRUE
