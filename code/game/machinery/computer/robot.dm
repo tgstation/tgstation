@@ -5,6 +5,7 @@
 	icon_keyboard = "rd_key"
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/computer/robotics
+
 	var/temp = null
 
 	light_color = LIGHT_COLOR_PINK
@@ -29,62 +30,78 @@
 		return
 	user.set_machine(src)
 	var/dat
-	var/robots = 0
+	var/list/robo_list = list()
+	var/robot_count
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
 		if(!can_control(user, R))
 			continue
-		robots++
-		dat += "[R.name] |"
-		if(R.stat)
-			dat += " Not Responding |"
-		else if (!(R.mobility_flags & MOBILITY_MOVE))
-			dat += " Locked Down |"
-		else
-			dat += " Operating Normally |"
-		if (!(R.mobility_flags & MOBILITY_MOVE))
-		else if(R.cell)
-			dat += " Battery Installed ([R.cell.charge]/[R.cell.maxcharge]) |"
-		else
-			dat += " No Cell Installed |"
-		if(R.module)
-			dat += " Module Installed ([R.module.name]) |"
-		else
-			dat += " No Module Installed |"
+		robot_count++
+		var/unit_sync = "Independent"
 		if(R.connected_ai)
-			dat += " Slaved to [R.connected_ai.name] |"
-		else
-			dat += " Independent from AI |"
-		if(issilicon(user) && user != R)
-			var/mob/living/silicon/S = user
-			if(is_servant_of_ratvar(S))
-				dat += "<A href='?src=[REF(src)];convert=[REF(R)]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
-			else if(S.hack_software && !R.emagged)
-				dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
-		else if(IsAdminGhost(user) && !R.emagged)
-			dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
-		dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[(R.mobility_flags & MOBILITY_MOVE) ? "Lockdown" : "Release"]</i></font>)</A> "
-		dat += "<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>"
-		dat += "<BR>"
+			unit_sync = "Slaved to [R.connected_ai]"
+		if(!robo_list[unit_sync])
+			robo_list[unit_sync] = list()
+		robo_list[unit_sync] += R
 
-	if(!robots)
-		dat += "No Cyborg Units detected within access parameters."
-		dat += "<BR>"
+	dat += "<center><h2>Cyborgs</h2><hr></center>"
+	if(!robo_list.len)
+		dat += "<center>No cyborg units detected within access parameters.</center><br><br>"
+	else
+		if(robo_list.len > 1)
+			sortTim(robo_list, /proc/cmp_text_asc)
+		for(var/ai_unit in robo_list)
+			dat += "<center><h3>[ai_unit]</h3></center><div class='statusDisplay'>"
+			var/spacer
+			for(var/robo in robo_list[ai_unit])
+				if(spacer)
+					dat += "<br><br>"
+				else
+					spacer = TRUE
+				var/mob/living/silicon/robot/R = robo
+				dat += "<b>Name:</b> [R.name]<br>"
+				var/can_move = (R.mobility_flags & MOBILITY_MOVE)
+				dat += "<b>Status:</b> [R.stat ? "Not Responding" : (can_move ? "Normal" : "Locked Down")]<br>"
 
+				if(can_move)
+					dat += "<b>Cell:</b> [R.cell ? "[R.cell.percent()]%" :  "No Cell Detected"]<br>"
+
+				dat += "<b>Module:</b> [R.module ? "[R.module.name] Module" : "No Module Detected"]<br>"
+				dat += "<b>Unit Controls:</b> "
+				if(issilicon(user) && user != R)
+					var/mob/living/silicon/S = user
+					if(is_servant_of_ratvar(S) && !is_servant_of_ratvar(R))
+						dat += "<A href='?src=[REF(src)];convert=[REF(R)]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
+					else if(S.hack_software && !R.emagged)
+						dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
+				else if(IsAdminGhost(user) && !R.emagged)
+					dat += "<A href='?src=[REF(src)];magbot=[REF(R)]'>(<font color=blue><i>Hack</i></font>)</A> "
+				dat += "<A href='?src=[REF(src)];stopbot=[REF(R)]'>(<font color=green><i>[(R.mobility_flags & MOBILITY_MOVE) ? "Lockdown" : "Release"]</i></font>)</A> "
+				dat += "<A href='?src=[REF(src)];killbot=[REF(R)]'>(<font color=red><i>Destroy</i></font>)</A>"
+			dat += "</div>"
+
+	dat += "<center><h2>Drones</h2></center>"
 	var/drones = 0
 	for(var/mob/living/simple_animal/drone/D in GLOB.drones_list)
 		if(D.hacked)
 			continue
+		if(drones)
+			dat += "<br><br>"
+		else
+			dat += "<div class='statusDisplay'>"
 		drones++
-		dat += "[D.name] |"
-		if(D.stat)
-			dat += " Not Responding |"
+		dat += "<b>Name:</b> [D.name]<br>"
+		dat += "<b>Status:</b> [D.stat ? "Not Responding" : "Normal"]<br>"
+		dat += "<b>Unit Controls:</b><br>"
 		dat += "<A href='?src=[REF(src)];killdrone=[REF(D)]'>(<font color=red><i>Destroy</i></font>)</A>"
-		dat += "<BR>"
 
-	if(!drones)
-		dat += "No Drone Units detected within access parameters."
+	if(drones)
+		dat += "</div>"
+	else
+		dat += "<hr><center>No drone units detected within access parameters.</center>"
 
-	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
+	var/window_height = min((300+((robot_count+drones) * 110)), 800)
+
+	var/datum/browser/popup = new(user, "computer", "Robotics Control Console", 375, window_height)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
