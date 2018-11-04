@@ -1897,33 +1897,63 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
 
-/datum/supply_pack/costumes_toys/randomised/toys
-	name = "Toy Crate"
-	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."
-	cost = 5000 // or play the arcade machines ya lazy bum
-	// TODO make this actually just use the arcade machine loot list
-	num_contained = 5
-	contains = list(/obj/item/toy/spinningtoy,
-	                /obj/item/toy/sword,
-	                /obj/item/toy/foamblade,
-	                /obj/item/toy/talking/AI,
-	                /obj/item/toy/talking/owl,
-	                /obj/item/toy/talking/griffin,
-	                /obj/item/toy/nuke,
-	                /obj/item/toy/minimeteor,
-	                /obj/item/toy/plush/carpplushie,
-	                /obj/item/toy/plush/lizardplushie,
-	                /obj/item/toy/plush/snakeplushie,
-	                /obj/item/toy/plush/nukeplushie,
-	                /obj/item/toy/plush/slimeplushie,
-	                /obj/item/coin/antagtoken,
-	                /obj/item/stack/tile/fakespace/loaded,
-	                /obj/item/gun/ballistic/shotgun/toy/crossbow,
-	                /obj/item/toy/redbutton,
-					/obj/item/toy/eightball,
-					/obj/item/vending_refill/donksoft)
-	crate_name = "toy crate"
-	crate_type = /obj/structure/closet/crate/wooden
+ /datum/supply_pack/costumes_toys/randomised/toys
+ 	name = "Toy Crate"
+ 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."
+ 	cost = 5000 // or play the arcade machines ya lazy bum
+ 	// TODID make this actually just use the arcade machine loot list
+ 	num_contained = 5
+ 	contains = list(/obj/item/storage/box/snappops,
+ 					/obj/item/toy/talking/AI,
+ 					/obj/item/toy/talking/codex_gigas,
+ 					/obj/item/clothing/under/syndicate/tacticool,
+ 					/obj/item/toy/sword	,
+ 					/obj/item/toy/gun,
+ 					/obj/item/gun/ballistic/shotgun/toy/crossbow,
+ 					/obj/item/storage/box/fakesyndiesuit,
+ 					/obj/item/storage/crayons,
+ 					/obj/item/toy/spinningtoy,
+ 					/obj/item/toy/prize/ripley,
+ 					/obj/item/toy/prize/fireripley,
+ 					/obj/item/toy/prize/deathripley,
+ 					/obj/item/toy/prize/gygax,
+ 					/obj/item/toy/prize/durand,
+ 					/obj/item/toy/prize/honk,
+ 					/obj/item/toy/prize/marauder,
+ 					/obj/item/toy/prize/seraph,
+ 					/obj/item/toy/prize/mauler,
+ 					/obj/item/toy/prize/odysseus,
+ 					/obj/item/toy/prize/phazon,
+ 					/obj/item/toy/prize/reticence,
+ 					/obj/item/toy/cards/deck,
+ 					/obj/item/toy/nuke,
+ 					/obj/item/toy/minimeteor,
+ 					/obj/item/toy/redbutton,
+ 					/obj/item/toy/talking/owl,
+ 					/obj/item/toy/talking/griffin,
+ 					/obj/item/coin/antagtoken,
+ 					/obj/item/stack/tile/fakespace/loaded,
+ 					/obj/item/stack/tile/fakepit/loaded,
+ 					/obj/item/toy/toy_xeno,
+ 					/obj/item/storage/box/actionfigure,
+ 					/obj/item/restraints/handcuffs/fake,
+ 					/obj/item/grenade/chem_grenade/glitter/pink,
+ 					/obj/item/grenade/chem_grenade/glitter/blue,
+ 					/obj/item/grenade/chem_grenade/glitter/white,
+ 					/obj/item/toy/eightball,
+ 					/obj/item/toy/windupToolbox,
+ 					/obj/item/toy/clockwork_watch,
+ 					/obj/item/toy/toy_dagger,
+ 					/obj/item/extendohand/acme,
+ 					/obj/item/hot_potato/harmless/toy,
+ 					/obj/item/card/emagfake,
+ 					/obj/item/clothing/shoes/wheelys,
+ 					/obj/item/clothing/shoes/kindleKicks,
+ 					/obj/item/storage/belt/military/snack,
+ 					/obj/item/toy/eightball,
+ 					/obj/item/vending_refill/donksoft)
+ 	crate_name = "toy crate"
+ 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"
