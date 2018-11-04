@@ -47,6 +47,9 @@
         <div class='content'>
           <ui-button icon='minus' action='remove' params='{"id": "{{id}}"}'/>
         </div>
+        {{#if paid}}
+    			<div class='content'><b>(Paid privately)</b></div>
+    		{{/if}}
       </ui-section>
     {{else}}
       <span>Nothing in Cart</span>
@@ -66,9 +69,6 @@
       <div class='content'>{{cost}} Credits</div>
       <div class='content'>By {{orderer}}</div>
       <div class='content'>Comment: {{reason}}</div>
-	  {{#if paid}}
-			<div class='content'><b>Paid by requester.</b></div>
-		{{/if}}
       {{#if !data.requestonly}}
         <div class='content'>
           <ui-button icon='check' action='approve' params='{"id": "{{id}}"}'/>

@@ -95,7 +95,9 @@
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
-			"id" = SO.id
+			"id" = SO.id,
+			"orderer" = SO.orderer,
+			"paid" = !isnull(SO.paying_account) //paid by requester
 		))
 
 	data["requests"] = list()
@@ -105,8 +107,7 @@
 			"cost" = SO.pack.cost,
 			"orderer" = SO.orderer,
 			"reason" = SO.reason,
-			"id" = SO.id,
-			"paid" = !isnull(SO.paying_account) //paid by requester
+			"id" = SO.id
 		))
 
 	return data
@@ -169,17 +170,16 @@
 				rank = "Silicon"
 
 			var/datum/bank_account/account
-			if(self_paid)
-				if(ishuman(usr))
-					var/mob/living/carbon/human/H = usr
-					var/obj/item/card/id/id_card = H.get_idcard(TRUE)
-					if(!istype(id_card))
-						say("No ID card detected.")
-						return
-					account = id_card.registered_account
-					if(!istype(account))
-						say("Invalid bank account.")
-						return
+			if(self_paid && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+				if(!istype(id_card))
+					say("No ID card detected.")
+					return
+				account = id_card.registered_account
+				if(!istype(account))
+					say("Invalid bank account.")
+					return
 
 			var/reason = ""
 			if(requestonly && !self_paid)
