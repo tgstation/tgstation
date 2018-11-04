@@ -1,4 +1,4 @@
-/obj/machinery/computer/arcade
+/obj/machinery/computer/arcade  //Remember to update the Cargo Toy Pack with any new toys!
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
