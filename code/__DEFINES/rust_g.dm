@@ -1,5 +1,5 @@
 // rust_g.dm - DM API for rust_g extension library
-#define RUST_G "rust_g"
+#define RUST_G "rust_g.so"
 
 #define rustg_dmi_strip_metadata(fname) call(RUST_G, "dmi_strip_metadata")(fname)
 
