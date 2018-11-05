@@ -5,28 +5,28 @@
 	icon_keyboard = "rd_key"
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/computer/robotics
-
+	light_color = LIGHT_COLOR_PINK
 	var/temp = null
 
-	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
+	. = FALSE
 	if(!istype(R))
-		return 0
+		return
 	if(isAI(user))
 		if (R.connected_ai != user)
-			return 0
+			return
 	if(iscyborg(user))
 		if (R != user)
-			return 0
+			return
 	if(R.scrambledcodes)
-		return 0
-	return 1
+		return
+	return TRUE
 
 /obj/machinery/computer/robotics/ui_interact(mob/user)
 	. = ..()
-	if (src.z > 6)
-		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
+	if(z > 6)
+		to_chat(user, "<span class='boldannounce'>Unable to establish a connection: You're too far away from the station!</span>")
 		return
 	user.set_machine(src)
 	var/dat
@@ -91,7 +91,7 @@
 		drones++
 		dat += "<b>Name:</b> [D.name]<br>"
 		dat += "<b>Status:</b> [D.stat ? "Not Responding" : "Normal"]<br>"
-		dat += "<b>Unit Controls:</b><br>"
+		dat += "<b>Unit Controls:</b> "
 		dat += "<A href='?src=[REF(src)];killdrone=[REF(D)]'>(<font color=red><i>Destroy</i></font>)</A>"
 
 	if(drones)
@@ -103,19 +103,19 @@
 
 	var/datum/browser/popup = new(user, "computer", "Robotics Control Console", 375, window_height)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if (href_list["temp"])
-		src.temp = null
+		temp = null
 
 	else if (href_list["killbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in GLOB.silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
@@ -130,7 +130,7 @@
 			to_chat(usr, "<span class='danger'>Access Denied.</span>")
 
 	else if (href_list["stopbot"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in GLOB.silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [!R.lockcharge ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
@@ -152,7 +152,7 @@
 			if(istype(R) && !R.emagged && (R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [key_name(R)] using robotic console!")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
-				R.SetEmagged(1)
+				R.SetEmagged(TRUE)
 
 	else if(href_list["convert"])
 		if(isAI(usr) && is_servant_of_ratvar(usr))
@@ -163,7 +163,7 @@
 				add_servant_of_ratvar(R)
 
 	else if (href_list["killdrone"])
-		if(src.allowed(usr))
+		if(allowed(usr))
 			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"]) in GLOB.mob_list
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
@@ -172,11 +172,10 @@
 				message_admins("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(D)] at [ADMIN_VERBOSEJMP(T)]!")
 				log_game("[key_name(usr)] detonated [key_name(D)]!")
 				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-				s.set_up(3, 1, D)
+				s.set_up(3, TRUE, D)
 				s.start()
 				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
 				D.gib()
 
 
-	src.updateUsrDialog()
-	return
+	updateUsrDialog()
