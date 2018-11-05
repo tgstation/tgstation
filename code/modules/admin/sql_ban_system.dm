@@ -199,7 +199,7 @@
 				banned_from += query_get_banned_roles.item[1]
 			qdel(query_get_banned_roles)
 		var/break_counter = 0
-		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' class='hidden' onClick='toggle_checkboxes(this, \"_dep\")'>Command</label><div class='content'>"
+		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' onClick='toggle_checkboxes(this, \"_dep\")'>Command</label><div class='content'>"
 		//all heads are listed twice so have a javascript call to toggle both their checkboxes when one is pressed
 		//for simplicity this also includes the captain even though it doesn't do anything
 		for(var/job in GLOB.command_positions)
@@ -220,7 +220,7 @@
 							"Silicon" = GLOB.nonhuman_positions) //another cheat for simplicity
 		for(var/department in job_lists)
 			//the first element is the department head so they need the same javascript call as above
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
 			output += {"<label class='inputlabel checkbox'>[job_lists[department][1]]
 						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' onClick='toggle_head(this, \"_com\")' value='1'>
 						<div class='inputbox[(job_lists[department][1] in banned_from) ? " banned" : ""]'></div></label>
@@ -245,7 +245,7 @@
 									ROLE_REV_HEAD, ROLE_SERVANT_OF_RATVAR, ROLE_SYNDICATE,
 									ROLE_TRAITOR, ROLE_WIZARD)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
 		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
 				if(break_counter > 0 && (break_counter % 10 == 0))
@@ -282,6 +282,7 @@
 	var/old_key
 	var/old_ip
 	var/old_cid
+	var/old_applies
 	var/page
 	var/admin_key
 	var/list/changes = list()
@@ -324,25 +325,26 @@
 		edit_id = href_list["editid"]
 		if(href_list["mirroredit"])
 			mirror_edit = TRUE
-			old_key = href_list["oldkey"]
-			old_ip = href_list["oldip"]
-			old_cid = href_list["oldcid"]
-			page = href_list["page"]
-			admin_key = href_list["adminkey"]
-			if(player_key != old_key)
-				changes += list("Key" = "[old_key] to [player_key]")
-			if(player_ip != old_ip)
-				changes += list("IP" = "[old_ip] to [player_ip]")
-			if(player_cid != old_cid)
-				changes += list("CID" = "[old_cid] to [player_cid]")
-			if(applies_to_admins != href_list["oldapplies"])
-				changes += list("Applies to admins" = "[href_list["oldapplies"]] to [applies_to_admins]")
-			if(duration != href_list["oldduration"])
-				changes += list("Duration" = "[href_list["oldduration"]] MINUTE to [duration] [interval]")
-			if(reason != href_list["oldreason"])
-				changes += list("Reason" = "[href_list["oldreason"]]<br>to<br>[reason]")
-			if(!changes.len)
-				error_state += "No changes were detected."
+		old_key = href_list["oldkey"]
+		old_ip = href_list["oldip"]
+		old_cid = href_list["oldcid"]
+		page = href_list["page"]
+		admin_key = href_list["adminkey"]
+		if(player_key != old_key)
+			changes += list("Key" = "[old_key] to [player_key]")
+		if(player_ip != old_ip)
+			changes += list("IP" = "[old_ip] to [player_ip]")
+		if(player_cid != old_cid)
+			changes += list("CID" = "[old_cid] to [player_cid]")
+		old_applies = text2num(href_list["oldapplies"])
+		if(applies_to_admins != old_applies)
+			changes += list("Applies to admins" = "[old_applies] to [applies_to_admins]")
+		if(duration != href_list["oldduration"])
+			changes += list("Duration" = "[href_list["oldduration"]] MINUTE to [duration] [interval]")
+		if(reason != href_list["oldreason"])
+			changes += list("Reason" = "[href_list["oldreason"]]<br>to<br>[reason]")
+		if(!changes.len)
+			error_state += "No changes were detected."
 	else
 		severity = href_list["radioseverity"]
 		if(!severity)
@@ -354,6 +356,7 @@
 				if(href_list[href_list.len] == "roleban_delimiter")
 					error_state += "Role ban was selected but no roles to ban were selected."
 				else
+					href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Civilian", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
 					var/delimiter_pos = href_list.Find("roleban_delimiter")
 					href_list.Cut(1, delimiter_pos+1)//remove every list element before and including roleban_delimiter so we have a list of only the roles to ban
 					for(var/key in href_list) //flatten into a list of only unique keys
@@ -364,7 +367,7 @@
 		to_chat(usr, "<span class='danger'>Ban not [edit_id ? "edited" : "created"] because the following errors were present:\n[error_state.Join("\n")]</span>")
 		return
 	if(edit_id)
-		edit_ban(edit_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, page, admin_key, changes)
+		edit_ban(edit_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
 	else
 		create_ban(player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
 
@@ -563,7 +566,7 @@
 			if(!expired && !unban_datetime)
 				output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[reason];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
 			if(edits)
-				output += "<br><a href='?_src_=holder;[HrefToken()];unbanlog=[ban_id]>Edit log</a>"
+				output += "<br><a href='?_src_=holder;[HrefToken()];unbanlog=[ban_id]'>Edit log</a>"
 			output += "</div></div></div>"
 		qdel(query_unban_search_bans)
 		output += "</div>"
@@ -601,7 +604,7 @@
 			to_chat(i, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your IP or CID.")
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
-/datum/admins/proc/edit_ban(ban_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, admin_key, page, list/changes)
+/datum/admins/proc/edit_ban(ban_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -628,8 +631,7 @@
 			qdel(query_edit_ban_get_player)
 			return
 	qdel(query_edit_ban_get_player)
-	applies_to_admins = sanitizeSQL(applies_to_admins)
-	if(applies_to_admins)
+	if(applies_to_admins && (applies_to_admins != old_applies))
 		var/admin_ckey = sanitizeSQL(usr.client.ckey)
 		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery("SELECT COUNT(DISTINCT bantime) FROM [format_table_name("ban")] WHERE a_ckey = '[admin_ckey]' AND applies_to_admins = 1 AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
 		if(!query_check_adminban_count.warn_execute()) //count distinct bantime to treat rolebans made at the same time as one ban
@@ -645,6 +647,7 @@
 				qdel(query_check_adminban_count)
 				return
 		qdel(query_check_adminban_count)
+	applies_to_admins = sanitizeSQL(applies_to_admins)
 	duration = text2num(duration)
 	if(interval)
 		interval = sanitizeSQL(interval)
@@ -669,7 +672,7 @@
 		if(old_cid)
 			wherelist += "computerid = '[sanitizeSQL(old_cid)]'"
 		where = wherelist.Join(" AND ")
-	var/datum/DBQuery/query_edit_ban = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET expiration_time = IF('[duration]' LIKE '', NULL, bantime + INTERVAL [duration ? "[duration]" : "0"] [interval]), applies_to_admins = [applies_to_admins], reason = '[reason]', ckey = IF('[player_ckey]' LIKE '', NULL, '[player_ckey]'), ip = INET_ATON(IF('[player_ip]' LIKE '', NULL, '[player_ip]')), computerid = IF('[player_cid]' LIKE '', NULL, '[player_cid]'), edits = CONCAT(edits,'[sanitizeSQL(usr.client.ckey)] edited the following [jointext(changes_text, ", ")]<hr>') WHERE [where]")
+	var/datum/DBQuery/query_edit_ban = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET expiration_time = IF('[duration]' LIKE '', NULL, bantime + INTERVAL [duration ? "[duration]" : "0"] [interval]), applies_to_admins = [applies_to_admins], reason = '[reason]', ckey = IF('[player_ckey]' LIKE '', NULL, '[player_ckey]'), ip = INET_ATON(IF('[player_ip]' LIKE '', NULL, '[player_ip]')), computerid = IF('[player_cid]' LIKE '', NULL, '[player_cid]'), edits = CONCAT(IFNULL(edits,''),'[sanitizeSQL(usr.client.ckey)] edited the following [jointext(changes_text, ", ")]<hr>') WHERE [where]")
 	if(!query_edit_ban.warn_execute())
 		qdel(query_edit_ban)
 		return
@@ -696,7 +699,7 @@
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	ban_id = sanitizeSQL(ban_id)
-	var/datum/DBQuery/query_get_ban_edits = SSdbcore.NewQuery("SELECT edits WHERE id = '[ban_id]'")
+	var/datum/DBQuery/query_get_ban_edits = SSdbcore.NewQuery("SELECT edits FROM [format_table_name("ban")] WHERE id = '[ban_id]'")
 	if(!query_get_ban_edits.warn_execute())
 		qdel(query_get_ban_edits)
 		return
