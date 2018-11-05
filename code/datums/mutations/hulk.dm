@@ -9,6 +9,7 @@
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
 	instability = 20
+	locked = TRUE
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())

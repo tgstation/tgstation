@@ -168,8 +168,12 @@
 		buttons += "<span class='linkOff'>Mutations</span>"
 	else
 		buttons += "<a href='?src=[REF(src)];task=screen;text=mutations;'>Mutations</a>"
+	if((current_screen == "mainmenu") || !current_screen)
+		buttons += "<span class='linkOff'>Genetic Sequencer</span>"
+	else
+		buttons += "<a href='?src=[REF(src)];task=screen;text=mainmenu;'>Genetic Sequencer</a>"
 	if(current_screen == "ui")
-		buttons += "<a href='?src=[REF(src)];task=screen;text=mainmenu;'>Radiation Emitter Menu</a>"
+		buttons += "<span class='linkOff'>Unique Identifiers</span>"
 	else
 		buttons += "<a href='?src=[REF(src)];task=screen;text=ui;'>Unique Identifiers</a>"
 
@@ -276,11 +280,30 @@
 							temp_html += "<a href='?src=[REF(src)];task=savedisk;num=[i];'>Save to Disk</a>"
 						else
 							temp_html += "<span class='linkOff'>Save to Disk</span>"
+		if("disk")
+			if(diskette)
+				temp_html += "<h3>[diskette.name]</h3><br>"
+				if(LAZYLEN(diskette.fields))
+					temp_html += "todo"
+				if(LAZYLEN(diskette.mutations))
+					temp_html += "<table>"
+					for(var/datum/mutation/human/A in diskette.mutations)
+						temp_html += "<tr><td><span class='linkOff'>[A.name]</span></td>"
+						temp_html += "<td><a href='?src=[REF(src)];task=deletediskmut;num=[diskette.mutations.Find(A)];'>Delete</a></td>"
+						if(LAZYLEN(stored_mutations) < max_storage)
+							temp_html += "<td><a href='?src=[REF(src)];task=importdiskmut;num=[diskette.mutations.Find(A)];'>Import</a></td>"
+						else
+							temp_html += "<td><td><span class='linkOff'>Import</span></td>"
+						temp_html += "</tr>"
+					temp_html += "</table>"
+			else
+				temp_html += "Loak diskette to start ----------"
 		if("info")
 			if(current_storage)
-				var/datum/mutation/human/HM = stored_mutations[current_storage]
-				if(HM)
-					temp_html += display_sequence(HM.type, current_storage)
+				if(LAZYLEN(stored_mutations) <= current_storage)
+					var/datum/mutation/human/HM = stored_mutations[current_storage]
+					if(HM)
+						temp_html += display_sequence(HM.type, current_storage)
 		if("mutations")
 			temp_html += status
 			temp_html += buttons
@@ -294,40 +317,49 @@
 		else
 			temp_html += status
 			temp_html += buttons
+			temp_html += "<div class='line'><div class='statusLabel'>Genetic Sequence:</div><br>"
+			if(viable_occupant)
+				if(viable_occupant.dna.scrambled)
+					temp_html += "<div class='line'>Genetic structure has been damaged. Please initiate restoration protocal."
+					temp_html += "<a href='?src=[REF(src)];task=restore;'>Restore.</a>"
 
-			if(viable_occupant && viable_occupant.dna.scrambled)
-				temp_html += "<div class='line'>Genetic structure has been damaged. Please initiate restoration protocal."
-				temp_html += "<a href='?src=[REF(src)];task=restore;'>Restore.</a>"
-			else
-				temp_html += "<div class='line'><div class='statusLabel'>Genetic Sequence:</div><div class='statusValue'><div class='clearBoth'>"
-				if(viable_occupant)
-					for(var/A in viable_occupant.dna.mutation_index)
-						temp_html += display_inactive_sequence(A)
-					temp_html += "<br>"
 				else
-					temp_html += "----"
-				if(viable_occupant && (current_mutation in viable_occupant.dna.mutation_index))
-					temp_html += display_sequence(current_mutation)
-				temp_html += "</div></div></div><br>"
+					if(viable_occupant)
+						for(var/A in get_mutation_list(viable_occupant))
+							temp_html += display_inactive_sequence(A)
+						temp_html += "<br>"
+					else
+						temp_html += "----"
+					if(viable_occupant && (current_mutation in get_mutation_list(viable_occupant)))
+						temp_html += display_sequence(current_mutation)
+					temp_html += "</div><br>"
+			else
+				temp_html += "----------"
 
 	popup.set_content(temp_html.Join())
 	popup.open()
 
 /obj/machinery/computer/scan_consolenew/proc/display_inactive_sequence(mutation)
 	var/temp_html = ""
-	var/class = "undiscovered"
+	var/class = "unselected"
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(!viable_occupant)
 		return
+
 	var/location = viable_occupant.dna.mutation_index.Find(mutation) //We do this because we dont want people using sysexp or similair tools to just read the mutations.
-	if(!location)
-		return
+
+	if(!location) //Do this only when needed, dont make a list with mutations for every iteration if you dont need to
+		var/list/mutations = get_mutation_list(viable_occupant)
+		if(mutation in mutations)
+			location = mutations.Find(mutation)
 	if(mutation == current_mutation)
-		class = "discovered"
-	if(mutation in stored_research.discovered_mutations)
-		temp_html += "<a href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_discovered.png' width = '100' alt='Discovered Mutation'></a>"
+		class = "selected"
+	if(location > DNA_STRUC_ENZYMES_BLOCKS)
+		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_extra.png' width = '65'  alt='Extra Mutation'></a>"
+	else if(mutation in stored_research.discovered_mutations)
+		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_discovered.png' width = '65'  alt='Discovered Mutation'></a>"
 	else
-		temp_html += "<a href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_undiscovered.png' width = '100' alt=Undiscovered Mutation'></a>"
+		temp_html += "<a class='clean' clean href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_undiscovered.png' width = '65' alt=Undiscovered Mutation'></a>"
 	return temp_html
 
 /obj/machinery/computer/scan_consolenew/proc/display_sequence(mutation, storage_slot) //Storage slot is for when viewing from the stored mutations
@@ -339,16 +371,17 @@
 	var/mut_desc = "No information available."
 	var/active = FALSE
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
-	if(viable_occupant.dna.get_mutation(mutation))
+	if(viable_occupant && viable_occupant.dna.get_mutation(mutation))
 		active = TRUE
-	if(!viable_occupant) //change this when making mutations host independent
-		return
 	if(active && (stored_research && !(mutation in stored_research.discovered_mutations)))
 		stored_research.discovered_mutations += mutation
 	if(stored_research && (mutation in stored_research.discovered_mutations))
 		var/datum/mutation/human/HM = get_initialized_mutation(mutation)
 		mut_name = HM.name
 		mut_desc = HM.desc
+	var/extra
+	if(viable_occupant && (!storage_slot && !viable_occupant.dna.mutation_in_se(mutation)))
+		extra = TRUE
 	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
 	if(!viable_occupant)
 		return
@@ -356,26 +389,26 @@
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	for(var/block in 1 to HM.blocks)
-		var/list/whole_sequence = viable_occupant.dna.get_gene_list(mutation)
+		var/list/whole_sequence = get_gene_list(mutation)
 		var/list/sequence = whole_sequence.Copy(1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
 		temp_html += "<div class='statusLine'><table class='statusDisplay'><tr>"
 		for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 			var/num = 1+(i-1)*2
 			var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-			temp_html += "<td><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></td>"
+			temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
 		temp_html += "</tr><tr>"
 		for(var/i in 1 to DNA_SEQUENCE_LENGTH)
-			temp_html += "<td>|</td>"
+			temp_html += "<td><div class='statusLine'>|</div></td>"
 		temp_html += "</tr><tr>"
 		for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 			var/num = i*2
 			var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-			temp_html += "<td><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></td>"
+			temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
 		temp_html += "</tr></table></div>"
 	temp_html += "<br><br><br><br><br>"
 	if((active || storage_slot) && (injectorready < world.time))
 		temp_html += "<a href='?src=[REF(src)];task=activator;path=[mutation];slot=[storage_slot];'>Print Activator</a>"
-		temp_html += "<a href='?src=[REF(src)];task=mutator;path=[mutation]slot;=[storage_slot];'>Print Mutator</a>"
+		temp_html += "<a href='?src=[REF(src)];task=mutator;path=[mutation];slot;=[storage_slot];'>Print Mutator</a>"
 	else
 		temp_html += "<span class='linkOff'>Print Activator</span>"
 		temp_html += "<span class='linkOff'>Print Mutator</span>"
@@ -385,8 +418,10 @@
 		temp_html += "<a href='?src=[REF(src)];task=screen;text=mutations;'>Back</a>"
 	else if(active)
 		temp_html += "<a href='?src=[REF(src)];task=savemut;path=[mutation];'>Store</a>"
+	if(extra)
+		temp_html += "<a href='?src=[REF(src)];task=nullify;'>Nullify</a>"
 	else
-		temp_html += "<span class='linkOff'>Store</span>"
+		temp_html += "<span class='linkOff'>Nullify</span>"
 	temp_html += "</div></div>"
 	return temp_html
 
@@ -549,7 +584,9 @@
 					connected.locked = locked_state
 		if("inspect")
 			if(viable_occupant)
-				current_mutation = viable_occupant.dna.mutation_index[num]
+				var/list/mutations = get_mutation_list(viable_occupant)
+				current_mutation = mutations[num]
+
 		if("inspectstorage")
 			current_storage = num
 			current_screen = "info"
@@ -571,8 +608,9 @@
 		if("deletemut")
 			var/datum/mutation/human/HM = stored_mutations[num]
 			if(HM)
-				stored_mutations.Remove(num)
+				stored_mutations.Remove(HM)
 				qdel(HM)
+				current_screen = "mutations"
 		if("activator")
 			if(injectorready < world.time)
 				var/mutation = text2path(href_list["path"])
@@ -595,8 +633,8 @@
 						I.name = "[HM.name] injector"
 						injectorready = world.time + INJECTOR_TIMEOUT*5
 		if("nullify")
-			if(viable_occupant)
-				viable_occupant.dna.force_lose(current_mutation)
+			if(viable_occupant && !viable_occupant.dna.mutation_in_se(current_mutation))
+				viable_occupant.dna.remove_mutation(current_mutation)
 				viable_occupant.dna.update_instability(TRUE)
 				current_screen = null
 		if("restore")
@@ -616,13 +654,42 @@
 						sequence[num] = new_gene
 						viable_occupant.dna.update_from_gene_list(path, sequence)
 					viable_occupant.domutcheck()
+		if("export")
+			if(diskette && !diskette.read_only)
+				var/path = text2path(href_list["path"])
+				if(ispath(path, /datum/mutation/human))
+					var/datum/mutation/human/A = get_valid_mutation(path)
+					if(A && diskette && (LAZYLEN(diskette.mutations) < diskette.max_mutations))
+						var/datum/mutation/human/HM = new A.type()
+						diskette.mutations += HM
+						HM.copy_mutation(A)
+						to_chat(usr, "<span class='notice'>Succesfully written [A.name] to [diskette.name].</span>")
+		if("deletediskmut")
+			if(diskette && !diskette.read_only)
+				if(num && (LAZYLEN(diskette.mutations) <= num))
+					var/datum/mutation/human/A = diskette.mutations[num]
+					diskette.mutations.Remove(A)
+					qdel(A)
+		if("importdiskmut")
+			if(diskette && (LAZYLEN(diskette.mutations) <= num))
+				if(LAZYLEN(stored_mutations) < max_storage)
+					var/datum/mutation/human/A = diskette.mutations[num]
+					var/datum/mutation/human/HM = new A.type()
+					HM.copy_mutation(A)
+					stored_mutations[HM] = get_sequence(HM.type)
+					to_chat(usr,"<span class='notice'>Succesfully written [A.name] to storage.")
+
+
+
+
+
 	ui_interact(usr,last_change)
 
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
 	if(ran == 0)
-		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-change makes people mad though
+		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-chance makes people mad though
 	else if(ran < 0)
 		ran = round(ran)	//negative, so floor it
 	else
@@ -684,6 +751,31 @@
 	var/mob/living/carbon/C = get_viable_occupant()
 	if(C)
 		return C.dna.get_mutation(mutation)
+
+
+/obj/machinery/computer/scan_consolenew/proc/get_mutation_list(mob/living/carbon/viable_occupant) //Returns a list of the mutation index types and any extra mutations
+	if(!viable_occupant)
+		return
+	var/list/paths = list()
+	for(var/A in viable_occupant.dna.mutation_index)
+		paths += A
+	for(var/datum/mutation/human/A in viable_occupant.dna.mutations)
+		if(A.class == MUT_EXTRA)
+			paths += A.type
+	return paths
+
+/obj/machinery/computer/scan_consolenew/proc/get_gene_list(mutation)
+	var/mob/living/carbon/C = get_viable_occupant()
+	if(C && (mutation in C.dna.mutation_index))
+		return C.dna.get_gene_list(mutation)
+	else if(C && (LAZYLEN(C.dna.mutations)))
+		for(var/datum/mutation/human/A in C.dna.mutations)
+			if(A.type == mutation)
+				return string2list(get_sequence(mutation))
+	if(mutation in stored_mutations)
+		return string2list(stored_mutations[mutation])
+
+
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT

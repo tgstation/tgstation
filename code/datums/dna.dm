@@ -105,18 +105,18 @@
 	return .
 
 /datum/dna/proc/generate_struc_enzymes()
-	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations
+	var/bonus
+	if(species && species.inert_mutation)
+		bonus = get_initialized_mutation(species.inert_mutation)
+	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
 	mutation_index.Cut()
 	shuffle_inplace(mutations_temp)
-	var/start_at = 1
-	if(species)
-		if((species.inert_mutation == RACEMUT) && ismonkey(holder))
-			mutations |= new species.inert_mutation(MUT_NORMAL)
-			mutation_index[species.inert_mutation] = get_sequence(species.inert_mutation)
-		else
-			mutation_index[species.inert_mutation] = create_sequence(species.inert_mutation, FALSE)
-		start_at = 2
-	for(var/i in start_at to DNA_STRUC_ENZYMES_BLOCKS)
+	if(ismonkey(holder))
+		mutations |= new RACEMUT(MUT_NORMAL)
+		mutation_index[RACEMUT] = get_sequence(RACEMUT)
+	else
+		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
+	for(var/i in 2 to DNA_STRUC_ENZYMES_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
 		mutation_index[M.type] = create_sequence(M.type, FALSE,M.difficulty)
 	shuffle_inplace(mutation_index)

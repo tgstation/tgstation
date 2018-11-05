@@ -80,6 +80,8 @@
 	name = "cloning data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	var/list/fields = list()
+	var/list/mutations = list()
+	var/max_mutations = 6
 	var/read_only = 0 //Well,it's still a floppy disk
 
 //Disk stuff.

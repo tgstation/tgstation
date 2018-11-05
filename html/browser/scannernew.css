@@ -14,9 +14,13 @@
 	font-family: Fixed, monospace;
 	float: left;
 }
-.discovered
+img.selected
 {
 	border: 1px solid blue;
+}
+img.unselected
+{
+	border: 2px solid black;
 }
 div>table {
 	float: left;
@@ -24,4 +28,10 @@ div>table {
 td
 {
 	text-align: center;
+}
+a.clean
+{
+	background: none;
+	border: none;
+	marging: none;
 }
