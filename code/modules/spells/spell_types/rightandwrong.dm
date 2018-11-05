@@ -154,7 +154,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 /proc/rightandwrong(summon_type, mob/user, survivor_probability)
 	if(user) //in this case either someone holding a spellbook or a badmin
 		to_chat(user, "<span class='warning'>You summoned [summon_type]!</span>")
-		message_admins("[key_name_admin(user, TRUE)] summoned [summon_type]!")
+		message_admins("[ADMIN_LOOKUPFLW(user)] summoned [summon_type]!")
 		log_game("[key_name(user)] summoned [summon_type]!")
 
 	if(summon_type == SUMMON_MAGIC)

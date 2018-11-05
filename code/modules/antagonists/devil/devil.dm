@@ -424,7 +424,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				return 0
 
 /datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
-	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
+	message_admins("[key_name_admin(owner)] (true name is: [truename]) is resurrecting using hellish energy.</a>")
 	if(SOULVALUE < ARCH_THRESHOLD || !ascendable) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
@@ -449,10 +449,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(!currentMob)
 			currentMob = owner.get_ghost()
 			if(!currentMob)
-				message_admins("[owner.name]'s devil resurrection failed due to client logoff.  Aborting.")
+				message_admins("[key_name_admin(owner)]'s devil resurrection failed due to client logoff.  Aborting.")
 				return -1
 		if(currentMob.mind != owner)
-			message_admins("[owner.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
+			message_admins("[key_name_admin(owner)]'s devil resurrection failed due to becoming a new mob.  Aborting.")
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current
