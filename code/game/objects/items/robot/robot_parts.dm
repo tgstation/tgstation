@@ -258,7 +258,7 @@
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
-			if(M.brain && M.brain.damaged_brain)
+			if(M.brain?.damaged_brain)
 				to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
 				return
 

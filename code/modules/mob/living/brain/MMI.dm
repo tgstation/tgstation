@@ -193,7 +193,8 @@
 
 /obj/item/mmi/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>There is a switch to toggle the radio system.</span>")
+	if(!brain)
+    	to_chat(user, "<span class='notice'>There is a switch to toggle the radio system [radio.on ? "off" : "on"].</span>")
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
