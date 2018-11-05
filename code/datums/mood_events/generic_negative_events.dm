@@ -114,9 +114,28 @@
 	mood_change = -4
 
 /datum/mood_event/healsbadman
-	description = "<span class='nicegreen'>You feel a lot better, but wow that was disgusting.</span>\n" //when you read the latest felinid removal PR and realize you're really not that much of a degenerate
+	description = "<span class='warning'>I feel a lot better, but wow that was disgusting.</span>\n" //when you read the latest felinid removal PR and realize you're really not that much of a degenerate
 	mood_change = -4
 	timeout = 1200
+
+/datum/mood_event/jittery
+	description = "<span class='warning'>I'm nervous and on edge and I can't stand still!!</span>\n"
+	mood_change = -2
+
+/datum/mood_event/vomit
+	description = "<span class='warning'>I just threw up. Gross.</span>\n"
+	mood_change = -2
+	timeout = 1200
+
+/datum/mood_event/vomitself
+	description = "<span class='warning'>I just threw up all over myself. This is disgusting.</span>\n"
+	mood_change = -4
+	timeout = 1800
+
+/datum/mood_event/painful_medicine
+	description = "<span class='warning'>Medicine may be good for me but right now it stings like hell.</span>\n"
+	mood_change = -5
+	timeout = 600
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse

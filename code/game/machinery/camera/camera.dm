@@ -6,17 +6,17 @@
 	name = "security camera"
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/machines/camera.dmi'
-	icon_state = "camera"
+	icon_state = "camera" //mapping icon to represent upgrade states. if you want a different base icon, update default_camera_icon as well as this.
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
-
 	resistance_flags = FIRE_PROOF
 
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 50)
 	max_integrity = 100
 	integrity_failure = 50
+	var/default_camera_icon = "camera" //the camera's base icon used by update_icon - icon_state is primarily used for mapping display purposes.
 	var/list/network = list("ss13")
 	var/c_tag = null
 	var/status = TRUE
@@ -38,6 +38,7 @@
 
 	// Upgrades bitflag
 	var/upgrades = 0
+	var/datum/component/empprotection/emp_component
 
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 
@@ -58,9 +59,15 @@
 		network += lowertext(i)
 	if(CA)
 		assembly = CA
+		if(assembly.xray_module)
+			upgradeEmpProof()
+		if(assembly.emp_module)
+			upgradeXRay()
+		if(assembly.proxy_module)
+			upgradeMotion()
 	else
 		assembly = new(src)
-		assembly.state = 4
+		assembly.state = 4 //STATE_FINISHED
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
@@ -70,6 +77,8 @@
 
 	if(mapload && is_station_level(z) && prob(3) && !start_active)
 		toggle_cam()
+	else //this is handled by toggle_camera, so no need to update it twice.
+		update_icon()
 
 /obj/machinery/camera/Destroy()
 	if(can_use())
@@ -78,6 +87,7 @@
 	if(isarea(myarea))
 		LAZYREMOVE(myarea.cameras, src)
 	QDEL_NULL(assembly)
+	QDEL_NULL(emp_component)
 	if(bug)
 		bug.bugged_cameras -= src.c_tag
 		if(bug.current == src)
@@ -85,6 +95,30 @@
 		bug = null
 	cancelCameraAlarm()
 	return ..()
+
+/obj/machinery/camera/examine(mob/user)
+	..()
+	if(isEmpProof())
+		to_chat(user, "It has electromagnetic interference shielding installed.")
+	else
+		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>")
+	if(isXRay())
+		to_chat(user, "It has an X-ray photodiode installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>")
+	if(isMotion())
+		to_chat(user, "It has a proximity sensor installed.")
+	else
+		to_chat(user, "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>")
+
+	if(!status)
+		to_chat(user, "<span class='info'>Its current deactivated.</span>")
+		if(!panel_open && powered())
+			to_chat(user, "<span class='notice'>You'll need to open it's maintenance panel with a <b>screwdriver</b> to turn it back on.</span>")
+	if(panel_open)
+		to_chat(user, "<span class='info'>Its maintenance panel is currently open.</span>")
+		if(!status && powered())
+			to_chat(user, "<span class='info'>It can reactivated with a <b>screwdriver</b>.</span>")
 
 /obj/machinery/camera/emp_act(severity)
 	. = ..()
@@ -145,6 +179,7 @@
 	panel_open = !panel_open
 	to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 	I.play_tool_sound(src)
+	update_icon()
 	return TRUE
 
 /obj/machinery/camera/wirecutter_act(mob/living/user, obj/item/I)
@@ -185,9 +220,9 @@
 			if(!isXRay())
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
-				qdel(I)
 				upgradeXRay()
-				to_chat(user, "<span class='notice'>You attach [I] into the assembly's inner circuits.</span>")
+				to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
+				qdel(I)
 			else
 				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
 			return
@@ -196,7 +231,7 @@
 			if(!isEmpProof())
 				if(I.use_tool(src, user, 0, amount=1))
 					upgradeEmpProof()
-					to_chat(user, "<span class='notice'>You attach [I] into the assembly's inner circuits.</span>")
+					to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 			else
 				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
 			return
@@ -206,7 +241,7 @@
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
 				upgradeMotion()
-				to_chat(user, "<span class='notice'>You attach [I] into the assembly's inner circuits.</span>")
+				to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 				qdel(I)
 			else
 				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
@@ -291,13 +326,16 @@
 			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 
-/obj/machinery/camera/update_icon()
+/obj/machinery/camera/update_icon() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
+	var/xray_module
+	if(isXRay())
+		xray_module = "xray"
 	if(!status)
-		icon_state = "[initial(icon_state)]1"
+		icon_state = "[xray_module][default_camera_icon]_off"
 	else if (stat & EMPED)
-		icon_state = "[initial(icon_state)]emp"
+		icon_state = "[xray_module][default_camera_icon]_emp"
 	else
-		icon_state = "[initial(icon_state)][in_use_lights ? "_in_use" : ""]"
+		icon_state = "[xray_module][default_camera_icon][in_use_lights ? "_in_use" : ""]"
 
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = 1)
 	status = !status
@@ -326,8 +364,8 @@
 		else
 			visible_message("<span class='danger'>\The [src] [change_msg]!</span>")
 
-		playsound(src.loc, 'sound/items/wirecutter.ogg', 100, 1)
-	update_icon()
+		playsound(src, 'sound/items/wirecutter.ogg', 100, TRUE)
+	update_icon() //update Initialize() if you remove this.
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.

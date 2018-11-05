@@ -56,6 +56,11 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		seed_multiplier = M.rating
 
+/obj/machinery/seed_extractor/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Extracting <b>[seed_multiplier]</b> seed(s) per piece of produce.<br>Machine can store up to <b>[max_seeds]%</b> seeds.<span>")
+
 /obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))

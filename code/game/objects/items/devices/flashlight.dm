@@ -95,7 +95,7 @@
 
 			if(BODY_ZONE_PRECISE_MOUTH)
 
-				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
+				if(M.is_mouth_covered())
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
 					return
 
@@ -479,7 +479,7 @@
 	if(!on)
 		on = TRUE
 		START_PROCESSING(SSobj, src)
-		
+
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
 	if(!fuel)
 		user.visible_message("<span class='suicide'>[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!</span>")

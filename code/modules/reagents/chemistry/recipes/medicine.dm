@@ -252,3 +252,9 @@
 	results = list("modafinil" = 5)
 	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, "sacid" = 1)
 	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible
+
+/datum/chemical_reaction/psicodine
+	name = "Psicodine"
+	id = "psicodine"
+	results = list("psicodine" = 5)
+	required_reagents = list( "mannitol" = 2, "water" = 2, "impedrezene" = 1)

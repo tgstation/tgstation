@@ -281,33 +281,8 @@
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
 		//check for protection
-		var/mouth_covered = 0
-		var/eyes_covered = 0
-		var/obj/item/safe_thing = null
-
-		//monkeys and humans can have masks
-		if( victim.wear_mask )
-			if ( victim.wear_mask.flags_cover & MASKCOVERSEYES )
-				eyes_covered = 1
-				safe_thing = victim.wear_mask
-			if ( victim.wear_mask.flags_cover & MASKCOVERSMOUTH )
-				mouth_covered = 1
-				safe_thing = victim.wear_mask
-
-		//only humans can have helmets and glasses
-		if(ishuman(victim))
-			var/mob/living/carbon/human/H = victim
-			if( H.head )
-				if ( H.head.flags_cover & HEADCOVERSEYES )
-					eyes_covered = 1
-					safe_thing = H.head
-				if ( H.head.flags_cover & HEADCOVERSMOUTH )
-					mouth_covered = 1
-					safe_thing = H.head
-			if(H.glasses)
-				eyes_covered = 1
-				if ( !safe_thing )
-					safe_thing = H.glasses
+		var/mouth_covered = victim.is_mouth_covered()
+		var/eyes_covered = victim.is_eyes_covered()
 
 		//actually handle the pepperspray effects
 		if ( eyes_covered && mouth_covered )

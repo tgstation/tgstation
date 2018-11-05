@@ -2,7 +2,7 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
-	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces 0.2 cubes for every monkey inserted."
+	desc = "A machine used for recycling dead monkeys into monkey cubes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
@@ -35,7 +35,11 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 		cube_production += B.rating * 0.1
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		cube_production += M.rating * 0.1
-	src.desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cube_production] cubes for every monkey inserted."
+		
+/obj/machinery/monkey_recycler/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Producing <b>[cube_production]</b> cubes for every monkey inserted.<span>")
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))

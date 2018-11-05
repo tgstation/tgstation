@@ -138,7 +138,7 @@
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	item_flags = NODROP | ABSTRACT
+	item_flags = NODROP | ABSTRACT | DROPDEL
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)

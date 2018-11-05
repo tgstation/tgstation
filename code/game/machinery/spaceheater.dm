@@ -52,6 +52,8 @@
 		to_chat(user, "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
 		to_chat(user, "There is no power cell installed.")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[heatingPower*0.001]kJ</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.<span>") //100%, 75%, 50%, 25%
 
 /obj/machinery/space_heater/update_icon()
 	if(on)

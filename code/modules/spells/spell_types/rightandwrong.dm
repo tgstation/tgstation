@@ -42,7 +42,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/revolver/grenadelauncher,
 	/obj/item/gun/ballistic/revolver/golden,
 	/obj/item/gun/ballistic/automatic/sniper_rifle,
-	/obj/item/gun/ballistic/automatic/rocketlauncher,
+	/obj/item/gun/ballistic/rocketlauncher,
 	/obj/item/gun/medbeam,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/gravity_gun))
