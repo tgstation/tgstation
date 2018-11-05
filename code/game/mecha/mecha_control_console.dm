@@ -63,7 +63,7 @@
 <b>Cell Charge:</b> [isnull(cell_charge)?"Not Found":"[M.cell.percent()]%"]<br>
 <b>Airtank:</b> [round(M.return_pressure(), 0.01)] kPa<br>
 <b>Pilot:</b> [M.occupant||"None"]<br>
-<b>Location:</b> [get_area(M)||"Unknown"]<br>
+<b>Location:</b> [get_area_name(M, TRUE)||"Unknown"]<br>
 <b>Active Equipment:</b> [M.selected||"None"]"}
 	if(istype(M, /obj/mecha/working/ripley))
 		var/obj/mecha/working/ripley/RM = M
