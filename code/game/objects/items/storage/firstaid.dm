@@ -261,3 +261,19 @@
 /obj/item/storage/pill_bottle/aranesp/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/aranesp(src)
+
+/obj/item/storage/pill_bottle/psicodine
+	name = "bottle of psicodine pills"
+	desc = "Contains pills used to treat mental distress and traumas."
+
+/obj/item/storage/pill_bottle/psicodine/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/psicodine(src)
+
+/obj/item/storage/pill_bottle/happiness
+	name = "happiness pill bottle"
+	desc = "The label is long gone, in its place an 'H' written with a marker."
+
+/obj/item/storage/pill_bottle/happiness/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happiness(src)

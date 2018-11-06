@@ -135,7 +135,7 @@
 		mind.special_role = "hacked drone"
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
-		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
+		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
 		if(!hacked)
 			return
@@ -152,7 +152,7 @@
 		speed = initial(speed)
 		if(is_servant_of_ratvar(src))
 			remove_servant_of_ratvar(src, TRUE)
-		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
+		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
 
 /mob/living/simple_animal/drone/proc/liberate()

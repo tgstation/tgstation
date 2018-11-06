@@ -70,9 +70,11 @@
         tooltip='Alerts ghosts when a pod is launched. Useful if some dumb shit is aboutta come outta the pod.'>Alert Ghosts</ui-button>    </ui-section>
 
     <ui-section label='Sound?'>
+        <ui-button style='{{data.fallingSound ? "selected" : null}}' action='fallingSound' tooltip-side='left'
+        tooltip='Choose a sound to play as the pod falls. Note that for this to work right you should know the exact length of the sound, in seconds.'>Custom Falling Sound</ui-button>
         <ui-button style='{{data.landingSound ? "selected" : null}}' action='landingSound' tooltip-side='left'
         tooltip='Choose a sound to play when the pod lands.'>Custom Landing Sound</ui-button>
-         <ui-button style='{{data.openingSound ? "selected" : null}}' action='openingSound' tooltip-side='left'
+        <ui-button style='{{data.openingSound ? "selected" : null}}' action='openingSound' tooltip-side='left'
         tooltip='Choose a sound to play when the pod opens.'>Custom Opening Sound</ui-button>
         <ui-button style='{{data.leavingSound ? "selected" : null}}' action='leavingSound' tooltip-side='left'
         tooltip='Choose a sound to play when the pod departs (whether that be delection in the case of a bluespace pod, or leaving for centcom for a reversing pod).'>Custom Leaving Sound</ui-button>
@@ -81,7 +83,9 @@
     </ui-section>
 
     <ui-section label='Delay timers?'>
-        <ui-button style='{{data.landingDelay != 5 ? "selected" : null}}' action='landingDelay' tooltip-side='left'
+        <ui-button style='{{data.fallDuration != 4 ? "selected" : null}}' action='fallDuration' tooltip-side='left'
+        tooltip='Set how long the animation for the pod falling lasts. Create dramatic, slow falling pods!'>Custom Falling Duration</ui-button>
+        <ui-button style='{{data.landingDelay != 20 ? "selected" : null}}' action='landingDelay' tooltip-side='left'
         tooltip='Choose the amount of time it takes for the supplypod to hit the station. By default this value is 0.5 seconds.'>Custom Landing Time</ui-button>
          <ui-button style='{{data.openingDelay != 30 ? "selected" : null}}' action='openingDelay' tooltip-side='left'
         tooltip='Choose the amount of time it takes for the supplypod to open after landing. Useful for giving whatevers inside the pod a nice dramatic entrance! By default this value is 3 seconds.'>Custom Opening Time</ui-button>
