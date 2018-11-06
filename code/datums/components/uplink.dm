@@ -147,6 +147,15 @@ GLOBAL_LIST_EMPTY(uplinks)
 							is_inaccessible = 0
 					if(is_inaccessible)
 						continue
+				////WORKING HERE
+				if(I.restricted_species.len)
+					var/is_inaccessible = 1
+					for(var/R in I.restricted_species)
+						if(R == var/mob/living/carbon/human/R)
+							is_inaccessible = 0
+					if(is_inaccessible)
+						continue
+				/////////////////
 				cat["items"] += list(list(
 					"name" = I.name,
 					"cost" = I.cost,
