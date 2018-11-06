@@ -32,7 +32,7 @@
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = FALSE		//if the turret responds to control panels
 
-	var/obj/item/electronics/turret/circuit
+	var/obj/item/electronics/turret/electronics
 	
 	var/installation = /obj/item/gun/energy/e_gun/turret		//the type of weapon installed by default
 	var/obj/item/gun/stored_gun = null
@@ -121,19 +121,19 @@
 
 /obj/machinery/porta_turret/proc/setup(obj/item/electronics/turret/_circuit, obj/item/gun/turret_gun)
 	if(_circuit)
-		circuit = _circuit
-		circuit.forceMove(src)
-		check_arrest = circuit.check_arrest
-		check_anomalies = circuit.check_anomalies
-		check_mindshield = circuit.check_mindshield
-		check_weapons = circuit.check_weapons
-		stun_all = circuit.stun_all
-		if(circuit.one_access)
-			req_one_access = circuit.accesses
+		electronics = _circuit
+		electronics.forceMove(src)
+		check_arrest = electronics.check_arrest
+		check_anomalies = electronics.check_anomalies
+		check_mindshield = electronics.check_mindshield
+		check_weapons = electronics.check_weapons
+		stun_all = electronics.stun_all
+		if(electronics.one_access)
+			req_one_access = electronics.accesses
 		else
-			req_access = circuit.accesses
+			req_access = electronics.accesses
 	else
-		circuit = new(src)
+		electronics = new(src)
 	
 	if(stored_gun)
 		qdel(stored_gun)
@@ -169,6 +169,7 @@
 	if(cp)
 		cp.turrets -= src
 		cp = null
+	QDEL_NULL(electronics)
 	QDEL_NULL(stored_gun)
 	QDEL_NULL(spark_system)
 	remove_control()

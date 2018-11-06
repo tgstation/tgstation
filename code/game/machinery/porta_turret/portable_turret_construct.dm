@@ -18,7 +18,7 @@
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
-	var/obj/item/electronics/turret/circuit
+	var/obj/item/electronics/turret/electronics
 	var/obj/item/gun/installed_gun = null
 	
 /obj/machinery/porta_turret_construct/examine(mob/user)
@@ -103,7 +103,7 @@
 			if(istype(I, /obj/item/electronics/turret))
 				if(!user.transferItemToLoc(I, src))
 					return
-				circuit = I
+				electronics = I
 				to_chat(user, "<span class='notice'>You add [I] to the turret.</span>")
 				build_step = PTURRET_CIRCUIT_ON
 				return
@@ -126,8 +126,8 @@
 			else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You remove the turret's circuitboard.</span>")
-				circuit.forceMove(drop_location())
-				circuit = null
+				electronics.forceMove(drop_location())
+				electronics = null
 				build_step = PTURRET_INTERNAL_ARMOUR_ON
 				return
 
@@ -185,7 +185,7 @@
 						turret = new/obj/machinery/porta_turret(loc)
 					turret.name = finish_name
 					turret.installation = installed_gun.type
-					turret.setup(circuit, installed_gun)
+					turret.setup(electronics, installed_gun)
 					qdel(src)
 
 			else if(I.tool_behaviour == TOOL_CROWBAR)
@@ -231,7 +231,7 @@
 	if(installed_gun)
 		qdel(installed_gun)
 		installed_gun = null
-	if(circuit)
-		qdel(circuit)
-		circuit = null
+	if(electronics)
+		qdel(electronics)
+		electronics = null
 	. = ..()

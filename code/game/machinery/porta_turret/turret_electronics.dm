@@ -81,4 +81,4 @@
 		if("toggle_auth")
 			stun_all = !stun_all
 			. = TRUE
-. = TRUE
+	. = TRUE
