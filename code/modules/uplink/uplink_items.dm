@@ -75,6 +75,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	var/restricted = FALSE // Adds restrictions for VR/Events
+	var/list/restricted_species = list() //Limits items to a specific species. Hopefully.
 
 /datum/uplink_item/New()
 	. = ..()
@@ -1680,3 +1681,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		var/datum/uplink_item/I = pick(possible_items)
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
 		U.MakePurchase(user, I)
+
+/datum/uplink_item/dangerous/lizsword
+	name = "Lizard Energy Sword"
+	desc = "This is a test item"
+	item = /obj/item/melee/transforming/energy/sword/saber
+	cost = 0
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	restricted_species = list("lizard")
