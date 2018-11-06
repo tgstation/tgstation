@@ -32,6 +32,8 @@
 	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = FALSE		//if the turret responds to control panels
 
+	var/obj/item/electronics/turret/circuit
+	
 	var/installation = /obj/item/gun/energy/e_gun/turret		//the type of weapon installed by default
 	var/obj/item/gun/stored_gun = null
 	var/gun_charge = 0		//the charge of the gun when retrieved from wreckage
@@ -53,12 +55,11 @@
 	var/shot_delay = 15		//ticks until next shot (1.5 ?)
 
 
-	var/check_records = 1	//checks if it can use the security records
-	var/criminals = 1		//checks if it can shoot people on arrest
-	var/auth_weapons = 0	//checks if it can shoot people that have a weapon they aren't authorized to have
-	var/stun_all = 0		//if this is active, the turret shoots everything that isn't security or head of staff
-	var/check_anomalies = 1	//checks if it can shoot at unidentified lifeforms (ie xenos)
-	var/shoot_unloyal = 0	//checks if it can shoot people that aren't loyalty implantd
+	var/check_arrest = TRUE		//checks if it can shoot people under arrest
+	var/check_weapons = FALSE	//checks if it can shoot people that have a weapon they aren't authorized to have
+	var/stun_all = FALSE		//if this is active, the turret shoots everything that isn't authorized
+	var/check_anomalies = TRUE	//checks if it can shoot at unidentified lifeforms (ie xenos)
+	var/check_mindshield = FALSE	//checks if it can shoot people that aren't mindshield implantd
 
 	var/attacked = 0		//if set to 1, the turret gets pissed off and shoots at people nearby (unless they have sec access!)
 
@@ -72,7 +73,7 @@
 
 	var/wall_turret_direction //The turret will try to shoot from a turf in that direction when in a wall
 
-	var/manual_control = FALSE //
+	var/manual_control = FALSE
 	var/datum/action/turret_quit/quit_action
 	var/datum/action/turret_toggle/toggle_action
 	var/mob/remote_controller
@@ -118,7 +119,22 @@
 			icon_state = "[base_icon_state]_unpowered"
 
 
-/obj/machinery/porta_turret/proc/setup(obj/item/gun/turret_gun)
+/obj/machinery/porta_turret/proc/setup(obj/item/electronics/turret/_circuit, obj/item/gun/turret_gun)
+	if(_circuit)
+		circuit = _circuit
+		circuit.forceMove(src)
+		check_arrest = circuit.check_arrest
+		check_anomalies = circuit.check_anomalies
+		check_mindshield = circuit.check_mindshield
+		check_weapons = circuit.check_weapons
+		stun_all = circuit.stun_all
+		if(circuit.one_access)
+			req_one_access = circuit.accesses
+		else
+			req_access = circuit.accesses
+	else
+		circuit = new(src)
+	
 	if(stored_gun)
 		qdel(stored_gun)
 		stored_gun = null
@@ -165,12 +181,11 @@
 	dat += "Behaviour controls are [locked ? "locked" : "unlocked"]<br>"
 
 	if(!locked)
-		dat += "Check for Weapon Authorization: <A href='?src=[REF(src)];operation=authweapon'>[auth_weapons ? "Yes" : "No"]</A><BR>"
-		dat += "Check Security Records: <A href='?src=[REF(src)];operation=checkrecords'>[check_records ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=shootcrooks'>[criminals ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize All Non-Security and Non-Command Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize Weapon Carriers: <A href='?src=[REF(src)];operation=authweapon'>[check_weapons ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize Identified Criminals: <A href='?src=[REF(src)];operation=checkarrest'>[check_arrest ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Authorized Personnel: <A href='?src=[REF(src)];operation=shootall'>[stun_all ? "Yes" : "No"]</A><BR>"
 		dat += "Neutralize All Unidentified Life Signs: <A href='?src=[REF(src)];operation=checkxenos'>[check_anomalies ? "Yes" : "No"]</A><BR>"
-		dat += "Neutralize All Non-Loyalty Implanted Personnel: <A href='?src=[REF(src)];operation=checkloyal'>[shoot_unloyal ? "Yes" : "No"]</A><BR>"
+		dat += "Neutralize All Non-Mindshield Implanted Personnel: <A href='?src=[REF(src)];operation=checkmindshield'>[check_mindshield ? "Yes" : "No"]</A><BR>"
 	if(issilicon(user))
 		if(!manual_control)
 			var/mob/living/silicon/S = user
@@ -201,17 +216,15 @@
 	if(href_list["operation"])
 		switch(href_list["operation"])	//toggles customizable behavioural protocols
 			if("authweapon")
-				auth_weapons = !auth_weapons
-			if("checkrecords")
-				check_records = !check_records
-			if("shootcrooks")
-				criminals = !criminals
+				check_weapons = !check_weapons
+			if("checkarrest")
+				check_arrest = !check_arrest
 			if("shootall")
 				stun_all = !stun_all
 			if("checkxenos")
 				check_anomalies = !check_anomalies
-			if("checkloyal")
-				shoot_unloyal = !shoot_unloyal
+			if("checkmindshield")
+				check_mindshield = !check_mindshield
 			if("manual")
 				if(issilicon(usr) && !manual_control)
 					give_control(usr)
@@ -311,10 +324,9 @@
 	if(on)
 		//if the turret is on, the EMP no matter how severe disables the turret for a while
 		//and scrambles its settings, with a slight chance of having an emag effect
-		check_records = pick(0, 1)
-		criminals = pick(0, 1)
-		auth_weapons = pick(0, 1)
-		stun_all = pick(0, 0, 0, 0, 1)	//stun_all is a pretty big deal, so it's least likely to get turned on
+		check_arrest = pick(FALSE, TRUE)
+		check_weapons = pick(FALSE, TRUE)
+		stun_all = pick(FALSE, FALSE, FALSE, FALSE, TRUE)	//stun_all is a pretty big deal, so it's least likely to get turned on
 
 		on = FALSE
 		remove_control()
@@ -464,30 +476,24 @@
 		return 10	//if emagged, always return 10.
 
 	if((stun_all || attacked) && !allowed(perp))
-		//if the turret has been attacked or is angry, target all non-sec people
-		if(!allowed(perp))
-			return 10
+		//if the turret has been attacked or is angry, target all non-authorized people
+		return 10
 
-	if(auth_weapons)	//check for weapon authorization
-		if(isnull(perp.wear_id) || istype(perp.wear_id.GetID(), /obj/item/card/id/syndicate))
+	if(check_weapons && !allowed(perp))	//check for weapon authorization
+		if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
+			threatcount += 4
 
-			if(allowed(perp)) //if the perp has security access, return 0
-				return 0
+		if(istype(perp.belt, /obj/item/gun) || istype(perp.belt, /obj/item/melee/baton))
+			threatcount += 2
 
-			if(perp.is_holding_item_of_type(/obj/item/gun) ||  perp.is_holding_item_of_type(/obj/item/melee/baton))
-				threatcount += 4
-
-			if(istype(perp.belt, /obj/item/gun) || istype(perp.belt, /obj/item/melee/baton))
-				threatcount += 2
-
-	if(check_records)	//if the turret can check the records, check if they are set to *Arrest* on records
+	if(check_arrest)	//if the turret can check the records, check if they are set to *Arrest* on records
 		var/perpname = perp.get_face_name(perp.get_id_name())
 		var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.security)
 		if(!R || (R.fields["criminal"] == "*Arrest*"))
 			threatcount += 4
 
-	if(shoot_unloyal)
-		if (!perp.has_trait(TRAIT_MINDSHIELD))
+	if(check_mindshield)
+		if(!perp.has_trait(TRAIT_MINDSHIELD))
 			threatcount += 4
 
 	return threatcount
@@ -767,6 +773,7 @@
 	if(built)
 		setDir(ndir)
 		locked = FALSE
+		req_access = list()
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
@@ -808,26 +815,31 @@
 		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
-			to_chat(user, "You link \the [M.buffer] with \the [src]")
+			to_chat(user, "You link \the [M.buffer] with [src]")
 			return
 
-	if (issilicon(user))
+	if(issilicon(user))
 		return attack_hand(user)
 
-	if ( get_dist(src, user) == 0 )		// trying to unlock the interface
-		if (allowed(usr))
+	if(get_dist(src, user) == 0)		// trying to unlock the interface
+		if(I.GetID() && !req_access.len)
+			req_access = I.GetAccess()
+			to_chat(user, "<span class='notice'>You use [I] to set the panel's access requirements.</span>")
+			return
+			
+		if(allowed(usr))
 			if(obj_flags & EMAGGED)
 				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
 
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>")
-			if (locked)
-				if (user.machine==src)
+			if(locked)
+				if(user.machine==src)
 					user.unset_machine()
 					user << browse(null, "window=turretid")
 			else
-				if (user.machine==src)
+				if(user.machine==src)
 					attack_hand(user)
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
@@ -977,9 +989,8 @@
 
 /obj/machinery/porta_turret/lasertag
 	req_access = list(ACCESS_MAINT_TUNNELS, ACCESS_THEATRE)
-	check_records = 0
-	criminals = 0
-	auth_weapons = 1
+	check_arrest = 0
+	check_weapons = 1
 	stun_all = 0
 	check_anomalies = 0
 	var/team_color
@@ -1004,7 +1015,7 @@
 		if(istype(perp.belt, /obj/item/gun/energy/laser/bluetag))
 			. += 2
 
-/obj/machinery/porta_turret/lasertag/setup(obj/item/gun/gun)
+/obj/machinery/porta_turret/lasertag/setup(obj/item/electronics/turret/_circuit, obj/item/gun/gun)
 	var/list/properties = ..()
 	if(properties["team_color"])
 		team_color = properties["team_color"]

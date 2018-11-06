@@ -185,6 +185,15 @@
 	build_path = /obj/item/electronics/firealarm
 	category = list("initial", "Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	
+/datum/design/turret_board
+	name = "Turret Electronics"
+	id = "turret_board"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/electronics/turret
+	category = list("initial", "Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY
 
 /datum/design/camera
 	name = "Camera"

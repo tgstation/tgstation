@@ -2,11 +2,12 @@
 #define PTURRET_BOLTED  1
 #define PTURRET_START_INTERNAL_ARMOUR  2
 #define PTURRET_INTERNAL_ARMOUR_ON  3
-#define PTURRET_GUN_EQUIPPED  4
-#define PTURRET_SENSORS_ON  5
-#define PTURRET_CLOSED  6
-#define PTURRET_START_EXTERNAL_ARMOUR  7
-#define PTURRET_EXTERNAL_ARMOUR_ON  8
+#define PTURRET_CIRCUIT_ON 4
+#define PTURRET_GUN_EQUIPPED  5
+#define PTURRET_SENSORS_ON  6
+#define PTURRET_CLOSED  7
+#define PTURRET_START_EXTERNAL_ARMOUR  8
+#define PTURRET_EXTERNAL_ARMOUR_ON  9
 
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
@@ -17,7 +18,30 @@
 	density = TRUE
 	var/build_step = PTURRET_UNSECURED //the current step in the building process
 	var/finish_name = "turret"	//the name applied to the product turret
+	var/obj/item/electronics/turret/circuit
 	var/obj/item/gun/installed_gun = null
+	
+/obj/machinery/porta_turret_construct/examine(mob/user)
+	. = ..()
+	switch(build_step)
+		if(PTURRET_UNSECURED)
+			to_chat(user, "<span class='notice'>The external <b>bolts</b> are unsecured.</span>")
+		if(PTURRET_BOLTED)
+			to_chat(user, "<span class='notice'>The interior frame is <b>unarmored</b>.</span>")
+		if(PTURRET_START_INTERNAL_ARMOUR)
+			to_chat(user, "<span class='notice'>The interior metal armor is <b>unsecured</b>.</span>")
+		if(PTURRET_INTERNAL_ARMOUR_ON)
+			to_chat(user, "<span class='notice'>The <b>circuit</b> slot is empty.</span>")
+		if(PTURRET_CIRCUIT_ON)
+			to_chat(user, "<span class='notice'>The <b>gun mount</b> is empty.</span>")
+		if(PTURRET_GUN_EQUIPPED)
+			to_chat(user, "<span class='notice'>It's missing a <b>proximity sensor</b>.</span>")
+		if(PTURRET_SENSORS_ON)
+			to_chat(user, "<span class='notice'>The external cover can be <b>screwed</b> shut.</span>")
+		if(PTURRET_CLOSED)
+			to_chat(user, "<span class='notice'>The external frame is <b>unarmored</b>.</span>")
+		if(PTURRET_START_EXTERNAL_ARMOUR)
+			to_chat(user, "<span class='notice'>The external metal armor is <b>unwelded</b>.</span>")
 
 /obj/machinery/porta_turret_construct/attackby(obj/item/I, mob/user, params)
 	//this is a bit unwieldy but self-explanatory
@@ -74,9 +98,22 @@
 					to_chat(user, "<span class='notice'>You remove the turret's interior metal armor.</span>")
 					new /obj/item/stack/sheet/metal(drop_location(), 2)
 					return
-
-
-		if(PTURRET_INTERNAL_ARMOUR_ON)
+					
+		if(PTURRET_INTERNAL_ARMOUR_ON)			
+			if(istype(I, /obj/item/electronics/turret))
+				if(!user.transferItemToLoc(I, src))
+					return
+				circuit = I
+				to_chat(user, "<span class='notice'>You add [I] to the turret.</span>")
+				build_step = PTURRET_CIRCUIT_ON
+				return
+			else if(I.tool_behaviour == TOOL_WRENCH)
+				I.play_tool_sound(src, 100)
+				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
+				build_step = PTURRET_START_INTERNAL_ARMOUR
+				return
+		
+		if(PTURRET_CIRCUIT_ON)
 			if(istype(I, /obj/item/gun/energy)) //the gun installation part
 				var/obj/item/gun/energy/E = I
 				if(!user.transferItemToLoc(E, src))
@@ -86,10 +123,12 @@
 				build_step = PTURRET_GUN_EQUIPPED
 				return
 
-			else if(I.tool_behaviour == TOOL_WRENCH)
+			else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 				I.play_tool_sound(src, 100)
-				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
-				build_step = PTURRET_START_INTERNAL_ARMOUR
+				to_chat(user, "<span class='notice'>You remove the turret's circuitboard.</span>")
+				circuit.forceMove(drop_location())
+				circuit = null
+				build_step = PTURRET_INTERNAL_ARMOUR_ON
 				return
 
 		if(PTURRET_GUN_EQUIPPED)
@@ -146,7 +185,7 @@
 						turret = new/obj/machinery/porta_turret(loc)
 					turret.name = finish_name
 					turret.installation = installed_gun.type
-					turret.setup(installed_gun)
+					turret.setup(circuit, installed_gun)
 					qdel(src)
 
 			else if(I.tool_behaviour == TOOL_CROWBAR)
@@ -192,4 +231,7 @@
 	if(installed_gun)
 		qdel(installed_gun)
 		installed_gun = null
+	if(circuit)
+		qdel(circuit)
+		circuit = null
 	. = ..()
