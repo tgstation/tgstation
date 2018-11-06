@@ -1,0 +1,4 @@
+author: "CRTXBacon"
+delete-after: True
+changes: 
+  - tweak: "Moves the clown mask south-facing sprite down one pixel, putting it on level with its other directional sprites. Henk."
