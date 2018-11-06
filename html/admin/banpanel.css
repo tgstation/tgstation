@@ -177,14 +177,6 @@
     display: inline-block;
 }
 
-.select select {
-    background: #e6e6e6;
-}
-
-.select select:hover {
-    background: #b4b4b4;
-}
-
 .hidden {
     display: none;
 }

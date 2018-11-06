@@ -121,7 +121,7 @@
 			<label class='inputlabel radio'>Temporary
 			<input type='radio' id='temporary' name='radioduration' value='temporary'[duration ? " checked" : ""]>
 			<div class='inputbox'></div></label>
-			<input type='text' name='duration' size='4' value='[duration]'>
+			<input type='text' name='duration' size='7' value='[duration]'>
 			<div class="select">
 				<select name='intervaltype'>
 					<option value='SECOND'>Seconds</option>
@@ -543,7 +543,8 @@
 			//make the href for unban here so only the search parameters are passed
 			var/unban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
 			var/expiration_time = query_unban_search_bans.item[5]
-			var/duration = text2num(query_unban_search_bans.item[6])
+			//we don't cast duration as num because if the duration is large enough to be converted to scientific notation by byond then the + character gets lost when passed through href causing SQL to interpret '4.321e 007' as '4'
+			var/duration = query_unban_search_bans.item[6]
 			var/expired = query_unban_search_bans.item[7]
 			var/applies_to_admins = text2num(query_unban_search_bans.item[8])
 			var/reason = query_unban_search_bans.item[9]
@@ -559,7 +560,7 @@
 			if(!expiration_time)
 				output += "<b>Permanent ban</b>."
 			else
-				output += "Duration of <b>[DisplayTimeText(duration MINUTES)]</b>, <b>[expired ? "expired" : "expires"]</b> on <b>[expiration_time]</b>."
+				output += "Duration of <b>[DisplayTimeText(text2num(duration) MINUTES)]</b>, <b>[expired ? "expired" : "expires"]</b> on <b>[expiration_time]</b>."
 			if(unban_datetime)
 				output += "<br>Unbanned by <b>[unban_key]</b> on <b>[unban_datetime]</b> during round <b>#[unban_round_id]</b>."
 			output += "</div><div class='container'><div class='reason'>[reason]</div><div class='edit'>"
@@ -648,7 +649,7 @@
 				return
 		qdel(query_check_adminban_count)
 	applies_to_admins = sanitizeSQL(applies_to_admins)
-	duration = text2num(duration)
+	duration = sanitizeSQL(duration)
 	if(interval)
 		interval = sanitizeSQL(interval)
 	else
@@ -672,7 +673,7 @@
 		if(old_cid)
 			wherelist += "computerid = '[sanitizeSQL(old_cid)]'"
 		where = wherelist.Join(" AND ")
-	var/datum/DBQuery/query_edit_ban = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET expiration_time = IF('[duration]' LIKE '', NULL, bantime + INTERVAL [duration ? "[duration]" : "0"] [interval]), applies_to_admins = [applies_to_admins], reason = '[reason]', ckey = IF('[player_ckey]' LIKE '', NULL, '[player_ckey]'), ip = INET_ATON(IF('[player_ip]' LIKE '', NULL, '[player_ip]')), computerid = IF('[player_cid]' LIKE '', NULL, '[player_cid]'), edits = CONCAT(IFNULL(edits,''),'[sanitizeSQL(usr.client.ckey)] edited the following [jointext(changes_text, ", ")]<hr>') WHERE [where]")
+	var/datum/DBQuery/query_edit_ban = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET expiration_time = IF('[duration]' LIKE '', NULL, bantime + INTERVAL [duration ? "[duration]" : "0"] [interval]), applies_to_admins = [applies_to_admins], reason = '[reason]', ckey = IF('[player_ckey]' LIKE '', NULL, '[player_ckey]'), ip = INET_ATON(IF('[player_ip]' LIKE '', NULL, '[player_ip]')), computerid = IF('[player_cid]' LIKE '', NULL, '[player_cid]'), edits = CONCAT(IFNULL(edits,''),'[sanitizeSQL(usr.client.key)] edited the following [jointext(changes_text, ", ")]<hr>') WHERE [where]")
 	if(!query_edit_ban.warn_execute())
 		qdel(query_edit_ban)
 		return
