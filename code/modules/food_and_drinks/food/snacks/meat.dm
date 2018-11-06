@@ -150,6 +150,11 @@
 	name = "monkey meat"
 	foodtype = RAW | MEAT
 
+/obj/item/reagent_containers/food/snacks/meat/slab/mouse
+	name = "mouse meat"
+	desc = "A slab of mouse meat. Best not eat it raw."
+	foodtype = RAW | MEAT | GROSS
+
 /obj/item/reagent_containers/food/snacks/meat/slab/corgi
 	name = "corgi meat"
 	desc = "Tastes like... well you know..."
@@ -267,15 +272,6 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/gondola
 	foodtype = RAW | MEAT
 
-/obj/item/reagent_containers/food/snacks/meat/slab/penguin
-	name = "penguin meat"
-	desc = "A slab of penguin meat."
-	list_reagents = list("nutriment" = 2, "cooking_oil" = 3)
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/steak/penguin
-	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/penguin
-	filling_color = "#B22222"
-	tastes = list("beef" = 1, "cod fish" = 1)
-
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 
@@ -326,10 +322,6 @@
 /obj/item/reagent_containers/food/snacks/meat/steak/gondola
 	name = "gondola steak"
 	tastes = list("meat" = 1, "tranquility" = 1)
-
-/obj/item/reagent_containers/food/snacks/meat/steak/penguin
-	name = "penguin steak"
-	tastes = list("beef" = 1, "cod fish" = 1)
 
 //////////////////////////////// MEAT CUTLETS ///////////////////////////////////////////////////////
 
@@ -393,11 +385,6 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
 	tastes = list("meat" = 1, "tranquility" = 1)
 
-/obj/item/reagent_containers/food/snacks/meat/rawcutlet/penguin
-	name = "raw penguin cutlet"
-	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/penguin
-	tastes = list("beef" = 1, "cod fish" = 1)
-
 //Cooked cutlets
 
 /obj/item/reagent_containers/food/snacks/meat/cutlet
@@ -437,7 +424,3 @@
 /obj/item/reagent_containers/food/snacks/meat/cutlet/gondola
 	name = "gondola cutlet"
 	tastes = list("meat" = 1, "tranquility" = 1)
-
-/obj/item/reagent_containers/food/snacks/meat/cutlet/penguin
-	name = "penguin cutlet"
-	tastes = list("beef" = 1, "cod fish" = 1)
