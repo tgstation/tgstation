@@ -10,7 +10,13 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
 
+	var/hit_probability = 2 //%
 	var/obj/item/paper/internalPaper
+
+/obj/item/paperplane/syndicate
+	desc = "Paper, folded in the shape of a rather robust plane."
+	throwforce = 20 //same as throwing stars, but no chance of embedding.
+	hit_probability = 100 //guaranteed to cause eye damage when it hits a mob.
 
 /obj/item/paperplane/Initialize(mapload, obj/item/paper/newPaper)
 	. = ..()
@@ -89,7 +95,7 @@
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
 	var/mob/living/carbon/human/H = hit_atom
-	if(prob(2))
+	if(prob(hit_probability))
 		if(H.is_eyes_covered())
 			return
 		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
