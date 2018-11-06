@@ -70,7 +70,7 @@
 /obj/item/ammo_box/shotgun
 	name = "ammo box (12g)"
 	icon_state = "12g_box"
-	desc = "A tactical ammunition box designed to easily reload shotguns.
+	desc = "A tactical ammunition box designed to easily reload shotguns."
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 8
 	start_empty = TRUE
