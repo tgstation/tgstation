@@ -654,6 +654,7 @@
 #include "code\game\machinery\porta_turret\portable_turret.dm"
 #include "code\game\machinery\porta_turret\portable_turret_construct.dm"
 #include "code\game\machinery\porta_turret\portable_turret_cover.dm"
+#include "code\game\machinery\porta_turret\turret_electronics.dm"
 #include "code\game\machinery\telecomms\broadcasting.dm"
 #include "code\game\machinery\telecomms\machine_interactions.dm"
 #include "code\game\machinery\telecomms\telecomunications.dm"
