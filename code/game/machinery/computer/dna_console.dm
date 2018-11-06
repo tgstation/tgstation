@@ -373,21 +373,37 @@
 		return
 	var/mut_name = "Unknown gene"
 	var/mut_desc = "No information available."
+	var/alias
+	var/discovered = FALSE
 	var/active = FALSE
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(viable_occupant && viable_occupant.dna.get_mutation(mutation))
 		active = TRUE
+	var/datum/mutation/human/A = get_initialized_mutation(mutation)
+	alias = A.alias
 	if(active && (stored_research && !(mutation in stored_research.discovered_mutations)))
 		stored_research.discovered_mutations += mutation
 	if(stored_research && (mutation in stored_research.discovered_mutations))
-		var/datum/mutation/human/HM = get_initialized_mutation(mutation)
-		mut_name = HM.name
-		mut_desc = HM.desc
+		mut_name = A.name
+		mut_desc = A.desc
+		discovered = TRUE
 	var/extra
 	if(viable_occupant && (!storage_slot && !viable_occupant.dna.mutation_in_se(mutation)))
 		extra = TRUE
 	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
-	temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[mut_name]</b><br>"
+
+	if(discovered)
+		var/mutcolor
+		switch(A.quality)
+			if(POSITIVE)
+				mutcolor = "good"
+			if(MINOR_NEGATIVE)
+				mutcolor = "average"
+			if(NEGATIVE)
+				mutcolor = "bad"
+		temp_html += "<div class='statusDisplay'><div class='statusLine'><span class='[mutcolor]'><b>[mut_name]</b></span><small>[alias]</small><br>"
+	else
+		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	for(var/block in 1 to HM.blocks)
@@ -562,7 +578,7 @@
 				ui_interact(usr)
 
 				sleep(radduration*10)
-				current_screen = "mainmenu"
+				current_screen = "ui"
 
 				if(viable_occupant && connected && connected.occupant==viable_occupant)
 					viable_occupant.radiation += (RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength)/(connected.damage_coeff ** 2) //Read comment in "transferbuffer" section above for explanation
@@ -591,7 +607,10 @@
 		if("inspect")
 			if(viable_occupant)
 				var/list/mutations = get_mutation_list(TRUE)
-				current_mutation = mutations[num]
+				if(current_mutation == mutations[num])
+					current_mutation = null
+				else
+					current_mutation = mutations[num]
 
 		if("inspectstorage")
 			current_storage = num
@@ -643,6 +662,7 @@
 				viable_occupant.dna.remove_mutation(current_mutation)
 				viable_occupant.dna.update_instability(TRUE)
 				current_screen = null
+				current_mutation = null
 		if("restore")
 			if(viable_occupant && viable_occupant.dna.scrambled)
 				viable_occupant.dna.remove_all_mutations() //Scrambled is set back to FALSE in this proc
@@ -684,10 +704,6 @@
 					HM.copy_mutation(A)
 					stored_mutations[HM] = get_sequence(HM.type)
 					to_chat(usr,"<span class='notice'>Succesfully written [A.name] to storage.")
-
-
-
-
 
 	ui_interact(usr,last_change)
 

@@ -26,6 +26,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/blocks = 2 //Amount of those big blocks with gene sequences
 	var/difficulty = 4 //Amount of missing sequences. Sometimes it removes an entire sequence for 2 points
 	var/timed = FALSE   //Boolean to easily check if we're going to self destruct
+	var/alias           //'Mutation #49', decided every round to get some form of distinction between undiscovered mutations
 	var/class           //Decides player accesibility, sorta
 	//MUT_NORMAL - A mutation that can be activated and deactived with structural enzymes
 	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console

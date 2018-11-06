@@ -6,6 +6,7 @@ T-RAY
 HEALTH ANALYZER
 GAS ANALYZER
 SLIME SCANNER
+NANITE SCANNER
 
 */
 /obj/item/t_scanner
@@ -644,3 +645,56 @@ SLIME SCANNER
 	var/response = SEND_SIGNAL(M, COMSIG_NANITE_SCAN, user, TRUE)
 	if(!response)
 		to_chat(user, "<span class='info'>No nanites detected in the subject.</span>")
+
+/obj/item/sequence_scanner
+	name = "genetic sequence scanner"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gene"
+	item_state = "healthanalyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+	desc = "A hand-held scanner able to swiftly scan someone for potential mutations. Hold near a DNA console to update from their database."
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 3
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 3
+	throw_range = 7
+	materials = list(MAT_METAL=200)
+	var/list/discovered = list() //hit a dna console to update the scanners database
+
+/obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic seqequence.</span>")
+
+	add_fingerprint(user)
+
+	gene_scan(M, user, src)
+
+/obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
+	. = ..()
+	if(!istype(O) || !proximity)
+		return
+
+	if(istype(O, /obj/machinery/computer/scan_consolenew))
+		var/obj/machinery/computer/scan_consolenew/C = O
+		if(C.stored_research)
+			to_chat(user, "<span class='notice'>[name] database updated.</span>")
+			discovered = C.stored_research.discovered_mutations
+		else
+			to_chat(user,"<span class='warning'>No database to update from.</span>")
+
+/proc/gene_scan(mob/living/carbon/C, mob/living/user, obj/item/sequence_scanner/G)
+	if(!iscarbon(C) || !C.has_dna())
+		return
+	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
+	for(var/A in C.dna.mutation_index)
+		var/datum/mutation/human/HM = get_initialized_mutation(A)
+		var/mut_name
+		if(G && (A in G.discovered))
+			mut_name = "[HM.name] ([HM.alias])"
+		else
+			mut_name = HM.alias
+		to_chat(world, "<span class='boldnotice'> - [mut_name] - [C.dna.mutation_index[A]]</span>")
+
+
