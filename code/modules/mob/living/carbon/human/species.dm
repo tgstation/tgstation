@@ -1401,7 +1401,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!environment)
 		return
 	if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
+		retur
 
 	var/loc_temp = H.get_temperature(environment)
 

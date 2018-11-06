@@ -1176,3 +1176,11 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+/mob/living/add_trait()
+	. = ..()
+	update_trait_slowdown()
+
+/mob/libing/remove_trait()
+	. = ..()
+	update_trait_slowdown()

@@ -23,15 +23,12 @@
 
 /mob/living/carbon/human/proc/update_hunger()			//NOT CODE HOOKED YET
 
-/mob/living/carbon/human/proc/update_trait_slowdowns()		//NOT CODE HOOKED YET
-	. = 0
-	if(has_trait(TRAIT_GOTTAGOFAST))
-		. -= 1
-	else if(has_trait(TRAIT_GOTTAGOREALLYFAST))
-		. -= 2
+/mob/living/carbon/human/update_trait_slowdown()
+	. = ..()
 	if(has_trait(TRAIT_FAT))
-		. += 1.5
-	add_movespeed_modifier(MOVESPEED_ID_TRAITS, override = TRUE, flags = (MOVESPEED_MODIFIER_REQUIRES_GRAVITY|MOVESPEED_MODIFIER_NO_FLIGHT), multiplicative_slowdown = .)
+		add_movespeed_modifier(MOVESPEED_ID_HUMAN_FAT, override = TRUE, flags = (MOVESPEED_MODIFIER_REQUIRES_GRAVITY|MOVESPEED_MODIFIER_NO_FLIGHT), multiplicative_slowdown = 1.5)
+	else
+		remove_movespeed_modifier(MOVESPEED_ID_HUMAN_FAT)
 
 /mob/living/carbon/human/movement_delay()
 	return species:_movement_delay() + ..()			//YES I KNOW THIS IS BANNED THIS IS A WIP PR!
@@ -64,7 +61,4 @@
 	if(gravity > STANDARD_GRAVITY)
 		var/grav_force = min(gravity - STANDARD_GRAVITY,3)
 		. += 1 + grav_force
-
-	if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !H.has_trait(TRAIT_RESISTCOLD))
-		. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
 	return .
