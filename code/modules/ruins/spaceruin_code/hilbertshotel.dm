@@ -1,6 +1,5 @@
 GLOBAL_VAR_INIT(hhStorageTurf, null)
 GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
-#define MAX_ROOM_NUMBER 65535
 
 /obj/item/hilbertshotel
     name = "Hilbert's Hotel"
@@ -47,8 +46,8 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
     if(!chosenRoomNumber)
         return
-    if(chosenRoomNumber > MAX_ROOM_NUMBER)
-        to_chat(user, "<span class='warning'>You have to check out the first [MAX_ROOM_NUMBER] rooms before you can go to a higher numbered one!</span>")
+    if(chosenRoomNumber > SHORT_REAL_LIMIT)
+        to_chat(user, "<span class='warning'>You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!</span>")
         return
     if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
         to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
@@ -424,7 +423,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/paper/crumpled/docslogs/Initialize()
     . = ..()
-    GLOB.hhmysteryRoomNumber = rand(1, MAX_ROOM_NUMBER)
+    GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
     info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
 	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
@@ -491,4 +490,3 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     There's always more room around every bend<br>
     Not all that's countable has an end...<i>"}
 
-#undef MAX_ROOM_NUMBER
