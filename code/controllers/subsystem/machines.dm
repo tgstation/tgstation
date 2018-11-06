@@ -18,9 +18,7 @@ SUBSYSTEM_DEF(machines)
 
 	for(var/obj/structure/cable/power/PC in GLOB.power_cable_list)
 		if(!PC.powernet)
-			var/datum/cablenet/power/NewPN = new()
-			NewPN.add_cable(PC)
-			propagate_network(PC,PC.powernet)
+			PC.force_rebuild_network()
 
 /datum/controller/subsystem/machines/stat_entry()
 	..("M:[processing.len]|PN:[powernets.len]")

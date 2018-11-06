@@ -38,7 +38,16 @@
 	cables += C
 	C.on_network_connect(src)
 
+/datum/cablenet/proc/merge_cost()
+	return cables.len
+
 /datum/cablenet/proc/merge(datum/cablenet/C)
+	if(C.merge_cost() > merge_cost())
+		C.do_merge(src)
+	else
+		do_merge(C)
+
+/datum/cablenet/proc/do_merge(datum/cablenet/C)
 	if(C.type != type)		//Why would this happen!
 		stack_trace("Unrelated cablenets attempted to merge.")
 		return
@@ -62,7 +71,7 @@
 	difference -= cables
 	if(difference.len)
 		for(var/i in difference)
-			var/obj/structure/C = i
+			var/obj/structure/cable/C = i
 			C.connect_to_network()
 
 /datum/cablenet/proc/propogate_network(obj/structure/cable/source)
@@ -87,9 +96,9 @@
 	 split_network(connected)
 
 /datum/cablenet/proc/split_network(list/branches)
-	 for(var/i in branches)
-	 	var/obj/structur/cable/C = i
-	 	C.addtimer(CALLBACK(C, /obj/structure/cable.proc/force_rebuild_network_branched, branches), 0)		//Lists are references so in theory this will work.
+	for(var/i in branches)
+		var/obj/structur/cable/C = i
+		C.addtimer(CALLBACK(C, /obj/structure/cable.proc/force_rebuild_network_branched, branches), 0)		//Lists are references so in theory this will work.
 
 /datum/cablenet/proc/cut_cable_immediate(obj/structure/cable/C)
 	var/list/obj/structure/cable/connected = C.connected_cables()

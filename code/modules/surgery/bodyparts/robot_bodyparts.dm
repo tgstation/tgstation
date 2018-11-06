@@ -186,12 +186,8 @@
 
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
 	if(wired)
-<<<<<<< HEAD
-		new /obj/item/stack/cable_coil/power(user.loc, 1)
-=======
-		new /obj/item/stack/cable_coil(drop_location(), 1)
+		new /obj/item/stack/cable_coil/power(drop_location(), 1)
 		wired = FALSE
->>>>>>> tgstation/master
 	if(cell)
 		cell.forceMove(drop_location())
 		cell = null

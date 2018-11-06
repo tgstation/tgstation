@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(power_cable_list)
+
 /obj/structure/cable/power
 	name = "power cable"
 	desc = "A flexible, superconducting insulated cable for heavy-duty power transfer."
@@ -74,6 +76,20 @@
 		return 1
 	else
 		return 0
+
+/obj/structure/cable/power/proc/get_machines()
+	if(!is_node())
+		return list()
+	. = list()
+	for(var/i in loc)
+		if(!istype(i, /obj/machinery/power))
+			continue
+		var/obj/machinery/power/P = i
+
+
+
+/obj/structure/cable/power/proc/powernet()
+	return network
 
 ////////////////////////////////////////////
 // Power related

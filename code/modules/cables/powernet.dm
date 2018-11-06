@@ -30,6 +30,8 @@
 /datum/cablenet/power/propagate_network()
 	. = ..()
 
+/datum/cablenet/power/merge_cost()
+	return ..() + 0.5 * machines.len			//Machines, in theory, will cost more/less. In theory.
 
 //remove a power machine from the current powernet
 //if the powernet is then empty, delete it
