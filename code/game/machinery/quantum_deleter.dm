@@ -52,6 +52,7 @@
 			//Don't delete ghosts
 			else if(!isobserver(ROI))
 				continue
-
+		if(isliving(ROI))
+			to_chat(ROI, "<span class='userdanger'>You don't feel so good...</span>")
 		qdel(ROI) //uh oh
 		CHECK_TICK
