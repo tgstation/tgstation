@@ -75,7 +75,7 @@
 	name = "Drink Flinging"
 	desc = "Toggles your ability to satisfyingly throw glasses without spilling them."
 	button_icon_state = "drinkfling_off"
-	check_flags = 0
+	check_flags = NONE
 
 /datum/action/innate/drink_fling/Activate()
 	button_icon_state = "drinkfling_on"
