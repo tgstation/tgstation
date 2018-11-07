@@ -147,16 +147,14 @@ GLOBAL_LIST_EMPTY(uplinks)
 							is_inaccessible = 0
 					if(is_inaccessible)
 						continue
-				////WORKING HERE
 				if(I.restricted_species.len)
 					var/is_inaccessible = 1
-					var/species = var/mob/living/carbon/human/H
-					for(var/R in I.restricted_species)
-						if(R == species)
+					var/mob/living/carbon/human/H = user
+					for(var/F in I.restricted_species)
+						if(F == H.dna.species.id)
 							is_inaccessible = 0
 					if(is_inaccessible)
 						continue
-				/////////////////
 				cat["items"] += list(list(
 					"name" = I.name,
 					"cost" = I.cost,
