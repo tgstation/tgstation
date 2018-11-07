@@ -40,6 +40,9 @@
 	sync_holder = new(drop_location())
 	to_chat(user, "<span class='notice'>You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality.</span>")
 	user.forceMove(sync_holder)
+	SEND_SIGNAL(user, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	for(var/thing in user)
+		SEND_SIGNAL(thing, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	addtimer(CALLBACK(src, .proc/resync), duration)
 	
 /obj/item/desynchronizer/proc/resync()
