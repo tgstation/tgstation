@@ -1,7 +1,7 @@
 /obj/machinery/quantumpad/deleter
 	name = "quantum deleter"
 	desc = "A quantum deleter (qdel for short) able to obliterate any object or entity standing above it when activated by only performing the first half of a quantum teleportation."
-	circuit = /obj/item/circuitboard/machine/quantum_deleter
+	circuit = /obj/item/circuitboard/machine/quantumpad/deleter
 
 /obj/machinery/quantumpad/deleter/interact(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(world.time < last_teleport + teleport_cooldown)
