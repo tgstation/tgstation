@@ -152,7 +152,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 					var/mob/living/carbon/human/H = user
 					for(var/F in I.restricted_species)
 						if(F == H.dna.species.id)
-							is_inaccessible = 0
+							is_inaccessible = FALSE
+							break
 					if(is_inaccessible)
 						continue
 				cat["items"] += list(list(
