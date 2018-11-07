@@ -229,9 +229,7 @@
 
 /obj/machinery/porta_turret_construct/Destroy()
 	if(installed_gun)
-		qdel(installed_gun)
-		installed_gun = null
+		QDEL_NULL(installed_gun)
 	if(electronics)
-		qdel(electronics)
-		electronics = null
+		QDEL_NULL(electronics)
 	. = ..()
