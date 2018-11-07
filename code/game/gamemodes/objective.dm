@@ -65,10 +65,23 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/proc/check_completion()
 	return completed
 
-/datum/objective/proc/is_unique_objective(possible_target)
-	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		for(var/datum/objective/O in M.get_all_objectives()) //This scope is debatable, probably should be passed in by caller.
+/datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
+	if(!islist(dupe_search_range))
+		stack_trace("Non-list passed as duplicate objective search range")
+		dupe_search_range = list(dupe_search_range)
+
+	for(var/A in dupe_search_range)
+		var/list/objectives_to_compare
+		if(istype(A,/datum/mind))
+			var/datum/mind/M = A
+			objectives_to_compare = M.get_all_objectives()
+		else if(istype(A,/datum/antagonist))
+			var/datum/antagonist/G = A
+			objectives_to_compare = G.objectives
+		else if(istype(A,/datum/team))
+			var/datum/team/T = A
+			objectives_to_compare = T.objectives
+		for(var/datum/objective/O in objectives_to_compare)
 			if(istype(O, type) && O.get_target() == possible_target)
 				return FALSE
 	return TRUE
@@ -84,8 +97,11 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(M)
 			. += M
 
-/datum/objective/proc/find_target()
+//dupe_search_range is a list of antag datums / minds / teams
+/datum/objective/proc/find_target(dupe_search_range)
 	var/list/datum/mind/owners = get_owners()
+	if(!dupe_search_range)
+		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
 	for(var/I in owners)
@@ -93,7 +109,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
+		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target,dupe_search_range))
 			possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
@@ -366,7 +382,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
 	var/target_missing_id
 
-/datum/objective/escape/escape_with_identity/find_target()
+/datum/objective/escape/escape_with_identity/find_target(dupe_search_range)
 	target = ..()
 	update_explanation_text()
 
@@ -461,12 +477,14 @@ GLOBAL_LIST_EMPTY(possible_items)
 		for(var/I in subtypesof(/datum/objective_item/steal))
 			new I
 
-/datum/objective/steal/find_target()
+/datum/objective/steal/find_target(dupe_search_range)
 	var/list/datum/mind/owners = get_owners()
+	if(!dupe_search_range)
+		dupe_search_range = get_owners()
 	var/approved_targets = list()
 	check_items:
 		for(var/datum/objective_item/possible_item in GLOB.possible_items)
-			if(!is_unique_objective(possible_item.targetitem))
+			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
 				continue
 			for(var/datum/mind/M in owners)
 				if(M.current.mind.assigned_role in possible_item.excludefromjob)
@@ -538,7 +556,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
 			new I
 
-/datum/objective/steal/special/find_target()
+/datum/objective/steal/special/find_target(dupe_search_range)
 	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/steal/exchange
@@ -750,7 +768,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	name = "destroy AI"
 	martyr_compatible = 1
 
-/datum/objective/destroy/find_target()
+/datum/objective/destroy/find_target(dupe_search_range)
 	var/list/possible_targets = active_ais(1)
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
 	target = target_ai.mind
