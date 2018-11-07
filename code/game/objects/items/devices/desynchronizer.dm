@@ -13,7 +13,7 @@
 	var/duration = 300
 	var/obj/effect/abstract/sync_holder/sync_holder
 	
-/obj/item/desynchronizer/attack_self(mob/user)
+/obj/item/desynchronizer/attack_self(mob/living/user)
 	if(!sync_holder)
 		desync(user)
 	else
