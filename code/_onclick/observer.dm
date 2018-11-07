@@ -31,7 +31,7 @@
 		ShiftClickOn(A)
 		return
 	if(modifiers["alt"])
-		AltClickOn(A)
+		AltClickNoInteract(src, A)
 		return
 	if(modifiers["ctrl"])
 		CtrlClickOn(A)
