@@ -16,16 +16,20 @@
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE
 
-/datum/supply_pack/proc/generate(atom/A)
-	var/obj/structure/closet/crate/C = new crate_type(A)
-	C.name = crate_name
+/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
+	var/obj/structure/closet/crate/C
+	if(paying_account)
+		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
+		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+	else
+		C = new crate_type(A)
+		C.name = crate_name
 	if(access)
 		C.req_access = list(access)
 	if(access_any)
 		C.req_one_access = access_any
 
 	fill(C)
-
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
