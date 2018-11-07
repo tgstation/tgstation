@@ -380,12 +380,18 @@
 	var/alias
 	var/discovered = FALSE
 	var/active = FALSE
+	var/scrambled = FALSE
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
-	if(viable_occupant && viable_occupant.dna.get_mutation(mutation))
-		active = TRUE
+
+	if(viable_occupant)
+		var/datum/mutation/human/HM = viable_occupant.dna.get_mutation(mutation)
+		if(HM)
+			if(HM.scrambled)
+				scrambled = TRUE
+			active = TRUE
 	var/datum/mutation/human/A = get_initialized_mutation(mutation)
 	alias = A.alias
-	if(active)
+	if(active && !scrambled)
 		discover(mutation)
 	if(stored_research && (mutation in stored_research.discovered_mutations))
 		mut_name = A.name
@@ -396,7 +402,7 @@
 		extra = TRUE
 	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
 
-	if(discovered)
+	if(discovered && !scrambled)
 		var/mutcolor
 		switch(A.quality)
 			if(POSITIVE)
@@ -410,25 +416,28 @@
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
-	for(var/block in 1 to HM.blocks)
-		var/list/whole_sequence = get_gene_list(mutation)
-		var/list/sequence = whole_sequence.Copy(1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
-		temp_html += "<div class='statusLine'><table class='statusDisplay'><tr>"
-		for(var/i in 1 to DNA_SEQUENCE_LENGTH)
-			var/num = 1+(i-1)*2
-			var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-			temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
-		temp_html += "</tr><tr>"
-		for(var/i in 1 to DNA_SEQUENCE_LENGTH)
-			temp_html += "<td><div class='statusLine'>|</div></td>"
-		temp_html += "</tr><tr>"
-		for(var/i in 1 to DNA_SEQUENCE_LENGTH)
-			var/num = i*2
-			var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-			temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
-		temp_html += "</tr></table></div>"
-	temp_html += "<br><br><br><br><br>"
-	if((active || storage_slot) && (injectorready < world.time))
+	if(!scrambled)
+		for(var/block in 1 to HM.blocks)
+			var/list/whole_sequence = get_gene_list(mutation)
+			var/list/sequence = whole_sequence.Copy(1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
+			temp_html += "<div class='statusLine'><table class='statusDisplay'><tr>"
+			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
+				var/num = 1+(i-1)*2
+				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
+				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
+			temp_html += "</tr><tr>"
+			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
+				temp_html += "<td><div class='statusLine'>|</div></td>"
+			temp_html += "</tr><tr>"
+			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
+				var/num = i*2
+				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
+				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];path=[mutation];'>[sequence[num]]</span></a></div></td>"
+			temp_html += "</tr></table></div>"
+		temp_html += "<br><br><br><br><br>"
+	else
+		temp_html = "<div class='statusLine'>Sequence unreadable due to unpredictable mutation.</div>"
+	if((active || storage_slot) && (injectorready < world.time) && !scrambled)
 		temp_html += "<a href='?src=[REF(src)];task=activator;path=[mutation];slot=[storage_slot];'>Print Activator</a>"
 		temp_html += "<a href='?src=[REF(src)];task=mutator;path=[mutation];slot;=[storage_slot];'>Print Mutator</a>"
 	else
@@ -442,10 +451,10 @@
 		else
 			temp_html += "<span class='linkOff'>Export</span>"
 		temp_html += "<a href='?src=[REF(src)];task=screen;text=mutations;'>Back</a>"
-	else if(active)
+	else if(active && !scrambled)
 		temp_html += "<a href='?src=[REF(src)];task=savemut;path=[mutation];'>Store</a>"
-	if(extra)
-		temp_html += "<a href='?src=[REF(src)];task=nullify;'>Nullify</a>"
+	if(extra || scrambled)
+		temp_html += "<a href='?src=[REF(src)];task=nullify>Nullify</a>"
 	else
 		temp_html += "<span class='linkOff'>Nullify</span>"
 	temp_html += "</div></div>"
@@ -664,14 +673,13 @@
 						I.name = "[HM.name] injector"
 						injectorready = world.time + INJECTOR_TIMEOUT*5
 		if("nullify")
-			if(viable_occupant && !viable_occupant.dna.mutation_in_se(current_mutation))
-				viable_occupant.dna.remove_mutation(current_mutation)
-				viable_occupant.dna.update_instability(TRUE)
-				current_screen = null
-				current_mutation = null
-		if("restore")
-			if(viable_occupant && viable_occupant.dna.scrambled)
-				viable_occupant.dna.remove_all_mutations() //Scrambled is set back to FALSE in this proc
+			if(viable_occupant)
+				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
+				if(A && (!viable_occupant.dna.mutation_in_se(current_mutation) || A.scrambled))
+					viable_occupant.dna.remove_mutation(current_mutation)
+					viable_occupant.dna.update_instability(TRUE)
+					current_screen = "mainmenu"
+					current_mutation = null
 		if("pulsegene")
 			if(current_screen != "info")
 				var/path = text2path(href_list["path"])

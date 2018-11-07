@@ -231,17 +231,17 @@
 	if(holder && alert)
 		var/message
 		switch(stability)
-			if(10 to 30)
+			if(90 to 70)
 				message = "<span class='warning'>You shiver.</span>"
-			if(31 to 50)
+			if(69 to 60)
 				message = "<span class='warning'>You feel cold.</span>"
-			if(51 to 70)
+			if(59 to 40)
 				message = "<span class='warning'>You feel sick.</span>"
-			if(71 to 90)
+			if(39 to 20)
 				message = "<span class='warning'>It feels like your skin is moving.</span>"
-			if(91 to 99)
+			if(19 to 1)
 				message = "<span class='warning'>You can feel your cells burning.</span>"
-			if(100 to INFINITY)
+			if(0 to -INFINITY)
 				message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
 				addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
 
@@ -249,7 +249,7 @@
 			to_chat(holder,message)
 
 /datum/dna/proc/something_horrible(alert=FALSE)
-	if(holder || (stability < 100))
+	if(holder || (stability > 0))
 		return
 	var/instability = stability-100
 	remove_all_mutations()
@@ -508,9 +508,12 @@
 		if(dna.mutation_in_se(A.type) && !dna.get_mutation(A.type))
 			possible += A.type
 	if(LAZYLEN(possible))
-		. = dna.activate_mutation(pick(possible))
+		var/mutation = pick(possible)
+		. = dna.activate_mutation(mutation)
 		if(scrambled)
-			dna.scrambled = TRUE
+			var/datum/mutation/human/HM = dna.get_mutation(mutation)
+			if(HM)
+				HM.scrambled = TRUE
 		return TRUE
 
 /mob/living/carbon/proc/randmutg(scrambled = TRUE)
@@ -522,9 +525,12 @@
 			possible += A.type
 
 	if(LAZYLEN(possible))
-		. = dna.activate_mutation(pick(possible))
+		var/mutation = pick(possible)
+		. = dna.activate_mutation(mutation)
 		if(scrambled)
-			dna.scrambled = TRUE
+			var/datum/mutation/human/HM = dna.get_mutation(mutation)
+			if(HM)
+				HM.scrambled = TRUE
 		return TRUE
 
 /mob/living/carbon/proc/randmuti()
