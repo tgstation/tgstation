@@ -11,7 +11,7 @@
 	materials = list(MAT_METAL=250, MAT_GLASS=500)
 	var/max_duration = 3000
 	var/duration = 300
-	var/obj/effect/sync_holder/sync_holder
+	var/obj/effect/abstract/sync_holder/sync_holder
 	
 /obj/item/desynchronizer/attack_self(mob/user)
 	if(!sync_holder)
