@@ -543,16 +543,6 @@
 	new /obj/item/clothing/head/syndicatefake(src)
 	new /obj/item/clothing/suit/syndicatefake(src)
 
-
-/obj/item/storage/box/angry_paperplanes
-	name = "boxed paper planes"
-	desc = "A box full of a number of rather robustly constructed paper planes."
-	icon_state = "syndiebox"
-
-/obj/item/storage/box/angry_paperplanes/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/paperplane/syndicate(src)
-
 /obj/item/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
 	desc = "<span class='alert'>Keep out of reach of children.</span>"

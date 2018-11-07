@@ -132,6 +132,15 @@
 	icon_state = "syndiebox"
 	illustration = "writing_syndie"
 
+/obj/item/storage/box/syndie_kit/origami_bundle
+	name = "boxed origami kit"
+	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
+
+/obj/item/storage/box/syndie_kit/origami_bundle/PopulateContents()
+	new /obj/item/book/granter/action/origami(src)
+	for(var/i in 1 to 5)
+		new /obj/item/paper(src)
+
 /obj/item/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
 
@@ -279,6 +288,8 @@
 /obj/item/storage/box/syndie_kit/throwing_weapons/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/throwing_star(src)
+	for(var/i in 1 to 2)
+		new /obj/item/paperplane/syndicate(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 	new /obj/item/restraints/legcuffs/bola/tactical(src)
 

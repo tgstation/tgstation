@@ -87,6 +87,34 @@
 	active = FALSE
 	UpdateButtonIcon()
 
+
+/obj/item/book/granter/action/origami
+	granted_action = /datum/action/innate/origami
+	name = "The Art of Origami"
+	desc = "A meticulously in-depth manual explaining the art of paper folding."
+	icon_state = "origamibook"
+	actionname = "origami"
+	oneuse = TRUE
+	remarks = list("Dead-stick stability...", "Symmetry seems to play a rather large factor...", "Accounting for crosswinds... really?", "Drag coefficients of various paper types...", "Thrust to weight ratios?", "Positive dihedral angle?", "Center of gravity forward of the center of lift...")
+
+/datum/action/innate/origami
+	name = "Origami Folding"
+	desc = "Toggles your ability to fold and catch robust paper airplanes."
+	button_icon_state = "origami_off"
+	check_flags = 0
+
+/datum/action/innate/origami/Activate()
+	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
+	button_icon_state = "origami_on"
+	active = TRUE
+	UpdateButtonIcon()
+
+/datum/action/innate/origami/Deactivate()
+	to_chat(owner, "<span class='notice'>You will no longer fold origami planes.</span>")
+	button_icon_state = "origami_off"
+	active = FALSE
+	UpdateButtonIcon()
+
 ///SPELLS///
 
 /obj/item/book/granter/spell
