@@ -61,7 +61,8 @@
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/abstract/sync_holder/Destroy()
-	for(var/atom/movable/AM in contents)
+	for(var/I in src)
+		var/atom/movable/AM = I
 		AM.forceMove(drop_location())
 	return ..()
 
