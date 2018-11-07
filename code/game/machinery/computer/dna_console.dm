@@ -1,7 +1,6 @@
 #define INJECTOR_TIMEOUT 100
-#define REJUVENATORS_INJECT 15
-#define REJUVENATORS_MAX 90
 #define NUMBER_OF_BUFFERS 3
+#define SCRAMBLE_TIMEOUT 600
 
 #define RADIATION_STRENGTH_MAX 15
 #define RADIATION_STRENGTH_MULTIPLIER 1			//larger has more range
@@ -30,6 +29,7 @@
 	var/list/stored_mutations = list()
 
 	var/injectorready = 0	//world timer cooldown var
+	var/scrambleready = 0
 	var/current_screen = "mainmenu"
 	var/current_mutation   //what block are we inspecting? only used when screen = "info"
 	var/current_storage   //what storage block are we looking at?
@@ -97,8 +97,6 @@
 				occupant_status += "</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [viable_occupant.health]%;' class='progressFill good'></div></div><div class='statusValue'>[viable_occupant.health] %</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Radiation Level:</div><div class='progressBar'><div style='width: [viable_occupant.radiation/(RAD_MOB_SAFE/100)]%;' class='progressFill bad'></div></div><div class='statusValue'>[viable_occupant.radiation/(RAD_MOB_SAFE/100)] %</div></div>"
-				var/rejuvenators = viable_occupant.reagents.get_reagent_amount("potass_iodide")
-				occupant_status += "<div class='line'><div class='statusLabel'>Rejuvenators:</div><div class='progressBar'><div style='width: [round((rejuvenators / REJUVENATORS_MAX) * 100)]%;' class='progressFill highlight'></div></div><div class='statusValue'>[rejuvenators] units</div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Unique Enzymes :</div><div class='statusValue'><span class='highlight'>[viable_occupant.dna.unique_enzymes]</span></div></div>"
 				occupant_status += "<div class='line'><div class='statusLabel'>Last Operation:</div><div class='statusValue'>[last_change ? last_change : "----"]</div></div>"
 			else
@@ -156,10 +154,10 @@
 			buttons += "<a href='?src=[REF(src)];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a>"
 	else
 		buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span>"
-	if(viable_occupant)
-		buttons += "<a href='?src=[REF(src)];task=rejuv'>Inject Rejuvenators</a>"
+	if(viable_occupant && (scrambleready > world.time))
+		buttons += "<a href='?src=[REF(src)];task=scramble'>Scramble DNA</a>"
 	else
-		buttons += "<span class='linkOff'>Inject Rejuvenators</span>"
+		buttons += "<span class='linkOff'>Scramble DNA</span>"
 	if(diskette)
 		buttons += "<a href='?src=[REF(src)];task=screen;text=disk;'>Disk</a>"
 	else
@@ -401,7 +399,7 @@
 				mutcolor = "average"
 			if(NEGATIVE)
 				mutcolor = "bad"
-		temp_html += "<div class='statusDisplay'><div class='statusLine'><span class='[mutcolor]'><b>[mut_name]</b></span><small>[alias]</small><br>"
+		temp_html += "<div class='statusDisplay'><div class='statusLine'><span class='[mutcolor]'><b>[mut_name]</b></span><small> ([alias])</small><br>"
 	else
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
@@ -484,11 +482,13 @@
 				radstrength = WRAP(num, 1, RADIATION_STRENGTH_MAX+1)
 		if("screen")
 			current_screen = href_list["text"]
-		if("rejuv")
-			if(viable_occupant && viable_occupant.reagents)
-				var/potassiodide_amount = viable_occupant.reagents.get_reagent_amount("potass_iodide")
-				var/can_add = max(min(REJUVENATORS_MAX - potassiodide_amount, REJUVENATORS_INJECT), 0)
-				viable_occupant.reagents.add_reagent("potass_iodide", can_add)
+		if("scramble")
+			if(viable_occupant && (scrambleready > world.time))
+				viable_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
+				viable_occupant.dna.generate_struc_enzymes()
+				scrambleready = world.time + SCRAMBLE_TIMEOUT
+				to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
+
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
 			if(num && text)
@@ -805,8 +805,6 @@
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT
-#undef REJUVENATORS_INJECT
-#undef REJUVENATORS_MAX
 #undef NUMBER_OF_BUFFERS
 
 #undef RADIATION_STRENGTH_MAX

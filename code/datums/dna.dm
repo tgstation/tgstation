@@ -13,7 +13,7 @@
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
 	var/mutation_index[DNA_STRUC_ENZYMES_BLOCKS] //List of which mutations this carbon has and its assigned block
-	var/instability
+	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 
 /datum/dna/New(mob/living/new_holder)
@@ -69,15 +69,16 @@
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
 
-/datum/dna/proc/remove_all_mutations()
-	remove_mutation_group(mutations)
+/datum/dna/proc/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
+	remove_mutation_group(mutations, classes)
 	scrambled = FALSE
 
-/datum/dna/proc/remove_mutation_group(list/group)
+/datum/dna/proc/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
 	if(!group)
 		return
 	for(var/datum/mutation/human/HM in group)
-		force_lose(HM)
+		if(HM.class in classes)
+			force_lose(HM)
 
 /datum/dna/proc/generate_uni_identity()
 	. = ""
@@ -223,28 +224,68 @@
 	mutation_index[mutation] = sequence.Join()
 
 /datum/dna/proc/update_instability(alert=FALSE)
-	instability = 0
-	var/adjective = "still "
+	stability = 100
 	for(var/datum/mutation/human/M in mutations)
 		if(M.class == MUT_EXTRA)
-			instability += M.instability
-		adjective = null
+			stability -= M.instability
 	if(holder && alert)
 		var/message
-		switch(instability)
+		switch(stability)
 			if(10 to 30)
-				message = "<span class='warning'>You [adjective]shiver.</span>"
+				message = "<span class='warning'>You shiver.</span>"
 			if(31 to 50)
-				message = "<span class='warning'>You [adjective]feel cold.</span>"
+				message = "<span class='warning'>You feel cold.</span>"
 			if(51 to 70)
-				message = "<span class='warning'>You [adjective]feel sick.</span>"
+				message = "<span class='warning'>You feel sick.</span>"
 			if(71 to 90)
-				message = "<span class='warning'>It [adjective]feels like your skin is moving.</span>"
-			if(91 to INFINITY)
-				message = "<span class='warning'>You can [adjective]feel your cells burning.</span>"
+				message = "<span class='warning'>It feels like your skin is moving.</span>"
+			if(91 to 99)
+				message = "<span class='warning'>You can feel your cells burning.</span>"
+			if(100 to INFINITY)
+				message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
+				addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 600 seconds to get your shit togheter
 
 		if(message)
 			to_chat(holder,message)
+
+/datum/dna/proc/something_horrible(alert=FALSE)
+	if(holder || (stability < 100))
+		return
+	var/instability = stability-100
+	remove_all_mutations()
+	stability = 100
+	if(!ishuman(holder))
+		holder.gib()
+		return
+	var/mob/living/carbon/human/H = holder
+	if(prob(70-instability))
+		switch(rand(0,3)) //not complete and utter death
+			if(0)
+				H.monkeyize()
+			if(1)
+				H.gain_trauma(/datum/brain_trauma/severe/paralysis)
+			if(2)
+				H.corgize()
+			if(3)
+				to_chat(H, "<span class='notice'>Oh, we actually feel quite alright!</span>")
+	else
+		switch(rand(0,3))
+			if(0)
+				H.gib()
+			if(1)
+				H.dust()
+
+			if(2)
+				H.death()
+				H.petrify(INFINITY)
+			if(3)
+				var/obj/item/bodypart/BP = H.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+				if(BP)
+					BP.dismember()
+				else
+					H.gib()
+
+
 
 
 //used to update dna UI, UE, and dna.real_name.
