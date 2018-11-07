@@ -34,7 +34,7 @@
 		duration = new_duration
 		to_chat(user, "<span class='notice'>You set the duration to [duration / 10] seconds.</span>")
 
-/obj/item/desynchronizer/proc/desync(mob/user)
+/obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)
 		return
 	sync_holder = new(get_turf(src))
