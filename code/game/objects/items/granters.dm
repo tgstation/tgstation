@@ -101,7 +101,7 @@
 	name = "Origami Folding"
 	desc = "Toggles your ability to fold and catch robust paper airplanes."
 	button_icon_state = "origami_off"
-	check_flags = 0
+	check_flags = NONE
 
 /datum/action/innate/origami/Activate()
 	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
