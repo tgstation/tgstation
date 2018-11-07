@@ -446,7 +446,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(M)])")
+		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(0)
 		M.key = C.key
 		return TRUE

@@ -124,7 +124,7 @@
 /datum/team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
 	O.team = src
 	if(needs_target)
-		O.find_target()
+		O.find_target(dupe_search_range = list(src))
 	O.update_explanation_text()
 	objectives += O
 
