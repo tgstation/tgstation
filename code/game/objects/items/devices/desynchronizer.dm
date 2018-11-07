@@ -21,18 +21,18 @@
 
 /obj/item/desynchronizer/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to customize the duration. Current duration: [duration / 10] seconds.</span>")
-	to_chat(user, "<span class='notice'>Can be used to .</span>")
+	to_chat(user, "<span class='notice'>Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)] seconds.</span>")
+	to_chat(user, "<span class='notice'>Can be used again to interrupt the effect early.</span>")
 	
 /obj/item/desynchronizer/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	var/new_duration = input(user, "Set the duration (5-300):", "Desynchronizer", duration / 10) as null|num
 	if(new_duration)
-		new_duration *= 10
+		new_duration = new_duration SECONDS
 		new_duration = CLAMP(new_duration, 50, max_duration)
 		duration = new_duration
-		to_chat(user, "<span class='notice'>You set the duration to [duration / 10] seconds.</span>")
+		to_chat(user, "<span class='notice'>You set the duration to [DisplayTimeText(duration)] seconds.</span>")
 
 /obj/item/desynchronizer/proc/desync(mob/user)
 	if(sync_holder)
