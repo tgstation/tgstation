@@ -1382,6 +1382,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 40
 	cant_discount = TRUE
 
+//Race-specific items
+/datum/uplink_item/race_restricted
+	category = "Species-Restricted"
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	surplus = 0
+
 // Role-specific items
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
@@ -1682,10 +1688,4 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
 		U.MakePurchase(user, I)
 
-/datum/uplink_item/dangerous/lizsword
-	name = "Lizard Energy Sword"
-	desc = "This is a test item"
-	item = /obj/item/melee/transforming/energy/sword/saber
-	cost = 0
-	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
-	restricted_species = list("lizard")
+
