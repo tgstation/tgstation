@@ -42,7 +42,8 @@
 	user.forceMove(sync_holder)
 	SEND_SIGNAL(user, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	for(var/thing in user)
-		SEND_SIGNAL(thing, COMSIG_MOVABLE_SECLUDED_LOCATION)
+		var/atom/movable/AM = thing
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	addtimer(CALLBACK(src, .proc/resync), duration)
 	
 /obj/item/desynchronizer/proc/resync()
