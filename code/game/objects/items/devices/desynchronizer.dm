@@ -13,7 +13,7 @@
 	var/duration = 300
 	var/obj/effect/abstract/sync_holder/sync_holder
 	
-/obj/item/desynchronizer/attack_self(mob/user)
+/obj/item/desynchronizer/attack_self(mob/living/user)
 	if(!sync_holder)
 		desync(user)
 	else
@@ -34,10 +34,10 @@
 		duration = new_duration
 		to_chat(user, "<span class='notice'>You set the duration to [DisplayTimeText(duration)] seconds.</span>")
 
-/obj/item/desynchronizer/proc/desync(mob/user)
+/obj/item/desynchronizer/proc/desync(mob/living/user)
 	if(sync_holder)
 		return
-	sync_holder = new(get_turf(src))
+	sync_holder = new(drop_location())
 	to_chat(user, "<span class='notice'>You activate [src], desynchronizing yourself from the present. You can still see your surroundings, but you feel eerily dissociated from reality.</span>")
 	user.forceMove(sync_holder)
 	addtimer(CALLBACK(src, .proc/resync), duration)
@@ -61,7 +61,8 @@
 	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/abstract/sync_holder/Destroy()
-	for(var/atom/movable/AM in contents)
+	for(var/I in src)
+		var/atom/movable/AM = I
 		AM.forceMove(drop_location())
 	return ..()
 
