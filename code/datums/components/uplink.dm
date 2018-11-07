@@ -148,7 +148,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 					if(is_inaccessible)
 						continue
 				if(I.restricted_species.len)
-					var/is_inaccessible = 1
+					var/is_inaccessible = TRUE
 					var/mob/living/carbon/human/H = user
 					for(var/F in I.restricted_species)
 						if(F == H.dna.species.id)
