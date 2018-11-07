@@ -56,10 +56,10 @@
 	
 /datum/design/implant_storage
 	name = "Storage Implant"
-	desc = "An implanter containing a storage implant, able to store items in a hidden bluespace pocket."
+	desc = "An implanter containing a replica of a syndicate storage implant, able to store items in a hidden bluespace pocket."
 	id = "implant_storage"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_PLASMA = 2000, MAT_BLUESPACE = 4000, MAT_DIAMOND = 2000)
-	build_path = /obj/item/implanter/storage
+	build_path = /obj/item/implanter/storage/replica
 	category = list("Bluespace Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE

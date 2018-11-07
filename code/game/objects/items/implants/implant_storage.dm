@@ -32,3 +32,10 @@
 /obj/item/implanter/storage
 	name = "implanter (storage)"
 	imp_type = /obj/item/implant/storage
+	
+/obj/item/implant/storage/replica
+	max_slot_stacking = 1
+
+/obj/item/implanter/storage/replica
+	name = "implanter (storage)"
+	imp_type = /obj/item/implant/storage/replica
