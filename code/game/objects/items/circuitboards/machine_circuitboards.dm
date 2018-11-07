@@ -93,6 +93,10 @@
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/cable_coil = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
+	
+/obj/item/circuitboard/machine/quantumpad/deleter
+	name = "Quantum Deleter (Machine Board)"
+	build_path = /obj/machinery/quantumpad/deleter
 
 /obj/item/circuitboard/machine/recharger
 	name = "Weapon Recharger (Machine Board)"

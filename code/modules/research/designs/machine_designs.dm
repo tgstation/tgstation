@@ -105,6 +105,14 @@
 	build_path = /obj/item/circuitboard/machine/quantumpad
 	category = list ("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+	
+/datum/design/board/quantumdeleter
+	name = "Machine Design (Quantum Deleter Board)"
+	desc = "The circuit board for a quantum deleter."
+	id = "quantumdeleter"
+	build_path = /obj/item/circuitboard/machine/quantumpad/deleter
+	category = list ("Teleportation Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/launchpad
 	name = "Machine Design (Bluespace Launchpad Board)"
