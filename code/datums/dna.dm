@@ -243,7 +243,7 @@
 				message = "<span class='warning'>You can feel your cells burning.</span>"
 			if(100 to INFINITY)
 				message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
-				addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 600 seconds to get your shit togheter
+				addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
 
 		if(message)
 			to_chat(holder,message)
@@ -284,9 +284,6 @@
 					BP.dismember()
 				else
 					H.gib()
-
-
-
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()

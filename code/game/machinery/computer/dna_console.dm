@@ -41,6 +41,7 @@
 	active_power_usage = 400
 	var/datum/techweb/stored_research
 	var/max_storage = 6
+	var/combine
 
 	light_color = LIGHT_COLOR_BLUE
 
@@ -63,6 +64,7 @@
 		if(!isnull(connected))
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
+	scrambleready = world.time + SCRAMBLE_TIMEOUT
 	stored_research = SSresearch.science_tech
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
@@ -154,7 +156,7 @@
 			buttons += "<a href='?src=[REF(src)];task=togglelock;'>[connected.locked ? "Unlock" : "Lock"] Scanner</a>"
 	else
 		buttons += "<span class='linkOff'>Open Scanner</span> <span class='linkOff'>Lock Scanner</span>"
-	if(viable_occupant && (scrambleready > world.time))
+	if(viable_occupant && (scrambleready < world.time))
 		buttons += "<a href='?src=[REF(src)];task=scramble'>Scramble DNA</a>"
 	else
 		buttons += "<span class='linkOff'>Scramble DNA</span>"
@@ -314,7 +316,11 @@
 				var/i = stored_mutations.Find(HM)
 				temp_html += "<tr><td><a href='?src=[REF(src)];task=inspectstorage;num=[i]'>[HM.name]</a></td>"
 				temp_html += "<td><a href='?src=[REF(src)];task=exportdiskmut;path=[HM.type]'>Export</a></td>"
-				temp_html += "<td><a href='?src=[REF(src)];task=deletemut;num=[i]'>Delete</a></td></tr>"
+				temp_html += "<td><a href='?src=[REF(src)];task=deletemut;num=[i]'>Delete</a></td>"
+				if(combine == HM.type)
+					temp_html += "<td><span class='linkOff'>Combine</span></td></tr>"
+				else
+					temp_html += "<td><a href='?src=[REF(src)];task=combine;num=[i]'>Combine</a></td></tr>"
 			temp_html += "</table>"
 		else
 			temp_html += status
@@ -379,8 +385,8 @@
 		active = TRUE
 	var/datum/mutation/human/A = get_initialized_mutation(mutation)
 	alias = A.alias
-	if(active && (stored_research && !(mutation in stored_research.discovered_mutations)))
-		stored_research.discovered_mutations += mutation
+	if(active)
+		discover(mutation)
 	if(stored_research && (mutation in stored_research.discovered_mutations))
 		mut_name = A.name
 		mut_desc = A.desc
@@ -692,19 +698,38 @@
 						to_chat(usr, "<span class='notice'>Succesfully written [A.name] to [diskette.name].</span>")
 		if("deletediskmut")
 			if(diskette && !diskette.read_only)
-				if(num && (LAZYLEN(diskette.mutations) <= num))
+				if(num && (LAZYLEN(diskette.mutations) >= num))
 					var/datum/mutation/human/A = diskette.mutations[num]
 					diskette.mutations.Remove(A)
 					qdel(A)
 		if("importdiskmut")
-			if(diskette && (LAZYLEN(diskette.mutations) <= num))
+			if(diskette && (LAZYLEN(diskette.mutations) >= num))
 				if(LAZYLEN(stored_mutations) < max_storage)
 					var/datum/mutation/human/A = diskette.mutations[num]
 					var/datum/mutation/human/HM = new A.type()
 					HM.copy_mutation(A)
 					stored_mutations[HM] = get_sequence(HM.type)
 					to_chat(usr,"<span class='notice'>Succesfully written [A.name] to storage.")
-
+		if("combine")
+			if(num && (LAZYLEN(stored_mutations) >= num))
+				if(LAZYLEN(stored_mutations) < max_storage)
+					var/datum/mutation/human/A = stored_mutations[num]
+					var/path = A.type
+					if(combine)
+						var/result_path = get_mixed_mutation(combine, path)
+						if(result_path)
+							stored_mutations[new result_path()] = get_sequence(result_path)
+							to_chat(usr, "<span class='boldnotice'>Succes! New mutation has been added to storage</span>")
+							discover(result_path)
+							combine = null
+						else
+							to_chat(usr, "<span class='warning'>Failed. No mutation could be created.</span>")
+							combine = null
+					else
+						combine = path
+						to_chat(usr,"<span class='notice'>Selected [A.name] for combining</span>")
+				else
+					to_chat(usr, "<span class='warning'>Not enough space to store potential mutation.</span>")
 	ui_interact(usr,last_change)
 
 /obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
@@ -801,8 +826,10 @@
 		if(A.type == mutation)
 			return string2list(stored_mutations[A])
 
-
-
+/obj/machinery/computer/scan_consolenew/proc/discover(mutation)
+	if(stored_research && !(mutation in stored_research.discovered_mutations))
+		stored_research.discovered_mutations += mutation
+		return TRUE
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS

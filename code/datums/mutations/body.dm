@@ -177,3 +177,13 @@
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/monkey/owner)
 	qdel(glowth)
+
+/datum/mutation/human/strong
+	name = "Strength"
+	desc = "The user's muscles slightly expand."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+
+
+
+

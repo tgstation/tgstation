@@ -1,8 +1,9 @@
 //Hulk turns your skin green, and allows you to punch through walls.
 /datum/mutation/human/hulk
 	name = "Hulk"
-	desc = "A poorly understood genome that causes the holder's muscles to expand, inhibit speech and make the person green for some reason."
+	desc = "A poorly understood genome that causes the holder's muscles to expand, inhibit speech and gives the person a bad skin condition."
 	quality = POSITIVE
+	locked = TRUE
 	get_chance = 15
 	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
