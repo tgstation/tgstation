@@ -65,7 +65,7 @@
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
@@ -77,7 +77,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
 
 	else if(reagents.total_volume)
@@ -100,7 +100,7 @@
 				to_chat(user, "<span class='notice'>[src] is full.</span>")
 			else
 				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
-				E.reagents.trans_to(src, E.reagents.total_volume)
+				E.reagents.trans_to(src, E.reagents.total_volume, transfered_by = user)
 				qdel(E)
 			return
 	..()
@@ -273,7 +273,7 @@
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		else
-			reagents.trans_to(O, 5)
+			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 	else if(isprox(O))

@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "You can now pay for cargo orders from your account with the cargo requests console. Credits will be detracted from the requester's account instead of the cargo budget. A 10% handling fee on top of the order will be paid to the cargo department budget."
+  - rscadd: "Cargo employees must still accept the order for it to be delivered."
+  - rscadd: "The delivery will arrive in a locked crate that can only be opened by an id with the paying bank account."

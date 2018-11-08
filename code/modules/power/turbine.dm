@@ -94,6 +94,11 @@
 		E += M.rating
 	efficiency = E / 6
 
+/obj/machinery/power/compressor/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
+
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -175,6 +180,11 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		P += C.rating
 	productivity = P / 6
+
+/obj/machinery/power/turbine/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<span>")
 
 /obj/machinery/power/turbine/locate_machinery()
 	if(compressor)

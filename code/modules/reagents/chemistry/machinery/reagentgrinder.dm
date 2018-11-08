@@ -46,6 +46,11 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		speed = M.rating
 
+/obj/machinery/reagentgrinder/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Grinding reagents at <b>[speed*100]%</b>.<span>")
+
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
 	if(A == beaker)
@@ -272,7 +277,7 @@
 	beaker.reagents.add_reagent_list(I.juice_results)
 	remove_object(I)
 
-/obj/machinery/reagentgrinder/proc/grind()
+/obj/machinery/reagentgrinder/proc/grind(mob/user)
 	power_change()
 	if(!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
@@ -282,15 +287,15 @@
 			break
 		var/obj/item/I = i
 		if(I.grind_results)
-			grind_item(i)
+			grind_item(i, user)
 
-/obj/machinery/reagentgrinder/proc/grind_item(obj/item/I) //Grind results can be found in respective object definitions
+/obj/machinery/reagentgrinder/proc/grind_item(obj/item/I, mob/user) //Grind results can be found in respective object definitions
 	if(I.on_grind(src) == -1) //Call on_grind() to change amount as needed, and stop grinding the item if it returns -1
 		to_chat(usr, "<span class='danger'>[src] shorts out as it tries to grind up [I], and transfers it back to storage.</span>")
 		return
 	beaker.reagents.add_reagent_list(I.grind_results)
 	if(I.reagents)
-		I.reagents.trans_to(beaker, I.reagents.total_volume)
+		I.reagents.trans_to(beaker, I.reagents.total_volume, transfered_by = user)
 	remove_object(I)
 
 /obj/machinery/reagentgrinder/proc/mix(mob/user)

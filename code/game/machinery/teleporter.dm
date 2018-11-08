@@ -11,7 +11,7 @@
 	idle_power_usage = 10
 	active_power_usage = 2000
 	circuit = /obj/item/circuitboard/machine/teleporter_hub
-	var/accurate = FALSE
+	var/accuracy = 0
 	var/obj/machinery/teleport/station/power_station
 	var/calibrated //Calibration prevents mutation
 
@@ -29,7 +29,12 @@
 	var/A = 0
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
-	accurate = A
+	accuracy = A
+
+/obj/machinery/teleport/hub/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.<span>")
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)
@@ -68,7 +73,7 @@
 	if (ismovableatom(M))
 		if(do_teleport(M, com.target))
 			use_power(5000)
-			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
+			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				log_game("[M] ([key_name(M)]) was turned into a fly person")
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
@@ -76,7 +81,7 @@
 						to_chat(M, "<span class='italics'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), EFFECT_IRRADIATE, 0)
+					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
@@ -102,7 +107,7 @@
 
 
 /obj/machinery/teleport/station
-	name = "station"
+	name = "teleporter station"
 	desc = "The power control station for a bluespace teleporter. Used for toggling power, and can activate a test-fire to prevent malfunctions."
 	icon_state = "controller"
 	use_power = IDLE_POWER_USE
@@ -124,6 +129,15 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
 	efficiency = E - 1
+
+/obj/machinery/teleport/station/examine(mob/user)
+	..()
+	if(!panel_open)
+		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device and wiring panel.</span>")
+	else
+		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned</i> with a multitool.<br>The <i>wiring</i> can be <i>connected<i> to a nearby console and hub with a pair of wirecutters.</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: This station can be linked to <b>[efficiency]</b> other station(s).<span>")
 
 /obj/machinery/teleport/station/proc/link_console_and_hub()
 	for(var/direction in GLOB.cardinals)

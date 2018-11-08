@@ -12,7 +12,7 @@
 
 /obj/machinery/camera/xray
 	start_active = TRUE
-	icon_state = "xraycam" // Thanks to Krutchen for the icons.
+	icon_state = "xraycamera" //mapping icon - Thanks to Krutchen for the icons.
 
 /obj/machinery/camera/xray/Initialize()
 	. = ..()
@@ -30,6 +30,7 @@
 // ALL UPGRADES
 /obj/machinery/camera/all
 	start_active = TRUE
+	icon_state = "xraycamera" //mapping icon.
 
 /obj/machinery/camera/all/Initialize()
 	. = ..()
@@ -61,29 +62,56 @@
 					number = max(number, C.number+1)
 		c_tag = "[A.name] #[number]"
 
-// CHECKS
+
+// UPGRADE PROCS
 
 /obj/machinery/camera/proc/isEmpProof()
 	return upgrades & CAMERA_UPGRADE_EMP_PROOF
 
+/obj/machinery/camera/proc/upgradeEmpProof()
+	if(isEmpProof())
+		return
+	emp_component = AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
+	if(!assembly.emp_module)
+		assembly.emp_module = new(assembly)
+	upgrades |= CAMERA_UPGRADE_EMP_PROOF
+
+/obj/machinery/camera/proc/removeEmpProof()
+	emp_component.RemoveComponent()
+	upgrades &= ~CAMERA_UPGRADE_EMP_PROOF
+
+
+
 /obj/machinery/camera/proc/isXRay()
 	return upgrades & CAMERA_UPGRADE_XRAY
+
+/obj/machinery/camera/proc/upgradeXRay()
+	if(isXRay())
+		return
+	if(!assembly.xray_module)
+		assembly.xray_module = new(assembly)
+	upgrades |= CAMERA_UPGRADE_XRAY
+	update_icon()
+
+/obj/machinery/camera/proc/removeXRay()
+	upgrades &= ~CAMERA_UPGRADE_XRAY
+	update_icon()
+
+
 
 /obj/machinery/camera/proc/isMotion()
 	return upgrades & CAMERA_UPGRADE_MOTION
 
-// UPGRADE PROCS
-
-/obj/machinery/camera/proc/upgradeEmpProof()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
-	assembly.upgrades.Add(new /obj/item/stack/sheet/mineral/plasma(assembly))
-	upgrades |= CAMERA_UPGRADE_EMP_PROOF
-
-/obj/machinery/camera/proc/upgradeXRay()
-	assembly.upgrades.Add(new /obj/item/analyzer(assembly))
-	upgrades |= CAMERA_UPGRADE_XRAY
-
-// If you are upgrading Motion, and it isn't in the camera's Initialize(), add it to the machines list.
 /obj/machinery/camera/proc/upgradeMotion()
-	assembly.upgrades.Add(new /obj/item/assembly/prox_sensor(assembly))
+	if(isMotion())
+		return
+	if(name == initial(name))
+		name = "motion-sensitive security camera"
+	if(!assembly.proxy_module)
+		assembly.proxy_module = new(assembly)
 	upgrades |= CAMERA_UPGRADE_MOTION
+
+/obj/machinery/camera/proc/removeMotion()
+	if(name == "motion-sensitive security camera")
+		name = "security camera"
+	upgrades &= ~CAMERA_UPGRADE_MOTION
