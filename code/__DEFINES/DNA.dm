@@ -32,6 +32,7 @@
 #define GLOWY		/datum/mutation/human/glow
 #define TELEPATHY	/datum/mutation/human/telepath
 #define FIREBREATH	/datum/mutation/human/firebreath
+#define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
 
 #define UI_CHANGED "ui changed"
