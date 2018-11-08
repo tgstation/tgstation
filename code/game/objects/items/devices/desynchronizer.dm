@@ -11,9 +11,13 @@
 	materials = list(MAT_METAL=250, MAT_GLASS=500)
 	var/max_duration = 3000
 	var/duration = 300
+	var/last_use = 0
+	var/next_use = 0
 	var/obj/effect/abstract/sync_holder/sync_holder
 	
 /obj/item/desynchronizer/attack_self(mob/living/user)
+	if(world.time < next_use)
+		to_chat(user, "<span class='warning'>[src] is still recharging.</span>")
 	if(!sync_holder)
 		desync(user)
 	else
@@ -21,8 +25,10 @@
 
 /obj/item/desynchronizer/examine(mob/user)
 	..()
+	if(world.time < next_use)
+		to_chat(user, "<span class='warning'>Time left to recharge: [DisplayTimeText(next_use - world.time)]</span>")
 	to_chat(user, "<span class='notice'>Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)] seconds.</span>")
-	to_chat(user, "<span class='notice'>Can be used again to interrupt the effect early.</span>")
+	to_chat(user, "<span class='notice'>Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.</span>")
 	
 /obj/item/desynchronizer/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -44,10 +50,12 @@
 	for(var/thing in user)
 		var/atom/movable/AM = thing
 		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	last_use = world.time
 	addtimer(CALLBACK(src, .proc/resync), duration)
 	
 /obj/item/desynchronizer/proc/resync()
 	QDEL_NULL(sync_holder)
+	next_use = world.time + (world.time - last_use) // Could be 2*world.time-last_use but that would just be confusing
 
 /obj/item/desynchronizer/Destroy()
 	resync()
