@@ -16,17 +16,47 @@
 
 	dog_fashion = /datum/dog_fashion/head/helmet
 
+	var/can_flashlight = FALSE //if a flashlight can be mounted. if it has a flashlight and this is false, it is permanently attached.
+	var/obj/item/flashlight/seclite/attached_light
+	var/datum/action/item_action/toggle_helmet_flashlight/alight
+
+/obj/item/clothing/head/helmet/Initialize()
+	. = ..()
+	if(attached_light)
+		alight = new(src)
+
 /obj/item/clothing/head/helmet/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_HEAD))
 
+/obj/item/clothing/head/helmet/examine(mob/user)
+	..()
+	if(attached_light)
+		to_chat(user, "It has \a [attached_light] [can_flashlight ? "" : "permanently "]mounted on it.")
+		if(can_flashlight)
+			to_chat(user, "<span class='info'>[attached_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+	else if(can_flashlight)
+		to_chat(user, "It has a mounting point for a <b>seclite</b>.")
+
+/obj/item/clothing/head/helmet/Destroy()
+	QDEL_NULL(attached_light)
+	return ..()
+
+/obj/item/clothing/head/helmet/handle_atom_del(atom/A)
+	if(A == attached_light)
+		attached_light = null
+		update_helmlight()
+		update_icon()
+		QDEL_NULL(alight)
+	return ..()
+
 /obj/item/clothing/head/helmet/sec
-	can_flashlight = 1
+	can_flashlight = TRUE
 
 /obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
 	if(issignaler(I))
 		var/obj/item/assembly/signaler/S = I
-		if(F) //Has a flashlight. Player must remove it, else it will be lost forever.
+		if(attached_light) //Has a flashlight. Player must remove it, else it will be lost forever.
 			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
 			return
 
@@ -45,7 +75,7 @@
 	icon_state = "helmetalt"
 	item_state = "helmetalt"
 	armor = list("melee" = 15, "bullet" = 60, "laser" = 10, "energy" = 10, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	can_flashlight = 1
+	can_flashlight = TRUE
 	dog_fashion = null
 
 /obj/item/clothing/head/helmet/old
@@ -93,7 +123,7 @@
 
 			if(active_sound)
 				while(up)
-					playsound(src.loc, "[active_sound]", 100, 0, 4)
+					playsound(src, "[active_sound]", 100, FALSE, 4)
 					sleep(15)
 
 /obj/item/clothing/head/helmet/justice
@@ -243,12 +273,20 @@
 	item_state = "skull"
 	strip_delay = 100
 
+/obj/item/clothing/head/helmet/durathread
+	name = "makeshift helmet"
+	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
+	icon_state = "durathread"
+	item_state = "durathread"
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
+	strip_delay = 60
+
 //LightToggle
 
 /obj/item/clothing/head/helmet/update_icon()
 	var/state = "[initial(icon_state)]"
-	if(F)
-		if(F.on)
+	if(attached_light)
+		if(attached_light.on)
 			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
 		else
 			state += "-flight" //etc.
@@ -260,7 +298,7 @@
 		H.update_inv_head()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/toggle_helmet_flashlight))
+	if(istype(action, alight))
 		toggle_helmlight()
 	else
 		..()
@@ -268,60 +306,60 @@
 /obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/flashlight/seclite))
 		var/obj/item/flashlight/seclite/S = I
-		if(can_flashlight)
-			if(!F)
-				if(!user.transferItemToLoc(S, src))
-					return
-				to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
-				if(S.on)
-					set_light(0)
-				F = S
-				update_icon()
-				update_helmlight(user)
-				verbs += /obj/item/clothing/head/helmet/proc/toggle_helmlight
-				var/datum/action/A = new /datum/action/item_action/toggle_helmet_flashlight(src)
-				if(loc == user)
-					A.Grant(user)
+		if(can_flashlight && !attached_light)
+			if(!user.transferItemToLoc(S, src))
+				return
+			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
+			if(S.on)
+				set_light(0)
+			attached_light = S
+			update_icon()
+			update_helmlight()
+			alight = new(src)
+			if(loc == user)
+				alight.Grant(user)
 		return
-
-	if(istype(I, /obj/item/screwdriver))
-		if(F)
-			for(var/obj/item/flashlight/seclite/S in src)
-				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
-				F = null
-				S.forceMove(user.drop_location())
-				update_helmlight(user)
-				S.update_brightness(user)
-				update_icon()
-				usr.update_inv_head()
-				verbs -= /obj/item/clothing/head/helmet/proc/toggle_helmlight
-			for(var/datum/action/item_action/toggle_helmet_flashlight/THL in actions)
-				qdel(THL)
-			return
-
 	return ..()
+
+/obj/item/clothing/head/helmet/screwdriver_act(mob/living/user, obj/item/I)
+	..()
+	if(can_flashlight && attached_light) //if it has a light but can_flashlight is false, the light is permanently attached.
+		I.play_tool_sound(src)
+		to_chat(user, "<span class='notice'>You unscrew [attached_light] from [src].</span>")
+		attached_light.forceMove(drop_location())
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(attached_light)
+
+		var/obj/item/flashlight/removed_light = attached_light
+		attached_light = null
+		update_helmlight()
+		removed_light.update_brightness(user)
+		update_icon()
+		user.update_inv_head()
+		QDEL_NULL(alight)
+		return TRUE
 
 /obj/item/clothing/head/helmet/proc/toggle_helmlight()
 	set name = "Toggle Helmetlight"
 	set category = "Object"
 	set desc = "Click to toggle your helmet's attached flashlight."
 
-	if(!F)
+	if(!attached_light)
 		return
 
 	var/mob/user = usr
 	if(user.incapacitated())
 		return
-	F.on = !F.on
-	to_chat(user, "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>")
+	attached_light.on = !attached_light.on
+	to_chat(user, "<span class='notice'>You toggle the helmet-light [attached_light.on ? "on":"off"].</span>")
 
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-	update_helmlight(user)
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_helmlight()
 
-/obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
-	if(F)
-		if(F.on)
-			set_light(F.brightness_on)
+/obj/item/clothing/head/helmet/proc/update_helmlight()
+	if(attached_light)
+		if(attached_light.on)
+			set_light(attached_light.brightness_on)
 		else
 			set_light(0)
 		update_icon()

@@ -187,7 +187,7 @@
 		return FALSE
 	var/initial_tier = initial(scripture.tier)
 	if(initial_tier != SCRIPTURE_PERIPHERAL)
-		if(!GLOB.ratvar_awakens && !no_cost && !SSticker.scripture_states[initial_tier])
+		if(!GLOB.ratvar_awakens && !no_cost && !GLOB.scripture_states[initial_tier])
 			to_chat(user, "<span class='warning'>That scripture is not unlocked, and cannot be recited!</span>")
 			return FALSE
 	var/datum/clockwork_scripture/scripture_to_recite = new scripture
@@ -313,7 +313,7 @@
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Scripture")
 			dat += "<font color=#BE8700 size=3>The Ancient Scripture</font><br><br>"
-			dat += "If you have experience with the Nar-Sian cult (or the \"blood cult\") then you will know of runes. They are the manifestations of the Geometer's power, and where most \
+			dat += "If you have experience with the Nar'Sian cult (or the \"blood cult\") then you will know of runes. They are the manifestations of the Geometer's power, and where most \
 			of the cult's supernatural ability comes from. The Servant equivalent of runes is called <b>scripture</b>, and unlike runes, scripture is loaded into your clockwork slab.<br><br>"
 			dat += "Each piece of scripture has widely-varying effects. Your most important scripture, <i>Geis</i>, is obvious and suspicious, but charges your slab with energy and allows \
 			you to attack a non-Servant in melee range to restrain them and begin converting them into a Servant. This is just one example; each piece of scripture can be simple or \
@@ -411,12 +411,12 @@
 		if(SCRIPTURE_DRIVER)
 			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 		if(SCRIPTURE_SCRIPT)
-			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
+			if(GLOB.scripture_states[SCRIPTURE_SCRIPT])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.</i></font>"
 		if(SCRIPTURE_APPLICATION)
-			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
+			if(GLOB.scripture_states[SCRIPTURE_APPLICATION])
 				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"

@@ -17,6 +17,10 @@
 	var/toxLethality = LIVER_DEFAULT_TOX_LETHALITY//affects how much damage toxins do to the liver
 	var/filterToxins = TRUE //whether to filter toxins
 
+#define HAS_SILENT_TOXIN 0 //don't provide a feedback message if this is the only toxin present
+#define HAS_NO_TOXIN 1
+#define HAS_PAINFUL_TOXIN 2
+
 /obj/item/organ/liver/on_life()
 	var/mob/living/carbon/C = owner
 
@@ -25,25 +29,33 @@
 			//slowly heal liver damage
 			damage = max(0, damage - 0.1)
 
+			var/provide_pain_message = HAS_NO_TOXIN
 			if(filterToxins && !owner.has_trait(TRAIT_TOXINLOVER))
 				//handle liver toxin filtration
 				for(var/I in C.reagents.reagent_list)
 					var/datum/reagent/pickedreagent = I
 					if(istype(pickedreagent, /datum/reagent/toxin))
-						var/thisamount = C.reagents.get_reagent_amount(initial(pickedreagent.id))
+						var/datum/reagent/toxin/found_toxin = pickedreagent
+						var/thisamount = C.reagents.get_reagent_amount(initial(found_toxin.id))
 						if (thisamount <= toxTolerance && thisamount)
-							C.reagents.remove_reagent(initial(pickedreagent.id), 1)
+							C.reagents.remove_reagent(initial(found_toxin.id), 1)
 						else
 							damage += (thisamount*toxLethality)
+							if(provide_pain_message != HAS_PAINFUL_TOXIN)
+								provide_pain_message = found_toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
 			//metabolize reagents
 			C.reagents.metabolize(C, can_overdose=TRUE)
 
-			if(damage > 10 && prob(damage/3))//the higher the damage the higher the probability
-				to_chat(C, "<span class='notice'>You feel [pick("nauseated", "a dull pain in your lower body", "confused")].</span>")
+			if(provide_pain_message && damage > 10 && prob(damage/3))//the higher the damage the higher the probability
+				to_chat(C, "<span class='warning'>You feel a dull pain in your abdomen.</span>")
 
 	if(damage > maxHealth)//cap liver damage
 		damage = maxHealth
+
+#undef HAS_SILENT_TOXIN
+#undef HAS_NO_TOXIN
+#undef HAS_PAINFUL_TOXIN
 
 /obj/item/organ/liver/prepare_eat()
 	var/obj/S = ..()
@@ -64,13 +76,16 @@
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"
 	icon_state = "liver-c"
-	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
+	desc = "An electronic device designed to mimic the functions of a human liver. Handles toxins slightly better than an organic liver."
 	synthetic = TRUE
+	maxHealth = 110
+	toxTolerance = 3.3
+	toxLethality = 0.009
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"
 	icon_state = "liver-c-u"
-	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
+	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
 	maxHealth = 200 //double the health of a normal liver
 	toxTolerance = 15 //can shrug off up to 15u of toxins

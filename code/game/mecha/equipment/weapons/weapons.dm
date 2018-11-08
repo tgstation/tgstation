@@ -53,7 +53,7 @@
 
 	if(kickback)
 		chassis.newtonian_move(turn(chassis.dir,180))
-	chassis.log_message("Fired from [src.name], targeting [target].")
+	chassis.log_message("Fired from [src.name], targeting [target].", LOG_MECHA)
 	return 1
 
 
@@ -177,14 +177,14 @@
 		M.SetSleeping(0)
 		M.stuttering += 20
 		M.adjustEarDamage(0, 30)
-		M.Knockdown(60)
+		M.Paralyze(60)
 		if(prob(30))
 			M.Stun(200)
 			M.Unconscious(80)
 		else
 			M.Jitter(500)
 
-	log_message("Honked from [src.name]. HONK!")
+	log_message("Honked from [src.name]. HONK!", LOG_MECHA)
 	var/turf/T = get_turf(src)
 	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Mecha Honker in [ADMIN_VERBOSEJMP(T)]")
 	log_game("[key_name(chassis.occupant)] used a Mecha Honker in [AREACOORD(T)]")
@@ -220,7 +220,7 @@
 			projectiles_to_add--
 			chassis.use_power(projectile_energy_cost)
 	send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
-	log_message("Rearmed [src.name].")
+	log_message("Rearmed [src.name].", LOG_MECHA)
 	return 1
 
 
@@ -293,7 +293,7 @@
 	name = "\improper SRM-8 missile rack"
 	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
 	icon_state = "mecha_missilerack"
-	projectile = /obj/item/projectile/bullet/srmrocket
+	projectile = /obj/item/projectile/bullet/a84mm_he
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 8
 	projectile_energy_cost = 1000
@@ -311,7 +311,7 @@
 		return
 	var/obj/O = new projectile(chassis.loc)
 	playsound(chassis, fire_sound, 50, 1)
-	log_message("Launched a [O.name] from [name], targeting [target].")
+	log_message("Launched a [O.name] from [name], targeting [target].", LOG_MECHA)
 	projectiles--
 	proj_init(O)
 	O.throw_at(target, missile_range, missile_speed, chassis.occupant, FALSE, diagonals_first = diags_first)

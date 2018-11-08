@@ -123,6 +123,24 @@
 	righthand_file = 'icons/mob/inhands/antag/balloons_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
+/obj/item/toy/syndicateballoon/pickup(mob/user)
+	. = ..()
+	if(user && user.mind && user.mind.has_antag_datum(/datum/antagonist, TRUE))
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+
+/obj/item/toy/syndicateballoon/dropped(mob/user)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+	. = ..()
+
+
+/obj/item/toy/syndicateballoon/Destroy()
+	if(ismob(loc))
+		var/mob/M = loc
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
+	. = ..()
+
+
 /*
  * Fake singularity
  */
@@ -260,7 +278,7 @@
 				newSaber.item_color = "rainbow"
 			qdel(W)
 			qdel(src)
-	else if(istype(W, /obj/item/multitool))
+	else if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			item_color = "rainbow"
@@ -659,8 +677,10 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 //ATTACK HAND NOT CALLING PARENT
 /obj/item/toy/cards/deck/attack_hand(mob/user)
-	if(user.lying)
-		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 	var/choice = null
 	if(cards.len == 0)
 		to_chat(user, "<span class='warning'>There are no more cards to draw!</span>")
@@ -727,7 +747,7 @@
 /obj/item/toy/cards/deck/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/living/M = usr
-	if(!istype(M) || usr.incapacitated() || usr.lying)
+	if(!istype(M) || !(M.mobility_flags & MOBILITY_PICKUP))
 		return
 	if(Adjacent(usr))
 		if(over_object == M && loc != M)
@@ -773,9 +793,11 @@
 /obj/item/toy/cards/cardhand/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.stat || !ishuman(usr) || !usr.canmove)
+	if(usr.stat || !ishuman(usr))
 		return
 	var/mob/living/carbon/human/cardUser = usr
+	if(!(cardUser.mobility_flags & MOBILITY_USE))
+		return
 	var/O = src
 	if(href_list["pick"])
 		if (cardUser.is_holding(src))
@@ -914,8 +936,8 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/user)
-	if(usr.stat || !ishuman(usr) || !usr.canmove || usr.restrained())
+/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
+	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
 
@@ -944,6 +966,7 @@
 /obj/item/toy/cards/deck/syndicate
 	name = "suspicious looking deck of cards"
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
+	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
 	card_hitsound = 'sound/weapons/bladeslice.ogg'
 	card_force = 5
@@ -1367,8 +1390,11 @@
 	to_chat(user, "You name the dummy as \"[doll_name]\"")
 	name = "[initial(name)] - [doll_name]"
 
-/obj/item/toy/dummy/talk_into(atom/movable/M, message, channel, list/spans, datum/language/language)
-	log_talk(M,"[key_name(M)] : through dummy : [message]",LOGSAY)
+/obj/item/toy/dummy/talk_into(atom/movable/A, message, channel, list/spans, datum/language/language)
+	var/mob/M = A
+	if (istype(M))
+		M.log_talk(message, LOG_SAY, tag="dummy toy")
+
 	say(message, language)
 	return NOPASS
 

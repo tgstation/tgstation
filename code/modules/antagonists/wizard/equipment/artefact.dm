@@ -110,6 +110,25 @@
 	eat()
 	return
 
+/obj/singularity/wizard/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		GET_COMPONENT_FROM(insaneinthemembrane, /datum/component/mood, C)
+		if(insaneinthemembrane.sanity < 15)
+			return //they've already seen it and are about to die, or are just too insane to care
+		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+		insaneinthemembrane.sanity = 0
+		for(var/lore in typesof(/datum/brain_trauma/severe))
+			C.gain_trauma(lore)
+		addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, C), 100)
+
+/obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
+	if(!C || C.stat == DEAD)
+		return
+	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.spew_organ(3, 2)
+	C.death()
+
 /obj/singularity/wizard/mapped/admin_investigate_setup()
 	return
 
@@ -169,7 +188,12 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-
+	
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
+		if(ghost.mind && ghost.mind.current == M && ghost.client)  //the dead mobs list can contain clientless mobs
+			ghost.reenter_corpse()
+			break
+	
 	if(!M.mind || !M.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
@@ -242,7 +266,7 @@
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Knockdown(40)
+			target.Paralyze(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
@@ -282,7 +306,7 @@
 		switch(user.zone_selected)
 			if(BODY_ZONE_PRECISE_MOUTH)
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
-				target.say(wgw)
+				target.say(wgw, forced = "voodoo doll")
 				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
 			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
@@ -361,7 +385,7 @@
 /obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
 	user.invisibility = initial(user.invisibility)
 	user.status_flags &= ~GODMODE
-	user.canmove = TRUE
+	user.update_mobility()
 
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
@@ -370,7 +394,7 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = FALSE
+	user.mobility_flags &= ~MOBILITY_MOVE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -386,7 +410,7 @@
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
 			user.forceMove(potential_T)
-			user.canmove = 0
+			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break
 		breakout += 1

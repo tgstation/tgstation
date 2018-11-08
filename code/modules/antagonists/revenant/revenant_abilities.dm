@@ -114,7 +114,7 @@
 		if(!msg)
 			charge_counter = charge_max
 			return
-		log_talk(user,"RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
+		log_directed_talk(user, M, msg, LOG_SAY, "revenant whisper")
 		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
 		if(!M.anti_magic_check(FALSE, TRUE)) //hear no evil
 			to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")

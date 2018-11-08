@@ -33,8 +33,8 @@
 	return
 
 /obj/singularity/energy_ball/Destroy()
-	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
-		var/obj/singularity/energy_ball/EB = orbiting.orbiting
+	if(orbiting && istype(orbiting.parent, /obj/singularity/energy_ball))
+		var/obj/singularity/energy_ball/EB = orbiting.parent
 		EB.orbiting_balls -= src
 
 	for(var/ball in orbiting_balls)
@@ -129,6 +129,15 @@
 /obj/singularity/energy_ball/Bumped(atom/movable/AM)
 	dust_mobs(AM)
 
+/obj/singularity/energy_ball/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		to_chat(C, "<span class='userdanger'>That was a shockingly dumb idea.</span>")
+		var/obj/item/organ/brain/rip_u = locate(/obj/item/organ/brain) in C.internal_organs
+		C.ghostize(0)
+		qdel(rip_u)
+		C.death()
+
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
 	if (istype(target))
 		target.orbiting_balls += src
@@ -137,12 +146,12 @@
 
 	. = ..()
 /obj/singularity/energy_ball/stop_orbit()
-	if (orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
-		var/obj/singularity/energy_ball/orbitingball = orbiting.orbiting
+	if (orbiting && istype(orbiting.parent, /obj/singularity/energy_ball))
+		var/obj/singularity/energy_ball/orbitingball = orbiting.parent
 		orbitingball.orbiting_balls -= src
 		orbitingball.dissipate_strength = orbitingball.orbiting_balls.len
-	..()
-	if (!loc && !QDELETED(src))
+	. = ..()
+	if (!QDELETED(src))
 		qdel(src)
 
 

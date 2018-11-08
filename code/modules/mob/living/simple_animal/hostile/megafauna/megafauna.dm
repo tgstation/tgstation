@@ -21,7 +21,9 @@
 	maxbodytemp = INFINITY
 	vision_range = 5
 	aggro_vision_range = 18
-	anchored = TRUE
+	move_force = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING
+	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
@@ -109,6 +111,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
+	ranged_cooldown = world.time + buffer_time
 
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
 	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set

@@ -350,7 +350,7 @@
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_images_from_clients, I, show_to), duration, TIMER_CLIENT_TIME)
 
 /proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
 	var/list/viewing = list()
@@ -494,6 +494,15 @@
 	if(!C || (!C.prefs.windowflashing && !ignorepref))
 		return
 	winset(C, "mainwindow", "flash=5")
+	
+//Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
+/proc/recursive_loc_check(atom/movable/target, type)
+	var/atom/A = target
+	while(!istype(A.loc, type))
+		if(!A.loc)
+			return
+		A = A.loc
+	return A
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))

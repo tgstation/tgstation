@@ -20,6 +20,8 @@
 		to_chat(user, "<span class='notice'>[src] are no longer <i>screwed</i> to the floor, and the flaps can be <b>cut</b> apart.</span>")
 
 /obj/structure/plasticflaps/screwdriver_act(mob/living/user, obj/item/W)
+	if(..())
+		return TRUE
 	add_fingerprint(user)
 	var/action = anchored ? "unscrews [src] from" : "screws [src] to"
 	var/uraction = anchored ? "unscrew [src] from " : "screw [src] to"
@@ -85,7 +87,7 @@
 			return 1
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
 			return 1
-		if(!M.lying && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
+		if((M.mobility_flags & MOBILITY_STAND) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return 0
 	return ..()
 
@@ -95,8 +97,8 @@
 	qdel(src)
 
 /obj/structure/plasticflaps/Initialize()
- 	. = ..()
- 	air_update_turf(TRUE)
+	. = ..()
+	air_update_turf(TRUE)
 
 /obj/structure/plasticflaps/Destroy()
 	var/atom/oldloc = loc

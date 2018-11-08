@@ -140,6 +140,8 @@
 
 // Construction/Deconstruction
 /obj/machinery/camera/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	panel_open = !panel_open
 	to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 	I.play_tool_sound(src)
@@ -179,7 +181,7 @@
 /obj/machinery/camera/attackby(obj/item/I, mob/living/user, params)
 	// UPGRADES
 	if(panel_open)
-		if(istype(I, /obj/item/analyzer))
+		if(I.tool_behaviour == TOOL_ANALYZER)
 			if(!isXRay())
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return

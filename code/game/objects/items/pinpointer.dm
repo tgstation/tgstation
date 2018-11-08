@@ -76,6 +76,7 @@
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
+	custom_price = 150
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
@@ -143,9 +144,3 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
-
-/obj/item/pinpointer/process()
-	if(!active)
-		return PROCESS_KILL
-	scan_for_target()
-	update_icon()

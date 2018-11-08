@@ -25,7 +25,6 @@
 	pressure_resistance = 2
 	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
-	var/traitor_unlock_degrees = 0
 	var/degrees = 0
 	var/font = PEN_FONT
 
@@ -117,7 +116,7 @@
 				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1
 
-		add_logs(user, M, "stabbed", src)
+		log_combat(user, M, "stabbed", src)
 
 	else
 		. = ..()

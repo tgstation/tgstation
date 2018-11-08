@@ -116,7 +116,7 @@
 			p.on_refund(owner.current)
 
 	//MOVE THIS
-	if(owner.current.hud_used)
+	if(owner.current.hud_used && owner.current.hud_used.lingstingdisplay)
 		owner.current.hud_used.lingstingdisplay.icon_state = null
 		owner.current.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
@@ -167,7 +167,7 @@
 		to_chat(owner.current, "We have reached our capacity for abilities.")
 		return
 
-	if(owner.current.has_trait(TRAIT_FAKEDEATH))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
+	if(owner.current.has_trait(TRAIT_DEATHCOMA))//To avoid potential exploits by buying new powers while in stasis, which clears your verblist.
 		to_chat(owner.current, "We lack the energy to evolve new abilities right now.")
 		return
 
@@ -410,7 +410,7 @@
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
 			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				kill_objective.find_target()
 			objectives += kill_objective
@@ -418,7 +418,7 @@
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			if(team_mode)
-				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				maroon_objective.find_target()
 			objectives += maroon_objective
@@ -440,13 +440,11 @@
 			var/datum/objective/escape/escape_with_identity/identity_theft = new
 			identity_theft.owner = owner
 			if(team_mode)
-				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				identity_theft.find_target()
 			objectives += identity_theft
 		escape_objective_possible = FALSE
-
-	owner.objectives |= objectives
 
 /datum/antagonist/changeling/proc/update_changeling_icons_added()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]

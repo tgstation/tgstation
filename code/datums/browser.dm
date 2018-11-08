@@ -91,7 +91,7 @@
 	[get_footer()]
 	"}
 
-/datum/browser/proc/open(use_onclose = 1)
+/datum/browser/proc/open(use_onclose = TRUE)
 	if(isnull(window_id))	//null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
 		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
@@ -371,9 +371,11 @@
 				if (isnull(settings["mainsettings"][setting]["value"]))
 					settings["mainsettings"][setting]["value"] = oldval
 			if ("string")
-				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]")
+				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"])
 			if ("number")
 				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]") as num
+			if ("color")
+				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
 			if ("boolean")
 				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
 			if ("ckey")

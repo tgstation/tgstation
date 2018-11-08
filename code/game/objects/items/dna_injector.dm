@@ -50,7 +50,7 @@
 			if(fields["UI"])	//UI+UE
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
-		log_attack(log_msg)
+		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	return FALSE
 
@@ -65,7 +65,7 @@
 		var/mob/living/carbon/human/humantarget = target
 		if (!humantarget.can_inject(user, 1))
 			return
-	add_logs(user, target, "attempted to inject", src)
+	log_combat(user, target, "attempted to inject", src)
 
 	if(target != user)
 		target.visible_message("<span class='danger'>[user] is trying to inject [target] with [src]!</span>", "<span class='userdanger'>[user] is trying to inject [target] with [src]!</span>")
@@ -77,7 +77,7 @@
 	else
 		to_chat(user, "<span class='notice'>You inject yourself with [src].</span>")
 
-	add_logs(user, target, "injected", src)
+	log_combat(user, target, "injected", src)
 
 	if(!inject(target, user))	//Now we actually do the heavy lifting.
 		to_chat(user, "<span class='notice'>It appears that [target] does not have compatible DNA.</span>")
@@ -353,7 +353,7 @@
 				M.dna.uni_identity = merge_text(M.dna.uni_identity, fields["UI"])
 				M.updateappearance(mutations_overlay_update=1)
 				M.dna.temporary_mutations[UI_CHANGED] = endtime
-		log_attack(log_msg)
+		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
 	else
 		return FALSE

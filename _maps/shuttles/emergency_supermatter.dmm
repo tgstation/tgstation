@@ -68,10 +68,6 @@
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
-"aq" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "ar" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -101,9 +97,6 @@
 /area/shuttle/escape)
 "aw" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"ax" = (
-/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/titanium{
@@ -313,6 +306,36 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"hD" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/shuttle/escape)
+"pb" = (
+/obj/structure/closet/radiation{
+	anchored = 1
+	},
+/obj/item/clothing/glasses/meson/engine,
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Bi" = (
+/obj/structure/closet/radiation{
+	anchored = 1
+	},
+/obj/item/clothing/glasses/meson/engine,
+/obj/machinery/status_display/evac{
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"UA" = (
+/obj/machinery/status_display/evac{
+	pixel_y = -32
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -339,17 +362,17 @@ aa
 aa
 "}
 (2,1,1) = {"
-ae
+aw
 ae
 ad
 ac
-aq
+ae
 ad
-ax
+aw
 ai
 aD
-ai
-aq
+UA
+ae
 aa
 aa
 aN
@@ -357,7 +380,7 @@ aM
 aR
 aU
 aX
-at
+aM
 ba
 bc
 be
@@ -367,7 +390,7 @@ ac
 ag
 ag
 bi
-ag
+Bi
 ag
 ag
 ai
@@ -376,12 +399,12 @@ ai
 ad
 aa
 aa
-at
+aM
 aa
 aS
 aV
 aY
-at
+aM
 ba
 bc
 be
@@ -400,13 +423,13 @@ ar
 aI
 aw
 aa
-at
+aM
 aa
 aT
 aW
 aZ
 aa
-aM
+hD
 aa
 aa
 "}
@@ -423,11 +446,11 @@ as
 as
 bk
 ad
-at
+aM
 aO
 aa
 aa
-aM
+hD
 aa
 aa
 aR
@@ -449,11 +472,11 @@ at
 aL
 aM
 aM
-aM
-aM
-aM
-aM
-aM
+hD
+hD
+hD
+hD
+hD
 bb
 bd
 aY
@@ -471,11 +494,11 @@ au
 au
 bl
 ad
-at
+aM
 aP
 aa
 aa
-aM
+hD
 aa
 aa
 aT
@@ -496,13 +519,13 @@ av
 aI
 aw
 aa
-at
+aM
 aa
 aR
 aU
 aX
 aa
-aM
+hD
 aa
 aa
 "}
@@ -511,7 +534,7 @@ ac
 ag
 ag
 bj
-ag
+pb
 ag
 ag
 ai
@@ -520,28 +543,28 @@ ai
 ad
 aa
 aa
-at
+aM
 aa
 aS
 aV
 aY
-at
+aM
 ba
 bc
 be
 "}
 (10,1,1) = {"
-ae
+aw
 ae
 ad
 ac
-aq
+ae
 ad
-ax
+aw
 ai
 aE
-ai
-aq
+UA
+ae
 aa
 aa
 aQ
@@ -549,7 +572,7 @@ aM
 aT
 aW
 aZ
-at
+aM
 ba
 bc
 be

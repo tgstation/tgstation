@@ -357,6 +357,7 @@
 /obj/item/integrated_circuit/converter/abs_to_rel_coords
 	name = "abs to rel coordinate converter"
 	desc = "Easily convert absolute coordinates to relative coordinates with this."
+	extended_desc = "Keep in mind that both sets of input coordinates should be absolute."
 	complexity = 1
 	inputs = list(
 		"X1" = IC_PINTYPE_NUMBER,
@@ -381,6 +382,71 @@
 	if(!isnull(x1) && !isnull(y1) && !isnull(x2) && !isnull(y2))
 		set_pin_data(IC_OUTPUT, 1, x1 - x2)
 		set_pin_data(IC_OUTPUT, 2, y1 - y2)
+
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/rel_to_abs_coords
+	name = "rel to abs coordinate converter"
+	desc = "Convert relative coordinates to absolute coordinates with this."
+	extended_desc = "Keep in mind that only one set of input coordinates should be absolute, and the other relative. \
+	The output coordinates will be the absolute form of the input relative coordinates."
+	complexity = 1
+	inputs = list(
+		"X1" = IC_PINTYPE_NUMBER,
+		"Y1" = IC_PINTYPE_NUMBER,
+		"X2" = IC_PINTYPE_NUMBER,
+		"Y2" = IC_PINTYPE_NUMBER
+		)
+	outputs = list(
+		"X" = IC_PINTYPE_NUMBER,
+		"Y" = IC_PINTYPE_NUMBER
+		)
+	activators = list("compute abs coordinates" = IC_PINTYPE_PULSE_IN, "on convert" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/abs_to_rel_coords/do_work()
+	var/x1 = get_pin_data(IC_INPUT, 1)
+	var/y1 = get_pin_data(IC_INPUT, 2)
+
+	var/x2 = get_pin_data(IC_INPUT, 3)
+	var/y2 = get_pin_data(IC_INPUT, 4)
+
+	if(!isnull(x1) && !isnull(y1) && !isnull(x2) && !isnull(y2))
+		set_pin_data(IC_OUTPUT, 1, x1 + x2)
+		set_pin_data(IC_OUTPUT, 2, y1 + y2)
+
+	push_data()
+	activate_pin(2)
+
+/obj/item/integrated_circuit/converter/adv_rel_to_abs_coords
+	name = "advanced rel to abs coordinate converter"
+	desc = "Easily convert relative coordinates to absolute coordinates with this."
+	extended_desc = "This circuit only requires a single set of relative inputs to output absolute coordinates."
+	complexity = 2
+	inputs = list(
+		"X" = IC_PINTYPE_NUMBER,
+		"Y" = IC_PINTYPE_NUMBER,
+		)
+	outputs = list(
+		"X" = IC_PINTYPE_NUMBER,
+		"Y" = IC_PINTYPE_NUMBER
+		)
+	activators = list("compute abs coordinates" = IC_PINTYPE_PULSE_IN, "on convert" = IC_PINTYPE_PULSE_OUT)
+	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/converter/abs_to_rel_coords/do_work()
+	var/turf/T = get_turf(src)
+
+	if(!T)
+		return
+
+	var/x1 = get_pin_data(IC_INPUT, 1)
+	var/y1 = get_pin_data(IC_INPUT, 2)
+
+	if(!isnull(x1) && !isnull(y1))
+		set_pin_data(IC_OUTPUT, 1, T.x + x1)
+		set_pin_data(IC_OUTPUT, 2, T.y + y1)
 
 	push_data()
 	activate_pin(2)

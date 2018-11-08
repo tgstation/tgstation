@@ -54,6 +54,7 @@ SUBSYSTEM_DEF(throwing)
 	var/dist_y
 	var/dx
 	var/dy
+	var/force = MOVE_FORCE_DEFAULT
 	var/pure_diagonal
 	var/diagonal_error
 	var/datum/callback/callback
@@ -116,7 +117,7 @@ SUBSYSTEM_DEF(throwing)
 			return
 
 		dist_travelled++
-		
+
 		if (dist_travelled > MAX_THROWING_DIST)
 			finalize()
 			return
@@ -126,6 +127,7 @@ SUBSYSTEM_DEF(throwing)
 	//done throwing, either because it hit something or it finished moving
 	if(!thrownthing)
 		return
+	thrownthing.throwing = null
 	if (!hit)
 		for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
 			var/atom/A = thing

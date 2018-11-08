@@ -12,6 +12,8 @@
 	var/credit_cost = INFINITY
 	var/can_be_bought = TRUE
 
+	var/port_x_offset
+	var/port_y_offset
 
 /datum/map_template/shuttle/proc/prerequisites_met()
 	return TRUE
@@ -21,7 +23,37 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
-/datum/map_template/shuttle/load(turf/T, centered)
+/datum/map_template/shuttle/preload_size(path, cache)
+	. = ..(path, TRUE) // Done this way because we still want to know if someone actualy wanted to cache the map
+	if(!cached_map)
+		return
+
+	discover_port_offset()
+
+	if(!cache)
+		cached_map = null
+
+/datum/map_template/shuttle/proc/discover_port_offset()
+	var/key
+	var/list/models = cached_map.grid_models
+	for(key in models)
+		if(findtext(models[key], "[/obj/docking_port/mobile]")) // Yay compile time checks
+			break // This works by assuming there will ever only be one mobile dock in a template at most
+
+	for(var/i in cached_map.gridSets)
+		var/datum/grid_set/gset = i
+		var/ycrd = gset.ycrd
+		for(var/line in gset.gridLines)
+			var/xcrd = gset.xcrd
+			for(var/j in 1 to length(line) step cached_map.key_len)
+				if(key == copytext(line, j, j + cached_map.key_len))
+					port_x_offset = xcrd
+					port_y_offset = ycrd
+					return
+				++xcrd
+			--ycrd
+
+/datum/map_template/shuttle/load(turf/T, centered, register=TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -34,6 +66,33 @@
 		if(length(place.baseturfs) < 2) // Some snowflake shuttle shit
 			continue
 		place.baseturfs.Insert(3, /turf/baseturf_skipover/shuttle)
+
+		for(var/obj/docking_port/mobile/port in place)
+			if(register)
+				port.register()
+			if(isnull(port_x_offset))
+				continue
+			switch(port.dir) // Yeah this looks a little ugly but mappers had to do this in their head before
+				if(NORTH)
+					port.width = width
+					port.height = height
+					port.dwidth = port_x_offset - 1
+					port.dheight = port_y_offset - 1
+				if(EAST)
+					port.width = height
+					port.height = width
+					port.dwidth = height - port_y_offset
+					port.dheight = port_x_offset - 1
+				if(SOUTH)
+					port.width = width
+					port.height = height
+					port.dwidth = width - port_x_offset
+					port.dheight = height - port_y_offset
+				if(WEST)
+					port.width = height
+					port.height = width
+					port.dwidth = port_y_offset - 1
+					port.dheight = width - port_x_offset
 
 		for(var/obj/structure/closet/closet in place)
 			if(closet.anchorable)
@@ -109,6 +168,11 @@
 	can_be_bought = FALSE
 
 // Shuttles start here:
+
+/datum/map_template/shuttle/emergency/backup
+	suffix = "backup"
+	name = "Backup Shuttle"
+	can_be_bought = FALSE
 
 /datum/map_template/shuttle/emergency/airless
 	suffix = "airless"
@@ -341,7 +405,7 @@
 
 /datum/map_template/shuttle/whiteship/delta
 	suffix = "delta"
-	name = "NT Luxury Frigate"
+	name = "NT Frigate"
 
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"

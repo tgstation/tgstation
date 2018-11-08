@@ -134,6 +134,9 @@ LOG_MANIFEST
 ## Enable logging pictures
 # LOG_PICTURES
 
+## log mecha actions
+# LOG_MECHA
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 
@@ -148,6 +151,9 @@ PICTURE_LOGGING_CAMERA
 
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
+
+## Comment this out to stop admins being able to choose their personal asay color
+ALLOW_ADMIN_ASAYCOLOR
 
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
@@ -372,10 +378,6 @@ AUTOADMIN_RANK Game Master
 
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
-
-## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
-#GENERATE_MINIMAPS
 
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.

@@ -20,6 +20,7 @@
 	return QDEL_HINT_HARDDEL
 
 /mob/Initialize()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
 	GLOB.mob_list += src
 	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
@@ -35,6 +36,8 @@
 		AA.onNewMob(src)
 	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
 	. = ..()
+	update_config_movespeed()
+	update_movespeed(TRUE)
 
 /mob/GenerateTag()
 	tag = "mob_[next_mob_id++]"
@@ -173,9 +176,6 @@
 	for(var/mob/M in get_hearers_in_view(range, src))
 		M.show_message( message, 2, deaf_message, 1)
 
-/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
-	return 0
-
 /mob/proc/Life()
 	set waitfor = FALSE
 
@@ -185,7 +185,7 @@
 /mob/proc/restrained(ignore_grab)
 	return
 
-/mob/proc/incapacitated(ignore_restraints, ignore_grab)
+/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
 	return
 
 //This proc is called whenever someone clicks an inventory ui slot.
@@ -317,17 +317,17 @@
 	set category = "Object"
 
 	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
-		return 0
+		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
-		return 0
+		return FALSE
 
 	var/tile = get_turf(A)
 	if (!tile)
-		return 0
+		return FALSE
 
 	new /obj/effect/temp_visual/point(A,invisibility)
 
-	return 1
+	return TRUE
 
 /mob/proc/can_resist()
 	return FALSE		//overridden in living.dm
@@ -515,7 +515,7 @@
 	if(statpanel("Status"))
 		if (client)
 			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config.map_name]")
+		stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
 		var/datum/map_config/cached = SSmapping.next_map_config
 		if(cached)
 			stat(null, "Next Map: [cached.map_name]")
@@ -599,59 +599,61 @@
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))
 			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
+#define MOB_FACE_DIRECTION_DELAY 1
+
 // facing verbs
 /mob/proc/canface()
-	if(!canmove)
-		return 0
-	if(world.time < client.move_delay)
-		return 0
-	if(stat==2)
-		return 0
+	if(world.time < client.last_turn)
+		return FALSE
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return FALSE
 	if(anchored)
-		return 0
+		return FALSE
 	if(notransform)
-		return 0
+		return FALSE
 	if(restrained())
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
-/mob/proc/fall(forced)
-	drop_all_held_items()
+/mob/living/canface()
+	if(!(mobility_flags & MOBILITY_MOVE))
+		return FALSE
+	return ..()
 
 /mob/verb/eastface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(EAST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/westface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(WEST)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/northface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(NORTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/verb/southface()
-	set hidden = 1
+	set hidden = TRUE
 	if(!canface())
-		return 0
+		return FALSE
 	setDir(SOUTH)
-	client.move_delay += movement_delay()
-	return 1
+	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
+	return TRUE
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
-	return 0
+	return FALSE
 
 /mob/proc/swap_hand()
 	return
@@ -662,9 +664,9 @@
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
 	return 0
 
-/mob/proc/get_ghost(even_if_they_cant_reenter = 0)
+/mob/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	if(mind)
-		return mind.get_ghost(even_if_they_cant_reenter)
+		return mind.get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 
 /mob/proc/grab_ghost(force)
 	if(mind)
@@ -765,8 +767,11 @@
 	return 0
 
 //Can the mob use Topic to interact with machines
-/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/proc/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	return
+
+/mob/proc/canUseStorage()
+	return FALSE
 
 /mob/proc/faction_check_mob(mob/target, exact_match)
 	if(exact_match) //if we need an exact match, we need to do some bullfuckery.
@@ -795,7 +800,7 @@
 //This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
-	log_message("[src] name changed from [oldname] to [newname]", INDIVIDUAL_OWNERSHIP_LOG)
+	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 	if(!newname)
 		return 0
 	real_name = newname
@@ -811,7 +816,7 @@
 		replace_identification_name(oldname,newname)
 
 		for(var/datum/mind/T in SSticker.minds)
-			for(var/datum/objective/obj in T.objectives)
+			for(var/datum/objective/obj in T.get_all_objectives())
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
@@ -832,6 +837,8 @@
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
+				if(ID.registered_account?.account_holder == oldname)
+					ID.registered_account.account_holder = newname
 				if(!search_pda)
 					break
 				search_id = 0
@@ -852,14 +859,7 @@
 	return
 
 /mob/proc/update_sight()
-	for(var/O in orbiters)
-		var/datum/orbit/orbit = O
-		var/obj/effect/wisp/wisp = orbit.orbiter
-		if (istype(wisp))
-			sight |= wisp.sight_flags
-			if(!isnull(wisp.lighting_alpha))
-				lighting_alpha = min(lighting_alpha, wisp.lighting_alpha)
-
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_SIGHT)
 	sync_lighting_plane_alpha()
 
 /mob/proc/sync_lighting_plane_alpha()
@@ -876,6 +876,12 @@
 		var/obj/mecha/M = loc
 		if(M.mouse_pointer)
 			client.mouse_pointer_icon = M.mouse_pointer
+	else if (istype(loc, /obj/vehicle/sealed))
+		var/obj/vehicle/sealed/E = loc
+		if(E.mouse_pointer)
+			client.mouse_pointer_icon = E.mouse_pointer
+
+
 
 /mob/proc/is_literate()
 	return 0
@@ -883,9 +889,8 @@
 /mob/proc/can_hold_items()
 	return FALSE
 
-/mob/proc/get_idcard()
+/mob/proc/get_idcard(hand_first)
 	return
-
 
 /mob/vv_get_dropdown()
 	. = ..()
@@ -914,3 +919,7 @@
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+/mob/setMovetype(newval)
+	. = ..()
+	update_movespeed(FALSE)

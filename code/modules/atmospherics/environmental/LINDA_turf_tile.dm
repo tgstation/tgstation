@@ -113,17 +113,18 @@
 
 /turf/open/proc/tile_graphic()
 	var/static/list/nonoverlaying_gases = typecache_of_gases_with_no_overlays()
-	if(air)
-		. = new /list
-		var/list/gases = air.gases
-		for(var/id in gases)
-			if (nonoverlaying_gases[id])
-				continue
-			var/gas = gases[id]
-			var/gas_meta = gas[GAS_META]
-			var/gas_overlay = gas_meta[META_GAS_OVERLAY]
-			if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
-				. += gas_overlay
+	if(!air)
+		return
+	. = new /list
+	var/list/gases = air.gases
+	for(var/id in gases)
+		if (nonoverlaying_gases[id])
+			continue
+		var/gas = gases[id]
+		var/gas_meta = gas[GAS_META]
+		var/gas_overlay = gas_meta[META_GAS_OVERLAY]
+		if(gas_overlay && gas[MOLES] > gas_meta[META_GAS_MOLES_VISIBLE])
+			. += gas_overlay[min(FACTOR_GAS_VISIBLE_MAX, CEILING(gas[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))]
 
 /proc/typecache_of_gases_with_no_overlays()
 	. = list()
@@ -228,7 +229,7 @@
 	update_visuals()
 
 	if((!our_excited_group && !(our_air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION && consider_superconductivity(starting = TRUE))) \
-	  || (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
+	|| (cached_atmos_cooldown > (EXCITED_GROUP_DISMANTLE_CYCLES * 2)))
 		SSair.remove_from_active(src)
 
 	atmos_cooldown = cached_atmos_cooldown
@@ -254,12 +255,13 @@
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
+	var/max_force = sqrt(pressure_difference)*(MOVE_FORCE_DEFAULT / 5)
 	set waitfor = 0
 	var/move_prob = 100
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
 	move_prob += pressure_resistance_prob_delta
-	if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+	if (move_prob > PROBABILITY_OFFSET && prob(move_prob) && (move_resist != INFINITY) && (!anchored && (max_force >= (move_resist * MOVE_FORCE_PUSH_RATIO))) || (anchored && (max_force >= (move_resist * MOVE_FORCE_FORCEPUSH_RATIO))))
 		step(src, direction)
 		last_high_pressure_movement_air_cycle = SSair.times_fired
 

@@ -9,7 +9,7 @@
 	// A list will be created in initialization that figures out the baseturf's baseturf etc.
 	// In the case of a list it is sorted from bottom layer to top.
 	// This shouldn't be modified directly, use the helper procs.
-	var/list/baseturfs = /turf/open/space
+	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -30,6 +30,8 @@
 	var/bullet_bounce_sound = 'sound/weapons/bulletremove.ogg' //sound played when a shell casing is ejected ontop of the turf.
 	var/bullet_sizzle = FALSE //used by ammo_casing/bounce_away() to determine if the shell casing should make a sizzle sound when it's ejected over the turf
 							//IE if the turf is supposed to be water, set TRUE.
+
+	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -424,7 +426,9 @@
 	return
 
 /turf/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
+	if(isliving(faller))
+		var/mob/living/L = faller
+		L.lying = pick(90, 270)
 	if(!forced)
 		return
 	if(has_gravity(src))

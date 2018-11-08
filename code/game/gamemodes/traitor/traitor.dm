@@ -8,6 +8,7 @@
 /datum/game_mode/traitor
 	name = "traitor"
 	config_tag = "traitor"
+	report_type = "traitor"
 	antag_flag = ROLE_TRAITOR
 	false_report_weight = 20 //Reports of traitors are pretty common.
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
@@ -84,7 +85,7 @@
 	if((SSticker.mode.traitors.len + pre_traitors.len) >= traitorcap) //Upper cap for number of latejoin antagonists
 		return
 	if((SSticker.mode.traitors.len + pre_traitors.len) <= (traitorcap - 2) || prob(100 / (tsc * 2)))
-		if(ROLE_TRAITOR in character.client.prefs.be_special)
+		if(antag_flag in character.client.prefs.be_special)
 			if(!jobban_isbanned(character, ROLE_TRAITOR) && !QDELETED(character) && !jobban_isbanned(character, ROLE_SYNDICATE) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))

@@ -85,7 +85,7 @@
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		if(units)
 			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
-			add_logs(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
+			log_combat(usr, src, "has added [english_list(RC.reagents.reagent_list)] to [src]")
 			return
 	if(default_unfasten_wrench(user, I, 40))
 		on = FALSE
@@ -144,7 +144,7 @@
 			if(on)
 				message_admins("[ADMIN_LOOKUPFLW(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [ADMIN_VERBOSEJMP(src)].")
 				log_game("[key_name(usr)] activated a smoke machine that contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
-				add_logs(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
+				log_combat(usr, src, "has activated [src] which contains [english_list(reagents.reagent_list)] at [AREACOORD(src)].")
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE

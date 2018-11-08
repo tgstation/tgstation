@@ -499,18 +499,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "Theatre"
 
 /area/library
- 	name = "Library"
- 	icon_state = "library"
- 	flags_1 = NONE
+	name = "Library"
+	icon_state = "library"
+	flags_1 = NONE
 
 /area/library/lounge
- 	name = "Library Lounge"
- 	icon_state = "library"
+	name = "Library Lounge"
+	icon_state = "library"
 
 /area/library/abandoned
- 	name = "Abandoned Library"
- 	icon_state = "library"
- 	flags_1 = NONE
+	name = "Abandoned Library"
+	icon_state = "library"
+	flags_1 = NONE
 
 /area/chapel
 	icon_state = "chapel"
@@ -559,9 +559,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine"
 
 /area/engine/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
- 	flags_1 = NONE
+	name = "Atmospherics"
+	icon_state = "atmos"
+	flags_1 = NONE
 
 /area/engine/atmospherics_engine
 	name = "Atmospherics Engine"
@@ -926,18 +926,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/checkpoint/customs/auxiliary
 	icon_state = "customs_point_aux"
 
-/area/security/vacantoffice
-	name = "Vacant Office"
-	icon_state = "security"
-
-/area/security/vacantoffice/a
-	name = "Vacant Office A"
-	icon_state = "security"
-
-/area/security/vacantoffice/b
-	name = "Vacant Office B"
-	icon_state = "security"
-
 /area/quartermaster
 	name = "Quartermasters"
 	icon_state = "quart"
@@ -1039,6 +1027,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Toxins Mixing Lab"
 	icon_state = "toxmix"
 
+/area/science/mixing/chamber
+	name = "Toxins Mixing Chamber"
+	icon_state = "toxmix"
+	valid_territory = FALSE
+
 /area/science/misc_lab
 	name = "Testing Lab"
 	icon_state = "toxmisc"
@@ -1090,6 +1083,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/research/abandoned
 	name = "Abandoned Research Lab"
 	icon_state = "medresearch"
+
+/area/science/nanite
+	name = "Nanite Lab"
+	icon_state = "toxmisc"
 
 //Storage
 
@@ -1202,6 +1199,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Storage Wing"
 	icon_state = "storage_wing"
 
+// Vacant Rooms
+/area/vacant_room
+	name = "Vacant Room"
+	icon_state = "yellow"
+	ambientsounds = MAINTENANCE
+
+/area/vacant_room/office
+	name = "Vacant Office"
+
+/area/vacant_room/office/office_a
+	name = "Vacant Office - A"
+
+/area/vacant_room/office/office_b
+	name = "Vacant Office - B"
+
+/area/vacant_room/commissary
+	name = "Vacant Commissary"
+
 
 //AI
 
@@ -1288,7 +1303,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	clockwork_warp_allowed = FALSE
 	clockwork_warp_fail = "For safety reasons, warping here is disallowed; the radio and bluespace noise could cause catastrophic results."
 	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg',\
-	 										'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
+											'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/tcommsat/entrance
 	name = "Telecomms Teleporter"

@@ -35,7 +35,6 @@
 /area/shuttle/abandoned)
 "ae" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 2
 	},
 /obj/effect/decal/cleanable/dirt{
@@ -120,11 +119,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "an" = (
-/obj/effect/spawner/lootdrop{
-	loot = list(/obj/mecha/working/ripley/mining = 1, /obj/structure/mecha_wreckage/ripley = 5);
-	lootdoubles = 0;
-	name = "25% mech 75% wreckage ripley spawner"
-	},
+/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/shuttle/abandoned)
 "ao" = (

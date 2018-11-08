@@ -6,20 +6,17 @@
 
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	..()
-	new /obj/item/reagent_containers/glass/beaker(src)
-	new /obj/item/reagent_containers/glass/beaker(src)
-	new /obj/item/reagent_containers/dropper(src)
-	new /obj/item/reagent_containers/dropper(src)
-	new /obj/item/storage/belt/medical(src)
-	new /obj/item/storage/box/syringes(src)
-	new /obj/item/reagent_containers/glass/bottle/toxin(src)
-	new /obj/item/reagent_containers/glass/bottle/morphine(src)
-	new /obj/item/reagent_containers/glass/bottle/morphine(src)
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/glass/bottle/charcoal(src)
-	new /obj/item/storage/box/rxglasses(src)
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/reagent_containers/dropper = 2,
+		/obj/item/storage/belt/medical = 1,
+		/obj/item/storage/box/syringes = 1,
+		/obj/item/reagent_containers/glass/bottle/toxin = 1,
+		/obj/item/reagent_containers/glass/bottle/morphine = 2,
+		/obj/item/reagent_containers/glass/bottle/epinephrine= 3,
+		/obj/item/reagent_containers/glass/bottle/charcoal = 3,
+		/obj/item/storage/box/rxglasses = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/structure/closet/secure_closet/medical2
 	name = "anesthetic closet"

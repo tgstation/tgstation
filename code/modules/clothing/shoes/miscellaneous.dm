@@ -56,6 +56,8 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
+	can_be_bloody = FALSE
+	custom_price = 100
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -142,8 +144,8 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/cult
-	name = "nar-sian invoker boots"
-	desc = "A pair of boots worn by the followers of Nar-Sie."
+	name = "\improper Nar'Sien invoker boots"
+	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
 	item_state = "cult"
 	item_color = "cult"

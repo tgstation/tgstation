@@ -119,7 +119,7 @@
 	if (mobhook && mobhook.parent != user)
 		QDEL_NULL(mobhook)
 	if (!mobhook)
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/Pickup_ores, user)))
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/Pickup_ores)))
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
@@ -204,7 +204,7 @@
 	set name = "Activate Seed Extraction"
 	set category = "Object"
 	set desc = "Activate to convert your plants into plantable seeds."
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.incapacitated())
 		return
 	for(var/obj/item/O in contents)
 		seedify(O, 1)
@@ -310,7 +310,7 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Knockdown(40)
+			M.Paralyze(40)
 	update_icon()
 
 /obj/item/storage/bag/tray/update_icon()

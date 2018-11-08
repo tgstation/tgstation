@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			message = L.treat_message(message)
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
-		log_talk(usr,"[key_name(usr)] has made a station announcement from [src] at [AREACOORD(usr)]: [message]",LOGSAY)
+		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		announceAuth = FALSE
 		message = ""
@@ -486,7 +486,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			messages += "<b>From:</b> [linkedsender]<BR>[message]"
 
 /obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/crowbar))
+	if(O.tool_behaviour == TOOL_CROWBAR)
 		if(open)
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			open = FALSE
@@ -495,7 +495,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			open = TRUE
 		update_icon()
 		return
-	if(istype(O, /obj/item/screwdriver))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER)
 		if(open)
 			hackState = !hackState
 			if(hackState)

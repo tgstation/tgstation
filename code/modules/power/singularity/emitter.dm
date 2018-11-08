@@ -19,6 +19,7 @@
 	active_power_usage = 300
 
 	var/icon_state_on = "emitter_+a"
+	var/icon_state_underpowered = "emitter_+u"
 	var/active = FALSE
 	var/powered = FALSE
 	var/fire_delay = 100
@@ -108,11 +109,14 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
-		icon_state = icon_state_on
+	if(active && powernet)
+		icon_state = avail(active_power_usage) ? icon_state_on : icon_state_underpowered
 	else
 		icon_state = initial(icon_state)
 
+/obj/machinery/power/emitter/power_change()
+	. = ..()
+	update_icon()
 
 /obj/machinery/power/emitter/interact(mob/user)
 	add_fingerprint(user)
@@ -160,7 +164,7 @@
 		update_icon()
 		return
 	if(active == TRUE)
-		if(!active_power_usage || avail(active_power_usage))
+		if(!active_power_usage || surplus() >= active_power_usage)
 			add_load(active_power_usage)
 			if(!powered)
 				powered = TRUE
@@ -189,7 +193,7 @@
 		return FALSE
 	if(state != EMITTER_WELDED)
 		return FALSE
-	if(avail(active_power_usage))
+	if(surplus() >= active_power_usage)
 		add_load(active_power_usage)
 		fire_beam()
 
@@ -278,6 +282,8 @@
 	return TRUE
 
 /obj/machinery/power/emitter/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	default_deconstruction_screwdriver(user, "emitter_open", "emitter", I)
 	return TRUE
 
@@ -350,6 +356,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "protoemitter"
 	icon_state_on = "protoemitter_+a"
+	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/view_range = 12

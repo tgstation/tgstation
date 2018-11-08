@@ -79,7 +79,7 @@
 			updateTank(W, 0, user)
 	else if(W.type == type)
 		to_chat(user, "<span class='warning'>You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption.</span>")
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		switch(pressureSetting)
 			if(1)
 				pressureSetting = 2
@@ -88,7 +88,7 @@
 			if(3)
 				pressureSetting = 1
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s pressure output to [pressureSetting].</span>")
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(tank)
 			updateTank(tank, 1, user)
 	else if(loadedWeightClass >= maxWeightClass)
@@ -98,6 +98,8 @@
 		load_item(IW, user)
 
 /obj/item/pneumatic_cannon/proc/can_load_item(obj/item/I, mob/user)
+	if(!istype(I))			//Players can't load non items, this allows for admin varedit inserts.
+		return TRUE
 	if(allowed_typecache && !is_type_in_typecache(I, allowed_typecache))
 		if(user)
 			to_chat(user, "<span class='warning'>[I] won't fit into [src]!</span>")
@@ -161,14 +163,14 @@
 	if(!discharge)
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 				    		 "<span class='danger'>You fire \the [src]!</span>")
-	add_logs(user, target, "fired at", src)
+	log_combat(user, target, "fired at", src)
 	var/turf/T = get_target(target, get_turf(src))
-	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
+	playsound(src, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	fire_items(T, user)
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
-		C.Knockdown(60)
+		C.Paralyze(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
 	if(fire_mode == PCANNON_FIREALL)
@@ -225,31 +227,31 @@
 
 /obj/item/pneumatic_cannon/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
-		if(!src.tank)
+		if(!tank)
 			return
 		to_chat(user, "<span class='notice'>You detach \the [thetank] from \the [src].</span>")
-		src.tank.forceMove(user.drop_location())
+		tank.forceMove(user.drop_location())
 		user.put_in_hands(tank)
-		src.tank = null
+		tank = null
 	if(!removing)
-		if(src.tank)
+		if(tank)
 			to_chat(user, "<span class='warning'>\The [src] already has a tank.</span>")
 			return
 		if(!user.transferItemToLoc(thetank, src))
 			return
 		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
-		src.tank = thetank
-	src.update_icons()
+		tank = thetank
+	update_icons()
 
 /obj/item/pneumatic_cannon/proc/update_icons()
-	src.cut_overlays()
+	cut_overlays()
 	if(!tank)
 		return
 	add_overlay(tank.icon_state)
-	src.update_icon()
+	update_icon()
 
 /obj/item/pneumatic_cannon/proc/fill_with_type(type, amount)
-	if(!ispath(type, /obj/item))
+	if(!ispath(type, /obj) && !ispath(type, /mob))
 		return FALSE
 	var/loaded = 0
 	for(var/i in 1 to amount)

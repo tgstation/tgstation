@@ -7,8 +7,8 @@
 
 /datum/action/innate/cult/blood_magic/Grant()
 	..()
-	button.screen_loc = "6:-29,4:-2"
-	button.moved = "6:-29,4:-2"
+	button.screen_loc = DEFAULT_BLOODSPELLS
+	button.moved = DEFAULT_BLOODSPELLS
 	button.ordered = FALSE
 
 /datum/action/innate/cult/blood_magic/Remove()
@@ -84,7 +84,7 @@
 		to_chat(owner, "<span class='warning'>Your wounds glows with power, you have prepared a [new_spell.name] invocation!</span>")
 	channeling = FALSE
 
-/datum/action/innate/cult/blood_spell //The next generation of talismans
+/datum/action/innate/cult/blood_spell //The next generation of talismans, handles storage/creation of blood magic
 	name = "Blood Magic"
 	button_icon_state = "telerune"
 	desc = "Fear the Old Blood."
@@ -161,7 +161,7 @@
 /datum/action/innate/cult/blood_spell/emp/Activate()
 	owner.visible_message("<span class='warning'>[owner]'s hand flashes a bright blue!</span>", \
 						 "<span class='cultitalic'>You speak the cursed words, emitting an EMP blast from your hand.</span>")
-	empulse(owner, 3, 6)
+	empulse(owner, 2, 5)
 	owner.whisper(invocation, language = /datum/language/common)
 	charges--
 	if(charges<=0)
@@ -179,11 +179,11 @@
 	desc = "<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>25 metal into a construct shell<br>Cyborgs directly into constructs<br>Cyborg shells into construct shells<br>Airlocks into runed airlocks (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
-	health_cost = 10
+	health_cost = 12
 
 /datum/action/innate/cult/blood_spell/equipment
 	name = "Summon Equipment"
-	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the nar'sien bola, and an eldritch longsword."
+	desc = "A crucial spell that enables you to summon either a ritual dagger or combat gear including armored robes, the Nar'Sien bola, and an eldritch longsword."
 	button_icon_state = "equip"
 	magic_path = "/obj/item/melee/blood_magic/armor"
 
@@ -378,7 +378,7 @@
 		uses = 0
 		qdel(src)
 		return
-	add_logs(user, M, "used a cult spell on", source.name, "")
+	log_combat(user, M, "used a cult spell on", source.name, "")
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 
@@ -400,8 +400,8 @@
 
 //Stun
 /obj/item/melee/blood_magic/stun
-	name = "Stunning Aura "
-	color = "#ff0000" // red
+	name = "Stunning Aura"
+	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
 /obj/item/melee/blood_magic/stun/afterattack(atom/target, mob/living/carbon/user, proximity)
@@ -412,13 +412,28 @@
 		return
 	if(iscultist(user))
 		user.visible_message("<span class='warning'>[user] holds up [user.p_their()] hand, which explodes in a flash of red light!</span>", \
-							 "<span class='cultitalic'>You stun [L] with the spell!</span>")
-		var/obj/item/nullrod/N = locate() in L
-		if(N)
-			target.visible_message("<span class='warning'>[L]'s holy weapon absorbs the light!</span>", \
-								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
+							"<span class='cultitalic'>You attempt to stun [L] with the spell!</span>")
+
+		user.mob_light(_color = LIGHT_COLOR_BLOOD_MAGIC, _range = 3, _duration = 2)
+
+		var/anti_magic_source = L.anti_magic_check()
+		if(anti_magic_source)
+
+			L.mob_light(_color = LIGHT_COLOR_HOLY_MAGIC, _range = 2, _duration = 100)
+			var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+			L.add_overlay(forbearance)
+			addtimer(CALLBACK(L, /atom/proc/cut_overlay, forbearance), 100)
+
+			if(istype(anti_magic_source, /obj/item))
+				var/obj/item/ams_object = anti_magic_source
+				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
+									   "<span class='userdanger'>Your [ams_object.name] begins to glow, emitting a blanket of holy light which surrounds you and protects you from the flash of light!</span>")
+			else
+				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
+									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 		else
-			L.Knockdown(160)
+			to_chat(user, "<span class='cultitalic'>In an brilliant flash of red, [L] falls to the ground!</span>")
+			L.Paralyze(160)
 			L.flash_act(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L
@@ -507,7 +522,7 @@
 				C.update_handcuffed()
 				C.silent += 5
 				to_chat(user, "<span class='notice'>You shackle [C].</span>")
-				add_logs(user, C, "shackled")
+				log_combat(user, C, "shackled")
 				uses--
 			else
 				to_chat(user, "<span class='warning'>[C] is already bound.</span>")
@@ -586,10 +601,13 @@
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else if(istype(target,/obj/machinery/door/airlock))
-			target.narsie_act()
-			uses--
-			user.visible_message("<span class='warning'>Black ribbons suddenly eminate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
-			SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+			playsound(T, 'sound/machines/airlockforced.ogg', 50, 1)
+			do_sparks(5, TRUE, target)
+			if(do_after(user, 50, target = user))
+				target.narsie_act()
+				uses--
+				user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
+				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")
 			return

@@ -247,7 +247,7 @@
 		/obj/machinery/vending/wallmed = "NanoMed")
 
 /obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/position = vending_names_paths.Find(build_path)
 		position = (position == vending_names_paths.len) ? 1 : (position + 1)
 		var/typepath = vending_names_paths[position]
@@ -316,7 +316,7 @@
 			build_path = PATH_HEATER
 
 /obj/item/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/obj/item/circuitboard/new_type
 		var/new_setting
 		switch(build_path)
@@ -375,7 +375,7 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
@@ -410,7 +410,7 @@
 	return ..()
 
 /obj/item/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
 		position = (position == fridges_name_paths.len) ? 1 : (position + 1)
 		build_path = fridges_name_paths[position]
@@ -496,6 +496,12 @@
 		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/subspace/filter = 1)
 
+/obj/item/circuitboard/machine/scanner_gate
+	name = "Scanner Gate (Machine Board)"
+	build_path = /obj/machinery/scanner_gate
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 3)		
+		
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type Generator (Machine Board)"
 	build_path = /obj/machinery/power/port_gen/pacman
@@ -587,7 +593,7 @@
 		build_path = PATH_POWERCOIL
 
 /obj/item/circuitboard/machine/tesla_coil/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/obj/item/circuitboard/new_type
 		var/new_setting
 		switch(build_path)
@@ -684,7 +690,7 @@
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		var/new_name = "ChemMaster"
 		var/new_path = /obj/machinery/chem_master
 
@@ -740,6 +746,47 @@
 		/obj/item/stock_parts/scanning_module = 1,
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/micro_laser = 2)
+
+/obj/item/circuitboard/machine/nanite_chamber
+	name = "Nanite Chamber (Machine Board)"
+	build_path = /obj/machinery/nanite_chamber
+	req_components = list(
+		/obj/item/stock_parts/scanning_module = 2,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/manipulator = 1)
+
+/obj/item/circuitboard/machine/public_nanite_chamber
+	name = "Public Nanite Chamber (Machine Board)"
+	build_path = /obj/machinery/public_nanite_chamber
+	var/cloud_id = 1
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/manipulator = 1)
+
+/obj/item/circuitboard/machine/public_nanite_chamber/multitool_act(mob/living/user)
+	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
+	if(new_cloud == null)
+		return
+	cloud_id = CLAMP(round(new_cloud, 1), 1, 100)
+
+/obj/item/circuitboard/machine/public_nanite_chamber/examine(mob/user)
+	. = ..()
+	to_chat(user, "Cloud ID is currently set to [cloud_id].")
+
+/obj/item/circuitboard/machine/nanite_program_hub
+	name = "Nanite Program Hub (Machine Board)"
+	build_path = /obj/machinery/nanite_program_hub
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/manipulator = 1)
+
+/obj/item/circuitboard/machine/nanite_programmer
+	name = "Nanite Programmer (Machine Board)"
+	build_path = /obj/machinery/nanite_programmer
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 1)
 
 /obj/item/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
@@ -931,4 +978,9 @@
 /obj/item/circuitboard/machine/ore_silo
 	name = "Ore Silo (Machine Board)"
 	build_path = /obj/machinery/ore_silo
+	req_components = list()
+
+/obj/item/circuitboard/machine/paystand
+	name = "Pay Stand (Machine Board)"
+	build_path = /obj/machinery/paystand
 	req_components = list()

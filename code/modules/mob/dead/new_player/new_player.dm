@@ -10,9 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = FALSE
 
-	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/dead/new_player/Initialize()
@@ -53,7 +51,7 @@
 			var/isadmin = 0
 			if(src.client && src.client.holder)
 				isadmin = 1
-			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[ckey]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[ckey]\")")
+			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[sanitizeSQL(ckey)]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[sanitizeSQL(ckey)]\")")
 			var/rs = REF(src)
 			if(query_get_new_polls.Execute())
 				var/newpoll = 0
@@ -74,7 +72,7 @@
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
-	popup.open(0)
+	popup.open(FALSE)
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -469,7 +467,7 @@
 	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
-	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
+	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
 
 
 /mob/dead/new_player/proc/create_character(transfer_after)

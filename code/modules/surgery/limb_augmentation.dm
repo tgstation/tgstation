@@ -43,7 +43,7 @@
 /datum/surgery/augmentation
 	name = "augmentation"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/replace_limb)
-	species = list(/mob/living/carbon/human)
+	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
 
@@ -57,10 +57,9 @@
 			tool.cut_overlays()
 			tool = tool.contents[1]
 		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
-			L.drop_limb(TRUE) //The limb is augmented, not directly replaced, so keep the internal organs
-			tool.attach_limb(target)
+			tool.replace_limb(target, TRUE)
 		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
+		log_combat(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
 	return TRUE

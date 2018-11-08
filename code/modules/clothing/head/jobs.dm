@@ -12,10 +12,10 @@
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef.</span>")
-	user.say("Bork Bork Bork!")
+	user.say("Bork Bork Bork!", forced = "chef hat suicide")
 	sleep(20)
 	user.visible_message("<span class='suicide'>[user] climbs into an imaginary oven!</span>")
-	user.say("BOOORK!")
+	user.say("BOOORK!", forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, 1)
 	return(FIRELOSS)
 
@@ -59,6 +59,7 @@
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	icon_state = "detective"
 	var/candy_cooldown = 0
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective

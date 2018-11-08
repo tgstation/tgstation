@@ -10,6 +10,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
 	crit_fail = FALSE     //Is the flash burnt out?
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	var/times_used = 0 //Number of times it's been used.
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
@@ -87,13 +89,14 @@
 	if(isturf(target_loc) || (ismob(target_loc) && isturf(target_loc.loc)))
 		return viewers(range, get_turf(target_loc))
 	else
-		return typecache_filter_list(target_loc.GetAllContents(), typecacheof(list(/mob/living)))
+		return typecache_filter_list(target_loc.GetAllContents(), GLOB.typecache_living)
 
 /obj/item/assembly/flash/proc/try_use_flash(mob/user = null)
 	if(crit_fail || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
 	times_used++
 	flash_recharge()
 	update_icon(TRUE)
@@ -104,7 +107,10 @@
 /obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
-	add_logs(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	if(user)
+		log_combat(user, M, "[targeted? "flashed(targeted)" : "flashed(AOE)"]", src)
+	else //caused by emp/remote signal
+		M.log_message("was [targeted? "flashed(targeted)" : "flashed(AOE)"]",LOG_ATTACK)
 	if(generic_message && M != user)
 		to_chat(M, "<span class='disarm'>[src] emits a blinding light!</span>")
 	if(targeted)
@@ -119,7 +125,7 @@
 				to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
 			else
 				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
-			M.Knockdown(rand(80,120))
+			M.Paralyze(rand(80,120))
 		else if(user)
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
 			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
@@ -139,9 +145,9 @@
 		return TRUE
 	else if(issilicon(M))
 		var/mob/living/silicon/robot/R = M
-		add_logs(user, R, "flashed", src)
+		log_combat(user, R, "flashed", src)
 		update_icon(1)
-		R.Knockdown(rand(80,120))
+		R.Paralyze(rand(80,120))
 		var/diff = 5 * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 		R.confused += min(5, diff)
 		R.flash_act(affect_silicon = 1)
@@ -171,8 +177,8 @@
 		return
 	AOE_flash()
 
-/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/human/H, mob/user)
-	if(istype(H) && ishuman(user) && H.stat != DEAD)
+/obj/item/assembly/flash/proc/terrible_conversion_proc(mob/living/carbon/H, mob/user)
+	if(istype(H) && H.stat != DEAD)
 		if(user.mind)
 			var/datum/antagonist/rev/head/converter = user.mind.has_antag_datum(/datum/antagonist/rev/head)
 			if(!converter)

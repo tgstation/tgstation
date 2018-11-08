@@ -92,7 +92,7 @@
 	. = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		. += BP.stamina_dam
+		. += round(BP.stamina_dam * BP.stam_damage_coeff, DAMAGE_PRECISION)
 
 /mob/living/carbon/adjustStaminaLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
@@ -113,10 +113,12 @@
 ////////////////////////////////////////////
 
 //Returns a list of damaged bodyparts
-/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE)
+/mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE, status)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(status && BP.status != status)
+			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP
 	return parts
@@ -178,7 +180,7 @@
 		update_damage_overlays()
 
 // damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
 	if(status_flags & GODMODE)
 		return	//godmode
 
@@ -195,7 +197,7 @@
 		var/stamina_was = picked.stamina_dam
 
 
-		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE)
+		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, required_status)
 
 		brute	= round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn	= round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)

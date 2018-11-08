@@ -91,11 +91,12 @@
 	..()
 	if(holding)
 		to_chat(user, "<span class='notice'>\The [src] contains [holding]. Alt-click [src] to remove it.</span>")
+		to_chat(user, "<span class='notice'>Click [src] with another gas tank to hot swap [holding].</span>")
 
 /obj/machinery/portable_atmospherics/proc/replace_tank(mob/living/user, close_valve, obj/item/tank/new_tank)
 	if(holding)
 		holding.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
+		if(Adjacent(user) && !issiliconoradminghost(user))
 			user.put_in_hands(holding)
 	if(new_tank)
 		holding = new_tank
@@ -113,7 +114,7 @@
 			to_chat(user, "<span class='notice'>[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [T]" : "You insert [T] into [src]"].</span>")
 			replace_tank(user, FALSE, T)
 			update_icon()
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()

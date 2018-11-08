@@ -122,8 +122,8 @@
 	desc = "A massive, armored construct built to spearhead attacks and soak up enemy fire."
 	icon_state = "behemoth"
 	icon_living = "behemoth"
-	maxHealth = 200
-	health = 200
+	maxHealth = 150
+	health = 150
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
 	obj_damage = 90
@@ -148,7 +148,7 @@
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
-		var/reflectchance = 60 - round(P.damage/3)
+		var/reflectchance = 40 - round(P.damage/3)
 		if(prob(reflectchance))
 			apply_damage(P.damage * 0.5, P.damage_type)
 			visible_message("<span class='danger'>The [P.name] is reflected by [src]'s armored shell!</span>", \
@@ -228,7 +228,7 @@
 /mob/living/simple_animal/hostile/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
-	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar-Sie's armies."
+	desc = "A bulbous construct dedicated to building and maintaining the Cult of Nar'Sie's armies."
 	icon_state = "artificer"
 	icon_living = "artificer"
 	maxHealth = 50
@@ -312,7 +312,7 @@
 /mob/living/simple_animal/hostile/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"
-	desc = "A long, thin construct built to herald Nar-Sie's rise. It'll be all over soon."
+	desc = "A long, thin construct built to herald Nar'Sie's rise. It'll be all over soon."
 	icon_state = "chosen"
 	icon_living = "chosen"
 	maxHealth = 40
@@ -338,7 +338,7 @@
 			stored_pulling.forceMove(loc)
 		forceMove(AM)
 		if(stored_pulling)
-			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
+			start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
@@ -357,7 +357,7 @@
 		if(!LAZYLEN(parts))
 			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
 				return ..()
-			C.Knockdown(60)
+			C.Paralyze(60)
 			visible_message("<span class='danger'>[src] knocks [C] down!</span>")
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE

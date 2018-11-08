@@ -19,6 +19,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
+	var/asaycolor = null
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
 
@@ -71,6 +72,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs", "moth_wings" = "Plain")
 
 	var/list/custom_names = list()
+	var/preferred_ai_core_display = "Blue"
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
 		//Mob preview
@@ -125,7 +127,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	for(var/custom_name_id in GLOB.preferences_custom_names)
 		custom_names[custom_name_id] = get_default_name(custom_name_id)
-	
+
 	UI_style = GLOB.available_ui_styles[1]
 	if(istype(C))
 		if(!IsGuestKey(C.key))
@@ -216,9 +218,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					old_group = namedata["group"]
 					dat += "<br>"
 				dat += "<a href ='?_src_=prefs;preference=[custom_name_id];task=input'><b>[namedata["pref_name"]]:</b> [custom_names[custom_name_id]]</a> "
-			dat += "<br>"
-			dat += "<b>Custom job preferences:</b><BR>"
-			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Prefered security department:</b> [prefered_security_department]</a><BR></td>"
+			dat += "<br><br>"
+
+			dat += "<b>Custom Job Preferences:</b><BR>"
+			dat += "<a href='?_src_=prefs;preference=ai_core_icon;task=input'><b>Preferred AI Core Display:</b> [preferred_ai_core_display]</a><br>"
+			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Preferred Security Department:</b> [prefered_security_department]</a><BR></td>"
 
 			dat += "<td valign='center'>"
 
@@ -399,33 +403,33 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 					mutant_category = 0
 
+			if("tail_human" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Tail</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
+
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+
+			if("ears" in pref_species.default_features)
+				if(!mutant_category)
+					dat += APPEARANCE_CATEGORY_COLUMN
+
+				dat += "<h3>Ears</h3>"
+
+				dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
+
+				mutant_category++
+				if(mutant_category >= MAX_MUTANT_ROWS)
+					dat += "</td>"
+					mutant_category = 0
+
 			if(CONFIG_GET(flag/join_with_mutant_humans))
-
-				if("tail_human" in pref_species.default_features)
-					if(!mutant_category)
-						dat += APPEARANCE_CATEGORY_COLUMN
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
-
-					mutant_category++
-					if(mutant_category >= MAX_MUTANT_ROWS)
-						dat += "</td>"
-						mutant_category = 0
-
-				if("ears" in pref_species.default_features)
-					if(!mutant_category)
-						dat += APPEARANCE_CATEGORY_COLUMN
-
-					dat += "<h3>Ears</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
-
-					mutant_category++
-					if(mutant_category >= MAX_MUTANT_ROWS)
-						dat += "</td>"
-						mutant_category = 0
 
 				if("wings" in pref_species.default_features && GLOB.r_wings_list.len >1)
 					if(!mutant_category)
@@ -582,9 +586,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h2>Admin Settings</h2>"
 
 				dat += "<b>Adminhelp Sounds:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"Enabled":"Disabled"]</a><br>"
+				dat += "<b>Prayer Sounds:</b> <a href = '?_src_=prefs;preference=hear_prayers'>[(toggles & SOUND_PRAYERS)?"Enabled":"Disabled"]</a><br>"
 				dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"Enabled":"Disabled"]</a><br>"
 				dat += "<br>"
 				dat += "<b>Combo HUD Lighting:</b> <a href = '?_src_=prefs;preference=combohud_lighting'>[(toggles & COMBOHUD_LIGHTING)?"Full-bright":"No Change"]</a><br>"
+				dat += "<br>"
+				dat += "<b>Hide Dead Chat:</b> <a href = '?_src_=prefs;preference=toggle_dead_chat'>[(chat_toggles & CHAT_DEAD)?"Shown":"Hidden"]</a><br>"
+				dat += "<b>Hide Radio Messages:</b> <a href = '?_src_=prefs;preference=toggle_radio_chatter'>[(chat_toggles & CHAT_RADIO)?"Shown":"Hidden"]</a><br>"
+				dat += "<b>Hide Prayers:</b> <a href = '?_src_=prefs;preference=toggle_prayers'>[(chat_toggles & CHAT_PRAYER)?"Shown":"Hidden"]</a><br>"
+				if(CONFIG_GET(flag/allow_admin_asaycolor))
+					dat += "<br>"
+					dat += "<b>ASAY Color:</b> <span style='border: 1px solid #161616; background-color: [asaycolor ? asaycolor : "#FF4500"];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=asaycolor;task=input'>Change</a><br>"
 				dat += "</td>"
 			dat += "</tr></table>"
 
@@ -599,7 +611,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 770)
 	popup.set_content(dat.Join())
-	popup.open(0)
+	popup.open(FALSE)
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
@@ -729,7 +741,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Occupation Preferences</div>", width, height)
 	popup.set_window_options("can_close=0")
 	popup.set_content(HTML)
-	popup.open(0)
+	popup.open(FALSE)
 	return
 
 /datum/preferences/proc/SetJobPreferenceLevel(datum/job/job, level)
@@ -917,13 +929,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
 					<a href='?_src_=prefs;preference=trait;task=update;trait=[quirk_name]'>[has_quirk ? "Lose" : "Take"] ([quirk_cost] pts.)</a><br>"
-		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Traits</a></center>"
+		dat += "<br><center><a href='?_src_=prefs;preference=trait;task=reset'>Reset Quirks</a></center>"
 
 	user << browse(null, "window=preferences")
 	var/datum/browser/popup = new(user, "mob_occupation", "<div align='center'>Quirk Preferences</div>", 900, 600) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options("can_close=0")
 	popup.set_content(dat.Join())
-	popup.open(0)
+	popup.open(FALSE)
 	return
 
 /datum/preferences/proc/GetQuirkBalance()
@@ -937,20 +949,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
-		var/datum/DBQuery/query_get_jobban = SSdbcore.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
+		var/datum/DBQuery/query_get_jobban = SSdbcore.NewQuery("SELECT reason, bantime, duration, expiration_time, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey) FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
 		if(!query_get_jobban.warn_execute())
 			qdel(query_get_jobban)
 			return
 		if(query_get_jobban.NextRow())
 			var/reason = query_get_jobban.item[1]
 			var/bantime = query_get_jobban.item[2]
-			var/duration = query_get_jobban.item[3]
+			var/duration = text2num(query_get_jobban.item[3])
 			var/expiration_time = query_get_jobban.item[4]
-			var/a_ckey = query_get_jobban.item[5]
+			var/admin_key = query_get_jobban.item[5]
 			var/text
-			text = "<span class='redtext'>You, or another user of this computer, ([user.ckey]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [a_ckey] on [bantime]"
-			if(text2num(duration) > 0)
-				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
+			text = "<span class='redtext'>You, or another user of this computer, ([user.key]) is banned from playing [job]. The ban reason is:<br>[reason]<br>This ban was applied by [admin_key] on [bantime]"
+			if(duration > 0)
+				text += ". The ban is for [DisplayTimeText(duration MINUTES)] and expires on [expiration_time] (server time)"
 			text += ".</span>"
 			to_chat(user, text)
 		qdel(query_get_jobban)
@@ -991,6 +1003,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				var/quirk = href_list["trait"]
 				if(!SSquirks.quirks[quirk])
 					return
+				for(var/V in SSquirks.quirk_blacklist) //V is a list
+					var/list/L = V
+					for(var/Q in all_quirks)
+						if((quirk in L) && (Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
+							return
 				var/value = SSquirks.quirk_points[quirk]
 				if(value == 0)
 					if(quirk in neutral_quirks)
@@ -1102,11 +1120,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
-					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
+					var/new_name = input(user, "Choose your character's name:", "Character Preference")  as text|null
 					if(new_name)
-						real_name = new_name
-					else
-						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
+						new_name = reject_bad_name(new_name)
+						if(new_name)
+							real_name = new_name
+						else
+							to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
@@ -1293,6 +1313,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_ooccolor)
 						ooccolor = new_ooccolor
 
+				if("asaycolor")
+					var/new_asaycolor = input(user, "Choose your ASAY color:", "Game Preference",asaycolor) as color|null
+					if(new_asaycolor)
+						asaycolor = new_asaycolor
+
 				if("bag")
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in GLOB.backbaglist
 					if(new_backbag)
@@ -1303,8 +1328,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
+				if("ai_core_icon")
+					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens
+					if(ai_core_icon)
+						preferred_ai_core_display = ai_core_icon
+
 				if("sec_dept")
-					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
+					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
 					if(department)
 						prefered_security_department = department
 
@@ -1374,12 +1404,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					tgui_lock = !tgui_lock
 				if("winflash")
 					windowflashing = !windowflashing
+
+				//here lies the badmins
 				if("hear_adminhelps")
-					toggles ^= SOUND_ADMINHELP
+					user.client.toggleadminhelpsound()
+				if("hear_prayers")
+					user.client.toggle_prayer_sound()
 				if("announce_login")
-					toggles ^= ANNOUNCE_LOGIN
+					user.client.toggleannouncelogin()
 				if("combohud_lighting")
 					toggles ^= COMBOHUD_LIGHTING
+				if("toggle_dead_chat")
+					user.client.deadchat()
+				if("toggle_radio_chatter")
+					user.client.toggle_hear_radio()
+				if("toggle_prayers")
+					user.client.toggleprayers()
 
 				if("be_special")
 					var/be_special_type = href_list["be_special_type"]
@@ -1467,20 +1507,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE)
 	if(be_random_name)
 		real_name = pref_species.random_name(gender)
 
 	if(be_random_body)
 		random_character(gender)
 
-	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
-		var/firstspace = findtext(real_name, " ")
-		var/name_length = length(real_name)
-		if(!firstspace)	//we need a surname
-			real_name += " [pick(GLOB.last_names)]"
-		else if(firstspace == name_length)
-			real_name += "[pick(GLOB.last_names)]"
+	if(roundstart_checks)
+		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
+			var/firstspace = findtext(real_name, " ")
+			var/name_length = length(real_name)
+			if(!firstspace)	//we need a surname
+				real_name += " [pick(GLOB.last_names)]"
+			else if(firstspace == name_length)
+				real_name += "[pick(GLOB.last_names)]"
 
 	character.real_name = real_name
 	character.name = character.real_name
@@ -1506,16 +1547,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.backbag = backbag
 
-	character.dna.features = features.Copy()
-	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
-	if(pref_species.id in GLOB.roundstart_races)
+	if(!roundstart_checks || (pref_species.id in GLOB.roundstart_races))
 		chosen_species = pref_species.type
 	else
 		chosen_species = /datum/species/human
 		pref_species = new /datum/species/human
 		save_character()
-	character.set_species(chosen_species, icon_update=0)
+
+	character.set_species(chosen_species, icon_update = FALSE, pref_load = TRUE)
+	character.dna.features = features.Copy()
+	character.dna.real_name = character.real_name
+
+	if("tail_lizard" in pref_species.default_features)
+		character.dna.species.mutant_bodyparts |= "tail_lizard"
 
 	if(icon_updates)
 		character.update_body()
@@ -1534,13 +1579,17 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			return pick(GLOB.clown_names)
 		if("mime")
 			return pick(GLOB.mime_names)
+		if("religion")
+			return DEFAULT_RELIGION
+		if("deity")
+			return DEFAULT_DEITY
 	return random_unique_name()
 
 /datum/preferences/proc/ask_for_custom_name(mob/user,name_id)
 	var/namedata = GLOB.preferences_custom_names[name_id]
 	if(!namedata)
 		return
-	
+
 	var/raw_name = input(user, "Choose your character's [namedata["qdesc"]]:","Character Preference") as text|null
 	if(!raw_name)
 		if(namedata["allow_null"])

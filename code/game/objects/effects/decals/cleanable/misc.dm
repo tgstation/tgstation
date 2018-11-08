@@ -42,11 +42,30 @@
 /obj/effect/decal/cleanable/glass/ex_act()
 	qdel(src)
 
+/obj/effect/decal/cleanable/glass/plasma
+	icon_state = "plasmatiny"
+
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = "Someone should clean that up."
 	icon_state = "dirt"
+	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall, /obj/structure/falsewall)
+	smooth = SMOOTH_FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/decal/cleanable/dirt/Initialize()
+	. = ..()
+	var/turf/T = get_turf(src)
+	if(T.tiled_dirt)
+		smooth = SMOOTH_MORE
+		icon = 'icons/effects/dirt.dmi'
+		icon_state = ""
+		queue_smooth(src)
+	queue_smooth_neighbors(src)
+
+/obj/effect/decal/cleanable/dirt/Destroy()
+	queue_smooth_neighbors(src)
+	return ..()
 
 /obj/effect/decal/cleanable/flour
 	name = "flour"
@@ -184,20 +203,20 @@
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
 	desc = "The herpes of arts and crafts."
-	icon = 'icons/effects/tile_effects.dmi'
+	icon = 'icons/effects/atmospherics.dmi'
 	gender = NEUTER
 
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"
-	icon_state = "plasma"
+	icon_state = "plasma_old"
 
 /obj/effect/decal/cleanable/glitter/white
 	name = "white glitter"
-	icon_state = "nitrous_oxide"
+	icon_state = "nitrous_oxide_old"
 
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
-	icon_state = "freon"
+	icon_state = "freon_old"
 
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"

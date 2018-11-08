@@ -26,11 +26,11 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
-/datum/component/riding/proc/vehicle_mob_unbuckle(mob/living/M, force = FALSE)
+/datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
 	restore_position(M)
 	unequip_buckle_inhands(M)
 
-/datum/component/riding/proc/vehicle_mob_buckle(mob/living/M, force = FALSE)
+/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	handle_vehicle_offsets()
 
 /datum/component/riding/proc/handle_vehicle_layer()
@@ -46,7 +46,7 @@
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
 
-/datum/component/riding/proc/vehicle_moved()
+/datum/component/riding/proc/vehicle_moved(datum/source)
 	var/atom/movable/AM = parent
 	for(var/i in AM.buckled_mobs)
 		ride_check(i)
@@ -162,12 +162,12 @@
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
 		step(AM, direction)
-		
+
 		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
 			last_move_diagonal = TRUE
 		else
 			last_move_diagonal = FALSE
-		
+
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
@@ -213,7 +213,7 @@
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
-	user.Knockdown(60)
+	user.Paralyze(60)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
@@ -271,7 +271,7 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>")
 	M.throw_at(target, 14, 5, AM)
-	M.Knockdown(60)
+	M.Paralyze(60)
 
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/atom/movable/AM = parent

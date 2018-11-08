@@ -71,7 +71,7 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		W.play_tool_sound(src)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
@@ -304,6 +304,8 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
+	else if(materials[MAT_METAL])
+		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
 
@@ -324,7 +326,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Knockdown(20)
+				C.Paralyze(20)
 		smash(user)
 
 

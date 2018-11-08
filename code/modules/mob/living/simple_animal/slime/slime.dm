@@ -61,6 +61,8 @@
 	var/mood = "" // To show its face
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
+	
+	do_footstep = TRUE
 
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
@@ -134,33 +136,37 @@
 		icon_state = icon_dead
 	..()
 
-/mob/living/simple_animal/slime/movement_delay()
-	if(bodytemperature >= 330.23) // 135 F or 57.08 C
-		return -1	// slimes become supercharged at high temperatures
-
+/mob/living/simple_animal/slime/on_reagent_change()
 	. = ..()
+	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
+	var/amount = 0
+	if(reagents.has_reagent("morphine")) // morphine slows slimes down
+		amount = 2
+	if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
+		amount = 5
+	if(amount)
+		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
 
+/mob/living/simple_animal/slime/updatehealth()
+	. = ..()
+	remove_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, FALSE)
 	var/health_deficiency = (100 - health)
+	var/mod = 0
 	if(health_deficiency >= 45)
-		. += (health_deficiency / 25)
+		mod += (health_deficiency / 25)
+	if(health <= 0)
+		mod += 2
+	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod)
 
-	if(bodytemperature < 183.222)
-		. += (283.222 - bodytemperature) / 10 * 1.75
-
-	if(reagents)
-		if(reagents.has_reagent("morphine")) // morphine slows slimes down
-			. *= 2
-
-		if(reagents.has_reagent("frostoil")) // Frostoil also makes them move VEEERRYYYYY slow
-			. *= 5
-
-	if(health <= 0) // if damaged, the slime moves twice as slow
-		. *= 2
-
-	var/static/config_slime_delay
-	if(isnull(config_slime_delay))
-		config_slime_delay = CONFIG_GET(number/slime_delay)
-	. += config_slime_delay
+/mob/living/simple_animal/slime/adjust_bodytemperature()
+	. = ..()
+	var/mod = 0
+	if(bodytemperature >= 330.23) // 135 F or 57.08 C
+		mod = -1	// slimes become supercharged at high temperatures
+	else if(bodytemperature < 283.222)
+		mod = ((283.222 - bodytemperature) / 10) * 1.75
+	if(mod)
+		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -239,7 +245,7 @@
 /mob/living/simple_animal/slime/doUnEquip(obj/item/W)
 	return
 
-/mob/living/simple_animal/slime/start_pulling(atom/movable/AM)
+/mob/living/simple_animal/slime/start_pulling(atom/movable/AM, state, force = move_force, supress_message = FALSE)
 	return
 
 /mob/living/simple_animal/slime/attack_ui(slot)
@@ -452,13 +458,13 @@
 
 	SStun = world.time + rand(20,60)
 	spawn(0)
-		canmove = 0
+		mobility_flags &= ~MOBILITY_MOVE
 		if(user)
 			step_away(src,user,15)
 		sleep(3)
 		if(user)
 			step_away(src,user,15)
-		update_canmove()
+		update_mobility()
 
 /mob/living/simple_animal/slime/pet
 	docile = 1

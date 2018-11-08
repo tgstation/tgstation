@@ -11,9 +11,9 @@
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
-
 	var/datum/team/cult/cult_team
 
+	
 /datum/antagonist/cult/get_team()
 	return cult_team
 
@@ -35,7 +35,6 @@
 
 /datum/antagonist/cult/proc/add_objectives()
 	objectives |= cult_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -60,7 +59,7 @@
 		equip_cultist(TRUE)
 	SSticker.mode.cult += owner // Only add after they've been given objectives
 	SSticker.mode.update_cult_icons_added(owner)
-	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
+	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
 		current.client.images += cult_team.blood_target_image
@@ -111,7 +110,11 @@
 	if(ishuman(current))
 		magic.Grant(current)
 	current.throw_alert("bloodsense", /obj/screen/alert/bloodsense)
-
+	if(cult_team.cult_risen)
+		cult_team.rise(current)
+		if(cult_team.cult_ascendent)
+			cult_team.ascend(current)
+			
 /datum/antagonist/cult/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
@@ -123,14 +126,19 @@
 	communion.Remove(current)
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
-
+	if(ishuman(current))
+		var/mob/living/carbon/human/H = current
+		H.eye_color = initial(H.eye_color)
+		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.remove_trait(CULT_EYES)
+		H.update_body()
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
-		owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
+		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
 		owner.current.client.images -= cult_team.blood_target_image
 	. = ..()
@@ -193,7 +201,10 @@
 	throwing.Grant(current)
 	current.update_action_buttons_icon()
 	current.apply_status_effect(/datum/status_effect/cult_master)
-
+	if(cult_team.cult_risen)
+		cult_team.rise(current)
+		if(cult_team.cult_ascendent)
+			cult_team.ascend(current)
 /datum/antagonist/cult/master/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
@@ -204,6 +215,14 @@
 	throwing.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
+	
+	if(ishuman(current))
+		var/mob/living/carbon/human/H = current
+		H.eye_color = initial(H.eye_color)
+		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.remove_trait(CULT_EYES)
+		H.cut_overlays()
+		H.regenerate_icons()
 
 /datum/team/cult
 	name = "Cult"
@@ -215,7 +234,53 @@
 	var/cult_vote_called = FALSE
 	var/mob/living/cult_master
 	var/reckoning_complete = FALSE
-
+	var/cult_risen = FALSE
+	var/cult_ascendent = FALSE
+	
+/datum/team/cult/proc/check_size()
+	if(cult_ascendent)
+		return
+	var/alive = 0
+	var/cultplayers = 0
+	for(var/I in GLOB.player_list)
+		var/mob/M = I
+		if(M.stat != DEAD)
+			if(iscultist(M))
+				++cultplayers
+			else
+				++alive
+	var/ratio = cultplayers/alive
+	if(ratio > CULT_RISEN && !cult_risen)
+		for(var/datum/mind/B in members)
+			if(B.current)
+				SEND_SOUND(B.current, 'sound/hallucinations/i_see_you2.ogg')
+				to_chat(B.current, "<span class='cultlarge'>The veil weakens as your cult grows, your eyes begin to glow...")
+				addtimer(CALLBACK(src, .proc/rise, B.current), 200)
+		cult_risen = TRUE
+		
+	if(ratio > CULT_ASCENDENT && !cult_ascendent)
+		for(var/datum/mind/B in members)
+			if(B.current)
+				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
+				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")
+				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
+		cult_ascendent = TRUE
+		
+		
+/datum/team/cult/proc/rise(cultist)
+	if(ishuman(cultist))
+		var/mob/living/carbon/human/H = cultist
+		H.eye_color = "f00"
+		H.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
+		H.add_trait(CULT_EYES)
+		H.update_body()
+		
+/datum/team/cult/proc/ascend(cultist)
+	if(ishuman(cultist))
+		var/mob/living/carbon/human/H = cultist
+		new /obj/effect/temp_visual/cult/sparks(get_turf(H), H.dir)
+		var/istate = pick("halo1","halo2","halo3","halo4","halo5","halo6")
+		H.add_overlay(mutable_appearance('icons/effects/32x64.dmi', istate, -BODY_FRONT_LAYER))
 
 /datum/team/cult/proc/setup_objectives()
 	//SAC OBJECTIVE , todo: move this to objective internals
@@ -257,6 +322,7 @@
 	summon_objective.team = src
 	objectives += summon_objective
 
+	
 /datum/objective/sacrifice
 	var/sacced = FALSE
 	var/sac_image
@@ -285,7 +351,7 @@
 	update_explanation_text()
 
 /datum/objective/eldergod/update_explanation_text()
-	explanation_text = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie'. <b>The summoning can only be accomplished in [english_list(summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
+	explanation_text = "Summon Nar'Sie by invoking the rune 'Summon Nar'Sie'. <b>The summoning can only be accomplished in [english_list(summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
 
 /datum/objective/eldergod/check_completion()
 	return summoned || completed
@@ -300,7 +366,7 @@
 	var/list/parts = list()
 
 	if(check_cult_victory())
-		parts += "<span class='greentext big'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>"
+		parts += "<span class='greentext big'>The cult has succeeded! Nar'Sie has snuffed out another torch in the void!</span>"
 	else
 		parts += "<span class='redtext big'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
 

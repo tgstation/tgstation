@@ -40,6 +40,52 @@ GLOBAL_LIST_EMPTY(caps_list)
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
+GLOBAL_LIST_INIT(ai_core_display_screens, list(
+	":thinking:",
+	"Alien",
+	"Angel",
+	"Banned",
+	"Bliss",
+	"Blue",
+	"Clown",
+	"Database",
+	"Dorf",
+	"Firewall",
+	"Fuzzy",
+	"Gentoo",
+	"Glitchman",
+	"Goon",
+	"Hades",
+	"Heartline",
+	"Helios",
+	"House",
+	"Inverted",
+	"Matrix",
+	"Monochrome",
+	"Murica",
+	"Nanotrasen",
+	"Not Malf",
+	"President",
+	"Random",
+	"Rainbow",
+	"Red",
+	"Red October",
+	"Static",
+	"Syndicat Meow",
+	"Text",
+	"Too Deep",
+	"Triumvirate",
+	"Triumvirate-M",
+	"Weird"))
+
+/proc/resolve_ai_icon(input)
+	if(!input || !(input in GLOB.ai_core_display_screens))
+		return "ai"
+	else
+		if(input == "Random")
+			input = pick(GLOB.ai_core_display_screens - "Random")
+		return "ai-[lowertext(input)]"
+
 GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
 
 	//Backpacks
@@ -73,7 +119,7 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 
 /* List of sortType codes for mapping reference
 0 Waste
-1 Disposals
+1 Disposals - All unwrapped items and untagged parcels get picked up by a junction with this sortType. Usually leads to the recycler.
 2 Cargo Bay
 3 QM Office
 4 Engineering
@@ -96,14 +142,29 @@ GLOBAL_LIST_INIT(scarySounds, list('sound/weapons/thudswoosh.ogg','sound/weapons
 21 Hydroponics
 22 Janitor
 23 Genetics
+24 Circuitry
+25 Toxins
+26 Dormitories
+27 Virology
+28 Xenobiology
+29 Law Office
+30 Detective's Office
 */
+
+//The whole system for the sorttype var is determined based on the order of this list,
+//disposals must always be 1, since anything that's untagged will automatically go to disposals, or sorttype = 1 --Superxpdude
+
+//If you don't want to fuck up disposals, add to this list, and don't change the order.
+//If you insist on changing the order, you'll have to change every sort junction to reflect the new order. --Pete
 
 GLOBAL_LIST_INIT(TAGGERLOCATIONS, list("Disposals",
 	"Cargo Bay", "QM Office", "Engineering", "CE Office",
 	"Atmospherics", "Security", "HoS Office", "Medbay",
 	"CMO Office", "Chemistry", "Research", "RD Office",
 	"Robotics", "HoP Office", "Library", "Chapel", "Theatre",
-	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics"))
+	"Bar", "Kitchen", "Hydroponics", "Janitor Closet","Genetics",
+	"Circuitry", "Toxins", "Dormitories", "Virology",
+	"Xenobiology", "Law Office","Detective's Office"))
 
 GLOBAL_LIST_INIT(station_prefixes, world.file2list("strings/station_prefixes.txt") + "")
 

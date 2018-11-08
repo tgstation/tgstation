@@ -4,20 +4,27 @@
 
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
-	var/list/archdrops
 	var/wet
+
+	var/footstep = null
+	var/barefootstep = null
+	var/clawfootstep = null
+	var/heavyfootstep = null
 
 /turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
-	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, archdrops)
 
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = TRUE
 
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE
@@ -31,6 +38,10 @@
 
 /turf/open/indestructible/sound
 	name = "squeaky floor"
+	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
@@ -45,6 +56,11 @@
 	icon_state = "necro1"
 	baseturfs = /turf/open/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	footstep = FOOTSTEP_LAVA
+	barefootstep = FOOTSTEP_LAVA
+	clawfootstep = FOOTSTEP_LAVA
+	heavyfootstep = FOOTSTEP_LAVA
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis/Initialize()
 	. = ..()
@@ -69,6 +85,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/hierophant
 	smooth = SMOOTH_TRUE
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/hierophant/two
 
@@ -79,12 +96,21 @@
 	name = "notebook floor"
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
+	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
+	tiled_dirt = FALSE
 
 /turf/open/indestructible/binary
 	name = "tear in the fabric of reality"
 	CanAtmosPass = ATMOS_PASS_NO
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
+	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
@@ -96,6 +122,10 @@
 	desc = "Brass plating that gently radiates heat. For some reason, it reminds you of blood."
 	icon_state = "reebe"
 	baseturfs = /turf/open/indestructible/clock_spawn_room
+	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/indestructible/clock_spawn_room/Entered()
 	..()
@@ -209,7 +239,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
+			if(!(C.mobility_flags & MOBILITY_STAND) || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
@@ -222,8 +252,9 @@
 			C.accident(I)
 
 		var/olddir = C.dir
+		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 		if(!(lube & SLIDE_ICE))
-			C.Knockdown(knockdown_amount)
+			C.Paralyze(knockdown_amount)
 			C.stop_pulling()
 		else
 			C.Stun(20)
@@ -235,6 +266,8 @@
 		if(lube&SLIDE)
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 4), 1, FALSE, CALLBACK(C, /mob/living/carbon/.proc/spin, 1, 1))
 		else if(lube&SLIDE_ICE)
+			if(C.force_moving) //If we're already slipping extend it
+				qdel(C.force_moving)
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 

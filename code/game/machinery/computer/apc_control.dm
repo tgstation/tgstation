@@ -28,6 +28,7 @@
 				playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
+			active_apc.remote_control = null
 			active_apc = null
 
 /obj/machinery/computer/apc_control/attack_ai(mob/user)
@@ -92,9 +93,7 @@
 	if(!usr || !usr.canUseTopic(src) || stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
-		var/obj/item/card/id/ID = usr.get_active_held_item()
-		if(!istype(ID))
-			ID = usr.get_idcard()
+		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
 		if(ID && istype(ID))
 			if(check_access(ID))
 				authenticated = TRUE
@@ -121,10 +120,12 @@
 			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
 			active_apc.locked = TRUE
 			active_apc.update_icon()
+			active_apc.remote_control = null
 			active_apc = null
 		to_chat(usr, "<span class='robot notice'>[icon2html(src, usr)] Connected to APC in [get_area_name(APC.area, TRUE)]. Interface request sent.</span>")
 		log_activity("remotely accessed APC in [get_area_name(APC.area, TRUE)]")
-		APC.ui_interact(usr, state = GLOB.not_incapacitated_state)
+		APC.remote_control = src
+		APC.ui_interact(usr)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		message_admins("[ADMIN_LOOKUPFLW(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")
 		log_game("[key_name(usr)] remotely accessed [APC] from [src] at [AREACOORD(src)].")

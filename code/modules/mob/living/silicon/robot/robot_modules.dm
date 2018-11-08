@@ -32,6 +32,7 @@
 	var/list/ride_offset_y = list("north" = 4, "south" = 4, "east" = 3, "west" = 3)
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
+	var/canDispose = FALSE // Whether the borg can stuff itself into disposal
 
 /obj/item/robot_module/Initialize()
 	. = ..()
@@ -469,9 +470,9 @@
 		/obj/item/extinguisher/mini,
 		/obj/item/hand_labeler/borg,
 		/obj/item/razor,
+		/obj/item/rsf,
 		/obj/item/instrument/violin,
 		/obj/item/instrument/guitar,
-		/obj/item/rsf/cyborg,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/lighter,
 		/obj/item/storage/bag/tray,
@@ -595,6 +596,40 @@
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
 	hat_offset = 3
+
+/obj/item/robot_module/saboteur
+	name = "Syndicate Saboteur"
+	basic_modules = list(
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/borg/sight/thermal,
+		/obj/item/construction/rcd/borg/syndicate,
+		/obj/item/pipe_dispenser,
+		/obj/item/extinguisher,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/screwdriver/nuke,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/multitool/cyborg,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/sheet/glass/cyborg,
+		/obj/item/stack/sheet/rglass/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/destTagger/borg,
+		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/pinpointer/syndicate_cyborg,
+		/obj/item/borg_chameleon,
+		)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/engineer,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	cyborg_base_icon = "synd_engi"
+	moduleselect_icon = "malf"
+	can_be_pushed = FALSE
+	magpulsing = TRUE
+	hat_offset = -4
+	canDispose = TRUE
 
 /datum/robot_energy_storage
 	var/name = "Generic energy storage"

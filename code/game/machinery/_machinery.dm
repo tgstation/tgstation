@@ -91,6 +91,7 @@ Class Procs:
 	verb_yell = "blares"
 	pressure_resistance = 15
 	max_integrity = 200
+	layer = BELOW_OBJ_LAYER //keeps shit coming out of the machine from ending up underneath it.
 
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -114,6 +115,9 @@ Class Procs:
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	var/fair_market_price = 69
+	var/market_verb = "Customer"
+	var/payment_department = ACCOUNT_ENG
 
 /obj/machinery/Initialize()
 	if(!armor)
@@ -130,7 +134,7 @@ Class Procs:
 	else
 		START_PROCESSING(SSfastprocess, src)
 	power_change()
-	AddComponent(/datum/component/redirect, list(COMSIG_ENTER_AREA = CALLBACK(src, .proc/power_change)))
+	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/power_change)
 
 	if (occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
@@ -173,7 +177,7 @@ Class Procs:
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A
-			L.update_canmove()
+			L.update_mobility()
 	occupant = null
 
 /obj/machinery/proc/close_machine(atom/movable/target = null)
@@ -230,6 +234,36 @@ Class Procs:
 			if(!(istype(H) && H.has_dna() && H.dna.check_mutation(TK)))
 				return FALSE
 	return TRUE
+
+/obj/machinery/proc/check_nap_violations()
+	if(!SSeconomy.full_ancap)
+		return TRUE
+	if(occupant && !state_open)
+		if(ishuman(occupant))
+			var/mob/living/carbon/human/H = occupant
+			var/obj/item/card/id/I = H.get_idcard(TRUE)
+			if(I)
+				var/datum/bank_account/insurance = I.registered_account
+				if(!insurance)
+					say("[market_verb] NAP Violation: No bank account found.")
+					nap_violation()
+					return FALSE
+				else
+					if(!insurance.adjust_money(-fair_market_price))
+						say("[market_verb] NAP Violation: Unable to pay.")
+						nap_violation()
+						return FALSE
+					var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
+					if(D)
+						D.adjust_money(fair_market_price)
+			else
+				say("[market_verb] NAP Violation: No ID card found.")
+				nap_violation()
+				return FALSE
+	return TRUE
+
+/obj/machinery/proc/nap_violation(mob/violator)
+	return
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 

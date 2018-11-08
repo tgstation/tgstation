@@ -5,6 +5,7 @@
 /datum/game_mode/monkey
 	name = "monkey"
 	config_tag = "monkey"
+	report_type = "monkey"
 	antag_flag = ROLE_MONKEY
 	false_report_weight = 1
 

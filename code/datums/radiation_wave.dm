@@ -24,8 +24,9 @@
 	START_PROCESSING(SSradiation, src)
 
 /datum/radiation_wave/Destroy()
+	. = QDEL_HINT_IWILLGC
 	STOP_PROCESSING(SSradiation, src)
-	return ..()
+	..()
 
 /datum/radiation_wave/process()
 	master_turf = get_step(master_turf, move_dir)
@@ -80,7 +81,10 @@
 		var/atom/thing = atoms[k]
 		if(!thing)
 			continue
-		SEND_SIGNAL(thing, COMSIG_ATOM_RAD_WAVE_PASSING, src, width)
+		if (SEND_SIGNAL(thing, COMSIG_ATOM_RAD_WAVE_PASSING, src, width) & COMPONENT_RAD_WAVE_HANDLED)
+			continue
+		if (thing.rad_insulation != RAD_NO_INSULATION)
+			intensity *= (1-((1-thing.rad_insulation)/width))
 
 /datum/radiation_wave/proc/radiate(list/atoms, strength)
 	var/contamination_chance = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1, 1/(steps*range_modifier))
@@ -91,7 +95,7 @@
 		thing.rad_act(strength)
 
 		// This list should only be for types which don't get contaminated but you want to look in their contents
-		// If you don't want to look in their contents and you don't want to rad_act them: 
+		// If you don't want to look in their contents and you don't want to rad_act them:
 		// modify the ignored_things list in __HELPERS/radiation.dm instead
 		var/static/list/blacklisted = typecacheof(list(
 			/turf,

@@ -46,7 +46,7 @@
 		playsound(src, 'sound/weapons/tap.ogg', 20, 1)
 		update_icon()
 		return
-	if(nadeassembly && istype(I, /obj/item/wirecutters))
+	if(nadeassembly && I.tool_behaviour == TOOL_WIRECUTTER)
 		I.play_tool_sound(src, 20)
 		nadeassembly.forceMove(get_turf(src))
 		nadeassembly.master = null
@@ -136,18 +136,18 @@
 		return
 	var/message_say = "FOR NO RAISIN!"
 	if(M.mind)
-		var/datum/mind/UM = M
+		var/datum/mind/UM = M.mind
 		if(UM.has_antag_datum(/datum/antagonist/nukeop) || UM.has_antag_datum(/datum/antagonist/traitor))
 			message_say = "FOR THE SYNDICATE!"
 		else if(UM.has_antag_datum(/datum/antagonist/changeling))
 			message_say = "FOR THE HIVE!"
 		else if(UM.has_antag_datum(/datum/antagonist/cult))
-			message_say = "FOR NAR-SIE!"
+			message_say = "FOR NAR'SIE!"
 		else if(UM.has_antag_datum(/datum/antagonist/clockcult))
 			message_say = "FOR RATVAR!"
 		else if(UM.has_antag_datum(/datum/antagonist/rev))
 			message_say = "VIVA LA REVOLUTION!"
-	M.say(message_say)
+	M.say(message_say, forced="C4 suicide")
 
 /obj/item/grenade/plastic/suicide_act(mob/user)
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
@@ -196,7 +196,7 @@
 	user.gib(1, 1)
 
 /obj/item/grenade/plastic/c4/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open_panel = !open_panel
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 	else if(is_wire_tool(I))

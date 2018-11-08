@@ -52,6 +52,11 @@
 	mood_change = 12
 	hidden = TRUE
 
+/datum/mood_event/badass_antag
+	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
+	mood_change = 15
+	hidden = TRUE
+
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
 	mood_change = 3
@@ -65,3 +70,8 @@
 /datum/mood_event/family_heirloom
 	description = "<span class='nicegreen'>My family heirloom is safe with me.</span>\n"
 	mood_change = 1
+
+/datum/mood_event/goodmusic
+	description = "<span class='nicegreen'>There is something soothing about this music.</span>\n"
+	mood_change = 3
+	timeout = 600

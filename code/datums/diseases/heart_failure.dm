@@ -44,7 +44,7 @@
 					if(prob(25))
 						affected_mob.vomit(95)
 					H.emote("cough")
-					H.Knockdown(40)
+					H.Paralyze(40)
 					H.losebreath += 4
 				if(prob(3))
 					to_chat(H, "<span class='danger'>You feel very weak and dizzy...</span>")
@@ -57,9 +57,8 @@
 				if(H.stat == CONSCIOUS)
 					H.visible_message("<span class='userdanger'>[H] clutches at [H.p_their()] chest as if [H.p_their()] heart is stopping!</span>")
 				H.adjustStaminaLoss(60)
-				H.reagents.add_reagent("corazone", 3) // To give the victim a final chance to shock their heart before losing consciousness
 				H.set_heartattack(TRUE)
+				H.reagents.add_reagent("corazone", 3) // To give the victim a final chance to shock their heart before losing consciousness
 				cure()
-
 	else
 		cure()

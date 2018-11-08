@@ -15,7 +15,7 @@
 		user.tod = station_time_timestamp()
 	user.fakedeath("changeling") //play dead
 	user.update_stat()
-	user.update_canmove()
+	user.update_mobility()
 
 	addtimer(CALLBACK(src, .proc/ready_to_regenerate, user), LING_FAKEDEATH_TIME, TIMER_UNIQUE)
 	return TRUE
@@ -28,7 +28,7 @@
 			C.purchasedpowers += new /obj/effect/proc_holder/changeling/revive(null)
 
 /obj/effect/proc_holder/changeling/fakedeath/can_sting(mob/living/user)
-	if(user.has_trait(TRAIT_FAKEDEATH, "changeling"))
+	if(user.has_trait(TRAIT_DEATHCOMA, "changeling"))
 		to_chat(user, "<span class='warning'>We are already reviving.</span>")
 		return
 	if(!user.stat) //Confirmation for living changelings if they want to fake their death

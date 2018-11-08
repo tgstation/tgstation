@@ -5,6 +5,7 @@
 	icon_state = "door1"
 	opacity = 1
 	density = TRUE
+	move_resist = MOVE_FORCE_VERY_STRONG
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
 	max_integrity = 350
@@ -34,6 +35,7 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/poddoor = FALSE
+	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 
 /obj/machinery/door/examine(mob/user)
 	..()
@@ -68,6 +70,10 @@
 		layer = closingLayer
 	else
 		layer = initial(layer)
+
+/obj/machinery/door/power_change()
+	..()
+	update_icon()
 
 /obj/machinery/door/Destroy()
 	update_freelook_sight()
@@ -161,7 +167,12 @@
 /obj/machinery/door/allowed(mob/M)
 	if(emergency)
 		return TRUE
+	if(unrestricted_side(M))
+		return TRUE
 	return ..()
+
+/obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, M) & unres_sides
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
@@ -170,10 +181,10 @@
 	return
 
 /obj/machinery/door/attackby(obj/item/I, mob/user, params)
-	if(user.a_intent != INTENT_HARM && (istype(I, /obj/item/crowbar) || istype(I, /obj/item/twohanded/fireaxe)))
+	if(user.a_intent != INTENT_HARM && (I.tool_behaviour == TOOL_CROWBAR || istype(I, /obj/item/twohanded/fireaxe)))
 		try_to_crowbar(I, user)
 		return 1
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user)
 		return 1
 	else if(!(I.item_flags & NOBLUDGEON) && user.a_intent != INTENT_HARM)
@@ -309,10 +320,10 @@
 		else if(ishuman(L)) //For humans
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 			L.emote("scream")
-			L.Knockdown(100)
+			L.Paralyze(100)
 		else if(ismonkey(L)) //For monkeys
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-			L.Knockdown(100)
+			L.Paralyze(100)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
 		var/turf/location = get_turf(src)

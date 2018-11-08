@@ -35,7 +35,7 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(istype(O, /obj/item/screwdriver) && (obj_flags & EMAGGED))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, "<span class='warning'>It is too hot to mess with!</span>")
 	else
@@ -423,7 +423,7 @@
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)
-						log_talk(usr, "[key_name(usr)] (PDA: [name]) sent \"[custommessage]\" to [signal.format_target()]", LOGPDA)
+						usr.log_message("(PDA: [name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
 
 
 		//Request Console Logs - KEY REQUIRED

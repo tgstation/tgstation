@@ -23,7 +23,12 @@
 	if (notransform)
 		return
 
-	if(..()) //not dead
+	. = ..()
+
+	if (QDELETED(src))
+		return 0
+
+	if(.) //not dead
 		handle_active_genes()
 
 	if(stat != DEAD)
@@ -61,13 +66,8 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
-	if (getBrainLoss() >= 60 && !incapacitated(TRUE))
+	if (getBrainLoss() >= 60)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "brain_damage", /datum/mood_event/brain_damage)
-		if(prob(3))
-			if(prob(25))
-				emote("drool")
-			else
-				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "brain_damage")
 
@@ -113,9 +113,19 @@
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	..()
+	. = ..()
+	if(.) //if the mob isn't on fire anymore
+		return
+
 	if(dna)
-		dna.species.handle_fire(src)
+		. = dna.species.handle_fire(src) //do special handling based on the mob's species. TRUE = they are immune to the effects of the fire.
+
+	if(!last_fire_update)
+		last_fire_update = fire_stacks
+	if((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM && last_fire_update <= HUMAN_FIRE_STACK_ICON_NUM) || (fire_stacks <= HUMAN_FIRE_STACK_ICON_NUM && last_fire_update > HUMAN_FIRE_STACK_ICON_NUM))
+		last_fire_update = fire_stacks
+		update_fire()
+
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
@@ -137,6 +147,7 @@
 
 /mob/living/carbon/human/ExtinguishMob()
 	if(!dna || !dna.species.ExtinguishMob(src))
+		last_fire_update = null
 		..()
 //END FIRE CODE
 

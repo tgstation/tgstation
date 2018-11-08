@@ -36,7 +36,7 @@
 				to_chat(user, "<span class='warning'>\The [IT] is too small for \the [src].</span>")
 				return
 			updateTank(W, 0, user)
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		switch(fisto_setting)
 			if(1)
 				fisto_setting = 2
@@ -46,7 +46,7 @@
 				fisto_setting = 1
 		W.play_tool_sound(src)
 		to_chat(user, "<span class='notice'>You tweak \the [src]'s piston valve to [fisto_setting].</span>")
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(tank)
 			updateTank(tank, 1, user)
 
@@ -89,7 +89,7 @@
 
 	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
 
-	add_logs(user, target, "power fisted", src)
+	log_combat(user, target, "power fisted", src)
 
 	user.changeNext_move(CLICK_CD_MELEE * click_delay)
 

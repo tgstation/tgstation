@@ -94,6 +94,16 @@
 	category= CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/gonbola
+	name = "Gonbola"
+	result = /obj/item/restraints/legcuffs/bola/gonbola
+	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
+				/obj/item/stack/sheet/metal = 6,
+				/obj/item/stack/sheet/animalhide/gondola = 1)
+	time = 40
+	category= CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub
@@ -280,7 +290,7 @@
 	subcategory = CAT_AMMO
 
 /datum/crafting_recipe/laserslug
-	name = "Laser Slug Shell"
+	name = "Scatter Laser Shell"
 	result = /obj/item/ammo_casing/shotgun/laserslug
 	reqs = list(/obj/item/ammo_casing/shotgun/techshell = 1,
 				/obj/item/stock_parts/capacitor/adv = 1,
@@ -319,6 +329,7 @@
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/shard = 1,
 				/obj/item/stack/rods = 1)
+	parts = list(/obj/item/shard = 1)
 	time = 40
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
@@ -522,7 +533,7 @@
 	result = /obj/item/bikehorn/golden
 	time = 20
 	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
-				/obj/item/bikehorn)
+				/obj/item/bikehorn = 1)
 	category = CAT_MISC
 
 /datum/crafting_recipe/bonedagger
@@ -624,64 +635,30 @@
 	tools = list(TOOL_SCREWDRIVER, TOOL_WRENCH, TOOL_WELDER)
 	category = CAT_MISC
 
-/datum/crafting_recipe/hudsunsec
-	name = "Security HUDsunglasses"
-	result = /obj/item/clothing/glasses/hud/security/sunglasses
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/hud/security = 1,
-				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/hudsunsecremoval
-	name = "Security HUD removal"
-	result = /obj/item/clothing/glasses/sunglasses
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/hud/security/sunglasses = 1)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/hudsunmed
-	name = "Medical HUDsunglasses"
-	result = /obj/item/clothing/glasses/hud/health/sunglasses
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/hud/health = 1,
-				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/hudsunmedremoval
-	name = "Medical HUD removal"
-	result = /obj/item/clothing/glasses/sunglasses
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/hud/health/sunglasses = 1)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/beergoggles
-	name = "Beer Goggles"
-	result = /obj/item/clothing/glasses/sunglasses/reagent
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/science = 1,
-				  /obj/item/clothing/glasses/sunglasses = 1,
-				  /obj/item/stack/cable_coil = 5)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/beergogglesremoval
-	name = "Beer Goggles removal"
-	result = /obj/item/clothing/glasses/sunglasses
-	time = 20
-	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/sunglasses/reagent = 1)
-	category = CAT_CLOTHING
-
-/datum/crafting_recipe/ghostsheet
-	name = "Ghost Sheet"
-	result = /obj/item/clothing/suit/ghost_sheet
-	time = 5
+/datum/crafting_recipe/aitater
+	name = "intelliTater"
+	result = /obj/item/aicard/aitater
+	time = 30
 	tools = list(TOOL_WIRECUTTER)
-	reqs = list(/obj/item/bedsheet = 1)
-	category = CAT_CLOTHING
+	reqs = list(/obj/item/aicard = 1,
+					/obj/item/reagent_containers/food/snacks/grown/potato = 1,
+					/obj/item/stack/cable_coil = 5)
+	category = CAT_MISC
+
+/datum/crafting_recipe/aispook
+	name = "intelliLantern"
+	result = /obj/item/aicard/aispook
+	time = 30
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/aicard = 1,
+					/obj/item/reagent_containers/food/snacks/grown/pumpkin = 1,
+					/obj/item/stack/cable_coil = 5)
+	category = CAT_MISC
+
+/datum/crafting_recipe/ghettojetpack
+	name = "Improvised Jetpack"
+	result = /obj/item/tank/jetpack/improvised
+	time = 30
+	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
+	category = CAT_MISC
+	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)

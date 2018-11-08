@@ -117,12 +117,14 @@
 /area/ruin/space/has_grav/powered/aesthetic)
 "A" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating/astplate{
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "B" = (
-/turf/open/floor/plating/astplate{
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
@@ -131,29 +133,34 @@
 	desc = "Ugh, this is merely an ugly amateurish replica of the other statue! The letters RIPGOAT are scribbled onto the base.";
 	dir = 8
 	},
-/turf/open/floor/plating/astplate{
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "D" = (
-/turf/open/floor/plasteel/airless/asteroid{
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless{
 	icon_state = "recharge_floor_asteroid"
 	},
 /area/ruin/unpowered/no_grav)
 "E" = (
-/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
 "F" = (
 /obj/structure/statue/sandstone/venus{
 	dir = 4
 	},
-/turf/open/floor/plating/astplate{
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
 "G" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/floor/plating/astplate{
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
@@ -163,20 +170,24 @@
 /area/ruin/unpowered/no_grav)
 "I" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plasteel/airless/asteroid,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
 "J" = (
-/turf/open/floor/plasteel/airless/asteroid{
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless{
 	icon_state = "stairs-l"
 	},
 /area/ruin/unpowered/no_grav)
 "K" = (
-/turf/open/floor/plasteel/airless/asteroid{
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless{
 	icon_state = "stairs-m"
 	},
 /area/ruin/unpowered/no_grav)
 "L" = (
-/turf/open/floor/plasteel/airless/asteroid{
+/obj/effect/turf_decal/sand,
+/turf/open/floor/plasteel/airless{
 	icon_state = "stairs-r"
 	},
 /area/ruin/unpowered/no_grav)
@@ -201,7 +212,8 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plating/astplate{
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating{
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)

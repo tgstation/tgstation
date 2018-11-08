@@ -1,4 +1,4 @@
-/mob/living/carbon/human/examine(mob/user)
+/mob/living/carbon/human/examine(mob/user) //User is the person being examined
 //this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/t_He = p_they(TRUE)
 	var/t_His = p_their(TRUE)
@@ -80,8 +80,11 @@
 		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	//eyes
-	if(glasses && !(SLOT_GLASSES in obscured))
-		msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
+	if(!(SLOT_GLASSES in obscured))
+		if(glasses)
+			msg += "[t_He] [t_has] [glasses.get_examine_string(user)] covering [t_his] eyes.\n"
+		else if(eye_color == BLOODCULT_EYE && iscultist(src) && has_trait(CULT_EYES))
+			msg += "<span class='warning'><B>[t_His] eyes are glowing an unnatural red!</B></span>\n"
 
 	//ears
 	if(ears && !(SLOT_EARS in obscured))
@@ -112,17 +115,8 @@
 			msg += "<span class='warning'>[t_His] soul seems to have been ripped out of [t_his] body.  Revival is impossible.</span>\n"
 		msg += "<span class='deadsay'>[t_He] [t_is] limp and unresponsive; there are no signs of life"
 		if(getorgan(/obj/item/organ/brain))
-			if(!key)
-				var/foundghost = 0
-				if(mind)
-					for(var/mob/dead/observer/G in GLOB.player_list)
-						if(G.mind == mind)
-							foundghost = 1
-							if (G.can_reenter_corpse == 0)
-								foundghost = 0
-							break
-				if(!foundghost)
-					msg += " and [t_his] soul has departed"
+			if(!key && !get_ghost(FALSE, TRUE))
+				msg += " and [t_his] soul has departed"
 		msg += "...</span>\n"
 
 	if(get_bodypart(BODY_ZONE_HEAD) && !getorgan(/obj/item/organ/brain))
@@ -148,8 +142,7 @@
 		if(!(BP.get_damage(include_stamina = FALSE) >= BP.max_damage)) //Stamina is disabling the limb
 			damage_text = "limp and lifeless"
 		else
-			var/more_brute = BP.brute_dam >= BP.burn_dam
-			damage_text = more_brute ? "broken and mangled" : "burnt and blistered"
+			damage_text = (BP.brute_dam >= BP.burn_dam) ? BP.heavy_brute_msg : BP.heavy_burn_msg
 		msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
 
 	//stores missing limbs
@@ -277,6 +270,8 @@
 
 		if(digitalcamo)
 			msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
+
+	msg += common_trait_examine()
 
 	var/traitstring = get_trait_string()
 	if(ishuman(user))

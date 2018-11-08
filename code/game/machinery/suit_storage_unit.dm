@@ -178,9 +178,13 @@
 		new /obj/item/stack/sheet/metal (loc, 2)
 	qdel(src)
 
-/obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !Adjacent(A) || !isliving(A))
+/obj/machinery/suit_storage_unit/MouseDrop_T(atom/A, mob/living/user)
+	if(!istype(user) || user.stat || !Adjacent(user) || !Adjacent(A) || !isliving(A))
 		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			return
 	var/mob/living/target = A
 	if(!state_open)
 		to_chat(user, "<span class='warning'>The unit's doors are shut!</span>")
@@ -340,6 +344,7 @@
 
 	if(panel_open && is_wire_tool(I))
 		wires.interact(user)
+		return
 	if(!state_open)
 		if(default_deconstruction_screwdriver(user, "panel", "close", I))
 			return

@@ -298,7 +298,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 						if(CHANNEL.is_admin_channel)
 							dat+="<B><FONT style='BACKGROUND-COLOR: LightGreen '><A href='?src=[REF(src)];show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A></FONT></B><BR>"
 						else
-							dat+="<B><A href='?src=[REF(src)];show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR></B>"
+							dat+="<B><A href='?src=[REF(src)];show_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR></B>"
 				dat+="<BR><HR><A href='?src=[REF(src)];refresh=1'>Refresh</A>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Back</A>"
 			if(2)
@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
-						dat+="<A href='?src=[REF(src)];pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+						dat+="<A href='?src=[REF(src)];pick_censor_channel=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Cancel</A>"
 			if(11)
 				dat+="<B>Nanotrasen D-Notice Handler</B><HR>"
@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 					dat+="<I>No feed channels found active...</I><BR>"
 				else
 					for(var/datum/newscaster/feed_channel/CHANNEL in GLOB.news_network.network_channels)
-						dat+="<A href='?src=[REF(src)];pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ()]<BR>"
+						dat+="<A href='?src=[REF(src)];pick_d_notice=[REF(CHANNEL)]'>[CHANNEL.channel_name]</A> [(CHANNEL.censored) ? ("<FONT COLOR='red'>***</FONT>") : ""]<BR>"
 				dat+="<BR><A href='?src=[REF(src)];setScreen=[0]'>Back</A>"
 			if(12)
 				dat+="<B>[viewing_channel.channel_name]: </B><FONT SIZE=1>\[ created by: <FONT COLOR='maroon'>[viewing_channel.returnAuthor(-1)]</FONT> \]</FONT><BR>"
@@ -698,7 +698,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				FC.body = cominput
 				FC.time_stamp = station_time_timestamp()
 				FM.comments += FC
-				log_talk(usr,"[key_name(usr)] as [scanned_user] commented on message [FM.returnBody(-1)] -- [FC.body]",LOGCOMMENT)
+				usr.log_message("(as [scanned_user]) commented on message [FM.returnBody(-1)] -- [FC.body]", LOG_COMMENT)
 			updateUsrDialog()
 		else if(href_list["del_comment"])
 			var/datum/newscaster/feed_comment/FC = locate(href_list["del_comment"])
@@ -718,7 +718,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			updateUsrDialog()
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
@@ -732,7 +732,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 				new /obj/item/wallframe/newscaster(loc)
 			qdel(src)
-	else if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(stat & BROKEN)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -885,7 +885,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 /obj/item/newspaper/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!</span>")
-	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF")
+	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced="newspaper suicide")
 	var/mob/living/carbon/human/H = user
 	var/obj/W = new /obj/item/reagent_containers/food/drinks/bottle/whiskey(H.loc)
 	playsound(H.loc, 'sound/items/drink.ogg', rand(10,50), 1)

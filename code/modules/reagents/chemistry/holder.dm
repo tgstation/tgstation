@@ -308,7 +308,7 @@
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
-		C.update_canmove()
+		C.update_mobility()
 		C.update_stamina()
 	update_total()
 
@@ -551,7 +551,7 @@
 		WARNING("[my_atom] attempted to add a reagent called '[reagent]' which doesn't exist. ([usr])")
 		return FALSE
 
- 	update_total()
+	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
 		amount = (maximum_volume - cached_total) //Doesnt fit in. Make it disappear. Shouldnt happen. Will happen.
@@ -595,13 +595,13 @@
 		R.data = data
 		R.on_new(data)
 
+	if(isliving(my_atom))
+		R.on_mob_add(my_atom) //Must occur befor it could posibly run on_mob_delete
 	update_total()
 	if(my_atom)
 		my_atom.on_reagent_change(ADD_REAGENT)
 	if(!no_react)
 		handle_reactions()
-	if(isliving(my_atom))
-		R.on_mob_add(my_atom)
 	return TRUE
 
 /datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)

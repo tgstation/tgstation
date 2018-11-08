@@ -69,7 +69,6 @@
 	var/zooming_angle
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
-	var/zoom_animating = 0
 
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
@@ -86,43 +85,33 @@
 
 /obj/item/gun/energy/beam_rifle/equipped(mob/user)
 	set_user(user)
-	. = ..()
+	return ..()
 
 /obj/item/gun/energy/beam_rifle/pickup(mob/user)
 	set_user(user)
-	. = ..()
+	return ..()
 
 /obj/item/gun/energy/beam_rifle/dropped(mob/user)
 	set_user()
-	. = ..()
+	return ..()
 
-/obj/item/gun/energy/beam_rifle/ui_action_click(owner, action)
-	if(istype(action, /datum/action/item_action/zoom_lock_action))
+/obj/item/gun/energy/beam_rifle/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, zoom_lock_action))
 		zoom_lock++
 		if(zoom_lock > 3)
 			zoom_lock = 0
 		switch(zoom_lock)
 			if(ZOOM_LOCK_AUTOZOOM_FREEMOVE)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to free directional.</span>")
+				to_chat(user, "<span class='boldnotice'>You switch [src]'s zooming processor to free directional.</span>")
 			if(ZOOM_LOCK_AUTOZOOM_ANGLELOCK)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to locked directional.</span>")
+				to_chat(user, "<span class='boldnotice'>You switch [src]'s zooming processor to locked directional.</span>")
 			if(ZOOM_LOCK_CENTER_VIEW)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
+				to_chat(user, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
 			if(ZOOM_LOCK_OFF)
-				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
-	reset_zooming()
-
-/obj/item/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
-	if(!check_user() || !zooming || zoom_lock == ZOOM_LOCK_OFF || zoom_lock == ZOOM_LOCK_CENTER_VIEW)
-		return
-	if(zoom_animating && delay_override != 0)
-		return smooth_zooming(zoom_animating + delay_override)	//Automatically compensate for ongoing zooming actions.
-	var/total_time = SSfastprocess.wait
-	if(delay_override)
-		total_time = delay_override
-	zoom_animating = total_time
-	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
-	zoom_animating = 0
+				to_chat(user, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
+		reset_zooming()
+	else
+		..()
 
 /obj/item/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
 	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
@@ -136,7 +125,6 @@
 	current_user.client.change_view(world.view + zoom_target_view_increase)
 	zoom_current_view_increase = zoom_target_view_increase
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
-	smooth_zooming()
 
 /obj/item/gun/energy/beam_rifle/proc/start_zooming()
 	if(zoom_lock == ZOOM_LOCK_OFF)
@@ -153,7 +141,6 @@
 		user = current_user
 	if(!user || !user.client)
 		return FALSE
-	zoom_animating = 0
 	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
 	user.client.change_view(CONFIG_GET(string/default_view))
@@ -164,7 +151,7 @@
 /obj/item/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
 	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
-	if(cell.charge > primary_ammo.e_cost)
+	if(!QDELETED(cell) && (cell.charge > primary_ammo.e_cost))
 		add_overlay(charged_overlay)
 	else
 		add_overlay(drained_overlay)
@@ -184,7 +171,7 @@
 	. = ..()
 	fire_delay = delay
 	current_tracers = list()
-	START_PROCESSING(SSprojectiles, src)
+	START_PROCESSING(SSfastprocess, src)
 	zoom_lock_action = new(src)
 
 /obj/item/gun/energy/beam_rifle/Destroy()
@@ -294,7 +281,6 @@
 		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
 			zooming_angle = lastangle
 			set_autozoom_pixel_offsets_immediate(zooming_angle)
-			smooth_zooming(2)
 	return ..()
 
 /obj/item/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
@@ -529,18 +515,18 @@
 	if(check_pierce(target))
 		permutated += target
 		trajectory_ignore_forcemove = TRUE
-		forceMove(target)
+		forceMove(target.loc)
 		trajectory_ignore_forcemove = FALSE
 		return FALSE
 	if(!QDELETED(target))
 		cached = get_turf(target)
-	. = ..()
+	return ..()
 
 /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
 	if(!QDELETED(target))
 		cached = get_turf(target)
 	handle_hit(target)
-	. = ..()
+	return ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan
 	icon_state = ""

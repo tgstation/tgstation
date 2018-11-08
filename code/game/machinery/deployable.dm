@@ -26,7 +26,7 @@
 	return
 
 /obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weldingtool) && user.a_intent != INTENT_HARM && material == METAL)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM && material == METAL)
 		if(obj_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return

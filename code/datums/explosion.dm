@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(explosions)
 
 	if(adminlog)
 		message_admins("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [ADMIN_VERBOSEJMP(epicenter)]")
-		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [AREACOORD(epicenter)]")
+		log_game("Explosion with size ([devastation_range], [heavy_impact_range], [light_impact_range], [flame_range]) in [loc_name(epicenter)]")
 
 	var/x0 = epicenter.x
 	var/y0 = epicenter.y
@@ -198,7 +198,8 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/list/items = list()
 			for(var/I in T)
 				var/atom/A = I
-				items += A.GetAllContents()
+				if (!A.prevent_content_explosion()) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+					items += A.GetAllContents()
 			for(var/O in items)
 				var/atom/A = O
 				if(!QDELETED(A))

@@ -1,15 +1,22 @@
 /mob/CanPass(atom/movable/mover, turf/target)
+	return TRUE				//There's almost no cases where non /living mobs should be used in game as actual mobs, other than ghosts.
+
+/mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))
 		return TRUE
 	if(istype(mover, /obj/item/projectile) || mover.throwing)
-		return (!density || lying)
+		return (!density || !(mobility_flags & MOBILITY_STAND))
 	if(buckled == mover)
 		return TRUE
 	if(ismob(mover))
 		if (mover in buckled_mobs)
 			return TRUE
-	return (!mover.density || !density || lying)
+	return (!mover.density || !density || !(mobility_flags & MOBILITY_STAND))
 
+//DO NOT USE THIS UNLESS YOU ABSOLUTELY HAVE TO. THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
+//See mob_movespeed.dm
+/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
+	return cached_multiplicative_slowdown
 
 /client/verb/drop_item()
 	set hidden = 1
@@ -26,7 +33,6 @@
 			mob.control_object.setDir(direct)
 		else
 			mob.control_object.forceMove(get_step(mob.control_object,direct))
-	return
 
 #define MOVEMENT_DELAY_BUFFER 0.75
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
@@ -38,7 +44,7 @@
 		next_move_dir_add = 0
 		next_move_dir_sub = 0
 	var/old_move_delay = move_delay
-	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
+	move_delay = world.time + world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
 		return FALSE
 	if(!n || !direct)
@@ -72,7 +78,7 @@
 	if(mob.buckled)							//if we're buckled to something, tell it we moved.
 		return mob.buckled.relaymove(mob, direct)
 
-	if(!mob.canmove)
+	if(!(L.mobility_flags & MOBILITY_MOVE))
 		return FALSE
 
 	if(isobj(mob.loc) || ismob(mob.loc))	//Inside an object, tell it we moved
@@ -87,7 +93,6 @@
 		move_delay = old_move_delay
 	else
 		move_delay = world.time
-	var/oldloc = mob.loc
 
 	if(L.confused)
 		var/newdir = 0
@@ -105,18 +110,14 @@
 
 	if((direct & (direct - 1)) && mob.loc == n) //moved diagonally successfully
 		add_delay *= 2
-	if(mob.loc != oldloc)
-		move_delay += add_delay
+	move_delay += add_delay
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
 
-	for(var/obj/O in mob.user_movement_hooks)
-		O.intercept_user_move(direct, mob, n, oldloc)
-
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
-		mob.dir = turn(mob.dir, 180)
+		mob.setDir(turn(mob.dir, 180))
 
 ///Process_Grab()
 ///Called by client/Move()
@@ -145,7 +146,7 @@
 		if(INCORPOREAL_MOVE_BASIC)
 			var/T = get_step(L,direct)
 			if(T)
-				L.loc = T
+				L.forceMove(T)
 			L.setDir(direct)
 		if(INCORPOREAL_MOVE_SHADOW)
 			if(prob(50))
@@ -187,7 +188,7 @@
 				new /obj/effect/temp_visual/dir_setting/ninja/shadow(mobloc, L.dir)
 				var/T = get_step(L,direct)
 				if(T)
-					L.loc = T
+					L.forceMove(T)
 			L.setDir(direct)
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
@@ -206,7 +207,7 @@
 					to_chat(L, "<span class='warning'>Holy energies block your path!</span>")
 					return
 
-				L.loc = get_step(L, direct)
+				L.forceMove(stepTurf)
 			L.setDir(direct)
 	return TRUE
 
@@ -357,9 +358,13 @@
 	set hidden = TRUE
 	set instant = TRUE
 	if(mob)
-		mob.toggle_move_intent()
+		mob.toggle_move_intent(usr)
 
-/mob/proc/toggle_move_intent()
+/mob/proc/toggle_move_intent(mob/user)
+	if(m_intent == MOVE_INTENT_RUN)
+		m_intent = MOVE_INTENT_WALK
+	else
+		m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.toggle(src)
+			selector.update_icon(src)

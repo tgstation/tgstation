@@ -23,30 +23,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
 //define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
-#define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
-
-#define JANUARY		1
-#define FEBRUARY	2
-#define MARCH		3
-#define APRIL		4
-#define MAY			5
-#define JUNE		6
-#define JULY		7
-#define AUGUST		8
-#define SEPTEMBER	9
-#define OCTOBER		10
-#define NOVEMBER	11
-#define DECEMBER	12
-
-//Select holiday names -- If you test for a holiday in the code, make the holiday's name a define and test for that instead
-#define NEW_YEAR				"New Year"
-#define VALENTINES				"Valentine's Day"
-#define APRIL_FOOLS				"April Fool's Day"
-#define EASTER					"Easter"
-#define HALLOWEEN				"Halloween"
-#define CHRISTMAS				"Christmas"
-#define FESTIVE_SEASON			"Festive Season"
-
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
 #define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
@@ -105,8 +81,9 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 
 #define TRANSITIONEDGE			7 //Distance from edge to move to another z-level
 
-#define BE_CLOSE 1		//in the case of a silicon, to select if they need to be next to the atom
-#define NO_DEXTERY 1	//if other mobs (monkeys, aliens, etc) can use this
+#define BE_CLOSE TRUE		//in the case of a silicon, to select if they need to be next to the atom
+#define NO_DEXTERY TRUE	//if other mobs (monkeys, aliens, etc) can use this
+#define NO_TK TRUE
 //used by canUseTopic()
 
 //singularity defines
@@ -160,6 +137,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
 #define BLOOD_LOSS_IN_SPREAD		20
+#define BLOOD_AMOUNT_PER_DECAL		20
 
 //Bloody shoe blood states
 #define BLOOD_STATE_HUMAN			"blood"
@@ -457,3 +435,13 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define CAMERA_NO_GHOSTS 0
 #define CAMERA_SEE_GHOSTS_BASIC 1
 #define CAMERA_SEE_GHOSTS_ORBIT 2
+
+#define CLIENT_FROM_VAR(I) (ismob(I) ? I:client : (istype(I, /client) ? I : (istype(I, /datum/mind) ? I:current?:client : null)))
+
+#define AREASELECT_CORNERA "corner A"
+#define AREASELECT_CORNERB "corner B"
+
+#define VARSET_FROM_LIST(L, V) if(L && L[#V]) V = L[#V]
+#define VARSET_FROM_LIST_IF(L, V, C...) if(L && L[#V] && (C)) V = L[#V]
+#define VARSET_TO_LIST(L, V) if(L) L[#V] = V
+#define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V

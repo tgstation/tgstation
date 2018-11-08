@@ -43,6 +43,7 @@
 		var/checktime = text2num(query_validate_time.item[1])
 		if(!checktime)
 			to_chat(src, "Datetime entered is improperly formatted or not later than current server time.")
+			qdel(query_validate_time)
 			return
 		endtime = query_validate_time.item[1]
 	qdel(query_validate_time)

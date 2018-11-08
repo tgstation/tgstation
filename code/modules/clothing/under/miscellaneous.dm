@@ -263,7 +263,7 @@
 
 /obj/item/clothing/under/suit_jacket/white
 	name = "white suit"
-	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!."
+	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!"
 	icon_state = "white_suit"
 	item_state = "white_suit"
 	item_color = "white_suit"
@@ -294,6 +294,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 25
 
 /obj/item/clothing/under/skirt/red
 	name = "red skirt"
@@ -304,6 +305,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 25
 
 /obj/item/clothing/under/skirt/purple
 	name = "purple skirt"
@@ -314,6 +316,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
+	custom_price = 25
 
 
 /obj/item/clothing/under/schoolgirl
@@ -351,6 +354,7 @@
 	item_state = "lb_suit"
 	item_color = "overalls"
 	can_adjust = FALSE
+	custom_price = 20
 
 /obj/item/clothing/under/pirate
 	name = "pirate outfit"
@@ -530,6 +534,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
+	custom_price = 25
 
 /obj/item/clothing/under/plaid_skirt/blue
 	name = "blue plaid skirt"
@@ -725,6 +730,14 @@
 	item_state = "lobster"
 	item_color = "lobster"
 	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/gondola
+	name = "gondola hide suit"
+	desc = "Now you're cooking."
+	icon_state = "gondola"
+	item_state = "lb_suit"
+	item_color = "gondola"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/skeleton

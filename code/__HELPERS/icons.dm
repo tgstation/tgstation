@@ -712,8 +712,19 @@ world
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
-	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);if(A.alpha<255)SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)SELF_ICON.Blend(A.color,ICON_MULTIPLY);;##SETVAR=SELF_ICON;
-
+	#define SET_SELF(SETVAR) do { \
+		var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null); \
+		if(A.alpha<255) { \
+			SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);\
+		} \
+		if(A.color) { \
+			if(islist(A.color)){ \
+				SELF_ICON.MapColors(arglist(A.color))} \
+			else{ \
+				SELF_ICON.Blend(A.color,ICON_MULTIPLY)} \
+		} \
+		##SETVAR=SELF_ICON;\
+		} while (0)
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
 	#define INDEX_Y_LOW 3
@@ -860,7 +871,11 @@ world
 			flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
 		if(A.color)
-			flat.Blend(A.color, ICON_MULTIPLY)
+			if(islist(A.color))
+				flat.MapColors(arglist(A.color))
+			else
+				flat.Blend(A.color, ICON_MULTIPLY)
+		
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
@@ -1027,15 +1042,17 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals)
+/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
 	var/static/list/humanoid_icon_cache = list()
 	if(!icon_id || !humanoid_icon_cache[icon_id])
 		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
 
 		if(prefs)
-			prefs.copy_to(body)
+			prefs.copy_to(body,TRUE,FALSE)
 		if(J)
-			J.equip(body, TRUE, FALSE)
+			J.equip(body, TRUE, FALSE, outfit_override = outfit_override)
+		else if (outfit_override)
+			body.equipOutfit(outfit_override,visualsOnly = TRUE)
 
 
 		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")

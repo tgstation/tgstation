@@ -3,6 +3,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
+	custom_price = 5
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
@@ -39,6 +40,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
+	custom_price = 5
 	icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
@@ -108,7 +110,7 @@
 	if(user.a_intent == INTENT_HARM && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
-		add_logs(user, target, "splashed", src)
+		log_combat(user, target, "splashed", src)
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return

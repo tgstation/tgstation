@@ -18,10 +18,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
-/mob/living/simple_animal/hostile/syndicate/ranged/pilot{
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "fh" = (
 /obj/machinery/camera/xray{
@@ -41,7 +41,7 @@
 /obj/machinery/computer/shuttle/caravan/syndicate1{
 	dir = 8
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "uW" = (
 /obj/machinery/button/door{
@@ -54,7 +54,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/syndicate1,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "vD" = (
 /obj/machinery/porta_turret/syndicate/energy{
@@ -77,7 +77,7 @@
 	network = list("caravansyndicate1")
 	},
 /obj/structure/cable/yellow,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/caravan/syndicate1)
 "wV" = (
 /obj/effect/mapping_helpers/airlock/locked,
@@ -98,7 +98,6 @@
 	name = "Syndicate Fighter";
 	port_direction = 2;
 	preferred_direction = 4;
-	timid = 1;
 	width = 9
 	},
 /turf/open/floor/plating,

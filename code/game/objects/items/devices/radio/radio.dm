@@ -16,7 +16,6 @@
 
 	var/on = TRUE
 	var/frequency = FREQ_COMMON
-	var/traitor_frequency = 0  // If tuned to this frequency, uplink will be unlocked.
 	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
 	var/emped = 0  // Tracks the number of EMPs currently stacked.
 
@@ -276,6 +275,7 @@
 	signal.broadcast()
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
 
@@ -327,7 +327,7 @@
 
 /obj/item/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		unscrewed = !unscrewed
 		if(unscrewed)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
@@ -378,7 +378,7 @@
 
 /obj/item/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(keyslot)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])

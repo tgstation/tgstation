@@ -18,7 +18,7 @@
 		if(ignored_things[thing.type])
 			continue
 		. += thing
-		if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION)
+		if((thing.rad_flags & RAD_PROTECT_CONTENTS) || (SEND_SIGNAL(thing, COMSIG_ATOM_RAD_PROBE) & COMPONENT_BLOCK_RADIATION))
 			continue
 		processing_list += thing.contents
 
@@ -41,5 +41,5 @@
 		log = TRUE
 	if(log)
 		var/turf/_source_T = isturf(source) ? source : get_turf(source)
-		log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [AREACOORD(_source_T)] ")
+		log_game("Radiation pulse with intensity: [intensity] and range modifier: [range_modifier] in [loc_name(_source_T)] ")
 	return TRUE

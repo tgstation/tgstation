@@ -1,60 +1,60 @@
-/obj/machinery/computer/arcade  //Remember to update the Cargo Toy Pack with any new toys!
+GLOBAL_LIST_INIT(arcade_prize_pool, list(
+		/obj/item/storage/box/snappops = 2,
+		/obj/item/toy/talking/AI = 2,
+		/obj/item/toy/talking/codex_gigas = 2,
+		/obj/item/clothing/under/syndicate/tacticool = 2,
+		/obj/item/toy/sword = 2,
+		/obj/item/toy/gun = 2,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow = 2,
+		/obj/item/storage/box/fakesyndiesuit = 2,
+		/obj/item/storage/crayons = 2,
+		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/prize/ripley = 1,
+		/obj/item/toy/prize/fireripley = 1,
+		/obj/item/toy/prize/deathripley = 1,
+		/obj/item/toy/prize/gygax = 1,
+		/obj/item/toy/prize/durand = 1,
+		/obj/item/toy/prize/honk = 1,
+		/obj/item/toy/prize/marauder = 1,
+		/obj/item/toy/prize/seraph = 1,
+		/obj/item/toy/prize/mauler = 1,
+		/obj/item/toy/prize/odysseus = 1,
+		/obj/item/toy/prize/phazon = 1,
+		/obj/item/toy/prize/reticence = 1,
+		/obj/item/toy/cards/deck = 2,
+		/obj/item/toy/nuke = 2,
+		/obj/item/toy/minimeteor = 2,
+		/obj/item/toy/redbutton = 2,
+		/obj/item/toy/talking/owl = 2,
+		/obj/item/toy/talking/griffin = 2,
+		/obj/item/coin/antagtoken = 2,
+		/obj/item/stack/tile/fakespace/loaded = 2,
+		/obj/item/stack/tile/fakepit/loaded = 2,
+		/obj/item/toy/toy_xeno = 2,
+		/obj/item/storage/box/actionfigure = 1,
+		/obj/item/restraints/handcuffs/fake = 2,
+		/obj/item/grenade/chem_grenade/glitter/pink = 1,
+		/obj/item/grenade/chem_grenade/glitter/blue = 1,
+		/obj/item/grenade/chem_grenade/glitter/white = 1,
+		/obj/item/toy/eightball = 2,
+		/obj/item/toy/windupToolbox = 2,
+		/obj/item/toy/clockwork_watch = 2,
+		/obj/item/toy/toy_dagger = 2,
+		/obj/item/extendohand/acme = 1,
+		/obj/item/hot_potato/harmless/toy = 1,
+		/obj/item/card/emagfake = 1,
+		/obj/item/clothing/shoes/wheelys = 2,
+		/obj/item/clothing/shoes/kindleKicks = 2,
+		/obj/item/storage/belt/military/snack = 2))
+
+/obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
 	icon_state = "arcade"
 	icon_keyboard = null
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
-	var/list/prizes = list(
-		/obj/item/storage/box/snappops					= 2,
-		/obj/item/toy/talking/AI								= 2,
-		/obj/item/toy/talking/codex_gigas						= 2,
-		/obj/item/clothing/under/syndicate/tacticool			= 2,
-		/obj/item/toy/sword										= 2,
-		/obj/item/toy/gun										= 2,
-		/obj/item/gun/ballistic/shotgun/toy/crossbow	= 2,
-		/obj/item/storage/box/fakesyndiesuit				= 2,
-		/obj/item/storage/crayons						= 2,
-		/obj/item/toy/spinningtoy								= 2,
-		/obj/item/toy/prize/ripley								= 1,
-		/obj/item/toy/prize/fireripley							= 1,
-		/obj/item/toy/prize/deathripley							= 1,
-		/obj/item/toy/prize/gygax								= 1,
-		/obj/item/toy/prize/durand								= 1,
-		/obj/item/toy/prize/honk								= 1,
-		/obj/item/toy/prize/marauder							= 1,
-		/obj/item/toy/prize/seraph								= 1,
-		/obj/item/toy/prize/mauler								= 1,
-		/obj/item/toy/prize/odysseus							= 1,
-		/obj/item/toy/prize/phazon								= 1,
-		/obj/item/toy/prize/reticence							= 1,
-		/obj/item/toy/cards/deck								= 2,
-		/obj/item/toy/nuke										= 2,
-		/obj/item/toy/minimeteor								= 2,
-		/obj/item/toy/redbutton									= 2,
-		/obj/item/toy/talking/owl								= 2,
-		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/coin/antagtoken						= 2,
-		/obj/item/stack/tile/fakespace/loaded					= 2,
-		/obj/item/stack/tile/fakepit/loaded						= 2,
-		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/storage/box/actionfigure				= 1,
-		/obj/item/restraints/handcuffs/fake              = 2,
-		/obj/item/grenade/chem_grenade/glitter/pink		= 1,
-		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
-		/obj/item/grenade/chem_grenade/glitter/white		= 1,
-		/obj/item/toy/eightball									= 2,
-		/obj/item/toy/windupToolbox								= 2,
-		/obj/item/toy/clockwork_watch							= 2,
-		/obj/item/toy/toy_dagger								= 2,
-		/obj/item/extendohand/acme								= 1,
-		/obj/item/hot_potato/harmless/toy						= 1,
-		/obj/item/card/emagfake									= 1,
-		/obj/item/clothing/shoes/wheelys				= 2,
-		/obj/item/clothing/shoes/kindleKicks				= 2,
-		/obj/item/storage/belt/military/snack					= 2
-		)
-
+	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -78,16 +78,23 @@
 		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
 
 	if(!contents.len)
-		var/prizeselect = pickweight(prizes)
+		var/prizeselect
+		if(prize_override)
+			prizeselect = pickweight(prize_override)
+		else
+			prizeselect = pickweight(GLOB.arcade_prize_pool)
 		new prizeselect(src)
 
-	var/atom/movable/prize = pick(contents)
-	visible_message("<span class='notice'>[src] dispenses [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+	var/atom/movable/the_prize = pick(contents)
+	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
-	prize.forceMove(get_turf(src))
+	the_prize.forceMove(get_turf(src))
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
+	var/override = FALSE
+	if(prize_override)
+		override = TRUE
 
 	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
@@ -100,7 +107,10 @@
 		if(2)
 			num_of_prizes = rand(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
-		empprize = pickweight(prizes)
+		if(override)
+			empprize = pickweight(prize_override)
+		else
+			empprize = pickweight(GLOB.arcade_prize_pool)
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
@@ -367,6 +377,15 @@
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
+/obj/machinery/computer/arcade/orion_trail/kobayashi
+	name = "Kobayashi Maru control computer"
+	desc = "A test for cadets"
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon_state = "control_boxp"
+	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
+	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
+	settlers = list("Kirk","Worf","Gene")
+
 /obj/machinery/computer/arcade/orion_trail/Reset()
 	// Sets up the main trail
 	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
@@ -520,7 +539,7 @@
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
-							M.Knockdown(60)
+							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
 							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
@@ -704,7 +723,7 @@
 							say("WEEWOO! WEEWOO! Spaceport security en route!")
 							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
 							for(var/i, i<=3, i++)
-								var/mob/living/simple_animal/hostile/syndicate/ranged/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/orion(get_turf(src))
+								var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(get_turf(src))
 								O.target = usr
 
 
@@ -1047,7 +1066,7 @@
 	newgame()
 	obj_flags |= EMAGGED
 
-/mob/living/simple_animal/hostile/syndicate/ranged/orion
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
@@ -1075,8 +1094,7 @@
 	if(active)
 		return
 
-	message_admins("[ADMIN_LOOKUPFLW(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
-	log_game("[key_name(usr)] primed an explosive Orion ship for detonation at [AREACOORD(usr)].")
+	log_bomber(usr, "primed an explosive", src, "for detonation")
 
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1

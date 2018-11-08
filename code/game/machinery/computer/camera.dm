@@ -202,6 +202,7 @@
 	desc = "Used for watching an empty arena."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
+	layer = SIGN_LAYER
 	network = list("thunder")
 	density = FALSE
 	circuit = null

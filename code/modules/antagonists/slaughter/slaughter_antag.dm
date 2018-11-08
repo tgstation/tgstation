@@ -26,8 +26,6 @@
 	new_objective2.explanation_text = "[objective_verb] everyone[summoner ? " else while you're at it":""]."
 	objectives += new_objective2
 
-	owner.objectives |= objectives
-
 /datum/antagonist/slaughter/laughter
 	name = "Laughter demon"
 	objective_verb = "Hug and Tickle"

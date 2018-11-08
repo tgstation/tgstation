@@ -1,4 +1,13 @@
-/world/TgsNew(datum/tgs_event_handler/event_handler)
+/world/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
+	var/current_api = TGS_READ_GLOBAL(tgs)
+	if(current_api)
+		TGS_ERROR_LOG("TgsNew(): TGS API datum already set ([current_api])!")
+		return
+
+#ifdef TGS_V3_API
+	minimum_required_security_level = TGS_SECURITY_TRUSTED
+#endif
+
 	var/tgs_version = world.params[TGS_VERSION_PARAMETER]
 	if(!tgs_version)
 		return
@@ -6,20 +15,22 @@
 	var/path = SelectTgsApi(tgs_version)
 	if(!path)
 		TGS_ERROR_LOG("Found unsupported API version: [tgs_version]. If this is a valid version please report this, backporting is done on demand.")
+		return
 
 	TGS_INFO_LOG("Activating API for version [tgs_version]")
 	var/datum/tgs_api/new_api = new path
 
-	var/result = new_api.OnWorldNew(event_handler ? event_handler : new /datum/tgs_event_handler/tgs_default)
-	if(result && result != TGS_UNIMPLEMENTED)
-		TGS_WRITE_GLOBAL(tgs, new_api)
-	else
+	TGS_WRITE_GLOBAL(tgs, new_api)
+
+	var/result = new_api.OnWorldNew(event_handler, minimum_required_security_level)
+	if(!result || result == TGS_UNIMPLEMENTED)
+		TGS_WRITE_GLOBAL(tgs, null)
 		TGS_ERROR_LOG("Failed to activate API!")
 
 /world/proc/SelectTgsApi(tgs_version)
 	//remove the old 3.0 header
 	tgs_version = replacetext(tgs_version, "/tg/station 13 Server v", "")
-
+  
 	var/list/version_bits = splittext(tgs_version, ".")
 
 	var/super = text2num(version_bits[1])
@@ -29,9 +40,17 @@
 
 	switch(super)
 		if(3)
+#ifndef TGS_V3_API
+			TGS_ERROR_LOG("Detected V3 API but TGS_V3_API isn't defined!")
+#else
 			switch(major)
 				if(2)
 					return /datum/tgs_api/v3210
+#endif
+		if(4)
+			switch(major)
+				if(0)
+					return /datum/tgs_api/v4
 
 	if(super != null && major != null && minor != null && patch != null && tgs_version > TgsMaximumAPIVersion())
 		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
@@ -115,6 +134,11 @@
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
 		api.ChatPrivateMessage(message, user)
+
+/world/TgsSecurityLevel()
+	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
+	if(api)
+		api.SecurityLevel()
 
 /*
 The MIT License

@@ -9,7 +9,7 @@
 	internal_radio = FALSE
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/experimental/growclone(clonename, ui, se, datum/species/mrace, list/features, factions)
+/obj/machinery/clonepod/experimental/growclone(ckey, clonename, ui, se, datum/species/mrace, list/features, factions)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -67,7 +67,7 @@
 
 		H.set_cloned_appearance()
 
-		H.suiciding = FALSE
+		H.set_suicide(FALSE)
 	attempting = FALSE
 	return TRUE
 
@@ -141,7 +141,9 @@
 	LAZYREMOVE(pods, pod)
 
 /obj/machinery/computer/prototype_cloning/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, W))
+			return
 		var/obj/item/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/clonepod/experimental))
@@ -292,6 +294,6 @@
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 	else
-		pod.growclone(mob_occupant.real_name, dna.uni_identity, dna.struc_enzymes, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(null, mob_occupant.real_name, dna.uni_identity, dna.struc_enzymes, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)

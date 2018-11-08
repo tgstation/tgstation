@@ -127,7 +127,7 @@
 			jetpack = I
 			to_chat(user, "<span class='notice'>You successfully install the jetpack into [src].</span>")
 			return
-	else if(istype(I, /obj/item/screwdriver))
+	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!jetpack)
 			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
@@ -360,11 +360,7 @@
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 50, "energy" = 25, "bomb" = 55, "bio" = 100, "rad" = 70, "fire" = 100, "acid" = 100)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	visor_flags_inv = 0
-	visor_flags = 0
-	on = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	name = "elite syndicate hardsuit"

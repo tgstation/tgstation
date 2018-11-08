@@ -262,7 +262,7 @@
 /datum/species/golem/wood
 	name = "Wood Golem"
 	id = "wood golem"
-	fixed_mut_color = "49311c"
+	fixed_mut_color = "9E704B"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
@@ -293,8 +293,8 @@
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
 		H.nutrition += light_amount * 10
-		if(H.nutrition > NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL
+		if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL)
+			H.nutrition = NUTRITION_LEVEL_ALMOST_FULL
 		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(1,1)
 			H.adjustToxLoss(-1)
@@ -745,6 +745,7 @@
 	var/mob/living/carbon/human/cloth_golem
 
 /obj/structure/cloth_pile/Initialize(mapload, mob/living/carbon/human/H)
+	. = ..()
 	if(!QDELETED(H) && is_species(H, /datum/species/golem/cloth))
 		H.unequip_everything()
 		H.forceMove(src)
@@ -792,7 +793,7 @@
 		fire_act()
 
 /datum/species/golem/plastic
-	name = "Plastic"
+	name = "Plastic Golem"
 	id = "plastic golem"
 	prefix = "Plastic"
 	special_names = null

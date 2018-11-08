@@ -26,16 +26,8 @@
 	AddAbility(new/obj/effect/proc_holder/alien/regurgitate(null))
 	. = ..()
 
-/mob/living/carbon/alien/humanoid/movement_delay()
-	. = ..()
-	var/static/config_alien_delay
-	if(isnull(config_alien_delay))
-		config_alien_delay = CONFIG_GET(number/alien_delay)
-	. += move_delay_add + config_alien_delay + sneaking //move_delay_add is used to slow aliens with stun
-
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
-	. = handcuffed
-
+	return handcuffed
 
 /mob/living/carbon/alien/humanoid/show_inv(mob/user)
 	user.set_machine(src)

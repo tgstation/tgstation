@@ -48,7 +48,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
 			diode.forceMove(drop_location())
@@ -92,7 +92,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-			add_logs(user, C, "shone in the eyes", src)
+			log_combat(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -109,11 +109,11 @@
 	//robots
 	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
-		add_logs(user, S, "shone in the sensors", src)
+		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
-			S.Knockdown(rand(100,200))
+			S.Paralyze(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
 			outmsg = "<span class='notice'>You overload [S] by shining [src] at [S.p_their()] sensors.</span>"
 		else
@@ -125,7 +125,7 @@
 		if(prob(effectchance * diode.rating))
 			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
-			add_logs(user, C, "EMPed", src)
+			log_combat(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
@@ -133,12 +133,12 @@
 	for(var/mob/living/carbon/human/H in view(1,targloc))
 		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
 			continue
-		if(!H.lying)
+		if(user.mobility_flags & MOBILITY_STAND)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
 			if(prob(effectchance))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
 				H.Move(targloc)
-				add_logs(user, H, "moved with a laser pointer",src)
+				log_combat(user, H, "moved with a laser pointer",src)
 			else
 				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
 		else
@@ -149,8 +149,7 @@
 		if(prob(50))
 			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
-			C.resting = TRUE
-			C.update_canmove()
+			C.set_resting(TRUE, FALSE)
 		else
 			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 

@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 	if(stat)
 		to_chat(src, "You must be conscious to do this!")
 		return
-	if(lying)
+	if(IsStun() || IsParalyzed())
 		to_chat(src, "You can't vent crawl while you're stunned!")
 		return
 	if(restrained())
@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 
 			if(iscarbon(src) && ventcrawler < 2)//It must have atleast been 1 to get this far
 				var/failed = 0
-				var/list/items_list = get_equipped_items()
+				var/list/items_list = get_equipped_items(include_pockets = TRUE)
 				if(items_list.len)
 					failed = 1
 				for(var/obj/item/I in held_items)
@@ -99,6 +99,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		pipes_shown += A.pipe_vision_img
 		if(client)
 			client.images += A.pipe_vision_img
+	setMovetype(movement_type | VENTCRAWLING)
 
 
 /mob/living/proc/remove_ventcrawl()
@@ -106,6 +107,7 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
 	pipes_shown.len = 0
+	setMovetype(movement_type & ~VENTCRAWLING)
 
 
 

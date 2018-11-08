@@ -4,15 +4,18 @@
 /obj/item/camera
 	name = "camera"
 	icon = 'icons/obj/items_and_weapons.dmi'
-	desc = "A polaroid camera. <span class='boldnotice'>Alt click to change its focusing, allowing you to set how big of an area it will capture!</span>"
+	desc = "A polaroid camera."
 	icon_state = "camera"
-	item_state = "electropack"
+	item_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_NECK
 	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	var/flash_enabled = TRUE
 	var/state_on = "camera"
 	var/state_off = "camera_off"
 	var/pictures_max = 10
@@ -38,14 +41,18 @@
 	user.put_in_hands(disk)
 	disk = null
 
+/obj/item/camera/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
+
 /obj/item/camera/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
 	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num
-	desired_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	desired_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	if(user.canUseTopic(src))
-		picture_size_x = desired_x
-		picture_size_y = desired_y
+	picture_size_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -114,7 +121,13 @@
 		return
 
 	on = FALSE
-	addtimer(CALLBACK(src, .proc/cooldown), cooldown)
+
+	var/realcooldown = cooldown
+	var/mob/living/carbon/human/H = user
+	if (H.has_trait(TRAIT_PHOTOGRAPHER))
+		realcooldown *= 0.5
+	addtimer(CALLBACK(src, .proc/cooldown), realcooldown)
+
 	icon_state = state_off
 
 	INVOKE_ASYNC(src, .proc/captureimage, target, user, flag, picture_size_x - 1, picture_size_y - 1)
@@ -132,6 +145,8 @@
 	qdel(P)
 
 /obj/item/camera/proc/captureimage(atom/target, mob/user, flag, size_x = 1, size_y = 1)
+	if(flash_enabled)
+		flash_lighting_fx(8, light_power, light_color)
 	blending = TRUE
 	var/turf/target_turf = get_turf(target)
 	if(!isturf(target_turf))
@@ -151,7 +166,7 @@
 	var/blueprints = FALSE
 	var/clone_area = SSmapping.RequestBlockReservation(size_x * 2 + 1, size_y * 2 + 1)
 	for(var/turf/T in block(locate(target_turf.x - size_x, target_turf.y - size_y, target_turf.z), locate(target_turf.x + size_x, target_turf.y + size_y, target_turf.z)))
-		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || T in seen)
+		if((ai_user && GLOB.cameranet.checkTurfVis(T)) || (T in seen))
 			turfs += T
 			for(var/mob/M in T)
 				mobs += M
@@ -185,17 +200,14 @@
 		to_chat(user, "<span class='notice'>[pictures_left] photos left.</span>")
 		var/customize = alert(user, "Do you want to customize the photo?", "Customization", "Yes", "No")
 		if(customize == "Yes")
-			var/name1 = input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name") as text|null
-			var/desc1 = input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption") as text|null
-			var/caption = input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption") as text|null
+			var/name1 = stripped_input(user, "Set a name for this photo, or leave blank. 32 characters max.", "Name", max_length = 32)
+			var/desc1 = stripped_input(user, "Set a description to add to photo, or leave blank. 128 characters max.", "Caption", max_length = 128)
+			var/caption = stripped_input(user, "Set a caption for this photo, or leave blank. 256 characters max.", "Caption", max_length = 256)
 			if(name1)
-				name1 = copytext(name1, 1, 33)
 				picture.picture_name = name1
 			if(desc1)
-				desc1 = copytext(desc1, 1, 129)
 				picture.picture_desc = "[desc1] - [picture.picture_desc]"
 			if(caption)
-				caption = copytext(caption, 1, 257)
 				picture.caption = caption
 		p.set_picture(picture, TRUE, TRUE)
 		if(CONFIG_GET(flag/picture_logging_camera))

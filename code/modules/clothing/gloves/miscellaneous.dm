@@ -10,6 +10,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	custom_price = 10
 
 /obj/item/clothing/gloves/botanic_leather
 	name = "botanist's leather gloves"
@@ -70,7 +71,7 @@
 	if(M.a_intent == INTENT_HARM)
 		M.changeNext_move(CLICK_CD_RAPID)
 		if(warcry)
-			M.say("[warcry]", ignore_spam = TRUE)
+			M.say("[warcry]", ignore_spam = TRUE, forced = "north star warcry")
 	.= FALSE
 
 /obj/item/clothing/gloves/rapid/attack_self(mob/user)

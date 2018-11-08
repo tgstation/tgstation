@@ -66,9 +66,8 @@
 
 	if(src.mob)
 		var/mob/A = src.mob
-		A.x = tx
-		A.y = ty
-		A.z = tz
+		var/turf/T = locate(tx,ty,tz)
+		A.forceMove(T)
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Coordiate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
 

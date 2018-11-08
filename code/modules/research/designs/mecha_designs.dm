@@ -209,7 +209,7 @@
 
 /datum/design/mech_missile_rack
 	name = "Exosuit Weapon (SRM-8 Missile Rack)"
-	desc = "Allows for the construction of SRM-8 Missile Rack."
+	desc = "Allows for the construction of an SRM-8 Missile Rack."
 	id = "mech_missile_rack"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack

@@ -24,17 +24,17 @@
 			if(A.grab_state >= GRAB_AGGRESSIVE)
 				D.grabbedby(A, 1)
 			else
-				A.start_pulling(D, 1)
+				A.start_pulling(D, supress_message = TRUE)
 				if(A.pulling)
 					D.drop_all_held_items()
 					D.stop_pulling()
 					if(A.a_intent == INTENT_GRAB)
-						add_logs(A, D, "grabbed", addition="aggressively")
+						log_combat(A, D, "grabbed", addition="aggressively")
 						D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 						  "<span class='userdanger'>[A] violently grabs you!</span>")
 						A.grab_state = GRAB_AGGRESSIVE //Instant aggressive grab
 					else
-						add_logs(A, D, "grabbed", addition="passively")
+						log_combat(A, D, "grabbed", addition="passively")
 						A.grab_state = GRAB_PASSIVE
 		if(4)
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
@@ -57,10 +57,10 @@
 			playsound(get_turf(D), 'sound/effects/meteorimpact.ogg', 25, 1, -1)
 			var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 			D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
-			D.Knockdown(60)
+			D.Paralyze(60)
 		if(7,8)
 			basic_hit(A,D)
 
 	if(atk_verb)
-		add_logs(A, D, "[atk_verb] (Psychotic Brawling)")
+		log_combat(A, D, "[atk_verb] (Psychotic Brawling)")
 	return 1

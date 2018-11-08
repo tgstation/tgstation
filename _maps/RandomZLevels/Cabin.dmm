@@ -205,7 +205,6 @@
 /area/awaymission/cabin)
 "aJ" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /obj/machinery/door/window/northright,
@@ -213,7 +212,6 @@
 /area/awaymission/cabin)
 "aK" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 4
 	},
 /obj/machinery/door/window/northleft,
@@ -466,12 +464,10 @@
 /area/awaymission/cabin)
 "bI" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 4
 	},
 /obj/machinery/door/window/eastright,
 /obj/structure/window{
-	icon_state = "window";
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,
@@ -967,10 +963,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/cabin)
-"dw" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/indestructible/rock/snow,
-/area/space)
 
 (1,1,1) = {"
 aa
@@ -1227,7 +1219,7 @@ aa
 aa
 aa
 aa
-dw
+aa
 "}
 (2,1,1) = {"
 aa
