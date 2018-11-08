@@ -730,7 +730,7 @@
 				user.visible_message("[user] removes the central control module from [parent].", "<span class='notice'>You remove the central computer mainboard from [parent].</span>")
 		if(7)
 			if(diff==FORWARD)
-				user.visible_message("[user] installs [I]into [parent].", "<span class='notice'>You install [I]into [parent].</span>")
+				user.visible_message("[user] installs [I] into [parent].", "<span class='notice'>You install [I] into [parent].</span>")
 			else
 				user.visible_message("[user] unfastens the mainboard.", "<span class='notice'>You unfasten the mainboard.</span>")
 		if(8)
@@ -1488,7 +1488,7 @@
 				user.visible_message("[user] unfastens the scanner module.", "<span class='notice'>You unfasten the scanner module.</span>")
 		if(14)
 			if(diff==FORWARD)
-				user.visible_message("[user] secures [I].", "<span class='notice'>You secure [I].</span>")
+				user.visible_message("[user] secures the capacitor.", "<span class='notice'>You secure the capacitor.</span>")
 			else
 				user.visible_message("[user] removes the capacitor from [parent].", "<span class='notice'>You remove the capacitor from [parent].</span>")
 		if(15)
