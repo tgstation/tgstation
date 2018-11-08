@@ -39,8 +39,7 @@
 	name = "X Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, wich might be fun for later //hmb
 	quality = POSITIVE
-	get_chance = 25
-	lowest_value = 256 * 12
+	difficulty = 14
 	text_gain_indication = "<span class='notice'>The walls suddenly disappear!</span>"
 	time_coeff = 2
 	instability = 25
@@ -63,6 +62,7 @@
 	desc = "Reflects concentrated light back from the eyes."
 	quality = POSITIVE
 	locked = TRUE
+	difficulty = 16
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD

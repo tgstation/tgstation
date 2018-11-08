@@ -4,8 +4,7 @@
 	desc = "A poorly understood genome that causes the holder's muscles to expand, inhibit speech and gives the person a bad skin condition."
 	quality = POSITIVE
 	locked = TRUE
-	get_chance = 15
-	lowest_value = 256 * 12
+	difficulty = 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25

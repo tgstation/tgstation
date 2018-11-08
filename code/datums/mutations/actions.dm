@@ -2,10 +2,9 @@
 	name = "Telepathy"
 	desc = "A rare mutation that allows the user to telepathically communicate to others."
 	quality = POSITIVE
-	lowest_value = 256 * 12
-	get_chance = 70
 	text_gain_indication = "<span class='notice'>You can hear your own voice echoing in your mind!</span>"
 	text_lose_indication = "<span class='notice'>You don't hear your mind echo anymore.</span>"
+	difficulty = 12
 	power = /obj/effect/proc_holder/spell/targeted/telepathy/genetic
 	instability = 10
 
@@ -22,8 +21,7 @@
 	name = "Fire Breath"
 	desc = "An ancient mutation that gives lizards breath of fire."
 	quality = POSITIVE
-	lowest_value = 256 * 12
-	get_chance = 20
+	difficulty = 8
 	locked = TRUE
 	text_gain_indication = "<span class='notice'>Your throat is burning!</span>"
 	text_lose_indication = "<span class='notice'>Your throat is cooling down.</span>"
@@ -60,6 +58,3 @@
 	exp_light = 0
 	exp_flash = 0
 	exp_fire= 4
-
-
-

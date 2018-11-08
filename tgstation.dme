@@ -2358,6 +2358,7 @@
 #include "code\modules\projectiles\projectile\reusable\_reusable.dm"
 #include "code\modules\projectiles\projectile\reusable\foam_dart.dm"
 #include "code\modules\projectiles\projectile\reusable\magspear.dm"
+#include "code\modules\projectiles\projectile\special\arm.dm"
 #include "code\modules\projectiles\projectile\special\curse.dm"
 #include "code\modules\projectiles\projectile\special\floral.dm"
 #include "code\modules\projectiles\projectile\special\gravity.dm"

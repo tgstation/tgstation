@@ -3,8 +3,7 @@
 	name = "Telekinesis"
 	desc = "A strange mutation that allows the holder to interact with objects through thought."
 	quality = POSITIVE
-	get_chance = 20
-	lowest_value = 256 * 12
+	difficulty = 16
 	text_gain_indication = "<span class='notice'>You feel smarter!</span>"
 	limb_req = BODY_ZONE_HEAD
 	instability = 30

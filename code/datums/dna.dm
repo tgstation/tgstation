@@ -123,7 +123,7 @@
 	shuffle_inplace(mutation_index)
 
 //Used to generate original gene sequences for every mutation
-/proc/generate_gene_sequence(length=2)
+/proc/generate_gene_sequence(length=4)
 	var/static/list/active_sequences = list("AT","TA","GC","CG")
 	var/sequence
 	for(var/i in 1 to length*DNA_SEQUENCE_LENGTH)
@@ -132,6 +132,7 @@
 
 //Used to create a chipped gene sequence
 /proc/create_sequence(mutation, active, difficulty=4)
+	difficulty += rand(-2,4)
 	var/sequence = get_sequence(mutation)
 	if(active)
 		return sequence

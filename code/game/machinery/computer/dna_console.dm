@@ -503,6 +503,7 @@
 				viable_occupant.dna.generate_struc_enzymes()
 				scrambleready = world.time + SCRAMBLE_TIMEOUT
 				to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
+				viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected.damage_coeff ** 2)
 
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
@@ -660,6 +661,7 @@
 						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
 						I.add_mutations += HM.type
 						I.name = "[HM.name] activator"
+						I.damage_coeff = connected.damage_coeff*4
 						injectorready = world.time + INJECTOR_TIMEOUT
 		if("mutator")
 			if(injectorready < world.time)
@@ -671,6 +673,7 @@
 						I.add_mutations += HM.type
 						I.doitanyway = TRUE
 						I.name = "[HM.name] injector"
+						I.damage_coeff = connected.damage_coeff
 						injectorready = world.time + INJECTOR_TIMEOUT*5
 		if("nullify")
 			if(viable_occupant)
@@ -693,6 +696,7 @@
 					if(viable_occupant == get_viable_occupant()) //No cheesing
 						sequence[num] = new_gene
 						viable_occupant.dna.update_from_gene_list(path, sequence)
+					viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected.damage_coeff
 					viable_occupant.domutcheck()
 		if("exportdiskmut")
 			if(diskette && !diskette.read_only)

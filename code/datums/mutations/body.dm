@@ -26,6 +26,7 @@
 	desc = "Strange mutation that causes the holder to randomly mutate."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
+	locked = TRUE
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -63,8 +64,7 @@
 	name = "Dwarfism"
 	desc = "A mutation believed to be the cause of dwarfism."
 	quality = POSITIVE
-	get_chance = 15
-	lowest_value = 256 * 12
+	difficulty = 8
 	instability = 5
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
@@ -165,6 +165,8 @@
 	desc = "You permanently emit a light with a random color and intensity."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
+	blocks = 3
+	difficulty = 6
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 1.5
@@ -183,7 +185,5 @@
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
-
-
-
+	difficulty = 8
 
