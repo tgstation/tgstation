@@ -1967,6 +1967,7 @@
 /datum/supply_pack/costumes_toys/randomised/toys/generate()
 	. = ..()
 	for(var/i in 1 to num_contained)
+	    if(prob(50)) //maybe?
 		var/the_toy = pickweight(GLOB.arcade_prize_pool)
 		new the_toy(.)
 	    else
