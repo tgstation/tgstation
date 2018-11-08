@@ -55,6 +55,59 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">08 November 2018</h2>
+			<h3 class="author">CRTXBacon updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Moves the clown mask south-facing sprite down one pixel, putting it on level with its other directional sprites. Henk.</li>
+			</ul>
+			<h3 class="author">MrDoomBringer updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">You will no longer attempt to use an explosive lance to craft an explosive lance</li>
+			</ul>
+			<h3 class="author">MrDoombringer updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">you can now rocket jump with rocketlaunchers! Just aim at the ground and fire!</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Updated the robotics control console interface a bit. Borgs are now grouped by their slaved AI.</li>
+				<li class="bugfix">Fixed the robotics control console showing the cultist conversion button on borgs which are already converted.</li>
+				<li class="bugfix">Flying / floating humans will no longer get stuck laying down if they have no legs.</li>
+				<li class="bugfix">Alien larva will no longer get stuck laying down after ventcrawling.</li>
+				<li class="bugfix">Turrets will now correctly target silicon mobs when check anomalies is disabled.</li>
+				<li class="bugfix">Fixed prying open a door with a jaws of life not checking if you're still holding them.</li>
+				<li class="bugfix">Fixed Xenos being able to force a door open even if they picked up another object during the action.</li>
+				<li class="bugfix">Posibrains will no longer become unusable if a mob suicides in them.</li>
+				<li class="bugfix">Suiciding is now even MORE permanent... again.</li>
+			</ul>
+			<h3 class="author">Skoglol updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">New helper proc for alt-click turf listing, bypasses any interaction overrides.</li>
+				<li class="code_imp">Ghosts and revenants now use the new proc.</li>
+				<li class="bugfix">Ghosts can no longer toggleopen sleepers, adjust skateboard speed or close laptops</li>
+				<li class="bugfix">Revenant can now alt-click turf to list contents.</li>
+				<li class="tweak">Revenant now slightly less nosy, use shift click to examine.</li>
+				<li class="tweak">Alt-clicking the same turf again no longer closes the turf listing tab.</li>
+			</ul>
+			<h3 class="author">XDTM updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">You can now pay for cargo orders from your account with the cargo requests console. Credits will be detracted from the requester's account instead of the cargo budget. A 10% handling fee on top of the order will be paid to the cargo department budget.</li>
+				<li class="rscadd">Cargo employees must still accept the order for it to be delivered.</li>
+				<li class="rscadd">The delivery will arrive in a locked crate that can only be opened by an id with the paying bank account.</li>
+			</ul>
+			<h3 class="author">bobbahbrown updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">RCDs are now more environmentally friendly and can now recycle rods and floor tiles without having to reduce them to sheets first.</li>
+			</ul>
+			<h3 class="author">nicbn updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">On BoxStation, there's a vacant commissary where detective office used to be. Detective office is now located where Law Office was, and Law Office has been moved to the adjacent Vacant Office B.</li>
+			</ul>
+			<h3 class="author">subject217 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Disabler beams now deal 40 stamina damage, so they should be a bit more consistent in knocking people down in 3 hits.</li>
+			</ul>
+
 			<h2 class="date">04 November 2018</h2>
 			<h3 class="author">Denton updated:</h3>
 			<ul class="changes bgimages16">
@@ -1591,55 +1644,6 @@
 				<li class="bugfix">You can actually purify shades with a Bible now, as intended.</li>
 				<li class="code_imp">Made deconversion just update_body instead of cutting and rebuilding all mob overlays.</li>
 				<li class="spellcheck">Removed an extra exclamation point from the messages for purifying bastard swords and soul stones.</li>
-			</ul>
-
-			<h2 class="date">05 September 2018</h2>
-			<h3 class="author">Floyd / Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Clown cars can now fit any mob (besides megafauna)</li>
-				<li class="rscadd">Repair your clown car with bananas</li>
-				<li class="rscadd">Emag the clowncar to unlock a button panel. Activate it to press a random button for a random effect!</li>
-				<li class="balance">lowers health and cost of clown car</li>
-				<li class="bugfix">removes a return in the clown car code that caused the wrong flags to be assigned</li>
-				<li class="bugfix">you cant open the clowncar trunk from the inside anymore, you can still escape though.</li>
-				<li class="bugfix">fixes broken to_chat in clown car</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">Ghost poll description button was broken in the ert spawner. It isn't anymore.</li>
-			</ul>
-			<h3 class="author">Nichlas0010 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">IAA now has its own preference</li>
-			</ul>
-			<h3 class="author">Robustin and Subject217 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="balance">Once the blood cult reaches 20% of the active player population, they will receive a notice that the cult is "rising" - and after a moderate delay the eyes of all existing and new cultists will be permanently red. Examining a cultist with uncovered eyes will confirm their supernatural appearance.</li>
-				<li class="balance">Once the blood cult reaches 40% of the active player population they will receive a warning and after a moderate delay will glow red, permanently revealing the identity of existing and new blood cultists.</li>
-				<li class="rscadd">Any non-cultist can now strike a (filled) soulshard with a bible to purify it. Purified shades have a unique appearance and will be eager to get revenge on the cult. Bibles can be printed in the library.</li>
-				<li class="balance">Juggernauts have 25% less HP and 35% less projectile reflection.</li>
-				<li class="balance">Cult mirror shield is slightly easier to break, has less illusions, and has -33% throwing distance.</li>
-				<li class="balance">The EMP blood spell has -1 light and heavy radius.</li>
-				<li class="balance">The revive rune now requires 3 sacrifices per revive, it still starts with one "freebie" revive. Giving "souls" to AFK/Catatonic cultists remains free of charge.</li>
-				<li class="balance">Twisted Construction now has a channel time with added noise/effects when used on doors. It also hurts you slightly more to use.</li>
-				<li class="balance">You can now only hold 1 blood spell without an empowering rune and 4 with one.</li>
-				<li class="rscdel">The Bloody Bastard Sword is no longer available in Blood Cult. It's still spawnable with admin tools.</li>
-			</ul>
-			<h3 class="author">SpaceManiac updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The stealth box and chameleon projector no longer allow escaping lockers.</li>
-				<li class="bugfix">Combining the stealth box and chameleon projector should cause less teleportation behavior.</li>
-				<li class="bugfix">In extreme lag scenarios, hyperspace ripples are no longer removed before the location is actually safe.</li>
-				<li class="bugfix">Research points are no longer generated during the pre-round lobby.</li>
-			</ul>
-			<h3 class="author">WJohn updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="refactor">Refactored floor tiles to use decals like warning lines do.</li>
-			</ul>
-			<h3 class="author">jegub updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Chemicals should no longer vanish for some reactions.</li>
-				<li class="tweak">Health sensor's 'detect death' mode now triggers on death rather than extreme unwellness.</li>
 			</ul>
 		</div>
 

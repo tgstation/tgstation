@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Posibrains will no longer become unusable if a mob suicides in them."
-  - bugfix: "Suiciding is now even MORE permanent... again."
