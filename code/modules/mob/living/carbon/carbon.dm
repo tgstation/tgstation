@@ -584,7 +584,7 @@
 	if(dna)
 		for(var/X in dna.mutations)
 			var/datum/mutation/M = X
-			if(M.name == XRAY)
+			if(M.type == XRAY)
 				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 				see_in_dark = max(see_in_dark, 8)
 

@@ -498,7 +498,7 @@
 		if("screen")
 			current_screen = href_list["text"]
 		if("scramble")
-			if(viable_occupant && (scrambleready > world.time))
+			if(viable_occupant && (scrambleready < world.time))
 				viable_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
 				viable_occupant.dna.generate_struc_enzymes()
 				scrambleready = world.time + SCRAMBLE_TIMEOUT

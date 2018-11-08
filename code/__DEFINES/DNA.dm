@@ -34,6 +34,7 @@
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
+#define FIRESWEAT	/datum/mutation/human/fire
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

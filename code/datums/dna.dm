@@ -61,6 +61,8 @@
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation_type, class = MUT_OTHER, time)
+	if(get_mutation(mutation_type))
+		return
 	force_give(new mutation_type (class, time))
 
 /datum/dna/proc/remove_mutation(mutation_type)
@@ -249,17 +251,17 @@
 		if(message)
 			to_chat(holder,message)
 
-/datum/dna/proc/something_horrible(alert=FALSE)
-	if(holder || (stability > 0))
+/datum/dna/proc/something_horrible()
+	if(!holder || (stability > 0))
 		return
-	var/instability = stability-100
+	var/instability = -stability
 	remove_all_mutations()
 	stability = 100
 	if(!ishuman(holder))
 		holder.gib()
 		return
 	var/mob/living/carbon/human/H = holder
-	if(prob(70-instability))
+	if(prob(max(70-instability,0)))
 		switch(rand(0,3)) //not complete and utter death
 			if(0)
 				H.monkeyize()
@@ -280,11 +282,14 @@
 				H.death()
 				H.petrify(INFINITY)
 			if(3)
-				var/obj/item/bodypart/BP = H.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-				if(BP)
-					BP.dismember()
+				if(prob(90))
+					var/obj/item/bodypart/BP = H.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+					if(BP)
+						BP.dismember()
+					else
+						H.gib()
 				else
-					H.gib()
+					H.set_species(/datum/species/dullahan)
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()

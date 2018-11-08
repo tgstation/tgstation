@@ -165,8 +165,6 @@
 	desc = "You permanently emit a light with a random color and intensity."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
-	blocks = 3
-	difficulty = 8
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 1.5
