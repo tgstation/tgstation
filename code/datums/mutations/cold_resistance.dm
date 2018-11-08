@@ -3,7 +3,7 @@
 	name = "Cold Resistance"
 	desc = "A strange mutation that makes the holder completely immune to hostile temperatures."
 	quality = POSITIVE
-	difficulty = 12
+	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 	time_coeff = 5
 	instability = 20
