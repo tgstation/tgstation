@@ -26,7 +26,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/area/currentArea = get_area(src)
     if(currentArea.type == /area/ruin/space/has_grav/hilbertresearchfacility)
         ruinSpawned = TRUE
-    
+
 /obj/item/hilbertshotel/Destroy()
     ejectRooms()
     return ..()
@@ -51,7 +51,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
         return
     if(ismob(loc))
         if(user == loc) //Not always the same as user
-            forceMove(get_turf(user)) 
+            forceMove(get_turf(user))
     if(!storageTurf) //Blame subsystems for not allowing this to be in Initialize
         if(!GLOB.hhStorageTurf)
             var/datum/map_template/hilbertshotelstorage/storageTemp = new()
@@ -232,7 +232,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     if(!user.mind)
         return
     if(!parentSphere)
-        to_chat(user, "<span class='warning'>The door seems to be malfunctioned and refuses to operate!</span>")
+        to_chat(user, "<span class='warning'>The door seems to be malfunctioning and refuses to operate!</span>")
         return
     if(alert(user, "Hilbert's Hotel would like to remind you that while we will do everything we can to protect the belongings you leave behind, we make no guarantees of their safety while you're gone, especially that of the health of any living creatures. With that in mind, are you ready to leave?", "Exit", "Leave", "Stay") == "Leave")
         user.forceMove(get_turf(parentSphere))
@@ -240,7 +240,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 //If only this could be simplified...
 /turf/closed/indestructible/hoteldoor/attack_hand(mob/user)
-    promptExit(user)  
+    promptExit(user)
 
 /turf/closed/indestructible/hoteldoor/attack_animal(mob/user)
     promptExit(user)
@@ -256,7 +256,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /turf/closed/indestructible/hoteldoor/attack_slime(mob/user)
     promptExit(user)
-    
+
 /turf/closed/indestructible/hoteldoor/attack_robot(mob/user)
     if(get_dist(get_turf(src), get_turf(user)) <= 1)
         promptExit(user)
@@ -384,13 +384,13 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
             to_chat(user, "<span class='warning'>It's to far away to scan!</span>")
             return
         var/obj/item/hilbertshotel/sphere = target
-        if(sphere.activeRooms.len) 
+        if(sphere.activeRooms.len)
             to_chat(user, "Currently Occupied Rooms:")
             for(var/roomnumber in sphere.activeRooms)
                 to_chat(user, roomnumber)
         else
             to_chat(user, "No currenty occupied rooms.")
-        if(sphere.storedRooms.len) 
+        if(sphere.storedRooms.len)
             to_chat(user, "Vacated Rooms:")
             for(var/roomnumber in sphere.storedRooms)
                 to_chat(user, roomnumber)
@@ -419,7 +419,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     name = "Research Logs"
 
 /obj/item/paper/crumpled/docslogs/Initialize()
-    . = ..()   
+    . = ..()
     GLOB.hhmysteryRoomNumber = rand(1, 65535)
     info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
