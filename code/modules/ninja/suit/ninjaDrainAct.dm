@@ -88,7 +88,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			if (do_after(H,10, target = src))
 				spark_system.start()
 				playsound(loc, "sparks", 50, 1)
-				cell.use(drain)
+				charge -= drain
 				S.cell.charge += drain
 				. += drain
 
