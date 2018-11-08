@@ -119,16 +119,17 @@
 	name = "combat knife"
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 65, "embedded_fall_chance" = 10)
+	embedding = list("embedded_pain_multiplier" = 3, "embed_chance" = 30, "embedded_fall_chance" = 10)
 	force = 20
 	throwforce = 20
+	throw_speed = 4
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 	bayonet = TRUE
 
 /obj/item/kitchen/knife/combat/survival
 	name = "survival knife"
 	icon_state = "survivalknife"
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)
+	embedding = list("embedded_pain_multiplier" = 2, "embed_chance" = 30, "embedded_fall_chance" = 10)
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
@@ -141,7 +142,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)
+	embedding = list("embedded_pain_multiplier" = 2, "embed_chance" = 20, "embedded_fall_chance" = 10)
 	force = 15
 	throwforce = 15
 	materials = list()
