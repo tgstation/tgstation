@@ -64,7 +64,7 @@
 	name = "Dwarfism"
 	desc = "A mutation believed to be the cause of dwarfism."
 	quality = POSITIVE
-	difficulty = 8
+	difficulty = 16
 	instability = 5
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
@@ -166,7 +166,7 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
 	blocks = 3
-	difficulty = 6
+	difficulty = 8
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 1.5
@@ -177,12 +177,14 @@
 	glowth = new(owner)
 	glowth.set_light(glow, glow, dna.features["mcolor"])
 
-/datum/mutation/human/glow/on_losing(mob/living/carbon/monkey/owner)
+/datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
 	qdel(glowth)
 
 /datum/mutation/human/void
 	name = "Void Magnet"
-	desc = "rare genome that attracts odd forces not usually observed."
+	desc = "A rare genome that attracts odd forces not usually observed."
 	quality = MINOR_NEGATIVE //upsides and downsides
 	text_gain_indication = "<span class='notice'>You feel a heavy, dull force just beyond the walls watching you.</span>"
 	instability = 30
@@ -192,7 +194,7 @@
 	var/obj/effect/proc_holder/spell/self/void/voidpower = power
 	if(voidpower.in_use) //i don't know how rare this is but coughs are 10% on life so in theory this should be okay
 		return
-	if(prob(2)) //very rare, but enough to annoy you hopefully
+	if(prob(0.5+((100-dna.stability)/20))) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
 		if(voidpower.action)
 			voidpower.action.UpdateButtonIcon()
 		voidpower.invocation_type = "none"
@@ -236,5 +238,31 @@
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
-	difficulty = 8
+	difficulty = 16
+
+/datum/mutation/human/fire
+	name = "Fiery Sweat"
+	desc = "The user's skin will randomly combust, but is generally alot more resilient to burning."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='warning'>You feel hot.</span>"
+	text_lose_indication = "<span class'notice'>You feel alot cooler.</span>"
+	difficulty = 14
+
+/datum/mutation/human/fire/on_life(mob/living/carbon/human/owner)
+	if(prob(1+(100-dna.stability)/10))
+		owner.adjust_fire_stacks(2)
+		owner.IgniteMob()
+
+/datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.physiology.burn_mod *= 0.5
+
+/datum/mutation/human/fire/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.physiology.burn_mod *= 2
+
+
+
 
