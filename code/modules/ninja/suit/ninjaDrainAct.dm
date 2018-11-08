@@ -109,7 +109,7 @@ They *could* go in their appropriate files, but this is supposed to be modular
 			if(S.cell.charge + charge > S.cell.maxcharge)
 				S.cell.charge = S.cell.maxcharge
 			else
-				S.cell.give(drain)
+				S.cell.give(charge)
 			charge = 0
 			corrupt()
 			update_icon()
