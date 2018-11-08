@@ -1967,12 +1967,11 @@
 /datum/supply_pack/costumes_toys/randomised/toys/generate()
 	. = ..()
 	for(var/i in 1 to num_contained)
-	    if(prob(50)) //maybe?
+		if(prob(50))
 		var/the_toy = pickweight(GLOB.arcade_prize_pool)
-		new the_toy(.)
-	    else
+	else
 		the_toy = pickweight(list(subtypesof(/obj/item/toy/plush))
-		new the_toy(.)
+	new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"
