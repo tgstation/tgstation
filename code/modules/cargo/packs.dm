@@ -1965,7 +1965,7 @@
 	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/costumes_toys/randomised/toys/generate()
-	. = ..()s
+	. = ..()
 	var/the_toy
 	for(var/i in 1 to num_contained)
 		if(prob(50))
