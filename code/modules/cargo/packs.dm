@@ -1969,7 +1969,7 @@
 	for(var/i in 1 to num_contained)
 		var/the_toy = pickweight(GLOB.arcade_prize_pool)
 		new the_toy(.)
-	else
+	    else
 		the_toy = pickweight(list(subtypesof(/obj/item/toy/plush))
 		new the_toy(.)
 
