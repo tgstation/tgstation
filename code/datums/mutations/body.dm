@@ -236,8 +236,5 @@
 	desc = "The user's muscles slightly expand."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
-<<<<<<< HEAD
 	difficulty = 8
 
-=======
->>>>>>> 2ac2d9726d53858325632e5b0279cd8798625bb1
