@@ -71,12 +71,16 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/chef_price = 10
 	var/default_price = 25
 	var/extra_price = 50
+	var/onstation = TRUE //if it doesn't originate from off-station during mapload, everything is free
 
 	var/dish_quants = list()  //used by the snack machine's custom compartment to count dishes.
 
 	var/obj/item/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
-/obj/machinery/vending/Initialize()
+/obj/item/circuitboard
+	var/onstation = TRUE //if the circuit board originated from a vendor off station or not.
+
+/obj/machinery/vending/Initialize(mapload)
 	var/build_inv = FALSE
 	if(!refill_canister)
 		circuit = null
@@ -94,6 +98,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
+
+	if(mapload) //check if it was initially created off station during mapload.
+		if(!is_station_level(z))
+			onstation = FALSE
+			if(circuit)
+				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
+		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -296,9 +308,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	return ..()
 
 /obj/machinery/vending/ui_interact(mob/user)
-	var/onstation = FALSE
-	if(SSmapping.level_trait(z, ZTRAIT_STATION))
-		onstation = TRUE
 	var/dat = ""
 	var/datum/bank_account/account
 	var/mob/living/carbon/human/H
@@ -363,9 +372,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/Topic(href, href_list)
 	if(..())
 		return
-	var/onstation = FALSE
-	if(SSmapping.level_trait(z, ZTRAIT_STATION))
-		onstation = TRUE
 
 	usr.set_machine(src)
 
