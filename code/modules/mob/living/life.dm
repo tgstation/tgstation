@@ -4,7 +4,7 @@
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 
-	if((movement_type & FLYING) && !floating)	//TODO: Better floating
+	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
 
 	if (client)
@@ -13,7 +13,7 @@
 			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
 				forceMove(E.loc)
 				break
-			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2irc_adminless_only("Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
@@ -21,7 +21,7 @@
 		// This is a temporary error tracker to make sure we've caught everything
 		else if (registered_z != T.z)
 #ifdef TESTING
-			message_admins("[src] [ADMIN_FLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+			message_admins("[ADMIN_LOOKUPFLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
 #endif
 			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
 			update_z(T.z)

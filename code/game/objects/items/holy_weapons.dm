@@ -18,43 +18,37 @@
 	item_state = "knight_templar"
 	allowed = list(/obj/item/storage/book/bible, /obj/item/nullrod, /obj/item/reagent_containers/food/drinks/bottle/holywater, /obj/item/storage/fancy/candle_box, /obj/item/candle, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
-/obj/item/holybeacon
+/obj/item/choice_beacon/holy
 	name = "armaments beacon"
 	desc = "Contains a set of armaments for the chaplain."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "gangtool-red"
-	item_state = "radio"
 
-/obj/item/holybeacon/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !SSreligion.holy_armor_type)
-		beacon_armor(user)
+/obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
+	if(user.mind && user.mind.isholy)
+		return ..()
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+		return FALSE
 
-/obj/item/holybeacon/proc/beacon_armor(mob/living/M)
-	if(!istype(M))
+/obj/item/choice_beacon/holy/generate_display_names()
+	var/static/list/holy_item_list
+	if(!holy_item_list)
+		holy_item_list = list()
+		var/list/templist = typesof(/obj/item/storage/box/holy)
+		for(var/V in templist)
+			var/atom/A = V
+			holy_item_list[initial(A.name)] = A
+	return holy_item_list
+
+/obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
+	if(!SSreligion.holy_armor_type)
+		..()
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
+		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
+		SSreligion.holy_armor_type = choice
+	else
+		to_chat(M, "<span class='warning'>A selection has already been made. Self-Destructing...</span>")
 		return
-	var/list/holy_armor_list = typesof(/obj/item/storage/box/holy)
-	var/list/display_names = list()
-	for(var/V in holy_armor_list)
-		var/atom/A = V
-		display_names += list(initial(A.name) = A)
 
-	var/choice = input(M,"What holy armor kit would you like to order?","Holy Armor Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.restrained() || !(M.mobility_flags & MOBILITY_USE) || SSreligion.holy_armor_type)
-		return
-
-	var/index = display_names.Find(choice)
-	var/A = holy_armor_list[index]
-
-	SSreligion.holy_armor_type = A
-	var/holy_armor_box = new A
-
-	SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
-
-	if(holy_armor_box)
-		qdel(src)
-		M.put_in_active_hand(holy_armor_box)///YOU COMPILED
 
 /obj/item/storage/box/holy
 	name = "Templar Kit"
@@ -510,7 +504,7 @@
 		return
 	if(prob(30) && ishuman(A))
 		var/mob/living/carbon/human/H = A
-		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
+		user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0, transfered_by = user)
 		to_chat(user, "<span class='notice'>Your pride reflects on [H].</span>")
 		to_chat(H, "<span class='userdanger'>You feel insecure, taking on [user]'s burden.</span>")
 

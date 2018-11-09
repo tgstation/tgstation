@@ -68,10 +68,12 @@ God bless America.
 	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
 	fry_speed = oil_efficiency
 
-/obj/machinery/deepfryer/examine()
+/obj/machinery/deepfryer/examine(mob/user)
 	..()
 	if(frying)
 		to_chat(usr, "You can make out \a [frying] in the oil.")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.<span>")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -79,7 +81,7 @@ God bless America.
 			to_chat(user, "<span class='warning'>There's nothing to dissolve [I] in!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] drops [I] into [src].</span>", "<span class='notice'>You dissolve [I] in [src].</span>")
-		I.reagents.trans_to(src, I.reagents.total_volume)
+		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
 		qdel(I)
 		return
 	if(!reagents.has_reagent("cooking_oil"))

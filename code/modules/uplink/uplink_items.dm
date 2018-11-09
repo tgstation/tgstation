@@ -224,7 +224,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "84mm Rocket Propelled Grenade Launcher"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
 		Guaranteed to send your target out with a bang or your money back!"
-	item = /obj/item/gun/ballistic/automatic/rocketlauncher
+	item = /obj/item/gun/ballistic/rocketlauncher
 	cost = 8
 	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)

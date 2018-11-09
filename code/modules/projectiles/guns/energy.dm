@@ -165,9 +165,6 @@
 		itemState += "[ratio]"
 		item_state = itemState
 
-/obj/item/gun/energy/ui_action_click()
-	toggle_gunlight()
-
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
