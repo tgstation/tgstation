@@ -6,7 +6,7 @@
 	var/list/gibamounts = list() //amount to spawn for each gib decal type we'll spawn.
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
 
-/obj/effect/gibspawner/Initialize(mapload, datum/dna/MobDNA, list/datum/disease/diseases)
+/obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases)
 	. = ..()
 
 	if(gibtypes.len != gibamounts.len || gibamounts.len != gibdirections.len)
@@ -29,9 +29,10 @@
 					var/mob/living/carbon/digester = loc
 					digester.stomach_contents += gib
 
-				if(MobDNA)
+				if(source_mob)
+					gib.add_blood_DNA(source_mob.get_blood_dna_list())
 
-				else if(istype(src, /obj/effect/gibspawner/generic)) // Probably a monkey
+				else if(istype(src, /obj/effect/gibspawner/generic)) // Incase a mob wasn't passed, give the gibs generic DNA
 					gib.add_blood_DNA(list("Non-human DNA" = "A+"))
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
