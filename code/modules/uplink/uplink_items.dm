@@ -1391,9 +1391,9 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/race_restricted/syndilamp
 	name = "Extra-Bright Lantern"
 	desc = "The Syndicate heard that moths such as yourself really like lamps. \
-	So they decided you can get access to a prototype Syndicate brand \"Extra-Bright Lantern\"."
+	So they decided you can get early access to a prototype Syndicate brand \"Extra-Bright Lantern\"."
 	cost = 2
-	item = /obj/item/flashlight/lantern/syndilantern
+	item = /obj/item/flashlight/lantern/syndicate
 	restricted_species = "moth"
 
 // Role-specific items
