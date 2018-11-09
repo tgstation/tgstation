@@ -14573,7 +14573,6 @@
 /obj/item/stock_parts/cell/high/plus,
 /obj/item/disk/tech_disk,
 /obj/item/disk/design_disk,
-/obj/item/integrated_circuit_printer,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},

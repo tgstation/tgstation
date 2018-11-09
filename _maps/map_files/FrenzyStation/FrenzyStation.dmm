@@ -1578,7 +1578,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/integrated_circuit_printer,
 /obj/item/clothing/glasses/welding,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
