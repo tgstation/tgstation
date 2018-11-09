@@ -122,7 +122,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need to put [src] on a surface to butcher it!</span>")
 	else
-..()
+		..()
 
 /obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
 	reagents.clear_reagents()

@@ -32,7 +32,7 @@
 		dat += toppaper.icon_state
 		dat += toppaper.overlays.Copy()
 	if(haspen)
-		dat += ("clipboard_pen")
+		dat += "clipboard_pen"
 	dat += "clipboard_over"
 	add_overlay(dat)
 
