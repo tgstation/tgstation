@@ -1469,7 +1469,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
 		/obj/item/reagent_containers/food/snacks/grown/nettle, // base type
-		/obj/item/reagent_containers/food/snacks/deepfryholder
+		/obj/item/reagent_containers/food/snacks/deepfryholder,
+		/obj/item/reagent_containers/food/snacks/clothing
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
