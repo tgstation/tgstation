@@ -123,8 +123,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/admin_toggle_ascendable(mob/admin)
 	ascendable = !ascendable
-	message_admins("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable]")
-	log_admin("[key_name_admin(admin)] set [owner.current] devil ascendable to [ascendable])")
+	message_admins("[key_name_admin(admin)] set [key_name_admin(owner)] devil ascendable to [ascendable]")
+	log_admin("[key_name_admin(admin)] set [key_name(owner)] devil ascendable to [ascendable])")
 
 /datum/antagonist/devil/admin_add(datum/mind/new_owner,mob/admin)
 	switch(alert(admin,"Should the devil be able to ascend",,"Yes","No","Cancel"))
@@ -135,8 +135,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		else
 			return
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
-	log_admin("[key_name(admin)] has devil'ed [new_owner.current]. [ascendable ? "(Ascendable)":""]")
+	message_admins("[key_name_admin(admin)] has devil'ed [key_name_admin(new_owner)]. [ascendable ? "(Ascendable)":""]")
+	log_admin("[key_name(admin)] has devil'ed [key_name(new_owner)]. [ascendable ? "(Ascendable)":""]")
 
 /datum/antagonist/devil/antag_listing_name()
 	return ..() + "([truename])"
@@ -424,7 +424,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				return 0
 
 /datum/antagonist/devil/proc/hellish_resurrection(mob/living/body)
-	message_admins("[owner.name] (true name is: [truename]) is resurrecting using hellish energy.</a>")
+	message_admins("[key_name_admin(owner)] (true name is: [truename]) is resurrecting using hellish energy.</a>")
 	if(SOULVALUE < ARCH_THRESHOLD || !ascendable) // once ascended, arch devils do not go down in power by any means.
 		reviveNumber += LOSS_PER_DEATH
 		update_hud()
@@ -449,10 +449,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		if(!currentMob)
 			currentMob = owner.get_ghost()
 			if(!currentMob)
-				message_admins("[owner.name]'s devil resurrection failed due to client logoff.  Aborting.")
+				message_admins("[key_name_admin(owner)]'s devil resurrection failed due to client logoff.  Aborting.")
 				return -1
 		if(currentMob.mind != owner)
-			message_admins("[owner.name]'s devil resurrection failed due to becoming a new mob.  Aborting.")
+			message_admins("[key_name_admin(owner)]'s devil resurrection failed due to becoming a new mob.  Aborting.")
 			return -1
 		currentMob.change_mob_type( /mob/living/carbon/human, targetturf, null, 1)
 		var/mob/living/carbon/human/H = owner.current

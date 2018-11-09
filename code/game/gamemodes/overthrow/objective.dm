@@ -138,7 +138,7 @@
 	else
 		explanation_text = "Nothing."
 
-/datum/objective/overthrow/target/is_unique_objective(datum/mind/possible_target)
+/datum/objective/overthrow/target/is_unique_objective(datum/mind/possible_target,dupe_search_range) 
 	if(possible_target.assigned_role in GLOB.command_positions)
 		return FALSE
 	return TRUE

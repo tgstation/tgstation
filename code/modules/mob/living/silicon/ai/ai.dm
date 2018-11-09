@@ -195,10 +195,12 @@
 			continue
 		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option))
 
+	view_core()
 	var/ai_core_icon = show_radial_menu(src, src , iconstates, radius = 42)
+
 	if(!ai_core_icon || incapacitated())
 		return
-	to_chat(src, "<span class='notice'>Core display screen set to \"[ai_core_icon]\".</span>")
+
 	display_icon_override = ai_core_icon
 	set_core_display_icon(ai_core_icon)
 

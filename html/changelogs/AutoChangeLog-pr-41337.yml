@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Sleeping mobs will no longer scream when their limbs become disabled."
+  - bugfix: "Fixed players getting duplicate messages if their already disabled limbs were attacked after they died / when no change happened."

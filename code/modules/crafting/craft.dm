@@ -58,6 +58,8 @@
 			var/needed_amount = R.reqs[A]
 			for(var/B in contents)
 				if(ispath(B, A))
+					if (R.blacklist.Find(B))
+						continue
 					if(contents[B] >= R.reqs[A])
 						continue main_loop
 					else

@@ -29,7 +29,6 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	var/floating = FALSE
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/grab_state = 0
@@ -705,14 +704,14 @@
 /atom/movable/proc/float(on)
 	if(throwing)
 		return
-	if(on && !floating)
+	if(on && !(movement_type & FLOATING))
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		floating = TRUE
-	else if (!on && floating)
+		setMovetype(movement_type | FLOATING)
+	else if (!on && (movement_type & FLOATING))
 		animate(src, pixel_y = initial(pixel_y), time = 10)
-		floating = FALSE
+		setMovetype(movement_type & ~FLOATING)
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

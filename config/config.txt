@@ -152,6 +152,9 @@ PICTURE_LOGGING_CAMERA
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
 
+## Comment this out to stop admins being able to choose their personal asay color
+ALLOW_ADMIN_ASAYCOLOR
+
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
 
