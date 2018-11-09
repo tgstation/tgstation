@@ -1388,6 +1388,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	surplus = 0
 
+/datum/uplink_item/race_restricted/syndilamp
+	name = "Extra-Bright Lantern"
+	desc = "The Syndicate heard that moths such as yourself really like lamps. \
+	So they decided you can get access to a prototype Syndicate brand \"Extra-Bright Lantern\"."
+	cost = 2
+	item = /obj/item/flashlight/lantern/syndilantern
+	restricted_species = "moth"
+
 // Role-specific items
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
