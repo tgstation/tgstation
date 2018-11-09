@@ -22,6 +22,7 @@
 	var/self_delay = 30
 	var/squirt_mode = 0
 	var/squirt_amount = 5
+	var/NewName = "name"
 
 /obj/item/reagent_containers/medspray/attack_self(mob/user)
 	squirt_mode = !squirt_mode
@@ -66,6 +67,16 @@
 		reagents.reaction(M, apply_type, fraction)
 		reagents.trans_to(M, amount_per_transfer_from_this)
 	return
+
+
+	if (NewName == ("stypic powder" || "Stypic Powder" || "stypic Powder" || "Stypic powder"))
+		icon_state = "brutespray"
+
+	if (NewName == ("silver sulfadine" || "Silver Sulfadine" || "silver Sulfadine" || "Silver sulfadine"))			// Renamed sprays have their icon changed to fit their new name when appropriate.
+		icon_state = "burnspray"
+
+	if (NewName == ("synthflesh" ||  "synth flesh" || "Synthflesh" || "SynthFlesh" || "Synth Flesh" || "Synth flesh" || "synth Flesh"))
+		icon_state = "synthspray"
 
 /obj/item/reagent_containers/medspray/styptic
 	name = "medical spray (styptic powder)"
