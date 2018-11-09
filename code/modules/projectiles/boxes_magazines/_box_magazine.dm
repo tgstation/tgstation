@@ -88,18 +88,18 @@
 					num_loaded++
 				if(!did_load || !multiload)
 					break
-		if(istype(A, /obj/item/ammo_casing))
-			var/obj/item/ammo_casing/AC = A
-			if(give_round(AC, replace_spent))
-				user.transferItemToLoc(AC, src, TRUE)
-				num_loaded++
-		if(num_loaded)
-			if(!silent)
-				to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-				playsound(src, 'sound/weapons/bulletinsert.ogg', 60, 1)
-			A.update_icon()
-			update_icon()
-		return num_loaded
+	if(istype(A, /obj/item/ammo_casing))
+		var/obj/item/ammo_casing/AC = A
+		if(give_round(AC, replace_spent))
+			user.transferItemToLoc(AC, src, TRUE)
+			num_loaded++
+	if(num_loaded)
+		if(!silent)
+			to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+			playsound(src, 'sound/weapons/bulletinsert.ogg', 60, 1)
+		A.update_icon()
+		update_icon()
+	return num_loaded
 
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
