@@ -291,7 +291,7 @@ Code:
 			else
 				var/list/L = list()
 				var/datum/cablenet/power/connected_powernet = powmonitor.get_powernet()
-				for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
+				for(var/obj/machinery/power/terminal/term in connected_powernet.machines)
 					if(istype(term.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/A = term.master
 						L += A

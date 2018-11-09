@@ -97,7 +97,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(dir1 == d1 && dir2 == d2)
 		return TRUE
 	var/has_network = network? TRUE : FALSE
-	var/list/changed = has_network? ((connected_cables(d1, d2) + get_node_connections(d1, d2)) - (connected_cables(dir1, dir2) + get_node_connections(dir1, dir2))) : null	//don't bother doing this if there's no network.
+	var/list/changed = has_network? (all_connections(dir1, dir2) - all_connections(d1, d2)) : null	//don't bother doing this if there's no network.
 	if(LAZYLEN(changed))
 		disconnect_from_network()
 	d1 = dir1
@@ -157,13 +157,16 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/proc/is_node()
 	return d1 == NONE
 
+/obj/structure/cable/proc/all_connections(d1 = src.d1, d2 = src.d2)
+	return connected_cables(d1, d2)
+
 /obj/structure/cable/proc/connected_cables(d1 = src.d1, d2 = src.d2)
 	. = list()
 	var/turf/T = get_turf(src)
 	var/is_node = is_node()
 	for(var/i in T.contents)			//Get stuff on our turf
 		var/obj/structure/cable/C = i
-		if((C.type == type) && ((C.d1 == opp) || (C.d2 == opp)) && can_connect_cable(C) && C.can_connect_cable(src))
+		if((C.type == type) && ((C.d1 == d1) || (C.d2 == d2)) && can_connect_cable(C) && C.can_connect_cable(src))
 			. |= C
 	if(d1)
 		var/turf/T1 = get_dir(T, d1)
