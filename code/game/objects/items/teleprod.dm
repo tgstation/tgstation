@@ -11,7 +11,7 @@
 	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		if(do_teleport(user, get_turf(user), 50), channel = TELEPORT_CHANNEL_BLUESPACE)//honk honk
+		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 			user.Paralyze(stunforce*3)
 			deductcharge(hitcost)
