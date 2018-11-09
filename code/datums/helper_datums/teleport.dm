@@ -27,7 +27,7 @@
 	switch(channel)
 		if(TELEPORT_CHANNEL_BLUESPACE)
 			if(istype(teleatom, /obj/item/storage/backpack/holding))
-			precision = rand(1,100)
+				precision = rand(1,100)
 
 			var/static/list/bag_cache = typecacheof(/obj/item/storage/backpack/holding)
 			var/list/bagholding = typecache_filter_list(teleatom.GetAllContents(), bag_cache)
