@@ -372,17 +372,20 @@
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
-			if(issilicon(A))
-				var/mob/living/silicon/sillycone = A
-				if(sillycone.stat || in_faction(sillycone))
+				continue
+
+		if(issilicon(A))
+			var/mob/living/silicon/sillycone = A
+			if(sillycone.stat || in_faction(sillycone))
+				continue
+
+			if(iscyborg(sillycone))
+				var/mob/living/silicon/robot/sillyconerobot = A
+				if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
 					continue
 
-				if(iscyborg(sillycone))
-					var/mob/living/silicon/robot/sillyconerobot = A
-					if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
-						continue
-
-				targets += sillycone
+			targets += sillycone
+			continue
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A

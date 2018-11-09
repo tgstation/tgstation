@@ -56,6 +56,14 @@
 	else
 		return ..()
 
+/obj/item/laser_pointer/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		if(!diode)
+			to_chat(user, "<span class='notice'>The diode is missing.<span>")
+		else
+			to_chat(user, "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>")
+
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()
 	laser_act(target, user, params)

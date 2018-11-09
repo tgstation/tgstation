@@ -40,7 +40,7 @@
 				to_chat(user, "<span class='notice'>[W] is full!</span>")
 				return
 			to_chat(user, "<span class='notice'>You scoop up [src] into [W]!</span>")
-			reagents.trans_to(W, reagents.total_volume)
+			reagents.trans_to(W, reagents.total_volume, transfered_by = user)
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return

@@ -44,6 +44,8 @@
 	..()
 	if(!operating)
 		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Capacity: <b>[max_n_of_items]</b> items.<br>Cook time reduced by <b>[(efficiency*25)-25]%</b>.<span>")
 
 /*******************
 *   Item Adding
