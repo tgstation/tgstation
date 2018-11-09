@@ -43,7 +43,16 @@
 			if(!shapeshift_type) //If you aren't gonna decide I am!
 				shapeshift_type = pick(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
-
+		
+		if(M.movement_type & (VENTCRAWLING)) //probably not a great idea after all
+			var/turf/turfyoudieon = get_turf(M)
+			var/obj/machinery/atmospherics/pipe/pipeyoudiein = locate() in turfyoudieon
+			if(!turfyoudieon || !pipeyoudiein) //how are you ventcrawling if there is no pipe or turf
+				return
+			to_chat(M, "<span class='userdanger'>Shapeshifting inside of [pipeyoudiein] quickly turns you into a bloody mush.</span>")
+			M.remove_ventcrawl()
+			M.gib()
+			pipeyoudiein.Destroy()
 		var/obj/shapeshift_holder/S = locate() in M
 		if(S)
 			Restore(M)
