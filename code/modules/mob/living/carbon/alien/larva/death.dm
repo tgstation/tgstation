@@ -10,7 +10,7 @@
 	if(with_bodyparts)
 		new /obj/effect/gibspawner/larva(drop_location(), src)
 	else
-		new /obj/effect/gibspawner/larvabodypartless(drop_location(), src)
+		new /obj/effect/gibspawner/larva/bodypartless(drop_location(), src)
 
 /mob/living/carbon/alien/larva/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, "gibbed-l")
