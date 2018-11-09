@@ -25,7 +25,7 @@
 	base_icon = "[icon_state][rand(1, 4)]"
 	icon_state = base_icon
 
-/obj/structure/flora/ash/proc/harvest(user)
+/obj/structure/flora/ash/proc/harvest_plant(user)
 	if(harvested)
 		return 0
 
@@ -58,7 +58,7 @@
 	if(!harvested && needs_sharp_harvest && W.sharpness)
 		user.visible_message("<span class='notice'>[user] starts to harvest from [src] with [W].</span>","<span class='notice'>You begin to harvest from [src] with [W].</span>")
 		if(do_after(user, harvest_time, target = src))
-			harvest(user)
+			harvest_plant(user)
 	else
 		return ..()
 
@@ -69,7 +69,7 @@
 	if(!harvested && !needs_sharp_harvest)
 		user.visible_message("<span class='notice'>[user] starts to harvest from [src].</span>","<span class='notice'>You begin to harvest from [src].</span>")
 		if(do_after(user, harvest_time, target = src))
-			harvest(user)
+			harvest_plant(user)
 
 /obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
 	regrowth_time_low = 4200

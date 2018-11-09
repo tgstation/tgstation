@@ -16,7 +16,7 @@
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/harebell)
 
-/obj/item/seeds/starthistle/harvest(mob/user)
+/obj/item/seeds/starthistle/harvest_seed(mob/user)
 	var/obj/machinery/hydroponics/parent = loc
 	var/seed_count = yield
 	if(prob(getYield() * 20))

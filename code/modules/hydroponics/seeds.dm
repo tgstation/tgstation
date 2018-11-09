@@ -136,7 +136,7 @@
 	return return_yield
 
 
-/obj/item/seeds/proc/harvest(mob/user)
+/obj/item/seeds/proc/harvest_seed(mob/user)
 	var/obj/machinery/hydroponics/parent = loc //for ease of access
 	var/t_amount = 0
 	var/list/result = list()

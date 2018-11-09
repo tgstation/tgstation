@@ -181,7 +181,7 @@
 	..()
 	Bruise()
 
-/mob/living/simple_animal/hostile/mushroom/harvest()
+/mob/living/simple_animal/hostile/mushroom/butcher_harvest()
 	var/counter
 	for(counter=0, counter<=powerlevel, counter++)
 		var/obj/item/reagent_containers/food/snacks/hugemushroomslice/S = new /obj/item/reagent_containers/food/snacks/hugemushroomslice(src.loc)

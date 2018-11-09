@@ -12,11 +12,11 @@
 		if(A in drained_mobs)
 			to_chat(src, "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" )
 		else if(in_range(src, A))
-			Harvest(A)
-	
+			siphon_soul(A)
+
 
 //Harvest; activated by clicking the target, will try to drain their essence.
-/mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
+/mob/living/simple_animal/revenant/proc/siphon_soul(mob/living/carbon/human/target)
 	if(!castcheck(0))
 		return
 	if(draining)

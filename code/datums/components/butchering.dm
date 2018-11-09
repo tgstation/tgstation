@@ -1,3 +1,11 @@
+/atom/movable
+	var/list/butcher_results = null //these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
+	var/list/guaranteed_butcher_results = null //these will always be yielded from butchering
+	var/butcher_difficulty = 0 //effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
+
+/atom/movable/proc/butcher_harvest(mob/living/user) //used for extra objects etc. in butchering
+	return
+
 /datum/component/butchering
 	var/speed = 80 //time in deciseconds taken to butcher something
 	var/effectiveness = 100 //percentage effectiveness; numbers above 100 yield extra drops
@@ -17,7 +25,7 @@
 	if(disabled)
 		butchering_enabled = FALSE
 
-/datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)
+/datum/component/butchering/proc/Butcher(mob/living/butcher, atom/movable/meat)
 	var/turf/T = meat.drop_location()
 	var/final_effectiveness = effectiveness - meat.butcher_difficulty
 	var/bonus_chance = max(0, (final_effectiveness - 100) + bonus_modifier) //so 125 total effectiveness = 25% extra chance
@@ -45,8 +53,12 @@
 	if(butcher)
 		meat.visible_message("<span class='notice'>[butcher] butchers [meat].</span>")
 	ButcherEffects(meat)
-	meat.harvest(butcher)
-	meat.gib(FALSE, FALSE, TRUE)
+	meat.butcher_harvest(butcher)
+	if(ismob(meat))
+		var/mob/M = meat
+		M.gib(FALSE, FALSE, TRUE)
+	else if(!QDELETED(meat))
+		qdel(meat)
 
 /datum/component/butchering/proc/ButcherEffects(mob/living/meat) //extra effects called on butchering, override this via subtypes
 	return

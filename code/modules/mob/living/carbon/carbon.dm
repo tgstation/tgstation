@@ -821,7 +821,7 @@
 	if(!getorgan(/obj/item/organ/brain) && (!mind || !mind.has_antag_datum(/datum/antagonist/changeling)))
 		return 0
 
-/mob/living/carbon/harvest(mob/living/user)
+/mob/living/carbon/butcher_harvest(mob/living/user)
 	if(QDELETED(src))
 		return
 	var/organs_amt = 0

@@ -65,7 +65,7 @@
 	return text
 
 
-/obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
+/obj/item/seeds/replicapod/harvest_seed(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
 	var/ckey_holder = null
