@@ -210,73 +210,66 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		if(href_list["embedded_object"])
-			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-			if(!L)
+	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+		if(!L)
+			return
+		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
+			return
+		var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
+		usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
+		if(do_after(usr, time_taken, needhand = 1, target = src))
+			if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 				return
-			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
-				return
-			var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
-			if(do_after(usr, time_taken, needhand = 1, target = src))
-				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
-					return
-				L.embedded_objects -= I
-				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.forceMove(get_turf(src))
-				usr.put_in_hands(I)
-				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
-				if(!has_embedded_objects())
-					clear_alert("embeddedobject")
-					SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+			L.embedded_objects -= I
+			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+			I.forceMove(get_turf(src))
+			usr.put_in_hands(I)
+			usr.emote("scream")
+			usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
+			if(!has_embedded_objects())
+				clear_alert("embeddedobject")
+				SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		return
+
+	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
+		var/slot = text2num(href_list["item"])
+		if(slot in check_obscured_slots())
+			to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 			return
 
-		if(href_list["item"])
-			var/slot = text2num(href_list["item"])
-			if(slot in check_obscured_slots())
-				to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
-				return
+	if(href_list["pockets"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY)) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
+		var/pocket_side = href_list["pockets"]
+		var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
+		var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
+		var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
 
-		if(href_list["pockets"])
-			var/pocket_side = href_list["pockets"]
-			var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
-			var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
-			var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
+		var/delay_denominator = 1
+		if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
+			if(pocket_item.item_flags & NODROP)
+				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
+			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
+		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
+			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
+			delay_denominator = 4
+		else
+			return
 
-			var/delay_denominator = 1
-			if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
-				if(pocket_item.item_flags & NODROP)
-					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
-				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
-				to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
-				delay_denominator = 4
+		if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
+			if(pocket_item)
+				if(pocket_item == (pocket_id == SLOT_R_STORE ? r_store : l_store)) //item still in the pocket we search
+					dropItemToGround(pocket_item)
 			else
-				return
-
-			if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
-				if(pocket_item)
-					if(pocket_item == (pocket_id == SLOT_R_STORE ? r_store : l_store)) //item still in the pocket we search
-						dropItemToGround(pocket_item)
-				else
-					if(place_item)
-						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
-							usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
-							equip_to_slot(place_item, pocket_id, TRUE)
-						//do nothing otherwise
-
-				// Update strip window
-				if(usr.machine == src && in_range(src, usr))
-					show_inv(usr)
-			else
-				// Display a warning if the user mocks up
-				to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
-
-		..()
-
+				if(place_item)
+					if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
+						usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
+						equip_to_slot(place_item, pocket_id, TRUE)
+					//do nothing otherwise
+				//updating inv screen after handled by living/Topic()
+		else
+			// Display a warning if the user mocks up
+			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
 ///////HUDs///////
 	if(href_list["hud"])
@@ -485,6 +478,9 @@
 											to_chat(usr, "<span class='notice'>Successfully added comment.</span>")
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
+
+	..() //end of this massive fucking chain. TODO: make the hud chain not spooky.
+
 
 /mob/living/carbon/human/proc/canUseHUD()
 	return (mobility_flags & MOBILITY_USE)

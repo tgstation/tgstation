@@ -222,6 +222,7 @@
 			if(M.stat)
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
 				X.monkeys = round(X.monkeys + 0.2,0.1)
+				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 				qdel(M)
 	else
 		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")

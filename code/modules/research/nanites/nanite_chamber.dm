@@ -29,6 +29,11 @@
 	for(var/obj/item/stock_parts/scanning_module/P in component_parts)
 		scan_level += P.rating
 
+/obj/machinery/nanite_chamber/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Scanning module has been upgraded to level <b>[scan_level]</b>.<span>")
+
 /obj/machinery/nanite_chamber/proc/set_busy(status, message, working_icon)
 	busy = status
 	busy_message = message

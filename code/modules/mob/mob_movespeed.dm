@@ -1,7 +1,9 @@
 
 /*Current movespeed modification list format: list(id = list(
 	priority,
+	flags,
 	legacy slowdown/speedup amount,
+	movetype_flags
 	))
 */
 
