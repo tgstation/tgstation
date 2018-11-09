@@ -44,7 +44,9 @@
 	if(world.time < linked_swapper.cooldown)
 		to_chat(user, "<span class='warning'>[linked_swapper] is still recharging.</span>")
 		return
-	swap(user)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+	to_chat(user, "<span class='notice'>You activate [src].</span>")
+	addtimer(CALLBACK(src, .proc/swap, user), 25)
 	
 /obj/item/swapper/examine(mob/user)
 	. = ..()
@@ -76,7 +78,7 @@
 	return teleportable
 	
 /obj/item/swapper/proc/swap(mob/user)
-	if(!linked_swapper)
+	if(QDELETED(linked_swapper) || world.time < linked_swapper.cooldown)
 		return
 		
 	var/atom/movable/A = get_teleportable_container()
@@ -86,10 +88,9 @@
 	
 	//TODO: add a sound effect or visual effect
 	if(do_teleport(A, turf_B, forced_teleport = TRUE))
-		to_chat(user, "<span class='notice'>You activate [src], swapping location with the linked device.</span>")
 		do_teleport(B, turf_A, forced_teleport = TRUE)
 		if(ismob(B))
 			var/mob/M = B
-			to_chat(M, "<span class='warning'>[linked_swapper] suddenly activates, swapping you with its linked device.</span>")
+			to_chat(M, "<span class='warning'>[linked_swapper] suddenly activates, and you find yourself somewhere else.</span>")
 		next_use = world.time + cooldown //only the one used goes on cooldown
 	
