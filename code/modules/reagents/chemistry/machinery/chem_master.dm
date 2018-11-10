@@ -266,6 +266,7 @@
 				P.name = trim("[name] patch")
 				adjust_item_drop_location(P)
 				reagents.trans_to(P,vol_each)
+				P.changed_name(P.name)
 			. = TRUE
 
 		if("createBottle")
