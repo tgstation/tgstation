@@ -314,8 +314,8 @@
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
 	medical_record_text = "Subject has permanent blindness."
 
-/datum/quirk/blindness/remove()
-	quirk_holder.clear_fullscreen("total")
+/datum/quirk/blindness/add()
+	quirk_holder.become_blind(ROUNDSTART_TRAIT)
 
 /datum/quirk/blindness/on_spawn()
 	quirk_holder.overlay_fullscreen("total", /obj/screen/fullscreen/total)
