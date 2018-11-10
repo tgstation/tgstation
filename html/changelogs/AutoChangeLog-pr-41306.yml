@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - spellcheck: "Added separate MMI/cyborg shell messages for when players try to insert damaged brains or MMIs that contain damaged brains."
-  - spellcheck: "Added an MMI examine message that mentions their radio toggle."
