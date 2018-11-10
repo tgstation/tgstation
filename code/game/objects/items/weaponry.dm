@@ -362,6 +362,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	materials = list(MAT_METAL=50)
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
+/obj/item/cane/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
+	if((user.a_intent == INTENT_HELP) && proximity_flag)
+		user.visible_message("<span class='notice'>[user] examines [target] with [src].</span>")
+		target.examine(user)
+
+
+
 /obj/item/staff
 	name = "wizard staff"
 	desc = "Apparently a staff used by the wizard."
