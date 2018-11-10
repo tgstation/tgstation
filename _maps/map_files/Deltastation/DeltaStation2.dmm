@@ -28333,10 +28333,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "baz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/bot,
+/obj/item/radio/intercom{
+	pixel_y = 26
 	},
-/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "baA" = (
@@ -28344,7 +28345,9 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "baB" = (
@@ -30879,12 +30882,8 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/item/radio/intercom{
-	pixel_x = -26;
-	pixel_y = -26
-	},
 /obj/effect/turf_decal/bot,
-/obj/structure/kitchenspike,
+/obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bfa" = (
