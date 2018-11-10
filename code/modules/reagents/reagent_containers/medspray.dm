@@ -93,7 +93,7 @@
 	if (lowertext(newname) == ("stypic powder"))
 		icon_state = "brutespray"
 		update_icon()
-	if (lowertext(newname) == ("silver sulfadine"))			// Renamed sprays have their icon changed to fit their new name when appropriate.
+	if (lowertext(newname) == ("silver sulfadiazine"))			// Renamed sprays have their icon changed to fit their new name when appropriate.
 		icon_state = "burnspray"
 		update_icon()
 	if (lowertext(newname) == ("synthflesh"))
