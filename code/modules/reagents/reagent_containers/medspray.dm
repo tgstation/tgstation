@@ -67,16 +67,6 @@
 		reagents.trans_to(M, amount_per_transfer_from_this)
 	return
 
-
-	if (name == ("stypic powder" || "Stypic Powder" || "stypic Powder" || "Stypic powder"))
-		icon_state = "brutespray"
-
-	if (name == ("silver sulfadine" || "Silver Sulfadine" || "silver Sulfadine" || "Silver sulfadine"))			// Renamed sprays have their icon changed to fit their new name when appropriate.
-		icon_state = "burnspray"
-
-	if (name == ("synthflesh" ||  "synth flesh" || "Synthflesh" || "SynthFlesh" || "Synth Flesh" || "Synth flesh" || "synth Flesh"))
-		icon_state = "synthspray"
-
 /obj/item/reagent_containers/medspray/styptic
 	name = "medical spray (styptic powder)"
 	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap. This one contains styptic powder, for treating cuts and bruises."
@@ -99,3 +89,13 @@
 	name = "sterilizer spray"
 	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list("sterilizine" = 60)
+/obj/item/reagent_containers/medspray/changed_name(newname)
+	if (lowertext(name) == ("stypic powder"))
+		icon_state = "brutespray"
+
+	if (lowertext(name) == ("silver sulfadine"))			// Renamed sprays have their icon changed to fit their new name when appropriate.
+		icon_state = "burnspray"
+
+	if (lowertext(name) == ("synthflesh"))
+		icon_state = "synthspray"
+	return ..()
