@@ -21,7 +21,7 @@
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
 	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
-	add_blood_DNA(list("Non-human DNA" = "A+")) // Needs to happen before ..()
+	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
 	return ..()
 
 /obj/effect/decal/cleanable/blood/splatter
@@ -104,7 +104,7 @@
 	. = ..()
 	setDir(pick(1,2,4,8))
 	icon_state += "-old"
-	add_blood_DNA(list("Non-human DNA" = "A+"))
+	add_blood_DNA(list("Non-human DNA" = random_blood_type()))
 
 /obj/effect/decal/cleanable/blood/drip
 	name = "drips of blood"
