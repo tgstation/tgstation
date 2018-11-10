@@ -23,8 +23,10 @@
 	used = TRUE
 
 /obj/item/book/granter/attack_self(mob/user)
-	if(reading == TRUE)
+	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
+		return FALSE
+	if(!user.can_read(src))
 		return FALSE
 	return TRUE
 
@@ -104,10 +106,10 @@
 		if(knownspell.type == S.type)
 			if(user.mind)
 				if(iswizard(user))
-					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy howto book can provide.</span>")
+					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-			return
+			return FALSE
 	if(used == TRUE && oneuse == TRUE)
 		recoil(user)
 	else
@@ -118,7 +120,7 @@
 				to_chat(user, "<span class='notice'>You stop reading...</span>")
 				reading = FALSE
 				qdel(S)
-				return
+				return FALSE
 		if(do_after(user,50, user))
 			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
 			user.mind.AddSpell(S)
