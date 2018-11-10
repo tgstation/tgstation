@@ -34,14 +34,11 @@
 	//If you override this method, have it return the number of objectives added.
 	if(devil_target_list.len && devil_target_list[devil]) // Is a double agent
 		var/datum/mind/target_mind = devil_target_list[devil]
+		var/datum/antagonist/devil/D = target_mind.has_antag_datum(/datum/antagonist/devil)
 		var/datum/objective/devil/outsell/outsellobjective = new
 		outsellobjective.owner = devil
 		outsellobjective.target = target_mind
 		outsellobjective.update_explanation_text()
-		devil.objectives += outsellobjective
+		D.objectives += outsellobjective
 		return 1
 	return 0
-
-/datum/game_mode/devil/devil_agents/generate_report()
-	return "Multiple soul merchants have been spotted in the quadrant, and appear to be competing over who can purchase the most souls.  Be advised that they are likely to manufacture \
-			emergencies to encourage employees to sell their souls. If anyone sells their soul in error, contact an attorney to overrule the sale."

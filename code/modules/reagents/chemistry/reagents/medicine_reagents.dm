@@ -47,9 +47,11 @@
 	M.remove_all_traits()
 	M.set_blurriness(0)
 	M.set_blindness(0)
-	M.SetKnockdown(0, 0)
-	M.SetStun(0, 0)
-	M.SetUnconscious(0, 0)
+	M.SetKnockdown(0, FALSE)
+	M.SetStun(0, FALSE)
+	M.SetUnconscious(0, FALSE)
+	M.SetParalyzed(0, FALSE)
+	M.SetImmobilized(0, FALSE)
 	M.silent = FALSE
 	M.dizziness = 0
 	M.disgust = 0
@@ -82,9 +84,11 @@
 
 /datum/reagent/medicine/synaptizine/on_mob_life(mob/living/carbon/M)
 	M.drowsyness = max(M.drowsyness-5, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
-	M.AdjustUnconscious(-20, 0)
+	M.AdjustStun(-20, FALSE)
+	M.AdjustKnockdown(-20, FALSE)
+	M.AdjustUnconscious(-20, FALSE)
+	M.AdjustImmobilized(-20, FALSE)
+	M.AdjustParalyzed(-20, FALSE)
 	if(holder.has_reagent("mindbreaker"))
 		holder.remove_reagent("mindbreaker", 5)
 	M.hallucination = max(0, M.hallucination - 10)
@@ -235,6 +239,7 @@
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns healing! It stings like hell!</span>")
 			M.emote("scream")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
 /datum/reagent/medicine/silver_sulfadiazine/on_mob_life(mob/living/carbon/M)
@@ -283,6 +288,7 @@
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your bruises healing! It stings like hell!</span>")
 			M.emote("scream")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
 
@@ -387,6 +393,7 @@
 			M.adjustFireLoss(-1.25 * reac_volume)
 			if(show_message)
 				to_chat(M, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
 	..()
 
 /datum/reagent/medicine/charcoal
@@ -554,10 +561,8 @@
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
-	M.AdjustUnconscious(-20, 0)
-	M.adjustStaminaLoss(-1*REM, 0)
+	M.AdjustAllImmobility(-20, FALSE)
+	M.adjustStaminaLoss(-1*REM, FALSE)
 	..()
 	return TRUE
 
@@ -623,10 +628,10 @@
 
 /datum/reagent/medicine/morphine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.ignore_slowdown(id)
 
 /datum/reagent/medicine/morphine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	L.unignore_slowdown(id)
 	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
@@ -763,9 +768,7 @@
 	M.adjustStaminaLoss(-0.5*REM, 0)
 	. = 1
 	if(prob(20))
-		M.AdjustStun(-20, 0)
-		M.AdjustKnockdown(-20, 0)
-		M.AdjustUnconscious(-20, 0)
+		M.AdjustAllImmobility(-20, FALSE)
 	..()
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
@@ -880,9 +883,7 @@
 		M.adjustToxLoss(-1*REM, 0)
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
-	M.AdjustStun(-60, 0)
-	M.AdjustKnockdown(-60, 0)
-	M.AdjustUnconscious(-60, 0)
+	M.AdjustAllImmobility(-60, FALSE)
 	M.adjustStaminaLoss(-5*REM, 0)
 	..()
 	. = 1
@@ -1133,9 +1134,7 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_life(mob/living/carbon/M as mob)
-	M.AdjustUnconscious(-20, 0)
-	M.AdjustStun(-20, 0)
-	M.AdjustKnockdown(-20, 0)
+	M.AdjustAllImmobility(-20, FALSE)
 	M.adjustStaminaLoss(-1, 0)
 	..()
 	return TRUE
@@ -1189,11 +1188,11 @@
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_add(mob/living/M)
 	. = ..()
-	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
+	M.ignore_slowdown(id)
 
 /datum/reagent/medicine/muscle_stimulant/on_mob_delete(mob/living/M)
 	. = ..()
-	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
+	M.unignore_slowdown(id)
 
 /datum/reagent/medicine/modafinil
 	name = "Modafinil"
@@ -1217,9 +1216,7 @@
 /datum/reagent/medicine/modafinil/on_mob_life(mob/living/carbon/M)
 	if(!overdosed) // We do not want any effects on OD
 		overdose_threshold = overdose_threshold + rand(-10,10)/10 // for extra fun
-		M.AdjustStun(-5, 0)
-		M.AdjustKnockdown(-5, 0)
-		M.AdjustUnconscious(-5, 0)
+		M.AdjustAllImmobility(-5, FALSE)
 		M.adjustStaminaLoss(-0.5*REM, 0)
 		M.Jitter(1)
 		metabolization_rate = 0.01 * REAGENTS_METABOLISM * rand(5,20) // randomizes metabolism between 0.02 and 0.08 per tick
@@ -1250,7 +1247,7 @@
 			if(prob(20))
 				to_chat(M, "You have a sudden fit!")
 				M.emote("moan")
-				M.Knockdown(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
+				M.Paralyze(20, 1, 0) // you should be in a bad spot at this point unless epipen has been used
 		if(81)
 			to_chat(M, "You feel too exhausted to continue!") // at this point you will eventually die unless you get charcoal
 			M.adjustOxyLoss(0.1*REM, 0)
@@ -1261,3 +1258,37 @@
 			M.adjustStaminaLoss(1.5*REM, 0)
 	..()
 	return TRUE
+
+/datum/reagent/medicine/psicodine
+	name = "Psicodine"
+	id = "psicodine"
+	description = "Suppresses anxiety and other various forms of mental distress. Overdose causes hallucinations and minor toxin damage."
+	reagent_state = LIQUID
+	color = "#07E79E"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 30
+
+/datum/reagent/medicine/psicodine/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(TRAIT_FEARLESS, id)
+
+/datum/reagent/medicine/psicodine/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_FEARLESS, id)
+	..()
+
+/datum/reagent/medicine/psicodine/on_mob_life(mob/living/carbon/M)
+	M.jitteriness = max(0, M.jitteriness-6)
+	M.dizziness = max(0, M.dizziness-6)
+	M.confused = max(0, M.confused-6)
+	M.disgust = max(0, M.disgust-6)
+	GET_COMPONENT_FROM(mood, /datum/component/mood, M)
+	if(mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
+		mood.setSanity(min(mood.sanity+5, SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
+	..()
+	. = 1
+
+/datum/reagent/medicine/psicodine/overdose_process(mob/living/M)
+	M.hallucination = min(max(0, M.hallucination + 5), 60)
+	M.adjustToxLoss(1, 0)
+	..()
+	. = 1

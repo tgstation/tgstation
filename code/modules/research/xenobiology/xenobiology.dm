@@ -840,7 +840,7 @@
 		return
 	if(isitem(C))
 		var/obj/item/I = C
-		if(I.slowdown <= 0)
+		if(I.slowdown <= 0 || I.obj_flags & IMMUTABLE_SLOW)
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 			return ..()
 		I.slowdown = 0
@@ -864,6 +864,7 @@
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "potblue"
+	resistance_flags = FIRE_PROOF
 	var/uses = 3
 
 /obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user)

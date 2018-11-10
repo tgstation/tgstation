@@ -36,9 +36,13 @@
 // DEBUFFS //
 /////////////
 
-#define STATUS_EFFECT_STUN /datum/status_effect/incapacitating/stun //the affected is stunned
+#define STATUS_EFFECT_STUN /datum/status_effect/incapacitating/stun //the affected is unable to move or use items
 
-#define STATUS_EFFECT_KNOCKDOWN /datum/status_effect/incapacitating/knockdown //the affected is knocked down
+#define STATUS_EFFECT_KNOCKDOWN /datum/status_effect/incapacitating/knockdown //the affected is unable to stand up
+
+#define STATUS_EFFECT_IMMOBILIZED /datum/status_effect/incapacitating/immobilized //the affected is unable to move
+
+#define STATUS_EFFECT_PARALYZED /datum/status_effect/incapacitating/paralyzed //the affected is unable to move, use items, or stand up.
 
 #define STATUS_EFFECT_UNCONSCIOUS /datum/status_effect/incapacitating/unconscious //the affected is unconscious
 
@@ -69,6 +73,8 @@
 #define STATUS_EFFECT_KINDLE /datum/status_effect/kindle //A knockdown reduced by 1 second for every 3 points of damage the target takes.
 
 #define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
+
+#define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbolaPacify //Gives the user gondola traits while the gonbola is attached to them.
 
 /////////////
 // NEUTRAL //

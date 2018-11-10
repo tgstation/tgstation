@@ -7,6 +7,9 @@
 	baseturfs = /turf/open/floor/plating
 
 	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -22,10 +25,12 @@
 	tiled_dirt = TRUE
 
 /turf/open/floor/Initialize(mapload)
+
 	if (!broken_states)
-		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
-	if (!burnt_states)
-		burnt_states = list()
+		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+	else
+		broken_states = typelist("broken_states", broken_states)
+	burnt_states = typelist("burnt_states", burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))

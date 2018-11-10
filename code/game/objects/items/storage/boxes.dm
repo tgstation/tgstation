@@ -218,10 +218,10 @@
 	desc = "This box contains injectors, it seems."
 
 /obj/item/storage/box/injectors/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/dnainjector/h2m(src)
-	for(var/i in 1 to 3)
-		new /obj/item/dnainjector/m2h(src)
+	var/static/items_inside = list(	
+		/obj/item/dnainjector/h2m = 3,
+		/obj/item/dnainjector/m2h = 3)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
@@ -286,11 +286,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/trackimp/PopulateContents()
-	for(var/i in 1 to 4)
-		new /obj/item/implantcase/tracking(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
-	new /obj/item/locator(src)
+	var/static/items_inside = list(	
+		/obj/item/implantcase/tracking = 4,
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
+		/obj/item/locator = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/minertracker
 	name = "boxed tracking implant kit"
@@ -298,11 +299,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/implantcase/tracking(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
-	new /obj/item/locator(src)
+	var/static/items_inside = list(	
+		/obj/item/implantcase/tracking = 3,
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
+		/obj/item/locator = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/chemimp
 	name = "boxed chemical implant kit"
@@ -310,10 +312,11 @@
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/implantcase/chem(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
+	var/static/items_inside = list(	
+		/obj/item/implantcase/chem = 5,
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/exileimp
 	name = "boxed exile implant kit"
@@ -321,9 +324,10 @@
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/implantcase/exile(src)
-	new /obj/item/implanter(src)
+	var/static/items_inside = list(	
+		/obj/item/implantcase/exile = 5,
+		/obj/item/implanter = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/bodybags
 	name = "body bags"
@@ -388,6 +392,7 @@
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
 	illustration = null
+	var/cube_type = /obj/item/reagent_containers/food/snacks/monkeycube
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
@@ -397,7 +402,27 @@
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(src)
+		new cube_type(src)
+
+/obj/item/storage/box/monkeycubes/syndicate
+	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
+	cube_type = /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
+
+/obj/item/storage/box/gorillacubes
+	name = "gorilla cube box"
+	desc = "Waffle Co. brand gorilla cubes. Do not taunt."
+	icon_state = "monkeycubebox"
+	illustration = null
+
+/obj/item/storage/box/gorillacubes/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 3
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+
+/obj/item/storage/box/gorillacubes/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/monkeycube/gorilla(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -415,10 +440,8 @@
 	illustration = "pda"
 
 /obj/item/storage/box/PDAs/PopulateContents()
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
-	new /obj/item/pda(src)
+	for(var/i in 1 to 4)
+		new /obj/item/pda(src)
 	new /obj/item/cartridge/head(src)
 
 	var/newcart = pick(	/obj/item/cartridge/engineering,
@@ -591,7 +614,7 @@
 	STR.max_items = 21
 	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
 	STR.max_combined_w_class = 21
-	STR.click_gather = TRUE
+	STR.click_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)
@@ -966,7 +989,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 
-
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 
@@ -988,21 +1010,13 @@
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/capacitor(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
+	var/static/items_inside = list(	
+		/obj/item/stock_parts/capacitor = 3,
+		/obj/item/stock_parts/scanning_module = 3, 
+		/obj/item/stock_parts/manipulator = 3,
+		/obj/item/stock_parts/micro_laser = 3,
+		/obj/item/stock_parts/matter_bin = 3)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
@@ -1010,18 +1024,10 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/capacitor/quadratic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/scanning_module/triphasic(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/manipulator/femto(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/micro_laser/quadultra(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
-	new /obj/item/stock_parts/matter_bin/bluespace(src)
+	var/static/items_inside = list(	
+		/obj/item/stock_parts/capacitor/quadratic = 3,
+		/obj/item/stock_parts/scanning_module/triphasic = 3,
+		/obj/item/stock_parts/manipulator/femto = 3,
+		/obj/item/stock_parts/micro_laser/quadultra = 3,
+		/obj/item/stock_parts/matter_bin/bluespace = 3)
+	generate_items_inside(items_inside,src)

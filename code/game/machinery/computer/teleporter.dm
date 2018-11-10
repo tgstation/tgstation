@@ -43,7 +43,7 @@
 		data += "Current target: [(!target) ? "None" : "[get_area(target)] [(regime_set != "Gate") ? "" : "Teleporter"]"]<BR>"
 		if(calibrating)
 			data += "Calibration: <font color='yellow'>In Progress</font>"
-		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
+		else if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
 			data += "Calibration: <font color='green'>Optimal</font>"
 		else
 			data += "Calibration: <font color='red'>Sub-Optimal</font>"
@@ -83,13 +83,13 @@
 		if(!target)
 			say("Error: No target set to calibrate to.")
 			return
-		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
+		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accuracy >= 3)
 			say("Hub is already calibrated!")
 			return
 		say("Processing hub calibration to target...")
 
 		calibrating = 1
-		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
+		spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1

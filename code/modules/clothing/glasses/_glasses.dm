@@ -270,6 +270,33 @@
 	..()
 	user.cure_blind("blindfold_[REF(src)]")
 
+/obj/item/clothing/glasses/sunglasses/blindfold/white
+	name = "blind personnel blindfold"
+	desc = "Indicates that the wearer suffers from blindness."
+	icon_state = "blindfoldwhite"
+	item_state = "blindfoldwhite"
+	var/colored_before = FALSE
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == SLOT_GLASSES)
+		update_icon(user)
+		user.update_inv_glasses() //Color might have been changed by update_icon.
+	..()
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
+	if(ishuman(user) && !colored_before)
+		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
+		colored_before = TRUE
+
+/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
+	. = list()
+	if(!isinhands && ishuman(loc) && !colored_before)
+		var/mob/living/carbon/human/H = loc
+		var/mutable_appearance/M = mutable_appearance('icons/mob/eyes.dmi', "blindfoldwhite")
+		M.appearance_flags |= RESET_COLOR
+		M.color = "#[H.eye_color]"
+		. += M
+
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks flashes."
 	icon_state = "bigsunglasses"

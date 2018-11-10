@@ -14,6 +14,7 @@
 	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/offset = 0
 	var/equipped_before_drop = FALSE
+	var/can_be_bloody = TRUE
 
 /obj/item/clothing/shoes/ComponentInitialize()
 	. = ..()

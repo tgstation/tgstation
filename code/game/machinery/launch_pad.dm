@@ -24,13 +24,20 @@
 	range = initial(range)
 	range += E
 
+/obj/machinery/launchpad/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Maximum range: <b>[range]</b> units.<span>")
+
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
 		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
 			return
 
 		if(panel_open)
-			if(istype(I, /obj/item/multitool))
+			if(I.tool_behaviour == TOOL_MULTITOOL)
+				if(!multitool_check_buffer(user, I))
+					return
 				var/obj/item/multitool/M = I
 				M.buffer = src
 				to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
@@ -207,7 +214,7 @@
 
 /obj/item/storage/briefcase/launchpad/PopulateContents()
 	new /obj/item/pen(src)
-	new /obj/item/launchpad_remote(src, pad) 
+	new /obj/item/launchpad_remote(src, pad)
 
 /obj/item/storage/briefcase/launchpad/attack_self(mob/user)
 	if(!isturf(user.loc)) //no setting up in a locker
@@ -228,7 +235,7 @@
 		L.pad = src.pad
 		to_chat(user, "<span class='notice'>You link [pad] to [L].</span>")
 	else
-		return ..()	
+		return ..()
 
 /obj/item/launchpad_remote
 	name = "folder"

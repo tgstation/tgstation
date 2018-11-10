@@ -94,7 +94,7 @@
 		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
-/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
@@ -147,13 +147,9 @@
 	if(ascended || user.mind.soulOwner == src.mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
 		S.key = user.key
-		S.mind.assigned_role = "Imp"
-		S.mind.special_role = "Imp"
-		var/datum/objective/newobjective = new
-		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
-		S.mind.objectives += newobjective
+		var/datum/antagonist/imp/A = new()
+		S.mind.add_antag_datum(A)
 		to_chat(S, S.playstyle_string)
-		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
 	else
 		return ..()
 
@@ -176,7 +172,7 @@
 				log_combat(M, src, "attacked")
 				updatehealth()
 			if ("disarm")
-				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
+				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

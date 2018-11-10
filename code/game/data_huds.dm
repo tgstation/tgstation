@@ -91,12 +91,14 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat
+	var/severity
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			if(!threat || D.severity > threat) //a buffing virus gets an icon
-				threat = D.severity
-	return threat
+			if(!threat || get_disease_severity_value(D.severity) > threat) //a buffing virus gets an icon
+				threat = get_disease_severity_value(D.severity)
+				severity = D.severity
+	return severity
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
@@ -222,7 +224,7 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudno_id"
-	if(wear_id)
+	if(wear_id?.GetID())
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
 	sec_hud_set_security_status()
 
@@ -440,56 +442,6 @@
 			holder.icon_state = "hudmove"
 		else
 			holder.icon_state = ""
-
-/*~~~~~~~~~~~~
-	Circutry!
-~~~~~~~~~~~~~*/
-/obj/item/electronic_assembly/proc/diag_hud_set_circuithealth(hide = FALSE)
-	var/image/holder = hud_list[DIAG_CIRCUIT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))||hide) //if not on the ground dont show overlay
-		holder.icon_state = null
-	else
-		holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
-
-/obj/item/electronic_assembly/proc/diag_hud_set_circuitcell(hide = FALSE)
-	var/image/holder = hud_list[DIAG_BATT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))||hide) //if not on the ground dont show overlay
-		holder.icon_state = null
-	else if(battery)
-		var/chargelvl = battery.charge/battery.maxcharge
-		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
-	else
-		holder.icon_state = "hudnobatt"
-
-/obj/item/electronic_assembly/proc/diag_hud_set_circuitstat(hide = FALSE) //On, On and dangerous, or Off
-	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))||hide) //if not on the ground don't show overlay
-		holder.icon_state = null
-	else if(!battery)
-		holder.icon_state = "hudoffline"
-	else if(battery.charge == 0)
-		holder.icon_state = "hudoffline"
-	else if(combat_circuits) //has a circuit that can harm people
-		holder.icon_state = prefered_hud_icon + "-red"
-	else //Bot is on and not dangerous
-		holder.icon_state = prefered_hud_icon
-
-/obj/item/electronic_assembly/proc/diag_hud_set_circuittracking(hide = FALSE)
-	var/image/holder = hud_list[DIAG_TRACK_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if((!isturf(loc))||hide) //if not on the ground dont show overlay
-		holder.icon_state = null
-	else if(long_range_circuits)
-		holder.icon_state = "hudtracking"
-	else
-		holder.icon_state = null
 
 /*~~~~~~~~~~~~
 	Airlocks!

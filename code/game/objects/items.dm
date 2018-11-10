@@ -108,8 +108,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/Initialize()
-	if (!materials)
-		materials = list()
+
+	materials =	typelist("materials", materials)
+
+	if (attack_verb)
+		attack_verb = typelist("attack_verb", attack_verb)
+
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
@@ -169,14 +173,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	set category = "Object"
 	set src in oview(1)
 
-	if(!isturf(loc) || usr.stat || usr.restrained() || !usr.canmove)
+	if(!isturf(loc) || usr.stat || usr.restrained())
 		return
 
-	var/turf/T = src.loc
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 
-	src.loc = null
-
-	src.loc = T
+	var/turf/T = loc
+	loc = null
+	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	..()
@@ -198,7 +205,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/boostable_nodes = techweb_item_boost_check(src)
 	if (boostable_nodes)
 		for(var/id in boostable_nodes)
-			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
+			if(!node)
+				continue
 			research_msg += sep
 			research_msg += node.display_name
 			sep = ", "
@@ -395,10 +404,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-//Set disable_warning to 1 if you wish it to not give you outputs.
+//Set disable_warning to TRUE if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
-		return 0
+		return FALSE
 
 	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
@@ -407,8 +416,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	set category = "Object"
 	set name = "Pick up"
 
-	if(usr.incapacitated() || !Adjacent(usr) || usr.lying)
+	if(usr.incapacitated() || !Adjacent(usr))
 		return
+
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 
 	if(usr.get_active_held_item() == null) // Let me know if this has any problems -Yota
 		usr.UnarmedAttack(src)
@@ -424,26 +438,17 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/eyestab(mob/living/carbon/M, mob/living/carbon/user)
 
-	var/is_human_victim = 0
+	var/is_human_victim
 	var/obj/item/bodypart/affecting = M.get_bodypart(BODY_ZONE_HEAD)
 	if(ishuman(M))
 		if(!affecting) //no head!
 			return
-		is_human_victim = 1
-		var/mob/living/carbon/human/H = M
-		if((H.head && H.head.flags_cover & HEADCOVERSEYES) || \
-			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
-			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
-			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
-			return
+		is_human_victim = TRUE
 
-	if(ismonkey(M))
-		var/mob/living/carbon/monkey/Mo = M
-		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
-			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
-			return
+	if(M.is_eyes_covered())
+		// you can't stab someone in the eyes wearing a mask!
+		to_chat(user, "<span class='danger'>You're going to need to remove [M.p_their()] eye protection first!</span>")
+		return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
 		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
@@ -496,7 +501,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Unconscious(20)
-			M.Knockdown(40)
+			M.Paralyze(40)
 		if (prob(eyes.eye_damage - 10 + 1))
 			M.become_blind(EYE_DAMAGE)
 			to_chat(M, "<span class='danger'>You go blind!</span>")
@@ -519,10 +524,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			itempush = 0 //too light to push anything
 		return A.hitby(src, 0, itempush)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	thrownby = thrower
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force)
 
 
 /obj/item/proc/after_throw(datum/callback/callback)

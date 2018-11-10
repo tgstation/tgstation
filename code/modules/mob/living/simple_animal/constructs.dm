@@ -338,7 +338,7 @@
 			stored_pulling.forceMove(loc)
 		forceMove(AM)
 		if(stored_pulling)
-			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
+			start_pulling(stored_pulling, supress_message = TRUE) //drag anything we're pulling through the wall with us by magic
 
 /mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
 	if(iscarbon(target))
@@ -357,7 +357,7 @@
 		if(!LAZYLEN(parts))
 			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
 				return ..()
-			C.Knockdown(60)
+			C.Paralyze(60)
 			visible_message("<span class='danger'>[src] knocks [C] down!</span>")
 			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
 			return FALSE

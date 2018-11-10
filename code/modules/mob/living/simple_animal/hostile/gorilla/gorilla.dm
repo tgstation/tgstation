@@ -13,7 +13,7 @@
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
-	loot = list(/obj/effect/gibspawner/generic)
+	loot = list(/obj/effect/gibspawner/generic/animal)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
 	response_help  = "prods"
 	response_disarm = "challenges"
@@ -71,7 +71,7 @@
 			var/atom/throw_target = get_edge_target_turf(L, dir)
 			L.throw_at(throw_target, rand(1,2), 7, src)
 		else
-			L.Knockdown(20)
+			L.Paralyze(20)
 			visible_message("<span class='danger'>[src] knocks [L] down!</span>")
 
 /mob/living/simple_animal/hostile/gorilla/CanAttack(atom/the_target)

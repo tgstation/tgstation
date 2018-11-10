@@ -926,18 +926,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/checkpoint/customs/auxiliary
 	icon_state = "customs_point_aux"
 
-/area/security/vacantoffice
-	name = "Vacant Office"
-	icon_state = "security"
-
-/area/security/vacantoffice/a
-	name = "Vacant Office A"
-	icon_state = "security"
-
-/area/security/vacantoffice/b
-	name = "Vacant Office B"
-	icon_state = "security"
-
 /area/quartermaster
 	name = "Quartermasters"
 	icon_state = "quart"
@@ -1210,6 +1198,24 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/construction/storage/wing
 	name = "Storage Wing"
 	icon_state = "storage_wing"
+
+// Vacant Rooms
+/area/vacant_room
+	name = "Vacant Room"
+	icon_state = "yellow"
+	ambientsounds = MAINTENANCE
+
+/area/vacant_room/office
+	name = "Vacant Office"
+
+/area/vacant_room/office/office_a
+	name = "Vacant Office - A"
+
+/area/vacant_room/office/office_b
+	name = "Vacant Office - B"
+
+/area/vacant_room/commissary
+	name = "Vacant Commissary"
 
 
 //AI

@@ -149,7 +149,7 @@
 
 /datum/nanite_program/cryo
 	name = "Cryogenic Treatment"
-	desc = "The nanites rapidly skin heat through the host's skin, lowering their temperature."
+	desc = "The nanites rapidly sink heat through the host's skin, lowering their temperature."
 	use_rate = 1
 	rogue_types = list(/datum/nanite_program/skin_decay, /datum/nanite_program/pyro)
 

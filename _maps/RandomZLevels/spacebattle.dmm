@@ -856,7 +856,6 @@
 /area/awaymission/spacebattle/cruiser)
 "dN" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 2
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -2169,7 +2168,6 @@
 /area/awaymission/spacebattle/syndicate7)
 "hV" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 4
 	},
 /obj/item/bikehorn/rubberducky,
@@ -2180,7 +2178,6 @@
 /area/awaymission/spacebattle/cruiser)
 "hX" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
@@ -2209,14 +2206,12 @@
 /area/awaymission/spacebattle/cruiser)
 "if" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/spacebattle/cruiser)
 "ig" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /obj/item/soap,
@@ -2790,7 +2785,6 @@
 /area/awaymission/spacebattle/cruiser)
 "ks" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 2
 	},
 /turf/open/floor/plating,
@@ -2868,7 +2862,6 @@
 /area/awaymission/spacebattle/cruiser)
 "kH" = (
 /obj/machinery/mech_bay_recharge_port{
-	icon_state = "recharge_port";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -2894,10 +2887,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"kM" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/mineral/random,
-/area/space/nearstation)
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
@@ -3175,7 +3164,7 @@ aa
 aa
 aa
 aa
-kM
+aa
 "}
 (2,1,1) = {"
 aa

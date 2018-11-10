@@ -1,4 +1,7 @@
 #define NEXT_PAGE_ID "__next__"
+#define DEFAULT_CHECK_DELAY 20
+
+GLOBAL_LIST_EMPTY(radial_menus)
 
 /obj/screen/radial
 	icon = 'icons/mob/radial.dmi'
@@ -30,6 +33,14 @@
 	name = "Close Menu"
 	icon_state = "radial_center"
 
+/obj/screen/radial/center/MouseEntered(location, control, params)
+	. = ..()
+	icon_state = "radial_center_focus"
+
+/obj/screen/radial/center/MouseExited(location, control, params)
+	. = ..()
+	icon_state = "radial_center"
+
 /obj/screen/radial/center/Click(location, control, params)
 	if(usr.client == parent.current_user)
 		parent.finished = TRUE
@@ -48,6 +59,9 @@
 	var/atom/anchor
 	var/image/menu_holder
 	var/finished = FALSE
+	var/datum/callback/custom_check_callback
+	var/next_check = 0
+	var/check_delay = DEFAULT_CHECK_DELAY
 
 	var/radius = 32
 	var/starting_angle = 0
@@ -57,7 +71,7 @@
 	var/max_elements
 	var/pages = 1
 	var/current_page = 1
-	
+
 	var/hudfix_method = TRUE //TRUE to change anchor to user, FALSE to shift by py_shift
 	var/py_shift = 0
 	var/entry_animation = TRUE
@@ -75,7 +89,7 @@
 			restrict_to_dir(NORTH) //I was going to parse screen loc here but that's more effort than it's worth.
 
 //Sets defaults
-//These assume 45 deg min_angle 
+//These assume 45 deg min_angle
 /datum/radial_menu/proc/restrict_to_dir(dir)
 	switch(dir)
 		if(NORTH)
@@ -96,7 +110,7 @@
 		zone = ending_angle - starting_angle
 	else
 		zone = 360 - starting_angle + ending_angle
-	
+
 	max_elements = round(zone / min_angle)
 	var/paged = max_elements < choices.len
 	if(elements.len < max_elements)
@@ -163,7 +177,7 @@
 	else
 		E.pixel_y = py
 		E.pixel_x = px
-	
+
 	//Visuals
 	E.alpha = 255
 	E.mouse_opacity = MOUSE_OPACITY_ICON
@@ -183,7 +197,7 @@
 		E.next_page = FALSE
 		if(choices_icons[choice_id])
 			E.add_overlay(choices_icons[choice_id])
-	
+
 /datum/radial_menu/New()
 	close_button = new
 	close_button.parent = src
@@ -193,6 +207,7 @@
 	choices_icons.Cut()
 	choices_values.Cut()
 	current_page = 1
+	QDEL_NULL(custom_check_callback)
 
 /datum/radial_menu/proc/element_chosen(choice_id,mob/user)
 	selected_choice = choices_values[choice_id]
@@ -220,7 +235,7 @@
 		MA.layer = ABOVE_HUD_LAYER
 		MA.appearance_flags |= RESET_TRANSFORM
 	return MA
-		
+
 
 /datum/radial_menu/proc/next_page()
 	if(pages > 1)
@@ -243,8 +258,15 @@
 	if(current_user)
 		current_user.images -= menu_holder
 
-/datum/radial_menu/proc/wait()
+/datum/radial_menu/proc/wait(atom/user, atom/anchor, require_near = FALSE)
 	while (current_user && !finished && !selected_choice)
+		if(require_near && !in_range(anchor, user))
+			return
+		if(custom_check_callback && next_check < world.time)
+			if(!custom_check_callback.Invoke())
+				return
+			else
+				next_check = world.time + check_delay
 		stoplag(1)
 
 /datum/radial_menu/Destroy()
@@ -252,19 +274,31 @@
 	hide()
 	. = ..()
 /*
-	Presents radial menu to user anchored to anchor (or user if the anchor is currently in users screen) 
+	Presents radial menu to user anchored to anchor (or user if the anchor is currently in users screen)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user,atom/anchor,list/choices)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE)
+	if(!user || !anchor || !length(choices))
+		return
+	if(!uniqueid)
+		uniqueid = "defmenu_[REF(user)]_[REF(anchor)]"
+
+	if(GLOB.radial_menus[uniqueid])
+		return
+
 	var/datum/radial_menu/menu = new
-	if(!user)
-		user = usr
+	GLOB.radial_menus[uniqueid] = menu
+	if(radius)
+		menu.radius = radius
+	if(istype(custom_check))
+		menu.custom_check_callback = custom_check
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices)
 	menu.show_to(user)
-	menu.wait()
+	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice
 	qdel(menu)
+	GLOB.radial_menus -= uniqueid
 	return answer

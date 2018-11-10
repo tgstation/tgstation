@@ -73,7 +73,7 @@
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Knockdown(40)
+				C.Paralyze(40)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..()
@@ -242,10 +242,14 @@
 		return
 	var/location = get_turf(holder.my_atom)
 	do_sparks(2, TRUE, location)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
+	var/range = created_volume/3
+	if(isatom(holder.my_atom))
+		var/atom/A = holder.my_atom
+		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
+	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Knockdown(60)
+				C.Paralyze(60)
 			else
 				C.Stun(100)
 	holder.remove_reagent("flash_powder", created_volume*3)
@@ -259,10 +263,14 @@
 /datum/chemical_reaction/flash_powder_flash/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
 	do_sparks(2, TRUE, location)
-	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/10, location))
+	var/range = created_volume/10
+	if(isatom(holder.my_atom))
+		var/atom/A = holder.my_atom
+		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
+	for(var/mob/living/carbon/C in get_hearers_in_view(range, location))
 		if(C.flash_act())
 			if(get_dist(C, location) < 4)
-				C.Knockdown(60)
+				C.Paralyze(60)
 			else
 				C.Stun(100)
 

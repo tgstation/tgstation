@@ -109,6 +109,9 @@
 /obj/machinery/power/apc/syndicate //general syndicate access
 	req_access = list(ACCESS_SYNDICATE)
 
+/obj/machinery/power/apc/away //general away mission access
+	req_access = list(ACCESS_AWAY_GENERAL)
+
 /obj/machinery/power/apc/highcap/five_k
 	cell_type = /obj/item/stock_parts/cell/upgraded/plus
 
@@ -266,7 +269,7 @@
 		to_chat(user, "<span class='brass'>There is an integration cog installed!</span>")
 
 	to_chat(user, "<span class='notice'>Alt-Click the APC to [ locked ? "unlock" : "lock"] the interface.</span>")
-	
+
 	if(issilicon(user))
 		to_chat(user, "<span class='notice'>Ctrl-Click the APC to switch the breaker [ operating ? "off" : "on"].</span>")
 
@@ -721,6 +724,7 @@
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the APC interface.</span>")
 			update_icon()
+			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
@@ -1104,7 +1108,7 @@
 
 /obj/machinery/power/apc/add_load(amount)
 	if(terminal && terminal.powernet)
-		terminal.powernet.load += amount
+		terminal.add_load(amount)
 
 /obj/machinery/power/apc/avail()
 	if(terminal)
@@ -1426,4 +1430,5 @@
 /obj/item/electronics/apc
 	name = "power control module"
 	icon_state = "power_mod"
+	custom_price = 5
 	desc = "Heavy-duty switching circuits for power control."

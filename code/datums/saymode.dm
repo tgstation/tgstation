@@ -17,7 +17,7 @@
 /datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language)
 	switch(user.lingcheck())
 		if(LINGHIVE_LINK)
-			var/msg = "<i><font color=#800040><b>[user.mind]:</b> [message]</font></i>"
+			var/msg = "<span class='changeling'><b>[user.mind]:</b> [message]</span>"
 			for(var/_M in GLOB.player_list)
 				var/mob/M = _M
 				if(M in GLOB.dead_mob_list)
@@ -33,13 +33,13 @@
 							to_chat(M, msg)
 						if(LINGHIVE_OUTSIDER)
 							if(prob(40))
-								to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
+								to_chat(M, "<span class='changeling'>We can faintly sense an outsider trying to communicate through the hivemind...</span>")
 		if(LINGHIVE_LING)
 			if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
 				to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 				return FALSE
 			var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
-			var/msg = "<i><font color=#800080><b>[changeling.changelingID]:</b> [message]</font></i>"
+			var/msg = "<span class='changeling'><b>[changeling.changelingID]:</b> [message]</span>"
 			user.log_talk(message, LOG_SAY, tag="changeling [changeling.changelingID]")
 			for(var/_M in GLOB.player_list)
 				var/mob/M = _M
@@ -56,9 +56,9 @@
 								to_chat(M, msg)
 						if(LINGHIVE_OUTSIDER)
 							if(prob(40))
-								to_chat(M, "<i><font color=#800080>We can faintly sense another of our kind trying to communicate through the hivemind...</font></i>")
+								to_chat(M, "<span class='changeling'>We can faintly sense another of our kind trying to communicate through the hivemind...</span>")
 		if(LINGHIVE_OUTSIDER)
-			to_chat(user, "<i><font color=#800080>Our senses have not evolved enough to be able to communicate this way...</font></i>")
+			to_chat(user, "<span class='changeling'>Our senses have not evolved enough to be able to communicate this way...</span>")
 	return FALSE
 
 

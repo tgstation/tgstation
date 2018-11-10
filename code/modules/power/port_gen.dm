@@ -103,6 +103,8 @@
 	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>")
 	if(crit_fail)
 		to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.<span>")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
@@ -168,7 +170,7 @@
 		return
 	else if(!active)
 
-		if(istype(O, /obj/item/wrench))
+		if(O.tool_behaviour == TOOL_WRENCH)
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -179,9 +181,9 @@
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = FALSE
 
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
-		else if(istype(O, /obj/item/screwdriver))
+		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
 			O.play_tool_sound(src)
 			if(panel_open)
@@ -221,7 +223,7 @@
 	dat += text("[capitalize(sheet_name)]: [sheets] - <A href='?src=[REF(src)];action=eject'>Eject</A><br>")
 	var/stack_percent = round(sheet_left * 100, 1)
 	dat += text("Current stack: [stack_percent]% <br>")
-	dat += text("Power output: <A href='?src=[REF(src)];action=lower_power'>-</A> [power_gen * power_output] <A href='?src=[REF(src)];action=higher_power'>+</A><br>")
+	dat += text("Power output: <A href='?src=[REF(src)];action=lower_power'>-</A> [DisplayPower(power_gen * power_output)] <A href='?src=[REF(src)];action=higher_power'>+</A><br>")
 	dat += text("Power current: [(powernet == null ? "Unconnected" : "[DisplayPower(avail())]")]<br>")
 	dat += text("Heat: [current_heat]<br>")
 	dat += "<br><A href='?src=[REF(src)];action=close'>Close</A>"

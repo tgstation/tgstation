@@ -3,10 +3,6 @@
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
-"ab" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/indestructible/rock/snow,
-/area/awaymission/snowdin/cave/mountain)
 "ac" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -483,7 +479,7 @@
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/item/clothing/shoes/winterboots,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormresearch3";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -497,7 +493,7 @@
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/science,
 /obj/item/clothing/shoes/winterboots,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormresearch2";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -520,7 +516,7 @@
 "bB" = (
 /obj/structure/closet,
 /obj/item/clothing/shoes/winterboots,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormresearch1";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -531,7 +527,7 @@
 /area/awaymission/snowdin/post/dorm)
 "bC" = (
 /obj/structure/closet,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormhydro2";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -544,7 +540,7 @@
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/hydro,
 /obj/item/clothing/shoes/winterboots,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormhydro1";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -1791,7 +1787,7 @@
 /obj/structure/closet,
 /obj/item/clothing/suit/hooded/wintercoat/security,
 /obj/item/clothing/shoes/winterboots,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormsec";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -2405,7 +2401,6 @@
 /area/awaymission/snowdin/post/dorm)
 "fw" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -3103,7 +3098,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormcap";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -4334,7 +4329,7 @@
 /area/awaymission/snowdin/post)
 "jt" = (
 /obj/structure/table,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdin_gate";
 	pixel_x = 7;
 	pixel_y = -24
@@ -6041,7 +6036,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/garage)
 "mY" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdingarage1";
 	name = "garage door toggle";
 	pixel_x = -24;
@@ -6230,9 +6225,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "yellow"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "np" = (
 /obj/structure/cable/yellow{
@@ -6476,9 +6469,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "yellow"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "nR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -7106,9 +7097,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/secpost)
 "pn" = (
 /turf/open/floor/plating,
@@ -7742,17 +7731,15 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "yellow"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "qS" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdinturbineoutlet";
 	name = "Turbine Outlet Release";
 	pixel_y = -32
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdinturbinegas";
 	name = "Turbine Gas Release";
 	pixel_y = -24
@@ -7793,7 +7780,7 @@
 	pixel_y = -26;
 	req_access_txt = "32"
 	},
-/obj/machinery/button/ignition{
+/obj/machinery/button/ignition/indestructible{
 	id = "snowdin_turbine_ignitor";
 	pixel_x = 6;
 	pixel_y = -24
@@ -9892,9 +9879,8 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "wy" = (
-/obj/structure/bonfire{
-	burning = 1;
-	icon_state = "bonfire_warm"
+/obj/structure/bonfire/prelit{
+	burn_icon = "bonfire_warm"
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
@@ -11088,7 +11074,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "zx" = (
 /obj/machinery/light/small,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdingarage2";
 	name = "garage door toggle";
 	pixel_x = -7;
@@ -11532,9 +11518,8 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/post/minipost)
 "AI" = (
-/obj/structure/bonfire{
-	burning = 1;
-	icon_state = "bonfire_warm"
+/obj/structure/bonfire/prelit{
+	burn_icon = "bonfire_warm"
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
@@ -11661,7 +11646,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/minipost)
 "Bb" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdindormabandoned1";
 	name = "Dorm Bolt Control";
 	normaldoorcontrol = 1;
@@ -13930,13 +13915,13 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "GK" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdingarageunder2";
 	name = "right garage door toggle";
 	pixel_x = 7;
 	pixel_y = 24
 	},
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdingarageunder";
 	name = "left garage door toggle";
 	pixel_x = -7;
@@ -14474,7 +14459,6 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "In" = (
 /obj/mecha/working/ripley/mining{
-	icon_state = "ripley";
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
@@ -14525,7 +14509,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "Iw" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "snowdingarage3";
 	name = "garage door toggle";
 	pixel_x = 7;
@@ -16031,7 +16015,7 @@ ac
 ac
 "}
 (2,1,1) = {"
-ab
+ac
 ac
 ac
 ac

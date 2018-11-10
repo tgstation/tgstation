@@ -21,7 +21,7 @@
 				check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT))
 		if(. >= 5 || prob(33))
 			occupant_message("<span class='userdanger'>Taking damage!</span>")
-		log_append_to_last("Took [damage_amount] points of damage. Damage type: \"[damage_type]\".",1)
+		log_message("Took [damage_amount] points of damage. Damage type: [damage_type]", LOG_MECHA)
 
 /obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
@@ -48,7 +48,7 @@
 		booster_deflection_modifier *= facing_modifier
 	if(prob(deflect_chance * booster_deflection_modifier))
 		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
-		log_append_to_last("Armor saved.")
+		log_message("Armor saved.", LOG_MECHA)
 		return 0
 	if(.)
 		. *= booster_damage_modifier
@@ -61,21 +61,20 @@
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
-	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
-	log_message("Attack by hand/paw. Attacker - [user].", color="red")
-	log_append_to_last("Armor saved.")
+	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens.</span>", null, null, COMBAT_MESSAGE_RANGE)
+	log_message("Attack by hand/paw. Attacker - [user].", LOG_MECHA, color="red")
 
 /obj/mecha/attack_paw(mob/user as mob)
 	return attack_hand(user)
 
 
 /obj/mecha/attack_alien(mob/living/user)
-	log_message("Attack by alien. Attacker - [user].", color="red")
+	log_message("Attack by alien. Attacker - [user].", LOG_MECHA, color="red")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 	attack_generic(user, 15, BRUTE, "melee", 0)
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
-	log_message("Attack by simple animal. Attacker - [user].", color="red")
+	log_message("Attack by simple animal. Attacker - [user].", LOG_MECHA, color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
 		user.emote("custom", message = "[user.friendly] [src].")
 		return 0
@@ -99,7 +98,7 @@
 /obj/mecha/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(.)
-		log_message("Attack by hulk. Attacker - [user].", color="red")
+		log_message("Attack by hulk. Attacker - [user].", LOG_MECHA, color="red")
 		log_combat(user, src, "punched", "hulk powers")
 
 /obj/mecha/blob_act(obj/structure/blob/B)
@@ -109,19 +108,19 @@
 	return
 
 /obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
-	log_message("Hit by [A].", color="red")
+	log_message("Hit by [A].", LOG_MECHA, color="red")
 	. = ..()
 
 
 /obj/mecha/bullet_act(obj/item/projectile/Proj) //wrapper
-	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", color="red")
+	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", LOG_MECHA, color="red")
 	. = ..()
 
 /obj/mecha/ex_act(severity, target)
-	log_message("Affected by explosion of severity: [severity].", color="red")
+	log_message("Affected by explosion of severity: [severity].", LOG_MECHA, color="red")
 	if(prob(deflect_chance))
 		severity++
-		log_append_to_last("Armor saved, changing severity to [severity].")
+		log_message("Armor saved, changing severity to [severity]", LOG_MECHA)
 	. = ..()
 
 /obj/mecha/contents_explosion(severity, target)
@@ -148,12 +147,12 @@
 	if(get_charge())
 		use_power((cell.charge/3)/(severity*2))
 		take_damage(30 / severity, BURN, "energy", 1)
-	log_message("EMP detected", color="red")
+	log_message("EMP detected", LOG_MECHA, color="red")
 	check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 
 /obj/mecha/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature>max_temperature)
-		log_message("Exposed to dangerous temperature.", color="red")
+		log_message("Exposed to dangerous temperature.", LOG_MECHA, color="red")
 		take_damage(5, BURN, 0, 1)
 
 /obj/mecha/attackby(obj/item/W as obj, mob/user as mob, params)
@@ -191,7 +190,7 @@
 				to_chat(user, "<span class='warning'>Invalid ID: Access denied.</span>")
 		else
 			to_chat(user, "<span class='warning'>Maintenance protocols disabled by operator.</span>")
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(state==1)
 			state = 2
 			to_chat(user, "<span class='notice'>You undo the securing bolts.</span>")
@@ -199,7 +198,7 @@
 			state = 1
 			to_chat(user, "<span class='notice'>You tighten the securing bolts.</span>")
 		return
-	else if(istype(W, /obj/item/crowbar))
+	else if(W.tool_behaviour == TOOL_CROWBAR)
 		if(state==2)
 			state = 3
 			to_chat(user, "<span class='notice'>You open the hatch to the power unit.</span>")
@@ -216,7 +215,7 @@
 			else
 				to_chat(user, "<span class='warning'>You need two lengths of cable to fix this mech!</span>")
 		return
-	else if(istype(W, /obj/item/screwdriver) && user.a_intent != INTENT_HARM)
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER && user.a_intent != INTENT_HARM)
 		if(internal_damage & MECHA_INT_TEMP_CONTROL)
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "<span class='notice'>You repair the damaged temperature controller.</span>")
@@ -225,7 +224,7 @@
 			cell = null
 			state = 4
 			to_chat(user, "<span class='notice'>You unscrew and pry out the powercell.</span>")
-			log_message("Powercell removed")
+			log_message("Powercell removed", LOG_MECHA)
 		else if(state==4 && cell)
 			state=3
 			to_chat(user, "<span class='notice'>You screw the cell in place.</span>")
@@ -239,12 +238,12 @@
 				var/obj/item/stock_parts/cell/C = W
 				to_chat(user, "<span class='notice'>You install the powercell.</span>")
 				cell = C
-				log_message("Powercell installed")
+				log_message("Powercell installed", LOG_MECHA)
 			else
 				to_chat(user, "<span class='notice'>There's already a powercell installed.</span>")
 		return
 
-	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume=50, amount=1))
@@ -273,7 +272,7 @@
 		return ..()
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
-	log_message("Attacked by [I]. Attacker - [user]")
+	log_message("Attacked by [I]. Attacker - [user]", LOG_MECHA)
 	..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)

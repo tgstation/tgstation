@@ -147,10 +147,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/do_invoke_glow()
 	set waitfor = FALSE
-	var/oldtransform = transform
 	animate(src, transform = matrix()*2, alpha = 0, time = 5, flags = ANIMATION_END_NOW) //fade out
 	sleep(5)
-	animate(src, transform = oldtransform, alpha = 255, time = 0, flags = ANIMATION_END_NOW)
+	animate(src, transform = matrix(), alpha = 255, time = 0, flags = ANIMATION_END_NOW)
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
@@ -220,7 +219,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
 			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
 			<span class='large_brass'>\"Give up and you will feel pain unlike anything you've ever felt!\"</span>")
-			L.Knockdown(80)
+			L.Paralyze(80)
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
@@ -899,7 +898,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(affecting.key)
 				affecting.visible_message("<span class='warning'>[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming.</span>", \
 									 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
-				affecting.Knockdown(40)
+				affecting.Paralyze(40)
 				break
 			if(affecting.health <= 10)
 				to_chat(G, "<span class='cultitalic'>Your body can no longer sustain the connection!</span>")
@@ -961,7 +960,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	playsound(T, 'sound/magic/enter_blood.ogg', 100, 1)
 	visible_message("<span class='warning'>A colossal shockwave of energy bursts from the rune, disintegrating it in the process!</span>")
 	for(var/mob/living/L in range(src, 3))
-		L.Knockdown(30)
+		L.Paralyze(30)
 	empulse(T, 0.42*(intensity), 1)
 	var/list/images = list()
 	var/zmatch = T.z

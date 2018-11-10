@@ -437,7 +437,6 @@
 "aJ" = (
 /obj/machinery/shower{
 	dir = 8;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/tile/blue,

@@ -79,7 +79,7 @@
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	return cell.charge >= shot.e_cost
+	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !cell)
@@ -164,9 +164,6 @@
 	if(itemState)
 		itemState += "[ratio]"
 		item_state = itemState
-
-/obj/item/gun/energy/ui_action_click()
-	toggle_gunlight()
 
 /obj/item/gun/energy/suicide_act(mob/living/user)
 	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))

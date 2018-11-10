@@ -49,6 +49,15 @@
 		"bromine",
 		"stable_plasma"
 	)
+	//these become available once the manipulator has been upgraded to tier 4 (femto)
+	var/list/upgrade_reagents = list(
+		"oil",
+		"ash",
+		"acetone",
+		"saltpetre",
+		"ammonia",
+		"diethylamine"
+	)
 	var/list/emagged_reagents = list(
 		"space_drugs",
 		"morphine",
@@ -74,7 +83,17 @@
 	..()
 	if(panel_open)
 		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
-
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>")
+		switch(macrotier)
+			if(1)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>5u</b>.<span>")
+			if(2)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>3u</b>.<span>")
+			if(3)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>2u</b>.<span>")
+			if(4)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>1u</b>.<span>")
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
 		if(!is_operational())
@@ -191,7 +210,7 @@
 		return
 	switch(action)
 		if("amount")
-			if(!is_operational())
+			if(!is_operational() || QDELETED(beaker))
 				return
 			var/target = text2num(params["target"])
 			if(target in beaker.possible_transfer_amounts)
@@ -346,6 +365,8 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if (M.rating > macrotier)
 			macrotier = M.rating
+		if (M.rating > 3)
+			dispensable_reagents |= upgrade_reagents
 	powerefficiency = round(newpowereff, 0.01)
 
 
@@ -448,6 +469,7 @@
 		"lemonjuice",
 		"menthol"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"thirteenloko",
 		"whiskeycola",
@@ -498,6 +520,7 @@
 		"triple_sec",
 		"sake"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
@@ -528,6 +551,7 @@
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	upgrade_reagents = null
 	emagged_reagents = list("plasma")
 
 
@@ -550,7 +574,8 @@
 		"ammonia",
 		"ash",
 		"diethylamine")
-	
+	upgrade_reagents = null
+
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
 	. = ..()
 	component_parts = list()

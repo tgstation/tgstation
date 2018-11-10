@@ -124,8 +124,8 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = 1
-	M.canmove = 0
+	M.notransform = TRUE
+	M.mobility_flags = NONE
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -153,6 +153,7 @@
 			var/robot = pick(200;/mob/living/silicon/robot,
 							/mob/living/silicon/robot/modules/syndicate,
 							/mob/living/silicon/robot/modules/syndicate/medical,
+							/mob/living/silicon/robot/modules/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -344,9 +345,10 @@
 	flag = "magic"
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
+	var/locker_suck = TRUE
 
 /obj/item/projectile/magic/locker/prehit(atom/A)
-	if(ismob(A))
+	if(ismob(A) && locker_suck)
 		var/mob/M = A
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
@@ -371,6 +373,7 @@
 	return ..()
 
 /obj/item/projectile/magic/locker/Destroy()
+	locker_suck = FALSE
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
 	. = ..()
@@ -409,11 +412,6 @@
 			unmagify()
 		else
 			addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
-
-/obj/structure/closet/decay/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity/2, target) //Difference is it does half the damage to contents from explosion, to make fireball not completely instakill
-		CHECK_TICK
 
 /obj/structure/closet/decay/proc/unmagify()
 	icon_state = weakened_icon
@@ -510,5 +508,3 @@
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
-
-

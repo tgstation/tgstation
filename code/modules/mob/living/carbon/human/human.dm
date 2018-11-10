@@ -73,7 +73,9 @@
 			if(changeling)
 				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
 				stat("Absorbed DNA", changeling.absorbedcount)
-
+			var/datum/antagonist/hivemind/hivemind = mind.has_antag_datum(/datum/antagonist/hivemind)
+			if(hivemind)
+				stat("Hivemind Vessels", hivemind.hive_size)
 
 	//NINJACODE
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
@@ -208,73 +210,66 @@
 
 
 /mob/living/carbon/human/Topic(href, href_list)
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		if(href_list["embedded_object"])
-			var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
-			if(!L)
+	if(href_list["embedded_object"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		var/obj/item/bodypart/L = locate(href_list["embedded_limb"]) in bodyparts
+		if(!L)
+			return
+		var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
+		if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
+			return
+		var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
+		usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
+		if(do_after(usr, time_taken, needhand = 1, target = src))
+			if(!I || !L || I.loc != src || !(I in L.embedded_objects))
 				return
-			var/obj/item/I = locate(href_list["embedded_object"]) in L.embedded_objects
-			if(!I || I.loc != src) //no item, no limb, or item is not in limb or in the person anymore
-				return
-			var/time_taken = I.embedding.embedded_unsafe_removal_time*I.w_class
-			usr.visible_message("<span class='warning'>[usr] attempts to remove [I] from [usr.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [I] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
-			if(do_after(usr, time_taken, needhand = 1, target = src))
-				if(!I || !L || I.loc != src || !(I in L.embedded_objects))
-					return
-				L.embedded_objects -= I
-				L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
-				I.forceMove(get_turf(src))
-				usr.put_in_hands(I)
-				usr.emote("scream")
-				usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
-				if(!has_embedded_objects())
-					clear_alert("embeddedobject")
-					SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+			L.embedded_objects -= I
+			L.receive_damage(I.embedding.embedded_unsafe_removal_pain_multiplier*I.w_class)//It hurts to rip it out, get surgery you dingus.
+			I.forceMove(get_turf(src))
+			usr.put_in_hands(I)
+			usr.emote("scream")
+			usr.visible_message("[usr] successfully rips [I] out of [usr.p_their()] [L.name]!","<span class='notice'>You successfully remove [I] from your [L.name].</span>")
+			if(!has_embedded_objects())
+				clear_alert("embeddedobject")
+				SEND_SIGNAL(usr, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		return
+
+	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
+		var/slot = text2num(href_list["item"])
+		if(slot in check_obscured_slots())
+			to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
 			return
 
-		if(href_list["item"])
-			var/slot = text2num(href_list["item"])
-			if(slot in check_obscured_slots())
-				to_chat(usr, "<span class='warning'>You can't reach that! Something is covering it.</span>")
-				return
+	if(href_list["pockets"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY)) //TODO: Make it match (or intergrate it into) strippanel so you get 'item cannot fit here' warnings if mob_can_equip fails
+		var/pocket_side = href_list["pockets"]
+		var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
+		var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
+		var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
 
-		if(href_list["pockets"])
-			var/pocket_side = href_list["pockets"]
-			var/pocket_id = (pocket_side == "right" ? SLOT_R_STORE : SLOT_L_STORE)
-			var/obj/item/pocket_item = (pocket_id == SLOT_R_STORE ? r_store : l_store)
-			var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
+		var/delay_denominator = 1
+		if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
+			if(pocket_item.item_flags & NODROP)
+				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
+			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
+		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
+			to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
+			delay_denominator = 4
+		else
+			return
 
-			var/delay_denominator = 1
-			if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
-				if(pocket_item.item_flags & NODROP)
-					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
-				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
-				to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
-				delay_denominator = 4
+		if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
+			if(pocket_item)
+				if(pocket_item == (pocket_id == SLOT_R_STORE ? r_store : l_store)) //item still in the pocket we search
+					dropItemToGround(pocket_item)
 			else
-				return
-
-			if(do_mob(usr, src, POCKET_STRIP_DELAY/delay_denominator)) //placing an item into the pocket is 4 times faster
-				if(pocket_item)
-					if(pocket_item == (pocket_id == SLOT_R_STORE ? r_store : l_store)) //item still in the pocket we search
-						dropItemToGround(pocket_item)
-				else
-					if(place_item)
-						if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
-							usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
-							equip_to_slot(place_item, pocket_id, TRUE)
-						//do nothing otherwise
-
-				// Update strip window
-				if(usr.machine == src && in_range(src, usr))
-					show_inv(usr)
-			else
-				// Display a warning if the user mocks up
-				to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
-
-		..()
-
+				if(place_item)
+					if(place_item.mob_can_equip(src, usr, pocket_id, FALSE, TRUE))
+						usr.temporarilyRemoveItemFromInventory(place_item, TRUE)
+						equip_to_slot(place_item, pocket_id, TRUE)
+					//do nothing otherwise
+				//updating inv screen after handled by living/Topic()
+		else
+			// Display a warning if the user mocks up
+			to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
 ///////HUDs///////
 	if(href_list["hud"])
@@ -368,15 +363,14 @@
 							return													  //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 						// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 						var/allowed_access = null
-						var/obj/item/clothing/glasses/G = H.glasses
-						if (!(G.obj_flags |= EMAGGED))
+						var/obj/item/clothing/glasses/hud/security/G = H.glasses
+						if(istype(G) && (G.obj_flags & EMAGGED))
+							allowed_access = "@%&ERROR_%$*"
+						else //Implant and standard glasses check access
 							if(H.wear_id)
 								var/list/access = H.wear_id.GetAccess()
 								if(ACCESS_SEC_DOORS in access)
 									allowed_access = H.get_authentification_name()
-						else
-							allowed_access = "@%&ERROR_%$*"
-
 
 						if(!allowed_access)
 							to_chat(H, "<span class='warning'>ERROR: Invalid Access</span>")
@@ -485,8 +479,11 @@
 											return
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
+	..() //end of this massive fucking chain. TODO: make the hud chain not spooky.
+
+
 /mob/living/carbon/human/proc/canUseHUD()
-	return !(src.stat || IsKnockdown() || IsStun() || src.restrained())
+	return (mobility_flags & MOBILITY_USE)
 
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
@@ -566,7 +563,7 @@
 		return threatcount
 
 	//Check for ID
-	var/obj/item/card/id/idcard = get_idcard()
+	var/obj/item/card/id/idcard = get_idcard(FALSE)
 	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
 		threatcount += 4
 
@@ -720,12 +717,12 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#000000")
 	cut_overlay(MA)
 
-/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
-	if(incapacitated() || lying )
+/mob/living/carbon/human/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+	if(!(mobility_flags & MOBILITY_UI))
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(!Adjacent(M) && (M.loc != src))
-		if((be_close == 0) || (dna.check_mutation(TK) && tkMaxRangeCheck(src, M)))
+		if((be_close == 0) || (!no_tk && (dna.check_mutation(TK) && tkMaxRangeCheck(src, M))))
 			return TRUE
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
@@ -830,7 +827,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Knockdown(200)
+			Paralyze(200)
 		return 1
 	..()
 
@@ -913,6 +910,9 @@
 
 /mob/living/carbon/human/species/dullahan
 	race = /datum/species/dullahan
+
+/mob/living/carbon/human/species/felinid
+	race = /datum/species/human/felinid
 
 /mob/living/carbon/human/species/fly
 	race = /datum/species/fly

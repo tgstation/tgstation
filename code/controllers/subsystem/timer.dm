@@ -1,5 +1,5 @@
 #define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
-#define BUCKET_POS(timer) ((round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) % BUCKET_LEN)||BUCKET_LEN)
+#define BUCKET_POS(timer) (((round((timer.timeToRun - SStimer.head_offset) / world.tick_lag)+1) % BUCKET_LEN)||BUCKET_LEN)
 #define TIMER_MAX (world.time + TICKS2DS(min(BUCKET_LEN-(SStimer.practical_offset-DS2TICKS(world.time - SStimer.head_offset))-1, BUCKET_LEN-1)))
 #define TIMER_ID_MAX (2**24) //max float with integer precision
 
@@ -38,15 +38,15 @@ SUBSYSTEM_DEF(timer)
 
 /datum/controller/subsystem/timer/fire(resumed = FALSE)
 	var/lit = last_invoke_tick
-	var/last_check = world.time - TIMER_NO_INVOKE_WARNING
+	var/last_check = world.time - TICKS2DS(BUCKET_LEN*1.5)
 	var/list/bucket_list = src.bucket_list
 
 	if(!bucket_count)
 		last_invoke_tick = world.time
 
-	if(lit && lit < last_check && last_invoke_warning < last_check)
+	if(lit && lit < last_check && head_offset < last_check && last_invoke_warning < last_check)
 		last_invoke_warning = world.time
-		var/msg = "No regular timers processed in the last [TIMER_NO_INVOKE_WARNING] ticks[bucket_auto_reset ? ", resetting buckets" : ""]!"
+		var/msg = "No regular timers processed in the last [BUCKET_LEN*1.5] ticks[bucket_auto_reset ? ", resetting buckets" : ""]!"
 		message_admins(msg)
 		WARNING(msg)
 		if(bucket_auto_reset)
@@ -71,7 +71,6 @@ SUBSYSTEM_DEF(timer)
 		for(var/I in second_queue)
 			log_world(get_timer_debug_string(I))
 
-	var/cut_start_index = 1
 	var/next_clienttime_timer_index = 0
 	var/len = length(clienttime_timers)
 
@@ -94,14 +93,14 @@ SUBSYSTEM_DEF(timer)
 
 		if(ctime_timer.flags & TIMER_LOOP)
 			ctime_timer.spent = 0
-			clienttime_timers.Insert(ctime_timer, 1)
-			cut_start_index++
+			ctime_timer.timeToRun = REALTIMEOFDAY + ctime_timer.wait
+			BINARY_INSERT(ctime_timer, clienttime_timers, datum/timedevent, timeToRun)
 		else
 			qdel(ctime_timer)
 
 
 	if (next_clienttime_timer_index)
-		clienttime_timers.Cut(cut_start_index,next_clienttime_timer_index+1)
+		clienttime_timers.Cut(1, next_clienttime_timer_index+1)
 
 	if (MC_TICK_CHECK)
 		return
@@ -122,7 +121,7 @@ SUBSYSTEM_DEF(timer)
 	if (!resumed)
 		timer = null
 
-	while (practical_offset <= BUCKET_LEN && head_offset + (practical_offset*world.tick_lag) <= world.time)
+	while (practical_offset <= BUCKET_LEN && head_offset + ((practical_offset-1)*world.tick_lag) <= world.time)
 		var/datum/timedevent/head = bucket_list[practical_offset]
 		if (!timer || !head || timer == head)
 			head = bucket_list[practical_offset]
@@ -170,7 +169,7 @@ SUBSYSTEM_DEF(timer)
 					qdel(timer)
 				continue
 
-			if (timer.timeToRun < head_offset + TICKS2DS(practical_offset))
+			if (timer.timeToRun < head_offset + TICKS2DS(practical_offset-1))
 				bucket_resolution = null //force bucket recreation
 				CRASH("[i] Invalid timer state: Timer in long run queue that would require a backtrack to transfer to short run queue. [get_timer_debug_string(timer)] world.time: [world.time], head_offset: [head_offset], practical_offset: [practical_offset]")
 				if (timer.callBack && !timer.spent)

@@ -41,7 +41,7 @@
 		if(M.reagents)
 			var/trans = 0
 			if(!infinite)
-				trans = reagents.trans_to(M, amount_per_transfer_from_this)
+				trans = reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			else
 				trans = reagents.copy_to(M, amount_per_transfer_from_this)
 
@@ -91,6 +91,7 @@
 	container_type = DRAWABLE
 	flags_1 = null
 	list_reagents = list("epinephrine" = 10)
+	custom_price = 40
 
 /obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")

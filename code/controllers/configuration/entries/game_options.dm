@@ -70,6 +70,8 @@
 
 /datum/config_entry/flag/disable_peaceborg
 
+/datum/config_entry/flag/economy	//money money money money money money money money money money money money
+
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
 	config_entry_value = 6
 	min_val = 1
@@ -259,6 +261,8 @@
 	min_val = 0
 
 /datum/config_entry/flag/ghost_interaction
+
+/datum/config_entry/flag/near_death_experience //If carbons can hear ghosts when unconscious and very close to death
 
 /datum/config_entry/flag/silent_ai
 /datum/config_entry/flag/silent_borg

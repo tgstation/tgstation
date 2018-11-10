@@ -10,9 +10,6 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(var/atom/A, params)
-	if(check_click_intercept(params,A))
-		return
-
 	if(control_disabled || incapacitated())
 		return
 

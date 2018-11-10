@@ -2,23 +2,14 @@
 	name = "plasma blast"
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
-	damage = 20
+	damage = 5
 	range = 4
 	dismemberment = 20
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
-	var/pressure_decrease_active = FALSE
-	var/pressure_decrease = 0.25
 	var/mine_range = 3 //mines this many additional tiles of rock
 	tracer_type = /obj/effect/projectile/tracer/plasma_cutter
 	muzzle_type = /obj/effect/projectile/muzzle/plasma_cutter
 	impact_type = /obj/effect/projectile/impact/plasma_cutter
-
-/obj/item/projectile/plasma/Initialize()
-	. = ..()
-	if(!lavaland_equipment_pressure_check(get_turf(src)))
-		name = "weakened [name]"
-		damage = damage * pressure_decrease
-		pressure_decrease_active = TRUE
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
@@ -32,12 +23,12 @@
 			return -1
 
 /obj/item/projectile/plasma/adv
-	damage = 28
+	damage = 7
 	range = 5
 	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 40
+	damage = 10
 	range = 9
 	mine_range = 3
 

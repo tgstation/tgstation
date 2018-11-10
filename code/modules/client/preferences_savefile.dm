@@ -71,6 +71,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 
 	//general preferences
+	S["asaycolor"]			>> asaycolor
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
@@ -109,6 +110,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
+	asaycolor		= sanitize_ooccolor(sanitize_hexcolor(asaycolor, 6, 1, initial(asaycolor)))
 	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, GLOB.available_ui_styles, GLOB.available_ui_styles[1])
@@ -145,6 +147,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	//general preferences
+	WRITE_FILE(S["asaycolor"], asaycolor)
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["UI_style"], UI_style)
@@ -248,6 +251,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
 		S[savefile_slot_name] >> custom_names[custom_name_id]
 
+	S["preferred_ai_core_display"] >> preferred_ai_core_display
 	S["prefered_security_department"] >> prefered_security_department
 
 	//Jobs
@@ -384,6 +388,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/savefile_slot_name = custom_name_id + "_name" //TODO remove this
 		WRITE_FILE(S[savefile_slot_name],custom_names[custom_name_id])
 
+	WRITE_FILE(S["preferred_ai_core_display"] ,  preferred_ai_core_display)
 	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs

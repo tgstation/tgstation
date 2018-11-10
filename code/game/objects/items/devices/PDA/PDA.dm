@@ -56,7 +56,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/last_everyone //No text for everyone spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
-	var/lock_code = "" // Lockcode to unlock uplink
 	var/honkamt = 0 //How many honks left when infected with honk.exe
 	var/mimeamt = 0 //How many silence left when infected with mime.exe
 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
@@ -592,6 +591,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		id = null
 		update_icon()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_id == src)
+				H.sec_hud_set_ID()
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name)
@@ -732,6 +735,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	remove_pen()
 
 /obj/item/pda/proc/toggle_light()
+	if(issilicon(usr) || !usr.canUseTopic(src, BE_CLOSE))
+		return
 	if(fon)
 		fon = FALSE
 		set_light(0)
@@ -769,6 +774,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return FALSE
 		var/obj/old_id = id
 		id = I
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_id == src)
+				H.sec_hud_set_ID()
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()

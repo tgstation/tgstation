@@ -233,7 +233,7 @@
 
 /datum/component/storage/proc/quick_empty(mob/M)
 	var/atom/A = parent
-	if((!ishuman(M) && (A.loc != M)) || (M.stat != CONSCIOUS) || M.restrained() || !M.canmove)
+	if(!M.canUseStorage() || !A.Adjacent(M) || M.incapacitated())
 		return
 	if(locked)
 		to_chat(M, "<span class='warning'>[parent] seems to be locked!</span>")

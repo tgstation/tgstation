@@ -27,12 +27,18 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/belt/examine(mob/user)
+	..()
+	clothing_resistance_flag_examine_message(user)
+
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_price = 50
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -53,6 +59,7 @@
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator,
+		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler
 		))
 	STR.can_hold = can_hold
@@ -320,6 +327,7 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
@@ -343,7 +351,7 @@
 		/obj/item/reagent_containers/food/snacks,
 		/obj/item/reagent_containers/food/drinks
 		))
-	
+
 	var/amount = 5
 	var/rig_snacks
 	while(contents.len <= amount)
@@ -429,34 +437,20 @@
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/facid(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/screwdriver(src)
-	new /obj/item/multitool(src)
+	var/static/items_inside = list(
+		/obj/item/grenade/flashbang = 1,
+		/obj/item/grenade/smokebomb = 4,
+		/obj/item/grenade/empgrenade = 1,
+		/obj/item/grenade/empgrenade = 1,
+		/obj/item/grenade/syndieminibomb/concussion/frag = 10,
+		/obj/item/grenade/gluon = 4,
+		/obj/item/grenade/chem_grenade/incendiary = 2,
+		/obj/item/grenade/chem_grenade/facid = 1,
+		/obj/item/grenade/syndieminibomb = 2,
+		/obj/item/screwdriver = 1,
+		/obj/item/multitool = 1)
+	generate_items_inside(items_inside,src)
+
 
 /obj/item/storage/belt/wands
 	name = "wand belt"
@@ -502,6 +496,7 @@
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
 		/obj/item/holosign_creator,
+		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
@@ -542,15 +537,18 @@
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
-	new /obj/item/gun/ballistic/revolver/detective(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/ammo_box/c38(src)
+	var/static/items_inside = list(
+		/obj/item/gun/ballistic/revolver/detective = 1,
+		/obj/item/ammo_box/c38 = 2)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	item_color = "fannypackleather"
+	custom_price = 15
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -562,51 +560,61 @@
 	name = "black fannypack"
 	icon_state = "fannypack_black"
 	item_state = "fannypack_black"
+	item_color = "black"
 
 /obj/item/storage/belt/fannypack/red
 	name = "red fannypack"
 	icon_state = "fannypack_red"
 	item_state = "fannypack_red"
+	item_color = "red"
 
 /obj/item/storage/belt/fannypack/purple
 	name = "purple fannypack"
 	icon_state = "fannypack_purple"
 	item_state = "fannypack_purple"
+	item_color = "purple"
 
 /obj/item/storage/belt/fannypack/blue
 	name = "blue fannypack"
 	icon_state = "fannypack_blue"
 	item_state = "fannypack_blue"
+	item_color = "blue"
 
 /obj/item/storage/belt/fannypack/orange
 	name = "orange fannypack"
 	icon_state = "fannypack_orange"
 	item_state = "fannypack_orange"
+	item_color = "orange"
 
 /obj/item/storage/belt/fannypack/white
 	name = "white fannypack"
 	icon_state = "fannypack_white"
 	item_state = "fannypack_white"
+	item_color = "white"
 
 /obj/item/storage/belt/fannypack/green
 	name = "green fannypack"
 	icon_state = "fannypack_green"
 	item_state = "fannypack_green"
+	item_color = "green"
 
 /obj/item/storage/belt/fannypack/pink
 	name = "pink fannypack"
 	icon_state = "fannypack_pink"
 	item_state = "fannypack_pink"
+	item_color = "pink"
 
 /obj/item/storage/belt/fannypack/cyan
 	name = "cyan fannypack"
 	icon_state = "fannypack_cyan"
 	item_state = "fannypack_cyan"
+	item_color = "cyan"
 
 /obj/item/storage/belt/fannypack/yellow
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
+	item_color = "yellow"
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"

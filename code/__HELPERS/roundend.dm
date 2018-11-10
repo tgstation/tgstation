@@ -313,7 +313,7 @@
 	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
-	roundend_report.open(0)
+	roundend_report.open(FALSE)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
 	var/list/parts = list()
@@ -410,11 +410,15 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
+	for(var/datum/team/A in GLOB.antagonist_teams)
+		if(!A.members)
+			continue
+		all_teams |= A
+	
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		all_teams |= A.get_team()
-		all_antagonists += A
+		all_antagonists |= A
 
 	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()
@@ -510,10 +514,12 @@
 	return parts.Join()
 
 
-/proc/printobjectives(datum/mind/ply)
+/proc/printobjectives(list/objectives)
+	if(!objectives || !objectives.len)
+		return
 	var/list/objective_parts = list()
 	var/count = 1
-	for(var/datum/objective/objective in ply.objectives)
+	for(var/datum/objective/objective in objectives)
 		if(objective.check_completion())
 			objective_parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
 		else
@@ -531,10 +537,11 @@
 		return
 	sync_ranks_with_db()
 	var/list/sql_admins = list()
-	for(var/datum/admins/A in GLOB.protected_admins)
-		var/sql_ckey = sanitizeSQL(A.owner.ckey)
+	for(var/i in GLOB.protected_admins)
+		var/datum/admins/A = GLOB.protected_admins[i]
+		var/sql_ckey = sanitizeSQL(A.target)
 		var/sql_rank = sanitizeSQL(A.rank.name)
-		sql_admins = list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
+		sql_admins += list(list("ckey" = "'[sql_ckey]'", "rank" = "'[sql_rank]'"))
 	SSdbcore.MassInsert(format_table_name("admin"), sql_admins, duplicate_key = TRUE)
 	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] p INNER JOIN [format_table_name("admin")] a ON p.ckey = a.ckey SET p.lastadminrank = a.rank")
 	query_admin_rank_update.Execute()

@@ -18,11 +18,8 @@
 /area/awaymission/moonoutpost19/hive)
 "ag" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
 	},
 /turf/open/floor/plating/asteroid{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -241,11 +238,8 @@
 /area/awaymission/moonoutpost19/syndicate)
 "aJ" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
 	},
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/plating/asteroid{
@@ -255,11 +249,8 @@
 /area/awaymission/moonoutpost19/hive)
 "aK" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
 	},
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/asteroid{
@@ -1084,11 +1075,8 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "ch" = (
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 4;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red,
@@ -1529,11 +1517,8 @@
 	req_access = null;
 	req_access_txt = "150"
 	},
-/obj/machinery/light{
-	active_power_usage = 0;
-	dir = 4;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -1813,11 +1798,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dr" = (
-/obj/structure/closet/secure_closet{
-	desc = "It's a secure locker for personnel. The first card swiped gains control.";
-	icon_state = "cabinet";
-	locked = 1;
-	name = "personal closet";
+/obj/structure/closet/secure_closet/personal/cabinet{
 	req_access_txt = "150"
 	},
 /obj/item/ammo_box/magazine/m10mm{
@@ -1841,11 +1822,8 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dt" = (
-/obj/structure/closet/secure_closet{
-	desc = "It's a secure locker for personnel. The first card swiped gains control.";
-	icon_state = "cabinet";
+/obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	name = "personal closet";
 	req_access_txt = "150"
 	},
 /obj/item/stack/spacecash/c50,
@@ -1883,11 +1861,8 @@
 /obj/structure/tank_dispenser/oxygen{
 	oxygentanks = 9
 	},
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 1;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -2005,8 +1980,7 @@
 /area/awaymission/moonoutpost19/main)
 "dH" = (
 /obj/item/flashlight/lantern{
-	icon_state = "lantern-on";
-	on = 1
+	icon_state = "lantern-on"
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plating/asteroid{
@@ -2258,18 +2232,12 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "eo" = (
-/obj/machinery/light{
-	active_power_usage = 0;
-	dir = 1;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 1
 	},
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
 	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology Containment North";
@@ -2310,11 +2278,8 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "ev" = (
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 4;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel{
@@ -2377,11 +2342,8 @@
 /area/awaymission/moonoutpost19/research)
 "eH" = (
 /obj/structure/alien/weeds,
-/obj/structure/alien/weeds{
-	desc = "A large mottled egg.";
-	obj_integrity = 100;
-	icon_state = "egg_hatched";
-	name = "egg"
+/obj/structure/alien/egg/burst{
+	desc = "A large mottled egg."
 	},
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
@@ -2405,11 +2367,8 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "eM" = (
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 8;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 8
 	},
 /obj/machinery/camera{
 	c_tag = "Xenobiology";
@@ -2631,11 +2590,8 @@
 "fg" = (
 /obj/structure/table,
 /obj/item/stack/sheet/mineral/plasma,
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 1;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 1
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
@@ -2946,11 +2902,8 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "fK" = (
-/obj/machinery/light{
-	active_power_usage = 0;
-	dir = 4;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 4
 	},
 /obj/structure/alien/weeds,
 /obj/machinery/camera{
@@ -3481,22 +3434,16 @@
 "gI" = (
 /obj/structure/table,
 /obj/item/surgical_drapes,
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 4;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 4
 	},
 /obj/structure/alien/weeds,
 /turf/open/floor/plasteel/white,
 /area/awaymission/moonoutpost19/research)
 "gJ" = (
 /obj/structure/filingcabinet/filingcabinet,
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 8;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 8
 	},
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_social,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/xeno_queen,
@@ -3608,11 +3555,8 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gS" = (
-/obj/machinery/light{
-	active_power_usage = 0;
-	dir = 4;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 4
 	},
 /obj/machinery/airalarm/unlocked{
 	dir = 8;
@@ -3703,11 +3647,8 @@
 /turf/open/floor/engine,
 /area/awaymission/moonoutpost19/research)
 "hb" = (
-/obj/machinery/light{
-	active_power_usage = 0;
-	dir = 2;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 2
 	},
 /obj/structure/alien/weeds,
 /obj/machinery/camera{
@@ -3828,11 +3769,8 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/trash/chips,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 1;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 2;
@@ -3887,11 +3825,8 @@
 /area/awaymission/moonoutpost19/research)
 "hs" = (
 /obj/structure/filingcabinet/chestdrawer,
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 1;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 1
 	},
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23;
@@ -4018,11 +3953,8 @@
 	dir = 1;
 	pixel_y = -32
 	},
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 2;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 2
 	},
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/evacuation,
 /obj/machinery/camera{
@@ -4294,11 +4226,8 @@
 /area/awaymission/moonoutpost19/research)
 "ig" = (
 /obj/structure/closet/l3closet,
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 2;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 2
 	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1;
@@ -4446,7 +4375,6 @@
 	},
 /obj/machinery/shower{
 	dir = 4;
-	icon_state = "shower";
 	name = "emergency shower"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -4572,11 +4500,8 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
-/obj/machinery/light/small{
-	active_power_usage = 0;
-	dir = 2;
-	icon_state = "bulb-broken";
-	status = 2
+/obj/machinery/light/small/broken{
+	dir = 2
 	},
 /obj/machinery/camera{
 	c_tag = "Research Director's Office";
@@ -5704,11 +5629,8 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kU" = (
-/obj/structure/closet/secure_closet{
-	desc = "It's a secure locker for personnel. The first card swiped gains control.";
-	icon_state = "cabinet";
+/obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	name = "personal closet";
 	req_access_txt = "201"
 	},
 /obj/item/clothing/under/suit_jacket/navy,
@@ -6230,7 +6152,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/window{
-	icon_state = "window";
 	dir = 1
 	},
 /turf/open/floor/plating{
@@ -6645,11 +6566,8 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nb" = (
-/obj/structure/closet/secure_closet{
-	desc = "It's a secure locker for personnel. The first card swiped gains control.";
-	icon_state = "cabinet";
+/obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	name = "personal closet";
 	req_access_txt = "201"
 	},
 /obj/item/clothing/under/assistantformal,
@@ -7058,11 +6976,8 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "nT" = (
-/obj/structure/closet/secure_closet{
-	desc = "It's a secure locker for personnel. The first card swiped gains control.";
-	icon_state = "cabinet";
+/obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
-	name = "personal closet";
 	req_access_txt = "201"
 	},
 /obj/item/clothing/under/suit_jacket/burgundy,
@@ -7212,10 +7127,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"oV" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/open/space,
-/area/space)
 "vV" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -7509,7 +7420,7 @@ aa
 aa
 aa
 aa
-oV
+aa
 "}
 (2,1,1) = {"
 aa

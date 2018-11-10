@@ -36,6 +36,11 @@
 		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
 
+/obj/machinery/power/tesla_coil/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Power generation at <b>[input_power_multiplier*100]%</b>.<br>Shock interval at <b>[zap_cooldown*0.1]</b> seconds.<span>")
+
 /obj/machinery/power/tesla_coil/on_construction()
 	if(anchored)
 		connect_to_network()
@@ -78,6 +83,9 @@
 		flick("coilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced, tesla_flags, shocked_targets)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+		if(D)
+			D.adjust_money(min(power_produced, 1))
 		if(istype(linked_techweb))
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 1)) // x4 coils = ~240/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
@@ -113,6 +121,9 @@
 		flick("rpcoilhit", src)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 		tesla_zap(src, 5, power_produced, tesla_flags, shocked_things)
+		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+		if(D)
+			D.adjust_money(min(power_produced, 3))
 		if(istype(linked_techweb))
 			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(power_produced, 3)) // x4 coils with a pulse per second or so = ~720/m point bonus for R&D
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)

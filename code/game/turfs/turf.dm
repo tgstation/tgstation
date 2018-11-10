@@ -9,7 +9,7 @@
 	// A list will be created in initialization that figures out the baseturf's baseturf etc.
 	// In the case of a list it is sorted from bottom layer to top.
 	// This shouldn't be modified directly, use the helper procs.
-	var/list/baseturfs = /turf/open/space
+	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -426,7 +426,9 @@
 	return
 
 /turf/handle_fall(mob/faller, forced)
-	faller.lying = pick(90, 270)
+	if(isliving(faller))
+		var/mob/living/L = faller
+		L.lying = pick(90, 270)
 	if(!forced)
 		return
 	if(has_gravity(src))
@@ -462,7 +464,7 @@
 		clear_reagents_to_vomit_pool(M,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
-	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	M.reagents.trans_to(V, M.reagents.total_volume / 10, transfered_by = M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R

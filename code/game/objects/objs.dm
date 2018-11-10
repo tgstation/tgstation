@@ -78,7 +78,7 @@
 	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	anchored = anchorvalue
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
@@ -214,9 +214,6 @@
 
 /obj/proc/check_uplink_validity()
 	return 1
-
-/obj/proc/intercept_user_move(dir, mob, newLoc, oldLoc)
-	return
 
 /obj/vv_get_dropdown()
 	. = ..()

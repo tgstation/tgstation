@@ -69,10 +69,8 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
 "an" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
@@ -154,10 +152,7 @@
 	},
 /area/ruin/unpowered)
 "aC" = (
-/obj/machinery/light{
-	icon_state = "tube-broken";
-	status = 2
-	},
+/obj/machinery/light/broken,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aD" = (
@@ -212,10 +207,8 @@
 /area/ruin/unpowered)
 "aK" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 1
 	},
 /turf/open/floor/plasteel/airless/cafeteria,
 /area/ruin/unpowered)
@@ -247,10 +240,8 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered)
 "aP" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 1
 	},
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
@@ -344,10 +335,8 @@
 	},
 /area/ruin/unpowered)
 "bh" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube-broken";
-	status = 2
+/obj/machinery/light/broken{
+	dir = 8
 	},
 /obj/structure/table_frame,
 /turf/open/floor/plasteel/airless/cafeteria,
@@ -467,7 +456,6 @@
 "bC" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "corner";
 	dir = 1
 	},
 /turf/template_noop,
@@ -482,7 +470,6 @@
 "bE" = (
 /obj/structure/lattice,
 /obj/structure/fluff/broken_flooring{
-	icon_state = "corner";
 	dir = 8
 	},
 /turf/template_noop,

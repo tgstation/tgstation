@@ -87,7 +87,7 @@
 
 
 /obj/item/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
@@ -124,7 +124,7 @@
 	if(!proximity)
 		return
 	if(!status && O.is_refillable())
-		reagents.trans_to(O, reagents.total_volume)
+		reagents.trans_to(O, reagents.total_volume, transfered_by = user)
 		to_chat(user, "<span class='notice'>You empty [src]'s fuel tank into [O].</span>")
 		update_icon()
 	if(isOn())

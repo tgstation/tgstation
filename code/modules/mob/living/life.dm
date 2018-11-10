@@ -4,7 +4,7 @@
 	if(digitalinvis)
 		handle_diginvis() //AI becomes unable to see mob
 
-	if((movement_type & FLYING) && !floating)	//TODO: Better floating
+	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
 		float(on = TRUE)
 
 	if (client)
@@ -13,7 +13,7 @@
 			for(var/obj/effect/landmark/error/E in GLOB.landmarks_list)
 				forceMove(E.loc)
 				break
-			var/msg = "[key_name_admin(src)] [ADMIN_JMP(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
+			var/msg = "[ADMIN_LOOKUPFLW(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(msg)
 			send2irc_adminless_only("Mob", msg, R_ADMIN)
 			log_game("[key_name(src)] was found to have no .loc with an attached client.")
@@ -21,7 +21,7 @@
 		// This is a temporary error tracker to make sure we've caught everything
 		else if (registered_z != T.z)
 #ifdef TESTING
-			message_admins("[src] [ADMIN_FLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
+			message_admins("[ADMIN_LOOKUPFLW(src)] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z]. If you could ask them how that happened and notify coderbus, it would be appreciated.")
 #endif
 			log_game("Z-TRACKING: [src] has somehow ended up in Z-level [T.z] despite being registered in Z-level [registered_z].")
 			update_z(T.z)
@@ -102,16 +102,16 @@
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
 		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
 	if(!on_fire)
-		return 1
+		return TRUE //the mob is no longer on fire, no need to do the rest.
 	if(fire_stacks > 0)
 		adjust_fire_stacks(-0.1) //the fire is slowly consumed
 	else
 		ExtinguishMob()
-		return
+		return TRUE //mob was put out, on_fire = FALSE via ExtinguishMob(), no need to update everything down the chain.
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
 	if(!G.gases[/datum/gas/oxygen] || G.gases[/datum/gas/oxygen][MOLES] < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
-		return
+		return TRUE
 	var/turf/location = get_turf(src)
 	location.hotspot_expose(700, 10, 1)
 

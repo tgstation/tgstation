@@ -9,10 +9,13 @@
 	item_state = "camera"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	light_color = LIGHT_COLOR_WHITE
+	light_power = FLASH_LIGHT_POWER
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_NECK
 	materials = list(MAT_METAL = 50, MAT_GLASS = 150)
+	var/flash_enabled = TRUE
 	var/state_on = "camera"
 	var/state_off = "camera_off"
 	var/pictures_max = 10
@@ -43,13 +46,13 @@
 	to_chat(user, "<span class='notice'>Alt-click to change its focusing, allowing you to set how big of an area it will capture.</span>")
 
 /obj/item/camera/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
 	var/desired_x = input(user, "How high do you want the camera to shoot, between [picture_size_x_min] and [picture_size_x_max]?", "Zoom", picture_size_x) as num
 	var/desired_y = input(user, "How wide do you want the camera to shoot, between [picture_size_y_min] and [picture_size_y_max]?", "Zoom", picture_size_y) as num
-	desired_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	desired_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
-	if(user.canUseTopic(src))
-		picture_size_x = desired_x
-		picture_size_y = desired_y
+	picture_size_x = min(CLAMP(desired_x, picture_size_x_min, picture_size_x_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+	picture_size_y = min(CLAMP(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
+
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -142,6 +145,8 @@
 	qdel(P)
 
 /obj/item/camera/proc/captureimage(atom/target, mob/user, flag, size_x = 1, size_y = 1)
+	if(flash_enabled)
+		flash_lighting_fx(8, light_power, light_color)
 	blending = TRUE
 	var/turf/target_turf = get_turf(target)
 	if(!isturf(target_turf))

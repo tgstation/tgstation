@@ -39,11 +39,16 @@
 		for(var/i in baseturf_cache)
 			if(baseturf_to_replace[i])
 				baseturf_cache -= i
+		if(!baseturf_cache.len)
+			thing.assemble_baseturfs(baseturf)
+		else
+			thing.PlaceOnBottom(null, baseturf)
 	else if(baseturf_to_replace[thing.baseturfs])
 		thing.assemble_baseturfs(baseturf)
-		return
+	else
+		thing.PlaceOnBottom(null, baseturf)
 
-	thing.PlaceOnBottom(null, baseturf)
+
 
 /obj/effect/baseturf_helper/space
 	name = "space baseturf editor"
@@ -159,17 +164,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.flags_1 |= NO_LAVA_GEN_1
-
-/// Adds the map it is on to the z_is_planet list
-/obj/effect/mapping_helpers/planet_z
-	name = "planet z helper"
-	layer = POINT_LAYER
-
-/obj/effect/mapping_helpers/planet_z/Initialize()
-	. = ..()
-	var/datum/space_level/S = SSmapping.get_level(z)
-	S.traits[ZTRAIT_PLANET] = TRUE
-
 
 //This helper applies components to things on the map directly.
 /obj/effect/mapping_helpers/component_injector

@@ -6,9 +6,9 @@
 
 /mob/living/carbon/human/spawn_gibs(with_bodyparts)
 	if(with_bodyparts)
-		new /obj/effect/gibspawner/human(drop_location(), dna, get_static_viruses())
+		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
 	else
-		new /obj/effect/gibspawner/humanbodypartless(drop_location(), dna, get_static_viruses())
+		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
 
 /mob/living/carbon/human/spawn_dust(just_ash = FALSE)
 	if(just_ash)
@@ -40,6 +40,11 @@
 		SSblackbox.ReportDeath(src)
 	if(is_devil(src))
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)
+	if(is_hivemember(src))
+		remove_hivemember(src)
+	if(is_hivehost(src))
+		var/datum/antagonist/hivemind/hive = mind.has_antag_datum(/datum/antagonist/hivemind)
+		hive.destroy_hive()
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	add_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)

@@ -39,6 +39,14 @@
 	tastes = list("candy corn" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
+/obj/item/reagent_containers/food/snacks/candy_corn/prison
+	name = "desiccated candy corn"
+	desc = "If this candy corn were any harder Security would confiscate it for being a potential shiv."
+	force = 1 // the description isn't lying
+	throwforce = 1 // if someone manages to bust out of jail with candy corn god bless them
+	tastes = list("bitter wax" = 1)
+	foodtype = GROSS
+
 /obj/item/reagent_containers/food/snacks/chocolatebar
 	name = "chocolate bar"
 	desc = "Such, sweet, fattening food."
@@ -69,7 +77,7 @@
 
 /obj/item/reagent_containers/food/snacks/popcorn/Initialize()
 	. = ..()
-	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
+	eatverb = pick("bite","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
 	name = "loaded baked potato"
@@ -156,7 +164,7 @@
 	icon_state = "mint"
 	bitesize = 1
 	trash = /obj/item/trash/plate
-	list_reagents = list("minttoxin" = 1)
+	list_reagents = list("minttoxin" = 2)
 	filling_color = "#800000"
 	foodtype = TOXIC | SUGAR
 

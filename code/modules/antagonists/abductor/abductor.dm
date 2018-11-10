@@ -42,12 +42,11 @@
 /datum/antagonist/abductor/on_gain()
 	owner.special_role = "[name] [sub_role]"
 	owner.assigned_role = "[name] [sub_role]"
-	owner.objectives += team.objectives
+	objectives += team.objectives
 	finalize_abductor()
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
-	owner.objectives -= team.objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [owner.special_role]!</span>")
 	owner.special_role = null
@@ -92,8 +91,8 @@
 	else
 		return
 	new_owner.add_antag_datum(src)
-	log_admin("[key_name(usr)] made [key_name(new_owner.current)] [name] on [choice]!")
-	message_admins("[key_name_admin(usr)] made [key_name_admin(new_owner.current)] [name] on [choice] !")
+	log_admin("[key_name(usr)] made [key_name(new_owner)] [name] on [choice]!")
+	message_admins("[key_name_admin(usr)] made [key_name_admin(new_owner)] [name] on [choice] !")
 
 /datum/antagonist/abductor/get_admin_commands()
 	. = ..()
@@ -146,7 +145,7 @@
 	result += "<span class='header'>The abductors of [name] were:</span>"
 	for(var/datum/mind/abductor_mind in members)
 		result += printplayer(abductor_mind)
-		result += printobjectives(abductor_mind)
+	result += printobjectives(objectives)
 
 	return "<div class='panel redborder'>[result.Join("<br>")]</div>"
 
@@ -171,7 +170,6 @@
 	var/objtype = (prob(75) ? /datum/objective/abductee/random : pick(subtypesof(/datum/objective/abductee/) - /datum/objective/abductee/random))
 	var/datum/objective/abductee/O = new objtype()
 	objectives += O
-	owner.objectives += objectives
 
 /datum/antagonist/abductee/apply_innate_effects(mob/living/mob_override)
 	update_abductor_icons_added(mob_override ? mob_override.mind : owner,"abductee")

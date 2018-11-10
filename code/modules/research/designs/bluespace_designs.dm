@@ -1,11 +1,11 @@
 
 /////////////////////////////////////////
-//////////////Blue Space/////////////////
+///////////////Bluespace/////////////////
 /////////////////////////////////////////
 
 /datum/design/beacon
 	name = "Tracking Beacon"
-	desc = "A blue space tracking beacon."
+	desc = "A bluespace tracking beacon."
 	id = "beacon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 100)
@@ -32,7 +32,7 @@
 	materials = list(MAT_DIAMOND = 1500, MAT_PLASMA = 1500)
 	build_path = /obj/item/stack/ore/bluespace_crystal/artificial
 	category = list("Bluespace Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/telesci_gps
 	name = "GPS Device"

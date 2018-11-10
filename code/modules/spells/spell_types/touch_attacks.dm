@@ -2,7 +2,7 @@
 	var/hand_path = /obj/item/melee/touch_attack
 	var/obj/item/melee/touch_attack/attached_hand = null
 	invocation_type = "none" //you scream on connecting, not summoning
-	include_user = 1
+	include_user = TRUE
 	range = -1
 
 /obj/effect/proc_holder/spell/targeted/touch/proc/remove_hand(recharge = FALSE)
@@ -41,7 +41,10 @@
 	attached_hand.attached_spell = src
 	if(!user.put_in_hands(attached_hand))
 		remove_hand(TRUE)
-		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		if (user.get_num_arms() <= 0)
+			to_chat(user, "<span class='warning'>You dont have any usable hands!</span>")
+		else
+			to_chat(user, "<span class='warning'>Your hands are full!</span>")
 		return FALSE
 	to_chat(user, "<span class='notice'>You channel the power of the spell to your hand.</span>")
 	return TRUE
@@ -54,7 +57,7 @@
 
 	school = "evocation"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
@@ -66,7 +69,7 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 1
+	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"

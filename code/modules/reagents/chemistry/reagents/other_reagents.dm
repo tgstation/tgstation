@@ -270,9 +270,7 @@
 /datum/reagent/fuel/unholywater/on_mob_life(mob/living/carbon/M)
 	if(iscultist(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
-		M.AdjustUnconscious(-20, 0)
-		M.AdjustStun(-40, 0)
-		M.AdjustKnockdown(-40, 0)
+		M.AdjustAllImmobility(-40, FALSE)
 		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
@@ -434,7 +432,7 @@
 		return
 	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as [H.p_their()] skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
-	H.Knockdown(60)
+	H.Paralyze(60)
 	addtimer(CALLBACK(src, .proc/mutate, H), 30)
 	return
 
@@ -740,7 +738,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/M)
-	if(M.canmove && !isspaceturf(M.loc))
+	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -820,7 +818,7 @@
 	taste_description = "metal"
 
 /datum/reagent/lithium/on_mob_life(mob/living/carbon/M)
-	if(M.canmove && !isspaceturf(M.loc))
+	if((M.mobility_flags & MOBILITY_MOVE) && !isspaceturf(M.loc))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -972,7 +970,7 @@
 /datum/reagent/fuel
 	name = "Welding fuel"
 	id = "welding_fuel"
-	description = "Required for welders. Flamable."
+	description = "Required for welders. Flammable."
 	color = "#660000" // rgb: 102, 0, 0
 	taste_description = "gross metal"
 	glass_icon_state = "dr_gibb_glass"
@@ -996,6 +994,7 @@
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	color = "#A5F0EE" // rgb: 165, 240, 238
 	taste_description = "sourness"
+	reagent_weight = 0.6 //so it sprays further
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/effect/decal/cleanable))
@@ -1231,7 +1230,7 @@
 	id = "stimulum"
 	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
 	reagent_state = GAS
-	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "E1A116"
 	taste_description = "sourness"
 
@@ -1245,18 +1244,16 @@
 	L.remove_trait(TRAIT_SLEEPIMMUNE, id)
 	..()
 
-/datum/reagent/stimulum/on_mob_life(mob/living/carbon/M) 
+/datum/reagent/stimulum/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(-2*REM, 0)
-	current_cycle++
-	holder.remove_reagent(id, 0.99)		//Gives time for the next tick of life().
-	. = TRUE //Update status effects.
+	..()
 
 /datum/reagent/nitryl
 	name = "Nitryl"
 	id = "no2"
 	description = "A highly reactive gas that makes you feel faster"
 	reagent_state = GAS
-	metabolization_rate = REAGENTS_METABOLISM
+	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
 	taste_description = "burning"
 

@@ -588,7 +588,7 @@
 	results = list("quintuple_sec" = 15)
 	required_reagents = list("quadruple_sec" = 5, "clownstears" = 5, "syndicatebomb" = 5)
 	mix_message = "Judgement is upon you."
-	mix_message = 'sound/items/airhorn2.ogg'
+	mix_sound = 'sound/items/airhorn2.ogg'
 
 /datum/chemical_reaction/bastion_bourbon
 	name = "Bastion Bourbon"

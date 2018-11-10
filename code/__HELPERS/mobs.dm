@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if (progress)
@@ -257,9 +257,15 @@ GLOBAL_LIST_EMPTY(species_list)
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
+
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.IsStun() || L.IsParalyzed())
+				. = 0
+				break
 
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
@@ -283,7 +289,7 @@ GLOBAL_LIST_EMPTY(species_list)
 	. = 1
 	return
 
-/proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
+/proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
 	if(!user || !targets)
 		return 0
 	if(!islist(targets))
@@ -305,6 +311,9 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/endtime = world.time + time
 	var/starttime = world.time
+	var/mob/living/L
+	if(isliving(user))
+		L = user
 	. = 1
 	mainloop:
 		while(world.time < endtime)
@@ -321,8 +330,12 @@ GLOBAL_LIST_EMPTY(species_list)
 				drifting = 0
 				user_loc = user.loc
 
+			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
+				. = 0
+				break
+
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
 	if(progbar)
@@ -343,11 +356,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/new_args = list(T)
 	if(extra_args)
 		new_args += extra_args
-
+	var/atom/X
 	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(arglist(new_args))
+		X = new spawn_type(arglist(new_args))
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
+	return X //return the last mob spawned
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -378,12 +392,14 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			prefs = new
 
-		var/adminoverride = 0
+		var/override = FALSE
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+			override = TRUE
+		if(M.has_trait(TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(isnewplayer(M) && !override)
 			continue
-		if(M.stat != DEAD && !adminoverride)
+		if(M.stat != DEAD && !override)
 			continue
 		if(speaker_key && speaker_key in prefs.ignoring)
 			continue

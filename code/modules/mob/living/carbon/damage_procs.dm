@@ -180,7 +180,7 @@
 		update_damage_overlays()
 
 // damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
 	if(status_flags & GODMODE)
 		return	//godmode
 
@@ -197,7 +197,7 @@
 		var/stamina_was = picked.stamina_dam
 
 
-		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE)
+		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, required_status)
 
 		brute	= round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn	= round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)

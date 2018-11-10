@@ -17,6 +17,7 @@
 	max_integrity = 350
 	integrity_failure = 80
 	circuit = /obj/item/circuitboard/machine/rad_collector
+	rad_insulation = RAD_EXTREME_INSULATION
 	var/obj/item/tank/internals/plasma/loaded_tank = null
 	var/stored_power = 0
 	var/active = 0
@@ -27,12 +28,9 @@
 	var/bitcoinproduction_drain = 0.15
 	var/bitcoinmining = FALSE
 
+
 /obj/machinery/power/rad_collector/anchored
 	anchored = TRUE
-
-/obj/machinery/power/rad_collector/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_EXTREME_INSULATION, FALSE, FALSE)
 
 /obj/machinery/power/rad_collector/Destroy()
 	return ..()
@@ -67,6 +65,9 @@
 			loaded_tank.air_contents.gases[/datum/gas/carbon_dioxide][MOLES] += gasdrained*2
 			loaded_tank.air_contents.garbage_collect()
 			var/bitcoins_mined = RAD_COLLECTOR_OUTPUT
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_ENG)
+			if(D)
+				D.adjust_money(bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, bitcoins_mined*RAD_COLLECTOR_MINING_CONVERSION_RATE)
 			stored_power-=bitcoins_mined
 

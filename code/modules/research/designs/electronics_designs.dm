@@ -23,6 +23,15 @@
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
+/datum/design/ai_cam_upgrade
+	name = "AI Surveillance Software Update"
+	desc = "A software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading."
+	id = "ai_cam_upgrade"
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 15000, MAT_SILVER = 15000, MAT_DIAMOND = 20000, MAT_PLASMA = 10000)
+	build_path = /obj/item/surveillance_upgrade
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
 ///////////////////////////////////
 //////////Nanite Devices///////////
@@ -88,35 +97,5 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 100)
 	build_path = /obj/item/disk/nanite_program
-	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/integrated_printer
-	name = "Integrated circuit printer"
-	desc = "This machine provides all necessary things for circuitry."
-	id = "icprinter"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 5000, MAT_METAL = 10000)
-	build_path = /obj/item/integrated_circuit_printer
-	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/IC_printer_upgrade_advanced
-	name = "Integrated circuit printer upgrade: Advanced Designs"
-	desc = "This disk allows for integrated circuit printers to print advanced circuitry designs."
-	id = "icupgadv"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 10000, MAT_METAL = 10000)
-	build_path = /obj/item/disk/integrated_circuit/upgrade/advanced
-	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/IC_printer_upgrade_clone
-	name = "Integrated circuit printer upgrade: Instant Cloning"
-	desc = "This disk allows for integrated circuit printers to clone designs instantaneously."
-	id = "icupgclo"
-	build_type = PROTOLATHE
-	materials = list(MAT_GLASS = 10000, MAT_METAL = 10000)
-	build_path = /obj/item/disk/integrated_circuit/upgrade/clone
 	category = list("Electronics")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE

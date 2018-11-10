@@ -2314,9 +2314,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/plasteel/white{
-	icon_state = "whitepurple"
-	},
+/turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "fU" = (
 /obj/effect/decal/cleanable/dirt,

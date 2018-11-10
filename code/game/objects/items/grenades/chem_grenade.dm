@@ -29,18 +29,21 @@
 	display_timer = (stage == READY && !nadeassembly)	//show/hide the timer based on assembly state
 	..()
 	if(user.can_see_reagents())
-		var/count = 0
 		if(beakers.len)
 			to_chat(user, "<span class='notice'>You scan the grenade and detect the following reagents:</span>")
 			for(var/obj/item/reagent_containers/glass/G in beakers)
-				var/textcount = thtotext(++count)
 				for(var/datum/reagent/R in G.reagents.reagent_list)
-					to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the [textcount] beaker.</span>")
+					to_chat(user, "<span class='notice'>[R.volume] units of [R.name] in the [G.name].</span>")
 			if(beakers.len == 1)
 				to_chat(user, "<span class='notice'>You detect no second beaker in the grenade.</span>")
 		else
 			to_chat(user, "<span class='notice'>You scan the grenade, but detect nothing.</span>")
-
+	else if(stage != READY && beakers.len)
+		if(beakers.len == 2 && beakers[1].name == beakers[2].name)
+			to_chat(user, "<span class='notice'>You see two [beakers[1].name]s inside the grenade.</span>")
+		else
+			for(var/obj/item/reagent_containers/glass/G in beakers)
+				to_chat(user, "<span class='notice'>You see a [G.name] inside the grenade.</span>")
 
 /obj/item/grenade/chem_grenade/attack_self(mob/user)
 	if(stage == READY && !active)
@@ -49,9 +52,8 @@
 		else
 			..()
 
-
 /obj/item/grenade/chem_grenade/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stage == WIRED)
 			if(beakers.len)
 				stage_change(READY)
@@ -106,18 +108,18 @@
 			to_chat(user, "<span class='warning'>You need one length of coil to wire the assembly!</span>")
 			return
 
-	else if(stage == READY && istype(I, /obj/item/wirecutters) && !active)
+	else if(stage == READY && I.tool_behaviour == TOOL_WIRECUTTER && !active)
 		stage_change(WIRED)
 		to_chat(user, "<span class='notice'>You unlock the [initial(name)] assembly.</span>")
 
-	else if(stage == WIRED && istype(I, /obj/item/wrench))
+	else if(stage == WIRED && I.tool_behaviour == TOOL_WRENCH)
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.forceMove(drop_location())
 				if(!O.reagents)
 					continue
 				var/reagent_list = pretty_string_from_reagent_list(O.reagents)
-				user.log_message("removed [O] ([reagent_list]) from [src]")
+				user.log_message("removed [O] ([reagent_list]) from [src]", LOG_GAME)
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
 			return // First use of the wrench remove beakers, then use the wrench to remove the activation mechanism.
@@ -163,17 +165,13 @@
 		nadeassembly.on_found(finder)
 
 /obj/item/grenade/chem_grenade/log_grenade(mob/user, turf/T)
-	..()
 	var/reagent_string = ""
 	var/beaker_number = 1
 	for(var/obj/exploded_beaker in beakers)
 		if(!exploded_beaker.reagents)
 			continue
-		reagent_string += "[exploded_beaker] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ";"
-	var/message = "[src] primed by [user] at [ADMIN_VERBOSEJMP(T)] contained [reagent_string]."
-	GLOB.bombers += message
-	message_admins(message)
-	user.log_message("primed [src] ([reagent_string])",LOG_GAME)
+		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
+	log_bomber(user, "primed a", src, "containing:[reagent_string]")
 
 /obj/item/grenade/chem_grenade/prime()
 	if(stage != READY)
@@ -274,7 +272,7 @@
 	var/unit_spread = 10 // Amount of units per repeat. Can be altered with a multitool.
 
 /obj/item/grenade/chem_grenade/adv_release/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/multitool))
+	if(I.tool_behaviour == TOOL_MULTITOOL)
 		switch(unit_spread)
 			if(0 to 24)
 				unit_spread += 5

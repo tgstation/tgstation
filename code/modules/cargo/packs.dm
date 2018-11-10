@@ -16,16 +16,20 @@
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE
 
-/datum/supply_pack/proc/generate(turf/T)
-	var/obj/structure/closet/crate/C = new crate_type(T)
-	C.name = crate_name
+/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
+	var/obj/structure/closet/crate/C
+	if(paying_account)
+		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
+		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+	else
+		C = new crate_type(A)
+		C.name = crate_name
 	if(access)
 		C.req_access = list(access)
 	if(access_any)
 		C.req_one_access = access_any
 
 	fill(C)
-
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
@@ -157,6 +161,18 @@
 			continue
 		crate_value -= I.cost
 		new I.item(C)
+
+/datum/supply_pack/emergency/plasma_spacesuit
+	name = "Plasmaman Space Envirosuits"
+	desc = "Contains two space-worthy envirosuits for Plasmamen. Order now and we'll throw in two free helmets! Requires EVA access to open."
+	cost = 4000
+	access = ACCESS_EVA
+	contains = list(/obj/item/clothing/suit/space/eva/plasmaman,
+					/obj/item/clothing/suit/space/eva/plasmaman,
+					/obj/item/clothing/head/helmet/space/plasmaman,
+					/obj/item/clothing/head/helmet/space/plasmaman)
+	crate_name = "plasmaman EVA crate"
+	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/emergency/plasmaman
 	name = "Plasmaman Supply Kit"
@@ -1191,16 +1207,6 @@
 	crate_name = "\improper APLU Ripley circuit crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/circuitry
-	name = "Circuitry Starter Pack Crate"
-	desc = "Journey into the mysterious world of Circuitry with this starter pack. Contains a circuit printer, analyzer, debugger and wirer. Power cells not included."
-	cost = 1000
-	contains = list(/obj/item/integrated_electronics/analyzer,
-					/obj/item/integrated_circuit_printer,
-					/obj/item/integrated_electronics/debugger,
-					/obj/item/integrated_electronics/wirer)
-	crate_name = "circuitry starter pack crate"
-
 /datum/supply_pack/science/plasma
 	name = "Plasma Assembly Crate"
 	desc = "Everything you need to burn something to the ground, this contains three plasma assembly sets. Each set contains a plasma tank, igniter, proximity sensor, and timer! Warranty void if exposed to high temperatures. Requires Toxins access to open."
@@ -1573,9 +1579,10 @@
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
-	desc = "Big things have small beginnings. Contains thirteen different seeds."
+	desc = "Big things have small beginnings. Contains fourteen different seeds."
 	cost = 1000
 	contains = list(/obj/item/seeds/chili,
+					/obj/item/seeds/cotton,
 					/obj/item/seeds/berry,
 					/obj/item/seeds/corn,
 					/obj/item/seeds/eggplant,
@@ -1593,7 +1600,7 @@
 
 /datum/supply_pack/organic/exoticseeds
 	name = "Exotic Seeds Crate"
-	desc = "Any entrepreneuring botanist's dream. Contains twelve different seeds, including three replica-pod seeds and two mystery seeds!"
+	desc = "Any entrepreneuring botanist's dream. Contains fourteen different seeds, including three replica-pod seeds and two mystery seeds!"
 	cost = 1500
 	contains = list(/obj/item/seeds/nettle,
 					/obj/item/seeds/replicapod,
@@ -1605,6 +1612,8 @@
 					/obj/item/seeds/reishi,
 					/obj/item/seeds/banana,
 					/obj/item/seeds/eggplant/eggy,
+					/obj/item/seeds/rainbow_bunch,
+					/obj/item/seeds/rainbow_bunch,
 					/obj/item/seeds/random,
 					/obj/item/seeds/random)
 	crate_name = "exotic seeds crate"

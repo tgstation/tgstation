@@ -10,6 +10,7 @@
 	resistance_flags = FIRE_PROOF
 	interaction_flags_machine = INTERACT_MACHINE_OPEN | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	obj_flags = CAN_BE_HIT | USES_TGUI
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
 	var/pressure_charging = TRUE
@@ -41,10 +42,6 @@
 	update_icon()
 
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
-
-/obj/machinery/disposal/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
 /obj/machinery/disposal/proc/trunk_check()
 	trunk = locate() in loc
@@ -80,12 +77,12 @@
 /obj/machinery/disposal/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
-		if(istype(I, /obj/item/screwdriver))
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			panel_open = !panel_open
 			I.play_tool_sound(src)
 			to_chat(user, "<span class='notice'>You [panel_open ? "remove":"attach"] the screws around the power connection.</span>")
 			return
-		else if(istype(I, /obj/item/weldingtool) && panel_open)
+		else if(I.tool_behaviour == TOOL_WELDER && panel_open)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
@@ -115,7 +112,12 @@
 
 /obj/machinery/disposal/proc/stuff_mob_in(mob/living/target, mob/living/user)
 	if(!iscarbon(user) && !user.ventcrawler) //only carbon and ventcrawlers can climb into disposal by themselves.
-		return
+		if (iscyborg(user))
+			var/mob/living/silicon/robot/borg = user
+			if (!borg.module || !borg.module.canDispose)
+				return
+		else
+			return
 	if(!isturf(user.loc)) //No magically doing it from inside closets
 		return
 	if(target.buckled || target.has_buckled_mobs())
@@ -454,7 +456,7 @@
 		flush()
 
 /obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
-	if(!AM.CanEnterDisposals())
+	if(QDELETED(AM) || !AM.CanEnterDisposals())
 		return
 	switch(dir)
 		if(NORTH)

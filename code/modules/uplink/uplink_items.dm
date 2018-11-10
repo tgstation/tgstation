@@ -85,18 +85,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	return pick(4;0.75,2;0.5,1;0.25)
 
 /datum/uplink_item/proc/purchase(mob/user, datum/component/uplink/U)
-	var/atom/A = spawn_item(item, user)
+	var/atom/A = spawn_item(item, user, U)
 	if(purchase_log_vis && U.purchase_log)
 		U.purchase_log.LogPurchase(A, src, cost)
 
-/datum/uplink_item/proc/spawn_item(spawn_item, mob/user)
-	if(!spawn_item)
+/datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
+	if(!spawn_path)
 		return
 	var/atom/A
-	if(ispath(spawn_item))
-		A = new spawn_item(get_turf(user))
+	if(ispath(spawn_path))
+		A = new spawn_path(get_turf(user))
 	else
-		A = spawn_item
+		A = spawn_path
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
@@ -201,7 +201,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 10
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
-	
+
 /datum/uplink_item/dangerous/carbine
 	name = "M-90gl Carbine"
 	desc = "A fully-loaded, specialized three-round burst carbine that fires 5.56mm ammunition from a 30 round magazine \
@@ -214,10 +214,19 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
-			This deadly weapon has a massive 50-round magazine of devastating 1.95x129mm ammunition."
+			This deadly weapon has a massive 50-round magazine of devastating 7.12x82mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 0
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/dangerous/rawketlawnchair
+	name = "84mm Rocket Propelled Grenade Launcher"
+	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
+		Guaranteed to send your target out with a bang or your money back!"
+	item = /obj/item/gun/ballistic/rocketlauncher
+	cost = 8
+	surplus = 30
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/grenadier
@@ -420,8 +429,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/pistol
 	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds \
-			are dirt cheap but are half as effective as .357 rounds."
+	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -526,15 +534,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/smg
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
-	
+
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
 	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
-			These bullets pack less punch than 1.95mm rounds, but they still offer more power than .45 ammo."
+			These bullets pack less punch than 7.12mm rounds, but they still offer more power than .45 ammo."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
-	
+
 /datum/uplink_item/ammo/a40mm
 	name = "40mm Grenade"
 	desc = "A 40mm HE grenade for use with the M-90gl's under-barrel grenade launcher. \
@@ -549,29 +557,44 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun/basic
-	name = "1.95x129mm Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use with the L6 SAW. \
+	name = "7.12x82mm Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use with the L6 SAW. \
 			By the time you need to use this, you'll already be on a pile of corpses."
-	item = /obj/item/ammo_box/magazine/mm195x129
+	item = /obj/item/ammo_box/magazine/mm712x82
 
 /datum/uplink_item/ammo/machinegun/hollow
-	name = "1.95x129mm (Hollow-Point) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
+	name = "7.12x82mm (Hollow-Point) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; equipped with hollow-point tips to help \
 			with the unarmored masses of crew."
-	item = /obj/item/ammo_box/magazine/mm195x129/hollow
+	item = /obj/item/ammo_box/magazine/mm712x82/hollow
 
 /datum/uplink_item/ammo/machinegun/ap
-	name = "1.95x129mm (Armor Penetrating) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; equipped with special properties \
+	name = "7.12x82mm (Armor Penetrating) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; equipped with special properties \
 			to puncture even the most durable armor."
-	item = /obj/item/ammo_box/magazine/mm195x129/ap
+	item = /obj/item/ammo_box/magazine/mm712x82/ap
 	cost = 9
 
 /datum/uplink_item/ammo/machinegun/incen
-	name = "1.95x129mm (Incendiary) Box Magazine"
-	desc = "A 50-round magazine of 1.95x129mm ammunition for use in the L6 SAW; tipped with a special flammable \
+	name = "7.12x82mm (Incendiary) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; tipped with a special flammable \
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
-	item = /obj/item/ammo_box/magazine/mm195x129/incen
+	item = /obj/item/ammo_box/magazine/mm712x82/incen
+
+/datum/uplink_item/ammo/rocket
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/rocket/basic
+	name = "84mm HE Rocket"
+	desc = "A low-yield anti-personnel HE rocket. Gonna take you out in style!"
+	item = /obj/item/ammo_box/magazine/rocket
+	cost = 4
+
+/datum/uplink_item/ammo/rocket/hedp
+	name = "84mm HEDP Rocket"
+	desc = "A high-yield HEDP rocket; extremely effective against armored targets, as well as surrounding personnel. Strike fear into the hearts of your enemies."
+	item = /obj/item/ammo_box/magazine/rocket/hedp
+	cost = 6
 
 /datum/uplink_item/ammo/sniper
 	cost = 4
@@ -638,6 +661,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate Medical Cyborg"
 	desc = "A combat medic cyborg, with potent healing reagents and a medical beam gun, but limited offensive potential."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
+	refundable = TRUE
+	cost = 35
+	restricted = TRUE
+
+/datum/uplink_item/support/reinforcement/saboteur_borg
+	name = "Syndicate Saboteur Cyborg"
+	desc = "A streamlined engineering cyborg, equipped with thermal vision and the ability to traverse Nanotrasen's disposal network. Also incapable of leaving the welder in the shuttle."
+	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	refundable = TRUE
 	cost = 35
 	restricted = TRUE
@@ -745,7 +776,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	cant_discount = TRUE
-	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -841,6 +871,24 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 4
 	restricted = TRUE
 
+/datum/uplink_item/stealthy_tools/failsafe
+	name = "Failsafe Uplink Code"
+	desc = "When entered the uplink will self-destruct immidiately."
+	item = /obj/effect/gibspawner/generic
+	cost = 1
+	surplus = 0
+	restricted = TRUE
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/stealthy_tools/failsafe/spawn_item(spawn_path, mob/user, datum/component/uplink/U)
+	if(!U)
+		return
+	U.failsafe_code = U.generate_code()
+	to_chat(user, "The new failsafe code for this uplink is now : [U.failsafe_code].")
+	if(user.mind)
+		user.mind.store_memory("Failsafe code for [U.parent] : [U.failsafe_code]")
+	return U.parent //For log icon
+
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification Card"
 	desc = "Agent cards prevent artificial intelligences from tracking the wearer, and can copy access \
@@ -914,6 +962,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
+	surplus_nullcrates = 0
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
@@ -1411,7 +1460,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list("Medical Doctor")
+	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist")
 	cost = 5
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
@@ -1441,6 +1490,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in Hominidae. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/magillitis
 	cost = 15
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
+
+/datum/uplink_item/role_restricted/gorillacubes
+	name = "Box of Gorilla Cubes"
+	desc = "A box with three Waffle Co. brand gorilla cubes. Eat big to get big. \
+			Caution: Product may rehydrate when exposed to water."
+	item = /obj/item/storage/box/gorillacubes
+	cost = 6
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/pressure_mod
@@ -1478,9 +1535,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Simply insert your bikehorn and get in, and get ready to have the funniest ride of your life! \
 			You can ram any spacemen you come across and stuff them into your car, kidnapping them and locking them inside until \
 			someone saves them or they manage to crawl out. Be sure not to ram into any walls or vending machines, as the springloaded seats \
-			are very sensetive. Now with our included lube defense mechanism which will protect you against any angry shitcurity!"
+			are very sensitive. Now with our included lube defense mechanism which will protect you against any angry shitcurity! \
+			Premium features can be unlocked with a cryptographic sequencer!"
 	item = /obj/vehicle/sealed/car/clowncar
-	cost = 15
+	cost = 20
 	restricted_roles = list("Clown")
 
 // Pointless
@@ -1579,7 +1637,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null, FALSE)
 
 	var/crate_value = starting_crate_value
-	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user)
+	var/obj/structure/closet/crate/C = spawn_item(/obj/structure/closet/crate, user, U)
 	if(U.purchase_log)
 		U.purchase_log.LogPurchase(C, src, cost)
 	while(crate_value)
