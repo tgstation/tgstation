@@ -23,6 +23,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/max_amount = 0
 	var/display_color = "blue"
 	var/custom_price
+	var/custom_premium_price
 
 /obj/machinery/vending
 	name = "\improper Vendomat"
@@ -165,6 +166,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		R.max_amount = amount
 		R.display_color = pick("#ff8080","#80ff80","#8080ff")
 		R.custom_price = initial(temp.custom_price)
+		R.custom_premium_price = initial(temp.custom_premium_price)
 		recordlist += R
 
 /obj/machinery/vending/proc/restock(obj/item/vending_refill/canister)
@@ -332,7 +334,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			if(!onstation || account && account.account_job && account.account_job.paycheck_department == payment_department)
 				price_listed = "FREE"
 			if(coin_records.Find(R) || is_hidden)
-				price_listed = "$[extra_price]"
+				price_listed = "$[R.custom_premium_price ? R.custom_premium_price : extra_price]"
 			dat += "<li>"
 			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && iscarbon(user))))
 				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
@@ -455,7 +457,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			if(account.account_job && account.account_job.paycheck_department == payment_department)
 				price_to_use = 0
 			if(coin_records.Find(R) || hidden_records.Find(R))
-				price_to_use = extra_price
+				price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
 			if(price_to_use && !account.adjust_money(-price_to_use))
 				say("You do not possess the funds to purchase [R.name].")
 				flick(icon_deny,src)
