@@ -368,8 +368,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		user.visible_message("<span class='notice'>[user] examines [target] with [src].</span>")
 		target.examine(user)
 
-
-
 /obj/item/staff
 	name = "wizard staff"
 	desc = "Apparently a staff used by the wizard."
