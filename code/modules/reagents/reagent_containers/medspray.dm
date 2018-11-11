@@ -91,3 +91,15 @@
 	name = "sterilizer spray"
 	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
 	list_reagents = list("sterilizine" = 60)
+/obj/item/reagent_containers/medspray/changed_name(newname)
+	var/compare = lowertext(newname)
+	if (compare == ("styptic powder"))
+		icon_state = "brutespray"
+	if (compare == ("silver sulfadiazine"))			// Renamed sprays have their icon changed to fit their new name when appropriate.
+		icon_state = "burnspray"
+	if (compare == ("synthflesh"))
+		icon_state = "synthspray"
+	else
+		icon_state = "medspray"
+	update_icon()
+	return ..()

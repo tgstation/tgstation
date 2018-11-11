@@ -38,3 +38,12 @@
 	desc = "Helps with burn injuries."
 	list_reagents = list("silver_sulfadiazine" = 20)
 	icon_state = "bandaid_burn"
+
+/obj/item/reagent_containers/pill/patch/changed_name(newname)
+	var/compare = lowertext(newname)
+	if (compare == "brute patch")
+		icon_state = "bandaid_brute"
+	if (compare == "burn patch")
+		icon_state = "bandaid_burn"
+	update_icon()
+	return ..()

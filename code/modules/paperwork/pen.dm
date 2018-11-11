@@ -136,7 +136,7 @@
 			if(oldname == input)
 				to_chat(user, "You changed \the [O.name] to... well... \the [O.name].")
 			else
-				O.name = input
+				O.changed_name(input)
 				to_chat(user, "\The [oldname] has been successfully been renamed to \the [input].")
 				O.renamedByPlayer = TRUE
 
