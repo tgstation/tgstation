@@ -80176,8 +80176,7 @@
 /obj/structure/table,
 /obj/item/storage/secure/briefcase,
 /obj/structure/sign/poster/random{
-	pixel_x = -32;
-	pixel_y = 0
+	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
