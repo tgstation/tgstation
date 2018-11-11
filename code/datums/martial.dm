@@ -72,7 +72,7 @@
 	if((D.stat != DEAD) && damage >= A.dna.species.punchstunthreshold)
 		D.visible_message("<span class='danger'>[A] has knocked [D] down!!</span>", \
 								"<span class='userdanger'>[A] has knocked [D] down!</span>")
-		D.apply_effect(40, EFFECT_KNOCKDOWN, armor_block)
+		D.apply_effect(40, EFFECT_PARALYZE, armor_block)
 		D.forcesay(GLOB.hit_appends)
 	else if(!(D.mobility_flags & MOBILITY_STAND))
 		D.forcesay(GLOB.hit_appends)

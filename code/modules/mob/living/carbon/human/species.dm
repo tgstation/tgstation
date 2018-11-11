@@ -1212,9 +1212,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		target.apply_damage(damage, BRUTE, affecting, armor_block)
 		log_combat(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
-			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
+			target.visible_message("<span class='danger'>[user] has knocked [target] down!</span>", \
 							"<span class='userdanger'>[user] has knocked [target] down!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.apply_effect(80, EFFECT_KNOCKDOWN, armor_block)
+			target.apply_effect(80, EFFECT_PARALYZE, armor_block)
 			target.forcesay(GLOB.hit_appends)
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
@@ -1380,7 +1380,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(prob(I.force))
 						H.visible_message("<span class='danger'>[H] has been knocked down!</span>", \
 									"<span class='userdanger'>[H] has been knocked down!</span>")
-						H.apply_effect(60, EFFECT_KNOCKDOWN, armor_block)
+						H.apply_effect(60, EFFECT_PARALYZE, armor_block)
 
 				if(bloody)
 					if(H.wear_suit)
