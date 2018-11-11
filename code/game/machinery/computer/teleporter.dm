@@ -120,8 +120,11 @@
 	if(regime_set == "Teleporter")
 		for(var/obj/item/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
-				var/area/A = get_area(R)
-				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
+				if(R.renamed == TRUE)
+					L[avoid_assoc_duplicate_keys(R.name, areaindex)] = R
+				else
+					var/area/A = get_area(R)
+					L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !isliving(I.loc))
