@@ -28,7 +28,7 @@
 	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 10
+	damage = 40
 	range = 9
 	mine_range = 3
 
