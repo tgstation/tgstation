@@ -12,6 +12,7 @@
 	var/spawn_text = "emerges from"
 	status_flags = 0
 	move_resist = MOVE_FORCE_VERY_STRONG
+	anchored = TRUE
 	AIStatus = AI_OFF
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
