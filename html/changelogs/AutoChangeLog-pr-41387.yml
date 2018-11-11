@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Delta's cargo shuttle's conveyor belts will no longer move the wrong direction if turned on while the shuttle is at CentCom."
