@@ -263,10 +263,13 @@
 					var/free = R.maximum_volume - R.total_volume
 					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
-						if(!cell.use(actual / powerefficiency))
+						if(!cell.use(abs(actual) / powerefficiency))
 							say("Not enough energy to complete operation!")
 							return
-						R.add_reagent(r_id, actual)
+						if(actual > 0)
+							R.add_reagent(r_id, actual)
+						if(actual < 0 && macrotier == 4)
+							R.remove_reagent(r_id, abs(actual))
 						work_animation()
 		if("clear_recipes")
 			if(!is_operational())
