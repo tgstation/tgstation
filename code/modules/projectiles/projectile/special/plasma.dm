@@ -32,6 +32,11 @@
 	range = 9
 	mine_range = 3
 
+/obj/item/projectile/plasma/adv/mech/Initialize()
+	if(!lavaland_equipment_pressure_check(get_turf(src)))
+		damage = 10
+		name = "weakened [name]"
+
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
