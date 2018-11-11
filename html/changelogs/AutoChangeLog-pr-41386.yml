@@ -1,5 +1,0 @@
-author: "Garen"
-delete-after: True
-changes: 
-  - tweak: "The shift E & B keybindings now take the item in the slot if it is not a storage item. The hotkey help has been updated accordingly."
-  - bugfix: "Fixed shift E & B not updating hands when it was used to put an item directly into the slot(not into a storage item but the actual equip slot)"
