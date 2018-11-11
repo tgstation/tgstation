@@ -313,6 +313,11 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/temp_visual/desynchronizer
+	name = "desynchronizer field"
+	icon_state = "chronofield"
+	duration = 3
+
 /obj/effect/temp_visual/impact_effect
 	icon_state = "impact_bullet"
 	duration = 5
