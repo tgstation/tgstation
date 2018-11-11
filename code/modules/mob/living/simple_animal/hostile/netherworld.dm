@@ -95,7 +95,7 @@
 		if(M)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, 1)
 			M.adjustBruteLoss(60)
-			new /obj/effect/gibspawner/generic(get_turf(M))
+			new /obj/effect/gibspawner/generic(get_turf(M), M)
 			if(M.stat == DEAD)
 				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank
 				blank = new(loc)
