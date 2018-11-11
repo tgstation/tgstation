@@ -524,9 +524,9 @@
 			add_atom_colour(color, ADMIN_COLOUR_PRIORITY)
 
 		if("dir")
-			if(isnull(var_value) || !(var_value in GLOB.alldirs))
-				return FALSE
-			setDir(var_value)
+			var/do_setdir = alert(usr, "use setDir?", "[src]", "Yes", "No")
+			if(do_setdir == "Yes")
+				setDir(var_value)
 			return TRUE
 
 /atom/vv_get_dropdown()
