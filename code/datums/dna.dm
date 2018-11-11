@@ -133,7 +133,10 @@
 	return sequence
 
 //Used to create a chipped gene sequence
-/proc/create_sequence(mutation, active, difficulty=4)
+/proc/create_sequence(mutation, active, difficulty)
+	if(!difficulty)
+		var/datum/mutation/human/A = get_initialized_mutation(mutation)
+		difficulty = A.difficulty
 	difficulty += rand(-2,4)
 	var/sequence = get_sequence(mutation)
 	if(active)
@@ -143,7 +146,6 @@
 		annihilate_sequence[rand(1,LAZYLEN(annihilate_sequence))] = "X"
 		difficulty--
 	return annihilate_sequence.Join()
-
 
 /proc/get_sequence(mutation)
 	return GLOB.full_sequences[mutation]

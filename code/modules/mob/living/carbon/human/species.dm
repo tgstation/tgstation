@@ -299,6 +299,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	for(var/X in inherent_traits)
 		C.remove_trait(X, SPECIES_TRAIT)
 	if(inert_mutation != new_species.inert_mutation)
+		C.dna.remove_mutation(inert_mutation)
 		C.dna.mutation_index[C.dna.mutation_index.Find(inert_mutation)] = new_species.inert_mutation
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
 	C.remove_movespeed_modifier(MOVESPEED_ID_SPECIES)
