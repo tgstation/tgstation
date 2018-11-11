@@ -96,8 +96,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 			mut_overlay.Remove(get_visual_indicator(owner))
 			owner.overlays_standing[layer_used] = mut_overlay
 			owner.apply_overlay(layer_used)
-			if(power)
-				owner.RemoveSpell(power)
+		if(power)
+			owner.RemoveSpell(power)
 			qdel(src)
 		return 0
 	return 1
