@@ -412,6 +412,10 @@
 				if(assess_perp(Mech.occupant) >= 4)
 					targets += Mech
 
+	if(check_anomalies && GLOB.blobs.len && (mode == TURRET_LETHAL))
+		for(var/obj/structure/blob/B in view(scan_range, base))
+			targets += B
+
 	if(targets.len)
 		tryToShootAt(targets)
 	else if(!always_up)
