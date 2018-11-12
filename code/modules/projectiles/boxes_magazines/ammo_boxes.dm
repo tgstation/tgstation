@@ -81,7 +81,7 @@
 	..()
 
 /obj/item/ammo_box/shotgun/attack_self(mob/user)
-	..()
+	. = ..()
 	if(!stored_ammo.len)
 		to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 		var/obj/item/I = new /obj/item/stack/sheet/cardboard
