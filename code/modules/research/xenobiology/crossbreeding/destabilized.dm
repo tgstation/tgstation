@@ -23,7 +23,7 @@ Destabilized extracts:
 
 /obj/item/slimecross/destabilized/grey/hitEffect(atom/A, mob/thrower)
 	. = ..()
-	var/mob/living/simple_animal/slime/random/S = new (get_turf(A))
+	var/mob/living/simple_animal/slime/S = new (get_turf(A))
 	S.rabid = TRUE
 	S.Friends += thrower
 	if(isliving(A))
@@ -138,12 +138,11 @@ Destabilized extracts:
 /obj/item/slimecross/destabilized/bluespace/hitEffect(atom/A, mob/thrower)
 	. = ..()
 	if(isliving(A))
-		var/mob/living/L = A
-		L.forceMove(get_turf(thrower))
+		do_teleport(A, get_turf(thrower), 1)
 	if(isobj(A))
 		var/obj/O = A
 		if(!O.anchored)
-			O.forceMove(get_turf(thrower))
+			do_teleport(O, get_turf(thrower), 1)
 
 /obj/item/slimecross/destabilized/sepia
 	colour = "sepia"
@@ -151,9 +150,11 @@ Destabilized extracts:
 /obj/item/slimecross/destabilized/sepia/hitEffect(atom/A, mob/thrower)
 	. = ..()
 	if(isliving(A))
-		var/mob/living/L = A
-		L.Stun(70, TRUE, TRUE)
-		to_chat(L, "<span class='warning'>You suddenly feel every molecule in your body grind to a halt!</span>")
+		var/datum/proximity_monitor/advanced/timestop/TS = new()
+		TS.host = A
+		TS.freeze_atom(A)
+		to_chat(A, "<span class='warning'>You suddenly feel every molecule in your body grind to a halt!</span>")
+		QDEL_IN(TS, 70)
 	else
 		new /obj/effect/timestop(get_turf(A), null, 50)
 
