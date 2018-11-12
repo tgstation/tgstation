@@ -179,10 +179,10 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)
