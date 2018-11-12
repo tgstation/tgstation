@@ -78,7 +78,7 @@
 /obj/item/ammo_box/shotgun/Initialize(mapload)
 	if(mapload)
 		start_empty = FALSE
-	..()
+	return ..()
 
 /obj/item/ammo_box/shotgun/attack_self(mob/user)
 	. = ..()
