@@ -4562,9 +4562,6 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-4"
 	},
-/obj/item/door_remote/chief_engineer,
-/obj/item/door_remote/chief_medical_officer,
-/obj/item/door_remote/research_director,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain{
 	name = "\improper Captain's Quarters"
@@ -4587,6 +4584,9 @@
 /obj/structure/table/wood,
 /obj/item/storage/lockbox/medal,
 /obj/item/card/id/captains_spare,
+/obj/item/door_remote/chief_engineer,
+/obj/item/door_remote/chief_medical_officer,
+/obj/item/door_remote/research_director,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain{
 	name = "\improper Captain's Quarters"
