@@ -78,7 +78,7 @@
 
 /obj/item/reagent_containers/hypospray/mini
 	name = "mini hypospray"
-	desc = "New varient of the standard air-needle autoinjector. Holds less chemicals than the standard hypospray but is easier to produce as a result."
+	desc = "New variant of the standard air-needle autoinjector. Holds less chemicals than the standard hypospray but is easier to produce as a result."
 	icon_state = "mini_hypo"
 	volume = 10
 	custom_price = 1200
