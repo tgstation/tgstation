@@ -89,7 +89,7 @@
 		var/turf/T = get_turf(C)
 		for(var/i in 1 to 3)
 			C.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-			new /obj/effect/gibspawner/generic(T)
+			new /obj/effect/gibspawner/generic(T, C)
 			sleep(1)
 		C.ghostize()
 		var/obj/item/bodypart/head/rip_u = C.get_bodypart(BODY_ZONE_HEAD)

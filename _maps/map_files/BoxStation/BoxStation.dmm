@@ -39042,6 +39042,11 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/obj/machinery/door/window/westleft{
+	name = "Atmospherics Delivery";
+	req_access_txt = "24"
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOT" = (
@@ -56863,9 +56868,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "oXE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/door/airlock/maintenance{
 	id_tag = "commissarydoor";
 	req_one_access_txt = "12;63;48;50"

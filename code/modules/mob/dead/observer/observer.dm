@@ -734,7 +734,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
-	return 1
+	return TRUE
 
 /mob/dead/observer/vv_edit_var(var_name, var_value)
 	. = ..()

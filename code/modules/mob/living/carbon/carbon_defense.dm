@@ -48,18 +48,29 @@
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
+/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
+	. = FALSE
+	if(!skip_throw_mode_check && !in_throw_mode)
+		return
+	if(get_active_held_item())
+		return
+	if(!(mobility_flags & MOBILITY_MOVE))
+		return
+	if(restrained())
+		return
+	return TRUE
+
 /mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
 	if(!skipcatch)	//ugly, but easy
-		if(in_throw_mode && !get_active_held_item())	//empty active hand and we're in throw mode
-			if((mobility_flags & MOBILITY_MOVE) && !restrained())
-				if(istype(AM, /obj/item))
-					var/obj/item/I = AM
-					if(isturf(I.loc))
-						I.attack_hand(src)
-						if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-							visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
-							throw_mode_off()
-							return 1
+		if(can_catch_item())
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				if(isturf(I.loc))
+					I.attack_hand(src)
+					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+						visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+						throw_mode_off()
+						return 1
 	..()
 
 

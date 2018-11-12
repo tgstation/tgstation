@@ -46,7 +46,10 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
     if(!chosenRoomNumber)
         return
-    if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)) || (chosenRoomNumber == INFINITY))
+    if(chosenRoomNumber > SHORT_REAL_LIMIT)
+        to_chat(user, "<span class='warning'>You have to check out the first [SHORT_REAL_LIMIT] rooms before you can go to a higher numbered one!</span>")
+        return
+    if((chosenRoomNumber < 1) || (chosenRoomNumber != round(chosenRoomNumber)))
         to_chat(user, "<span class='warning'>That is not a valid room number!</span>")
         return
     if(ismob(loc))
@@ -123,7 +126,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     currentArea.reservation = currentReservation
     for(var/turf/closed/indestructible/hoteldoor/door in currentArea)
         door.parentSphere = src
-        door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br />Alt-Click to look through the peephole."
+        door.desc = "The door to this hotel room. The placard reads 'Room [currentRoomnumber]'. Strange, this door doesnt even seem openable. The doorknob, however, seems to buzz with unusual energy...<br /><span class='info'>Alt-Click to look through the peephole.</span>"
     for(var/turf/open/space/bluespace/BSturf in currentArea)
         BSturf.parentSphere = src
 
@@ -427,7 +430,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/paper/crumpled/docslogs/Initialize()
     . = ..()
-    GLOB.hhmysteryRoomNumber = rand(1, 65535)
+    GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
     info = {"<h4><center>Research Logs</center></h4>
 	I might just be onto something here!<br>
 	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
@@ -493,3 +496,4 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     Lay your head to rest, it soon becomes clear<br>
     There's always more room around every bend<br>
     Not all that's countable has an end...<i>"}
+

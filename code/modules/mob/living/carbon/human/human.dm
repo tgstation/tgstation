@@ -811,7 +811,7 @@
 		. += dna.species.check_weakness(weapon, attacker)
 
 /mob/living/carbon/human/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/can_hold_items()
 	return TRUE

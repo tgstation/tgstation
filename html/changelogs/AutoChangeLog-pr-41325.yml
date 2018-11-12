@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed prying open a door with a jaws of life not checking if you're still holding them."
-  - bugfix: "Fixed Xenos being able to force a door open even if they picked up another object during the action."

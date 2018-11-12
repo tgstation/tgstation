@@ -55,11 +55,9 @@
 					D.update_icon()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
-					D.secondsElectrified = -1
-					LAZYADD(D.shockedby, "\[[time_stamp()]\] [key_name(usr)]")
-					log_combat(usr, D, "electrified")
+					D.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
 				else
-					D.secondsElectrified = 0
+					D.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
 			if(specialfunctions & SAFE)
 				D.safe = !D.safe
 
