@@ -15098,10 +15098,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/structure/table,
-/obj/item/integrated_electronics/wirer,
-/obj/item/integrated_electronics/debugger,
-/obj/item/integrated_electronics/analyzer,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "LB" = (
@@ -15235,8 +15231,6 @@
 	icon_state = "2-8"
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/structure/table,
-/obj/item/integrated_circuit_printer,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "LW" = (
@@ -18258,16 +18252,6 @@
 /obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/science/nanite)
-"WT" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/obj/structure/table,
-/obj/item/book/manual/wiki/circuitry,
-/obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/cell/high,
-/turf/open/floor/plasteel,
-/area/science/misc_lab)
 "Xi" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -18425,15 +18409,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"ZH" = (
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/obj/structure/table,
-/obj/item/multitool,
-/obj/item/screwdriver,
-/turf/open/floor/plasteel,
-/area/science/misc_lab)
 "ZI" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
@@ -64097,7 +64072,7 @@ Iu
 Jj
 Jj
 HL
-WT
+HH
 HM
 HL
 HL
@@ -64354,7 +64329,7 @@ Iv
 Jj
 Kw
 HL
-ZH
+HH
 HM
 MW
 Nt
