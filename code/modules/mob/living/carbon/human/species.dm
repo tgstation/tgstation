@@ -1116,8 +1116,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					. += hungry / 50
 			else if(isethereal(H))
 				var/datum/species/ethereal/E = H.dna.species
-				if(E.charge <= ETHEREAL_CHARGE_NORMAL)
-					. += 1.5 * (1 - E.charge / 100)
+				if(E.ethereal_charge <= ETHEREAL_CHARGE_NORMAL)
+					. += 1.5 * (1 - E.ethereal_charge / 100)
 
 		//Moving in high gravity is very slow (Flying too)
 		if(gravity > STANDARD_GRAVITY)
