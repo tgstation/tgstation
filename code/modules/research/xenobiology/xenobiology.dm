@@ -266,7 +266,7 @@
 /obj/item/slime_extract/red
 	name = "red slime extract"
 	icon_state = "red slime extract"
-	effectmod = "sanguine"
+	effectmod = "destabilized"
 	activate_reagents = list("blood","plasma","water")
 
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
