@@ -517,10 +517,10 @@
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-	if(. && (owner.stat > DEAD))
-		to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+			if(held_index)
+				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
 		if(L)
@@ -582,10 +582,10 @@
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-    if(. && (owner.stat > DEAD))
-		  to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
-		if(held_index)
-			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+			if(held_index)
+				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
 		if(R)
@@ -642,8 +642,8 @@
 		if(. && (owner.stat > DEAD))
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-    if(. && (owner.stat > DEAD))
-		  to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -701,8 +701,8 @@
 		if(. && (owner.stat > DEAD))
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-    if(. && (owner.stat > DEAD))
-		  to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"
