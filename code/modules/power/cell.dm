@@ -155,7 +155,7 @@
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
-		return CLAMP(round(charge/10000), 10, 90) + rand(-5,5)
+		return CLAMP(20 + round(charge/25000), 20, 195) + rand(-5,5)
 	else
 		return 0
 

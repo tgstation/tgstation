@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - rscadd: "Admins can now personalize their asay message color on servers with the feature enabled."
-  - tweak: "Moved some admin only preference verbs out of the Preferences tab and to a new admin preferences tab to help unclutter it / prevent accidental toggling of fun things."

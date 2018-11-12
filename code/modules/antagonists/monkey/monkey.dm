@@ -97,8 +97,8 @@
 			else
 				return
 	new_owner.add_antag_datum(src)
-	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
-	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] a monkey leader!")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] a monkey leader!")
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()

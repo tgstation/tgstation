@@ -820,7 +820,7 @@
 						to_chat(user, "<span class='warning'>You need at least 2 metal sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
-					if(do_after(user, 20, 1, target = src))
+					if(do_after(user, 20, TRUE, src))
 						if(!panel_open || !S.use(2))
 							return
 						user.visible_message("<span class='notice'>[user] reinforces \the [src] with metal.</span>",
@@ -834,7 +834,7 @@
 						to_chat(user, "<span class='warning'>You need at least 2 plasteel sheets to reinforce [src].</span>")
 						return
 					to_chat(user, "<span class='notice'>You start reinforcing [src].</span>")
-					if(do_after(user, 20, 1, target = src))
+					if(do_after(user, 20, TRUE, src))
 						if(!panel_open || !S.use(2))
 							return
 						user.visible_message("<span class='notice'>[user] reinforces \the [src] with plasteel.</span>",
@@ -1030,7 +1030,7 @@
 		charge.forceMove(get_turf(user))
 		charge = null
 		return
-	if(beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked)))
+	if(!security_level && (beingcrowbarred && panel_open && ((obj_flags & EMAGGED) || (density && welded && !operating && !hasPower() && !locked))))
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(I.use_tool(src, user, 40, volume=100))
@@ -1069,14 +1069,14 @@
 		var/time_to_open = 5
 		if(hasPower() && !prying_so_hard)
 			time_to_open = 50
-			playsound(src, 'sound/machines/airlock_alien_prying.ogg',100,1) //is it aliens or just the CE being a dick?
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
 			prying_so_hard = TRUE
-			var/result = do_after(user, time_to_open,target = src)
-			prying_so_hard = FALSE
-			if(result)
+			if(do_after(user, time_to_open, TRUE, src))
 				open(2)
 				if(density && !open(2))
 					to_chat(user, "<span class='warning'>Despite your attempts, [src] refuses to open.</span>")
+			prying_so_hard = FALSE
+
 
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked )
@@ -1305,7 +1305,7 @@
 		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 
 
-	if(do_after(user, time_to_open, target = src))
+	if(do_after(user, time_to_open, TRUE, src))
 		if(density && !open(2)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
 			to_chat(user, "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>")
 

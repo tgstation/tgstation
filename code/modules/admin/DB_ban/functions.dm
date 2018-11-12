@@ -155,7 +155,7 @@
 		return
 	qdel(query_add_ban)
 	to_chat(usr, "<span class='adminnotice'>Ban saved to database.</span>")
-	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [bankey] [(job)?"([job])":""] [(duration > 0)?"([duration] minutes)":""] with the reason: \"[reason]\" to the ban database."
+	var/msg = "[key_name_admin(usr)] has added a [bantype_str] for [bankey] [(job)?"([job])":""] [(duration > 0)?"([DisplayTimeText(duration MINUTES)])":""] with the reason: \"[reason]\" to the ban database."
 	message_admins(msg,1)
 	var/datum/admin_help/AH = admin_ticket_log(ckey, msg)
 
@@ -308,7 +308,7 @@
 				qdel(query_edit_ban_duration)
 				return
 			qdel(query_edit_ban_duration)
-			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s duration from [duration] to [value]")
+			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s duration from [DisplayTimeText(duration MINUTES)] to [DisplayTimeText(value MINUTES)]")
 		if("unban")
 			if(alert("Unban [p_key]?", "Unban?", "Yes", "No") == "Yes")
 				DB_ban_unban_by_id(banid)

@@ -21,8 +21,6 @@
 	var/bleed_mod = 1     	// % bleeding modifier
 	var/datum/armor/armor 	// internal armor datum
 
-	var/speed_mod = 0     	//tick modifier for each step. Positive is slower, negative is faster.
-
 	var/hunger_mod = 1		//% of hunger rate taken per tick.
 
 	var/do_after_speed = 1 //Speed mod for do_after. Lower is better. If temporarily adjusting, please only modify using *= and /=, so you don't interrupt other calculations.

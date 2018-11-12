@@ -241,6 +241,7 @@
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 	owner.update_mobility()
+	return TRUE //if there was a change.
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
@@ -446,13 +447,12 @@
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/Destroy()
-	if(cavity_item)
-		qdel(cavity_item)
+	QDEL_NULL(cavity_item)
 	return ..()
 
 /obj/item/bodypart/chest/drop_organs(mob/user, violent_removal)
 	if(cavity_item)
-		cavity_item.forceMove(user.loc)
+		cavity_item.forceMove(drop_location())
 		cavity_item = null
 	..()
 
@@ -506,16 +506,19 @@
 	return ..()
 	
 /obj/item/bodypart/l_arm/set_disabled(new_disabled)
-	..()
+	. = ..()
 	if(disabled == new_disabled)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+    if(. && (owner.stat > DEAD))
+		  to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
@@ -568,16 +571,19 @@
 	return ..()
 
 /obj/item/bodypart/r_arm/set_disabled(new_disabled)
-	..()
+	. = ..()
 	if(disabled == new_disabled)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+    if(. && (owner.stat > DEAD))
+		  to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
@@ -627,14 +633,17 @@
 	return ..()
 
 /obj/item/bodypart/l_leg/set_disabled(new_disabled)
-	..()
+	. = ..()
 	if(disabled == new_disabled)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+    if(. && (owner.stat > DEAD))
+		  to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -683,14 +692,17 @@
 	return ..()
 
 /obj/item/bodypart/r_leg/set_disabled(new_disabled)
-	..()
+	. = ..()
 	if(disabled == new_disabled)
 		return
 	if(disabled == BODYPART_DISABLED_DAMAGE)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 	else if(disabled == BODYPART_DISABLED_PARALYSIS)
-		to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+    if(. && (owner.stat > DEAD))
+		  to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"
@@ -715,3 +727,5 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
+
+#undef WARN_AND_SCREAM
