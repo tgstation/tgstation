@@ -120,6 +120,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!IS_DYNAMIC_LIGHTING(src))
 		add_overlay(/obj/effect/fullbright)
 
+	reg_in_areas_in_z()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/area/LateInitialize()
+	power_change()		// all machines set to current power level, also updates icon
+
+/area/proc/reg_in_areas_in_z()
 	if(contents.len)
 		var/list/areas_in_z = SSmapping.areas_in_z
 		var/z
@@ -136,11 +144,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!areas_in_z["[z]"])
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
-
-	return INITIALIZE_HINT_LATELOAD
-
-/area/LateInitialize()
-	power_change()		// all machines set to current power level, also updates icon
 
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
