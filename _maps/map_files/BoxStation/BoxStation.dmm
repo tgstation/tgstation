@@ -56868,9 +56868,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "oXE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/door/airlock/maintenance{
 	id_tag = "commissarydoor";
 	req_one_access_txt = "12;63;48;50"
