@@ -110,10 +110,8 @@
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 
-/obj/screen/fullscreen/total
+/obj/screen/fullscreen/blind/total
 	icon_state = "totalblackoverlay"
-	layer = CURSE_LAYER
-	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/curse
 	icon_state = "curse"

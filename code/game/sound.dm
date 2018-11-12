@@ -7,7 +7,7 @@
 
 	if (!turf_source)
 		return
-		
+
 	//allocate a channel if necessary now so its the same for everyone
 	channel = channel || open_sound_channel()
 
@@ -22,6 +22,10 @@
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
 			M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S)
+		if(isliving(M))
+			var/mob/living/L = M
+			if(L.echolocation)
+				L.echolocate(source, soundin, vol)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)

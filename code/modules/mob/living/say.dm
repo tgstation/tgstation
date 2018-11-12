@@ -226,6 +226,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		deaf_message = "<span class='notice'>You can't hear yourself!</span>"
 		deaf_type = 2 // Since you should be able to hear yourself without looking
 
+	if(echolocation)
+		echolocate(speaker)
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	message = hear_intercept(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
@@ -396,3 +398,25 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return .
 
 	. = ..()
+
+/mob/living/proc/echolocate(atom/source, sound, volume)
+	var/list/possible_points = list()
+	for(var/turf/open/floor/F in range(source,2))
+		possible_points += F
+		if(possible_points.len)
+			var/turf/open/floor/sound_landing = pick(possible_points)
+			var/image/sound_icon = image('icons/sound_icon.dmi', sound_landing, "circle", CURSE_LAYER)
+			sound_icon.layer = CURSE_LAYER
+			if(volume)
+				sound_icon.alpha = sound_icon.alpha * (volume/100) //louder sounds are more visible
+			if(client)
+				client.images += sound_icon
+			sleep(5) //Only seen for a brief moment.
+			if(client)
+				client.images -= sound_icon
+
+
+
+
+
+

@@ -316,9 +316,10 @@
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
+	quirk_holder.echolocation = TRUE
 
 /datum/quirk/blindness/on_spawn()
-	quirk_holder.overlay_fullscreen("total", /obj/screen/fullscreen/total)
+	quirk_holder.overlay_fullscreen("total", /obj/screen/fullscreen/blind/total)
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/sunglasses/blindfold/white/glasses = new(get_turf(H))
 	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
