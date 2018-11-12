@@ -105,7 +105,7 @@
 			camera.remove_target_ui()
 			camera.forceMove(user)
 		teleport_now.UpdateButtonIcon()
-		deactive(TRUE)
+		deactivate(TRUE)
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
 	var/mob/living/carbon/human/user = src.loc
