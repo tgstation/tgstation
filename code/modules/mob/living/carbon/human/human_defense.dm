@@ -463,10 +463,8 @@
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
-	if(isethereal(src))
-		var/datum/species/ethereal/E = dna?.species
-		E.adjust_charge(shock_damage * siemens_coeff * 2)
-		to_chat(src, "<span class='notice'>You absorb some of the shock into your body!</span>")
+
+	dna?.species.spec_electrocute_act(src, shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)

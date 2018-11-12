@@ -264,7 +264,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				mutant_colors = TRUE
 
-			if((DYNCOLORS in pref_species.species_traits))
+			if(istype(pref_species, /datum/species/ethereal)) //not the best thing to do tbf but I dont know whats better.
 
 				if(!use_skintones)
 					dat += APPEARANCE_CATEGORY_COLUMN

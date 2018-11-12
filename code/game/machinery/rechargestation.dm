@@ -109,7 +109,8 @@
 	if(isethereal(occupant))
 		var/mob/living/carbon/human/H = occupant
 		var/datum/species/ethereal/E = H.dna?.species
-		E.adjust_charge(recharge_speed / 70) //Around 3 per process if unupgraded
+		if(E)
+			E.adjust_charge(recharge_speed / 70) //Around 3 per process if unupgraded
 
 /obj/machinery/recharge_station/proc/restock_modules()
 	if(occupant)

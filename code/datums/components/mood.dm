@@ -153,10 +153,6 @@
 			clear_event(null, "depression")
 	
 	HandleNutrition(owner)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		if(isethereal(H))
-			HandleCharge(H)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
 	if(amount == sanity)
@@ -252,6 +248,8 @@
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
+		if(isethereal(H))
+			HandleCharge(H)
 		if(H.has_trait(TRAIT_NOHUNGER))
 			return FALSE //no mood events for nutrition
 	switch(L.nutrition)

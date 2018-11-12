@@ -90,6 +90,12 @@
 	.=..()
 	set_charge(ETHEREAL_CHARGE_FULL)
 
+/datum/species/ethereal/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+	.=..()
+	adjust_charge(shock_damage * siemens_coeff * 2)
+	to_chat(src, "<span class='notice'>You absorb some of the shock into your body!</span>")
+
+
 /datum/species/ethereal/proc/stop_emp(mob/living/carbon/human/H)
 	EMPeffect = FALSE
 	spec_updatehealth(H)
