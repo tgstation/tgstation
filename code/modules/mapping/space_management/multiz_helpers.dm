@@ -7,25 +7,25 @@
 		return get_step(SSmapping.get_turf_below(get_turf(ref)), dir)
 	return get_step(ref, dir)
 
-/proc/get_dir_multiz(turf/src, turf/other)
-	src = get_turf(src)
-	other = get_turf(other)
-	if(!src || !other)
+/proc/get_dir_multiz(turf/us, turf/them)
+	us = get_turf(us)
+	them = get_turf(them)
+	if(!us || !them)
 		return NONE
-	if(src.z == other.z)
-		return get_dir(src, other)
+	if(us.z == them.z)
+		return get_dir(us, them)
 	else
-		var/turf/T = src.above()
+		var/turf/T = us.above()
 		var/dir = NONE
-		if(T && (T.z == other.z))
+		if(T && (T.z == them.z))
 			dir = UP
 		else
-			T = src.below()
-			if(T && (T.z == other.z))
+			T = us.below()
+			if(T && (T.z == them.z))
 				dir = DOWN
 			else
-				return get_dir(src, other)
-		return (dir | get_dir(src, other))
+				return get_dir(us, them)
+		return (dir | get_dir(us, them))
 
 /turf/proc/above()
 	return get_step_multiz(src, UP)
