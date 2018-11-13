@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - rscadd: "Cutting the shut up wire on a vending machine will now make the vending machine shut up."
