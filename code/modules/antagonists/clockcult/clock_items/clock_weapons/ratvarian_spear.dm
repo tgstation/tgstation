@@ -72,5 +72,6 @@
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
+			qdel(src)
 		action.weapon_reset(RATVARIAN_SPEAR_COOLDOWN)
 
