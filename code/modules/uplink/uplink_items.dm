@@ -1394,7 +1394,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	So they decided you can get early access to a prototype Syndicate brand \"Extra-Bright Lantern\"."
 	cost = 2
 	item = /obj/item/flashlight/lantern/syndicate
-	restricted_species = "moth"
+	restricted_species = list("moth")
 
 // Role-specific items
 /datum/uplink_item/role_restricted
