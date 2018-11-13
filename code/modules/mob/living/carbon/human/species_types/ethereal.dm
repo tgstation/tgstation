@@ -119,15 +119,15 @@
 	brutemod = 1.25
 	adjust_charge(-charge_rate)
 	switch(ethereal_charge)
-		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
+		if(ETHEREAL_CHARGE_NONE)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 3)
+		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
+			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 2)
 			apply_damage(0.5, BRUTE)
 			brutemod = 1.75
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
-			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 2)
-			brutemod = 1.5
-		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_ALMOSTFULL)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 1)
+			brutemod = 1.5
 		else
 			H.clear_alert("ethereal_charge")
 
