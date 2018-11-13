@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	var/restricted = FALSE // Adds restrictions for VR/Events
-	var/list/restricted_species = list() //Limits items to a specific species. Hopefully.
+	var/list/restricted_species //Limits items to a specific species. Hopefully.
 
 /datum/uplink_item/New()
 	. = ..()
