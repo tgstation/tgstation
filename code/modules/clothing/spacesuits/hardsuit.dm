@@ -636,6 +636,22 @@
 	QDEL_NULL(mobhook) // mobhook is not our component
 	return ..()
 
+	//SWAT MKII
+/obj/item/clothing/head/helmet/space/hardsuit/captain/swat
+	name = "MK II. SWAT Helmet"
+	icon_state = "swat2helm"
+	item_state = "swat2helm"
+	desc = "A tactical SWAT helmet MK.II."
+
+/obj/item/clothing/suit/space/hardsuit/captain/swat
+	name = "MK II. SWAT Suit"
+	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available."
+	icon_state = "swat2"
+	item_state = "swat2"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/captain/swat
+
+
+
 /////////////SHIELDED//////////////////////////////////
 
 /obj/item/clothing/suit/space/hardsuit/shielded
