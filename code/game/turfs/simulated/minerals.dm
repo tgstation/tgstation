@@ -57,9 +57,6 @@
 		if (!isturf(T))
 			return
 
-		if(last_act + (40 * I.toolspeed) > world.time)//prevents message spam
-			return
-		last_act = world.time
 		to_chat(user, "<span class='notice'>You start picking...</span>")
 
 		if(I.use_tool(src, user, 40, volume=50))
