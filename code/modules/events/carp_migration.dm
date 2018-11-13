@@ -5,11 +5,11 @@
 	min_players = 2
 	earliest_start = 10 MINUTES
 	max_occurrences = 6
-	var/hasAnnounced = FALSE
 
 /datum/round_event/carp_migration
 	announceWhen	= 3
 	startWhen = 50
+	var/hasAnnounced = FALSE
 
 /datum/round_event/carp_migration/setup()
 	startWhen = rand(40, 60)
