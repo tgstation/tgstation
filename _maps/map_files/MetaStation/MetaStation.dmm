@@ -83245,7 +83245,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
-	name = "Circuitry Lab";
+	name = "Research Testing Range";
 	req_access_txt = "47"
 	},
 /obj/machinery/door/firedoor,
