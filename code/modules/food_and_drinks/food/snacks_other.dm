@@ -468,7 +468,7 @@
 	add_overlay(head)
 
 /obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	..(A)
+	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 

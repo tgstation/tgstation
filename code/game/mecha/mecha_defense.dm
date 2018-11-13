@@ -108,7 +108,7 @@
 	return
 
 /obj/mecha/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //wrapper
-	log_message("Hit by [A].", LOG_MECHA, color="red")
+	log_message("Hit by [AM].", LOG_MECHA, color="red")
 	. = ..()
 
 
