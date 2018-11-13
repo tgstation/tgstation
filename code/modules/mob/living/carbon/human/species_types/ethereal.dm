@@ -12,7 +12,7 @@
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, NOSTOMACH)
+	species_traits = list(DYNCOLORS, NOSTOMACH, AGENDER, NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_NOHUNGER)
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
