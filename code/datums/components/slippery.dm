@@ -5,7 +5,7 @@
 	var/lube_flags
 	var/datum/callback/callback
 
-/datum/component/slippery/Initialize(_knockdown, _lube_flags = NONE, datum/callback/_callback, _paralyze, _force_drop = TRUE)
+/datum/component/slippery/Initialize(_lube_flags = NONE, datum/callback/_callback, _paralyze, _force_drop = TRUE)
 	paralyze_time = max(_knockdown, 0)
 	force_drop_items = _force_drop
 	lube_flags = _lube_flags
