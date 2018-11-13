@@ -1,0 +1,8 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed building a new camera with EMP upgrades in it's assembly giving it the X-Ray upgrade, and vice versa."
+  - bugfix: "The AI Camera network firmware upgrade will no longer change the icon of the upgraded cameras, with made it very obvious the AI was rogue when the entire station suddenly had X-Ray cameras."
+  - bugfix: "You will no longer be able to detect the usage of the AI Camera network firmware upgrade by examining a camera to see if it has xray / emp upgrades."
+  - bugfix: "You will no longer be able to detect the usage of the AI Camera network firmware upgrade by trying to upgrade the camera (it's a software thing, not a hardware thing.)"
+  - bugfix: "Cameras rebuilt after being upgraded by the AI Camera network firmware upgrade will now retain their upgrades."
