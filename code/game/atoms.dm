@@ -33,6 +33,7 @@
 	var/list/filter_data //For handling persistent filters
 
 	var/custom_price
+	var/custom_premium_price
 
 	var/datum/component/orbiter/orbiters
 

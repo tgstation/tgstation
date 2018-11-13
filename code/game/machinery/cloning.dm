@@ -77,7 +77,7 @@
 /obj/machinery/clonepod/examine(mob/user)
 	..()
 	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Speed <b>gay</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.<span>")
+		to_chat(user, "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.<span>")
 		if(efficiency > 5)
 			to_chat(user, "<span class='notice'>Pod has been upgraded to support autoprocessing and apply beneficial mutations.<span>")
 
