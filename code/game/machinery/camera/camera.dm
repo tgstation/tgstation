@@ -104,11 +104,11 @@
 
 /obj/machinery/camera/examine(mob/user)
 	..()
-	if(isEmpProof(assembly.malf_emp_firmware_active)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
+	if(isEmpProof(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
 		to_chat(user, "It has electromagnetic interference shielding installed.")
 	else
 		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>")
-	if(isXRay(assembly.malf_xray_firmware_active)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
+	if(isXRay(TRUE)) //don't reveal it's upgraded if was done via MALF AI Upgrade Camera Network ability
 		to_chat(user, "It has an X-ray photodiode installed.")
 	else
 		to_chat(user, "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>")
@@ -223,10 +223,10 @@
 	// UPGRADES
 	if(panel_open)
 		if(I.tool_behaviour == TOOL_ANALYZER)
-			if(!isXRay(assembly.malf_xray_firmware_active)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
+			if(!isXRay(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
 				if(!user.temporarilyRemoveItemFromInventory(I))
 					return
-				upgradeXRay(FALSE, assembly.malf_xray_firmware_active)
+				upgradeXRay(FALSE, TRUE)
 				to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 				qdel(I)
 			else
@@ -234,9 +234,9 @@
 			return
 
 		else if(istype(I, /obj/item/stack/sheet/mineral/plasma))
-			if(!isEmpProof(assembly.malf_emp_firmware_active)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
+			if(!isEmpProof(TRUE)) //don't reveal it was already upgraded if was done via MALF AI Upgrade Camera Network ability
 				if(I.use_tool(src, user, 0, amount=1))
-					upgradeEmpProof(FALSE, assembly.malf_emp_firmware_active)
+					upgradeEmpProof(FALSE, TRUE)
 					to_chat(user, "<span class='notice'>You attach [I] into [assembly]'s inner circuits.</span>")
 			else
 				to_chat(user, "<span class='notice'>[src] already has that upgrade!</span>")
@@ -334,7 +334,7 @@
 
 /obj/machinery/camera/update_icon() //TO-DO: Make panel open states, xray camera, and indicator lights overlays instead.
 	var/xray_module
-	if(isXRay(assembly.malf_xray_firmware_active))
+	if(isXRay(TRUE))
 		xray_module = "xray"
 	if(!status)
 		icon_state = "[xray_module][default_camera_icon]_off"

@@ -78,7 +78,7 @@
 			malf_xray_firmware_active = malf_xray_firmware_present //re-enable firmware based upgrades after the part is removed.
 		if(istype(loc, /obj/machinery/camera))
 			var/obj/machinery/camera/contained_camera = loc
-			contained_camera.removeXRay(malf_xray_firmware_active) //make sure we don't remove MALF upgrades.
+			contained_camera.removeXRay(malf_xray_firmware_present) //make sure we don't remove MALF upgrades.
 
 	else if(A == emp_module)
 		emp_module = null

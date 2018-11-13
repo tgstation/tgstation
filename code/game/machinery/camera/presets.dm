@@ -66,7 +66,7 @@
 // UPGRADE PROCS
 
 /obj/machinery/camera/proc/isEmpProof(ignore_malf_upgrades)
-	return (upgrades & CAMERA_UPGRADE_EMP_PROOF) && (!ignore_malf_upgrades)
+	return (upgrades & CAMERA_UPGRADE_EMP_PROOF) && (!(ignore_malf_upgrades && assembly.malf_emp_firmware_active))
 
 /obj/machinery/camera/proc/upgradeEmpProof(malf_upgrade, ignore_malf_upgrades)
 	if(isEmpProof(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf module with the normal one
@@ -92,7 +92,7 @@
 
 
 /obj/machinery/camera/proc/isXRay(ignore_malf_upgrades)
-	return (upgrades & CAMERA_UPGRADE_XRAY) && (!ignore_malf_upgrades)
+	return (upgrades & CAMERA_UPGRADE_XRAY) && (!(ignore_malf_upgrades && assembly.malf_xray_firmware_active))
 
 /obj/machinery/camera/proc/upgradeXRay(malf_upgrade, ignore_malf_upgrades)
 	if(isXRay(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf upgrade with the normal one
