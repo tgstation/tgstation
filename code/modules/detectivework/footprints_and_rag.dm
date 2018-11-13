@@ -33,7 +33,7 @@
 		var/log_object = "a damp rag containing [reagentlist]"
 		if(user.a_intent == INTENT_HARM && !C.is_mouth_covered())
 			reagents.reaction(C, INGEST)
-			reagents.trans_to(C, reagents.total_volume)
+			reagents.trans_to(C, reagents.total_volume, transfered_by = user)
 			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='italics'>You hear some struggling and muffled cries of surprise.</span>")
 			log_combat(user, C, "smothered", log_object)
 		else

@@ -218,7 +218,7 @@
 	desc = "This box contains injectors, it seems."
 
 /obj/item/storage/box/injectors/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/dnainjector/h2m = 3,
 		/obj/item/dnainjector/m2h = 3)
 	generate_items_inside(items_inside,src)
@@ -286,7 +286,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/trackimp/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/implantcase/tracking = 4,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -299,7 +299,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/implantcase/tracking = 3,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1,
@@ -312,7 +312,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/implantcase/chem = 5,
 		/obj/item/implanter = 1,
 		/obj/item/implantpad = 1)
@@ -324,7 +324,7 @@
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/implantcase/exile = 5,
 		/obj/item/implanter = 1)
 	generate_items_inside(items_inside,src)
@@ -1010,9 +1010,9 @@
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/stock_parts/capacitor = 3,
-		/obj/item/stock_parts/scanning_module = 3, 
+		/obj/item/stock_parts/scanning_module = 3,
 		/obj/item/stock_parts/manipulator = 3,
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/matter_bin = 3)
@@ -1024,7 +1024,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/stock_parts/capacitor/quadratic = 3,
 		/obj/item/stock_parts/scanning_module/triphasic = 3,
 		/obj/item/stock_parts/manipulator/femto = 3,

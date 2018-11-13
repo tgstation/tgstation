@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - rscadd: "Added a negative deafness quirk worth two points."

@@ -138,7 +138,9 @@
 	remarks = list("...")
 
 /obj/item/book/granter/spell/mimery_blockade/attack_self(mob/user)
-	..()
+	. = ..()
+	if(!.)
+		return
 	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
 
@@ -151,6 +153,8 @@
 	remarks = list("...")
 
 /obj/item/book/granter/spell/mimery_guns/attack_self(mob/user)
-	..()
+	. = ..()
+	if(!.)
+		return
 	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)

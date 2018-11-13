@@ -1602,7 +1602,7 @@
 
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)].")
-		H.AIize()
+		H.AIize(H.client)
 
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))

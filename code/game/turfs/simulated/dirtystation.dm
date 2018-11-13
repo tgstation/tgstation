@@ -41,7 +41,6 @@
 		//Construction zones. Blood, sweat, and oil.  Oh, and dirt.
 	var/static/list/engine_dirt_areas = typecacheof(list(/area/engine,
 														/area/crew_quarters/heads/chief,
-														/area/ruin/space/derelict/assembly_line,
 														/area/science/robotics,
 														/area/maintenance,
 														/area/construction,
