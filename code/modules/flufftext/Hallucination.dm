@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
-			var/image/new_plasma = image(image_icon,center,image_state,FLY_LAYER)
+			var/image/new_plasma = image(image_icon,T,image_state,FLY_LAYER)
 			new_plasma.alpha = 50
 			flood_images += new_plasma
 			flood_turfs += T
