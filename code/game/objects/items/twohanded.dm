@@ -492,9 +492,10 @@
 
 /obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
 	. = ..()
+	
 	if(!proximity)
 		return
-	if(isopenturf(AM)) //So you can actually melee with it
+	if(!istype(src, /obj/item/twohanded/spear/explosive) && isopenturf(AM)) //So you can actually melee with it
 		return
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
@@ -506,13 +507,6 @@
 		icon_prefix = "spearplasma"
 	update_icon()
 	qdel(tip)
-	var/obj/item/twohanded/spear/S = locate() in parts_list	
-	if(S)
-		if (istype(S, /obj/item/twohanded/spear/explosive))
-			var/obj/item/twohanded/spear/explosive/lance = S 
-			lance.explosive.forceMove(get_turf(src)) //Sanity check. This shouldn't really happen, as explosive lances are blacklisted from spear construction.
-		parts_list -= S
-		qdel(S)
 	var/obj/item/grenade/G = locate() in parts_list
 	if(G)
 		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
@@ -520,6 +514,7 @@
 		lance.force_unwielded = force_unwielded
 		lance.throwforce = throwforce
 		lance.icon_prefix = icon_prefix
+		parts_list -= G
 		qdel(src)
 	..()
 	
@@ -531,7 +526,7 @@
 /obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
 	. = ..()
 	if (!G)
-		G = new() //For admin-spawned explosive lances
+		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
 	G.forceMove(src)
 	explosive = G
 
@@ -558,6 +553,7 @@
 /obj/item/twohanded/spear/explosive/throw_impact(atom/target)
 	. = ..()
 	if(!.) //not caught
+		explosive.forceMove(get_turf(src))
 		explosive.prime()
 		qdel(src)
 
