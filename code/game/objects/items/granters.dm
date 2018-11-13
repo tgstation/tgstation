@@ -23,8 +23,10 @@
 	used = TRUE
 
 /obj/item/book/granter/attack_self(mob/user)
-	if(reading == TRUE)
+	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
+		return FALSE
+	if(!user.can_read(src))
 		return FALSE
 	return TRUE
 
@@ -75,7 +77,7 @@
 	name = "Drink Flinging"
 	desc = "Toggles your ability to satisfyingly throw glasses without spilling them."
 	button_icon_state = "drinkfling_off"
-	check_flags = 0
+	check_flags = NONE
 
 /datum/action/innate/drink_fling/Activate()
 	button_icon_state = "drinkfling_on"
@@ -84,6 +86,34 @@
 
 /datum/action/innate/drink_fling/Deactivate()
 	button_icon_state = "drinkfling_off"
+	active = FALSE
+	UpdateButtonIcon()
+
+
+/obj/item/book/granter/action/origami
+	granted_action = /datum/action/innate/origami
+	name = "The Art of Origami"
+	desc = "A meticulously in-depth manual explaining the art of paper folding."
+	icon_state = "origamibook"
+	actionname = "origami"
+	oneuse = TRUE
+	remarks = list("Dead-stick stability...", "Symmetry seems to play a rather large factor...", "Accounting for crosswinds... really?", "Drag coefficients of various paper types...", "Thrust to weight ratios?", "Positive dihedral angle?", "Center of gravity forward of the center of lift...")
+
+/datum/action/innate/origami
+	name = "Origami Folding"
+	desc = "Toggles your ability to fold and catch robust paper airplanes."
+	button_icon_state = "origami_off"
+	check_flags = NONE
+
+/datum/action/innate/origami/Activate()
+	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
+	button_icon_state = "origami_on"
+	active = TRUE
+	UpdateButtonIcon()
+
+/datum/action/innate/origami/Deactivate()
+	to_chat(owner, "<span class='notice'>You will no longer fold origami planes.</span>")
+	button_icon_state = "origami_off"
 	active = FALSE
 	UpdateButtonIcon()
 
@@ -104,10 +134,10 @@
 		if(knownspell.type == S.type)
 			if(user.mind)
 				if(iswizard(user))
-					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy howto book can provide.</span>")
+					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-			return
+			return FALSE
 	if(used == TRUE && oneuse == TRUE)
 		recoil(user)
 	else
@@ -118,7 +148,7 @@
 				to_chat(user, "<span class='notice'>You stop reading...</span>")
 				reading = FALSE
 				qdel(S)
-				return
+				return FALSE
 		if(do_after(user,50, user))
 			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
 			user.mind.AddSpell(S)

@@ -251,7 +251,7 @@
 		shuttleId = port.id
 		shuttlePortId = "[port.id]_custom"
 	if(dock)
-		jumpto_ports += dock.id
+		jumpto_ports[dock.id] = TRUE
 
 /mob/camera/aiEye/remote/shuttle_docker
 	visible_icon = FALSE

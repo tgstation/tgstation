@@ -47,10 +47,9 @@
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
 
-	log_combat(user, M, "fed", reagents.log_list())
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
-		reagents.trans_to(M, reagents.total_volume)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 	qdel(src)
 	return 1
 
@@ -72,7 +71,7 @@
 	to_chat(user, "<span class='notice'>You dissolve [src] in [target].</span>")
 	for(var/mob/O in viewers(2, user))	//viewers is necessary here because of the small radius
 		to_chat(O, "<span class='warning'>[user] slips something into [target]!</span>")
-	reagents.trans_to(target, reagents.total_volume)
+	reagents.trans_to(target, reagents.total_volume, transfered_by = user)
 	qdel(src)
 
 /obj/item/reagent_containers/pill/tox
@@ -154,6 +153,13 @@
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
 	roundstart = 1
+
+/obj/item/reagent_containers/pill/psicodine
+	name = "psicodine pill"
+	desc = "Used to treat mental instability and traumas."
+	list_reagents = list("psicodine" = 10)
+	icon_state = "pill22"
+	roundstart = 1
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
@@ -180,6 +186,13 @@
 /obj/item/reagent_containers/pill/aranesp
 	name = "speedy pill"
 	list_reagents = list("aranesp" = 10)
+
+/obj/item/reagent_containers/pill/happiness
+	name = "happiness pill"
+	desc = "It has a creepy smiling face on it."
+	icon_state = "pill_happy"
+	list_reagents = list("happiness" = 10)
+
 
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"

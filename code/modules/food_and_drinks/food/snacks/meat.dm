@@ -150,6 +150,11 @@
 	name = "monkey meat"
 	foodtype = RAW | MEAT
 
+/obj/item/reagent_containers/food/snacks/meat/slab/mouse
+	name = "mouse meat"
+	desc = "A slab of mouse meat. Best not eat it raw."
+	foodtype = RAW | MEAT | GROSS
+
 /obj/item/reagent_containers/food/snacks/meat/slab/corgi
 	name = "corgi meat"
 	desc = "Tastes like... well you know..."

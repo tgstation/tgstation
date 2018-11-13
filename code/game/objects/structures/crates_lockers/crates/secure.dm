@@ -67,3 +67,42 @@
 	name = "secure science crate"
 	desc = "A crate with a lock on it, painted in the scheme of the station's scientists."
 	icon_state = "scisecurecrate"
+
+/obj/structure/closet/crate/secure/owned
+	name = "private crate"
+	desc = "A crate cover designed to only open for who purchased its contents."
+	icon_state = "privatecrate"
+	var/datum/bank_account/buyer_account
+	var/privacy_lock = TRUE
+
+/obj/structure/closet/crate/secure/owned/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>It's locked with a privacy lock, and can only be unlocked by the buyer's ID.</span>")
+
+/obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
+	. = ..()
+	buyer_account = _buyer_account
+
+/obj/structure/closet/crate/secure/owned/togglelock(mob/living/user, silent)
+	if(privacy_lock)
+		if(!broken)
+			var/obj/item/card/id/id_card = user.get_idcard(TRUE)
+			if(id_card)
+				if(id_card.registered_account)
+					if(id_card.registered_account == buyer_account)
+						if(iscarbon(user))
+							add_fingerprint(user)
+						locked = !locked
+						user.visible_message("<span class='notice'>[user] unlocks [src]'s privacy lock.</span>",
+										"<span class='notice'>You unlock [src]'s privacy lock.</span>")
+						privacy_lock = FALSE
+						update_icon()
+					else if(!silent)
+						to_chat(user, "<span class='notice'>Bank account does not match with buyer!</span>")
+				else if(!silent)
+					to_chat(user, "<span class='notice'>No linked bank account detected!</span>")
+			else if(!silent)
+				to_chat(user, "<span class='notice'>No ID detected!</span>")
+		else if(!silent)
+			to_chat(user, "<span class='warning'>[src] is broken!</span>")
+	else ..()

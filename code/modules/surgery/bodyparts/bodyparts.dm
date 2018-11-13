@@ -234,6 +234,7 @@
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 	owner.update_mobility()
+	return TRUE //if there was a change.
 
 //Updates an organ's brute/burn states for use by update_damage_overlays()
 //Returns 1 if we need to update overlays. 0 otherwise.
@@ -493,10 +494,12 @@
 	stam_heal_tick = 2
 
 /obj/item/bodypart/l_arm/set_disabled(new_disabled = TRUE)
-	..()
+	. = ..()
 	if(disabled)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
@@ -544,10 +547,12 @@
 	max_stamina_damage = 50
 
 /obj/item/bodypart/r_arm/set_disabled(new_disabled = TRUE)
-	..()
+	. = ..()
 	if(disabled)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
@@ -592,10 +597,12 @@
 	max_stamina_damage = 50
 
 /obj/item/bodypart/l_leg/set_disabled(new_disabled = TRUE)
-	..()
+	. = ..()
 	if(disabled)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -639,10 +646,12 @@
 	stam_heal_tick = 2
 
 /obj/item/bodypart/r_leg/set_disabled(new_disabled = TRUE)
-	..()
+	. = ..()
 	if(disabled)
-		to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
-		owner.emote("scream")
+		if(owner.stat > UNCONSCIOUS)
+			owner.emote("scream")
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"
@@ -667,3 +676,5 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
+
+#undef WARN_AND_SCREAM

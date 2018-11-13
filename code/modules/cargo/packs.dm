@@ -16,16 +16,20 @@
 	var/DropPodOnly = FALSE//only usable by the Bluespace Drop Pod via the express cargo console
 	var/admin_spawned = FALSE
 
-/datum/supply_pack/proc/generate(atom/A)
-	var/obj/structure/closet/crate/C = new crate_type(A)
-	C.name = crate_name
+/datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account)
+	var/obj/structure/closet/crate/C
+	if(paying_account)
+		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
+		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
+	else
+		C = new crate_type(A)
+		C.name = crate_name
 	if(access)
 		C.req_access = list(access)
 	if(access_any)
 		C.req_one_access = access_any
 
 	fill(C)
-
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
@@ -1949,29 +1953,20 @@
 	name = "Toy Crate"
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."
 	cost = 5000 // or play the arcade machines ya lazy bum
-	// TODO make this actually just use the arcade machine loot list
 	num_contained = 5
-	contains = list(/obj/item/toy/spinningtoy,
-	                /obj/item/toy/sword,
-	                /obj/item/toy/foamblade,
-	                /obj/item/toy/talking/AI,
-	                /obj/item/toy/talking/owl,
-	                /obj/item/toy/talking/griffin,
-	                /obj/item/toy/nuke,
-	                /obj/item/toy/minimeteor,
-	                /obj/item/toy/plush/carpplushie,
-	                /obj/item/toy/plush/lizardplushie,
-	                /obj/item/toy/plush/snakeplushie,
-	                /obj/item/toy/plush/nukeplushie,
-	                /obj/item/toy/plush/slimeplushie,
-	                /obj/item/coin/antagtoken,
-	                /obj/item/stack/tile/fakespace/loaded,
-	                /obj/item/gun/ballistic/shotgun/toy/crossbow,
-	                /obj/item/toy/redbutton,
-					/obj/item/toy/eightball,
-					/obj/item/vending_refill/donksoft)
+	contains = list()
 	crate_name = "toy crate"
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/costumes_toys/randomised/toys/generate()
+	. = ..()
+	var/the_toy
+	for(var/i in 1 to num_contained)
+		if(prob(50))
+			the_toy = pickweight(GLOB.arcade_prize_pool)
+		else
+			the_toy = pick(subtypesof(/obj/item/toy/plush))
+		new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard
 	name = "Wizard Costume Crate"

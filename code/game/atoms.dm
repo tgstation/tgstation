@@ -33,6 +33,7 @@
 	var/list/filter_data //For handling persistent filters
 
 	var/custom_price
+	var/custom_premium_price
 
 	var/datum/component/orbiter/orbiters
 
@@ -321,7 +322,7 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
-/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze, force_drop)
 	return
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
@@ -342,6 +343,9 @@
 
 /mob/living/carbon/alien/get_blood_dna_list()
 	return list("UNKNOWN DNA" = "X*")
+
+/mob/living/silicon/get_blood_dna_list()
+	return list("MOTOR OIL" = "SAE 5W-30") //just a little flavor text.
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)

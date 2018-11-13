@@ -154,13 +154,15 @@
 	if(user.zone_selected != BODY_ZONE_HEAD)
 		return ..()
 
-	if((C.head && (C.head.flags_cover & HEADCOVERSEYES)) || (C.wear_mask && (C.wear_mask.flags_cover & MASKCOVERSEYES)) || (C.glasses && (C.glasses.flags_1 & GLASSESCOVERSEYES)))
+	var/target_has_brain = C.getorgan(/obj/item/organ/brain)
+
+	if(!target_has_brain && C.is_eyes_covered())
 		to_chat(user, "<span class='warning'>You're going to need to remove [C.p_their()] head cover first!</span>")
 		return
 
 //since these people will be dead M != usr
 
-	if(!C.getorgan(/obj/item/organ/brain))
+	if(!target_has_brain)
 		if(!C.get_bodypart(BODY_ZONE_HEAD) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/msg = "[C] has [src] inserted into [C.p_their()] head by [user]."

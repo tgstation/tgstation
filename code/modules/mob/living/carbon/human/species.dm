@@ -1069,13 +1069,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	gravity = H.has_gravity()
 
-	if(gravity && !flight)	//Check for chemicals and innate speedups and slowdowns if we're on the ground
-		if(H.has_trait(TRAIT_GOTTAGOFAST))
-			. -= 1
-		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
-			. -= 2
-		. += H.physiology.speed_mod
-
 	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
 		ignoreslow = 1
 

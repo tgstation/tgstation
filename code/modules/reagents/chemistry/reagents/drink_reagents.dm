@@ -168,6 +168,7 @@
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M)
 	M.emote("laugh")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
 /datum/reagent/consumable/superlaughter
@@ -182,6 +183,7 @@
 	if(prob(30))
 		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
 		M.Stun(5)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
 	..()
 
 /datum/reagent/consumable/potato_juice
@@ -392,10 +394,10 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/consumable/nuka_cola/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)

@@ -144,7 +144,7 @@ To add a crossbreed:
 		to_chat(user, "<span class='warning'>This can only be used on yourself.</span>")
 		return
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1)))
-		reagents.trans_to(M, reagents.total_volume)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 		if(user != M)
 			to_chat(M, "<span class='warning'>[user] presses [src] against you!</span>")
 			to_chat(user, "<span class='notice'>You press [src] against [M], injecting [M.p_them()].</span>")

@@ -462,21 +462,21 @@
 		if(machine && in_range(src, usr))
 			show_inv(machine)
 
-	if(usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		if(href_list["item"])
-			var/slot = text2num(href_list["item"])
-			var/hand_index = text2num(href_list["hand_index"])
-			var/obj/item/what
-			if(hand_index)
-				what = get_item_for_held_index(hand_index)
-				slot = list(slot,hand_index)
-			else
-				what = get_item_by_slot(slot)
-			if(what)
-				if(!(what.item_flags & ABSTRACT))
-					usr.stripPanelUnequip(what,src,slot)
-			else
-				usr.stripPanelEquip(what,src,slot)
+
+	if(href_list["item"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		var/slot = text2num(href_list["item"])
+		var/hand_index = text2num(href_list["hand_index"])
+		var/obj/item/what
+		if(hand_index)
+			what = get_item_for_held_index(hand_index)
+			slot = list(slot,hand_index)
+		else
+			what = get_item_by_slot(slot)
+		if(what)
+			if(!(what.item_flags & ABSTRACT))
+				usr.stripPanelUnequip(what,src,slot)
+		else
+			usr.stripPanelEquip(what,src,slot)
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
@@ -811,7 +811,7 @@
 	if(mind)
 		mind.name = newname
 		if(mind.key)
-			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment. 
+			log_played_names(mind.key,newname) //Just in case the mind is unsynced at the moment.
 
 	if(oldname)
 		//update the datacore records! This is goig to be a bit costly.
@@ -889,7 +889,16 @@
 
 
 /mob/proc/is_literate()
-	return 0
+	return FALSE
+
+/mob/proc/can_read(obj/O)
+	if(is_blind(src))
+		to_chat(src, "<span class='warning'>As you are trying to read [O], you suddenly feel very stupid!</span>")
+		return
+	if(!is_literate())
+		to_chat(src, "<span class='notice'>You try to read [O], but can't comprehend any of it.</span>")
+		return
+	return TRUE
 
 /mob/proc/can_hold_items()
 	return FALSE
