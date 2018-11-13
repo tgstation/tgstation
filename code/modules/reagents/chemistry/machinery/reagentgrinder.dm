@@ -131,7 +131,7 @@
 /obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu //I am reasonably certain that this is not a microwave
 	. = ..()
 
-	if(operating)
+	if(operating || !user.canUseTopic(src))
 		return
 
 	var/list/options = list()
@@ -162,7 +162,7 @@
 		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
 
 	// post choice verification
-	if(operating || (isAI(user) && stat & NOPOWER))
+	if(operating || (isAI(user) && stat & NOPOWER) || !user.canUseTopic(src))
 		return
 
 	switch(choice)
