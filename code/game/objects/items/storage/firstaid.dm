@@ -29,7 +29,7 @@
 /obj/item/storage/firstaid/regular/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 2,
 		/obj/item/stack/medical/ointment = 2,
@@ -44,7 +44,7 @@
 /obj/item/storage/firstaid/ancient/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment= 3)
@@ -67,7 +67,7 @@
 /obj/item/storage/firstaid/fire/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
 		/obj/item/reagent_containers/pill/oxandrolone = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
@@ -91,7 +91,7 @@
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/syringe/charcoal = 4,
 		/obj/item/storage/pill_bottle/charcoal = 2,
 		/obj/item/healthanalyzer = 1)
@@ -110,7 +110,7 @@
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/salbutamol = 4,
 		/obj/item/reagent_containers/hypospray/medipen = 2,
 		/obj/item/healthanalyzer = 1)
@@ -129,10 +129,27 @@
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/styptic = 4,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/healthanalyzer = 1)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/firstaid/advanced
+	name = "advanced first aid kit"
+	desc = "An advanced kit to help deal with advanced wounds."
+	icon_state = "radfirstaid"
+	item_state = "firstaid-rad"
+	custom_premium_price = 600
+
+/obj/item/storage/firstaid/advanced/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/healthanalyzer/advanced = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/tactical
