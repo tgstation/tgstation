@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed inconsistency where illiterate and blind mobs were able to read some books/manuals, but not others."
-  - bugfix: "Fixed mobs being granted mime speak even if they failed to finish reading the Guide to Advanced Mimery Volumes 1/2."

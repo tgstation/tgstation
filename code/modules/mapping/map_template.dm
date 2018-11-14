@@ -29,6 +29,7 @@
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
 	var/list/atom/atoms = list()
+	var/list/area/areas = list()
 
 	var/list/turfs = block(	locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
@@ -37,6 +38,7 @@
 	for(var/L in turfs)
 		var/turf/B = L
 		atoms += B
+		areas |= B.loc
 		for(var/A in B)
 			atoms += A
 			if(istype(A, /obj/structure/cable))
@@ -48,6 +50,7 @@
 		var/turf/T = L
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
+	SSmapping.reg_in_areas_in_z(areas)
 	SSatoms.InitializeAtoms(atoms)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)

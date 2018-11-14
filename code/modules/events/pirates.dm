@@ -80,11 +80,9 @@
 				var/mob/M = candidates[1]
 				spawner.create(M.ckey)
 				candidates -= M
-				if (!atom_of_interest)
-					atom_of_interest = M
+				announce_to_ghosts(M)
 			else
-				if (!atom_of_interest)
-					atom_of_interest = spawner
+				announce_to_ghosts(spawner)
 
 	priority_announce("Unidentified armed ship detected near the station.")
 
