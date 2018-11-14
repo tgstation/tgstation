@@ -88,6 +88,10 @@
 	. = ..()
 	message_simple = initial(message_simple)
 	if(. && user.deathsound)
+		if(isliving(user))
+			var/mob/living/L = user
+			if(!L.can_speak_vocal() || L.oxyloss >= 50)
+				return//stop the message if: oxyloss too high/cant speak
 		playsound(user.loc, user.deathsound, 80, 1, 1)
 
 /datum/emote/living/drool

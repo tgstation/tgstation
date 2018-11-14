@@ -997,7 +997,6 @@
 
 /mob/living/carbon/human/species/lizard
 	race = /datum/species/lizard
-	deathsound = 'sound/voice/lizard/deathsound.ogg'
 
 /mob/living/carbon/human/species/lizard/ashwalker
 	race = /datum/species/lizard/ashwalker
