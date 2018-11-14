@@ -677,4 +677,3 @@
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
-#undef WARN_AND_SCREAM
