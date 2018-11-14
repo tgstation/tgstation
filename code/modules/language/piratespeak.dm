@@ -10,6 +10,6 @@
 	syllables = list(
 	"arr","ahoy","rum","aye","blimey","booty","bucko","grog","treasure",
 	"me","scallywag","landlubber","poopdeck","ye","avast",
-	"shiver me timbers","matey","treasure"
+	"shiver","timbers","matey","swashbuckler"
 	)
 	icon_state = "pirate"
