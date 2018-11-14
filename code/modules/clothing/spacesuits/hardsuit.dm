@@ -528,12 +528,13 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	jetpack = /obj/item/tank/jetpack/suit
 
-	//Captain
-/obj/item/clothing/head/helmet/space/hardsuit/captain
-	name = "captain's hardsuit helmet"
-	icon_state = "capspace"
-	item_state = "capspacehelmet"
-	desc = "A tactical SWAT helmet MK.II boasting better protection and a horrible fashion sense."
+
+	//SWAT MKII
+/obj/item/clothing/head/helmet/space/hardsuit/swat
+	name = "MK II. SWAT Helmet"
+	icon_state = "swat2helm"
+	item_state = "swat2helm"
+	desc = "A tactical SWAT helmet MK.II."
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 50, "energy" = 25, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR //we want to see the mask
@@ -541,23 +542,34 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 
-/obj/item/clothing/head/helmet/space/hardsuit/captain/attack_self()
+/obj/item/clothing/head/helmet/space/hardsuit/swat/attack_self()
 	return //Sprites required for flashlight
 
-/obj/item/clothing/suit/space/hardsuit/captain
-	name = "captain's SWAT suit"
-	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available Usually reserved for heavy hitter corporate security, this one has a regal finish in Nanotrasen company colors. Better not let the assistants get a hold of it."
-	icon_state = "caparmor"
-	item_state = "capspacesuit"
+/obj/item/clothing/suit/space/hardsuit/swat
+	name = "MK II. SWAT Suit"
+	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available."
+	icon_state = "swat2"
+	item_state = "swat2"
 	armor = list("melee" = 40, "bullet" = 50, "laser" = 50, "energy" = 25, "bomb" = 50, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this needed to be added a long fucking time ago
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/captain
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat
 
-/obj/item/clothing/suit/space/hardsuit/captain/Initialize()
-	. = ..()
-	allowed = GLOB.security_hardsuit_allowed
+
+	//Captain
+/obj/item/clothing/head/helmet/space/hardsuit/swat/captain
+	name = "captain's hardsuit helmet"
+	icon_state = "capspace"
+	item_state = "capspacehelmet"
+	desc = "A tactical SWAT helmet MK.II boasting better protection and a horrible fashion sense."
+
+/obj/item/clothing/suit/space/hardsuit/swat/captain
+	name = "captain's SWAT suit"
+	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available Usually reserved for heavy hitter corporate security, this one has a regal finish in Nanotrasen company colors. Better not let the assistants get a hold of it."
+	icon_state = "caparmor"
+	item_state = "capspacesuit"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
 
 	//Clown
 /obj/item/clothing/head/helmet/space/hardsuit/clown
@@ -635,21 +647,6 @@
 /obj/item/clothing/suit/space/hardsuit/ancient/Destroy()
 	QDEL_NULL(mobhook) // mobhook is not our component
 	return ..()
-
-	//SWAT MKII
-/obj/item/clothing/head/helmet/space/hardsuit/captain/swat
-	name = "MK II. SWAT Helmet"
-	icon_state = "swat2helm"
-	item_state = "swat2helm"
-	desc = "A tactical SWAT helmet MK.II."
-
-/obj/item/clothing/suit/space/hardsuit/captain/swat
-	name = "MK II. SWAT Suit"
-	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available."
-	icon_state = "swat2"
-	item_state = "swat2"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/captain/swat
-
 
 
 /////////////SHIELDED//////////////////////////////////
