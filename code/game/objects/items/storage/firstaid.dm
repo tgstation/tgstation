@@ -149,7 +149,7 @@
 		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/healthanalyzer/advanced = 1)
+		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/tactical
@@ -294,3 +294,11 @@
 /obj/item/storage/pill_bottle/happiness/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/happiness(src)
+
+/obj/item/storage/pill_bottle/penacid
+	name = "bottle of pentetic acid"
+	desc = "Contains pills to expunge radioation and toxins"
+
+/obj/item/storage/pill_bottle/penacid/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/penacid(src)
