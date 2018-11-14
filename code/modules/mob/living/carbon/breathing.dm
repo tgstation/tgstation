@@ -167,24 +167,24 @@
 
 		//Miasma side effects
 		switch(pp)
-			if(0.25 to 5)
+			if(MIASMA_MINIMUM_PP to MIASMA_LOW_PP)
 				// At lower pp, give out a little warning
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 				if(prob(5))
 					to_chat(src, "<span class='notice'>There is an unpleasant smell in the air.</span>")
-			if(5 to 20)
+			if(MIASMA_LOW_PP to MIASMA_MED_PP)
 				//At somewhat higher pp, warning becomes more obvious
 				if(prob(15))
 					to_chat(src, "<span class='warning'>You smell something horribly decayed inside this room.</span>")
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/bad_smell)
-			if(15 to 30)
+			if(MIASMA_MED_PP to MIASMA_HIGH_PP)
 				//Small chance to vomit. By now, people have internals on anyway
 				if(prob(15))
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "smell", /datum/mood_event/disgust/nauseating_stench)
 					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
 					if(prob(33))
 						vomit()
-			if(30 to INFINITY)
+			if(MIASMA_HIGH_PP to INFINITY)
 				//Higher chance to vomit. Let the horror start
 				if(prob(25))
 					to_chat(src, "<span class='warning'>The stench of rotting carcasses is unbearable!</span>")
