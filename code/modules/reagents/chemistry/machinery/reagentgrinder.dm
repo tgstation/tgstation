@@ -179,20 +179,18 @@
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	. = ..()
-	if(beaker || length(holdingitems))
-		to_chat(user, "It contains:")
+	if(!beaker && !length(holdingitems))
+		return
+	to_chat(user, "It contains:")
 	for(var/i in holdingitems)
 		var/obj/item/O = i
 		to_chat(user, "\A [O.name]")
 	if(beaker)
-		if(!length(beaker.reagents.reagent_list))
-			to_chat(user, "An empty [beaker]")
-		else if(user.can_see_reagents() || issilicon(user))
-			to_chat(user, "\A [beaker] containing:")
+		to_chat(user, "\A [beaker]")
+		if(!(stat & (NOPOWER|BROKEN)))
+			to_chat(user, "The screen reads:")
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
 				to_chat(user, "[R.volume] units of [R.name]")
-		else
-			to_chat(user, "\A [beaker]")
 
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
 	for(var/i in holdingitems)
