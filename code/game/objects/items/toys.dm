@@ -24,13 +24,13 @@
  *		Toy Daggers
  */
 
+#define CAPGUN_AMMO_MAX 8
 
 /obj/item/toy
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	force = 0
-
 
 /*
  * Balloons
@@ -153,6 +153,7 @@
 /*
  * Toy gun: Why isnt this an /obj/item/gun?
  */
+
 /obj/item/toy/gun
 	name = "cap gun"
 	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
@@ -166,7 +167,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=10, MAT_GLASS=10)
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
-	var/bullets = 7
+	var/bullets = CAPGUN_AMMO_MAX
 
 /obj/item/toy/gun/examine(mob/user)
 	..()
@@ -175,20 +176,20 @@
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
 	if(istype(A, /obj/item/toy/ammo/gun))
-		if (src.bullets >= 7)
+		if (src.bullets >= CAPGUN_AMMO_MAX)
 			to_chat(user, "<span class='warning'>It's already fully loaded!</span>")
 			return 1
 		if (A.amount_left <= 0)
 			to_chat(user, "<span class='warning'>There are no more caps!</span>")
 			return 1
-		if (A.amount_left < (7 - src.bullets))
+		if (A.amount_left < CAPGUN_AMMO_MAX - src.bullets)
 			src.bullets += A.amount_left
-			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", A.amount_left))
+			to_chat(user, "<span class='notice'>You reload [A.amount_left] cap\s.</span>")
 			A.amount_left = 0
 		else
-			to_chat(user, text("<span class='notice'>You reload [] cap\s.</span>", 7 - src.bullets))
-			A.amount_left -= 7 - src.bullets
-			src.bullets = 7
+			to_chat(user, "<span class='notice'>You reload [CAPGUN_AMMO_MAX - bullets] cap\s.</span>")
+			A.amount_left -= CAPGUN_AMMO_MAX - src.bullets
+			src.bullets = CAPGUN_AMMO_MAX
 		A.update_icon()
 		return 1
 	else
@@ -216,13 +217,13 @@
 	name = "capgun ammo"
 	desc = "Make sure to recyle the box in an autolathe when it gets empty."
 	icon = 'icons/obj/ammo.dmi'
-	icon_state = "357OLD-7"
+	icon_state = "genbox-8"
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL=10, MAT_GLASS=10)
-	var/amount_left = 7
+	var/amount_left = CAPGUN_AMMO_MAX
 
 /obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = text("357OLD-[]", src.amount_left)
+	src.icon_state = "genbox-[amount_left]"
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
@@ -1400,3 +1401,5 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+
+#undef CAPGUN_AMMO_MAX

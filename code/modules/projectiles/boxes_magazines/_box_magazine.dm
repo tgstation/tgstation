@@ -118,7 +118,7 @@
 		if(1)
 			icon_state = "[initial(icon_state)]-[shells_left]"
 		if(2)
-			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
+			icon_state = shells_left ? initial(icon_state) : "[initial(icon_state)]-0"
 	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
 	for (var/material in bullet_cost)
 		var/material_amount = bullet_cost[material]
