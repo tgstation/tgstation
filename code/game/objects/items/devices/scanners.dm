@@ -665,7 +665,7 @@ NANITE SCANNER
 	var/list/discovered = list() //hit a dna console to update the scanners database
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic seqequence.</span>")
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
 
 	add_fingerprint(user)
 
