@@ -1062,28 +1062,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0	//We start at 0.
 	var/flight = 0	//Check for flight and flying items
-	var/ignoreslow = 0
 	var/gravity = 0
 	if(H.movement_type & FLYING)
 		flight = 1
 
 	gravity = H.has_gravity()
 
-	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
-		ignoreslow = 1
-
-	if(!gravity)
-		var/obj/item/tank/jetpack/J = H.back
-		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
-		if(!istype(J) && istype(C))
-			J = C.jetpack
-		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
-			. -= 2
-		else if(istype(T) && T.allow_thrust(0.01, H))
-			. -= 2
-
-	if(!ignoreslow && gravity)
+	if(!H.has_trait(TRAIT_IGNORESLOWDOWN) && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)

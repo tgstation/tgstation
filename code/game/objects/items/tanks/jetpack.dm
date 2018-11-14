@@ -39,26 +39,34 @@
 		return
 
 	if(!on)
-		turn_on()
+		turn_on(user)
 		to_chat(user, "<span class='notice'>You turn the jetpack on.</span>")
 	else
-		turn_off()
+		turn_off(user)
 		to_chat(user, "<span class='notice'>You turn the jetpack off.</span>")
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
 
-/obj/item/tank/jetpack/proc/turn_on()
+/obj/item/tank/jetpack/proc/turn_on(mob/user)
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	if(full_speed)
+		user.add_movespeed_modifier(MOVESPEED_ID_JETPACK, priority=100, multiplicative_slowdown=-2, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
 
-/obj/item/tank/jetpack/proc/turn_off()
+/obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
 	stabilizers = FALSE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	user.remove_movespeed_modifier(MOVESPEED_ID_JETPACK)
+
+/obj/item/tank/jetpack/proc/move_react(mob/user)
+	allow_thrust(0.01, user)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!on)
@@ -176,6 +184,7 @@
 	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/tank/internals/tank = null
+	var/mob/living/carbon/human/cur_user
 
 /obj/item/tank/jetpack/suit/New()
 	..()
@@ -196,28 +205,30 @@
 		return
 	..()
 
-/obj/item/tank/jetpack/suit/turn_on()
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
+/obj/item/tank/jetpack/suit/turn_on(mob/user)
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc) || loc.loc != user)
 		return
-	var/mob/living/carbon/human/H = loc.loc
+	var/mob/living/carbon/human/H = user
 	tank = H.s_store
 	air_contents = tank.air_contents
 	START_PROCESSING(SSobj, src)
+	cur_user = user
 	..()
 
-/obj/item/tank/jetpack/suit/turn_off()
+/obj/item/tank/jetpack/suit/turn_off(mob/user)
 	tank = null
 	air_contents = temp_air_contents
 	STOP_PROCESSING(SSobj, src)
+	cur_user = null
 	..()
 
 /obj/item/tank/jetpack/suit/process()
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
-		turn_off()
+		turn_off(cur_user)
 		return
 	var/mob/living/carbon/human/H = loc.loc
 	if(!tank || tank != H.s_store)
-		turn_off()
+		turn_off(cur_user)
 		return
 	..()
 
