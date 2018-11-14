@@ -87,8 +87,8 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
-	if(. && isalienadult(user))
-		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
+	if(. && user.deathsound)
+		playsound(user.loc, user.deathsound, 80, 1, 1)
 
 /datum/emote/living/drool
 	key = "drool"
