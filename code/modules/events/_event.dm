@@ -94,7 +94,8 @@
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	if(random)
 		log_game("Random Event triggering: [name] ([typepath])")
-	deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been[random ? " randomly" : ""] triggered!</span>") //STOP ASSUMING IT'S BADMINS!
+	if (alert_observers)
+		deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been[random ? " randomly" : ""] triggered!</span>") //STOP ASSUMING IT'S BADMINS!
 	return E
 
 //Special admins setup
