@@ -6718,7 +6718,6 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/dorms)
 "aoU" = (
-/obj/machinery/vending/wardrobe/engi_wardrobe,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -6729,6 +6728,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/vending/tool,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aoV" = (
@@ -35719,6 +35719,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"bsU" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/vending/wardrobe/engi_wardrobe,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "bsV" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/neutral,
@@ -42986,14 +42995,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
-"bFQ" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "bFR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/segment{
@@ -91998,7 +91999,7 @@ aUX
 bRr
 caG
 bIu
-bFQ
+bsU
 aBK
 bpx
 bAB
