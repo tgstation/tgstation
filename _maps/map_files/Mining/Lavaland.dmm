@@ -1659,7 +1659,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/mine/living_quarters)
+/area/mine/production)
 "em" = (
 /obj/machinery/light{
 	dir = 4
@@ -4086,7 +4086,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/mine/living_quarters)
 "Wp" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -19057,8 +19057,8 @@ eB
 cD
 br
 bq
-am
-am
+ab
+ab
 aj
 aj
 aj

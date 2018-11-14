@@ -925,7 +925,7 @@
 			coverlocked = !coverlocked
 			. = TRUE
 		if("breaker")
-			toggle_breaker()
+			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
 			toggle_nightshift_lights()
@@ -976,10 +976,12 @@
 				CHECK_TICK
 	return 1
 
-/obj/machinery/power/apc/proc/toggle_breaker()
+/obj/machinery/power/apc/proc/toggle_breaker(mob/user)
 	if(!is_operational() || failure_timer)
 		return
 	operating = !operating
+	add_hiddenprint(user)
+	log_combat(user, src, "turned [operating ? "on" : "off"]")
 	update()
 	update_icon()
 

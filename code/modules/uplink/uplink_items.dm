@@ -707,6 +707,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
 
+/datum/uplink_item/stealthy_weapons/origami_kit
+	name = "Boxed Origami Kit"
+	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into\
+			perfectly aerodynamic (and potentially lethal) paper airplanes."
+	item = /obj/item/storage/box/syndie_kit/origami_bundle
+	cost = 14
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear) //clown ops intentionally left in, because that seems like some s-tier shenanigans.
+
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \

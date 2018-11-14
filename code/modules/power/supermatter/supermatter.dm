@@ -683,7 +683,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/atom/movable/pulled_object = P
 			if(ishuman(P))
 				var/mob/living/carbon/human/H = P
-				H.apply_effect(40, EFFECT_KNOCKDOWN, 0)
+				H.apply_effect(40, EFFECT_PARALYZE, 0)
 			if(pulled_object && !pulled_object.anchored && !ishuman(P))
 				step_towards(pulled_object,center)
 				step_towards(pulled_object,center)
