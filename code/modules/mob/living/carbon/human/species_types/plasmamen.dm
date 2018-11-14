@@ -59,13 +59,13 @@
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
-	return 0
+	return FALSE
 
 /datum/species/plasmaman/qualifies_for_rank(rank, list/features)
 	if(rank in GLOB.security_positions)
-		return 0
+		return FALSE
 	if(rank == "Clown" || rank == "Mime")//No funny bussiness
-		return 0
+		return FALSE
 	return ..()
 
 /datum/species/plasmaman/random_name(gender,unique,lastname)
