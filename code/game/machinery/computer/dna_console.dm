@@ -1,12 +1,15 @@
 #define INJECTOR_TIMEOUT 100
 #define NUMBER_OF_BUFFERS 3
 #define SCRAMBLE_TIMEOUT 600
+#define JOKER_TIMEOUT 12000					//20 minutes
+#define JOKER_UPGRADE 1800
 
 #define RADIATION_STRENGTH_MAX 15
 #define RADIATION_STRENGTH_MULTIPLIER 1			//larger has more range
 
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
+
 
 #define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject receives
 
@@ -22,6 +25,15 @@
 	icon_keyboard = "med_key"
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/scan_consolenew
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 10
+	active_power_usage = 400
+	light_color = LIGHT_COLOR_BLUE
+
+	var/datum/techweb/stored_research
+	var/max_storage = 6
+	var/combine
 	var/radduration = 2
 	var/radstrength = 1
 
@@ -29,6 +41,7 @@
 	var/list/stored_mutations = list()
 
 	var/injectorready = 0	//world timer cooldown var
+	var/jokerready = 0
 	var/scrambleready = 0
 	var/current_screen = "mainmenu"
 	var/current_mutation   //what block are we inspecting? only used when screen = "info"
@@ -36,14 +49,6 @@
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/disk/data/diskette = null
 	var/list/delayed_action = null
-	use_power = IDLE_POWER_USE
-	idle_power_usage = 10
-	active_power_usage = 400
-	var/datum/techweb/stored_research
-	var/max_storage = 6
-	var/combine
-
-	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
@@ -65,7 +70,16 @@
 			break
 	injectorready = world.time + INJECTOR_TIMEOUT
 	scrambleready = world.time + SCRAMBLE_TIMEOUT
+	jokerready = world.time + JOKER_TIMEOUT
+
 	stored_research = SSresearch.science_tech
+
+/obj/machinery/computer/scan_consolenew/examine(mob/user)
+	..()
+	if(jokerready < world.time)
+		to_chat(user, "<span class='notice'>JOKER algorithm available.</span>")
+	else
+		to_chat(user, "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.")
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, last_change)
 	. = ..()
@@ -688,12 +702,18 @@
 				var/path = text2path(href_list["path"])
 				if(viable_occupant && num && (path in viable_occupant.dna.mutation_index))
 					var/list/genes = list("A","T","G","C","X")
+					if(jokerready < world.time)
+						genes += "JOKER"
 					var/list/sequence = viable_occupant.dna.get_gene_list(path)
 					var/original = sequence[num]
 					var/new_gene = input("From [original] to-", "New block", original) as null|anything in genes
 					if(!new_gene)
 						new_gene = original
 					if(viable_occupant == get_viable_occupant()) //No cheesing
+						if((new_gene == "JOKER") && (jokerready < world.time))
+							var/list/true_genes = string2list(get_sequence(current_mutation))
+							new_gene = true_genes[num]
+							jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected.precision_coeff-1))
 						sequence[num] = new_gene
 						viable_occupant.dna.update_from_gene_list(path, sequence)
 					viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected.damage_coeff

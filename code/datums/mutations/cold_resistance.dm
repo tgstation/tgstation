@@ -6,7 +6,7 @@
 	difficulty = 16
 	text_gain_indication = "<span class='notice'>Your body feels warm!</span>"
 	time_coeff = 5
-	instability = 20
+	instability = 30
 
 /datum/mutation/human/cold_resistance/New()
 	..()
