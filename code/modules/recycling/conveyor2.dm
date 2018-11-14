@@ -76,6 +76,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	else
 		return ..()
 
+/obj/machinery/conveyor/setDir(newdir)
+	. = ..()
+	update_move_direction()
+
 /obj/machinery/conveyor/proc/update_move_direction()
 	switch(dir)
 		if(NORTH)

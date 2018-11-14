@@ -50,6 +50,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "
 /obj/item/storage/book/bible/attack_self(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
+	if(!H.can_read(src))
+		return FALSE
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
 	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"

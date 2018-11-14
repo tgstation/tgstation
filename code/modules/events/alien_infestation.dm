@@ -62,7 +62,6 @@
 
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 		new_xeno.key = C.key
-		atom_of_interest = new_xeno
 
 		spawncount--
 		successSpawn = TRUE

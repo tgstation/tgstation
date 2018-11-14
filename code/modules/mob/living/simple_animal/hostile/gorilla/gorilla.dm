@@ -13,7 +13,7 @@
 	speak_chance = 80
 	maxHealth = 220
 	health = 220
-	loot = list(/obj/effect/gibspawner/generic)
+	loot = list(/obj/effect/gibspawner/generic/animal)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/gorilla = 4)
 	response_help  = "prods"
 	response_disarm = "challenges"

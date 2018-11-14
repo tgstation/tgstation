@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Turrets will now correctly target silicon mobs when check anomalies is disabled."
