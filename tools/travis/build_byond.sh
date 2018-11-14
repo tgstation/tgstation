@@ -5,19 +5,23 @@ set -e
 shopt -s globstar
 
 if [ "$BUILD_TOOLS" = false ]; then
-	if grep '"aaa" = \(.+\)' _maps/**/*.dmm;	then
+	if grep -E '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
     	echo "Non-TGM formatted map detected. Please convert it using Map Merger!"
     	exit 1
 	fi;
+	if grep -P '^\ttag = \"icon' _maps/**/*.dmm;	then
+    	echo "tag vars from icon state generation detected in maps, please remove them."
+    	exit 1
+	fi;
 	if grep 'step_[xy]' _maps/**/*.dmm;	then
-    	echo "step_[xy] variables detected in maps, please remove them."
+    	echo "step_x/step_y variables detected in maps, please remove them."
     	exit 1
 	fi;
 	if grep 'pixel_[xy] = 0' _maps/**/*.dmm;	then
-    	echo "pixel_[xy] = 0 detected in maps, please review to ensure they are not dirty varedits."
+    	echo "pixel_x/pixel_y = 0 variables detected in maps, please review to ensure they are not dirty varedits."
 	fi;
-	if grep '\td[1-2] =' _maps/**/*.dmm;	then
-    	echo "d[1-2] cable variables detected in maps, please remove them."
+	if grep -P '\td[1-2] =' _maps/**/*.dmm;	then
+    	echo "d1/d2 cable variables detected in maps, please remove them."
     	exit 1
 	fi;
 	if grep '^/area/.+[\{]' _maps/**/*.dmm;	then
