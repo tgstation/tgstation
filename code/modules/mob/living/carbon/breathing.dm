@@ -167,7 +167,7 @@
 
 		//Miasma side effects
 		switch(pp)
-			if(1 to 5)
+			if(0.25 to 5)
 				// At lower pp, give out a little warning
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 				if(prob(5))
@@ -193,14 +193,13 @@
 			else
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
-
 	//Clear all moods if no miasma at all
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
+
 	breath.garbage_collect()
 
-	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
 
 	return TRUE
@@ -214,11 +213,16 @@
 /mob/living/carbon/proc/get_breath_from_internal(volume_needed)
 	if(!internal)
 		return
-	if( internal.loc != src || ( !getorganslot(ORGAN_SLOT_BREATHING_TUBE) && (!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS)) ) )
+	if(internal.loc != src)
 		internal = null
 		update_internals_hud_icon(0)
 		return
+	if(!getorganslot(ORGAN_SLOT_BREATHING_TUBE))
+		if(!wear_mask || !(wear_mask.clothing_flags & MASKINTERNALS))
+			internal = null
+			update_internals_hud_icon(0)
+			return
+
 	update_internals_hud_icon(1)
-	
 	//will return FALSE instead of null, to differentiate no internals and empty internals
 	return internal.remove_air_volume(volume_needed) || FALSE
