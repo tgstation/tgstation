@@ -106,9 +106,9 @@ Destabilized extracts:
 	if(isliving(A))
 		var/mob/living/L = A
 		L.fire_stacks += 5
-		L.reagents.add_reagent("plasma", 30)
+		L.reagents.add_reagent("plasma", 10)
 	else
-		var/datum/reagents/R = new/datum/reagents(30)
+		var/datum/reagents/R = new/datum/reagents(10)
 		R.add_reagent("plasma", 10)
 		var/datum/effect_system/smoke_spread/chem/smoke = new
 		smoke.set_up(R, 1, get_turf(A))
