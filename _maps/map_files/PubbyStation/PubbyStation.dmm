@@ -4066,10 +4066,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "ali" = (
-/obj/machinery/door/airlock/abandoned{
+/obj/machinery/door/airlock{
 	id_tag = "mainthideout";
 	name = "Hideout"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "alj" = (
@@ -4774,10 +4775,11 @@
 	},
 /area/maintenance/department/crew_quarters/dorms)
 "amH" = (
-/obj/machinery/door/airlock/atmos/abandoned{
+/obj/machinery/door/airlock/atmos{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "amI" = (
@@ -5059,10 +5061,11 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "anm" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Pete's Speakeasy";
 	req_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "anp" = (
@@ -14117,10 +14120,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aHn" = (
-/obj/machinery/door/airlock/abandoned{
+/obj/machinery/door/airlock{
 	name = "Starboard Emergency Storage";
 	req_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -35581,10 +35585,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bEm" = (
-/obj/machinery/door/airlock/atmos/abandoned{
+/obj/machinery/door/airlock/atmos{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
 	},
@@ -53266,9 +53271,10 @@
 /turf/open/space/basic,
 /area/space)
 "cHS" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Firing Range"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -54407,9 +54413,10 @@
 /turf/open/floor/plating,
 /area/chapel/main/monastery)
 "fKj" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Mineral Room"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "fLG" = (
@@ -56351,9 +56358,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "kJw" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Firing Range Target"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -56610,10 +56618,11 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
 "lGv" = (
-/obj/machinery/door/airlock/atmos/abandoned{
+/obj/machinery/door/airlock/atmos{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -56658,10 +56667,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "lKL" = (
-/obj/machinery/door/airlock/abandoned{
+/obj/machinery/door/airlock{
 	name = "Starboard Emergency Storage";
 	req_access_txt = "0"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -57002,9 +57012,10 @@
 /turf/open/floor/plating,
 /area/tcommsat/computer)
 "mES" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Surgical Room"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "mHy" = (
@@ -57509,9 +57520,10 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "nZw" = (
-/obj/machinery/door/airlock/abandoned{
+/obj/machinery/door/airlock{
 	name = "Backup Laboratory"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "obj" = (
@@ -58705,7 +58717,8 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "qXq" = (
-/obj/machinery/door/airlock/maintenance/abandoned,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -58953,10 +58966,11 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "rxQ" = (
-/obj/machinery/door/airlock/abandoned{
+/obj/machinery/door/airlock{
 	id_tag = "PottySci";
 	name = "Science Bathroom"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "rxV" = (
@@ -61031,7 +61045,8 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "xlA" = (
-/obj/machinery/door/airlock/maintenance/abandoned,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "xlQ" = (
