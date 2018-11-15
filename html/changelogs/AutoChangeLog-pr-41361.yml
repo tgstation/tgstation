@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer move / reconstruct a vending machine on lavaland to access all it's contents for free."
-  - bugfix: "Rebuilding a vending machine which originated from lavaland on station will now carry over it's original pricing setup."

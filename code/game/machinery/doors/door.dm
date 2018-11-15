@@ -15,7 +15,7 @@
 
 	interaction_flags_atom = INTERACT_ATOM_UI_INTERACT
 
-	var/secondsElectrified = 0
+	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 	var/shockedby
 	var/visible = TRUE
 	var/operating = FALSE
@@ -222,13 +222,13 @@
 	if(prob(20/severity) && (istype(src, /obj/machinery/door/airlock) || istype(src, /obj/machinery/door/window)) )
 		INVOKE_ASYNC(src, .proc/open)
 	if(prob(severity*10 - 20))
-		if(secondsElectrified == 0)
-			secondsElectrified = -1
+		if(secondsElectrified == MACHINE_NOT_ELECTRIFIED)
+			secondsElectrified = MACHINE_ELECTRIFIED_PERMANENT
 			LAZYADD(shockedby, "\[[time_stamp()]\]EM Pulse")
 			addtimer(CALLBACK(src, .proc/unelectrify), 300)
 
 /obj/machinery/door/proc/unelectrify()
-	secondsElectrified = 0
+	secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
 /obj/machinery/door/update_icon()
 	if(density)

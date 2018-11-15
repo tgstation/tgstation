@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - bugfix: "Ghost Announcements work a little bit better now. Space dust won't be announced, and general wording has been improved."

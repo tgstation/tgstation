@@ -32,7 +32,6 @@
 	var/mob/living/carbon/human/devil = create_event_devil()
 	Mind.transfer_to(devil)
 	add_devil(devil, ascendable = FALSE)
-	atom_of_interest = devil
 
 	spawned_mobs += devil
 	message_admins("[ADMIN_LOOKUPFLW(devil)] has been made into a devil by an event.")

@@ -156,12 +156,12 @@ Difficulty: Hard
 		DestroySurroundings()
 	..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!charging)
 		return ..()
 
-	else if(isliving(A))
-		var/mob/living/L = A
+	else if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
 		L.apply_damage(40, BRUTE)
 		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)

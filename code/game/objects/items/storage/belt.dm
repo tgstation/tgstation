@@ -220,7 +220,7 @@
 	icon_state = "securitywebbing"
 	item_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_price = 800
+	custom_premium_price = 800
 
 /obj/item/storage/belt/security/webbing/ComponentInitialize()
 	. = ..()

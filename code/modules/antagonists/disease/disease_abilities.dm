@@ -5,6 +5,9 @@ is currently following.
 */
 
 GLOBAL_LIST_INIT(disease_ability_singletons, list(
+new /datum/disease_ability/action/cough,
+new /datum/disease_ability/action/sneeze,
+new /datum/disease_ability/action/infect,
 new /datum/disease_ability/symptom/mild/cough,
 new /datum/disease_ability/symptom/mild/sneeze,
 new /datum/disease_ability/symptom/medium/shedding,

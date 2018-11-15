@@ -61,7 +61,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/slogan_delay = 6000		//How long until we can pitch again?
 	var/icon_vend				//Icon_state when vending!
 	var/icon_deny				//Icon_state when vending!
-	var/seconds_electrified = 0	//Shock customers like an airlock.
+	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED	//Shock customers like an airlock.
 	var/shoot_inventory = 0		//Fire items at customers! We're broken!
 	var/shoot_inventory_chance = 2
 	var/shut_up = 0				//Stop spouting those godawful pitches!
@@ -113,6 +113,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	QDEL_NULL(coin)
 	QDEL_NULL(bill)
 	return ..()
+
+/obj/machinery/vending/can_speak()
+	return !shut_up
 
 /obj/machinery/vending/RefreshParts()         //Better would be to make constructable child
 	if(!component_parts)
@@ -493,7 +496,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	if(!active)
 		return
 
-	if(seconds_electrified > 0)
+	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
 
 	//Pitch to the people!  Really sell it!
