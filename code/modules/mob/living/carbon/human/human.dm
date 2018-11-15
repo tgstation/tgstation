@@ -508,33 +508,17 @@
 		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
 
-/mob/living/carbon/human/proc/check_obscured_slots()
-	var/list/obscured = list()
-
+/mob/living/carbon/human/check_obscured_slots()
+	. = ..()
 	if(wear_suit)
+		if(wear_suit.flags_inv & HIDENECK)
+			. |= SLOT_NECK
 		if(wear_suit.flags_inv & HIDEGLOVES)
-			obscured |= SLOT_GLOVES
+			. |= SLOT_GLOVES
 		if(wear_suit.flags_inv & HIDEJUMPSUIT)
-			obscured |= SLOT_W_UNIFORM
+			. |= SLOT_W_UNIFORM
 		if(wear_suit.flags_inv & HIDESHOES)
-			obscured |= SLOT_SHOES
-
-	if(head)
-		if(head.flags_inv & HIDEMASK)
-			obscured |= SLOT_WEAR_MASK
-		if(head.flags_inv & HIDEEYES)
-			obscured |= SLOT_GLASSES
-		if(head.flags_inv & HIDEEARS)
-			obscured |= SLOT_EARS
-
-	if(wear_mask)
-		if(wear_mask.flags_inv & HIDEEYES)
-			obscured |= SLOT_GLASSES
-
-	if(obscured.len)
-		return obscured
-	else
-		return null
+			. |= SLOT_SHOES
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
