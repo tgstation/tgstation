@@ -543,7 +543,7 @@
 	active = TRUE
 	curse_of_madness(user)
 	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
-	playsound(get_turf(user), 'sound/magic/mandswap.ogg', 50, 1)
+	playsound(user, 'sound/magic/mandswap.ogg', 50, 1)
 	return TRUE
 
 /obj/item/spellbook
