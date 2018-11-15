@@ -8,7 +8,6 @@ GLOBAL_LIST_EMPTY(outputs_list)
 
 /datum/outputs/New()
 	GLOB.outputs_list[src.type] = src
-	icon = image('icons/sound_icon.dmi', , state, HUD_LAYER)
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
 	var/sound = pickweight(sounds)
@@ -70,21 +69,28 @@ GLOBAL_LIST_EMPTY(outputs_list)
 	//Handle icon
 	if(isliving(receiver))
 		var/mob/living/L = receiver
-		if(icon && L.audiolocation)
-			var/image/I = new icon
+		if(state && L.audiolocation)
+			icon = image('icons/sound_icon.dmi', turf_source, state, HUD_LAYER)
 			if(sound && vol)
-				I.alpha = I.alpha * (vol / 100)
-			I.loc = turf_source
-			receiver.client.images += I
-			addtimer(CALLBACK(src, .proc/remove_image, I, receiver), 7, TIMER_UNIQUE)
+				icon.alpha = icon.alpha * (vol / 100)
+			receiver.client.images += icon
+			addtimer(CALLBACK(src, .proc/remove_image, icon, receiver), 7, TIMER_UNIQUE)
 	//Handle text
 	if(text && receiver.can_hear())
-		to_chat(receiver, text)
+		to_chat(receiver, "<span class='italics'>[text]</span>")
 
 /datum/outputs/proc/remove_image(image, mob/living/receiver)
 	receiver.client.images -= image
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."
-	sounds = list('sound/items/airhorn.ogg'=1, 'sound/items/airhorn.ogg'=1)
+	sounds = list('sound/items/bikehorn.ogg'=1)
+
+/datum/outputs/airhorn
+	text = "You hear the violent blaring of an airhorn."
+	sounds = list('sound/items/airhorn2.ogg'=1)
+
+/datum/outputs/alarm
+	text = "You hear a blaring alarm."
+	sounds = list('sound/machines/alarm.ogg'=1)
 

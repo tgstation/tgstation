@@ -994,7 +994,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/alarm.ogg', 100, 0)
+		playsound(src, /datum/outputs/alarm, 100, 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
