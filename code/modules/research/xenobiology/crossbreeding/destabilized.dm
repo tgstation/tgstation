@@ -8,6 +8,7 @@ Destabilized extracts:
 	desc = "It seems ready to burst at any moment."
 	effect = "destabilized"
 	icon_state = "destabilized"
+	amountToCreate = 5
 
 /obj/item/slimecross/destabilized/throw_impact(atom/A, var/datum/thrownthing/T)
 	if(!..()) //For those tactical catches
