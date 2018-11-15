@@ -318,6 +318,7 @@
 #include "code\datums\brain_damage\brain_trauma.dm"
 #include "code\datums\brain_damage\hypnosis.dm"
 #include "code\datums\brain_damage\imaginary_friend.dm"
+#include "code\datums\brain_damage\magic.dm"
 #include "code\datums\brain_damage\mild.dm"
 #include "code\datums\brain_damage\phobia.dm"
 #include "code\datums\brain_damage\severe.dm"
