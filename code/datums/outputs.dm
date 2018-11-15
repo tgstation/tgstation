@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(outputs_list)
 
 /datum/outputs
 	var/text = "You hear broken code."
-	var/sound = 'sound/items/airhorn.ogg'
+	var/list/sounds = list('sound/items/airhorn.ogg'=1) //weighted, put multiple for random selection between sounds
 	var/state = "circle"
 	var/image/icon
 
@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(outputs_list)
 	icon = image('icons/sound_icon.dmi', , state, HUD_LAYER)
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
+	var/sound = pickweight(sounds)
 	if(receiver.client)
 		//Handle sound
 		if(sound && receiver.can_hear())
@@ -71,7 +72,7 @@ GLOBAL_LIST_EMPTY(outputs_list)
 		var/mob/living/L = receiver
 		if(icon && L.audiolocation)
 			var/image/I = new icon
-			if(vol)
+			if(sound && vol)
 				I.alpha = I.alpha * (vol / 100)
 			I.loc = turf_source
 			receiver.client.images += I
@@ -85,5 +86,5 @@ GLOBAL_LIST_EMPTY(outputs_list)
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."
-	sound = 'sound/items/bikehorn.ogg'
+	sounds = list('sound/items/airhorn.ogg'=1, 'sound/items/airhorn.ogg'=1)
 

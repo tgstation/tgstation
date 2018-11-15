@@ -1,5 +1,4 @@
 /datum/component/squeak
-	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
 	var/list/override_squeak_sounds
 	var/squeak_chance = 100
 	var/volume = 30
@@ -41,7 +40,7 @@
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))
 		if(!override_squeak_sounds)
-			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
+			playsound(parent, /datum/outputs/bikehorn, volume, 1, -1)
 		else
 			playsound(parent, pickweight(override_squeak_sounds), volume, 1, -1)
 
