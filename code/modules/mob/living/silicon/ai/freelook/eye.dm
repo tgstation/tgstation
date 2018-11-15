@@ -70,8 +70,6 @@
 
 /mob/camera/aiEye/proc/setLoc(T, force_update = FALSE)
 	if(ai)
-		if(!isturf(ai.loc))
-			return
 		T = get_turf(T)
 		if(!force_update && (T == get_turf(src)) )
 			return //we are already here!
