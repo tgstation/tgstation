@@ -404,21 +404,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.city_of_cogs_spawns += loc
 	return INITIALIZE_HINT_QDEL
 
-//generic event spawns
-/obj/effect/landmark/event_spawn
-	name = "generic event spawn"
-	icon_state = "generic_event"
-	layer = HIGH_LANDMARK_LAYER
-
-
-/obj/effect/landmark/event_spawn/New()
-	..()
-	GLOB.generic_event_spawns += src
-
-/obj/effect/landmark/event_spawn/Destroy()
-	GLOB.generic_event_spawns -= src
-	return ..()
-
 /obj/effect/landmark/ruin
 	var/datum/map_template/ruin/ruin_template
 

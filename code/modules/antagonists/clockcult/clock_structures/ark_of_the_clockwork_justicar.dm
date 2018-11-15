@@ -1,4 +1,5 @@
 #define ARK_GRACE_PERIOD 300 //In seconds, how long the crew has before the Ark truly "begins"
+#define PORTAL_COUNT 20 // How many portals will open on the station.
 
 /proc/clockwork_ark_active() //A helper proc so the Ark doesn't have to be typecast every time it's checked; returns null if there is no Ark and its active var otherwise
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
@@ -162,7 +163,7 @@
 			var/atom/movable/target = L
 			if(isobj(L.loc))
 				target = L.loc
-			target.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
+			target.forceMove(find_safe_turf())
 			L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 			L.clear_fullscreen("flash", 30)
 			if(isliving(L))
@@ -301,8 +302,8 @@
 	switch(progress_in_seconds)
 		if(-INFINITY to GATEWAY_REEBE_FOUND)
 			if(!second_sound_played)
-				for(var/V in GLOB.generic_event_spawns)
-					addtimer(CALLBACK(src, .proc/open_portal, get_turf(V)), rand(100, 600))
+				for(var/i in 1 to PORTAL_COUNT)
+					addtimer(CALLBACK(src, .proc/open_portal, find_safe_turf(), rand(100, 600)))
 				sound_to_playing_players('sound/magic/clockwork/invoke_general.ogg', 30, FALSE)
 				sound_to_playing_players(volume = 20, channel = CHANNEL_JUSTICAR_ARK, S = sound('sound/effects/clockcult_gateway_charging.ogg', TRUE))
 				second_sound_played = TRUE

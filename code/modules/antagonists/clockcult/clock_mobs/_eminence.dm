@@ -271,7 +271,7 @@
 
 /datum/action/innate/eminence/station_jump/Activate()
 	if(is_reebe(owner.z))
-		owner.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
+		owner.forceMove(find_safe_turf())
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)
 	else

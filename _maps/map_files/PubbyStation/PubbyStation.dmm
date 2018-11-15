@@ -3903,7 +3903,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "akN" = (
-/obj/effect/landmark/event_spawn,
 /mob/living/simple_animal/bot/secbot{
 	arrest_type = 1;
 	health = 45;
@@ -7256,7 +7255,6 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/dorms)
 "ase" = (
-/obj/effect/landmark/event_spawn,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -7706,7 +7704,6 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/gateway)
@@ -8368,11 +8365,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"auA" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "auB" = (
 /obj/machinery/light{
 	dir = 8
@@ -8995,7 +8987,6 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "avO" = (
-/obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
 	c_tag = "Bridge MiniSat Access Foyer";
@@ -16504,7 +16495,6 @@
 "aNw" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aNx" = (
@@ -21022,7 +21012,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -22577,7 +22566,6 @@
 /area/security/checkpoint/customs)
 "baS" = (
 /obj/structure/chair/office/dark,
-/obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -25520,7 +25508,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -26982,7 +26969,6 @@
 /turf/open/floor/plasteel/dark/telecomms,
 /area/science/server)
 "blP" = (
-/obj/effect/landmark/event_spawn,
 /obj/item/beacon,
 /obj/machinery/light{
 	dir = 8
@@ -27439,10 +27425,6 @@
 	dir = 1;
 	light_color = "#d1dfff"
 	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
-"bni" = (
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "bnj" = (
@@ -38753,7 +38735,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/event_spawn,
 /obj/item/beacon,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -39640,10 +39621,6 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
-"bMA" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/engine,
-/area/maintenance/department/engine)
 "bMB" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine,
@@ -40968,11 +40945,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
-"bPI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bPJ" = (
@@ -46149,13 +46121,6 @@
 /obj/structure/table/glass,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cbh" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cbi" = (
 /obj/machinery/light{
 	dir = 4
@@ -46246,7 +46211,6 @@
 /area/engine/atmos)
 "cbx" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/engine/air,
 /area/engine/atmos)
 "cby" = (
@@ -46661,10 +46625,6 @@
 /area/engine/engineering)
 "ccZ" = (
 /obj/structure/particle_accelerator/end_cap,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"cda" = (
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cdc" = (
@@ -47956,7 +47916,6 @@
 "chk" = (
 /obj/structure/sink/puddle,
 /obj/item/reagent_containers/glass/bucket,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
 "chl" = (
@@ -60130,7 +60089,6 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
@@ -83119,7 +83077,7 @@ bHQ
 bJd
 bKi
 bLv
-bMA
+bLv
 bNH
 bOz
 bHQ
@@ -83312,7 +83270,7 @@ aqq
 aon
 asv
 atA
-auA
+auy
 avw
 awJ
 axG
@@ -84340,7 +84298,7 @@ aqu
 arn
 asA
 atC
-auA
+auy
 avz
 awJ
 axG
@@ -91104,7 +91062,7 @@ bYc
 bYO
 bZC
 cal
-cbh
+cbm
 cam
 cam
 cdQ
@@ -92905,7 +92863,7 @@ bZA
 cdN
 ccW
 ceY
-cda
+cbX
 cbX
 cex
 cfe
@@ -94173,7 +94131,7 @@ bCC
 bMT
 bOc
 bmD
-bPI
+bmD
 bmD
 bRn
 bRX
@@ -107769,7 +107727,7 @@ aFi
 gfi
 aFi
 bkF
-bni
+blX
 blX
 blX
 hvW
@@ -108797,7 +108755,7 @@ aEl
 gfi
 ybX
 bkF
-bni
+blX
 blX
 blX
 bqI
