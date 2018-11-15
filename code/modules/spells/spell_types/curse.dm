@@ -12,6 +12,8 @@
 			continue
 		if(H.anti_magic_check(TRUE, FALSE))
 			continue
+		if(istype(H.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
+			continue
 		to_chat(H, "<span class='warning'>You feel something twisting your mind...</span>")
 		switch(rand(1,10))
 			if(1 to 3)
