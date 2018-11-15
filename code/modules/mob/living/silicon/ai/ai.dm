@@ -293,6 +293,8 @@
 	if (.)
 		return
 	if (T0.z != T1.z)
+		return FALSE
+
 	if (istype(loc, /obj/item/aicard))
 		if (!T0 || ! T1)
 			return FALSE
