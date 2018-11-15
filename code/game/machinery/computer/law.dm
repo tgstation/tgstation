@@ -16,11 +16,6 @@
 			to_chat(user, "<span class='caution'>Upload failed!</span> Check to make sure [current.name] is functioning properly.")
 			current = null
 			return
-		var/turf/currentloc = get_turf(current)
-		if(currentloc && user.z != currentloc.z)
-			to_chat(user, "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!")
-			current = null
-			return
 		M.install(current.laws, user)
 	else
 		return ..()
