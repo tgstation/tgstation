@@ -22,6 +22,14 @@
 		else
 			speak("neutral", prob(25))
 
+/datum/brain_trauma/special/godwoken/on_gain()
+	owner.add_trait(TRAIT_HOLY, TRAUMA_TRAIT)
+	..()
+
+/datum/brain_trauma/special/godwoken/on_lose()
+	owner.remove_trait(TRAIT_HOLY, TRAUMA_TRAIT)
+	..()			
+			
 /datum/brain_trauma/special/godwoken/proc/speak(type, include_owner = FALSE)
 	var/message
 	switch(type)
