@@ -473,11 +473,6 @@
 	. = ..()
 	if(.)
 		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
-		activate()
-
-/obj/item/flashlight/glowstick/proc/activate()
-	if(!on)
-		on = TRUE
 		START_PROCESSING(SSobj, src)
 
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
