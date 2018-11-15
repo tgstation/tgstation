@@ -325,7 +325,7 @@
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
-	quirk_holder.echolocation = TRUE
+	quirk_holder.audiolocation = TRUE
 
 /datum/quirk/blindness/on_spawn()
 	quirk_holder.overlay_fullscreen("total", /obj/screen/fullscreen/blind/total)
