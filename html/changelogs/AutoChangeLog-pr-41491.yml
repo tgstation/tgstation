@@ -1,5 +1,0 @@
-author: "Tlaltecuhtli and Subject217"
-delete-after: True
-changes: 
-  - rscadd: "You can now make Diagnostic HUD sunglasses.
-sprite: Fixed the MedHUD sunglasses having the wrong color when worn."

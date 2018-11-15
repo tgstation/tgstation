@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "The Paralysis trauma now randomly chooses a selection of limbs to paralyze instead of always being complete paralysis. It can be a single limb, both arms, both legs, either side of your body or the classic full paralysis."
