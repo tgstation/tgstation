@@ -59,6 +59,24 @@
 	reqs = list(/obj/item/clothing/glasses/hud/health/sunglasses = 1)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/hudsundiag
+	name = "Diagnostic HUDsunglasses"
+	result = /obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic = 1,
+				  /obj/item/clothing/glasses/sunglasses = 1,
+				  /obj/item/stack/cable_coil = 5)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/hudsundiagremoval
+	name = "Diagnostic HUD removal"
+	result = /obj/item/clothing/glasses/sunglasses
+	time = 20
+	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/beergoggles
 	name = "Beer Goggles"
 	result = /obj/item/clothing/glasses/sunglasses/reagent
