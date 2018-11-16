@@ -102312,7 +102312,7 @@
 /area/science/misc_lab/range)
 "dqe" = (
 /obj/machinery/door/airlock/research{
-	name = "Circuitry Lab";
+	name = "Research Testing Range";
 	req_access_txt = "47"
 	},
 /obj/structure/disposalpipe/segment{

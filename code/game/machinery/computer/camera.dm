@@ -178,7 +178,7 @@
 	circuit = /obj/item/circuitboard/computer/research
 
 /obj/machinery/computer/security/hos
-	name = "Head of Security's camera console"
+	name = "\improper Head of Security's camera console"
 	desc = "A custom security console with added access to the labor camp network."
 	network = list("ss13", "labor")
 	circuit = null
@@ -190,7 +190,7 @@
 	circuit = null
 
 /obj/machinery/computer/security/qm
-	name = "Quartermaster's camera console"
+	name = "\improper Quartermaster's camera console"
 	desc = "A console with access to the mining, auxillary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
 	circuit = null
@@ -223,32 +223,32 @@
 	network = list("thunder")
 
 /obj/machinery/computer/security/telescreen/rd
-	name = "Research Director's telescreen"
+	name = "\improper Research Director's telescreen"
 	desc = "Used for watching the AI and the RD's goons from the safety of his office."
 	network = list("rd", "aicore", "aiupload", "minisat", "xeno", "test")
 
-/obj/machinery/computer/security/telescreen/circuitry
-	name = "circuitry telescreen"
-	desc = "Used for watching the other eggheads from the safety of the circuitry lab."
+/obj/machinery/computer/security/telescreen/research
+	name = "research telescreen"
+	desc = "A telescreen with access to the research division's camera network."
 	network = list("rd")
 
 /obj/machinery/computer/security/telescreen/ce
-	name = "Chief Engineer's telescreen"
+	name = "\improper Chief Engineer's telescreen"
 	desc = "Used for watching the engine, telecommunications and the minisat."
 	network = list("engine", "singularity", "tcomms", "minisat")
 
 /obj/machinery/computer/security/telescreen/cmo
-	name = "Chief Medical Officer's telescreen"
+	name = "\improper Chief Medical Officer's telescreen"
 	desc = "A telescreen with access to the medbay's camera network."
 	network = list("medbay")
 
 /obj/machinery/computer/security/telescreen/vault
-	name = "Vault monitor"
+	name = "vault monitor"
 	desc = "A telescreen that connects to the vault's camera network."
 	network = list("vault")
 
 /obj/machinery/computer/security/telescreen/toxins
-	name = "Bomb test site monitor"
+	name = "bomb test site monitor"
 	desc = "A telescreen that connects to the bomb test site's camera."
 	network = list("toxin")
 
@@ -283,6 +283,6 @@
 	network = list("minisat")
 
 /obj/machinery/computer/security/telescreen/aiupload
-	name = "AI upload monitor"
+	name = "\improper AI upload monitor"
 	desc = "A telescreen that connects to the AI upload's camera network."
 	network = list("aiupload")

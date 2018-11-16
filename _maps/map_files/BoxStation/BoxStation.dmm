@@ -32618,7 +32618,7 @@
 "bzD" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/computer/security/telescreen/circuitry,
+/obj/machinery/computer/security/telescreen/research,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -56622,7 +56622,7 @@
 /area/science/mixing)
 "lQm" = (
 /obj/machinery/camera{
-	c_tag = "Circuitry Lab";
+	c_tag = "Nanite Lab";
 	dir = 4;
 	network = list("ss13","rd")
 	},
