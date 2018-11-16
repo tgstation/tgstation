@@ -257,9 +257,6 @@
 	GM.temperature = T20C
 	return GM
 
-/obj/structure/chrono_field/Move()
-	return
-
 /obj/structure/chrono_field/singularity_act()
 	return
 
