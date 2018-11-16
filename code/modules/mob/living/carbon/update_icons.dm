@@ -122,7 +122,7 @@
 		inv.update_icon()
 
 	if(wear_mask)
-		if(!(head && (head.flags_inv & HIDEMASK)))
+		if(!(SLOT_WEAR_MASK in check_obscured_slots()))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
