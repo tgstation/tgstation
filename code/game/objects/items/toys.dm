@@ -176,7 +176,7 @@
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
 
 	if(istype(A, /obj/item/toy/ammo/gun))
-		if (src.bullets >= CAPGUN_AMMO_MAX)
+		if (bullets >= CAPGUN_AMMO_MAX)
 			to_chat(user, "<span class='warning'>It's already fully loaded!</span>")
 			return 1
 		if (A.amount_left <= 0)
