@@ -67,9 +67,10 @@
 	gain_text = "<span class='warning'>You feel like something wants to kill you...</span>"
 	lose_text = "<span class='notice'>You no longer feel eyes on your back.</span>"
 	var/obj/effect/hallucination/simple/stalker_phantom/stalker
+	var/close_stalker = FALSE //For heartbeat
 
 /datum/brain_trauma/magic/stalker/on_gain()
-	var/turf/stalker_source = locate(owner.x + pick(-9, 9), owner.y + pick(-9, 9), owner.z) //random corner
+	var/turf/stalker_source = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z) //random corner
 	stalker = new(stalker_source, owner)
 	..()
 	
@@ -84,6 +85,15 @@
 		owner.take_bodypart_damage(rand(20, 45))
 	else if(prob(50))
 		stalker.forceMove(get_step_towards(stalker, owner))
+	if(get_dist(owner, stalker) <= 8)
+		if(!close_stalker)
+			var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+			owner.playsound_local(owner, slowbeat, 40, 0, channel = CHANNEL_HEARTBEAT)
+			close_stalker = TRUE
+	else
+		if(close_stalker)
+			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
+			close_stalker = FALSE
 	..()
 	
 /obj/effect/hallucination/simple/stalker_phantom
