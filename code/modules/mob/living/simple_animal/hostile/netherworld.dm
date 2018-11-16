@@ -30,7 +30,7 @@
 	speed = -0.5
 	var/static/list/migo_sounds
 	deathmessage = "wails as its form turns into a pulpy mush."
-	death_sound = 'sound/voice/hiss6.ogg'
+	deathsound = 'sound/voice/hiss6.ogg'
 
 /mob/living/simple_animal/hostile/netherworld/migo/Initialize()
 	. = ..()
