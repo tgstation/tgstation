@@ -59,3 +59,35 @@
 /datum/brain_trauma/magic/antimagic/on_lose()
 	owner.remove_trait(TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
 	..()
+	
+/datum/brain_trauma/magic/stalker
+	name = "Stalking Phantom"
+	desc = "Patient is stalked by a phantom only they can see."
+	scan_desc = "extra-sensory paranoia"
+	gain_text = "<span class='warning'>You feel like something wants to kill you...</span>"
+	lose_text = "<span class='notice'>You no longer feel eyes on your back.</span>"
+	var/obj/effect/hallucination/simple/stalker_phantom/stalker
+
+/datum/brain_trauma/magic/stalker/on_gain()
+	var/turf/stalker_source = locate(owner.x + pick(-9, +9), owner.y + pick(-9,+9), owner.z) //random corner
+	stalker = new(stalker_source, owner)
+	..()
+	
+/datum/brain_trauma/magic/stalker/on_lose()
+	QDEL_NULL(stalker)
+	..()
+	
+/datum/brain_trauma/magic/stalker/on_life()
+	if(get_dist(owner, stalker) <= 1)
+		playsound(owner, 'sound/magic/demon_attack1.ogg', 50)
+		owner.visible_message("<span class='warning'>[owner] is torn apart by invisible claws!</span>", "<span class='userdanger'>Ghostly claws tear your body apart!</span>")
+		owner.take_bodypart_damage(rand(20, 45))
+	else if(prob(50))
+		stalker.forceMove(get_step_towards(stalker, owner))
+	..()
+	
+/obj/effect/hallucination/simple/stalker_phantom
+	name = "???"
+	desc = "It's coming closer..."
+	image_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
+	image_state = "curseblob"
