@@ -266,7 +266,7 @@
 									available_channels.Add(RADIO_TOKEN_SERVICE)
 
 						if(headset_to_add.translate_binary)
-							available_channels.Add(RADIO_TOKEN_BINARY)
+							available_channels.Add(MODE_TOKEN_BINARY)
 		else
 			..()
 

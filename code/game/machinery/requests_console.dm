@@ -314,13 +314,13 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			switch(text2num(href_list["emergency"]))
 				if(1) //Security
 					radio_freq = FREQ_SECURITY
-					emergency = RADIO_CHANNEL_SECURITY
+					emergency = "Security"
 				if(2) //Engineering
 					radio_freq = FREQ_ENGINEERING
-					emergency = RADIO_CHANNEL_ENGINEERING
+					emergency = "Engineering"
 				if(3) //Medical
 					radio_freq = FREQ_MEDICAL
-					emergency = RADIO_CHANNEL_MEDICAL
+					emergency = "Medical"
 			if(radio_freq)
 				Radio.set_frequency(radio_freq)
 				Radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq,get_spans(),get_default_language())

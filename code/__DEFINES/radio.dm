@@ -1,12 +1,10 @@
 // Radios use a large variety of predefined frequencies.
 
+//say based modes like binary are in living/say.dm
+
 #define RADIO_CHANNEL_COMMON "Common"
 #define RADIO_KEY_COMMON ";"
 #define RADIO_TOKEN_COMMON ";"
-
-#define RADIO_CHANNEL_DEPARTMENT "department"
-#define RADIO_KEY_DEPARTMENT "h"
-#define RADIO_TOKEN_DEPARTMENT ":h"
 
 #define RADIO_CHANNEL_SECURITY "Security"
 #define RADIO_KEY_SECURITY "s"
@@ -35,10 +33,6 @@
 #define RADIO_CHANNEL_SERVICE "Service"
 #define RADIO_KEY_SERVICE "v"
 #define RADIO_TOKEN_SERVICE ":v"
-
-#define RADIO_CHANNEL_BINARY "Binary"
-#define RADIO_KEY_BINARY "b"
-#define RADIO_TOKEN_BINARY ":b"
 
 #define RADIO_CHANNEL_AI_PRIVATE "AI Private"
 #define RADIO_KEY_AI_PRIVATE "o"
