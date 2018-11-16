@@ -6,7 +6,7 @@ Chief Medical Officer
 	flag = CMO_JF
 	department_head = list("Captain")
 	department_flag = MEDSCI
-	head_announce = list("Medical")
+	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1

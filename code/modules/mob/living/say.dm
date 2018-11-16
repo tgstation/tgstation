@@ -7,25 +7,25 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"i" = "intercom",
 
 	// Department
-	"h" = "department",
-	"c" = "Command",
-	"n" = "Science",
-	"m" = "Medical",
-	"e" = "Engineering",
-	"s" = "Security",
-	"u" = "Supply",
-	"v" = "Service",
+	RADIO_KEY_DEPARTMENT = RADIO_CHANNEL_DEPARTMENT,
+	RADIO_KEY_COMMAND = RADIO_CHANNEL_COMMAND,
+	RADIO_KEY_SCIENCE = RADIO_CHANNEL_SCIENCE,
+	RADIO_KEY_MEDICAL = RADIO_CHANNEL_MEDICAL,
+	RADIO_KEY_ENGINEERING = RADIO_CHANNEL_ENGINEERING,
+	RADIO_KEY_SECURITY = RADIO_CHANNEL_SECURITY,
+	RADIO_KEY_SUPPLY = RADIO_CHANNEL_SUPPLY,
+	RADIO_KEY_SERVICE = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"t" = "Syndicate",
-	"y" = "CentCom",
+	RADIO_KEY_SYNDICATE = RADIO_CHANNEL_SYNDICATE,
+	RADIO_KEY_CENTCOM = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
 	"p" = "admin",
 	"d" = "deadmin",
 
 	// Misc
-	"o" = "AI Private", // AI Upload channel
+	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
 	"x" = "cords",		// vocal cords, used by Voice of God
 
 
@@ -37,25 +37,25 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"ø" = "intercom",
 
 	// Department
-	"ð" = "department",
-	"ñ" = "Command",
-	"ò" = "Science",
-	"ü" = "Medical",
-	"ó" = "Engineering",
-	"û" = "Security",
-	"ã" = "Supply",
-	"ì" = "Service",
+	"ð" = RADIO_CHANNEL_DEPARTMENT,
+	"ñ" = RADIO_CHANNEL_COMMAND,
+	"ò" = RADIO_CHANNEL_SCIENCE,
+	"ü" = RADIO_CHANNEL_MEDICAL,
+	"ó" = RADIO_CHANNEL_ENGINEERING,
+	"û" = RADIO_CHANNEL_SECURITY,
+	"ã" = RADIO_CHANNEL_SUPPLY,
+	"ì" = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"å" = "Syndicate",
-	"í" = "CentCom",
+	"å" = RADIO_CHANNEL_SYNDICATE,
+	"í" = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
 	"ç" = "admin",
 	"â" = "deadmin",
 
 	// Misc
-	"ù" = "AI Private",
+	"ù" = RADIO_CHANNEL_AI_PRIVATE,
 	"÷" = "cords"
 ))
 
