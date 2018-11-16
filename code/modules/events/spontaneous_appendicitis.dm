@@ -26,5 +26,5 @@
 
 		var/datum/disease/D = new /datum/disease/appendicitis()
 		H.ForceContractDisease(D, FALSE, TRUE)
-		atom_of_interest = H
+		announce_to_ghosts(H)
 		break

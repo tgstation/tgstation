@@ -554,10 +554,10 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/medicine/ephedrine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
@@ -823,7 +823,16 @@
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustBrainLoss(-2*REM)
-	if(prob(10))
+	..()
+	
+/datum/reagent/medicine/neurine
+	name = "Neurine"
+	id = "neurine"
+	description = "Reacts with neural tissue, helping reform damaged connections. Can cure minor traumas."
+	color = "#EEFF8F"
+
+/datum/reagent/medicine/neurine/on_mob_life(mob/living/carbon/C)
+	if(prob(15))
 		C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 	..()
 
@@ -871,10 +880,10 @@
 
 /datum/reagent/medicine/stimulants/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/medicine/stimulants/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/medicine/stimulants/on_mob_life(mob/living/carbon/M)
@@ -1153,10 +1162,10 @@
 
 /datum/reagent/medicine/changelinghaste/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/medicine/changelinghaste/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)

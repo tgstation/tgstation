@@ -76,6 +76,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	var/restricted = FALSE // Adds restrictions for VR/Events
 	var/list/restricted_species //Limits items to a specific species. Hopefully.
+	var/illegal_tech = TRUE // Can this item be deconstructed to unlock certain techweb research nodes?
 
 /datum/uplink_item/New()
 	. = ..()
@@ -477,6 +478,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/a357
 	cost = 4
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
@@ -625,6 +627,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/foambox/riot
 	cost = 2
 	surplus = 0
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/bioterror
 	name = "Box of Bioterror Syringes"
@@ -707,6 +710,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 // Stealthy Weapons
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
+
+/datum/uplink_item/stealthy_weapons/origami_kit
+	name = "Boxed Origami Kit"
+	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into\
+			perfectly aerodynamic (and potentially lethal) paper airplanes."
+	item = /obj/item/storage/box/syndie_kit/origami_bundle
+	cost = 14
+	surplus = 0
+	exclude_modes = list(/datum/game_mode/nuclear) //clown ops intentionally left in, because that seems like some s-tier shenanigans.
 
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
@@ -1583,6 +1595,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
+	illegal_tech = FALSE
 
 /datum/uplink_item/badass/balloon
 	name = "Syndicate Balloon"
@@ -1591,6 +1604,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/toy/syndicateballoon
 	cost = 20
 	cant_discount = TRUE
+	illegal_tech = FALSE
 
 /datum/uplink_item/badass/costumes
 	surplus = 0

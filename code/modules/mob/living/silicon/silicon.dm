@@ -399,7 +399,7 @@
 	return ..()
 
 /mob/living/silicon/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE

@@ -26,13 +26,21 @@ SLIME SCANNER
 	user.visible_message("<span class='suicide'>[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return TOXLOSS
 
-/obj/item/t_scanner/attack_self(mob/user)
-
+/obj/item/t_scanner/proc/toggle_on()
 	on = !on
 	icon_state = copytext(icon_state, 1, length(icon_state))+"[on]"
-
 	if(on)
 		START_PROCESSING(SSobj, src)
+	else
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/t_scanner/attack_self(mob/user)
+	toggle_on()
+
+/obj/item/t_scanner/cyborg_unequip(mob/user)
+	if(!on)
+		return
+	toggle_on()
 
 /obj/item/t_scanner/process()
 	if(!on)

@@ -573,7 +573,6 @@
 /obj/machinery/requests_console{
 	department = "Janitorial";
 	departmentType = 1;
-	pixel_x = 0;
 	pixel_y = 29
 	},
 /turf/open/floor/plasteel,
@@ -6446,10 +6445,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "alF" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Secure Storage Room";
 	req_access_txt = "65"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -7586,10 +7586,11 @@
 /area/maintenance/fore)
 "anE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "anF" = (
@@ -8550,10 +8551,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "apv" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -9968,10 +9970,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asl" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -10383,10 +10386,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "asR" = (
@@ -11101,10 +11105,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aut" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -12250,10 +12255,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "awI" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awJ" = (
@@ -12985,7 +12991,7 @@
 "aym" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Cargo Bay Warehouse Maintenance";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -16206,7 +16212,7 @@
 	id = "qm_warehouse";
 	name = "Warehouse Door Control";
 	pixel_y = -24;
-	req_access_txt = "50"
+	req_access_txt = "31"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -16247,7 +16253,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aEG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
@@ -16264,14 +16270,14 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aEH" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	icon_state = "0-2"
 	},
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aEI" = (
 /obj/machinery/airalarm{
 	dir = 4;
@@ -16857,7 +16863,7 @@
 /area/maintenance/port/fore)
 "aFN" = (
 /turf/closed/wall,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -16867,7 +16873,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFP" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -16877,7 +16883,7 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFQ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -16886,7 +16892,7 @@
 /obj/structure/cable/yellow,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
@@ -16910,7 +16916,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -16918,7 +16924,7 @@
 	},
 /obj/structure/cable/yellow,
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
@@ -16931,14 +16937,14 @@
 	icon_state = "0-4"
 	},
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aFV" = (
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
@@ -17594,7 +17600,7 @@
 	id = "qm_warehouse";
 	name = "Warehouse Door Control";
 	pixel_y = 24;
-	req_access_txt = "50"
+	req_access_txt = "31"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -17635,14 +17641,14 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
 	name = "Cargo Bay";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHk" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -17655,7 +17661,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17670,12 +17676,12 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
 	name = "Cargo Bay";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17685,7 +17691,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHn" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -17694,7 +17700,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHo" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17703,7 +17709,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHp" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 2
@@ -17712,7 +17718,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17725,7 +17731,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -17737,7 +17743,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -17746,7 +17752,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHt" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/newscaster{
@@ -17757,7 +17763,7 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aHu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/structure/cable/yellow{
@@ -18193,14 +18199,14 @@
 	},
 /obj/machinery/door/airlock/mining{
 	name = "Cargo Bay";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIs" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -18215,7 +18221,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIt" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Bay - Storage Wing Entrance";
@@ -18225,7 +18231,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -18233,7 +18239,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Storage Wing APC";
-	areastring = "/area/construction/storage/wing";
+	areastring = "/area/construction/storage_wing";
 	pixel_y = -27
 	},
 /obj/structure/cable/yellow{
@@ -18246,7 +18252,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/yellow{
@@ -18270,7 +18276,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIx" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
@@ -18294,7 +18300,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -18306,7 +18312,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -18325,7 +18331,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIA" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -18334,7 +18340,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -18343,7 +18349,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "aIC" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -19378,6 +19384,10 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/eastright{
+	name = "MULEbot Access";
+	req_one_access_txt = "31;48"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aKZ" = (
@@ -20545,6 +20555,7 @@
 	id = "QMLoaddoor";
 	layer = 4;
 	name = "Loading Doors";
+	req_access_txt = "31";
 	pixel_x = -27;
 	pixel_y = -5
 	},
@@ -20553,6 +20564,7 @@
 	id = "QMLoaddoor2";
 	layer = 4;
 	name = "Loading Doors";
+	req_access_txt = "31";
 	pixel_x = -27;
 	pixel_y = 5
 	},
@@ -26627,10 +26639,11 @@
 /area/storage/tools)
 "aZv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aZw" = (
@@ -27187,7 +27200,7 @@
 "bak" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Cargo Bay Maintenance";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -27217,6 +27230,13 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
+	},
+/obj/machinery/door/window/southleft{
+	name = "Cargo Disposal";
+	req_access_txt = "50"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -27309,7 +27329,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
 	name = "Cargo Bay";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -27322,7 +27342,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
 	name = "Cargo Bay";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -30688,7 +30708,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mailroom";
-	req_one_access_txt = "48;50"
+	req_access_txt = "50"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable/yellow{
@@ -30767,7 +30787,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining/glass{
 	name = "Cargo Office";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -40549,11 +40569,12 @@
 /area/vacant_room/office)
 "bzz" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/grunge/abandoned{
+/obj/machinery/door/airlock/grunge{
 	name = "Vacant Office";
 	opacity = 1;
 	req_access_txt = "32"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -43602,6 +43623,13 @@
 	},
 /obj/effect/turf_decal/loading_area{
 	dir = 4
+	},
+/obj/machinery/door/window/westright{
+	name = "Atmospherics Access";
+	req_access_txt = "24"
+	},
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -48410,10 +48438,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bPI" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Vacant Office Maintenance";
 	req_access_txt = "32"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bPJ" = (
@@ -49017,10 +49046,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bRf" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -50166,10 +50196,11 @@
 /area/engine/engineering)
 "bTr" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bTs" = (
@@ -53362,10 +53393,11 @@
 /turf/open/floor/plating/airless,
 /area/maintenance/solars/port/aft)
 "bZO" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -53450,6 +53482,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/door/window/westleft{
+	name = "Medical Delivery";
+	req_access_txt = "5"
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "bZZ" = (
@@ -55217,10 +55254,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cde" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -59649,10 +59687,11 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "clX" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_one_access_txt = "12;47"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -70805,10 +70844,11 @@
 	},
 /area/medical/medbay/aft)
 "cGP" = (
-/obj/machinery/door/airlock/abandoned{
+/obj/machinery/door/airlock{
 	name = "Medical Surplus Storeroom";
 	req_access_txt = "5"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cGQ" = (
@@ -72295,10 +72335,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Medical Surplus Storeroom";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cJx" = (
@@ -73005,10 +73046,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_one_access_txt = "12;47"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cKM" = (
@@ -80625,7 +80667,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "dhH" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -82838,10 +82880,11 @@
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
 "dDL" = (
-/obj/machinery/door/airlock/maintenance/abandoned{
+/obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
@@ -83221,7 +83264,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
-	name = "Circuitry Lab";
+	name = "Research Testing Range";
 	req_access_txt = "47"
 	},
 /obj/machinery/door/firedoor,
@@ -83674,14 +83717,14 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/mining{
 	name = "Cargo Bay";
-	req_one_access_txt = "48;50"
+	req_one_access_txt = "31;48"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/construction/storage/wing)
+/area/construction/storage_wing)
 "nLv" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"

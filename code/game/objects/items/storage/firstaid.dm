@@ -29,7 +29,7 @@
 /obj/item/storage/firstaid/regular/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 2,
 		/obj/item/stack/medical/ointment = 2,
@@ -44,7 +44,7 @@
 /obj/item/storage/firstaid/ancient/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment= 3)
@@ -67,7 +67,7 @@
 /obj/item/storage/firstaid/fire/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
 		/obj/item/reagent_containers/pill/oxandrolone = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1,
@@ -91,7 +91,7 @@
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/syringe/charcoal = 4,
 		/obj/item/storage/pill_bottle/charcoal = 2,
 		/obj/item/healthanalyzer = 1)
@@ -110,7 +110,7 @@
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/salbutamol = 4,
 		/obj/item/reagent_containers/hypospray/medipen = 2,
 		/obj/item/healthanalyzer = 1)
@@ -129,7 +129,7 @@
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
 		return
-	var/static/items_inside = list(	
+	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/styptic = 4,
 		/obj/item/stack/medical/gauze = 2,
 		/obj/item/healthanalyzer = 1)
@@ -152,8 +152,9 @@
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
 	new /obj/item/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
 /*

@@ -424,7 +424,7 @@
 	throwforce = 35
 	icon_state = "punching_glove"
 
-/obj/item/punching_glove/throw_impact(atom/hit_atom)
+/obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom

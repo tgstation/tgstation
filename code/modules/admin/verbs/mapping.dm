@@ -36,6 +36,9 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
+	#ifdef TESTING
+	/client/proc/see_dirty_varedits,
+	#endif
 	/client/proc/cmd_admin_test_atmos_controllers,
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
@@ -84,7 +87,22 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
 
+#ifdef TESTING
+GLOBAL_LIST_EMPTY(dirty_vars)
 
+/client/proc/see_dirty_varedits()
+	set category = "Mapping"
+	set name = "Dirty Varedits"
+
+	var/list/dat = list()
+	dat += "<h3>Abandon all hope ye who enter here</h3><br><br>"
+	for(var/thing in GLOB.dirty_vars)
+		dat += "[thing]<br>"
+		CHECK_TICK
+	var/datum/browser/popup = new(usr, "dirty_vars", "Dirty Varedits", 900, 750)
+	popup.set_content(dat.Join())
+	popup.open()
+#endif
 
 /client/proc/sec_camera_report()
 	set category = "Mapping"

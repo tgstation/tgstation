@@ -304,6 +304,11 @@
 	desc = "An advanced welder designed to be used in robotic systems."
 	toolspeed = 0.5
 
+/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
+	if(!isOn())
+		return
+	switched_on(user)
+
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return
 

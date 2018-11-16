@@ -102,6 +102,7 @@
 			changeling.absorbedcount += (target_ling.absorbedcount)
 			target_ling.stored_profiles.len = 1
 			target_ling.absorbedcount = 0
+			target_ling.was_absorbed = TRUE
 
 
 	changeling.chem_charges=min(changeling.chem_charges+10, changeling.chem_storage)

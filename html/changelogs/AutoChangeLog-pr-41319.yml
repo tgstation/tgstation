@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Flying / floating humans will no longer get stuck laying down if they have no legs."
-  - bugfix: "Alien larva will no longer get stuck laying down after ventcrawling."
