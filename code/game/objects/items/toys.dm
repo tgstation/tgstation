@@ -189,7 +189,7 @@
 		else
 			to_chat(user, "<span class='notice'>You reload [CAPGUN_AMMO_MAX - bullets] cap\s.</span>")
 			A.amount_left -= CAPGUN_AMMO_MAX - src.bullets
-			src.bullets = CAPGUN_AMMO_MAX
+			bullets = CAPGUN_AMMO_MAX
 		A.update_icon()
 		return 1
 	else
