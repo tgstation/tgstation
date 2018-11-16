@@ -76,6 +76,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
+	var/datum/component/waddle
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -83,11 +84,14 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
+	if(slot == SLOT_SHOES)
+		waddle = user.AddComponent(/datum/component/waddling)
 	if(user.mind && user.mind.assigned_role == "Clown")
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
+	QDEL_NULL(waddle)
 	if(user.mind && user.mind.assigned_role == "Clown")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
