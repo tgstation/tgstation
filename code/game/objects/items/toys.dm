@@ -223,7 +223,7 @@
 	var/amount_left = CAPGUN_AMMO_MAX
 
 /obj/item/toy/ammo/gun/update_icon()
-	src.icon_state = "genbox-[amount_left]"
+	icon_state = "genbox-[amount_left]"
 
 /obj/item/toy/ammo/gun/examine(mob/user)
 	..()
