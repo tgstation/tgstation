@@ -69,7 +69,7 @@
 	var/obj/effect/hallucination/simple/stalker_phantom/stalker
 
 /datum/brain_trauma/magic/stalker/on_gain()
-	var/turf/stalker_source = locate(owner.x + pick(-9, +9), owner.y + pick(-9,+9), owner.z) //random corner
+	var/turf/stalker_source = locate(owner.x + pick(-9, 9), owner.y + pick(-9, 9), owner.z) //random corner
 	stalker = new(stalker_source, owner)
 	..()
 	
