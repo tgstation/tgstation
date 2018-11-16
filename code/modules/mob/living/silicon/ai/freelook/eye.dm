@@ -165,7 +165,8 @@
 			to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
 			create_eye()
 
-	eyeobj.setLoc(loc)
+	if(eyeobj)
+		eyeobj.setLoc(loc)
 
 /mob/living/silicon/ai/proc/create_eye()
 	if(eyeobj)
