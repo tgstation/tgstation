@@ -363,7 +363,7 @@
 		icon_state = icon_living
 		density = initial(density)
 		mobility_flags = MOBILITY_FLAGS_DEFAULT
-		update_mobility()
+		set_resting(FALSE)
 		. = 1
 		setMovetype(initial(movement_type))
 
