@@ -12780,10 +12780,11 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload)
 "aBM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm{
+	pixel_y = 25
+	},
 /obj/structure/cable/yellow{
-	icon_state = "1-4"
+	icon_state = "2-4"
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -32403,6 +32404,9 @@
 /obj/item/flashlight/lamp/bananalamp{
 	pixel_y = 3
 	},
+/obj/structure/sign/poster/contraband/clown{
+	pixel_x = -32
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "bnv" = (
@@ -33265,14 +33269,8 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "boQ" = (
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/turret_protected/ai_upload";
-	dir = 1;
-	name = "AI Upload APC";
-	pixel_y = 24
-	},
 /obj/structure/cable/yellow{
-	icon_state = "0-8"
+	icon_state = "4-8"
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -39065,6 +39063,15 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
+"byY" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/rnd/production/techfab/department/engineering,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "byZ" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -39794,8 +39801,10 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "bAv" = (
-/obj/machinery/airalarm{
-	pixel_y = 25
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
@@ -39817,6 +39826,17 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/chapel,
 /area/chapel/main)
+"bAA" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/transit_tube/station/reverse/flipped,
+/obj/structure/transit_tube_pod{
+	icon_state = "pod";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "bAB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -39882,6 +39902,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"bAI" = (
+/obj/structure/lattice,
+/obj/structure/transit_tube/crossing,
+/turf/open/space/basic,
+/area/space/nearstation)
 "bAJ" = (
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/plasteel,
@@ -42442,6 +42467,12 @@
 /obj/item/toy/figure/ce,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/chief)
+"bEW" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai_upload)
 "bEX" = (
 /obj/machinery/airalarm{
 	pixel_y = 25
@@ -42644,6 +42675,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
+"bFn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4;
+	icon_state = "intact"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai_upload)
 "bFo" = (
 /obj/structure/table,
 /obj/item/cartridge/medical{
@@ -42995,6 +43036,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
+"bFQ" = (
+/obj/machinery/power/apc{
+	areastring = "/area/ai_monitored/turret_protected/ai_upload";
+	dir = 2;
+	name = "AI Upload APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/yellow,
+/turf/open/floor/circuit,
+/area/ai_monitored/turret_protected/ai_upload)
 "bFR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/segment{
@@ -44492,15 +44543,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
-"bIu" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/rnd/production/protolathe/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "bIv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -54648,17 +54690,6 @@
 /obj/structure/window/reinforced,
 /obj/structure/transit_tube/curved/flipped{
 	icon_state = "curved1";
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
-"ccT" = (
-/obj/structure/transit_tube/station/reverse/flipped,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/transit_tube_pod{
-	icon_state = "pod";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -74791,7 +74822,7 @@ aau
 cdf
 cdq
 cdq
-cdq
+bAI
 cdq
 cdA
 aau
@@ -75301,7 +75332,7 @@ bRi
 bRj
 acB
 aCK
-ccT
+bAA
 ash
 aaa
 aaa
@@ -76343,7 +76374,7 @@ aaa
 aau
 cdC
 cdq
-cdq
+bAI
 cdE
 aau
 aaa
@@ -91276,6 +91307,7 @@ aau
 cdC
 cdq
 cdq
+bAI
 cdq
 cdq
 cdq
@@ -91283,8 +91315,7 @@ cdq
 cdq
 cdq
 cdq
-cdq
-cdq
+bAI
 cdA
 aCL
 aNz
@@ -91998,7 +92029,7 @@ bPI
 aUX
 bRr
 caG
-bIu
+byY
 bsU
 aBK
 bpx
@@ -101211,10 +101242,10 @@ aRV
 bta
 aup
 aiV
-bAv
-anR
-aPT
-anR
+aBM
+bEW
+bFn
+bFQ
 aiV
 arf
 bHM
@@ -101468,7 +101499,7 @@ aRV
 bta
 aRW
 aiV
-bzI
+bfD
 alP
 aPY
 arO
@@ -101725,7 +101756,7 @@ aRV
 bta
 aup
 aka
-anR
+boQ
 anU
 aPY
 arP
@@ -101982,7 +102013,7 @@ asj
 bBE
 bXF
 aBL
-aBM
+bAv
 aPJ
 bys
 arP
@@ -102239,7 +102270,7 @@ aTC
 bEG
 aUh
 aiV
-bfD
+bzI
 alP
 bAn
 arO
@@ -102496,7 +102527,7 @@ aup
 aup
 aup
 aiV
-boQ
+anR
 anR
 bAp
 anR
