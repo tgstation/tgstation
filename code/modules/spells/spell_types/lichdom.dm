@@ -28,6 +28,9 @@
 		if(!hand_items.len)
 			to_chat(M, "<span class='caution'>You must hold an item you wish to make your phylactery...</span>")
 			return
+		if(!M.mind.hasSoul)
+			to_chat(user, "<span class='caution'>You do not possess a soul.</span>")
+			return
 
 		var/obj/item/marked_item
 
@@ -174,6 +177,6 @@
 		to_chat(user, "<span class='warning'>You do not possess a soul to tap into!</span>")
 	to_chat(user, "<span class='notice'>A gripping, cold emptiness flows through your body for a moment.</span>")
 	user.maxHealth -= 10
-	user.health = min(M.health - 10, M.maxHealth)
+	user.health = min(user.health - 10, user.maxHealth)
 	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)
 		spell.charge_counter = spell.charge_max
