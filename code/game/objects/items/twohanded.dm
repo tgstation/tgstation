@@ -495,8 +495,6 @@
 	
 	if(!proximity)
 		return
-	if(!istype(src, /obj/item/twohanded/spear/explosive) && isopenturf(AM)) //So you can actually melee with it
-		return
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
