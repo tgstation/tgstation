@@ -61,7 +61,7 @@
 				to_chat(user, "<span class='notice'>We bruteforce our way past the mental barriers of [target.name] and begin linking our minds!</span>")
 			else
 				to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
-			if(do_mob(user,user,50))
+			if(do_mob(user,target,50))
 				if((target in view(range)))
 					to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 					success = TRUE
