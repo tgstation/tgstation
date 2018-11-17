@@ -250,11 +250,7 @@
 
 /mob/living/simple_animal/hostile/big_legion/Initialize()
 	.=..()
-	//TODO: make these defines
-	var/mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion)
-	var/spawn_time = 200
-	var/max_mobs = 3
-	AddComponent(/datum/component/spawner, mob_types, spawn_time, faction, "peels itself off from", max_mobs)
+	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
 
 //Tendril-spawned Legion remains, the charred skeletons of those whose bodies sank into laval or fell into chasms.
 /obj/effect/mob_spawn/human/corpse/charredskeleton
