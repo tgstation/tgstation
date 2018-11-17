@@ -13,6 +13,7 @@
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
+	var/thankscount
 	var/cannonmode = FALSE
 	var/cannonbusy = FALSE
 
@@ -185,3 +186,10 @@
 		playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 		L.throw_at(A, 10, 2)
 		return COMSIG_MOB_CANCEL_CLICKON
+
+/obj/vehicle/sealed/car/clowncar/proc/ThanksCounter()
+	thankscount++
+	if(thankscount >= 100)
+		for(var/i in return_drivers())
+			var/mob/busdriver = i
+			SSmedals.UnlockMedal(MEDAL_THANKSALOT,busdriver.client)
