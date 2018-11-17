@@ -12,13 +12,21 @@
 	var/cooldown = 300
 	var/next_use = 0
 	var/obj/item/swapper/linked_swapper
-	
+
 /obj/item/swapper/Destroy()
 	if(linked_swapper)
 		linked_swapper.linked_swapper = null //*inception music*
+		linked_swapper.update_icon()
 		linked_swapper = null
 	return ..()
-	
+
+/obj/item/swapper/update_icon()
+	if(linked_swapper)
+		icon_state = "swapper-linked"
+	else
+		icon_state = "swapper"
+	..()
+
 /obj/item/swapper/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/swapper))
 		var/obj/item/swapper/other_swapper = I
@@ -31,9 +39,11 @@
 		to_chat(user, "<span class='notice'>You establish a quantum link between the two devices.</span>")
 		linked_swapper = other_swapper
 		other_swapper.linked_swapper = src
+		update_icon()
+		linked_swapper.update_icon()
 	else
 		return ..()
-	
+
 /obj/item/swapper/attack_self(mob/living/user)
 	if(world.time < next_use)
 		to_chat(user, "<span class='warning'>[src] is still recharging.</span>")
@@ -46,8 +56,9 @@
 		return
 	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
 	to_chat(user, "<span class='notice'>You activate [src].</span>")
+	next_use = world.time + cooldown //only the one used goes on cooldown
 	addtimer(CALLBACK(src, .proc/swap, user), 25)
-	
+
 /obj/item/swapper/examine(mob/user)
 	. = ..()
 	if(world.time < next_use)
@@ -61,36 +72,37 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
 	to_chat(user, "<span class='notice'>You break the current quantum link.</span>")
+	linked_swapper.linked_swapper = null
+	linked_swapper.update_icon()
 	linked_swapper = null
-	
-//Gets the topmost teleportable container	
+	update_icon()
+
+//Gets the topmost teleportable container
 /obj/item/swapper/proc/get_teleportable_container()
 	var/atom/movable/teleportable = src
 	while(ismovableatom(teleportable.loc))
-		var/atom/movable/AM = loc
+		var/atom/movable/AM = teleportable.loc
 		if(AM.anchored)
 			break
 		if(isliving(AM))
 			var/mob/living/L = AM
 			if(L.buckled && L.buckled.anchored)
-				break		
+				break
 		teleportable = AM
 	return teleportable
-	
+
 /obj/item/swapper/proc/swap(mob/user)
 	if(QDELETED(linked_swapper) || world.time < linked_swapper.cooldown)
 		return
-		
+
 	var/atom/movable/A = get_teleportable_container()
 	var/atom/movable/B = linked_swapper.get_teleportable_container()
 	var/turf/turf_A = get_turf(A)
 	var/turf/turf_B = get_turf(B)
-	
+
 	//TODO: add a sound effect or visual effect
-	if(do_teleport(A, turf_B, forced_teleport = TRUE))
-		do_teleport(B, turf_A, forced_teleport = TRUE)
+	if(do_teleport(A, turf_B, force_teleport = TRUE))
+		do_teleport(B, turf_A, force_teleport = TRUE)
 		if(ismob(B))
 			var/mob/M = B
 			to_chat(M, "<span class='warning'>[linked_swapper] suddenly activates, and you find yourself somewhere else.</span>")
-		next_use = world.time + cooldown //only the one used goes on cooldown
-	
