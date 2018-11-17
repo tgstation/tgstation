@@ -67,10 +67,9 @@
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/decal/cleanable/flour
-	name = "flour"
-	desc = "It's still good. Four second rule!"
-	icon_state = "flour"
+/obj/effect/decal/cleanable/dirt/dust
+	name = "dust"
+	desc = "A thin layer of dust coating the floor."
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
@@ -143,33 +142,6 @@
 	. = ..()
 	icon_state += "-old"
 
-/obj/effect/decal/cleanable/tomato_smudge
-	name = "tomato smudge"
-	desc = "It's red."
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
-
-/obj/effect/decal/cleanable/plant_smudge
-	name = "plant smudge"
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("smashed_plant")
-
-/obj/effect/decal/cleanable/egg_smudge
-	name = "smashed egg"
-	desc = "Seems like this one won't hatch."
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
-
-/obj/effect/decal/cleanable/pie_smudge //honk
-	name = "smashed pie"
-	desc = "It's pie cream from a cream pie."
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("smashed_pie")
-
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
 	desc = "A pile of chemicals. You can't quite tell what's inside it."
@@ -193,17 +165,11 @@
 	pixel_y = rand(-10, 10)
 	. = ..()
 
-/obj/effect/decal/cleanable/salt
-	name = "salt pile"
-	desc = "A sizable pile of table salt. Someone must be upset."
-	icon = 'icons/effects/tomatodecal.dmi'
-	icon_state = "salt_pile"
-	gender = NEUTER
-
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
 	desc = "The herpes of arts and crafts."
 	icon = 'icons/effects/atmospherics.dmi'
+	icon_state = "plasma_old"
 	gender = NEUTER
 
 /obj/effect/decal/cleanable/glitter/pink
@@ -222,6 +188,7 @@
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
+	icon = 'icons/effects/tomatodecal.dmi'
 	color = "#C8A5DC"
 
 /obj/effect/decal/cleanable/insectguts
