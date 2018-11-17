@@ -4,7 +4,6 @@
 
 #define RADIO_CHANNEL_COMMON "Common"
 #define RADIO_KEY_COMMON ";"
-#define RADIO_TOKEN_COMMON ";"
 
 #define RADIO_CHANNEL_SECURITY "Security"
 #define RADIO_KEY_SECURITY "s"
