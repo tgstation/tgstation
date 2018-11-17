@@ -16,7 +16,7 @@
 	var/convert_damage = FALSE //If you want to convert the caster's health to the shift, and vice versa.
 	var/convert_damage_type = BRUTE //Since simplemobs don't have advanced damagetypes, what to convert damage back into.
 
-	var/shapeshift_type
+	var/mob/living/shapeshift_type
 	var/list/possible_shapes = list(/mob/living/simple_animal/mouse,\
 		/mob/living/simple_animal/pet/dog/corgi,\
 		/mob/living/simple_animal/hostile/carp/ranged/chaos,\
@@ -43,17 +43,33 @@
 			if(!shapeshift_type) //If you aren't gonna decide I am!
 				shapeshift_type = pick(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
-		
-		if(M.movement_type & (VENTCRAWLING)) //probably not a great idea after all
-			var/turf/turfyoudieon = get_turf(M)
-			var/obj/machinery/atmospherics/pipe/pipeyoudiein = locate() in turfyoudieon
-			if(!turfyoudieon || !pipeyoudiein) //how are you ventcrawling if there is no pipe or turf
-				return
-			to_chat(M, "<span class='userdanger'>Shapeshifting inside of [pipeyoudiein] quickly turns you into a bloody mush.</span>")
-			M.remove_ventcrawl()
-			M.gib()
-			pipeyoudiein.Destroy()
+
 		var/obj/shapeshift_holder/S = locate() in M
+		if(M.movement_type & (VENTCRAWLING))
+			var/mob/living/ventcrawlmaybe = shapeshift_type
+			if((S && !S.stored.ventcrawler) || !shapeshift_type.ventcrawler) //you're shapeshifting into something that can't fit into a vent
+				var/turf/turfyoudieon = get_turf(M)
+				var/obj/machinery/atmospherics/pipe/pipeyoudiein = locate() in turfyoudieon
+				if(!turfyoudieon || !pipeyoudiein) //not sure how this happens but sanity
+					return
+				to_chat(M, "<span class='userdanger'>Shapeshifting inside of [pipeyoudiein] quickly turns you into a bloody mush.</span>")
+				var/list/bloody_vents = list() //the vents we picked to splatter gore
+				var/list/viable_vents = list() //list of vents and scrubbers in the pipeline
+				for(var/obj/machinery/atmospherics/components/unary/possiblevent in pipeyoudiein.parent.other_atmosmch)
+					if(istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_pump) || istype(possiblevent, /obj/machinery/atmospherics/components/unary/vent_scrubber))
+						viable_vents += possiblevent
+				for(var/i in 1 to 3)
+					if(!viable_vents.len)
+						break
+					var/chosen_one = pick(viable_vents)
+					bloody_vents += chosen_one
+					viable_vents.Remove(chosen_one) //so we can't pick the same vent twice
+				for(var/obj/vent in bloody_vents)
+					new /obj/effect/gibspawner/generic(get_turf(vent))
+				M.remove_ventcrawl()
+				M.death()
+				qdel(M)
+				return
 		if(S)
 			Restore(M)
 		else
