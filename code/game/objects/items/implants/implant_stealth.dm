@@ -3,6 +3,10 @@
 	desc = "Allows you to be hidden in plain sight."
 	actions_types = list(/datum/action/item_action/agent_box)
 
+/obj/item/implanter/stealth
+	name = "implanter (stealth)"
+	imp_type = /obj/item/implant/stealth
+
 //Box Object
 
 /obj/structure/closet/cardboard/agent

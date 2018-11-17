@@ -110,11 +110,15 @@
 	return ..()
 
 
-/obj/item/implanter/explosive
-	name = "implanter (explosive)"
+/obj/item/implanter/microbomb
+	name = "implanter (microbomb)"
 	imp_type = /obj/item/implant/explosive
 
-/obj/item/implantcase/explosive
+/obj/item/implantcase/microbomb
 	name = "implant case - 'Explosive'"
 	desc = "A glass case containing an explosive implant."
 	imp_type = /obj/item/implant/explosive
+
+/obj/item/implanter/macrobomb
+	name = "implanter (macrobomb)"
+	imp_type = /obj/item/implant/explosive/macro
