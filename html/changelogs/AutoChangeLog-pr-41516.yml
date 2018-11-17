@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Added concealed weapon bays. They allow a non-combat mecha to equip a mecha weapon. They can be purchased by traitor roboticists and research directors from the traitor uplink."
