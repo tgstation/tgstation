@@ -9,14 +9,13 @@ GLOBAL_LIST_EMPTY(outputs_list)
 /datum/outputs/New()
 	GLOB.outputs_list[src.type] = src
 
-/datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
-	var/sound = pickweight(sounds)
+/datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+	//problem is taking sound out
 	if(receiver.client)
 		//Handle sound
-		if(sound && receiver.can_hear())
-			if(!S)
-				S = sound(get_sfx(sound))
-
+		if(sounds.len && receiver.can_hear())
+			var/soundin = pickweight(sounds)
+			var/sound/S = sound(get_sfx(soundin))
 			S.wait = 0 //No queue
 			S.channel = channel || open_sound_channel()
 			S.volume = vol
@@ -28,7 +27,7 @@ GLOBAL_LIST_EMPTY(outputs_list)
 					S.frequency = get_rand_frequency()
 
 			if(isturf(turf_source))
-				var/turf/T = get_turf(src)
+				var/turf/T = get_turf(receiver)
 
 				//sound volume falloff with distance
 				var/distance = get_dist(T, turf_source)
@@ -71,7 +70,7 @@ GLOBAL_LIST_EMPTY(outputs_list)
 		var/mob/living/L = receiver
 		if(state && L.audiolocation)
 			icon = image('icons/sound_icon.dmi', turf_source, state, HUD_LAYER)
-			if(sound && vol)
+			if(sounds.len && vol)
 				icon.alpha = icon.alpha * (vol / 100)
 			receiver.client.images += icon
 			addtimer(CALLBACK(src, .proc/remove_image, icon, receiver), 7, TIMER_UNIQUE)

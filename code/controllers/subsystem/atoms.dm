@@ -130,6 +130,7 @@ SUBSYSTEM_DEF(atoms)
 /datum/controller/subsystem/atoms/proc/setupOutputs()
 	for(var/A in subtypesof(/datum/outputs))
 		new A()
+		world << "[A]"
 
 /datum/controller/subsystem/atoms/proc/InitLog()
 	. = ""

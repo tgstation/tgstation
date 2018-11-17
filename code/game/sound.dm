@@ -17,22 +17,22 @@
 	var/list/listeners = SSmobs.clients_by_zlevel[z]
 	if(!ignore_walls) //these sounds don't carry through walls
 		listeners = listeners & hearers(maxdistance,turf_source)
-	var/sound/S = sound(get_sfx(input))
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.sound_or_datum(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
+			M.sound_or_datum(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.sound_or_datum(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
+			M.sound_or_datum(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 
-/mob/proc/sound_or_datum(turf/turf_source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S )
-	if(sound(get_sfx(input)))
-		playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
-	else
+/mob/proc/sound_or_datum(turf/turf_source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+	if(input in subtypesof(/datum/outputs))
 		var/datum/outputs/bundle = GLOB.outputs_list[input]
-		bundle.send_info(src, turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
+		bundle.send_info(src, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	else
+		var/sound/S = sound(get_sfx(input))
+		playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
 
 //kept for legacy support and uploaded admin sounds
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
