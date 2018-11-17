@@ -64,7 +64,7 @@
 			new /obj/item/implanter/uplink/precharged(src)
 			new /obj/item/implanter/emp(src)
 			new /obj/item/implanter/adrenalin(src)
-			new /obj/item/implanter/microbomb(src)
+			new /obj/item/implanter/explosive(src)
 			new /obj/item/implanter/storage(src)
 
 		if("hacker") // 26 tc
@@ -110,7 +110,7 @@
 		if("metaops") // 30 tc
 			new /obj/item/clothing/suit/space/hardsuit/syndi(src) // 8 tc
 			new /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted(src) // 8 tc
-			new /obj/item/implanter/microbomb(src) // 2 tc
+			new /obj/item/implanter/explosive(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/ammo_box/magazine/m12g(src) // 2 tc
 			new /obj/item/grenade/plastic/c4 (src) // 1 tc
@@ -151,13 +151,13 @@
 	name = "microbomb implant box"
 
 /obj/item/storage/box/syndie_kit/imp_microbomb/PopulateContents()
-	new /obj/item/implanter/microbomb(src)
+	new /obj/item/implanter/explosive(src)
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb
 	name = "macrobomb implant box"
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
-	new /obj/item/implanter/macrobomb(src)
+	new /obj/item/implanter/explosive_macro(src)
 
 /obj/item/storage/box/syndie_kit/imp_uplink
 	name = "uplink implant box"
