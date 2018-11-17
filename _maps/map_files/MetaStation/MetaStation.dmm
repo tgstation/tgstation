@@ -52245,9 +52245,7 @@
 /area/engine/atmos)
 "bXn" = (
 /obj/machinery/atmospherics/pipe/manifold/dark/visible,
-/obj/machinery/meter{
-	color = ""
-	},
+/obj/machinery/meter,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bXo" = (
