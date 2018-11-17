@@ -78,6 +78,18 @@
 
 	random_color = FALSE
 
+/obj/item/wirecutters/syndie
+	name = "wirecutters"
+	desc = "This cuts wires."
+	icon_state = "cutters_red"
+	toolspeed = 0.1
+
+/obj/item/wirecutters/syndie/op
+	name = "syndicate wirecutters"
+	desc = "Special wirecutters with a hidden powered grip."
+	icon_state = "cutters_syndie"
+	random_color = FALSE
+
 /obj/item/wirecutters/cyborg
 	name = "wirecutters"
 	desc = "This cuts wires."

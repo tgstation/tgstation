@@ -169,3 +169,14 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 	toolspeed = 0.1
+
+/obj/item/multitool/abductor/syndi
+	name = "multitool"
+	desc = "Used for pulsing wires to test which to cut. Not recommended by doctors."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "multitool"
+
+/obj/item/multitool/abductor/syndi/op
+	name = "syndicate multitool"
+	desc = "Military issue variant. Exposes wire functions to the user."
+	icon_state = "multitool-syd"

@@ -44,6 +44,18 @@
 	toolspeed = 0.1
 
 
+/obj/item/wrench/syndie
+	name = "wrench"
+	desc = "A wrench with common uses. Can be found in your hand."
+	icon_state = "wrench"
+	toolspeed = 0.1
+
+/obj/item/wrench/syndie/op
+	name = "syndicate wrench"
+	desc = "Syndicate wrench with internal grip stabilizer to help loosen bolts."
+	icon_state = "wrench_syndie"
+
+
 /obj/item/wrench/power
 	name = "hand drill"
 	desc = "A simple powered hand drill. It's fitted with a bolt bit."

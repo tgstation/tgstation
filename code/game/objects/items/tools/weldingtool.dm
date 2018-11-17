@@ -313,6 +313,17 @@
 	return
 
 
+/obj/item/weldingtool/largetank/syndie
+	name = "industrial welding tool"
+	desc = "A slightly larger welder with a larger tank."
+	toolspeed = 0.1
+
+/obj/item/weldingtool/largetank/syndie/op
+	name = "syndicate welding tool"
+	desc = "Special syndicate issue welding tool, has an expanded fuel capacity and operates faster."
+	icon_state ="indwelder_syndie"
+
+
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"
 	desc = "A miniature welder used during emergencies."

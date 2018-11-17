@@ -121,9 +121,31 @@
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool/largetank(src)
-	new /obj/item/crowbar/red(src)
+	new /obj/item/crowbar/syndie(src)
 	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool(src)
+	new /obj/item/clothing/gloves/combat(src)
+
+/obj/item/weapon/storage/toolbox/syndicate/stealth
+
+/obj/item/storage/toolbox/syndicate/stealth/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench/syndie(src)
+	new /obj/item/weldingtool/largetank/syndie(src)
+	new /obj/item/crowbar/syndie(src)
+	new /obj/item/wirecutters/syndie(src)
+	new /obj/item/multitool/abductor/syndi(src)
+	new /obj/item/clothing/gloves/combat(src)
+
+/obj/item/weapon/storage/toolbox/syndicate/op
+
+/obj/item/storage/toolbox/syndicate/stealth/op/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench/syndie/op(src)
+	new /obj/item/weldingtool/largetank/syndie/op(src)
+	new /obj/item/crowbar/syndie/op(src)
+	new /obj/item/wirecutters/syndie/op(src)
+	new /obj/item/multitool/abductor/syndi/op(src)
 	new /obj/item/clothing/gloves/combat(src)
 
 /obj/item/storage/toolbox/drone
