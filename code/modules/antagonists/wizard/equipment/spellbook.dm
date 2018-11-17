@@ -247,6 +247,12 @@
 	category = "Assistance"
 	cost = 1
 
+/datum/spellbook_entry/tap
+	name = "Soul Tap"
+	spell_type = /obj/effect/proc_holder/spell/self/tap
+	category = "Assistance"
+	cost = 3
+
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
 	spell_type = /obj/effect/proc_holder/spell/spacetime_dist
