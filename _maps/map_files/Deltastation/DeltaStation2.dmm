@@ -5234,7 +5234,6 @@
 "aoD" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
-/obj/item/toy/syndicateballoon,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
