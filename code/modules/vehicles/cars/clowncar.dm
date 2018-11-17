@@ -33,6 +33,13 @@
 	. = ..()
 	playsound(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
 
+/obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
+	. = ..()
+	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
+		for(var/i in return_drivers())
+			var/mob/voreman = i
+			SSmedals.UnlockMedal(MEDAL_CLOWNCARKING,voreman.client)
+
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_CLICKON)
