@@ -1553,6 +1553,15 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 20
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/concealed_weapon_bay
+	name = "Concealed Weapon Bay"
+	desc = "A modification for non-combat mechas that allows them to equip one piece of equipment designed for combat mechs. \
+			It also hides the equipped weapon from plain sight. \
+			Only one can fit on a mecha."
+	item = /obj/item/mecha_parts/concealed_weapon_bay
+	cost = 3
+	restricted_roles = list("Roboticist", "Research Director")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
