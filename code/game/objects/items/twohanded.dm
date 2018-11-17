@@ -490,12 +490,6 @@
 /obj/item/twohanded/spear/update_icon()
 	icon_state = "[icon_prefix][wielded]"
 
-/obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
-	. = ..()
-	
-	if(!proximity)
-		return
-
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/shard/tip = locate() in parts_list
 	if (istype(tip, /obj/item/shard/plasma))
