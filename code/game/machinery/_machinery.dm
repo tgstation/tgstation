@@ -372,7 +372,7 @@ Class Procs:
 /obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == "melee" && damage_amount < damage_deflection)
 		return 0
-	. = ..()
+	return ..()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
