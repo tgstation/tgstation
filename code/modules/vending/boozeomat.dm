@@ -43,9 +43,6 @@
 	extra_price = 50
 	payment_department = ACCOUNT_SRV
 
-/obj/machinery/vending/boozeomat/pirate //space pirate ghost role shuttle (pirate_default.dmm)
-	onstation = FALSE
-
 /obj/machinery/vending/boozeomat/all_access
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. This model appears to have no access restrictions."
 	req_access = null
