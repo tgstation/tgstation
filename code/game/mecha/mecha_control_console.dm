@@ -91,7 +91,7 @@
 			M.trackers -= src
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/mecha/M)
+/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/mecha/M)
 	if(!..())
 		return
 	M.trackers += src
