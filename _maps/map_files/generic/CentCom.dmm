@@ -10731,6 +10731,10 @@
 	},
 /turf/open/floor/grass,
 /area/centcom/holding)
+"ye" = (
+/obj/machinery/telecomms/allinone/indestructable,
+/turf/open/floor/engine/cult,
+/area/wizard_station)
 "yf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -24822,7 +24826,7 @@ qE
 qE
 qE
 qE
-qZ
+ye
 qZ
 FT
 Gr
