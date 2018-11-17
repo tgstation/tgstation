@@ -213,9 +213,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	. = ..()
 	name = "alien hunter ([rand(1, 1000)])"
 
-/obj/effect/hallucination/simple/xeno/throw_impact(A)
+/obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	update_icon("alienh_pounce")
-	if(A == target && target.stat!=DEAD)
+	if(hit_atom == target && target.stat!=DEAD)
 		target.Paralyze(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 

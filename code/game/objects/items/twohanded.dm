@@ -555,7 +555,7 @@
 	icon_state = "spearbomb[wielded]"
 
  //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/explosive/throw_impact(atom/target)
+/obj/item/twohanded/spear/explosive/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!.) //not caught
 		explosive.prime()
