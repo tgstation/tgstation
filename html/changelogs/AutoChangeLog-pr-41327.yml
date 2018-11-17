@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - admin: "Fixed AI fingersprints not getting logged"
-  - admin: "Fixed some door interactions not being logged at all."
-  - admin: "Turret control interactions are now in mob combat logs"

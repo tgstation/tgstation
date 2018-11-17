@@ -358,6 +358,7 @@
 #include "code\datums\components\rotation.dm"
 #include "code\datums\components\signal_redirect.dm"
 #include "code\datums\components\slippery.dm"
+#include "code\datums\components\spill.dm"
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeak.dm"
 #include "code\datums\components\stationloving.dm"
