@@ -1,0 +1,5 @@
+author: "CRTXBacon"
+delete-after: True
+changes: 
+  - refactor: "Added the Race-Restricted category to syndicate uplinks, which can be used for species restricted traitor items."
+  - rscadd: "Adds an extra-bright syndicate brand lamp as an uplink item exclusive to mothpeople."
