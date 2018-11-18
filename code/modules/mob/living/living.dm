@@ -939,18 +939,22 @@
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return
-	var/L_old_on_fire = L.on_fire
+		
+	if(on_fire)
+		if(L.on_fire) // If they were also on fire
+			var/firesplit = (fire_stacks + L.fire_stacks)/2
+			fire_stacks = firesplit
+			L.fire_stacks = firesplit
+		else // If they were not
+			fire_stacks /= 2
+			L.fire_stacks += fire_stacks
+			if(L.IgniteMob()) // Ignite them
+				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
-	if(on_fire) //Only spread fire stacks if we're on fire
-		fire_stacks /= 2
-		L.fire_stacks += fire_stacks
-		if(L.IgniteMob())
-			log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
-
-	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
+	else if(L.on_fire) // If they were on fire and we were not
 		L.fire_stacks /= 2
 		fire_stacks += L.fire_stacks
-		IgniteMob()
+		IgniteMob() // Ignite us
 
 //Mobs on Fire end
 
