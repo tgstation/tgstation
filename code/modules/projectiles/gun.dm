@@ -476,8 +476,15 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/gun/pickup(mob/user)
+	..()
+	if(azoom)
+		azoom.Grant(user)
+
 /obj/item/gun/dropped(mob/user)
 	. = ..()
+	if(azoom)
+		azoom.Remove(user)
 	if(zoomed)
 		zoom(user,FALSE)
 
