@@ -36,7 +36,7 @@
 	spawned_mobs = null
 
 /datum/component/spawner/proc/try_spawn_mob()
-	var/atom/P = parent //might also be a mob, but who cares
+	var/atom/P = parent 
 	if(spawned_mobs.len >= max_mobs)
 		return 0
 	if(spawn_delay > world.time)
@@ -44,7 +44,7 @@
 	spawn_delay = world.time + spawn_time
 	var/chosen_mob_type = pick(mob_types)
 	var/mob/living/simple_animal/L = new chosen_mob_type(P.loc)
-	//todo: mark as admin spawned if necessary
+	L.flags_1 |= (P.flags_1 & ADMIN_SPAWNED_1)	
 	spawned_mobs += L
 	L.nest = src
 	L.faction = src.faction
