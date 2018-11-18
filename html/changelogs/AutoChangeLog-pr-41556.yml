@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "The Snowdin waste loop air injector is now on the correct piping layer."
-  - tweak: "Tweaked the Snowdin VR atmos area so it looks properly broken."

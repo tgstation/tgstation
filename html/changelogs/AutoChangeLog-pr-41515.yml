@@ -1,4 +1,0 @@
-author: "YPOQ"
-delete-after: True
-changes: 
-  - bugfix: "Simple mobs will no longer be stuck resting after being killed and then revived"

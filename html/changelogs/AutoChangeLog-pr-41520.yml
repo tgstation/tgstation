@@ -1,4 +1,0 @@
-author: "Swindly"
-delete-after: True
-changes: 
-  - bugfix: "Fixed glowsticks not running out of fuel or turning off when they have no fuel"
