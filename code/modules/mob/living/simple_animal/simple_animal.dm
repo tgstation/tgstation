@@ -328,7 +328,6 @@
 		health = 0
 		icon_state = icon_dead
 		density = FALSE
-		set_resting(TRUE)
 		..()
 
 /mob/living/simple_animal/proc/CanAttack(atom/the_target)

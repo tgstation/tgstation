@@ -83,6 +83,12 @@
 			M.trackers -= src
 	return ..()
 
+/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/mecha/M)
+	if(!..())
+		return
+	M.trackers += src
+	M.diag_hud_set_mechtracking()
+
 /obj/item/mecha_parts/mecha_tracking/proc/in_mecha()
 	if(ismecha(loc))
 		return loc
