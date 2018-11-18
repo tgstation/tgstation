@@ -21,9 +21,9 @@
 	icon_state = "floor1-old"
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
-	icon_state += "-old" //This IS necessary because the parent /blood type uses icon randomization.
 	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
-	return ..()
+	. = ..()
+	icon_state = "[icon_state]-old" //change from the normal blood icon selected from random_icon_states in the parent's Initialize to the old dried up blood.
 
 /obj/effect/decal/cleanable/blood/splatter
 	icon_state = "gibbl1"

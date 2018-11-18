@@ -21240,14 +21240,6 @@
 /turf/open/floor/plating,
 /area/vacant_room/commissary)
 "aYj" = (
-/obj/machinery/power/apc{
-	areastring = "/area/vacant_room/commissary";
-	dir = 4;
-	name = "Vacant Commissary APC";
-	pixel_x = 27;
-	pixel_y = 2
-	},
-/obj/structure/cable/yellow,
 /obj/structure/rack,
 /obj/item/wrench,
 /obj/item/screwdriver,
@@ -36004,7 +35996,7 @@
 	dir = 5
 	},
 /obj/machinery/computer/security/telescreen/toxins{
-	dir = 4;
+	dir = 8;
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel,
@@ -39271,9 +39263,6 @@
 	name = "Testing Lab APC";
 	areastring = "/area/science/misc_lab";
 	pixel_x = 26
-	},
-/obj/structure/cable{
-	icon_state = "0-8"
 	},
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -55559,6 +55548,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
+"dfx" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "dgS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -55673,6 +55666,13 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"elq" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "epI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -57209,6 +57209,20 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"soQ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/power/apc{
+	areastring = "/area/vacant_room/commissary";
+	dir = 4;
+	name = "Vacant Commissary APC";
+	pixel_x = 27;
+	pixel_y = 2
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "suO" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel,
@@ -79894,8 +79908,8 @@ aTJ
 aPK
 cCl
 aYh
-aQM
-aQM
+elq
+dfx
 cCm
 aSg
 aPz
@@ -80151,7 +80165,7 @@ aTI
 aPK
 aWB
 cCj
-sST
+soQ
 sST
 bbU
 aSg
