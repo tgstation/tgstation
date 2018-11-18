@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Space pirates can now afford their own vending machine again."
+  - bugfix: "Removed unconnected vents/scrubbers from the derelict space ruin."
+  - bugfix: "The Boxstation bomb test site telescreen now faces the correct way."
