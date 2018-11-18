@@ -97,6 +97,8 @@
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
+	if(!isliving(user))
+		return
 	if(user.get_active_held_item() != src)
 		to_chat(user, "You must hold the [src] in your hand to do this.")
 		return
