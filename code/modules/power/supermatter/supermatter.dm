@@ -683,8 +683,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/atom/movable/pulled_object = P
 			if(ishuman(P))
 				var/mob/living/carbon/human/H = P
-				H.apply_effect(40, EFFECT_PARALYZE, 0)
-			if(pulled_object && !pulled_object.anchored && !ishuman(P))
+				if(!H.mob_negates_gravity())
+					H.visible_message("<span class='danger'>[H] is suddenly knocked down, as if their legs have been pulled out from underneath them!</span>",\
+						"<span class='userdanger'>A sudden gravitational pulse knocks you down!</span>",\
+						"<span class='italics'>You hear a thud.</span>")
+					H.apply_effect(40, EFFECT_PARALYZE, 0)
+			else if(pulled_object && !pulled_object.anchored)
 				step_towards(pulled_object,center)
 				step_towards(pulled_object,center)
 				step_towards(pulled_object,center)
