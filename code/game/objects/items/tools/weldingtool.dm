@@ -314,9 +314,7 @@
 
 
 /obj/item/weldingtool/largetank/syndie
-	name = "industrial welding tool"
-	desc = "A slightly larger welder with a larger tank."
-	toolspeed = 0.1
+	toolspeed = 0.5
 
 /obj/item/weldingtool/largetank/syndie/op
 	name = "syndicate welding tool"

@@ -45,10 +45,7 @@
 
 
 /obj/item/wrench/syndie
-	name = "wrench"
-	desc = "A wrench with common uses. Can be found in your hand."
-	icon_state = "wrench"
-	toolspeed = 0.1
+	toolspeed = 0.5
 
 /obj/item/wrench/syndie/op
 	name = "syndicate wrench"

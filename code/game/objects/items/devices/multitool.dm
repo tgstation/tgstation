@@ -178,5 +178,5 @@
 
 /obj/item/multitool/abductor/syndi/op
 	name = "syndicate multitool"
-	desc = "Military issue variant. Exposes wire functions to the user."
+	desc = "A military-issue variant of the standard Syndicate multitool. This upgraded device is capable of exposing wire functions to the user."
 	icon_state = "multitool-syd"

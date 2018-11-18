@@ -43,14 +43,12 @@
 	toolspeed = 0.1
 
 /obj/item/crowbar/syndie
-	name = "wrench"
-	desc = "A small crowbar. This handy tool is useful for lots of things, such as prying floor tiles or opening unpowered doors."
-	icon_state = "crowbar"
-	toolspeed = 0.1
+	toolspeed = 0.5
 
 /obj/item/crowbar/syndie/op
 	name = "syndicate wrench"
 	desc = "Specialized crowbar using superior materials that make it lightweight and sturdier."
+	icon_state = "crowbar_syndie"
 
 /obj/item/crowbar/large
 	name = "crowbar"

@@ -79,10 +79,7 @@
 	random_color = FALSE
 
 /obj/item/wirecutters/syndie
-	name = "wirecutters"
-	desc = "This cuts wires."
-	icon_state = "cutters_red"
-	toolspeed = 0.1
+	toolspeed = 0.5
 
 /obj/item/wirecutters/syndie/op
 	name = "syndicate wirecutters"

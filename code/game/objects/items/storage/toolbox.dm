@@ -121,7 +121,7 @@
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench(src)
 	new /obj/item/weldingtool/largetank(src)
-	new /obj/item/crowbar/syndie(src)
+	new /obj/item/crowbar/red(src)
 	new /obj/item/wirecutters(src, "red")
 	new /obj/item/multitool(src)
 	new /obj/item/clothing/gloves/combat(src)
