@@ -75,6 +75,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	var/player_minimum //The minimum crew size needed for this item to be added to uplinks.
 	var/purchase_log_vis = TRUE // Visible in the purchase log?
 	var/restricted = FALSE // Adds restrictions for VR/Events
+	var/list/restricted_species //Limits items to a specific species. Hopefully.
 	var/illegal_tech = TRUE // Can this item be deconstructed to unlock certain techweb research nodes?
 
 /datum/uplink_item/New()
@@ -1413,6 +1414,20 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/cyber_implants
 	cost = 40
 	cant_discount = TRUE
+
+//Race-specific items
+/datum/uplink_item/race_restricted
+	category = "Species-Restricted"
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	surplus = 0
+
+/datum/uplink_item/race_restricted/syndilamp
+	name = "Extra-Bright Lantern"
+	desc = "We heard that moths such as yourself really like lamps, so we decided to grant you early access to a prototype \
+	Syndicate brand \"Extra-Bright Lantern™\". Enjoy."
+	cost = 2
+	item = /obj/item/flashlight/lantern/syndicate
+	restricted_species = list("moth")
 
 // Role-specific items
 /datum/uplink_item/role_restricted
