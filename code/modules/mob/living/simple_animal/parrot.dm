@@ -1022,7 +1022,7 @@
 	faction = list("ratvar")
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
-	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 
 /mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
 	return
