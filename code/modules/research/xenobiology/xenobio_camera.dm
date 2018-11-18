@@ -272,7 +272,7 @@
 // Alternate clicks for slime, monkey and open turf if using a xenobio console
 
 // Scans slime
-/mob/living/simple_animal/slime/CtrlClick(mob/user/C, )
+/mob/living/simple_animal/slime/CtrlClick(mob/user)
 	if(!user.remote_control)
 		. = ..()
 		return
@@ -291,9 +291,7 @@
 	if(!user.remote_control)
 		. = ..()
 		return
-	if(istype(user.remote_control, /mob/camera/aiEye/remote/xenobio))
-		user.remote_control.origin
-		
+	if(istype(user.remote_control, /mob/camera/aiEye/remote/xenobio))		
 		if(GLOB.cameranet.checkTurfVis(loc))
 			var/mob/living/C = user
 			var/mob/camera/aiEye/remote/xenobio/E = C.remote_control
