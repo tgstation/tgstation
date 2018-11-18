@@ -87,6 +87,11 @@
 				if(!istype(target) || target.anchored)
 					occupant_message("Unable to lock on [target]")
 					return
+				if(ismob(target))
+					var/mob/M = target
+					if(M.mob_negates_gravity())
+						occupant_message("Unable to lock on [target]")
+						return
 				locked = target
 				occupant_message("Locked on [target]")
 				send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
@@ -112,6 +117,10 @@
 			for(var/atom/movable/A in atoms)
 				if(A.anchored)
 					continue
+				if(ismob(A))
+					var/mob/M = A
+					if(M.mob_negates_gravity())
+						continue
 				spawn(0)
 					var/iter = 5-get_dist(A,target)
 					for(var/i=0 to iter)
