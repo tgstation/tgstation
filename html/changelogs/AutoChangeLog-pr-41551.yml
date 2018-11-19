@@ -1,0 +1,5 @@
+author: "subject217"
+delete-after: True
+changes: 
+  - code_imp: "Damage deflection is handled at the machine level instead of the door level now, so it can be applied to any machine."
+  - balance: "The stacking machine now has damage deflection, so it can't be destroyed by things like pickaxes."
