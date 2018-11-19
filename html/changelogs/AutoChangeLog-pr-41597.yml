@@ -1,0 +1,4 @@
+author: "CRTXBacon"
+delete-after: True
+changes: 
+  - bugfix: "Fixes an error caused by the species restricted category in uplinks"
