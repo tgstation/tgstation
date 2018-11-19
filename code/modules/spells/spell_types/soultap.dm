@@ -20,7 +20,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='warning'>You do not possess a soul to tap into!</span>")
 		return
-	to_chat(user, "<span class='danger'>Your body feels drained and you feel a burning pain in your chest.</span>")
+	to_chat(user, "<span class='danger'>Your body feels drained and there is a burning pain in your chest.</span>")
 	user.maxHealth -= 20
 	user.health = min(user.health - 20, user.maxHealth)
 	if(user.maxHealth <= 0)
