@@ -58,7 +58,7 @@
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
 	if(!M.is_adult)
-		to_chat(user, "<span class='warning'>The slime must be an adult to cross it's core!</span>")
+		to_chat(user, "<span class='warning'>The slime must be an adult to cross its core!</span>")
 		return
 	if(M.effectmod && M.effectmod != effectmod)
 		to_chat(user, "<span class='warning'>The slime is already being crossed with a different extract!</span>")
