@@ -5,6 +5,7 @@
 	icon_state = "card_scanner"
 	density = TRUE
 	anchored = TRUE
+	var/locked = FALSE
 	var/obj/item/card/id/my_card
 	var/obj/item/assembly/signaler/signaler = null //attached signaler, let people attach signalers that get activated if the user's transaction limit is achieved.
 	var/signaler_threshold = 0 //signaler threshold amount
@@ -12,6 +13,10 @@
 
 /obj/machinery/paystand/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id))
+		if(W == my_card)
+			locked = !locked
+			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the bolts on the paystand.</span>")
+			return
 		if(!my_card)
 			var/obj/item/card/id/assistant_mains_need_to_die = W
 			if(assistant_mains_need_to_die.registered_account)
@@ -97,4 +102,10 @@
 	if(signaler && amount_deposited >= signaler_threshold)
 		signaler.activate()
 		amount_deposited = 0
+
+/obj/machinery/paystand/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
+	if(locked)
+		to_chat(user, "<span class='warning'>The anchored bolts on this paystand are currently locked!</span>")
+		return
+	. = ..()
 	
