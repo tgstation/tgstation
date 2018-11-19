@@ -191,9 +191,9 @@
 	var/list/iconstates = GLOB.ai_core_display_screens
 	for(var/option in iconstates)
 		if(option == "Random")
-			iconstates[option] = image(icon = src.icon, icon_state = "ai-random")
+			iconstates[option] = image(icon = 'icons/mob/ai.dmi', icon_state = "ai-random")
 			continue
-		iconstates[option] = image(icon = src.icon, icon_state = resolve_ai_icon(option))
+		iconstates[option] = image(icon = 'icons/mob/ai.dmi', icon_state = resolve_ai_icon(option))
 
 	view_core()
 	var/ai_core_icon = show_radial_menu(src, src , iconstates, radius = 42)
