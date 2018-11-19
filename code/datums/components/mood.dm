@@ -16,7 +16,7 @@
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
-	
+
 	START_PROCESSING(SSmood, src)
 
 	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
@@ -154,7 +154,7 @@
 		if(prob(0.05))
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
-	
+
 	HandleNutrition(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
@@ -268,7 +268,10 @@
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			add_event(null, "nutrition", /datum/mood_event/fat)
+			if (!L.has_trait(TRAIT_VORACIOUS))
+				add_event(null, "nutrition", /datum/mood_event/fat)
+			else
+				add_event(null, "nutrition", /datum/mood_event/wellfed) // round and full
 		if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
 			add_event(null, "nutrition", /datum/mood_event/wellfed)
 		if( NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
