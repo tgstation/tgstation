@@ -369,7 +369,7 @@ Class Procs:
 		update_icon()
 		updateUsrDialog()
 
-/obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/run_obj_armor(damage_amount, damage_type, damage_flag = NONE, attack_dir)
 	if(damage_flag == "melee" && damage_amount < damage_deflection)
 		return 0
 	return ..()
