@@ -250,23 +250,23 @@
 						clearlist(available_channels)
 						for(var/ch in headset_to_add.channels)
 							switch(ch)
-								if("Engineering")
-									available_channels.Add(":e")
-								if("Command")
-									available_channels.Add(":c")
-								if("Security")
-									available_channels.Add(":s")
-								if("Science")
-									available_channels.Add(":n")
-								if("Medical")
-									available_channels.Add(":m")
-								if("Supply")
-									available_channels.Add(":u")
-								if("Service")
-									available_channels.Add(":v")
+								if(RADIO_CHANNEL_ENGINEERING)
+									available_channels.Add(RADIO_TOKEN_ENGINEERING)
+								if(RADIO_CHANNEL_COMMAND)
+									available_channels.Add(RADIO_TOKEN_COMMAND)
+								if(RADIO_CHANNEL_SECURITY)
+									available_channels.Add(RADIO_TOKEN_SECURITY)
+								if(RADIO_CHANNEL_SCIENCE)
+									available_channels.Add(RADIO_TOKEN_SCIENCE)
+								if(RADIO_CHANNEL_MEDICAL)
+									available_channels.Add(RADIO_TOKEN_MEDICAL)
+								if(RADIO_CHANNEL_SUPPLY)
+									available_channels.Add(RADIO_TOKEN_SUPPLY)
+								if(RADIO_CHANNEL_SERVICE)
+									available_channels.Add(RADIO_TOKEN_SERVICE)
 
 						if(headset_to_add.translate_binary)
-							available_channels.Add(":b")
+							available_channels.Add(MODE_TOKEN_BINARY)
 		else
 			..()
 
@@ -1022,7 +1022,7 @@
 	faction = list("ratvar")
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
-	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 
 /mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
 	return

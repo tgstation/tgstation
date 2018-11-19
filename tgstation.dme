@@ -691,6 +691,7 @@
 #include "code\game\mecha\equipment\tools\medical_tools.dm"
 #include "code\game\mecha\equipment\tools\mining_tools.dm"
 #include "code\game\mecha\equipment\tools\other_tools.dm"
+#include "code\game\mecha\equipment\tools\weapon_bay.dm"
 #include "code\game\mecha\equipment\tools\work_tools.dm"
 #include "code\game\mecha\equipment\weapons\weapons.dm"
 #include "code\game\mecha\medical\medical.dm"
