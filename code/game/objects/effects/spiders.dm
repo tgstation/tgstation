@@ -71,8 +71,6 @@
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
 			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
-			S.poison_type = poison_type
-			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
 			S.directive = directive
 			if(player_spiders)
