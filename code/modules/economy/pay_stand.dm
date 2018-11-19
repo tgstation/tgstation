@@ -7,7 +7,7 @@
 	anchored = TRUE
 	var/locked = FALSE
 	var/obj/item/card/id/my_card
-	var/obj/item/assembly/signaler/signaler = null //attached signaler, let people attach signalers that get activated if the user's transaction limit is achieved.
+	var/obj/item/assembly/signaler/signaler //attached signaler, let people attach signalers that get activated if the user's transaction limit is achieved.
 	var/signaler_threshold = 0 //signaler threshold amount
 	var/amount_deposited = 0 //keep track of the amount deposited over time so you can pay multiple times to reach the signaler threshold
 
@@ -23,7 +23,7 @@
 				var/msg = stripped_input(user, "Name of pay stand:", "Paystand Naming", "[user]'s Awesome Paystand")
 				if(!msg)
 					return
-				name = "[msg]"
+				name = msg
 				desc = "Owned by [assistant_mains_need_to_die.registered_account.account_holder], pays directly into [user.p_their()] account."
 				my_card = assistant_mains_need_to_die
 				to_chat(user, "You link the stand to your account.")
@@ -52,7 +52,7 @@
 			to_chat(user, "Thanks for purchasing! The vendor has been informed.")
 			return
 		else
-			to_chat(user, "<span class='warning'>ERROR: Account has insufficient funds to make transaction.</span>")
+			to_chat(user, "<span class='warning'>ERROR: Insufficient funds to make transaction.</span>")
 			return
 	if(istype(W, /obj/item/stack/spacecash))
 		to_chat(user, "What is this, the 2000s? We only take card here.")
@@ -68,7 +68,7 @@
 			to_chat(user, "<span class='warning'>ERROR: No identification card has been assigned to this paystand yet!</span>")
 			return
 		if(!signaler)
-			var/cash_limit = input(user, "Enter the minium amount of cash needed to deposit before the signaler is activated.", "Signaler Activation Threshold") as null|num
+			var/cash_limit = input(user, "Enter the minimum amount of cash needed to deposit before the signaler is activated.", "Signaler Activation Threshold") as null|num
 			if(cash_limit < 1)
 				to_chat(user, "<span class='warning'>ERROR: Invalid amount designated.</span>")
 				return
