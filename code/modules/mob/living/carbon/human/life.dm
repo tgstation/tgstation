@@ -62,7 +62,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
+	if(((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) || (w_uniform && (w_uniform.flags_1 & STOPSPRESSUREDMAGE_1))) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
 		return ONE_ATMOSPHERE
 	else
 		return pressure

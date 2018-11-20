@@ -207,7 +207,6 @@ SUBSYSTEM_DEF(ticker)
 		world.update_status()
 		last_hub_update = world.time+600
 
-
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
 	var/init_start = world.timeofday
@@ -366,6 +365,9 @@ SUBSYSTEM_DEF(ticker)
 	for(var/mob/dead/new_player/N in GLOB.player_list)
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
+			var/datum/job/job = SSjob.GetJob(player.mind.assigned_role)
+			if(!job.is_whitelisted(N.client))
+				player.mind.assigned_role = "Assistant"
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)

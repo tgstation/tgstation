@@ -1,4 +1,4 @@
-/*/obj/item/gun/ballistic/automatic/pistol/APS/New()
+/obj/item/gun/ballistic/automatic/pistol/APS/New()
 	if(type == /obj/item/gun/ballistic/automatic/pistol/APS)
 		icon = 'icons/oldschool/guns.dmi'
 	. = ..()
@@ -28,7 +28,7 @@
 		icon = 'icons/oldschool/guns.dmi'
 		lefthand_file = 'icons/oldschool/inhand_left.dmi'
 		righthand_file = 'icons/oldschool/inhand_right.dmi'
-	. = ..()*/
+	. = ..()
 
 /obj/item/gun/energy/laser/scatter/shotty/New()
 	if(type == /obj/item/gun/energy/laser/scatter/shotty)

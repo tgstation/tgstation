@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 //	You do not need to raise this if you are adding new values that have sane defaults.
-//	Only raise this value when changing the meaning/format/name/layout of an existing value 
+//	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
 #define SAVEFILE_VERSION_MAX	20
 
@@ -34,7 +34,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return savefile_version
 	return -1
 
-//should these procs get fairly long 
+//should these procs get fairly long
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
 //SAVEFILE_VERSION_MAX and then delete any obsolete if clauses
 //from these procs.
@@ -102,6 +102,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
 	S["pda_color"]			>> pda_color
+	S["lastheardlobbytheme"]	>> lastheardlobbytheme
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -129,6 +130,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
 	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 
+	if((lastheardlobbytheme < LOBBYMUSICREVISION) && !(toggles & SOUND_LOBBY))
+		toggles ^= SOUND_LOBBY
+		save_preferences()
 	return 1
 
 /datum/preferences/proc/save_preferences()
@@ -170,6 +174,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
+	WRITE_FILE(S["lastheardlobbytheme"], lastheardlobbytheme)
 
 	return 1
 

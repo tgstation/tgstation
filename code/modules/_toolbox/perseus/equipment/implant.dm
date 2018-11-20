@@ -1,4 +1,13 @@
+/*
+	Commenting this entire page incase it gets turned on -falaskian
+
+
+#define PERSEUS_HUD		"20"
+#define HUD_PERSEUS				23
 var/list/perseus_implants = list()
+
+/*/var/const/access_penforcer = 501
+/var/const/access_pcommander = 502*/
 
 /proc/check_perseus(mob/M)
 	if (M)
@@ -31,85 +40,129 @@ var/list/perseus_implants = list()
 
 /obj/item/implant/enforcer
 	name = "perseus enforcer implant"
-	access = list(access_penforcer, GLOB.access_brig,GLOB.access_sec_doors, GLOB.access_court, GLOB.access_maint_tunnels, GLOB.access_morgue, GLOB.access_medical,
-	GLOB.access_construction, GLOB.access_mailsorting, GLOB.access_engine, GLOB.access_research, GLOB.access_security)
+	access = list(ACCESS_PERSEUS_ENFORCER, ACCESS_BRIG,ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_MEDICAL,
+	ACCESS_CONSTRUCTION, ACCESS_MAILSORTING, ACCESS_ENGINE, ACCESS_RESEARCH, ACCESS_SECURITY)
 	actions_types = list()
 	can_remove = 0
+	var/list/allied_implants = list(/obj/item/implant/enforcer,/obj/item/implant/commander)
 	var/perc_identifier = "ERROR"
 	var/datum/action/padrenal/padrenal
+	var/datum/action/pdoors/pdoors
+	var/critical_condition = 0
+	var/datum/mind/owner_mind = null
 
-/obj/item/implant/enforcer/implanted()
-	if (imp_in && check_perseus(imp_in))
+/obj/item/implant/enforcer/implant(mob/living/target, mob/user, silent = FALSE)
+	. = ..()
+	if (imp_in == loc && istype(imp_in,/mob/living))
+		var/mob/living/mob = imp_in
+		if(!owner_mind)
+			owner_mind = mob.mind
 		clear_implants()
 		clear_antag()
 		perseus_implants += src
-		perseusAlert("PercTech Alert System","New implant connection detected, [imp_in]",1)
+		perseusAlert("PercTech Alert System","New implant connection detected, [mob.name]",1)
 		padrenal = new(src)
-		padrenal.Grant(imp_in)
-		var/datum/atom_hud/P = GLOB.huds[HUD_PERSEUS]
+		padrenal.Grant(mob)
+		pdoors = new(src)
+		pdoors.Grant(mob)
+		/*var/datum/atom_hud/P = GLOB.huds[HUD_PERSEUS]
 		if (P)
 			P.add_hud_to(imp_in)
-			imp_in.update_perseus_hud()
+			imp_in.update_perseus_hud()*/
 
 /obj/item/implant/enforcer/New()
 	..()
 	SSobj.processing |= src
 
 /obj/item/implant/enforcer/Destroy()
-	..()
+	if(owner_mind && istype(owner_mind.current,/mob/living/carbon/human))
+		var/hasimplant = 0
+		for(var/obj/item/implant/enforcer/E in owner_mind.current)
+			if(E == src)
+				continue
+			hasimplant = 1
+			break
+		if(!hasimplant)
+			var/obj/item/implant/I = new type(owner_mind.current)
+			I.implant(owner_mind.current)
 	qdel(padrenal)
+	owner_mind = null
 	SSobj.processing -= src
-
-var/list/dying_perseus = list()
+	. = ..()
 
 /obj/item/implant/enforcer/process()
-	if(!imp_in || !check_perseus(imp_in))
-		qdel(src)
-		return
+	if(istype(loc,/obj/item/implantcase))
+		var/obj/item/implantcase/case = loc
+		case.imp = null
+		case.update_icon()
+		moveToNullspace()
+	if(istype(loc,/obj/item/implanter))
+		var/obj/item/implanter/imper = loc
+		imper.imp = null
+		imper.update_icon()
+		moveToNullspace()
+	if(loc && owner_mind && owner_mind.current != loc && istype(owner_mind.current,/mob/living/carbon/human))
+		for(var/obj/item/implant/I in loc)
+			for(var/Itype in allied_implants)
+				if(istype(I,Itype))
+					if(istype(I.loc,/mob/living))
+						var/mob/living/L = I.loc
+						L.implants -= I
+					I.imp_in = null
+					I.moveToNullspace()
+					if(istype(owner_mind.current,/mob/living/carbon/human))
+						I.implant(owner_mind.current)
+	clear_implants()
 	if(imp_in && imp_in.mind && (imp_in.mind.objectives.len || imp_in.mind.special_role))
 		clear_antag()
-	clear_implants()
-	if (imp_in.stat == 1 || imp_in.stat == 2)
-		if (!(imp_in in dying_perseus) || world.time > dying_perseus[imp_in])
-			dying_perseus[imp_in] = world.time + 100
-			var/area/current_area = get_area(imp_in)
-			perseusAlert("Lifesigns Monitor","[imp_in] is [imp_in.stat == 1 ? "in critical condition" : "dead"]! Location: [current_area.name] ([imp_in.x],[imp_in.y],[imp_in.z])", 2)
-	else if (imp_in in dying_perseus)
-		dying_perseus[imp_in] = null
-		dying_perseus -= imp_in
-		perseusAlert("Lifesigns Monitor","[imp_in] is no longer in critical condition.", 3)
+	if(imp_in && imp_in == loc && istype(imp_in))
+		var/mob/living/M = imp_in
+		if(M.health > 0 && M.stat != DEAD)
+			if(critical_condition > initial(critical_condition))
+				critical_condition = 0
+				perseusAlert("Lifesigns Monitor","[M.name] is no longer in critical condition.", 3)
+		else
+			var/do_alert = 0
+			if(M.stat == DEAD && critical_condition != 2)
+				critical_condition = 2
+				do_alert = 1
+			else if(M.health <= 0 && critical_condition != 1)
+				critical_condition = 1
+				do_alert = 1
+			if(do_alert)
+				var/area/current_area = get_area(M)
+				if(current_area)
+					perseusAlert("Lifesigns Monitor","[M.name] is [imp_in.stat == 1 ? "in critical condition" : "dead"]! Location: [current_area.name] ([imp_in.x],[imp_in.y],[imp_in.z])", 2)
 
-/obj/item/implant/enforcer/proc/clear_antag() CHANGELING DOESNT WORK LIKE THIS ANY MORE
+/obj/item/implant/enforcer/proc/clear_antag()
 	if (!imp_in || !imp_in.mind)
 		return
-	if (imp_in.mind.changeling)
-		qdel(imp_in.mind.changeling)
-		imp_in.mind.changeling = null
+	var/changed = 0
+	if(istype(imp_in.mind.antag_datums,/list))
+		for(var/datum/antagonist/A in imp_in.mind.antag_datums)
+			if(!changed)
+				changed = 1
+			qdel(A)
 
-	imp_in.mind.remove_objectives()
+	if(istype(imp_in.mind.objectives,/list) && imp_in.mind.objectives.len)
+		for(var/datum/objective/O in imp_in.mind.objectives)
+			if(!changed)
+				changed = 1
+			imp_in.mind.objectives -= O
+			qdel(O)
 	imp_in.mind.special_role = ""
-	imp_in.mind.memory = ""
-	to_chat(imp_in, "<span class='userdanger'>You remember nothing.</span>")
-	to_chat(imp_in, "<span class='notice'>Your memories have been wiped clean. If you were previously an antagonist, you no longer are.</span>")
-	to_chat(imp_in, "<span class='notice'>You are now a Perseus Enforcer. Follow the SOP and listen to Perseus Commanders.</span>")
+	if(changed)
+		imp_in.mind.memory = ""
+		to_chat(imp_in, "<span class='userdanger'>You remember nothing.</span>")
+		to_chat(imp_in, "<span class='notice'>Your memories have been wiped clean. If you were previously an antagonist, you no longer are.</span>")
+		to_chat(imp_in, "<span class='notice'>You are now a Perseus Enforcer. Follow the SOP and listen to Perseus Commanders.</span>")
 
 /obj/item/implant/enforcer/proc/clear_implants()
-	if(!imp_in)
-		qdel(src)
-		return 0
 	var/found_imp = 0
 	for(var/obj/item/implant/E in imp_in)
-		if (E != src && E.type == /obj/item/implant/enforcer)
+		if(!istype(E, /obj/item/implant/enforcer) && !istype(E, /obj/item/implant/commander))
 			qdel(E)
 			found_imp = 1
-		else if (!istype(E, /obj/item/implant/enforcer) && !istype(E, /obj/item/implant/commander))
-			qdel(E)
-			found_imp = 1
-	var/commander_cnt = 0
-	for(var/obj/item/implant/commander/C in imp_in)
-		if(commander_cnt)
-			qdel(C)
-		commander_cnt++
 	if(found_imp)
 		to_chat(imp_in, "<span class='warning'>All foreign implants destroyed.</span>")
 
@@ -187,25 +240,55 @@ var/list/dying_perseus = list()
 	return 1
 
 // *****************
+// MYCENAE LOCKDOWN
+// *****************
+
+/datum/action/pdoors
+	name = "Mycenae Lockdown"
+	check_flags = AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/oldschool/perseus.dmi'
+	button_icon_state = "lock_down"
+	var/list/poddoorids = list("prisonship")
+
+/datum/action/pdoors/Trigger()
+	var/doorstatus = -1
+	for(var/obj/machinery/door/poddoor/P in world)
+		if(P.id in poddoorids)
+			if(doorstatus == -1)
+				doorstatus = P.density
+			switch(doorstatus)
+				if(0)
+					spawn(0)
+						P.close()
+				if(1)
+					spawn(0)
+						P.open()
+	if(doorstatus >= 0)
+		to_chat(owner, "Mycenae blast doors [doorstatus ? "opening" : "closing"].")
+
+// *****************
 // COMMANDER IMPLANT
 // *****************
 
 /obj/item/implant/commander
 	name = "perseus commander implant"
-	access = list(access_pcommander, access_penforcer, GLOB.access_security, GLOB.access_sec_doors, GLOB.access_brig,
-	GLOB.access_armory, GLOB.access_court, GLOB.access_forensics_lockers, GLOB.access_morgue,
-	GLOB.access_maint_tunnels, GLOB.access_research, GLOB.access_engine, GLOB.access_mining, GLOB.access_medical, GLOB.access_construction,
-	GLOB.access_mailsorting, GLOB.access_heads, GLOB.access_hos, GLOB.access_heads)
+	access = list(ACCESS_PERSEUS_ENFORCER, ACCESS_PERSEUS_COMMANDER, ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_BRIG,
+	ACCESS_ARMORY, ACCESS_COURT, ACCESS_FORENSICS_LOCKERS, ACCESS_MORGUE,
+	ACCESS_MAINT_TUNNELS, ACCESS_RESEARCH, ACCESS_ENGINE, ACCESS_MINING, ACCESS_MEDICAL, ACCESS_CONSTRUCTION,
+	ACCESS_MAILSORTING, ACCESS_HEADS, ACCESS_HOS, ACCESS_HEADS)
+
+
 	actions_types = list()
 	var/datum/action/fire_perc/fire_perc
 	can_remove = 0
 
-/obj/item/implant/commander/implanted()
+/obj/item/implant/commander/implant(mob/living/target, mob/user, silent = FALSE)
+	. = ..()
 	if(!imp_in || !check_perseus(imp_in))
 		qdel(src)
 		return
-	fire_perc = new(src)
-	fire_perc.Grant(imp_in)
+	/*fire_perc = new(src)
+	fire_perc.Grant(imp_in)*/
 
 /obj/item/implant/commander/Destroy()
 	..()
@@ -245,6 +328,7 @@ var/list/dying_perseus = list()
 	if (!istype(chosen_mob) || !check_perseus(chosen_mob))
 		return 0
 	for(var/obj/item/implant/enforcer/E in chosen_mob)
+		E.owner_mind = null
 		qdel(E)
 
 	if(!check_perseus(chosen_mob))
@@ -299,3 +383,4 @@ var/list/dying_perseus = list()
 			holder.icon_state = "pcommander"
 		else
 			holder.icon_state = "penforcer"
+*/

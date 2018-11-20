@@ -5,9 +5,9 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "plastic-explosive0"
 	item_state = "plasticx"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	w_class = 2.0
-	origin_tech = "syndicate=2"
+	//origin_tech = "syndicate=2"
 	var/timer = 10
 	var/atom/target = null
 	var/open_panel = 0
@@ -41,7 +41,7 @@
 /obj/item/c4_ex/attack_self(mob/user as mob)
 	var/newtime = input(usr, "Please set the timer.", "Timer", 10) as num
 	if(user.get_active_held_item() == src)
-		newtime = Clamp(newtime, 10, 60000)
+		newtime = CLAMP(newtime, 10, 60000)
 		timer = newtime
 		to_chat(user, "Timer set for [timer] seconds.")
 
@@ -58,7 +58,7 @@
 
 
 	if(do_after(user, 50) && in_range(user, target))
-		user.drop_item()
+		user.dropItemToGround(src)
 		src.target = target
 		loc = null
 

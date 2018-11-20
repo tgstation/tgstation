@@ -255,6 +255,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "</ul>"
 				dat += "</ul>"
 
+				//cartridge custom menu. This is how all the pda should get all menus from the cartridge. fuck tg. -falaskian
+				if (cartridge && cartridge.access & CART_CUSTOMMENU)
+					dat += "[cartridge.get_custom_menu(user)]"
+
 				dat += "<h4>Utilities</h4>"
 				dat += "<ul>"
 				if (cartridge)
@@ -371,6 +375,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 /obj/item/device/pda/Topic(href, href_list)
 	..()
+
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 	if(loc)
@@ -384,6 +389,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(usr.canUseTopic(src) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
+
+		if(cartridge && href_list["custommenu"])
+			return cartridge.customreaction(href_list,usr)
+
 
 		switch(href_list["choice"])
 

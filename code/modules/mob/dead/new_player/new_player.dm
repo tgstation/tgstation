@@ -291,6 +291,8 @@
 					return 0
 		else
 			return 0
+	if(job.whitelisted && !job.is_whitelisted(client))
+		return 0
 	if(jobban_isbanned(src,rank))
 		return 0
 	if(!job.player_old_enough(src.client))
@@ -301,6 +303,11 @@
 
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
+	var/datum/job/job = SSjob.GetJob(rank)
+	if(!job.is_whitelisted(client))
+		message_admins("An illegal attempt to access job \"[rank]\" has been made by [key].")
+		log_game("An illegal attempt to access job \"[rank]\" has been made by [key].")
+		return FALSE
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
 		return FALSE
@@ -346,7 +353,7 @@
 	if(ishuman(character))
 		humanc = character	//Let's retypecast the var to be human,
 
-	if(humanc)	//These procs all expect humans
+	if(humanc && !job.override_station_procedures)	//These procs all expect humans
 		GLOB.data_core.manifest_inject(humanc)
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
@@ -364,7 +371,7 @@
 
 	GLOB.joined_player_list += character.ckey
 
-	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc && !job.antagonist_immune)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
@@ -402,7 +409,6 @@
 		if(job && IsJobAvailable(job.title))
 			available_job_count++;
 
-
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
 			SSjob.prioritized_jobs -= prioritized_job
@@ -422,6 +428,8 @@
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
+		if(job.whitelisted)
+			continue
 		if(job && IsJobAvailable(job.title))
 			job_count++;
 			if (job_count > round(available_job_count / 2))
@@ -430,6 +438,7 @@
 			if (job.title in GLOB.command_positions)
 				position_class = "commandPosition"
 			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+
 	if(!job_count) //if there's nowhere to go, overflow opens up.
 		for(var/datum/job/job in SSjob.occupations)
 			if(job.title != SSjob.overflow_role)
@@ -437,6 +446,26 @@
 			dat += "<a class='otherPosition' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break
 	dat += "</div></div>"
+
+	//adding whitelisted jobs to viewed list -falaskian
+	var/list/whitelisted_for = list()
+	for(var/datum/job/job in SSjob.whitelisted_occupations)
+		if(!job.is_whitelisted(client))
+			continue
+		if(job && IsJobAvailable(job.title))
+			whitelisted_for += job
+	if(whitelisted_for.len)
+		dat += "<div class='clearBoth'>Special Jobs:</div><br>"
+		dat += "<div class='jobs'><div class='jobsColumn'>"
+		for(var/datum/job/job in whitelisted_for)
+			job_count++;
+			if (job_count > round(available_job_count / 2))
+				dat += "</div><div class='jobsColumn'>"
+			var/position_class = "otherPosition"
+			if (job.title in GLOB.command_positions)
+				position_class = "commandPosition"
+			dat += "<a class='[position_class]' href='byond://?src=[REF(src)];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+		dat += "</div></div>"
 
 	// Removing the old window method but leaving it here for reference
 	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")

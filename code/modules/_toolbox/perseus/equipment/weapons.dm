@@ -31,7 +31,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	name = "5.7x28mm magazine"
 	icon_state = "45"
 	icon = 'icons/oldschool/perseus.dmi'
-	origin_tech = "combat=2"
+	//origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/fiveseven
 	caliber = "5.7x28mm"
 	max_ammo = 20
@@ -40,12 +40,15 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 // PIN
 
 /obj/item/device/firing_pin/implant/perseus
-	req_implant = /obj/item/implant/enforcer
+	var/required = /datum/extra_role/perseus
+	var/emagged = 0
 
 /obj/item/device/firing_pin/implant/perseus/pin_auth(mob/living/user)
 	if(emagged)
 		return 1
-	else return ..()
+	if(check_perseus(user))
+		return 1
+	return 0
 
 /obj/item/device/firing_pin/implant/perseus/emag_act(mob/living/user)
 	return
@@ -55,7 +58,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	S.set_up(3, 0, get_turf(src))
 	S.start()
 	to_chat(user, "<div class='warning'>The [src] shocks you.</div>")
-	user.AdjustKnockdown(2)
+	user.AdjustKnockdown(40)
 
 /obj/item/gun/ballistic/fiveseven
 	name = "five-seven"
@@ -75,9 +78,10 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 			to_chat(usr, "\blue It's locking mechanism looks fried.")
 
 	attackby(var/obj/item/I, var/mob/living/M)
-		if(istype(I, /obj/item/card/emag) && !emagged)
+		if(istype(I, /obj/item/card/emag) && !emagged  && istype(pin,/obj/item/device/firing_pin/implant/perseus))
 			emagged = 1
-			pin.emagged = 1
+			var/obj/item/device/firing_pin/implant/perseus/ppin = pin
+			ppin.emagged = 1
 			to_chat(M, "<div class='notice'>You emag the [src].</div>")
 			var/datum/effect_system/spark_spread/system = new()
 			system.set_up(3, 0, get_turf(src))
@@ -100,7 +104,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	throwforce = 2
 	w_class = 2
 
-	var/locked = /obj/item/implant/enforcer
+	var/locked = /datum/extra_role/perseus
 	var/mode = 1 //0 = attack | 1 = stun
 	var/obj/item/stock_parts/cell/power_supply
 
@@ -122,12 +126,12 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 
 	attack(var/mob/living/M, var/mob/living/user)
 		if(locked)
-			if(!user.check_contents_for(locked))
+			if(!check_perseus(user))
 				var/datum/effect_system/spark_spread/S = new(get_turf(src))
 				S.set_up(3, 0, get_turf(src))
 				S.start()
 				to_chat(user, "<div class='warning'>The [src] shocks you.</div>")
-				user.Knockdown(40)
+				user.AdjustKnockdown(40)
 				return
 		add_fingerprint(user)
 		//user.do_attack_animation(M)
@@ -158,3 +162,20 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 
 	unlocked/
 		locked = 0
+
+/*
+* perseus medbeam gun with implant lock
+*/
+
+/obj/item/gun/medbeam/perseus
+	name = "Perseus Enforcer's Medical Beamgun"
+	pin = /obj/item/device/firing_pin/implant/perseus
+
+/obj/item/gun/medbeam/perseus/emag_act(mob/living/user)
+	var/obj/item/device/firing_pin/implant/perseus/ppin = pin
+	if(istype(ppin) && !ppin.emagged)
+		ppin.emagged = 1
+		to_chat(user, "<div class='notice'>You emag the [src].</div>")
+		var/datum/effect_system/spark_spread/system = new()
+		system.set_up(3, 0, get_turf(src))
+		system.start()

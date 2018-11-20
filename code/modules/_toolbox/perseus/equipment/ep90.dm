@@ -22,7 +22,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	item_state = "ep"
 	cell_type = /obj/item/stock_parts/cell/magazine/ep90
 	ammo_type = list(/obj/item/ammo_casing/energy/ep90_single, /obj/item/ammo_casing/energy/ep90_aoe, /obj/item/ammo_casing/energy/ep90_burst_3, /obj/item/ammo_casing/energy/ep90_burst_5)
-	fire_sound = 'sound/weapons/ep90.ogg'
+	fire_sound = 'sound/toolbox/ep90.ogg'
 	pin = /obj/item/device/firing_pin/implant/perseus
 	selfcharge = 1
 	charge_delay = 2
@@ -30,6 +30,8 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	var/panel = 0
 
 	attack_self(var/mob/living/user as mob)
+		if(firing_burst)
+			return
 		select_fire(user)
 		var/obj/item/ammo_casing/selected = ammo_type[select]
 		if (istype(selected))
@@ -63,7 +65,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 			if(cell)
 				to_chat(M, "<div class='warning'>There is already a power supply installed.</div>")
 				return
-			M.drop_item()
+			M.dropItemToGround(I)
 			I.loc = src
 			cell = I
 
@@ -79,8 +81,9 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 			chambered = ammo_type[select]
 			to_chat(M, "<div class='notice'>You insert the [I] into the [src].</div>")
 			update_icon()
-		if(istype(I, /obj/item/card/emag) && !emagged)
-			pin.emagged = 1
+		if(istype(I, /obj/item/card/emag) && !emagged && istype(pin,/obj/item/device/firing_pin/implant/perseus))
+			var/obj/item/device/firing_pin/implant/perseus/ppin = pin
+			ppin.emagged = 1
 			emagged = 1
 			selfcharge = 0
 			for (var/obj/item/ammo_casing/E in ammo_type)
@@ -94,14 +97,15 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 			panel = !panel
 			to_chat(M, "<div class='danger'>You [panel ? "open" : "close"] the maintenance panel.</div>")
 			playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		if(istype(I, /obj/item/weldingtool) && emagged && panel)
+		if(istype(I, /obj/item/weldingtool) && emagged && panel && istype(pin,/obj/item/device/firing_pin/implant/perseus))
 			var/obj/item/weldingtool/WT = I
-			if(!WT.remove_fuel(0, M))
+			if(!WT.use(0))
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
 			to_chat(M, "<div class='danger'>You repair the [src].</div>")
 			emagged = 0
-			pin.emagged = 0
+			var/obj/item/device/firing_pin/implant/perseus/ppin = pin
+			ppin.emagged = 1
 			selfcharge = 1
 			for (var/obj/item/ammo_casing/E in ammo_type)
 				if (E.BB)
@@ -222,8 +226,9 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 			L.apply_effects(stun, knockdown, 0, 0, stutter)
 		else if (emagged)
 			L.apply_effects(3, 3, 0, 0, 3)
-/obj/item/projectile
-	var/bump_at_tile = 0
+
+/*/obj/item/projectile
+	var/bump_at_tile = 0*/
 
 /obj/item/projectile/energy/ep90_aoe
 	name = "energy"
@@ -259,6 +264,11 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 				else if (emagged)
 					M.SetKnockdown(60)
 
+	Range()
+		if(isturf(original) && loc == original)
+			Collide(loc)
+		return ..()
+
 /*
 	Ammo casings
 */
@@ -270,7 +280,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	select_name = "semi-automatic fire"
 	projectile_type = /obj/item/projectile/energy/ep90_single
 	e_cost = 20
-	fire_sound = 'sound/weapons/ep90.ogg'
+	fire_sound = 'sound/toolbox/ep90.ogg'
 
 /obj/item/ammo_casing/energy/ep90_single/newshot(var/emagged = 0)
 	if(!BB && projectile_type)
@@ -281,7 +291,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	select_name = "area-of-effect fire"
 	projectile_type = /obj/item/projectile/energy/ep90_aoe
 	e_cost = 100
-	fire_sound = 'sound/weapons/ep90.ogg'
+	fire_sound = 'sound/toolbox/ep90.ogg'
 
 /obj/item/ammo_casing/energy/ep90_aoe/newshot(var/emagged = 0)
 	if(!BB && projectile_type)
@@ -293,7 +303,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	select_name = "3-round-burst"
 	projectile_type = /obj/item/projectile/energy/ep90_single
 	e_cost = 20
-	fire_sound = 'sound/weapons/ep90.ogg'
+	fire_sound = 'sound/toolbox/ep90.ogg'
 	burst = 3
 	burst_delay = 1.6
 
@@ -307,7 +317,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	select_name = "5-round-burst"
 	projectile_type = /obj/item/projectile/energy/ep90_single
 	e_cost = 20
-	fire_sound = 'sound/weapons/ep90.ogg'
+	fire_sound = 'sound/toolbox/ep90.ogg'
 	burst = 5
 	burst_delay = 2.7
 

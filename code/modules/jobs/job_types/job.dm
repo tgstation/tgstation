@@ -51,7 +51,17 @@
 	//The amount of good boy points playing this role will earn you towards a higher chance to roll antagonist next round
 	var/antag_rep = 0
 
+	//toolbox vars
 	var/position_after_type = null //add the type path of a job to be positioned after in the jobs list. If left blank it will appear in the job list in the same order as it appears in the source code its self.
+	var/whitelisted = 0
+	var/override_station_procedures = 0 //This will make it so when the job spawns it overrides things like announcements, security records.
+	var/antagonist_immune = 0//can this job be an antagonist?
+
+/datum/job/proc/is_whitelisted(client/C)
+	return 1
+
+/datum/job/proc/pre_setup(mob/user,joined_late)
+	return 1
 
 //Only override this proc
 //H is usually a human unless an /equip override transformed it

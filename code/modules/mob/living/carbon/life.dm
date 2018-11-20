@@ -23,6 +23,8 @@
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 
+	handle_extra_roles() //handing extra_roles created by falaskian
+
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 

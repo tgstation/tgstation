@@ -200,6 +200,9 @@
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
+		var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+		if(J && J.override_station_procedures)
+			return
 		var/assignment
 		if(H.mind.assigned_role)
 			assignment = H.mind.assigned_role

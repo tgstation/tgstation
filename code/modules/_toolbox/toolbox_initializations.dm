@@ -1,7 +1,9 @@
 //Use this file to for things related to round start or new spawn initializations.
 
 proc/Initialize_Falaskians_Shit()
+	save_perseus_manager_whitelist()
 	SaveStation()
+	GLOB.reinforced_glass_recipes += new/datum/stack_recipe("reinforced delivery window", /obj/structure/window/reinforced/fulltile/delivery/unanchored, 5, time = 0, on_floor = TRUE, window_checks = TRUE)
 	new_player_cam = new()
 
 /datum/config_entry/string/discordurl

@@ -1,10 +1,12 @@
-/mob/living/carbon/human/handle_inherent_channels(message, message_mode)
-	if (stat)
-		return ..()
-	else if (message_mode == MODE_ALIEN && check_perseus(src))
-		perseusHivemindSay(message)
-		return 1
-	else return ..()
+#define MODE_PERSEUS "perseustalk"
+/datum/saymode/perseus
+	key = "a"
+	mode = MODE_PERSEUS
+
+/datum/saymode/perseus/handle_message(mob/living/user, message, datum/language/language)
+	if(!user.hivecheck() && check_perseus(user))
+		user.perseusHivemindSay(message)
+	return FALSE
 
 /mob/living/proc/perseusHivemindSay(var/message)
 	if (!message)
@@ -15,10 +17,13 @@
 
 	var/message_a = say_quote(message)
 	var/rendered = "<i><span class='game say'>Hivemind, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i>"
-	for (var/mob/living/S in world)
-		if(!S.stat)
-			if(check_perseus(S))
-				to_chat(S, rendered)
+	log_message(message_a, INDIVIDUAL_SAY_LOG)
+	for(var/mob/living/S in world)
+		if(!S.stat && check_perseus(S))
+			to_chat(S, rendered)
+	for(var/mob/dead/observer/S in world)
+		if(S.client && is_pmanager(S.ckey))
+			to_chat(S, rendered)
 
 /proc/perseusAlert(var/name, var/alert, var/alert_sound = 0)
 	if (!alert)

@@ -137,8 +137,8 @@
 
 	New()
 		..()
-		air_contents.assert_gas("o2")
-		src.air_contents.gases["o2"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		air_contents.assert_gas(/datum/gas/oxygen)
+		src.air_contents.gases[/datum/gas/oxygen][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 /*
 * Jet harness
@@ -239,8 +239,158 @@
 	update_icon()
 		icon_state = "pglassbox[destroyed ? "b" : ""][showpiece ? "1" : "0"]"
 
+/*
+* PDA
+*/
+/datum/asset/simple/perseuspda
+	assets = list(
+	"pda_perseus_bd.png" = 'icons/pda_icons/pda_perseus_bd.png',
+	"pda_perseus_i.png" = 'icons/pda_icons/pda_perseus_i.png',
+	"pda_perseus_c.png" = 'icons/pda_icons/pda_perseus_c.png'
+	)
+
 /obj/item/device/pda/perseus
 	name = "Perseus PDA"
-	default_cartridge = /obj/item/cartridge/detective
+	default_cartridge = /obj/item/cartridge/perseus
 	icon = 'icons/oldschool/perseus.dmi'
 	icon_state = "pda-perc"
+
+/obj/item/cartridge/perseus
+	name = "\improper Perseus Cartridge"
+	icon = 'icons/oldschool/perseus.dmi'
+	icon_state = "cart-perc"
+	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST | CART_CUSTOMMENU
+	bot_access_flags = SEC_BOT
+
+/obj/item/cartridge/perseus/get_custom_menu(mob/living/carbon/user)
+	if(!check_perseus(user))
+		return
+	var/dat = "<h4>PercTech</h4>"
+	dat += "<ul>"
+	dat += "<li><a href='byond://?src=\ref[src];choice=61;custommenu=1'><img src=pda_perseus_bd.png> Blast Door Status</A></li>"
+	dat += "<li><a href='byond://?src=\ref[src];choice=62;custommenu=1'><img src=pda_perseus_i.png> Implant Status</A></li>"
+	var/obj/machinery/computer/shuttle/perseus_shuttle/P = locate() in world
+	if(P)
+		dat += "<li><a href='byond://?src=\ref[src];choice=Toggle Prison Shuttle;custommenu=1'><img src=pda_perseus_c.png> Toggle Prison Shuttle Lock - [P.locked ? "<b>Locked</b>" : "<b>Unlocked</b>"]</A></li>"
+	dat += "</ul>"
+	return dat
+
+/obj/item/cartridge/perseus/customreaction(href_list,mob/living/carbon/user)
+	if(!istype(user,/mob/living/carbon))
+		return
+	if(!check_perseus(user))
+		var/datum/effect_system/spark_spread/S = new(get_turf(src))
+		S.set_up(3, 0, get_turf(src))
+		S.start()
+		to_chat(user, "<div class='warning'>The [src] shocks you.</div>")
+		user.AdjustKnockdown(40)
+		return
+	if(host_pda)
+		var/thechoice = href_list["choice"]
+		var/thechoicenum = text2num(thechoice)
+		if(thechoice == "Toggle Prison Shuttle")
+			var/lockedstatus = -1
+			for(var/obj/machinery/computer/shuttle/perseus_shuttle/P in world)
+				if(lockedstatus == -1)
+					lockedstatus = P.locked
+				P.locked = !lockedstatus
+		else if(thechoicenum && isnum(thechoicenum))
+			host_pda.mode = thechoicenum
+		host_pda.attack_self(user)
+
+/obj/item/cartridge/perseus/generate_menu()
+	if((host_pda) && (host_pda.mode in list(61,62)) && (check_perseus(usr)))
+		switch(host_pda.mode)
+			if(61)
+				menu = ""
+				var/blastdoors = 1
+				for(var/obj/machinery/door/poddoor/M in world)
+					if(M.id == "prisonship")
+						if(M.density)
+							blastdoors = 1
+						else
+							blastdoors = 0
+						break
+				menu += "<i>Blast doors are: [blastdoors ? "Closed" : "Opened"]</i>"
+			if(62)
+				menu = "<h3><font color=\"#232D45\"> Perseus Personnel Tracker </font></h3><br>"
+				var/list/commanders = list()
+				var/list/enforcers = list()
+				for(var/datum/extra_role/perseus/P in perseus_datums)
+					if(P.affecting && istype(P.affecting.current,/mob/living))
+						if(P.iscommander)
+							commanders += P
+						else
+							enforcers += P
+				var/implantnumber = 0
+				for(var/datum/extra_role/perseus/P in commanders)
+					var/mob/living/L = P.affecting.current
+					var/turf/T = get_turf(L)
+					var/area/A = get_area(T)
+					if(!A || !T)
+						continue
+					implantnumber++
+					menu += "Implant <b>[implantnumber]</b>: <br>"
+					menu += "Area: <b>[A.name]</b><br>"
+					menu += "Coordinates: <b>(X: [T.x] Y: [T.y] Z: [T.z])</b><br>"
+					menu += "Holder: <b>[ismob(L) ? L.name : "Error."]"
+					if(L == usr)
+						menu += "(Your implant)"
+					menu += "</b><br>"
+					menu += "********************************<br>"
+				menu += "<b><i> Total Commander Implants: [implantnumber]</i></b><br>"
+				menu += "<hr><br>"
+				implantnumber = 0
+				for(var/datum/extra_role/perseus/P in enforcers)
+					var/mob/living/L = P.affecting.current
+					var/turf/T = get_turf(L)
+					var/area/A = get_area(T)
+					if(!A || !T)
+						continue
+					implantnumber++
+					menu += "Implant <b>[implantnumber]</b>: <br>"
+					menu += "Area: <b>[A.name]</b><br>"
+					menu += "Coordinates: <b>(X: [T.x] Y: [T.y] Z: [T.z])</b><br>"
+					menu += "Holder: <b>[ismob(L) ? L.name : "Error."]"
+					if(L == loc.loc)
+						menu += " (Your implant)"
+					menu += "</b><br>"
+					menu += "********************************<br>"
+				menu += "<b><i> Total Enforcer Implants: [implantnumber]</i></b><br>"
+		return menu
+	else
+		if(host_pda)
+			host_pda.mode = 0
+		return ..()
+
+
+
+/*
+* Soap
+*/
+
+/obj/item/soap/perseus
+	desc = "An expensive bar of soap. Doesn't smell."
+	icon = 'icons/oldschool/perseus.dmi'
+	icon_state = "percsoap"
+
+/*
+* Medkit
+*/
+
+/obj/item/storage/firstaid/perseus
+	name = "Perseus Medical Kit"
+	desc = "An emergency first-aid kit for those feeling a little blue."
+	icon = 'icons/oldschool/perseus.dmi'
+	lefthand_file = 'icons/oldschool/perseus_inhand_left.dmi'
+	righthand_file = 'icons/oldschool/perseus_inhand_right.dmi'
+	icon_state = "percmedkit"
+	PopulateContents()
+		..()
+		for(var/i=2,i>0,i--)
+			new /obj/item/stimpack/perseus(src)
+		new /obj/item/stack/medical/bruise_pack(src)
+		new /obj/item/stack/medical/bruise_pack(src)
+		new /obj/item/stack/medical/ointment(src)
+		new /obj/item/storage/pill_bottle/charcoal(src)
+		new /obj/item/device/healthanalyzer(src)

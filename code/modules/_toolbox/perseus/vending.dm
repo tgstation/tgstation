@@ -25,7 +25,7 @@
 
 	product_ads = "Eat me."
 	contraband = list(/obj/item/reagent_containers/food/snacks/soup/wish = 1, /obj/item/reagent_containers/food/snacks/burger/superbite = 2)
-	req_access_txt = "66"
+	req_access_txt = "561"
 
 /*
 * Perseus Medical
@@ -37,7 +37,7 @@
 	icon_state = "percmed"
 	icon_deny = "percmed-deny"
 	icon = 'icons/oldschool/perseus.dmi'
-	req_access_txt = "66"
+	req_access_txt = "561"
 
 	products = list(/obj/item/reagent_containers/glass/bottle/charcoal = 4, /obj/item/reagent_containers/glass/bottle/epinephrine = 4,
 	/obj/item/reagent_containers/glass/bottle/morphine = 4,/obj/item/reagent_containers/glass/bottle/toxin = 4,
@@ -45,7 +45,7 @@
 	/obj/item/reagent_containers/glass/beaker = 4,/obj/item/reagent_containers/dropper = 2, /obj/item/stack/medical/bruise_pack = 6,
 	/obj/item/stack/medical/ointment = 6, /obj/item/stimpack/perseus = 10,/obj/item/stack/medical/gauze=5)
 
-	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6)
+	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6, /obj/item/reagent_containers/glass/bottle/plasma = 2,/obj/item/storage/pill_bottle = 2)
 
 /*
 * PercTech Vendor
@@ -57,12 +57,12 @@
 	icon_state = "perseus"
 	icon_deny = "perseus-deny"
 	icon = 'icons/oldschool/perseus.dmi'
-	req_access_txt = "66"
-	products = list(/obj/item/restraints/handcuffs = 10,/obj/item/grenade/flashbang = 2, /obj/item/device/assembly/flash = 5,
+	req_access_txt = "561"
+	products = list(/obj/item/restraints/handcuffs = 10,/obj/item/grenade/flashbang = 2, /obj/item/device/assembly/flash/handheld = 5,
 	/obj/item/tank/perseus = 8, /obj/item/tank/internals/oxygen = 4,/obj/item/storage/fancy/cigarettes/perc = 5,
 	/obj/item/storage/box/matches = 5, /obj/item/c4_ex/breach = 5, /obj/item/clothing/mask/cigarette/cigar/victory = 6)
 
-	contraband = list(/obj/item/tank/jetpack/oxygen/perctech = 2, /obj/item/storage/fancy/donut_box = 2)
+	contraband = list(/obj/item/tank/jetpack/oxygen/perctech = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/device/aicard = 1)
 
 /*
 * Perseus Booze-O-Mat
@@ -79,7 +79,7 @@
 					/obj/item/reagent_containers/food/drinks/bottle/cream = 4,/obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/reagent_containers/food/drinks/ice = 9)
-	req_access_txt = "66"
+	req_access_txt = "561"
 
 	contraband = list(/obj/item/reagent_containers/food/drinks/xenoschlag = 6)
 
@@ -99,7 +99,7 @@
 	icon_on = "Percprisoner"
 	icon_off = "Percprisoner"
 	density = 0
-	req_access = list(access_penforcer)
+	req_access = list(ACCESS_PERSEUS_ENFORCER)
 
 	accept_check(var/obj/item/O as obj)
 		if(istype(O, /obj/item))
@@ -129,5 +129,5 @@
 					/obj/item/toy/prize/gygax = 1, /obj/item/toy/prize/durand = 1, /obj/item/toy/prize/honk = 1,
 					/obj/item/toy/prize/marauder = 1, /obj/item/toy/prize/seraph = 1, /obj/item/toy/prize/mauler = 1,
 					/obj/item/toy/prize/odysseus = 1, /obj/item/toy/prize/phazon = 1)
-	req_access = list(access_penforcer)
+	req_access = list(ACCESS_PERSEUS_ENFORCER)
 

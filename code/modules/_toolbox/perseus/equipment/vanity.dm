@@ -46,3 +46,14 @@
 	icon_state = "cigar2off"
 	icon_on = "cigar2on"
 	icon_off = "cigar2off"
+
+/*
+* Bed Sheet
+*/
+
+/obj/item/bedsheet/perc
+	icon = 'icons/oldschool/perseus.dmi'
+	icon_state = "sheetperc"
+	item_color = "blue"
+	alternate_worn_icon = 'icons/oldschool/perseus_worn.dmi'
+	dream_messages = list("blue", "monster truck", "energy project")

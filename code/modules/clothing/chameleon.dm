@@ -342,6 +342,9 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+/obj/item/clothing/mask/chameleon/disguise_voice()
+	return vchange
+
 /obj/item/clothing/mask/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)

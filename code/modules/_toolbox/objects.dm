@@ -58,3 +58,17 @@
 	if(istype(C))
 		C.charge = C.maxcharge
 		C.update_icon()
+
+//reinforced delivery window. allows items to be placed on tables underneath it
+/obj/structure/window/reinforced/fulltile/delivery
+	name = "reinforced delivery window"
+	icon = 'icons/oldschool/objects.dmi'
+	icon_state = "delivery_window"
+	flags_1 = 0
+	smooth = SMOOTH_FALSE
+	canSmoothWith = list()
+	glass_amount = 5
+	CanAtmosPass = ATMOS_PASS_YES
+
+/obj/structure/window/reinforced/fulltile/delivery/unanchored
+	anchored = FALSE

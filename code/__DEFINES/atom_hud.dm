@@ -22,6 +22,7 @@
 #define SENTIENT_DISEASE_HUD	"18"
 //for antag huds. these are used at the /mob level
 #define ANTAG_HUD		"19"
+#define BLUE_HUD_TEXT	"20"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -53,6 +54,7 @@
 #define ANTAG_HUD_SOULLESS		20
 #define ANTAG_HUD_CLOCKWORK		21
 #define ANTAG_HUD_BROTHER		22
+#define BLUE_HUD_GLOBAL			23
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

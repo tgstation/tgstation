@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(job)
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
+	var/list/whitelisted_occupations = list()
 	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
@@ -55,9 +56,14 @@ SUBSYSTEM_DEF(job)
 		else
 			repositioned_jobdatums[job.position_after_type] = job
 	for(var/datum/job/job in jobdatums)
-		occupations += job
 		name_occupations[job.title] = job
 		type_occupations[job.type] = job
+		if(job.whitelisted)
+			whitelisted_occupations += job
+		else
+			occupations += job
+	for(var/datum/job/job in whitelisted_occupations)
+		occupations += job
 
 	return 1
 
@@ -326,6 +332,9 @@ SUBSYSTEM_DEF(job)
 					Debug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
 
+				if(job.whitelisted && !job.is_whitelisted(player.client))
+					continue
+
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.GetJobDepartment(job, level) & job.flag)
 
@@ -368,7 +377,6 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
 			AssignRole(player, SSjob.overflow_role) //If everything is already filled, make them an assistant
-
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -384,7 +392,9 @@ SUBSYSTEM_DEF(job)
 	var/datum/job/job = GetJob(rank)
 
 	H.job = rank
-
+	if(!job.pre_setup(M,joined_late))
+		message_admins("job \"[rank]\" for player \"[M.key]\" failed pre_setup. They have been spawned as an assistant.")
+		return EquipRank(M, "Assistant", joined_late)
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null

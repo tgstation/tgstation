@@ -19,3 +19,4 @@
 	minimal_access += ACCESS_CREMATORIUM
 
 MAP_REMOVE_JOB(lawyer)
+MAP_REMOVE_JOB(psychiatrist)

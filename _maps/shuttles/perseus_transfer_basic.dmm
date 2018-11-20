@@ -1,0 +1,18 @@
+"a" = (/turf/closed/wall/mineral/titanium,/area/shuttle/perseus_transfer)
+"b" = (/obj/effect/spawner/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/perseus_transfer)
+"c" = (/obj/machinery/computer/shuttle/perseus_shuttle,/turf/open/floor/mineral/titanium/blue,/area/shuttle/perseus_transfer)
+"d" = (/turf/open/floor/mineral/titanium/blue,/area/shuttle/perseus_transfer)
+"e" = (/obj/machinery/light{dir = 8},/turf/open/floor/mineral/titanium/blue,/area/shuttle/perseus_transfer)
+"f" = (/obj/machinery/door/airlock/titanium,/obj/docking_port/mobile{dheight = 0; dir = 8; dwidth = 3; height = 4; id = "perseus_transfer"; name = "Prison Shuttle"; port_direction = 4; width = 6},/turf/open/floor/mineral/titanium/blue,/area/shuttle/labor)
+"g" = (/obj/structure/chair{dir = 1},/turf/open/floor/mineral/titanium/blue,/area/shuttle/perseus_transfer)
+"h" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{dir = 1; layer = 2.9},/turf/open/floor/plating/airless,/area/shuttle/perseus_transfer)
+"i" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/perseus_transfer)
+
+(1,1,1) = {"
+abba
+acda
+aedf
+agga
+ahha
+aiia
+"}
