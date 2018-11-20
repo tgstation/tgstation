@@ -33,6 +33,7 @@
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
+	layer = RIPPLE_LAYER
 	mech_sized = TRUE
 
 /obj/effect/portal/Move(newloc)
