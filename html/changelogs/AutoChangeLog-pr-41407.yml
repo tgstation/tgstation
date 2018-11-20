@@ -1,0 +1,5 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - rscadd: "The teleporter computers's selection window now shows the name of renamed beacons, as well as their location"
+  - tweak: "For consistency's sake, tracking implants now show the carrier's location as well as name."
