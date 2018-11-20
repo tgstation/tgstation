@@ -34,6 +34,10 @@
 				var/mob/living/MM = teleatom
 				to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 
+	if(istype(teleatom, /obj/item/reagent_containers/food/snacks/store/bread))
+		new /mob/living/simple_animal/hostile/yeast_beast(get_turf(destination)) //so we're fine, as long as nobody teleports any bread
+		qdel(teleatom)
+
 	// if effects are not specified and not explicitly disabled, sparks
 	if ((!effectin || !effectout) && !no_effects)
 		var/datum/effect_system/spark_spread/sparks = new

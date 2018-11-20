@@ -6,7 +6,6 @@
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
 
-
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
 	bitesize = 2
@@ -97,7 +96,6 @@
 	tastes = list("bread" = 10) // bananjuice will also flavour
 	foodtype = GRAIN | FRUIT
 
-
 /obj/item/reagent_containers/food/snacks/breadslice/banana
 	name = "banana-nut bread slice"
 	desc = "A slice of delicious banana bread."
@@ -159,6 +157,15 @@
 	filling_color = "#C0C0C0"
 	list_reagents = list("nutriment" = 2, "mutetoxin" = 1, "nothing" = 1, "vitamin" = 1)
 	foodtype = GRAIN | FRUIT
+
+/obj/item/reagent_containers/food/snacks/breadslice/yeast_beast
+	name = "yeast beast slice"
+	desc = "A slice of bread hewn from the carcass of a yeast beast."
+	icon_state = "breadslice"
+	filling_color = "#4C9800"
+	list_reagents = list("nutriment" = 6, "mutagen" = 3, "vitamin" = 1)
+	tastes = list("bread" = 10, "tumors" = 10)
+	foodtype = GRAIN | TOXIC | GROSS
 
 /obj/item/reagent_containers/food/snacks/breadslice/custom
 	name = "bread slice"
