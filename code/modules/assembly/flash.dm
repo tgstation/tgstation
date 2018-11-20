@@ -338,7 +338,7 @@
 	if(targeted)
 		if(M.flash_act(1, 1))
 			var/hypnosis = FALSE
-			if(M.hypnosis_vulnerable)
+			if(M.hypnosis_vulnerable())
 				hypnosis = TRUE
 			if(user)
 				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
@@ -353,7 +353,7 @@
 			else
 				M.confused += min(M.confused + 10, 20)
 				M.dizziness += min(M.dizziness + 10, 20)
-				M.drowsiness += min(M.drowsiness + 10, 20)
+				M.drowsyness += min(M.drowsyness + 10, 20)
 				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
 				
 		else if(user)
@@ -367,5 +367,5 @@
 			to_chat(M, "<span class='notice'>Such a pretty light...</span>")
 			M.confused += min(M.confused + 4, 20)
 			M.dizziness += min(M.dizziness + 4, 20)
-			M.drowsiness += min(M.drowsiness + 4, 20)
+			M.drowsyness += min(M.drowsyness + 4, 20)
 			M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
