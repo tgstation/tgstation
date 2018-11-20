@@ -27,9 +27,9 @@
 			M.sound_or_datum(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 
 /mob/proc/sound_or_datum(turf/turf_source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
-	if(input in subtypesof(/datum/outputs))
-		var/datum/outputs/bundle = GLOB.outputs_list[input]
-		bundle.send_info(src, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	if(istype(input,/datum))
+		var/datum/outputs/O = input
+		O.send_info(src, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 	else
 		var/sound/S = sound(get_sfx(input))
 		playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
