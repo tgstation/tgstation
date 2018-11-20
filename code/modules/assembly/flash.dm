@@ -321,10 +321,6 @@
 	
 /obj/item/assembly/flash/hypnotic/burn_out()
 	return
-
-/obj/item/assembly/flash/hypnotic/proc/check_vulnerable(mob/living/carbon/C)
-	if(C.hallucinating())
-		return TRUE
 	
 /obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))

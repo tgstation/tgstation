@@ -573,7 +573,7 @@
 /datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
 	duration = _duration
 	stun = _stun
-	. = ..()
+	return ..()
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
