@@ -844,7 +844,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		for(var/obj/I in all_items) //Check for wanted items
 			if(is_type(I, /obj/item/book/granter/spell))
 				var/obj/item/book/granter/spell/spellbook = I
-				if(!I.used || !I.oneuse) //if the book still has powers...
+				if(!spellbook.used || !spellbook.oneuse) //if the book still has powers...
 					stolen_count++ //it counts. nice.
 			else if(is_type_in_typecache(I, wanted_items))
 				stolen_count++
