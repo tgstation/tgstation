@@ -120,8 +120,11 @@
 	if(regime_set == "Teleporter")
 		for(var/obj/item/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
-				var/area/A = get_area(R)
-				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
+				if(R.renamed)
+					L[avoid_assoc_duplicate_keys("[R.name] ([get_area(R)])", areaindex)] = R
+				else
+					var/area/A = get_area(R)
+					L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !isliving(I.loc) || !I.allow_teleport)
@@ -132,7 +135,7 @@
 					if(M.timeofdeath + I.lifespan_postmortem < world.time)
 						continue
 				if(is_eligible(I))
-					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+					L[avoid_assoc_duplicate_keys("[M.real_name] ([get_area(M)])", areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
