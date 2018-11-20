@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		return TRUE
 	owner = H
 	dna = H.dna
-	dna.mutations[src] = type
+	dna.mutations += src
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
@@ -138,6 +138,3 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	else
 		qdel(src)
 
-
-/proc/get_initialized_mutation(B)
-	return GLOB.all_mutations[B]

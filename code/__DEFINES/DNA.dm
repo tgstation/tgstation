@@ -5,7 +5,7 @@
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
 #define HULK		/datum/mutation/human/hulk
 #define XRAY		/datum/mutation/human/x_ray
-#define COLDRES		/datum/mutation/human/cold_resistance
+#define COLDRES		/datum/mutation/human/space_adaptation
 #define TK			/datum/mutation/human/telekinesis
 #define NERVOUS		/datum/mutation/human/nervousness
 #define EPILEPSY	/datum/mutation/human/epilepsy
@@ -46,7 +46,7 @@
 //Types of usual mutations
 #define	POSITIVE 			1
 #define	NEGATIVE			2
-#define	MINOR_NEGATIVE		3
+#define	MINOR_NEGATIVE		4
 
 
 //Mutation classes. Normal being SE, extra being additional mutations with instability and other being stuff you dont want people to fuck with like wizard mutate
@@ -70,7 +70,7 @@
 #define DNA_HAIR_STYLE_BLOCK		7
 
 #define DNA_SEQUENCE_LENGTH			4
-#define DNA_STRUC_ENZYMES_BLOCKS	8
+#define DNA_MUTATION_BLOCKS	8
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff

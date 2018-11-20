@@ -19,7 +19,7 @@
 //Blind makes you blind. Who knew?
 /datum/mutation/human/blind
 	name = "Blindness"
-	desc = "Completely inhibits peripheral brain function."
+	desc = "Renders the subject completely blind."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You can't seem to see anything.</span>"
 
@@ -75,5 +75,5 @@
 	return visual_indicators[1]
 
 /datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target, mouseparams)
-	if(owner.a_intent == INTENT_HELP)
+	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target, mouseparams)

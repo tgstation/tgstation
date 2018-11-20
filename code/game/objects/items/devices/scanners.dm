@@ -697,10 +697,10 @@ NANITE SCANNER
 			mut_name = HM.alias
 		var/list/temp = string2list(C.dna.mutation_index[A])
 		var/list/display = list()
-		for(var/i in 0 to LAZYLEN(temp) / DNA_STRUC_ENZYMES_BLOCKS-1)
+		for(var/i in 0 to LAZYLEN(temp) / DNA_MUTATION_BLOCKS-1)
 			if(i)
 				display += list("-")
-			display += temp.Copy(1 + i*DNA_STRUC_ENZYMES_BLOCKS, DNA_STRUC_ENZYMES_BLOCKS*(1+i) + 1)
+			display += temp.Copy(1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
 
 		var/text = display.Join()
 

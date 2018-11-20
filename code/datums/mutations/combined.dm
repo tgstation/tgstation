@@ -2,11 +2,6 @@
 	var/required = list()
 	var/result = null
 
-/datum/generecipe/New()
-	. = ..()
-	GLOB.mutation_recipes[required] = result
-	qdel(src) //We dont need this anymore, might aswell throw it away
-
 /proc/get_mixed_mutation(mutation1, mutation2)
 	if(!mutation1 || !mutation2)
 		return FALSE

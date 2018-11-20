@@ -111,7 +111,7 @@ SUBSYSTEM_DEF(atoms)
 	var/list/mutations = subtypesof(/datum/mutation/human)
 	shuffle_inplace(mutations)
 	for(var/A in subtypesof(/datum/generecipe))
-		new A ()
+		GLOB.mutation_recipes[initial(A.required)] = initial(A.result)
 	for(var/i in 1 to LAZYLEN(mutations))
 		var/path = mutations[i] //byond gets pissy when we do it in one line
 		var/datum/mutation/human/B = new path ()

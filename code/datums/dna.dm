@@ -107,7 +107,7 @@
 			. += random_string(DNA_BLOCK_SIZE,GLOB.hex_characters)
 	return .
 
-/datum/dna/proc/generate_struc_enzymes()
+/datum/dna/proc/generate_dna_blocks()
 	var/bonus
 	if(species && species.inert_mutation)
 		bonus = get_initialized_mutation(species.inert_mutation)
@@ -303,7 +303,7 @@
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	generate_struc_enzymes()
+	generate_dna_blocks()
 	features = random_features()
 
 
@@ -476,13 +476,9 @@
 /datum/dna/proc/activate_mutation(mutation)
 	if(!mutation)
 		return
-	if(!mutation_in_se(mutation)) //cant activate what we dont have, use add_mutation
+	if(!mutation_in_se(mutation, src)) //cant activate what we dont have, use add_mutation
 		return FALSE
 	return add_mutation(mutation, MUT_NORMAL)
-
-/datum/dna/proc/mutation_in_se(mutation)
-	if(mutation in mutation_index)
-		return TRUE
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
 
@@ -513,7 +509,7 @@
 		return
 	var/list/possible = list()
 	for(var/datum/mutation/human/A in GLOB.bad_mutations + GLOB.not_good_mutations)
-		if(dna.mutation_in_se(A.type) && !dna.get_mutation(A.type))
+		if(mutation_in_se(A.type, dna) && !dna.get_mutation(A.type))
 			possible += A.type
 	if(LAZYLEN(possible))
 		var/mutation = pick(possible)
@@ -529,7 +525,7 @@
 		return
 	var/list/possible = list()
 	for(var/datum/mutation/human/A in GLOB.good_mutations)
-		if(dna.mutation_in_se(A.type) && !dna.get_mutation(A.type))
+		if(mutation_in_se(A.type, dna) && !dna.get_mutation(A.type))
 			possible += A.type
 
 	if(LAZYLEN(possible))
@@ -564,7 +560,7 @@
 	if(se)
 		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
 			if(prob(probability))
-				M.dna.generate_struc_enzymes()
+				M.dna.generate_dna_blocks()
 		M.domutcheck()
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)

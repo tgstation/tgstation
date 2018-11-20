@@ -341,20 +341,15 @@
 			temp_html += buttons
 			temp_html += "<div class='line'><div class='statusLabel'>Genetic Sequence:</div><br>"
 			if(viable_occupant)
-				if(viable_occupant.dna.scrambled)
-					temp_html += "<div class='line'>Genetic structure has been damaged. Please initiate restoration protocal."
-					temp_html += "<a href='?src=[REF(src)];task=restore;'>Restore.</a>"
-
-				else
-					if(viable_occupant)
-						for(var/A in get_mutation_list())
-							temp_html += display_inactive_sequence(A)
+				if(viable_occupant)
+					for(var/A in get_mutation_list())
+					temp_html += display_inactive_sequence(A)
 						temp_html += "<br>"
-					else
-						temp_html += "----"
-					if(viable_occupant && (current_mutation in get_mutation_list(viable_occupant)))
-						temp_html += display_sequence(current_mutation)
-					temp_html += "</div><br>"
+				else
+					temp_html += "----"
+				if(viable_occupant && (current_mutation in get_mutation_list(viable_occupant)))
+					temp_html += display_sequence(current_mutation)
+				temp_html += "</div><br>"
 			else
 				temp_html += "----------"
 
@@ -376,7 +371,7 @@
 			location = mutations.Find(mutation)
 	if(mutation == current_mutation)
 		class = "selected"
-	if(location > DNA_STRUC_ENZYMES_BLOCKS)
+	if(location > DNA_MUTATION_BLOCKS)
 		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_extra.png' width = '65'  alt='Extra Mutation'></a>"
 	else if(mutation in stored_research.discovered_mutations)
 		temp_html += "<a class='clean' href='?src=[REF(src)];task=inspect;num=[location];'><img class='[class]' src='dna_discovered.png' width = '65'  alt='Discovered Mutation'></a>"
@@ -412,7 +407,7 @@
 		mut_desc = A.desc
 		discovered = TRUE
 	var/extra
-	if(viable_occupant && (!storage_slot && !viable_occupant.dna.mutation_in_se(mutation)))
+	if(viable_occupant && (!storage_slot && !mutation_in_se(mutation, viable_occupant.dna)))
 		extra = TRUE
 	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
 
@@ -514,7 +509,7 @@
 		if("scramble")
 			if(viable_occupant && (scrambleready < world.time))
 				viable_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
-				viable_occupant.dna.generate_struc_enzymes()
+				viable_occupant.dna.generate_dna_blocks()
 				scrambleready = world.time + SCRAMBLE_TIMEOUT
 				to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
 				viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected.damage_coeff ** 2)
@@ -692,7 +687,7 @@
 		if("nullify")
 			if(viable_occupant)
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
-				if(A && (!viable_occupant.dna.mutation_in_se(current_mutation) || A.scrambled))
+				if(A && (!mutation_in_se(current_mutation, viable_occupant.dna) || A.scrambled))
 					viable_occupant.dna.remove_mutation(current_mutation)
 					viable_occupant.dna.update_instability(TRUE)
 					current_screen = "mainmenu"
