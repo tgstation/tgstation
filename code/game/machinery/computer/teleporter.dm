@@ -120,7 +120,7 @@
 	if(regime_set == "Teleporter")
 		for(var/obj/item/beacon/R in GLOB.teleportbeacons)
 			if(is_eligible(R))
-				if(R.renamed == TRUE)
+				if(R.renamed)
 					L[avoid_assoc_duplicate_keys(R.name, areaindex)] = R
 				else
 					var/area/A = get_area(R)
