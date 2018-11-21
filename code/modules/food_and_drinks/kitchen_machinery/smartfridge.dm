@@ -52,7 +52,7 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
+	if(default_deconstruction_screwdriver(user, "[icon_on]_open", "[icon_on]", O))
 		return
 
 	if(exchange_parts(user, O))

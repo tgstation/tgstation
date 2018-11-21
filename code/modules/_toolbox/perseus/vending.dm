@@ -27,6 +27,9 @@
 	contraband = list(/obj/item/reagent_containers/food/snacks/soup/wish = 1, /obj/item/reagent_containers/food/snacks/burger/superbite = 2)
 	req_access_txt = "561"
 
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
+
 /*
 * Perseus Medical
 */
@@ -47,6 +50,9 @@
 
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3, /obj/item/reagent_containers/pill/morphine = 4, /obj/item/reagent_containers/pill/charcoal = 6, /obj/item/reagent_containers/glass/bottle/plasma = 2,/obj/item/storage/pill_bottle = 2)
 
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
+
 /*
 * PercTech Vendor
 */
@@ -63,6 +69,9 @@
 	/obj/item/storage/box/matches = 5, /obj/item/c4_ex/breach = 5, /obj/item/clothing/mask/cigarette/cigar/victory = 6)
 
 	contraband = list(/obj/item/tank/jetpack/oxygen/perctech = 2, /obj/item/storage/fancy/donut_box = 2, /obj/item/device/aicard = 1)
+
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
 
 /*
 * Perseus Booze-O-Mat
@@ -83,6 +92,8 @@
 
 	contraband = list(/obj/item/reagent_containers/food/drinks/xenoschlag = 6)
 
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
 /*
 *
 */
@@ -114,6 +125,9 @@
 		/obj/item/clothing/suit/straight_jacket = 5,
 		/obj/item/clothing/glasses/sunglasses/blindfold = 5)
 
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
+
 /obj/machinery/vending/percleisure
 	name = "PercTech Leisure Vendor"
 	icon = 'icons/oldschool/perseus.dmi'
@@ -130,4 +144,7 @@
 					/obj/item/toy/prize/marauder = 1, /obj/item/toy/prize/seraph = 1, /obj/item/toy/prize/mauler = 1,
 					/obj/item/toy/prize/odysseus = 1, /obj/item/toy/prize/phazon = 1)
 	req_access = list(ACCESS_PERSEUS_ENFORCER)
+
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
 

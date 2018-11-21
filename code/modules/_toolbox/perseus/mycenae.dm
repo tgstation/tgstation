@@ -273,3 +273,53 @@
 
 /area/prison_shuttle_sat
 	name = "Prison Shuttle Satellite"
+
+/*
+**Mycenae Engines
+*/
+
+/obj/structure/shuttle/engine/propulsion/mycenae
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
+	wrench_act(mob/living/user, obj/item/I)
+		return FALSE
+	welder_act(mob/living/user, obj/item/I)
+		return FALSE
+
+
+/obj/structure/shuttle/engine/heater/mycenae
+	can_be_unfasten_wrench(mob/user, silent)
+		return FAILED_UNFASTEN
+	wrench_act(mob/living/user, obj/item/I)
+		return FALSE
+	welder_act(mob/living/user, obj/item/I)
+		return FALSE
+
+/*
+**Mycenae Engines
+*/
+
+/obj/structure/mycenae_nameplate
+	name = "Perseus Ship: The Mycenae III"
+	icon = 'icons/oldschool/perseus.dmi'
+	icon_state = "perc1"
+	var/starter_icon_state = "perc"
+
+/obj/structure/mycenae_nameplate/New()
+	..()
+	update_icon()
+
+/obj/structure/mycenae_nameplate/update_icon()
+	..()
+	var/check = 1
+	var/turf/current = loc
+	for(var/i=5,i>0,i--)
+		var/turf/T = get_step(current,WEST)
+		if(T)
+			current = T
+			for(var/obj/structure/mycenae_nameplate/M in current)
+				check++
+				break
+	icon_state = "[starter_icon_state][check]"
+
+

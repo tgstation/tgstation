@@ -109,6 +109,8 @@
 	icon_state = "blackpack"
 	icon = 'icons/oldschool/perseus.dmi'
 	alternate_worn_icon = 'icons/oldschool/perseus_worn.dmi'
+	lefthand_file = 'icons/oldschool/perseus_inhand_left.dmi'
+	righthand_file = 'icons/oldschool/perseus_inhand_right.dmi'
 
 /*
 * Gloves
