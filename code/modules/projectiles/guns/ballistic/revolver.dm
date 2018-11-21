@@ -3,6 +3,9 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
+	fire_sound = 'sound/weapons/revolver357shot.ogg'
+	vary_fire_sound = FALSE
+	fire_sound_volume = 90
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/revolver/Initialize()
@@ -58,6 +61,7 @@
 		return
 
 	if(do_spin())
+		playsound(usr, get_sfx("revolver_spin"), 30, FALSE)
 		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
@@ -88,6 +92,7 @@
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
 	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."
+	fire_sound = 'sound/weapons/revolver38shot.ogg'
 	icon_state = "detective"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	obj_flags = UNIQUE_RENAME
@@ -122,6 +127,7 @@
 				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return TRUE
 			magazine.caliber = "357"
+			fire_sound = 'sound/weapons/revolver357shot.ogg'
 			desc = "The barrel and chamber assembly seems to have been modified."
 			to_chat(user, "<span class='notice'>You reinforce the barrel of [src]. Now it will fire .357 rounds.</span>")
 	else
@@ -135,6 +141,7 @@
 				to_chat(user, "<span class='warning'>You can't modify it!</span>")
 				return
 			magazine.caliber = "38"
+			fire_sound = 'sound/weapons/revolver38shot.ogg'
 			desc = initial(desc)
 			to_chat(user, "<span class='notice'>You remove the modifications on [src]. Now it will fire .38 rounds.</span>")
 	return TRUE
@@ -220,7 +227,7 @@
 		if(chambered)
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire_casing(user, user))
-				playsound(user, fire_sound, 50, 1)
+				playsound(user, fire_sound, 90, FALSE)
 				var/zone = check_zone(user.zone_selected)
 				var/obj/item/bodypart/affecting = H.get_bodypart(zone)
 				if(zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH)
