@@ -151,3 +151,17 @@ GLOBAL_LIST_EMPTY(hub_features)
 
 /obj/machinery/computer/rdconsole
 	savable_data = list("locked")
+
+//*********
+//Omnilathe
+//*********
+//Science protolathe converts to an omni lathe depending on a config entry
+
+/datum/config_entry/number/omnilathe
+/obj/machinery/rnd/production/protolathe/science/Initialize(roundstart)
+	if(roundstart && CONFIG_GET(number/omnilathe))
+		name = "protolathe"
+		allowed_department_flags = ALL
+		department_tag = "Unidentified"
+		circuit = /obj/item/circuitboard/machine/protolathe
+	return ..()
