@@ -181,94 +181,85 @@
  */
 /mob/living/simple_animal/parrot/show_inv(mob/user)
 	user.set_machine(src)
-	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	if(ears)
-		dat +=	"<br><b>Headset:</b> [ears] (<a href='?src=[REF(src)];remove_inv=ears'>Remove</a>)"
-	else
-		dat +=	"<br><b>Headset:</b> <a href='?src=[REF(src)];add_inv=ears'>Nothing</a>"
 
-	user << browse(dat, "window=mob[real_name];size=325x500")
-	onclose(user, "mob[real_name]")
+	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
+	dat += "<br><B>Headset:</B> <A href='?src=[REF(src)];[ears ? "remove_inv=ears'>[ears]" : "add_inv=ears'>Nothing"]</A>"
+
+	user << browse(dat, "window=mob[REF(src)];size=325x500")
+	onclose(user, "window=mob[REF(src)]")
 
 
 /mob/living/simple_animal/parrot/Topic(href, href_list)
-
-	//Can the usr physically do this?
-	if(usr.incapacitated() || !usr.Adjacent(loc))
+	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		usr << browse(null, "window=mob[REF(src)]")
+		usr.unset_machine()
 		return
 
-	//Is the usr's mob type able to do this? (lolaliens)
-	if(ishuman(usr) || ismonkey(usr) || iscyborg(usr) ||  isalienadult(usr))
+	//Removing from inventory
+	if(href_list["remove_inv"])
+		var/remove_from = href_list["remove_inv"]
+		switch(remove_from)
+			if("ears")
+				if(!ears)
+					to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
+					return
+				if(!stat)
+					say("[available_channels.len ? "[pick(available_channels)] " : null]BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
+				ears.forceMove(drop_location())
+				ears = null
+				for(var/possible_phrase in speak)
+					if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
+						possible_phrase = copytext(possible_phrase,3)
 
-		//Removing from inventory
-		if(href_list["remove_inv"])
-			var/remove_from = href_list["remove_inv"]
-			switch(remove_from)
-				if("ears")
-					if(ears)
-						if(!stat)
-							if(available_channels.len)
-								src.say("[pick(available_channels)] BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-							else
-								src.say("BAWWWWWK LEAVE THE HEADSET BAWKKKKK!")
-						ears.forceMove(src.loc)
-						ears = null
-						for(var/possible_phrase in speak)
-							if(copytext(possible_phrase,1,3) in GLOB.department_radio_keys)
-								possible_phrase = copytext(possible_phrase,3)
-					else
-						to_chat(usr, "<span class='warning'>There is nothing to remove from its [remove_from]!</span>")
+	//Adding things to inventory
+	else if(href_list["add_inv"])
+		var/add_to = href_list["add_inv"]
+		if(!usr.get_active_held_item())
+			to_chat(usr, "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>")
+			return
+		switch(add_to)
+			if("ears")
+				if(ears)
+					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
+					return
+				else
+					var/obj/item/item_to_add = usr.get_active_held_item()
+					if(!item_to_add)
 						return
 
-		//Adding things to inventory
-		else if(href_list["add_inv"])
-			var/add_to = href_list["add_inv"]
-			if(!usr.get_active_held_item())
-				to_chat(usr, "<span class='warning'>You have nothing in your hand to put on its [add_to]!</span>")
-				return
-			switch(add_to)
-				if("ears")
-					if(ears)
-						to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
+					if( !istype(item_to_add,  /obj/item/radio/headset) )
+						to_chat(usr, "<span class='warning'>This object won't fit!</span>")
 						return
-					else
-						var/obj/item/item_to_add = usr.get_active_held_item()
-						if(!item_to_add)
-							return
 
-						if( !istype(item_to_add,  /obj/item/radio/headset) )
-							to_chat(usr, "<span class='warning'>This object won't fit!</span>")
-							return
+					var/obj/item/radio/headset/headset_to_add = item_to_add
 
-						var/obj/item/radio/headset/headset_to_add = item_to_add
+					if(!usr.transferItemToLoc(headset_to_add, src))
+						return
+					ears = headset_to_add
+					to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
 
-						if(!usr.transferItemToLoc(headset_to_add, src))
-							return
-						src.ears = headset_to_add
-						to_chat(usr, "<span class='notice'>You fit the headset onto [src].</span>")
+					clearlist(available_channels)
+					for(var/ch in headset_to_add.channels)
+						switch(ch)
+							if(RADIO_CHANNEL_ENGINEERING)
+								available_channels.Add(RADIO_TOKEN_ENGINEERING)
+							if(RADIO_CHANNEL_COMMAND)
+								available_channels.Add(RADIO_TOKEN_COMMAND)
+							if(RADIO_CHANNEL_SECURITY)
+								available_channels.Add(RADIO_TOKEN_SECURITY)
+							if(RADIO_CHANNEL_SCIENCE)
+								available_channels.Add(RADIO_TOKEN_SCIENCE)
+							if(RADIO_CHANNEL_MEDICAL)
+								available_channels.Add(RADIO_TOKEN_MEDICAL)
+							if(RADIO_CHANNEL_SUPPLY)
+								available_channels.Add(RADIO_TOKEN_SUPPLY)
+							if(RADIO_CHANNEL_SERVICE)
+								available_channels.Add(RADIO_TOKEN_SERVICE)
 
-						clearlist(available_channels)
-						for(var/ch in headset_to_add.channels)
-							switch(ch)
-								if("Engineering")
-									available_channels.Add(":e")
-								if("Command")
-									available_channels.Add(":c")
-								if("Security")
-									available_channels.Add(":s")
-								if("Science")
-									available_channels.Add(":n")
-								if("Medical")
-									available_channels.Add(":m")
-								if("Supply")
-									available_channels.Add(":u")
-								if("Service")
-									available_channels.Add(":v")
-
-						if(headset_to_add.translate_binary)
-							available_channels.Add(":b")
-		else
-			..()
+					if(headset_to_add.translate_binary)
+						available_channels.Add(MODE_TOKEN_BINARY)
+	else
+		return ..()
 
 
 /*
@@ -1022,7 +1013,7 @@
 	faction = list("ratvar")
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
-	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 
 /mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
 	return

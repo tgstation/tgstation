@@ -224,6 +224,7 @@
 			new_race = mrace
 		else
 			return
+		deathsound = new_race.deathsound
 		dna.species.on_species_loss(src, new_race, pref_load)
 		var/datum/species/old_species = dna.species
 		dna.species = new_race

@@ -1,39 +1,32 @@
 //Necropolis Tendrils, which spawn lavaland monsters and break into a chasm when killed
-/obj/effect/light_emitter/tendril
-	set_luminosity = 4
-	set_cap = 2.5
-	light_color = LIGHT_COLOR_LAVA
-
-/mob/living/simple_animal/hostile/spawner/lavaland
+/obj/structure/spawner/lavaland
 	name = "necropolis tendril"
 	desc = "A vile tendril of corruption, originating deep underground. Terrible monsters are pouring out of it."
+
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "tendril"
-	icon_living = "tendril"
-	icon_dead = "tendril"
+
 	faction = list("mining")
-	weather_immunities = list("lava","ash")
-	health = 250
-	maxHealth = 250
 	max_mobs = 3
-	spawn_time = 300 //30 seconds default
+	max_integrity = 250
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril)
-	spawn_text = "emerges from"
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
-	maxbodytemp = INFINITY
-	loot = list(/obj/effect/collapse, /obj/structure/closet/crate/necropolis/tendril)
-	del_on_death = 1
+
+	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+
 	var/gps = null
 	var/obj/effect/light_emitter/tendril/emitted_light
 
-/mob/living/simple_animal/hostile/spawner/lavaland/goliath
+
+/obj/structure/spawner/lavaland/goliath
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/tendril)
 
-/mob/living/simple_animal/hostile/spawner/lavaland/legion
+/obj/structure/spawner/lavaland/legion
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril)
 
-/mob/living/simple_animal/hostile/spawner/lavaland/Initialize()
+GLOBAL_LIST_INIT(tendrils, list())
+/obj/structure/spawner/lavaland/Initialize()
 	. = ..()
 	emitted_light = new(loc)
 	for(var/F in RANGE_TURFS(1, src))
@@ -41,18 +34,19 @@
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 	gps = new /obj/item/gps/internal(src)
+	GLOB.tendrils += src
 
-/mob/living/simple_animal/hostile/spawner/lavaland/Destroy()
-	QDEL_NULL(emitted_light)
-	QDEL_NULL(gps)
+/obj/structure/spawner/lavaland/deconstruct(disassembled)
+	new /obj/effect/collapse(loc)
+	new /obj/structure/closet/crate/necropolis/tendril(loc)
 	return ..()
 
-/mob/living/simple_animal/hostile/spawner/lavaland/death()
+
+/obj/structure/spawner/lavaland/Destroy()
 	var/last_tendril = TRUE
-	for(var/mob/living/simple_animal/hostile/spawner/lavaland/other in GLOB.mob_living_list)
-		if(other != src)
-			last_tendril = FALSE
-			break
+	if(GLOB.tendrils.len>1)
+		last_tendril = FALSE
+	
 	if(last_tendril && !(flags_1 & ADMIN_SPAWNED_1))
 		if(SSmedals.hub_enabled)
 			for(var/mob/living/L in view(7,src))
@@ -60,7 +54,15 @@
 					continue
 				SSmedals.UnlockMedal("[BOSS_MEDAL_TENDRIL] [ALL_KILL_MEDAL]", L.client)
 				SSmedals.SetScore(TENDRIL_CLEAR_SCORE, L.client, 1)
-	..()
+	GLOB.tendrils -= src
+	QDEL_NULL(emitted_light)
+	QDEL_NULL(gps)
+	return ..()
+
+/obj/effect/light_emitter/tendril
+	set_luminosity = 4
+	set_cap = 2.5
+	light_color = LIGHT_COLOR_LAVA
 
 /obj/effect/collapse
 	name = "collapsing necropolis tendril"

@@ -7,3 +7,8 @@ No changes were made to the sounds, and all credit goes to kMoon.
 batreflect sounds are by shadoWisp on freesound.org:
 https://www.freesound.org/people/shadoWisp/sounds/252044/
 Small parts of the sound are cut out and used.
+
+shotgunshot sound is cut and mixed from a recording captured by the BBC.
+bbc.co.uk - (c) copyright 2018 BBC
+http://bbcsfx.acropolis.org.uk/assets/07074025.wav
+

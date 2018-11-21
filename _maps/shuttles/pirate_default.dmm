@@ -714,7 +714,9 @@
 /turf/open/floor/plasteel,
 /area/shuttle/pirate)
 "bH" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat/all_access{
+	onstation = 0
+	},
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1

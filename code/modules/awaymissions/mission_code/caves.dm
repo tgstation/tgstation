@@ -46,7 +46,7 @@
 
 /obj/item/paper/fluff/awaymissions/caves/shipment_notice
 	name = "shipment notice"
-	info = "<center>We were suppose to get a shipment of these special laser rifles and a couple 'nades to help combat the wildlife down here, but its been weeks since we last heard from the caravan carrying the shit down here. At this point we can only assume they fell victim to one of the monster nests or the dumbasses managed to trip into the lava. So much for that shipment, I guess.</center>"
+	info = "<center>We were supposed to get a shipment of these special laser rifles and a couple 'nades to help combat the wildlife down here, but it's been weeks since we last heard from the caravan carrying the shit down here. At this point we can only assume they fell victim to one of the monster nests or the dumbasses managed to trip into the lava. So much for that shipment, I guess.</center>"
 
 /obj/item/paper/fluff/awaymissions/caves/safety_notice
 	name = "safety notice"

@@ -90,13 +90,13 @@
 	armor_block = min(90,armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
-	// You are going to knock someone out for longer if they are not wearing a helmet.
+	// You are going to knock someone down for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
 	if(affecting == BODY_ZONE_HEAD && istype(target, /mob/living/carbon/))
 		head_attack_message = " on the head"
-		//Paralyze the target for the duration that we calculated and divide it by 5.
+		//Knock down the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
-			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN) // Never knockdown more than a flash!
+			target.apply_effect(min(armor_duration, 200) , EFFECT_KNOCKDOWN)
 
 	//Display an attack message.
 	if(target != user)
