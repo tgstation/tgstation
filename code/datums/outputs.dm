@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(outputs_list)
 			var/soundin = pickweight(sounds)
 			S = sound(get_sfx(soundin))
 		//Process sound
-		if(S && receiver.can_hear())
+		if(S)
 			S.wait = 0 //No queue
 			S.channel = channel || open_sound_channel()
 			S.volume = vol

@@ -106,23 +106,14 @@
 		to_chat(src, msg)
 
 /mob/proc/display_output(sound/S, image/I, text, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+	if(can_hear())
 	//Process sound
-	if(S && can_hear())
-		SEND_SOUND(src, S)
-	//Process icon
-	if(isliving(src))
-		var/mob/living/L = src
-		if(I && L.audiolocation)
-			client.images += I
-			addtimer(CALLBACK(src, .proc/remove_image, I), 7)
+		if(S)
+			SEND_SOUND(src, S)
 	//Process text
-	if(text && can_hear())
+	if(text)
 		to_chat(src, "<span class='italics'>[text]</span>")
-
-/mob/proc/remove_image(image)
-	if(image && client)
-		client.images -= image
-		qdel(image)
+	//to whoever sees this: icons are handled in living.dm
 
 // Show a message to all player mobs who sees this atom
 // Show a message to the src mob (if the src is a mob)

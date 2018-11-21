@@ -1138,6 +1138,18 @@
 	mob_pickup(user)
 	return TRUE
 
+/mob/living/display_output(sound/S, image/I)
+	..()
+	if(I && audiolocation)
+		client.images += I
+		addtimer(CALLBACK(src, .proc/remove_image, I), 7)
+
+/mob/living/proc/remove_image(image)
+	if(image && client)
+		client.images -= image
+		qdel(image)
+
+
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))
 		return
