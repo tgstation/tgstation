@@ -1,4 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - admin: "select equipment no longer pesters you with alerts if it doesn't have to!"

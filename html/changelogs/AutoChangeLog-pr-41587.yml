@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - balance: "Malfunctioning or emagged borgs now only give away their antag status if their interface is locked/unlocked successfully. The new message is: \"The cover interface glitches out for a split second.\""
