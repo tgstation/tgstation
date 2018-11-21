@@ -59,9 +59,9 @@
 			var/tab = "megafauna_kills"
 			if(crusher_kill)
 				tab = "megafauna_kills_crusher"
-			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type, score_type, crusher_kill)
+				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
