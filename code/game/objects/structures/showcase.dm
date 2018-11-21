@@ -64,7 +64,7 @@
 
 /obj/structure/showcase/mecha/ripley
 	name = "construction mech exhibit"
-	desc = "A stand with an retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
+	desc = "A stand with a retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
 	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "firefighter"
 
