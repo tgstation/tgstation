@@ -17086,7 +17086,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "aOe" = (
-/obj/item/beacon,
 /obj/machinery/camera{
 	c_tag = "Arrivals Bay 1 South"
 	},
@@ -24119,6 +24118,7 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
 "bfQ" = (
@@ -26900,7 +26900,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/mineral/ore_redemption{
 	input_dir = 8;
-	output_dir = 1
+	output_dir = 4
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
@@ -55876,11 +55876,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"guW" = (
-/obj/machinery/light,
-/obj/structure/closet/firecloset,
-/turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
 "gwd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -56271,6 +56266,10 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
+"kcH" = (
+/obj/item/beacon,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "keW" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/sorting/mail{
@@ -68627,7 +68626,7 @@ aaa
 aaa
 awW
 aOe
-ayl
+kcH
 ayl
 aRY
 awW
@@ -99222,7 +99221,7 @@ aYV
 aYV
 aYV
 aYV
-guW
+beE
 bfS
 biE
 bkf
