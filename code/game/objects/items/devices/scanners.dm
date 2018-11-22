@@ -705,5 +705,3 @@ NANITE SCANNER
 		var/text = display.Join()
 
 		to_chat(user, "<span class='boldnotice'>- [mut_name] > [text]</span>")
-
-

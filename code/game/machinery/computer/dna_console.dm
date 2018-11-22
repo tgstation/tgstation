@@ -343,8 +343,8 @@
 			if(viable_occupant)
 				if(viable_occupant)
 					for(var/A in get_mutation_list())
-					temp_html += display_inactive_sequence(A)
-						temp_html += "<br>"
+						temp_html += display_inactive_sequence(A)
+					temp_html += "<br>"
 				else
 					temp_html += "----"
 				if(viable_occupant && (current_mutation in get_mutation_list(viable_occupant)))
@@ -407,7 +407,7 @@
 		mut_desc = A.desc
 		discovered = TRUE
 	var/extra
-	if(viable_occupant && (!storage_slot && !mutation_in_se(mutation, viable_occupant.dna)))
+	if(viable_occupant && !(storage_slot || mutation_in_se(mutation, viable_occupant.dna)))
 		extra = TRUE
 	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
 

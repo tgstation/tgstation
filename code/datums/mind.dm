@@ -640,8 +640,6 @@
 /datum/mind/proc/transfer_mindbound_actions(mob/living/new_character)
 	for(var/X in spell_list)
 		var/obj/effect/proc_holder/spell/S = X
-		if(S.body_bound)
-			continue
 		S.action.Grant(new_character)
 
 /datum/mind/proc/disrupt_spells(delay, list/exceptions = New())

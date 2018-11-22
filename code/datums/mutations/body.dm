@@ -193,7 +193,7 @@
 	desc = "The user's skin will randomly combust, but is generally alot more resilient to burning."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
-	text_lose_indication = "<span class'notice'>You feel alot cooler.</span>"
+	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
 	difficulty = 14
 
 /datum/mutation/human/fire/on_life(mob/living/carbon/human/owner)

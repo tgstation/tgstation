@@ -12,7 +12,7 @@
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
-	var/mutation_index[DNA_STRUC_ENZYMES_BLOCKS] //List of which mutations this carbon has and its assigned block
+	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
 	var/stability = 100
 	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 
@@ -119,7 +119,7 @@
 		mutation_index[RACEMUT] = get_sequence(RACEMUT)
 	else
 		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
-	for(var/i in 2 to DNA_STRUC_ENZYMES_BLOCKS)
+	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
 		mutation_index[M.type] = create_sequence(M.type, FALSE,M.difficulty)
 	shuffle_inplace(mutation_index)
@@ -457,7 +457,7 @@
 			return HM
 
 /datum/dna/proc/check_block_string(mutation)
-	if((LAZYLEN(mutation_index) > DNA_STRUC_ENZYMES_BLOCKS) || !(mutation in mutation_index))
+	if((LAZYLEN(mutation_index) > DNA_MUTATION_BLOCKS) || !(mutation in mutation_index))
 		return 0
 	return is_gene_active(mutation)
 
@@ -465,7 +465,7 @@
 	return (mutation_index[mutation] == get_sequence(mutation))
 
 /datum/dna/proc/set_se(on=TRUE, datum/mutation/human/HM)
-	if(!HM || !(HM.type in mutation_index) || (LAZYLEN(mutation_index) < DNA_STRUC_ENZYMES_BLOCKS))
+	if(!HM || !(HM.type in mutation_index) || (LAZYLEN(mutation_index) < DNA_MUTATION_BLOCKS))
 		return
 	. = TRUE
 	if(on)
@@ -558,7 +558,7 @@
 	if(!M.has_dna())
 		return 0
 	if(se)
-		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
+		for(var/i=1, i<=DNA_MUTATION_BLOCKS, i++)
 			if(prob(probability))
 				M.dna.generate_dna_blocks()
 		M.domutcheck()

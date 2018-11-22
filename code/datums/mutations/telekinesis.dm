@@ -10,7 +10,8 @@
 
 /datum/mutation/human/telekinesis/New()
 	..()
-	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER)
+	if(!LAZYLEN(visual_indicators))
+		visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER)
 
 /datum/mutation/human/telekinesis/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]

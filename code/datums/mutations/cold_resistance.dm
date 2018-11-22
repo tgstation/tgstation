@@ -10,7 +10,8 @@
 
 /datum/mutation/human/space_adaptation/New()
 	..()
-	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER)
+	if(!LAZYLEN(visual_indicators))
+		visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER)
 
 /datum/mutation/human/space_adaptation/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]

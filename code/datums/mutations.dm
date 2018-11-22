@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(mutations_list)
-
 /datum/mutation
 
 	var/name
@@ -13,7 +11,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 	var/lowest_value = 256 * 8
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
-	var/list/mutable_appearance/visual_indicators = list()
+	var/static/list/mutable_appearance/visual_indicators = list()
 	var/obj/effect/proc_holder/spell/power
 	var/layer_used = MUTATIONS_LAYER //which mutation layer to use
 	var/list/species_allowed = list() //to restrict mutation to only certain species
@@ -66,7 +64,6 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		power = new power()
 		power.action_background_icon_state = "bg_tech_blue_on"
 		power.panel = "Genetic"
-		power.body_bound = TRUE
 		owner.AddSpell(power)
 
 /datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)

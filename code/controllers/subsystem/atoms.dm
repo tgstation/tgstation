@@ -111,7 +111,8 @@ SUBSYSTEM_DEF(atoms)
 	var/list/mutations = subtypesof(/datum/mutation/human)
 	shuffle_inplace(mutations)
 	for(var/A in subtypesof(/datum/generecipe))
-		GLOB.mutation_recipes[initial(A.required)] = initial(A.result)
+		var/datum/generecipe/GR = A
+		GLOB.mutation_recipes[initial(GR.required)] = initial(GR.result)
 	for(var/i in 1 to LAZYLEN(mutations))
 		var/path = mutations[i] //byond gets pissy when we do it in one line
 		var/datum/mutation/human/B = new path ()
@@ -126,7 +127,6 @@ SUBSYSTEM_DEF(atoms)
 			GLOB.bad_mutations |= B
 		else if(B.quality == MINOR_NEGATIVE)
 			GLOB.not_good_mutations |= B
-		GLOB.mutations_list[B.type] = B
 		CHECK_TICK
 
 /datum/controller/subsystem/atoms/proc/InitLog()

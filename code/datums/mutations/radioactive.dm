@@ -12,7 +12,8 @@
 
 /datum/mutation/human/radioactive/New()
 	..()
-	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER)
+	if(!LAZYLEN(visual_indicators))
+		visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER)
 
 /datum/mutation/human/radioactive/get_visual_indicator(mob/living/carbon/human/owner)
 	return visual_indicators[1]
