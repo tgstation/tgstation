@@ -84,7 +84,7 @@
 	switch(mode)
 		if(1)
 			if(!locked)
-				if(!istype(target) || target.anchored)
+				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					occupant_message("Unable to lock on [target]")
 					return
 				if(ismob(target))
@@ -115,7 +115,7 @@
 			else
 				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
-				if(A.anchored)
+				if(A.anchored || A.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					continue
 				if(ismob(A))
 					var/mob/M = A
