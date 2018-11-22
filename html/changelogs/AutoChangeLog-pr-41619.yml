@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Clowns that are consumed by singularities now either add or remove a much larger amount of energy."
