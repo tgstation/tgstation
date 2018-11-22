@@ -554,6 +554,9 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this needed to be added a long fucking time ago
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat
 
+/obj/item/clothing/suit/space/hardsuit/swat/Initialize()
+	. = ..()
+	allowed = GLOB.security_hardsuit_allowed
 
 	//Captain
 /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
