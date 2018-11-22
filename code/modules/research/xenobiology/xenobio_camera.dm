@@ -28,6 +28,7 @@
 	var/datum/action/innate/monkey_recycle/monkey_recycle_action
 	var/datum/action/innate/slime_scan/scan_action
 	var/datum/action/innate/feed_potion/potion_action
+	var/datum/action/innate/hotkey_help/hotkey_help
 
 	var/datum/component/redirect/listener
 
@@ -49,6 +50,7 @@
 	monkey_recycle_action = new
 	scan_action = new
 	potion_action = new
+	hotkey_help = new
 	stored_slimes = list()
 	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
 
@@ -100,10 +102,11 @@
 		potion_action.target = src
 		potion_action.Grant(user)
 		actions += potion_action
-
-	//Adds component to user for click shortcuts
-/* 	user.AddComponent(/datum/component/xenobiology_hotkeys)
-	 */
+	
+	if(hotkey_help)
+		hotkey_help.target = src
+		hotkey_help.Grant(user)
+		actions += hotkey_help
 
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)	
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)	
@@ -114,8 +117,6 @@
 
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
-	//Remove component from user here. Actions are removed in the parent proc
-/* 	TakeComponent(/datum/component/xenobiology_hotkeys) */
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)	
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)	
@@ -291,6 +292,20 @@
 	else
 		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 
+/datum/action/innate/hotkey_help
+	name = "Hotkey Help"
+	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
+	button_icon_state = "hotkey_help"
+
+/datum/action/innate/hotkey_help/Activate()
+	if(!target || !isliving(owner))
+		return
+	to_chat(owner, "<b>Click shortcuts:</b>")
+	to_chat(owner, "Shift-click a slime to pick it up, or the floor to drop all held slimes.")
+	to_chat(owner, "Ctrl-click a slime to scan it.")
+	to_chat(owner, "Alt-click a slime to feed it a potion.")
+	to_chat(owner, "Ctrl-click or a dead monkey to recycle it, or the floor to place a new monkey.")
+
 //
 // Alternate clicks for slime, monkey and open turf if using a xenobio console
 
@@ -309,7 +324,7 @@
 	SEND_SIGNAL(user, COMSIG_XENO_SLIME_CLICK_SHIFT, src)
 	..()
 
-//Place slime
+//Place slimes
 /turf/open/ShiftClick(mob/user)
 	SEND_SIGNAL(user, COMSIG_XENO_TURF_CLICK_SHIFT, src)
 	..()
@@ -324,7 +339,7 @@
 	SEND_SIGNAL(user, COMSIG_XENO_MONKEY_CLICK_CTRL, src)
 	..()
 
-
+// Scans slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickCtrl(mob/living/user, mob/living/simple_animal/slime/S)
 	if(!GLOB.cameranet.checkTurfVis(S.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
@@ -335,7 +350,7 @@
 	if(mobarea.name == E.allowed_area || mobarea.xenobiology_compatible)
 		slime_scan(S, C)
 
-
+//Feeds a potion to slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickAlt(mob/living/user, mob/living/simple_animal/slime/S)
 	if(!GLOB.cameranet.checkTurfVis(S.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
@@ -350,7 +365,7 @@
 	if(mobarea.name == E.allowed_area || mobarea.xenobiology_compatible)
 		X.current_potion.attack(S, C)
 
-
+//Picks up slime
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/simple_animal/slime/S)
 	if(!GLOB.cameranet.checkTurfVis(S.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
@@ -372,7 +387,7 @@
 		S.forceMove(X)
 		X.stored_slimes += S
 
-
+//Place slimes
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickShift(mob/living/user, turf/open/T)
 	if(!GLOB.cameranet.checkTurfVis(T))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
@@ -387,7 +402,7 @@
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
 
-
+//Place monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoTurfClickCtrl(mob/living/user, turf/open/T)
 	if(!GLOB.cameranet.checkTurfVis(T))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
@@ -404,7 +419,7 @@
 				X.monkeys --
 				to_chat(C, "[X] now has [X.monkeys] monkeys left.")
 
-
+//Pick up monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/monkey/M)
 	if(!GLOB.cameranet.checkTurfVis(M.loc))
 		to_chat(user, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
