@@ -25,4 +25,4 @@
             seenVersions[versionString] = I
 
     if(highest_major != DB_MAJOR_VERSION || highest_minor != DB_MINOR_VERSION)
-        Fail("DB_VERSION defines ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]) don't match highest available migrations ([highestMajor].[highestMinor])!")
+        Fail("DB_VERSION defines ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]) don't match highest available migrations ([highest_major].[highest_minor])!")
