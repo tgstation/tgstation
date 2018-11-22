@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - bugfix: "Boxstation's detective no longer starts the round undercover in a random job's spawn point"
