@@ -1,0 +1,10 @@
+author: "Barhandar"
+delete-after: True
+changes: 
+  - bugfix: "Magboots will yet again prevent singularity from pulling you in."
+  - tweak: "Magboots will now also prevent being pulled in by gravitational anomaly."
+  - tweak: "Magboots will also prevent effects of supermatter pull, gravitational catapult and RnD gravity gun."
+  - balance: "Being prone will now prevent knockdown-stun of supermatter pull, removing accumulating chainstunning that rendered CO2 delams impossible to escape by humans. You still can get chainstunned, but now you have a few moments between stuns to try and get out."
+  - tweak: "Said supermatter pull stun now has player feedback."
+  - bugfix: "Ghosts (and all other things that have no business being pulled) no longer get pulled by supermatter pull."
+  - bugfix: "RnD gravity gun and gravity catapult had their proton packs removed too and should no longer throw ghosts around."
