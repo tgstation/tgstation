@@ -12,8 +12,8 @@
 
 /datum/mutation/human/radioactive/New()
 	..()
-	if(!LAZYLEN(visual_indicators))
-		visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER)
+	if(!(type in visual_indicators))
+		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER))
 
 /datum/mutation/human/radioactive/get_visual_indicator()
-	return visual_indicators[1]
+	return visual_indicators[type][1]

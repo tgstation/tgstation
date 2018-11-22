@@ -121,7 +121,7 @@
 			var/mutable_appearance/V = CM.get_visual_indicator()
 			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
 				remove_overlay(CM.layer_used)
-				for(var/mutable_appearance/MA in CM.visual_indicators)
+				for(var/mutable_appearance/MA in CM.visual_indicators[CM.type])
 					mut_overlay.Remove(MA)
 				mut_overlay |= V
 				overlays_standing[CM.layer_used] = mut_overlay

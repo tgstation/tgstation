@@ -8,7 +8,7 @@
 	if(mutation1 == mutation2) //this could otherwise be bad
 		return FALSE
 	for(var/A in GLOB.mutation_recipes)
-		if(("[mutation1]" in A) && ("[mutation2]" in A))
+		if(findtext(A, "[mutation1]") && findtext(A, "[mutation2]"))
 			return GLOB.mutation_recipes[A]
 
 /datum/generecipe/hulk

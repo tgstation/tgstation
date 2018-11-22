@@ -10,11 +10,11 @@
 
 /datum/mutation/human/space_adaptation/New()
 	..()
-	if(!LAZYLEN(visual_indicators))
-		visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER)
+	if(!(type in visual_indicators))
+		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "fire", -MUTATIONS_LAYER))
 
 /datum/mutation/human/space_adaptation/get_visual_indicator()
-	return visual_indicators[1]
+	return visual_indicators[type][1]
 
 /datum/mutation/human/space_adaptation/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
