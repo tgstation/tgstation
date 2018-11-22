@@ -695,13 +695,12 @@ NANITE SCANNER
 			mut_name = "[HM.name] ([HM.alias])"
 		else
 			mut_name = HM.alias
-		var/list/temp = string2list(C.dna.mutation_index[A])
-		var/list/display = list()
-		for(var/i in 0 to LAZYLEN(temp) / DNA_MUTATION_BLOCKS-1)
+		var/temp = get_gene_string(HM.type, C.dna)
+		var/display
+		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
 			if(i)
-				display += list("-")
-			display += temp.Copy(1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
+				display += "-"
+			display += copytext(temp, 1 + i*DNA_MUTATION_BLOCKS, DNA_MUTATION_BLOCKS*(1+i) + 1)
 
-		var/text = display.Join()
 
-		to_chat(user, "<span class='boldnotice'>- [mut_name] > [text]</span>")
+		to_chat(user, "<span class='boldnotice'>- [mut_name] > [display]</span>")

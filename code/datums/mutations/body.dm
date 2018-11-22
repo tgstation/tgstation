@@ -7,15 +7,15 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
 
-/datum/mutation/human/epilepsy/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/epilepsy/on_life()
 	if(prob(1) && owner.stat == CONSCIOUS)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		owner.Unconscious(200)
 		owner.Jitter(1000)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
-		addtimer(CALLBACK(src, .proc/jitter_less, owner), 90)
+		addtimer(CALLBACK(src, .proc/jitter_less), 90)
 
-/datum/mutation/human/epilepsy/proc/jitter_less(mob/living/carbon/human/owner)
+/datum/mutation/human/epilepsy/proc/jitter_less()
 	if(owner)
 		owner.jitteriness = 10
 
@@ -53,7 +53,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
 
-/datum/mutation/human/cough/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/cough/on_life()
 	if(prob(5) && owner.stat == CONSCIOUS)
 		owner.drop_all_held_items()
 		owner.emote("cough")
@@ -196,7 +196,7 @@
 	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
 	difficulty = 14
 
-/datum/mutation/human/fire/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/fire/on_life()
 	if(prob(1+(100-dna.stability)/10))
 		owner.adjust_fire_stacks(2)
 		owner.IgniteMob()

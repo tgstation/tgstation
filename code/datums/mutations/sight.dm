@@ -71,9 +71,9 @@
 	..()
 	visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER)
 
-/datum/mutation/human/laser_eyes/get_visual_indicator(mob/living/carbon/human/owner)
+/datum/mutation/human/laser_eyes/get_visual_indicator()
 	return visual_indicators[1]
 
-/datum/mutation/human/laser_eyes/on_ranged_attack(mob/living/carbon/human/owner, atom/target, mouseparams)
+/datum/mutation/human/laser_eyes/on_ranged_attack(atom/target, mouseparams)
 	if(owner.a_intent == INTENT_HARM)
 		owner.LaserEyes(target, mouseparams)

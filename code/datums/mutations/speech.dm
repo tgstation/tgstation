@@ -7,7 +7,7 @@
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You feel nervous.</span>"
 
-/datum/mutation/human/nervousness/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/nervousness/on_life()
 	if(prob(10))
 		owner.stuttering = max(10, owner.stuttering)
 
@@ -192,7 +192,7 @@
 	text_gain_indication = "<span class='notice'>You feel pretty good, honeydoll.</span>"
 	text_lose_indication = "<span class='notice'>You feel a little less conversation would be great.</span>"
 
-/datum/mutation/human/elvis/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/elvis/on_life()
 	switch(pick(1,2))
 		if(1)
 			if(prob(15))

@@ -13,8 +13,8 @@
 	if(!LAZYLEN(visual_indicators))
 		visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER)
 
-/datum/mutation/human/telekinesis/get_visual_indicator(mob/living/carbon/human/owner)
+/datum/mutation/human/telekinesis/get_visual_indicator()
 	return visual_indicators[1]
 
-/datum/mutation/human/telekinesis/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/telekinesis/on_ranged_attack(atom/target)
 	target.attack_tk(owner)

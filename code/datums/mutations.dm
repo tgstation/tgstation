@@ -53,10 +53,10 @@
 	if(text_gain_indication)
 		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
-		var/list/mut_overlay = list(get_visual_indicator(owner))
+		var/list/mut_overlay = list(get_visual_indicator())
 		if(owner.overlays_standing[layer_used])
 			mut_overlay = owner.overlays_standing[layer_used]
-			mut_overlay |= get_visual_indicator(owner)
+			mut_overlay |= get_visual_indicator()
 		owner.remove_overlay(layer_used)
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
@@ -66,19 +66,19 @@
 		power.panel = "Genetic"
 		owner.AddSpell(power)
 
-/datum/mutation/human/proc/get_visual_indicator(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+/datum/mutation/human/proc/on_attack_hand( atom/target, proximity)
 	return
 
-/datum/mutation/human/proc/on_ranged_attack(mob/living/carbon/human/owner, atom/target)
+/datum/mutation/human/proc/on_ranged_attack(atom/target)
 	return
 
-/datum/mutation/human/proc/on_move(mob/living/carbon/human/owner, new_loc)
+/datum/mutation/human/proc/on_move(new_loc)
 	return
 
-/datum/mutation/human/proc/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/proc/on_life()
 	return
 
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
@@ -90,7 +90,7 @@
 			if(owner.overlays_standing[layer_used])
 				mut_overlay = owner.overlays_standing[layer_used]
 			owner.remove_overlay(layer_used)
-			mut_overlay.Remove(get_visual_indicator(owner))
+			mut_overlay.Remove(get_visual_indicator())
 			owner.overlays_standing[layer_used] = mut_overlay
 			owner.apply_overlay(layer_used)
 		if(power)
@@ -118,7 +118,7 @@
 			var/list/mut_overlay = list()
 			if(overlays_standing[CM.layer_used])
 				mut_overlay = overlays_standing[CM.layer_used]
-			var/mutable_appearance/V = CM.get_visual_indicator(src)
+			var/mutable_appearance/V = CM.get_visual_indicator()
 			if(!mut_overlay.Find(V)) //either we lack the visual indicator or we have the wrong one
 				remove_overlay(CM.layer_used)
 				for(var/mutable_appearance/MA in CM.visual_indicators)

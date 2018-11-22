@@ -629,9 +629,3 @@
 			return null
 		r += ascii2text(c)
 	return r
-
-/proc/string2list(str)
-	var/list/stringlist = list()
-	for(var/i in 1 to lentext(str))
-		stringlist += copytext(str,i,i+1)
-	return stringlist

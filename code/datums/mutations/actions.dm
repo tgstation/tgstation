@@ -67,7 +67,7 @@
 	instability = 30
 	power = /obj/effect/proc_holder/spell/self/void
 
-/datum/mutation/human/void/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/void/on_life()
 	var/obj/effect/proc_holder/spell/self/void/voidpower = power
 	if(voidpower.in_use) //i don't know how rare this is but coughs are 10% on life so in theory this should be okay
 		return
@@ -79,7 +79,7 @@
 
 /obj/effect/proc_holder/spell/self/void
 	name = "Convoke Void" //magic the gathering joke here
-	desc = "rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
+	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
 	school = "evocation"
 	clothes_req = FALSE
 	charge_max = 600

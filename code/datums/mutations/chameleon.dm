@@ -14,13 +14,13 @@
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
-/datum/mutation/human/chameleon/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/chameleon/on_life()
 	owner.alpha = max(0, owner.alpha - 25)
 
-/datum/mutation/human/chameleon/on_move(mob/living/carbon/human/owner)
+/datum/mutation/human/chameleon/on_move()
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
-/datum/mutation/human/chameleon/on_attack_hand(mob/living/carbon/human/owner, atom/target, proximity)
+/datum/mutation/human/chameleon/on_attack_hand(atom/target, proximity)
 	if(proximity) //stops tk from breaking chameleon
 		owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 		return

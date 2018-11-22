@@ -7,7 +7,7 @@
 	instability = 5
 	difficulty = 8
 
-/datum/mutation/human/radioactive/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/radioactive/on_life()
 	radiation_pulse(owner, 20)
 
 /datum/mutation/human/radioactive/New()
@@ -15,5 +15,5 @@
 	if(!LAZYLEN(visual_indicators))
 		visual_indicators |= mutable_appearance('icons/effects/genetics.dmi', "radiation", -MUTATIONS_LAYER)
 
-/datum/mutation/human/radioactive/get_visual_indicator(mob/living/carbon/human/owner)
+/datum/mutation/human/radioactive/get_visual_indicator()
 	return visual_indicators[1]

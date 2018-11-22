@@ -135,20 +135,17 @@
 //Used to create a chipped gene sequence
 /proc/create_sequence(mutation, active, difficulty)
 	if(!difficulty)
-		var/datum/mutation/human/A = get_initialized_mutation(mutation)
+		var/datum/mutation/human/A = get_initialized_mutation(mutation) //leaves the possibility to change difficulty mid-round
 		difficulty = A.difficulty
 	difficulty += rand(-2,4)
 	var/sequence = get_sequence(mutation)
 	if(active)
 		return sequence
-	var/list/annihilate_sequence = string2list(sequence)
 	while(difficulty)
-		annihilate_sequence[rand(1,LAZYLEN(annihilate_sequence))] = "X"
+		var/randnum = rand(1, length(sequence))
+		sequence = copytext(sequence, 1, randnum) + "X" + copytext(sequence, randnum+1, length(sequence)+1)
 		difficulty--
-	return annihilate_sequence.Join()
-
-/proc/get_sequence(mutation)
-	return GLOB.full_sequences[mutation]
+	return sequence
 
 /datum/dna/proc/generate_unique_enzymes()
 	. = ""
@@ -218,15 +215,6 @@
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
-
-
-/datum/dna/proc/get_gene_list(mutation)
-	return string2list(mutation_index[mutation])
-
-/datum/dna/proc/update_from_gene_list(mutation, list/sequence)
-	if(!LAZYLEN(sequence) || !mutation)
-		return
-	mutation_index[mutation] = sequence.Join()
 
 /datum/dna/proc/update_instability(alert=FALSE)
 	stability = 100

@@ -427,8 +427,8 @@
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
 		for(var/block in 1 to HM.blocks)
-			var/list/whole_sequence = get_gene_list(mutation)
-			var/list/sequence = whole_sequence.Copy(1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
+			var/whole_sequence = get_valid_gene_string(mutation)
+			var/sequence = copytext(whole_sequence, 1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
 			temp_html += "<div class='statusLine'><table class='statusDisplay'><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = 1+(i-1)*2
@@ -463,7 +463,7 @@
 	else if(active && !scrambled)
 		temp_html += "<a href='?src=[REF(src)];task=savemut;path=[mutation];'>Store</a>"
 	if(extra || scrambled)
-		temp_html += "<a href='?src=[REF(src)];task=nullify>Nullify</a>"
+		temp_html += "<a href='?src=[REF(src)];task=nullify;'>Nullify</a>"
 	else
 		temp_html += "<span class='linkOff'>Nullify</span>"
 	temp_html += "</div></div>"
@@ -699,18 +699,18 @@
 					var/list/genes = list("A","T","G","C","X")
 					if(jokerready < world.time)
 						genes += "JOKER"
-					var/list/sequence = viable_occupant.dna.get_gene_list(path)
+					var/sequence = get_gene_string(path, viable_occupant.dna)
 					var/original = sequence[num]
 					var/new_gene = input("From [original] to-", "New block", original) as null|anything in genes
 					if(!new_gene)
 						new_gene = original
 					if(viable_occupant == get_viable_occupant()) //No cheesing
 						if((new_gene == "JOKER") && (jokerready < world.time))
-							var/list/true_genes = string2list(get_sequence(current_mutation))
+							var/true_genes = get_sequence(current_mutation)
 							new_gene = true_genes[num]
 							jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected.precision_coeff-1))
-						sequence[num] = new_gene
-						viable_occupant.dna.update_from_gene_list(path, sequence)
+						sequence = copytext(sequence, 1, num) + new_gene + copytext(sequence, num+1, length(sequence)+1)
+						viable_occupant.dna.mutation_index[path] = sequence
 					viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected.damage_coeff
 					viable_occupant.domutcheck()
 		if("exportdiskmut")
@@ -841,17 +841,17 @@
 			paths += A.type
 	return paths
 
-/obj/machinery/computer/scan_consolenew/proc/get_gene_list(mutation)
+/obj/machinery/computer/scan_consolenew/proc/get_valid_gene_string(mutation)
 	var/mob/living/carbon/C = get_viable_occupant()
 	if(C && (mutation in C.dna.mutation_index))
-		return C.dna.get_gene_list(mutation)
+		return get_gene_string(mutation, C.dna)
 	else if(C && (LAZYLEN(C.dna.mutations)))
 		for(var/datum/mutation/human/A in C.dna.mutations)
 			if(A.type == mutation)
-				return string2list(get_sequence(mutation))
+				return get_sequence(mutation)
 	for(var/datum/mutation/human/A in stored_mutations)
 		if(A.type == mutation)
-			return string2list(stored_mutations[A])
+			return stored_mutations[A]
 
 /obj/machinery/computer/scan_consolenew/proc/discover(mutation)
 	if(stored_research && !(mutation in stored_research.discovered_mutations))
