@@ -62,7 +62,7 @@
 	.["laws"] = borg.laws ? borg.laws.get_law_list(include_zeroth = TRUE) : list()
 	.["channels"] = list()
 	for (var/k in GLOB.radiochannels)
-		if (k == "Common")
+		if (k == RADIO_CHANNEL_COMMON)
 			continue
 		.["channels"] += list(list("name" = k, "installed" = (k in borg.radio.channels)))
 	.["cell"] = borg.cell ? list("missing" = FALSE, "maxcharge" = borg.cell.maxcharge, "charge" = borg.cell.charge) : list("missing" = TRUE, "maxcharge" = 1, "charge" = 0)
@@ -164,13 +164,13 @@
 			if (channel in borg.radio.channels) // We're removing a channel
 				if (!borg.radio.keyslot) // There's no encryption key. This shouldn't happen but we can cope
 					borg.radio.channels -= channel
-					if (channel == "Syndicate")
+					if (channel == RADIO_CHANNEL_SYNDICATE)
 						borg.radio.syndie = FALSE
 					else if (channel == "CentCom")
 						borg.radio.independent = FALSE
 				else
 					borg.radio.keyslot.channels -= channel
-					if (channel == "Syndicate")
+					if (channel == RADIO_CHANNEL_SYNDICATE)
 						borg.radio.keyslot.syndie = FALSE
 					else if (channel == "CentCom")
 						borg.radio.keyslot.independent = FALSE
@@ -180,7 +180,7 @@
 				if (!borg.radio.keyslot) // Assert that an encryption key exists
 					borg.radio.keyslot = new (borg.radio)
 				borg.radio.keyslot.channels[channel] = 1
-				if (channel == "Syndicate")
+				if (channel == RADIO_CHANNEL_SYNDICATE)
 					borg.radio.keyslot.syndie = TRUE
 				else if (channel == "CentCom")
 					borg.radio.keyslot.independent = TRUE

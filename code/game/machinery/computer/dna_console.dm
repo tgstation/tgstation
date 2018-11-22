@@ -515,7 +515,7 @@
 				viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected.damage_coeff ** 2)
 
 		if("setbufferlabel")
-			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
+			var/text = sanitize(input(usr, "Input a new label:", "Input a Text", null) as text|null)
 			if(num && text)
 				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]

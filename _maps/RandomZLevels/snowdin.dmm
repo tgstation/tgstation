@@ -3659,7 +3659,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "im" = (
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 5
 	},
 /turf/open/floor/engine/cult{
@@ -8169,9 +8169,9 @@
 "rI" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	id = "syndie_lavaland_inc_in";
 	pixel_x = 5;
-	pixel_y = 5
+	pixel_y = 5;
+	piping_layer = 3
 	},
 /obj/effect/light_emitter{
 	name = "cave light";
@@ -8315,7 +8315,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "sb" = (
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 4;
 	name = "weak netherworld link"
 	},
@@ -10233,7 +10233,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 4;
 	name = "weak netherworld link"
 	},
@@ -14564,7 +14564,8 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "In" = (
 /obj/mecha/working/ripley/mining{
-	dir = 1
+	dir = 1;
+	ruin_mecha = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mech_bay_recharge_floor,

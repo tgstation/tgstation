@@ -117,7 +117,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(dna && dna.species)
 		var/spec_return = dna.species.spec_hitby(AM, src)
 		if(spec_return)
@@ -134,7 +134,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
-		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if((I.throw_speed >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !has_trait(TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
@@ -486,7 +486,7 @@
 					L.receive_damage(0,5)
 					Paralyze(100)
 
-/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
+/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots()
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
@@ -633,7 +633,7 @@
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
 			gain = 100
 		if(mind.assigned_role == "Clown")
-			gain = rand(-300, 300)
+			gain = rand(-1000, 1000)
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)

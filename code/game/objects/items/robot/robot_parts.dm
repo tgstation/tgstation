@@ -254,8 +254,12 @@
 				to_chat(user, "<span class='warning'>The MMI indicates that their mind is currently inactive; it might change!</span>")
 				return
 
-			if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.damaged_brain || M.brain.suicided)))
+			if(BM.stat == DEAD || BM.suiciding || (M.brain && (M.brain.brain_death || M.brain.suicided)))
 				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
+				return
+
+			if(M.brain?.damaged_brain)
+				to_chat(user, "<span class='warning'>The MMI indicates that the brain is damaged!</span>")
 				return
 
 			if(jobban_isbanned(BM, "Cyborg") || QDELETED(src) || QDELETED(BM) || QDELETED(user) || QDELETED(M) || !Adjacent(user))

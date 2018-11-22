@@ -372,17 +372,20 @@
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
-			if(issilicon(A))
-				var/mob/living/silicon/sillycone = A
-				if(sillycone.stat || in_faction(sillycone))
+				continue
+
+		if(issilicon(A))
+			var/mob/living/silicon/sillycone = A
+			if(sillycone.stat || in_faction(sillycone))
+				continue
+
+			if(iscyborg(sillycone))
+				var/mob/living/silicon/robot/sillyconerobot = A
+				if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
 					continue
 
-				if(iscyborg(sillycone))
-					var/mob/living/silicon/robot/sillyconerobot = A
-					if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
-						continue
-
-				targets += sillycone
+			targets += sillycone
+			continue
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
@@ -408,6 +411,10 @@
 			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
 				if(assess_perp(Mech.occupant) >= 4)
 					targets += Mech
+
+	if(check_anomalies && GLOB.blobs.len && (mode == TURRET_LETHAL))
+		for(var/obj/structure/blob/B in view(scan_range, base))
+			targets += B
 
 	if(targets.len)
 		tryToShootAt(targets)
@@ -879,17 +886,21 @@
 			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
-		toggle_on()
+		toggle_on(usr)
 	else if (href_list["toggleLethal"])
-		toggle_lethal()
+		toggle_lethal(usr)
 	attack_hand(usr)
 
-/obj/machinery/turretid/proc/toggle_lethal()
+/obj/machinery/turretid/proc/toggle_lethal(mob/user)
 	lethal = !lethal
+	add_hiddenprint(user)
+	log_combat(user, src, "[lethal ? "enabled" : "disabled"] lethals on")
 	updateTurrets()
 
-/obj/machinery/turretid/proc/toggle_on()
+/obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
+	add_hiddenprint(user)
+	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()

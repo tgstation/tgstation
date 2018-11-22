@@ -121,7 +121,9 @@
 
 //Third link in a breath chain, calls handle_breath_temperature()
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
-	if((status_flags & GODMODE))
+	if(status_flags & GODMODE)
+		return
+	if(has_trait(TRAIT_NOBREATH))
 		return
 
 	var/lungs = getorganslot(ORGAN_SLOT_LUNGS)
@@ -243,7 +245,7 @@
 
 		//Miasma side effects
 		switch(miasma_partialpressure)
-			if(1 to 5)
+			if(0.25 to 5)
 				// At lower pp, give out a little warning
 				SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 				if(prob(5))

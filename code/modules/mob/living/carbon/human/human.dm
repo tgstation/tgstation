@@ -151,10 +151,13 @@
 
 	dat += "<tr><td><B>Exosuit:</B></td><td><A href='?src=[REF(src)];item=[SLOT_WEAR_SUIT]'>[(wear_suit && !(wear_suit.item_flags & ABSTRACT)) ? wear_suit : "<font color=grey>Empty</font>"]</A></td></tr>"
 	if(wear_suit)
-		dat += "<tr><td>&nbsp;&#8627;<B>Suit Storage:</B></td><td><A href='?src=[REF(src)];item=[SLOT_S_STORE]'>[(s_store && !(s_store.item_flags & ABSTRACT)) ? s_store : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(s_store, /obj/item/tank))
-			dat += "&nbsp;<A href='?src=[REF(src)];internal=[SLOT_S_STORE]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
-		dat += "</td></tr>"
+		if(SLOT_S_STORE in obscured)
+			dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Suit Storage:</B></font></td></tr>"
+		else
+			dat += "<tr><td>&nbsp;&#8627;<B>Suit Storage:</B></td><td><A href='?src=[REF(src)];item=[SLOT_S_STORE]'>[(s_store && !(s_store.item_flags & ABSTRACT)) ? s_store : "<font color=grey>Empty</font>"]</A>"
+			if(has_breathable_mask && istype(s_store, /obj/item/tank))
+				dat += "&nbsp;<A href='?src=[REF(src)];internal=[SLOT_S_STORE]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
+			dat += "</td></tr>"
 	else
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Suit Storage:</B></font></td></tr>"
 
@@ -508,34 +511,6 @@
 		// Might need re-wording.
 		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [above_neck(target_zone) ? "on [p_their()] head" : "on [p_their()] body"].</span>")
 
-/mob/living/carbon/human/proc/check_obscured_slots()
-	var/list/obscured = list()
-
-	if(wear_suit)
-		if(wear_suit.flags_inv & HIDEGLOVES)
-			obscured |= SLOT_GLOVES
-		if(wear_suit.flags_inv & HIDEJUMPSUIT)
-			obscured |= SLOT_W_UNIFORM
-		if(wear_suit.flags_inv & HIDESHOES)
-			obscured |= SLOT_SHOES
-
-	if(head)
-		if(head.flags_inv & HIDEMASK)
-			obscured |= SLOT_WEAR_MASK
-		if(head.flags_inv & HIDEEYES)
-			obscured |= SLOT_GLASSES
-		if(head.flags_inv & HIDEEARS)
-			obscured |= SLOT_EARS
-
-	if(wear_mask)
-		if(wear_mask.flags_inv & HIDEEYES)
-			obscured |= SLOT_GLASSES
-
-	if(obscured.len)
-		return obscured
-	else
-		return null
-
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
 	if(judgement_criteria & JUDGE_EMAGGED)
 		return 10 //Everyone is a criminal!
@@ -811,7 +786,7 @@
 		. += dna.species.check_weakness(weapon, attacker)
 
 /mob/living/carbon/human/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/carbon/human/can_hold_items()
 	return TRUE

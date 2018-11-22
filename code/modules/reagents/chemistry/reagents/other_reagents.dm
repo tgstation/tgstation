@@ -756,7 +756,7 @@
 /datum/reagent/carbon
 	name = "Carbon"
 	id = "carbon"
-	description = "A crumbly black solid that, while unexciting on an physical level, forms the base of all known life. Kind of a big deal."
+	description = "A crumbly black solid that, while unexciting on a physical level, forms the base of all known life. Kind of a big deal."
 	reagent_state = SOLID
 	color = "#1C1300" // rgb: 30, 20, 0
 	taste_description = "sour chalk"
@@ -1259,10 +1259,10 @@
 
 /datum/reagent/nitryl/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/nitryl/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////

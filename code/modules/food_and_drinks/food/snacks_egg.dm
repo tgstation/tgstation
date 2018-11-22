@@ -31,7 +31,7 @@
 	var/color = mix_color_from_reagents(reagents.reagent_list)
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		var/turf/T = get_turf(hit_atom)
 		new/obj/effect/decal/cleanable/egg_smudge(T)

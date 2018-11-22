@@ -64,8 +64,6 @@
 
 /obj/item/paper/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
-
 	var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 	assets.send(user)
 

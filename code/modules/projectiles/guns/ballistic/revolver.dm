@@ -258,6 +258,9 @@
 	desc = "A true classic."
 	icon_state = "dshotgun"
 	item_state = "shotgun"
+	fire_sound = 'sound/weapons/shotgunshot.ogg'
+	vary_fire_sound = FALSE
+	fire_sound_volume = 90
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
 	force = 10
