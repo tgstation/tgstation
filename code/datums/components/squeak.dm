@@ -1,5 +1,5 @@
 /datum/component/squeak
-	var/override_squeak_datum
+	var/squeak_datum
 	var/squeak_chance = 100
 	var/volume = 30
 
@@ -27,7 +27,7 @@
 			if(istype(parent, /obj/item/clothing/shoes))
 				RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
-	override_squeak_datum = GLOB.outputs_list[custom_datum]
+	squeak_datum = GLOB.outputs_list[custom_datum]
 	if(chance_override)
 		squeak_chance = chance_override
 	if(volume_override)
@@ -39,10 +39,10 @@
 
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))
-		if(!override_squeak_datum)
-			playsound(parent, /datum/outputs/bikehorn, volume, 1, -1)
+		if(!squeak_datum)
+			CRASH("Squeak datum attempted to play missing datum")
 		else
-			playsound(parent, override_squeak_datum, volume, 1, -1)
+			playsound(parent, squeak_datum, volume, 1, -1)
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)

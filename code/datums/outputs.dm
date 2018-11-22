@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(outputs_list)
 
+//NOTE: When adding new sounds here, check to make sure they haven't been added already via CTRL + F.
+
 /datum/outputs
 	var/text = ""
 	var/list/sounds = list('sound/items/airhorn.ogg'=1) //weighted, put multiple for random selection between sounds
@@ -74,13 +76,39 @@ GLOBAL_LIST_EMPTY(outputs_list)
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."
-	sounds = list('sound/items/bikehorn.ogg'=1)
+	sounds = list('sound/items/bikehorn.ogg' = 1)
 
 /datum/outputs/airhorn
 	text = "You hear the violent blaring of an airhorn."
-	sounds = list('sound/items/airhorn2.ogg'=1)
+	sounds = list('sound/items/airhorn2.ogg' = 1)
 
 /datum/outputs/alarm
 	text = "You hear a blaring alarm."
-	sounds = list('sound/machines/alarm.ogg'=1)
+	sounds = list('sound/machines/alarm.ogg' = 1)
 
+/datum/outputs/squeak
+	text = "You hear a squeak."
+	sounds = list('sound/effects/mousesqueek.ogg' = 1)
+
+/datum/outputs/clownstep
+	sounds = list('sound/effects/clownstep1.ogg' = 1,'sound/effects/clownstep2.ogg' = 1)
+
+/datum/outputs/bite
+	text = "You hear ravenous biting."
+	sounds = list('sound/weapons/bite.ogg' = 1)
+
+/datum/outputs/demonattack
+	text = "You hear a terrifying, unholy noise."
+	sounds = list('sound/magic/demon_attack1.ogg' = 1)
+
+/datum/outputs/slash
+	text = "You hear a slashing noise."
+	sounds = list('sound/weapons/slash.ogg' = 1)
+
+/datum/outputs/punch
+	text = "You hear a punch."
+	sounds = list('sound/effects/hit_punch.ogg' = 1)
+
+/datum/outputs/squelch
+	text = "You hear a horrendous squelching sound."
+	sounds = list('sound/effects/blobattack.ogg' = 1)

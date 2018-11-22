@@ -102,7 +102,7 @@
 	item_color = "purpleclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	
+
 /obj/item/clothing/under/rank/orangeclown
 	name = "orange clown suit"
 	desc = "<i>'ORANGE HONK!'</i>"
@@ -111,7 +111,7 @@
 	item_color = "orangeclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	
+
 /obj/item/clothing/under/rank/rainbowclown
 	name = "rainbow clown suit"
 	desc = "<i>'R A I N B O W HONK!'</i>"
@@ -123,7 +123,7 @@
 
 /obj/item/clothing/under/rank/clown/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	AddComponent(/datum/component/squeak, /datum/outputs/bikehorn, 50)
 
 /obj/item/clothing/under/rank/head_of_personnel
 	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."

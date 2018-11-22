@@ -11,7 +11,7 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE, /obj/item/stack)
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
+	AddComponent(/datum/component/squeak, /datum/outputs/bikehorn, 75)
 	if(always_noslip)
 		clothing_flags |= NOSLIP
 

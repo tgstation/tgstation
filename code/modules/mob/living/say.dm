@@ -396,7 +396,3 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return .
 
 	. = ..()
-
-
-
-

@@ -20,19 +20,19 @@
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.sound_or_datum(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
+			sound_or_datum(M, turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			M.sound_or_datum(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
+			sound_or_datum(M, turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 
-/mob/proc/sound_or_datum(turf/turf_source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+/proc/sound_or_datum(mob/receiver, turf/turf_source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	if(istype(input,/datum))
 		var/datum/outputs/O = input
-		O.send_info(src, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+		O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 	else
 		var/sound/S = sound(get_sfx(input))
-		playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
+		receiver.playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)
 
 //kept for legacy support and uploaded admin sounds
 /mob/proc/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, sound/S)
