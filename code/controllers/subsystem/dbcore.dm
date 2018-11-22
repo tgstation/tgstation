@@ -19,13 +19,86 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/Initialize()
 	//We send warnings to the admins during subsystem init, as the clients will be New'd and messages
 	//will queue properly with goonchat
-	switch(schema_mismatch)
-		if(1)
-			message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-		if(2)
-			message_admins("Could not get schema version from database")
+
+	if(CONFIG_GET(flag/migrations))
+		if(!RunMigrations())
+			message_admins("Failed to apply all database migrations. Now at schema version [db_major].[db_minor] (Latest: [DB_MAJOR_VERSION].[DB_MINOR_VERSION])")
+	else
+		switch(schema_mismatch)
+			if(1)
+				message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+			if(2)
+				message_admins("Could not get schema version from database")
 
 	return ..()
+
+/datum/controller/subsystem/dbcore/proc/RunMigrations()
+	//first build the tree of all migrations
+	var/list/migration_datums = list()
+	var/highest_major_version = db_major
+	var/highest_minor_version = db_minor
+	for(var/I in subtypesof(/datum/database_migration))
+		var/datum/database_migration/mig = new I
+		if(mig.schema_version_major < db_major || mig.schema_version_minor <= db_minor)
+			qdel(mig)
+			continue
+		highest_major_version = max(mig.schema_version_major, highest_major_version)
+		highest_minor_version = max(mig.schema_version_minor, highest_minor_version)
+		var/minor_list = migration_datums["[mig.schema_version_major]"]
+		if(!minor_list)
+			minor_list = list()
+			migration_datums["[mig.schema_version_major]"] = minor_list
+		minor_list["[mig.schema_version_minor]"] = mig
+	
+	if(DB_MAJOR_VERSION < db_major || DB_MINOR_VERSION <= db_minor)
+		for(var/I in migration_datums)
+			for(var/J in migration_datums[I])
+				qdel(J)
+		return TRUE
+
+	to_chat(world, "<span class='boldannounce'>Migrating database...</span>")
+
+	var/list/migration_order = list()
+
+	for(var/I in db_major to highest_major_version)
+		var/minor_list = migration_datums["[I]"]
+		for(var/J in 0 to highest_minor_version)
+			var/mig = minor_list["[J]"]
+			if(!mig)
+				continue
+			if(I == db_major && J <= db_minor)
+				qdel(mig)
+				continue
+			migration_order += mig
+	
+	log_sql("Applying [migration_order.len] migrations...")
+	var/single_transact = !CONFIG_GET(flag/single_migration_transaction)
+
+	var/datum/DBQuery/query
+	. = TRUE
+	if(single_transact)
+		query = NewQuery("BEGIN TRANSACTION")
+		. = query.Execute(TRUE, TRUE)
+	
+	for(var/I in migration_order)
+		var/datum/database_migration/mig = I
+		if(.)
+			if(!mig.Run(query, FALSE))
+				. = FALSE
+			if(!single_transact)
+				db_major = mig.schema_version_major
+				db_minor = mig.schema_version_minor
+		qdel(mig)
+
+	if(single_transact)
+		if(.)
+			query.SetQuery("COMMIT")
+			. = query.Execute(TRUE, TRUE)
+		if(!.)
+			log_sql("Reverting back to schema version [db_major].[db_minor]...")
+			query.SetQuery("ROLLBACK")
+			query.Execute(TRUE, TRUE)
+		qdel(query)	
 
 /datum/controller/subsystem/dbcore/fire()
 	for(var/I in active_queries)
@@ -105,7 +178,7 @@ SUBSYSTEM_DEF(dbcore)
 			if(query_db_version.NextRow())
 				db_major = text2num(query_db_version.item[1])
 				db_minor = text2num(query_db_version.item[2])
-				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
+				if((db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION) && !CONFIG_GET(flag/migrations))
 					schema_mismatch = 1 // flag admin message about mismatch
 					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 			else

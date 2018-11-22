@@ -49,3 +49,9 @@
 	min_val = 1
 
 /datum/config_entry/flag/bsql_debug
+
+/datum/config_entry/flag/migrations
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/single_migration_transaction
+	protection = CONFIG_ENTRY_LOCKED

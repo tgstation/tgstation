@@ -43,3 +43,9 @@ BSQL_THREAD_LIMIT 50
 
 ## Uncomment to enable verbose BSQL communication logs
 #BSQL_DEBUG
+
+## Uncomment to enable database migrations which will allow the server to apply database changes
+#MIGRATIONS
+
+## Uncomment to perform to one database transaction for all migrations as opposed to one per migration (Only takes effect if MIGRATIONS is active)
+#SINGLE_MIGRATION_TRANSACTION

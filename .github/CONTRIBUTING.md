@@ -237,7 +237,7 @@ This prevents nesting levels from getting deeper then they need to be.
 ### SQL
 * Do not use the shorthand sql insert format (where no column names are specified) because it unnecessarily breaks all queries on minor column changes and prevents using these tables for tracking outside related info such as in a connected site/forum.
 
-* All changes to the database's layout(schema) must be specified in the database changelog in SQL, as well as reflected in the schema files
+* All changes to the database's layout(schema) must be specified in the database changelog in SQL, reflected in the schema files, and written as a migration in `/code/modules/database_migrations`
 
 * Any time the schema is changed the `schema_revision` table and `DB_MAJOR_VERSION` or `DB_MINOR_VERSION` defines must be incremented.
 
