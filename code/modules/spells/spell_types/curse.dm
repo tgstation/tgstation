@@ -1,8 +1,8 @@
-/proc/curse_of_madness(mob/user)
+/proc/curse_of_madness(mob/user, message)
 	if(user) //in this case either someone holding a spellbook or a badmin
-		to_chat(user, "<span class='warning'>You sent a curse of madness!</span>")
-		message_admins("[ADMIN_LOOKUPFLW(user)] sent a curse of madness!")
-		log_game("[key_name(user)] sent a curse of madness!")
+		to_chat(user, "<span class='warning'>You sent a curse of madness with the message \"[message]\"!</span>")
+		message_admins("[ADMIN_LOOKUPFLW(user)] sent a curse of madness with the message \"[message]\"!")
+		log_game("[key_name(user)] sent a curse of madness with the message \"[message]\"!")
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		var/turf/T = get_turf(H)
@@ -14,7 +14,9 @@
 			continue
 		if(istype(H.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			continue
-		to_chat(H, "<span class='warning'>You feel something twisting your mind...</span>")
+		H.playsound_local(H,'sound/hallucinations/veryfar_noise.ogg',40,1)
+		to_chat(H, "<span class='hypnophrase'>[message]</span>")
+		to_chat(H, "<span class='warning'>Your mind shatters!</span>")
 		switch(rand(1,10))
 			if(1 to 3)
 				H.gain_trauma(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
