@@ -69,6 +69,36 @@
 			return
 	return ..()
 
+/obj/item/clothing/head/helmet/med
+	name = "helmet (med)"
+	desc = "Standard Security gear. Has Medbay's symbol printed on the side."
+	icon_state = "helmet-med"
+	item_state = "helmet-med"
+	can_flashlight = TRUE
+
+/obj/item/clothing/head/helmet/sci
+	name = "helmet (sci)"
+	desc = "Standard Security gear. Has extra blast plating covering the mouth area."
+	flags_inv = HIDEMASK|HIDEHAIR|HIDEEARS
+	icon_state = "helmet-sci"
+	item_state = "helmet-sci"
+	can_flashlight = TRUE
+
+/obj/item/clothing/head/helmet/eng
+	name = "helmet (eng)"
+	desc = "Standard Security gear. Has Engineering symbol printed on the side, and the visor is slightly tinted."
+	icon_state = "helmet-eng"
+	item_state = "helmet-eng"
+	can_flashlight = TRUE
+
+/obj/item/clothing/head/helmet/crg
+	name = "helmet (crg)"
+	desc = "Standard Security gear. Has cargo colouring on the edges."
+	icon_state = "helmet-crg"
+	item_state = "helmet-crg"
+	can_flashlight = TRUE
+
+
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
