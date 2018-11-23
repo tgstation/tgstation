@@ -21,257 +21,257 @@
 
 	if(!CheckAdminHref(href, href_list))
 		return
+	switch(href_list)
+		if("ahelp")
+			if(!check_rights(R_ADMIN, TRUE))
+				return
 
-	if(href_list["ahelp"])
-		if(!check_rights(R_ADMIN, TRUE))
-			return
+			var/ahelp_ref = href_list["ahelp"]
+			var/datum/admin_help/AH = locate(ahelp_ref)
+			if(AH)
+				AH.Action(href_list["ahelp_action"])
+			else
+				to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
 
-		var/ahelp_ref = href_list["ahelp"]
-		var/datum/admin_help/AH = locate(ahelp_ref)
-		if(AH)
-			AH.Action(href_list["ahelp_action"])
-		else
-			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
+		if("ahelp_tickets")
+			GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
-	else if(href_list["ahelp_tickets"])
-		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
+		if("stickyban")
+			stickyban(href_list["stickyban"],href_list)
 
-	else if(href_list["stickyban"])
-		stickyban(href_list["stickyban"],href_list)
+		if("getplaytimewindow")
+			if(!check_rights(R_ADMIN))
+				return
+			var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
+			if(!M)
+				to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
+				return
+			cmd_show_exp_panel(M.client)
 
-	else if(href_list["getplaytimewindow"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/mob/M = locate(href_list["getplaytimewindow"]) in GLOB.mob_list
-		if(!M)
-			to_chat(usr, "<span class='danger'>ERROR: Mob not found.</span>")
-			return
-		cmd_show_exp_panel(M.client)
+		if("toggleexempt")
+			if(!check_rights(R_ADMIN))
+				return
+			var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
+			if(!C)
+				to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+				return
+			toggle_exempt_status(C)
 
-	else if(href_list["toggleexempt"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/client/C = locate(href_list["toggleexempt"]) in GLOB.clients
-		if(!C)
-			to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
-			return
-		toggle_exempt_status(C)
-
-	else if(href_list["makeAntag"])
-		if(!check_rights(R_ADMIN))
-			return
-		if (!SSticker.mode)
-			to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
-			return
-		switch(href_list["makeAntag"])
-			if("traitors")
-				if(src.makeTraitors())
-					message_admins("[key_name_admin(usr)] created traitors.")
-					log_admin("[key_name(usr)] created traitors.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create traitors.")
-			if("changelings")
-				if(src.makeChangelings())
-					message_admins("[key_name(usr)] created changelings.")
-					log_admin("[key_name(usr)] created changelings.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create changelings.")
-			if("revs")
-				if(src.makeRevs())
-					message_admins("[key_name(usr)] started a revolution.")
-					log_admin("[key_name(usr)] started a revolution.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a revolution.")
-			if("cult")
-				if(src.makeCult())
-					message_admins("[key_name(usr)] started a cult.")
-					log_admin("[key_name(usr)] started a cult.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a cult.")
-			if("wizard")
-				message_admins("[key_name(usr)] is creating a wizard...")
-				if(src.makeWizard())
-					message_admins("[key_name(usr)] created a wizard.")
-					log_admin("[key_name(usr)] created a wizard.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a wizard. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a wizard.")
-			if("nukeops")
-				message_admins("[key_name(usr)] is creating a nuke team...")
-				if(src.makeNukeTeam())
-					message_admins("[key_name(usr)] created a nuke team.")
-					log_admin("[key_name(usr)] created a nuke team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a nuke team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a nuke team.")
-			if("ninja")
-				message_admins("[key_name(usr)] spawned a ninja.")
-				log_admin("[key_name(usr)] spawned a ninja.")
-				src.makeSpaceNinja()
-			if("aliens")
-				message_admins("[key_name(usr)] started an alien infestation.")
-				log_admin("[key_name(usr)] started an alien infestation.")
-				src.makeAliens()
-			if("deathsquad")
-				message_admins("[key_name(usr)] is creating a death squad...")
-				if(src.makeDeathsquad())
-					message_admins("[key_name(usr)] created a death squad.")
-					log_admin("[key_name(usr)] created a death squad.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a death squad.")
-			if("blob")
-				var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num|null
-				if(!strength)
-					return
-				message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
-				log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
-				new/datum/round_event/ghost_role/blob(TRUE, strength)
-			if("centcom")
-				message_admins("[key_name(usr)] is creating a CentCom response team...")
-				if(src.makeEmergencyresponseteam())
-					message_admins("[key_name(usr)] created a CentCom response team.")
-					log_admin("[key_name(usr)] created a CentCom response team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create a CentCom response team.")
-			if("abductors")
-				message_admins("[key_name(usr)] is creating an abductor team...")
-				if(src.makeAbductorTeam())
-					message_admins("[key_name(usr)] created an abductor team.")
-					log_admin("[key_name(usr)] created an abductor team.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
-					log_admin("[key_name(usr)] failed to create an abductor team.")
-			if("clockcult")
-				if(src.makeClockCult())
-					message_admins("[key_name(usr)] started a clockwork cult.")
-					log_admin("[key_name(usr)] started a clockwork cult.")
-				else
-					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to start a clockwork cult.")
-			if("revenant")
-				if(src.makeRevenant())
-					message_admins("[key_name(usr)] created a revenant.")
-					log_admin("[key_name(usr)] created a revenant.")
-				else
-					message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
-					log_admin("[key_name(usr)] failed to create a revenant.")
-
-	else if(href_list["forceevent"])
-		if(!check_rights(R_FUN))
-			return
-		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
-		if(E)
-			E.admin_setup(usr)
-			var/datum/round_event/event = E.runEvent()
-			if(event.announceWhen>0)
-				event.processing = FALSE
-				var/prompt = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel")
-				switch(prompt)
-					if("Cancel")
-						event.kill()
+		if("makeAntag")
+			if(!check_rights(R_ADMIN))
+				return
+			if (!SSticker.mode)
+				to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
+				return
+			switch(href_list["makeAntag"])
+				if("traitors")
+					if(src.makeTraitors())
+						message_admins("[key_name_admin(usr)] created traitors.")
+						log_admin("[key_name(usr)] created traitors.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunately, there were no candidates available.")
+						log_admin("[key_name(usr)] failed to create traitors.")
+				if("changelings")
+					if(src.makeChangelings())
+						message_admins("[key_name(usr)] created changelings.")
+						log_admin("[key_name(usr)] created changelings.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
+						log_admin("[key_name(usr)] failed to create changelings.")
+				if("revs")
+					if(src.makeRevs())
+						message_admins("[key_name(usr)] started a revolution.")
+						log_admin("[key_name(usr)] started a revolution.")
+					else
+						message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunately, there were no candidates available.")
+						log_admin("[key_name(usr)] failed to start a revolution.")
+				if("cult")
+					if(src.makeCult())
+						message_admins("[key_name(usr)] started a cult.")
+						log_admin("[key_name(usr)] started a cult.")
+					else
+						message_admins("[key_name_admin(usr)] tried to start a cult. Unfortunately, there were no candidates available.")
+						log_admin("[key_name(usr)] failed to start a cult.")
+				if("wizard")
+					message_admins("[key_name(usr)] is creating a wizard...")
+					if(src.makeWizard())
+						message_admins("[key_name(usr)] created a wizard.")
+						log_admin("[key_name(usr)] created a wizard.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create a wizard. Unfortunately, there were no candidates available.")
+						log_admin("[key_name(usr)] failed to create a wizard.")
+				if("nukeops")
+					message_admins("[key_name(usr)] is creating a nuke team...")
+					if(src.makeNukeTeam())
+						message_admins("[key_name(usr)] created a nuke team.")
+						log_admin("[key_name(usr)] created a nuke team.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create a nuke team. Unfortunately, there were not enough candidates available.")
+						log_admin("[key_name(usr)] failed to create a nuke team.")
+				if("ninja")
+					message_admins("[key_name(usr)] spawned a ninja.")
+					log_admin("[key_name(usr)] spawned a ninja.")
+					src.makeSpaceNinja()
+				if("aliens")
+					message_admins("[key_name(usr)] started an alien infestation.")
+					log_admin("[key_name(usr)] started an alien infestation.")
+					src.makeAliens()
+				if("deathsquad")
+					message_admins("[key_name(usr)] is creating a death squad...")
+					if(src.makeDeathsquad())
+						message_admins("[key_name(usr)] created a death squad.")
+						log_admin("[key_name(usr)] created a death squad.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create a death squad. Unfortunately, there were not enough candidates available.")
+						log_admin("[key_name(usr)] failed to create a death squad.")
+				if("blob")
+					var/strength = input("Set Blob Resource Gain Rate","Set Resource Rate",1) as num|null
+					if(!strength)
 						return
-					if("No")
-						event.announceWhen = -1
-				event.processing = TRUE
-			message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
-			log_admin("[key_name(usr)] has triggered an event. ([E.name])")
-		return
+					message_admins("[key_name(usr)] spawned a blob with base resource gain [strength].")
+					log_admin("[key_name(usr)] spawned a blob with base resource gain [strength].")
+					new/datum/round_event/ghost_role/blob(TRUE, strength)
+				if("centcom")
+					message_admins("[key_name(usr)] is creating a CentCom response team...")
+					if(src.makeEmergencyresponseteam())
+						message_admins("[key_name(usr)] created a CentCom response team.")
+						log_admin("[key_name(usr)] created a CentCom response team.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create a CentCom response team. Unfortunately, there were not enough candidates available.")
+						log_admin("[key_name(usr)] failed to create a CentCom response team.")
+				if("abductors")
+					message_admins("[key_name(usr)] is creating an abductor team...")
+					if(src.makeAbductorTeam())
+						message_admins("[key_name(usr)] created an abductor team.")
+						log_admin("[key_name(usr)] created an abductor team.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
+						log_admin("[key_name(usr)] failed to create an abductor team.")
+				if("clockcult")
+					if(src.makeClockCult())
+						message_admins("[key_name(usr)] started a clockwork cult.")
+						log_admin("[key_name(usr)] started a clockwork cult.")
+					else
+						message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
+						log_admin("[key_name(usr)] failed to start a clockwork cult.")
+				if("revenant")
+					if(src.makeRevenant())
+						message_admins("[key_name(usr)] created a revenant.")
+						log_admin("[key_name(usr)] created a revenant.")
+					else
+						message_admins("[key_name_admin(usr)] tried to create a revenant. Unfortunately, there were no candidates available.")
+						log_admin("[key_name(usr)] failed to create a revenant.")
 
-	else if(href_list["dbsearchckey"] || href_list["dbsearchadmin"] || href_list["dbsearchip"] || href_list["dbsearchcid"])
-		var/adminckey = href_list["dbsearchadmin"]
-		var/playerckey = href_list["dbsearchckey"]
-		var/ip = href_list["dbsearchip"]
-		var/cid = href_list["dbsearchcid"]
-		var/page = href_list["dbsearchpage"]
-
-		DB_ban_panel(playerckey, adminckey, ip, cid, page)
-		return
-
-	else if(href_list["dbbanedit"])
-		var/banedit = href_list["dbbanedit"]
-		var/banid = text2num(href_list["dbbanid"])
-		if(!banedit || !banid)
+		if("forceevent")
+			if(!check_rights(R_FUN))
+				return
+			var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
+			if(E)
+				E.admin_setup(usr)
+				var/datum/round_event/event = E.runEvent()
+				if(event.announceWhen>0)
+					event.processing = FALSE
+					var/prompt = alert(usr, "Would you like to alert the crew?", "Alert", "Yes", "No", "Cancel")
+					switch(prompt)
+						if("Cancel")
+							event.kill()
+							return
+						if("No")
+							event.announceWhen = -1
+					event.processing = TRUE
+				message_admins("[key_name_admin(usr)] has triggered an event. ([E.name])")
+				log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 			return
 
-		DB_ban_edit(banid, banedit)
-		return
+		if("dbsearchckey"|| "dbsearchadmin" || "dbsearchip" || "dbsearchcid")
+			var/adminckey = href_list["dbsearchadmin"]
+			var/playerckey = href_list["dbsearchckey"]
+			var/ip = href_list["dbsearchip"]
+			var/cid = href_list["dbsearchcid"]
+			var/page = href_list["dbsearchpage"]
 
-	else if(href_list["dbbanaddtype"])
-		if(!check_rights(R_BAN))
+			DB_ban_panel(playerckey, adminckey, ip, cid, page)
 			return
-		var/bantype = text2num(href_list["dbbanaddtype"])
-		var/bankey = href_list["dbbanaddkey"]
-		var/banckey = ckey(bankey)
-		var/banip = href_list["dbbanaddip"]
-		var/bancid = href_list["dbbanaddcid"]
-		var/banduration = text2num(href_list["dbbaddduration"])
-		var/banjob = href_list["dbbanaddjob"]
-		var/banreason = href_list["dbbanreason"]
-		var/banseverity = href_list["dbbanaddseverity"]
 
-		switch(bantype)
-			if(BANTYPE_PERMA)
-				if(!banckey || !banreason || !banseverity)
-					to_chat(usr, "Not enough parameters (Requires ckey, severity, and reason).")
-					return
-				banduration = null
-				banjob = null
-			if(BANTYPE_TEMP)
-				if(!banckey || !banreason || !banduration || !banseverity)
-					to_chat(usr, "Not enough parameters (Requires ckey, reason, severity and duration).")
-					return
-				banjob = null
-			if(BANTYPE_JOB_PERMA)
-				if(!banckey || !banreason || !banjob || !banseverity)
-					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
-					return
-				banduration = null
-			if(BANTYPE_JOB_TEMP)
-				if(!banckey || !banreason || !banjob || !banduration || !banseverity)
-					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
-					return
-			if(BANTYPE_ADMIN_PERMA)
-				if(!banckey || !banreason || !banseverity)
-					to_chat(usr, "Not enough parameters (Requires ckey, severity and reason).")
-					return
-				banduration = null
-				banjob = null
-			if(BANTYPE_ADMIN_TEMP)
-				if(!banckey || !banreason || !banduration || !banseverity)
-					to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and duration).")
-					return
-				banjob = null
+		if("dbbanedit")
+			var/banedit = href_list["dbbanedit"]
+			var/banid = text2num(href_list["dbbanid"])
+			if(!banedit || !banid)
+				return
 
-		var/mob/playermob
-
-		for(var/mob/M in GLOB.player_list)
-			if(M.ckey == banckey)
-				playermob = M
-				break
-
-
-		banreason = "(MANUAL BAN) "+banreason
-
-		if(!playermob)
-			if(banip)
-				banreason = "[banreason] (CUSTOM IP)"
-			if(bancid)
-				banreason = "[banreason] (CUSTOM CID)"
-		else
-			message_admins("Ban process: A mob matching [playermob.key] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob.")
-
-		if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, bankey, banip, bancid ))
-			to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
+			DB_ban_edit(banid, banedit)
 			return
-		create_message("note", bankey, null, banreason, null, null, 0, 0, null, 0, banseverity)
 
-	else if(href_list["editrightsbrowser"])
+		if("dbbanaddtype")
+			if(!check_rights(R_BAN))
+				return
+			var/bantype = text2num(href_list["dbbanaddtype"])
+			var/bankey = href_list["dbbanaddkey"]
+			var/banckey = ckey(bankey)
+			var/banip = href_list["dbbanaddip"]
+			var/bancid = href_list["dbbanaddcid"]
+			var/banduration = text2num(href_list["dbbaddduration"])
+			var/banjob = href_list["dbbanaddjob"]
+			var/banreason = href_list["dbbanreason"]
+			var/banseverity = href_list["dbbanaddseverity"]
+
+			switch(bantype)
+				if(BANTYPE_PERMA)
+					if(!banckey || !banreason || !banseverity)
+						to_chat(usr, "Not enough parameters (Requires ckey, severity, and reason).")
+						return
+					banduration = null
+					banjob = null
+				if(BANTYPE_TEMP)
+					if(!banckey || !banreason || !banduration || !banseverity)
+						to_chat(usr, "Not enough parameters (Requires ckey, reason, severity and duration).")
+						return
+					banjob = null
+				if(BANTYPE_JOB_PERMA)
+					if(!banckey || !banreason || !banjob || !banseverity)
+						to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
+						return
+					banduration = null
+				if(BANTYPE_JOB_TEMP)
+					if(!banckey || !banreason || !banjob || !banduration || !banseverity)
+						to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and job).")
+						return
+				if(BANTYPE_ADMIN_PERMA)
+					if(!banckey || !banreason || !banseverity)
+						to_chat(usr, "Not enough parameters (Requires ckey, severity and reason).")
+						return
+					banduration = null
+					banjob = null
+				if(BANTYPE_ADMIN_TEMP)
+					if(!banckey || !banreason || !banduration || !banseverity)
+						to_chat(usr, "Not enough parameters (Requires ckey, severity, reason and duration).")
+						return
+					banjob = null
+
+			var/mob/playermob
+
+			for(var/mob/M in GLOB.player_list)
+				if(M.ckey == banckey)
+					playermob = M
+					break
+
+
+			banreason = "(MANUAL BAN) "+banreason
+
+			if(!playermob)
+				if(banip)
+					banreason = "[banreason] (CUSTOM IP)"
+				if(bancid)
+					banreason = "[banreason] (CUSTOM CID)"
+			else
+				message_admins("Ban process: A mob matching [playermob.key] was found at location [playermob.x], [playermob.y], [playermob.z]. Custom ip and computer id fields replaced with the ip and computer id from the located mob.")
+
+			if(!DB_ban_record(bantype, playermob, banduration, banreason, banjob, bankey, banip, bancid ))
+				to_chat(usr, "<span class='danger'>Failed to apply ban.</span>")
+				return
+			create_message("note", bankey, null, banreason, null, null, 0, 0, null, 0, banseverity)
+
+	if(href_list["editrightsbrowser"])
 		edit_admin_permissions(0)
 
 	else if(href_list["editrightsbrowserlog"])
