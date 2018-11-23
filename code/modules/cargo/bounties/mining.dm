@@ -58,7 +58,7 @@
 
 /datum/bounty/item/mining/inocybe_mushroom
 	name = "Mushroom Caps"
-	description = "Our botanist claims that he can distill tasty liquor from absolutely any plant. Let's see what he'll do with Inocybe mushroom caps"
+	description = "Our botanist claims that he can distill tasty liquor from absolutely any plant. Let's see what he'll do with Inocybe mushroom caps."
 	reward = 4500
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/ash_flora/mushroom_cap)
