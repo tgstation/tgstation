@@ -62,6 +62,8 @@ SUBSYSTEM_DEF(dbcore)
 
 	for(var/I in db_major to highest_major_version)
 		var/minor_list = migration_datums["[I]"]
+		if(!minor_list)
+			continue
 		for(var/J in 0 to highest_minor_version)
 			var/mig = minor_list["[J]"]
 			if(!mig)
