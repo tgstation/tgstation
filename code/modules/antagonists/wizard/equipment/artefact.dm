@@ -136,7 +136,7 @@
 
 /obj/item/scrying
 	name = "scrying orb"
-	desc = "An incandescent orb of otherworldly energy, staring into it gives you vision beyond mortal means."
+	desc = "An incandescent orb of otherworldly energy, merely holding it gives you vision and hearing beyond mortal means, and staring into it lets you see the entire universe."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state ="bluespace"
 	throw_speed = 3
@@ -159,19 +159,25 @@
 /obj/item/scrying/process()
 	var/mob/holder = get(loc, /mob)
 	if(current_owner && current_owner != holder)
+
+		to_chat(current_owner, "<span class='notice'>Your otherworldly vision fades...</span>")
+
 		current_owner.remove_trait(TRAIT_SIXTHSENSE, SCRYING_ORB)
 		current_owner.remove_trait(TRAIT_XRAY_VISION, SCRYING_ORB)
+		current_owner.update_sight()
 
 		current_owner = null
 
 	if(!current_owner)
 		current_owner = holder
 
+		to_chat(current_owner, "<span class='notice'>You can see...everything!</span>")
+
 		current_owner.add_trait(TRAIT_SIXTHSENSE, SCRYING_ORB)
 		current_owner.add_trait(TRAIT_XRAY_VISION, SCRYING_ORB)
+		current_owner.update_sight()
 
 /obj/item/scrying/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 
@@ -202,12 +208,12 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
-	
+
 	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
 		if(ghost.mind && ghost.mind.current == M && ghost.client)  //the dead mobs list can contain clientless mobs
 			ghost.reenter_corpse()
 			break
-	
+
 	if(!M.mind || !M.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
