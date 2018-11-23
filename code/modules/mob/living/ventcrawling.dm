@@ -98,7 +98,9 @@ GLOBAL_LIST_INIT(ventcrawl_machinery, typecacheof(list(
 			A.pipe_vision_img.plane = ABOVE_HUD_PLANE
 		pipes_shown += A.pipe_vision_img
 		if(client)
-			client.images += A.pipe_vision_img
+			if(A.loc.x >= starting_machine.loc.x - 7 && A.loc.x <= starting_machine.loc.x + 7)
+				if(A.loc.y >= starting_machine.loc.y - 7 && A.loc.y <= starting_machine.loc.y + 7)
+					client.images += A.pipe_vision_img
 	setMovetype(movement_type | VENTCRAWLING)
 
 
