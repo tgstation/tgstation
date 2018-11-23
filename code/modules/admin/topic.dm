@@ -60,7 +60,7 @@
 		if("makeAntag")
 			if(!check_rights(R_ADMIN))
 				return
-			if (!SSticker.mode)
+			if(!SSticker.mode)
 				to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
 				return
 			switch(href_list["makeAntag"])
@@ -417,6 +417,9 @@
 		if("end_round")
 			if(!check_rights(R_ADMIN))
 				return
+			if(!SSticker.mode)
+				to_chat(usr, "<span class='danger'>End the round? Its not started! If its bugged that badly RESTART THE SERVER!</span>")
+				return
 
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
 			if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
@@ -503,72 +506,72 @@
 					M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 
 
-	/////////////////////////////////////new ban stuff
-	if(href_list["unbanf"])
-		if(!check_rights(R_BAN))
-			return
+		/////////////////////////////////////new ban stuff
+		if("unbanf")
+			if(!check_rights(R_BAN))
+				return
 
-		var/banfolder = href_list["unbanf"]
-		GLOB.Banlist.cd = "/base/[banfolder]"
-		var/key = GLOB.Banlist["key"]
-		if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
-			if(RemoveBan(banfolder))
-				unbanpanel()
-			else
-				alert(usr, "This ban has already been lifted / does not exist.", "Error", "Ok")
-				unbanpanel()
+			var/banfolder = href_list["unbanf"]
+			GLOB.Banlist.cd = "/base/[banfolder]"
+			var/key = GLOB.Banlist["key"]
+			if(alert(usr, "Are you sure you want to unban [key]?", "Confirmation", "Yes", "No") == "Yes")
+				if(RemoveBan(banfolder))
+					unbanpanel()
+				else
+					alert(usr, "This ban has already been lifted / does not exist.", "Error", "Ok")
+					unbanpanel()
 
-	else if(href_list["unbane"])
-		if(!check_rights(R_BAN))
-			return
+		if("unbane")
+			if(!check_rights(R_BAN))
+				return
 
-		UpdateTime()
-		var/reason
+			UpdateTime()
+			var/reason
 
-		var/banfolder = href_list["unbane"]
-		GLOB.Banlist.cd = "/base/[banfolder]"
-		var/reason2 = GLOB.Banlist["reason"]
-		var/temp = GLOB.Banlist["temp"]
+			var/banfolder = href_list["unbane"]
+			GLOB.Banlist.cd = "/base/[banfolder]"
+			var/reason2 = GLOB.Banlist["reason"]
+			var/temp = GLOB.Banlist["temp"]
 
-		var/minutes = GLOB.Banlist["minutes"]
+			var/minutes = GLOB.Banlist["minutes"]
 
-		var/banned_key = GLOB.Banlist["key"]
-		GLOB.Banlist.cd = "/base"
+			var/banned_key = GLOB.Banlist["key"]
+			GLOB.Banlist.cd = "/base"
 
-		var/duration
+			var/duration
 
-		switch(alert("Temporary Ban for [banned_key]?",,"Yes","No"))
-			if("Yes")
-				temp = 1
-				var/mins = 0
-				if(minutes > GLOB.CMinutes)
-					mins = minutes - GLOB.CMinutes
-				mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
-				if(mins <= 0)
-					to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
-					return
-				minutes = GLOB.CMinutes + mins
-				duration = GetExp(minutes)
-				reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
-				if(!reason)
-					return
-			if("No")
-				temp = 0
-				duration = "Perma"
-				reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
-				if(!reason)
-					return
+			switch(alert("Temporary Ban for [banned_key]?",,"Yes","No"))
+				if("Yes")
+					temp = 1
+					var/mins = 0
+					if(minutes > GLOB.CMinutes)
+						mins = minutes - GLOB.CMinutes
+					mins = input(usr,"How long (in minutes)? (Default: 1440)","Ban time",mins ? mins : 1440) as num|null
+					if(mins <= 0)
+						to_chat(usr, "<span class='danger'>[mins] is not a valid duration.</span>")
+						return
+					minutes = GLOB.CMinutes + mins
+					duration = GetExp(minutes)
+					reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
+					if(!reason)
+						return
+				if("No")
+					temp = 0
+					duration = "Perma"
+					reason = input(usr,"Please State Reason For Banning [banned_key].","Reason",reason2) as message|null
+					if(!reason)
+						return
 
-		log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
-		GLOB.Banlist.cd = "/base/[banfolder]"
-		WRITE_FILE(GLOB.Banlist["reason"], reason)
-		WRITE_FILE(GLOB.Banlist["temp"], temp)
-		WRITE_FILE(GLOB.Banlist["minutes"], minutes)
-		WRITE_FILE(GLOB.Banlist["bannedby"], usr.ckey)
-		GLOB.Banlist.cd = "/base"
-		unbanpanel()
+			log_admin_private("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
+			ban_unban_log_save("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]</span>")
+			GLOB.Banlist.cd = "/base/[banfolder]"
+			WRITE_FILE(GLOB.Banlist["reason"], reason)
+			WRITE_FILE(GLOB.Banlist["temp"], temp)
+			WRITE_FILE(GLOB.Banlist["minutes"], minutes)
+			WRITE_FILE(GLOB.Banlist["bannedby"], usr.ckey)
+			GLOB.Banlist.cd = "/base"
+			unbanpanel()
 
 	/////////////////////////////////////new ban stuff
 
