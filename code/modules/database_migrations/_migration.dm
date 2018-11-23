@@ -32,7 +32,9 @@
 		query = SSdbcore.NewQuery()
 	src.query = query
 
-	log_sql("[down ? "Una" : "A"]pplying [type] ([schema_version_major].[schema_version_minor])...")
+	var/log_message = "[down ? "Una" : "A"]pplying [type] ([schema_version_major].[schema_version_minor])..."
+	log_world(log_message)
+	log_sql(log_message)
 
 	if(local_transaction)
 		M("BEGIN TRANSACTION")
