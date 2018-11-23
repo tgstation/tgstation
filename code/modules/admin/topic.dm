@@ -271,240 +271,240 @@
 				return
 			create_message("note", bankey, null, banreason, null, null, 0, 0, null, 0, banseverity)
 
-	if(href_list["editrightsbrowser"])
-		edit_admin_permissions(0)
+		if("editrightsbrowser")
+			edit_admin_permissions(0)
 
-	else if(href_list["editrightsbrowserlog"])
-		edit_admin_permissions(1, href_list["editrightstarget"], href_list["editrightsoperation"], href_list["editrightspage"])
+		if("editrightsbrowserlog")
+			edit_admin_permissions(1, href_list["editrightstarget"], href_list["editrightsoperation"], href_list["editrightspage"])
 
-	if(href_list["editrightsbrowsermanage"])
-		if(href_list["editrightschange"])
-			change_admin_rank(ckey(href_list["editrightschange"]), href_list["editrightschange"], TRUE)
-		else if(href_list["editrightsremove"])
-			remove_admin(ckey(href_list["editrightsremove"]), href_list["editrightsremove"], TRUE)
-		else if(href_list["editrightsremoverank"])
-			remove_rank(href_list["editrightsremoverank"])
-		edit_admin_permissions(2)
+		if("editrightsbrowsermanage")
+			if(href_list["editrightschange"])
+				change_admin_rank(ckey(href_list["editrightschange"]), href_list["editrightschange"], TRUE)
+			else if(href_list["editrightsremove"])
+				remove_admin(ckey(href_list["editrightsremove"]), href_list["editrightsremove"], TRUE)
+			else if(href_list["editrightsremoverank"])
+				remove_rank(href_list["editrightsremoverank"])
+			edit_admin_permissions(2)
 
-	else if(href_list["editrights"])
-		edit_rights_topic(href_list)
+		if("editrights")
+			edit_rights_topic(href_list)
 
-	else if(href_list["call_shuttle"])
-		if(!check_rights(R_ADMIN))
-			return
-
-
-		switch(href_list["call_shuttle"])
-			if("1")
-				if(EMERGENCY_AT_LEAST_DOCKED)
-					return
-				SSshuttle.emergency.request()
-				log_admin("[key_name(usr)] called the Emergency Shuttle.")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station.</span>")
-
-			if("2")
-				if(EMERGENCY_AT_LEAST_DOCKED)
-					return
-				switch(SSshuttle.emergency.mode)
-					if(SHUTTLE_CALL)
-						SSshuttle.emergency.cancel()
-						log_admin("[key_name(usr)] sent the Emergency Shuttle back.")
-						message_admins("<span class='adminnotice'>[key_name_admin(usr)] sent the Emergency Shuttle back.</span>")
-					else
-						SSshuttle.emergency.cancel()
-						log_admin("[key_name(usr)] called the Emergency Shuttle.")
-						message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station.</span>")
-
-
-		href_list["secrets"] = "check_antagonist"
-
-	else if(href_list["edit_shuttle_time"])
-		if(!check_rights(R_SERVER))
-			return
-
-		var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
-		if(!timer)
-			return
-		SSshuttle.emergency.setTimer(timer*10)
-		log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
-		minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
-		href_list["secrets"] = "check_antagonist"
-	else if(href_list["trigger_centcom_recall"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		usr.client.trigger_centcom_recall()
-
-	else if(href_list["toggle_continuous"])
-		if(!check_rights(R_ADMIN))
-			return
-		var/list/continuous = CONFIG_GET(keyed_list/continuous)
-		if(!continuous[SSticker.mode.config_tag])
-			continuous[SSticker.mode.config_tag] = TRUE
-		else
-			continuous[SSticker.mode.config_tag] = FALSE
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [continuous[SSticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
-		check_antagonists()
-
-	else if(href_list["toggle_midround_antag"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)
-		if(!midround_antag[SSticker.mode.config_tag])
-			midround_antag[SSticker.mode.config_tag] = TRUE
-		else
-			midround_antag[SSticker.mode.config_tag] = FALSE
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [midround_antag[SSticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
-		check_antagonists()
-
-	else if(href_list["alter_midround_time_limit"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/timer = input("Enter new maximum time",, CONFIG_GET(number/midround_antag_time_check)) as num|null
-		if(!timer)
-			return
-		CONFIG_SET(number/midround_antag_time_check, timer)
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the maximum midround antagonist time to [timer] minutes.</span>")
-		check_antagonists()
-
-	else if(href_list["alter_midround_life_limit"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		var/ratio = input("Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100) as num
-		if(!ratio)
-			return
-		CONFIG_SET(number/midround_antag_life_check, ratio / 100)
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio]% alive.</span>")
-		check_antagonists()
-
-	else if(href_list["toggle_noncontinuous_behavior"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(!SSticker.mode.round_ends_with_antag_death)
-			SSticker.mode.round_ends_with_antag_death = 1
-		else
-			SSticker.mode.round_ends_with_antag_death = 0
-
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [SSticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.</span>")
-		check_antagonists()
-
-	else if(href_list["delay_round_end"])
-		if(!check_rights(R_SERVER))
-			return
-		if(!SSticker.delay_end)
-			SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
-			if(isnull(SSticker.admin_delay_notice))
+		if("call_shuttle")
+			if(!check_rights(R_ADMIN))
 				return
-		else
-			SSticker.admin_delay_notice = null
-		SSticker.delay_end = !SSticker.delay_end
-		var/reason = SSticker.delay_end ? "for reason: [SSticker.admin_delay_notice]" : "."//laziness
-		var/msg = "[SSticker.delay_end ? "delayed" : "undelayed"] the round end [reason]"
-		log_admin("[key_name(usr)] [msg]")
-		message_admins("[key_name_admin(usr)] [msg]")
-		href_list["secrets"] = "check_antagonist"
-		if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
-			SSticker.standard_reboot()
 
-	else if(href_list["end_round"])
-		if(!check_rights(R_ADMIN))
-			return
 
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
-		if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
-			if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
-				SSticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
+			switch(href_list["call_shuttle"])
+				if("1")
+					if(EMERGENCY_AT_LEAST_DOCKED)
+						return
+					SSshuttle.emergency.request()
+					log_admin("[key_name(usr)] called the Emergency Shuttle.")
+					message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station.</span>")
+
+				if("2")
+					if(EMERGENCY_AT_LEAST_DOCKED)
+						return
+					switch(SSshuttle.emergency.mode)
+						if(SHUTTLE_CALL)
+							SSshuttle.emergency.cancel()
+							log_admin("[key_name(usr)] sent the Emergency Shuttle back.")
+							message_admins("<span class='adminnotice'>[key_name_admin(usr)] sent the Emergency Shuttle back.</span>")
+						else
+							SSshuttle.emergency.cancel()
+							log_admin("[key_name(usr)] called the Emergency Shuttle.")
+							message_admins("<span class='adminnotice'>[key_name_admin(usr)] called the Emergency Shuttle to the station.</span>")
+
+
+			href_list["secrets"] = "check_antagonist"
+
+		if("edit_shuttle_time")
+			if(!check_rights(R_SERVER))
 				return
+
+			var/timer = input("Enter new shuttle duration (seconds):","Edit Shuttle Timeleft", SSshuttle.emergency.timeLeft() ) as num|null
+			if(!timer)
+				return
+			SSshuttle.emergency.setTimer(timer*10)
+			log_admin("[key_name(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.")
+			minor_announce("The emergency shuttle will reach its destination in [round(SSshuttle.emergency.timeLeft(600))] minutes.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the Emergency Shuttle's timeleft to [timer] seconds.</span>")
+			href_list["secrets"] = "check_antagonist"
+		if("trigger_centcom_recall")
+			if(!check_rights(R_ADMIN))
+				return
+
+			usr.client.trigger_centcom_recall()
+
+		if("toggle_continuous")
+			if(!check_rights(R_ADMIN))
+				return
+			var/list/continuous = CONFIG_GET(keyed_list/continuous)
+			if(!continuous[SSticker.mode.config_tag])
+				continuous[SSticker.mode.config_tag] = TRUE
+			else
+				continuous[SSticker.mode.config_tag] = FALSE
+
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [continuous[SSticker.mode.config_tag] ? "continue if all antagonists die" : "end with the antagonists"].</span>")
+			check_antagonists()
+
+		if("toggle_midround_antag")
+			if(!check_rights(R_ADMIN))
+				return
+
+			var/list/midround_antag = CONFIG_GET(keyed_list/midround_antag)
+			if(!midround_antag[SSticker.mode.config_tag])
+				midround_antag[SSticker.mode.config_tag] = TRUE
+			else
+				midround_antag[SSticker.mode.config_tag] = FALSE
+
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled the round to [midround_antag[SSticker.mode.config_tag] ? "use" : "skip"] the midround antag system.</span>")
+			check_antagonists()
+
+		if("alter_midround_time_limit")
+			if(!check_rights(R_ADMIN))
+				return
+
+			var/timer = input("Enter new maximum time",, CONFIG_GET(number/midround_antag_time_check)) as num|null
+			if(!timer)
+				return
+			CONFIG_SET(number/midround_antag_time_check, timer)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the maximum midround antagonist time to [timer] minutes.</span>")
+			check_antagonists()
+
+		if("alter_midround_life_limit")
+			if(!check_rights(R_ADMIN))
+				return
+
+			var/ratio = input("Enter new life ratio",, CONFIG_GET(number/midround_antag_life_check) * 100) as num
+			if(!ratio)
+				return
+			CONFIG_SET(number/midround_antag_life_check, ratio / 100)
+
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist living crew ratio to [ratio]% alive.</span>")
+			check_antagonists()
+
+		if("toggle_noncontinuous_behavior")
+			if(!check_rights(R_ADMIN))
+				return
+
+			if(!SSticker.mode.round_ends_with_antag_death)
+				SSticker.mode.round_ends_with_antag_death = 1
+			else
+				SSticker.mode.round_ends_with_antag_death = 0
+
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] edited the midround antagonist system to [SSticker.mode.round_ends_with_antag_death ? "end the round" : "continue as extended"] upon failure.</span>")
+			check_antagonists()
+
+		if("delay_round_end")
+			if(!check_rights(R_SERVER))
+				return
+			if(!SSticker.delay_end)
+				SSticker.admin_delay_notice = input(usr, "Enter a reason for delaying the round end", "Round Delay Reason") as null|text
+				if(isnull(SSticker.admin_delay_notice))
+					return
+			else
+				SSticker.admin_delay_notice = null
+			SSticker.delay_end = !SSticker.delay_end
+			var/reason = SSticker.delay_end ? "for reason: [SSticker.admin_delay_notice]" : "."//laziness
+			var/msg = "[SSticker.delay_end ? "delayed" : "undelayed"] the round end [reason]"
+			log_admin("[key_name(usr)] [msg]")
+			message_admins("[key_name_admin(usr)] [msg]")
+			href_list["secrets"] = "check_antagonist"
+			if(SSticker.ready_for_reboot && !SSticker.delay_end) //we undelayed after standard reboot would occur
+				SSticker.standard_reboot()
+
+		if("end_round")
+			if(!check_rights(R_ADMIN))
+				return
+
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] is considering ending the round.</span>")
+			if(alert(usr, "This will end the round, are you SURE you want to do this?", "Confirmation", "Yes", "No") == "Yes")
+				if(alert(usr, "Final Confirmation: End the round NOW?", "Confirmation", "Yes", "No") == "Yes")
+					message_admins("<span class='adminnotice'>[key_name_admin(usr)] has ended the round.</span>")
+					SSticker.force_ending = 1 //Yeah there we go APC destroyed mission accomplished
+					return
+				else
+					message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
 			else
 				message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
-		else
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] decided against ending the round.</span>")
 
-	else if(href_list["simplemake"])
-		if(!check_rights(R_SPAWN))
-			return
-
-		var/mob/M = locate(href_list["mob"])
-		if(!ismob(M))
-			to_chat(usr, "This can only be used on instances of type /mob.")
-			return
-
-		var/delmob = FALSE
-		switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
-			if("Cancel")
+		if("simplemake")
+			if(!check_rights(R_SPAWN))
 				return
-			if("Yes")
-				delmob = TRUE
 
-		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
-		switch(href_list["simplemake"])
-			if("observer")
-				M.change_mob_type( /mob/dead/observer , null, null, delmob )
-			if("drone")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
-			if("hunter")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
-			if("queen")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/queen , null, null, delmob )
-			if("praetorian")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/praetorian , null, null, delmob )
-			if("sentinel")
-				M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
-			if("larva")
-				M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
-			if("human")
-				var/posttransformoutfit = usr.client.robust_dress_shop()
-				if (!posttransformoutfit)
+			var/mob/M = locate(href_list["mob"])
+			if(!ismob(M))
+				to_chat(usr, "This can only be used on instances of type /mob.")
+				return
+
+			var/delmob = FALSE
+			switch(alert("Delete old mob?","Message","Yes","No","Cancel"))
+				if("Cancel")
 					return
-				var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
-				if(posttransformoutfit && istype(newmob))
-					newmob.equipOutfit(posttransformoutfit)
-			if("slime")
-				M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
-			if("monkey")
-				M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
-			if("robot")
-				M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
-			if("cat")
-				M.change_mob_type( /mob/living/simple_animal/pet/cat , null, null, delmob )
-			if("runtime")
-				M.change_mob_type( /mob/living/simple_animal/pet/cat/Runtime , null, null, delmob )
-			if("corgi")
-				M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi , null, null, delmob )
-			if("ian")
-				M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi/Ian , null, null, delmob )
-			if("pug")
-				M.change_mob_type( /mob/living/simple_animal/pet/dog/pug , null, null, delmob )
-			if("crab")
-				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
-			if("coffee")
-				M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
-			if("parrot")
-				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
-			if("polyparrot")
-				M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
-			if("constructarmored")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/armored , null, null, delmob )
-			if("constructbuilder")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/builder , null, null, delmob )
-			if("constructwraith")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
-			if("shade")
-				M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
+				if("Yes")
+					delmob = TRUE
+
+			log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
+			switch(href_list["simplemake"])
+				if("observer")
+					M.change_mob_type( /mob/dead/observer , null, null, delmob )
+				if("drone")
+					M.change_mob_type( /mob/living/carbon/alien/humanoid/drone , null, null, delmob )
+				if("hunter")
+					M.change_mob_type( /mob/living/carbon/alien/humanoid/hunter , null, null, delmob )
+				if("queen")
+					M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/queen , null, null, delmob )
+				if("praetorian")
+					M.change_mob_type( /mob/living/carbon/alien/humanoid/royal/praetorian , null, null, delmob )
+				if("sentinel")
+					M.change_mob_type( /mob/living/carbon/alien/humanoid/sentinel , null, null, delmob )
+				if("larva")
+					M.change_mob_type( /mob/living/carbon/alien/larva , null, null, delmob )
+				if("human")
+					var/posttransformoutfit = usr.client.robust_dress_shop()
+					if (!posttransformoutfit)
+						return
+					var/mob/living/carbon/human/newmob = M.change_mob_type( /mob/living/carbon/human , null, null, delmob )
+					if(posttransformoutfit && istype(newmob))
+						newmob.equipOutfit(posttransformoutfit)
+				if("slime")
+					M.change_mob_type( /mob/living/simple_animal/slime , null, null, delmob )
+				if("monkey")
+					M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
+				if("robot")
+					M.change_mob_type( /mob/living/silicon/robot , null, null, delmob )
+				if("cat")
+					M.change_mob_type( /mob/living/simple_animal/pet/cat , null, null, delmob )
+				if("runtime")
+					M.change_mob_type( /mob/living/simple_animal/pet/cat/Runtime , null, null, delmob )
+				if("corgi")
+					M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi , null, null, delmob )
+				if("ian")
+					M.change_mob_type( /mob/living/simple_animal/pet/dog/corgi/Ian , null, null, delmob )
+				if("pug")
+					M.change_mob_type( /mob/living/simple_animal/pet/dog/pug , null, null, delmob )
+				if("crab")
+					M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
+				if("coffee")
+					M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
+				if("parrot")
+					M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
+				if("polyparrot")
+					M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
+				if("constructarmored")
+					M.change_mob_type( /mob/living/simple_animal/hostile/construct/armored , null, null, delmob )
+				if("constructbuilder")
+					M.change_mob_type( /mob/living/simple_animal/hostile/construct/builder , null, null, delmob )
+				if("constructwraith")
+					M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
+				if("shade")
+					M.change_mob_type( /mob/living/simple_animal/shade , null, null, delmob )
 
 
 	/////////////////////////////////////new ban stuff
-	else if(href_list["unbanf"])
+	if(href_list["unbanf"])
 		if(!check_rights(R_BAN))
 			return
 
@@ -572,7 +572,7 @@
 
 	/////////////////////////////////////new ban stuff
 
-	else if(href_list["appearanceban"])
+	if(href_list["appearanceban"])
 		if(!check_rights(R_BAN))
 			return
 		var/mob/M = locate(href_list["appearanceban"])
