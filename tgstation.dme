@@ -1525,6 +1525,7 @@
 #include "code\modules\crafting\recipes.dm"
 #include "code\modules\crafting\tailoring.dm"
 #include "code\modules\database_migrations\_migration.dm"
+#include "code\modules\database_migrations\4.7_LegacySchema.dm"
 #include "code\modules\detectivework\detective_work.dm"
 #include "code\modules\detectivework\evidence.dm"
 #include "code\modules\detectivework\footprints_and_rag.dm"
