@@ -590,12 +590,18 @@
 			see_invisible = min(G.invis_view, see_invisible)
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
-	if(dna)
+
+	var/has_xray = has_trait(TRAIT_XRAY_VISION)
+
+	if(dna && !has_xray)
 		for(var/X in dna.mutations)
 			var/datum/mutation/M = X
 			if(M.name == XRAY)
-				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-				see_in_dark = max(see_in_dark, 8)
+				has_xray = TRUE
+
+	if(has_xray)
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
