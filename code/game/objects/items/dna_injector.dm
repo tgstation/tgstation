@@ -173,12 +173,12 @@
 /obj/item/dnainjector/antifire
 	name = "\improper DNA injector (Anti-Fire)"
 	desc = "Cures fire."
-	remove_mutations = list(COLDRES)
+	remove_mutations = list(SPACEMUT)
 
 /obj/item/dnainjector/firemut
 	name = "\improper DNA injector (Fire)"
 	desc = "Gives you fire."
-	add_mutations = list(COLDRES)
+	add_mutations = list(SPACEMUT)
 
 /obj/item/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"

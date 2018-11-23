@@ -5,7 +5,7 @@
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's type
 #define HULK		/datum/mutation/human/hulk
 #define XRAY		/datum/mutation/human/x_ray
-#define COLDRES		/datum/mutation/human/space_adaptation
+#define SPACEMUT	/datum/mutation/human/space_adaptation
 #define TK			/datum/mutation/human/telekinesis
 #define NERVOUS		/datum/mutation/human/nervousness
 #define EPILEPSY	/datum/mutation/human/epilepsy
