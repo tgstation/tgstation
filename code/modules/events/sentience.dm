@@ -1,3 +1,19 @@
+GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
+	/mob/living/simple_animal/pet,
+	/mob/living/simple_animal/parrot,
+	/mob/living/simple_animal/hostile/lizard,
+	/mob/living/simple_animal/sloth,
+	/mob/living/simple_animal/mouse/brown/Tom,
+	/mob/living/simple_animal/hostile/retaliate/goat,
+	/mob/living/simple_animal/chicken,
+	/mob/living/simple_animal/cow,
+	/mob/living/simple_animal/hostile/retaliate/bat,
+	/mob/living/simple_animal/hostile/carp/cayenne,
+	/mob/living/simple_animal/butterfly,
+	/mob/living/simple_animal/hostile/retaliate/poison/snake,
+	/mob/living/simple_animal/bot/secbot/beepsky
+)))
+
 /datum/round_event_control/sentience
 	name = "Random Human-level Intelligence"
 	typepath = /datum/round_event/ghost_role/sentience
@@ -28,13 +44,29 @@
 
 	// find our chosen mob to breathe life into
 	// Mobs have to be simple animals, mindless and on station
+	// prioritize starter animals that people will recognise
+
+
 	var/list/potential = list()
+
+	var/list/hi_pri = list()
+	var/list/low_pri = list()
+
 	for(var/mob/living/simple_animal/L in GLOB.alive_mob_list)
 		var/turf/T = get_turf(L)
 		if(!T || !is_station_level(T.z))
 			continue
-		if(!(L in GLOB.player_list) && !L.mind)
-			potential += L
+		if((L in GLOB.player_list) || L.mind)
+			continue
+		if(is_type_in_typecache(L, GLOB.high_priority_sentience))
+			hi_pri += L
+		else
+			low_pri += L
+
+	shuffle_inplace(hi_pri)
+	shuffle_inplace(low_pri)
+
+	potential = hi_pri + low_pri
 
 	if(!potential.len)
 		return WAITING_FOR_SOMETHING
@@ -43,7 +75,7 @@
 
 	var/spawned_animals = 0
 	while(spawned_animals < animals && candidates.len && potential.len)
-		var/mob/living/simple_animal/SA = pick_n_take(potential)
+		var/mob/living/simple_animal/SA = popleft(potential)
 		var/mob/dead/observer/SG = pick_n_take(candidates)
 
 		spawned_animals++
