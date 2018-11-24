@@ -90,22 +90,23 @@
 
 
 /datum/game_mode/cult/post_setup()
-	for(var/datum/mind/cult_mind in cultists_to_cult)
-		add_cultist(cult_mind, 0, equip=TRUE)
-		if(!main_cult)
-			var/datum/antagonist/cult/C = cult_mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-			if(C && C.cult_team)
-				main_cult = C.cult_team
-	..()
+	main_cult = new
 
-/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE) //BASE
+	for(var/datum/mind/cult_mind in cultists_to_cult)
+		add_cultist(cult_mind, 0, equip=TRUE, cult_team = main_cult)
+
+	main_cult.setup_objectives() //Wait until all cultists are assigned to make sure none will be chosen as sacrifice.
+
+	. = ..()
+
+/datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun , equip = FALSE, datum/team/cult/cult_team = null)
 	if (!istype(cult_mind))
 		return FALSE
 
 	var/datum/antagonist/cult/new_cultist = new()
 	new_cultist.give_equipment = equip
 
-	if(cult_mind.add_antag_datum(new_cultist))
+	if(cult_mind.add_antag_datum(new_cultist,cult_team))
 		if(stun)
 			cult_mind.current.Unconscious(100)
 		return TRUE

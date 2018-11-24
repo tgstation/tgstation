@@ -72,7 +72,7 @@
 	if(going_kaboom)
 		return
 	going_kaboom = TRUE
-	visible_message("<span class='danger'>\The [src] lets out an shower of sparks as it starts to lose stability!</span>",\
+	visible_message("<span class='danger'>\The [src] lets out a shower of sparks as it starts to lose stability!</span>",\
 		"<span class='italics'>You hear a loud electrical crack!</span>")
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
 	tesla_zap(src, 5, power_gen * 0.05)

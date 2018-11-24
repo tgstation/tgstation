@@ -1,6 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - rscadd: "Guns now have their shot volume and variation of shot pitch controlled by variables instead of hardcode"
-  - tweak: "Racking a shotgun is no longer louder than the actual shot"
-  - soundadd: "Shotguns now have a unique sound effect. Blat blat."

@@ -1,4 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "throws no longer default to INFINITE FORCE"
