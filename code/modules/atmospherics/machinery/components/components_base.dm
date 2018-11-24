@@ -9,11 +9,10 @@
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
 
-/obj/machinery/atmospherics/components/Initialize()
+/obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
-
-	. = ..()
+	..()
 
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/A = new
