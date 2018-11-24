@@ -39,6 +39,8 @@ GLOBAL_LIST_EMPTY(hub_features)
 		if(thediscordlink)
 			dat += "<a href=\"[thediscordlink]\">Discord</a>"
 		dat += ")<br>"
+	if(SSmapping && SSmapping.config.map_name)
+		dat += "Map: [SSmapping.config.map_name]<br>"
 	if(SSticker)
 		if(SSticker.current_state < GAME_STATE_PLAYING)
 			dat += "New Round Starting."
@@ -158,10 +160,13 @@ GLOBAL_LIST_EMPTY(hub_features)
 //Science protolathe converts to an omni lathe depending on a config entry
 
 /datum/config_entry/number/omnilathe
-/obj/machinery/rnd/production/protolathe/science/Initialize(roundstart)
+/obj/machinery/rnd/production/protolathe/department/science/Initialize(roundstart)
 	if(roundstart && CONFIG_GET(number/omnilathe))
 		name = "protolathe"
 		allowed_department_flags = ALL
 		department_tag = "Unidentified"
 		circuit = /obj/item/circuitboard/machine/protolathe
+		container_type = OPENCONTAINER
+		requires_console = TRUE
+		consoleless_interface = FALSE
 	return ..()

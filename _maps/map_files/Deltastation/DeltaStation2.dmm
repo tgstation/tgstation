@@ -3119,7 +3119,7 @@
 "bhY" = (/turf/open/floor/plasteel/neutral,/area/hydroponics)
 "bhZ" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/turf/open/floor/plasteel/neutral,/area/hydroponics)
 "bia" = (/turf/open/floor/plasteel/greenblue/side{dir = 4},/area/hydroponics)
-"bib" = (/obj/machinery/light{dir = 4},/obj/machinery/light_switch{pixel_x = 26; pixel_y = 8},/obj/machinery/plantgenes,/obj/machinery/camera{c_tag = "Hydroponics"; dir = 8; name = "service camera"},/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/hydroponics)
+"bib" = (/obj/machinery/light{dir = 4},/obj/machinery/plantgenes,/obj/machinery/camera{c_tag = "Hydroponics"; dir = 8; name = "service camera"},/obj/effect/turf_decal/delivery,/obj/structure/plant_disk_shelf{pixel_x = 32; pixel_y = 0},/turf/open/floor/plasteel,/area/hydroponics)
 "bic" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/hallway/secondary/service)
 "bid" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Service Foyer"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,/obj/structure/cable/white{icon_state = "1-2"},/obj/effect/turf_decal/stripes/line{dir = 2},/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel,/area/hallway/secondary/service)
 "bie" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/structure/disposalpipe/segment,/turf/open/floor/plating,/area/hallway/secondary/service)
