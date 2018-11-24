@@ -8,24 +8,14 @@
 
 /obj/machinery/atmospherics/components/binary/SetInitDirections()
 	switch(dir)
-		if(NORTH)
+		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
-		if(SOUTH)
-			initialize_directions = NORTH|SOUTH
-		if(EAST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
-		if(WEST)
-			initialize_directions = EAST|WEST
-/*
-Iconnery
-*/
+
 /obj/machinery/atmospherics/components/binary/hide(intact)
 	update_icon()
-
-	..(intact)
-/*
-Housekeeping and pipe network stuff
-*/
+	..()
 
 /obj/machinery/atmospherics/components/binary/getNodeConnects()
 	return list(turn(dir, 180), dir)
