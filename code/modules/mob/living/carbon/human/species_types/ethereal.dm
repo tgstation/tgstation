@@ -110,7 +110,7 @@
 		return
 	current_color = pick(ETHEREAL_COLORS)
 	spec_updatehealth(H)
-	addtimer(CALLBACK(src, .proc/handle_emag, H), 10) //Call ourselves every 1 seconds to change color
+	addtimer(CALLBACK(src, .proc/handle_emag, H), 5) //Call ourselves every 0.5 seconds to change color
 
 /datum/species/ethereal/proc/stop_emag(mob/living/carbon/human/H)
 	emageffect = FALSE
