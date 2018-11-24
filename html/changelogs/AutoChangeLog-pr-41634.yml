@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Pets will be selected first to gain self awareness before other simple mobs during a sentience event."
