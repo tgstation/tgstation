@@ -12,6 +12,7 @@
 	if(user.has_status_effect(STATUS_EFFECT_FLESHMEND))
 		to_chat(user, "<span class='warning'>We are already fleshmending!</span>")
 		return
+	..()
 	to_chat(user, "<span class='notice'>We begin to heal rapidly.</span>")
 	user.apply_status_effect(STATUS_EFFECT_FLESHMEND)
 	return TRUE
