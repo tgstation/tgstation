@@ -47,6 +47,11 @@
 		name = "[initial(projectiletype.name)] [name]"
 	. = ..()
 
+/mob/living/simple_animal/hostile/carp/ranged/Shoot()
+	if(chaos)
+		projectiletype = pick(allowed_projectile_types)
+	..()
+
 /mob/living/simple_animal/hostile/carp/ranged/chaos
 	name = "chaos magicarp"
 	desc = "50% carp, 100% magic, 150% horrible."
@@ -54,8 +59,3 @@
 	maxHealth = 75
 	health = 75
 	chaos = TRUE
-
-/mob/living/simple_animal/hostile/carp/ranged/chaos/Shoot()
-	if(chaos)
-		projectiletype = pick(allowed_projectile_types)
-	..()
