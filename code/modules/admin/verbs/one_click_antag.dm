@@ -11,17 +11,17 @@
 /datum/admins/proc/one_click_antag()
 
 	var/dat = {"
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=traitors'>Make Traitors</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=changelings'>Make Changelings</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revs'>Make Revs</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=cult'>Make Cult</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=clockcult'>Make Clockwork Cult</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=blob'>Make Blob</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
-		<a href='?src=[REF(src)];[HrefToken()];makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=traitors'>Make Traitors</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=changelings'>Make Changelings</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=revs'>Make Revs</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=cult'>Make Cult</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=clockcult'>Make Clockwork Cult</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=blob'>Make Blob</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=wizard'>Make Wizard (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=nukeops'>Make Nuke Team (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=centcom'>Make CentCom Response Team (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=abductors'>Make Abductor Team (Requires Ghosts)</a><br>
+		<a href='?src=[REF(src)];[HrefToken()];admin_action=makeAntag;makeAntag=revenant'>Make Revenant (Requires Ghost)</a><br>
 		"}
 
 	var/datum/browser/popup = new(usr, "oneclickantag", "Quick-Create Antagonist", 400, 400)

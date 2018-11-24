@@ -182,7 +182,7 @@
 				log_admin("[key_name(usr)] has triggered an event. ([E.name])")
 			return
 
-		if("dbsearchckey"|| "dbsearchadmin" || "dbsearchip" || "dbsearchcid")
+		if("dbsearch")
 			var/adminckey = href_list["dbsearchadmin"]
 			var/playerckey = href_list["dbsearchckey"]
 			var/ip = href_list["dbsearchip"]
