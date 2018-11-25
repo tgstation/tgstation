@@ -30,9 +30,8 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "inje_cap", initialize_directions)
-		PIPING_LAYER_SHIFT(cap, piping_layer)
-		add_overlay(cap)
+		// everything is already shifted so don't shift the cap
+		add_overlay(getpipeimage(icon, "inje_cap", initialize_directions))
 
 	if(!nodes[1] || !on || !is_operational())
 		icon_state = "inje_off"
