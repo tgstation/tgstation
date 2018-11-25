@@ -1,7 +1,8 @@
 #define RESTART_COUNTER_PATH "data/round_counter.txt"
 
 GLOBAL_VAR(restart_counter)
-GLOBAL_VAR_INIT(bypass_tgs_reboot)
+//TODO: Replace INFINITY with the version that fixes http://www.byond.com/forum/?post=2407430
+GLOBAL_VAR_INIT(bypass_tgs_reboot, world.system_type == UNIX && world.byond_build < INFINITY)
 
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
@@ -16,9 +17,6 @@ GLOBAL_VAR_INIT(bypass_tgs_reboot)
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
 	TgsNew(new /datum/tgs_event_handler/tg, minimum_required_security_level = TGS_SECURITY_TRUSTED)
-
-	//TODO: Replace INFINITY with the version that fixes http://www.byond.com/forum/?post=2407430
-	GLOB.bypass_tgs_reboot = world.system_type == UNIX && world.byond_build < INFINITY
 
 	GLOB.revdata = new
 
