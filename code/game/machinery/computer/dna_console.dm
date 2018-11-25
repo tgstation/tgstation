@@ -407,7 +407,7 @@
 		mut_desc = A.desc
 		discovered = TRUE
 	var/extra
-	if(viable_occupant && !(storage_slot || mutation_in_se(mutation, viable_occupant.dna)))
+	if(viable_occupant && !(storage_slot || mutation_in_sequence(mutation, viable_occupant.dna)))
 		extra = TRUE
 	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
 
@@ -687,7 +687,7 @@
 		if("nullify")
 			if(viable_occupant)
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
-				if(A && (!mutation_in_se(current_mutation, viable_occupant.dna) || A.scrambled))
+				if(A && (!mutation_in_sequence(current_mutation, viable_occupant.dna) || A.scrambled))
 					viable_occupant.dna.remove_mutation(current_mutation)
 					viable_occupant.dna.update_instability(TRUE)
 					current_screen = "mainmenu"

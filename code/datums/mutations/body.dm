@@ -35,11 +35,11 @@
 	var/mob/new_mob
 	if(prob(95))
 		if(prob(50))
-			new_mob = owner.randmutb()
+			new_mob = owner.easy_randmut(NEGATIVE + MINOR_NEGATIVE)
 		else
 			new_mob = owner.randmuti()
 	else
-		new_mob = owner.randmutg()
+		new_mob = owner.easy_randmut(POSITIVE)
 	if(new_mob && ismob(new_mob))
 		owner = new_mob
 	. = owner

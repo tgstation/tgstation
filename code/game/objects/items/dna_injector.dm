@@ -29,7 +29,7 @@
 			if(HM == RACEMUT)
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-			if(mutation_in_se(HM, M.dna))
+			if(mutation_in_sequence(HM, M.dna))
 				M.dna.activate_mutation(HM)
 			else
 				M.dna.add_mutation(HM, MUT_EXTRA)

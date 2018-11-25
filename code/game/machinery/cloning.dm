@@ -177,9 +177,9 @@
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		H.randmutg()
+		H.easy_randmut(POSITIVE)
 	if(efficiency < 3 && prob(50))
-		var/mob/M = H.randmutb()
+		var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		if(ismob(M))
 			H = M
 

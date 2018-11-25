@@ -469,7 +469,7 @@
 /datum/dna/proc/activate_mutation(mutation)
 	if(!mutation)
 		return
-	if(!mutation_in_se(mutation, src)) //cant activate what we dont have, use add_mutation
+	if(!mutation_in_sequence(mutation, src)) //cant activate what we dont have, use add_mutation
 		return FALSE
 	return add_mutation(mutation, MUT_NORMAL)
 
@@ -497,30 +497,22 @@
 	var/mutation = pick(candidates)
 	. = dna.add_mutation(mutation)
 
-/mob/living/carbon/proc/randmutb(scrambled = TRUE)
+/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE)
 	if(!has_dna())
 		return
+	var/list/mutations = list()
+	if(quality & POSITIVE)
+		mutations += GLOB.good_mutations
+	if(quality & NEGATIVE)
+		mutations += GLOB.bad_mutations
+	if(quality & MINOR_NEGATIVE)
+		mutations += GLOB.not_good_mutations
 	var/list/possible = list()
-	for(var/datum/mutation/human/A in GLOB.bad_mutations + GLOB.not_good_mutations)
-		if(mutation_in_se(A.type, dna) && !dna.get_mutation(A.type))
+	for(var/datum/mutation/human/A in mutations)
+		if((!sequence || mutation_in_sequence(A.type, dna)) && !dna.get_mutation(A.type))
 			possible += A.type
-	if(LAZYLEN(possible))
-		var/mutation = pick(possible)
-		. = dna.activate_mutation(mutation)
-		if(scrambled)
-			var/datum/mutation/human/HM = dna.get_mutation(mutation)
-			if(HM)
-				HM.scrambled = TRUE
-		return TRUE
-
-/mob/living/carbon/proc/randmutg(scrambled = TRUE)
-	if(!has_dna())
-		return
-	var/list/possible = list()
-	for(var/datum/mutation/human/A in GLOB.good_mutations)
-		if(mutation_in_se(A.type, dna) && !dna.get_mutation(A.type))
-			possible += A.type
-
+	if(exclude_monkey)
+		possible.Remove(RACEMUT)
 	if(LAZYLEN(possible))
 		var/mutation = pick(possible)
 		. = dna.activate_mutation(mutation)
