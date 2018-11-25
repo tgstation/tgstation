@@ -419,17 +419,20 @@
 		to_chat(who,law)
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
-	if(force)
+if(force)
 		zeroth = null
 		zeroth_borg = null
 		return
-	else
-		if(owner && owner.mind && owner.mind.special_role)
+	if(owner && owner.mind && owner.mind.special_role)
+		return
+	if (istype(owner, /mob/living/silicon/ai))
+		var/mob/living/silicon/ai/A=owner
+		if(A && A.deployed_shell && A.deployed_shell.mind && A.deployed_shell.mind.special_role)
+			message_admins("DEBUG ============ AI's shell is speical too")
 			return
-		else
-			zeroth = null
-			zeroth_borg = null
-			return
+	zeroth = null
+	zeroth_borg = null
+	return
 
 /datum/ai_laws/proc/clear_law_sixsixsix(force)
 	if(force || !is_devil(owner))
