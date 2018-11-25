@@ -8,6 +8,13 @@
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
 
+/datum/quirk/blooddeficiency/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
+		return
+	else
+		quirk_holder.blood_volume -= 0.275
+
 /datum/quirk/blindness
 	name = "Blind"
 	desc = "You are completely blind, nothing can counteract this."
@@ -26,12 +33,16 @@
 		H.put_in_hands(glasses)
 	H.regenerate_icons()
 
-/datum/quirk/blooddeficiency/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
-	if(NOBLOOD in H.dna.species.species_traits) //can't lose blood if your species doesn't have any
-		return
-	else
-		quirk_holder.blood_volume -= 0.275
+/datum/quirk/brainproblems
+	name = "Brain Tumor"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
+	value = -3
+	gain_text = "<span class='danger'>You feel smooth.</span>"
+	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
+	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
+
+/datum/quirk/brainproblems/on_process()
+	quirk_holder.adjustBrainLoss(0.2)
 
 /datum/quirk/deafness
 	name = "Deaf"
@@ -173,17 +184,6 @@
 	gain_text = "<span class='danger'>You feel sleepy.</span>"
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
-
-/datum/quirk/brainproblems
-	name = "Brain Tumor"
-	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
-	value = -3
-	gain_text = "<span class='danger'>You feel smooth.</span>"
-	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
-	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
-
-/datum/quirk/brainproblems/on_process()
-	quirk_holder.adjustBrainLoss(0.2)
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
