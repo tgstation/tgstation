@@ -77,7 +77,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is no quantum pad data saved in [I]'s buffer!</span>")
 			return TRUE
-			
+
 	else if(istype(I, /obj/item/quantum_keycard))
 		var/obj/item/quantum_keycard/K = I
 		if(K.qpad)
@@ -134,6 +134,10 @@
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(target_pad)
+		var/area/area1 = get_area(src)
+		var/area/area2 = get_area(target_pad)
+		if(area1.noteleport || area2.noteleport)
+			return
 		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
 		teleporting = TRUE
 
@@ -165,7 +169,7 @@
 			for(var/atom/movable/ROI in get_turf(src))
 				if(QDELETED(ROI))
 					continue //sleeps in CHECK_TICK
-				   
+
 				// if is anchored, don't let through
 				if(ROI.anchored)
 					if(isliving(ROI))
