@@ -242,14 +242,12 @@
 #define PIPING_CARDINAL_AUTONORMALIZE	(1<<3)	//north/south east/west doesn't matter, auto normalize on build.
 
 //HELPERS
-#define PIPING_LAYER_SHIFT(T, PipingLayer, Dir) \
-	switch(Dir) {																\
-		if(NORTH, SOUTH) {														\
-			T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
-		}																		\
-		if(WEST, EAST) {														\
-			T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
-		}																		\
+#define PIPING_LAYER_SHIFT(T, PipingLayer) \
+	if(T.dir & NORTH || T.dir & SOUTH) {									\
+		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+	}																		\
+	if(T.dir & WEST || T.dir & EAST) {										\
+		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
 	}
 
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \

@@ -75,7 +75,7 @@ Buildable meters
 		new_layer = PIPING_LAYER_DEFAULT
 	piping_layer = new_layer
 
-	PIPING_LAYER_SHIFT(src, piping_layer, dir)
+	PIPING_LAYER_SHIFT(src, piping_layer)
 	layer = initial(layer) + ((piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE)
 
 /obj/item/pipe/proc/update()

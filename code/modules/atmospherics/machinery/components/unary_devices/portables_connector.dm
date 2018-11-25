@@ -25,6 +25,13 @@
 		connected_device.disconnect()
 	return ..()
 
+/obj/machinery/atmospherics/components/unary/portables_connector/update_icon_nopipes()
+	icon_state = "connector"
+	if(showpipe)
+		var/image/cap = getpipeimage(icon, "connector_cap", initialize_directions)
+		PIPING_LAYER_SHIFT(cap, piping_layer)
+		add_overlay(cap)
+
 /obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
 	if(!connected_device)
 		return

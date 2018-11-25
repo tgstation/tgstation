@@ -38,8 +38,8 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "dpvent_cap")
-		PIPING_LAYER_SHIFT(cap, piping_layer, dir)
+		var/image/cap = getpipeimage(icon, "dpvent_cap", dir)
+		PIPING_LAYER_SHIFT(cap, piping_layer)
 		add_overlay(cap)
 
 	if(!on || !is_operational())

@@ -64,7 +64,7 @@
 		I = getpipeimage(icon, "pipe", p_dir)
 
 	I.layer = layer - 0.01
-	PIPING_LAYER_SHIFT(I, p_layer, dir)
+	PIPING_LAYER_SHIFT(I, p_layer)
 	add_overlay(I)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()

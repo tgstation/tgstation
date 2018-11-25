@@ -53,7 +53,7 @@
 	cut_overlays()
 	if(showpipe)
 		var/image/cap = getpipeimage(icon, "vent_cap", initialize_directions)
-		PIPING_LAYER_SHIFT(cap, piping_layer, dir)
+		PIPING_LAYER_SHIFT(cap, piping_layer)
 		add_overlay(cap)
 
 	if(welded)

@@ -29,7 +29,7 @@
 		else
 			cap = getpipeimage(icon, "cap", direction)
 
-		PIPING_LAYER_SHIFT(cap, piping_layer, direction)
+		PIPING_LAYER_SHIFT(cap, piping_layer)
 		add_overlay(cap)
 
 	return ..()

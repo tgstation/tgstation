@@ -9,11 +9,11 @@
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
 
-/obj/machinery/atmospherics/components/Initialize()
+/obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
 
-	. = ..()
+	..()
 
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/A = new
@@ -55,7 +55,7 @@
 			underlays += get_pipe_underlay("pipe_exposed", direction)
 
 	if(!shift_underlay_only)
-		PIPING_LAYER_SHIFT(src, piping_layer, dir)
+		PIPING_LAYER_SHIFT(src, piping_layer)
 
 /obj/machinery/atmospherics/components/proc/get_pipe_underlay(state, dir, color = null)
 	if(color)
@@ -65,7 +65,7 @@
 
 	if(shift_underlay_only)
 		var/image/I = .
-		PIPING_LAYER_SHIFT(I, piping_layer, dir)
+		PIPING_LAYER_SHIFT(I, piping_layer)
 
 // Pipenet stuff; housekeeping
 

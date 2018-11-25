@@ -52,7 +52,7 @@
 
 /obj/machinery/meter/proc/setAttachLayer(new_layer)
 	target_layer = new_layer
-	PIPING_LAYER_SHIFT(src, target_layer, dir)
+	PIPING_LAYER_SHIFT(src, target_layer)
 
 /obj/machinery/meter/process_atmos()
 	if(!target)
