@@ -74,7 +74,6 @@
 	desc = "Standard Security gear. Has Medbay's symbol printed on the side."
 	icon_state = "helmet-med"
 	item_state = "helmet-med"
-	can_flashlight = TRUE
 
 /obj/item/clothing/head/helmet/sci
 	name = "helmet (sci)"
