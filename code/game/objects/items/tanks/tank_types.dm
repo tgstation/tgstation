@@ -177,13 +177,29 @@
 	air_contents.assert_gas(/datum/gas/oxygen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
+	
+/obj/item/tank/internals/emergency_oxygen/empty/New()
+	..()
+	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
+	return
 
 /obj/item/tank/internals/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
 	icon_state = "emergency_engi"
 	volume = 6
 
+/obj/item/tank/internals/emergency_oxygen/engi/empty/New()
+	..()
+	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
+	return
+
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
 	volume = 10
+	
+/obj/item/tank/internals/emergency_oxygen/double/empty/New()
+	..()
+	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
+	return
+	
