@@ -112,6 +112,8 @@
 	if(species && species.inert_mutation)
 		bonus = get_initialized_mutation(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
+	if(!LAZYLEN(mutations_temp))
+		return
 	mutation_index.Cut()
 	shuffle_inplace(mutations_temp)
 	if(ismonkey(holder))
@@ -136,6 +138,8 @@
 /proc/create_sequence(mutation, active, difficulty)
 	if(!difficulty)
 		var/datum/mutation/human/A = get_initialized_mutation(mutation) //leaves the possibility to change difficulty mid-round
+		if(A)
+			return
 		difficulty = A.difficulty
 	difficulty += rand(-2,4)
 	var/sequence = get_sequence(mutation)
