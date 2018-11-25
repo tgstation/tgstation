@@ -419,7 +419,7 @@
 		to_chat(who,law)
 
 /datum/ai_laws/proc/clear_zeroth_law(force) //only removes zeroth from antag ai if force is 1
-if(force)
+	if(force)
 		zeroth = null
 		zeroth_borg = null
 		return
