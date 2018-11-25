@@ -733,8 +733,6 @@
 /area/engine/engineering)
 "bZ" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/effect/turf_decal/stripes/corner{
@@ -769,13 +767,9 @@
 /area/engine/engineering)
 "cd" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -839,8 +833,6 @@
 /area/engine/engineering)
 "cn" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -925,7 +917,7 @@
 /obj/structure/cable{
 	icon_state = "0-2";
 	pixel_y = 1;
-	d2 = 2
+	
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -1023,8 +1015,6 @@
 /area/engine/engineering)
 "cO" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/line,
@@ -1094,8 +1084,6 @@
 /area/engine/engineering)
 "cZ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -1169,8 +1157,6 @@
 /area/engine/engineering)
 "dk" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -1247,8 +1233,6 @@
 /area/engine/engineering)
 "ds" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
@@ -1353,8 +1337,6 @@
 /area/engine/engineering)
 "dH" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
@@ -1643,16 +1625,12 @@
 /area/engine/engineering)
 "es" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
 "et" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
@@ -1663,8 +1641,6 @@
 /area/engine/engineering)
 "eu" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/structure/cable/cyan{
@@ -1788,8 +1764,6 @@
 /area/engine/engineering)
 "eJ" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
@@ -1800,12 +1774,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1819,12 +1790,9 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/dark,
@@ -1835,7 +1803,6 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -1975,18 +1942,12 @@
 /area/engine/engineering)
 "fg" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/structure/window/reinforced,
@@ -1995,8 +1956,6 @@
 "fh" = (
 /obj/machinery/meter,
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
@@ -16754,8 +16713,6 @@
 /area/maintenance/aft)
 "QG" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/item/stock_parts/cell/high,
@@ -16766,21 +16723,15 @@
 /area/maintenance/aft)
 "QH" = (
 /obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "QI" = (
 /obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/open/floor/plating,
@@ -16796,7 +16747,6 @@
 /area/security/brig)
 "QK" = (
 /obj/structure/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating,
@@ -16917,8 +16867,6 @@
 /area/maintenance)
 "Rc" = (
 /obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
