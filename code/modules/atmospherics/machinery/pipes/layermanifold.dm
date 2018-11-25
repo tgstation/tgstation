@@ -49,6 +49,8 @@
 	update_alpha()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_images(obj/machinery/atmospherics/A)
+	if(!A)
+		return
 	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
 			add_attached_image(get_dir(src, A), i)
