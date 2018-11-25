@@ -180,6 +180,11 @@
 				if(!istype(account))
 					say("Invalid bank account.")
 					return
+				var/required_access = pack.get_access()
+				var/list/useraccess = H.wear_id.GetAccess()
+				if(required_access && !(required_access in useraccess))
+					say("Your ID does not have the required access.")
+					return
 
 			var/reason = ""
 			if(requestonly && !self_paid)

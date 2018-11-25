@@ -41,6 +41,9 @@
 		for(var/item in contains)
 			new item(C)
 
+/datum/supply_pack/proc/get_access()
+	return access
+
 // If you add something to this list, please group it by type and sort it alphabetically instead of just jamming it in like an animal
 
 //////////////////////////////////////////////////////////////////////////////
