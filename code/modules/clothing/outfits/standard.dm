@@ -89,8 +89,6 @@
 /datum/outfit/pirate/space
 	suit = /obj/item/clothing/suit/space/pirate
 	head = /obj/item/clothing/head/helmet/space/pirate/bandana
-	mask = /obj/item/clothing/mask/breath
-	suit_store = /obj/item/tank/internals/oxygen
 	ears = /obj/item/radio/headset/syndicate
 	id = /obj/item/card/id
 
@@ -378,7 +376,7 @@
 	back = /obj/item/storage/backpack/security
 	l_pocket = /obj/item/melee/transforming/energy/sword/saber
 	r_pocket = /obj/item/shield/energy
-	suit_store = /obj/item/tank/internals/emergency_oxygen
+	suit_store = /obj/item/tank/internals/emergency_oxygen/double
 	belt = /obj/item/gun/ballistic/revolver/mateba
 	r_hand = /obj/item/gun/energy/pulse/loyalpin
 	id = /obj/item/card/id
