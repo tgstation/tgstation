@@ -290,6 +290,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("input")
 			signal.data += list("tag" = input_tag, "power_toggle" = TRUE)
 			. = TRUE
+		if("rate")
+			var/target = input("New target rate:", name, input_info ? input_info["volume_rate"] : 0) as num|null
+			if(!isnull(target) && !..())
+				target =  CLAMP(target, 0, 200)
+				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
+				. = TRUE
 		if("output")
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
