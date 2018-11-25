@@ -454,7 +454,7 @@
 		))
 	if(!SSdbcore.MassInsert(format_table_name("ban"), sql_ban, warn = 1))
 		return
-	var/time_message = "[DisplayTimeText(duration MINUTES)]"
+	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
 	if(duration > 1) //pluralize the interval if necessary
 		time_message += "s"
 	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [player_key]."
