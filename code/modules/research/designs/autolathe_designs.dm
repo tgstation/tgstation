@@ -243,7 +243,16 @@
 	materials = list(MAT_METAL = 750)
 	build_path = /obj/item/tank/internals/emergency_oxygen/engi/empty
 	category = list("hacked","Misc","Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARMENTAL_FLAG_CARGO
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
+	
+/datum/design/plasmaman_tank_belt
+	name = "Plasmaman Belt Tank"
+	id = "plasmaman_tank_belt"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(MAT_METAL = 800)
+	build_path = /obj/item/tank/internals/plasmaman/belt/empty
+	category = list("hacked","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/metal
 	name = "Metal"
