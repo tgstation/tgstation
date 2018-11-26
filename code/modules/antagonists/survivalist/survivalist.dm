@@ -31,7 +31,7 @@
 	name = "Amateur Magician"
 	greet_message = "Grow your newfound talent! Grab as many magical artefacts as possible, by any means necessary. Kill anyone who gets in your way."
 
-/datum/antagonist/survivalist/greet()
+/datum/antagonist/survivalist/magic/greet()
 	..()
 	to_chat(owner, "<span class='notice'>As a wonderful magician, you should remember that spellbooks don't mean anything if they are used up.</span>")
 
