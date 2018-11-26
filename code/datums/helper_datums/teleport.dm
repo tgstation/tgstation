@@ -51,7 +51,8 @@
 		return FALSE
 
 	var/area/A = get_area(curturf)
-	if(A.noteleport)
+	var/area/B = get_area(destturf)
+	if(A.noteleport || B.noteleport)
 		return FALSE
 
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
