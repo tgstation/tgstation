@@ -154,6 +154,11 @@
 	..() // Plasma asserted in parent
 	air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
+	
+/obj/item/tank/internals/plasmaman/belt/empty/New()
+	..() // Plasma asserted in parent
+	air_contents.gases[/datum/gas/plasma][MOLES] = 0
+	return
 
 
 
