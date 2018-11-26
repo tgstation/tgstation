@@ -431,7 +431,6 @@
 			return
 	zeroth = null
 	zeroth_borg = null
-	return
 
 /datum/ai_laws/proc/clear_law_sixsixsix(force)
 	if(force || !is_devil(owner))
