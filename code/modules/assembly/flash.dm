@@ -337,29 +337,23 @@
 			if(M.hypnosis_vulnerable())
 				hypnosis = TRUE
 			if(user)
-				visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-				to_chat(user, "<span class='danger'>You hypno-flash [M]!</span>")
-				if(!hypnosis)
-					to_chat(M, "<span class='notice'>The light makes you feel oddly relaxed...</span>")
-			else if(!hypnosis)
-				to_chat(M, "<span class='notice'>The light makes you feel oddly relaxed...</span>")
+				user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>", "<span class='danger'>You hypno-flash [M]!</span>")	
 				
-			if(hypnosis) //Placed here so the trance message does not appear before the flash message
-				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
-			else
+			if(!hypnosis)
+				to_chat(M, "<span class='notice'>The light makes you feel oddly relaxed...</span>")
 				M.confused += min(M.confused + 10, 20)
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.drowsyness += min(M.drowsyness + 10, 20)
-				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
+				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)			
+			else
+				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)				
 				
 		else if(user)
-			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
-			to_chat(user, "<span class='warning'>You fail to hypno-flash [M]!</span>")
-			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
+			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to hypno-flash [M]!</span>")
 		else
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
-	else
-		if(M.flash_act())
+			
+	else if(M.flash_act())
 			to_chat(M, "<span class='notice'>Such a pretty light...</span>")
 			M.confused += min(M.confused + 4, 20)
 			M.dizziness += min(M.dizziness + 4, 20)
