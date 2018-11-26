@@ -34,6 +34,7 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/proc/RunMigrations()
 	//first build the tree of all migrations
+	var/zero_start = db_major == 0 && db_minor == 0
 	var/list/migration_datums = list()
 	var/highest_major_version = db_major
 	var/highest_minor_version = db_minor
@@ -50,7 +51,7 @@ SUBSYSTEM_DEF(dbcore)
 			migration_datums["[mig.schema_version_major]"] = minor_list
 		minor_list["[mig.schema_version_minor]"] = mig
 	
-	if(DB_MAJOR_VERSION < db_major || DB_MINOR_VERSION <= db_minor)
+	if(DB_MAJOR_VERSION < db_major || (DB_MAJOR_VERSION == db_major && DB_MINOR_VERSION < db_minor))
 		for(var/I in migration_datums)
 			for(var/J in migration_datums[I])
 				qdel(J)
@@ -73,13 +74,13 @@ SUBSYSTEM_DEF(dbcore)
 				continue
 			migration_order += mig
 	
-	log_sql("Applying [migration_order.len] migrations...")
+	log_sql("Applying [migration_order.len] migration[migration_order.len > 1 ? "s" : ""]...")
 	var/single_transact = !CONFIG_GET(flag/single_migration_transaction)
 
 	var/datum/DBQuery/query
 	. = TRUE
 	if(single_transact)
-		query = NewQuery("BEGIN TRANSACTION")
+		query = NewQuery("START TRANSACTION")
 		. = query.Execute(TRUE, TRUE)
 	
 	for(var/I in migration_order)
@@ -100,7 +101,10 @@ SUBSYSTEM_DEF(dbcore)
 			log_sql("Reverting back to schema version [db_major].[db_minor]...")
 			query.SetQuery("ROLLBACK")
 			query.Execute(TRUE, TRUE)
-		qdel(query)	
+		qdel(query)
+
+	if(. && zero_start)
+		SetRoundID()
 
 /datum/controller/subsystem/dbcore/fire()
 	for(var/I in active_queries)

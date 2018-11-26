@@ -37,7 +37,7 @@
 	log_sql(log_message)
 
 	if(local_transaction)
-		M("BEGIN TRANSACTION")
+		M("START TRANSACTION")
 
 	if(down)
 		Down()

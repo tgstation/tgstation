@@ -4,13 +4,13 @@
 
 /datum/database_migration/LegacySchema/Up()
 	//original v4.7 schema creation scripts here: https://github.com/tgstation/tgstation/tree/f28cd100991f4a35c8028b63aa1b40f3c2393cff/SQL
-	M("{
+	M({"
 		CREATE TABLE `[format_table_name("admin")]` (
 			`ckey` varchar(32) NOT NULL,
 			`rank` varchar(32) NOT NULL,
 			PRIMARY KEY (`ckey`)
 		) ENGINE=InnoDB DEFAULT CHARSET=latin1
-	")
+	"})
 	M({"
 		CREATE TABLE `[format_table_name("admin_log")]` (
 			`id` int(11) NOT NULL AUTO_INCREMENT,
@@ -22,7 +22,7 @@
 			`target` varchar(32) NOT NULL,
 			`log` varchar(1000) NOT NULL,
 			PRIMARY KEY (`id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=latin1"
+		) ENGINE=InnoDB DEFAULT CHARSET=latin1
 	"})
 	M({"
 		CREATE TABLE `[format_table_name("admin_ranks")]` (
