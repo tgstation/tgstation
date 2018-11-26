@@ -1544,8 +1544,9 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 /proc/send2chat(message, config_setting)
 	if(config_setting == null || !world.TgsAvailable())
 		return
-	var/regex/tgs_v3_regex = regex(@"3\.[0-9]+\.[0-9]+\.[0-9]+")
-	if(config_setting == "" || tgs_v3.Find(world.TgsVersion()))
+
+	var/datum/tgs_version = world.TgsVersion()
+	if(config_setting == "" || tgs_version.suite == 3)
 		world.TgsTargetedChatBroadcast(message, FALSE)
 		return
 
