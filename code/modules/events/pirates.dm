@@ -32,7 +32,7 @@
 	threat = new
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
-		payoff = D.account_balance < payoff_min ? payoff_min : round(D.account_balance * 0.80)
+		payoff = D.account_balance < payoff_min ? payoff_min : floor(D.account_balance * 0.80, 1000)
 	threat.title = "Business proposition"
 	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
 	threat.possible_answers = list("We'll pay.","No way.")
