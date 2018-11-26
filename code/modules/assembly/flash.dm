@@ -354,8 +354,8 @@
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
 			
 	else if(M.flash_act())
-			to_chat(M, "<span class='notice'>Such a pretty light...</span>")
-			M.confused += min(M.confused + 4, 20)
-			M.dizziness += min(M.dizziness + 4, 20)
-			M.drowsyness += min(M.drowsyness + 4, 20)
-			M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
+		to_chat(M, "<span class='notice'>Such a pretty light...</span>")
+		M.confused += min(M.confused + 4, 20)
+		M.dizziness += min(M.dizziness + 4, 20)
+		M.drowsyness += min(M.drowsyness + 4, 20)
+		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
