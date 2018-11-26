@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - balance: "Mannitol no longer cures mild traumas."
-  - balance: "Added a new reagent, Neurine, made with Mannitol, Acetone and Oxygen. Neurine can cure mild traumas in the same way Mannitol did, but does not heal brain damage."

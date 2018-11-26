@@ -447,7 +447,7 @@
 	if(power < 10 || target.z != user.z)
 		to_chat(user, "<span class='notice'>We are too far away from [target.name] to affect them!</span>")
 		return
-	to_chat(user, "<span class='notice'>We succesfuly distort reality surrounding [target.name]!</span>")
+	to_chat(user, "<span class='notice'>We successfully distort reality surrounding [target.name]!</span>")
 	switch(hive.hive_size)
 		if(5 to 9)
 		if(10 to 14)

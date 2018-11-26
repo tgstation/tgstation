@@ -12,7 +12,7 @@ Head of Security
 	flag = HOS
 	department_head = list("Captain")
 	department_flag = ENGSEC
-	head_announce = list("Security")
+	head_announce = list(RADIO_CHANNEL_SECURITY)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1

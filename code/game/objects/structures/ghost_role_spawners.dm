@@ -182,6 +182,7 @@
 /obj/effect/mob_spawn/human/golem/servant
 	has_owner = TRUE
 	name = "inert servant golem shell"
+	mob_name = "a servant golem"
 
 
 /obj/effect/mob_spawn/human/golem/adamantine

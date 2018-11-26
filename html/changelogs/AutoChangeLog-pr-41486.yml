@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Changelings with a team objective will no longer get an objective to absorb their teammates."
-  - bugfix: "Solo changelings will no longer get an objective to absorb themselves."
-  - bugfix: "Fixed latejoin/admin created changelings being given an objective to absorb the only other changeling if that ling was already absorbed and the ling that absorbed them was gibbed, leaving the objective in an uncompletable state."

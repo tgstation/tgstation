@@ -3,6 +3,9 @@
 	desc = "A traditional shotgun with wood furniture and a four-shell capacity underneath."
 	icon_state = "shotgun"
 	item_state = "shotgun"
+	fire_sound = "sound/weapons/shotgunshot.ogg"
+	vary_fire_sound = FALSE
+	fire_sound_volume = 90
 	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags_1 =  CONDUCT_1
@@ -19,7 +22,7 @@
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
-		playsound(user, 'sound/weapons/shotguninsert.ogg', 60, 1)
+		playsound(user, 'sound/weapons/shotguninsert.ogg', 40, 1)
 		A.update_icon()
 		update_icon()
 
@@ -48,7 +51,7 @@
 		. = 1
 
 /obj/item/gun/ballistic/shotgun/proc/pump(mob/M)
-	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
+	playsound(M, 'sound/weapons/shotgunpump.ogg', 40, 1)
 	pump_unload(M)
 	pump_reload(M)
 	update_icon()	//I.E. fix the desc
