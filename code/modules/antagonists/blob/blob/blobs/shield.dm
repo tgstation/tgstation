@@ -45,6 +45,8 @@
 	explosion_block = 2
 
 /obj/structure/blob/shield/reflective/handle_ricochet(obj/item/projectile/P)
+	if(istype(P,/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam))
+		return
 	var/turf/p_turf = get_turf(P)
 	var/face_direction = get_dir(src, p_turf)
 	var/face_angle = dir2angle(face_direction)
