@@ -243,7 +243,7 @@
 		return
 
 	if(prob(15))
-		adjust_nutrition(-1 + is_adult)
+		adjust_nutrition(-(1 + is_adult))
 
 	if(nutrition <= 0)
 		set_nutrition(0)
