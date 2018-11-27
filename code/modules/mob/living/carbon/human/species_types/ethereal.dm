@@ -33,7 +33,7 @@
 	.=..()
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		default_color = "#" + H.dna?.features["ethcolor"]
+		default_color = "#" + H.dna.features["ethcolor"]
 		r1 = GetRedPart(default_color)
 		g1 = GetGreenPart(default_color)
 		b1 = GetBluePart(default_color)

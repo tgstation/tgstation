@@ -210,8 +210,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
 	
-	if(!S["features["ethcolor"]"] || S["features["ethcolor"]"] == "#000")
-		WRITE_FILE(S["features["ethcolor"]"]	, "#9c3030")
+	if(!S["feature_ethcolor"] || S["feature_ethcolor"] == "#000")
+		WRITE_FILE(S["feature_ethcolor"]	, "#9c3030")
 
 	//Character
 	S["real_name"]			>> real_name
@@ -318,7 +318,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["ethcolor"]	= sanitize_hexcolor(features["ethcolor"], 3, 0)
+	features["ethcolor"]	= copytext(features["ethcolor"],1,7)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], GLOB.tails_list_human, "None")
 	features["snout"]	= sanitize_inlist(features["snout"], GLOB.snouts_list)
