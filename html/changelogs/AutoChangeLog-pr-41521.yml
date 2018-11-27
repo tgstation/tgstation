@@ -1,0 +1,4 @@
+author: "imsxz"
+delete-after: True
+changes: 
+  - balance: "AI can now only interact with things on its z level"
