@@ -37,7 +37,7 @@ Difficulty: Hard
 	armour_penetration = 40
 	melee_damage_lower = 40
 	melee_damage_upper = 40
-	speed = 1
+	speed = 2
 	move_to_delay = 10
 	ranged = 1
 	pixel_x = -32
@@ -45,7 +45,7 @@ Difficulty: Hard
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
-	var/charging = FALSE
+	var/turf/charging = null
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -77,7 +77,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	move_to_delay = CLAMP((health/maxHealth) * 10, 5, 10)
+	INVOKE_ASYNC(src, .proc/blood_ball)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
@@ -87,17 +87,18 @@ Difficulty: Hard
 
 	var/warped = FALSE
 	if(!try_bloodattack())
-		INVOKE_ASYNC(src, .proc/blood_spray)
 		warped = blood_warp()
 		if(warped && prob(100 - anger_modifier))
 			return
 
-	if(prob(90 - anger_modifier) || slaughterlings())
+	if(prob(90) || slaughterlings())
 		if(health > maxHealth * 0.5)
 			charge()
 		else
 			if(prob(70) || warped)
-				charge(3)
+				charge()
+				charge()
+				charge()
 			else
 				warp_charge()
 
@@ -134,59 +135,52 @@ Difficulty: Hard
 	if(charging)
 		new /obj/effect/temp_visual/decoy/fading(loc,src)
 		DestroySurroundings()
-	. = ..()
-	if(!stat && .)
-		playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
+	..()
+		
+/mob/living/simple_animal/hostile/megafauna/bubblegum/Moved()
+	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	if(charging)
 		DestroySurroundings()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/warp_charge()
 	blood_warp()
 	charge()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(charges = 1)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_turf(target)
 	if(!T || T == loc)
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
-	charging = TRUE
+	charging = T
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(get_dir(src, T))
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
-	sleep(3)
-	throw_at(T, get_dist(src, T), 1, src, 0)
-	sleep(7)
-	if(charges <= 1)
-		charging = FALSE
-		SetRecoveryTime(5)
-		return
-	charge(charges - 1)
-
+	sleep(2)
+	walk_towards(src, T, 1)
+	sleep(get_dist(src, T))
+	SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
+	try_bloodattack()
+	charging = null
+		
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)
 		DestroySurroundings()
+		if(isliving(A))
+			var/mob/living/L = A
+			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you and forces you to the side!</span>")
+			var/move_dir = turn(dir, pick(-90, 90)) // to the left or right of bubblegum
+			src.forceMove(get_turf(L))
+			L.forceMove(get_step(src, move_dir))
+			L.apply_damage(40, BRUTE)
+			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
+			shake_camera(L, 4, 3)
+			shake_camera(src, 2, 3)
 	..()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/throw_impact(atom/A)
-	if(!charging)
-		return ..()
-
-	else if(isliving(A))
-		var/mob/living/L = A
-		L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] slams into you!</span>")
-		L.apply_damage(40, BRUTE)
-		playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
-		shake_camera(L, 4, 3)
-		shake_camera(src, 2, 3)
-		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-		L.throw_at(throwtarget, 3)
-
-	charging = FALSE
-
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
 	var/list/targets = ListTargets()
@@ -200,7 +194,6 @@ Difficulty: Hard
 	var/list/targets = get_mobs_on_blood()
 	if(targets.len)
 		INVOKE_ASYNC(src, .proc/bloodattack, targets, prob(50))
-
 		return TRUE
 	return FALSE
 
@@ -297,7 +290,7 @@ Difficulty: Hard
 	icon_state = "leftsmack"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-	if(Adjacent(target))
+	if(Adjacent(target) || speed != initial(speed))
 		return FALSE
 	var/list/can_jaunt = get_pools(get_turf(src), 1)
 	if(!can_jaunt.len)
@@ -330,8 +323,17 @@ Difficulty: Hard
 		forceMove(get_turf(found_bloodpool))
 		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 		visible_message("<span class='danger'>And springs back out!</span>")
+		INVOKE_ASYNC(src, .proc/blood_speed)
 		return TRUE
 	return FALSE
+	
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_speed()
+	speed = 3
+	var/newcolor = rgb(149, 10, 10)
+	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
+	sleep(60)
+	speed = initial(move_to_delay)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_pools(turf/T, range)
 	. = list()
@@ -339,27 +341,56 @@ Difficulty: Hard
 		if(nearby.can_bloodcrawl_in())
 			. += nearby
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray(var/range = 10, var/atom/shootat = target)
-	if(!shootat)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_ball(var/count = 1, var/atom/shootat = target)
+	if(!shootat || !isliving(shootat))
 		return
-	var/angle = ATAN2(shootat.x - src.x, shootat.y - src.y) // angle to the target
-	var/turf/end = get_turf(src)
-	for(var/i = 1 to range)
-		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
-		if(!check || !end.CanAtmosPass(check))
-			break
-		end = check
-	var/list/toaffect = getline(src, end)
-	if(!toaffect.len || toaffect.len < 2)
-		return
-	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
-	for(var/i = 2 to toaffect.len)
-		var/turf/J = toaffect[i]
-		var/turf/previousturf = toaffect[i - 1]
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
-		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
+	for(var/i = 1 to count)
+		new /obj/effect/temp_visual/blood_ball(get_turf(src), get_turf(shootat))
+		sleep(5)
+
+/obj/effect/temp_visual/blood_ball
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "leaper"
+	name = "bloodball"
+	desc = "You should probably get moving!"
+	layer = FLY_LAYER
+	duration = 12
+	pixel_z = 64
+
+/obj/effect/temp_visual/blood_ball/ex_act()
+	return
+
+/obj/effect/temp_visual/blood_ball/Initialize(mapload, var/turf/end)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/fall, end)
+	animate(src, pixel_z = 128, time = duration * 1/3)
+
+/obj/effect/temp_visual/blood_ball/proc/fall(var/turf/end)
+	var/turf/T = get_turf(src)
+	//playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
+	for(var/i = 1 to duration * 1/3)
+		forceMove(get_step(src, get_dir(src, end)))
+		sleep(1)
+	animate(src, pixel_z = 0, time = duration * 2/3)
+	for(var/i = 1 to duration * 2/3)
+		forceMove(get_step(src, get_dir(src, end)))
+		sleep(1)
+	T = get_turf(src) // update for movement
+	playsound(T,'sound/effects/splat.ogg', 100, 1, -1)
+
+	for(var/mob/living/L in T.contents)
+		if(istype(L, /mob/living/simple_animal/hostile/megafauna/bubblegum))
+			continue
+		L.adjustBruteLoss(10)
+		to_chat(L, "<span class='userdanger'>You're hit directly by the blood ball!</span>")
+
+	// deals damage to mechs
+	for(var/obj/mecha/M in T.contents)
+		M.take_damage(45, BRUTE, "melee", 1)
+
+	// spawns blood around the end location
+	for(var/turf/J in RANGE_TURFS(1, src))
 		new /obj/effect/decal/cleanable/blood(J)
-		sleep((previousturf.x - J.x == 0 || previousturf.y - J.y == 0) ? 1 : 2) // diagonals take longer
 
 /obj/effect/decal/cleanable/blood/bubblegum
 	bloodiness = 0
