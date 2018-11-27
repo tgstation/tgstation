@@ -916,8 +916,7 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2";
-	pixel_y = 1;
-	
+	pixel_y = 1
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
@@ -1275,9 +1274,7 @@
 /area/space/nearstation)
 "dy" = (
 /turf/closed/wall/r_wall,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "dz" = (
 /obj/machinery/camera/autoname{
 	icon_state = "camera";
@@ -1380,28 +1377,20 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "dO" = (
 /obj/machinery/camera/autoname,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "dP" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "dQ" = (
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "dR" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
@@ -1516,15 +1505,11 @@
 /area/space/nearstation)
 "ee" = (
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "ef" = (
 /obj/machinery/blackbox_recorder,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "eg" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
@@ -1694,21 +1679,15 @@
 "ey" = (
 /obj/machinery/telecomms/hub/preset,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "ez" = (
 /obj/machinery/announcement_system,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "eA" = (
 /obj/machinery/telecomms/bus/preset_one/birdstation,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "eB" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -1853,9 +1832,7 @@
 "eS" = (
 /obj/machinery/telecomms/message_server,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "eT" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -1998,15 +1975,11 @@
 "fn" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "fo" = (
 /obj/machinery/door/window/southright,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "fp" = (
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/aisat_interior{
@@ -2141,9 +2114,7 @@
 "fI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "fJ" = (
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior{
@@ -2154,17 +2125,13 @@
 	network = "tcommsat"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "fL" = (
 /obj/machinery/computer/telecomms/monitor{
 	network = "tcommsat"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "fM" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-17";
@@ -2180,9 +2147,7 @@
 	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "fN" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
@@ -2354,25 +2319,19 @@
 /obj/item/beacon,
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gk" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gl" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gm" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "telecomms and ai module door";
@@ -2382,9 +2341,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gn" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
@@ -2454,9 +2411,7 @@
 "gy" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gz" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
@@ -2465,9 +2420,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gA" = (
 /obj/machinery/power/apc{
 	dir = 4;
@@ -2478,9 +2431,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gB" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-02";
@@ -2613,18 +2564,14 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gS" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "telecomms and ai module door";
 	req_access_txt = "61"
 	},
 /turf/open/floor/plasteel,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "gT" = (
 /obj/machinery/gravity_generator/main/station,
 /obj/effect/turf_decal/bot_white,
@@ -17812,9 +17759,7 @@
 "UI" = (
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "Vd" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/white,
@@ -17834,9 +17779,7 @@
 "Vu" = (
 /obj/machinery/telecomms/processor/preset_one/birdstation,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "VA" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /obj/machinery/door/airlock/atmos/glass/critical{
@@ -18017,9 +17960,7 @@
 "Zg" = (
 /obj/machinery/telecomms/server/presets/common/birdstation,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "Zh" = (
 /obj/machinery/nanite_program_hub,
 /turf/open/floor/plasteel/white,
@@ -18063,9 +18004,7 @@
 "ZA" = (
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/tcomeast{
-	name = "\improper Telecommunications Chamber"
-	})
+/area/tcommsat/server)
 "ZC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
