@@ -6,6 +6,7 @@
 	fire_sound = 'sound/weapons/revolver357shot.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
+	dry_fire_sound = 'sound/weapons/revolverdry.ogg'
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/revolver/Initialize()
@@ -47,6 +48,7 @@
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
+		playsound(user, 'sound/weapons/revolverempty.ogg', 40, FALSE)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
@@ -238,7 +240,7 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(src, "gun_dry_fire", 30, 1)
+		playsound(src, dry_fire_sound, 30, TRUE)
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
