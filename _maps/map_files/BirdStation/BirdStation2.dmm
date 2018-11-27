@@ -10816,19 +10816,6 @@
 /area/crew_quarters/bar{
 	name = "\improper Bar and Kitchen"
 	})
-"BD" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchen shutter";
-	name = "kitchen shutter"
-	},
-/obj/item/reagent_containers/food/snacks/pastatomato{
-	name = "pasghetti"
-	},
-/turf/open/floor/plasteel/white,
-/area/crew_quarters/bar{
-	name = "\improper Bar and Kitchen"
-	})
 "BE" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -53911,7 +53898,7 @@ zo
 zU
 Vd
 yK
-BD
+BE
 nP
 CR
 DG
