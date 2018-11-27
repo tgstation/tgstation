@@ -31,7 +31,7 @@
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src].</span>")
-		playsound(user, 'sound/weapons/bulletinsert.ogg', 60, TRUE)
+		playsound(user, 'sound/weapons/revolverload.ogg', 40, TRUE)
 		A.update_icon()
 		update_icon()
 		chamber_round(0)
