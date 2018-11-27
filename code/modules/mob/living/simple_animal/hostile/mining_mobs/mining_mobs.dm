@@ -70,3 +70,6 @@
 		adjustBruteLoss(2)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+	
+/mob/living/simple_animal/hostile/asteroid/can_destroy_object(obj/other)
+	return !istype(other, /obj/structure/spawner/lavaland)
