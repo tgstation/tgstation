@@ -442,6 +442,8 @@
 		. =  Move(moving_to,move_direction)
 	dodging = TRUE
 
+
+//used to stop simple animals destroying certain things, e.g. lavaland mobs shouldn't destroy tendrils
 /mob/living/simple_animal/hostile/proc/can_destroy_object(obj/other)
 	return TRUE
 
