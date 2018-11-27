@@ -1,0 +1,4 @@
+author: "xmikey555"
+delete-after: True
+changes: 
+  - rscadd: "Added pirate language, equip a pirate hat to speak it."
