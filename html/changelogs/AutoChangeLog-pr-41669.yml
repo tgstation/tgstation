@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Certain incompatible quirks can no longer be taken together"
