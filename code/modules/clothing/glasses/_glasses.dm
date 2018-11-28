@@ -259,7 +259,9 @@
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	flash_protect = 2
-	tint = 3			// to make them blind
+	tint = 3
+	darkness_view = 1
+	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
