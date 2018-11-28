@@ -120,7 +120,7 @@
 	for(var/datum/reagent/R in M.reagents.reagent_list) //Not just toxins!
 		M.reagents.remove_reagent(R.id, actual_power)
 		if(food_conversion)
-			M.nutrition += 0.3
+			M.adjust_nutrition(0.3)
 		if(prob(2))
 			to_chat(M, "<span class='notice'>You feel a mild warmth as your blood purifies itself.</span>")
 	return 1
@@ -157,7 +157,7 @@
 		C.reagents.metabolize(C, can_overdose=TRUE)
 	C.overeatduration = max(C.overeatduration - 2, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
-	C.nutrition = max(C.nutrition - (lost_nutrition * HUNGER_FACTOR), 0) //Hunger depletes at 10x the normal speed
+	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
 		to_chat(C, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	return 1

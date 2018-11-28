@@ -318,7 +318,7 @@
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
-		if(MUTCOLORS in S.species_traits)
+		if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
 			if(S.fixed_mut_color)
 				species_color = S.fixed_mut_color
 			else

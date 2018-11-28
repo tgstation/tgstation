@@ -867,7 +867,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			healing_types += CLONE
 
 		owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
-		owner.nutrition += 3
+		owner.adjust_nutrition(3)
 		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
 	else
 		messagedelivered = FALSE
