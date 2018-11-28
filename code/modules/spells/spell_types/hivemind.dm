@@ -194,7 +194,7 @@
 		return
 	var/iterations = 0
 
-	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getInternalLoss && !user.getCloneLoss() && !user.getBrainLoss())
+	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getInternalLoss() && !user.getCloneLoss() && !user.getBrainLoss())
 		to_chat(user, "<span class='notice'>We cannot heal ourselves any more with this power!</span>")
 		revert_cast()
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
