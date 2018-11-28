@@ -648,7 +648,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		if(!F)
 			F = get_turf(owner)
 			range = 50
-		if(do_teleport(owner, F, range))
+		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
 			to_chat(owner, "<span class='notice'>[linked_extract] will take some time to re-align you on the bluespace axis.</span>")
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)

@@ -419,7 +419,7 @@
 	H.visible_message("<span class='warning'>[H] teleports!</span>", "<span class='danger'>You destabilize and teleport!</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(H))
 	playsound(get_turf(H), "sparks", 50, 1)
-	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg')
+	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 
 /datum/species/golem/bluespace/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
@@ -485,7 +485,7 @@
 	spark_system.set_up(10, 0, src)
 	spark_system.attach(H)
 	spark_system.start()
-	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg')
+	do_teleport(H, get_turf(H), 12, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 	UpdateButtonIcon() //action icon looks unavailable
 	sleep(cooldown + 5)

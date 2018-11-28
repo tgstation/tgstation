@@ -11,7 +11,7 @@
 	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		if(do_teleport(user, get_turf(user), 50))//honk honk
+		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 			user.Paralyze(stunforce*3)
 			deductcharge(hitcost)
@@ -26,7 +26,7 @@
 				return .
 			else
 				SEND_SIGNAL(M, COMSIG_LIVING_MINOR_SHOCK)
-				do_teleport(M, get_turf(M), 15)
+				do_teleport(M, get_turf(M), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/item/melee/baton/cattleprod/attackby(obj/item/I, mob/user, params)//handles sticking a crystal onto a stunprod to make a teleprod
 	if(istype(I, /obj/item/stack/ore/bluespace_crystal))

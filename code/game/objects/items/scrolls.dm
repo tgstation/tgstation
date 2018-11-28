@@ -66,7 +66,8 @@
 		to_chat(user, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 		return
 
-	user.forceMove(pick(L))
-
-	smoke.start()
-	uses--
+	if(do_teleport(user, pick(L), forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC))
+		smoke.start()
+		uses--
+	else
+		to_chat(user, "The spell matrix was disrupted by something near the destination.")

@@ -409,7 +409,7 @@
 	while(breakout < 50)
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
-			user.forceMove(potential_T)
+			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
 			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break

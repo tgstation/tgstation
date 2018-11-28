@@ -145,7 +145,7 @@ Burning extracts:
 	user.visible_message("<span class='danger'>[src] sparks, and lets off a shockwave of bluespace energy!</span>")
 	for(var/mob/living/L in range(1, get_turf(user)))
 		if(L != user)
-			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg') //Somewhere between the effectiveness of fake and real BS crystal
+			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
 			new /obj/effect/particle_effect/sparks(get_turf(L))
 			playsound(get_turf(L), "sparks", 50, 1)
 	..()
