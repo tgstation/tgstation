@@ -8382,10 +8382,11 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "asg" = (
-/obj/structure/closet/secure_closet/contraband/armory,
-/obj/effect/spawner/lootdrop/armory_contraband/donutstation,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/security/armory)
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "ash" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -17504,10 +17505,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aLg" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
+/obj/structure/closet/secure_closet/contraband/armory,
+/obj/effect/spawner/lootdrop/armory_contraband/donutstation,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/security/armory)
 "aLh" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/tile/red{
@@ -27034,14 +27036,17 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bdt" = (
-/obj/machinery/door/airlock{
-	name = "Theatre Backstage";
-	req_access_txt = "46"
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink";
+	pixel_y = 28
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/turf/open/floor/wood,
-/area/crew_quarters/theatre)
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/crew_quarters/bar)
 "bdu" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -37903,18 +37908,25 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "bwx" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Gravity Generator";
-	req_access_txt = "11"
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/light_construct/small{
+	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/power/apc{
+	areastring = "/area/maintenance/department/crew_quarters/bar";
+	cell_type = null;
+	dir = 1;
+	name = "Abandoned Bar APC";
+	pixel_y = 24
+	},
 /obj/structure/cable/yellow{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/department/crew_quarters/bar)
 "bwy" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
@@ -49137,14 +49149,15 @@
 	},
 /area/maintenance/department/crew_quarters/bar)
 "bQM" = (
-/obj/structure/chair/stool,
-/obj/machinery/newscaster{
-	pixel_y = 32
+/obj/machinery/door/airlock{
+	name = "Theatre Backstage";
+	req_access_txt = "46"
 	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/crew_quarters/bar)
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/crew_quarters/theatre)
 "bQN" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -50007,13 +50020,10 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "bSy" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/beer,
-/obj/item/reagent_containers/food/drinks/beer{
-	pixel_x = 6;
-	pixel_y = 4
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
 	},
-/turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/bar)
 "bSz" = (
 /obj/structure/closet/crate{
@@ -51591,12 +51601,11 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "bVP" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -51610,20 +51619,11 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "bVS" = (
-/obj/structure/reagent_dispensers/beerkeg,
-/obj/structure/light_construct/small{
-	dir = 1
+/obj/machinery/airalarm/all_access{
+	dir = 8;
+	pixel_x = 24
 	},
-/obj/machinery/power/apc{
-	areastring = "/area/maintenance/department/crew_quarters/bar";
-	cell_type = null;
-	dir = 1;
-	name = "Abandoned Bar APC";
-	pixel_y = 24
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2"
-	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -51642,9 +51642,10 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "bVU" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/obj/effect/spawner/lootdrop/gambling,
+/turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/bar)
 "bVV" = (
 /obj/structure/chair/office/light{
@@ -51654,10 +51655,11 @@
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "bVW" = (
-/obj/structure/reagent_dispensers/beerkeg,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
+/obj/structure/chair/stool,
+/obj/machinery/newscaster{
+	pixel_y = 32
 	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -51710,13 +51712,16 @@
 /turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/bar)
 "bWb" = (
-/turf/open/floor/wood,
+/obj/structure/chair/stool/bar,
+/obj/structure/sign/barsign{
+	pixel_y = 32
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/department/crew_quarters/bar)
 "bWc" = (
-/obj/machinery/airalarm/all_access{
-	dir = 8;
-	pixel_x = 24
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -51748,13 +51753,13 @@
 /turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/bar)
 "bWg" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = 32
+/obj/structure/light_construct/small{
+	dir = 8
 	},
-/obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck,
-/obj/effect/spawner/lootdrop/gambling,
-/turf/open/floor/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/department/crew_quarters/bar)
 "bWh" = (
 /obj/structure/table,
@@ -51773,11 +51778,15 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bWj" = (
-/obj/structure/chair/stool/bar,
-/obj/structure/sign/barsign{
-	pixel_y = 32
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/beer,
+/obj/item/reagent_containers/food/drinks/beer{
+	pixel_x = 6;
+	pixel_y = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/department/crew_quarters/bar)
 "bWk" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -51786,42 +51795,37 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bWl" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 6;
-	pixel_y = -1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = 4;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/turf/open/floor/wood{
-	icon_state = "wood-broken6"
+/obj/structure/table_frame/wood,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/maintenance/department/crew_quarters/bar)
 "bWm" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/wood,
+/obj/item/reagent_containers/glass/rag,
+/obj/structure/table_frame/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/department/crew_quarters/bar)
 "bWn" = (
+/obj/structure/sign/poster/contraband/random{
+	pixel_x = 32
+	},
+/obj/structure/light_construct/small{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
 	},
 /area/maintenance/department/crew_quarters/bar)
 "bWo" = (
-/obj/structure/light_construct/small{
-	dir = 8
-	},
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -51885,11 +51889,11 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "bWv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
+/obj/structure/light_construct/small,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
 	},
-/obj/structure/table_frame/wood,
-/turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/bar)
 "bWw" = (
 /obj/effect/decal/cleanable/dirt,
@@ -51910,20 +51914,29 @@
 /turf/closed/wall,
 /area/maintenance/port/aft)
 "bWA" = (
-/obj/item/reagent_containers/glass/rag,
-/obj/structure/table_frame/wood,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
+/obj/machinery/door/airlock/engineering{
+	name = "Gravity Generator";
+	req_access_txt = "11"
 	},
-/area/maintenance/department/crew_quarters/bar)
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
 "bWB" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall,
 /area/maintenance/department/crew_quarters/bar)
 "bWC" = (
-/obj/structure/chair/stool/bar,
-/turf/open/floor/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/frame/machine,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/department/crew_quarters/bar)
 "bWD" = (
 /obj/structure/sign/poster/contraband/random{
@@ -51946,20 +51959,6 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
-/area/maintenance/department/crew_quarters/bar)
-"bWG" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_x = 32
-	},
-/obj/structure/light_construct/small{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
-/area/maintenance/department/crew_quarters/bar)
-"bWH" = (
-/obj/structure/light_construct/small,
-/turf/open/floor/wood,
 /area/maintenance/department/crew_quarters/bar)
 "bWI" = (
 /obj/structure/table,
@@ -53422,25 +53421,6 @@
 /obj/item/paicard,
 /turf/open/floor/plating,
 /area/maintenance/department/security)
-"bZS" = (
-/obj/structure/chair/stool,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/crew_quarters/bar)
-"bZT" = (
-/obj/structure/chair/stool/bar,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
-/area/maintenance/department/crew_quarters/bar)
-"bZU" = (
-/obj/structure/sign/poster/contraband/random{
-	pixel_y = -32
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
-/area/maintenance/department/crew_quarters/bar)
 "bZV" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -54521,13 +54501,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"ccf" = (
-/obj/machinery/computer/slot_machine,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/department/crew_quarters/bar)
 "ccg" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -78924,7 +78897,7 @@ bMs
 bVZ
 cep
 bWd
-bWo
+bWg
 bWD
 bWB
 bQe
@@ -79440,7 +79413,7 @@ bVM
 bWf
 bWx
 bZP
-ccf
+bWC
 bVM
 aBx
 bXW
@@ -79694,10 +79667,10 @@ bVL
 bYm
 bXA
 bVM
-bWg
 bVU
-bZS
-ccf
+bSy
+bSy
+bWC
 aRr
 aBx
 bXU
@@ -79951,8 +79924,8 @@ asv
 bMs
 bLQ
 bVM
-bQM
-bVU
+bVW
+bSy
 ccd
 cci
 bVM
@@ -80208,10 +80181,10 @@ acB
 bVZ
 bQQ
 bVM
-bWj
+bWb
 caV
-bVU
-bVU
+bSy
+bSy
 aRr
 aBx
 aBx
@@ -80465,10 +80438,10 @@ bVX
 bWi
 bVM
 bVM
-bWl
 bSy
+bWj
 bZQ
-bZU
+bWw
 bVM
 aBx
 bYK
@@ -80722,10 +80695,10 @@ bVM
 bVM
 bVM
 bWa
-bWm
-bWv
-bWC
-bWn
+bWc
+bWl
+bSy
+bSy
 aRr
 aBx
 aBx
@@ -80976,13 +80949,13 @@ bRO
 bMs
 bdB
 bVM
-bVP
-bVU
-bWb
-bWn
-bWA
-bZT
-bWH
+bdt
+bSy
+bSy
+bSy
+bWm
+bWo
+bWv
 bVM
 bZt
 aBx
@@ -81233,11 +81206,11 @@ acB
 bTK
 bYD
 bVM
+bwx
+bVP
 bVS
-bVW
-bWc
-bWw
-bWG
+bSy
+bWn
 bWw
 bWF
 bVM
@@ -84265,7 +84238,7 @@ bxp
 brp
 asP
 asP
-aLg
+asg
 acy
 acR
 aZu
@@ -84574,7 +84547,7 @@ bDh
 ahT
 aBx
 bpV
-bdt
+bQM
 bbP
 bbW
 bcF
@@ -86383,7 +86356,7 @@ aMO
 aoh
 aBx
 bPe
-bwx
+bWA
 aUw
 bbp
 bpP
@@ -104080,7 +104053,7 @@ aCS
 aCS
 aCS
 arT
-asg
+aLg
 aWP
 auv
 aEo
