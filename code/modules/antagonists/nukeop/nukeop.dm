@@ -50,6 +50,7 @@
 	. = ..()
 	equip_op()
 	memorize_code()
+	owner.add_trait(TRAIT_DISK_VERIFIER, "nuke-op")
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
 
