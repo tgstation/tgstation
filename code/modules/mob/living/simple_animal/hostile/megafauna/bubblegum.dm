@@ -77,7 +77,6 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
 	..()
-	INVOKE_ASYNC(src, .proc/blood_ball)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
@@ -90,6 +89,9 @@ Difficulty: Hard
 		warped = blood_warp()
 		if(warped && prob(100 - anger_modifier))
 			return
+		else
+			if(prob(25))
+				INVOKE_ASYNC(src, .proc/blood_ball, max(5, anger_modifier))
 
 	if(prob(90) || slaughterlings())
 		if(health > maxHealth * 0.5)
@@ -136,7 +138,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/decoy/fading(loc,src)
 		DestroySurroundings()
 	..()
-		
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Moved()
 	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	if(charging)
@@ -158,13 +160,12 @@ Difficulty: Hard
 	setDir(get_dir(src, T))
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
-	sleep(2)
+	sleep(3)
 	walk_towards(src, T, 1)
 	sleep(get_dist(src, T))
-	SetRecoveryTime(MEGAFAUNA_DEFAULT_RECOVERY_TIME)
 	try_bloodattack()
 	charging = null
-		
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
 		if(isturf(A) || isobj(A) && A.density)
@@ -290,7 +291,7 @@ Difficulty: Hard
 	icon_state = "leftsmack"
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-	if(Adjacent(target) || speed != initial(speed))
+	if(Adjacent(target) || move_to_delay != initial(move_to_delay))
 		return FALSE
 	var/list/can_jaunt = get_pools(get_turf(src), 1)
 	if(!can_jaunt.len)
@@ -326,13 +327,13 @@ Difficulty: Hard
 		INVOKE_ASYNC(src, .proc/blood_speed)
 		return TRUE
 	return FALSE
-	
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_speed()
-	speed = 3
+	move_to_delay = 3
 	var/newcolor = rgb(149, 10, 10)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	sleep(60)
-	speed = initial(move_to_delay)
+	move_to_delay = initial(move_to_delay)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_pools(turf/T, range)
@@ -341,43 +342,60 @@ Difficulty: Hard
 		if(nearby.can_bloodcrawl_in())
 			. += nearby
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_ball(var/count = 1, var/atom/shootat = target)
-	if(!shootat || !isliving(shootat))
-		return
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_ball(var/count = 5, var/atom/shootat = target)
+	var/cooldown = max(10 - count, 1)
+	var/directions = GLOB.cardinals + GLOB.diagonals
+	SetRecoveryTime(count * cooldown + 10)
 	for(var/i = 1 to count)
-		new /obj/effect/temp_visual/blood_ball(get_turf(src), get_turf(shootat))
-		sleep(5)
+		if(!shootat || !isliving(shootat))
+			return
+		var/turf/endturf = get_turf(shootat)
+		for(var/j = 1 to 3)
+			var/turf/check = get_step(endturf, pick(directions))
+			if(check)
+				endturf = check
+		var/obj/item/projectile/P = new /obj/item/projectile/blood_ball(src.loc)
+		P.firer = src
+		P.preparePixelProjectile(endturf, src)
+		P.range = get_dist(endturf, get_turf(src))
+		P.speed = 20 / P.range
+		P.fire()
+		new /obj/effect/temp_visual/blood_ball_target(endturf)
+		sleep(cooldown)
 
-/obj/effect/temp_visual/blood_ball
-	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "leaper"
-	name = "bloodball"
-	desc = "You should probably get moving!"
-	layer = FLY_LAYER
-	duration = 12
-	pixel_z = 64
+/obj/effect/temp_visual/blood_ball_target
+	icon = 'icons/mob/actions/actions_items.dmi'
+	icon_state = "sniper_zoom"
+	layer = BELOW_MOB_LAYER
+	light_range = 2
+	duration = 20
 
-/obj/effect/temp_visual/blood_ball/ex_act()
+/obj/effect/temp_visual/blood_ball_target/ex_act()
 	return
 
-/obj/effect/temp_visual/blood_ball/Initialize(mapload, var/turf/end)
-	. = ..()
-	INVOKE_ASYNC(src, .proc/fall, end)
-	animate(src, pixel_z = 128, time = duration * 1/3)
+/obj/item/projectile/blood_ball
+	name = "bloodball"
+	desc = "You should probably get moving!"
+	icon_state = "mini_leaper"
+	layer = FLY_LAYER
+	forcedodge = 1
+	light_range = 2
+	light_color = LIGHT_COLOR_RED
 
-/obj/effect/temp_visual/blood_ball/proc/fall(var/turf/end)
+/obj/item/projectile/blood_ball/ex_act()
+	return
+
+/obj/item/projectile/blood_ball/on_hit(atom/target, blocked = FALSE)
+	return
+
+/obj/item/projectile/blood_ball/Bump(atom/A)
+	return
+
+/obj/item/projectile/blood_ball/on_range()
 	var/turf/T = get_turf(src)
-	//playsound(get_turf(src), 'sound/magic/clockwork/invoke_general.ogg', 20, 1)
-	for(var/i = 1 to duration * 1/3)
-		forceMove(get_step(src, get_dir(src, end)))
-		sleep(1)
-	animate(src, pixel_z = 0, time = duration * 2/3)
-	for(var/i = 1 to duration * 2/3)
-		forceMove(get_step(src, get_dir(src, end)))
-		sleep(1)
-	T = get_turf(src) // update for movement
 	playsound(T,'sound/effects/splat.ogg', 100, 1, -1)
 
+	// damage to living targets
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 			continue
@@ -389,8 +407,9 @@ Difficulty: Hard
 		M.take_damage(45, BRUTE, "melee", 1)
 
 	// spawns blood around the end location
-	for(var/turf/J in RANGE_TURFS(1, src))
-		new /obj/effect/decal/cleanable/blood(J)
+	new /obj/effect/decal/cleanable/blood(T)
+
+	return ..()
 
 /obj/effect/decal/cleanable/blood/bubblegum
 	bloodiness = 0
