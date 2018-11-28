@@ -65,7 +65,7 @@
 	if(locate(/datum/surgery_step/saw) in surgery.steps)
 		target.heal_bodypart_damage(45,0)
 		if(target_zone == BODY_ZONE_CHEST)
-			target.adjustInternalLoss(20)
+			target.adjustInternalLoss(-20)
 	return ..()
 
 
