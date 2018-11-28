@@ -137,6 +137,7 @@
 	if(M.bodytemperature < T0C)
 		M.adjustOxyLoss(-3 * power, 0)
 		M.adjustBruteLoss(-power, 0)
+		M.adjustInternalLoss(-0.5 * power, 0)
 		M.adjustFireLoss(-power, 0)
 		M.adjustToxLoss(-power, 0, TRUE) //heals TOXINLOVERs
 		M.adjustCloneLoss(-power, 0)
@@ -183,6 +184,7 @@
 
 		M.adjustOxyLoss(-2 * power, 0)
 		M.adjustBruteLoss(-power, 0)
+		M.adjustInternalLoss(-power, 0)
 		M.adjustFireLoss(-1.5 * power, 0)
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
@@ -300,7 +302,7 @@
 /datum/reagent/medicine/salglu_solution
 	name = "Saline-Glucose Solution"
 	id = "salglu_solution"
-	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage. Can be used as a temporary blood substitute."
+	description = "Has a 33% chance per metabolism cycle to heal brute and burn damage, as well as internal damage while resting. Can be used as a temporary blood substitute."
 	reagent_state = LIQUID
 	color = "#DCDCDC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -322,6 +324,9 @@
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
 		. = TRUE
+	if(M.resting)
+		M.adjustInternalLoss(-0.5*REM, 0)
+		. = TRUE
 	..()
 
 /datum/reagent/medicine/salglu_solution/overdose_process(mob/living/M)
@@ -334,8 +339,7 @@
 		holder.add_reagent("sugar", 1)
 		holder.remove_reagent("salglu_solution", 0.5)
 	if(prob(33))
-		M.adjustBruteLoss(0.5*REM, 0)
-		M.adjustFireLoss(0.5*REM, 0)
+		M.adjustToxLoss(0.5*REM, 0)
 		. = TRUE
 	..()
 
@@ -453,6 +457,20 @@
 			M.reagents.remove_reagent(R.id,2.5)
 	if(M.health > 20)
 		M.adjustToxLoss(2.5*REM, 0)
+		. = 1
+	..()
+	
+/datum/reagent/medicine/viscosine
+	name = "Viscosine"
+	id = "viscosine"
+	description = "Rapidly increases the body's internal regeneration rate while resting, but isn't effective on external wounds."
+	reagent_state = LIQUID
+	color = "#8b3333"
+	taste_description = "plastic"
+
+/datum/reagent/medicine/viscosine/on_mob_life(mob/living/carbon/M)
+	if(M.resting)
+		M.adjustInternalLoss(-3*REM, 0)
 		. = 1
 	..()
 
@@ -729,6 +747,7 @@
 	if(M.health < 0)
 		M.adjustToxLoss(-2*REM, 0)
 		M.adjustBruteLoss(-2*REM, 0)
+		M.adjustInternalLoss(-1*REM, 0)
 		M.adjustFireLoss(-2*REM, 0)
 		M.adjustOxyLoss(-5*REM, 0)
 		. = 1
@@ -810,7 +829,7 @@
 	..()
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(0.5*REM, 0)
+	M.adjustInternalLoss(0.5*REM, 0)
 	M.adjustFireLoss(0.5*REM, 0)
 	..()
 	. = 1
@@ -1043,6 +1062,7 @@
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-1.5*REM, 0)
+	M.adjustInternalLoss(-0.5*REM, 0)
 	M.adjustFireLoss(-1.5*REM, 0)
 	M.adjustOxyLoss(-1.5*REM, 0)
 	M.adjustToxLoss(-1.5*REM, 0, TRUE) //heals TOXINLOVERs
@@ -1058,6 +1078,7 @@
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
+	M.adjustInternalLoss(-2.5*REM, 0)
 	M.adjustFireLoss(-5*REM, 0)
 	M.adjustOxyLoss(-15, 0)
 	M.adjustToxLoss(-5*REM, 0)
@@ -1075,6 +1096,7 @@
 
 /datum/reagent/medicine/earthsblood/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-3 * REM, 0)
+	M.adjustInternalLoss(-1 * REM, 0)
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
@@ -1128,7 +1150,7 @@
 	return TRUE
 
 /datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0)
+	M.adjustInternalLoss(3*REM, 0)
 	M.adjustFireLoss(3*REM, 0)
 	M.adjustToxLoss(3*REM, 0)
 	..()

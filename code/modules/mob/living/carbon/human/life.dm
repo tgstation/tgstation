@@ -266,12 +266,13 @@
 	return min(1,thermal_protection)
 
 /mob/living/carbon/human/handle_random_events()
-	//Puke if toxloss is too high
+	//Puke if toxloss or internal damage is too high
 	if(!stat)
-		if(getToxLoss() >= 45 && nutrition > 20)
+		if(getInternalLoss() >= 50 || (getToxLoss() >= 45 && nutrition > 20))
 			lastpuke += prob(50)
 			if(lastpuke >= 50) // about 25 second delay I guess
-				vomit(20, toxic = TRUE)
+				var/blood_vomit = prob(getInternalLoss() * 2) //Internal damage causes blood vomit
+				vomit(20, blood = blood_vomit, toxic = TRUE)
 				lastpuke = 0
 
 

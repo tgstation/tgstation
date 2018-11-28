@@ -28,16 +28,16 @@ Bonus
 	base_message_chance = 50
 	symptom_delay_min = 15
 	symptom_delay_max = 60
-	var/bleed = FALSE
+	var/internal_ratio = 0.25
 	var/pain = FALSE
-	threshold_desc = "<b>Resistance 7:</b> Host will bleed profusely during necrosis.<br>\
+	threshold_desc = "<b>Resistance 7:</b> Increases the amount of internal damage done by the symptom.<br>\
 					  <b>Transmission 8:</b> Causes extreme pain to the host, weakening it."
 
 /datum/symptom/flesh_eating/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	if(A.properties["resistance"] >= 7) //extra bleeding
-		bleed = TRUE
+	if(A.properties["resistance"] >= 7) //more internal damage
+		internal_ratio = 0.75
 	if(A.properties["transmittable"] >= 8) //extra stamina damage
 		pain = TRUE
 
@@ -54,14 +54,13 @@ Bonus
 			Flesheat(M, A)
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
-	var/get_damage = rand(15,25) * power
+	var/get_damage = rand(10,20) * power
+	var/internal_damage = get_damage * internal_ratio
+	get_damage -= internal_damage
 	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
+	M.adjustInternalLoss(internal_damage)
 	if(pain)
 		M.adjustStaminaLoss(get_damage)
-	if(bleed)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.bleed_rate += 5 * power
 	return 1
 
 /*
@@ -94,10 +93,12 @@ Bonus
 	base_message_chance = 50
 	symptom_delay_min = 3
 	symptom_delay_max = 6
+	var/internal_ratio = 0.3
 	var/chems = FALSE
 	var/zombie = FALSE
 	threshold_desc = "<b>Stage Speed 7:</b> Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.<br>\
-					  <b>Stealth 5:</b> The symptom remains hidden until active."
+					  <b>Stealth 5:</b> The symptom remains hidden until active.<br>\
+					  <b>Resistance 8:</b> Increases the amount of internal damage done by the symptom."
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
 	if(!..())
@@ -106,6 +107,9 @@ Bonus
 		suppress_warning = TRUE
 	if(A.properties["stage_rate"] >= 7) //bleeding and hunger
 		chems = TRUE
+	if(A.properties["resistance"] >= 8) //more internal damage
+		internal_ratio = 0.85
+	
 
 /datum/symptom/flesh_death/Activate(datum/disease/advance/A)
 	if(!..())
@@ -121,7 +125,7 @@ Bonus
 			Flesh_death(M, A)
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
-	var/get_damage = rand(6,10)
+	var/get_damage = rand(4,8)
 	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list("heparin" = 2, "lipolicide" = 2))

@@ -24,9 +24,10 @@
 /datum/surgery_step/reconstruct/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] fixes some of [target]'s wounds.", "<span class='notice'>You succeed in fixing some of [target]'s wounds.</span>")
 	target.heal_bodypart_damage(30,30)
+	target.adjustInternalLoss(-25)
 	return TRUE
 
 /datum/surgery_step/reconstruct/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] screws up!", "<span class='warning'>You screwed up!</span>")
-	target.take_bodypart_damage(5,0)
+	target.adjustInternalLoss(5,0)
 	return FALSE

@@ -112,11 +112,13 @@ In all, this is a lot like the monkey code. /N
 			return
 
 		if (2)
-			take_overall_damage(60, 60)
+			take_overall_damage(30, 60)
+			adjustInternalLoss(30)
 			adjustEarDamage(30,120)
 
 		if(3)
-			take_overall_damage(30,0)
+			take_overall_damage(15,0)
+			adjustInternalLoss(15)
 			if(prob(50))
 				Unconscious(20)
 			adjustEarDamage(15,60)

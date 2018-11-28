@@ -715,9 +715,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
-		var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+	var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
+	if((H.health < H.crit_threshold) && takes_crit_damage)
+		H.adjustInternalLoss(0.5)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1408,6 +1408,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			H.adjustToxLoss(damage * hit_percent * H.physiology.tox_mod)
 		if(OXY)
 			H.adjustOxyLoss(damage * hit_percent * H.physiology.oxy_mod)
+		if(INTERNAL)
+			H.adjustInternalLoss(damage * hit_percent * H.physiology.internal_mod)
 		if(CLONE)
 			H.adjustCloneLoss(damage * hit_percent * H.physiology.clone_mod)
 		if(STAMINA)

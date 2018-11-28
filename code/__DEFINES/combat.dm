@@ -6,6 +6,7 @@
 #define BRUTE		"brute"
 #define BURN		"fire"
 #define TOX			"tox"
+#define INTERNAL	"internal"
 #define OXY			"oxy"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
@@ -60,6 +61,8 @@
 //Cuff resist speeds
 #define FAST_CUFFBREAK 1
 #define INSTANT_CUFFBREAK 2
+
+#define INTERNAL_DAMAGE_THRESHOLD 15 //Amount of brute damage that will cause internal damage if directed to the chest
 
 //Grab levels
 #define GRAB_PASSIVE				0

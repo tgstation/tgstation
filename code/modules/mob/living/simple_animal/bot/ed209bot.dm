@@ -7,7 +7,7 @@
 	anchored = FALSE
 	health = 100
 	maxHealth = 100
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, INTERNAL = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	obj_damage = 60
 	environment_smash = ENVIRONMENT_SMASH_WALLS //Walls can't stop THE LAW
 	mob_size = MOB_SIZE_LARGE

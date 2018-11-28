@@ -41,7 +41,7 @@
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
 	has_unlimited_silicon_privilege = 1
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, INTERNAL = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
 	faction = list("neutral","silicon","turret")

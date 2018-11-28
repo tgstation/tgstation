@@ -32,6 +32,8 @@
 			adjustToxLoss(damage * hit_percent)
 		if(OXY)
 			adjustOxyLoss(damage * hit_percent)
+		if(INTERNAL)
+			adjustInternalLoss(damage * hit_percent)
 		if(CLONE)
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)

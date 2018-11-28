@@ -456,6 +456,16 @@
 		cavity_item = null
 	..()
 
+//Heavy hits to the chest cause internal damage
+/obj/item/bodypart/chest/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
+	var/internal = 0
+	if(brute >= INTERNAL_DAMAGE_THRESHOLD)
+		internal = brute / 3
+		brute -= internal
+	. = ..()
+	if(.)
+		owner.adjustInternalLoss(internal)
+
 /obj/item/bodypart/chest/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_chest"

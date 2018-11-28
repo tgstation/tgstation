@@ -120,7 +120,7 @@
 /datum/reagent/toxin/slimejelly/on_mob_life(mob/living/carbon/M)
 	if(prob(10))
 		to_chat(M, "<span class='danger'>Your insides are burning!</span>")
-		M.adjustToxLoss(rand(20,60)*REM, 0)
+		M.adjustInternalLoss(rand(10,20)*REM, 0)
 		. = 1
 	else if(prob(40))
 		M.heal_bodypart_damage(5*REM)
@@ -452,7 +452,7 @@
 /datum/reagent/toxin/venom
 	name = "Venom"
 	id = "venom"
-	description = "An exotic poison extracted from highly toxic fauna. Causes scaling amounts of toxin damage and bruising depending and dosage. Often decays into Histamine."
+	description = "An exotic poison extracted from highly toxic fauna. Causes scaling amounts of toxin and internal damage depending and dosage. Often decays into Histamine."
 	reagent_state = LIQUID
 	color = "#F0FFF0"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -460,7 +460,7 @@
 
 /datum/reagent/toxin/venom/on_mob_life(mob/living/carbon/M)
 	toxpwr = 0.2*volume
-	M.adjustBruteLoss((0.3*volume)*REM, 0)
+	M.adjustInternalLoss((0.3*volume)*REM, 0)
 	. = 1
 	if(prob(15))
 		M.reagents.add_reagent("histamine", pick(5,10))
@@ -838,10 +838,10 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
-		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustInternalLoss(min(6*toxpwr, reac_volume * toxpwr))
 		return
 	if(method == INJECT)
-		C.adjustBruteLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
+		C.adjustInternalLoss(1.5 * min(6*toxpwr, reac_volume * toxpwr))
 		return
 	C.acid_act(acidpwr, reac_volume)
 

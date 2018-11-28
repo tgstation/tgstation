@@ -111,6 +111,12 @@
 	id = "salbutamol"
 	results = list("salbutamol" = 5)
 	required_reagents = list("sal_acid" = 1, "lithium" = 1, "aluminium" = 1, "bromine" = 1, "ammonia" = 1)
+	
+/datum/chemical_reaction/viscosine
+	name = "Viscosine"
+	id = "viscosine"
+	results = list("viscosine" = 4)
+	required_reagents = list("synthflesh" = 1, "carbon" = 2, "bicaridine" = 1)
 
 /datum/chemical_reaction/perfluorodecalin
 	name = "Perfluorodecalin"

@@ -371,6 +371,8 @@
 		return
 	var/b_loss = 0
 	var/f_loss = 0
+	var/i_loss = 0
+	var/internal_coeff = 0.75 //Percent of brute damage converted to internal damage
 	var/bomb_armor = getarmor(null, "bomb")
 
 	switch (severity)
@@ -393,6 +395,11 @@
 			if(bomb_armor)
 				b_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
 				f_loss = b_loss
+				internal_coeff -= (round(bomb_armor*0.01, 0.01) * 0.75)
+				//Convert a portion of brute damage to internal damage
+				i_loss = b_loss * internal_coeff
+				b_loss -= i_loss
+				
 			damage_clothes(200 - bomb_armor, BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
@@ -403,6 +410,11 @@
 			b_loss = 30
 			if(bomb_armor)
 				b_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
+				internal_coeff -= (round(bomb_armor*0.01, 0.01) * 0.75)
+				//Convert a portion of brute damage to internal damage
+				i_loss = b_loss * internal_coeff
+				b_loss -= i_loss
+				
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
@@ -410,6 +422,7 @@
 				Unconscious(160)
 
 	take_overall_damage(b_loss,f_loss)
+	adjustInternalLoss(i_loss)
 
 	//attempt to dismember bodyparts
 	if(severity <= 2 || !bomb_armor)

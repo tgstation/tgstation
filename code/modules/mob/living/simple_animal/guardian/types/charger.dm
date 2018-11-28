@@ -6,7 +6,7 @@
 	ranged_message = "charges"
 	ranged_cooldown_time = 40
 	speed = -1
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
+	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, INTERNAL = 0.6, CLONE = 0.6, STAMINA = 0, OXY = 0.6)
 	playstyle_string = "<span class='holoparasite'>As a <b>charger</b> type you do medium damage, have medium damage resistance, move very fast, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.</span>"
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Hunter, an alien master of rapid assault.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Charge modules loaded. Holoparasite swarm online.</span>"

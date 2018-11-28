@@ -31,6 +31,12 @@
 	else if(damage_coeff[TOX])
 		. = adjustHealth(amount * damage_coeff[TOX] * CONFIG_GET(number/damage_multiplier), updating_health, forced)
 
+/mob/living/simple_animal/adjustInternalLoss(amount, updating_health = TRUE, forced = FALSE)
+	if(forced)
+		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)
+	else if(damage_coeff[INTERNAL])
+		. = adjustHealth(amount * damage_coeff[INTERNAL] * CONFIG_GET(number/damage_multiplier), updating_health, forced)		
+		
 /mob/living/simple_animal/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(forced)
 		. = adjustHealth(amount * CONFIG_GET(number/damage_multiplier), updating_health, forced)

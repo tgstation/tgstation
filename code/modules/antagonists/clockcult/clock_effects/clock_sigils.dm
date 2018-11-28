@@ -271,7 +271,7 @@
 	var/revive_cost = 150
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
-	var/static/list/damage_heal_order = list(CLONE, TOX, BURN, BRUTE, OXY) //we heal damage in this order
+	var/static/list/damage_heal_order = list(CLONE, INTERNAL, TOX, BURN, BRUTE, OXY) //we heal damage in this order
 
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()

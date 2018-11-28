@@ -132,6 +132,7 @@ SLIME SCANNER
 	var/tox_loss = M.getToxLoss()
 	var/fire_loss = M.getFireLoss()
 	var/brute_loss = M.getBruteLoss()
+	var/internal_loss = M.getInternalLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100] % healthy</b>")
 
 	if(M.has_trait(TRAIT_FAKEDEATH) && !advanced)
@@ -149,7 +150,9 @@ SLIME SCANNER
 
 	// Damage descriptions
 	if(brute_loss > 10)
-		to_chat(user, "\t<span class='alert'>[brute_loss > 50 ? "Severe" : "Minor"] tissue damage detected.</span>")
+		to_chat(user, "\t<span class='alert'>[brute_loss > 50 ? "Severe" : "Minor"] external tissue damage detected.</span>")
+	if(internal_loss > 10)
+		to_chat(user, "\t<span class='alert'>[internal_loss > 50 ? "Severe" : "Minor"] internal tissue damage detected.</span>")
 	if(fire_loss > 10)
 		to_chat(user, "\t<span class='alert'>[fire_loss > 50 ? "Severe" : "Minor"] burn damage detected.</span>")
 	if(oxy_loss > 10)
@@ -167,7 +170,7 @@ SLIME SCANNER
 	if (M.getBrainLoss() >= 200 || !M.getorgan(/obj/item/organ/brain))
 		to_chat(user, "\t<span class='alert'>Subject's brain function is non-existent.</span>")
 	else if (M.getBrainLoss() >= 120)
-		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject likely to have mental traumas.</span>")
+		to_chat(user, "\t<span class='alert'>Severe brain damage detected. Subject is prone to mental traumas.</span>")
 	else if (M.getBrainLoss() >= 45)
 		to_chat(user, "\t<span class='alert'>Brain damage detected.</span>")
 	if(iscarbon(M))
@@ -181,8 +184,10 @@ SLIME SCANNER
 						trauma_desc += "severe "
 					if(TRAUMA_RESILIENCE_LOBOTOMY)
 						trauma_desc += "deep-rooted "
-					if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
+					if(TRAUMA_RESILIENCE_MAGIC)
 						trauma_desc += "permanent "
+					if(TRAUMA_RESILIENCE_ABSOLUTE)
+						trauma_desc += "complex "
 				trauma_desc += B.scan_desc
 				trauma_text += trauma_desc
 			to_chat(user, "\t<span class='alert'>Cerebral traumas detected: subject appears to be suffering from [english_list(trauma_text)].</span>")
@@ -258,8 +263,8 @@ SLIME SCANNER
 	if(iscarbon(M) && mode == 1)
 		var/mob/living/carbon/C = M
 		var/list/damaged = C.get_damaged_bodyparts(1,1)
-		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0)
-			to_chat(user, "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>")
+		if(length(damaged)>0 || oxy_loss>0 || tox_loss>0 || fire_loss>0 || internal_loss>0)
+			to_chat(user, "<span class='info'>\tDamage: <span class='info'><font color='red'>Brute</font></span>-<font color='#FF8000'>Burn</font>-<font color='green'>Toxin</font>-<font color='blue'>Suffocation</font>-<font color='#8B0000'>Internal</font>\n\t\tSpecifics: <font color='red'>[brute_loss]</font>-<font color='#FF8000'>[fire_loss]</font>-<font color='green'>[tox_loss]</font>-<font color='blue'>[oxy_loss]</font></span>-<font color='#8B0000'>[internal_loss]</font></span>")
 			for(var/obj/item/bodypart/org in damaged)
 				to_chat(user, "\t\t<span class='info'>[capitalize(org.name)]: [(org.brute_dam > 0) ? "<font color='red'>[org.brute_dam]</font></span>" : "<font color='red'>0</font>"]-[(org.burn_dam > 0) ? "<font color='#FF8000'>[org.burn_dam]</font>" : "<font color='#FF8000'>0</font>"]")
 

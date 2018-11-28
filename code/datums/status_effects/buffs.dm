@@ -208,6 +208,7 @@
 	owner.adjustFireLoss(-grace_heal)
 	owner.adjustToxLoss(-grace_heal, TRUE, TRUE)
 	owner.adjustOxyLoss(-(grace_heal * 2))
+	owner.adjustInternalLoss(-grace_heal)
 	owner.adjustCloneLoss(-grace_heal)
 
 /datum/status_effect/his_grace/on_remove()
@@ -431,6 +432,7 @@
 	else
 		linked_alert.icon_state = "fleshmend"
 	owner.adjustBruteLoss(-10, FALSE)
+	owner.adjustInternalLoss(-10, FALSE)
 	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
 
@@ -522,6 +524,7 @@
 			itemUser.adjustOxyLoss(-1.5)
 			itemUser.adjustStaminaLoss(-1.5)
 			itemUser.adjustBrainLoss(-1.5)
+			itemUser.adjustInternalLoss(-0.5)
 			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
 		//Heal all those around you, unbiased
 		for(var/mob/living/L in view(7, owner))
@@ -534,6 +537,7 @@
 				L.adjustOxyLoss(-3.5)
 				L.adjustStaminaLoss(-3.5)
 				L.adjustBrainLoss(-3.5)
+				L.adjustInternalLoss(-1)
 				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
 			else if(issilicon(L))
 				L.adjustBruteLoss(-3.5)

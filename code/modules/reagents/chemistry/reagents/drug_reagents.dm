@@ -91,7 +91,7 @@
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustBrainLoss(2*REM)
 	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustInternalLoss(2*REM, 0)
 	..()
 	. = 1
 
@@ -105,14 +105,14 @@
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustInternalLoss(3*REM, 0)
 	..()
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
 	M.adjustBrainLoss(3*REM)
 	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
+	M.adjustInternalLoss(3*REM, 0)
 	..()
 	. = 1
 

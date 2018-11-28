@@ -274,6 +274,7 @@
 		M.adjustStaminaLoss(-10, 0)
 		M.adjustToxLoss(-2, 0)
 		M.adjustOxyLoss(-2, 0)
+		M.adjustInternalLoss(-2, 0)
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
@@ -284,6 +285,7 @@
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
 		M.adjustBruteLoss(2, 0)
+		M.adjustInternalLoss(2, 0)
 	holder.remove_reagent(id, 1)
 	return TRUE
 
@@ -1054,7 +1056,7 @@
 	taste_description = "acid"
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(3.33)
+	M.adjustInternalLoss(3.33)
 	M.adjustFireLoss(3.33)
 	M.adjustToxLoss(3.33)
 	..()

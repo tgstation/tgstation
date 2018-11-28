@@ -46,7 +46,7 @@
 
 /datum/symptom/heal/starlight
 	name = "Starlight Condensation"
-	desc = "The virus reacts to direct starlight, producing regenerative chemicals. Works best against toxin-based damage."
+	desc = "The virus reacts to direct starlight, producing regenerative chemicals. Works best against toxin-based or internal damage."
 	stealth = -1
 	resistance = -2
 	stage_speed = 0
@@ -80,6 +80,7 @@
 		to_chat(M, "<span class='notice'>Your skin tingles as the starlight seems to heal you.</span>")
 
 	M.adjustToxLoss(-(4 * heal_amt)) //most effective on toxins
+	M.adjustInternalLoss(-(2 * heal_amt)) //can heal internal damage
 
 	var/list/parts = M.get_damaged_bodyparts(1,1)
 
@@ -294,7 +295,9 @@
 	level = 6
 	passive_message = "<span class='notice'>Your skin feels oddly dry...</span>"
 	var/absorption_coeff = 1
+	var/internal_heal = FALSE
 	threshold_desc = "<b>Resistance 5:</b> Water is consumed at a much slower rate.<br>\
+					  <b>Transmission 5:</b> Heals internal damage as well.<br>\
 					  <b>Stage Speed 7:</b> Increases healing speed."
 
 /datum/symptom/heal/water/Start(datum/disease/advance/A)
@@ -302,6 +305,8 @@
 		return
 	if(A.properties["stage_rate"] >= 7)
 		power = 2
+	if(A.properties["transmittable"] >= 5)
+		internal_heal = TRUE
 	if(A.properties["stealth"] >= 2)
 		absorption_coeff = 0.25
 
@@ -320,7 +325,10 @@
 
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 2 * actual_power
-
+	
+	if(internal_heal)
+		M.adjustInternalLoss(-heal_amt)
+	
 	var/list/parts = M.get_damaged_bodyparts(1,1) //more effective on burns
 
 	if(!parts.len)

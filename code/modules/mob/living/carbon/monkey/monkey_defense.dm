@@ -173,14 +173,16 @@
 			return
 
 		if (2)
-			take_overall_damage(60, 60)
+			take_overall_damage(30, 60)
+			adjustInternalLoss(30)
 			damage_clothes(200, BRUTE, "bomb")
 			adjustEarDamage(30, 120)
 			if(prob(70))
 				Unconscious(200)
 
 		if(3)
-			take_overall_damage(30, 0)
+			take_overall_damage(15, 0)
+			adjustInternalLoss(15)
 			damage_clothes(50, BRUTE, "bomb")
 			adjustEarDamage(15,60)
 			if (prob(50))

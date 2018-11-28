@@ -29,7 +29,7 @@ Slimecrossing Weapons
 
 /obj/item/kitchen/knife/rainbowknife/afterattack(atom/O, mob/user, proximity)
 	if(proximity && istype(O, /mob/living))
-		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE)
+		damtype = pick(BRUTE, BURN, TOX, OXY, CLONE, INTERNAL)
 	switch(damtype)
 		if(BRUTE)
 			hitsound = 'sound/weapons/bladeslice.ogg'
@@ -46,6 +46,9 @@ Slimecrossing Weapons
 		if(CLONE)
 			hitsound = 'sound/items/geiger/ext1.ogg'
 			attack_verb = list("irradiated","mutated","maligned")
+		if(INTERNAL)
+			hitsound = 'sound/weapons/bladeslice.ogg'
+			attack_verb = list("pierced","phased into")
 	return ..()
 
 //Adamantine shield - Chilling Adamantine

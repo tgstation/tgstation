@@ -159,12 +159,13 @@
 
 /datum/nanite_program/regenerative_advanced
 	name = "Bio-Reconstruction"
-	desc = "The nanites manually repair and replace organic cells, acting much faster than normal regeneration. \
+	desc = "The nanites manually repair and replace organic cells, acting much faster than normal regeneration, and healing internal wounds as well. \
 			However, this program cannot detect the difference between harmed and unharmed, causing it to consume nanites even if it has no effect."
 	use_rate = 5.5
 	rogue_types = list(/datum/nanite_program/suffocating, /datum/nanite_program/necrotic)
 
 /datum/nanite_program/regenerative_advanced/active_effect()
+	host_mob.adjustInternalLoss(-1.5)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		var/list/parts = C.get_damaged_bodyparts(TRUE,TRUE, status = BODYPART_ORGANIC)
@@ -219,7 +220,7 @@
 		return FALSE
 	if((world.time - C.timeofdeath) > 1800) //too late
 		return FALSE
-	if((C.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (C.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE) || !C.can_be_revived()) //too damaged
+	if(((C.getBruteLoss() + C.getInternalLoss()) >= MAX_REVIVE_BRUTE_DAMAGE) || (C.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE) || !C.can_be_revived()) //too damaged
 		return FALSE
 	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
 		return FALSE
