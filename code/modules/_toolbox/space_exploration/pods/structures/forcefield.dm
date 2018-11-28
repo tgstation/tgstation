@@ -99,21 +99,10 @@
 
 		if(istype(M, /obj/pod))
 			var/obj/pod/pod = M
-			if(pod.pilot)
-				for(var/obj/item/card/id/id in list(pod.pilot.get_active_held_item(), pod.pilot.get_inactive_held_item(), pod.pilot.wear_id, pod.pilot.belt))
-					if(check_access(id, 1))
-						return 1
-
-				if(istype(pod.pilot.wear_id, /obj/item/device/pda))
-					var/obj/item/device/pda/tablet = pod.pilot.wear_id
-					if(tablet.id)
-						var/obj/item/card/id/id = tablet.id
-						if(check_access(id, 1))
-							return 1
-
-				to_chat(pod.pilot,"<span class='warning'>You bounce back on the forcefield.</span>")
-				return 0
-
+			if(pod.pilot && allowed(pod.pilot))
+				return 1
+			to_chat(pod.pilot,"<span class='warning'>You bounce back on the forcefield.</span>")
+			return 0
 		return 1
 
 	proc/GenerateShields(var/generator = 1)

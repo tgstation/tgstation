@@ -255,6 +255,8 @@
 	icon = 'icons/oldschool/perseus.dmi'
 	icon_state = "pda-perc"
 
+/obj/item/device/pda/perseus/update_icon()
+
 /obj/item/cartridge/perseus
 	name = "\improper Perseus Cartridge"
 	icon = 'icons/oldschool/perseus.dmi'

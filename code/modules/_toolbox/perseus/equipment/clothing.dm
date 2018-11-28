@@ -124,6 +124,8 @@
 	icon = 'icons/oldschool/perseus.dmi'
 	alternate_worn_icon = 'icons/oldschool/perseus_worn.dmi'
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	heat_protection = HANDS
 	cold_protection = HANDS
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05

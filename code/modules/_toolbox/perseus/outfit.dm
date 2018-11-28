@@ -43,6 +43,10 @@
 	P.name = "PDA-[P.owner] ([P.ownjob])"
 	H.equip_to_slot_or_del(P, slot_wear_id)
 	E.announce()
+	var/list/thecontents = H.get_contents()
+	if(istype(thecontents))
+		for(var/obj/machinery/computer/percsecuritysystem/C in world)
+			C.gather_equipment(thecontents)
 
 //Commander outfit
 /datum/outfit/perseus/commander
@@ -73,6 +77,10 @@
 	if(visualsOnly)
 		return
 	extra_equipment(H)
+	var/list/thecontents = H.get_contents()
+	if(istype(thecontents))
+		for(var/obj/machinery/computer/percsecuritysystem/C in world)
+			C.gather_equipment(thecontents)
 
 /datum/outfit/perseus/commander/fullkit
 	name = "Perseus Security Commander - Full Kit"
@@ -88,9 +96,21 @@
 	if(visualsOnly)
 		return
 	extra_equipment(H)
+	var/list/thecontents = H.get_contents()
+	if(istype(thecontents))
+		for(var/obj/machinery/computer/percsecuritysystem/C in world)
+			C.gather_equipment(thecontents)
 
 //Adding additional items.
 /datum/outfit/perseus/proc/extra_equipment(mob/living/carbon/human/H)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/perseus, slot_glasses)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/security/perseus, slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/restraints/handcuffs, slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/gun/ballistic/fiveseven(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/tank/jetpack/oxygen/perctech(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), slot_in_backpack)
+	H.put_in_l_hand(new /obj/item/shield/riot/perc(H))
+
 	if(istype(H.belt,/obj/item/storage/belt))
 		var/obj/item/storage/belt/B = H.belt
 		for(var/type in items_for_belt)
@@ -108,11 +128,3 @@
 			var/obj/item/stun_knife/stunknife = new(shoes)
 			shoes.knife = stunknife
 			shoes.update_icon()
-
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/perseus, slot_glasses)
-	H.equip_to_slot_or_del(new /obj/item/storage/belt/security/perseus, slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/restraints/handcuffs, slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/gun/ballistic/fiveseven(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/tank/jetpack/oxygen/perctech(H), slot_in_backpack)
-	H.equip_to_slot_or_del(new /obj/item/storage/belt/utility/full(H), slot_in_backpack)
-	H.put_in_l_hand(new /obj/item/shield/riot/perc(H))

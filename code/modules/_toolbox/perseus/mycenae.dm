@@ -174,8 +174,52 @@
 		for(var/i=50,i>0,i--)
 			if(S.try_to_place(pick(z_levels),/area/space))
 				Mycenae_In_Space = 1
+				for(var/obj/machinery/computer/percsecuritysystem/C in world)
+					C.preparecells()
+					C.gather_equipment()
 				return 1
+
 	return 0
+
+/proc/Remove_Mycenae()
+	if(!Mycenae_In_Space)
+		return 0
+	var/obj/effect/landmark/ruin/mycenae_landmark
+	for(var/obj/effect/landmark/ruin/R in GLOB.ruin_landmarks)
+		if(istype(R.ruin_template,/datum/map_template/ruin/space/mycenae))
+			mycenae_landmark = R
+			break
+	if(!istype(mycenae_landmark))
+		return 0
+	var/area/shuttle/perseus_mycenae/mycenae = locate()
+	if(!istype(mycenae))
+		return 0
+	for(var/mob/living/M in world)
+		if(get_area(M) in mycenae.related)
+			M.ghostize(0)
+			qdel(M)
+	var/list/to_be_destroyed = list()
+	for(var/obj/O in world)
+		if(get_area(O) in mycenae.related)
+			to_be_destroyed += O
+	var/list/turfsfound = list()
+	for(var/area/A in mycenae.related)
+		for(var/turf/T in A)
+			turfsfound += T
+	for(var/turf/T in turfsfound)
+		T.ChangeTurf(/turf/open/space/basic)
+		new /area/space(T)
+	for(var/obj/O in to_be_destroyed)
+		qdel(O, force = TRUE)
+	qdel(mycenae_landmark)
+	Mycenae_In_Space = !Mycenae_In_Space
+	var/obj/docking_port/mobile/M = SSshuttle.getShuttle("perseus_transfer")
+	if(M)
+		SSshuttle.moveShuttle("perseus_transfer", "perseus_transfer_home", 0)
+	var/obj/docking_port/stationary/D = SSshuttle.getDock("perseus_transfer_away")
+	if(D)
+		qdel(D,force = TRUE)
+	return 1
 
 /*
 **Prison Shuttle

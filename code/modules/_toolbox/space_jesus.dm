@@ -3,6 +3,7 @@
 	status_flags = GODMODE//|GOTTAGOREALLYFAST|IGNORESLOWDOWN these 2 removed. fix later
 	anchored = 1
 	incorporeal_move = 1
+	omnipotent_access = 1
 
 /mob/living/carbon/human/jesus/update_canmove()
 	..()
@@ -58,6 +59,8 @@
 	else
 		to_chat(src,"You are now corporeal.")
 
+/mob
+	var/omnipotent_access = 0
 /mob/living/carbon/human/jesus/New()
 	..()
 	name = "Space Jesus"
@@ -170,27 +173,15 @@
 /datum/admins/proc/space_jesus()
 	set name = "Space Jesus"
 	set category = "Special Verbs"
-	if(!istype(usr,/mob/dead/observer))
-		to_chat(usr,"You must be a ghost for this.")
-		return
-	for(var/mob/living/carbon/human/jesus/J in world)
-		to_chat(usr,"Space Jesus already walks the earth(controlled by [J.key]). There is only one Space Jesus!")
-		return
-	if(!isturf(usr.loc))
-		to_chat(usr,"Can't spawn Space Jesus here.")
-		return
 	var/userckey = usr.ckey
 	var/confirm = alert(usr,"Do you wish to become Space Jesus?","Space Jesus","Yes","Cancel")
 	if(confirm != "Yes")
 		return
-	if(!istype(usr,/mob/dead/observer) || usr.ckey != userckey)
-		to_chat(usr,"You must be a ghost for this.")
-		return
-	for(var/mob/living/carbon/human/jesus/J in world)
-		to_chat(usr,"Space Jesus already walks the earth(controlled by [J.key]). There is only one Space Jesus!")
-		return
 	if(!isturf(usr.loc))
 		to_chat(usr,"Can't spawn Space Jesus here.")
+		return
+	if(!istype(usr,/mob/dead/observer) || usr.ckey != userckey)
+		to_chat(usr,"You must be a ghost for this.")
 		return
 	usr.jesusify()
 

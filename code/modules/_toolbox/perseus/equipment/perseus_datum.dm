@@ -64,15 +64,22 @@
 //This is the replacement for the implant, a datum connected to a mobs mind -falaskian
 
 /var/global/list/perseus_datums = list()
+
+//Condition flags for the state of a perseus character
+#define PERCSSD (1<<0)
+#define PERCCRIT (1<<1)
+#define PERCDEAD (1<<2)
+
 /datum/extra_role/perseus
 	access = list(ACCESS_PERSEUS_ENFORCER, ACCESS_BRIG,ACCESS_SEC_DOORS, ACCESS_COURT, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE, ACCESS_MEDICAL,
 	ACCESS_CONSTRUCTION, ACCESS_MAILSORTING, ACCESS_ENGINE, ACCESS_RESEARCH, ACCESS_SECURITY)
-	var/critical_condition = 0
+	var/condition = 0
 	var/perc_identifier = "ERROR"
 	var/datum/mind/owner_mind = null
 	var/list/action_datums = list(/datum/action/padrenal,/datum/action/pdoors) //must be /datum/action -falaskian
 	var/list/active_actions = list()
 	var/iscommander = 0
+	var/list/handled_client_images = list()
 
 /datum/extra_role/perseus/on_gain(mob/living/user,announce = 1)
 	perseus_datums[src] = affecting
@@ -94,6 +101,7 @@
 		active_actions -= A
 		if(A.owner == user)
 			qdel(A)
+	handle_client_images(1)
 	perseus_datums.Remove(src)
 	return ..()
 
@@ -150,7 +158,10 @@
 		affecting.memory = ""
 		to_chat(affecting.current, "<span class='userdanger'>You remember nothing.</span>")
 		to_chat(affecting.current, "<span class='notice'>Your memories have been wiped clean. If you were previously an antagonist, you no longer are.</span>")
-		to_chat(affecting.current, "<span class='notice'>You are now a Perseus Enforcer. Follow the SOP and listen to Perseus Commanders.</span>")
+		var/perseustext = "You are a Perseus Enforcer. Follow and obey the SOP as well as your Perseus Commander should one be present."
+		if(iscommander)
+			perseustext = "You are the Perseus Commander, you command the Mycenae III and other Perseus Enforcers. Follow and obey the SOP. You answer only to Nanotransen Offials."
+		to_chat(affecting.current, "<span class='notice'>[perseustext]</span>")
 
 /datum/extra_role/perseus/proc/clear_implants()
 	if(!affecting || !affecting.current)
@@ -166,6 +177,17 @@
 	if(found_imp)
 		to_chat(affecting.current, "<span class='warning'>All foreign implants destroyed.</span>")
 
+/var/global/list/perseus_client_imaged_machines = list()
+/datum/extra_role/perseus/proc/handle_client_images(wipe_only = 0)
+	if(affecting && affecting.current && affecting.current.client)
+		for(var/image/I in handled_client_images)
+			affecting.current.client -= I
+		if(!wipe_only)
+			for(var/atom/movable/A in perseus_client_imaged_machines)
+				var/image/I = perseus_client_imaged_machines[A]
+				if(istype(I))
+					affecting.current.client.images += I
+
 /datum/extra_role/perseus/process()
 	if(!istype(affecting) || !affecting.current)
 		return
@@ -173,23 +195,38 @@
 		return
 	clear_implants()
 	clear_antag()
+	handle_client_images()
 	if(affecting.current.health > 0 && affecting.current.stat != DEAD)
-		if(critical_condition > initial(critical_condition))
-			critical_condition = 0
+		if(condition & PERCCRIT || condition & PERCDEAD)
+			condition &= ~PERCCRIT
+			condition &= ~PERCDEAD
 			perseusAlert("Lifesigns Alert","[affecting.current.name] is no longer in critical condition.", 3)
+		var/isssd = 0
+		if(!affecting.current.client)
+			isssd = 1
+			for(var/mob/dead/observer/O in world)
+				if(O.mind && O.mind == affecting && O.can_reenter_corpse)
+					isssd = 0
+					break
+		if(isssd && !(condition & PERCSSD))
+			condition |= PERCSSD
+			perseusAlert("Status Alert","[affecting.current.name]'s mind has become inactive.", 1)
+		else if(!isssd && condition & PERCSSD)
+			condition &= ~PERCSSD
+			perseusAlert("Status Alert","[affecting.current.name]'s mind has become active again.", 3)
 	else
 		var/do_alert = 0
-		if(affecting.current.stat == DEAD && critical_condition != 2)
-			critical_condition = 2
+		if(affecting.current.stat == DEAD && !(condition & PERCDEAD))
+			condition |= PERCDEAD
 			do_alert = 1
-		else if(affecting.current.health <= 0 && critical_condition != 1)
-			critical_condition = 1
+		else if(affecting.current.health <= 0 && affecting.current.stat != DEAD && !(condition & PERCCRIT))
+			condition |= PERCCRIT
 			do_alert = 1
 		if(do_alert)
 			var/area/current_area = get_area(affecting.current)
 			var/turf/current_turf = get_turf(affecting.current)
 			if(current_area)
-				perseusAlert("Lifesigns Alert","[affecting.current.name] is [affecting.current.stat == 1 ? "in critical condition" : "dead"]! Location: [current_area.name] ([current_turf.x],[current_turf.y],[current_turf.z])", 2)
+				perseusAlert("Lifesigns Alert","[affecting.current.name] is [affecting.current.stat == DEAD ? "dead" : "in critical condition"]! Location: [current_area.name] ([current_turf.x],[current_turf.y],[current_turf.z])", 2)
 
 // *****************
 // PERSEUS ADRENAL

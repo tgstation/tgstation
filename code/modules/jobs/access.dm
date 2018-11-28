@@ -1,6 +1,8 @@
 
 //returns TRUE if this mob has sufficient access to use this object
 /obj/proc/allowed(mob/M)
+	if(M.omnipotent_access)
+		return TRUE
 	//check if it doesn't require any access at all
 	if(src.check_access(null))
 		return TRUE
@@ -18,11 +20,11 @@
 					return TRUE
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		//if they are holding or wearing a card that has access, that works
 		if(istype(H.implants,/list))
 			for(var/obj/item/implant/I in H.implants)
 				if(check_access(I))
 					return TRUE
+		//if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_held_item()) || src.check_access(H.wear_id))
 			return TRUE
 	else if(ismonkey(M) || isalienadult(M))
