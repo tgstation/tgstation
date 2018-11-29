@@ -9,8 +9,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-GLOBAL_VAR_INIT(broken_sparks_min, 3 SECONDS)
-GLOBAL_VAR_INIT(broken_sparks_max, 10 SECONDS)
+#define BROKEN_SPARKS_MIN 15 SECONDS
+#define BROKEN_SPARKS_MAX 30 SECONDS
 
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
@@ -373,7 +373,7 @@ GLOBAL_VAR_INIT(broken_sparks_max, 10 SECONDS)
 	if(status == LIGHT_BROKEN && has_power())
 		if(!start_only)
 			do_sparks(3, TRUE, src)
-		var/delay = rand(GLOB.broken_sparks_min, GLOB.broken_sparks_max)
+		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
 		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process()
