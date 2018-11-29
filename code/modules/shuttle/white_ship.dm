@@ -44,12 +44,6 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Initialize()
 	. = ..()
 	GLOB.jam_on_wardec += src
-	for(var/V in SSshuttle.stationary)
-		if(!V)
-			continue
-		var/obj/docking_port/stationary/S = V
-		if(jumpto_ports[S.id])
-			z_lock |= S.z
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/whiteship/Destroy()
 	GLOB.jam_on_wardec -= src
