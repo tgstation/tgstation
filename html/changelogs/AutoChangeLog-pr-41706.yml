@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - spellcheck: "Added an examine message to clone pods which shows that you can link them via multitool."
