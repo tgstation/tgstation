@@ -337,7 +337,7 @@
 		return
 	if(reac_volume < 1)
 		return
-	new/obj/effect/decal/cleanable/salt(T)
+	new/obj/effect/decal/cleanable/food/salt(T)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -484,7 +484,7 @@
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
-		var/obj/effect/decal/cleanable/flour/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
+		var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(T)
 		reagentdecal = locate() in T //Might have merged with flour already there.
 		if(reagentdecal)
 			reagentdecal.reagents.add_reagent("flour", reac_volume)

@@ -84481,7 +84481,7 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "wmt" = (
-/obj/effect/decal/cleanable/flour,
+/obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "wtq" = (
