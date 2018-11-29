@@ -75,6 +75,6 @@ if [ "$BUILD_TOOLS" = false ]; then
 		DreamDaemon tgstation.dmb -close -trusted -verbose -params "test-run&log-directory=travis"
 		cd ..
 		cat travis_test/data/logs/travis/clean_run.lk
-
+		cat travis_test/data/logs/travis/sql.log
 	fi;
 fi;
