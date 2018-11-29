@@ -81,6 +81,14 @@
 	nodamage = 1
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
+/obj/item/projectile/magic/door/prehit(atom/A)
+	. = ..()
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [M]!</span>")
+			return
+
 /obj/item/projectile/magic/door/on_hit(atom/target)
 	. = ..()
 	if(istype(target, /obj/machinery/door))
@@ -309,14 +317,15 @@
 	dismemberment = 50
 	nodamage = 0
 
-/obj/item/projectile/magic/spellblade/on_hit(target)
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			qdel(src)
-			return
+/obj/item/projectile/magic/spellblade/prehit(atom/A)
 	. = ..()
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [M]!</span>")
+			damage = 0
+			dismemberment = 0
+			return
 
 /obj/item/projectile/magic/arcane_barrage
 	name = "arcane bolt"
@@ -328,15 +337,14 @@
 	flag = "magic"
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
-/obj/item/projectile/magic/arcane_barrage/on_hit(target)
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			qdel(src)
-			return
+/obj/item/projectile/magic/arcane_barrage/prehit(atom/A)
 	. = ..()
-
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes in a small burst of energy on contact with [M]!</span>")
+			damage = 0
+			return
 
 /obj/item/projectile/magic/locker
 	name = "locker bolt"
@@ -453,14 +461,17 @@
 		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]", time = INFINITY, maxdistance = INFINITY)
 	..()
 
+/obj/item/projectile/magic/aoe/lightning/prehit(atom/A)
+	. = ..()
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [M]!</span>")
+			damage = 0
+			return
+
 /obj/item/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
-			qdel(src)
-			return
 	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
 	qdel(src)
 
@@ -481,12 +492,20 @@
 	var/exp_flash = 3
 	var/exp_fire = 2
 
+/obj/item/projectile/magic/aoe/fireball/prehit(atom/A)
+	. = ..()
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes into smoke on contact with [M]!</span>")
+			damage = 0
+			return
+
 /obj/item/projectile/magic/aoe/fireball/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.anti_magic_check())
-			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
 			return
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
@@ -504,6 +523,7 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.anti_magic_check())
+			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
 			return
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)

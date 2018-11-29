@@ -4,3 +4,12 @@
 	icon_state = "spellcard"
 	damage_type = BURN
 	damage = 2
+
+/obj/item/projectile/spellcard/prehit(atom/A)
+	. = ..()
+	if(ismob(A))
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] burns up and vanishes on contact with [M]!</span>")
+			damage = 0
+			return
