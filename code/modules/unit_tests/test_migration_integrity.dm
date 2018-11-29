@@ -16,8 +16,8 @@
             highest_minor = test.schema_version_minor
 
         var/versionString = "[test.schema_version_major].[test.schema_version_minor]"
-        if(test.schema_version_major < 4 || (test.schema_version_major == 4 && test.schema_version_minor))
-            Fail("Migration [I] has schema version <= 4.7 ([versionString]) which is a legacy schema version!")
+        if(test.schema_version_major < 4 || (test.schema_version_major == 4 && test.schema_version_minor < 7))
+            Fail("Migration [I] has schema version < 4.7 ([versionString]) which is a legacy schema version!")
 
         if(seenVersions[versionString])
             Fail("Both [I] and [seenVersions[versionString]] have the same schema version ([versionString])!")
