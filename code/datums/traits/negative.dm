@@ -332,3 +332,9 @@
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+
+/datum/quirk/unlucky
+	name = "Unlucky"
+	desc = "Whenever something goes wrong, it always seems to be you."
+	value = -1
+	mob_trait = TRAIT_UNLUCKY

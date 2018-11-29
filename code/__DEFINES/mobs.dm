@@ -278,3 +278,6 @@
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define POSITIVE_EVENT "positive-event"
+#define NEGATIVE_EVENT "negative-event"

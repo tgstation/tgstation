@@ -458,3 +458,31 @@ GLOBAL_LIST_EMPTY(species_list)
 		chosen = pick(mob_spawn_meancritters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
+
+/proc/apply_luck(list/moblist, type=POSITIVE_EVENT)
+	var/list/applied_luck = list()
+	for(var/m in shuffle(moblist))
+		var/mob/M = m
+
+		if(!M.has_trait(TRAIT_LUCKY) && !M.has_trait(TRAIT_UNLUCKY))
+			applied_luck += M
+		// Good and bad luck cancel each other out.
+		else if(M.has_trait(TRAIT_LUCKY) && M.has_trait(TRAIT_UNLUCKY))
+			applied_luck += M
+
+		else if(M.has_trait(TRAIT_LUCKY))
+			if(type == POSITIVE_EVENT)
+				applied_luck += list(M, M)
+
+			if(type == NEGATIVE_EVENT)
+				if(prob(50))
+					applied_luck += M
+
+		else if(M.has_trait(TRAIT_UNLUCKY))
+			if(type == POSITIVE_EVENT)
+				if(prob(50))
+					applied_luck += M
+			if(type == NEGATIVE_EVENT)
+				applied_luck += list(M, M)
+
+	. = applied_luck

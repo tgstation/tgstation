@@ -148,3 +148,9 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
+
+/datum/quirk/lucky
+	name = "Lucky"
+	desc = "Statistically, bad things tend to happen to you less than other people."
+	value = 1
+	mob_trait = TRAIT_LUCKY
