@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
-	. = ..()
+	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
