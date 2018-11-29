@@ -1,0 +1,6 @@
+author: "Floyd / Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "New medals for being the best clown car driver"
+  - rscadd: "You can now thank the clown car driver"
+  - code_imp: "changes usr to user somewhere because seeing usr triggers my bones"
