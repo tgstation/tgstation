@@ -63,7 +63,7 @@
 		return
 
 	if(do_spin())
-		playsound(usr, get_sfx("revolver_spin"), 30, FALSE)
+		playsound(usr, "revolver_spin", 30, FALSE)
 		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
