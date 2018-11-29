@@ -1139,7 +1139,7 @@
 	return TRUE
 
 /mob/living/display_output(sound/S, image/I)
-	..()
+	. = ..()
 	if(I && audiolocation)
 		client.images += I
 		addtimer(CALLBACK(src, .proc/remove_image, I), 7)
