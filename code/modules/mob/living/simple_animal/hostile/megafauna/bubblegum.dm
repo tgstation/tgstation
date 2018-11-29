@@ -38,11 +38,9 @@ Difficulty: Hard
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
-	move_to_delay = 10
-	vision_range = 20
-	aggro_vision_range = 20
-	rapid_melee = 8 // every quarter second
-	melee_queue_distance = 20 // as far as the aggro vision range is
+	move_to_delay = 5
+	rapid_melee = 16 // every 1/8 second
+	melee_queue_distance = 20 // as far as possible really, need this because of blood warp
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
@@ -50,6 +48,7 @@ Difficulty: Hard
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/turf/charging = null
+	var/enrage_till = null
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -88,22 +87,18 @@ Difficulty: Hard
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
 
-	var/warped = FALSE
 	if(!try_bloodattack())
-		warped = blood_warp()
-		if(warped && prob(100 - anger_modifier))
+		INVOKE_ASYNC(src, .proc/blood_spray, 10 + anger_modifier)
+		if(blood_warp() && prob(25))
+			if(health <= maxHealth * 0.5)
+				INVOKE_ASYNC(src, .proc/ground_slam)
 			return
 
-	if(prob(90) || slaughterlings())
-		if(health > maxHealth * 0.5)
-			charge()
-		else
-			if(prob(70) || warped)
-				charge()
-				charge()
-				charge()
-			else
-				warp_charge()
+	if(health > maxHealth * 0.5)
+		charge()
+	else
+		charge()
+		INVOKE_ASYNC(src, .proc/ground_slam)
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
@@ -132,6 +127,17 @@ Difficulty: Hard
 		if(.)
 			recovery_time = world.time + 20 // can only attack melee once every 2 seconds but rapid_melee gives higher priority
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/item/projectile/P)
+	if(is_enraged())
+		visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+		return 0
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/ex_act(severity, target)
+	if(severity >= EXPLODE_LIGHT)
+		return
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
 	if(!charging)
@@ -148,10 +154,6 @@ Difficulty: Hard
 	if(charging)
 		DestroySurroundings()
 	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/warp_charge()
-	blood_warp()
-	charge()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
 	var/turf/T = get_turf(target)
@@ -180,7 +182,7 @@ Difficulty: Hard
 			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
 			src.forceMove(get_turf(L))
 			L.apply_damage(40, BRUTE)
-			L.Stun(10)
+			L.Paralyze(10)
 			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 			shake_camera(L, 4, 3)
 			shake_camera(src, 2, 3)
@@ -293,15 +295,57 @@ Difficulty: Hard
 /obj/effect/temp_visual/bubblegum_hands/leftsmack
 	icon_state = "leftsmack"
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/ground_slam(var/range = 4)
+	if(!target)
+		return
+	visible_message("<span class='boldwarning'>Bubblegum raises his hands in the air to slam down!</span>")
+	var/turf/orgin = get_ranged_target_turf(get_turf(src), get_dir(src, target), min(2, get_dist(src, target)))
+	new /obj/effect/temp_visual/bubblegum_slam_target(orgin)
+	sleep(8)
+	for(var/mob/M in range(10,orgin))
+		if(M.client)
+			shake_camera(M, 4, 3)
+	playsound(src, 'sound/effects/explosion_distant.ogg', 300, 1, 5)
+	var/list/hitby = list()
+	for(var/i = 0 to range)
+		for(var/turf/T in RANGE_TURFS(i, orgin))
+			playsound(T,'sound/effects/bamf.ogg', 300, 1, 5)
+			if(ismineralturf(T))
+				var/turf/closed/mineral/M = T
+				M.gets_drilled()
+			new /obj/effect/temp_visual/small_smoke/halfsecond(T)
+			for(var/mob/living/L in T)
+				if(istype(L, /mob/living/simple_animal/hostile/megafauna/bubblegum) || locate(L) in hitby)
+					continue
+				hitby += L
+				to_chat(L, "<span class='userdanger'>[src]'s ground slam shockwave sends you flying!</span>")
+				var/turf/thrownat = get_ranged_target_turf(L, get_dir(orgin, L), 6)
+				L.throw_at(thrownat, get_dist(L, thrownat), 1, src, 1)
+				L.apply_damage(20, BRUTE)
+				L.Paralyze(5) // mostly for the visual effect
+				shake_camera(L, 4, 3)
+		sleep(1)
+	return
+
+/obj/effect/temp_visual/bubblegum_slam_target
+	icon = 'icons/mob/actions/actions_items.dmi'
+	icon_state = "sniper_zoom"
+	layer = FLY_LAYER
+	light_range = 2
+	duration = 8
+
+/obj/effect/temp_visual/bubblegum_slam_target/ex_act()
+	return
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
-	if(Adjacent(target) || move_to_delay != initial(move_to_delay))
+	if(Adjacent(target) || is_enraged())
 		return FALSE
 	var/list/can_jaunt = get_pools(get_turf(src), 1)
 	if(!can_jaunt.len)
 		return FALSE
 
-	var/list/pools = get_pools(get_turf(target), 2)
-	var/list/pools_to_remove = get_pools(get_turf(target), 1)
+	var/list/pools = get_pools(get_turf(target), 4)
+	var/list/pools_to_remove = get_pools(get_turf(target), 2)
 	pools -= pools_to_remove
 	if(!pools.len)
 		return FALSE
@@ -327,17 +371,51 @@ Difficulty: Hard
 		forceMove(get_turf(found_bloodpool))
 		playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 		visible_message("<span class='danger'>And springs back out!</span>")
-		INVOKE_ASYNC(src, .proc/blood_speed)
+		INVOKE_ASYNC(src, .proc/blood_enrage)
 		return TRUE
 	return FALSE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_speed()
-	move_to_delay = 3
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage()
+	enrage_till = world.time + 30
+	change_move_delay(initial(move_to_delay) / 2) // double move speed
 	var/newcolor = rgb(149, 10, 10)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
-	sleep(60)
-	move_to_delay = initial(move_to_delay)
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
+	addtimer(cb, 30)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(var/newcolor = rgb(149, 10, 10))
+	if(!is_enraged())
+		change_move_delay()
+		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/is_enraged()
+	return (enrage_till > world.time)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/change_move_delay(var/newmove = initial(move_to_delay))
+	move_to_delay = newmove
+	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray(var/range = 10, var/atom/shootat = target)
+	if(!shootat)
+		return
+	var/angle = ATAN2(shootat.x - src.x, shootat.y - src.y) // angle to the target
+	var/turf/end = get_turf(src)
+	for(var/i = 1 to range)
+		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
+		if(!check)
+			break
+		end = check
+	var/list/toaffect = getline(src, end)
+	if(!toaffect.len || toaffect.len < 2)
+		return
+	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
+	for(var/i = 2 to toaffect.len)
+		var/turf/J = toaffect[i]
+		var/turf/previousturf = toaffect[i - 1]
+		new /obj/effect/temp_visual/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
+		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
+		new /obj/effect/decal/cleanable/blood(J)
+		sleep((previousturf.x - J.x == 0 || previousturf.y - J.y == 0) ? 0.5 : 1) // diagonals take longer
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_pools(turf/T, range)
 	. = list()
