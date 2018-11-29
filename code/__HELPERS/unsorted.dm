@@ -1545,8 +1545,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	if(config_setting == null || !world.TgsAvailable())
 		return
 
-	var/datum/tgs_version = world.TgsVersion()
-	if(config_setting == "" || tgs_version.suite == 3)
+	var/datum/tgs_version/version = world.TgsVersion()
+	if(config_setting == "" || version.suite == 3)
 		world.TgsTargetedChatBroadcast(message, FALSE)
 		return
 

@@ -112,11 +112,12 @@
 	var/suite			//The suite version, can be >=3
 
 	//this group of variables can be null to represent a wild card
-	var/major			//The major version
-	var/minor			//The minor version
-	var/patch			//The patch version
+	var/major					//The major version
+	var/minor					//The minor version
+	var/patch					//The patch version
 
-	var/raw_parameter	//The unparsed parameter
+	var/raw_parameter			//The unparsed parameter
+	var/deprefixed_parameter	//The version only bit of raw_parameter
 
 //if the tgs_version is a wildcard version
 /datum/tgs_version/proc/Wildcard()

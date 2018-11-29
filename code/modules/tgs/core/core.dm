@@ -17,7 +17,7 @@
 		return
 
 	var/api_datum
-	switch(version.super)
+	switch(version.suite)
 		if(3)
 #ifndef TGS_V3_API
 			TGS_ERROR_LOG("Detected V3 API but TGS_V3_API isn't defined!")
@@ -31,15 +31,15 @@
 				if(0)
 					api_datum = /datum/tgs_api/v4
 
-	if(version.super != null && version.major != null && version.minor != null && version.patch != null && parsing > TgsMaximumAPIVersion())
+	if(version.suite != null && version.major != null && version.minor != null && version.patch != null && version.deprefixed_parameter > TgsMaximumAPIVersion())
 		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
 		api_datum = /datum/tgs_api/latest
 
 	if(!api_datum)
-		TGS_ERROR_LOG("Found unsupported API version: [tgs_version]. If this is a valid version please report this, backporting is done on demand.")
+		TGS_ERROR_LOG("Found unsupported API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
 		return
 
-	TGS_INFO_LOG("Activating API for version [tgs_version]")
+	TGS_INFO_LOG("Activating API for version [version.deprefixed_parameter]")
 	var/datum/tgs_api/new_api = new api_datum(version)
 
 	TGS_WRITE_GLOBAL(tgs, new_api)
