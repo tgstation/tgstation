@@ -101,8 +101,8 @@
 	var/turf/turf_B = get_turf(B)
 
 	//TODO: add a sound effect or visual effect
-	if(do_teleport(A, turf_B, force_teleport = TRUE))
-		do_teleport(B, turf_A, force_teleport = TRUE)
+	if(do_teleport(A, turf_B, forceMove = TRUE, channel = TELEPORT_CHANNEL_QUANTUM))
+		do_teleport(B, turf_A, forceMove = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 		if(ismob(B))
 			var/mob/M = B
 			to_chat(M, "<span class='warning'>[linked_swapper] suddenly activates, and you find yourself somewhere else.</span>")
