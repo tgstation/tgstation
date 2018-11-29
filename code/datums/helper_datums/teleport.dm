@@ -37,7 +37,7 @@
 					var/mob/living/MM = teleatom
 					to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
 
-	if(istype(teleatom, /obj/item/reagent_containers/food/snacks/store/bread))
+	if(TELEPORT_CHANNEL_QUANTUM && istype(teleatom, /obj/item/reagent_containers/food/snacks/store/bread) && prob(5))
 		new /mob/living/simple_animal/hostile/yeast_beast(get_turf(destination)) //so we're fine, as long as nobody teleports any bread
 		qdel(teleatom)
 

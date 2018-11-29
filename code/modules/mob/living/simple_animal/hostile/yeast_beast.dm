@@ -23,8 +23,7 @@
 	melee_damage_upper = 5
 	attacktext = "bites"
 	faction = list("hostile")
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = "sound/weapons/bite.ogg"
 	speak_emote = list("oozes")
 	gold_core_spawnable = NO_SPAWN
-	death_sound = 'sound/misc/splort.ogg'
 	deathmessage = "crumples to the ground, green dough oozing from its maw."
