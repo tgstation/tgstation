@@ -27,7 +27,7 @@
 			if(istype(parent, /obj/item/clothing/shoes))
 				RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
-	squeak_datum = GLOB.outputs_list[custom_datum]
+	squeak_datum = SSoutputs.outputs[custom_datum]
 	if(chance_override)
 		squeak_chance = chance_override
 	if(volume_override)

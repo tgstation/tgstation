@@ -1,32 +1,31 @@
-GLOBAL_LIST_EMPTY(outputs_list)
-
 //NOTE: When adding new sounds here, check to make sure they haven't been added already via CTRL + F.
 
 /datum/outputs
 	var/text = ""
 	var/list/sounds = list('sound/items/airhorn.ogg'=1) //weighted, put multiple for random selection between sounds
-	var/list/icon = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
+	var/image/stored_image
 
 /datum/outputs/New()
-	GLOB.outputs_list[type] = src
+	stored_image = image('icons/sound_icon.dmi', ,"circle", HUD_LAYER)
+	SSoutputs.outputs[type] = src
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
-	var/sound/S
+	var/sound/sound_output
 	//Pick sound
 	if(sounds.len)
 		var/soundin = pickweight(sounds)
-		S = sound(get_sfx(soundin))
+		sound_output = sound(get_sfx(soundin))
 	//Process sound
-	if(S)
-		S.wait = 0 //No queue
-		S.channel = channel || open_sound_channel()
-		S.volume = vol
+	if(sound_output)
+		sound_output.wait = 0 //No queue
+		sound_output.channel = channel || open_sound_channel()
+		sound_output.volume = vol
 
 		if(vary)
 			if(frequency)
-				S.frequency = frequency
+				sound_output.frequency = frequency
 			else
-				S.frequency = get_rand_frequency()
+				sound_output.frequency = get_rand_frequency()
 
 		if(isturf(turf_source))
 			var/turf/T = get_turf(receiver)
@@ -34,7 +33,7 @@ GLOBAL_LIST_EMPTY(outputs_list)
 			//sound volume falloff with distance
 			var/distance = get_dist(T, turf_source)
 
-			S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
+			sound_output.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
 
 			if(pressure_affected)
 				//Atmosphere affects sound
@@ -52,26 +51,28 @@ GLOBAL_LIST_EMPTY(outputs_list)
 				if(distance <= 1)
 					pressure_factor = max(pressure_factor, 0.15) //touching the source of the sound
 
-				S.volume *= pressure_factor
+				sound_output.volume *= pressure_factor
 				//End Atmosphere affecting sound
 
-			if(S.volume <= 0)
+			if(sound_output.volume <= 0)
 				return //No sound
 
 			var/dx = turf_source.x - T.x // Hearing from the right/left
-			S.x = dx
+			sound_output.x = dx
 			var/dz = turf_source.y - T.y // Hearing from infront/behind
-			S.z = dz
+			sound_output.z = dz
 			// The y value is for above your head, but there is no ceiling in 2d spessmens.
-			S.y = 1
-			S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
+			sound_output.y = 1
+			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	//Process icon
-	var/image/I = image(icon[1], turf_source, icon[2], icon[3])
-	if(S && vol)
-		I.alpha = I.alpha * (vol / 100)
+	if(stored_image)
+		stored_image.loc = turf_source
+		stored_image.alpha = 255 //reset alpha to 255 since we'll be reusing this image every time
+		if(sound_output && vol)
+			stored_image.alpha = stored_image.alpha * (vol / 100)
 
-	receiver.display_output(S, I, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	receiver.display_output(sound_output, stored_image, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."

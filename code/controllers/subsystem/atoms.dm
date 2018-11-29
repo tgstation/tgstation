@@ -17,7 +17,6 @@ SUBSYSTEM_DEF(atoms)
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	setupGenetics() //to set the mutations' place in structural enzymes, so monkey.initialize() knows where to put the monkey mutation.
-	setupOutputs()
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	return ..()
@@ -126,10 +125,6 @@ SUBSYSTEM_DEF(atoms)
 		else if(B.quality == MINOR_NEGATIVE)
 			GLOB.not_good_mutations |= B
 		CHECK_TICK
-
-/datum/controller/subsystem/atoms/proc/setupOutputs()
-	for(var/A in subtypesof(/datum/outputs))
-		new A()
 
 /datum/controller/subsystem/atoms/proc/InitLog()
 	. = ""

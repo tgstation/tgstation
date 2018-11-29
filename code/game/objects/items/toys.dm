@@ -991,7 +991,7 @@
 
 /obj/item/toy/nuke/Initialize()
 	. = ..()
-	output = GLOB.outputs_list[/datum/outputs/alarm]
+	output = SSoutputs.outputs[/datum/outputs/alarm]
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
