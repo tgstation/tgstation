@@ -474,6 +474,19 @@
 		M.adjustInternalLoss(-3*REM, 0)
 		. = 1
 	..()
+	
+/datum/reagent/medicine/combat_viscosine
+	name = "Combat Viscosine"
+	id = "combat_viscosine"
+	description = "An expensive viscosine variant that is effective even during physical activity."
+	reagent_state = LIQUID
+	color = "#8b3333"
+	taste_description = "plastic"
+
+/datum/reagent/medicine/combat_viscosine/on_mob_life(mob/living/carbon/M)
+	M.adjustInternalLoss(-1.5*REM, 0)
+	. = 1
+	..()
 
 /datum/reagent/medicine/potass_iodide
 	name = "Potassium Iodide"

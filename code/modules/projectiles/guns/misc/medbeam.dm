@@ -118,6 +118,7 @@
 	target.adjustFireLoss(-4)
 	target.adjustToxLoss(-1)
 	target.adjustOxyLoss(-1)
+	target.adjustInternalLoss(-1)
 	return
 
 /obj/item/gun/medbeam/proc/on_beam_release(var/mob/living/target)
