@@ -37,6 +37,7 @@
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
+#define TRAIT_INTERNALIMMUNE	"internal_immune"
 #define TRAIT_ANTIMAGIC			"anti_magic"
 #define TRAIT_HOLY				"holy"
 #define TRAIT_DEPRESSION		"depression"

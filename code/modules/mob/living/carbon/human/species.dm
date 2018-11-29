@@ -714,9 +714,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.has_trait(TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
+	
+	if(H.has_trait(TRAIT_INTERNALIMMUNE))
+		H.setInternalLoss(0)
 
-	var/takes_crit_damage = (!H.has_trait(TRAIT_NOCRITDAMAGE))
-	if((H.health < H.crit_threshold) && takes_crit_damage)
+	else if((H.health < H.crit_threshold) && !H.has_trait(TRAIT_NOCRITDAMAGE))
 		H.adjustInternalLoss(0.5)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)

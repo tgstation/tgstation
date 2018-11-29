@@ -1147,6 +1147,7 @@
 
 /datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
 	M.heal_bodypart_damage(5,5)
+	M.adjustInternalLoss(-3)
 	..()
 	return TRUE
 
