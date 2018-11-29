@@ -459,7 +459,7 @@
 //Heavy hits to the chest cause internal damage
 /obj/item/bodypart/chest/receive_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
 	var/internal = 0
-	if(brute >= INTERNAL_DAMAGE_THRESHOLD)
+	if(brute >= INTERNAL_DAMAGE_THRESHOLD && !owner.has_trait(TRAIT_INTERNALIMMUNE))
 		internal = brute / 3
 		brute -= internal
 	. = ..()
