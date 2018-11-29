@@ -1,0 +1,4 @@
+author: "YPOQ"
+delete-after: True
+changes: 
+  - bugfix: "Fixed an issue that could cause a tesla ball submitted for the tesla ball bounty to not be deleted"
