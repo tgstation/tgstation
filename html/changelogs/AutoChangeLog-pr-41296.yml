@@ -1,4 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - rscadd: "Blobs can now upgrade their strong blobs to reflect projectiles at the cost of their normal health and extra brute resistance."

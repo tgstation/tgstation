@@ -132,6 +132,13 @@
 	tastes = list("brains" = 1, "meat" = 1)
 	foodtype = RAW | MEAT | TOXIC
 
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
+	icon_state = "etherealmeat"
+	desc = "So shiny you feel like ingesting it might make you shine too"
+	filling_color = "#97ee63"
+	list_reagents = list("liquidelectricity" = 3)
+	tastes = list("pure electrictiy" = 2, "meat" = 1)
+	foodtype = RAW | MEAT | TOXIC
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
 

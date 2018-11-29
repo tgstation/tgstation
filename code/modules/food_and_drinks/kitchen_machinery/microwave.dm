@@ -314,7 +314,6 @@
 	icon_state = "mwb" // Make it look all busted up and shit
 	visible_message("<span class='warning'>The microwave breaks!</span>") //Let them know they're stupid
 	broken = 2 // Make it broken so it can't be used util fixed
-	flags_1 = null //So you can't add condiments
 	operating = FALSE // Turn it off again aferwards
 	updateUsrDialog()
 	set_light(0)

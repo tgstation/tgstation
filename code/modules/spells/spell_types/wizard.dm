@@ -363,7 +363,7 @@
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
+/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom

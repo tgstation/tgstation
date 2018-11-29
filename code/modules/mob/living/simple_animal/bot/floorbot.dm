@@ -11,7 +11,7 @@
 	spacewalk = TRUE
 
 	radio_key = /obj/item/encryptionkey/headset_eng
-	radio_channel = "Engineering"
+	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
 	bot_core = /obj/machinery/bot_core/floorbot
