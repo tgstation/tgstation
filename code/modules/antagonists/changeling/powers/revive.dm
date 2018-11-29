@@ -8,7 +8,7 @@
 
 //Revive from revival stasis
 /obj/effect/proc_holder/changeling/revive/sting_action(mob/living/carbon/user)
-	..()
+	. = ..()
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = 1)
 	var/list/missing = user.get_missing_limbs()
