@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
-		SSmedals.UnlockMedal(MEDAL_PULSE, usr.client)
+		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
 
 	if(!contents.len)
 		var/prizeselect
