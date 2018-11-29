@@ -1,5 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Spraying holy water on tiles will now prevent cult-based teleportation from using them as a destination point."
-  - tweak: "Quantum, wormhole and magic teleportation is no longer disrupted by bags of holding."

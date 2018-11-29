@@ -1,6 +1,0 @@
-author: "Qustinnus / Floyd / Ethereal sprites by Space, is that it? / Alerts and food sprites by MrDroppodBringer"
-delete-after: True
-changes: 
-  - rscadd: "Adds Ethereal; a race which lives off of electricity and shines bright. If they are healthy they shine a bright green light, and the more damaged they are, the less they shine and the greyer they become. Their punches do burn damage and they are weak to blunt attacks!
-They dont need to eat normal food and dont have nutrition, Instead they gain charge by going into borg rechargers, eating ethereal food or doign specific interactions."
-  - refactor: "all nutrition changes now go through a proc so we can override behavior"

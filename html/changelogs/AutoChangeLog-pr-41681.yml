@@ -1,4 +1,0 @@
-author: "YoYoBatty"
-delete-after: True
-changes: 
-  - code_imp: "turn_off proc for jetpack wasn't having user being sent in argument."

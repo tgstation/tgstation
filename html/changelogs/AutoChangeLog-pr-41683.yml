@@ -1,6 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - balance: "Double capacity emergency tanks are no longer available on stations, regular shuttles and free escape shuttles. They have been replaced with standard emergency oxygen tanks."
-  - balance: "The Curator's NASA set contains a full-sized oxygen tank instead of a compact double emergency oxygen tank."
-  - balance: "Death Squads now start with double capacity oxygen tanks instead of regular oxygen tanks."

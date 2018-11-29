@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "AIs that get upgraded with a combat software upgrade now see a reminder that this doesn't change their laws or antagonist status."
-  - admin: "Added logging and an admin follow message to AI combat/surveillance software upgrades."
