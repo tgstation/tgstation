@@ -9,8 +9,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-GLOBAL_VAR_INIT(broken_sparks_min, 30)
-GLOBAL_VAR_INIT(broken_sparks_max, 100)
+GLOBAL_VAR_INIT(broken_sparks_min, 3 SECONDS)
+GLOBAL_VAR_INIT(broken_sparks_max, 10 SECONDS)
 
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
