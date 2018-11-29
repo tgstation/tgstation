@@ -333,6 +333,7 @@
 
 	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
 	cached_gases[/datum/gas/miasma][MOLES] += 0.02
+	miasma_turf.air_update_turf()
 
 /mob/living/carbon/proc/handle_blood()
 	return
