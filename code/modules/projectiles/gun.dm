@@ -19,6 +19,8 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
+	var/vary_fire_sound = TRUE
+	var/fire_sound_volume = 50
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
 	var/can_unsuppress = TRUE
@@ -146,9 +148,9 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, fire_sound, 10, TRUE)
+		playsound(user, fire_sound, 10, vary_fire_sound)
 	else
-		playsound(user, fire_sound, 50, TRUE)
+		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
 			if(pointblank)
 				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -476,8 +478,15 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
+/obj/item/gun/pickup(mob/user)
+	..()
+	if(azoom)
+		azoom.Grant(user)
+
 /obj/item/gun/dropped(mob/user)
 	. = ..()
+	if(azoom)
+		azoom.Remove(user)
 	if(zoomed)
 		zoom(user,FALSE)
 

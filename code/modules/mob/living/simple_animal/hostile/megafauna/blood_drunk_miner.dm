@@ -51,7 +51,7 @@ Difficulty: Medium
 	var/dash_cooldown = 15
 	var/guidance = FALSE
 	deathmessage = "falls to the ground, decaying into glowing particles."
-	death_sound = "bodyfall"
+	deathsound = "bodyfall"
 
 	do_footstep = TRUE
 

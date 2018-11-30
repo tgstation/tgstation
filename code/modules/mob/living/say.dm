@@ -2,61 +2,61 @@ GLOBAL_LIST_INIT(department_radio_prefixes, list(":", "."))
 
 GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Location
-	"r" = "right hand",
-	"l" = "left hand",
-	"i" = "intercom",
+	MODE_KEY_R_HAND = MODE_R_HAND,
+	MODE_KEY_L_HAND = MODE_L_HAND,
+	MODE_KEY_INTERCOM = MODE_INTERCOM,
 
 	// Department
-	"h" = "department",
-	"c" = "Command",
-	"n" = "Science",
-	"m" = "Medical",
-	"e" = "Engineering",
-	"s" = "Security",
-	"u" = "Supply",
-	"v" = "Service",
+	MODE_KEY_DEPARTMENT = MODE_DEPARTMENT,
+	RADIO_KEY_COMMAND = RADIO_CHANNEL_COMMAND,
+	RADIO_KEY_SCIENCE = RADIO_CHANNEL_SCIENCE,
+	RADIO_KEY_MEDICAL = RADIO_CHANNEL_MEDICAL,
+	RADIO_KEY_ENGINEERING = RADIO_CHANNEL_ENGINEERING,
+	RADIO_KEY_SECURITY = RADIO_CHANNEL_SECURITY,
+	RADIO_KEY_SUPPLY = RADIO_CHANNEL_SUPPLY,
+	RADIO_KEY_SERVICE = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"t" = "Syndicate",
-	"y" = "CentCom",
+	RADIO_KEY_SYNDICATE = RADIO_CHANNEL_SYNDICATE,
+	RADIO_KEY_CENTCOM = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
-	"p" = "admin",
-	"d" = "deadmin",
+	MODE_KEY_ADMIN = MODE_ADMIN,
+	MODE_KEY_DEADMIN = MODE_DEADMIN,
 
 	// Misc
-	"o" = "AI Private", // AI Upload channel
-	"x" = "cords",		// vocal cords, used by Voice of God
+	RADIO_KEY_AI_PRIVATE = RADIO_CHANNEL_AI_PRIVATE, // AI Upload channel
+	MODE_KEY_VOCALCORDS = MODE_VOCALCORDS,		// vocal cords, used by Voice of God
 
 
 	//kinda localization -- rastaf0
 	//same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.
 	// Location
-	"ê" = "right hand",
-	"ä" = "left hand",
-	"ø" = "intercom",
+	"ê" = MODE_R_HAND,
+	"ä" = MODE_L_HAND,
+	"ø" = MODE_INTERCOM,
 
 	// Department
-	"ð" = "department",
-	"ñ" = "Command",
-	"ò" = "Science",
-	"ü" = "Medical",
-	"ó" = "Engineering",
-	"û" = "Security",
-	"ã" = "Supply",
-	"ì" = "Service",
+	"ð" = MODE_DEPARTMENT,
+	"ñ" = RADIO_CHANNEL_COMMAND,
+	"ò" = RADIO_CHANNEL_SCIENCE,
+	"ü" = RADIO_CHANNEL_MEDICAL,
+	"ó" = RADIO_CHANNEL_ENGINEERING,
+	"û" = RADIO_CHANNEL_SECURITY,
+	"ã" = RADIO_CHANNEL_SUPPLY,
+	"ì" = RADIO_CHANNEL_SERVICE,
 
 	// Faction
-	"å" = "Syndicate",
-	"í" = "CentCom",
+	"å" = RADIO_CHANNEL_SYNDICATE,
+	"í" = RADIO_CHANNEL_CENTCOM,
 
 	// Admin
-	"ç" = "admin",
-	"â" = "deadmin",
+	"ç" = MODE_ADMIN,
+	"â" = MODE_ADMIN,
 
 	// Misc
-	"ù" = "AI Private",
-	"÷" = "cords"
+	"ù" = RADIO_CHANNEL_AI_PRIVATE,
+	"÷" = MODE_VOCALCORDS
 ))
 
 /mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
@@ -105,12 +105,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(findtext(message, " ", 1, 2))
 		message = copytext(message, 2)
 
-	if(message_mode == "admin")
+	if(message_mode == MODE_ADMIN)
 		if(client)
 			client.cmd_admin_say(message)
 		return
 
-	if(message_mode == "deadmin")
+	if(message_mode == MODE_DEADMIN)
 		if(client)
 			client.dsay(message)
 		return

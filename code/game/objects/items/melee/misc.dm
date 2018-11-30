@@ -213,14 +213,14 @@
 	if(!on)
 		src.attack_self(user)
 	else
-		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+		playsound(src, 'sound/weapons/batonextend.ogg', 50, 1)
 		add_fingerprint(user)
 	sleep(3)
-	if (H && !QDELETED(H))
-		if (B && !QDELETED(B))
+	if (!QDELETED(H))
+		if(!QDELETED(B))
 			H.internal_organs -= B
 			qdel(B)
-		new /obj/effect/gibspawner/generic(get_turf(H), H.dna)
+		new /obj/effect/gibspawner/generic(H.drop_location(), H)
 		return (BRUTELOSS)
 
 /obj/item/melee/classic_baton/telescopic/attack_self(mob/user)
@@ -287,13 +287,13 @@
 	if(proximity_flag)
 		consume_everything(target)
 
-/obj/item/melee/supermatter_sword/throw_impact(target)
+/obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
-	if(ismob(target))
-		var/mob/M
+	if(ismob(hit_atom))
+		var/mob/M = hit_atom
 		if(src.loc == M)
 			M.dropItemToGround(src)
-	consume_everything(target)
+	consume_everything(hit_atom)
 
 /obj/item/melee/supermatter_sword/pickup(user)
 	..()

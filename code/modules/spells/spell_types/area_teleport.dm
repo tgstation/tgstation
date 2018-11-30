@@ -58,7 +58,7 @@
 		var/success = FALSE
 		while(tempL.len)
 			attempt = pick(tempL)
-			target.Move(attempt)
+			do_teleport(target, attempt, channel = TELEPORT_CHANNEL_MAGIC)
 			if(get_turf(target) == attempt)
 				success = TRUE
 				break
@@ -66,7 +66,7 @@
 				tempL.Remove(attempt)
 
 		if(!success)
-			target.forceMove(L)
+			do_teleport(target, L, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 			playsound(get_turf(user), sound2, 50,1)
 
 	return

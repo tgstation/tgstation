@@ -1,0 +1,4 @@
+author: "Lavalandby"
+delete-after: True
+changes: 
+  - bugfix: "Watcher's Wing no longer Perma-Disarms certain mobs"

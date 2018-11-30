@@ -2,9 +2,10 @@
 #define SCRUBBING	1
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber
+	icon_state = "scrub_map-2"
+
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
-	icon_state = "scrub_map"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 60
@@ -28,16 +29,6 @@
 
 	pipe_state = "scrubber"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
 	if(!id_tag)
@@ -47,20 +38,6 @@
 		if(istext(f))
 			filter_types -= f
 			filter_types += gas_id2path(f)
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on
-	on = TRUE
-	icon_state = "scrub_map_on"
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	var/area/A = get_area(src)
@@ -92,7 +69,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		add_overlay(getpipeimage(icon, "scrub_cap", initialize_directions))
+		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions)
+		PIPING_LAYER_SHIFT(cap, piping_layer)
+		add_overlay(cap)
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -325,6 +304,25 @@
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1)
 
 
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1
+	piping_layer = 1
+	icon_state = "scrub_map-1"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer3
+	piping_layer = 3
+	icon_state = "scrub_map-3"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on
+	on = TRUE
+	icon_state = "scrub_map_on-2"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1
+	piping_layer = 1
+	icon_state = "scrub_map_on-1"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3
+	piping_layer = 3
+	icon_state = "scrub_map_on-3"
 
 #undef SIPHONING
 #undef SCRUBBING

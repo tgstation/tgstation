@@ -69,7 +69,7 @@ Head of Personnel
 	flag = HOP
 	department_head = list("Captain")
 	department_flag = CIVILIAN
-	head_announce = list("Supply", "Service")
+	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1

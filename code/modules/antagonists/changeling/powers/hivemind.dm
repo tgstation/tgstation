@@ -1,8 +1,8 @@
-//HIVEMIND COMMUNICATION (:g)
+//HIVEMIND COMMUNICATION //MODE_TOKEN_CHANGELING / :g
 /obj/effect/proc_holder/changeling/hivemind_comms
 	name = "Hivemind Communication"
 	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
-	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
+	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives." //MODE_TOKEN_CHANGELING needs to be manually updated here.
 	dna_cost = 0
 	chemical_cost = -1
 
@@ -10,7 +10,7 @@
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.changeling_speak = 1
-	to_chat(user, "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>")
+	to_chat(user, "<i><font color=#800080>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with the other changelings.</font></i>")
 	var/obj/effect/proc_holder/changeling/hivemind_upload/S1 = new
 	if(!changeling.has_sting(S1))
 		changeling.purchasedpowers+=S1

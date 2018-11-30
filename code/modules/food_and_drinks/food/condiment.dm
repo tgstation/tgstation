@@ -156,7 +156,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
 		reagents.remove_reagent("sodiumchloride", 2)
-		new/obj/effect/decal/cleanable/salt(target)
+		new/obj/effect/decal/cleanable/food/salt(target)
 		return
 
 /obj/item/reagent_containers/food/condiment/peppermill

@@ -38,12 +38,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
 	var/stunmod = 1		// multiplier for stun duration
+	var/attack_type = BRUTE //Type of damage attack does
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/deathsound //used to set the mobs deathsound on species change
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -243,6 +245,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
+	if((AGENDER in species_traits))
+		C.gender = PLURAL
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
@@ -949,6 +953,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
+	if(has_trait(TRAIT_NOHUNGER))
+		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.has_trait(TRAIT_FAT))//I share your pain, past coder.
@@ -980,7 +986,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= H.physiology.hunger_mod
-		H.nutrition = max(0, H.nutrition - hunger_rate)
+		H.adjust_nutrition(-hunger_rate)
 
 
 	if (H.nutrition > NUTRITION_LEVEL_FULL)
@@ -1062,35 +1068,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/movement_delay(mob/living/carbon/human/H)
 	. = 0	//We start at 0.
 	var/flight = 0	//Check for flight and flying items
-	var/ignoreslow = 0
 	var/gravity = 0
 	if(H.movement_type & FLYING)
 		flight = 1
 
 	gravity = H.has_gravity()
 
-	if(gravity && !flight)	//Check for chemicals and innate speedups and slowdowns if we're on the ground
-		if(H.has_trait(TRAIT_GOTTAGOFAST))
-			. -= 1
-		if(H.has_trait(TRAIT_GOTTAGOREALLYFAST))
-			. -= 2
-		. += H.physiology.speed_mod
-
-	if(H.has_trait(TRAIT_IGNORESLOWDOWN))
-		ignoreslow = 1
-
-	if(!gravity)
-		var/obj/item/tank/jetpack/J = H.back
-		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
-		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot(ORGAN_SLOT_THRUSTERS)
-		if(!istype(J) && istype(C))
-			J = C.jetpack
-		if(istype(J) && J.full_speed && J.allow_thrust(0.01, H))	//Prevents stacking
-			. -= 2
-		else if(istype(T) && T.allow_thrust(0.01, H))
-			. -= 2
-
-	if(!ignoreslow && gravity)
+	if(!H.has_trait(TRAIT_IGNORESLOWDOWN) && gravity)
 		if(H.wear_suit)
 			. += H.wear_suit.slowdown
 		if(H.shoes)
@@ -1107,9 +1091,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				. += (health_deficiency / 25)
 		if(CONFIG_GET(flag/disable_human_mood))
-			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
-			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
-				. += hungry / 50
+			if(!H.has_trait(TRAIT_NOHUNGER))
+				var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
+				if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
+					. += hungry / 50
+			else if(isethereal(H))
+				var/datum/species/ethereal/E = H.dna.species
+				if(E.ethereal_charge <= ETHEREAL_CHARGE_NORMAL)
+					. += 1.5 * (1 - E.ethereal_charge / 100)
 
 		//Moving in high gravity is very slow (Flying too)
 		if(gravity > STANDARD_GRAVITY)
@@ -1129,6 +1118,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////
 // ATTACK PROCS //
 //////////////////
+
+/datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/spec_emp_act(mob/living/carbon/human/H, severity)
+	return
+
+/datum/species/proc/spec_emag_act(mob/living/carbon/human/H, mob/user)
+	return
+
+/datum/species/proc/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+	return
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(!((target.health < 0 || target.has_trait(TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
@@ -1209,7 +1213,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
-		target.apply_damage(damage, BRUTE, affecting, armor_block)
+		target.apply_damage(damage, attack_type, affecting, armor_block)
 		log_combat(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \
@@ -1568,50 +1572,45 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.on_fire)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
+		var/list/obscured = H.check_obscured_slots()
 		//HEAD//
-		var/obj/item/clothing/head_clothes = null
-		if(H.glasses)
-			head_clothes = H.glasses
-		if(H.wear_mask)
-			head_clothes = H.wear_mask
-		if(H.wear_neck)
-			head_clothes = H.wear_neck
-		if(H.head)
-			head_clothes = H.head
-		if(head_clothes)
-			burning_items += head_clothes
-		else if(H.ears)
+
+		if(H.glasses && !(SLOT_GLASSES in obscured))
+			burning_items += H.glasses
+		if(H.wear_mask && !(SLOT_WEAR_MASK in obscured))
+			burning_items += H.wear_mask
+		if(H.wear_neck && !(SLOT_NECK in obscured))
+			burning_items += H.wear_neck
+		if(H.ears && !(SLOT_EARS in obscured))
 			burning_items += H.ears
+		if(H.head)
+			burning_items += H.head
 
 		//CHEST//
-		var/obj/item/clothing/chest_clothes = null
-		if(H.w_uniform)
-			chest_clothes = H.w_uniform
+		if(H.w_uniform && !(SLOT_W_UNIFORM in obscured))
+			burning_items += H.w_uniform
 		if(H.wear_suit)
-			chest_clothes = H.wear_suit
-
-		if(chest_clothes)
-			burning_items += chest_clothes
+			burning_items += H.wear_suit
 
 		//ARMS & HANDS//
 		var/obj/item/clothing/arm_clothes = null
-		if(H.gloves)
+		if(H.gloves && !(SLOT_GLOVES in obscured))
 			arm_clothes = H.gloves
-		if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
-			arm_clothes = H.w_uniform
-		if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
+		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & HANDS) || (H.wear_suit.body_parts_covered & ARMS)))
 			arm_clothes = H.wear_suit
+		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & HANDS) || (H.w_uniform.body_parts_covered & ARMS)))
+			arm_clothes = H.w_uniform
 		if(arm_clothes)
 			burning_items |= arm_clothes
 
 		//LEGS & FEET//
 		var/obj/item/clothing/leg_clothes = null
-		if(H.shoes)
+		if(H.shoes && !(SLOT_SHOES in obscured))
 			leg_clothes = H.shoes
-		if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
-			leg_clothes = H.w_uniform
-		if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
+		else if(H.wear_suit && ((H.wear_suit.body_parts_covered & FEET) || (H.wear_suit.body_parts_covered & LEGS)))
 			leg_clothes = H.wear_suit
+		else if(H.w_uniform && ((H.w_uniform.body_parts_covered & FEET) || (H.w_uniform.body_parts_covered & LEGS)))
+			leg_clothes = H.w_uniform
 		if(leg_clothes)
 			burning_items |= leg_clothes
 

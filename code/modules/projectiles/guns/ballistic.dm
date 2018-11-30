@@ -165,12 +165,7 @@
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
-			var/datum/dna/user_dna
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				user_dna = C.dna
-				B.add_blood_DNA(user_dna)
-			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, list(user_dna))
+			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, user)
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)
 		else
@@ -222,7 +217,7 @@
 
 /obj/item/suppressor
 	name = "suppressor"
-	desc = "A universal syndicate small-arms suppressor for maximum espionage."
+	desc = "A nigh-universal syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
@@ -231,6 +226,6 @@
 
 /obj/item/suppressor/specialoffer
 	name = "cheap suppressor"
-	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
+	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits most weapons."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"

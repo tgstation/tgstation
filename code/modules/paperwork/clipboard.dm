@@ -27,12 +27,14 @@
 
 /obj/item/clipboard/update_icon()
 	cut_overlays()
+	var/list/dat = list()
 	if(toppaper)
-		add_overlay(toppaper.icon_state)
-		copy_overlays(toppaper)
+		dat += toppaper.icon_state
+		dat += toppaper.overlays.Copy()
 	if(haspen)
-		add_overlay("clipboard_pen")
-	add_overlay("clipboard_over")
+		dat += "clipboard_pen"
+	dat += "clipboard_over"
+	add_overlay(dat)
 
 
 /obj/item/clipboard/attackby(obj/item/W, mob/user, params)

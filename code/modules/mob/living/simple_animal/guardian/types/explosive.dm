@@ -22,7 +22,7 @@
 		var/mob/living/M = target
 		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
 			new /obj/effect/temp_visual/guardian/phase/out(get_turf(M))
-			do_teleport(M, M, 10)
+			do_teleport(M, M, 10, channel = TELEPORT_CHANNEL_BLUESPACE)
 			for(var/mob/living/L in range(1, M))
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
