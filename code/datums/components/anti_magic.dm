@@ -42,7 +42,7 @@
 		
 	var/obj/item/reagent_containers/food/snacks/grown/holymelon/melon = parent
 	if(melon.seed)
-		uses = round(melon.seed.potency / 10)
+		uses = round(melon.seed.potency / 20)
 	if(!uses)
 		return COMPONENT_INCOMPATIBLE
 		
