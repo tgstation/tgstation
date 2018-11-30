@@ -76,18 +76,16 @@
 
 /datum/status_effect/chosen_one
 	id = "chosen_one"
-	var/awakened = FALSE
 
 /datum/status_effect/chosen_one/tick()
-	if(owner.health <= maxHealth/5 && awakened == FALSE)
+	if(owner.health <= owner.maxHealth/5)
 		a_hero_rises()
 
 /datum/status_effect/chosen_one/proc/a_hero_rises()
-	awakened = TRUE
-	heal_overall_damage(10, 10)
+	owner.heal_overall_damage(10, 10)
 	to_chat(owner, "<span class='green'><b>Your will to live gives you a burst of energy!</b></span>")
 	owner.SetStun(0, FALSE)
 	owner.SetKnockdown(0, FALSE)
 	owner.SetParalyzed(0, FALSE)
 	owner.SetImmobilized(0)
-	remove_status_effect(/datum/status_effect/chosen_one)
+	owner.remove_status_effect(/datum/status_effect/chosen_one)
