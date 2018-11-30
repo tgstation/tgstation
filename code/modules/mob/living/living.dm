@@ -1147,8 +1147,6 @@
 /mob/living/proc/remove_image(image)
 	if(image && client)
 		client.images -= image
-		qdel(image)
-
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))

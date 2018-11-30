@@ -172,7 +172,7 @@
 //golden bikehorn
 /obj/item/bikehorn/golden
 	name = "golden bike horn"
-	desc = "Golden? Clearly, it's made of bananium! Honk!"
+	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	item_state = "gold_horn"
 	var/flip_cooldown = 0

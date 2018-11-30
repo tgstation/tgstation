@@ -7,7 +7,6 @@
 
 /datum/outputs/New()
 	stored_image = image('icons/sound_icon.dmi', ,"circle", HUD_LAYER)
-	SSoutputs.outputs[type] = src
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	var/sound/sound_output

@@ -33,8 +33,7 @@
 
 /obj/item/toy/plush/Initialize()
 	. = ..()
-	if(squeak_override)
-		AddComponent(/datum/component/squeak, squeak_override)
+	AddComponent(/datum/component/squeak, squeak_override)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
