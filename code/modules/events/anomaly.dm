@@ -88,4 +88,5 @@
 	owner.SetKnockdown(0, FALSE)
 	owner.SetParalyzed(0, FALSE)
 	owner.SetImmobilized(0)
+	owner.add_stun_absorption("chosen", 30, 1, self_message = "The adrenaline keeps you from falling!")
 	owner.remove_status_effect(/datum/status_effect/chosen_one)
