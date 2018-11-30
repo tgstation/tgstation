@@ -5,12 +5,13 @@
 	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
+	var/unique_blood = null
 	var/labelled = 0
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		reagents.add_reagent(unique_blood ? unique_blood : "blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
 /obj/item/reagent_containers/blood/on_reagent_change(changetype)
@@ -71,6 +72,7 @@
 
 /obj/item/reagent_containers/blood/ethereal
 	blood_type = "LE"
+	unique_blood = "liquidelectricity"
 
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
