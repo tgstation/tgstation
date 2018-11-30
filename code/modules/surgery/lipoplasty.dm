@@ -35,7 +35,7 @@
 	user.visible_message("[user] extracts [target]'s fat!", "<span class='notice'>You extract [target]'s fat.</span>")
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
-	target.nutrition = NUTRITION_LEVEL_WELL_FED
+	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 	removednutriment -= 450 //whatever was removed goes into the meat
 	var/mob/living/carbon/human/H = target
 	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human

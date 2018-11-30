@@ -38,6 +38,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/coldmod = 1		// multiplier for cold damage
 	var/heatmod = 1		// multiplier for heat damage
 	var/stunmod = 1		// multiplier for stun duration
+	var/attack_type = BRUTE //Type of damage attack does
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
 	var/punchstunthreshold = 9//damage at which punches from this race will stun //yes it should be to the attacked race but it's not useful that way even if it's logical
@@ -244,6 +245,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	// Drop the items the new species can't wear
+	if((AGENDER in species_traits))
+		C.gender = PLURAL
 	for(var/slot_id in no_equip)
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
@@ -950,6 +953,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
+	if(has_trait(TRAIT_NOHUNGER))
+		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.has_trait(TRAIT_FAT))//I share your pain, past coder.
@@ -981,7 +986,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				H.Jitter(5)
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= H.physiology.hunger_mod
-		H.nutrition = max(0, H.nutrition - hunger_rate)
+		H.adjust_nutrition(-hunger_rate)
 
 
 	if (H.nutrition > NUTRITION_LEVEL_FULL)
@@ -1086,9 +1091,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			else
 				. += (health_deficiency / 25)
 		if(CONFIG_GET(flag/disable_human_mood))
-			var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
-			if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
-				. += hungry / 50
+			if(!H.has_trait(TRAIT_NOHUNGER))
+				var/hungry = (500 - H.nutrition) / 5 //So overeat would be 100 and default level would be 80
+				if((hungry >= 70) && !flight) //Being hungry will still allow you to use a flightsuit/wings.
+					. += hungry / 50
+			else if(isethereal(H))
+				var/datum/species/ethereal/E = H.dna.species
+				if(E.ethereal_charge <= ETHEREAL_CHARGE_NORMAL)
+					. += 1.5 * (1 - E.ethereal_charge / 100)
 
 		//Moving in high gravity is very slow (Flying too)
 		if(gravity > STANDARD_GRAVITY)
@@ -1108,6 +1118,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////
 // ATTACK PROCS //
 //////////////////
+
+/datum/species/proc/spec_updatehealth(mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/spec_fully_heal(mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/spec_emp_act(mob/living/carbon/human/H, severity)
+	return
+
+/datum/species/proc/spec_emag_act(mob/living/carbon/human/H, mob/user)
+	return
+
+/datum/species/proc/spec_electrocute_act(mob/living/carbon/human/H, shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
+	return
 
 /datum/species/proc/help(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(!((target.health < 0 || target.has_trait(TRAIT_FAKEDEATH)) && !(target.mobility_flags & MOBILITY_STAND)))
@@ -1188,7 +1213,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
-		target.apply_damage(damage, BRUTE, affecting, armor_block)
+		target.apply_damage(damage, attack_type, affecting, armor_block)
 		log_combat(user, target, "punched")
 		if((target.stat != DEAD) && damage >= user.dna.species.punchstunthreshold)
 			target.visible_message("<span class='danger'>[user] has knocked  [target] down!</span>", \

@@ -162,6 +162,13 @@
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
 
+//Charge levels for Ethereals
+#define ETHEREAL_CHARGE_NONE 0
+#define ETHEREAL_CHARGE_LOWPOWER 20
+#define ETHEREAL_CHARGE_NORMAL 50
+#define ETHEREAL_CHARGE_ALMOSTFULL 75
+#define ETHEREAL_CHARGE_FULL 100
+
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
 
@@ -252,6 +259,7 @@
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
+#define	ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 

@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Smuggler satchels should now properly be removed from the pool upon spawn."

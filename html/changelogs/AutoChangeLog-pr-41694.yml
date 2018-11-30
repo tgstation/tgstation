@@ -1,4 +1,0 @@
-author: "Nichlas0010"
-delete-after: True
-changes: 
-  - bugfix: "You are now also blocked from teleporting IN to no-teleport areas, not just out of them."

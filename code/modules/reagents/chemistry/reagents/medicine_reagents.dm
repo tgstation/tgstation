@@ -357,7 +357,7 @@
 /datum/reagent/medicine/mine_salve/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
 		if(method in list(INGEST, VAPOR, INJECT))
-			M.nutrition -= 5
+			M.adjust_nutrition(-5)
 			if(show_message)
 				to_chat(M, "<span class='warning'>Your stomach feels empty and cramps!</span>")
 		else

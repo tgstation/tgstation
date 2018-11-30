@@ -638,7 +638,7 @@
 	M.adjustOxyLoss(-0.5, 0)
 	if(M.nutrition && (M.nutrition - 2 > 0))
 		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
-			M.nutrition -= 2
+			M.adjust_nutrition(-2)
 	..()
 	. = 1
 

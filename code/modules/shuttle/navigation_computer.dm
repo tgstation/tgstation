@@ -22,6 +22,12 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize()
 	. = ..()
 	GLOB.navigation_computers += src
+	for(var/V in SSshuttle.stationary)
+		if(!V)
+			continue
+		var/obj/docking_port/stationary/S = V
+		if(jumpto_ports[S.id])
+			z_lock |= S.z
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Destroy()
 	. = ..()

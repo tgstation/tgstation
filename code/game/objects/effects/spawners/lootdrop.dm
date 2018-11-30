@@ -108,6 +108,34 @@
 	loot = GLOB.maintenance_loot
 	. = ..()
 
+/obj/effect/spawner/lootdrop/maintenance/two
+	name = "2 x maintenance loot spawner"
+	lootcount = 2
+
+/obj/effect/spawner/lootdrop/maintenance/three
+	name = "3 x maintenance loot spawner"
+	lootcount = 3
+
+/obj/effect/spawner/lootdrop/maintenance/four
+	name = "4 x maintenance loot spawner"
+	lootcount = 4
+
+/obj/effect/spawner/lootdrop/maintenance/five
+	name = "5 x maintenance loot spawner"
+	lootcount = 5
+
+/obj/effect/spawner/lootdrop/maintenance/six
+	name = "6 x maintenance loot spawner"
+	lootcount = 6
+
+/obj/effect/spawner/lootdrop/maintenance/seven
+	name = "7 x maintenance loot spawner"
+	lootcount = 7
+
+/obj/effect/spawner/lootdrop/maintenance/eight
+	name = "8 x maintenance loot spawner"
+	lootcount = 8
+
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = FALSE

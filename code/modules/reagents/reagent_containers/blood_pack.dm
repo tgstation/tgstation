@@ -69,6 +69,9 @@
 /obj/item/reagent_containers/blood/lizard
 	blood_type = "L"
 
+/obj/item/reagent_containers/blood/ethereal
+	blood_type = "LE"
+
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
 
