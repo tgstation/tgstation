@@ -51,5 +51,6 @@
 		uses--
 		if(uses <= 0)
 			parent.visible_message("<span class='warning'>[parent] rapidly turns into ash!</span>")
+			new /obj/effect/decal/cleanable/ash(parent.drop_location())
 			qdel(parent)
 		
