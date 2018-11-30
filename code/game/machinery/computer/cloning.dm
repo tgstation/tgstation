@@ -6,13 +6,11 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/cloning
-	req_access = list(ACCESS_HEADS) //ONLY USED FOR RECORD DELETION RIGHT NOW.
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
 	var/scantemp_ckey
 	var/scantemp = "Ready to Scan"
-	var/menu = 1 //Which menu screen to display
 	var/datum/data/record/active_record = null
 	var/loading = 0 // Nice loading text
 
@@ -128,40 +126,38 @@
 	dat += "<h3>Cloning Pod Status</h3>"
 	dat += "<div class='statusDisplay'>[temp]&nbsp;</div>"
 
-	switch(src.menu)
-		if(1)
-			// Modules
-			if (isnull(src.scanner) || !LAZYLEN(pods))
-				dat += "<h3>Modules</h3>"
-				//dat += "<a href='byond://?src=[REF(src)];relmodules=1'>Reload Modules</a>"
-				if (isnull(src.scanner))
-					dat += "<font class='bad'>ERROR: No Scanner detected!</font><br>"
-				if (!LAZYLEN(pods))
-					dat += "<font class='bad'>ERROR: No Pod detected</font><br>"
+	// Modules
+	if (isnull(src.scanner) || !LAZYLEN(pods))
+		dat += "<h3>Modules</h3>"
+		//dat += "<a href='byond://?src=[REF(src)];relmodules=1'>Reload Modules</a>"
+		if (isnull(src.scanner))
+			dat += "<font class='bad'>ERROR: No Scanner detected!</font><br>"
+		if (!LAZYLEN(pods))
+			dat += "<font class='bad'>ERROR: No Pod detected</font><br>"
 
-			// Scanner
-			if (!isnull(src.scanner))
-				var/mob/living/scanner_occupant = get_mob_or_brainmob(scanner.occupant)
+	// Scanner
+	if (!isnull(src.scanner))
+		var/mob/living/scanner_occupant = get_mob_or_brainmob(scanner.occupant)
 
-				dat += "<h3>Scanner Functions</h3>"
+		dat += "<h3>Scanner Functions</h3>"
 
-				dat += "<div class='statusDisplay'>"
-				if(!scanner_occupant)
-					dat += "Scanner Unoccupied"
-				else if(loading)
-					dat += "[scanner_occupant] => Scanning..."
-				else
-					if(scanner_occupant.ckey != scantemp_ckey)
-						scantemp = "Ready to Scan"
-						scantemp_ckey = scanner_occupant.ckey
-					dat += "[scanner_occupant] => [scantemp]"
-				dat += "</div>"
+		dat += "<div class='statusDisplay'>"
+		if(!scanner_occupant)
+			dat += "Scanner Unoccupied"
+		else if(loading)
+			dat += "[scanner_occupant] => Scanning..."
+		else
+			if(scanner_occupant.ckey != scantemp_ckey)
+				scantemp = "Ready to Scan"
+				scantemp_ckey = scanner_occupant.ckey
+			dat += "[scanner_occupant] => [scantemp]"
+		dat += "</div>"
 
-				if(scanner_occupant)
-					dat += "<a href='byond://?src=[REF(src)];scan=1'>Start Scan</a>"
-					dat += "<br><a href='byond://?src=[REF(src)];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
-				else
-					dat += "<span class='linkOff'>Start Scan</span>"
+		if(scanner_occupant)
+			dat += "<a href='byond://?src=[REF(src)];scan=1'>Start Scan</a>"
+			dat += "<br><a href='byond://?src=[REF(src)];lock=1'>[src.scanner.locked ? "Unlock Scanner" : "Lock Scanner"]</a>"
+		else
+			dat += "<span class='linkOff'>Start Scan</span>"
 
 
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
@@ -205,10 +201,6 @@
 		src.updateUsrDialog()
 		playsound(src, "terminal_type", 25, 0)
 
-
-	if (href_list["menu"])
-		src.menu = text2num(href_list["menu"])
-		playsound(src, "terminal_type", 25, 0)
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
@@ -286,7 +278,6 @@
 	else if(pod.growclone(mob_occupant.ckey, mob_occupant.real_name, dna.uni_identity, dna.struc_enzymes, mind, mrace, dna.features, mob_occupant.faction, quirks, has_bank_account))
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning cycle in progress...</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-		menu = 1
 	else
 		temp = "[mob_occupant.real_name] => <font class='bad'>Initialisation failure.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
