@@ -71,9 +71,6 @@
 	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	H.put_in_hands(B)
 	H.equip_to_slot(B, SLOT_IN_BACKPACK)
-	var/obj/item/musicaltuner/musicaltuner = new(get_turf(H))
-	H.put_in_hands(musicaltuner)
-	H.equip_to_slot(musicaltuner, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/night_vision

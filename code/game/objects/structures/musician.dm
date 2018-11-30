@@ -33,7 +33,7 @@
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
 // oct is 1-8 (or 9 for C)
-/datum/song/proc/playnote(note, acc as text, oct)
+/datum/song/proc/playnote(mob/user, note, acc as text, oct)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -67,14 +67,17 @@
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		LAZYCLEARLIST(hearing_mobs)
 		for(var/mob/M in get_hearers_in_view(15, source))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
-				continue
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
 
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
+		if(user.has_trait(TRAIT_MUSICIAN) && isliving(M))
+			var/mob/living/L = M
+			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
+		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			continue
 		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
 
 /datum/song/proc/updateDialog(mob/user)
@@ -127,7 +130,7 @@
 							cur_acc[cur_note] = "b"
 						else if(prob(75))
 							cur_acc[cur_note] = "n"
-					playnote(cur_note, cur_acc[cur_note], cur_oct[cur_note])
+					playnote(user, cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
 					sleep(sanitize_tempo(tempo / text2num(notes[2])))
 				else
