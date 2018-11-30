@@ -423,7 +423,7 @@
 		zeroth = null
 		zeroth_borg = null
 		return
-	if(owner && owner.mind && owner.mind.special_role)
+	if(owner?.mind?.special_role)
 		return
 	if (istype(owner, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/A=owner
