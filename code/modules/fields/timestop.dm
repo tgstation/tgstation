@@ -133,6 +133,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
 	if(L.anti_magic_check(check_anti_magic, check_holy))
+		immune += L
 		return
 	L.Stun(20, 1, 1)
 	frozen_mobs[L] = L.anchored
