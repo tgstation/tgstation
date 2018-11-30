@@ -60,14 +60,18 @@
 // this datum is shared for areas
 /datum/airalarm_configuration
 	var/area/area
+	var/list/TLV
 
 	var/list/alarms
 
-/datum/airalarm_configuration/New(area/area)
+/datum/airalarm_configuration/New(area/area, list/TLV)
 	src.area = area
+	src.TLV = TLV.Copy()
 
 /datum/airalarm_configuration/Destory()
 	area.airalarm_configuration = null
+	area = null
+	TLV.Cut()
 
 	for(var/I in alarms)
 		I.alarm_config = null
@@ -119,7 +123,7 @@
 
 	var/datum/airalarm_configuration/alarm_config
 
-	var/list/TLV = list( // Breathable air.
+	var/list/init_TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
@@ -138,7 +142,7 @@
 	)
 
 /obj/machinery/airalarm/server // No checks here.
-	TLV = list(
+	init_TLV = list(
 		"pressure"					= new/datum/tlv/no_checks,
 		"temperature"				= new/datum/tlv/no_checks,
 		/datum/gas/oxygen			= new/datum/tlv/no_checks,
@@ -157,7 +161,7 @@
 	)
 
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
-	TLV = list(
+	init_TLV = list(
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
 		"temperature"				= new/datum/tlv(T0C-73.15, T0C-63.15, T0C, T0C+10),
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
@@ -258,9 +262,10 @@
 	AttachToAreaConfig(A)
 
 /obj/machinery/airalarm/proc/AttachToAreaConfig(area/A)
+	var/tlv_to_use_for_initialization = alarm_config?.TLV || init_TLV
 	alarm_config?.RemoveAlarm(src)
 	if(!A.airalarm_configuration)
-		new /datum/airalarm_configuration(A)	
+		new /datum/airalarm_configuration(A, tlv_to_use_for_initialization)
 	A.airalarm_configuration.AddAlarm(src)
 
 /obj/machinery/airalarm/Moved(atom/OldLoc, Dir, Forced = FALSE)
@@ -314,6 +319,7 @@
 
 	var/datum/gas_mixture/environment = alarm_config?.GetMeasuredEnvironment()
 	if(environment)
+		var/list/TLV = alarm_config.TLV
 		data["environment_data"] = list()
 		var/pressure = environment.return_pressure()
 		var/datum/tlv/cur_tlv = TLV["pressure"]
