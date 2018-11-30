@@ -427,7 +427,7 @@
 		return
 	if (istype(owner, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/A=owner
-		if(A && A.deployed_shell && A.deployed_shell.mind && A.deployed_shell.mind.special_role)
+		if(A?.deployed_shell?.mind?.special_role)
 			return
 	zeroth = null
 	zeroth_borg = null
