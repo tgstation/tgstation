@@ -26,8 +26,8 @@ Bonus
 	level = 6
 	severity = 5
 	base_message_chance = 50
-	symptom_delay_min = 15
-	symptom_delay_max = 60
+	symptom_delay_min = 10
+	symptom_delay_max = 20
 	var/internal_ratio = 0.25
 	var/pain = FALSE
 	threshold_desc = "<b>Resistance 7:</b> Increases the amount of internal damage done by the symptom.<br>\
@@ -50,11 +50,12 @@ Bonus
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='warning'>[pick("You feel a sudden pain across your body.", "Drops of blood appear suddenly on your skin.")]</span>")
 		if(4,5)
-			to_chat(M, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
+			if(prob(base_message_chance * 2))
+				to_chat(M, "<span class='userdanger'>[pick("You cringe as a violent pain takes over your body.", "It feels like your body is eating itself inside out.", "IT HURTS.")]</span>")
 			Flesheat(M, A)
 
 /datum/symptom/flesh_eating/proc/Flesheat(mob/living/M, datum/disease/advance/A)
-	var/get_damage = rand(10,20) * power
+	var/get_damage = rand(4,7) * power
 	var/internal_damage = get_damage * internal_ratio
 	get_damage -= internal_damage
 	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
@@ -125,7 +126,7 @@ Bonus
 			Flesh_death(M, A)
 
 /datum/symptom/flesh_death/proc/Flesh_death(mob/living/M, datum/disease/advance/A)
-	var/get_damage = rand(4,8)
+	var/get_damage = rand(3,5)
 	M.take_overall_damage(brute = get_damage, required_status = BODYPART_ORGANIC)
 	if(chems)
 		M.reagents.add_reagent_list(list("heparin" = 2, "lipolicide" = 2))
