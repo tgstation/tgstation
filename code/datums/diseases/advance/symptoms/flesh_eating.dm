@@ -28,7 +28,7 @@ Bonus
 	base_message_chance = 50
 	symptom_delay_min = 10
 	symptom_delay_max = 20
-	var/internal_ratio = 0.25
+	var/internal_ratio = 0.35
 	var/pain = FALSE
 	threshold_desc = "<b>Resistance 7:</b> Increases the amount of internal damage done by the symptom.<br>\
 					  <b>Transmission 8:</b> Causes extreme pain to the host, weakening it."
@@ -94,12 +94,12 @@ Bonus
 	base_message_chance = 50
 	symptom_delay_min = 3
 	symptom_delay_max = 6
-	var/internal_ratio = 0.3
+	var/internal_ratio = 0.5
 	var/chems = FALSE
 	var/zombie = FALSE
 	threshold_desc = "<b>Stage Speed 7:</b> Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.<br>\
 					  <b>Stealth 5:</b> The symptom remains hidden until active.<br>\
-					  <b>Resistance 8:</b> Increases the amount of internal damage done by the symptom."
+					  <b>Resistance 7:</b> Increases the amount of internal damage done by the symptom."
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
 	if(!..())
@@ -108,8 +108,8 @@ Bonus
 		suppress_warning = TRUE
 	if(A.properties["stage_rate"] >= 7) //bleeding and hunger
 		chems = TRUE
-	if(A.properties["resistance"] >= 8) //more internal damage
-		internal_ratio = 0.85
+	if(A.properties["resistance"] >= 7) //more internal damage
+		internal_ratio = 0.9
 	
 
 /datum/symptom/flesh_death/Activate(datum/disease/advance/A)
