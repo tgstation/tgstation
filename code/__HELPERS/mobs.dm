@@ -474,7 +474,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			if(type == POSITIVE_EVENT)
 				applied_luck += list(M, M)
 
-			if(type == NEGATIVE_EVENT)
+			else if(type == NEGATIVE_EVENT)
 				if(prob(50))
 					applied_luck += M
 
@@ -482,7 +482,7 @@ GLOBAL_LIST_EMPTY(species_list)
 			if(type == POSITIVE_EVENT)
 				if(prob(50))
 					applied_luck += M
-			if(type == NEGATIVE_EVENT)
+			else if(type == NEGATIVE_EVENT)
 				applied_luck += list(M, M)
 
 	. = applied_luck
