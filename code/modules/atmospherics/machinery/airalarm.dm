@@ -57,6 +57,39 @@
 
 #define AALARM_REPORT_TIMEOUT 100
 
+// this datum is shared for areas
+/datum/airalarm_configuration
+	var/area/area
+
+	var/list/alarms
+
+/datum/airalarm_configuration/New(area/area)
+	src.area = area
+
+/datum/airalarm_configuration/Destory()
+	area.airalarm_configuration = null
+
+	for(var/I in alarms)
+		I.alarm_config = null
+	LAZYCLEARLIST(alarms)
+	return ..()
+
+/datum/airalarm_configuration/proc/CheckEmpty()
+	if(!LAZYLEN(alarms))
+		qdel(src)
+
+/datum/airalarm_configuration/proc/AddAlarm(obj/machinery/airalarm/alarm)
+	alarms += alarm
+	alarm.alarm_config = src
+
+/datum/airalarm_configuration/proc/RemoveAlarm(obj/machinery/airalarm/alarm)
+	alarms -= alarm
+	alarm.alarm_config = null
+	CheckEmpty()
+
+/area
+	var/datum/airalarm_configuration/airalarm_configuration
+
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
@@ -83,6 +116,8 @@
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
 	var/datum/radio_frequency/radio_connection
+
+	var/datum/airalarm_configuration/alarm_config
 
 	var/list/TLV = list( // Breathable air.
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
@@ -192,6 +227,7 @@
 	var/list/air_scrub_info = list()
 
 /obj/machinery/airalarm/Destroy()
+	alarm_config?.RemoveAlarm(src)
 	SSradio.remove_object(src, frequency)
 	QDEL_NULL(wires)
 	return ..()
@@ -214,6 +250,25 @@
 	update_icon()
 
 	set_frequency(frequency)
+
+	var/area/A = get_area(src)
+	if(!A)
+		return
+	
+	AttachToAreaConfig(A)
+
+/obj/machinery/airalarm/proc/AttachToAreaConfig(area/A)
+	alarm_config?.RemoveAlarm(src)
+	if(!A.airalarm_configuration)
+		new /datum/airalarm_configuration(A)	
+	A.airalarm_configuration.AddAlarm(src)
+
+/obj/machinery/airalarm/Moved(atom/OldLoc, Dir, Forced = FALSE)
+	. = ..()
+	var/oldArea = get_area(OldLoc)
+	var/newArea = get_area(src)
+	if(oldArea != newArea)
+		AttachToAreaConfig(newArea)
 
 /obj/machinery/airalarm/examine(mob/user)
 	. = ..()
@@ -239,8 +294,10 @@
 		ui = new(user, src, ui_key, "airalarm", name, 440, 650, master_ui, state)
 		ui.open()
 
-/obj/machinery/airalarm/proc/GetMeasuredEnvironment()
-	var/turf/T = get_turf(src)
+/datum/airalarm_configuration/proc/GetMeasuredEnvironment()
+	if(!LAZYLEN(alarms))
+		return
+	var/turf/T = get_turf(alarms[1])
 	return T.return_air()
 
 /obj/machinery/airalarm/ui_data(mob/user)
@@ -255,15 +312,11 @@
 	data["atmos_alarm"] = A.atmosalm
 	data["fire_alarm"] = A.fire
 
-	var/datum/gas_mixture/environment = GetMeasuredEnvironment()
-	var/datum/tlv/cur_tlv
-
-	data["has_environment"] = environment != null
-
+	var/datum/gas_mixture/environment = alarm_config?.GetMeasuredEnvironment()
 	if(environment)
 		data["environment_data"] = list()
 		var/pressure = environment.return_pressure()
-		cur_tlv = TLV["pressure"]
+		var/datum/tlv/cur_tlv = TLV["pressure"]
 		data["environment_data"] += list(list(
 								"name" = "Pressure",
 								"value" = pressure,
