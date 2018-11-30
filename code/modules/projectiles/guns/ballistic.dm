@@ -94,8 +94,6 @@
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	// this proc assumes that the suppressor is already inside src
 	suppressed = S
-	S.oldsound = fire_sound
-	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
 	update_icon()
 
@@ -108,7 +106,6 @@
 				return ..()
 			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
 			user.put_in_hands(suppressed)
-			fire_sound = S.oldsound
 			w_class -= S.w_class
 			suppressed = null
 			update_icon()
@@ -221,7 +218,6 @@
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
-	var/oldsound = null
 
 
 /obj/item/suppressor/specialoffer
