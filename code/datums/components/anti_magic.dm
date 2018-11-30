@@ -50,7 +50,8 @@
 	if(major)
 		uses--
 		if(uses <= 0)
-			parent.visible_message("<span class='warning'>[parent] rapidly turns into ash!</span>")
-			new /obj/effect/decal/cleanable/ash(parent.drop_location())
+			var/obj/item/melon = parent
+			melon.visible_message("<span class='warning'>[parent] rapidly turns into ash!</span>")
+			new /obj/effect/decal/cleanable/ash(melon.drop_location())
 			qdel(parent)
 		
