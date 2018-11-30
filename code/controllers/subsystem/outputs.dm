@@ -6,6 +6,5 @@ SUBSYSTEM_DEF(outputs)
 
 /datum/controller/subsystem/outputs/Initialize(timeofday)
 	for(var/A in subtypesof(/datum/outputs))
-		var/datum/O = new A()
-		outputs[O.type] = O
+		outputs[A] = new A
 	return ..()
