@@ -102,3 +102,13 @@
 #define MACHINE_NOT_ELECTRIFIED 0
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
+
+#define AALARM_MODE_SCRUBBING 1
+#define AALARM_MODE_VENTING 2 //makes draught
+#define AALARM_MODE_PANIC 3 //like siphon, but stronger (enables widenet)
+#define AALARM_MODE_REPLACEMENT 4 //sucks off all air, then refill and swithes to scrubbing
+#define AALARM_MODE_OFF 5
+#define AALARM_MODE_FLOOD 6 //Emagged mode; turns off scrubbers and pressure checks on vents
+#define AALARM_MODE_SIPHON 7 //Scrubbers suck air
+#define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
+#define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output

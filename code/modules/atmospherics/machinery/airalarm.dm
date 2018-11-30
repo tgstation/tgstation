@@ -45,16 +45,6 @@
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
 
-#define AALARM_MODE_SCRUBBING 1
-#define AALARM_MODE_VENTING 2 //makes draught
-#define AALARM_MODE_PANIC 3 //like siphon, but stronger (enables widenet)
-#define AALARM_MODE_REPLACEMENT 4 //sucks off all air, then refill and swithes to scrubbing
-#define AALARM_MODE_OFF 5
-#define AALARM_MODE_FLOOD 6 //Emagged mode; turns off scrubbers and pressure checks on vents
-#define AALARM_MODE_SIPHON 7 //Scrubbers suck air
-#define AALARM_MODE_CONTAMINATED 8 //Turns on all filtering and widenet scrubbing.
-#define AALARM_MODE_REFILL 9 //just like normal, but with triple the air output
-
 #define AALARM_REPORT_TIMEOUT 100
 
 // this datum is shared for areas
@@ -62,7 +52,7 @@
 	var/area/area
 	var/list/TLV
 	
-	var/alarm_mode = AALARM_MODE_SCRUBBING
+	var/mode = AALARM_MODE_SCRUBBING
 
 	var/list/alarms
 
@@ -70,13 +60,14 @@
 	src.area = area
 	src.TLV = TLV.Copy()
 
-/datum/airalarm_configuration/Destory()
+/datum/airalarm_configuration/Destroy()
 	area.airalarm_configuration = null
 	area = null
 	TLV.Cut()
 
 	for(var/I in alarms)
-		I.alarm_config = null
+		var/obj/machinery/airalarm/A = I
+		A.alarm_config = null
 	LAZYCLEARLIST(alarms)
 	return ..()
 
@@ -301,10 +292,46 @@
 		ui.open()
 
 /datum/airalarm_configuration/proc/GetMeasuredEnvironment()
-	if(!LAZYLEN(alarms))
-		return
-	var/turf/T = get_turf(alarms[1])
-	return T.return_air()
+	var/list/sensor_list = alarms	//TODO: Make an actual sensor floor component
+	switch(LAZYLEN(alarms))
+		if(0)
+			return
+		if(1)
+			var/turf/T = get_turf(sensor_list[1])
+			return T.return_air()
+		else
+			//amalgamate sensors
+			var/datum/gas_mixture/measurement = new
+			var/list/measurement_gases
+			var/sensor_count = sensor_list.len
+			for(var/I in sensor_list)
+				var/turf/T = get_turf(I)
+				var/datum/gas_mixture/current = T.return_air()
+				if(!current)
+					--sensor_count
+					continue
+
+				var/list/current_gases = current.gases
+				measurement_gases = measurement.gases
+				if(!measurement_gases)
+					measurement.gases = current_gases.Copy()
+				else
+					for(var/J in current_gases)
+						var/list/gaslist = current_gases[J]
+						if(!measurement_gases[J])
+							measurement_gases[J] = gaslist.Copy()
+						else
+							//we only care about moles
+							measurement_gases[J][MOLES] += gaslist[MOLES]
+
+			if(!sensor_count)
+				return
+
+			for(var/I in measurement_gases)
+				measurement_gases[I][MOLES] /= sensor_count
+			measurement.temperature /= sensor_count
+			measurement.volume /= sensor_count
+			return measurement
 
 /obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
@@ -319,8 +346,8 @@
 	data["fire_alarm"] = A.fire
 
 	var/datum/gas_mixture/environment = alarm_config?.GetMeasuredEnvironment()
+	var/list/TLV = alarm_config?.TLV
 	if(environment)
-		var/list/TLV = alarm_config.TLV
 		data["environment_data"] = list()
 		var/pressure = environment.return_pressure()
 		var/datum/tlv/cur_tlv = TLV["pressure"]
@@ -467,7 +494,7 @@
 				env = text2path(env)
 
 			var/name = params["var"]
-			var/datum/tlv/tlv = TLV[env]
+			var/datum/tlv/tlv = alarm_config?.TLV[env]
 			if(isnull(tlv))
 				return
 			var/value = input("New [name] for [env]:", name, tlv.vars[name]) as num|null
@@ -481,7 +508,7 @@
 		if("mode")
 			if(alarm_config)
 				alarm_config.mode = text2num(params["mode"])
-				investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
+				investigate_log("was turned to [get_mode_name(alarm_config.mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
 				apply_mode()
 			. = TRUE
 		if("alarm")
@@ -712,18 +739,15 @@
 			icon_state = "alarm1"
 
 /obj/machinery/airalarm/process()
-	if((stat & (NOPOWER|BROKEN)) || shorted)
-		return
-
-	var/turf/location = get_turf(src)
-	if(!location)
+	if(!is_operational() || shorted || !alarm_config)
 		return
 
 	var/datum/tlv/cur_tlv
 
-	var/datum/gas_mixture/environment = location.return_air()
+	var/datum/gas_mixture/environment = alarm_config.GetMeasuredEnvironment()
 	var/list/env_gases = environment.gases
 	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+	var/TLV = alarm_config.TLV
 
 	cur_tlv = TLV["pressure"]
 	var/environment_pressure = environment.return_pressure()
@@ -746,7 +770,7 @@
 
 	if(old_danger_level != danger_level)
 		apply_danger_level()
-	if(alarm_config?.mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
+	if(alarm_config.mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
 		alarm_config.mode = AALARM_MODE_SCRUBBING
 		apply_mode()
 
