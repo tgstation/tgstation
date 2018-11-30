@@ -61,6 +61,8 @@
 /datum/airalarm_configuration
 	var/area/area
 	var/list/TLV
+	
+	var/alarm_mode = AALARM_MODE_SCRUBBING
 
 	var/list/alarms
 
@@ -110,7 +112,6 @@
 	resistance_flags = FIRE_PROOF
 
 	var/danger_level = 0
-	var/mode = AALARM_MODE_SCRUBBING
 
 	var/locked = TRUE
 	var/aidisabled = 0
@@ -384,6 +385,7 @@
 					"widenet"				= info["widenet"],
 					"filter_types"			= info["filter_types"]
 				))
+		var/mode = alarm_config?.mode || AALARM_MODE_SCRUBBING
 		data["mode"] = mode
 		data["modes"] = list()
 		data["modes"] += list(list("name" = "Filtering - Scrubs out contaminants", 				"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0))
@@ -477,9 +479,10 @@
 				investigate_log(" treshold value for [env]:[name] was set to [value] by [key_name(usr)]",INVESTIGATE_ATMOS)
 				. = TRUE
 		if("mode")
-			mode = text2num(params["mode"])
-			investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
-			apply_mode()
+			if(alarm_config)
+				alarm_config.mode = text2num(params["mode"])
+				investigate_log("was turned to [get_mode_name(mode)] mode by [key_name(usr)]",INVESTIGATE_ATMOS)
+				apply_mode()
 			. = TRUE
 		if("alarm")
 			var/area/A = get_area(src)
@@ -571,7 +574,7 @@
 
 /obj/machinery/airalarm/proc/apply_mode()
 	var/area/A = get_area(src)
-	switch(mode)
+	switch(alarm_config.mode)
 		if(AALARM_MODE_SCRUBBING)
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
@@ -743,8 +746,8 @@
 
 	if(old_danger_level != danger_level)
 		apply_danger_level()
-	if(mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
-		mode = AALARM_MODE_SCRUBBING
+	if(alarm_config?.mode == AALARM_MODE_REPLACEMENT && environment_pressure < ONE_ATMOSPHERE * 0.05)
+		alarm_config.mode = AALARM_MODE_SCRUBBING
 		apply_mode()
 
 
@@ -828,7 +831,6 @@
 						wires.repair()
 						aidisabled = 0
 						locked = FALSE
-						mode = 1
 						shorted = 0
 						post_alert(0)
 						buildstage = BUILDSTAGE_COMPLETE
