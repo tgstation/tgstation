@@ -15,7 +15,6 @@
 	var/menu = 1 //Which menu screen to display
 	var/datum/data/record/active_record = null
 	var/loading = 0 // Nice loading text
-	var/autoprocess = 0
 
 	light_color = LIGHT_COLOR_BLUE
 
@@ -60,10 +59,6 @@
 	src.scanner = findscanner()
 	if(findfirstcloner && !LAZYLEN(pods))
 		findcloner()
-	if(!autoprocess)
-		STOP_PROCESSING(SSmachines, src)
-	else
-		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
