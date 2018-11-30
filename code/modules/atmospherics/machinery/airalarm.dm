@@ -191,8 +191,14 @@
 	var/list/air_vent_info = list()
 	var/list/air_scrub_info = list()
 
-/obj/machinery/airalarm/New(loc, ndir, nbuild)
-	..()
+/obj/machinery/airalarm/Destroy()
+	SSradio.remove_object(src, frequency)
+	qdel(wires)
+	wires = null
+	return ..()
+
+/obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
+	. = ..()
 	wires = new /datum/wires/airalarm(src)
 	if(ndir)
 		setDir(ndir)
@@ -207,15 +213,7 @@
 		name = "[get_area_name(src)] Air Alarm"
 
 	update_icon()
-
-/obj/machinery/airalarm/Destroy()
-	SSradio.remove_object(src, frequency)
-	qdel(wires)
-	wires = null
-	return ..()
-
-/obj/machinery/airalarm/Initialize(mapload)
-	. = ..()
+	
 	set_frequency(frequency)
 
 /obj/machinery/airalarm/examine(mob/user)
