@@ -39,8 +39,10 @@ Difficulty: Hard
 	melee_damage_upper = 40
 	speed = 1
 	move_to_delay = 5
-	rapid_melee = 16 // every 1/8 second
+	rapid_melee = 8 // every 1/4 second
 	melee_queue_distance = 20 // as far as possible really, need this because of blood warp
+	retreat_distance = 5
+	minimum_distance = 5
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
@@ -152,7 +154,7 @@ Difficulty: Hard
 	if(charging)
 		DestroySurroundings()
 	if(is_enraged())
-		ground_slam()
+		ground_slam(1)
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge()
@@ -168,11 +170,11 @@ Difficulty: Hard
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	sleep(3)
-	var/movespeed = is_enraged() ? 1 : 0.7
-	walk_towards(src, T, movespeed) // faster if not enraged
+	var/movespeed = is_enraged() ? 0.5 : 0.7
+	walk_towards(src, T, movespeed)
 	sleep(get_dist(src, T) * movespeed)
 	try_bloodattack()
-	SetRecoveryTime(20)
+	SetRecoveryTime(10)
 	charging = null
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
@@ -180,12 +182,11 @@ Difficulty: Hard
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)
 		DestroySurroundings()
-		if(isliving(A))
+		if(isliving(A) && !is_enraged())
 			var/mob/living/L = A
 			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
 			src.forceMove(get_turf(L))
 			L.apply_damage(40, BRUTE)
-			L.Paralyze(3) // lol you fucked up how did you even get hit by this attack directly
 			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 			shake_camera(L, 4, 3)
 			shake_camera(src, 2, 3)
@@ -309,14 +310,13 @@ Difficulty: Hard
 				M.gets_drilled()
 			new /obj/effect/temp_visual/small_smoke/halfsecond(T)
 			for(var/mob/living/L in T)
-				if(istype(L, /mob/living/simple_animal/hostile/megafauna/bubblegum) || locate(L) in hitby)
+				if(istype(L, /mob/living/simple_animal/hostile/megafauna/bubblegum) || L.throwing)
 					continue
 				hitby += L
 				to_chat(L, "<span class='userdanger'>[src]'s ground slam shockwave sends you flying!</span>")
 				var/turf/thrownat = get_ranged_target_turf(L, get_dir(orgin, L), 10)
-				L.throw_at(thrownat, get_dist(L, thrownat), 0.05, src, 1)
+				L.throw_at(thrownat, get_dist(L, thrownat), 2, L, 1)
 				L.apply_damage(20, BRUTE)
-				L.Paralyze(0.25) // mostly for the visual effect (and weapon drop)
 				shake_camera(L, 2, 1)
 		sleep(2)
 	return
