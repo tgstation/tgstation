@@ -78,7 +78,7 @@
 	var/locked = TRUE
 	var/aidisabled = 0
 	var/shorted = 0
-	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	var/buildstage = BUILDSTAGE_COMPLETE
 
 	var/frequency = FREQ_ATMOS_CONTROL
 	var/alarm_frequency = FREQ_ATMOS_ALARMS
@@ -198,7 +198,7 @@
 		setDir(ndir)
 
 	if(nbuild)
-		buildstage = 0
+		buildstage = BUILDSTAGE_NOCIRCUIT
 		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir == 1 ? -24 : 24) : 0
@@ -366,7 +366,7 @@
 	return data
 
 /obj/machinery/airalarm/ui_act(action, params)
-	if(..() || buildstage != 2)
+	if(..() || buildstage != BUILDSTAGE_COMPLETE)
 		return
 	if((locked && !usr.has_unlimited_silicon_privilege) || (usr.has_unlimited_silicon_privilege && aidisabled))
 		return
@@ -724,7 +724,7 @@
 				W.play_tool_sound(src)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				new /obj/item/stack/cable_coil(loc, 5)
-				buildstage = 1
+				buildstage = BUILDSTAGE_NOWIRES
 				update_icon()
 				return
 			else if(W.tool_behaviour == TOOL_SCREWDRIVER)  // Opening that Air Alarm up.
@@ -744,11 +744,11 @@
 									"<span class='notice'>You start prying out the circuit...</span>")
 				W.play_tool_sound(src)
 				if (W.use_tool(src, user, 20))
-					if (buildstage == 1)
+					if (buildstage == BUILDSTAGE_NOWIRES)
 						to_chat(user, "<span class='notice'>You remove the air alarm electronics.</span>")
 						new /obj/item/electronics/airalarm( src.loc )
 						playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
-						buildstage = 0
+						buildstage = BUILDSTAGE_NOCIRCUIT
 						update_icon()
 				return
 
@@ -760,7 +760,7 @@
 				user.visible_message("[user.name] wires the air alarm.", \
 									"<span class='notice'>You start wiring the air alarm...</span>")
 				if (do_after(user, 20, target = src))
-					if (cable.get_amount() >= 5 && buildstage == 1)
+					if (cable.get_amount() >= 5 && buildstage == BUILDSTAGE_NOWIRES)
 						cable.use(5)
 						to_chat(user, "<span class='notice'>You wire the air alarm.</span>")
 						wires.repair()
@@ -769,14 +769,14 @@
 						mode = 1
 						shorted = 0
 						post_alert(0)
-						buildstage = 2
+						buildstage = BUILDSTAGE_COMPLETE
 						update_icon()
 				return
 		if(0)
 			if(istype(W, /obj/item/electronics/airalarm))
 				if(user.temporarilyRemoveItemFromInventory(W))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
-					buildstage = 1
+					buildstage = BUILDSTAGE_NOWIRES
 					update_icon()
 					qdel(W)
 				return
@@ -787,7 +787,7 @@
 					return
 				user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 				"<span class='notice'>You adapt an air alarm circuit and slot it into the assembly.</span>")
-				buildstage = 1
+				buildstage = BUILDSTAGE_NOWIRES
 				update_icon()
 				return
 

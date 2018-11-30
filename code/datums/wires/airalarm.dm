@@ -13,7 +13,7 @@
 
 /datum/wires/airalarm/interactable(mob/user)
 	var/obj/machinery/airalarm/A = holder
-	if(A.panel_open && A.buildstage == 2)
+	if(A.panel_open && A.buildstage == BUILDSTAGE_COMPLETE)
 		return TRUE
 
 /datum/wires/airalarm/get_status()

@@ -31,7 +31,7 @@
 	light_color = "#ff3232"
 
 	var/detecting = 1
-	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
+	var/buildstage = BUILDSTAGE_COMPLETE
 	var/last_alarm = 0
 	var/area/myarea = null
 
@@ -40,7 +40,7 @@
 	if(dir)
 		src.setDir(dir)
 	if(building)
-		buildstage = 0
+		buildstage = BUILDSTAGE_NOCIRCUIT
 		panel_open = TRUE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
@@ -137,7 +137,7 @@
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
 /obj/machinery/firealarm/attack_hand(mob/user)
-	if(buildstage != 2)
+	if(buildstage != BUILDSTAGE_COMPLETE)
 		return ..()
 	add_fingerprint(user)
 	var/area/A = get_area(src)
@@ -155,7 +155,7 @@
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 
-	if(W.tool_behaviour == TOOL_SCREWDRIVER && buildstage == 2)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && buildstage == BUILDSTAGE_COMPLETE)
 		W.play_tool_sound(src)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
@@ -188,7 +188,7 @@
 					return
 
 				else if(W.tool_behaviour == TOOL_WIRECUTTER)
-					buildstage = 1
+					buildstage = BUILDSTAGE_NOWIRES
 					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
@@ -209,7 +209,7 @@
 						to_chat(user, "<span class='warning'>You need more cable for this!</span>")
 					else
 						coil.use(5)
-						buildstage = 2
+						buildstage = BUILDSTAGE_COMPLETE
 						to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 						update_icon()
 					return
@@ -218,21 +218,21 @@
 					user.visible_message("[user.name] removes the electronics from [src.name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(W.use_tool(src, user, 20, volume=50))
-						if(buildstage == 1)
+						if(buildstage == BUILDSTAGE_NOWIRES)
 							if(stat & BROKEN)
 								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
 								stat &= ~BROKEN
 							else
 								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
 								new /obj/item/electronics/firealarm(user.loc)
-							buildstage = 0
+							buildstage = BUILDSTAGE_NOCIRCUIT
 							update_icon()
 					return
 			if(0)
 				if(istype(W, /obj/item/electronics/firealarm))
 					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
 					qdel(W)
-					buildstage = 1
+					buildstage = BUILDSTAGE_NOWIRES
 					update_icon()
 					return
 
@@ -242,7 +242,7 @@
 						return
 					user.visible_message("<span class='notice'>[user] fabricates a circuit and places it into [src].</span>", \
 					"<span class='notice'>You adapt a fire alarm circuit and slot it into the assembly.</span>")
-					buildstage = 1
+					buildstage = BUILDSTAGE_NOWIRES
 					update_icon()
 					return
 
