@@ -239,6 +239,10 @@
 		ui = new(user, src, ui_key, "airalarm", name, 440, 650, master_ui, state)
 		ui.open()
 
+/obj/machinery/airalarm/proc/GetMeasuredEnvironment()
+	var/turf/T = get_turf(src)
+	return T.return_air()
+
 /obj/machinery/airalarm/ui_data(mob/user)
 	var/data = list(
 		"locked" = locked,
@@ -251,39 +255,41 @@
 	data["atmos_alarm"] = A.atmosalm
 	data["fire_alarm"] = A.fire
 
-	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/environment = T.return_air()
+	var/datum/gas_mixture/environment = GetMeasuredEnvironment()
 	var/datum/tlv/cur_tlv
 
-	data["environment_data"] = list()
-	var/pressure = environment.return_pressure()
-	cur_tlv = TLV["pressure"]
-	data["environment_data"] += list(list(
-							"name" = "Pressure",
-							"value" = pressure,
-							"unit" = "kPa",
-							"danger_level" = cur_tlv.get_danger_level(pressure)
-	))
-	var/temperature = environment.temperature
-	cur_tlv = TLV["temperature"]
-	data["environment_data"] += list(list(
-							"name" = "Temperature",
-							"value" = temperature,
-							"unit" = "K ([round(temperature - T0C, 0.1)]C)",
-							"danger_level" = cur_tlv.get_danger_level(temperature)
-	))
-	var/total_moles = environment.total_moles()
-	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
-	for(var/gas_id in environment.gases)
-		if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
-			continue
-		cur_tlv = TLV[gas_id]
+	data["has_environment"] = environment != null
+
+	if(environment)
+		data["environment_data"] = list()
+		var/pressure = environment.return_pressure()
+		cur_tlv = TLV["pressure"]
 		data["environment_data"] += list(list(
-								"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
-								"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
-								"unit" = "%",
-								"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id][MOLES] * partial_pressure)
+								"name" = "Pressure",
+								"value" = pressure,
+								"unit" = "kPa",
+								"danger_level" = cur_tlv.get_danger_level(pressure)
 		))
+		var/temperature = environment.temperature
+		cur_tlv = TLV["temperature"]
+		data["environment_data"] += list(list(
+								"name" = "Temperature",
+								"value" = temperature,
+								"unit" = "K ([round(temperature - T0C, 0.1)]C)",
+								"danger_level" = cur_tlv.get_danger_level(temperature)
+		))
+		var/total_moles = environment.total_moles()
+		var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+		for(var/gas_id in environment.gases)
+			if(!(gas_id in TLV)) // We're not interested in this gas, it seems.
+				continue
+			cur_tlv = TLV[gas_id]
+			data["environment_data"] += list(list(
+									"name" = environment.gases[gas_id][GAS_META][META_GAS_NAME],
+									"value" = environment.gases[gas_id][MOLES] / total_moles * 100,
+									"unit" = "%",
+									"danger_level" = cur_tlv.get_danger_level(environment.gases[gas_id][MOLES] * partial_pressure)
+			))
 
 	if(!locked || user.has_unlimited_silicon_privilege)
 		data["vents"] = list()
