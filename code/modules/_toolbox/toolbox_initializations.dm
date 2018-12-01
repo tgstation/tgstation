@@ -170,3 +170,27 @@ GLOBAL_LIST_EMPTY(hub_features)
 		requires_console = TRUE
 		consoleless_interface = FALSE
 	return ..()
+
+/obj/machinery/rnd/production/techfab/department/science/Initialize(roundstart)
+	if(roundstart && CONFIG_GET(number/omnilathe))
+		name = "technology fabricator"
+		desc = "Produces researched prototypes with raw materials and energy."
+		icon_state = "protolathe"
+		allowed_department_flags = ALL
+		department_tag = "Unidentified"
+		circuit = /obj/item/circuitboard/machine/techfab
+		container_type = OPENCONTAINER
+	return ..()
+
+/obj/machinery/rnd/production/circuit_imprinter/department/science/Initialize(roundstart)
+	if(roundstart && CONFIG_GET(number/omnilathe))
+		name = "circuit imprinter"
+		desc = "Manufactures circuit boards for the construction of machines."
+		icon_state = "circuit_imprinter"
+		container_type = OPENCONTAINER
+		circuit = /obj/item/circuitboard/machine/circuit_imprinter
+		requires_console = TRUE
+		consoleless_interface = FALSE
+		allowed_department_flags = ALL
+		department_tag = "Unidentified"
+	return ..()

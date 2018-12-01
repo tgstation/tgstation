@@ -37,7 +37,9 @@
 		if(possible_brothers.len < min_team_size || antag_candidates.len <= required_enemies)
 			break
 		var/datum/team/brother_team/team = new
-		var/team_size = prob(10) ? min(3, possible_brothers.len) : 2
+		var/team_size = 2
+		if(num_players() > 13)
+			team_size = prob(10) ? min(3, possible_brothers.len) : 2
 		for(var/k = 1 to team_size)
 			var/datum/mind/bro = antag_pick(possible_brothers)
 			possible_brothers -= bro

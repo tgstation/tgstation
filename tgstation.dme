@@ -1052,6 +1052,7 @@
 #include "code\modules\_toolbox\perseus\equipment\vanity.dm"
 #include "code\modules\_toolbox\perseus\equipment\weapons.dm"
 #include "code\modules\_toolbox\perseus\machines\camera_console.dm"
+#include "code\modules\_toolbox\perseus\machines\perseus_supply.dm"
 #include "code\modules\_toolbox\perseus\machines\security_system.dm"
 #include "code\modules\_toolbox\seasonal\halloween.dm"
 #include "code\modules\_toolbox\silly\clothing.dm"

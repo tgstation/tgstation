@@ -40,6 +40,9 @@
 /datum/extra_role/proc/GetAccess()
 	return access
 
+/datum/extra_role/proc/get_who_list_info()
+	return ""
+
 /mob/living/carbon/proc/handle_extra_roles()
 	if(mind && mind.extra_roles && mind.extra_roles.len)
 		for(var/datum/extra_role/E in mind.extra_roles)

@@ -1,3 +1,6 @@
+/*
+interaction with split personality is broken as fuck*/
+
 #define MODE_PERSEUS "perseustalk"
 /datum/saymode/perseus
 	key = "a"

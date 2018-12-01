@@ -76,6 +76,7 @@
 	var/condition = 0
 	var/perc_identifier = "ERROR"
 	var/datum/mind/owner_mind = null
+	var/mob/living/last_mob = null
 	var/list/action_datums = list(/datum/action/padrenal,/datum/action/pdoors) //must be /datum/action -falaskian
 	var/list/active_actions = list()
 	var/iscommander = 0
@@ -193,6 +194,15 @@
 		return
 	if(!istype(affecting.current,/mob/living/carbon))
 		return
+	if(!last_mob)
+		last_mob = affecting.current
+	if(istype(last_mob) && last_mob != affecting.current)
+		last_mob.remove_perseus_hud()
+		last_mob = affecting.current
+		for(var/datum/action/action in active_actions)
+			action.Grant(last_mob)
+			action.UpdateButtonIcon()
+		last_mob.give_perseus_hud()
 	clear_implants()
 	clear_antag()
 	handle_client_images()
@@ -227,6 +237,9 @@
 			var/turf/current_turf = get_turf(affecting.current)
 			if(current_area)
 				perseusAlert("Lifesigns Alert","[affecting.current.name] is [affecting.current.stat == DEAD ? "dead" : "in critical condition"]! Location: [current_area.name] ([current_turf.x],[current_turf.y],[current_turf.z])", 2)
+
+/datum/extra_role/perseus/get_who_list_info()
+	 return "<font color='blue'><b>Perc</b></font>"
 
 // *****************
 // PERSEUS ADRENAL
@@ -298,8 +311,14 @@
 	var/list/poddoorids = list("prisonship")
 
 /datum/action/pdoors/Trigger()
+	if (!..())
+		return 0
+	if (!owner || !check_perseus(owner))
+		return 0
 	var/doorstatus = -1
 	for(var/obj/machinery/door/poddoor/P in world)
+		if(P.operating)
+			continue
 		if(P.id in poddoorids)
 			if(doorstatus == -1)
 				doorstatus = P.density
@@ -310,6 +329,7 @@
 				if(1)
 					spawn(0)
 						P.open()
+			UpdateButtonIcon()
 	if(doorstatus >= 0)
 		to_chat(owner, "Mycenae blast doors [doorstatus ? "opening" : "closing"].")
 

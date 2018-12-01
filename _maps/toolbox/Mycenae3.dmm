@@ -49,14 +49,14 @@
 "aW" = (/obj/structure/table/wood,/obj/item/book/manual/sop,/turf/open/floor/carpet,/area/shuttle/perseus_mycenae)
 "aX" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/snacks/chips,/obj/item/lighter/zippo/perc{pixel_x = 4; pixel_y = 4},/turf/open/floor/carpet,/area/shuttle/perseus_mycenae)
 "aY" = (/obj/machinery/door/poddoor{closingLayer = 3; id = "prisonship"},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"aZ" = (/obj/structure/table/optable,/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
+"aZ" = (/obj/machinery/computer/operating,/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
 "ba" = (/obj/structure/table/reinforced,/obj/machinery/vending/percmed{density = 0; pixel_y = 32; req_access = 561},/obj/item/stimpack/perseus,/obj/item/stimpack/perseus,/obj/item/stimpack/perseus,/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
 "bb" = (/obj/structure/table/reinforced,/obj/structure/stimtank/perseus,/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
 "bc" = (/obj/machinery/light{dir = 4},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
 "bd" = (/obj/machinery/light{dir = 8},/turf/open/floor/carpet,/area/shuttle/perseus_mycenae)
 "be" = (/obj/structure/chair/comfy/brown{dir = 1},/obj/effect/landmark/start/penforcer,/turf/open/floor/carpet,/area/shuttle/perseus_mycenae)
 "bf" = (/obj/machinery/computer/shuttle/perseus_shuttle,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"bg" = (/obj/machinery/computer/operating,/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
+"bg" = (/obj/structure/table/optable,/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
 "bh" = (/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
 "bi" = (/obj/machinery/light{dir = 4},/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/open/floor{tag = "icon-white"; icon_state = "white"},/area/shuttle/perseus_mycenae)
 "bj" = (/obj/machinery/door/airlock/security/glass{name = "Cell 1"; req_access_txt = "561"},/obj/machinery/door/poddoor/preopen{id = "prisonshipcell"},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
@@ -104,40 +104,40 @@
 "bZ" = (/obj/machinery/door/airlock/security/glass{name = "Cell 4"; req_access_txt = "561"},/obj/machinery/door/poddoor/preopen{id = "prisonshipcell"},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
 "ca" = (/obj/machinery/door/airlock/security/glass{name = "Minibar"; req_access_txt = "561"},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
 "cb" = (/obj/structure/table/wood,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"cc" = (/obj/structure/bed,/obj/item/bedsheet/perc,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cd" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"ce" = (/obj/machinery/light{dir = 8},/turf/open/floor/engine,/area/shuttle/perseus_mycenae)
-"cf" = (/obj/structure/table,/obj/item/pinpointer/nuke,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/gun/energy/ionrifle,/turf/open/floor/engine,/area/shuttle/perseus_mycenae)
-"cg" = (/obj/machinery/computer/crew,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"ch" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"ci" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"cj" = (/obj/structure/table,/obj/machinery/vending/perctech{density = 0; pixel_y = -32; req_access = 561},/obj/item/device/detective_scanner,/obj/item/book/manual/sop,/obj/item/clothing/glasses/perseus,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"ck" = (/obj/machinery/light{dir = 8},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cl" = (/obj/structure/chair/comfy/teal,/obj/effect/landmark/start/pcommander,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cm" = (/obj/structure/table,/obj/structure/closet/secure_closet{anchorable = 0; anchored = 1; desc = "A wall mounted locker."; icon = 'icons/oldschool/perseus.dmi'; icon_door = "p_armory_wall_closet"; icon_door_override = 1; icon_state = "p_armory_wall_closet"; name = "Perseus armory locker"; pixel_y = -30; req_access = null; req_access_txt = "562"; wall_mounted = 1},/obj/item/gun/ballistic/fiveseven,/obj/item/gun/ballistic/fiveseven,/obj/item/gun/energy/ep90,/obj/item/gun/energy/ep90,/turf/open/floor/engine,/area/shuttle/perseus_mycenae)
-"cn" = (/obj/structure/disposalpipe/segment,/turf/closed/indestructible/perc,/area/shuttle/perseus_mycenae)
-"co" = (/turf/open/floor{tag = "icon-red"; icon_state = "red"},/area/shuttle/perseus_mycenae)
-"cp" = (/obj/structure/closet/perseus/mixed,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"cq" = (/obj/machinery/vending/boozeomat/perc{density = 0; pixel_y = -32; req_access_txt = "561"},/obj/structure/table/wood,/obj/item/book/manual/barman_recipes,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cr" = (/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cs" = (/obj/structure/table/wood,/obj/machinery/recharger,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"ct" = (/obj/structure/table/wood,/obj/machinery/light,/obj/item/clothing/glasses/perseus,/obj/item/device/multitool/ai_detect,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cu" = (/obj/machinery/computer/camera_advanced/perseus,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cv" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/open/floor/plating,/area/shuttle/perseus_mycenae)
-"cw" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/indestructible/perc{tag = "icon-percwall (EAST)"; icon_state = "percwall"; dir = 4},/area/shuttle/perseus_mycenae)
-"cx" = (/obj/structure/bookcase{pixel_y = 32},/obj/structure/table/wood,/obj/machinery/computer/libraryconsole,/obj/structure/disposalpipe/segment{dir = 9},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cy" = (/obj/machinery/light{dir = 4},/obj/structure/chair/comfy/black,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cz" = (/obj/machinery/door/airlock/security/glass{name = "Recreation"; req_access_txt = "561"},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"cA" = (/obj/structure/mycenae_nameplate,/turf/closed/indestructible/perc,/area/shuttle/perseus_mycenae)
-"cB" = (/obj/structure/chair{dir = 1},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
-"cC" = (/obj/structure/displaycase/perseus{alert = 0; pixel_y = 32},/turf/open/floor{tag = "icon-orange (WEST)"; icon_state = "orange"; dir = 8},/area/shuttle/perseus_mycenae)
-"cD" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
-"cE" = (/turf/open/floor{tag = "icon-orange (NORTH)"; icon_state = "orange"; dir = 1},/area/shuttle/perseus_mycenae)
-"cF" = (/turf/open/floor{tag = "icon-orangecorner (NORTH)"; icon_state = "orangecorner"; dir = 1},/area/shuttle/perseus_mycenae)
-"cG" = (/obj/effect/landmark/start/penforcer,/turf/open/floor{tag = "icon-red (NORTHWEST)"; icon_state = "red"; dir = 9},/area/shuttle/perseus_mycenae)
-"cH" = (/obj/effect/landmark/start/penforcer,/turf/open/floor{tag = "icon-red (NORTHEAST)"; icon_state = "red"; dir = 5},/area/shuttle/perseus_mycenae)
-"cI" = (/turf/open/floor{tag = "icon-red (SOUTHWEST)"; icon_state = "red"; dir = 10},/area/shuttle/perseus_mycenae)
-"cJ" = (/turf/open/floor{tag = "icon-red (SOUTHEAST)"; icon_state = "red"; dir = 6},/area/shuttle/perseus_mycenae)
+"cc" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cd" = (/obj/machinery/light{dir = 8},/turf/open/floor/engine,/area/shuttle/perseus_mycenae)
+"ce" = (/obj/structure/table,/obj/item/pinpointer/nuke,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/c4_ex/breach,/obj/item/gun/energy/ionrifle,/turf/open/floor/engine,/area/shuttle/perseus_mycenae)
+"cf" = (/obj/machinery/computer/crew,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
+"cg" = (/obj/machinery/disposal/bin,/obj/structure/disposalpipe/trunk,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
+"ch" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
+"ci" = (/obj/structure/table,/obj/machinery/vending/perctech{density = 0; pixel_y = -32; req_access = 561},/obj/item/device/detective_scanner,/obj/item/book/manual/sop,/obj/item/clothing/glasses/perseus,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
+"cj" = (/obj/machinery/light{dir = 8},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"ck" = (/obj/structure/chair/comfy/teal,/obj/effect/landmark/start/pcommander,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cl" = (/obj/structure/table,/obj/structure/closet/secure_closet{anchorable = 0; anchored = 1; desc = "A wall mounted locker."; icon = 'icons/oldschool/perseus.dmi'; icon_door = "p_armory_wall_closet"; icon_door_override = 1; icon_state = "p_armory_wall_closet"; name = "Perseus armory locker"; pixel_y = -30; req_access = null; req_access_txt = "562"; wall_mounted = 1},/obj/item/gun/ballistic/fiveseven,/obj/item/gun/ballistic/fiveseven,/obj/item/gun/energy/ep90,/obj/item/gun/energy/ep90,/turf/open/floor/engine,/area/shuttle/perseus_mycenae)
+"cm" = (/obj/structure/disposalpipe/segment,/turf/closed/indestructible/perc,/area/shuttle/perseus_mycenae)
+"cn" = (/turf/open/floor{tag = "icon-red"; icon_state = "red"},/area/shuttle/perseus_mycenae)
+"co" = (/obj/structure/closet/perseus/mixed,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
+"cp" = (/obj/machinery/vending/boozeomat/perc{density = 0; pixel_y = -32; req_access_txt = "561"},/obj/structure/table/wood,/obj/item/book/manual/barman_recipes,/obj/item/reagent_containers/food/drinks/shaker,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cq" = (/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks/beer,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cr" = (/obj/structure/table/wood,/obj/machinery/recharger,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cs" = (/obj/structure/table/wood,/obj/machinery/light,/obj/item/clothing/glasses/perseus,/obj/item/device/multitool/ai_detect,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"ct" = (/obj/machinery/computer/camera_advanced/perseus,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cu" = (/obj/structure/disposalpipe/trunk{dir = 4},/obj/structure/disposaloutlet{dir = 8},/turf/open/floor/plating,/area/shuttle/perseus_mycenae)
+"cv" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/indestructible/perc{tag = "icon-percwall (EAST)"; icon_state = "percwall"; dir = 4},/area/shuttle/perseus_mycenae)
+"cw" = (/obj/structure/bookcase{pixel_y = 32},/obj/structure/table/wood,/obj/machinery/computer/libraryconsole,/obj/structure/disposalpipe/segment{dir = 9},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cx" = (/obj/machinery/light{dir = 4},/obj/structure/chair/comfy/black,/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cy" = (/obj/machinery/door/airlock/security/glass{name = "Recreation"; req_access_txt = "561"},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
+"cz" = (/obj/structure/mycenae_nameplate,/turf/closed/indestructible/perc,/area/shuttle/perseus_mycenae)
+"cA" = (/obj/structure/chair{dir = 1},/turf/open/floor/wood,/area/shuttle/perseus_mycenae)
+"cB" = (/obj/structure/displaycase/perseus{alert = 0; pixel_y = 32},/turf/open/floor{tag = "icon-orange (WEST)"; icon_state = "orange"; dir = 8},/area/shuttle/perseus_mycenae)
+"cC" = (/obj/machinery/sleeper{icon_state = "sleeper-open"; dir = 8},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
+"cD" = (/turf/open/floor{tag = "icon-orange (NORTH)"; icon_state = "orange"; dir = 1},/area/shuttle/perseus_mycenae)
+"cE" = (/turf/open/floor{tag = "icon-orangecorner (NORTH)"; icon_state = "orangecorner"; dir = 1},/area/shuttle/perseus_mycenae)
+"cF" = (/obj/effect/landmark/start/penforcer,/turf/open/floor{tag = "icon-red (NORTHWEST)"; icon_state = "red"; dir = 9},/area/shuttle/perseus_mycenae)
+"cG" = (/obj/effect/landmark/start/penforcer,/turf/open/floor{tag = "icon-red (NORTHEAST)"; icon_state = "red"; dir = 5},/area/shuttle/perseus_mycenae)
+"cH" = (/turf/open/floor{tag = "icon-red (SOUTHWEST)"; icon_state = "red"; dir = 10},/area/shuttle/perseus_mycenae)
+"cI" = (/turf/open/floor{tag = "icon-red (SOUTHEAST)"; icon_state = "red"; dir = 6},/area/shuttle/perseus_mycenae)
+"cJ" = (/obj/machinery/computer/perseussupply,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
 "cK" = (/obj/structure/table,/obj/item/grenade/barrier{pixel_x = -4; pixel_y = -1},/obj/item/grenade/barrier{pixel_y = 2},/obj/item/grenade/barrier{pixel_x = 4; pixel_y = 5},/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
 "cL" = (/obj/structure/window/reinforced{color = "#FFFFFF"; dir = 4},/obj/machinery/light,/obj/machinery/shieldgen,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
 "cM" = (/obj/machinery/computer/arcade,/turf/open/floor{tag = "icon-floor"; icon_state = "floor"},/area/shuttle/perseus_mycenae)
@@ -159,14 +159,14 @@ aqarbsbtbhazbubvazbwaKaKbxaKaKbyazaKaKaKaKaKaKaKaKbzaKaKbAbBab
 aqarababbCabaEbDbEaKaKaKaKaKaKaKbEbFaKaKaKbGaKbHbIazaKaKaMbJaj
 aqarbKbLaKaKaKbDbEaKaKaKaKaKaKaKbEbFaKababbMbvababababbNaMbOaj
 aqarbKaKaKaKaKbKazbPaKaKbQaKaKbRazaKbSazbTbUbUbVbWbXazbSbAbBab
-aqarbKaKaKaKaKbKazbYbkblazblbkbZazcacbazccbUcdazcecfazcgababaw
-aDabaKchcicjaKbKazaMaMaMazaMaMaMazckbUazbUclbUazcmabababawaaaa
-aaababcnababcocpazaMaQaRazaSaTaMazcqcrazcsctcuazabawaaaaaaaaaa
-aacvcwcxcyabczbvazaLaMaNazaNaMaOazazcAcAcAcAcAawaaaaaaaaaaaaaa
-aaaeabcBbUcCaKcDazabavabababavabawaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaqarcEcEcFaKcDazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaqaraKcGcHaKcDazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaqaraKcIcJaKaKababacadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aqarbKaKaKaKaKbKazbYbkblazblbkbZazcacbazbUbUccazcdceazcfababaw
+aDabaKcgchciaKbKazaMaMaMazaMaMaMazcjbUazbUckbUazclabababawaaaa
+aaababcmababcncoazaMaQaRazaSaTaMazcpcqazcrcsctazabawaaaaaaaaaa
+aacucvcwcxabcybvazaLaMaNazaNaMaOazazczczczczczawaaaaaaaaaaaaaa
+aaaeabcAbUcBaKcCazabavabababavabawaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaqarcDcDcEaKcCazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaqaraKcFcGaKcCazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaqaraKcHcIaKcJababacadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaDazcKcLaKaKaKbLaKcMajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaDabababaKaKaKaKcNajaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaabababababavawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
