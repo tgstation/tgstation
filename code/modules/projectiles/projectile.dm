@@ -83,7 +83,7 @@
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
 	var/decayedRange
-	var/is_reflectable = FALSE // Can it be reflected or not?
+	var/reflectable = NONE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
 	var/knockdown = 0

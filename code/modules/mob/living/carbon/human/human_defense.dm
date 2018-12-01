@@ -55,7 +55,7 @@
 					return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(P.is_reflectable)
+		if(P.reflectable & REFLECT_NORMAL)
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -725,7 +725,7 @@
 					to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
 				else if(oxyloss > 30)
 					to_chat(src, "<span class='danger'>You're choking!</span>")
-		
+
 		if(!has_trait(TRAIT_NOHUNGER))
 			switch(nutrition)
 				if(NUTRITION_LEVEL_FULL to INFINITY)
