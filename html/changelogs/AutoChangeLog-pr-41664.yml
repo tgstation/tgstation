@@ -1,5 +1,0 @@
-author: "nicbn"
-delete-after: True
-changes: 
-  - bugfix: "Layered pipes no longer stick out of their tile, also vents and other machines will always be in the middle of the tile."
-  - imageadd: "Layer manifold now loos like an adaptor."

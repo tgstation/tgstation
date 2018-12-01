@@ -1,4 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - bugfix: "It is no longer possible to purge a malfunctioning AI's Law zero if the AI is currently using a shell."
