@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - rscadd: "Kitchen whetstones now have a sound when used."
