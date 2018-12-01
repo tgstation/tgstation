@@ -162,7 +162,7 @@
 
 /obj/item/reagent_containers/food/snacks/pizza/arnold
 	name = "\improper Arnold pizza"
-	desc = "Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni."
+	desc = "Hello, you've reached Arnold's pizza shop. I'm not here now, I'm out killing pepperoni. <span class='warning'>This will probably be bad for you...</span>"
 	icon_state = "arnoldpizza"
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	bonus_reagents = list("nutriment" = 30, "vitamin" = 6, "iron" = 10, "omnizine" = 30)
@@ -195,7 +195,7 @@
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	name = "\improper Arnold pizza slice"
-	desc = "I come over, maybe I give you a pizza, maybe I break off your arm."
+	desc = "I come over, maybe I give you a pizza, maybe I break off your arm. <span class='warning'>This will probably be bad for you...</span>"
 	icon_state = "arnoldpizzaslice"
 	filling_color = "#A52A2A"
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
