@@ -150,7 +150,7 @@
 //liquid plasma!!!!!!//
 
 /turf/open/floor/plasteel/dark/snowdin
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = 1
 	temperature = 180
 
