@@ -97,16 +97,16 @@ Difficulty: Hard
 		if(prob(75))
 			charge()
 		else
-			hallucination_charge()
+			hallucination_charge_around()
 	else
 		if(prob(50))
 			charge()
 		else
-			hallucination_charge(GLOB.cardinals + GLOB.diagonals)
+			hallucination_charge_around(GLOB.cardinals + GLOB.diagonals)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
-	if(!istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
+	if(ispath(src, /mob/living/simple_animal/hostile/megafauna/bubblegum))
 		for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
 			if(B != src)
 				return INITIALIZE_HINT_QDEL //There can be only one
@@ -163,7 +163,7 @@ Difficulty: Hard
 		playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target, var/delay = 3)
 	if(!chargeat)
 		return
 	var/dir = get_dir(src, chargeat)
@@ -177,7 +177,7 @@ Difficulty: Hard
 	setDir(dir)
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
-	sleep(3)
+	sleep(delay)
 	var/movespeed = is_enraged() ? 0.5 : 0.7
 	walk_towards(src, T, movespeed)
 	sleep(get_dist(src, T) * movespeed)
@@ -420,22 +420,22 @@ Difficulty: Hard
 /obj/effect/decal/cleanable/blood/bubblegum/can_bloodcrawl_in()
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge(var/list/directions = GLOB.cardinals)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge_around(var/list/directions = GLOB.cardinals)
 	if(!target || !directions.len)
 		return
 	var/turf/chargeat = get_turf(target)
-	var/distance = directions.len + 2
+	var/distance = directions.len
 	var/realspawn = pick(directions)
 	for(var/dir in directions)
 		var/turf/place = get_ranged_target_turf(target, dir, distance)
 		if(dir == realspawn)
 			forceMove(place)
-			INVOKE_ASYNC(src, .proc/charge, chargeat)
+			INVOKE_ASYNC(src, .proc/charge, chargeat, 6)
 			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
 		B.forceMove(place)
 		B.target = target
-		INVOKE_ASYNC(B, .proc/charge, chargeat)
+		INVOKE_ASYNC(B, .proc/charge, chargeat, 6)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"
