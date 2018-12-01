@@ -52,8 +52,10 @@
 	potion_action = new
 	stored_slimes = list()
 	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
-	connected_recycler = GLOB.monkey_recycler_default
-	connected_recycler.connected += src
+	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
+		if(get_area(recycler.loc) == get_area(loc))
+			connected_recycler = recycler
+			connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null

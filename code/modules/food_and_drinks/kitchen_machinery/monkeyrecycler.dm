@@ -1,4 +1,4 @@
-GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
+GLOBAL_LIST_EMPTY(monkey_recyclers)
 
 /obj/machinery/monkey_recycler
 	name = "monkey recycler"
@@ -17,16 +17,14 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 	
 /obj/machinery/monkey_recycler/Initialize(mapload)
 	. = ..()
-	if (!GLOB.monkey_recycler_default && mapload && is_station_level(z))
-		GLOB.monkey_recycler_default = src
+	if (mapload)
+		GLOB.monkey_recyclers += src
 
 /obj/machinery/monkey_recycler/Destroy()
-	if (GLOB.monkey_recycler_default == src)
-		GLOB.monkey_recycler_default = null
-	for(var/C in connected)
-		var/obj/machinery/computer/camera_advanced/xenobio/console = C
+	if(src in GLOB.monkey_recyclers)
+		GLOB.monkey_recyclers -= src
+	for(var/obj/machinery/computer/camera_advanced/xenobio/console in connected)
 		console.connected_recycler = null
-	
 	return ..()
 
 /obj/machinery/monkey_recycler/RefreshParts()	//Ranges from 0.2 to 0.8 per monkey recycled
@@ -97,7 +95,7 @@ GLOBAL_DATUM(monkey_recycler_default, /obj/machinery/monkey_recycler)
 		to_chat(user, "<span class='danger'>The machine needs at least 1 monkey worth of material to produce a monkey cube. It currently has [stored_matter].</span>")
 
 /obj/machinery/monkey_recycler/multitool_act(mob/living/user, obj/item/multitool/I)
-	if (istype(I))
+	if(istype(I))
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
 		return TRUE
