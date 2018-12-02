@@ -108,7 +108,6 @@
 	GW.backdrop(src)
 	OT.backdrop(src)
 
-
 /////////////////////////////////// DRUGGY ////////////////////////////////////
 
 /mob/proc/adjust_drugginess(amount)
