@@ -210,6 +210,15 @@
 	design_ids = list("bluespace_cell", "quadratic_capacitor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
+	
+/datum/techweb_node/unregulated_bluespace
+	id = "unregulated_bluespace"
+	display_name = "Unregulated Bluespace Research"
+	description = "Bluespace technology using unstable or unbalanced procedures, prone to damaging the fabric of bluespace. Outlawed by galactic conventions."
+	prereq_ids = list("bluespace_travel", "syndicate_basic")
+	design_ids = list("desynchronizer")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 2500
 
 
 /////////////////////////plasma tech/////////////////////////
