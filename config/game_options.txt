@@ -88,15 +88,17 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 ## Default probablity is 1, increase to make that mode more likely to be picked.
 ## Set to 0 to disable that mode.
 
-PROBABILITY TRAITOR 5
-PROBABILITY TRAITORBRO 2
-PROBABILITY TRAITORCHAN 4
-PROBABILITY INTERNAL_AFFAIRS 3
-PROBABILITY NUCLEAR 2
-PROBABILITY REVOLUTION 2
-PROBABILITY CULT 2
-PROBABILITY CHANGELING 2
-PROBABILITY WIZARD 4
+PROBABILITY TRAITOR 50
+#PROBABILITY NOTRAITOR 0
+#PROBABILITY BROTHERS 50
+PROBABILITY TRAITORBRO 10
+PROBABILITY TRAITORCHAN 0
+PROBABILITY INTERNAL_AFFAIRS 0
+PROBABILITY NUCLEAR 0
+PROBABILITY REVOLUTION 0
+PROBABILITY CULT 0
+PROBABILITY CHANGELING 0
+PROBABILITY WIZARD 0
 PROBABILITY MONKEY 0
 PROBABILITY METEOR 0
 PROBABILITY EXTENDED 0
@@ -115,18 +117,18 @@ REPEATED_MODE_ADJUST 45 30 10
 ## Toggles for continuous modes.
 ## Modes that aren't continuous will end the instant all antagonists are dead.
 
-CONTINUOUS TRAITOR
-CONTINUOUS TRAITORBRO
-CONTINUOUS TRAITORCHAN
-CONTINUOUS INTERNAL_AFFAIRS
+#CONTINUOUS TRAITOR
+#CONTINUOUS TRAITORBRO
+#CONTINUOUS TRAITORCHAN
+#CONTINUOUS INTERNAL_AFFAIRS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
-CONTINUOUS CULT
-CONTINUOUS CLOCKWORK_CULT
-CONTINUOUS CHANGELING
-CONTINUOUS WIZARD
+#CONTINUOUS CULT
+#CONTINUOUS CLOCKWORK_CULT
+#CONTINUOUS CHANGELING
+#CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
-CONTINUOUS HIVEMIND
+#CONTINUOUS HIVEMIND
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -139,7 +141,7 @@ CONTINUOUS SECRET_EXTENDED
 ## In modes that are continuous, if all antagonists should die then a new set of antagonists will be created.
 
 MIDROUND_ANTAG TRAITOR
-#MIDROUND_ANTAG TRAITORBRO
+MIDROUND_ANTAG TRAITORBRO
 MIDROUND_ANTAG TRAITORCHAN
 MIDROUND_ANTAG INTERNAL_AFFAIRS
 #MIDROUND_ANTAG  NUCLEAR
@@ -265,7 +267,7 @@ EVENTS_MIN_TIME_MUL 1
 
 ## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
 ## Set to 0 to make dangerous events avaliable for all populations.
-EVENTS_MIN_PLAYERS_MUL 1
+EVENTS_MIN_PLAYERS_MUL 0
 
 
 ## AI ###
@@ -287,11 +289,11 @@ ALLOW_AI_MULTICAM
 ## AWAY MISSIONS ###
 
 ## Uncomment to load one of the missions from awaymissionconfig.txt at roundstart.
-#ROUNDSTART_AWAY
+ROUNDSTART_AWAY
 
 ## How long the delay is before the Away Mission gate opens. Default is half an hour.
 ## 600 is one minute.
-GATEWAY_DELAY 18000
+GATEWAY_DELAY 9000
 
 
 ## ACCESS ###
@@ -322,7 +324,7 @@ SEC_START_BRIG
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ## NEAR-DEATH EXPERIENCE ###
 ## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
@@ -346,7 +348,7 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
-DEFAULT_LAWS 0
+DEFAULT_LAWS 3
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -400,7 +402,7 @@ LAW_WEIGHT drone,3
 LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
 LAW_WEIGHT reporter,4
-LAW_WEIGHT hulkamania,4
+LAW_WEIGHT hulkamania,5
 
 ## Bad idea laws. Probably shouldn't enable these
 LAW_WEIGHT syndie,0
@@ -427,7 +429,7 @@ ROUNDSTART_RACES human
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-#ROUNDSTART_RACES moth
+ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 

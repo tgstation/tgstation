@@ -5,7 +5,7 @@
 	typepath = /datum/round_event/meteor_wave
 	weight = 4
 	min_players = 15
-	max_occurrences = 3
+	max_occurrences = 0
 	earliest_start = 25 MINUTES
 
 /datum/round_event/meteor_wave

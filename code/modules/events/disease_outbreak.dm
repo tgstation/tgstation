@@ -1,7 +1,7 @@
 /datum/round_event_control/disease_outbreak
 	name = "Disease Outbreak"
 	typepath = /datum/round_event/disease_outbreak
-	max_occurrences = 1
+	max_occurrences = 0
 	min_players = 10
 	weight = 5
 
