@@ -1134,6 +1134,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
+	
+/datum/uplink_item/device_tools/hypnotic_flash
+	name = "Hypnotic Flash"
+	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
+	item = /obj/item/assembly/flash/hypnotic
+	cost = 7
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
