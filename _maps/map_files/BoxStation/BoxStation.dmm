@@ -228,7 +228,7 @@
 "aet" = (/obj/structure/cable{icon_state = "4-8"},/obj/structure/cable{icon_state = "1-8"},/obj/structure/cable{icon_state = "2-8"},/obj/structure/lattice/catwalk,/turf/open/space,/area/solar/starboard/fore)
 "aeu" = (/obj/structure/cable{icon_state = "1-8"},/obj/structure/cable{icon_state = "2-8"},/obj/structure/lattice/catwalk,/turf/open/space,/area/solar/starboard/fore)
 "aev" = (/obj/structure/cable,/obj/machinery/power/solar{id = "auxsolareast"; name = "Port Auxiliary Solar Array"},/turf/open/floor/plasteel/airless/solarpanel,/area/solar/port/fore)
-"aew" = (/obj/machinery/hangar_forcefield_generator{req_access = list(3); req_passing_access = list(3)},/obj/machinery/door/poddoor{id = "security pod hangar blast"; name = "security pod bay blast door"},/turf/open/floor/engine,/area/pod_hangar/security)
+"aew" = (/obj/machinery/hangar_forcefield_generator{req_access = list(); req_access_txt = "3"; req_passing_access = list(3)},/obj/machinery/door/poddoor{id = "security pod hangar blast"; name = "security pod bay blast door"},/turf/open/floor/engine,/area/pod_hangar/security)
 "aex" = (/turf/open/floor/engine,/area/pod_hangar/security)
 "aey" = (/obj/effect/turf_decal/box/corners{dir = 4},/turf/open/floor/engine,/area/pod_hangar/security)
 "aez" = (/obj/effect/turf_decal/box/corners{dir = 1},/obj/machinery/light{dir = 1},/turf/open/floor/engine,/area/pod_hangar/security)
