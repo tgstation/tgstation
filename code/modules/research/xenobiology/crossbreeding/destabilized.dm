@@ -248,7 +248,7 @@ Destabilized extracts:
 /obj/item/slimecross/destabilized/pink/hitEffect(atom/A, mob/thrower)
 	. = ..()
 	if(!isliving(A) || !iscarbon(thrower))
-		return FALSE //Don't use up the extarct unless it lands a hit on a eligible mob.
+		return FALSE //Don't use up the extract unless it lands a hit on a eligible mob.
 	var/mob/living/carbon/CThrower = thrower
 	if(iscarbon(A))
 		var/mob/living/carbon/CTarget = A
