@@ -15,7 +15,7 @@
 
 	//used for mapping and for breathing while in walls (because that's a thing that needs to be accounted for...)
 	//string parsed by /datum/gas/proc/copy_from_turf
-	var/initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	var/initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	//approximation of MOLES_O2STANDARD and MOLES_N2STANDARD pending byond allowing constant expressions to be embedded in constant strings
 	// If someone will place 0 of some gas there, SHIT WILL BREAK. Do not do that.
 

@@ -234,7 +234,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
-	var/datum/radio_frequency/freq = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
+	var/datum/radio_frequency/freq = SSradio.return_frequency(frequency)
 	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		var/list/text = splittext(U.id_tag, "_")
@@ -249,11 +249,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"
 		name = "[uppertext(S)] Supply Control"
-		var/list/new_devices = freq.devices["4"]
+		var/list/new_devices = freq.devices["atmosia"]
+		sensors.Cut()
 		for(var/obj/machinery/air_sensor/U in new_devices)
 			var/list/text = splittext(U.id_tag, "_")
 			if(text[1] == S)
-				sensors = list("[S]_sensor" = "Tank")
+				sensors = list("[S]_sensor" = "[S] Tank")
 				break
 
 	for(var/obj/machinery/atmospherics/components/unary/outlet_injector/U in devices)
@@ -289,6 +290,12 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		if("input")
 			signal.data += list("tag" = input_tag, "power_toggle" = TRUE)
 			. = TRUE
+		if("rate")
+			var/target = input("New target rate:", name, input_info ? input_info["volume_rate"] : 0) as num|null
+			if(!isnull(target) && !..())
+				target =  CLAMP(target, 0, MAX_TRANSFER_RATE)
+				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
+				. = TRUE
 		if("output")
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE

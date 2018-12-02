@@ -542,7 +542,7 @@
 	var/atom/L = loc
 	if(!L)
 		return null
-	return L.AllowDrop() ? L : get_turf(L)
+	return L.AllowDrop() ? L : L.drop_location()
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)

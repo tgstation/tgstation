@@ -204,7 +204,7 @@
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(src, "gun_dry_fire", 30, 1)
+		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--

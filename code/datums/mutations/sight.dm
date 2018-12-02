@@ -45,11 +45,13 @@
 	if(..())
 		return
 
+	owner.add_trait(TRAIT_XRAY_VISION, GENETIC_MUTATION)
 	owner.update_sight()
 
 /datum/mutation/human/x_ray/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
+	owner.remove_trait(TRAIT_XRAY_VISION, GENETIC_MUTATION)
 	owner.update_sight()
 
 

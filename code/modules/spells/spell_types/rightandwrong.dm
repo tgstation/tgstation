@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(summoned_special_magic, list(
 	/obj/item/necromantic_stone,
 	/obj/item/blood_contract))
 
-//everything above except for single use spellbooks, because those are for basic bitches
+//everything above except for single use spellbooks, because they are counted separately (and are for basic bitches anyways)
 GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/antag_spawner/contract,
 	/obj/item/blood_contract,
