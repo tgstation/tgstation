@@ -130,7 +130,7 @@
 	if(isOn())
 		use(1)
 		var/turf/location = get_turf(user)
-		location.hotspot_expose(550, 10, 1)
+		location.hotspot_expose(700, 50, 1)
 		if(get_fuel() <= 0)
 			set_light(0)
 

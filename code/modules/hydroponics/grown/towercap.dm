@@ -208,7 +208,7 @@
 
 /obj/structure/bonfire/proc/Burn()
 	var/turf/current_location = get_turf(src)
-	current_location.hotspot_expose(1000,100,1)
+	current_location.hotspot_expose(1000,500,1)
 	for(var/A in current_location)
 		if(A == src)
 			continue
