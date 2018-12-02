@@ -178,7 +178,7 @@
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		H.randmutvg()
+		H.easy_randmut(POSITIVE)
 	if(efficiency < 3)
 		if(prob(50))
 			H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_BASIC)
