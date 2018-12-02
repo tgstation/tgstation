@@ -1435,6 +1435,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/flashlight/lantern/syndicate
 	restricted_species = list("moth")
 
+/datum/uplink_item/race_restricted/plasmafist
+	name = "Frayed Scroll"
+	desc = "Reading this scroll will teach you the forbidden secrets of the Plasma Fist. With enough proficiency, \
+			you will be able to make people explode violently."
+	cost = 12
+	item = /obj/item/book/granter/martial/plasma_fist
+	restricted_species = list("plasmaman")
+
 // Role-specific items
 /datum/uplink_item/role_restricted
 	category = "Role-Restricted"
