@@ -67,7 +67,7 @@ SUBSYSTEM_DEF(persistence)
 		F.y = old_secret_satchels[pos]["y"]
 		F.z = SSmapping.station_start
 		path = text2path(old_secret_satchels[pos]["saved_obj"])
-		old_secret_satchels.Cut(pos, pos+1 % old_secret_satchels.len)
+		old_secret_satchels.Cut(pos, (pos+1) % old_secret_satchels.len)
 
 	if(F)
 		if(isfloorturf(F.loc) && !isplatingturf(F.loc))
