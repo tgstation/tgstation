@@ -102,8 +102,5 @@
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
 #define CULT_EYES "cult_eyes"
-<<<<<<< HEAD
 #define TRAIT_SANTA "santa"
-=======
 #define SCRYING_ORB "scrying-orb"
->>>>>>> master
