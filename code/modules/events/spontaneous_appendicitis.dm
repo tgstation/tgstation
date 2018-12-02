@@ -17,6 +17,8 @@
 			continue
 		if(!H.getorgan(/obj/item/organ/appendix)) //Don't give the disease to some who lacks it, only for it to be auto-cured
 			continue
+		if(!(MOB_ORGANIC in H.mob_biotypes)) //biotype sleeper bugs strike again, once again making appendicitis pick a target that can't take it
+			continue
 		var/foundAlready = FALSE	//don't infect someone that already has appendicitis
 		for(var/datum/disease/appendicitis/A in H.diseases)
 			foundAlready = TRUE

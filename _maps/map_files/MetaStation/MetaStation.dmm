@@ -818,7 +818,7 @@
 "abW" = (
 /obj/structure/bed,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/mask/muzzle,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/item/electropack,
@@ -1531,7 +1531,7 @@
 "adg" = (
 /obj/structure/bed,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/mask/muzzle,
 /turf/open/floor/plasteel/white,
 /area/security/prison)
@@ -1544,7 +1544,7 @@
 "adi" = (
 /obj/structure/bed,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/mask/muzzle,
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -60274,7 +60274,7 @@
 /obj/item/clothing/mask/muzzle,
 /obj/item/gun/syringe,
 /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/ears/earmuffs,
 /obj/item/storage/belt/medical{
 	pixel_y = 2
