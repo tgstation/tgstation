@@ -10,6 +10,7 @@
 	req_stat = UNCONSCIOUS
 
 /obj/effect/proc_holder/changeling/regenerate/sting_action(mob/living/user)
+	..()
 	to_chat(user, "<span class='notice'>You feel an itching, both inside and \
 		outside as your tissues knit and reknit.</span>")
 	if(iscarbon(user))
