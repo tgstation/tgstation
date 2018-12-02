@@ -629,8 +629,14 @@
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "abt" = (
+/obj/machinery/light/small,
+/obj/machinery/camera/motion{
+	c_tag = "Secure - AI Upload Front Access";
+	dir = 1;
+	network = list("ss13","Secure")
+	},
 /turf/open/floor/plating,
-/area/maintenance/fore)
+/area/maintenance/starboard)
 "abu" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -81957,7 +81963,7 @@ bky
 bvH
 avi
 aRA
-abt
+bQr
 bkB
 aCD
 adO
@@ -82471,7 +82477,7 @@ awe
 bvK
 avi
 aRA
-abt
+bQr
 bkB
 bjR
 adO
@@ -82728,7 +82734,7 @@ avY
 bvK
 avi
 aRA
-abt
+bQr
 bkB
 bQB
 adO
@@ -82985,7 +82991,7 @@ avY
 bvK
 avi
 aQb
-abt
+bQr
 aaT
 aaT
 adO
@@ -83499,10 +83505,10 @@ avY
 bvK
 avi
 aRA
-abt
+bQr
 asF
-abt
-abt
+bQr
+bQr
 adO
 adO
 aIW
@@ -83756,7 +83762,7 @@ avY
 aBh
 avi
 aRA
-abt
+bQr
 aaT
 bXd
 bQh
@@ -84013,7 +84019,7 @@ avY
 bvK
 avi
 aRA
-abt
+bQr
 aaT
 bQf
 bQi
@@ -84275,7 +84281,7 @@ aaT
 bQg
 bQj
 aaT
-abt
+bQr
 bfS
 aHX
 auK
@@ -84527,12 +84533,12 @@ bvP
 bvK
 avi
 bmo
-abt
+bQr
 aaT
 aaT
 aaT
 aaT
-abt
+bQr
 blN
 asG
 aiv
@@ -84784,12 +84790,12 @@ avY
 bvK
 avi
 aRA
-abt
+bQr
 aBC
 aJM
 aTA
-abt
-abt
+bQr
+bQr
 bfS
 asG
 bRG
@@ -85813,7 +85819,7 @@ bvK
 avi
 bfS
 aaT
-abt
+bQr
 acf
 ack
 ahn
@@ -86611,7 +86617,7 @@ aaT
 aaT
 aRk
 aSz
-abt
+bQr
 aZb
 aLs
 aLs
@@ -86867,8 +86873,8 @@ aaT
 bRT
 bRU
 aRl
-abt
-abt
+bQr
+bQr
 aLn
 aLs
 aLs
@@ -87097,11 +87103,11 @@ avY
 bvK
 avi
 bfS
-abt
-abt
-abt
-abt
-abt
+bQr
+bQr
+bQr
+bQr
+bQr
 bxK
 bgA
 acf
@@ -87122,9 +87128,9 @@ auJ
 bSp
 aXG
 bTm
-abt
+bQr
 aRl
-abt
+bQr
 bmx
 aLn
 aLs
@@ -87894,7 +87900,7 @@ aCC
 aCC
 aCz
 aCz
-abt
+bQr
 aRl
 aLm
 bvj
@@ -88151,7 +88157,7 @@ bvf
 avj
 aCE
 aCz
-abt
+bQr
 aYw
 aLm
 aHv
@@ -88388,7 +88394,7 @@ awe
 bwi
 avi
 bfS
-abt
+bQr
 acf
 auu
 auu
@@ -88645,7 +88651,7 @@ awe
 bwj
 avi
 blN
-abt
+bQr
 acf
 acf
 acf
@@ -88665,7 +88671,7 @@ bvh
 avd
 aCN
 aCz
-abt
+bQr
 aRl
 aLm
 aLm
@@ -88902,9 +88908,9 @@ awe
 bvK
 avi
 bfS
-abt
+bQr
 bCh
-abt
+bQr
 bQj
 aaT
 bfv
@@ -88922,7 +88928,7 @@ bvi
 avj
 aLl
 aCz
-abt
+bQr
 amM
 ahW
 boe
@@ -89179,8 +89185,8 @@ aCC
 aCC
 aCz
 aCz
-abt
-abt
+bQr
+bQr
 aaT
 aaT
 aaT
@@ -89426,7 +89432,7 @@ boi
 bEZ
 aaT
 aQE
-abt
+bQr
 aBC
 aaT
 aXE
@@ -89435,9 +89441,9 @@ aCz
 aCz
 aCz
 aCz
-abt
+bQr
 bCh
-abt
+bQr
 aBG
 aau
 aaa
@@ -89683,17 +89689,17 @@ afC
 aae
 aaE
 acx
-abt
-abt
+bQr
+bQr
 bSr
-abt
-abt
-abt
+bQr
+bQr
+bQr
 bSt
 aBC
-abt
-abt
-abt
+bQr
+bQr
+bQr
 aBE
 aBF
 aaa
@@ -89940,16 +89946,16 @@ bot
 axb
 aaT
 afx
-abt
+bQr
 bCh
 aaT
 bSa
-abt
-abt
-abt
+bQr
+bQr
+bQr
 bCh
-abt
-abt
+bQr
+bQr
 aBE
 aBF
 aau
@@ -90197,7 +90203,7 @@ apV
 aaT
 aaT
 afx
-abt
+bQr
 aaT
 aaT
 aaT
@@ -90452,9 +90458,9 @@ bxU
 arK
 awV
 aaT
-abt
+bQr
 afx
-abt
+bQr
 aaT
 aaa
 aaa
@@ -90966,7 +90972,7 @@ ark
 bna
 bnq
 aaT
-abt
+bQr
 afx
 aaT
 aaT
@@ -91223,7 +91229,7 @@ ark
 boi
 awV
 aaT
-abt
+bQr
 afx
 aaT
 aaT
@@ -93793,7 +93799,7 @@ bjn
 aeo
 awV
 aaT
-abt
+bQr
 bfS
 aaT
 aaT
@@ -94307,7 +94313,7 @@ awI
 bom
 awV
 aaT
-abt
+bQr
 bqm
 aXF
 aaT
@@ -102020,7 +102026,7 @@ asj
 bQO
 aRV
 bta
-aRW
+abt
 aiV
 bfD
 alP
