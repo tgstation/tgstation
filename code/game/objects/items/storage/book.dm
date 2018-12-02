@@ -50,6 +50,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "
 /obj/item/storage/book/bible/attack_self(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
+	if(!H.can_read(src))
+		return FALSE
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
 	if(!SSreligion.bible_icon_state && H.job == "Chaplain")
 		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
@@ -90,12 +92,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "
 			return 0
 
 	var/heal_amt = 10
-	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1)
+	var/list/hurt_limbs = H.get_damaged_bodyparts(1, 1, null, BODYPART_ORGANIC)
 
 	if(hurt_limbs.len)
 		for(var/X in hurt_limbs)
 			var/obj/item/bodypart/affecting = X
-			if(affecting.heal_damage(heal_amt, heal_amt))
+			if(affecting.heal_damage(heal_amt, heal_amt, null, BODYPART_ORGANIC))
 				H.update_damage_overlays()
 		H.visible_message("<span class='notice'>[user] heals [H] with the power of [deity_name]!</span>")
 		to_chat(H, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")

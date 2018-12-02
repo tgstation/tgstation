@@ -9,6 +9,7 @@
 
 //Fake our own death and fully heal. You will appear to be dead but regenerate fully after a short delay.
 /obj/effect/proc_holder/changeling/fakedeath/sting_action(mob/living/user)
+	..()
 	to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 	if(user.stat != DEAD)
 		user.emote("deathgasp")

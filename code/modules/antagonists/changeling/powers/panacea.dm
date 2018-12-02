@@ -9,7 +9,7 @@
 //Heals the things that the other regenerative abilities don't.
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/user)
 	to_chat(user, "<span class='notice'>We cleanse impurities from our form.</span>")
-
+	..()
 	var/list/bad_organs = list(
 		user.getorgan(/obj/item/organ/body_egg),
 		user.getorgan(/obj/item/organ/zombie_infection))

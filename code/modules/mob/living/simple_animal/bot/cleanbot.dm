@@ -9,7 +9,7 @@
 	health = 25
 	maxHealth = 25
 	radio_key = /obj/item/encryptionkey/headset_service
-	radio_channel = "Service" //Service
+	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = CLEAN_BOT
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
@@ -179,10 +179,10 @@
 		/obj/effect/decal/cleanable/robot_debris,
 		/obj/effect/decal/cleanable/crayon,
 		/obj/effect/decal/cleanable/molten_object,
-		/obj/effect/decal/cleanable/tomato_smudge,
-		/obj/effect/decal/cleanable/egg_smudge,
-		/obj/effect/decal/cleanable/pie_smudge,
-		/obj/effect/decal/cleanable/flour,
+		/obj/effect/decal/cleanable/food/tomato_smudge,
+		/obj/effect/decal/cleanable/food/egg_smudge,
+		/obj/effect/decal/cleanable/food/pie_smudge,
+		/obj/effect/decal/cleanable/food/flour,
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,

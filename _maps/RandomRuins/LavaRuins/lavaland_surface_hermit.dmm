@@ -137,7 +137,6 @@
 /area/ruin/powered)
 "D" = (
 /obj/effect/decal/cleanable/blood/footprints{
-	icon_state = "blood1";
 	dir = 1
 	},
 /obj/machinery/door/airlock/survival_pod/glass,

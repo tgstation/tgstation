@@ -92,7 +92,7 @@
 	var/transfer_in_progress = FALSE //Is there an AI being transferred out of us?
 	var/obj/item/clockwork/integration_cog/integration_cog //Is there a cog siphoning power?
 	var/longtermpower = 10
-	var/auto_name = 0
+	var/auto_name = FALSE
 	var/failure_timer = 0
 	var/force_update = 0
 	var/emergency_lights = FALSE
@@ -162,11 +162,8 @@
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
 		setDir(ndir)
-	src.tdir = dir		// to fix Vars bug
+	tdir = dir		// to fix Vars bug
 	setDir(SOUTH)
-
-	if(auto_name)
-		name = "\improper [get_area(src)] APC"
 
 	switch(tdir)
 		if(NORTH)
@@ -181,9 +178,9 @@
 		area = get_area(src)
 		opened = APC_COVER_OPENED
 		operating = FALSE
-		name = "[area.name] APC"
+		name = "\improper [get_area_name(area, TRUE)] APC"
 		stat |= MAINT
-		src.update_icon()
+		update_icon()
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
@@ -214,7 +211,7 @@
 /obj/machinery/power/apc/proc/make_terminal()
 	// create a terminal object at the same position as original turf loc
 	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(src.loc)
+	terminal = new/obj/machinery/power/terminal(loc)
 	terminal.setDir(tdir)
 	terminal.master = src
 
@@ -228,16 +225,20 @@
 		cell = new cell_type
 		cell.charge = start_charge * cell.maxcharge / 100 		// (convert percentage to actual value)
 
-	var/area/A = src.loc.loc
+	var/area/A = loc.loc
 
 	//if area isn't specified use current
 	if(areastring)
-		src.area = get_area_instance_from_text(areastring)
-		if(!src.area)
-			src.area = A
-			stack_trace("Bad areastring path for [src], [src.areastring]")
-	else if(isarea(A) && src.areastring == null)
-		src.area = A
+		area = get_area_instance_from_text(areastring)
+		if(!area)
+			area = A
+			stack_trace("Bad areastring path for [src], [areastring]")
+	else if(isarea(A) && areastring == null)
+		area = A
+
+	if(auto_name)
+		name = "\improper [get_area_name(area, TRUE)] APC"
+
 	update_icon()
 
 	make_terminal()
@@ -925,7 +926,7 @@
 			coverlocked = !coverlocked
 			. = TRUE
 		if("breaker")
-			toggle_breaker()
+			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
 			toggle_nightshift_lights()
@@ -976,10 +977,12 @@
 				CHECK_TICK
 	return 1
 
-/obj/machinery/power/apc/proc/toggle_breaker()
+/obj/machinery/power/apc/proc/toggle_breaker(mob/user)
 	if(!is_operational() || failure_timer)
 		return
 	operating = !operating
+	add_hiddenprint(user)
+	log_combat(user, src, "turned [operating ? "on" : "off"]")
 	update()
 	update_icon()
 

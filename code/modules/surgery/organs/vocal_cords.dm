@@ -3,7 +3,7 @@
 #define COOLDOWN_MEME 300
 #define COOLDOWN_NONE 100
 
-/obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
+/obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
 	icon_state = "appendix"
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -305,7 +305,7 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, FALSE, FALSE)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier)
 
 	//BRUTE DAMAGE
 	else if((findtext(message, hurt_words)))

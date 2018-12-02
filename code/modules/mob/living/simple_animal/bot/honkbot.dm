@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/encryptionkey/headset_service //doesn't have security key
-	radio_channel = "Service" //Doesn't even use the radio anyway.
+	radio_channel = RADIO_CHANNEL_SERVICE //Doesn't even use the radio anyway.
 	bot_type = HONK_BOT
 	model = "Honkbot"
 	bot_core_type = /obj/machinery/bot_core/honkbot
@@ -157,7 +157,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 		bike_horn(A)
 
 
-/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
+/mob/living/simple_animal/bot/honkbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		playsound(src, honksound, 50, TRUE, -1)
 		var/obj/item/I = AM

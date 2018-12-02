@@ -394,10 +394,10 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/consumable/nuka_cola/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
@@ -638,7 +638,7 @@
 	M.adjustOxyLoss(-0.5, 0)
 	if(M.nutrition && (M.nutrition - 2 > 0))
 		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
-			M.nutrition -= 2
+			M.adjust_nutrition(-2)
 	..()
 	. = 1
 

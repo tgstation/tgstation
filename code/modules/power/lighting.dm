@@ -602,7 +602,13 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-
+			if(isethereal(H))
+				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
+				if(do_after(user, 50, target = src))
+					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+					H.dna?.species.adjust_charge(5)
+					return
+				
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
@@ -759,7 +765,7 @@
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
 
-/obj/item/light/throw_impact(atom/hit_atom)
+/obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
 		shatter()
 

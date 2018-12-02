@@ -412,6 +412,13 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define SUMMON_GUNS "guns"
 #define SUMMON_MAGIC "magic"
 
+#define TELEPORT_CHANNEL_BLUESPACE "bluespace"	//Classic bluespace teleportation, requires a sender but no receiver
+#define TELEPORT_CHANNEL_QUANTUM "quantum"		//Quantum-based teleportation, requires both sender and receiver, but is free from normal disruption
+#define TELEPORT_CHANNEL_WORMHOLE "wormhole"	//Wormhole teleportation, is not disrupted by bluespace fluctuations but tends to be very random or unsafe
+#define TELEPORT_CHANNEL_MAGIC "magic"			//Magic teleportation, does whatever it wants (unless there's antimagic)
+#define TELEPORT_CHANNEL_CULT "cult"			//Cult teleportation, does whatever it wants (unless there's holiness)
+#define TELEPORT_CHANNEL_FREE "free"			//Anything else
+
 //Run the world with this parameter to enable a single run though of the game setup and tear down process with unit tests in between
 #define TEST_RUN_PARAMETER "test-run"
 //Force the log directory to be something specific in the data/logs folder

@@ -1057,6 +1057,8 @@
 				var/chosenart = artnames[result]
 				var/datum/martial_art/MA = new chosenart
 				MA.teach(C)
+				log_admin("[key_name(usr)] has taught [MA] to [key_name(C)].")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has taught [MA] to [key_name_admin(C)].</span>")
 
 		else if(href_list["givetrauma"])
 			if(!check_rights(NONE))
@@ -1346,10 +1348,10 @@
 					return
 
 			if(amount != 0)
-				log_admin("[key_name(usr)] dealt [amount] amount of [Text] damage to [L] ")
-				var/msg = "<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>"
-				message_admins(msg)
-				admin_ticket_log(L, msg)
+				var/log_msg = "[key_name(usr)] dealt [amount] amount of [Text] damage to [key_name(L)]"
+				message_admins("[key_name(usr)] dealt [amount] amount of [Text] damage to [ADMIN_LOOKUPFLW(L)]")
+				log_admin(log_msg)
+				admin_ticket_log(L, "<span class='notice'>[log_msg]</span>")
 				vv_update_display(L, Text, "[newamt]")
 		else if(href_list["copyoutfit"])
 			if(!check_rights(R_SPAWN))

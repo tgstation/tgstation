@@ -10,12 +10,12 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
-/mob/living/carbon/slip(knockdown_amount, obj/O, lube)
+/mob/living/carbon/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	if(movement_type & FLYING)
 		return 0
 	if(!(lube&SLIDE_ICE))
 		log_combat(src, (O ? O : get_turf(src)), "slipped on the", null, ((lube & SLIDE) ? "(LUBE)" : null))
-	return loc.handle_slip(src, knockdown_amount, O, lube)
+	return loc.handle_slip(src, knockdown_amount, O, lube, paralyze, force_drop)
 
 /mob/living/carbon/Process_Spacemove(movement_dir = 0)
 	if(..())
@@ -36,8 +36,8 @@
 	. = ..()
 	if(. && (movement_type & FLOATING)) //floating is easy
 		if(has_trait(TRAIT_NOHUNGER))
-			nutrition = NUTRITION_LEVEL_FED - 1	//just less than feeling vigorous
+			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTOR/10
+			adjust_nutrition(-(HUNGER_FACTOR/10))
 			if(m_intent == MOVE_INTENT_RUN)
-				nutrition -= HUNGER_FACTOR/10
+				adjust_nutrition(-(HUNGER_FACTOR/10))

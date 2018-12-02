@@ -8,7 +8,7 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = null
 	baseturfs = /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 	opacity = 1
 	density = TRUE
 	blocks_air = 1
@@ -241,7 +241,7 @@
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	defer_change = TRUE
 
 
@@ -278,7 +278,7 @@
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	defer_change = TRUE
 
 
@@ -343,7 +343,7 @@
 	smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	defer_change = TRUE
 
 
@@ -404,7 +404,7 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	baseturfs = /turf/open/floor/plating/asteroid/snow
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	environment_type = "snow"
 	turf_type = /turf/open/floor/plating/asteroid/snow
 	defer_change = TRUE

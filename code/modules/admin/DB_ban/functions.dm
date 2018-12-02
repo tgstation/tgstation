@@ -308,7 +308,7 @@
 				qdel(query_edit_ban_duration)
 				return
 			qdel(query_edit_ban_duration)
-			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s duration from [duration] to [value]")
+			message_admins("[key_name_admin(usr)] has edited a ban for [p_key]'s duration from [DisplayTimeText(duration MINUTES)] to [DisplayTimeText(value MINUTES)]")
 		if("unban")
 			if(alert("Unban [p_key]?", "Unban?", "Yes", "No") == "Yes")
 				DB_ban_unban_by_id(banid)

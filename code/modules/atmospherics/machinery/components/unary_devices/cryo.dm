@@ -27,7 +27,7 @@
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = "Medical"
+	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	var/running_anim = FALSE
 

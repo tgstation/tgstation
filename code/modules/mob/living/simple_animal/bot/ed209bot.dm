@@ -13,7 +13,7 @@
 	mob_size = MOB_SIZE_LARGE
 
 	radio_key = /obj/item/encryptionkey/headset_sec
-	radio_channel = "Security"
+	radio_channel = RADIO_CHANNEL_SECURITY
 	bot_type = SEC_BOT
 	model = "ED-209"
 	bot_core = /obj/machinery/bot_core/secbot

@@ -40,7 +40,7 @@
 /datum/species/vampire/spec_life(mob/living/carbon/human/C)
 	. = ..()
 	if(istype(C.loc, /obj/structure/closet/crate/coffin))
-		C.heal_overall_damage(4,4)
+		C.heal_overall_damage(4,4,0, BODYPART_ORGANIC)
 		C.adjustToxLoss(-4)
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
@@ -48,6 +48,9 @@
 	C.blood_volume -= 0.75
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
+		var/obj/shapeshift_holder/H = locate() in C
+		if(H)
+			H.shape.dust() //make sure we're killing the bat if you are out of blood, if you don't it creates weird situations where the bat is alive but the caster is dusted.
 		C.dust()
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))

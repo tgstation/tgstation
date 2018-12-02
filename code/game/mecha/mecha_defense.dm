@@ -107,8 +107,8 @@
 /obj/mecha/attack_tk()
 	return
 
-/obj/mecha/hitby(atom/movable/A as mob|obj) //wrapper
-	log_message("Hit by [A].", LOG_MECHA, color="red")
+/obj/mecha/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum) //wrapper
+	log_message("Hit by [AM].", LOG_MECHA, color="red")
 	. = ..()
 
 
@@ -164,17 +164,6 @@
 			to_chat(user, "[src]-[W] interface initialization failed.")
 		return
 
-	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
-		var/obj/item/mecha_parts/mecha_equipment/E = W
-		spawn()
-			if(E.can_attach(src))
-				if(!user.temporarilyRemoveItemFromInventory(W))
-					return
-				E.attach(src)
-				user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>You were unable to attach [W] to [src]!</span>")
-		return
 	if(W.GetID())
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(user))
@@ -260,13 +249,9 @@
 			to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
 		return 1
 
-	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, "<span class='warning'>\the [W] is stuck to your hand, you cannot put it in \the [src]!</span>")
-			return
-		trackers += W
-		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
-		diag_hud_set_mechtracking()
+	else if(istype(W, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/P = W
+		P.try_attach_part(user, src)
 		return
 	else
 		return ..()

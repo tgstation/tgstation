@@ -58,7 +58,7 @@
 		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return
 	if(!M.is_adult)
-		to_chat(user, "<span class='warning'>The slime must be an adult to cross it's core!</span>")
+		to_chat(user, "<span class='warning'>The slime must be an adult to cross its core!</span>")
 		return
 	if(M.effectmod && M.effectmod != effectmod)
 		to_chat(user, "<span class='warning'>The slime is already being crossed with a different extract!</span>")
@@ -187,7 +187,7 @@
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
-			user.nutrition += 50
+			user.adjust_nutrition(50)
 			user.blood_volume += 50
 			to_chat(user, "<span class='notice'>You activate [src], and your body is refilled with fresh slime jelly!</span>")
 			return 150
@@ -495,7 +495,7 @@
 			to_chat(user, "<span class='warning'>You feel your body vibrating...</span>")
 			if(do_after(user, 25, target = user))
 				to_chat(user, "<span class='warning'>You teleport!</span>")
-				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg')
+				do_teleport(user, get_turf(user), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 				return 300
 
 		if(SLIME_ACTIVATE_MAJOR)
@@ -511,7 +511,7 @@
 				if(teleport_x && teleport_y && teleport_z)
 					var/turf/T = locate(teleport_x, teleport_y, teleport_z)
 					to_chat(user, "<span class='notice'>You snap back to your anchor point!</span>")
-					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg')
+					do_teleport(user, T,  asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 					return 450
 
 
@@ -635,7 +635,7 @@
 		return
 
 	M.docile = 1
-	M.nutrition = 700
+	M.set_nutrition(700)
 	to_chat(M, "<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>")
 	to_chat(user, "<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>")
 	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)

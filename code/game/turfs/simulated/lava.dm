@@ -30,7 +30,7 @@
 	return
 
 /turf/open/lava/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/lava/Entered(atom/movable/AM)
 	if(burn_stuff(AM))
@@ -43,7 +43,7 @@
 		if(!islava(newloc) && !L.on_fire)
 			L.update_fire()
 
-/turf/open/lava/hitby(atom/movable/AM)
+/turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
@@ -170,4 +170,4 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 /turf/open/lava/smooth/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS

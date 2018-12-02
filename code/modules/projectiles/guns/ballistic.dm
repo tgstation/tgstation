@@ -94,8 +94,6 @@
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	// this proc assumes that the suppressor is already inside src
 	suppressed = S
-	S.oldsound = fire_sound
-	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
 	update_icon()
 
@@ -108,7 +106,6 @@
 				return ..()
 			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
 			user.put_in_hands(suppressed)
-			fire_sound = S.oldsound
 			w_class -= S.w_class
 			suppressed = null
 			update_icon()
@@ -165,12 +162,7 @@
 			var/turf/target = get_ranged_target_turf(user, turn(user.dir, 180), BRAINS_BLOWN_THROW_RANGE)
 			B.Remove(user)
 			B.forceMove(T)
-			var/datum/dna/user_dna
-			if(iscarbon(user))
-				var/mob/living/carbon/C = user
-				user_dna = C.dna
-				B.add_blood_DNA(user_dna)
-			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, list(user_dna))
+			var/datum/callback/gibspawner = CALLBACK(GLOBAL_PROC, /proc/spawn_atom_to_turf, /obj/effect/gibspawner/generic, B, 1, FALSE, user)
 			B.throw_at(target, BRAINS_BLOWN_THROW_RANGE, BRAINS_BLOWN_THROW_SPEED, callback=gibspawner)
 			return(BRUTELOSS)
 		else
@@ -178,7 +170,7 @@
 			return(OXYLOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(src, "gun_dry_fire", 30, 1)
+		playsound(src, dry_fire_sound, 30, TRUE)
 		return (OXYLOSS)
 #undef BRAINS_BLOWN_THROW_SPEED
 #undef BRAINS_BLOWN_THROW_RANGE
@@ -222,15 +214,14 @@
 
 /obj/item/suppressor
 	name = "suppressor"
-	desc = "A universal syndicate small-arms suppressor for maximum espionage."
+	desc = "A nigh-universal syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
 	w_class = WEIGHT_CLASS_TINY
-	var/oldsound = null
 
 
 /obj/item/suppressor/specialoffer
 	name = "cheap suppressor"
-	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits all weapons."
+	desc = "A foreign knock-off suppressor, it feels flimsy, cheap, and brittle. Still fits most weapons."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
