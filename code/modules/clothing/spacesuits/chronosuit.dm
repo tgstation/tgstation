@@ -6,7 +6,7 @@
 	slowdown = 1
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/obj/item/clothing/suit/space/chronos/suit = null
+	var/obj/item/clothing/suit/space/chronos/suit
 
 /obj/item/clothing/head/helmet/space/chronos/dropped()
 	if(suit)
@@ -28,9 +28,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
 	var/list/hands_nodrop = list()
-	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
-	var/obj/effect/chronos_cam/camera = null
-	var/mutable_appearance/phase_underlay = null
+	var/obj/item/clothing/head/helmet/space/chronos/helmet
+	var/obj/effect/chronos_cam/camera
+	var/mutable_appearance/phase_underlay
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
@@ -38,10 +38,10 @@
 	var/teleporting = 0
 	var/phase_timer_id
 
-/obj/item/clothing/suit/space/chronos/New()
-	..()
+/obj/item/clothing/suit/space/chronos/Initialize()
 	teleport_now.chronosuit = src
 	teleport_now.target = src
+	return ..()
 
 /obj/item/clothing/suit/space/chronos/proc/new_camera(mob/user)
 	if(camera)
@@ -105,8 +105,7 @@
 		hands_nodrop = null
 		if(phase_underlay && !QDELETED(phase_underlay))
 			user.underlays -= phase_underlay
-			qdel(phase_underlay)
-			phase_underlay = null
+			QDEL_NULL(phase_underlay)
 		if(camera)
 			camera.remove_target_ui()
 			camera.forceMove(user)
@@ -179,7 +178,7 @@
 	else
 		finish_chronowalk(user, to_turf)
 
-/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
+/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(mob/user)
 	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
 	user_icon.AddAlphaMask(getFlatIcon(user))
 	var/mutable_appearance/phase = mutable_appearance(user_icon, null)
@@ -268,10 +267,10 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	opacity = 0
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	var/mob/holder = null
+	var/mob/holder
 	var/phase_time = 0
 	var/phase_time_length = 3
-	var/obj/screen/chronos_target/target_ui = null
+	var/obj/screen/chronos_target/target_ui
 	var/obj/item/clothing/suit/space/chronos/chronosuit
 
 /obj/effect/chronos_cam/singularity_act()
@@ -284,13 +283,12 @@
 	if(holder && holder.client && chronosuit)
 		if(target_ui)
 			remove_target_ui()
-		target_ui = new(null, holder)
+		target_ui = new(src, holder)
 		holder.client.screen += target_ui
 
 /obj/effect/chronos_cam/proc/remove_target_ui()
 	if(target_ui)
-		qdel(target_ui)
-		target_ui = null
+		QDEL_NULL(target_ui)
 
 /obj/effect/chronos_cam/relaymove(var/mob/user, direction)
 	if(!holder)
