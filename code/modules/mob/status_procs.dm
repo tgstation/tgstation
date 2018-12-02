@@ -82,23 +82,17 @@
 /////////////////////////////////// EYE_BLURRY ////////////////////////////////////
 
 /mob/proc/blur_eyes(amount)
-	var/need_update = (eye_blurry == 0 && amount > 0)
 	if(amount>0)
 		eye_blurry = max(amount, eye_blurry)
-	if(need_update)
-		update_eye_blur()
+	update_eye_blur()
 
 /mob/proc/adjust_blurriness(amount)
-	var/need_update = ((eye_blurry == 0 && amount > 0) || eye_blurry + amount <= 0)
 	eye_blurry = max(eye_blurry+amount, 0)
-	if(need_update)
-		update_eye_blur()
+	update_eye_blur()
 
 /mob/proc/set_blurriness(amount)
-	var/need_update = ((eye_blurry == 0 && amount > 0) || (eye_blurry > 0 && amount <= 0))
 	eye_blurry = max(amount, 0)
-	if(need_update)
-		update_eye_blur()
+	update_eye_blur()
 
 /mob/proc/update_eye_blur()
 	if(!client)
