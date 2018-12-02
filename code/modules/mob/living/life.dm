@@ -135,7 +135,7 @@
 			eye_blind = max(eye_blind-1,1)
 	else if(eye_blurry)			//blurry eyes heal slowly
 		eye_blurry = max(eye_blurry-1, 0)
-		if(client && !eye_blurry)
+		if(client)
 			update_eye_blur()
 
 /mob/living/proc/update_damage_hud()
