@@ -3,8 +3,26 @@
 	name = "projectile gun"
 	icon_state = "pistol"
 	w_class = WEIGHT_CLASS_NORMAL
+
+	//sound info vars
+	var/unload_sound = ''
+	var/unload_sound_volume = 40
+	var/unload_sound_vary = TRUE
+	var/load_sound = "gun_insert_full_magazine"
+	var/load_empty_sound = "gun_insert_empty_magazine"
+	var/load_sound_volume = 60
+	var/load_sound_vary = TRUE
+	var/rack_sound = ''
+	var/rack_sound_volume = 40
+	var/rack_sound_vary = TRUE
+	var/eject_sound = "gun_remove_empty_magazine"
+	var/eject_sound_volume = 
+	var/eject_sound_vary = TRUE
+
 	var/spawnwithmagazine = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
+	var/bolt_type = BOLT_TYPE_STANDARD
+	var/bolt_locked = FALSE
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 	var/magazine_wording = "magazine"
@@ -27,7 +45,7 @@
 		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
 
 
-/obj/item/gun/ballistic/process_chamber(empty_chamber = 1)
+/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(istype(AC)) //there's a chambered round
 		if(casing_ejector)
@@ -47,9 +65,13 @@
 		chambered.forceMove(src)
 
 /obj/item/gun/ballistic/can_shoot()
-	if(!magazine || !magazine.ammo_count(FALSE))
-		return 0
-	return 1
+	if(chambered)
+		return TRUE
+	else
+		if(!magazine || !magazine.ammo_count(FALSE))
+			return FALSE
+		else
+			return TRUE
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
@@ -60,12 +82,12 @@
 				magazine = AM
 				to_chat(user, "<span class='notice'>You load a new [magazine_wording] into \the [src].</span>")
 				if(magazine.ammo_count())
-					playsound(src, "gun_insert_full_magazine", 70, 1)
+					playsound(src, load_sound, load_sound_volume, load_sound_vary)
 					if(!chambered)
 						chamber_round()
 						addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/gun_chamber_round.ogg', 100, 1), 3)
 				else
-					playsound(src, "gun_insert_empty_magazine", 70, 1)
+					playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 				A.update_icon()
 				update_icon()
 				return 1
@@ -100,6 +122,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
+
 		if(suppressed && can_unsuppress)
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
@@ -112,8 +135,12 @@
 			return
 	return ..()
 
+/obj/item/gun/ballistic/rack()
+
+
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	if(!)
 	if(magazine)
 		magazine.forceMove(drop_location())
 		user.put_in_hands(magazine)

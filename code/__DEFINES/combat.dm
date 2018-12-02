@@ -124,6 +124,11 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//Gun bolt types
+#define BOLT_TYPE_STANDARD 1
+#define BOLT_TYPE_OPEN 2
+#define BOLT_TYPE_NO_BOLT 3
+#define BOLT_TYPE_LOCKING 4
 
 //Object/Item sharpness
 #define IS_BLUNT			0
