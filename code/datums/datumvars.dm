@@ -1057,6 +1057,8 @@
 				var/chosenart = artnames[result]
 				var/datum/martial_art/MA = new chosenart
 				MA.teach(C)
+				log_admin("[key_name(usr)] has taught [MA] to [key_name(C)].")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has taught [MA] to [key_name_admin(C)].</span>")
 
 		else if(href_list["givetrauma"])
 			if(!check_rights(NONE))

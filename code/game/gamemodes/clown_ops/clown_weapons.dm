@@ -80,13 +80,13 @@
 	..()
 	if(active)
 		GET_COMPONENT(slipper, /datum/component/slippery)
-		slipper.Slip(M)
+		slipper.Slip(src, M)
 
 /obj/item/melee/transforming/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
 	if(active)
 		GET_COMPONENT(slipper, /datum/component/slippery)
-		slipper.Slip(hit_atom)
+		slipper.Slip(src, hit_atom)
 
 /obj/item/melee/transforming/energy/sword/bananium/attackby(obj/item/I, mob/living/user, params)
 	if((world.time > next_trombone_allowed) && istype(I, /obj/item/melee/transforming/energy/sword/bananium))
@@ -109,7 +109,7 @@
 		transform_weapon(user, TRUE)
 	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!</span>")
 	GET_COMPONENT(slipper, /datum/component/slippery)
-	slipper.Slip(user)
+	slipper.Slip(src, user)
 	return SHAME
 
 //BANANIUM SHIELD
@@ -145,14 +145,15 @@
 			C.throw_mode_on() //so they can catch it on the return.
 	return ..()
 
-/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom)
+/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(active)
-		var/caught = hit_atom.hitby(src, 0, 0)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			GET_COMPONENT(slipper, /datum/component/slippery)
-			slipper.Slip(hit_atom)
+			slipper.Slip(src, hit_atom)
 		if(thrownby && !caught)
-			throw_at(thrownby, throw_range+2, throw_speed, null, 1)
+			sleep(1)
+			throw_at(thrownby, throw_range+2, throw_speed, null, TRUE)
 	else
 		return ..()
 

@@ -28,6 +28,7 @@
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
 		msg += "Test merge active of PR #[tm.number] commit [tm.commit]"
+		SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[tm.number]", "[tm.commit]"))
 
 	if(commit && commit != originmastercommit)
 		msg += "HEAD: [commit]"

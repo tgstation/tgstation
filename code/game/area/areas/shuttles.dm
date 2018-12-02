@@ -60,10 +60,6 @@
 	requires_power = TRUE
 	canSmoothWithAreas = /area/shuttle/pirate
 
-/area/shuttle/pirate/vault
-	name = "Pirate Shuttle Vault"
-	requires_power = FALSE
-
 ////////////////////////////White Ship////////////////////////////
 
 /area/shuttle/abandoned
