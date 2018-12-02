@@ -65,7 +65,7 @@
 	temperature = 255.37
 
 /turf/open/floor/wood/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/grass
 	name = "grass patch"
@@ -105,7 +105,7 @@
 	ore_type = /obj/item/stack/sheet/mineral/snow
 	planetary_atmos = TRUE
 	floor_tile = null
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND

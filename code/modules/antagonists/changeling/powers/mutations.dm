@@ -41,6 +41,7 @@
 	if(held && !user.dropItemToGround(held))
 		to_chat(user, "<span class='warning'>[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
 		return
+	..()
 	var/limb_regen = 0
 	if(user.active_hand_index % 2 == 0) //we regen the arm before changing it into the weapon
 		limb_regen = user.regenerate_limb(BODY_ZONE_R_ARM, 1)
@@ -115,7 +116,7 @@
 	if(!user.canUnEquip(user.head))
 		to_chat(user, "\the [user.head] is stuck on your head, you cannot grow a [helmet_name_simple] over it!")
 		return
-
+	..()
 	user.dropItemToGround(user.head)
 	user.dropItemToGround(user.wear_suit)
 

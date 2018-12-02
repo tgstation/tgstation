@@ -42,11 +42,6 @@
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src, 0)
-	else
-		var/datum/gas_mixture/heating = air_contents.remove_ratio(exposed_volume/air_contents.volume)
-		heating.temperature = exposed_temperature
-		heating.react()
-		assume_air(heating)
 	return igniting
 
 //This is the icon for fire on turfs, also helps for nurturing small fires until they are full tile

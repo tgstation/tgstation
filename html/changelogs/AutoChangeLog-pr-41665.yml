@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Adds the Spontaneous Brain Trauma to the event pool. Sometimes your brain just goes a little wrong."

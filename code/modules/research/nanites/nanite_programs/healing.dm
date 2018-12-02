@@ -23,7 +23,7 @@
 		if(!parts.len)
 			return
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len))
+			if(L.heal_damage(1/parts.len, 1/parts.len, null, BODYPART_ORGANIC))
 				host_mob.update_damage_overlays()
 	else
 		host_mob.adjustBruteLoss(-1, TRUE)
@@ -128,7 +128,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(1/parts.len, 1/parts.len, only_robotic = TRUE, only_organic = FALSE))
+			if(L.heal_damage(1/parts.len, 1/parts.len, null, BODYPART_ROBOTIC))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()
@@ -172,7 +172,7 @@
 			return
 		var/update = FALSE
 		for(var/obj/item/bodypart/L in parts)
-			if(L.heal_damage(3/parts.len, 3/parts.len))
+			if(L.heal_damage(3/parts.len, 3/parts.len, null, BODYPART_ORGANIC))
 				update = TRUE
 		if(update)
 			host_mob.update_damage_overlays()

@@ -475,7 +475,7 @@
 	name = "Beanbag Slug"
 	id = "beanbag_slug"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 250)
+	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/ammo_casing/shotgun/beanbag
 	category = list("initial", "Security")
 
