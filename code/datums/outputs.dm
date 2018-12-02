@@ -3,10 +3,10 @@
 /datum/outputs
 	var/text = ""
 	var/list/sounds = list('sound/items/airhorn.ogg'=1) //weighted, put multiple for random selection between sounds
-	var/image/stored_image
+	var/image/image
 
 /datum/outputs/New()
-	stored_image = image('icons/sound_icon.dmi', ,"circle", HUD_LAYER)
+	image = image('icons/sound_icon.dmi', ,"circle", HUD_LAYER)
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	var/sound/sound_output
@@ -64,14 +64,7 @@
 			sound_output.y = 1
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	//Process icon
-	if(stored_image)
-		stored_image.loc = turf_source
-		stored_image.alpha = 255 //reset alpha to 255 since we'll be reusing this image every time
-		if(sound_output && vol)
-			stored_image.alpha = stored_image.alpha * (vol / 100)
-
-	receiver.display_output(sound_output, stored_image, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	receiver.display_output(sound_output, image, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."

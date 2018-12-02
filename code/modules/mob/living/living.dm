@@ -1138,9 +1138,14 @@
 	mob_pickup(user)
 	return TRUE
 
-/mob/living/display_output(sound/S, image/I)
+/mob/living/display_output(sound/S, image/I, text, turf/turf_source, vol as num)
 	. = ..()
+		//Process icon
+	I.loc = turf_source
+	I.alpha = 255 //reset alpha to 255 since we'll be reusing this image every time
 	if(I && audiolocation)
+		if(vol && S)
+			I.alpha = I.alpha * (vol / 100)
 		client.images += I
 		addtimer(CALLBACK(src, .proc/remove_image, I), 7)
 
