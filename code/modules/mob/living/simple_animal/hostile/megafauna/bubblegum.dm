@@ -39,6 +39,8 @@ Difficulty: Hard
 	melee_damage_upper = 40
 	speed = 1
 	move_to_delay = 5
+	retreat_distance = 5
+	minimum_distance = 5
 	rapid_melee = 8 // every 1/4 second
 	melee_queue_distance = 20 // as far as possible really, need this because of blood warp
 	ranged = 1
@@ -47,7 +49,7 @@ Difficulty: Hard
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/bubblegum/crusher)
 	loot = list(/obj/structure/closet/crate/necropolis/bubblegum)
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
-	var/turf/charging = null
+	var/charging = 0
 	var/enrage_till = null
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
@@ -92,22 +94,23 @@ Difficulty: Hard
 		blood_warp()
 
 	if(health > maxHealth * 0.5)
-		if(prob(25))
+		if(prob(50))
 			charge()
 		else
 			hallucination_charge_around(pick(GLOB.cardinals, GLOB.diagonals))
 	else
-		if(prob(25))
+		if(prob(50))
 			charge()
 		else
 			hallucination_charge_around(GLOB.cardinals + GLOB.diagonals)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
-	if(ispath(src, /mob/living/simple_animal/hostile/megafauna/bubblegum))
-		for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
-			if(B != src)
-				return INITIALIZE_HINT_QDEL //There can be only one
+	if(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
+		return
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
+		if(B != src)
+			return INITIALIZE_HINT_QDEL //There can be only one
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
@@ -151,6 +154,10 @@ Difficulty: Hard
 	if(!charging)
 		..()
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/MoveToTarget(list/possible_targets)
+	if(!charging)
+		..()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(charging)
 		new /obj/effect/temp_visual/decoy/fading(loc,src)
@@ -161,7 +168,7 @@ Difficulty: Hard
 	if(charging)
 		DestroySurroundings()
 	if(is_enraged())
-		ground_slam()
+		INVOKE_ASYNC(src, .proc/ground_slam)
 	else
 		playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	return ..()
@@ -174,7 +181,7 @@ Difficulty: Hard
 	if(!T)
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
-	charging = T
+	charging = 1
 	DestroySurroundings()
 	walk(src, 0)
 	setDir(dir)
@@ -185,8 +192,9 @@ Difficulty: Hard
 	walk_towards(src, T, movespeed)
 	sleep(get_dist(src, T) * movespeed)
 	try_bloodattack()
-	charging = null
-	handle_automated_action() // get moving nerd
+	charging = 0
+	if(target)
+		MoveToTarget(target) // get moving nerd
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
@@ -372,6 +380,8 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage(var/boost_time = 30)
 	enrage_till = world.time + boost_time
+	retreat_distance = null
+	minimum_distance = 1
 	change_move_delay(initial(move_to_delay) / 2) // double move speed
 	var/newcolor = rgb(149, 10, 10)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
@@ -379,9 +389,10 @@ Difficulty: Hard
 	addtimer(cb, boost_time)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_enrage_end(var/newcolor = rgb(149, 10, 10))
-	if(!is_enraged())
-		change_move_delay()
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	retreat_distance = initial(retreat_distance)
+	minimum_distance = initial(minimum_distance)
+	change_move_delay()
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/is_enraged()
 	return (enrage_till > world.time)
@@ -427,21 +438,22 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge_around(var/list/directions = GLOB.cardinals)
 	if(!target || !directions.len)
 		return
+	charging = 1
 	var/turf/chargeat = get_turf(target)
 	var/distance = directions.len
 	var/realspawn = pick(directions)
 	var/tocharge = list()
-	for(var/dir in directions)
+	for(var/dir in (directions - realspawn))
 		var/turf/place = get_ranged_target_turf(chargeat, dir, distance)
-		if(dir == realspawn)
-			forceMove(place)
-			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
 		B.forceMove(place)
 		tocharge += B
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B in tocharge)
 		INVOKE_ASYNC(B, .proc/charge, chargeat, 6)
+	var/turf/place = get_ranged_target_turf(chargeat, realspawn, distance)
+	forceMove(place)
 	charge(chargeat, 6)
+	charging = 0
 
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
@@ -474,6 +486,9 @@ Difficulty: Hard
 		return 1
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life()
+	return
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
 	return
 
@@ -483,7 +498,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/AttackingTarget()
 	return
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/try_bloodattack()
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/try_bloodattack()
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/grant_achievement(medaltype,scoretype)
