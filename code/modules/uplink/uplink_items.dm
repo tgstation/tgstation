@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/nukeoffer/sniper
 	name = "Sniper bundle"
 	desc = "Elegant and refined: Contains a collapsed sniper rifle in an expensive carrying case, \
-			two soporific knockout magazines, a free surplus supressor, and a sharp-looking tactical turtleneck suit. \
+			two soporific knockout magazines, a free surplus suppressor, and a sharp-looking tactical turtleneck suit. \
 			We'll throw in a free red tie if you order NOW."
 	item = /obj/item/storage/briefcase/sniperbundle
 	cost = 20 // normally 26
@@ -723,7 +723,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
-	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into\
+	desc = "This box contains a guide on how to craft masterful works of origami, allowing you to transform normal pieces of paper into \
 			perfectly aerodynamic (and potentially lethal) paper airplanes."
 	item = /obj/item/storage/box/syndie_kit/origami_bundle
 	cost = 14
@@ -1134,6 +1134,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	item = /obj/item/storage/briefcase/launchpad
 	cost = 6
+	
+/datum/uplink_item/device_tools/hypnotic_flash
+	name = "Hypnotic Flash"
+	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
+	item = /obj/item/assembly/flash/hypnotic
+	cost = 7
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -1375,7 +1381,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Stealth Implant"
 	desc = "This one-of-a-kind implant will make you almost invisible if you play your cards right. \
 			On activation, it will conceal you inside a chameleon cardboard box that is only revealed once someone bumps into it."
-	item = /obj/item/implanter/stealth
+	item = /obj/item/storage/box/syndie_kit/imp_stealth
 	cost = 8
 
 // Cybernetics

@@ -63,4 +63,4 @@
 				hard_target = P.loc
 		if(!hard_target)
 			return
-		do_teleport(M, hard_target, 1, 1, 0, 0) ///You will appear adjacent to the beacon
+		do_teleport(M, hard_target, 1, 1, 0, 0, channel = TELEPORT_CHANNEL_WORMHOLE) ///You will appear adjacent to the beacon

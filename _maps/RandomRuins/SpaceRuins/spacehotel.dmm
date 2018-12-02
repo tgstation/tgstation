@@ -2623,9 +2623,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel)
 "hS" = (
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
@@ -4193,9 +4191,7 @@
 "lA" = (
 /obj/structure/closet,
 /obj/item/dice/d1,
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},

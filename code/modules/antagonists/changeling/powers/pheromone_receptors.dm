@@ -12,6 +12,7 @@
 	var/receptors_active = FALSE
 
 /obj/effect/proc_holder/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
+	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!receptors_active)
 		to_chat(user, "<span class='warning'>We search for the scent of any nearby changelings.</span>")

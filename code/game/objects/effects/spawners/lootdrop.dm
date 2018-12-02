@@ -108,6 +108,34 @@
 	loot = GLOB.maintenance_loot
 	. = ..()
 
+/obj/effect/spawner/lootdrop/maintenance/two
+	name = "2 x maintenance loot spawner"
+	lootcount = 2
+
+/obj/effect/spawner/lootdrop/maintenance/three
+	name = "3 x maintenance loot spawner"
+	lootcount = 3
+
+/obj/effect/spawner/lootdrop/maintenance/four
+	name = "4 x maintenance loot spawner"
+	lootcount = 4
+
+/obj/effect/spawner/lootdrop/maintenance/five
+	name = "5 x maintenance loot spawner"
+	lootcount = 5
+
+/obj/effect/spawner/lootdrop/maintenance/six
+	name = "6 x maintenance loot spawner"
+	lootcount = 6
+
+/obj/effect/spawner/lootdrop/maintenance/seven
+	name = "7 x maintenance loot spawner"
+	lootcount = 7
+
+/obj/effect/spawner/lootdrop/maintenance/eight
+	name = "8 x maintenance loot spawner"
+	lootcount = 8
+
 /obj/effect/spawner/lootdrop/crate_spawner
 	name = "lootcrate spawner" //USE PROMO CODE "SELLOUT" FOR 20% OFF!
 	lootdoubles = FALSE
@@ -215,16 +243,15 @@
 				)
 
 // Tech storage circuit board spawners
-// For these, make sure that lootcount equals the number of list items
 
 /obj/effect/spawner/lootdrop/techstorage
 	name = "generic circuit board spawner"
 	lootdoubles = FALSE
 	fan_out_items = TRUE
+	lootcount = INFINITY
 
 /obj/effect/spawner/lootdrop/techstorage/service
 	name = "service circuit board spawner"
-	lootcount = 10
 	loot = list(
 				/obj/item/circuitboard/computer/arcade/battle,
 				/obj/item/circuitboard/computer/arcade/orion_trail,
@@ -240,7 +267,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/rnd
 	name = "RnD circuit board spawner"
-	lootcount = 12
 	loot = list(
 				/obj/item/circuitboard/computer/aifixer,
 				/obj/item/circuitboard/machine/rdserver,
@@ -258,7 +284,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/security
 	name = "security circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/secure_data,
 				/obj/item/circuitboard/computer/security,
@@ -267,7 +292,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/engineering
 	name = "engineering circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/atmos_alert,
 				/obj/item/circuitboard/computer/stationalert,
@@ -276,7 +300,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/tcomms
 	name = "tcomms circuit board spawner"
-	lootcount = 9
 	loot = list(
 				/obj/item/circuitboard/computer/message_monitor,
 				/obj/item/circuitboard/machine/telecomms/broadcaster,
@@ -291,7 +314,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/medical
 	name = "medical circuit board spawner"
-	lootcount = 9
 	loot = list(
 				/obj/item/circuitboard/computer/cloning,
 				/obj/item/circuitboard/machine/clonepod,
@@ -306,7 +328,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/AI
 	name = "secure AI circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/aiupload,
 				/obj/item/circuitboard/computer/borgupload,
@@ -315,7 +336,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/command
 	name = "secure command circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/crew,
 				/obj/item/circuitboard/computer/communications,
@@ -324,7 +344,6 @@
 
 /obj/effect/spawner/lootdrop/techstorage/RnD_secure
 	name = "secure RnD circuit board spawner"
-	lootcount = 3
 	loot = list(
 				/obj/item/circuitboard/computer/mecha_control,
 				/obj/item/circuitboard/computer/apc_control,

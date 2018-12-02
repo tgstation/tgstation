@@ -10,8 +10,11 @@
 	var/mob/living/carbon/human/H = user //SHOULD always be human, because req_human = 1
 	if(!istype(H)) // req_human could be done in can_sting stuff.
 		return
+	..()
 	if(H.dna.get_mutation(CHAMELEON))
 		H.dna.remove_mutation(CHAMELEON)
+
+
 	else
 		H.dna.add_mutation(CHAMELEON)
 	return TRUE

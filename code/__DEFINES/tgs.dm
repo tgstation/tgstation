@@ -107,6 +107,22 @@
 	var/commit			//full sha of compiled commit
 	var/origin_commit	//full sha of last known remote commit. This may be null if the TGS repository is not currently tracking a remote branch
 
+//represents a version of tgstation-server
+/datum/tgs_version
+	var/suite			//The suite version, can be >=3
+
+	//this group of variables can be null to represent a wild card
+	var/major					//The major version
+	var/minor					//The minor version
+	var/patch					//The patch version
+
+	var/raw_parameter			//The unparsed parameter
+	var/deprefixed_parameter	//The version only bit of raw_parameter
+
+//if the tgs_version is a wildcard version
+/datum/tgs_version/proc/Wildcard()
+	return
+
 //represents a merge of a GitHub pull request
 /datum/tgs_revision_information/test_merge
 	var/number				//pull request number
@@ -155,20 +171,20 @@
 
 //FUNCTIONS
 
-//Returns the respective string version of the API
+//Returns the respective supported /datum/tgs_version of the API
 /world/proc/TgsMaximumAPIVersion()
 	return
 
 /world/proc/TgsMinimumAPIVersion()
 	return
 
-//Gets the current version of the server tools running the server
-/world/proc/TgsVersion()
-	return
-
 //Returns TRUE if the world was launched under the server tools and the API matches, FALSE otherwise
 //No function below this succeeds if it returns FALSE
 /world/proc/TgsAvailable()
+	return
+
+//Gets the current /datum/tgs_version of the server tools running the server
+/world/proc/TgsVersion()
 	return
 
 /world/proc/TgsInstanceName()

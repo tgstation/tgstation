@@ -112,7 +112,7 @@
 
 	if(!chosen_prof)
 		return
-
+	..()
 	changeling_transform(user, chosen_prof)
 	return TRUE
 
