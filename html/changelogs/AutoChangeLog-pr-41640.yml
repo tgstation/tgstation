@@ -1,5 +1,0 @@
-author: "Steelpoint"
-delete-after: True
-changes: 
-  - rscadd: "Beanbag slug shells can now be produced at the security protolathe."
-  - tweak: "Beanbag slug shells now have the same metal cost as other comparable shotgun shells."

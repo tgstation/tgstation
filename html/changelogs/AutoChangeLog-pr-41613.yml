@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "On Boxstation, Cargo can optionally open up their autolathe to the public, via shutters. Some consoles and machinery has moved to accomplish this feat."

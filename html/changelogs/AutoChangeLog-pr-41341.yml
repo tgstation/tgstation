@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added the desynchronizer device, buildable in science protolathes."
-  - rscadd: "The desynchronizer can desync the user from spacetime, effectively making them incorporeal (but immobile) while it lasts. The effect can be ended early, and has a maximum duration of five minutes."
-  - rscadd: "Requires the Unregulated Bluespace techweb node."
