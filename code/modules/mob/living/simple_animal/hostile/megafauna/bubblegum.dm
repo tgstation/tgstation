@@ -41,8 +41,6 @@ Difficulty: Hard
 	move_to_delay = 5
 	rapid_melee = 8 // every 1/4 second
 	melee_queue_distance = 20 // as far as possible really, need this because of blood warp
-	retreat_distance = 5
-	minimum_distance = 5
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
@@ -94,12 +92,12 @@ Difficulty: Hard
 		blood_warp()
 
 	if(health > maxHealth * 0.5)
-		if(prob(75))
+		if(prob(25))
 			charge()
 		else
-			hallucination_charge_around()
+			hallucination_charge_around(pick(GLOB.cardinals, GLOB.diagonals))
 	else
-		if(prob(50))
+		if(prob(25))
 			charge()
 		else
 			hallucination_charge_around(GLOB.cardinals + GLOB.diagonals)
@@ -134,14 +132,19 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/bullet_act(obj/item/projectile/P)
 	if(is_enraged())
 		visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons while enraged!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 300, 1)
 		return 0
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/ex_act(severity, target)
 	if(severity >= EXPLODE_LIGHT)
 		return
-	severity = EXPLODE_LIGHT
+	severity = EXPLODE_LIGHT // puny mortals
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/CanPass(atom/movable/mover, turf/target)
+	if(istype(mover, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
+		return 1
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Goto(target, delay, minimum_distance)
@@ -168,7 +171,7 @@ Difficulty: Hard
 		return
 	var/dir = get_dir(src, chargeat)
 	var/turf/T = get_ranged_target_turf(get_turf(chargeat), dir, 2)
-	if(!T || T == loc)
+	if(!T)
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
 	charging = T
@@ -183,6 +186,7 @@ Difficulty: Hard
 	sleep(get_dist(src, T) * movespeed)
 	try_bloodattack()
 	charging = null
+	handle_automated_action() // get moving nerd
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
@@ -426,16 +430,19 @@ Difficulty: Hard
 	var/turf/chargeat = get_turf(target)
 	var/distance = directions.len
 	var/realspawn = pick(directions)
+	var/tocharge = list()
 	for(var/dir in directions)
-		var/turf/place = get_ranged_target_turf(target, dir, distance)
+		var/turf/place = get_ranged_target_turf(chargeat, dir, distance)
 		if(dir == realspawn)
 			forceMove(place)
-			INVOKE_ASYNC(src, .proc/charge, chargeat, 6)
 			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
 		B.forceMove(place)
-		B.target = target
+		tocharge += B
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B in tocharge)
 		INVOKE_ASYNC(B, .proc/charge, chargeat, 6)
+	charge(chargeat, 6)
+
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"
@@ -449,6 +456,10 @@ Difficulty: Hard
 	score_type = null
 	deathmessage = "Explodes into a pool of blood!"
 	deathsound = 'sound/effects/splat.ogg'
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
+	..()
+	toggle_ai(AI_OFF)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge(var/atom/chargeat = target)
 	..()
@@ -470,6 +481,9 @@ Difficulty: Hard
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/AttackingTarget()
+	return
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/try_bloodattack()
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/grant_achievement(medaltype,scoretype)
