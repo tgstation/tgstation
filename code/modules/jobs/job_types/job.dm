@@ -158,11 +158,11 @@
 	belt = /obj/item/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
+	box = /obj/item/storage/box/survival
 
 	var/backpack = /obj/item/storage/backpack
 	var/satchel  = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
-	var/box = /obj/item/storage/box/survival
 
 	var/pda_slot = SLOT_BELT
 
@@ -182,12 +182,6 @@
 			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
-
-	if(box)
-		if(!backpack_contents)
-			backpack_contents = list()
-		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
-		backpack_contents[box] = 1
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
