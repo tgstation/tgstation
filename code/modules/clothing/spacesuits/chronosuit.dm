@@ -30,7 +30,6 @@
 	var/list/hands_nodrop = list()
 	var/obj/item/clothing/head/helmet/space/chronos/helmet
 	var/obj/effect/chronos_cam/camera
-	var/mutable_appearance/phase_underlay
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
@@ -103,9 +102,6 @@
 			if(I in hands_nodrop)
 				I.item_flags &= ~NODROP
 		hands_nodrop = null
-		if(phase_underlay && !QDELETED(phase_underlay))
-			user.underlays -= phase_underlay
-			QDEL_NULL(phase_underlay)
 		if(camera)
 			camera.remove_target_ui()
 			camera.forceMove(user)
@@ -139,9 +135,6 @@
 
 		user.ExtinguishMob()
 
-		phase_underlay = create_phase_underlay(user)
-		user.underlays += phase_underlay
-
 		hands_nodrop = list()
 		for(var/obj/item/I in user.held_items)
 			if(!(I.item_flags & NODROP))
@@ -158,7 +151,7 @@
 
 /obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
 	if(teleporting && activated && user)
-		animate(user, alpha = 0, time = 2)
+		animate(user, color = list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 1,1,1,0), time = 2)
 		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_3, user, to_turf, phase_in_ds), 2, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
@@ -166,7 +159,7 @@
 /obj/item/clothing/suit/space/chronos/proc/phase_3(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
 	if(teleporting && activated && user)
 		user.forceMove(to_turf)
-		animate(user, alpha = 255, time = phase_in_ds)
+		animate(user, color = "#00ccee", time = phase_in_ds)
 		phase_timer_id = addtimer(CALLBACK(src, .proc/phase_4, user, to_turf), phase_in_ds, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
@@ -177,13 +170,6 @@
 		phase_timer_id = addtimer(CALLBACK(src, .proc/finish_chronowalk, user, to_turf), 3, TIMER_STOPPABLE)
 	else
 		finish_chronowalk(user, to_turf)
-
-/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(mob/user)
-	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
-	user_icon.AddAlphaMask(getFlatIcon(user))
-	var/mutable_appearance/phase = mutable_appearance(user_icon, null)
-	phase.appearance_flags = RESET_COLOR|RESET_ALPHA|KEEP_APART
-	return phase
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
@@ -333,16 +319,15 @@
 /obj/screen/chronos_target
 	name = "target display"
 	screen_loc = "CENTER,CENTER"
-	color = "#ff3311"
-	blend_mode = BLEND_SUBTRACT
+	color = list(1,0,0,0, 0,1,0,0.8, 0,0,1,0.933, 0,0,0,0, 0,0,0,0)
+	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 
-/obj/screen/chronos_target/New(loc, var/mob/living/carbon/human/user)
+/obj/screen/chronos_target/Initialize(mapload, mob/living/carbon/human/user)
 	if(user)
-		var/icon/user_icon = getFlatIcon(user)
-		icon = user_icon
-		transform = user.transform
+		vis_contents += user
 	else
 		qdel(src)
+	return ..()
 
 /datum/action/innate/chrono_teleport
 	name = "Teleport Now"
