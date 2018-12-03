@@ -5,16 +5,6 @@
 	max_ammo = 4
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/shot/ammo_count(countempties = 1)
-	if (!countempties)
-		var/boolets = 0
-		for(var/obj/item/ammo_casing/bullet in stored_ammo)
-			if(bullet.BB)
-				boolets++
-		return boolets
-	else
-		return ..()
-
 /obj/item/ammo_box/magazine/internal/shot/tube
 	name = "dual feed shotgun internal tube"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot

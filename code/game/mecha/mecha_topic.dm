@@ -117,7 +117,6 @@
 						<a href='?src=[REF(src)];toggle_maint_access=1'><span id='t_maint_access'>[maint_access?"Forbid":"Permit"] maintenance protocols</span></a><br>
 						<a href='?src=[REF(src)];toggle_port_connection=1'><span id='t_port_connection'>[internal_tank.connected_port?"Disconnect from":"Connect to"] gas port</span></a><br>
 						<a href='?src=[REF(src)];dna_lock=1'>DNA-lock</a><br>
-						<a href='?src=[REF(src)];view_log=1'>View internal log</a><br>
 						<a href='?src=[REF(src)];change_name=1'>Change exosuit name</a><br>
 						</div>
 						</div>
@@ -146,15 +145,6 @@
 		. += "<div id='[REF(MT)]'>[MT.get_equip_info()]</div>"
 	. += "</div>"
 
-
-
-/obj/mecha/proc/get_log_html()
-	. = "<html><head><title>[src.name] Log</title></head><body style='font: 13px 'Courier', monospace;'>"
-	for(var/list/entry in log)
-		. += {"<div style='font-weight: bold;'>[entry["time"]] [time2text(entry["date"],"MMM DD")] [entry["year"]]</div>
-						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
-						"}
-	. += "</body></html>"
 
 
 
@@ -289,16 +279,11 @@
 		radio.set_frequency(new_frequency)
 		send_byjax(src.occupant,"exosuit.browser","rfreq","[format_frequency(radio.frequency)]")
 
-	if (href_list["view_log"])
-		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
-		onclose(occupant, "exosuit_log")
-
 	if (href_list["change_name"])
-		var/newname = stripped_input(occupant,"Choose new exosuit name","Rename exosuit","", MAX_NAME_LEN)
-		if(newname && trim(newname))
-			name = newname
-		else
-			alert(occupant, "nope.avi")
+		var/userinput = input(occupant, "Choose new exosuit name", "Rename exosuit", "") as null|text
+		if(!isnull(userinput))
+			var/newname = copytext(sanitize(userinput),1,MAX_NAME_LEN)
+			name = newname ? newname : initial(name)
 
 	if (href_list["toggle_id_upload"])
 		add_req_access = !add_req_access
@@ -315,7 +300,7 @@
 		if(internal_tank.connected_port)
 			if(internal_tank.disconnect())
 				occupant_message("Disconnected from the air system port.")
-				log_message("Disconnected from gas port.")
+				log_message("Disconnected from gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to disconnect from the air system port!</span>")
 				return
@@ -323,7 +308,7 @@
 			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate() in loc
 			if(internal_tank.connect(possible_port))
 				occupant_message("Connected to the air system port.")
-				log_message("Connected to gas port.")
+				log_message("Connected to gas port.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Unable to connect with air system port!</span>")
 				return
@@ -341,14 +326,13 @@
 
 	if(href_list["repair_int_control_lost"])
 		occupant_message("Recalibrating coordination system...")
-		log_message("Recalibration of coordination system started.")
+		log_message("Recalibration of coordination system started.", LOG_MECHA)
 		var/T = loc
 		spawn(100)
 			if(T == loc)
 				clearInternalDamage(MECHA_INT_CONTROL_LOST)
 				occupant_message("<span class='notice'>Recalibration successful.</span>")
-				log_message("Recalibration of coordination system finished with 0 errors.")
+				log_message("Recalibration of coordination system finished with 0 errors.", LOG_MECHA)
 			else
 				occupant_message("<span class='warning'>Recalibration failed!</span>")
-				log_message("Recalibration of coordination system failed with 1 error.", color="red")
-
+				log_message("Recalibration of coordination system failed with 1 error.", LOG_MECHA, color="red")

@@ -10,6 +10,7 @@
 	set waitfor = FALSE
 	if(alert("Are we sure we wish to kill ourself and create a headslug?",,"Yes", "No") == "No")
 		return
+	..()
 	var/datum/mind/M = user.mind
 	var/list/organs = user.getorganszone(BODY_ZONE_HEAD, 1)
 
@@ -25,7 +26,7 @@
 		H.confused += 3
 	for(var/mob/living/silicon/S in range(2,user))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
-		S.Knockdown(60)
+		S.Paralyze(60)
 	var/turf = get_turf(user)
 	user.gib()
 	. = TRUE

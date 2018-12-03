@@ -3133,10 +3133,11 @@
 	},
 /obj/structure/table,
 /obj/item/soulstone,
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "iY" = (
 /obj/structure/shuttle/engine/propulsion/left,
@@ -3201,10 +3202,11 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jh" = (
 /obj/structure/cable{
@@ -3260,10 +3262,11 @@
 /obj/item/organ/brain{
 	name = "The preserved brain of Harry Houdini"
 	},
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jp" = (
 /obj/structure/cable{
@@ -3367,10 +3370,11 @@
 /obj/structure/table,
 /obj/structure/window/reinforced,
 /obj/item/batterer,
-/turf/open/floor/plasteel/airless{
-	icon_state = "whitered";
+/obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/airless/white,
 /area/awaymission/academy/academyaft)
 "jB" = (
 /obj/item/shard{

@@ -186,7 +186,7 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Knockdown(40)
+		M.Paralyze(40)
 		M.throw_at(throwtarget, 5, 1,src)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
@@ -199,18 +199,20 @@
 		if(H.mind && H.mind.assigned_role == "Bartender")
 			return TRUE
 
-	var/obj/item/card/id/ID = user.get_idcard()
+	var/obj/item/card/id/ID = user.get_idcard(FALSE)
 	if(ID && (ACCESS_CENT_BAR in ID.access))
 		return TRUE
 
 //Luxury Shuttle Blockers
 
 /obj/effect/forcefield/luxury_shuttle
+	name = "Luxury shuttle ticket booth"
+	desc = "A forceful money collector."
 	timeleft = 0
 	var/threshold = 500
 	var/static/list/approved_passengers = list()
 	var/static/list/check_times = list()
-
+	var/list/payees = list()
 
 /obj/effect/forcefield/luxury_shuttle/CanPass(atom/movable/mover, turf/target)
 	if(mover in approved_passengers)
@@ -227,46 +229,76 @@
 	if(!isliving(AM))
 		return ..()
 
-	if(check_times[AM] && check_times[AM] > world.time) //Let's not spam the message
-		return ..()
-
-	check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
-
-	var/total_cash = 0
 	var/list/counted_money = list()
 
 	for(var/obj/item/coin/C in AM.GetAllContents())
-		total_cash += C.value
+		if(payees[AM] >= threshold)
+			break
+		payees[AM] += C.value
 		counted_money += C
-		if(total_cash >= threshold)
-			break
 	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
-		total_cash += S.value * S.amount
-		counted_money += S
-		if(total_cash >= threshold)
+		if(payees[AM] >= threshold)
 			break
+		payees[AM] += S.value * S.amount
+		counted_money += S
+	for(var/obj/item/holochip/H in AM.GetAllContents())
+		if(payees[AM] >= threshold)
+			break
+		payees[AM] += H.credits
+		counted_money += H
 
-	if(AM.pulling)
-		if(istype(AM.pulling, /obj/item/coin))
-			var/obj/item/coin/C = AM.pulling
-			total_cash += C.value
-			counted_money += C
+	if(payees[AM] < threshold && istype(AM.pulling, /obj/item/coin))
+		var/obj/item/coin/C = AM.pulling
+		payees[AM] += C.value
+		counted_money += C
 
-		else if(istype(AM.pulling, /obj/item/stack/spacecash))
-			var/obj/item/stack/spacecash/S = AM.pulling
-			total_cash += S.value * S.amount
-			counted_money += S
+	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/S = AM.pulling
+		payees[AM] += S.value * S.amount
+		counted_money += S
 
-	if(total_cash >= threshold)
+	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/holochip))
+		var/obj/item/holochip/H = AM.pulling
+		payees[AM] += H.credits
+		counted_money += H
+
+	if(ishuman(AM))
+		var/mob/living/carbon/human/H = AM
+		if(H.get_bank_account())
+			var/datum/bank_account/account = H.get_bank_account()
+
+			if(account.account_balance < threshold)
+				payees[AM] += account.account_balance
+				account.adjust_money(-account.account_balance)
+			else
+				var/money_owed = threshold - payees[AM]
+				payees[AM] += money_owed
+				account.adjust_money(-money_owed)
+
+	if(payees[AM] >= threshold)
 		for(var/obj/I in counted_money)
 			qdel(I)
-
-		to_chat(AM, "Thank you for your payment! Please enjoy your flight.")
+		payees[AM] -= threshold
+		say("<span class='robot'>Welcome aboard, [AM]!</span>")
 		approved_passengers += AM
+
+		if(payees[AM] > 0 && ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.get_bank_account())
+				var/datum/bank_account/account = H.get_bank_account()
+				account.adjust_money(payees[AM])
+				payees[AM] -= payees[AM]
+
 		check_times -= AM
 		return
+	else if (payees[AM] > 0)
+		for(var/obj/I in counted_money)
+			qdel(I)
+		if(!check_times[AM] || check_times[AM] < world.time) //Let's not spam the message
+			say("<span class='robot'>$[payees[AM]] received, [AM]. You need $[threshold-payees[AM]] more.</span>")
+			check_times[AM] = world.time + LUXURY_MESSAGE_COOLDOWN
+		return ..()
 	else
-		to_chat(AM, "<span class='warning'>You don't have enough money to enter the main shuttle. You'll have to fly coach.</span>")
 		return ..()
 
 /mob/living/simple_animal/hostile/bear/fightpit

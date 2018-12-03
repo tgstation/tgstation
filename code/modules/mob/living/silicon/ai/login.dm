@@ -6,6 +6,7 @@
 			O.mode = 1
 			O.emotion = "Neutral"
 			O.update()
+	set_eyeobj_visible(TRUE)
 	if(multicam_on)
 		end_multicam()
 	view_core()

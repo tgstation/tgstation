@@ -32,7 +32,7 @@
 	busy_icon_state = working_icon
 	update_icon()
 
-/obj/machinery/public_nanite_chamber/proc/inject_nanites()
+/obj/machinery/public_nanite_chamber/proc/inject_nanites(mob/living/attacker)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if((stat & MAINT) || panel_open)
@@ -47,14 +47,17 @@
 	set_busy(TRUE, "[initial(icon_state)]_raising")
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_active"),20)
 	addtimer(CALLBACK(src, .proc/set_busy, TRUE, "[initial(icon_state)]_falling"),60)
-	addtimer(CALLBACK(src, .proc/complete_injection, locked_state),80)
+	addtimer(CALLBACK(src, .proc/complete_injection, locked_state, attacker),80)
 
-/obj/machinery/public_nanite_chamber/proc/complete_injection(locked_state)
+/obj/machinery/public_nanite_chamber/proc/complete_injection(locked_state, mob/living/attacker)
 	//TODO MACHINE DING
 	locked = locked_state
 	set_busy(FALSE)
 	if(!occupant)
 		return
+	if(attacker)
+		occupant.investigate_log("was injected with nanites by [key_name(attacker)] using [src] at [AREACOORD(src)].", INVESTIGATE_NANITES)
+		log_combat(attacker, occupant, "injected", null, "with nanites via [src]")
 	occupant.AddComponent(/datum/component/nanites, 75, cloud_id)
 
 /obj/machinery/public_nanite_chamber/update_icon()
@@ -94,7 +97,7 @@
 		return
 
 	if(state_open)
-		close_machine()
+		close_machine(null, user)
 		return
 
 	else if(locked)
@@ -122,7 +125,7 @@
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
-/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user)
+/obj/machinery/public_nanite_chamber/close_machine(mob/living/carbon/user, mob/living/attacker)
 	if(!state_open)
 		return FALSE
 
@@ -130,15 +133,15 @@
 
 	. = TRUE
 
-	addtimer(CALLBACK(src, .proc/try_inject_nanites), 30) //If someone is shoved in give them a chance to get out before the injection starts
+	addtimer(CALLBACK(src, .proc/try_inject_nanites, attacker), 30) //If someone is shoved in give them a chance to get out before the injection starts
 
-/obj/machinery/public_nanite_chamber/proc/try_inject_nanites()
+/obj/machinery/public_nanite_chamber/proc/try_inject_nanites(mob/living/attacker)
 	if(occupant)
 		var/mob/living/L = occupant
 		if(SEND_SIGNAL(L, COMSIG_HAS_NANITES))
 			return
 		if((MOB_ORGANIC in L.mob_biotypes) || (MOB_UNDEAD in L.mob_biotypes))
-			inject_nanites()
+			inject_nanites(attacker)
 
 /obj/machinery/public_nanite_chamber/open_machine()
 	if(state_open)
@@ -173,6 +176,8 @@
 	toggle_open(user)
 
 /obj/machinery/public_nanite_chamber/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || !Adjacent(target) || !user.Adjacent(target) || !iscarbon(target))
 		return
-	close_machine(target)
+	if(close_machine(target, user))
+		log_combat(user, target, "inserted", null, "into [src].")
+	add_fingerprint(user)

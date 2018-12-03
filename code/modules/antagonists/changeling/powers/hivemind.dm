@@ -1,8 +1,8 @@
-//HIVEMIND COMMUNICATION (:g)
+//HIVEMIND COMMUNICATION //MODE_TOKEN_CHANGELING / :g
 /obj/effect/proc_holder/changeling/hivemind_comms
 	name = "Hivemind Communication"
 	desc = "We tune our senses to the airwaves to allow us to discreetly communicate and exchange DNA with other changelings."
-	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives."
+	helptext = "We will be able to talk with other changelings with :g. Exchanged DNA do not count towards absorb objectives." //MODE_TOKEN_CHANGELING needs to be manually updated here.
 	dna_cost = 0
 	chemical_cost = -1
 
@@ -10,7 +10,7 @@
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.changeling_speak = 1
-	to_chat(user, "<i><font color=#800080>Use say \":g message\" to communicate with the other changelings.</font></i>")
+	to_chat(user, "<i><font color=#800080>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with the other changelings.</font></i>")
 	var/obj/effect/proc_holder/changeling/hivemind_upload/S1 = new
 	if(!changeling.has_sting(S1))
 		changeling.purchasedpowers+=S1
@@ -31,6 +31,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	if (user.has_trait(CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, "<span class='warning'>The poison in the air hinders our ability to interact with the hivemind.</span>")
 		return
+	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
 	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
@@ -91,7 +92,7 @@ GLOBAL_LIST_EMPTY(hivemind_bank)
 	var/datum/changelingprofile/chosen_prof = names[S]
 	if(!chosen_prof)
 		return
-
+	..()
 	var/datum/changelingprofile/downloaded_prof = new chosen_prof.type
 	chosen_prof.copy_profile(downloaded_prof)
 	changeling.add_profile(downloaded_prof)

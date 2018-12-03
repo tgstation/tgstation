@@ -10,7 +10,6 @@
 
 	density = FALSE
 	stat = DEAD
-	canmove = FALSE
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
@@ -73,7 +72,7 @@
 	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>New Player Options</div>", 250, 265)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output)
-	popup.open(0)
+	popup.open(FALSE)
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -468,7 +467,7 @@
 	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
-	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc
+	popup.open(FALSE) // FALSE is passed to open so that it doesn't use the onclose() proc
 
 
 /mob/dead/new_player/proc/create_character(transfer_after)

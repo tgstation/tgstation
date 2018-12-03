@@ -27,6 +27,7 @@
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
 #_maps/RandomRuins/SpaceRuins/gasthelizards.dmm
 #_maps/RandomRuins/SpaceRuins/gondolaasteroid.dmm
+#_maps/RandomRuins/SpaceRuins/hilbertshoteltestingsite.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
 #_maps/RandomRuins/SpaceRuins/listeningstation.dmm
 #_maps/RandomRuins/SpaceRuins/mechtransport.dmm
@@ -45,3 +46,4 @@
 #_maps/RandomRuins/SpaceRuins/way_home.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipdock.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
+

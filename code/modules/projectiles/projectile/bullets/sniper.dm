@@ -4,7 +4,7 @@
 	name =".50 bullet"
 	speed = 0.4
 	damage = 70
-	knockdown = 100
+	paralyze = 100
 	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE
@@ -20,7 +20,7 @@
 	armour_penetration = 0
 	damage = 0
 	dismemberment = 0
-	knockdown = 0
+	paralyze = 0
 	breakthings = FALSE
 
 /obj/item/projectile/bullet/p50/soporific/on_hit(atom/target, blocked = FALSE)
@@ -36,5 +36,5 @@
 	damage = 60
 	forcedodge = TRUE
 	dismemberment = 0 //It goes through you cleanly.
-	knockdown = 0
+	paralyze = 0
 	breakthings = FALSE

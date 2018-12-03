@@ -74,6 +74,8 @@
 			L.SetStun(0)
 			L.SetKnockdown(0)
 			L.SetSleeping(0)
+			L.SetImmobilized(0)
+			L.SetParalyzed(0)
 			L.SetUnconscious(0)
 			L.reagents.add_reagent("muscle_stimulant", CLAMP(5 - L.reagents.get_reagent_amount("muscle_stimulant"), 0, 5))	//If you don't have legs or get bola'd, tough luck!
 			colorize(L)
@@ -139,9 +141,10 @@
 	activation_time = timer + world.time
 	detonation_timerid = addtimer(CALLBACK(src, .proc/detonate), delay, TIMER_STOPPABLE)
 	START_PROCESSING(SSfastprocess, src)
-	var/turf/T = get_turf(src)
-	message_admins("[user? "[ADMIN_LOOKUPFLW(user)] has primed [src]" : "A [src] has been primed"] (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range]) for detonation at [ADMIN_VERBOSEJMP(T)]")
-	log_game("[user ? "[key_name(user)] has primed [src]" : "A [src] has been primed"] ([detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range]) for detonation at [AREACOORD(T)]")
+	if(user)
+		log_bomber(user, "has primed a", src, "for detonation (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range])")
+	else
+		log_bomber(null, null, src, "was primed for detonation (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range])")
 	active = TRUE
 
 /obj/item/hot_potato/proc/deactivate()

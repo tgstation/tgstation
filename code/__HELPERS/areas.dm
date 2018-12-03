@@ -86,6 +86,8 @@
 		newA.contents += thing
 		thing.change_area(old_area, newA)
 
+	newA.reg_in_areas_in_z()
+
 	var/list/firedoors = oldA.firedoors
 	for(var/door in firedoors)
 		var/obj/machinery/door/firedoor/FD = door

@@ -27,7 +27,7 @@
 
 /obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
 	. = ..()
-	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
+	eatverb = pick("bite","chew","gnaw","swallow","chomp")
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
 	name = "imitation carp fillet"
@@ -64,6 +64,12 @@
 	filling_color = "#F0E68C"
 	tastes = list("tofu" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/tofu/prison
+	name = "soggy tofu"
+	desc = "You refuse to eat this strange bean curd."
+	tastes = list("sour, rotten water" = 1)
+	foodtype = GROSS
 
 /obj/item/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
@@ -184,10 +190,11 @@
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtype = MEAT | SUGAR
 	var/faction
+	var/spawned_mob = /mob/living/carbon/monkey
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/carbon/monkey/bananas = new(drop_location(), TRUE, spammer)
+	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
 	if(faction)
 		bananas.faction = faction
 	if (!QDELETED(bananas))
@@ -199,6 +206,14 @@
 
 /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)
+
+/obj/item/reagent_containers/food/snacks/monkeycube/gorilla
+	name = "gorilla cube"
+	desc = "A Waffle Co. brand gorilla cube. Now with extra molecules!"
+	bitesize = 20
+	list_reagents = list("nutriment" = 15)
+	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
+	spawned_mob = /mob/living/simple_animal/hostile/gorilla
 
 /obj/item/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"
@@ -224,7 +239,7 @@
 
 /obj/item/reagent_containers/food/snacks/stewedsoymeat/Initialize()
 	. = ..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = pick("slurp","sip","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/boiledspiderleg
 	name = "boiled spider leg"

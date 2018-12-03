@@ -29,12 +29,10 @@
 	if(!..())
 		return
 	to_chat(host_mob, "<span class='notice'>You feel a sudden surge of energy!</span>")
-	host_mob.SetStun(0)
-	host_mob.SetKnockdown(0)
-	host_mob.SetUnconscious(0)
+	host_mob.SetAllImmobility(0)
 	host_mob.adjustStaminaLoss(-75)
-	host_mob.lying = 0
-	host_mob.update_canmove()
+	host_mob.set_resting(FALSE)
+	host_mob.update_mobility()
 	host_mob.reagents.add_reagent("stimulants", 1.5)
 
 /datum/nanite_program/hardening
@@ -120,7 +118,7 @@
 
 /datum/nanite_program/mindshield/enable_passive_effect()
 	. = ..()
-	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev)) //won't work if on a rev, to avoid having implanted revs
+	if(!host_mob.mind.has_antag_datum(/datum/antagonist/rev) && !is_hivemember(host_mob)) //won't work if on a rev, to avoid having implanted revs. same applies for hivemind members.
 		host_mob.add_trait(TRAIT_MINDSHIELD, "nanites")
 		host_mob.sec_hud_set_implants()
 

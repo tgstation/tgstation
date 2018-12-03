@@ -29,9 +29,10 @@
 	var/damageChoice = 0 //Determines if we do no damage (0), custom amnt of damage (1), or gib + 5000dmg (2)
 	var/launcherActivated = FALSE //check if we've entered "launch mode" (when we click a pod is launched). Used for updating mouse cursor
 	var/effectBurst = FALSE //Effect that launches 5 at once in a 3x3 area centered on the target
+	var/effectAnnounce = TRUE
 	var/numTurfs = 0 //Counts the number of turfs with things we can launch in the chosen bay (in the centcom map)
 	var/launchCounter = 1 //Used with the "Ordered" launch mode (launchChoice = 1) to see what item is launched
-	var/specificTarget //Do we want to target a specific mob instead of where we click? Also used for smiting
+	var/atom/specificTarget //Do we want to target a specific mob instead of where we click? Also used for smiting
 	var/list/orderedArea = list() //Contains an ordered list of turfs in an area (filled in the createOrderedArea() proc), read top-left to bottom-right. Used for the "ordered" launch mode (launchChoice = 1)
 	var/list/acceptableTurfs = list() //Contians a list of turfs (in the "bay" area on centcom) that have items that can be launched. Taken from orderedArea
 	var/list/launchList = list() //Contains whatever is going to be put in the supplypod and fired. Taken from acceptableTurfs
@@ -66,12 +67,14 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
 	data["explosionChoice"] = explosionChoice //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
 	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
+	data["fallDuration"] = temp_pod.fallDuration //How long the pod's falling animation lasts
 	data["landingDelay"] = temp_pod.landingDelay //How long the pod takes to land after launching
 	data["openingDelay"] = temp_pod.openingDelay //How long the pod takes to open after landing
 	data["departureDelay"] = temp_pod.departureDelay //How long the pod takes to leave after opening (if bluespace=true, it deletes. if reversing=true, it flies back to centcom)
 	data["styleChoice"] = temp_pod.style //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod. 
 	data["effectStun"] = temp_pod.effectStun //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	data["effectLimb"] = temp_pod.effectLimb //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
+	data["effectOrgans"] = temp_pod.effectOrgans //If true, yeets the organs out of any bodies caught under the pod when it lands
 	data["effectBluespace"] = temp_pod.bluespace //If true, the pod deletes (in a shower of sparks) after landing
 	data["effectStealth"] = temp_pod.effectStealth //If true, a target icon isnt displayed on the turf where the pod will land
 	data["effectQuiet"] = temp_pod.effectQuiet //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
@@ -81,12 +84,14 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	data["effectReverse"] = temp_pod.reversing //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	data["effectTarget"] = specificTarget //Launches the pod at the turf of a specific mob target, rather than wherever the user clicked. Useful for smites
 	data["effectName"] = temp_pod.adminNamed //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
+	data["effectAnnounce"] = effectAnnounce
 	data["giveLauncher"] = launcherActivated //If true, the user is in launch mode, and whenever they click a pod will be launched (either at their mouse position or at a specific target)
 	data["numObjects"] = numTurfs //Counts the number of turfs that contain a launchable object in the centcom supplypod bay
+	data["fallingSound"] = temp_pod.fallingSound != initial(temp_pod.fallingSound)//Admin sound to play as the pod falls
 	data["landingSound"] = temp_pod.landingSound //Admin sound to play when the pod lands
 	data["openingSound"] = temp_pod.openingSound //Admin sound to play when the pod opens
 	data["leavingSound"] = temp_pod.leavingSound //Admin sound to play when the pod leaves
-	data["soundVolume"] = temp_pod.soundVolume != 50 //Admin sound to play when the pod leaves
+	data["soundVolume"] = temp_pod.soundVolume != initial(temp_pod.soundVolume) //Admin sound to play when the pod leaves
 	return data
 
 /datum/centcom_podlauncher/ui_act(action, params)
@@ -227,6 +232,9 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if("effectLimb") //Toggle: Anyone carbon mob under the pod loses a limb when it lands
 			temp_pod.effectLimb = !temp_pod.effectLimb
 			. = TRUE
+		if("effectOrgans") //Toggle: Anyone carbon mob under the pod loses a limb when it lands
+			temp_pod.effectOrgans = !temp_pod.effectOrgans
+			. = TRUE
 		if("effectBluespace") //Toggle: Deletes the pod after landing
 			temp_pod.bluespace = !temp_pod.bluespace
 			. = TRUE
@@ -245,6 +253,9 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if("effectBurst") //Toggle: Launch 5 pods (with a very slight delay between) in a 3x3 area centered around the target
 			effectBurst = !effectBurst
 			. = TRUE
+		if("effectAnnounce") //Toggle: Launch 5 pods (with a very slight delay between) in a 3x3 area centered around the target
+			effectAnnounce = !effectAnnounce
+			. = TRUE
 		if("effectReverse") //Toggle: Don't send any items. Instead, after landing, close (taking any objects inside) and go back to the centcom bay it came from
 			temp_pod.reversing = !temp_pod.reversing
 			. = TRUE
@@ -261,11 +272,23 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			. = TRUE
 
 		////////////////////////////TIMER DELAYS//////////////////
+		if("fallDuration") //Change the time it takes the pod to land, after firing
+			if (temp_pod.fallDuration != initial(temp_pod.fallDuration)) //If the landing delay has already been changed when we push the "change value" button, then set it to default
+				temp_pod.fallDuration = initial(temp_pod.fallDuration)
+				return
+			var/timeInput = input("Delay Time", "Enter the duration of the pod's falling animation, in seconds", initial(temp_pod.fallDuration) * 0.1) as null|num
+			if (isnull(timeInput))
+				return
+			if (!isnum(timeInput)) //Sanitize input, if it doesnt check out, error and set to default
+				alert(usr, "That wasnt a number! Value set to default ([initial(temp_pod.fallDuration)*0.1]) instead.")
+				timeInput = initial(temp_pod.fallDuration)
+			temp_pod.fallDuration = 10 * timeInput
+			. = TRUE
 		if("landingDelay") //Change the time it takes the pod to land, after firing
 			if (temp_pod.landingDelay != initial(temp_pod.landingDelay)) //If the landing delay has already been changed when we push the "change value" button, then set it to default
 				temp_pod.landingDelay = initial(temp_pod.landingDelay)
 				return
-			var/timeInput = input("Delay Time", "Enter the time it takes for the pod to land, in seconds", 0.5) as null|num
+			var/timeInput = input("Delay Time", "Enter the time it takes for the pod to land, in seconds", initial(temp_pod.landingDelay) * 0.1) as null|num
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput)) //Sanitize input, if it doesnt check out, error and set to default
@@ -277,7 +300,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (temp_pod.openingDelay != initial(temp_pod.openingDelay)) //If the opening delay has already been changed when we push the "change value" button, then set it to default
 				temp_pod.openingDelay = initial(temp_pod.openingDelay)
 				return
-			var/timeInput = input("Delay Time", "Enter the time it takes for the pod to open after landing, in seconds", 3) as null|num
+			var/timeInput = input("Delay Time", "Enter the time it takes for the pod to open after landing, in seconds", initial(temp_pod.openingDelay) * 0.1) as null|num
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput)) //Sanitize input
@@ -289,7 +312,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			if (temp_pod.departureDelay != initial(temp_pod.departureDelay)) //If the departure delay has already been changed when we push the "change value" button, then set it to default
 				temp_pod.departureDelay = initial(temp_pod.departureDelay)
 				return
-			var/timeInput = input("Delay Time", "Enter the time it takes for the pod to leave after opening, in seconds", 3) as null|num
+			var/timeInput = input("Delay Time", "Enter the time it takes for the pod to leave after opening, in seconds", initial(temp_pod.departureDelay) * 0.1) as null|num
 			if (isnull(timeInput))
 				return
 			if (!isnum(timeInput))
@@ -299,31 +322,57 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			. = TRUE
 
 		////////////////////////////ADMIN SOUNDS//////////////////
+		if("fallingSound") //Admin sound from a local file that plays when the pod lands
+			if ((temp_pod.fallingSound) != initial(temp_pod.fallingSound))
+				temp_pod.fallingSound = initial(temp_pod.fallingSound)
+				temp_pod.fallingSoundLength = initial(temp_pod.fallingSoundLength)
+				return
+			var/soundInput = input(holder, "Please pick a sound file to play when the pod lands! NOTICE: Take a note of exactly how long the sound is.", "Pick a Sound File") as null|sound
+			if (isnull(soundInput))
+				return
+			var/timeInput =  input(holder, "What is the exact length of the sound file, in seconds. This number will be used to line the sound up so that it finishes right as the pod lands!", "Pick a Sound File", 0.3) as null|num
+			if (isnull(timeInput))
+				return
+			if (!isnum(timeInput))
+				alert(usr, "That wasnt a number! Value set to default ([initial(temp_pod.fallingSoundLength)*0.1]) instead.")
+			temp_pod.fallingSound = soundInput
+			temp_pod.fallingSoundLength = 10 * timeInput
+			. = TRUE
 		if("landingSound") //Admin sound from a local file that plays when the pod lands
 			if (!isnull(temp_pod.landingSound))
 				temp_pod.landingSound = null
 				return
-			temp_pod.landingSound = input(holder, "Please pick a sound file to play when the pod lands! I reccomend a nice \"oh shit, i'm sorry\", incase you hit someone with the pod.", "Pick a Sound File") as null|sound
+			var/soundInput = input(holder, "Please pick a sound file to play when the pod lands! I reccomend a nice \"oh shit, i'm sorry\", incase you hit someone with the pod.", "Pick a Sound File") as null|sound
+			if (isnull(soundInput))
+				return
+			temp_pod.landingSound = soundInput
 			. = TRUE
 		if("openingSound") //Admin sound from a local file that plays when the pod opens
 			if (!isnull(temp_pod.openingSound))
 				temp_pod.openingSound = null
 				return
-			temp_pod.openingSound = input(holder, "Please pick a sound file to play when the pod opens! I reccomend a stock sound effect of kids cheering at a party, incase your pod is full of fun exciting stuff!", "Pick a Sound File") as null|sound
+			var/soundInput = input(holder, "Please pick a sound file to play when the pod opens! I reccomend a stock sound effect of kids cheering at a party, incase your pod is full of fun exciting stuff!", "Pick a Sound File") as null|sound
+			if (isnull(soundInput))
+				return
+			temp_pod.openingSound = soundInput
 			. = TRUE
 		if("leavingSound") //Admin sound from a local file that plays when the pod leaves
 			if (!isnull(temp_pod.leavingSound))
 				temp_pod.leavingSound = null
 				return
-			temp_pod.leavingSound = input(holder, "Please pick a sound file to play when the pod leaves! I reccomend a nice slide whistle sound, especially if you're using the reverse pod effect.", "Pick a Sound File") as null|sound
+			var/soundInput = input(holder, "Please pick a sound file to play when the pod leaves! I reccomend a nice slide whistle sound, especially if you're using the reverse pod effect.", "Pick a Sound File") as null|sound
+			if (isnull(soundInput))
+				return
+			temp_pod.leavingSound = soundInput
 			. = TRUE
 		if("soundVolume") //Admin sound from a local file that plays when the pod leaves
-			if (temp_pod.soundVolume != 50)
-				temp_pod.soundVolume = 50
+			if (temp_pod.soundVolume != initial(temp_pod.soundVolume))
+				temp_pod.soundVolume = initial(temp_pod.soundVolume)
 				return
-			temp_pod.soundVolume = input(holder, "Please pick a volume. Default is between 1 and 100 with 50 being average, but pick whatever. I'm a notification, not a cop. If you still cant hear your sound, consider turning on the Quiet effect. It will silence all pod sounds except for the custom admin ones set by the previous three buttons.", "Pick Admin Sound Volume") as null|num
-			if (isnull(temp_pod.soundVolume))
-				temp_pod.soundVolume = 50
+			var/soundInput = input(holder, "Please pick a volume. Default is between 1 and 100 with 50 being average, but pick whatever. I'm a notification, not a cop. If you still cant hear your sound, consider turning on the Quiet effect. It will silence all pod sounds except for the custom admin ones set by the previous three buttons.", "Pick Admin Sound Volume") as null|num
+			if (isnull(soundInput))
+				return
+			temp_pod.soundVolume = soundInput
 			. = TRUE
 		////////////////////////////STYLE CHANGES//////////////////
 		//Style is a value that is used to keep track of what the pod is supposed to look like. It can be used with the POD_STYLES list (in cargo.dm defines) 
@@ -403,12 +452,17 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if(left_click) //When we left click:
 			preLaunch() //Fill the acceptableTurfs list from the orderedArea list. Then, fill up the launchList list with items from the acceptableTurfs list based on the manner of launch (ordered, random, etc)
 			if (!isnull(specificTarget))
-				target = get_turf(specificTarget) //if we have a specific mob target, then always launch the pod at the turf of the mob
+				target = get_turf(specificTarget) //if we have a specific target, then always launch the pod at the turf of the target
 			else if (target)
 				target = get_turf(target) //Make sure we're aiming at a turf rather than an item or effect or something
 			else
 				return //if target is null and we don't have a specific target, cancel
-
+			if (effectAnnounce)
+				deadchat_broadcast("<span class='deadsay'>A special package is being launched at the station!</span>", turf_target = target)
+			var/list/bouttaDie = list()
+			for (var/mob/living/M in target)
+				bouttaDie.Add(M)
+			supplypod_punish_log(bouttaDie)
 			if (!effectBurst) //If we're not using burst mode, just launch normally.
 				launch(target)
 			else
@@ -422,7 +476,6 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 					else
 						launch(target) //If we couldn't locate an adjacent turf, just launch at the normal target
 					sleep(rand()*2) //looks cooler than them all appearing at once. Gives the impression of burst fire.
-			log_admin("Centcom Supplypod Launch: [key_name(user)] launched a supplypod in [AREACOORD(target)]")
 
 /datum/centcom_podlauncher/proc/refreshBay() //Called whenever the bay is switched, as well as wheneber a pod is launched
 	orderedArea = createOrderedArea(bay) //Create an ordered list full of turfs form the bay
@@ -509,3 +562,25 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	qdel(temp_pod) //Delete the temp_pod
 	qdel(selector) //Delete the selector effect
 	. = ..()
+
+/datum/centcom_podlauncher/proc/supplypod_punish_log(var/list/whoDyin)
+	var/podString = effectBurst ? "5 pods" : "a pod"
+	var/whomString = ""
+	if (LAZYLEN(whoDyin))
+		for (var/mob/living/M in whoDyin) 
+			whomString += "[key_name(M)], "
+
+	var/delayString = temp_pod.landingDelay == initial(temp_pod.landingDelay) ? "" : " Delay=[temp_pod.landingDelay*0.1]s"
+	var/damageString = temp_pod.damage == 0 ? "" : " Dmg=[temp_pod.damage]"
+	var/explosionString = ""
+	var/explosion_sum = temp_pod.explosionSize[1] + temp_pod.explosionSize[2] + temp_pod.explosionSize[3] + temp_pod.explosionSize[4]
+	if (explosion_sum != 0)
+		explosionString = " Boom=|"
+		for (var/X in temp_pod.explosionSize)
+			explosionString += "[X]|"
+	
+	var/msg = "launched [podString][whomString].[delayString][damageString][explosionString]]"
+	message_admins("[key_name_admin(usr)] [msg] in [AREACOORD(specificTarget)].")
+	if (!isemptylist(whoDyin))
+		for (var/mob/living/M in whoDyin)
+			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")

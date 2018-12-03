@@ -12,6 +12,7 @@
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
 	var/team_mode = FALSE //Should assign team objectives ?
+	var/competitive_objectives = FALSE //Should we assign objectives in competition with other lings?
 
 	//Changeling Stuff
 
@@ -27,6 +28,7 @@
 	var/sting_range = 2
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
+	var/was_absorbed = FALSE //if they were absorbed by another ling already.
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
@@ -42,6 +44,15 @@
 	// wip stuff
 	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
 
+/datum/antagonist/changeling/New()
+	. = ..()
+	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
+		if(!C.owner || C.owner == owner)
+			continue
+		if(C.was_absorbed) //make sure the other ling wasn't already killed by another one. only matters if the changeling that absorbed them was gibbed after.
+			continue
+		competitive_objectives = TRUE
+		break
 
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(cellular_emporium)
@@ -116,7 +127,7 @@
 			p.on_refund(owner.current)
 
 	//MOVE THIS
-	if(owner.current.hud_used)
+	if(owner.current.hud_used && owner.current.hud_used.lingstingdisplay)
 		owner.current.hud_used.lingstingdisplay.icon_state = null
 		owner.current.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
@@ -340,7 +351,7 @@
 /datum/antagonist/changeling/greet()
 	if (you_are_greet)
 		to_chat(owner.current, "<span class='boldannounce'>You are [changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
-	to_chat(owner.current, "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
+	to_chat(owner.current, "<span class='boldannounce'>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with your fellow changelings.</span>")
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -371,19 +382,19 @@
 		if(!CTO.escape_objective_compatible)
 			escape_objective_possible = FALSE
 			break
-	var/changeling_objective = rand(1,3)
-	switch(changeling_objective)
+
+	switch(competitive_objectives ? (team_mode ? rand(1,2) : rand(1,3)) : 1)
 		if(1)
 			var/datum/objective/absorb/absorb_objective = new
 			absorb_objective.owner = owner
 			absorb_objective.gen_amount_goal(6, 8)
 			objectives += absorb_objective
 		if(2)
-			var/datum/objective/absorb_changeling/ac = new
+			var/datum/objective/absorb_most/ac = new
 			ac.owner = owner
 			objectives += ac
-		if(3)
-			var/datum/objective/absorb_most/ac = new
+		if(3) //only give the murder other changelings goal if they're not in a team.
+			var/datum/objective/absorb_changeling/ac = new
 			ac.owner = owner
 			objectives += ac
 
@@ -410,7 +421,7 @@
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
 			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				kill_objective.find_target()
 			objectives += kill_objective
@@ -418,7 +429,7 @@
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			if(team_mode)
-				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				maroon_objective.find_target()
 			objectives += maroon_objective
@@ -440,7 +451,7 @@
 			var/datum/objective/escape/escape_with_identity/identity_theft = new
 			identity_theft.owner = owner
 			if(team_mode)
-				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				identity_theft.find_target()
 			objectives += identity_theft

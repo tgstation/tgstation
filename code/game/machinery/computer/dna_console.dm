@@ -346,7 +346,7 @@
 				var/can_add = max(min(REJUVENATORS_MAX - potassiodide_amount, REJUVENATORS_INJECT), 0)
 				viable_occupant.reagents.add_reagent("potass_iodide", can_add)
 		if("setbufferlabel")
-			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
+			var/text = sanitize(input(usr, "Input a new label:", "Input a Text", null) as text|null)
 			if(num && text)
 				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
@@ -562,7 +562,7 @@
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	if(delayed_action && connected)
+	if(delayed_action && get_viable_occupant())
 		to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?

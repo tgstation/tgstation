@@ -40,7 +40,7 @@
 		return
 	mobloc = get_turf(target.loc)
 	jaunt_steam(mobloc)
-	target.canmove = 0
+	target.mobility_flags &= ~MOBILITY_MOVE
 	holder.reappearing = 1
 	playsound(get_turf(target), 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	sleep(25 - jaunt_in_time)
@@ -55,7 +55,7 @@
 				if(T)
 					if(target.Move(T))
 						break
-		target.canmove = 1
+		target.mobility_flags |= MOBILITY_MOVE
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/proc/jaunt_steam(mobloc)
 	var/datum/effect_system/steam_spread/steam = new /datum/effect_system/steam_spread()

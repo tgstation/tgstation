@@ -11,6 +11,8 @@
 	weather_immunities = list("ash")
 	possible_a_intents = list(INTENT_HELP, INTENT_HARM)
 	mob_biotypes = list(MOB_ROBOTIC)
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	deathsound = 'sound/voice/borg_deathsound.ogg'
 
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
@@ -51,10 +53,6 @@
 		diag_hud.add_to_hud(src)
 	diag_hud_set_status()
 	diag_hud_set_health()
-
-/mob/living/silicon/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION, TRUE, TRUE)
 
 /mob/living/silicon/med_hud_set_health()
 	return //we use a different hud
@@ -402,7 +400,7 @@
 	return ..()
 
 /mob/living/silicon/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/silicon/get_inactive_held_item()
 	return FALSE

@@ -1304,7 +1304,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "hK" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCHangar1";
 	name = "Hangar Bay Blast Doors";
 	pixel_x = -28;
@@ -1374,7 +1374,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "hX" = (
-/obj/machinery/button/crematorium{
+/obj/machinery/button/crematorium/indestructible{
 	pixel_y = 25
 	},
 /turf/open/indestructible,
@@ -1540,7 +1540,7 @@
 /obj/structure/table/wood{
 	dir = 5
 	},
-/obj/item/storage/backpack/satchel,
+/obj/item/storage/backpack/satchel/fireproof,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "iW" = (
@@ -1549,14 +1549,14 @@
 /area/awaymission/centcomAway/general)
 "iY" = (
 /obj/structure/table/reinforced,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec3";
 	name = "XCC Shutter 3 Control"
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "ja" = (
-/obj/machinery/button/massdriver{
+/obj/machinery/button/massdriver/indestructible{
 	id = "XCCMechs";
 	name = "XCC Mechbay Mass Driver";
 	pixel_x = 25
@@ -1712,7 +1712,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "kf" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCFerry";
 	name = "Hangar Bay Shutters";
 	pixel_x = -28;
@@ -1754,7 +1754,7 @@
 /area/awaymission/centcomAway/general)
 "kr" = (
 /obj/structure/table/reinforced,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec1";
 	name = "XCC Shutter 1 Control"
 	},
@@ -1794,7 +1794,7 @@
 /area/awaymission/centcomAway/general)
 "kE" = (
 /obj/structure/table/reinforced,
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCsec2";
 	name = "XCC Shutter 2 Control"
 	},
@@ -2164,7 +2164,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "mt" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCtdomemelee";
 	name = "XCC Thunderdome Melee!"
 	},
@@ -2176,7 +2176,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "mv" = (
-/obj/machinery/button/door{
+/obj/machinery/button/door/indestructible{
 	id = "XCCtdomeguns";
 	name = "XCC Thunderdome Guns!"
 	},

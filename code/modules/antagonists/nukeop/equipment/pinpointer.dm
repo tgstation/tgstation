@@ -68,6 +68,11 @@
 	item_flags = NODROP
 	flags_1 = NONE
 
+/obj/item/pinpointer/syndicate_cyborg/cyborg_unequip(mob/user)
+	if(!active)
+		return
+	toggle_on()
+
 /obj/item/pinpointer/syndicate_cyborg/scan_for_target()
 	target = null
 	var/list/possible_targets = list()

@@ -17,7 +17,7 @@
 	actions_types = list(/datum/action/item_action/hands_free/activate)
 	allowed = list(
 		/obj/item/abductor,
-		/obj/item/abductor_baton,
+		/obj/item/abductor/baton,
 		/obj/item/melee/baton,
 		/obj/item/gun/energy,
 		/obj/item/restraints/handcuffs
@@ -54,7 +54,7 @@
 
 /obj/item/clothing/suit/armor/abductor/vest/item_action_slot_check(slot, mob/user)
 	if(slot == SLOT_WEAR_SUIT) //we only give the mob the ability to activate the vest if he's actually wearing it.
-		return 1
+		return TRUE
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/SetDisguise(datum/icon_snapshot/entry)
 	disguise = entry
@@ -86,11 +86,9 @@
 
 /obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	DeactivateStealth()
-	return 0
 
 /obj/item/clothing/suit/armor/abductor/vest/IsReflect()
 	DeactivateStealth()
-	return 0
 
 /obj/item/clothing/suit/armor/abductor/vest/ui_action_click()
 	switch(mode)
@@ -112,6 +110,8 @@
 		M.SetUnconscious(0)
 		M.SetStun(0)
 		M.SetKnockdown(0)
+		M.SetImmobilized(0)
+		M.SetParalyzed(0)
 		combat_cooldown = 0
 		START_PROCESSING(SSobj, src)
 
@@ -131,6 +131,8 @@
 
 /obj/item/abductor
 	icon = 'icons/obj/abductor.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
 /obj/item/abductor/proc/AbductorCheck(user)
 	if(isabductor(user))
@@ -154,8 +156,6 @@
 	desc = "A dual-mode tool for retrieving specimens and scanning appearances. Scanning can be done through cameras."
 	icon_state = "gizmo_scan"
 	item_state = "silencer"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	var/mode = GIZMO_SCAN
 	var/mob/living/marked = null
 	var/obj/machinery/abductor/console/console
@@ -243,8 +243,6 @@
 	desc = "A compact device used to shut down communications equipment."
 	icon_state = "silencer"
 	item_state = "gizmo"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
 /obj/item/abductor/silencer/attack(mob/living/M, mob/user)
 	if(!AbductorCheck(user))
@@ -288,8 +286,6 @@
 			or to send a command to a test subject with a charged gland."
 	icon_state = "mind_device_message"
 	item_state = "silencer"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	var/mode = MIND_DEVICE_MESSAGE
 
 /obj/item/abductor/mind_device/attack_self(mob/user)
@@ -419,21 +415,18 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 #define BATON_PROBE 3
 #define BATON_MODES 4
 
-/obj/item/abductor_baton
+/obj/item/abductor/baton
 	name = "advanced baton"
 	desc = "A quad-mode baton used for incapacitation and restraining of specimens."
 	var/mode = BATON_STUN
-	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wonderprodStun"
 	item_state = "wonderprod"
-	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
 	force = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
-/obj/item/abductor_baton/proc/toggle(mob/living/user=usr)
+/obj/item/abductor/baton/proc/toggle(mob/living/user=usr)
 	mode = (mode+1)%BATON_MODES
 	var/txt
 	switch(mode)
@@ -449,7 +442,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	to_chat(usr, "<span class='notice'>You switch the baton to [txt] mode.</span>")
 	update_icon()
 
-/obj/item/abductor_baton/update_icon()
+/obj/item/abductor/baton/update_icon()
 	switch(mode)
 		if(BATON_STUN)
 			icon_state = "wonderprodStun"
@@ -464,8 +457,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			icon_state = "wonderprodProbe"
 			item_state = "wonderprodProbe"
 
-/obj/item/abductor_baton/attack(mob/target, mob/living/user)
-	if(!isabductor(user))
+/obj/item/abductor/baton/attack(mob/target, mob/living/user)
+	if(!AbductorCheck(user))
 		return
 
 	if(iscyborg(target))
@@ -482,8 +475,8 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK))
-			playsound(L, 'sound/weapons/genhit.ogg', 50, 1)
-			return 0
+			playsound(H, 'sound/weapons/genhit.ogg', 50, TRUE)
+			return FALSE
 
 	switch (mode)
 		if(BATON_STUN)
@@ -495,21 +488,21 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		if(BATON_PROBE)
 			ProbeAttack(L,user)
 
-/obj/item/abductor_baton/attack_self(mob/living/user)
+/obj/item/abductor/baton/attack_self(mob/living/user)
 	toggle(user)
 
-/obj/item/abductor_baton/proc/StunAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/StunAttack(mob/living/L,mob/living/user)
 
 	L.lastattacker = user.real_name
 	L.lastattackerckey = user.ckey
 
-	L.Knockdown(140)
+	L.Paralyze(140)
 	L.apply_effect(EFFECT_STUTTER, 7)
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
 	L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 							"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+	playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -517,7 +510,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	log_combat(user, L, "stunned")
 
-/obj/item/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/SleepAttack(mob/living/L,mob/living/user)
 	if(L.incapacitated(TRUE, TRUE))
 		if(istype(L.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 			to_chat(user, "<span class='warning'>The specimen's protective headgear is interfering with the sleep inducement!</span>")
@@ -527,7 +520,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 			return
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
-		playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+		playsound(src, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 		L.Sleeping(1200)
 		log_combat(user, L, "put to sleep")
 	else
@@ -541,13 +534,13 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		L.visible_message("<span class='danger'>[user] tried to induce sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel drowsy!</span>")
 
-/obj/item/abductor_baton/proc/CuffAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/CuffAttack(mob/living/L,mob/living/user)
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/C = L
 	if(!C.handcuffed)
 		if(C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore())
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+			playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 			C.visible_message("<span class='danger'>[user] begins restraining [C] with [src]!</span>", \
 									"<span class='userdanger'>[user] begins shaping an energy field around your hands!</span>")
 			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
@@ -561,7 +554,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		else
 			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
 
-/obj/item/abductor_baton/proc/ProbeAttack(mob/living/L,mob/living/user)
+/obj/item/abductor/baton/proc/ProbeAttack(mob/living/L,mob/living/user)
 	L.visible_message("<span class='danger'>[user] probes [L] with [src]!</span>", \
 						"<span class='userdanger'>[user] probes you!</span>")
 
@@ -606,7 +599,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	S.start()
 	. = ..()
 
-/obj/item/abductor_baton/examine(mob/user)
+/obj/item/abductor/baton/examine(mob/user)
 	..()
 	switch(mode)
 		if(BATON_STUN)
@@ -635,7 +628,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	AddComponent(/datum/component/wearertargeting/earprotection, list(SLOT_EARS))
 
 /obj/item/radio/headset/abductor/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		return // Stops humans from disassembling abductor headsets.
 	return ..()
 
@@ -702,11 +695,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	framestackamount = 1
 
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
-			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			qdel(src)

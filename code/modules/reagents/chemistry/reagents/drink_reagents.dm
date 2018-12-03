@@ -168,6 +168,7 @@
 
 /datum/reagent/consumable/laughter/on_mob_life(mob/living/carbon/M)
 	M.emote("laugh")
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_laughter)
 	..()
 
 /datum/reagent/consumable/superlaughter
@@ -182,6 +183,7 @@
 	if(prob(30))
 		M.visible_message("<span class='danger'>[M] bursts out into a fit of uncontrollable laughter!</span>", "<span class='userdanger'>You burst out in a fit of uncontrollable laughter!</span>")
 		M.Stun(5)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "chemical_laughter", /datum/mood_event/chemical_superlaughter)
 	..()
 
 /datum/reagent/consumable/potato_juice
@@ -392,10 +394,10 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/consumable/nuka_cola/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
@@ -407,6 +409,33 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 	. = 1
+
+/datum/reagent/consumable/grey_bull
+	name = "Grey Bull"
+	id = "grey_bull"
+	description = "Grey Bull, it gives you gloves!"
+	color = "#EEFF00" // rgb: 238, 255, 0
+	quality = DRINK_VERYGOOD
+	taste_description = "carbonated oil"
+	glass_icon_state = "grey_bull_glass"
+	glass_name = "glass of Grey Bull"
+	glass_desc = "Surprisingly it isnt grey."
+
+/datum/reagent/consumable/grey_bull/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(TRAIT_SHOCKIMMUNE, id)
+
+/datum/reagent/consumable/grey_bull/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_SHOCKIMMUNE, id)
+	..()
+
+/datum/reagent/consumable/grey_bull/on_mob_life(mob/living/carbon/M)
+	M.Jitter(20)
+	M.dizziness +=1
+	M.drowsyness = 0
+	M.AdjustSleeping(-40, FALSE)
+	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
+	..()
 
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
@@ -609,7 +638,7 @@
 	M.adjustOxyLoss(-0.5, 0)
 	if(M.nutrition && (M.nutrition - 2 > 0))
 		if(!(M.mind && M.mind.assigned_role == "Medical Doctor")) //Drains the nutrition of the holder. Not medical doctors though, since it's the Doctor's Delight!
-			M.nutrition -= 2
+			M.adjust_nutrition(-2)
 	..()
 	. = 1
 

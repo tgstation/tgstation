@@ -225,7 +225,7 @@
 			if(user.wear_suit == src)
 				if(hard_landing)
 					user.electrocute_act(35, src, safety = 1)
-					user.Knockdown(200)
+					user.Paralyze(200)
 				if(!silent)
 					to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
 					if(camera)

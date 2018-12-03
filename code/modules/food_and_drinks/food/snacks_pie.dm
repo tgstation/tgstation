@@ -29,7 +29,7 @@
 	foodtype = GRAIN | DAIRY | SUGAR
 	var/stunning = TRUE
 
-/obj/item/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!.) //if we're not being caught
 		splat(hit_atom)
@@ -38,7 +38,7 @@
 	if(isliving(loc)) //someone caught us!
 		return
 	var/turf/T = get_turf(hit_atom)
-	new/obj/effect/decal/cleanable/pie_smudge(T)
+	new/obj/effect/decal/cleanable/food/pie_smudge(T)
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
 	if(ishuman(hit_atom))
@@ -49,7 +49,7 @@
 		else
 			creamoverlay.icon_state = "creampie_human"
 		if(stunning)
-			H.Knockdown(20) //splat!
+			H.Paralyze(20) //splat!
 		H.adjust_blurriness(1)
 		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
 		playsound(H, "desceration", 50, TRUE)

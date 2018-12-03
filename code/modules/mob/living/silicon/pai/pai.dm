@@ -12,7 +12,6 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
-
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -54,6 +53,8 @@
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
+	var/obj/item/instrument/recorder/internal_instrument
+
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
@@ -73,7 +74,6 @@
 	var/overload_ventcrawl = 0
 	var/overload_bulletblock = 0	//Why is this a good idea?
 	var/overload_maxhealth = 0
-	canmove = FALSE
 	var/silent = FALSE
 	var/brightness_power = 5
 
@@ -84,6 +84,7 @@
 	return FALSE
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(internal_instrument)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null
@@ -97,7 +98,6 @@
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
-	canmove = 0
 	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = P
 		P = new /obj/item/paicard(newcardloc)
@@ -183,7 +183,7 @@
 
 // See software.dm for Topic()
 
-/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/silicon/pai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(be_close && !in_range(M, src))
 		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE

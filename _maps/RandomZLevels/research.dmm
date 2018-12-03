@@ -1196,7 +1196,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Gateway Access";
-	req_access_txt = "36"
+	req_access_txt = "205"
 	},
 /turf/open/floor/plating,
 /area/awaymission/research/interior/gateway)
@@ -1885,7 +1885,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage C";
-	req_access_txt = "36"
+	req_access_txt = "205"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
@@ -1894,7 +1894,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage D";
-	req_access_txt = "36"
+	req_access_txt = "205"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
@@ -2973,7 +2973,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Power Storage";
-	req_access_txt = "36"
+	req_access_txt = "205"
 	},
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -3007,7 +3007,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 0;
 	name = "Vault Storage";
-	req_access_txt = "36"
+	req_access_txt = "205"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -3925,7 +3925,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage A";
-	req_access_txt = "36"
+	req_access_txt = "205"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
@@ -3934,7 +3934,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	aiDisabledIdScanner = 1;
 	name = "Secure Storage B";
-	req_access_txt = "36"
+	req_access_txt = "205"
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/secure)
@@ -4030,7 +4030,7 @@
 	read_only = 1
 	},
 /obj/item/disk/data{
-	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines. This one has the initials 'C.P' marked on the front. ";
+	desc = "A specialized data disk for holding critical genetic backup data. Without proper passwords, information will turn up blank on most DNA machines. This one has the initials 'C.P' marked on the front.";
 	name = "encrypted genetic data disk";
 	read_only = 1
 	},
@@ -4549,7 +4549,6 @@
 /area/awaymission/research/interior/bathroom)
 "iN" = (
 /obj/machinery/shower{
-	icon_state = "shower";
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,

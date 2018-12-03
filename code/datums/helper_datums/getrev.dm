@@ -28,6 +28,7 @@
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
 		msg += "Test merge active of PR #[tm.number] commit [tm.commit]"
+		SSblackbox.record_feedback("associative", "testmerged_prs", 1, list("number" = "[tm.number]", "commit" = "[tm.commit]", "title" = "[tm.title]", "author" = "[tm.author]"))
 
 	if(commit && commit != originmastercommit)
 		msg += "HEAD: [commit]"
@@ -57,6 +58,10 @@
 	// Round ID
 	if(GLOB.round_id)
 		msg += "<b>Round ID:</b> [GLOB.round_id]"
+
+	msg += "<b>BYOND Version:</b> [world.byond_version].[world.byond_build]"
+	if(DM_VERSION != world.byond_version || DM_BUILD != world.byond_build)
+		msg += "<b>Compiled with BYOND Version:</b> [DM_VERSION].[DM_BUILD]"
 
 	// Revision information
 	var/datum/getrev/revdata = GLOB.revdata

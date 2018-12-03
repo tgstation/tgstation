@@ -8,6 +8,7 @@
 /datum/buildmode_mode/advanced/show_help(client/c)
 	to_chat(c, "<span class='notice'>***********************************************************</span>")
 	to_chat(c, "<span class='notice'>Right Mouse Button on buildmode button = Set object type</span>")
+	to_chat(c, "<span class='notice'>Left Mouse Button + alt on turf/obj    = Copy object type")
 	to_chat(c, "<span class='notice'>Left Mouse Button on turf/obj          = Place objects</span>")
 	to_chat(c, "<span class='notice'>Right Mouse Button                     = Delete objects</span>")
 	to_chat(c, "")
@@ -32,7 +33,15 @@
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 	var/right_click = pa.Find("right")
-	if(left_click)
+	var/alt_click = pa.Find("alt")
+
+	if(left_click && alt_click)
+		if (istype(object, /turf) || istype(object, /obj) || istype(object, /mob))
+			objholder = object.type
+			to_chat(c, "<span class='notice'>[initial(object.name)] ([object.type]) selected.</span>")
+		else
+			to_chat(c, "<span class='notice'>[initial(object.name)] is not a turf, object, or mob! Please select again.</span>")
+	else if(left_click)
 		if(ispath(objholder,/turf))
 			var/turf/T = get_turf(object)
 			log_admin("Build Mode: [key_name(c)] modified [T] in [AREACOORD(object)] to [objholder]")

@@ -31,7 +31,7 @@
 	switch(stage)
 		if(1)
 			if(restcure)
-				if(affected_mob.lying && prob(30))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(30))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
@@ -43,7 +43,7 @@
 				to_chat(affected_mob, "<span class='danger'>You feel angry.</span>")
 		if(2)
 			if(restcure)
-				if(affected_mob.lying && prob(20))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(20))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
@@ -58,7 +58,7 @@
 				to_chat(affected_mob, "<span class='danger'>Your stomach churns.</span>")
 		if(3)
 			if(restcure)
-				if(affected_mob.lying && prob(20))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(20))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return
@@ -73,7 +73,7 @@
 
 		if(4)
 			if(restcure)
-				if(affected_mob.lying && prob(5))
+				if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(5))
 					to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 					cure()
 					return

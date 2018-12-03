@@ -46,7 +46,8 @@ God bless America.
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
-		/obj/item/storage/part_replacer,
+		/obj/item/storage,
+		/obj/item/smallDelivery,
 		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
@@ -67,10 +68,12 @@ God bless America.
 	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
 	fry_speed = oil_efficiency
 
-/obj/machinery/deepfryer/examine()
+/obj/machinery/deepfryer/examine(mob/user)
 	..()
 	if(frying)
 		to_chat(usr, "You can make out \a [frying] in the oil.")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.<span>")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -78,7 +81,7 @@ God bless America.
 			to_chat(user, "<span class='warning'>There's nothing to dissolve [I] in!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] drops [I] into [src].</span>", "<span class='notice'>You dissolve [I] in [src].</span>")
-		I.reagents.trans_to(src, I.reagents.total_volume)
+		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
 		qdel(I)
 		return
 	if(!reagents.has_reagent("cooking_oil"))
@@ -148,6 +151,6 @@ God bless America.
 		reagents.reaction(C, TOUCH)
 		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
-		C.Knockdown(60)
+		C.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()

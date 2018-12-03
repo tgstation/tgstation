@@ -27,6 +27,7 @@ other types of metals and chemistry for reagents).
 */
 
 //DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING! //why are you yelling?
+//DO NOT REFERENCE OUTSIDE OF SSRESEARCH. USE THE PROCS IN SSRESEARCH TO OBTAIN A REFERENCE.
 
 /datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
@@ -48,8 +49,12 @@ other types of metals and chemistry for reagents).
 	var/research_icon_state
 	var/icon_cache
 
+/datum/design/error_design
+	name = "ERROR"
+	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Comamnd so their techs can fix this ASAP(tm)"
+
 /datum/design/Destroy()
-	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
+	SSresearch.techweb_designs -= id
 	return ..()
 
 /datum/design/proc/icon_html(client/user)

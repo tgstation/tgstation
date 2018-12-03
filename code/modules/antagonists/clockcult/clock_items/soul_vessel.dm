@@ -65,6 +65,9 @@
 	if(is_servant_of_ratvar(target))
 		to_chat(user, "<span class='nezbere'>\"It would be more wise to revive your allies, friend.\"</span>")
 		return
+	if(target.suiciding)
+		to_chat(user, "<span class='nezbere'>\"This ally isn't able to be revived.\"</span>")
+		return
 	var/mob/living/carbon/human/H = target
 	if(H.stat == CONSCIOUS)
 		to_chat(user, "<span class='warning'>[H] must be dead or unconscious for you to claim [H.p_their()] mind!</span>")
@@ -87,9 +90,14 @@
 	if(!B) //either somebody already got to them or robotics did
 		to_chat(user, "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>")
 		return
+	if(B.suicided || B.brainmob?.suiciding)
+		to_chat(user, "<span class='nezbere'>\"This ally isn't able to be revived.\"</span>")
+		return
 	if(!H.key) //nobody's home
 		to_chat(user, "<span class='warning'>[H] has no mind to claim!</span>")
 		return
+	if(brainmob.suiciding)
+		brainmob.set_suicide(FALSE)
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
 	H.fakedeath("soul_vessel") //we want to make sure they don't deathgasp and maybe possibly explode

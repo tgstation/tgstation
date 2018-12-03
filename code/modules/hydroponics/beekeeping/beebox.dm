@@ -156,7 +156,7 @@
 			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
 		return
 
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		if(default_unfasten_wrench(user, I, time = 20))
 			return
 

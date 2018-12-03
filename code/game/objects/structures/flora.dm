@@ -101,6 +101,12 @@
 	icon_state = "festivus_pole"
 	desc = "During last year's Feats of Strength the Research Director was able to suplex this passing immobile rod into a planter."
 
+/obj/structure/festivus/anchored
+	name = "suplexed rod"
+	desc = "A true feat of strength, almost as good as last year."
+	icon_state = "anchored_rod"
+	anchored = TRUE
+
 /obj/structure/flora/tree/dead/Initialize()
 	icon_state = "tree_[rand(1, 6)]"
 	. = ..()

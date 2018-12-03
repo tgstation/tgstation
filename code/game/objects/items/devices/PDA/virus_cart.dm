@@ -75,9 +75,7 @@
 		if(!target.detonatable || prob(difficulty * 15) || (hidden_uplink))
 			U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
 		else
-			message_admins("[!is_special_character(U) ? "Non-antag " : ""][ADMIN_LOOKUPFLW(U)] triggered a PDA explosion on [target.name] at [ADMIN_VERBOSEJMP(target)].")
-			var/message_log = "triggered a PDA explosion on [target.name] at [AREACOORD(target)]."
-			U.log_message(message_log, LOG_ATTACK)
+			log_bomber(U, "triggered a PDA explosion on", target, "[!is_special_character(U) ? "(TRIGGED BY NON-ANTAG)" : ""]")
 			U.show_message("<span class='notice'>Success!</span>", 1)
 			target.explode()
 	else

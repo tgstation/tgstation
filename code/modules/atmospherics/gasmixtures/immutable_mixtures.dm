@@ -3,6 +3,7 @@
 
 /datum/gas_mixture/immutable
 	var/initial_temperature
+	gc_share = TRUE
 
 /datum/gas_mixture/immutable/New()
 	..()
@@ -21,9 +22,6 @@
 
 /datum/gas_mixture/immutable/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	. = ..(sharer, 0)
-	garbage_collect()
-
-/datum/gas_mixture/immutable/after_share()
 	garbage_collect()
 
 /datum/gas_mixture/immutable/react()

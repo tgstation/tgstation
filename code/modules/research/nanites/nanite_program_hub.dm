@@ -69,7 +69,7 @@
 	if(current_category != "Main")
 		var/list/program_list = list()
 		for(var/i in linked_techweb.researched_designs)
-			var/datum/design/nanites/D = linked_techweb.researched_designs[i]
+			var/datum/design/nanites/D = SSresearch.techweb_design_by_id(i)
 			if(!istype(D))
 				continue
 			if(current_category in D.category)
