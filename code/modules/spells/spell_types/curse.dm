@@ -4,16 +4,12 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] sent a curse of madness with the message \"[message]\"!")
 		log_game("[key_name(user)] sent a curse of madness with the message \"[message]\"!")
 
-	for(var/M in GLOB.player_list)
+	deadchat_broadcast("<span class='deadsay'>A <span class='name'>Curse of Madness</span> has stricken the station, shattering their minds with the awful secret: \"<span class='big hypnophrase'>[message]</span>\"</span>")
+
+	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		var/turf/T = get_turf(H)
-		if(M.stat == DEAD || isobserver(M))
-			to_chat(H, "A dark breeze whispers, \"<span class='hypnophrase'>[message]</span>\" into every ear...</span>")
+		if(H.stat == DEAD)
 			continue
-
-		if(!ishuman(M))
-			continue
-
-		var/mob/living/carbon/human/H = M
 		if(T && !is_station_level(T.z))
 			continue
 		if(H.anti_magic_check(TRUE, FALSE))
@@ -23,7 +19,7 @@
 			to_chat(H, "<span class='warning'>Your protective headgear successfully deflects mind controlling brainwaves!</span>")
 			continue
 		H.playsound_local(H,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		to_chat(H, "<span class='hypnophrase'>[message]</span>")
+		to_chat(H, "<span class='reallybig hypnophrase'>[message]</span>")
 		to_chat(H, "<span class='warning'>Your mind shatters!</span>")
 		switch(rand(1,10))
 			if(1 to 3)
