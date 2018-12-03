@@ -163,7 +163,7 @@
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
-	interaction_flags_atom = 0
+	interaction_flags_atom = NONE
 	var/mob/living/captured = null
 	var/obj/item/gun/energy/chrono_gun/gun = null
 	var/tickstokill = 15
@@ -171,7 +171,7 @@
 	var/preloaded = 0
 	var/RPpos = null
 
-/obj/structure/chrono_field/Initialize(mapload, var/mob/living/target, var/obj/item/gun/energy/chrono_gun/G)
+/obj/structure/chrono_field/Initialize(mapload, mob/living/target, obj/item/gun/energy/chrono_gun/G)
 	if(target && isliving(target) && G)
 		target.forceMove(src)
 		captured = target
