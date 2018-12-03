@@ -17317,6 +17317,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/two)
+"OA" = (
+/turf/open/floor/plasteel/freezer,
+/area/syndicate_mothership/control)
 "OD" = (
 /obj/machinery/microwave{
 	desc = "Cooks and boils stuff, somehow.";
@@ -17653,6 +17656,14 @@
 /obj/machinery/door/window/westleft,
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
+"RA" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/landmark/xmastree,
+/turf/open/floor/plasteel,
+/area/syndicate_mothership/control)
 "RM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -17673,9 +17684,6 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/holding)
-"Sb" = (
-/turf/open/floor/plasteel/freezer,
-/area/syndicate_mothership/control)
 "Sd" = (
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
@@ -17745,14 +17753,6 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/basketball)
-"SE" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/landmark/xmastree,
-/turf/open/floor/plasteel,
-/area/syndicate_mothership/control)
 "SG" = (
 /obj/structure/table,
 /obj/machinery/microwave{
@@ -18096,6 +18096,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/evac)
+"Wj" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/freezer{
+	dir = 2
+	},
+/area/syndicate_mothership/control)
 "Wm" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -36371,7 +36380,7 @@ kt
 kt
 nz
 pZ
-SE
+RA
 rf
 sf
 te
@@ -38172,7 +38181,7 @@ ku
 ku
 qN
 ri
-ri
+Wj
 ku
 ku
 nz
@@ -38427,7 +38436,7 @@ hl
 pG
 ku
 qO
-Sb
+OA
 ri
 sj
 ku
