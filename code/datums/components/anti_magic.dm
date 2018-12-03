@@ -16,6 +16,7 @@
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
 	if(slot == SLOT_IN_BACKPACK)
+		UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 		return
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/can_protect, TRUE)
 
