@@ -55,7 +55,7 @@
  */
 /obj/item/clothing/head/bomb_hood
 	name = "bomb hood"
-	desc = "Use in case of bomb."
+	desc = "Use in case of bomb. Equipped with an embedded tachyon-doppler array."
 	icon_state = "bombsuit"
 	clothing_flags = THICKMATERIAL
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 20,"energy" = 10, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
@@ -70,7 +70,11 @@
 	equip_delay_other = 70
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	resistance_flags = NONE
+	var/obj/machinery/doppler_array/integrated/bomb_radar
 
+/obj/item/clothing/head/bomb_hood/Initialize()
+	. = ..()
+	bomb_radar = new /obj/machinery/doppler_array/integrated(src)
 
 /obj/item/clothing/suit/bomb_suit
 	name = "bomb suit"
