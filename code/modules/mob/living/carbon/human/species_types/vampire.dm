@@ -34,7 +34,7 @@
 	. = ..()
 	if(!isnull(batform))
 		C.RemoveSpell(batform)
-		qdel(batform)
+		QDEL_NULL(batform)
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/C)
 	. = ..()
