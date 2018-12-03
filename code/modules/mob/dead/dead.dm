@@ -21,6 +21,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
 
+/mob/dead/canUseStorage()
+	return FALSE
+
 /mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
 	return
 
@@ -35,7 +38,9 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/turf/new_turf = get_turf(destination)
 	if (old_turf?.z != new_turf?.z)
 		onTransitZ(old_turf?.z, new_turf?.z)
+	var/oldloc = loc
 	loc = destination
+	Moved(oldloc, NONE, TRUE)
 
 /mob/dead/Stat()
 	..()

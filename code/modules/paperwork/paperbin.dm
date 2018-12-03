@@ -60,8 +60,10 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/paper_bin/attack_hand(mob/user)
-	if(user.lying)
-		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_PICKUP))
+			return
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(bin_pen)
 		var/obj/item/pen/P = bin_pen

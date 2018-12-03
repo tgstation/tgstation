@@ -3,7 +3,7 @@
 	verb_say = "chimpers"
 	initial_language_holder = /datum/language_holder/monkey
 	icon = 'icons/mob/monkey.dmi'
-	icon_state = ""
+	icon_state = "monkey1"
 	gender = NEUTER
 	pass_flags = PASSTABLE
 	ventcrawler = VENTCRAWLER_NUDE
@@ -80,8 +80,8 @@
 	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
-		slow += (283.222 - bodytemperature) / 10 * 1.75
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		slow += ((283.222 - bodytemperature) / 10) * 1.75
+	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
 
 /mob/living/carbon/monkey/Stat()
 	..()

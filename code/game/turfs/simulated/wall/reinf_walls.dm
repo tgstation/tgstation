@@ -12,10 +12,7 @@
 	sheet_amount = 1
 	girder_type = /obj/structure/girder/reinforced
 	explosion_block = 2
-
-/turf/closed/wall/r_wall/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, RAD_HEAVY_INSULATION)
+	rad_insulation = RAD_HEAVY_INSULATION
 
 /turf/closed/wall/r_wall/deconstruction_hints(mob/user)
 	switch(d_state)
@@ -66,7 +63,7 @@
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
-			if(istype(W, /obj/item/wirecutters))
+			if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
 				d_state = SUPPORT_LINES
 				update_icon()
@@ -74,7 +71,7 @@
 				return 1
 
 		if(SUPPORT_LINES)
-			if(istype(W, /obj/item/screwdriver))
+			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, "<span class='notice'>You begin unsecuring the support lines...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_LINES)
@@ -84,7 +81,7 @@
 					to_chat(user, "<span class='notice'>You unsecure the support lines.</span>")
 				return 1
 
-			else if(istype(W, /obj/item/wirecutters))
+			else if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
 				d_state = INTACT
 				update_icon()
@@ -92,7 +89,7 @@
 				return 1
 
 		if(COVER)
-			if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
 					return
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover...</span>")
@@ -104,7 +101,7 @@
 					to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return 1
 
-			if(istype(W, /obj/item/screwdriver))
+			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, "<span class='notice'>You begin securing the support lines...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
@@ -115,7 +112,7 @@
 				return 1
 
 		if(CUT_COVER)
-			if(istype(W, /obj/item/crowbar))
+			if(W.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
@@ -125,7 +122,7 @@
 					to_chat(user, "<span class='notice'>You pry off the cover.</span>")
 				return 1
 
-			if(istype(W, /obj/item/weldingtool))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
 					return
 				to_chat(user, "<span class='notice'>You begin welding the metal cover back to the frame...</span>")
@@ -138,7 +135,7 @@
 				return 1
 
 		if(ANCHOR_BOLTS)
-			if(istype(W, /obj/item/wrench))
+			if(W.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
@@ -148,7 +145,7 @@
 					to_chat(user, "<span class='notice'>You remove the bolts anchoring the support rods.</span>")
 				return 1
 
-			if(istype(W, /obj/item/crowbar))
+			if(W.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, "<span class='notice'>You start to pry the cover back into place...</span>")
 				if(W.use_tool(src, user, 20, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
@@ -159,7 +156,7 @@
 				return 1
 
 		if(SUPPORT_RODS)
-			if(istype(W, /obj/item/weldingtool) || istype(W, /obj/item/gun/energy/plasmacutter))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
 					return
 				to_chat(user, "<span class='notice'>You begin slicing through the support rods...</span>")
@@ -171,7 +168,7 @@
 					to_chat(user, "<span class='notice'>You slice through the support rods.</span>")
 				return 1
 
-			if(istype(W, /obj/item/wrench))
+			if(W.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>")
 				W.play_tool_sound(src, 100)
 				if(W.use_tool(src, user, 40))
@@ -183,7 +180,7 @@
 				return 1
 
 		if(SHEATH)
-			if(istype(W, /obj/item/crowbar))
+			if(W.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
 					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
@@ -192,7 +189,7 @@
 					dismantle_wall()
 				return 1
 
-			if(istype(W, /obj/item/weldingtool))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(!W.tool_start_check(user, amount=0))
 					return
 				to_chat(user, "<span class='notice'>You begin welding the support rods back together...</span>")

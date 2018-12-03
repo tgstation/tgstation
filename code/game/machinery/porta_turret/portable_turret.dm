@@ -238,7 +238,7 @@
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN)
-		if(istype(I, /obj/item/crowbar))
+		if(I.tool_behaviour == TOOL_CROWBAR)
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
@@ -255,7 +255,7 @@
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src)
 
-	else if((istype(I, /obj/item/wrench)) && (!on))
+	else if((I.tool_behaviour == TOOL_WRENCH) && (!on))
 		if(raised)
 			return
 
@@ -282,7 +282,9 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I, /obj/item/multitool) && !locked)
+	else if(I.tool_behaviour == TOOL_MULTITOOL && !locked)
+		if(!multitool_check_buffer(user, I))
+			return
 		var/obj/item/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
@@ -370,22 +372,25 @@
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
-			if(issilicon(A))
-				var/mob/living/silicon/sillycone = A
-				if(sillycone.stat || in_faction(sillycone))
+				continue
+
+		if(issilicon(A))
+			var/mob/living/silicon/sillycone = A
+			if(sillycone.stat || in_faction(sillycone))
+				continue
+
+			if(iscyborg(sillycone))
+				var/mob/living/silicon/robot/sillyconerobot = A
+				if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
 					continue
 
-				if(iscyborg(sillycone))
-					var/mob/living/silicon/robot/sillyconerobot = A
-					if(LAZYLEN(faction) && (ROLE_SYNDICATE in faction) && sillyconerobot.emagged == TRUE)
-						continue
-
-				targets += sillycone
+			targets += sillycone
+			continue
 
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
-			//If not emagged, only target non downed carbons
-			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.lying))
+			//If not emagged, only target carbons that can use items
+			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || !(C.mobility_flags & MOBILITY_USE)))
 				continue
 
 			//If emagged, target all but dead carbons
@@ -406,6 +411,10 @@
 			if(Mech.occupant && !in_faction(Mech.occupant)) //If there is a user and they're not in our faction
 				if(assess_perp(Mech.occupant) >= 4)
 					targets += Mech
+
+	if(check_anomalies && GLOB.blobs.len && (mode == TURRET_LETHAL))
+		for(var/obj/structure/blob/B in view(scan_range, base))
+			targets += B
 
 	if(targets.len)
 		tryToShootAt(targets)
@@ -800,7 +809,9 @@
 	if(stat & BROKEN)
 		return
 
-	if (istype(I, /obj/item/multitool))
+	if(I.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, I))
+			return
 		var/obj/item/multitool/M = I
 		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
@@ -875,17 +886,21 @@
 			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
-		toggle_on()
+		toggle_on(usr)
 	else if (href_list["toggleLethal"])
-		toggle_lethal()
+		toggle_lethal(usr)
 	attack_hand(usr)
 
-/obj/machinery/turretid/proc/toggle_lethal()
+/obj/machinery/turretid/proc/toggle_lethal(mob/user)
 	lethal = !lethal
+	add_hiddenprint(user)
+	log_combat(user, src, "[lethal ? "enabled" : "disabled"] lethals on")
 	updateTurrets()
 
-/obj/machinery/turretid/proc/toggle_on()
+/obj/machinery/turretid/proc/toggle_on(mob/user)
 	enabled = !enabled
+	add_hiddenprint(user)
+	log_combat(user, src, "[enabled ? "enabled" : "disabled"]")
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()

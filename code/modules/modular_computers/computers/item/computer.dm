@@ -193,6 +193,8 @@
 	else if(obj_integrity < max_integrity)
 		to_chat(user, "<span class='warning'>It is damaged.</span>")
 
+	get_modular_computer_parts_examine(user)
+
 /obj/item/modular_computer/update_icon()
 	cut_overlays()
 	if(!enabled)
@@ -385,7 +387,7 @@
 		if(install_component(W, user))
 			return
 
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		if(all_components.len)
 			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
 			return
@@ -395,7 +397,7 @@
 		qdel(src)
 		return
 
-	if(istype(W, /obj/item/weldingtool))
+	if(W.tool_behaviour == TOOL_WELDER)
 		if(obj_integrity == max_integrity)
 			to_chat(user, "<span class='warning'>\The [src] does not require repairs.</span>")
 			return
@@ -409,7 +411,7 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 		return
 
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!all_components.len)
 			to_chat(user, "<span class='warning'>This device doesn't have any components installed.</span>")
 			return

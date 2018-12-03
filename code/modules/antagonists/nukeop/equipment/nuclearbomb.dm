@@ -111,7 +111,7 @@
 				return
 
 		if(NUKESTATE_PANEL_REMOVED)
-			if(istype(I, /obj/item/weldingtool))
+			if(I.tool_behaviour == TOOL_WELDER)
 				if(!I.tool_start_check(user, amount=1))
 					return
 				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")

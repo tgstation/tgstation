@@ -72,14 +72,15 @@
 		
 		function updateSearch()
 		{
-			old_search = document.spawner.filter.value;
+			old_search = document.spawner.filter.value.toLowerCase();
 			
 			
 			var filtered = new Array();
 			var i;
 			for (i in objects)
 			{
-				if(objects[i].search(old_search) < 0)
+				var caseInsensitiveObject = objects[i].toLowerCase();
+				if(caseInsensitiveObject.search(old_search) < 0)
 				{
 					continue;
 				}

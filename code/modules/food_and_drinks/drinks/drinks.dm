@@ -51,7 +51,7 @@
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
 	checkLiked(fraction, M)
 	reagents.reaction(M, INGEST, fraction)
-	reagents.trans_to(M, gulp_size)
+	reagents.trans_to(M, gulp_size, transfered_by = user)
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
@@ -70,7 +70,7 @@
 			return
 
 		var/refill = reagents.get_master_reagent_id()
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
 		if(iscyborg(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
@@ -91,7 +91,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
@@ -101,10 +101,10 @@
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 	..()
 
-/obj/item/reagent_containers/food/drinks/throw_impact(atom/target, datum/thrownthing/throwinfo)
+/obj/item/reagent_containers/food/drinks/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		smash(target, throwinfo.thrower, TRUE)
+		smash(hit_atom, throwingdatum?.thrower, TRUE)
 
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(!isGlass)
@@ -121,10 +121,12 @@
 	B.icon = I
 	B.name = "broken [name]"
 	if(prob(33))
-		new/obj/item/shard(drop_location())
+		var/obj/item/shard/S = new(drop_location())
+		target.Bumped(S)
 	playsound(src, "shatter", 70, 1)
 	transfer_fingerprints_to(B)
 	qdel(src)
+	target.Bumped(B)
 
 
 
@@ -202,10 +204,16 @@
 /obj/item/reagent_containers/food/drinks/ice
 	name = "ice cup"
 	desc = "Careful, cold ice, do not chew."
+	custom_price = 5
 	icon_state = "coffee"
 	list_reagents = list("ice" = 30)
 	spillable = TRUE
 	isGlass = FALSE
+
+/obj/item/reagent_containers/food/drinks/ice/prison
+	name = "dirty ice cup"
+	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
+	list_reagents  = list("ice" = 25, "liquidgibs" = 5)
 
 /obj/item/reagent_containers/food/drinks/mug/ // parent type is literally just so empty mug sprites are a thing
 	name = "mug"
@@ -228,19 +236,20 @@
 /obj/item/reagent_containers/food/drinks/mug/coco
 	name = "Dutch hot coco"
 	desc = "Made in Space South America."
-	list_reagents = list("hot_coco" = 30, "sugar" = 5)
+	list_reagents = list("hot_coco" = 15, "sugar" = 5)
 	foodtype = SUGAR
-
 	resistance_flags = FREEZE_PROOF
+	custom_price = 42
 
 
 /obj/item/reagent_containers/food/drinks/dry_ramen
 	name = "cup ramen"
-	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
+	desc = "Just add 5ml of water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
-	list_reagents = list("dry_ramen" = 30)
+	list_reagents = list("dry_ramen" = 15)
 	foodtype = GRAIN
 	isGlass = FALSE
+	custom_price = 38
 
 /obj/item/reagent_containers/food/drinks/beer
 	name = "space beer"
@@ -298,6 +307,7 @@
 	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
 	transfer_fingerprints_to(B)
 	qdel(src)
+	target.Bumped(B)
 
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
 	if (reagents.reagent_list.len)
@@ -356,6 +366,7 @@
 /obj/item/reagent_containers/food/drinks/flask
 	name = "flask"
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
+	custom_price = 30
 	icon_state = "flask"
 	materials = list(MAT_METAL=250)
 	volume = 60
@@ -390,13 +401,28 @@
 	container_type = NONE
 	spillable = FALSE
 	isGlass = FALSE
+	custom_price = 10
 
-/obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is trying to eat \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)
-	crushed_can.icon_state = icon_state
-	qdel(src)
-	return BRUTELOSS
+/obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
+	if(!reagents.total_volume)
+		H.visible_message("<span class='warning'>[H] is trying to take a big sip from [src]... The can is empty!</span>")
+		return SHAME
+	if(!is_drainable())
+		open_soda()
+		sleep(10)
+	H.visible_message("<span class='suicide'>[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!</span>")
+	playsound(H,'sound/items/drink.ogg', 80, 1)
+	reagents.trans_to(H, src.reagents.total_volume, transfered_by = H) //a big sip
+	sleep(5)
+	H.say(pick("Now, Outbomb Cuban Pete, THAT was a game.", "All these new fangled arcade games are too slow. I prefer the classics.", "They don't make 'em like Orion Trail anymore.", "You know what they say. Worst day of spess carp fishing is better than the best day at work.", "They don't make 'em like good old fashioned singularity engines anymore."))
+	if(H.age >= 30)
+		H.Stun(50)
+		sleep(50)
+		playsound(H,'sound/items/drink.ogg', 80, 1)
+		H.say(pick("Another day, another dollar.", "I wonder if I should hold?", "Diversifying is for young'ns.", "Yeap, times were good back then."))
+		return MANUAL_SUICIDE
+	sleep(20) //dramatic pause
+	return TOXLOSS
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == BODY_ZONE_HEAD)
@@ -407,14 +433,16 @@
 		qdel(src)
 	..()
 
+/obj/item/reagent_containers/food/drinks/soda_cans/proc/open_soda(mob/user)
+	to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
+	container_type = OPENCONTAINER
+	playsound(src, "can_open", 50, 1)
+	spillable = TRUE
+	return
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_drainable())
-		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		container_type = OPENCONTAINER
-		playsound(src, "can_open", 50, 1)
-		spillable = TRUE
-		return
+		open_soda()
 	return ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
@@ -494,6 +522,13 @@
 	desc = "~Shake me up some of that Shambler's Juice!~"
 	icon_state = "shamblers"
 	list_reagents = list("shamblers" = 30)
+	foodtype = SUGAR | JUNKFOOD
+
+/obj/item/reagent_containers/food/drinks/soda_cans/grey_bull
+	name = "Grey Bull"
+	desc = "Grey Bull, it gives you gloves!"
+	icon_state = "energy_drink"
+	list_reagents = list("grey_bull" = 20)
 	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/reagent_containers/food/drinks/soda_cans/air

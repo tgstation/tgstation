@@ -24,37 +24,66 @@
 	throw_speed = 3
 	throw_range = 7
 	grind_results = list("lye" = 10)
-	var/cleanspeed = 50 //slower than mop
+	var/cleanspeed = 35 //slower than mop
 	force_string = "robust... against germs"
+	var/uses = 100
 
 /obj/item/soap/Initialize()
 	. = ..()
 	AddComponent(/datum/component/slippery, 80)
 
+/obj/item/soap/examine(mob/user)
+	. = ..()
+	var/max_uses = initial(uses)
+	var/msg = "It looks like it just came out of the package."
+	if(uses != max_uses)
+		var/percentage_left = uses / max_uses
+		switch(percentage_left)
+			if(0 to 14)
+				msg = "There's just a tiny bit left of what it used to be, you're not sure it'll last much longer."
+			if(15 to 29)
+				msg = "It's dissolved quite a bit, but there's still some life to it."
+			if(30 to 49)
+				msg = "It's past its prime, but it's definitely still good."
+			if(50 to 74)
+				msg = "It's started to get a little smaller than it used to be, but it'll definitely still last for a while."
+			else
+				msg = "It's seen some light use, but it's still pretty fresh."
+	to_chat(user, "<span class='notice'>[msg]</span>")
+
 /obj/item/soap/nanotrasen
-	desc = "A Nanotrasen brand bar of soap. Smells of plasma."
+	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
+	grind_results = list("plasma" = 10, "lye" = 10)
 	icon_state = "soapnt"
+	cleanspeed = 28 //janitor gets this
+	uses = 300
 
 /obj/item/soap/homemade
 	desc = "A homemade bar of soap. Smells of... well...."
 	icon_state = "soapgibs"
-	cleanspeed = 45 // a little faster to reward chemists for going to the effort
+	cleanspeed = 30 // faster to reward chemists for going to the effort
 
 /obj/item/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
 	icon_state = "soapdeluxe"
-	cleanspeed = 40 //same speed as mop because deluxe -- captain gets one of these
+	cleanspeed = 20 //captain gets one of these
 
 /obj/item/soap/syndie
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
 	icon_state = "soapsyndie"
-	cleanspeed = 10 //much faster than mop so it is useful for traitors who want to clean crime scenes
+	cleanspeed = 5 //faster than mop so it is useful for traitors who want to clean crime scenes
 
 /obj/item/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
 	user.visible_message("<span class='suicide'>[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!</span>")
 	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
+
+/obj/item/soap/proc/decreaseUses(mob/user)
+	uses--
+	if(uses <= 0)
+		to_chat(user, "<span class='warning'>[src] crumbles into tiny bits!</span>")
+		qdel(src)
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -69,11 +98,14 @@
 		if(do_after(user, src.cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
+			decreaseUses(user)
+
 	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/mob/living/carbon/human/H = user
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		H.lip_style = null //removes lipstick
 		H.update_body()
+		decreaseUses(user)
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
@@ -81,15 +113,17 @@
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
+			decreaseUses(user)
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
-			var/obj/effect/decal/cleanable/C = locate() in target
-			qdel(C)
+			for(var/obj/effect/decal/cleanable/C in target)
+				qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 			target.wash_cream()
+			decreaseUses(user)
 	return
 
 
@@ -121,8 +155,8 @@
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] solemnly points the horn at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
+	user.visible_message("<span class='suicide'>[user] solemnly points [src] at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 	return (BRUTELOSS)
 
 //air horn

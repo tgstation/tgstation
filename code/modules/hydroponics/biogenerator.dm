@@ -52,6 +52,11 @@
 	productivity = P
 	max_items = max_storage
 
+/obj/machinery/biogenerator/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<span>")
+
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
@@ -173,7 +178,7 @@
 			for(var/V in categories)
 				categories[V] = list()
 			for(var/V in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[V]
+				var/datum/design/D = SSresearch.techweb_design_by_id(V)
 				for(var/C in categories)
 					if(C in D.category)
 						categories[C] += D

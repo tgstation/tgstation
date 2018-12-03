@@ -19,13 +19,15 @@
 #define SHAME 			(1<<4)
 #define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
 
-#define EFFECT_STUN		"stun"
-#define EFFECT_KNOCKDOWN		"knockdown"
+#define EFFECT_STUN			"stun"
+#define EFFECT_KNOCKDOWN	"knockdown"
 #define EFFECT_UNCONSCIOUS	"unconscious"
+#define EFFECT_PARALYZE		"paralyze"
+#define EFFECT_IMMOBILIZE	"immobilize"
 #define EFFECT_IRRADIATE	"irradiate"
 #define EFFECT_STUTTER		"stutter"
 #define EFFECT_SLUR 		"slur"
-#define EFFECT_EYE_BLUR	"eye_blur"
+#define EFFECT_EYE_BLUR		"eye_blur"
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
@@ -40,6 +42,8 @@
 #define HEALTH_THRESHOLD_CRIT 0
 #define HEALTH_THRESHOLD_FULLCRIT -30
 #define HEALTH_THRESHOLD_DEAD -100
+
+#define HEALTH_THRESHOLD_NEARDEATH -90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
 
 //Actual combat defines
 
@@ -63,8 +67,10 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
+//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
+#define SOFTCRIT_ADD_SLOWDOWN 2
+//slowdown when crawling
+#define CRAWLING_ADD_SLOWDOWN 4
 
 //Attack types for checking shields/hit reactions
 #define MELEE_ATTACK 1

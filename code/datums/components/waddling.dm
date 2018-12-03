@@ -8,7 +8,7 @@
 
 /datum/component/waddling/proc/Waddle()
     var/mob/living/L = parent
-    if(L.incapacitated() || L.lying)
+    if(L.incapacitated() || !(L.mobility_flags & MOBILITY_STAND))
         return
     animate(L, pixel_z = 4, time = 0)
     animate(pixel_z = 0, transform = turn(matrix(), pick(-12, 0, 12)), time=2)

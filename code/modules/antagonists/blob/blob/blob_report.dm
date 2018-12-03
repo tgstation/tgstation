@@ -8,6 +8,13 @@
 	var/mach = 0
 
 /datum/station_state/proc/count()
+	floor = 0
+	wall = 0
+	r_wall = 0
+	window = 0
+	door = 0
+	grille = 0
+	mach = 0
 	for(var/Z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		for(var/turf/T in block(locate(1,1,Z), locate(world.maxx,world.maxy,Z)))
 			// don't count shuttles since they may have just left
@@ -47,6 +54,9 @@
 					door += 1
 				else if(ismachinery(O))
 					mach += 1
+				CHECK_TICK
+			CHECK_TICK
+		CHECK_TICK
 
 /datum/station_state/proc/score(datum/station_state/result)
 	if(!result)

@@ -17,6 +17,7 @@
 		/datum/language/beachbum,
 		/datum/language/ratvar,
 		/datum/language/aphasia,
+		/datum/language/piratespeak,
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)

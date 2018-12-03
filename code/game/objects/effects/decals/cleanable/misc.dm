@@ -67,10 +67,9 @@
 	queue_smooth_neighbors(src)
 	return ..()
 
-/obj/effect/decal/cleanable/flour
-	name = "flour"
-	desc = "It's still good. Four second rule!"
-	icon_state = "flour"
+/obj/effect/decal/cleanable/dirt/dust
+	name = "dust"
+	desc = "A thin layer of dust coating the floor."
 
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
@@ -130,9 +129,9 @@
 					if (istype(R, /datum/reagent/consumable))
 						var/datum/reagent/consumable/nutri_check = R
 						if(nutri_check.nutriment_factor >0)
-							H.nutrition += nutri_check.nutriment_factor * nutri_check.volume
+							H.adjust_nutrition(nutri_check.nutriment_factor * nutri_check.volume)
 							reagents.remove_reagent(nutri_check.id,nutri_check.volume)
-			reagents.trans_to(H, reagents.total_volume)
+			reagents.trans_to(H, reagents.total_volume, transfered_by = user)
 			qdel(src)
 
 /obj/effect/decal/cleanable/vomit/old
@@ -142,33 +141,6 @@
 /obj/effect/decal/cleanable/vomit/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	icon_state += "-old"
-
-/obj/effect/decal/cleanable/tomato_smudge
-	name = "tomato smudge"
-	desc = "It's red."
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("tomato_floor1", "tomato_floor2", "tomato_floor3")
-
-/obj/effect/decal/cleanable/plant_smudge
-	name = "plant smudge"
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("smashed_plant")
-
-/obj/effect/decal/cleanable/egg_smudge
-	name = "smashed egg"
-	desc = "Seems like this one won't hatch."
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("smashed_egg1", "smashed_egg2", "smashed_egg3")
-
-/obj/effect/decal/cleanable/pie_smudge //honk
-	name = "smashed pie"
-	desc = "It's pie cream from a cream pie."
-	gender = NEUTER
-	icon = 'icons/effects/tomatodecal.dmi'
-	random_icon_states = list("smashed_pie")
 
 /obj/effect/decal/cleanable/chem_pile
 	name = "chemical pile"
@@ -193,35 +165,30 @@
 	pixel_y = rand(-10, 10)
 	. = ..()
 
-/obj/effect/decal/cleanable/salt
-	name = "salt pile"
-	desc = "A sizable pile of table salt. Someone must be upset."
-	icon = 'icons/effects/tomatodecal.dmi'
-	icon_state = "salt_pile"
-	gender = NEUTER
-
 /obj/effect/decal/cleanable/glitter
 	name = "generic glitter pile"
 	desc = "The herpes of arts and crafts."
-	icon = 'icons/effects/tile_effects.dmi'
+	icon = 'icons/effects/atmospherics.dmi'
+	icon_state = "plasma_old"
 	gender = NEUTER
 
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"
-	icon_state = "plasma"
+	icon_state = "plasma_old"
 
 /obj/effect/decal/cleanable/glitter/white
 	name = "white glitter"
-	icon_state = "nitrous_oxide"
+	icon_state = "nitrous_oxide_old"
 
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
-	icon_state = "freon"
+	icon_state = "freon_old"
 
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
+	icon = 'icons/effects/tomatodecal.dmi'
 	color = "#C8A5DC"
 
 /obj/effect/decal/cleanable/insectguts

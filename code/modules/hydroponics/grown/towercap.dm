@@ -110,11 +110,16 @@
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
+	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"
 	var/grill = FALSE
 	var/fire_stack_strength = 5
 
 /obj/structure/bonfire/dense
 	density = TRUE
+
+/obj/structure/bonfire/prelit/Initialize()
+	. = ..()
+	StartBurning()
 
 /obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -183,13 +188,13 @@
 		if(O.air)
 			var/loc_gases = O.air.gases
 			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/structure/bonfire/proc/StartBurning()
 	if(!burning && CheckOxygen())
-		icon_state = "bonfire_on_fire"
-		burning = 1
+		icon_state = burn_icon
+		burning = TRUE
 		set_light(6)
 		Burn()
 		START_PROCESSING(SSobj, src)

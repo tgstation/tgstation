@@ -3,10 +3,6 @@
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
-"ab" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/indestructible/rock/snow,
-/area/awaymission/snowdin/cave/mountain)
 "ac" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave/mountain)
@@ -1208,7 +1204,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/effect/decal/cleanable/egg_smudge,
+/obj/effect/decal/cleanable/food/egg_smudge,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/kitchen)
@@ -1520,7 +1516,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/flour,
+/obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/kitchen)
 "du" = (
@@ -1711,7 +1707,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/kitchen)
 "dV" = (
-/obj/effect/decal/cleanable/egg_smudge,
+/obj/effect/decal/cleanable/food/egg_smudge,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -2008,7 +2004,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/kitchen)
 "eB" = (
-/obj/effect/decal/cleanable/flour,
+/obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/kitchen)
 "eC" = (
@@ -2405,7 +2401,6 @@
 /area/awaymission/snowdin/post/dorm)
 "fw" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper";
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -2936,7 +2931,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/snowdin/post/messhall)
 "gB" = (
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/item/trash/can,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/snowdin/post/messhall)
@@ -3664,7 +3659,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "im" = (
 /obj/effect/decal/cleanable/blood/old,
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 5
 	},
 /turf/open/floor/engine/cult{
@@ -6275,9 +6270,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "yellow"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "np" = (
 /obj/structure/cable/yellow{
@@ -6521,9 +6514,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "yellow"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "nR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
@@ -7151,9 +7142,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/secpost)
 "pn" = (
 /turf/open/floor/plating,
@@ -7792,9 +7781,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	icon_state = "yellow"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/engineering)
 "qS" = (
 /obj/machinery/button/door{
@@ -8182,9 +8169,9 @@
 "rI" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
 	dir = 1;
-	id = "syndie_lavaland_inc_in";
 	pixel_x = 5;
-	pixel_y = 5
+	pixel_y = 5;
+	piping_layer = 3
 	},
 /obj/effect/light_emitter{
 	name = "cave light";
@@ -8328,7 +8315,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/snowdin/post/cavern2)
 "sb" = (
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 4;
 	name = "weak netherworld link"
 	},
@@ -9956,9 +9943,8 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "wy" = (
-/obj/structure/bonfire{
-	burning = 1;
-	icon_state = "bonfire_warm"
+/obj/structure/bonfire/prelit{
+	burn_icon = "bonfire_warm"
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
@@ -10247,7 +10233,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
-/mob/living/simple_animal/hostile/spawner/nether{
+/obj/structure/spawner/nether{
 	max_mobs = 4;
 	name = "weak netherworld link"
 	},
@@ -11600,9 +11586,8 @@
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/snowdin/post/minipost)
 "AI" = (
-/obj/structure/bonfire{
-	burning = 1;
-	icon_state = "bonfire_warm"
+/obj/structure/bonfire/prelit{
+	burn_icon = "bonfire_warm"
 	},
 /obj/effect/light_emitter{
 	light_color = "#FAA019";
@@ -12902,7 +12887,6 @@
 /area/awaymission/snowdin/cave)
 "DU" = (
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -14580,8 +14564,8 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "In" = (
 /obj/mecha/working/ripley/mining{
-	icon_state = "ripley";
-	dir = 1
+	dir = 1;
+	ruin_mecha = 1
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/mech_bay_recharge_floor,
@@ -16143,7 +16127,7 @@ ac
 ac
 "}
 (2,1,1) = {"
-ab
+ac
 ac
 ac
 ac

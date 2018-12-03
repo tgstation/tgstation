@@ -3,6 +3,10 @@
 	desc = "Allows you to be hidden in plain sight."
 	actions_types = list(/datum/action/item_action/agent_box)
 
+/obj/item/implanter/stealth
+	name = "implanter (stealth)"
+	imp_type = /obj/item/implant/stealth
+
 //Box Object
 
 /obj/structure/closet/cardboard/agent
@@ -12,7 +16,7 @@
 	move_speed_multiplier = 0.5
 
 /obj/structure/closet/cardboard/agent/proc/go_invisible()
-	animate(src, , alpha = 0, time = 5)
+	animate(src, , alpha = 0, time = 20)
 
 /obj/structure/closet/cardboard/agent/Initialize()
 	. = ..()

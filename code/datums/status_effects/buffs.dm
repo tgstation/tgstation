@@ -74,7 +74,9 @@
 	owner.add_stun_absorption("vanguard", INFINITY, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	owner.SetStun(0, FALSE)
-	owner.SetKnockdown(0)
+	owner.SetKnockdown(0, FALSE)
+	owner.SetParalyzed(0, FALSE)
+	owner.SetImmobilized(0)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
@@ -96,7 +98,7 @@
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
 		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
-			owner.Knockdown(stuns_blocked)
+			owner.Paralyze(stuns_blocked)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 300)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
@@ -224,9 +226,9 @@
 	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(full_heal = 1, admin_revive = 1)
+	owner.revive(full_heal = TRUE, admin_revive = TRUE)
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
-	owner.update_canmove()
+	owner.update_mobility()
 
 /obj/screen/alert/status_effect/wish_granters_gift
 	name = "Wish Granter's Immortality"

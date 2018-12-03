@@ -1,5 +1,5 @@
 /obj/item/implantpad
-	name = "implantpad"
+	name = "implant pad"
 	desc = "Used to modify implants."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "implantpad-0"
@@ -10,41 +10,61 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/implantcase/case = null
-	var/broadcasting = null
-	var/listening = 1
-
 
 /obj/item/implantpad/update_icon()
-	if(case)
-		icon_state = "implantpad-1"
+	icon_state = "implantpad-[!QDELETED(case)]"
+
+/obj/item/implantpad/examine(mob/user)
+	..()
+	var/is_adjacent = Adjacent(user)
+	if(is_adjacent)
+		to_chat(user, "It [case ? "contains \a [case]" : "is currently empty"].")
+		if(case)
+			to_chat(user, "<span class='info'>Alt-click to remove [case].</span>")
 	else
-		icon_state = "implantpad-0"
+		if(case)
+			to_chat(user, "<span class='warning'>There seems to be something inside it, but you can't quite tell what from here...</span>")
 
-
-/obj/item/implantpad/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(case && user.is_holding(src))
-		user.put_in_active_hand(case)
-
-		case.add_fingerprint(user)
+/obj/item/implantpad/handle_atom_del(atom/A)
+	if(A == case)
 		case = null
+	update_icon()
+	updateSelfDialog()
+	. = ..()
 
-		add_fingerprint(user)
-		update_icon()
+/obj/item/implantpad/AltClick(mob/user)
+	..()
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(!case)
+		to_chat(user, "<span class='warning'>There's no implant to remove from [src].</span>")
+		return
+
+	user.put_in_hands(case)
+
+	add_fingerprint(user)
+	case.add_fingerprint(user)
+	case = null
+
+	updateSelfDialog()
+	update_icon()
 
 /obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user, params)
-	if(istype(C, /obj/item/implantcase))
-		if(!case)
-			if(!user.transferItemToLoc(C, src))
-				return
-			case = C
+	if(istype(C, /obj/item/implantcase) && !case)
+		if(!user.transferItemToLoc(C, src))
+			return
+		case = C
+		updateSelfDialog()
 		update_icon()
 	else
 		return ..()
 
-/obj/item/implantpad/attack_self(mob/user)
+/obj/item/implantpad/ui_interact(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		user.unset_machine(src)
+		user << browse(null, "window=implantpad")
+		return
+
 	user.set_machine(src)
 	var/dat = "<B>Implant Mini-Computer:</B><HR>"
 	if(case)
@@ -57,21 +77,3 @@
 		dat += "Please insert an implant casing!"
 	user << browse(dat, "window=implantpad")
 	onclose(user, "implantpad")
-
-
-/obj/item/implantpad/Topic(href, href_list)
-	..()
-	if(usr.stat)
-		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)))
-		usr.set_machine(src)
-
-		if(ismob(loc))
-			attack_self(loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if(M.client)
-					attack_self(M)
-		add_fingerprint(usr)
-	else
-		usr << browse(null, "window=implantpad")

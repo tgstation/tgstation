@@ -42,10 +42,12 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/revolver/grenadelauncher,
 	/obj/item/gun/ballistic/revolver/golden,
 	/obj/item/gun/ballistic/automatic/sniper_rifle,
+	/obj/item/gun/ballistic/rocketlauncher,
 	/obj/item/gun/medbeam,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/gravity_gun))
 
+//if you add anything that isn't covered by the typepaths below, add it to summon_magic_objective_types
 GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/spell/fireball,
 	/obj/item/book/granter/spell/smoke,
@@ -80,6 +82,21 @@ GLOBAL_LIST_INIT(summoned_special_magic, list(
 	/obj/item/gun/magic/staff/chaos,
 	/obj/item/necromantic_stone,
 	/obj/item/blood_contract))
+
+//everything above except for single use spellbooks, because they are counted separately (and are for basic bitches anyways)
+GLOBAL_LIST_INIT(summoned_magic_objectives, list(
+	/obj/item/antag_spawner/contract,
+	/obj/item/blood_contract,
+	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
+	/obj/item/gun/magic,
+	/obj/item/immortality_talisman,
+	/obj/item/melee/ghost_sword,
+	/obj/item/necromantic_stone,
+	/obj/item/scrying,
+	/obj/item/spellbook,
+	/obj/item/storage/belt/wands/full,
+	/obj/item/voodoo,
+	/obj/item/warpwhistle))
 
 // If true, it's the probability of triggering "survivor" antag.
 GLOBAL_VAR_INIT(summon_guns_triggered, FALSE)
@@ -137,7 +154,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 /proc/rightandwrong(summon_type, mob/user, survivor_probability)
 	if(user) //in this case either someone holding a spellbook or a badmin
 		to_chat(user, "<span class='warning'>You summoned [summon_type]!</span>")
-		message_admins("[key_name_admin(user, TRUE)] summoned [summon_type]!")
+		message_admins("[ADMIN_LOOKUPFLW(user)] summoned [summon_type]!")
 		log_game("[key_name(user)] summoned [summon_type]!")
 
 	if(summon_type == SUMMON_MAGIC)

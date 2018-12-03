@@ -41,11 +41,8 @@
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)
 
-/obj/item/instrument/ui_interact(mob/user)
-	if(!user)
-		return
-
-	if(!isliving(user) || user.stat || user.restrained() || user.lying)
+/obj/item/instrument/ui_interact(mob/living/user)
+	if(!isliving(user) || user.stat || user.restrained() || !(user.mobility_flags & MOBILITY_STAND))
 		return
 
 	user.set_machine(src)
@@ -56,7 +53,7 @@
 		var/mob/living/carbon/human/H = user
 		if (H.has_trait(TRAIT_MUSICIAN))
 			if (!tune_time)
-				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
+				H.visible_message("[H] tunes [src] to perfection!", "<span class='notice'>You tune [src] to perfection!</span>")
 				tune_time = 300
 				START_PROCESSING(SSobj, src)
 			else
@@ -268,3 +265,29 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+
+/obj/item/choice_beacon/music
+	name = "instrument delivery beacon"
+	desc = "Summon your tool of art."
+	icon_state = "gangtool-red"
+
+/obj/item/choice_beacon/music/generate_display_names()
+	var/static/list/instruments
+	if(!instruments)
+		instruments = list()
+		var/list/templist = list(/obj/item/instrument/violin,
+							/obj/item/instrument/piano_synth,
+							/obj/item/instrument/guitar,
+							/obj/item/instrument/eguitar,
+							/obj/item/instrument/glockenspiel,
+							/obj/item/instrument/accordion,
+							/obj/item/instrument/trumpet,
+							/obj/item/instrument/saxophone,
+							/obj/item/instrument/trombone,
+							/obj/item/instrument/recorder,
+							/obj/item/instrument/harmonica
+							)
+		for(var/V in templist)
+			var/atom/A = V
+			instruments[initial(A.name)] = A
+	return instruments

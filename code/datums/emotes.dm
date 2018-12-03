@@ -120,11 +120,14 @@
 				if(DEAD)
 					to_chat(user, "<span class='notice'>You cannot [key] while dead.</span>")
 			return FALSE
-		if(restraint_check && (user.IsStun() || user.IsKnockdown()))
-			if(!intentional)
-				return FALSE
-			to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")
-			return FALSE
+		if(restraint_check)
+			if(isliving(user))
+				var/mob/living/L = user
+				if(L.IsParalyzed() || L.IsStun())
+					if(!intentional)
+						return FALSE
+					to_chat(user, "<span class='notice'>You cannot [key] while stunned.</span>")
+					return FALSE
 		if(restraint_check && user.restrained())
 			if(!intentional)
 				return FALSE

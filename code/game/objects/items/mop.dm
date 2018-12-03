@@ -5,8 +5,8 @@
 	icon_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	force = 3
-	throwforce = 5
+	force = 8
+	throwforce = 10
 	throw_speed = 3
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
@@ -14,8 +14,8 @@
 	resistance_flags = FLAMMABLE
 	var/mopping = 0
 	var/mopcount = 0
-	var/mopcap = 5
-	var/mopspeed = 30
+	var/mopcap = 15
+	var/mopspeed = 15
 	force_string = "robust... against germs"
 	var/insertable = TRUE
 
@@ -83,10 +83,10 @@
 	item_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	force = 6
-	throwforce = 8
+	force = 12
+	throwforce = 14
 	throw_range = 4
-	mopspeed = 20
+	mopspeed = 8
 	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
 	var/refill_rate = 1 //Rate per process() tick mop refills itself
 	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING

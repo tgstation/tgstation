@@ -63,7 +63,7 @@
 	exclude_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/white, /obj/item/reagent_containers/food/snacks/grown/cannabis/death, /obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate)
 	multiplier = 4 //hush money
 	bonus_desc = "Do not mention this shipment to security."
-	foodtype = "\"meal\""
+	foodtype = "batch of \"muffins\""
 	
 /datum/bounty/item/botany/cannabis_white
 	name = "Lifeweed Leaves"
@@ -84,7 +84,7 @@
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/cannabis/ultimate)
 	multiplier = 6
 	bonus_desc = "Under no circumstances mention this shipment to security."
-	foodtype = "\"meal\""
+	foodtype = "batch of \"brownies\""
 
 /datum/bounty/item/botany/wheat
 	name = "Wheat Grains"
@@ -192,3 +192,10 @@
 	name = "Bluespace Tomatoes"
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/tomato/blue/bluespace)
 	multiplier = 4
+
+/datum/bounty/item/botany/oatz
+	name = "Oats"
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/grown/oat)
+	multiplier = 2
+	foodtype = "batch of oatmeal"
+	bonus_desc = "Squats and oats. We're all out of oats."

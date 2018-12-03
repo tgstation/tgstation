@@ -87,6 +87,8 @@
 		//Effects
 	var/stun = 0
 	var/knockdown = 0
+	var/paralyze = 0
+	var/immobilize = 0
 	var/unconscious = 0
 	var/irradiate = 0
 	var/stutter = 0
@@ -196,7 +198,7 @@
 	else
 		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 
-	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)
+	return L.apply_effects(stun, knockdown, unconscious, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter, paralyze, immobilize)
 
 /obj/item/projectile/proc/vol_by_damage()
 	if(src.damage)
@@ -271,11 +273,10 @@
 	var/turf/T = get_turf(A)
 	if(original in T)
 		return original
-	var/list/mob/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob) - A
+	var/list/mob/living/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob) - A
 	var/list/mob/mobs = list()
-	for(var/i in possible_mobs)
-		var/mob/M = i
-		if(M.lying)
+	for(var/mob/living/M in possible_mobs)
+		if(!(M.mobility_flags & MOBILITY_STAND))
 			continue
 		mobs += M
 	var/mob/M = safepick(mobs)
@@ -567,9 +568,15 @@
 	return list(angle, p_x, p_y)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
-	..()
-	if(isliving(AM) && (AM.density || AM == original) && !(src.pass_flags & PASSMOB))
-		Bump(AM)
+	. = ..()
+	if(isliving(AM) && !(pass_flags & PASSMOB))
+		var/mob/living/L = AM
+		if(AM == original)		//specific aiming for
+			Bump(AM)
+		if(AM.density)			//blocks projectiles
+			Bump(AM)
+		if((L.mobility_flags & MOBILITY_USE|MOBILITY_STAND|MOBILITY_MOVE) & (MOBILITY_USE|MOBILITY_MOVE))	//If they're either able to move or use items, while crawling, they're not stunned enough to avoid projectiles.
+			Bump(AM)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)

@@ -165,6 +165,12 @@
 	results = list("mannitol" = 3)
 	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
 	mix_message = "The solution slightly bubbles, becoming thicker."
+	
+/datum/chemical_reaction/neurine
+	name = "Neurine"
+	id = "neurine"
+	results = list("neurine" = 3)
+	required_reagents = list("mannitol" = 1, "acetone" = 1, "oxygen" = 1)
 
 /datum/chemical_reaction/mutadone
 	name = "Mutadone"
@@ -252,3 +258,9 @@
 	results = list("modafinil" = 5)
 	required_reagents = list("diethylamine" = 1, "ammonia" = 1, "phenol" = 1, "acetone" = 1, "sacid" = 1)
 	required_catalysts = list("bromine" = 1) // as close to the real world synthesis as possible
+
+/datum/chemical_reaction/psicodine
+	name = "Psicodine"
+	id = "psicodine"
+	results = list("psicodine" = 5)
+	required_reagents = list( "mannitol" = 2, "water" = 2, "impedrezene" = 1)

@@ -41,24 +41,21 @@ RSF
 /obj/item/rsf/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
 	switch(mode)
+		if(5)
+			mode = 1
+			to_chat(user, "Changed dispensing mode to 'Drinking Glass'")
 		if(1)
 			mode = 2
-			to_chat(user, "Changed dispensing mode to 'Drinking Glass'")
+			to_chat(user, "Changed dispensing mode to 'Paper'")
 		if(2)
 			mode = 3
-			to_chat(user, "Changed dispensing mode to 'Paper'")
+			to_chat(user, "Changed dispensing mode to 'Pen'")
 		if(3)
 			mode = 4
-			to_chat(user, "Changed dispensing mode to 'Pen'")
+			to_chat(user, "Changed dispensing mode to 'Dice Pack'")
 		if(4)
 			mode = 5
-			to_chat(user, "Changed dispensing mode to 'Dice Pack'")
-		if(5)
-			mode = 6
 			to_chat(user, "Changed dispensing mode to 'Cigarette'")
-		if(6)
-			mode = 1
-			to_chat(user, "Changed dispensing mode to 'Dosh'")
 	// Change mode
 
 /obj/item/rsf/afterattack(atom/A, mob/user, proximity)
@@ -68,39 +65,35 @@ RSF
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
 
-	if(matter < 1)
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
-		return
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 200)
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 			return
+	else if (matter < 1)
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
+		return
 
 	var/turf/T = get_turf(A)
 	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
 	switch(mode)
 		if(1)
-			to_chat(user, "Dispensing Dosh...")
-			new /obj/item/stack/spacecash/c10(T)
-			use_matter(200, user)
-		if(2)
 			to_chat(user, "Dispensing Drinking Glass...")
 			new /obj/item/reagent_containers/food/drinks/drinkingglass(T)
 			use_matter(20, user)
-		if(3)
+		if(2)
 			to_chat(user, "Dispensing Paper Sheet...")
 			new /obj/item/paper(T)
 			use_matter(10, user)
-		if(4)
+		if(3)
 			to_chat(user, "Dispensing Pen...")
 			new /obj/item/pen(T)
 			use_matter(50, user)
-		if(5)
+		if(4)
 			to_chat(user, "Dispensing Dice Pack...")
 			new /obj/item/storage/pill_bottle/dice(T)
 			use_matter(200, user)
-		if(6)
+		if(5)
 			to_chat(user, "Dispensing Cigarette...")
 			new /obj/item/clothing/mask/cigarette(T)
 			use_matter(10, user)

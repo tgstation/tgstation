@@ -108,8 +108,8 @@
 	if(F)
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
-			var/mob/living/user = src.loc
-			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && !user.lying && (user.stat == CONSCIOUS))
+			var/mob/living/user = loc
+			if((currentpos == startpos) && (field in view(CHRONO_BEAM_RANGE, currentpos)) && (user.mobility_flags & MOBILITY_STAND) && (user.stat == CONSCIOUS))
 				return 1
 		field_disconnect(F)
 		return 0
@@ -150,8 +150,8 @@
 		gun = loc
 	. = ..()
 
-	
-	
+
+
 
 
 /obj/effect/chrono_field

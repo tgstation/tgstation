@@ -232,10 +232,10 @@
 	. = ..()
 	if(!sliver)
 		return
-	if(ismovableatom(O) && O != sliver)
+	if(proximity && ismovableatom(O) && O != sliver)
 		Consume(O, user)
 
-/obj/item/hemostat/supermatter/throw_impact(atom/hit_atom) // no instakill supermatter javelins
+/obj/item/hemostat/supermatter/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum) // no instakill supermatter javelins
 	if(sliver)
 		sliver.forceMove(loc)
 		to_chat(usr, "<span class='notice'>\The [sliver] falls out of \the [src] as you throw them.</span>")

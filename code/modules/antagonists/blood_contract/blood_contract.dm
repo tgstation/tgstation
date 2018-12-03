@@ -2,6 +2,7 @@
 	name = "Blood Contract Target"
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE
+	show_name_in_check_antagonists = TRUE
 
 /datum/antagonist/blood_contract/on_gain()
 	. = ..()

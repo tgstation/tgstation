@@ -50,10 +50,7 @@
 		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
 		A.holder = src
 		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
-
-		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
-		message_admins("[ADMIN_LOOKUPFLW(user)] attached a [item] to a transfer valve.")
-		log_game("[key_name(user)] attached a [item] to a transfer valve.")
+		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
 		attacher = user
 	return
 
@@ -140,7 +137,6 @@
 
 /obj/item/transfer_valve/update_icon()
 	cut_overlays()
-	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)
 		icon_state = "valve_1"
@@ -150,9 +146,13 @@
 	if(tank_one)
 		add_overlay("[tank_one.icon_state]")
 	if(tank_two)
-		var/icon/J = new(icon, icon_state = "[tank_two.icon_state]")
-		J.Shift(WEST, 13)
-		underlays += J
+		var/mutable_appearance/J = mutable_appearance(icon, icon_state = "[tank_two.icon_state]")
+		var/matrix/T = matrix()
+		T.Translate(-13, 0)
+		J.transform = T
+		underlays = list(J)
+	else
+		underlays = null
 	if(attached_device)
 		add_overlay("device")
 		if(istype(attached_device, /obj/item/assembly/infra))
@@ -219,7 +219,7 @@
 
 		var/admin_bomb_message = "Bomb valve opened in [ADMIN_VERBOSEJMP(bombturf)][admin_attachment_message][admin_bomber_message]"
 		GLOB.bombers += admin_bomb_message
-		message_admins(admin_bomb_message, 0, 1)
+		message_admins(admin_bomb_message)
 		log_game("Bomb valve opened in [AREACOORD(bombturf)][attachment_message][bomber_message]")
 
 		merge_gases()

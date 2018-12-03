@@ -45,10 +45,10 @@
 			bonus_damage *= 3 //total 30 damage on cultists, 50 with ratvar
 		GLOB.clockwork_vitality += target.adjustFireLoss(bonus_damage) //adds the damage done to existing vitality
 
-/obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/target)
-	var/turf/T = get_turf(target)
-	if(isliving(target))
-		var/mob/living/L = target
+/obj/item/clockwork/weapon/ratvarian_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/turf/T = get_turf(hit_atom)
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(is_servant_of_ratvar(L))
 			if(L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
@@ -57,9 +57,9 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(issilicon(L) || iscultist(L))
-					L.Knockdown(100)
+					L.Paralyze(100)
 				else
-					L.Knockdown(40)
+					L.Paralyze(40)
 				GLOB.clockwork_vitality += L.adjustFireLoss(bonus_burn * 3) //normally a total of 40 damage, 70 with ratvar
 			break_spear(T)
 	else
@@ -72,5 +72,6 @@
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
 			new /obj/effect/temp_visual/ratvar/spearbreak(T)
+			qdel(src)
 		action.weapon_reset(RATVARIAN_SPEAR_COOLDOWN)
 

@@ -112,7 +112,7 @@
 			continue
 		if(is_servant_of_ratvar(L) || (L.has_trait(TRAIT_BLIND)) || L.anti_magic_check(TRUE, TRUE))
 			continue
-		if(L.stat || L.lying)
+		if(L.stat || !(L.mobility_flags & MOBILITY_STAND))
 			continue
 		if (iscarbon(L))
 			var/mob/living/carbon/c = L

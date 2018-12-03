@@ -10,6 +10,7 @@
 /datum/game_mode/revolution
 	name = "revolution"
 	config_tag = "revolution"
+	report_type = "revolution"
 	antag_flag = ROLE_REV
 	false_report_weight = 10
 	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
@@ -167,7 +168,7 @@
 	for(var/datum/mind/rev_mind in revolution.head_revolutionaries())
 		var/turf/T = get_turf(rev_mind.current)
 		if(!considered_afk(rev_mind) && considered_alive(rev_mind) && is_station_level(T.z))
-			if(ishuman(rev_mind.current))
+			if(ishuman(rev_mind.current) || ismonkey(rev_mind.current))
 				return FALSE
 	return TRUE
 

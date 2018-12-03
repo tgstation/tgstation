@@ -313,7 +313,7 @@
 	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
-	roundend_report.open(0)
+	roundend_report.open(FALSE)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
 	var/list/parts = list()
@@ -410,11 +410,15 @@
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
+	for(var/datum/team/A in GLOB.antagonist_teams)
+		if(!A.members)
+			continue
+		all_teams |= A
+	
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
-		all_teams |= A.get_team()
-		all_antagonists += A
+		all_antagonists |= A
 
 	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()

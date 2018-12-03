@@ -17,9 +17,9 @@
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
-	eyeobj.visible_icon = 1
-	eyeobj.icon = 'icons/obj/abductor.dmi'
-	eyeobj.icon_state = "camera_target"
+	eyeobj.visible_icon = TRUE
+	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon_state = "generic_camera"
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	..()

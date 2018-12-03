@@ -57,8 +57,8 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
-									pipenetwarnings -= 1
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)]")
+									pipenetwarnings--
 									if(pipenetwarnings == 0)
 										warning("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
@@ -221,13 +221,16 @@
 		if(!P)
 			continue
 		GL += P.return_air()
-		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
-			if(V.on)
-				PL |= V.parents[1]
-				PL |= V.parents[2]
-		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
-			if(C.connected_device)
-				GL += C.portableConnectorReturnAir()
+		for(var/atmosmch in P.other_atmosmch)
+			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
+				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
+				if(V.on)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
+			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
+				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
+				if(C.connected_device)
+					GL += C.portableConnectorReturnAir()
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0

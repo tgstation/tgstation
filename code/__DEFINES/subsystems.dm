@@ -22,8 +22,6 @@
 //In most cases you want a subsystem instead
 #define TIMER_LOOP				(1<<5)
 
-#define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
-
 #define TIMER_ID_NULL -1
 
 //For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
@@ -51,20 +49,21 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_TITLE 20
-#define INIT_ORDER_GARBAGE			19
-#define INIT_ORDER_DBCORE			18
-#define INIT_ORDER_BLACKBOX			17
-#define INIT_ORDER_SERVER_MAINT		16
-#define INIT_ORDER_INPUT			15
-#define INIT_ORDER_VIS				14
-#define INIT_ORDER_RESEARCH			13
-#define INIT_ORDER_EVENTS			12
-#define INIT_ORDER_JOBS				11
-#define INIT_ORDER_QUIRKS			10
-#define INIT_ORDER_TICKER			9
-#define INIT_ORDER_MAPPING			8
-#define INIT_ORDER_NETWORKS			7
+#define INIT_ORDER_TITLE 21
+#define INIT_ORDER_GARBAGE			20
+#define INIT_ORDER_DBCORE			19
+#define INIT_ORDER_BLACKBOX			18
+#define INIT_ORDER_SERVER_MAINT		17
+#define INIT_ORDER_INPUT			16
+#define INIT_ORDER_VIS				15
+#define INIT_ORDER_RESEARCH			14
+#define INIT_ORDER_EVENTS			13
+#define INIT_ORDER_JOBS				12
+#define INIT_ORDER_QUIRKS			11
+#define INIT_ORDER_TICKER			10
+#define INIT_ORDER_MAPPING			9
+#define INIT_ORDER_NETWORKS			8
+#define INIT_ORDER_ECONOMY			7
 #define INIT_ORDER_ATOMS			6
 #define INIT_ORDER_LANGUAGE			5
 #define INIT_ORDER_MACHINES			4
@@ -100,7 +99,6 @@
 #define FIRE_PRIORITY_SPACEDRIFT	30
 #define FIRE_PRIORITY_FIELDS		30
 #define FIRE_PRIOTITY_SMOOTHING		35
-#define FIRE_PRIORITY_ORBIT			35
 #define FIRE_PRIORITY_NETWORKS		40
 #define FIRE_PRIORITY_OBJ			40
 #define FIRE_PRIORITY_ACID			40

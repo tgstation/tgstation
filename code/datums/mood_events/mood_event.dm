@@ -3,6 +3,7 @@
 	var/mood_change = 0
 	var/timeout = 0
 	var/hidden = FALSE//Not shown on examine
+	var/category //string of what category this mood was added in as
 	var/mob/owner
 
 /datum/mood_event/New(mob/M, param)

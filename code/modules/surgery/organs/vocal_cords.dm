@@ -3,7 +3,7 @@
 #define COOLDOWN_MEME 300
 #define COOLDOWN_NONE 100
 
-/obj/item/organ/vocal_cords //organs that are activated through speech with the :x channel
+/obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
 	icon_state = "appendix"
 	zone = BODY_ZONE_PRECISE_MOUTH
@@ -265,7 +265,7 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Knockdown(60 * power_multiplier)
+			L.Paralyze(60 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))
@@ -305,7 +305,7 @@
 		cooldown = COOLDOWN_DAMAGE
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier, 0, FALSE, FALSE)
+			L.heal_overall_damage(10 * power_multiplier, 10 * power_multiplier)
 
 	//BRUTE DAMAGE
 	else if((findtext(message, hurt_words)))
@@ -484,11 +484,8 @@
 		cooldown = COOLDOWN_DAMAGE //because stun removal
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.resting)
-				L.lay_down() //aka get up
-			L.SetStun(0)
-			L.SetKnockdown(0)
-			L.SetUnconscious(0) //i said get up i don't care if you're being tased
+			L.set_resting(FALSE)
+			L.SetAllImmobility(0)
 
 	//SIT
 	else if((findtext(message, sit_words)))

@@ -54,7 +54,7 @@
 		// Only humans can enter from the west side, while lying down.
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
-		if((transform_standing || H.lying) && move_dir == EAST)// || move_dir == WEST)
+		if((transform_standing || !(H.mobility_flags & MOBILITY_STAND)) && move_dir == EAST)// || move_dir == WEST)
 			AM.forceMove(drop_location())
 			do_transform(AM)
 

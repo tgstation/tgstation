@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(antagonist_teams)
+
 //A barebones antagonist team.
 /datum/team
 	var/list/datum/mind/members = list()
@@ -7,12 +9,17 @@
 
 /datum/team/New(starting_members)
 	. = ..()
+	GLOB.antagonist_teams += src
 	if(starting_members)
 		if(islist(starting_members))
 			for(var/datum/mind/M in starting_members)
 				add_member(M)
 		else
 			add_member(starting_members)
+
+/datum/team/Destroy(force, ...)
+	GLOB.antagonist_teams -= src
+	. = ..()
 
 /datum/team/proc/is_solo()
 	return members.len == 1

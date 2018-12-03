@@ -91,7 +91,7 @@
 //		src.sd_SetLuminosity(0)
 
 /obj/machinery/sparker/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/screwdriver))
+	if (W.tool_behaviour == TOOL_SCREWDRIVER)
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
@@ -126,7 +126,7 @@
 	use_power(1000)
 	var/turf/location = src.loc
 	if (isturf(location))
-		location.hotspot_expose(1000,100,1)
+		location.hotspot_expose(1000,2500,1)
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)

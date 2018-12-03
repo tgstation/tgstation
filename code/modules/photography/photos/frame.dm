@@ -113,14 +113,14 @@
 		..()
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
-	if(can_decon && (istype(I, /obj/item/screwdriver) || istype(I, /obj/item/wrench)))
+	if(can_decon && (I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH))
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct()
 
-	else if(istype(I, /obj/item/wirecutters) && framed)
+	else if(I.tool_behaviour == TOOL_WIRECUTTER && framed)
 		framed.forceMove(drop_location())
 		framed = null
 		user.visible_message("<span class='warning'>[user] cuts away [framed] from [src]!</span>")

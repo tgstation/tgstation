@@ -1,3 +1,5 @@
+GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
+
 /datum/objective
 	var/datum/mind/owner				//The primary owner of the objective. !!SOMEWHAT DEPRECATED!! Prefer using 'team' for new code.
 	var/datum/team/team					//An alternative to 'owner': a team. Use this when writing new code.
@@ -23,22 +25,24 @@
 
 //Shared by few objective types
 /datum/objective/proc/admin_simple_target_pick(mob/admin)
-	var/list/possible_targets = list("Free objective")
+	var/list/possible_targets = list("Free objective","Random")
 	var/def_value
 	for(var/datum/mind/possible_target in SSticker.minds)
 		if ((possible_target != src) && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 
-	
+
 	if(target && target.current)
 		def_value = target.current
 
 	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
 	if (!new_target)
 		return
-	
+
 	if (new_target == "Free objective")
 		target = null
+	else if (new_target == "Random")
+		find_target()
 	else
 		target = new_target.mind
 
@@ -61,10 +65,23 @@
 /datum/objective/proc/check_completion()
 	return completed
 
-/datum/objective/proc/is_unique_objective(possible_target)
-	var/list/datum/mind/owners = get_owners()
-	for(var/datum/mind/M in owners)
-		for(var/datum/objective/O in M.get_all_objectives()) //This scope is debatable, probably should be passed in by caller.
+/datum/objective/proc/is_unique_objective(possible_target, dupe_search_range)
+	if(!islist(dupe_search_range))
+		stack_trace("Non-list passed as duplicate objective search range")
+		dupe_search_range = list(dupe_search_range)
+
+	for(var/A in dupe_search_range)
+		var/list/objectives_to_compare
+		if(istype(A,/datum/mind))
+			var/datum/mind/M = A
+			objectives_to_compare = M.get_all_objectives()
+		else if(istype(A,/datum/antagonist))
+			var/datum/antagonist/G = A
+			objectives_to_compare = G.objectives
+		else if(istype(A,/datum/team))
+			var/datum/team/T = A
+			objectives_to_compare = T.objectives
+		for(var/datum/objective/O in objectives_to_compare)
 			if(istype(O, type) && O.get_target() == possible_target)
 				return FALSE
 	return TRUE
@@ -80,8 +97,11 @@
 		if(M)
 			. += M
 
-/datum/objective/proc/find_target()
+//dupe_search_range is a list of antag datums / minds / teams
+/datum/objective/proc/find_target(dupe_search_range)
 	var/list/datum/mind/owners = get_owners()
+	if(!dupe_search_range)
+		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
 	for(var/I in owners)
@@ -89,7 +109,7 @@
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target))
+		if(!(possible_target in owners) && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && is_unique_objective(possible_target,dupe_search_range))
 			possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
@@ -104,28 +124,31 @@
 	update_explanation_text()
 	return target
 
-/datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
+/datum/objective/proc/find_target_by_role(role, role_type=FALSE,invert=FALSE)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
 	var/list/datum/mind/owners = get_owners()
+	var/list/possible_targets = list()
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if(!(possible_target in owners) && ishuman(possible_target.current))
-			var/is_role = 0
+			var/is_role = FALSE
 			if(role_type)
 				if(possible_target.special_role == role)
-					is_role++
+					is_role = TRUE
 			else
 				if(possible_target.assigned_role == role)
-					is_role++
+					is_role = TRUE
 
 			if(invert)
 				if(is_role)
 					continue
-				target = possible_target
+				possible_targets += possible_target
 				break
 			else if(is_role)
-				target = possible_target
+				possible_targets += possible_target
 				break
-
+	if(length(possible_targets))
+		target = pick(possible_targets)
 	update_explanation_text()
+	return target
 
 /datum/objective/proc/update_explanation_text()
 	if(team_explanation_text && LAZYLEN(get_owners()) > 1)
@@ -143,17 +166,16 @@
 
 /datum/objective/assassinate
 	name = "assasinate"
-	var/target_role_type=0
+	var/target_role_type=FALSE
 	martyr_compatible = 1
 
-/datum/objective/assassinate/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/assassinate/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
 		target_role_type = role_type
 	..()
-	return target
 
 /datum/objective/assassinate/check_completion()
-	return !considered_alive(target) || considered_afk(target)
+	return completed || (!considered_alive(target) || considered_afk(target))
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
@@ -164,7 +186,7 @@
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
-	
+
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
 
@@ -175,14 +197,13 @@
 
 /datum/objective/mutiny
 	name = "mutiny"
-	var/target_role_type=0
+	var/target_role_type=FALSE
 	martyr_compatible = 1
 
-/datum/objective/mutiny/find_target_by_role(role, role_type=0,invert=0)
+/datum/objective/mutiny/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
 		target_role_type = role_type
 	..()
-	return target
 
 /datum/objective/mutiny/check_completion()
 	if(!target || !considered_alive(target) || considered_afk(target))
@@ -199,14 +220,13 @@
 
 /datum/objective/maroon
 	name = "maroon"
-	var/target_role_type=0
+	var/target_role_type=FALSE
 	martyr_compatible = 1
 
-/datum/objective/maroon/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/maroon/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
 		target_role_type = role_type
 	..()
-	return target
 
 /datum/objective/maroon/check_completion()
 	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
@@ -224,11 +244,10 @@
 	name = "debrain"
 	var/target_role_type=0
 
-/datum/objective/debrain/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/debrain/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
 		target_role_type = role_type
 	..()
-	return target
 
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
@@ -258,10 +277,10 @@
 /datum/objective/protect//The opposite of killing a dude.
 	name = "protect"
 	martyr_compatible = 1
-	var/target_role_type = 0
+	var/target_role_type = FALSE
 	var/human_check = TRUE
 
-/datum/objective/protect/find_target_by_role(role, role_type=0, invert=0)
+/datum/objective/protect/find_target_by_role(role, role_type=FALSE,invert=FALSE)
 	if(!invert)
 		target_role_type = role_type
 	..()
@@ -363,7 +382,7 @@
 	var/target_real_name // Has to be stored because the target's real_name can change over the course of the round
 	var/target_missing_id
 
-/datum/objective/escape/escape_with_identity/find_target()
+/datum/objective/escape/escape_with_identity/find_target(dupe_search_range)
 	target = ..()
 	update_explanation_text()
 
@@ -428,6 +447,8 @@
 	for(var/datum/mind/M in owners)
 		if(considered_alive(M))
 			return FALSE
+		if(M.current?.suiciding) //killing yourself ISN'T glorious.
+			return FALSE
 	return TRUE
 
 /datum/objective/nuclear
@@ -456,12 +477,14 @@ GLOBAL_LIST_EMPTY(possible_items)
 		for(var/I in subtypesof(/datum/objective_item/steal))
 			new I
 
-/datum/objective/steal/find_target()
+/datum/objective/steal/find_target(dupe_search_range)
 	var/list/datum/mind/owners = get_owners()
+	if(!dupe_search_range)
+		dupe_search_range = get_owners()
 	var/approved_targets = list()
 	check_items:
 		for(var/datum/objective_item/possible_item in GLOB.possible_items)
-			if(!is_unique_objective(possible_item.targetitem))
+			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
 				continue
 			for(var/datum/mind/M in owners)
 				if(M.current.mind.assigned_role in possible_item.excludefromjob)
@@ -487,9 +510,10 @@ GLOBAL_LIST_EMPTY(possible_items)
 		return
 
 	if (new_target == "custom") //Can set custom items.
-		var/obj/item/custom_target = input(admin,"Select type:","Type") as null|anything in typesof(/obj/item)
-		if (!custom_target)
+		var/custom_path = input(admin,"Search for target item type:","Type") as null|text
+		if (!custom_path)
 			return
+		var/obj/item/custom_target = pick_closest_path(custom_path, make_types_fancy(subtypesof(/obj/item)))
 		var/custom_name = initial(custom_target.name)
 		custom_name = stripped_input(admin,"Enter target name:", "Objective target", custom_name)
 		if (!custom_name)
@@ -532,7 +556,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		for(var/I in subtypesof(/datum/objective_item/special) + subtypesof(/datum/objective_item/stack))
 			new I
 
-/datum/objective/steal/special/find_target()
+/datum/objective/steal/special/find_target(dupe_search_range)
 	return set_target(pick(GLOB.possible_items_special))
 
 /datum/objective/steal/exchange
@@ -744,7 +768,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	name = "destroy AI"
 	martyr_compatible = 1
 
-/datum/objective/destroy/find_target()
+/datum/objective/destroy/find_target(dupe_search_range)
 	var/list/possible_targets = active_ais(1)
 	var/mob/living/silicon/ai/target_ai = pick(possible_targets)
 	target = target_ai.mind
@@ -778,21 +802,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/steal_five_of_type
 	name = "steal five of"
 	explanation_text = "Steal at least five items!"
-	var/list/wanted_items = list(/obj/item)
+	var/list/wanted_items = list()
 
 /datum/objective/steal_five_of_type/New()
 	..()
 	wanted_items = typecacheof(wanted_items)
-
-/datum/objective/steal_five_of_type/summon_guns
-	name = "steal guns"
-	explanation_text = "Steal at least five guns!"
-	wanted_items = list(/obj/item/gun)
-
-/datum/objective/steal_five_of_type/summon_magic
-	name = "steal magic"
-	explanation_text = "Steal at least five magical artefacts!"
-	wanted_items = list(/obj/item/spellbook, /obj/item/gun/magic, /obj/item/clothing/suit/space/hardsuit/wizard, /obj/item/scrying, /obj/item/antag_spawner/contract, /obj/item/necromantic_stone)
 
 /datum/objective/steal_five_of_type/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -803,6 +817,36 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
 			if(is_type_in_typecache(I, wanted_items))
+				stolen_count++
+	return stolen_count >= 5
+
+/datum/objective/steal_five_of_type/summon_guns
+	name = "steal guns"
+	explanation_text = "Steal at least five guns!"
+	wanted_items = list(/obj/item/gun)
+
+/datum/objective/steal_five_of_type/summon_magic
+	name = "steal magic"
+	explanation_text = "Steal at least five magical artefacts!"
+	wanted_items = list()
+
+/datum/objective/steal_five_of_type/summon_magic/New()
+	wanted_items = GLOB.summoned_magic_objectives
+	..()
+
+/datum/objective/steal_five_of_type/summon_magic/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	var/stolen_count = 0
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		for(var/obj/I in all_items) //Check for wanted items
+			if(istype(I, /obj/item/book/granter/spell))
+				var/obj/item/book/granter/spell/spellbook = I
+				if(!spellbook.used || !spellbook.oneuse) //if the book still has powers...
+					stolen_count++ //it counts. nice.
+			else if(is_type_in_typecache(I, wanted_items))
 				stolen_count++
 	return stolen_count >= 5
 
@@ -985,5 +1029,28 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
 	command_staff_only = TRUE
 
+//Ideally this would be all of them but laziness and unusual subtypes
+/proc/generate_admin_objective_list()
+	GLOB.admin_objective_list = list()
 
+	var/list/allowed_types = list(
+		/datum/objective/assassinate,
+		/datum/objective/maroon,
+		/datum/objective/debrain,
+		/datum/objective/protect,
+		/datum/objective/destroy,
+		/datum/objective/hijack,
+		/datum/objective/escape,
+		/datum/objective/survive,
+		/datum/objective/martyr,
+		/datum/objective/steal,
+		/datum/objective/download,
+		/datum/objective/nuclear,
+		/datum/objective/capture,
+		/datum/objective/absorb,
+		/datum/objective/custom
+	)
 
+	for(var/T in allowed_types)
+		var/datum/objective/X = T
+		GLOB.admin_objective_list[initial(X.name)] = T

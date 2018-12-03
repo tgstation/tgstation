@@ -4,7 +4,7 @@
 	mood_change = -4
 
 /datum/mood_event/wellfed
-	description = "<span class='nicegreen'>My belly feels round and full.</span>\n"
+	description = "<span class='nicegreen'>I'm stuffed!</span>\n"
 	mood_change = 6
 
 /datum/mood_event/fed
@@ -18,6 +18,19 @@
 /datum/mood_event/starving
 	description = "<span class='boldwarning'>I'm starving!</span>\n"
 	mood_change = -15
+
+//charge
+/datum/mood_event/charged
+	description = "<span class='nicegreen'>I feel the power in my veins!</span>\n"
+	mood_change = 6
+
+/datum/mood_event/lowpower
+	description = "<span class='warning'>My power is running low, I should go charge up somewhere.</span>\n"
+	mood_change = -7
+
+/datum/mood_event/decharged
+	description = "<span class='boldwarning'>I'm in desperate need of some electricity!</span>\n"
+	mood_change = -12
 
 //Disgust
 /datum/mood_event/gross

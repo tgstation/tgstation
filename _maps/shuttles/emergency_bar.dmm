@@ -178,8 +178,7 @@
 /area/shuttle/escape)
 "aF" = (
 /obj/structure/piano{
-	icon_state = "piano";
-	name = "space piano"
+	icon_state = "piano"
 	},
 /turf/open/floor/plasteel/grimy,
 /area/shuttle/escape)

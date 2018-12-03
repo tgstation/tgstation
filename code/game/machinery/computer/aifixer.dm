@@ -9,8 +9,8 @@
 	icon_screen = "ai-fixer"
 	light_color = LIGHT_COLOR_PINK
 
-/obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
-	if(occupier && istype(I, /obj/item/screwdriver))
+/obj/machinery/computer/aifixer/attackby(obj/item/I, mob/user, params)
+	if(occupier && I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stat & (NOPOWER|BROKEN))
 			to_chat(user, "<span class='warning'>The screws on [name]'s screen won't budge.</span>")
 		else
@@ -129,8 +129,8 @@
 			return
 		AI.forceMove(src)
 		occupier = AI
-		AI.control_disabled = 1
-		AI.radio_enabled = 0
+		AI.control_disabled = TRUE
+		AI.radio_enabled = FALSE
 		to_chat(AI, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
 		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 		card.AI = null

@@ -23,6 +23,7 @@
 	item_state = ""	//no inhands
 	item_color = "bluetie"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_price = 15
 
 /obj/item/clothing/neck/tie/blue
 	name = "blue tie"
@@ -92,51 +93,61 @@
 	name = "white scarf"
 	icon_state = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
-	item_color = "scarf"
+	item_color = "white"
 	dog_fashion = /datum/dog_fashion/head
+	custom_price = 10
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"
+	item_color = "black"
 	icon_state = "scarf"
 	color = "#4A4A4B" //Grey but it looks black
 
 /obj/item/clothing/neck/scarf/pink
 	name = "pink scarf"
+	item_color = "pink"
 	icon_state = "scarf"
 	color = "#F699CD" //Pink
 
 /obj/item/clothing/neck/scarf/red
 	name = "red scarf"
+	item_color = "red"
 	icon_state = "scarf"
 	color = "#D91414" //Red
 
 /obj/item/clothing/neck/scarf/green
 	name = "green scarf"
+	item_color = "green"
 	icon_state = "scarf"
 	color = "#5C9E54" //Green
 
 /obj/item/clothing/neck/scarf/darkblue
 	name = "dark blue scarf"
+	item_color = "blue"
 	icon_state = "scarf"
 	color = "#1E85BC" //Blue
 
 /obj/item/clothing/neck/scarf/purple
 	name = "purple scarf"
+	item_color = "purple"
 	icon_state = "scarf"
 	color = "#9557C5" //Purple
 
 /obj/item/clothing/neck/scarf/yellow
 	name = "yellow scarf"
+	item_color = "yellow"
 	icon_state = "scarf"
 	color = "#E0C14F" //Yellow
 
 /obj/item/clothing/neck/scarf/orange
 	name = "orange scarf"
+	item_color = "orange"
 	icon_state = "scarf"
 	color = "#C67A4B" //Orange
 
 /obj/item/clothing/neck/scarf/cyan
 	name = "cyan scarf"
+	item_color = "cyan"
 	icon_state = "scarf"
 	color = "#54A3CE" //Cyan
 
@@ -160,23 +171,30 @@
 	name = "striped red scarf"
 	icon_state = "stripedredscarf"
 	item_color = "stripedredscarf"
+	custom_price = 10
 
 /obj/item/clothing/neck/stripedgreenscarf
 	name = "striped green scarf"
 	icon_state = "stripedgreenscarf"
 	item_color = "stripedgreenscarf"
+	custom_price = 10
 
 /obj/item/clothing/neck/stripedbluescarf
 	name = "striped blue scarf"
 	icon_state = "stripedbluescarf"
 	item_color = "stripedbluescarf"
+	custom_price = 10
 
-/obj/item/clothing/neck/petcollar //don't really wear this though please c'mon seriously guys
+/obj/item/clothing/neck/petcollar
 	name = "pet collar"
-	desc = "It's for pets. Though you probably could wear it yourself, you'd doubtless be the subject of ridicule."
+	desc = "It's for pets."
 	icon_state = "petcollar"
 	item_color = "petcollar"
 	var/tagname = null
+
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+	if(ishuman(M))
+		return FALSE
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
@@ -192,3 +210,32 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "bling"
 	item_color = "bling"
+
+/obj/item/clothing/neck/neckerchief
+	icon = 'icons/obj/clothing/masks.dmi' //In order to reuse the bandana sprite
+	w_class = WEIGHT_CLASS_TINY
+	var/sourceBandanaType
+
+/obj/item/clothing/neck/neckerchief/worn_overlays(isinhands)
+	. = ..()
+	if(!isinhands)
+		var/mutable_appearance/realOverlay = mutable_appearance('icons/mob/mask.dmi', icon_state)
+		realOverlay.pixel_y = -3
+		. += realOverlay
+
+/obj/item/clothing/neck/neckerchief/AltClick(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.get_item_by_slot(SLOT_NECK) == src)
+			to_chat(user, "<span class='warning'>You can't untie [src] while wearing it!</span>")
+			return
+		if(user.is_holding(src))
+			var/obj/item/clothing/mask/bandana/newBand = new sourceBandanaType(user)
+			var/currentHandIndex = user.get_held_index_of_item(src)
+			var/oldName = src.name
+			qdel(src)
+			user.put_in_hand(newBand, currentHandIndex)
+			user.visible_message("You untie [oldName] back into a [newBand.name]", "[user] unties [oldName] back into a [newBand.name]")
+		else
+			to_chat(user, "<span class='warning'>You must be holding [src] in order to untie it!")

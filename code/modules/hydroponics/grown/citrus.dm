@@ -115,10 +115,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/firelemon/attack_self(mob/living/user)
 	user.visible_message("<span class='warning'>[user] primes [src]!</span>", "<span class='userdanger'>You prime [src]!</span>")
-	var/message = "[ADMIN_LOOKUPFLW(user)] primed a combustible lemon for detonation at [ADMIN_VERBOSEJMP(user)]"
-	GLOB.bombers += message
-	message_admins(message)
-	log_game("[key_name(user)] primed a combustible lemon for detonation at [AREACOORD(user)].")
+	log_bomber(user, "primed a", src, "for detonation")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.throw_mode_on()

@@ -18,7 +18,7 @@
 	initial_language_holder = /datum/language_holder/clockmob
 	bubble_icon = "clock"
 	light_color = "#E42742"
-	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
+	deathsound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
 	var/empower_string = "<span class='heavy_brass'>You have nothing to empower, yell at the coders!</span>" //Shown to the mob when the herald beacon activates
 

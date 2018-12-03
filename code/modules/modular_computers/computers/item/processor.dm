@@ -44,7 +44,7 @@
 		return machinery_computer.update_icon()
 
 // This thing is not meant to be used on it's own, get topic data from our machinery owner.
-//obj/item/modular_computer/processor/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+//obj/item/modular_computer/processor/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 //	if(!machinery_computer)
 //		return 0
 
@@ -74,3 +74,6 @@
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk
 		if(MC_AI)
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_card
+
+/obj/item/modular_computer/processor/attack_ghost(mob/user)
+	ui_interact(user)

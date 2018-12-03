@@ -8,21 +8,28 @@
 	icon_state = "donut1"
 	bitesize = 5
 	bonus_reagents = list("sugar" = 1)
-	list_reagents = list("nutriment" = 3, "sugar" = 2)
-	var/extra_reagent = null
+	list_reagents = list("nutriment" = 3, "sprinkles" = 1, "sugar" = 2)
 	filling_color = "#D2691E"
 	tastes = list("donut" = 1)
 	foodtype = JUNKFOOD | GRAIN | FRIED | SUGAR
+	var/frosted_icon = "donut2"
+	var/is_frosted = FALSE
+	var/extra_reagent = null
 
 /obj/item/reagent_containers/food/snacks/donut/Initialize()
 	. = ..()
 	if(prob(30))
-		icon_state = "donut2"
-		name = "frosted donut"
-		reagents.add_reagent("sprinkles", 2)
-		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
-		filling_color = "#FF69B4"
+		frost_donut()
 
+/obj/item/reagent_containers/food/snacks/donut/proc/frost_donut()
+	if(is_frosted || !frosted_icon)
+		return
+	is_frosted = TRUE
+	name = "frosted [name]"
+	icon_state = frosted_icon //delish~!
+	reagents.add_reagent("sprinkles", 1)
+	filling_color = "#FF69B4"
+	return TRUE
 
 /obj/item/reagent_containers/food/snacks/donut/checkLiked(fraction, mob/M)	//Sec officers always love donuts
 	if(last_check_time + 50 < world.time)
@@ -48,18 +55,12 @@
 	. = ..()
 	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
-	bonus_reagents = list("[extra_reagent]" = 3, "sugar" = 1)
-	if(prob(30))
-		icon_state = "donut2"
-		name = "frosted chaos donut"
-		reagents.add_reagent("sprinkles", 2)
-		bonus_reagents = list("sprinkles" = 2, "[extra_reagent]" = 3, "sugar" = 1)
-		filling_color = "#FF69B4"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
+	frosted_icon = "jdonut2"
 	bonus_reagents = list("sugar" = 1, "vitamin" = 1)
 	extra_reagent = "berryjuice"
 	tastes = list("jelly" = 1, "donut" = 3)
@@ -69,12 +70,6 @@
 	. = ..()
 	if(extra_reagent)
 		reagents.add_reagent("[extra_reagent]", 3)
-	if(prob(30))
-		icon_state = "jdonut2"
-		name = "frosted jelly Donut"
-		reagents.add_reagent("sprinkles", 2)
-		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
-		filling_color = "#FF69B4"
 
 /obj/item/reagent_containers/food/snacks/donut/jelly/slimejelly
 	name = "jelly donut"
@@ -89,13 +84,13 @@
 	icon_state = "jdonut1"
 	extra_reagent = "cherryjelly"
 	foodtype = JUNKFOOD | GRAIN | FRIED | FRUIT
-	
+
 /obj/item/reagent_containers/food/snacks/donut/meat
 	bonus_reagents = list("ketchup" = 1)
 	list_reagents = list("nutriment" = 3, "ketchup" = 2)
 	tastes = list("meat" = 1)
 	foodtype = JUNKFOOD | MEAT | GROSS | FRIED
-	
+
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 

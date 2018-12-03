@@ -67,7 +67,7 @@
 
 		H.set_cloned_appearance()
 
-		H.suiciding = FALSE
+		H.set_suicide(FALSE)
 	attempting = FALSE
 	return TRUE
 
@@ -141,7 +141,9 @@
 	LAZYREMOVE(pods, pod)
 
 /obj/machinery/computer/prototype_cloning/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, W))
+			return
 		var/obj/item/multitool/P = W
 
 		if(istype(P.buffer, /obj/machinery/clonepod/experimental))

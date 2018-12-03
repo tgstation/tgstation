@@ -160,3 +160,21 @@
 	affected_mob.diseases -= src		//remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
+	
+//Use this to compare severities	
+/proc/get_disease_severity_value(severity)
+	switch(severity)
+		if(DISEASE_SEVERITY_POSITIVE)
+			return 1
+		if(DISEASE_SEVERITY_NONTHREAT)
+			return 2
+		if(DISEASE_SEVERITY_MINOR)
+			return 3
+		if(DISEASE_SEVERITY_MEDIUM)
+			return 4
+		if(DISEASE_SEVERITY_HARMFUL)
+			return 5
+		if(DISEASE_SEVERITY_DANGEROUS)
+			return 6
+		if(DISEASE_SEVERITY_BIOHAZARD)
+			return 7
