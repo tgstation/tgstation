@@ -144,14 +144,16 @@
 		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+	if(istype(I, /obj/item/stack/sheet/mineral/plasma) && (cell.charge < cell.maxcharge))
 		I.use(1)
 		cell.give(1000)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
-	else if(istype(I, /obj/item/stack/ore/plasma))
+	else if(istype(I, /obj/item/stack/ore/plasma) && (cell.charge < cell.maxcharge))
 		I.use(1)
 		cell.give(500)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
+	else if((istype(I, /obj/item/stack/sheet/mineral/plasma) || (istype(I, /obj/item/stack/ore/plasma))) && (cell.charge == cell.maxcharge))
+		to_chat(user, "<span class='notice'>The [src] is fully charged.</span>")
 	else
 		..()
 
