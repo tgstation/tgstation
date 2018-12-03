@@ -1,0 +1,4 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - rscdel: "You can no longer pre-scan in the cloner"
