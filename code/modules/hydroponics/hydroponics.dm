@@ -108,6 +108,8 @@
 		myseed.forceMove(src)
 
 	if(self_sustaining)
+		if(istype(myseed, /obj/item/seeds/replicapod))
+			adjustHealth(-5)
 		adjustNutri(1)
 		adjustWater(rand(3,5))
 		adjustWeeds(-2)
@@ -304,6 +306,9 @@
 	if(myseed)
 		to_chat(user, "<span class='info'>It has <span class='name'>[myseed.plantname]</span> planted.</span>")
 		if (dead)
+			if(self_sustaining && istype(myseed, /obj/item/seeds/replicapod))
+				to_chat(user, "<span class='info'>It seems that Earthsblood is toxic to the [myseed.plantname]!</span>")
+
 			to_chat(user, "<span class='warning'>It's dead!</span>")
 		else if (harvest)
 			to_chat(user, "<span class='info'>It's ready to harvest.</span>")
@@ -879,7 +884,8 @@
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)
-		plant_health = CLAMP(plant_health + adjustamt, 0, myseed.endurance)
+		plant_health = min(plant_health + adjustamt, myseed.endurance)
+
 
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
 	toxic = CLAMP(toxic + adjustamt, 0, 100)
