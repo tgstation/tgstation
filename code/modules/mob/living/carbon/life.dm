@@ -318,7 +318,7 @@
 		return
 
 	// Wait a bit before decaying
-	if(world.time - timeofdeath < 1200)
+	if(world.time - timeofdeath < 2 MINUTES)
 		return
 
 	var/deceasedturf = get_turf(src)
