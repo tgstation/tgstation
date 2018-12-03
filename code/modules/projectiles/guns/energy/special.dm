@@ -153,7 +153,7 @@
 		cell.give(500)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else if((istype(I, /obj/item/stack/sheet/mineral/plasma) || (istype(I, /obj/item/stack/ore/plasma))) && (cell.charge == cell.maxcharge))
-		to_chat(user, "<span class='notice'>The [src] is fully charged.</span>")
+		to_chat(user, "<span class='notice'>You try to put [I] in [src], but it's fully charged.</span>")
 	else
 		..()
 
