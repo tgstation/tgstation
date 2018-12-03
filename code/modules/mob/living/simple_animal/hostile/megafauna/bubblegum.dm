@@ -5,12 +5,13 @@ BUBBLEGUM
 Bubblegum spawns randomly wherever a lavaland creature is able to spawn. It is the most powerful slaughter demon in existence.
 Bubblegum's footsteps are heralded by shaking booms, proving its tremendous size.
 
-It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power that increase as it takes damage.
+It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power
 
 It tries to strike at its target through any bloodpools under them; if it fails to do that, it will spray blood and then attempt to warp to a bloodpool near the target.
-If it fails to warp to a target, it may summon up to 6 slaughterlings from the blood around it.
-If it does not summon all 6 slaughterlings, it will instead charge at its target, dealing massive damage to anything it hits and spraying a stream of blood.
-At half health, it will either charge three times or warp, then charge, instead of doing a single charge.
+If it does warp it will enter an enraged state, becoming immune to all projectiles, becoming much faster, and dealing damage and knockback to anything that gets in the cloud around it.
+It may summon clones charging from all sides, one of these charges being bubblegum himself.
+It can charge at its target leaving lots of damaging spaces behind if he's enraged, and also heavily damaging anything directly hit in the charge.
+If at half health it will start to charge from all sides with clones.
 
 When Bubblegum dies, it leaves behind a H.E.C.K. mining suit as well as a chest that can contain three things:
  1. A bottle that, when activated, drives everyone nearby into a frenzy
@@ -38,7 +39,7 @@ Difficulty: Hard
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
-	move_to_delay = 7.5
+	move_to_delay = 5
 	retreat_distance = 5
 	minimum_distance = 5
 	rapid_melee = 8 // every 1/4 second
@@ -193,8 +194,6 @@ Difficulty: Hard
 	sleep(get_dist(src, T) * movespeed)
 	try_bloodattack()
 	charging = 0
-	if(target)
-		MoveToTarget(target) // get moving nerd
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Bump(atom/A)
 	if(charging)
@@ -382,7 +381,7 @@ Difficulty: Hard
 	enrage_till = world.time + boost_time
 	retreat_distance = null
 	minimum_distance = 1
-	change_move_delay(initial(move_to_delay) / 2) // double move speed
+	change_move_delay(3.75)
 	var/newcolor = rgb(149, 10, 10)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	var/datum/callback/cb = CALLBACK(src, .proc/blood_enrage_end)
