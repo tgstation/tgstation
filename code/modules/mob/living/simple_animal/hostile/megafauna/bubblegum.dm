@@ -38,7 +38,7 @@ Difficulty: Hard
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 1
-	move_to_delay = 6
+	move_to_delay = 7.5
 	retreat_distance = 5
 	minimum_distance = 5
 	rapid_melee = 8 // every 1/4 second
@@ -188,7 +188,7 @@ Difficulty: Hard
 	var/obj/effect/temp_visual/decoy/D = new /obj/effect/temp_visual/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	sleep(delay)
-	var/movespeed = is_enraged() ? 0.5 : 0.7
+	var/movespeed = 0.7
 	walk_towards(src, T, movespeed)
 	sleep(get_dist(src, T) * movespeed)
 	try_bloodattack()
@@ -333,7 +333,7 @@ Difficulty: Hard
 					continue
 				hitby += L
 				to_chat(L, "<span class='userdanger'>[src]'s ground slam shockwave sends you flying!</span>")
-				var/turf/thrownat = get_ranged_target_turf(L, get_dir(orgin, L), 10)
+				var/turf/thrownat = get_ranged_target_turf(L, get_dir(orgin, L), 4)
 				L.throw_at(thrownat, get_dist(L, thrownat), 2, L, 1)
 				L.apply_damage(20, BRUTE)
 				shake_camera(L, 2, 1)
@@ -443,16 +443,17 @@ Difficulty: Hard
 	var/distance = directions.len
 	var/realspawn = pick(directions)
 	var/tocharge = list()
+	var/waittime = 6 + directions.len * 0.4
 	for(var/dir in (directions - realspawn))
 		var/turf/place = get_ranged_target_turf(chargeat, dir, distance)
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
 		B.forceMove(place)
 		tocharge += B
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B in tocharge)
-		INVOKE_ASYNC(B, .proc/charge, chargeat, 6)
+		INVOKE_ASYNC(B, .proc/charge, chargeat, waittime)
 	var/turf/place = get_ranged_target_turf(chargeat, realspawn, distance)
 	forceMove(place)
-	charge(chargeat, 6)
+	charge(chargeat, waittime)
 	charging = 0
 
 
