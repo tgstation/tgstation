@@ -46,12 +46,20 @@
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
 /obj/effect/landmark/xmastree/Initialize(mapload)
-	..()
+	. = ..()
+	// Xmas tree landmarks on Centcom will initialize BEFORE SSevent is initialized
+	// so delay the checking until roundstart.
+	SSticker.OnRoundstart(CALLBACK(src, .proc/check_holiday))
+
+/obj/effect/landmark/xmastree/proc/check_holiday()
+	var/turf/T = get_turf(src)
+
 	if((CHRISTMAS in SSevents.holidays) && christmas_tree)
-		new christmas_tree(get_turf(src))
+		new christmas_tree(T)
 	else if((FESTIVE_SEASON in SSevents.holidays) && festive_tree)
-		new festive_tree(get_turf(src))
-	return INITIALIZE_HINT_QDEL
+		new festive_tree(T)
+
+	qdel(src)
 
 /obj/effect/landmark/xmastree/rdrod
 	name = "festivus pole spawner"
