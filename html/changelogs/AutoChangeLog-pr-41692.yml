@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - balance: "Reduced the beam rifle shots per charge from 10 to 5."
-  - bugfix: "Beam rifle no longer looks empty before it is empty."

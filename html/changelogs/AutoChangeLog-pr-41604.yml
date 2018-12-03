@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added the Hypnotic Flash to the uplink for 7 TC."
-  - rscadd: "The Hypnotic Flash temporarily confuses and pacifies those it's used on."
-  - rscadd: "If the victim is in a mentally vulnerable state (hallucinating, insane, reduced mental activity) they will instead fall into a trance, and will be hypnotized by the next words they hear."
