@@ -117,7 +117,7 @@
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
-	var/turf/location = get_turf(new_character.current)
+	var/turf/location = get_turf(new_character)
 	explosion(location, GLOB.MAX_EX_DEVESTATION_RANGE, GLOB.MAX_EX_HEAVY_RANGE, GLOB.MAX_EX_LIGHT_RANGE, GLOB.MAX_EX_FLASH_RANGE)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
