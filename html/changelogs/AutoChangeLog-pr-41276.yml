@@ -1,5 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Monkey recyclers now connected to the xenobiology consoles. Upgrading it now increases yield from monkeys gathered through the camera."
-  - balance: "Adjusted monkey recycler numbers. Down from 4 cubes to 0.8 cubes per monkey at t4 parts."
