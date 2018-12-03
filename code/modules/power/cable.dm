@@ -46,6 +46,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	var/d2 = 1   // cable direction 2 (see above)
 	var/datum/powernet/powernet
 	var/obj/item/stack/cable_coil/stored
+	var/image/cable_vision_img
 
 	var/cable_color = "red"
 	color = "#ff0000"
@@ -107,6 +108,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(powernet)
 		cut_cable_from_powernet()				// update the powernets
 	GLOB.cable_list -= src							//remove it from global cable list
+	if(cable_vision_img)
+		qdel(cable_vision_img)
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
