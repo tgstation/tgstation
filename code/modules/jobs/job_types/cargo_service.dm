@@ -155,13 +155,6 @@ Bartender
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
 
-/datum/job/bartender/after_spawn(mob/living/carbon/human/H, mob/M, joined_late)
-	if(joined_late)
-		return
-	for(var/b in GLOB.bar_signs)
-		var/obj/structure/sign/barsign/B = b
-		B.bartender_spawn(M)
-
 /datum/outfit/job/bartender
 	name = "Bartender"
 	jobtype = /datum/job/bartender

@@ -1,6 +1,6 @@
 /obj/structure/sign/barsign // All Signs are 64 by 32 pixels, they take two tiles
 	name = "bar sign"
-	desc = "A bar sign with no writing on it."
+	desc = "A bar sign which has not been initialized, somehow. Complain at a coder!"
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(ACCESS_BAR)
@@ -10,16 +10,11 @@
 	buildable_sign = 0
 
 	var/panel_open = FALSE
-	var/datum/barsign/bartender_preference
+	var/datum/barsign/chosen_sign
 
 /obj/structure/sign/barsign/Initialize()
 	. = ..()
-	bar_signs |= GLOB.bar_signs
 	set_sign(new /datum/barsign/hiddensigns/signoff)
-
-/obj/structure/sign/barsign/Destroy()
-	bar_signs -= GLOB.bar_signs
-	. = ..()
 
 /obj/structure/sign/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -38,12 +33,14 @@
 	if(sign.rename_area && sign.name)
 		rename_area(src, sign.name)
 
+	return sign
+
 /obj/structure/sign/barsign/proc/set_sign_by_name(sign_name)
 	for(var/d in subtypesof(/datum/barsign))
 		var/datum/barsign/D = d
 		if(initial(D.name) == sign_name)
-			set_sign(new D)
-
+			var/new_sign = new D
+			return set_sign(new_sign)
 
 /obj/structure/sign/barsign/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
@@ -78,33 +75,24 @@
 
 /obj/structure/sign/barsign/attackby(obj/item/I, mob/user)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!allowed(user))
-			to_chat(user, "<span class='info'>Access denied.</span>")
-			return
 		if(!panel_open)
 			to_chat(user, "<span class='notice'>You open the maintenance panel.</span>")
 			set_sign(new /datum/barsign/hiddensigns/signoff)
 			panel_open = TRUE
 		else
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
-			if(!broken && !(obj_flags & EMAGGED))
-				if(bartender_preference)
-					set_sign(bartender_preference)
+			if(!broken)
+				if(!chosen_sign)
+					set_sign(new /datum/barsign/hiddensigns/signoff)
 				else
-					set_sign_by_name(pick(GLOB.bar_names))
-			else if(obj_flags & EMAGGED)
-				selected = new /datum/barsign/hiddensign/syndibarsign
-				set_sign(new /datum/barsign/hiddensigns/syndibarsign)
+					set_sign(chosen_sign)
 			else
 				set_sign(new /datum/barsign/hiddensigns/empbarsign)
 			panel_open = FALSE
 
 	else if(istype(I, /obj/item/stack/cable_coil) && panel_open)
 		var/obj/item/stack/cable_coil/C = I
-		if(obj_flags & EMAGGED) //Emagged, not broken by EMP
-			to_chat(user, "<span class='warning'>Sign has been damaged beyond repair!</span>")
-			return
-		else if(!broken)
+		if(!broken)
 			to_chat(user, "<span class='warning'>This sign is functioning properly!</span>")
 			return
 
@@ -125,14 +113,12 @@
 	broken = TRUE
 
 /obj/structure/sign/barsign/emag_act(mob/user)
-	if(broken || (obj_flags & EMAGGED))
+	if(broken)
 		to_chat(user, "<span class='warning'>Nothing interesting happens!</span>")
 		return
-	obj_flags |= EMAGGED
-	to_chat(user, "<span class='notice'>You emag the barsign. Takeover in progress...</span>")
+	to_chat(user, "<span class='notice'>You load an illegal barsign into the memory buffer...</span>")
 	sleep(10 SECONDS)
-	set_sign(new /datum/barsign/hiddensigns/syndibarsign)
-	req_access = list(ACCESS_SYNDICATE)
+	chosen_sign = set_sign(new /datum/barsign/hiddensigns/syndibarsign)
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
@@ -140,21 +126,7 @@
 	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in GLOB.bar_names
 	if(!picked_name)
 		return
-	set_sign_by_name(picked_name)
-
-/obj/structure/sign/barsign/proc/bartender_spawn(mob/M)
-	if(bartender_preference)
-		return
-
-	var/client/C = M.client
-	if(!istype(C))
-		return
-
-	var/new_name = C.prefs.preferred_bar_name
-
-	set_sign_by_name(new_name)
-	bartender_preference = new_name
-
+	chosen_sign = set_sign_by_name(picked_name)
 
 /proc/populate_bar_names()
 	if(!GLOB.bar_names.len)
@@ -326,7 +298,7 @@
 	rename_area = FALSE
 
 /datum/barsign/hiddensigns/syndibarsign
-	name = "Syndi Cat Takeover"
+	name = "Syndi Cat"
 	icon = "syndibarsign"
 	desc = "Syndicate or die."
 
