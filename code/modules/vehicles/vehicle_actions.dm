@@ -176,3 +176,18 @@
 		if(C.cannonbusy)
 			to_chat(owner, "<span class='notice'>Please wait for the vehicle to finish its current action first.</span>")
 		C.ToggleCannon()
+
+/datum/action/vehicle/sealed/Thank
+	name = "Thank the Clown car Driver"
+	desc = "They're just doing their job."
+	button_icon_state = "car_thanktheclown"
+	var/last_thank_time
+
+/datum/action/vehicle/sealed/Thank/Trigger()
+	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+		if(world.time >= last_thank_time + 60)
+			var/mob/living/carbon/human/clown = pick(C.return_drivers())
+			owner.say("Thank you for the fun ride, [clown.name]!")
+			last_thank_time = world.time
+			C.ThanksCounter()

@@ -133,7 +133,7 @@
 	illustration = "writing_syndie"
 
 /obj/item/storage/box/syndie_kit/origami_bundle
-	name = "boxed origami kit"
+	name = "origami kit"
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
 
 /obj/item/storage/box/syndie_kit/origami_bundle/PopulateContents()
@@ -142,37 +142,28 @@
 		new /obj/item/paper(src)
 
 /obj/item/storage/box/syndie_kit/imp_freedom
-	name = "boxed freedom implant (with injector)"
+	name = "freedom implant box"
 
 /obj/item/storage/box/syndie_kit/imp_freedom/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/freedom(O)
-	O.update_icon()
+	new /obj/item/implanter/freedom(src)
 
 /obj/item/storage/box/syndie_kit/imp_microbomb
-	name = "Microbomb Implant (with injector)"
+	name = "microbomb implant box"
 
 /obj/item/storage/box/syndie_kit/imp_microbomb/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/explosive(O)
-	O.update_icon()
+	new /obj/item/implanter/explosive(src)
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb
-	name = "Macrobomb Implant (with injector)"
+	name = "macrobomb implant box"
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/explosive/macro(O)
-	O.update_icon()
+	new /obj/item/implanter/explosive_macro(src)
 
 /obj/item/storage/box/syndie_kit/imp_uplink
-	name = "boxed uplink implant (with injector)"
+	name = "uplink implant box"
 
 /obj/item/storage/box/syndie_kit/imp_uplink/PopulateContents()
-	..()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/uplink(O)
-	O.update_icon()
+	new /obj/item/implanter/uplink(src)
 
 /obj/item/storage/box/syndie_kit/bioterror
 	name = "bioterror syringe box"
@@ -182,18 +173,28 @@
 		new /obj/item/reagent_containers/syringe/bioterror(src)
 
 /obj/item/storage/box/syndie_kit/imp_adrenal
-	name = "boxed adrenal implant (with injector)"
+	name = "adrenal implant box"
 
 /obj/item/storage/box/syndie_kit/imp_adrenal/PopulateContents()
-	var/obj/item/implanter/O = new(src)
-	O.imp = new /obj/item/implant/adrenalin(O)
-	O.update_icon()
+	new /obj/item/implanter/adrenalin(src)
 
 /obj/item/storage/box/syndie_kit/imp_storage
-	name = "boxed storage implant (with injector)"
+	name = "storage implant box"
 
 /obj/item/storage/box/syndie_kit/imp_storage/PopulateContents()
 	new /obj/item/implanter/storage(src)
+
+/obj/item/storage/box/syndie_kit/imp_stealth
+	name = "stealth implant box"
+
+/obj/item/storage/box/syndie_kit/imp_stealth/PopulateContents()
+	new /obj/item/implanter/stealth(src)
+
+/obj/item/storage/box/syndie_kit/imp_radio
+	name = "syndicate radio implant box"
+
+/obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
+	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/space
 	name = "boxed space suit and helmet"
@@ -209,7 +210,7 @@
 	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 
 /obj/item/storage/box/syndie_kit/emp
-	name = "boxed EMP kit"
+	name = "EMP kit"
 
 /obj/item/storage/box/syndie_kit/emp/PopulateContents()
 	for(var/i in 1 to 5)
@@ -217,7 +218,7 @@
 	new /obj/item/implanter/emp(src)
 
 /obj/item/storage/box/syndie_kit/chemical
-	name = "boxed chemical kit"
+	name = "chemical kit"
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
@@ -258,7 +259,7 @@
 	new /obj/item/paper/guides/antag/supermatter_sliver(src)
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade
-	name = "boxed virus grenade kit"
+	name = "virus grenade kit"
 
 /obj/item/storage/box/syndie_kit/tuberculosisgrenade/PopulateContents()
 	new /obj/item/grenade/chem_grenade/tuberculosis(src)
@@ -313,9 +314,6 @@
 /obj/item/storage/box/syndie_kit/mimery/PopulateContents()
 	new /obj/item/book/granter/spell/mimery_blockade(src)
 	new /obj/item/book/granter/spell/mimery_guns(src)
-
-/obj/item/storage/box/syndie_kit/imp_radio/PopulateContents()
-	new /obj/item/implanter/radio/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/centcom_costume/PopulateContents()
 	new /obj/item/clothing/under/rank/centcom_officer(src)

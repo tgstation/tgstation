@@ -177,7 +177,7 @@
 					else if(!isobserver(ROI))
 						continue
 
-				do_teleport(ROI, get_turf(target_pad),null,TRUE,null,null,null,null,TRUE)
+				do_teleport(ROI, get_turf(target_pad),null,TRUE,null,null,null,null,TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 				CHECK_TICK
 
 /obj/machinery/quantumpad/proc/initMappedLink()

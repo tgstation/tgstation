@@ -480,7 +480,7 @@
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
 	if(!blood)
-		nutrition -= lost_nutrition
+		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
 	for(var/i=0 to distance)
 		if(blood)
@@ -590,12 +590,10 @@
 			see_invisible = min(G.invis_view, see_invisible)
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
-	if(dna)
-		for(var/X in dna.mutations)
-			var/datum/mutation/M = X
-			if(M.name == XRAY)
-				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-				see_in_dark = max(see_in_dark, 8)
+
+	if(has_trait(TRAIT_XRAY_VISION))
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
@@ -923,3 +921,17 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
+	
+/mob/living/carbon/proc/hypnosis_vulnerable()
+	if(has_trait(TRAIT_MINDSHIELD))
+		return FALSE
+	if(hallucinating())
+		return TRUE
+	if(IsSleeping())
+		return TRUE
+	if(has_trait(TRAIT_DUMB))
+		return TRUE
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if(mood)
+		if(mood.sanity < SANITY_UNSTABLE)
+			return TRUE

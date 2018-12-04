@@ -1,24 +1,46 @@
 /world/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	var/current_api = TGS_READ_GLOBAL(tgs)
 	if(current_api)
-		TGS_ERROR_LOG("TgsNew(): TGS API datum already set ([current_api])!")
+		TGS_ERROR_LOG("TgsNew(): TGS API datum already set ([current_api])! Was TgsNew() called more than once?")
 		return
 
 #ifdef TGS_V3_API
 	minimum_required_security_level = TGS_SECURITY_TRUSTED
 #endif
-
-	var/tgs_version = world.params[TGS_VERSION_PARAMETER]
-	if(!tgs_version)
+	var/raw_parameter = world.params[TGS_VERSION_PARAMETER]
+	if(!raw_parameter)
 		return
 
-	var/path = SelectTgsApi(tgs_version)
-	if(!path)
-		TGS_ERROR_LOG("Found unsupported API version: [tgs_version]. If this is a valid version please report this, backporting is done on demand.")
+	var/datum/tgs_version/version = new(raw_parameter)
+	if(!version.Valid(FALSE))
+		TGS_ERROR_LOG("Failed to validate TGS version parameter: [raw_parameter]!")
 		return
 
-	TGS_INFO_LOG("Activating API for version [tgs_version]")
-	var/datum/tgs_api/new_api = new path
+	var/api_datum
+	switch(version.suite)
+		if(3)
+#ifndef TGS_V3_API
+			TGS_ERROR_LOG("Detected V3 API but TGS_V3_API isn't defined!")
+#else
+			switch(version.major)
+				if(2)
+					api_datum = /datum/tgs_api/v3210
+#endif
+		if(4)
+			switch(version.major)
+				if(0)
+					api_datum = /datum/tgs_api/v4
+
+	if(version.suite != null && version.major != null && version.minor != null && version.patch != null && version.deprefixed_parameter > TgsMaximumAPIVersion())
+		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
+		api_datum = /datum/tgs_api/latest
+
+	if(!api_datum)
+		TGS_ERROR_LOG("Found unsupported API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
+		return
+
+	TGS_INFO_LOG("Activating API for version [version.deprefixed_parameter]")
+	var/datum/tgs_api/new_api = new api_datum(version)
 
 	TGS_WRITE_GLOBAL(tgs, new_api)
 
@@ -27,40 +49,11 @@
 		TGS_WRITE_GLOBAL(tgs, null)
 		TGS_ERROR_LOG("Failed to activate API!")
 
-/world/proc/SelectTgsApi(tgs_version)
-	//remove the old 3.0 header
-	tgs_version = replacetext(tgs_version, "/tg/station 13 Server v", "")
-  
-	var/list/version_bits = splittext(tgs_version, ".")
-
-	var/super = text2num(version_bits[1])
-	var/major = text2num(version_bits[2])
-	var/minor = text2num(version_bits[3])
-	var/patch = text2num(version_bits[4])
-
-	switch(super)
-		if(3)
-#ifndef TGS_V3_API
-			TGS_ERROR_LOG("Detected V3 API but TGS_V3_API isn't defined!")
-#else
-			switch(major)
-				if(2)
-					return /datum/tgs_api/v3210
-#endif
-		if(4)
-			switch(major)
-				if(0)
-					return /datum/tgs_api/v4
-
-	if(super != null && major != null && minor != null && patch != null && tgs_version > TgsMaximumAPIVersion())
-		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
-		return /datum/tgs_api/latest
-
 /world/TgsMaximumAPIVersion()
-	return "4.0.0.0"
+	return new /datum/tgs_version("4.0.x.x")
 
 /world/TgsMinimumAPIVersion()
-	return "3.2.0.0"
+	return new /datum/tgs_version("3.2.0.0")
 
 /world/TgsInitializationComplete()
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
@@ -90,7 +83,9 @@
 	return TGS_READ_GLOBAL(tgs) != null
 
 /world/TgsVersion()
-	return world.params[TGS_VERSION_PARAMETER]
+	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
+	if(api)
+		return api.version
 
 /world/TgsInstanceName()
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)

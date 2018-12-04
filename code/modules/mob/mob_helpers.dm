@@ -407,7 +407,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else
 			dam = 0
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			if(affecting.heal_damage(brute_heal, burn_heal, 0, TRUE, FALSE))
+			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
