@@ -93,9 +93,6 @@
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
 
-/obj/item/gun/ballistic/automatic/wt550/update_icon()
-	..()
-
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
@@ -203,7 +200,6 @@
 	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
-
 
 
 // L6 SAW //

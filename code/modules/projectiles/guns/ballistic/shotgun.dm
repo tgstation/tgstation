@@ -17,7 +17,7 @@
 	semi_auto = FALSE
 	internal_magazine = TRUE
 	bolt_wording = "pump"
-	bullet_wording = "shell"
+	cartridge_wording = "shell"
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
