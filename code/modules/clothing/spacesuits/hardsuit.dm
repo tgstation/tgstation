@@ -544,7 +544,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/swat/attack_self()
 
 /obj/item/clothing/suit/space/hardsuit/swat
-	name = "MK.II. SWAT Suit"
+	name = "\improper MK.II SWAT Suit"
 	desc = "A MK.II SWAT suit with streamlined joints and armor made out of superior materials, insulated against intense heat. The most advanced tactical armor available."
 	icon_state = "swat2"
 	item_state = "swat2"
