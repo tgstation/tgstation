@@ -30,6 +30,8 @@
 	var/self_sufficiency_req = 20 //Required total dose to make a self-sufficient hydro tray. 1:1 with earthsblood.
 	var/self_sufficiency_progress = 0
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
+	var/composting = FALSE
+	var/compost_cycles = 0
 
 
 /obj/machinery/hydroponics/constructable
@@ -125,13 +127,17 @@
 			needs_update = 1
 
 //Nutrients//////////////////////////////////////////////////////////////
-			// Nutrients deplete slowly
-			if(prob(50))
-				adjustNutri(-1 / rating)
+			if(compost_cycles <= 0)
+				// Nutrients deplete slowly
+				if(prob(50))
+					adjustNutri(-1 / rating)
 
-			// Lack of nutrients hurts non-weeds
-			if(nutrilevel <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
-				adjustHealth(-rand(1,3))
+				// Lack of nutrients hurts non-weeds
+				if(nutrilevel <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+					adjustHealth(-rand(1,3))
+			else
+				compost_cycles--
+				needs_update = 1
 
 //Photosynthesis/////////////////////////////////////////////////////////
 			// Lack of light hurts non-mushrooms
@@ -156,7 +162,7 @@
 					adjustHealth(-rand(0,2) / rating)
 
 			// Sufficient water level and nutrient level = plant healthy but also spawns weeds
-			else if(waterlevel > 10 && nutrilevel > 0)
+			else if(waterlevel > 10 && (nutrilevel > 0 || compost_cycles <= 0))
 				adjustHealth(rand(1,2) / rating)
 				if(myseed && prob(myseed.weed_chance))
 					adjustWeeds(myseed.weed_rate)
@@ -260,6 +266,15 @@
 			set_light(G.glow_range(myseed), G.glow_power(myseed), G.glow_color)
 		else
 			set_light(0)
+		switch(compost_cycles)
+			if(11 to INFINITY)
+				add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "compost_water_4"))
+			if(8 to 10)
+				add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "compost_water_3"))
+			if(4 to 7)
+				add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "compost_water_2"))
+			if(1 to 3)
+				add_overlay(mutable_appearance('icons/obj/hydroponics/equipment.dmi', "compost_water_1"))
 
 	return
 
@@ -318,6 +333,8 @@
 		if(self_sufficiency_progress > 0)
 			var/percent_progress = round(self_sufficiency_progress * 100 / self_sufficiency_req)
 			to_chat(user, "<span class='info'>Treatment for self-sustenance are [percent_progress]% complete.</span>")
+		if(compost_cycles > 0)
+			to_chat(user, "<span class='info'>There is enough composted material to sustain plants without additional nutrients.</span>")
 	else
 		to_chat(user, "<span class='info'>It doesn't require any water or nutrients.</span>")
 
@@ -837,7 +854,28 @@
 	. = ..()
 	if(.)
 		return
+	if(composting)
+		return
 	if(issilicon(user)) //How does AI know what plant is?
+		return
+	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+		var/mob/living/L = user.pulling
+		if(!iscarbon(L))
+			to_chat(user, "<span class='danger'>This item is not suitable for composting!</span>")
+			return
+		var/mob/living/carbon/C = L
+		for(var/obj/item/I in C.held_items + C.get_equipped_items())
+			if(!(I.item_flags & NODROP))
+				to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
+				return
+		if(C.stat != DEAD)
+			to_chat(user, "<span class='danger'>Subject is living and not suitable for composting!</span>")
+			return
+		user.visible_message("<span class='danger'>[user] starts to put [C] into [src]!</span>")
+		add_fingerprint(user)
+		if(do_after(user, 40, target = src))
+			user.visible_message("<span class='danger'>[user] stuffs [C] into [src]!</span>")
+			compost_mob(C, user)
 		return
 	if(harvest)
 		return myseed.harvest(user)
@@ -851,6 +889,24 @@
 	else
 		if(user)
 			examine(user)
+
+/obj/machinery/hydroponics/proc/compost_mob(mob/living/carbon/C, mob/user)
+	if(composting)
+		return
+	composting = TRUE
+	use_power(600)
+	visible_message("<span class='italics'>You hear a loud liquidy grinding sound.</span>")
+	playsound(loc, 'sound/machines/mob_compost.ogg', 50, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	log_combat(user, C, "composted")
+	qdel(C)
+	compost_cycles += 10
+	pixel_x = initial(pixel_x) //return to its spot after shaking
+	composting = FALSE
+	update_icon()
+	return
+
 
 /obj/machinery/hydroponics/proc/update_tray(mob/user)
 	harvest = 0
