@@ -1,0 +1,5 @@
+author: "Jordie0608"
+delete-after: True
+changes: 
+  - admin: "Ban interface rework. The banning and unbanning panels have received a new design which is easier to use and allows multiple role bans to be made at once.
+prefix: Ban search and unbanning moved to unbanning panel, which is now a separate panel to the old banning panel."

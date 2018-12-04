@@ -362,10 +362,7 @@
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon()
-	var/old_state = icon_state
 	icon_state = "cult_sharpener[used ? "_used" : ""]"
-	if(old_state != icon_state)
-		playsound(get_turf(src), 'sound/items/unsheath.ogg', 25, 1)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
