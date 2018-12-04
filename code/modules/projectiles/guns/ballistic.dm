@@ -10,19 +10,22 @@
 	var/unload_sound_vary = TRUE
 	var/load_sound = "gun_insert_full_magazine"
 	var/load_empty_sound = "gun_insert_empty_magazine"
-	var/load_sound_volume = 60
+	var/load_sound_volume = 40
 	var/load_sound_vary = TRUE
 	var/rack_sound = ''
-	var/rack_sound_volume = 40
+	var/rack_sound_volume = 60
 	var/rack_sound_vary = TRUE
 	var/eject_sound = "gun_remove_empty_magazine"
 	var/eject_sound_volume = 
 	var/eject_sound_vary = TRUE
+	var/bolt_drop_sound = ''
+	var/bolt_drop_sound_volume = 40
 
 	var/spawnwithmagazine = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/bolt_type = BOLT_TYPE_STANDARD
 	var/bolt_locked = FALSE
+	var/bolt_name = "bolt"
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 	var/magazine_wording = "magazine"
@@ -63,6 +66,37 @@
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.forceMove(src)
+	
+/obj/item/gun/ballistic/proc/rack()
+	if (bolt_type == BOLT_TYPE_OPEN || bolt_type == BOLT_TYPE_NO_BOLT)
+		return
+	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+	to_chat(user, "<span class='notice'>You rack the [bolt_name] of \the [src].</span>")
+	if (chambered)
+		process_chamber(FALSE)
+
+/obj/item/gun/ballistic/proc/drop_bolt()
+	if (bolt_type != BOLT_TYPE_LOCKING)
+		return
+	playsound(src, bolt_drop_sound, bolt_drop_volume, FALSE)
+	to_chat(user, "<span class='notice'>You drop the [bolt_name] of \the [src].</span>")
+	chamber_round()
+	update_icon()
+
+/obj/item/gun/ballistic/proc/eject_magazine(mob/user)
+	if(bolt_type == BOLT_TYPE_OPEN)
+		var/obj/item/ammo_casing/AC = chambered
+		magazine.give_round(AC)
+		chambered = null
+	magazine.forceMove(drop_location())
+	user.put_in_hands(magazine)
+	magazine.update_icon()
+	if(magazine.ammo_count())
+		playsound(src, load_sound, load_sound_volume, load_sound_vary)
+	else
+		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	magazine = null
+	to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
 
 /obj/item/gun/ballistic/can_shoot()
 	if(chambered)
@@ -81,16 +115,10 @@
 			if(user.transferItemToLoc(AM, src))
 				magazine = AM
 				to_chat(user, "<span class='notice'>You load a new [magazine_wording] into \the [src].</span>")
-				if(magazine.ammo_count())
-					playsound(src, load_sound, load_sound_volume, load_sound_vary)
-					if(!chambered)
-						chamber_round()
-						addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/gun_chamber_round.ogg', 100, 1), 3)
-				else
-					playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+				playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 				A.update_icon()
 				update_icon()
-				return 1
+				return TRUE
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 				return
@@ -119,53 +147,46 @@
 	w_class += S.w_class //so pistols do not fit in pockets when suppressed
 	update_icon()
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/gun/ballistic/attack_hand(mob/user)
+/obj/item/gun/ballistic/AltClick(mob/user)
 	if(loc == user)
-
 		if(suppressed && can_unsuppress)
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
 				return ..()
-			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
+			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src]</span>")
 			user.put_in_hands(suppressed)
 			w_class -= S.w_class
 			suppressed = null
 			update_icon()
 			return
+
+//ATTACK HAND IGNORING PARENT RETURN VALUE
+/obj/item/gun/ballistic/attack_hand(mob/user)
+	if(loc == user)
+		if(magazine)
+			eject_magazine(mob/user)
 	return ..()
-
-/obj/item/gun/ballistic/rack()
-
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if(!)
+	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
+		drop_bolt()
+		return
+	if(bolt_type == BOLT_TYPE_NO_BOLT)
+		return
 	if(magazine)
-		magazine.forceMove(drop_location())
-		user.put_in_hands(magazine)
-		magazine.update_icon()
 		if(magazine.ammo_count())
-			playsound(src, 'sound/weapons/gun_magazine_remove_full.ogg', 70, 1)
-		else
-			playsound(src, "gun_remove_empty_magazine", 70, 1)
-		magazine = null
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
-	else if(chambered)
-		AC.forceMove(drop_location())
-		AC.bounce_away()
-		chambered = null
-		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
-		playsound(src, "gun_slide_lock", 70, 1)
-	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
-	update_icon()
+			eject_magazine(user)
+			return
+	rack()	
 	return
 
 
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
 	to_chat(user, "It has [get_ammo()] round\s remaining.")
+	if (suppressor)
+		to_chat(user, "It has a suppressor attached that can be removed with alt+click.")
 
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
 	var/boolets = 0 //mature var names for mature people
