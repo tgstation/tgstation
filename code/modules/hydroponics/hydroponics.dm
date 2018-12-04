@@ -838,6 +838,21 @@
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
 
+	else if(istype(O, /obj/item/bodypart))
+		var/obj/item/bodypart/B = O
+		if(istype(O, /obj/item/bodypart/head) && !(obj_flags & EMAGGED))
+			to_chat(user, "<span class='danger'>This item is not suitable for composting!</span>")
+		else if(B.status == BODYPART_ORGANIC)
+			compost_flesh(O, user, 4)
+
+	else if(istype(O, /obj/item/organ))
+		var/obj/item/organ/G = O
+		if(istype(O, /obj/item/organ/brain) && !(obj_flags & EMAGGED))
+			to_chat(user, "<span class='danger'>This item is not suitable for composting!</span>")
+		if(!G.synthetic)
+			compost_flesh(O, user, 2)
+
+
 	else
 		return ..()
 
@@ -862,7 +877,7 @@
 		return
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(!iscarbon(L) || (ishuman(L) && !(obj_flags & EMAGGED))))
+		if(!iscarbon(L) || (ishuman(L) && !(obj_flags & EMAGGED)))
 			to_chat(user, "<span class='danger'>This item is not suitable for composting!</span>")
 			return
 		var/mob/living/carbon/C = L
@@ -904,6 +919,22 @@
 	log_combat(user, C, "composted")
 	qdel(C)
 	compost_cycles += 10
+	pixel_x = initial(pixel_x) //return to its spot after shaking
+	composting = FALSE
+	update_icon()
+	return
+
+/obj/machinery/hydroponics/proc/compost_flesh(obj/item/O, mob/user, cycles)
+	if(composting)
+		return
+	composting = TRUE
+	use_power(100)
+	visible_message("<span class='italics'>You hear a loud liquidy grinding sound.</span>")
+	playsound(loc, 'sound/machines/mob_compost.ogg', 35, 1)
+	var/offset = prob(50) ? -1 : 1
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	qdel(O)
+	compost_cycles += cycles
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	composting = FALSE
 	update_icon()
