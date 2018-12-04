@@ -20,7 +20,7 @@
 			malfhacked(malfhack)
 
 		if(isturf(loc)) //not shunted
-			if(!eyeobj || QDELETED(eyeobj) || !eyeobj.loc)
+			if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 				view_core()
 
 		if(machine)
