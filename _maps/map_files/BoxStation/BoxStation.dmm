@@ -15233,6 +15233,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aJn" = (
@@ -16312,7 +16313,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe";
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aLV" = (
@@ -18699,7 +18704,7 @@
 /turf/open/floor/plating,
 /area/storage/emergency/port)
 "aSn" = (
-/obj/item/extinguisher,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/storage/emergency/port)
 "aSo" = (
@@ -25369,7 +25374,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/extinguisher,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
 "biF" = (
@@ -29230,6 +29235,7 @@
 	pixel_y = 6
 	},
 /obj/item/pen,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "brE" = (
@@ -57048,6 +57054,7 @@
 /obj/item/wrench,
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "rKc" = (
