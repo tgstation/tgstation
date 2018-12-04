@@ -77,7 +77,7 @@
 	if(!chambered && empty_indicator)
 		add_overlay("[icon_state]_empty")
 	if (magazine)
-		add_overlay("[icon_state]_mag[magazine.icon_state ? "_[magazine.icon_state]" : ""]")
+		add_overlay("[icon_state]_mag")
 		var/capacity_number = 0
 		switch(get_ammo() / magazine.max_ammo)
 			if(0.2 to 0.39)

@@ -95,7 +95,6 @@
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
-	icon_state = "wt550[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
@@ -191,6 +190,7 @@
 	can_suppress = FALSE
 	burst_size = 4
 	fire_delay = 1
+	bolt_type = BOLT_TYPE_OPEN
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
@@ -346,8 +346,3 @@
 	actions_types = list()
 	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = FALSE
-
-/obj/item/gun/ballistic/automatic/laser/update_icon()
-	..()
-	icon_state = "oldrifle[magazine ? "-[CEILING(get_ammo(0)/4, 1)*4]" : ""]"
-	return
