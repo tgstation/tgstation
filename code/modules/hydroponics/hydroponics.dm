@@ -849,7 +849,7 @@
 		var/obj/item/organ/G = O
 		if(istype(O, /obj/item/organ/brain) && !(obj_flags & EMAGGED))
 			to_chat(user, "<span class='danger'>This item is not suitable for composting!</span>")
-		if(!G.synthetic)
+		else if(!G.synthetic)
 			compost_flesh(O, user, 2)
 
 
