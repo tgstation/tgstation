@@ -530,7 +530,7 @@
 
 	//SWAT MKII
 /obj/item/clothing/head/helmet/space/hardsuit/swat
-	name = "MK.II. SWAT Helmet"
+	name = "\improper MK.II SWAT Helmet"
 	icon_state = "swat2helm"
 	item_state = "swat2helm"
 	desc = "A tactical SWAT helmet MK.II."
