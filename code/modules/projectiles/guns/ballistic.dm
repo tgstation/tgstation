@@ -5,34 +5,48 @@
 	w_class = WEIGHT_CLASS_NORMAL
 
 	//sound info vars
-	var/unload_sound = ''
-	var/unload_sound_volume = 40
-	var/unload_sound_vary = TRUE
 	var/load_sound = "gun_insert_full_magazine"
 	var/load_empty_sound = "gun_insert_empty_magazine"
 	var/load_sound_volume = 40
 	var/load_sound_vary = TRUE
-	var/rack_sound = ''
+	var/rack_sound = "gun_slide_lock"
 	var/rack_sound_volume = 60
 	var/rack_sound_vary = TRUE
 	var/eject_sound = "gun_remove_empty_magazine"
-	var/eject_sound_volume = 
+	var/eject_empty_sound = "gun_remove_full_magazine"
+	var/eject_sound_volume = 40
 	var/eject_sound_vary = TRUE
-	var/bolt_drop_sound = ''
-	var/bolt_drop_sound_volume = 40
+	var/bolt_drop_sound = 'sound/weapons/gun_chamber_round.ogg'
+	var/bolt_drop_sound_volume = 60
 
 	var/spawnwithmagazine = TRUE
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
+	var/mag_display = FALSE //Whether the sprite has a visible magazine or not
+	var/mag_display_ammo = FALSE //Whether the sprite has a visible ammo display or not
+	var/empty_indicator = FALSE //Whether the sprite has an indicator for being empty or not.
+	//Four bolt types:
+	//BOLT_TYPE_STANDARD: Gun has a bolt, it stays closed while not cycling. The gun must be racked to have a bullet chambered when a mag is inserted.
+	//Example: c20, shotguns, m90
+	//BOLT_TYPE_OPEN: Gun has a bolt, it is open when ready to fire. Largely the same as standard, except the gun can never have a chambered bullet with no magazine.
+	//Example: Some SMGs, the L6
+	//BOLT_TYPE_NO_BOLT: Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
+	//Example: Break action shotguns, revolvers
+	//BOLT_TYPE_LOCKING: Gun has a bolt, it locks back when empty. It can be released to chamber a round if a magazine is in.
+	//Example: Pistols with a slide lock, some SMGs
 	var/bolt_type = BOLT_TYPE_STANDARD
 	var/bolt_locked = FALSE
-	var/bolt_name = "bolt"
+	var/bolt_wording = "bolt" //bolt, slide, etc.
+	var/semi_auto = TRUE
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
+	var/internal_magazine = FALSE //Whether the gun has an internal magazine or a detatchable one.
 	var/magazine_wording = "magazine"
+	var/rack_delay = 5
+	var/recent_rack = 0
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
-	if(!spawnwithmagazine)
+	if (!spawnwithmagazine)
 		update_icon()
 		return
 	if (!magazine)
@@ -41,11 +55,36 @@
 	update_icon()
 
 /obj/item/gun/ballistic/update_icon()
+	if (QDELETED(src))
+		return
 	..()
 	if(current_skin)
-		icon_state = "[unique_reskin[current_skin]][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
+		icon_state = "[unique_reskin[current_skin]][sawn_off ? "-sawn" : ""]"
 	else
-		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_off ? "-sawn" : ""]"
+		icon_state = "[initial(icon_state)][sawn_off ? "-sawn" : ""]"
+	cut_overlays()
+	if (bolt_type == BOLT_TYPE_LOCKING)
+		add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
+	if (suppressed)
+		add_overlay("[icon_state]_suppressor")
+	if(!chambered && empty_indicator)
+		add_overlay("[icon_state]_empty")
+	if (magazine)
+		add_overlay("[icon_state]_mag")
+		var/capacity_number = 0
+		switch(magazine.ammo_count / magazine.max_ammo)
+			if(0.2 to 0.39)
+				capacity_number = 20
+			if(0.4 to 0.59)
+				capacity_number = 40
+			if(0.6 to 0.79)
+				capacity_number = 60
+			if(0.8 to 0.99)
+				capacity_number = 80
+			if(1.0)
+				capacity_number = 100
+		if (capacity_number)
+			add_overlay("[icon_state]_mag_[capacity_number]")
 
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE)
@@ -71,15 +110,15 @@
 	if (bolt_type == BOLT_TYPE_OPEN || bolt_type == BOLT_TYPE_NO_BOLT)
 		return
 	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
-	to_chat(user, "<span class='notice'>You rack the [bolt_name] of \the [src].</span>")
-	if (chambered)
-		process_chamber(FALSE)
+	to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
+	process_chamber(!chambered)
+	cocked = TRUE
 
 /obj/item/gun/ballistic/proc/drop_bolt()
 	if (bolt_type != BOLT_TYPE_LOCKING)
 		return
 	playsound(src, bolt_drop_sound, bolt_drop_volume, FALSE)
-	to_chat(user, "<span class='notice'>You drop the [bolt_name] of \the [src].</span>")
+	to_chat(user, "<span class='notice'>You drop the [bolt_wording] of \the [src].</span>")
 	chamber_round()
 	update_icon()
 
@@ -163,7 +202,7 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)
 	if(loc == user)
-		if(magazine)
+		if(magazine && !internal_magazine)
 			eject_magazine(mob/user)
 	return ..()
 
@@ -178,6 +217,9 @@
 		if(magazine.ammo_count())
 			eject_magazine(user)
 			return
+	if (recent_rack > world.time)
+		return
+	recent_rack = world.time + rack_delay
 	rack()	
 	return
 
@@ -185,6 +227,8 @@
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
 	to_chat(user, "It has [get_ammo()] round\s remaining.")
+	if (bolt_locked)
+		to_chat(user, "The [bolt_wording] is locked back and needs to be released before firing.")
 	if (suppressor)
 		to_chat(user, "It has a suppressor attached that can be removed with alt+click.")
 
