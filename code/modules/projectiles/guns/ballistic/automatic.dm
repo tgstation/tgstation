@@ -292,7 +292,7 @@
 	item_state = "sniper"
 	fire_sound = "sound/weapons/sniper_shot.ogg"
 	fire_sound_volume = 90
-	fire_sound_vary = FALSE
+	vary_fire_sound = FALSE
 	load_sound = "sound/weapons/sniper_mag_insert.ogg"
 	rack_sound = "sound/weapons/sniper_rack.ogg"
 	recoil = 2
