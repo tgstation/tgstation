@@ -13,10 +13,11 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
-	casing_ejector = FALSE
 	weapon_weight = WEAPON_MEDIUM
 	semi_auto = FALSE
 	internal_magazine = TRUE
+	bolt_wording = "pump"
+	bullet_wording = "shell"
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0

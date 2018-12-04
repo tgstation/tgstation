@@ -8,13 +8,11 @@
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
+	bolt_type = BOLT_TYPE_LOCKING
+	bolt_wording = "slide"
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
 	spawnwithmagazine = FALSE
-
-/obj/item/gun/ballistic/automatic/pistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
 	. = ..()
@@ -39,15 +37,7 @@
 	force = 14
 	mag_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
-
-/obj/item/gun/ballistic/automatic/pistol/deagle/update_icon()
-	..()
-	if(magazine)
-		cut_overlays()
-		add_overlay("deagle_magazine")
-	else
-		cut_overlays()
-	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+	mag_display = TRUE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."

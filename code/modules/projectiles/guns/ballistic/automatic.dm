@@ -5,6 +5,7 @@
 	burst_size = 3
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
+	semi_auto = TRUE
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -66,6 +67,7 @@
 	mag_display = TRUE
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
+	tac_reloads = TRUE
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
 	pin = /obj/item/firing_pin
@@ -87,6 +89,9 @@
 	can_bayonet = TRUE
 	knife_x_offset = 25
 	knife_y_offset = 12
+	mag_display = TRUE
+	mag_display_ammo = TRUE
+	empty_indicator = TRUE
 
 /obj/item/gun/ballistic/automatic/wt550/update_icon()
 	..()
@@ -98,6 +103,7 @@
 	icon_state = "mini-uzi"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
+	bolt_type = BOLT_TYPE_OPEN
 	mag_display = TRUE
 
 /obj/item/gun/ballistic/automatic/m90

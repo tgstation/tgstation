@@ -41,7 +41,7 @@
 	var/bolt_type = BOLT_TYPE_STANDARD
 	var/bolt_locked = FALSE
 	var/bolt_wording = "bolt" //bolt, slide, etc.
-	var/semi_auto = FALSE //Whether the gun has to be racked each shot or not.
+	var/semi_auto = TRUE //Whether the gun has to be racked each shot or not.
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
 	var/internal_magazine = FALSE //Whether the gun has an internal magazine or a detatchable one. Overridden by BOLT_TYPE_NO_BOLT.
@@ -95,7 +95,7 @@
 
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE)
-	if(semi_auto && from_firing)
+	if(!semi_auto && from_firing)
 		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(istype(AC)) //there's a chambered round
@@ -159,6 +159,7 @@
 	magazine = null
 	if (display_message)
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
+	update_icon()
 
 /obj/item/gun/ballistic/can_shoot()
 	if(chambered)
@@ -242,6 +243,7 @@
 	if(loc == user)
 		if(magazine && !internal_magazine)
 			eject_magazine(user)
+			return
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
@@ -266,7 +268,7 @@
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 	if(magazine && !internal_magazine)
-		if(magazine.ammo_count())
+		if(!magazine.ammo_count())
 			eject_magazine(user)
 			return
 	if (recent_rack > world.time)
