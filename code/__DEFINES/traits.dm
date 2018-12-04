@@ -56,6 +56,7 @@
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
 #define TRAIT_DISK_VERIFIER     "disk-verifier"
+#define TRAIT_XRAY_VISION       "xray_vision"
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -102,3 +103,4 @@
 #define EYES_COVERED "eyes_covered"
 #define CULT_EYES "cult_eyes"
 #define OBSERVER_TRAIT "observer-trait"
+#define SCRYING_ORB "scrying-orb"

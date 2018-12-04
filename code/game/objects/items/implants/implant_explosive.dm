@@ -111,10 +111,14 @@
 
 
 /obj/item/implanter/explosive
-	name = "implanter (explosive)"
+	name = "implanter (microbomb)"
 	imp_type = /obj/item/implant/explosive
 
 /obj/item/implantcase/explosive
 	name = "implant case - 'Explosive'"
 	desc = "A glass case containing an explosive implant."
 	imp_type = /obj/item/implant/explosive
+
+/obj/item/implanter/explosive_macro
+	name = "implanter (macrobomb)"
+	imp_type = /obj/item/implant/explosive/macro
