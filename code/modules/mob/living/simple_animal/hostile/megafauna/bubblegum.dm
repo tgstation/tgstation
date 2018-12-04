@@ -100,7 +100,7 @@ Difficulty: Hard
 			hallucination_charge_around(times = 6, delay = 10 - anger_modifier / 5)
 			SetRecoveryTime(10)
 	else
-		if(prob(50))
+		if(prob(50 - anger_modifier))
 			hallucination_charge_around(times = 4, delay = 9)
 			hallucination_charge_around(times = 4, delay = 8)
 			hallucination_charge_around(times = 4, delay = 7)
