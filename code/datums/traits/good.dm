@@ -58,6 +58,12 @@
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 
+/datum/quirk/lucky
+	name = "Lucky"
+	desc = "Statistically, bad things tend to happen to you less than other people."
+	value = 1
+	mob_trait = TRAIT_LUCKY
+
 /datum/quirk/musician
 	name = "Musician"
 	desc = "You can tune handheld musical instruments to play melodies that clear certain negative effects and soothe the soul."
@@ -148,9 +154,3 @@
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = "<span class='notice'>You feel HONGRY.</span>"
 	lose_text = "<span class='danger'>You no longer feel HONGRY.</span>"
-
-/datum/quirk/lucky
-	name = "Lucky"
-	desc = "Statistically, bad things tend to happen to you less than other people."
-	value = 1
-	mob_trait = TRAIT_LUCKY

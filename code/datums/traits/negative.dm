@@ -335,6 +335,6 @@
 
 /datum/quirk/unlucky
 	name = "Unlucky"
-	desc = "Whenever something goes wrong, it always seems to be you."
+	desc = "Whenever something goes wrong, it always seems to involve you."
 	value = -1
 	mob_trait = TRAIT_UNLUCKY
