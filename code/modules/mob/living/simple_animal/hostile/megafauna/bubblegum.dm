@@ -7,10 +7,11 @@ Bubblegum's footsteps are heralded by shaking booms, proving its tremendous size
 
 It acts as a melee creature, chasing down and attacking its target while also using different attacks to augment its power
 
-It tries to strike at its target through any bloodpools under them; if it fails to do that, it will spray blood and then attempt to warp to a bloodpool near the target.
+It leaves blood trails behind wherever it goes, its clones do as well.
+It tries to strike at its target through any bloodpools under them; if it fails to do that.
 If it does warp it will enter an enraged state, becoming immune to all projectiles, becoming much faster, and dealing damage and knockback to anything that gets in the cloud around it.
 It may summon clones charging from all sides, one of these charges being bubblegum himself.
-It can charge at its target leaving lots of damaging spaces behind if he's enraged, and also heavily damaging anything directly hit in the charge.
+It can charge at its target, and also heavily damaging anything directly hit in the charge.
 If at half health it will start to charge from all sides with clones.
 
 When Bubblegum dies, it leaves behind a H.E.C.K. mining suit as well as a chest that can contain three things:
@@ -81,29 +82,34 @@ Difficulty: Hard
 /obj/effect/decal/cleanable/blood/gibs/bubblegum/can_bloodcrawl_in()
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/Life()
-	..()
-
 /mob/living/simple_animal/hostile/megafauna/bubblegum/OpenFire()
 	anger_modifier = CLAMP(((maxHealth - health)/60),0,20)
 	if(charging)
 		return
-	ranged_cooldown = world.time + ranged_cooldown_time
-
+	ranged_cooldown = world.time + 50
 	if(!try_bloodattack())
-		INVOKE_ASYNC(src, .proc/blood_spray)
 		blood_warp()
 
 	if(health > maxHealth * 0.5)
-		if(prob(50))
-			charge()
+		if(prob(50 + anger_modifier))
+			charge(delay = 6)
+			charge(delay = 4) // The FitnessGram Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues.
+			charge(delay = 2)
+			SetRecoveryTime(15)
 		else
-			hallucination_charge_around(pick(GLOB.cardinals, GLOB.diagonals))
+			hallucination_charge_around(times = 6, delay = 10 - anger_modifier / 5)
+			SetRecoveryTime(10)
 	else
 		if(prob(50))
-			charge()
+			hallucination_charge_around(times = 4, delay = 9)
+			hallucination_charge_around(times = 4, delay = 8)
+			hallucination_charge_around(times = 4, delay = 7)
+			SetRecoveryTime(15)
 		else
-			hallucination_charge_around(GLOB.cardinals + GLOB.diagonals)
+			for(var/i = 1 to 5)
+				INVOKE_ASYNC(src, .proc/hallucination_charge_around, 2, 10, 2, 0)
+				sleep(5)
+			SetRecoveryTime(10)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
@@ -166,19 +172,20 @@ Difficulty: Hard
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Moved()
+	new /obj/effect/decal/cleanable/blood(src.loc)
 	if(charging)
 		DestroySurroundings()
-	if(is_enraged())
-		INVOKE_ASYNC(src, .proc/ground_slam)
-	else
-		playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 200, 1, 2, 1)
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target, var/delay = 3)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge(var/atom/chargeat = target, var/delay = 3, var/chargepast = 2)
 	if(!chargeat)
 		return
-	var/dir = get_dir(src, chargeat)
-	var/turf/T = get_ranged_target_turf(get_turf(chargeat), dir, 2)
+	var/chargeturf = get_turf(chargeat)
+	if(!chargeturf)
+		return
+	var/dir = get_dir(src, chargeturf)
+	var/turf/T = get_ranged_target_turf(chargeturf, dir, chargepast)
 	if(!T)
 		return
 	new /obj/effect/temp_visual/dragon_swoop/bubblegum(T)
@@ -192,6 +199,7 @@ Difficulty: Hard
 	var/movespeed = 0.7
 	walk_towards(src, T, movespeed)
 	sleep(get_dist(src, T) * movespeed)
+	walk(src, 0) // cancel the movement
 	try_bloodattack()
 	charging = 0
 
@@ -200,11 +208,11 @@ Difficulty: Hard
 		if(isturf(A) || isobj(A) && A.density)
 			A.ex_act(EXPLODE_HEAVY)
 		DestroySurroundings()
-		if(isliving(A) && !is_enraged())
+		if(isliving(A))
 			var/mob/living/L = A
 			L.visible_message("<span class='danger'>[src] slams into [L]!</span>", "<span class='userdanger'>[src] tramples you into the ground!</span>")
 			src.forceMove(get_turf(L))
-			L.apply_damage(40, BRUTE)
+			L.apply_damage(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination) ? 15 : 30, BRUTE)
 			playsound(get_turf(L), 'sound/effects/meteorimpact.ogg', 100, 1)
 			shake_camera(L, 4, 3)
 			shake_camera(src, 2, 3)
@@ -262,13 +270,13 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/rightsmack(T)
 	else
 		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
-	sleep(2.5)
+	sleep(4)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
 			to_chat(L, "<span class='userdanger'>[src] rends you!</span>")
 			playsound(T, attack_sound, 100, 1, -1)
 			var/limb_to_hit = L.get_bodypart(pick(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
-			L.apply_damage(25, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
+			L.apply_damage(10, BRUTE, limb_to_hit, L.run_armor_check(limb_to_hit, "melee", null, null, armour_penetration))
 	sleep(3)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/bloodgrab(turf/T, handedness)
@@ -281,12 +289,12 @@ Difficulty: Hard
 	sleep(6)
 	for(var/mob/living/L in T)
 		if(!faction_check_mob(L))
-			to_chat(L, "<span class='userdanger'>[src] drags you through the blood!</span>")
-			playsound(T, 'sound/magic/enter_blood.ogg', 100, 1, -1)
-			var/turf/targetturf = get_step(src, dir)
-			L.forceMove(targetturf)
-			playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
 			if(L.stat != CONSCIOUS)
+				to_chat(L, "<span class='userdanger'>[src] drags you through the blood!</span>")
+				playsound(T, 'sound/magic/enter_blood.ogg', 100, 1, -1)
+				var/turf/targetturf = get_step(src, dir)
+				L.forceMove(targetturf)
+				playsound(targetturf, 'sound/magic/exit_blood.ogg', 100, 1, -1)
 				addtimer(CALLBACK(src, .proc/devour, L), 2)
 	sleep(1)
 
@@ -316,28 +324,6 @@ Difficulty: Hard
 
 /obj/effect/temp_visual/bubblegum_hands/leftsmack
 	icon_state = "leftsmack"
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/ground_slam(var/range = 1)
-	var/turf/orgin = get_turf(src)
-	var/list/hitby = list()
-	for(var/i = 0 to range)
-		for(var/turf/T in RANGE_TURFS(i, orgin))
-			playsound(T,'sound/effects/bamf.ogg', 600, 1, 10)
-			if(ismineralturf(T))
-				var/turf/closed/mineral/M = T
-				M.gets_drilled()
-			new /obj/effect/temp_visual/small_smoke/halfsecond(T)
-			for(var/mob/living/L in T)
-				if(istype(L, /mob/living/simple_animal/hostile/megafauna/bubblegum) || L.throwing)
-					continue
-				hitby += L
-				to_chat(L, "<span class='userdanger'>[src]'s ground slam shockwave sends you flying!</span>")
-				var/turf/thrownat = get_ranged_target_turf(L, get_dir(orgin, L), 4)
-				L.throw_at(thrownat, get_dist(L, thrownat), 2, L, 1)
-				L.apply_damage(20, BRUTE)
-				shake_camera(L, 2, 1)
-		sleep(2)
-	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_warp()
 	if(Adjacent(target) || (enrage_till + 30 > world.time))
@@ -400,28 +386,6 @@ Difficulty: Hard
 	move_to_delay = newmove
 	handle_automated_action() // need to recheck movement otherwise move_to_delay won't update until the next checking aka will be wrong speed for a bit
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray(var/range = 25, var/atom/shootat = target)
-	if(!shootat)
-		return
-	var/angle = ATAN2(shootat.x - src.x, shootat.y - src.y) // angle to the target
-	var/turf/end = get_turf(src)
-	for(var/i = 1 to range)
-		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
-		if(!check)
-			break
-		end = check
-	var/list/toaffect = getline(src, end)
-	if(!toaffect.len || toaffect.len < 2)
-		return
-	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
-	for(var/i = 2 to toaffect.len)
-		var/turf/J = toaffect[i]
-		var/turf/previousturf = toaffect[i - 1]
-		new /obj/effect/temp_visual/dir_setting/bloodsplatter(previousturf, get_dir(previousturf, J))
-		playsound(J,'sound/effects/splat.ogg', 100, 1, -1)
-		new /obj/effect/decal/cleanable/blood(J)
-		sleep((previousturf.x - J.x == 0 || previousturf.y - J.y == 0) ? 1 : 2) // diagonals take longer
-
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_pools(turf/T, range)
 	. = list()
 	for(var/obj/effect/decal/cleanable/nearby in view(T, range))
@@ -434,27 +398,28 @@ Difficulty: Hard
 /obj/effect/decal/cleanable/blood/bubblegum/can_bloodcrawl_in()
 	return TRUE
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge_around(var/list/directions = GLOB.cardinals)
-	if(!target || !directions.len)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/hallucination_charge_around(var/times = 4, var/delay = 6, var/chargepast = 0, var/useoriginal = 1)
+	var/startingangle = rand(1, 360)
+	if(!target)
 		return
-	charging = 1
 	var/turf/chargeat = get_turf(target)
-	var/distance = directions.len
-	var/realspawn = pick(directions)
-	var/tocharge = list()
-	var/waittime = 6 + directions.len * 0.4
-	for(var/dir in (directions - realspawn))
-		var/turf/place = get_ranged_target_turf(chargeat, dir, distance)
+	var/srcplaced = 0
+	for(var/i = 1 to times)
+		var/ang = (startingangle + 360/times * i)
+		if(!chargeat)
+			return
+		var/turf/place = locate(chargeat.x + cos(ang) * times, chargeat.y + sin(ang) * times, chargeat.z)
+		if(!place)
+			continue
+		if(!srcplaced && useoriginal)
+			forceMove(place)
+			srcplaced = 1
+			continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
 		B.forceMove(place)
-		tocharge += B
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B in tocharge)
-		INVOKE_ASYNC(B, .proc/charge, chargeat, waittime)
-	var/turf/place = get_ranged_target_turf(chargeat, realspawn, distance)
-	forceMove(place)
-	charge(chargeat, waittime)
-	charging = 0
-
+		INVOKE_ASYNC(B, .proc/charge, chargeat, delay, chargepast)
+	if(useoriginal)
+		charge(chargeat, delay, chargepast)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination
 	name = "bubblegum's hallucination"
@@ -473,7 +438,7 @@ Difficulty: Hard
 	..()
 	toggle_ai(AI_OFF)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge(var/atom/chargeat = target)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/charge()
 	..()
 	qdel(src)
 
