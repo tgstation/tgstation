@@ -43,6 +43,10 @@
 			if(!shapeshift_type) //If you aren't gonna decide I am!
 				shapeshift_type = pick(animal_list)
 			shapeshift_type = animal_list[shapeshift_type]
+		
+		if(M.movement_type & (VENTCRAWLING))
+			to_chat(caster, "<span class='warning'>Shapeshifting here would be dangerous!</span>")
+			return
 
 		var/obj/shapeshift_holder/S = locate() in M
 		if(S)
