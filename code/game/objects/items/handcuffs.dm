@@ -297,6 +297,7 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
+	breakouttime = 30
 	item_flags = DROPDEL
 	flags_1 = NONE
 
