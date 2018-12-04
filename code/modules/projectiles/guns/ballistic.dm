@@ -122,6 +122,8 @@
 	if (user)
 		to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
 	process_chamber(!chambered, FALSE)
+	if (!chambered)
+		bolt_locked = TRUE
 
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
 	if (bolt_type != BOLT_TYPE_LOCKING)
@@ -130,6 +132,7 @@
 	if (user)
 		to_chat(user, "<span class='notice'>You drop the [bolt_wording] of \the [src].</span>")
 	chamber_round()
+	bolt_locked = FALSE
 	update_icon()
 
 /obj/item/gun/ballistic/proc/insert_magazine(mob/user, obj/item/ammo_box/magazine/AM, display_message = TRUE)
@@ -227,16 +230,19 @@
 			update_icon()
 			return
 
-/obj/item/gun/ballistic/proc/empty_alarm()
-	if(!chambered && !get_ammo() && !alarmed && empty_alarm)
-		playsound(src.loc, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
-		update_icon()
-		alarmed = 1
+/obj/item/gun/ballistic/proc/empty_checks()
+	if (!chambered && !get_ammo())
+		if (!alarmed && empty_alarm)
+			playsound(src.loc, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
+			update_icon()
+			alarmed = 1
+		if (bolt_type == BOLT_TYPE_LOCKING)
+			bolt_locked = TRUE
 	return
 
 /obj/item/gun/ballistic/afterattack()
 	. = ..()
-	empty_alarm()
+	empty_checks()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)
