@@ -290,6 +290,11 @@
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
 	icon_state = "sniper"
 	item_state = "sniper"
+	fire_sound = "sound/weapons/sniper_shot.ogg"
+	fire_sound_volume = 90
+	fire_sound_vary = FALSE
+	load_sound = "sound/weapons/sniper_mag_insert.ogg"
+	rack_sound = "sound/weapons/sniper_rack.ogg"
 	recoil = 2
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
