@@ -1,0 +1,5 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - balance: "dragnet no longer stuns on hit"
+  - balance: "dragnet traps are removed 10x faster than previously."
