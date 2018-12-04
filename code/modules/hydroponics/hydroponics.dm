@@ -342,6 +342,8 @@
 		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
 	if(pestlevel >= 5)
 		to_chat(user, "<span class='warning'>It's filled with tiny worms!</span>")
+	if(obj_flags & EMAGGED)
+		to_chat(user, "<span class='warning'>The safety features are disabled!</span>")
 	to_chat(user, "" )
 
 
@@ -860,7 +862,7 @@
 		return
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
 		var/mob/living/L = user.pulling
-		if(!iscarbon(L))
+		if(!iscarbon(L) || (ishuman(L) && !(obj_flags & EMAGGED))))
 			to_chat(user, "<span class='danger'>This item is not suitable for composting!</span>")
 			return
 		var/mob/living/carbon/C = L
@@ -907,6 +909,12 @@
 	update_icon()
 	return
 
+/obj/machinery/hydroponics/emag_act(mob/user)
+	if(obj_flags & EMAGGED)
+		return
+	playsound(src, "sparks", 75, 1)
+	do_sparks(1, TRUE, src)
+	obj_flags |= EMAGGED
 
 /obj/machinery/hydroponics/proc/update_tray(mob/user)
 	harvest = 0
