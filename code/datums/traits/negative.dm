@@ -163,7 +163,7 @@
 	var/list/names = splittext(quirk_holder.real_name, " ")
 	var/family_name = names[names.len]
 
-	heirloom.AddComponent(/datum/component/heirloom, quirk_holder, family_name)
+	heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
 /datum/quirk/family_heirloom/on_process()
 	if(heirloom in quirk_holder.GetAllContents())
@@ -178,8 +178,6 @@
 
 /datum/quirk/family_heirloom/on_clone(data)
 	heirloom = data
-	var/datum/component/heirloom/C = heirloom.GetComponent(/datum/component/heirloom)
-	C.owner = quirk_holder
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"

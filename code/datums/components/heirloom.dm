@@ -1,5 +1,5 @@
 /datum/component/heirloom
-	var/mob/living/carbon/human/owner
+	var/datum/mind/owner
 	var/family_name
 
 /datum/component/heirloom/Initialize(new_owner, new_family_name)
@@ -12,5 +12,5 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 /datum/component/heirloom/proc/examine(datum/source, mob/user)
-	if(user == owner)
+	if(user.mind == owner)
 		to_chat(user, "<span class='notice'>It is your precious [family_name] family heirloom. Keep it safe!</span>")
