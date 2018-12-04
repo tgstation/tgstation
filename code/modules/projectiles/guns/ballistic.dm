@@ -124,6 +124,7 @@
 	process_chamber(!chambered, FALSE)
 	if (!chambered)
 		bolt_locked = TRUE
+	update_icon()
 
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
 	if (bolt_type != BOLT_TYPE_LOCKING)
