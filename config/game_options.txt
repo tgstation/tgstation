@@ -89,8 +89,8 @@ ALERT_DELTA Destruction of the station is imminent. All crew are instructed to o
 ## Set to 0 to disable that mode.
 
 PROBABILITY TRAITOR 50
-#PROBABILITY NOTRAITOR 0
-#PROBABILITY BROTHERS 50
+PROBABILITY NOTRAITOR 0
+PROBABILITY BROTHERS 50
 PROBABILITY TRAITORBRO 10
 PROBABILITY TRAITORCHAN 0
 PROBABILITY INTERNAL_AFFAIRS 0
@@ -434,7 +434,7 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 
 ## Races that are better than humans in some ways, but worse in others
-ROUNDSTART_RACES ethereal
+#ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES golem
 #ROUNDSTART_RACES adamantine
