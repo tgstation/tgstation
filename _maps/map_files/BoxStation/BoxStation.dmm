@@ -5124,7 +5124,8 @@
 	},
 /obj/machinery/button/flasher{
 	id = "cell4";
-	step_x = 24;
+	pixel_x = 24;
+	step_x = 0;
 	step_y = 0
 	},
 /turf/open/floor/plasteel,
