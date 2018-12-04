@@ -217,7 +217,7 @@
 	if(!istype(src, /datum/techweb/admin))
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
-			D.adjust_money(SSeconomy.techweb_bounty)
+			D.adjust_money(SSeconomy.techweb_bounty/10)
 	return TRUE
 
 /datum/techweb/proc/unresearch_node_id(id)
