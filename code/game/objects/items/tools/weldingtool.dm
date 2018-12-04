@@ -130,7 +130,7 @@
 	if(isOn())
 		use(1)
 		var/turf/location = get_turf(user)
-		location.hotspot_expose(550, 10, 1)
+		location.hotspot_expose(700, 50, 1)
 		if(get_fuel() <= 0)
 			set_light(0)
 
@@ -303,6 +303,11 @@
 	name = "integrated welding tool"
 	desc = "An advanced welder designed to be used in robotic systems."
 	toolspeed = 0.5
+
+/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
+	if(!isOn())
+		return
+	switched_on(user)
 
 /obj/item/weldingtool/largetank/flamethrower_screwdriver()
 	return

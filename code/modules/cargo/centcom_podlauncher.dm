@@ -573,7 +573,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	var/delayString = temp_pod.landingDelay == initial(temp_pod.landingDelay) ? "" : " Delay=[temp_pod.landingDelay*0.1]s"
 	var/damageString = temp_pod.damage == 0 ? "" : " Dmg=[temp_pod.damage]"
 	var/explosionString = ""
-	if (counterlist_sum(temp_pod.explosionSize) != 0)
+	var/explosion_sum = temp_pod.explosionSize[1] + temp_pod.explosionSize[2] + temp_pod.explosionSize[3] + temp_pod.explosionSize[4]
+	if (explosion_sum != 0)
 		explosionString = " Boom=|"
 		for (var/X in temp_pod.explosionSize)
 			explosionString += "[X]|"

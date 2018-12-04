@@ -22,9 +22,9 @@
 		var/light_amount = T.get_lumcount()
 
 		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-			H.take_overall_damage(1,1)
+			H.take_overall_damage(1,1, 0, BODYPART_ORGANIC)
 		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-			H.heal_overall_damage(1,1)
+			H.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -143,6 +143,7 @@
 		respawn_progress = 0
 		return
 	var/turf/T = get_turf(owner)
+
 	if(istype(T))
 		var/light_amount = T.get_lumcount()
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
@@ -187,6 +188,9 @@
 		return
 	if(isliving(AM))
 		var/mob/living/L = AM
+		if(isethereal(AM))
+			AM.emp_act(EMP_LIGHT)
+
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(!borg.lamp_cooldown)

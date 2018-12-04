@@ -47,7 +47,7 @@
 
 /obj/item/paper/fluff/awaymissions/wildwest/journal/page7
 	name = "Planer Sauls' Journal: Page 7"
-	info = "The Vault...it just keeps growing and growing.  I went on my daily walk through the garden and now its just right outside the mansion... a few days ago it was only barely visible. But whatever is inside...its calling to me."
+	info = "The Vault...it just keeps growing and growing.  I went on my daily walk through the garden and now it's just right outside the mansion... a few days ago it was only barely visible. But whatever is inside...it's calling to me."
 
 /obj/item/paper/fluff/awaymissions/wildwest/journal/page8
 	name = "Planer Saul's Journal: Page 8"

@@ -49,4 +49,4 @@
 	if(T)
 		newAnomaly = new anomaly_path(T)
 	if (newAnomaly)
-		atom_of_interest = newAnomaly
+		announce_to_ghosts(newAnomaly)

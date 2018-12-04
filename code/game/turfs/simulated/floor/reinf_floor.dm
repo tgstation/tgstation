@@ -17,7 +17,7 @@
 	to_chat(user, "<span class='notice'>The reinforcement rods are <b>wrenched</b> firmly in place.</span>")
 
 /turf/open/floor/engine/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/engine/break_tile()
 	return //unbreakable
@@ -98,28 +98,28 @@
 /turf/open/floor/engine/n2o
 	article = "an"
 	name = "\improper N2O floor"
-	initial_gas_mix = "n2o=6000;TEMP=293.15"
+	initial_gas_mix = ATMOS_TANK_N2O
 
 /turf/open/floor/engine/co2
 	name = "\improper CO2 floor"
-	initial_gas_mix = "co2=50000;TEMP=293.15"
+	initial_gas_mix = ATMOS_TANK_CO2
 
 /turf/open/floor/engine/plasma
 	name = "plasma floor"
-	initial_gas_mix = "plasma=70000;TEMP=293.15"
+	initial_gas_mix = ATMOS_TANK_PLASMA
 
 /turf/open/floor/engine/o2
 	name = "\improper O2 floor"
-	initial_gas_mix = "o2=100000;TEMP=293.15"
+	initial_gas_mix = ATMOS_TANK_O2
 
 /turf/open/floor/engine/n2
 	article = "an"
 	name = "\improper N2 floor"
-	initial_gas_mix = "n2=100000;TEMP=293.15"
+	initial_gas_mix = ATMOS_TANK_N2
 
 /turf/open/floor/engine/air
 	name = "air floor"
-	initial_gas_mix = "o2=2644;n2=10580;TEMP=293.15"
+	initial_gas_mix = ATMOS_TANK_AIRMIX
 
 
 
@@ -159,8 +159,8 @@
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
 /turf/open/floor/engine/cult/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/engine/vacuum
 	name = "vacuum floor"
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS

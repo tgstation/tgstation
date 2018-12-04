@@ -19,4 +19,4 @@
 		var/mob/living/carbon/human/winner = pickweight(heart_attack_contestants)
 		var/datum/disease/D = new /datum/disease/heart_failure()
 		winner.ForceContractDisease(D, FALSE, TRUE)
-		atom_of_interest = winner
+		announce_to_ghosts(winner)

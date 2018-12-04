@@ -4,7 +4,6 @@
 	icon_state = "otherthing"
 	icon_living = "otherthing"
 	icon_dead = "otherthing-dead"
-	mob_biotypes = list(MOB_INORGANIC)
 	health = 80
 	maxHealth = 80
 	obj_damage = 100
@@ -30,7 +29,7 @@
 	speed = -0.5
 	var/static/list/migo_sounds
 	deathmessage = "wails as its form turns into a pulpy mush."
-	death_sound = 'sound/voice/hiss6.ogg'
+	deathsound = 'sound/voice/hiss6.ogg'
 
 /mob/living/simple_animal/hostile/netherworld/migo/Initialize()
 	. = ..()
@@ -41,7 +40,7 @@
 	if(stat)
 		return
 	var/chosen_sound = pick(migo_sounds)
-	playsound(src, chosen_sound, 100, TRUE)
+	playsound(src, chosen_sound, 50, TRUE)
 
 /mob/living/simple_animal/hostile/netherworld/migo/Life()
 	..()
@@ -49,7 +48,7 @@
 		return
 	if(prob(10))
 		var/chosen_sound = pick(migo_sounds)
-		playsound(src, chosen_sound, 100, TRUE)
+		playsound(src, chosen_sound, 50, TRUE)
 
 /mob/living/simple_animal/hostile/netherworld/blankbody
 	name = "blank body"
@@ -65,37 +64,33 @@
 	attacktext = "punches"
 	deathmessage = "falls apart into a fine dust."
 
-/mob/living/simple_animal/hostile/spawner/nether
+/obj/structure/spawner/nether
 	name = "netherworld link"
 	desc = "A direct link to another dimension full of creatures not very happy to see you. <span class='warning'>Entering the link would be a very bad idea.</span>"
 	icon_state = "nether"
-	icon_living = "nether"
-	health = 50
-	maxHealth = 50
+	max_integrity = 50
 	spawn_time = 600 //1 minute
 	max_mobs = 15
-	mob_biotypes = list(MOB_INORGANIC)
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "crawls through"
 	mob_types = list(/mob/living/simple_animal/hostile/netherworld/migo, /mob/living/simple_animal/hostile/netherworld, /mob/living/simple_animal/hostile/netherworld/blankbody)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	faction = list("nether")
-	deathmessage = "shatters into oblivion."
-	del_on_death = TRUE
 
-/mob/living/simple_animal/hostile/spawner/nether/attack_hand(mob/user)
+/obj/structure/spawner/nether/Initialize()
+	.=..()
+	START_PROCESSING(SSprocessing, src)
+
+/obj/structure/spawner/nether/attack_hand(mob/user)
 		user.visible_message("<span class='warning'>[user] is violently pulled into the link!</span>", \
 						  "<span class='userdanger'>Touching the portal, you are quickly pulled through into a world of unimaginable horror!</span>")
 		contents.Add(user)
 
-/mob/living/simple_animal/hostile/spawner/nether/Life()
-	..()
-	var/list/C = src.get_contents()
-	for(var/mob/living/M in C)
+/obj/structure/spawner/nether/process()
+	for(var/mob/living/M in contents)
 		if(M)
 			playsound(src, 'sound/magic/demon_consume.ogg', 50, 1)
 			M.adjustBruteLoss(60)
-			new /obj/effect/gibspawner/generic(get_turf(M))
+			new /obj/effect/gibspawner/generic(get_turf(M), M)
 			if(M.stat == DEAD)
 				var/mob/living/simple_animal/hostile/netherworld/blankbody/blank
 				blank = new(loc)

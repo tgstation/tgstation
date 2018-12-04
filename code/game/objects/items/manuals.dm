@@ -37,7 +37,7 @@
 				</ol>
 				<p>
 				It really is that easy! Good luck!
-	
+
 				</body>
 				</html>
 				"}
@@ -241,7 +241,7 @@
 /obj/item/book/manual/wiki/attack_self()
 	if(!dat)
 		initialize_wikibook()
-	..()
+	return ..()
 
 /obj/item/book/manual/wiki/proc/initialize_wikibook()
 	var/wikiurl = CONFIG_GET(string/wikiurl)
@@ -344,14 +344,14 @@
 	author = "Sir John Rose"
 	title = "Barman Recipes: Mixing Drinks and Changing Lives"
 	page_link = "Guide_to_food_and_drinks"
-	
+
 /obj/item/book/manual/wiki/robotics_cyborgs
 	name = "Robotics for Dummies"
 	icon_state = "borgbook"
 	author = "XISC"
 	title = "Robotics for Dummies"
 	page_link = "Guide_to_robotics"
-	
+
 /obj/item/book/manual/wiki/research_and_development
 	name = "Research and Development 101"
 	icon_state = "rdbook"
@@ -381,13 +381,6 @@
 	title = "To Serve Man"
 	page_link = "Guide_to_food_and_drinks"
 
-/obj/item/book/manual/wiki/circuitry
-	name = "Circuitry for Dummies"
-	icon_state = "book1"
-	author = "Dr. Hans Asperger"
-	title = "Circuitry for Dummies"
-	page_link = "Guide_to_circuits"
-
 /obj/item/book/manual/wiki/tcomms
 	name = "Subspace Telecommunications And You"
 	icon_state = "book3"
@@ -401,7 +394,7 @@
 	author = "the City-state of Atmosia"
 	title = "Lexica Atmosia"
 	page_link = "Guide_to_Atmospherics"
-	
+
 /obj/item/book/manual/wiki/medicine
 	name = "Medical Space Compendium, Volume 638"
 	icon_state = "book8"

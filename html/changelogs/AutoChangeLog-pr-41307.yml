@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - imageadd: "Updated the robotics control console interface a bit. Borgs are now grouped by their slaved AI."
-  - bugfix: "Fixed the robotics control console showing the cultist conversion button on borgs which are already converted."

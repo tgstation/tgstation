@@ -137,7 +137,6 @@
 
 /obj/item/transfer_valve/update_icon()
 	cut_overlays()
-	underlays = null
 
 	if(!tank_one && !tank_two && !attached_device)
 		icon_state = "valve_1"
@@ -147,9 +146,13 @@
 	if(tank_one)
 		add_overlay("[tank_one.icon_state]")
 	if(tank_two)
-		var/icon/J = new(icon, icon_state = "[tank_two.icon_state]")
-		J.Shift(WEST, 13)
-		underlays += J
+		var/mutable_appearance/J = mutable_appearance(icon, icon_state = "[tank_two.icon_state]")
+		var/matrix/T = matrix()
+		T.Translate(-13, 0)
+		J.transform = T
+		underlays = list(J)
+	else
+		underlays = null
 	if(attached_device)
 		add_overlay("device")
 		if(istype(attached_device, /obj/item/assembly/infra))

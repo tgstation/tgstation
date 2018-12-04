@@ -108,7 +108,7 @@
 			to_chat(user, "<span class='warning'>You failed to pour [O] onto [src]!</span>")
 			return
 
-		user.visible_message("[user] pours the contents of [O] onto [src], causing it to reform it's original shape and turn a slightly brighter shade of pink.", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform it's original shape and turn a slightly brighter shade of pink.</span>")
+		user.visible_message("[user] pours the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.", "<span class='notice'>You pour the contents of [O] onto [src], causing it to reform its original shape and turn a slightly brighter shade of pink.</span>")
 		damaged_brain = FALSE //heal the superficial damage.
 
 		O.reagents.clear_reagents()

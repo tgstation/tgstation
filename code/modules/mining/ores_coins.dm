@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	recipes = GLOB.sand_recipes
 	. = ..()
 
-/obj/item/stack/ore/glass/throw_impact(atom/hit_atom)
+/obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
 		return
 	var/mob/living/carbon/human/C = hit_atom

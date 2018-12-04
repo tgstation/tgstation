@@ -56,7 +56,7 @@
 
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
-	if((H.status_flags & GODMODE))
+	if(H.status_flags & GODMODE)
 		return
 	if(H.has_trait(TRAIT_NOBREATH))
 		return
@@ -294,7 +294,7 @@
 
 			// Miasma side effects
 			switch(miasma_pp)
-				if(1 to 5)
+				if(0.25 to 5)
 					// At lower pp, give out a little warning
 					SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 					if(prob(5))

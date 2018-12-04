@@ -304,6 +304,7 @@
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
@@ -363,7 +364,7 @@
 	icon_state = "snappop"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom)
+/obj/item/spellpacket/lightningbolt/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		if(isliving(hit_atom))
 			var/mob/living/M = hit_atom
