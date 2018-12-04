@@ -144,16 +144,18 @@
 		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/sheet/mineral/plasma) && (cell.charge < cell.maxcharge))
+	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
+	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+		charge_multiplier = 2
+	if(istype(I, /obj/item/stack/ore/plasma))
+		charge_multiplier = 1
+	if(charge_multiplier)
+		if(cell.charge == cell.maxcharge)
+			to_chat(user, "<span class='notice'>You try to insert [I] in [src], but it's fully charged.</span>") //my cell is round and full
+			return
 		I.use(1)
-		cell.give(1000)
+		cell.give(500*charge_multiplier)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
-	else if(istype(I, /obj/item/stack/ore/plasma) && (cell.charge < cell.maxcharge))
-		I.use(1)
-		cell.give(500)
-		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
-	else if((istype(I, /obj/item/stack/sheet/mineral/plasma) || (istype(I, /obj/item/stack/ore/plasma))) && (cell.charge == cell.maxcharge))
-		to_chat(user, "<span class='notice'>You try to put [I] in [src], but it's fully charged.</span>")
 	else
 		..()
 
