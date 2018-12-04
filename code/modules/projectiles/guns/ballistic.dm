@@ -39,8 +39,9 @@
 	var/semi_auto = TRUE
 	var/obj/item/ammo_box/magazine/magazine
 	var/casing_ejector = TRUE //whether the gun ejects the chambered casing
-	var/internal_magazine = FALSE //Whether the gun has an internal magazine or a detatchable one.
+	var/internal_magazine = FALSE //Whether the gun has an internal magazine or a detatchable one. Overridden by BOLT_TYPE_NO_BOLT.
 	var/magazine_wording = "magazine"
+	var/cartridge_wording = "bullet"
 	var/rack_delay = 5
 	var/recent_rack = 0
 
@@ -87,7 +88,9 @@
 			add_overlay("[icon_state]_mag_[capacity_number]")
 
 
-/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE)
+/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE)
+	if(semi_auto && from_firing)
+		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(istype(AC)) //there's a chambered round
 		if(casing_ejector)
@@ -111,7 +114,7 @@
 		return
 	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 	to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
-	process_chamber(!chambered)
+	process_chamber(!chambered, FALSE)
 	cocked = TRUE
 
 /obj/item/gun/ballistic/proc/drop_bolt()
@@ -148,7 +151,7 @@
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
-	if (istype(A, /obj/item/ammo_box/magazine))
+	if (istype(A, /obj/item/ammo_box/magazine) && !internal_magazine)
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
 			if(user.transferItemToLoc(AM, src))
@@ -163,6 +166,13 @@
 				return
 		else if (magazine)
 			to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
+	else
+		var/num_loaded = magazine.attackby(A, user, params)
+		if (num_loaded)
+			to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
+			plasound(src, load_sound, load_sound_volume, load_sound_vary)
+			A.update_icon()
+			update_icon()
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
 		if(!can_suppress)
@@ -212,8 +222,22 @@
 		drop_bolt()
 		return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
+		var/num_unloaded = 0
+		chambered = null
+		while (get_ammo() > 0)
+			var/obj/item/ammo_casing/CB
+			CB = magazine.get_round(0)
+			if(CB)
+				CB.forceMove(drop_location())
+				CB.bounce_away(FALSE, NONE)
+				num_unloaded++
+		if (num_unloaded)
+			to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
+			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
+		else
+			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
-	if(magazine)
+	if(magazine && !internal_magazine)
 		if(magazine.ammo_count())
 			eject_magazine(user)
 			return
