@@ -22,7 +22,6 @@
 	var/internals_slot = null //ID of slot containing a gas tank
 	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
 	var/list/implants = null
-	var/list/mind_traits = null
 	var/accessory = null
 
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
@@ -107,9 +106,6 @@
 			for(var/implant_type in implants)
 				var/obj/item/implant/I = new implant_type(H)
 				I.implant(H, null, TRUE)
-		if(mind_traits && H.mind)
-			for(var/mt in mind_traits)
-				H.mind.add_trait(mt, OUTFIT_TRAIT)
 
 	H.update_body()
 	return TRUE

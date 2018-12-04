@@ -133,7 +133,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	. = ..()
 
 	grant_all_languages()
-	grant_observer_traits()
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -842,6 +841,3 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
-
-/mob/dead/observer/proc/grant_observer_traits()
-	add_trait(TRAIT_DISK_VERIFIER, OBSERVER_TRAIT)

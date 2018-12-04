@@ -26,6 +26,9 @@ Captain
 /datum/job/captain/get_access()
 	return get_all_accesses()
 
+/datum/job/captain/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	H.mind.add_trait(TRAIT_DISK_VERIFIER, JOB_TRAIT)
+
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
@@ -50,7 +53,6 @@ Captain
 	duffelbag = /obj/item/storage/backpack/duffelbag/captain
 
 	implants = list(/obj/item/implant/mindshield)
-	mind_traits = list(TRAIT_DISK_VERIFIER)
 	accessory = /obj/item/clothing/accessory/medal/gold/captain
 
 	chameleon_extras = list(/obj/item/gun/energy/e_gun, /obj/item/stamp/captain)

@@ -88,8 +88,8 @@
 #define TRAUMA_TRAIT "trauma"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
-#define OUTFIT_TRAIT "outfit"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
+#define JOB_TRAIT "job"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -102,5 +102,6 @@
 #define GENETICS_SPELL "genetics_spell"
 #define EYES_COVERED "eyes_covered"
 #define CULT_EYES "cult_eyes"
-#define OBSERVER_TRAIT "observer-trait"
 #define SCRYING_ORB "scrying-orb"
+#define NUKEOP_TRAIT "nuke-op"
+#define DEATHSQUAD_TRAIT "deathsquad"
