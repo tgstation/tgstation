@@ -100,7 +100,7 @@
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
-	icon_state = "mini-uzi"
+	icon_state = "miniuzi"
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
 	bolt_type = BOLT_TYPE_OPEN
@@ -234,6 +234,8 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	..()
+	if(!cover_open)
+		to_chat(user, "It seems like you could use an <b>empty hand</b> to open the dust cover.")
 	if(cover_open && magazine)
 		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
 
@@ -248,10 +250,9 @@
 	update_icon()
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/update_icon() //TODO: fix
+/obj/item/gun/ballistic/automatic/l6_saw/update_icon() 
 	. = ..()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEILING(get_ammo(0)/12.5, 1)*25 : "-empty"][suppressed ? "-suppressed" : ""]"
-	item_state = "l6[cover_open ? "openmag" : "closedmag"]"
+	add_overlay("l6_door_[cover_open ? "open" : "closed"]")
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
