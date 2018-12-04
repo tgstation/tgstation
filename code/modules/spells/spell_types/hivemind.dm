@@ -7,6 +7,7 @@
 	action_icon_state = "spell_default"
 	clothes_req = 0
 	human_req = 1
+	antimagic_allowed = TRUE
 	range = 0 //SNOWFLAKE, 0 is unlimited for target_external=0 spells
 	var/target_external = 0 //Whether or not we select targets inside or outside of the hive
 

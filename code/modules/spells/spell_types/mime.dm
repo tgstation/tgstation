@@ -9,6 +9,7 @@
 	summon_lifespan = 300
 	charge_max = 300
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	range = 0
 	cast_sound = null
 	human_req = TRUE
@@ -34,6 +35,7 @@
 	panel = "Mime"
 	clothes_req = FALSE
 	human_req = TRUE
+	antimagic_allowed = TRUE
 	charge_max = 3000
 	range = -1
 	include_user = TRUE
@@ -76,6 +78,7 @@
 	charge_max = 600
 	sound =  null
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	range = -1
 	include_user = TRUE
 
@@ -99,6 +102,7 @@
 	panel = "Mime"
 	charge_max = 300
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20

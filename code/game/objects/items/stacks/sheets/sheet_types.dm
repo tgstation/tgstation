@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("white softcap", /obj/item/clothing/head/soft/mime, 2), \
 	new/datum/stack_recipe("white beanie", /obj/item/clothing/head/beanie, 2), \
 	null, \
-	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/sunglasses/blindfold, 2), \
+	new/datum/stack_recipe("blindfold", /obj/item/clothing/glasses/blindfold, 2), \
 	))
 
 /obj/item/stack/sheet/cloth
