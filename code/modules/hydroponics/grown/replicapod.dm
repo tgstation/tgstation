@@ -1,4 +1,5 @@
 // A very special plant, deserving it's own file.
+//A weed has grown in the special file!
 
 /obj/item/seeds/replicapod
 	name = "pack of replica pod seeds"
@@ -131,3 +132,45 @@
 
 	parent.update_tray()
 	return result
+
+/obj/item/seeds/genesispod
+	name = "pack of genesis pod seeds"
+	desc = "These seeds grow into genesis pods. They say these are used to harvest PODDERS."
+	icon_state = "seed-replicapod"
+	species = "genesispod"
+	plantname = "Genesis Pod"
+	product = /obj/item/seeds/genesispod
+	lifespan = 50
+	endurance = 8
+	maturation = 10
+	production = 1
+	yield = 1 
+	potency = 30
+
+/obj/item/seeds/genesispod/process()
+	var/obj/machinery/hydroponics/parent = loc
+	if(parent.harvest)
+		notify_ghosts("A genesis pod has matured in [get_area(src)]", source = parent)
+		STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/seeds/genesispod/proc/create_podman(mob/dead/observer/ghost)
+	var/obj/machinery/hydroponics/parent = loc
+	if(!parent.harvest)
+		return
+
+	var/confirm = alert("Become a podperson? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(confirm == "No")
+		return
+
+	var/mob/living/carbon/human/podman = new /mob/living/carbon/human(get_turf(parent))
+	podman.hardset_dna(mrace = new /datum/species/pod)
+	name_podperson(podman)
+	podman.ckey = ghost.ckey
+
+/obj/item/seeds/genesispod/afterattack(obj/target, mob/user, proximity)
+	if(istype(loc, /obj/machinery/hydroponics))
+		RegisterSignal(loc, COMSIG_ATOM_ATTACK_GHOST, .proc/create_podman)
+		START_PROCESSING(SSprocessing, src)
+
+	
+

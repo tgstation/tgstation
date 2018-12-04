@@ -16,7 +16,7 @@
 	for contact from your creators. Estimated time of last contact: Deployment, 5x10^3 millennia ago.</b>"
 	assignedrole = "Lifebringer"
 
-/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+/proc/name_podperson(mob/living/new_spawn)
 	var/plant_name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
 	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
 	new_spawn.fully_replace_character_name(null,plant_name)
@@ -24,6 +24,9 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude" //You're a plant, partner
 		H.update_body()
+
+/obj/effect/mob_spawn/human/seed_vault/special(mob/living/new_spawn)
+	name_podperson(new_spawn)
 
 /obj/effect/mob_spawn/human/seed_vault/Destroy()
 	new/obj/structure/fluff/empty_terrarium(get_turf(src))
