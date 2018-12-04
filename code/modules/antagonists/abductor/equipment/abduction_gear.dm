@@ -787,3 +787,11 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	airlock_type = /obj/machinery/door/airlock/abductor
 	material_type = /obj/item/stack/sheet/mineral/abductor
 	noglass = TRUE
+
+/obj/item/clothing/under/abductor
+	desc = "The most advanced form of jumpsuit known to reality, looks uncomfortable."
+	name = "alien jumpsuit"
+	icon_state = "abductor-suit"
+	item_state = "bl_suit"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 10, bio = 10, rad = 0, fire = 0, acid = 0)
+	can_adjust = 0
