@@ -4,6 +4,8 @@
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/revolver357shot.ogg'
+	load_sound = 'sound/weapons/revolverload.ogg'
+	eject_sound = 'sound/weapons/revolverempty.ogg'
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
 	dry_fire_sound = 'sound/weapons/revolverdry.ogg'
