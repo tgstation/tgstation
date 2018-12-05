@@ -12,10 +12,12 @@
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_YELLOW
 	light_power = 3
+	var/disabled = FALSE
 	var/operating = FALSE // Is it on?
 	var/dirty = 0 // = {0..100} Does it need cleaning?
 	var/broken = 0 // ={0,1,2} How broken is it???
 	var/max_n_of_items = 10 // whatever fat fuck made this a global var needs to look at themselves in the mirror sometime
+	var/list/ingredients
 	var/efficiency = 0
 	var/datum/looping_sound/microwave/soundloop
 
@@ -27,8 +29,15 @@
 
 /obj/machinery/microwave/Initialize()
 	. = ..()
+	wires = new /datum/wires/microwave(src)
+	ingredients = list()
+
 	create_reagents(100)
 	soundloop = new(list(src), FALSE)
+
+/obj/machinery/microwave/Destroy()
+	QDEL_NULL(wires)
+	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
 	var/E
@@ -62,6 +71,10 @@
 
 	if(default_deconstruction_crowbar(O))
 		return
+
+	if(panel_open && is_wire_tool(O))
+		wires.interact(user)
+		return TRUE
 
 	if(broken > 0)
 		if(broken == 2 && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a screwdriver
@@ -136,18 +149,19 @@
 		var/obj/item/storage/T = O
 		var/loaded = 0
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
-			if (contents.len>=max_n_of_items)
+			if (ingredients.len>=max_n_of_items)
 				to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 				return 1
 			if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 				loaded++
+				ingredients += S
 
 		if(loaded)
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
 
 
 	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
-		if (contents.len>=max_n_of_items)
+		if (ingredients.len>=max_n_of_items)
 			to_chat(user, "<span class='warning'>[src] is full, you can't put anything in!</span>")
 			return 1
 		else
@@ -155,6 +169,7 @@
 				to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return 0
 
+			ingredients += O
 			user.visible_message( \
 				"[user] has added \the [O] to \the [src].", \
 				"<span class='notice'>You add \the [O] to \the [src].</span>")
@@ -181,10 +196,10 @@
 	else if(operating)
 		dat += "Microwaving in progress!<BR>Please wait...!</div>"
 	else if(dirty==100)
-		dat += "ERROR: >> 0 --Response input zero<BR>Contact your operator of the device manifactor support.</div>"
+		dat += "ERROR: >> 0 --Response input zero<BR>Contact your operator of the device manufacturer support.</div>"
 	else
 		var/list/items_counts = new
-		for (var/obj/O in contents)
+		for (var/obj/O in ingredients)
 			if(istype(O, /obj/item/stack/))
 				var/obj/item/stack/S = O
 				items_counts[O.name] += S.amount
@@ -213,6 +228,14 @@
 /obj/machinery/microwave/proc/cook()
 	if(stat & (NOPOWER|BROKEN))
 		return
+	if(operating || broken > 0 || panel_open || !anchored || dirty == 100)
+		return
+
+	if(disabled)
+		audible_message("[src] buzzes.")
+		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		return
+
 	start()
 
 	if (prob(max(5/efficiency-5,dirty*5))) //a clean unupgraded microwave has no risk of failure
@@ -221,7 +244,6 @@
 			muck_finish()
 			return
 		muck_finish()
-		return
 
 	else
 		if(has_extra_item() && prob(min(dirty*5,100)) && !microwaving(4))
@@ -234,7 +256,7 @@
 		stop()
 
 		var/metal = 0
-		for(var/obj/item/O in contents)
+		for(var/obj/item/O in ingredients)
 			O.microwave_act(src)
 			if(O.materials[MAT_METAL])
 				metal += O.materials[MAT_METAL]
@@ -246,8 +268,8 @@
 			broke()
 			return
 
-		dropContents()
-		return
+		dropContents(ingredients)
+		ingredients.Cut()
 
 /obj/machinery/microwave/proc/microwaving(seconds as num)
 	for (var/i=1 to seconds)
@@ -258,7 +280,7 @@
 	return 1
 
 /obj/machinery/microwave/proc/has_extra_item()
-	for (var/obj/O in contents)
+	for (var/obj/O in ingredients)
 		if ( \
 				!istype(O, /obj/item/reagent_containers/food) && \
 				!istype(O, /obj/item/grown) \
@@ -285,7 +307,7 @@
 	abort()
 
 /obj/machinery/microwave/proc/dispose()
-	for (var/obj/O in contents)
+	for (var/obj/O in ingredients)
 		O.forceMove(drop_location())
 	to_chat(usr, "<span class='notice'>You dispose of the microwave contents.</span>")
 	updateUsrDialog()
