@@ -252,7 +252,50 @@
 				reagents.trans_to(P,10, transfered_by = usr)
 			. = TRUE
 		if("pillStyle")
-			pill_style = input(usr, "Choose your desired pill style:", "Pill Style")  as null|anything in list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21)
+			var/pill_name = input(usr, "Choose your desired pill style:", "Pill Style")  as null|anything in list("capsule 1", "capsule 2", "capsule 3", "capsule 4", "capsule 5", "capsule 6", "capsule 7", "capsule 8", "capsule 9", "capsule 10", "tablet 1", "tablet 2", "tablet 3", "tablet 4", "tablet 5", "tablet 6", "tablet 7", "tablet 8", "tablet 9", "tablet 10", "tablet 11")
+			switch(pill_name)
+				if("capsule1")
+					pill_style = 1
+				if("capsule2")
+					pill_style = 2
+				if("capsule3")
+					pill_style = 3
+				if("capsule4")
+					pill_style = 4
+				if("capsule5")
+					pill_style = 5
+				if("capsule6")
+					pill_style = 6
+				if("capsule7")
+					pill_style = 18
+				if("capsule8")
+					pill_style = 19
+				if("capsule9")
+					pill_style = 20
+				if("capsule10")
+					pill_style = 20
+				if("tablet1")
+					pill_style = 7
+				if("tablet2")
+					pill_style = 8
+				if("tablet3")
+					pill_style = 9
+				if("tablet4")
+					pill_style = 10
+				if("tablet5")
+					pill_style = 11
+				if("tablet6")
+					pill_style = 12
+				if("tablet7")
+					pill_style = 13
+				if("tablet8")
+					pill_style = 14
+				if("tablet9")
+					pill_style = 15
+				if("tablet10")
+					pill_style = 16
+				if("tablet11")
+					pill_style = 17
 		if("createPatch")
 			var/many = params["many"]
 			if(reagents.total_volume == 0)
