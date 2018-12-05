@@ -165,7 +165,7 @@
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	magazine.forceMove(drop_location())
 	if (tac_load)
-		insert_magazine()
+		insert_magazine(user, tac_load, FALSE)
 		to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
 	user.put_in_hands(magazine)
 	magazine.update_icon()
@@ -186,23 +186,23 @@
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
-	if (istype(A, /obj/item/ammo_box/magazine))
-		if (!internal_magazine)
-			var/obj/item/ammo_box/magazine/AM = A
-			if (!magazine && istype(AM, mag_type))
-				insert_magazine(user, AM)
-			else if (magazine)
-				if(tac_reloads)
-					eject_magazine(user, FALSE, AM)
-				else
-					to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
-		else
-			var/num_loaded = magazine.attackby(A, user, params)
-			if (num_loaded)
-				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
-				playsound(src, load_sound, load_sound_volume, load_sound_vary)
-				A.update_icon()
-				update_icon()
+	if (istype(A, /obj/item/ammo_box/magazine) && !internal_magazine)
+		var/obj/item/ammo_box/magazine/AM = A
+		if (!magazine && istype(AM, mag_type))
+			insert_magazine(user, AM)
+		else if (magazine)
+			if(tac_reloads)
+				eject_magazine(user, FALSE, AM)
+			else
+				to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
+			
+	if (istype(A, /obj/item/ammo_casing) && internal_magazine)
+		var/num_loaded = magazine.attackby(A, user, params)
+		if (num_loaded)
+			to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
+			playsound(src, load_sound, load_sound_volume, load_sound_vary)
+			A.update_icon()
+			update_icon()
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
 		if(!can_suppress)
@@ -266,24 +266,24 @@
 		if(!magazine.ammo_count())
 			eject_magazine(user)
 			return
-	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
-		drop_bolt(user)
-		return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
 		var/num_unloaded = 0
 		chambered = null
 		while (get_ammo() > 0)
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round(0)
-			if(CB)
-				CB.forceMove(drop_location())
-				CB.bounce_away(FALSE, NONE)
-				num_unloaded++
+			//if(CB)
+			CB.forceMove(drop_location())
+			CB.bounce_away(FALSE, NONE)
+			num_unloaded++
 		if (num_unloaded)
 			to_chat(user, "<span class='notice'>You unload [num_unloaded] [cartridge_wording]\s from [src].</span>")
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		return
+	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
+		drop_bolt(user)
 		return
 	if (recent_rack > world.time)
 		return
