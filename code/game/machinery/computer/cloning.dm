@@ -437,6 +437,12 @@
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
+
+	if(mob_occupant.stat != DEAD)
+		scantemp = "<font class='bad'>Cannot scan living subject.</font>"
+		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+		return
+		
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
 	if(ishuman(mob_occupant))
