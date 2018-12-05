@@ -31571,7 +31571,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "bxm" = (
-/obj/effect/landmark/xmastree/rdrod,
+/obj/effect/spawner/xmastree/rdrod,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -48009,7 +48009,7 @@
 /area/engine/atmos)
 "clX" = (
 /obj/effect/landmark/event_spawn,
-/obj/effect/landmark/xmastree,
+/obj/effect/spawner/xmastree,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -50208,7 +50208,7 @@
 /area/engine/engineering)
 "csT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/xmastree,
+/obj/effect/spawner/xmastree,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "csU" = (

@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(atoms)
 
 	var/old_initialized
 
-	var/list/late_loaders
+	var/list/late_loaders = list()
 
 	var/list/BadInitializeCalls = list()
 
@@ -26,8 +26,6 @@ SUBSYSTEM_DEF(atoms)
 		return
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
-
-	LAZYINITLIST(late_loaders)
 
 	var/count
 	var/list/mapload_arg = list(TRUE)
