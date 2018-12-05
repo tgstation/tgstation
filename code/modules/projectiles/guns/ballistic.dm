@@ -170,8 +170,8 @@
 		to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
 	user.put_in_hands(old_mag)
 	magazine.update_icon()
-
-	magazine = null
+	if (!tac_load)
+		magazine = null
 	if (display_message)
 		to_chat(user, "<span class='notice'>You pull the [magazine_wording] out of \the [src].</span>")
 	update_icon()
@@ -249,6 +249,7 @@
 			alarmed = 1
 		if (bolt_type == BOLT_TYPE_LOCKING)
 			bolt_locked = TRUE
+			update_icon()
 	return
 
 /obj/item/gun/ballistic/afterattack()
