@@ -794,7 +794,7 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(M.has_trait(TRAIT_NOCLONE)) && !M.hellbound)
+		if(!M.suiciding && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))

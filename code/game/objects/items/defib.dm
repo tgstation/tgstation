@@ -437,7 +437,7 @@
 	do_help(H, user)
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
-	if(H.suiciding || H.has_trait(TRAIT_NOCLONE) || H.hellbound)
+	if(H.suiciding || H.hellbound)
 		return
 	if((world.time - H.timeofdeath) > tlimit)
 		return
