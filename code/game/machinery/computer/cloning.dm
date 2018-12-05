@@ -66,7 +66,7 @@
 
 	for(var/datum/data/record/R in records)
 		var/datum/mind/clonemind = locate(R.fields["mind"]) in SSticker.minds
-		if(!QDELETED(clonemind.current) && (clonemind.current.stat != DEAD)
+		if(!QDELETED(clonemind.current) && (clonemind.current.stat != DEAD))
 			records -= R
 			continue
 		if(!should_autoprocess)
