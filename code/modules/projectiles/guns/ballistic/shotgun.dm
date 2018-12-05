@@ -16,6 +16,7 @@
 	weapon_weight = WEAPON_MEDIUM
 	semi_auto = FALSE
 	internal_magazine = TRUE
+	casing_ejector = FALSE
 	bolt_wording = "pump"
 	cartridge_wording = "shell"
 
@@ -61,6 +62,7 @@
 	can_bayonet = TRUE
 	knife_x_offset = 27
 	knife_y_offset = 13
+	bolt_wording = "bolt"
 
 //TODO: bolt action behavior
 
@@ -95,12 +97,6 @@
 	flags_1 = NONE
 
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted/arcane_barrage
-
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/Initialize()
-	. = ..()
-	bolt_open = TRUE
-	rack()
-	gun_type = type
 
 /obj/item/gun/ballistic/shotgun/boltaction/enchanted/dropped()
 	..()
@@ -244,7 +240,7 @@
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 
-/obj/item/gun/ballistic/revolver/doublebarrel/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/shotgun/doublebarrel/attackby(obj/item/A, mob/user, params)
 	..()
 	if(istype(A, /obj/item/melee/transforming/energy))
 		var/obj/item/melee/transforming/energy/W = A

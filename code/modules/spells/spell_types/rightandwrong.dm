@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/gyropistol,
 	/obj/item/gun/energy/pulse,
 	/obj/item/gun/ballistic/automatic/pistol/suppressed,
-	/obj/item/gun/ballistic/revolver/doublebarrel,
+	/obj/item/gun/ballistic/shotgun/doublebarrel,
 	/obj/item/gun/ballistic/shotgun,
 	/obj/item/gun/ballistic/shotgun/automatic/combat,
 	/obj/item/gun/ballistic/automatic/ar,

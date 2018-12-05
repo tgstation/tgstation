@@ -14634,7 +14634,7 @@
 "GR" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/beanbag,
-/obj/item/gun/ballistic/revolver/doublebarrel,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
