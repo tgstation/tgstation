@@ -154,18 +154,22 @@
 		to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 		return
 
-/obj/item/gun/ballistic/proc/eject_magazine(mob/user, display_message = TRUE)
+/obj/item/gun/ballistic/proc/eject_magazine(mob/user, display_message = TRUE, obj/item/ammo_box/magazine/tac_load = null)
 	if(bolt_type == BOLT_TYPE_OPEN)
 		var/obj/item/ammo_casing/AC = chambered
 		magazine.give_round(AC)
 		chambered = null
-	magazine.forceMove(drop_location())
-	user.put_in_hands(magazine)
-	magazine.update_icon()
-	if(magazine.ammo_count())
+	if (magazine.ammo_count())
 		playsound(src, load_sound, load_sound_volume, load_sound_vary)
 	else
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+	magazine.forceMove(drop_location())
+	if (tac_load)
+		insert_magazine()
+		to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
+	user.put_in_hands(magazine)
+	magazine.update_icon()
+
 	magazine = null
 	if (display_message)
 		to_chat(user, "<span class='notice'>You pull the [magazine_wording] out of \the [src].</span>")
@@ -189,11 +193,7 @@
 				insert_magazine(user, AM)
 			else if (magazine)
 				if(tac_reloads)
-					var/obj/item/ammo_box_magazine/old_mag = magazine
-					eject_magazine(user, FALSE)
-					insert_magazine(user, AM, FALSE)
-					user.put_in_hands(old_mag)
-					to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
+					eject_magazine(user, FALSE, AM)
 				else
 					to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
 		else
