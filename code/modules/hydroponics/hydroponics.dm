@@ -876,23 +876,7 @@
 	if(issilicon(user)) //How does AI know what plant is?
 		return
 	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
-		var/mob/living/L = user.pulling
-		if(!iscarbon(L) || (ishuman(L) && !(obj_flags & EMAGGED)))
-			to_chat(user, "<span class='danger'>This item is not suitable for composting!</span>")
-			return
-		var/mob/living/carbon/C = L
-		for(var/obj/item/I in C.held_items + C.get_equipped_items())
-			if(!(I.item_flags & NODROP))
-				to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
-				return
-		if(C.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject is living and not suitable for composting!</span>")
-			return
-		user.visible_message("<span class='danger'>[user] starts to put [C] into [src]!</span>")
-		add_fingerprint(user)
-		if(do_after(user, 40, target = src))
-			user.visible_message("<span class='danger'>[user] stuffs [C] into [src]!</span>")
-			compost_mob(C, user)
+		insert_mob(user.pulling, user)
 		return
 	if(harvest)
 		return myseed.harvest(user)
@@ -907,7 +891,38 @@
 		if(user)
 			examine(user)
 
-/obj/machinery/hydroponics/proc/compost_mob(mob/living/carbon/C, mob/user)
+/obj/machinery/hydroponics/MouseDrop_T(mob/target, mob/user)
+	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target))
+		return
+	if(isliving(target))
+		insert_mob(target, user)
+
+/obj/machinery/hydroponics/proc/insert_mob(mob/living/L, mob/user)
+	if(ishuman(L) && !(obj_flags & EMAGGED))
+		to_chat(user, "<span class='danger'>Safety features prevent composting this subject!</span>")
+		return
+	if(L.stat != DEAD)
+		to_chat(user, "<span class='danger'>Subject is living and not suitable for composting!</span>")
+		return
+	if(istype(L, /mob/living/carbon))
+		var/mob/living/carbon/C = L
+		for(var/obj/item/I in C.held_items + C.get_equipped_items())
+			if(!(I.item_flags & NODROP))
+				to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
+				return
+		user.visible_message("<span class='danger'>[user] starts to put [C] into [src]!</span>")
+		add_fingerprint(user)
+		if(do_after(user, 40, target = src))
+			user.visible_message("<span class='danger'>[user] stuffs [C] into [src]!</span>")
+			compost_mob(C, user, 10)
+	else
+		to_chat(user, "<span class='danger'>This subjet is not suitable for composting!</span>")
+		return
+
+/obj/machinery/hydroponics/soil/insert_mob(mob/living/L, mob/user)
+		return
+
+/obj/machinery/hydroponics/proc/compost_mob(mob/living/carbon/C, mob/user, cycles)
 	if(composting)
 		return
 	composting = TRUE
@@ -918,7 +933,7 @@
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	log_combat(user, C, "composted")
 	qdel(C)
-	compost_cycles += 10
+	compost_cycles += cycles
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	composting = FALSE
 	update_icon()
@@ -940,12 +955,21 @@
 	update_icon()
 	return
 
+/obj/machinery/hydroponics/soil/compost_mob(obj/item/O, mob/user, cycles)
+	return
+
+/obj/machinery/hydroponics/soil/compost_flesh(obj/item/O, mob/user, cycles)
+	return
+
 /obj/machinery/hydroponics/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	playsound(src, "sparks", 75, 1)
 	do_sparks(1, TRUE, src)
 	obj_flags |= EMAGGED
+
+/obj/machinery/hydroponics/soil/emag_act(mob/user)
+	return
 
 /obj/machinery/hydroponics/proc/update_tray(mob/user)
 	harvest = 0
