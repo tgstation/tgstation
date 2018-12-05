@@ -183,8 +183,10 @@
 				insert_magazine(user, AM)
 			else if (magazine)
 				if(tac_reloads)
+					var/obj/item/ammo_box_magazine/old_mag = magazine
 					eject_magazine(user, FALSE)
 					insert_magazine(user, AM, FALSE)
+					user.put_in_hands(old_mag)
 					to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
 				else
 					to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
