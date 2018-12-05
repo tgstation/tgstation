@@ -13,6 +13,7 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
+	var/pill_style = 1
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
@@ -125,6 +126,9 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pills)
+		assets.send(user)
+
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
@@ -138,6 +142,8 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
+	data["pillStyle"] = pill_style
+	data["pillImage"] = "pill[pill_style]"
 
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
@@ -231,6 +237,7 @@
 					else
 						P = new(drop_location())
 					P.name = trim("[name] pill")
+					P.icon_state = "pill[pill_style]"
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each, transfered_by = usr)
 			else
@@ -244,7 +251,8 @@
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10, transfered_by = usr)
 			. = TRUE
-
+		if("pillStyle")
+			pill_style = input(usr, "Choose your desired pill style:", "Pill Style")  as null|anything in list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21)
 		if("createPatch")
 			var/many = params["many"]
 			if(reagents.total_volume == 0)

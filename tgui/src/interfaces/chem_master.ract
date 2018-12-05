@@ -58,6 +58,8 @@
 			{{/if}}
 			
 			<br/>
+			<img src='{{data.pillImage}}'><ui-button action='pillStyle'>Choose Pill Style</ui-button>
+			<br/>
 			<br/>
 			<ui-button action='createPill' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Pill (max 50µ)</ui-button>
 			<br/>
