@@ -41,9 +41,11 @@
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	addiction_threshold = 30
+	addiction_threshold = 10
 	taste_description = "smoke"
 	trippy = FALSE
+	overdose_threshold=15
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
@@ -56,6 +58,12 @@
 	M.AdjustParalyzed(-20, FALSE)
 	M.AdjustImmobilized(-20, FALSE)
 	M.adjustStaminaLoss(-0.5*REM, 0)
+	..()
+	. = 1
+
+/datum/reagent/drug/nicotine/overdose_process(mob/living/M)
+	M.adjustToxLoss(0.1*REM, 0)
+	M.adjustOxyLoss(1.1*REM, 0)
 	..()
 	. = 1
 
@@ -83,7 +91,7 @@
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustBrainLoss(2*REM)
 	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -171,10 +179,10 @@
 
 /datum/reagent/drug/methamphetamine/on_mob_add(mob/living/L)
 	..()
-	L.add_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/drug/methamphetamine/on_mob_delete(mob/living/L)
-	L.remove_trait(TRAIT_GOTTAGOREALLYFAST, id)
+	L.remove_movespeed_modifier(id)
 	..()
 
 /datum/reagent/drug/methamphetamine/on_mob_life(mob/living/carbon/M)

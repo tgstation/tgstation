@@ -1,16 +1,17 @@
 // Used for translating channels to tokens on examination
 GLOBAL_LIST_INIT(channel_tokens, list(
-	"Common" = ";",
-	"Science" = ":n",
-	"Command" = ":c",
-	"Medical" = ":m",
-	"Engineering" = ":e",
-	"Security" = ":s",
-	"CentCom" = ":y",
-	"Syndicate" = ":t",
-	"Supply" = ":u",
-	"Service" = ":v",
-	"Binary" = ":b"
+	RADIO_CHANNEL_COMMON = RADIO_KEY_COMMON,
+	RADIO_CHANNEL_SCIENCE = RADIO_TOKEN_SCIENCE,
+	RADIO_CHANNEL_COMMAND = RADIO_TOKEN_COMMAND,
+	RADIO_CHANNEL_MEDICAL = RADIO_TOKEN_MEDICAL,
+	RADIO_CHANNEL_ENGINEERING = RADIO_TOKEN_ENGINEERING,
+	RADIO_CHANNEL_SECURITY = RADIO_TOKEN_SECURITY,
+	RADIO_CHANNEL_CENTCOM = RADIO_TOKEN_CENTCOM,
+	RADIO_CHANNEL_SYNDICATE = RADIO_TOKEN_SYNDICATE,
+	RADIO_CHANNEL_SUPPLY = RADIO_TOKEN_SUPPLY,
+	RADIO_CHANNEL_SERVICE = RADIO_TOKEN_SERVICE,
+	MODE_BINARY = MODE_TOKEN_BINARY,
+	RADIO_CHANNEL_AI_PRIVATE = RADIO_TOKEN_AI_PRIVATE
 ))
 
 /obj/item/radio/headset
@@ -32,22 +33,22 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/examine(mob/user)
 	..()
-	
+
 	if(item_flags & IN_INVENTORY && loc == user)
 		// construction of frequency description
-		var/list/avail_chans = list("Use ; for the currently tuned frequency")
+		var/list/avail_chans = list("Use [RADIO_KEY_COMMON] for the currently tuned frequency")
 		if(translate_binary)
-			avail_chans += "use :b for Binary"
+			avail_chans += "use [MODE_TOKEN_BINARY] for [MODE_BINARY]"
 		if(length(channels))
 			for(var/i in 1 to length(channels))
 				if(i == 1)
-					avail_chans += "use :h or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
+					avail_chans += "use [MODE_TOKEN_DEPARTMENT] or [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 				else
 					avail_chans += "use [GLOB.channel_tokens[channels[i]]] for [lowertext(channels[i])]"
 		to_chat(user, "<span class='notice'>A small screen on the headset displays the following available frequencies:\n[english_list(avail_chans)].")
-		
+
 		if(command)
-			to_chat(user, "<span class='notice'>Alt-click to toggle the high-volume mode.</span>")
+			to_chat(user, "<span class='info'>Alt-click to toggle the high-volume mode.</span>")
 	else
 		to_chat(user, "<span class='notice'>A small screen on the headset flashes, it's too small to read without holding or wearing the headset.</span>")
 

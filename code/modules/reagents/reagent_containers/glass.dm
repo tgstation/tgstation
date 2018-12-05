@@ -56,6 +56,9 @@
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
+	if(!spillable)
+		return
+
 	if(target.is_refillable()) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")

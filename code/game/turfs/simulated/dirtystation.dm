@@ -41,7 +41,6 @@
 		//Construction zones. Blood, sweat, and oil.  Oh, and dirt.
 	var/static/list/engine_dirt_areas = typecacheof(list(/area/engine,
 														/area/crew_quarters/heads/chief,
-														/area/ruin/space/derelict/assembly_line,
 														/area/science/robotics,
 														/area/maintenance,
 														/area/construction,
@@ -100,9 +99,9 @@
 	if(is_type_in_typecache(A, kitchen_dirt_areas))
 		if(prob(60))
 			if(prob(50))
-				new /obj/effect/decal/cleanable/egg_smudge(src)
+				new /obj/effect/decal/cleanable/food/egg_smudge(src)
 			else
-				new /obj/effect/decal/cleanable/flour(src)
+				new /obj/effect/decal/cleanable/food/flour(src)
 		return
 
 		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.

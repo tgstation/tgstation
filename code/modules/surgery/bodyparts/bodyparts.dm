@@ -21,7 +21,7 @@
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
 
-	var/disabled = FALSE //If TRUE, limb is as good as missing
+	var/disabled = BODYPART_NOT_DISABLED //If disabled, limb is as good as missing
 	var/body_damage_coeff = 1 //Multiplier of the limb's damage that gets applied to the mob
 	var/stam_damage_coeff = 0.5
 	var/brutestate = 0
@@ -110,7 +110,7 @@
 	else
 		return ..()
 
-/obj/item/bodypart/throw_impact(atom/hit_atom)
+/obj/item/bodypart/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(status != BODYPART_ROBOTIC)
 		playsound(get_turf(src), 'sound/misc/splort.ogg', 50, 1, -1)
@@ -136,7 +136,7 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life()
 	if(stamina_dam > DAMAGE_PRECISION)					//DO NOT update health here, it'll be done in the carbon's life.
-		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, only_robotic = FALSE, only_organic = FALSE, updating_health = FALSE))
+		if(heal_damage(brute = 0, burn = 0, stamina = stam_heal_tick, null, updating_health = FALSE))
 			. |= BODYPART_LIFE_UPDATE_HEALTH
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
@@ -146,7 +146,7 @@
 	if(owner && (owner.status_flags & GODMODE))
 		return FALSE	//godmode
 
-	if(required_status && status != required_status)
+	if(required_status && (status != required_status))
 		return FALSE
 
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
@@ -188,18 +188,15 @@
 		if(stamina > DAMAGE_PRECISION)
 			owner.update_stamina()
 	consider_processing()
-	check_disabled()
+	update_disabled()
 	return update_bodypart_damage_state()
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, stamina, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
+/obj/item/bodypart/proc/heal_damage(brute, burn, stamina, required_status, updating_health = TRUE)
 
-	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
-		return
-
-	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
+	if(required_status && (status != required_status)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
 	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
@@ -208,7 +205,7 @@
 	if(owner && updating_health)
 		owner.updatehealth()
 	consider_processing()
-	check_disabled()
+	update_disabled()
 	return update_bodypart_damage_state()
 
 //Returns total damage.
@@ -219,15 +216,22 @@
 	return total
 
 //Checks disabled status thresholds
-/obj/item/bodypart/proc/check_disabled()
-	if(!can_dismember() || owner.has_trait(TRAIT_NODISMEMBER))
-		return
-	if(!disabled && (get_damage(TRUE) >= max_damage))
-		set_disabled(TRUE)
-	else if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
-		set_disabled(FALSE)
+/obj/item/bodypart/proc/update_disabled()
+	set_disabled(is_disabled())
 
-/obj/item/bodypart/proc/set_disabled(new_disabled = TRUE)
+/obj/item/bodypart/proc/is_disabled()
+	if(has_trait(TRAIT_PARALYSIS))
+		return BODYPART_DISABLED_PARALYSIS
+	if(can_dismember() && !owner.has_trait(TRAIT_NODISMEMBER))
+		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
+		if((get_damage(TRUE) >= max_damage))
+			return BODYPART_DISABLED_DAMAGE
+		if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
+			return BODYPART_NOT_DISABLED
+	else
+		return BODYPART_NOT_DISABLED
+
+/obj/item/bodypart/proc/set_disabled(new_disabled)
 	if(disabled == new_disabled)
 		return
 	disabled = new_disabled
@@ -311,7 +315,7 @@
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
-		if(MUTCOLORS in S.species_traits)
+		if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
 			if(S.fixed_mut_color)
 				species_color = S.fixed_mut_color
 			else
@@ -493,15 +497,27 @@
 	px_y = 0
 	stam_heal_tick = 2
 
-/obj/item/bodypart/l_arm/set_disabled(new_disabled = TRUE)
+/obj/item/bodypart/l_arm/is_disabled()
+	if(owner.has_trait(TRAIT_PARALYSIS_L_ARM))
+		return BODYPART_DISABLED_PARALYSIS
+	return ..()
+
+/obj/item/bodypart/l_arm/set_disabled(new_disabled)
 	. = ..()
-	if(disabled)
+	if(disabled == new_disabled)
+		return
+	if(disabled == BODYPART_DISABLED_DAMAGE)
 		if(owner.stat > UNCONSCIOUS)
 			owner.emote("scream")
 		if(. && (owner.stat > DEAD))
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	else if(disabled == BODYPART_DISABLED_PARALYSIS)
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+			if(held_index)
+				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/L = owner.hud_used.hand_slots["[held_index]"]
 		if(L)
@@ -546,15 +562,27 @@
 	stam_heal_tick = 2
 	max_stamina_damage = 50
 
-/obj/item/bodypart/r_arm/set_disabled(new_disabled = TRUE)
+/obj/item/bodypart/r_arm/is_disabled()
+	if(owner.has_trait(TRAIT_PARALYSIS_R_ARM))
+		return BODYPART_DISABLED_PARALYSIS
+	return ..()
+
+/obj/item/bodypart/r_arm/set_disabled(new_disabled)
 	. = ..()
-	if(disabled)
+	if(disabled == new_disabled)
+		return
+	if(disabled == BODYPART_DISABLED_DAMAGE)
 		if(owner.stat > UNCONSCIOUS)
 			owner.emote("scream")
 		if(. && (owner.stat > DEAD))
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
 		if(held_index)
 			owner.dropItemToGround(owner.get_item_for_held_index(held_index))
+	else if(disabled == BODYPART_DISABLED_PARALYSIS)
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
+			if(held_index)
+				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	if(owner.hud_used)
 		var/obj/screen/inventory/hand/R = owner.hud_used.hand_slots["[held_index]"]
 		if(R)
@@ -596,13 +624,23 @@
 	stam_heal_tick = 2
 	max_stamina_damage = 50
 
-/obj/item/bodypart/l_leg/set_disabled(new_disabled = TRUE)
+/obj/item/bodypart/l_leg/is_disabled()
+	if(owner.has_trait(TRAIT_PARALYSIS_L_LEG))
+		return BODYPART_DISABLED_PARALYSIS
+	return ..()
+
+/obj/item/bodypart/l_leg/set_disabled(new_disabled)
 	. = ..()
-	if(disabled)
+	if(disabled == new_disabled)
+		return
+	if(disabled == BODYPART_DISABLED_DAMAGE)
 		if(owner.stat > UNCONSCIOUS)
 			owner.emote("scream")
 		if(. && (owner.stat > DEAD))
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+	else if(disabled == BODYPART_DISABLED_PARALYSIS)
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/l_leg/digitigrade
 	name = "left digitigrade leg"
@@ -645,13 +683,23 @@
 	max_stamina_damage = 50
 	stam_heal_tick = 2
 
-/obj/item/bodypart/r_leg/set_disabled(new_disabled = TRUE)
+/obj/item/bodypart/r_leg/is_disabled()
+	if(owner.has_trait(TRAIT_PARALYSIS_R_LEG))
+		return BODYPART_DISABLED_PARALYSIS
+	return ..()
+
+/obj/item/bodypart/r_leg/set_disabled(new_disabled)
 	. = ..()
-	if(disabled)
+	if(disabled == new_disabled)
+		return
+	if(disabled == BODYPART_DISABLED_DAMAGE)
 		if(owner.stat > UNCONSCIOUS)
 			owner.emote("scream")
 		if(. && (owner.stat > DEAD))
 			to_chat(owner, "<span class='userdanger'>Your [name] is too damaged to function!</span>")
+	else if(disabled == BODYPART_DISABLED_PARALYSIS)
+		if(. && (owner.stat > DEAD))
+			to_chat(owner, "<span class='userdanger'>You can't feel your [name]!</span>")
 
 /obj/item/bodypart/r_leg/digitigrade
 	name = "right digitigrade leg"
@@ -676,5 +724,3 @@
 	dismemberable = 0
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
-
-#undef WARN_AND_SCREAM

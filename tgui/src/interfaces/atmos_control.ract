@@ -27,7 +27,7 @@
         {{data.inputting ? "Injecting": "Off"}}</ui-button>
     </ui-section>
     <ui-section label='Input Rate'>
-      <span>{{Math.fixed(adata.inputRate)}} L/s</span>
+      <ui-button icon='pencil' action='rate'>{{Math.round(adata.inputRate)}} L/s</ui-button>
     </ui-section>
     <ui-section label='Output Regulator'>
       <ui-button icon='{{data.outputting ? "power-off" : "close"}}' style='{{data.outputting ? "selected" : null}}' action='output'>

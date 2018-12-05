@@ -17,6 +17,7 @@
     "babelify-external-helpers": "1.1.0",
     "browserify": "13.0.0",
     "bundle-collapser": "1.2.1",
+    "cached-path-relative": "1.0.2",
     "dom4": "1.7.0",
     "es3ify": "0.2.1",
     "fg-loadcss": "1.0.0-0",

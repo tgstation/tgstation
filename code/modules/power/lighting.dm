@@ -9,7 +9,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-
+#define BROKEN_SPARKS_MIN 15 SECONDS
+#define BROKEN_SPARKS_MAX 30 SECONDS
 
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
@@ -366,6 +367,14 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+	broken_sparks(start_only=TRUE)
+
+/obj/machinery/light/proc/broken_sparks(start_only=FALSE)
+	if(status == LIGHT_BROKEN && has_power())
+		if(!start_only)
+			do_sparks(3, TRUE, src)
+		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
+		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process()
 	if (!cell)
@@ -602,7 +611,13 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-
+			if(isethereal(H))
+				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
+				if(do_after(user, 50, target = src))
+					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+					H.dna?.species.adjust_charge(5)
+					return
+				
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
@@ -759,7 +774,7 @@
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
 
-/obj/item/light/throw_impact(atom/hit_atom)
+/obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
 		shatter()
 
@@ -780,7 +795,7 @@
 /obj/item/light/Initialize()
 	. = ..()
 	update()
-	
+
 /obj/item/light/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
@@ -791,7 +806,7 @@
 		if(L.has_trait(TRAIT_LIGHT_STEP))
 			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
 		else
-			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)	
+			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()
 

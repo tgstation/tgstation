@@ -7,7 +7,7 @@
 	var/name = "Generic Action"
 	var/desc = null
 	var/obj/target = null
-	var/check_flags = 0
+	var/check_flags = NONE
 	var/processing = FALSE
 	var/obj/screen/movable/action_button/button = null
 	var/buttontooltipstyle = ""
@@ -409,7 +409,7 @@
 	name = "Shift Nerves"
 
 /datum/action/item_action/explosive_implant
-	check_flags = 0
+	check_flags = NONE
 	name = "Activate Explosive Implant"
 
 /datum/action/item_action/toggle_research_scanner
@@ -522,7 +522,7 @@
 
 //Preset for spells
 /datum/action/spell_action
-	check_flags = 0
+	check_flags = NONE
 	background_icon_state = "bg_spell"
 
 /datum/action/spell_action/New(Target)
@@ -578,7 +578,7 @@
 
 //Preset for general and toggled actions
 /datum/action/innate
-	check_flags = 0
+	check_flags = NONE
 	var/active = 0
 
 /datum/action/innate/Trigger()
@@ -599,7 +599,7 @@
 //Preset for an action with a cooldown
 
 /datum/action/cooldown
-	check_flags = 0
+	check_flags = NONE
 	transparent_when_unavailable = FALSE
 	var/cooldown_time = 0
 	var/next_use_time = 0
@@ -659,7 +659,7 @@
 	name = "Language Menu"
 	desc = "Open the language menu to review your languages, their keys, and select your default language."
 	button_icon_state = "language_menu"
-	check_flags = 0
+	check_flags = NONE
 
 /datum/action/language_menu/Trigger()
 	if(!..())

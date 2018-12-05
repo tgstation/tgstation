@@ -31,16 +31,7 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/victim = target
 
-				var/obj/item/safe_thing = null
-				if(victim.wear_mask)
-					if(victim.wear_mask.flags_cover & MASKCOVERSEYES)
-						safe_thing = victim.wear_mask
-				if(victim.head)
-					if(victim.head.flags_cover & MASKCOVERSEYES)
-						safe_thing = victim.head
-				if(victim.glasses)
-					if(!safe_thing)
-						safe_thing = victim.glasses
+				var/obj/item/safe_thing = victim.is_eyes_covered()
 
 				if(safe_thing)
 					if(!safe_thing.reagents)
