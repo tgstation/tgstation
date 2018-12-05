@@ -213,9 +213,11 @@
 		return "blood"
 
 /mob/living/carbon/human/get_blood_id()
+	if(has_trait(TRAIT_HUSK))
+		return
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.species_traits) || (has_trait(TRAIT_HUSK)))
+	else if((NOBLOOD in dna.species.species_traits))
 		return
 	return "blood"
 

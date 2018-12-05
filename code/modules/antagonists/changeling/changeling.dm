@@ -244,6 +244,10 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
+	if(target.has_trait(TRAIT_HUSK))
+		if(verbose)
+			to_chat(user, "<span class='warning'>[target]'s body is ruined beyond usability!</span>")
+		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
 			to_chat(user, "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>")
