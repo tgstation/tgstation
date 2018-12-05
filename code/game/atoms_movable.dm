@@ -1,4 +1,4 @@
-/atom/movable
+ /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
 	var/last_move_time = 0

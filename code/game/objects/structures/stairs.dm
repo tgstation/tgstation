@@ -10,7 +10,7 @@
 
 	var/force_open_above = FALSE
 	var/terminator_mode = STAIR_TERMINATOR_AUTOMATIC
-	var/datum/component/signal/multiz_signal_listener
+	var/datum/component/redirect/multiz_signal_listener
 
 /obj/structure/stairs/Initialize(mapload)
 	if(force_open_above)
@@ -36,7 +36,7 @@
 /obj/structure/stairs/proc/build_signal_listener()
 	QDEL_NULL(multiz_signal_listener)
 	var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
-	multiz_signal_listener = T.AddComponent(/datum/component/signal_redirect, list(COMSIG_TURF_MULTIZ_NEW = CALLBACK(src, .proc/on_multiz_new)))
+	multiz_signal_listener = T.AddComponent(/datum/component/redirect, list(COMSIG_TURF_MULTIZ_NEW = CALLBACK(src, .proc/on_multiz_new)))
 
 /obj/structure/stairs/proc/on_multiz_new(turf/source, dir)
 	if(dir == UP)
