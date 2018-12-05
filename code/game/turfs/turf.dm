@@ -71,9 +71,11 @@
 	var/turf/T = SSmapping.get_turf_above(src)
 	if(T)
 		T.multiz_turf_new(src, DOWN)
+		T.SendSignal(COMSIG_TURF_MULTIZ_NEW, src, DOWN)
 	T = SSmapping.get_turf_below(src)
 	if(T)
 		T.multiz_turf_new(src, UP)
+		T.SendSignal(COMSIG_TURF_MULTIZ_NEW, src, UP)
 
 	if (opacity)
 		has_opaque_atom = TRUE
@@ -139,6 +141,12 @@
 	return FALSE
 
 /turf/proc/zImpact(atom/movable/A, levels = 1)
+	for(var/i in contents)
+		var/atom/thing = i
+		if(thing.intercept_zImpact(A, levels))
+			return FALSE
+	if(zFall(A, ++levels))
+		return FALSE
 	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
 	A.onZImpact(src, levels)
 	return TRUE
