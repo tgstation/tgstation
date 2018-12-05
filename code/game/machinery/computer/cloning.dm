@@ -24,6 +24,7 @@
 /obj/machinery/computer/cloning/Initialize()
 	. = ..()
 	updatemodules(TRUE)
+	START_PROCESSING(SSmachines, src)
 
 /obj/machinery/computer/cloning/Destroy()
 	if(pods)
@@ -58,13 +59,19 @@
 				. = pod
 
 /obj/machinery/computer/cloning/process()
-	if(!(scanner && LAZYLEN(pods) && autoprocess))
-		return
+	var/should_autoprocess = scanner && LAZYLEN(pods) && autoprocess
 
-	if(scanner.occupant && scanner.scan_level > 2)
+	if(should_autoprocess && scanner.occupant && scanner.scan_level > 2)
 		scan_occupant(scanner.occupant)
 
 	for(var/datum/data/record/R in records)
+		var/datum/mind/clonemind = locate(R.fields["mind"]) in SSticker.minds
+		if(!QDELETED(clonemind.current) && (clonemind.current.stat != DEAD)
+			records -= R
+			continue
+		if(!should_autoprocess)
+			continue
+
 		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
 
 		if(!pod)
@@ -81,10 +88,6 @@
 	src.scanner = findscanner()
 	if(findfirstcloner && !LAZYLEN(pods))
 		findcloner()
-	if(!autoprocess)
-		STOP_PROCESSING(SSmachines, src)
-	else
-		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/computer/cloning/proc/findscanner()
 	var/obj/machinery/dna_scannernew/scannerf = null
@@ -286,11 +289,9 @@
 			if("autoprocess")
 				if(scanner && HasEfficientPod() && scanner.scan_level >= AUTOCLONING_MINIMAL_LEVEL)
 					autoprocess = TRUE
-					START_PROCESSING(SSmachines, src)
 					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			if("stopautoprocess")
 				autoprocess = FALSE
-				STOP_PROCESSING(SSmachines, src)
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
