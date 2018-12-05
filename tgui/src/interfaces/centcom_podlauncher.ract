@@ -113,7 +113,7 @@
     tooltip='Changes the pods style from the default Centcom color scheme to a menacing black and blood-red. Great for sending meme-ops in style!'>Syndicate</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.styleChoice == 5 ? "selected" : null}}' action='styleBlue' tooltip-side='left'
     tooltip='Changes the pods style from the default Centcom color scheme to a menacing black and dark blue. Great for sending deathsquads in style!'>Deathsquad</ui-button> </ui-section>
-        <ui-section label=' ' candystripe right> <ui-button style='{{data.styleChoice == 6 ? "selected" : null}}' action='styleCult' tooltip-side='left'
+    <ui-section label=' ' candystripe right> <ui-button style='{{data.styleChoice == 6 ? "selected" : null}}' action='styleCult' tooltip-side='left'
     tooltip='Changes the pods style from the default Centcom style to a blood and rune covered cult pod!'>Cult Pod</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.styleChoice == 7 ? "selected" : null}}' action='styleMissile' tooltip-side='left'
     tooltip='Changes the pods style from the default Centcom style to a large missile. Combos well with a missile mode, so the missile doesnt stick around after landing.'>Missile</ui-button> </ui-section>
@@ -134,12 +134,12 @@
 
 <ui-display>
     <ui-section label='{{data.numObjects}} turfs in Bay #{{data.bay}}'>
-        <ui-section label=' ' candystripe right> <ui-button action='refresh' tooltip-side='left'
-        tooltip='Manually refreshes the possible things to launch in the pod bay.'>Refresh Pod Bay</ui-button> </ui-section>
+        <ui-button action='refresh' tooltip-side='left'
+        tooltip='Manually refreshes the possible things to launch in the pod bay.'>Refresh Pod Bay</ui-button>
     </ui-section>
 
-    <ui-section>
-        <ui-section label=' ' candystripe right> <ui-button style='{{data.giveLauncher ? "selected" : null}}' action='giveLauncher' tooltip-side='left'
-        tooltip='THE CODEX ASTARTES CALLS THIS MANEUVER: STEEL RAIN'>Enter Launch Mode</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right>
+        <ui-button style='{{data.giveLauncher ? "selected" : null}}' action='giveLauncher' tooltip-side='left'
+        tooltip='THE CODEX ASTARTES CALLS THIS MANEUVER: STEEL RAIN'>Enter Launch Mode</ui-button>
     </ui-section>
 </ui-display>
