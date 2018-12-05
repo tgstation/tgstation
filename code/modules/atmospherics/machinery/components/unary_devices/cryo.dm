@@ -181,7 +181,7 @@
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
 		var/msg = "Patient fully restored."
 		if(autoeject) // Eject if configured.
-			msg = "[msg] Auto ejecting patient now."
+			msg += " Auto ejecting patient now."
 			open_machine()
 		radio.talk_into(src, msg, radio_channel, get_spans(), get_default_language())
 		return
