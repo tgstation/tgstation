@@ -262,7 +262,10 @@
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
-	//var/obj/item/ammo_casing/AC = chambered //Find chambered round
+	if(magazine && !internal_magazine)
+		if(!magazine.ammo_count())
+			eject_magazine(user)
+			return
 	if(bolt_type == BOLT_TYPE_LOCKING && bolt_locked)
 		drop_bolt(user)
 		return
@@ -282,10 +285,6 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
-	if(magazine && !internal_magazine)
-		if(!magazine.ammo_count())
-			eject_magazine(user)
-			return
 	if (recent_rack > world.time)
 		return
 	recent_rack = world.time + rack_delay
