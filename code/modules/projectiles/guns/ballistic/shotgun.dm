@@ -209,8 +209,10 @@
 	mag_display = TRUE
 	empty_indicator = TRUE
 	empty_alarm = TRUE
+	special_mags = TRUE
 	semi_auto = TRUE
 	internal_magazine = FALSE
+	tac_reloads = TRUE
 
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted
@@ -233,11 +235,11 @@
 	sawn_desc = "Omar's coming!"
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Default" = "dshotgun",
-						"Dark Red Finish" = "dshotgun-d",
-						"Ash" = "dshotgun-f",
-						"Faded Grey" = "dshotgun-g",
-						"Maple" = "dshotgun-l",
-						"Rosewood" = "dshotgun-p"
+						"Dark Red Finish" = "dshotgun_d",
+						"Ash" = "dshotgun_f",
+						"Faded Grey" = "dshotgun_g",
+						"Maple" = "dshotgun_l",
+						"Rosewood" = "dshotgun_p"
 						)
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT

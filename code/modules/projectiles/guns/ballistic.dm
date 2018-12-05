@@ -28,6 +28,7 @@
 	var/mag_display_ammo = FALSE //Whether the sprite has a visible ammo display or not
 	var/empty_indicator = FALSE //Whether the sprite has an indicator for being empty or not.
 	var/empty_alarm = FALSE //Whether the sprite alarms when empty or not.
+	var/special_mags = FALSE //Whether the gun supports multiple special mag types
 	var/alarmed = FALSE
 	//Four bolt types:
 	//BOLT_TYPE_STANDARD: Gun has a bolt, it stays closed while not cycling. The gun must be racked to have a bullet chambered when a mag is inserted.
@@ -66,7 +67,7 @@
 		return
 	..()
 	if(current_skin)
-		icon_state = "[unique_reskin[current_skin]][sawn_off ? "-sawn" : ""]"
+		icon_state = "[unique_reskin[current_skin]][sawn_off ? "_sawn" : ""]"
 	else
 		icon_state = "[initial(icon_state)][sawn_off ? "-sawn" : ""]"
 	cut_overlays()
@@ -77,21 +78,26 @@
 	if(!chambered && empty_indicator)
 		add_overlay("[icon_state]_empty")
 	if (magazine)
-		add_overlay("[icon_state]_mag")
-		var/capacity_number = 0
-		switch(get_ammo() / magazine.max_ammo)
-			if(0.2 to 0.39)
-				capacity_number = 20
-			if(0.4 to 0.59)
-				capacity_number = 40
-			if(0.6 to 0.79)
-				capacity_number = 60
-			if(0.8 to 0.99)
-				capacity_number = 80
-			if(1.0)
-				capacity_number = 100
-		if (capacity_number)
-			add_overlay("[icon_state]_mag_[capacity_number]")
+		if (special_mags)
+			add_overlay("[icon_state]_mag_[magazine.icon_state]")
+			if (!magazine)
+				add_overlay("[icon_state]_mag_empty")
+		else
+			add_overlay("[icon_state]_mag")
+			var/capacity_number = 0
+			switch(get_ammo() / magazine.max_ammo)
+				if(0.2 to 0.39)
+					capacity_number = 20
+				if(0.4 to 0.59)
+					capacity_number = 40
+				if(0.6 to 0.79)
+					capacity_number = 60
+				if(0.8 to 0.99)
+					capacity_number = 80
+				if(1.0)
+					capacity_number = 100
+			if (capacity_number)
+				add_overlay("[icon_state]_mag_[capacity_number]")
 
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE)
