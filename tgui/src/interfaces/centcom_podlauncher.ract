@@ -13,15 +13,15 @@
 </ui-display>
 
 <ui-display>
-    <ui-section label='Useful teleport tools!'></ui-section>
-    <ui-section label=' ' candystripe right> <ui-button action='teleportCentcom'>Teleport to Centcom's Supplypod Loading Bay</ui-button> </ui-section>
-    <ui-section label=' ' candystripe right> <ui-button state='{{data.oldArea ? null : "disabled"}}'action='teleportBack'>Teleport Back to {{data.oldArea ? data.oldArea : "where you were"}}</ui-button> </ui-section>
+    <ui-section label='Teleport to'></ui-section>
+    <ui-section label=' ' candystripe right> <ui-button action='teleportCentcom'>Loading Bay</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right> <ui-button state='{{data.oldArea ? null : "disabled"}}'action='teleportBack'>{{data.oldArea ? data.oldArea : "where you were"}}</ui-button> </ui-section>
 </ui-display>
 
 <ui-display>
-    <ui-section label='Keep stuff after launching?'> </ui-section>
+    <ui-section label='Launch the real atoms?'> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.launchClone ? "selected" : null}}' action='launchClone' tooltip-side='left'
-    tooltip='Choosing this will create a duplicate of the item to be launched in Centcom, allowing you to send one type of item multiple times. Either way, the atoms are forceMoved into the supplypod after it lands (but before it opens).'>Clone and Launch</ui-button> </ui-section>
+    tooltip='Choosing this will create a duplicate of the item to be launched in Centcom, allowing you to send one type of item multiple times. Either way, the atoms are forceMoved into the supplypod after it lands (but before it opens).'>Launch Clones</ui-button> </ui-section>
 </ui-display>
 
 <ui-display >
@@ -49,13 +49,17 @@
 </ui-display>
 
 <ui-display>
-    <ui-section label='Extra effects?'></ui-section>
+    <ui-section label='Damaging effects?'></ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectStun ? "selected" : null}}' action='effectStun' tooltip-side='left'
     tooltip='Anyone who is on the turf when the supplypod is launched will be stunned until the supplypod lands. They cant get away that easy!'>Stun</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectLimb ? "selected" : null}}' action='effectLimb' tooltip-side='left'
     tooltip='This will cause anyone caught under the pod to lose a limb, excluding their head.'>Delimb</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectOrgans ? "selected" : null}}' action='effectOrgans' tooltip-side='left'
     tooltip='This will cause anyone caught under the pod to lose all their limbs and organs in a spectacular fashion.'>Yeet Organs</ui-button> </ui-section>
+</ui-display>
+
+<ui-display>
+    <ui-section label='Movement effects?'></ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectBluespace ? "selected" : null}}' action='effectBluespace' tooltip-side='left'
     tooltip='Gives the supplypod an advanced Bluespace Recyling Device. After opening, the supplypod will be warped directly to the surface of a nearby NT-designated trash planet (/r/ss13).'>Bluespace</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectStealth ? "selected" : null}}' action='effectStealth' tooltip-side='left'
@@ -72,10 +76,15 @@
     tooltip='This will make each click launch 5 supplypods inaccuratly around the target turf (a 3x3 area). Combos well with the Missle Mode if you dont want shit lying everywhere after.'>Machine Gun Mode</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectTarget ? "selected" : null}}' action='effectTarget' tooltip-side='left'
     tooltip='This will make the supplypod target a specific atom, instead of the mouses position. Smiting does this automatically!'>Specific Target</ui-button> </ui-section>
+</ui-display>
+
+<ui-display>
+    <ui-section label='Change Name/Desc?'></ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectName ? "selected" : null}}' action='effectName' tooltip-side='left'
     tooltip='Allows you to add a custom name and description.'>Custom Name/Desc</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.effectAnnounce ? "selected" : null}}' action='effectAnnounce' tooltip-side='left'
-    tooltip='Alerts ghosts when a pod is launched. Useful if some dumb shit is aboutta come outta the pod.'>Alert Ghosts</ui-button> </ui-section>    </ui-display>
+    tooltip='Alerts ghosts when a pod is launched. Useful if some dumb shit is aboutta come outta the pod.'>Alert Ghosts</ui-button> </ui-section>
+</ui-display>
 
 <ui-display>
     <ui-section label='Sound?'></ui-section>
@@ -133,12 +142,9 @@
 
 
 <ui-display>
-    <ui-section label='{{data.numObjects}} turfs in Bay #{{data.bay}}'>
+    <ui-section label='{{data.numObjects}} turfs in Bay #{{data.bay}}' candystripe right>
         <ui-button action='refresh' tooltip-side='left'
         tooltip='Manually refreshes the possible things to launch in the pod bay.'>Refresh Pod Bay</ui-button>
-    </ui-section>
-
-    <ui-section label=' ' candystripe right>
         <ui-button style='{{data.giveLauncher ? "selected" : null}}' action='giveLauncher' tooltip-side='left'
         tooltip='THE CODEX ASTARTES CALLS THIS MANEUVER: STEEL RAIN'>Enter Launch Mode</ui-button>
     </ui-section>
