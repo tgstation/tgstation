@@ -162,7 +162,7 @@
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 	magazine = null
 	if (display_message)
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
+		to_chat(user, "<span class='notice'>You pull the [magazine_wording] out of \the [src].</span>")
 	update_icon()
 
 /obj/item/gun/ballistic/can_shoot()
@@ -209,7 +209,7 @@
 			to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
 			return
 		if(user.transferItemToLoc(A, src))
-			to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
+			to_chat(user, "<span class='notice'>You screw \the [S] onto \the [src].</span>")
 			install_suppressor(A)
 			return
 	return 0
@@ -226,7 +226,7 @@
 			var/obj/item/suppressor/S = suppressed
 			if(!user.is_holding(src))
 				return ..()
-			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src]</span>")
+			to_chat(user, "<span class='notice'>You unscrew \the [suppressed] from \the [src].</span>")
 			user.put_in_hands(suppressed)
 			w_class -= S.w_class
 			suppressed = null
@@ -271,7 +271,7 @@
 				CB.bounce_away(FALSE, NONE)
 				num_unloaded++
 		if (num_unloaded)
-			to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
+			to_chat(user, "<span class='notice'>You unload [num_unloaded] [cartridge_wording]\s from [src].</span>")
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
@@ -290,10 +290,12 @@
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
 	to_chat(user, "It has [get_ammo()] round\s remaining.")
+	if (!chambered)
+		to_chat(user, "It does not seem to have a round chambered.")
 	if (bolt_locked)
 		to_chat(user, "The [bolt_wording] is locked back and needs to be released before firing.")
 	if (suppressed)
-		to_chat(user, "It has a suppressor attached that can be removed with alt+click.")
+		to_chat(user, "It has a suppressor attached that can be removed with <b>alt+click</b>.")
 
 /obj/item/gun/ballistic/proc/get_ammo(countchambered = TRUE)
 	var/boolets = 0 //mature var names for mature people
