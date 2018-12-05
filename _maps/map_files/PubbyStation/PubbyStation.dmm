@@ -18320,7 +18320,7 @@
 	},
 /area/maintenance/department/crew_quarters/bar)
 "aRQ" = (
-/obj/item/gun/ballistic/revolver/doublebarrel{
+/obj/item/gun/ballistic/shotgun/doublebarrel{
 	pixel_y = 11
 	},
 /obj/structure/table/wood,
