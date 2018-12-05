@@ -203,6 +203,8 @@
 			if (num_loaded)
 				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
 				playsound(src, load_sound, load_sound_volume, load_sound_vary)
+				if (chambered = null && bolt_type == BOLT_TYPE_NO_BOLT)
+					rack()
 				A.update_icon()
 				update_icon()
 	if(istype(A, /obj/item/suppressor))
