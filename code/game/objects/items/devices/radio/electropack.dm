@@ -145,3 +145,13 @@ Code:
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
+
+/obj/item/electropack/collar
+	name = "shock collar"
+	desc = "It's for pets."
+	icon = 'icons/obj/clothing/neck.dmi'
+	icon_state = "petcollar"
+	item_color = "petcollar"
+	body_parts_covered = NECK
+	slot_flags = ITEM_SLOT_NECK
+	w_class = WEIGHT_CLASS_TINY
