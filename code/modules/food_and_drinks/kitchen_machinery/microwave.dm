@@ -161,7 +161,7 @@
 	else if(operating)
 		dat += "Microwaving in progress!<BR>Please wait...!</div>"
 	else if(dirty == 100)
-		dat += "ERROR: >> 0 --Response input zero<BR>Contact your operator of the device manifactor support.</div>"
+		dat += "ERROR: >> 0 --Response input zero<BR>Contact your operator of the device manufacturer support.</div>"
 	else
 		var/list/items_counts = new
 		for (var/obj/O in contents)
