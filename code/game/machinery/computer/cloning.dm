@@ -65,7 +65,7 @@
 		scan_occupant(scanner.occupant)
 
 	for(var/the_record in records)
-	    var/datum/data/record/R = the_record
+		var/datum/data/record/R = the_record
 		var/datum/mind/clonemind = locate(R.fields["mind"]) in SSticker.minds
 		if(!QDELETED(clonemind.current) && (clonemind.current.stat != DEAD))
 			records -= R
