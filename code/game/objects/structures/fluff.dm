@@ -70,6 +70,13 @@
 	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
 	icon_state = "drake_statue_falling"
 
+/obj/structure/fluff/lightpost
+	name = "lightpost"
+	desc = "A homely lightpost adorned with festive decor."
+	icon = 'icons/obj/2x2.dmi'
+	icon_state = "lightpost"
+	deconstructible = FALSE
+	layer = EDGED_TURF_LAYER
 
 /obj/structure/fluff/bus
 	name = "bus"
