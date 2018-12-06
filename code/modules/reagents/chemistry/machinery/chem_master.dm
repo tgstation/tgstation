@@ -254,47 +254,47 @@
 		if("pillStyle")
 			var/pill_name = input(usr, "Choose your desired pill style:", "Pill Style")  as null|anything in list("capsule 1", "capsule 2", "capsule 3", "capsule 4", "capsule 5", "capsule 6", "capsule 7", "capsule 8", "capsule 9", "capsule 10", "tablet 1", "tablet 2", "tablet 3", "tablet 4", "tablet 5", "tablet 6", "tablet 7", "tablet 8", "tablet 9", "tablet 10", "tablet 11")
 			switch(pill_name)
-				if("capsule1")
+				if("capsule 1")
 					pill_style = 1
-				if("capsule2")
+				if("capsule 2")
 					pill_style = 2
-				if("capsule3")
+				if("capsule 3")
 					pill_style = 3
-				if("capsule4")
+				if("capsule 4")
 					pill_style = 4
-				if("capsule5")
+				if("capsule 5")
 					pill_style = 5
-				if("capsule6")
+				if("capsule 6")
 					pill_style = 6
-				if("capsule7")
+				if("capsule 7")
 					pill_style = 18
-				if("capsule8")
+				if("capsule 8")
 					pill_style = 19
-				if("capsule9")
+				if("capsule 9")
 					pill_style = 20
-				if("capsule10")
+				if("capsule 10")
 					pill_style = 20
-				if("tablet1")
+				if("tablet 1")
 					pill_style = 7
-				if("tablet2")
+				if("tablet 2")
 					pill_style = 8
-				if("tablet3")
+				if("tablet 3")
 					pill_style = 9
-				if("tablet4")
+				if("tablet 4")
 					pill_style = 10
-				if("tablet5")
+				if("tablet 5")
 					pill_style = 11
-				if("tablet6")
+				if("tablet 6")
 					pill_style = 12
-				if("tablet7")
+				if("tablet 7")
 					pill_style = 13
-				if("tablet8")
+				if("tablet 8")
 					pill_style = 14
-				if("tablet9")
+				if("tablet 9")
 					pill_style = 15
-				if("tablet10")
+				if("tablet 10")
 					pill_style = 16
-				if("tablet11")
+				if("tablet 11")
 					pill_style = 17
 		if("createPatch")
 			var/many = params["many"]
