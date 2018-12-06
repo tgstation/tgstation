@@ -777,7 +777,7 @@
 				if(uses < 300)
 					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
 				else
-					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
+					var/obj/rite = new /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood()
 					uses -= 300
 					qdel(src)
 					if(user.put_in_hands(rite))

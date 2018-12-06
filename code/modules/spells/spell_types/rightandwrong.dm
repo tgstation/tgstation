@@ -18,7 +18,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/shotgun/automatic/combat,
 	/obj/item/gun/ballistic/automatic/ar,
 	/obj/item/gun/ballistic/revolver/mateba,
-	/obj/item/gun/ballistic/shotgun/boltaction,
+	/obj/item/gun/ballistic/rifle/boltaction,
 	/obj/item/gun/ballistic/automatic/speargun,
 	/obj/item/gun/ballistic/automatic/mini_uzi,
 	/obj/item/gun/energy/lasercannon,
