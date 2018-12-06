@@ -1,0 +1,4 @@
+author: "subject217"
+delete-after: True
+changes: 
+  - bugfix: "Plasma cutters will no longer accept infinite plasma, and will stop you when they are full."
