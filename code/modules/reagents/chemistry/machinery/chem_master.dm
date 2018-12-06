@@ -161,7 +161,7 @@
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 	var/list/pillStyles = list()
-	for (var/x in 1 to 21)
+	for (var/x in 1 to 22)
 		var/list/SL = list()
 		SL["id"] = x
 		pillStyles += list(SL)
@@ -240,7 +240,10 @@
 					else
 						P = new(drop_location())
 					P.name = trim("[name] pill")
-					P.icon_state = "pill[chosenPillStyle]"
+					if(chosenPillStyle == 22)
+						P.icon_state ="pill[rand(1,21)]"
+					else
+						P.icon_state = "pill[chosenPillStyle]"
 					if(P.icon_state == "pill4")
 						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)

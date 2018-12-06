@@ -583,6 +583,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 		"pill19" = 'icons/UI_Icons/Pills/pill19.png',
 		"pill20" = 'icons/UI_Icons/Pills/pill20.png',
 		"pill21" = 'icons/UI_Icons/Pills/pill21.png',
+		"pill22" = 'icons/UI_Icons/Pills/pill22.png',
 	)
 
 //this exists purely to avoid meta by pre-loading all language icons.
