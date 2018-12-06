@@ -159,7 +159,7 @@
 	desc = "Used to treat mental instability and traumas."
 	list_reagents = list("psicodine" = 10)
 	icon_state = "pill22"
-	roundstart = 1
+	roundstart = TRUE
 	icon_state = "pill22"
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
