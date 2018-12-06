@@ -248,11 +248,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
-			dat += "<b>Hat:</b><BR><a href ='?_src_=prefs;preference=hat;task=input'>[GLOB.roundstarthatlist[hat]]</a><BR>"
-			dat += "<b>Glasses:</b><BR><a href ='?_src_=prefs;preference=glasses;task=input'>[GLOB.roundstartglasseslist[glasses]]</a><BR>"
-			dat += "<b>Neckwear:</b><BR><a href ='?_src_=prefs;preference=neckwear;task=input'>[GLOB.roundstartneckwearlist[neckwear]]</a><BR>"
-			dat += "<b>Suit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[GLOB.roundstartneckwearlist[suit]]</a><BR>"
-			dat += "<b>Pocket Item:</b><BR><a href ='?_src_=prefs;preference=pocket;task=input'>[GLOB.roundstartpocketlist[pocket]]</a><BR>"
+			dat += "<b>Hat:</b><BR><a href ='?_src_=prefs;preference=hat;task=input'>[hat]</a><BR>"
+			dat += "<b>Glasses:</b><BR><a href ='?_src_=prefs;preference=glasses;task=input'>[glasses]</a><BR>"
+			dat += "<b>Neckwear:</b><BR><a href ='?_src_=prefs;preference=neckwear;task=input'>[neckwear]</a><BR>"
+			dat += "<b>Suit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[suit]</a><BR>"
+			dat += "<b>Pocket Item:</b><BR><a href ='?_src_=prefs;preference=pocket;task=input'>[pocket]</a><BR>"
 			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
 			var/use_skintones = pref_species.use_skintones
@@ -1350,7 +1350,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						hat = new_hat
 
 				if("glasses")
-					var/new_glasses = input(user, "Choose your character's glasses:", "Character Preference")  as null|anything in GLOB.roundstarthatlist
+					var/new_glasses = input(user, "Choose your character's glasses:", "Character Preference")  as null|anything in GLOB.roundstartglasseslist
 					if(new_glasses)
 						glasses = new_glasses
 

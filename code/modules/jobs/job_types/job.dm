@@ -97,17 +97,26 @@
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 	if(preference_source)
-		if(preference_source.prefs.hat)
-			H.equip_to_slot_or_del(new preference_source.prefs.hat(H),SLOT_HEAD)
-		if(preference_source.prefs.glasses)
-			H.equip_to_slot_or_del(new preference_source.prefs.glasses(H),SLOT_GLASSES)
-		if(preference_source.prefs.neckwear)
-			H.equip_to_slot_or_del(new preference_source.prefs.neckwear(H),SLOT_NECK)
-		if(preference_source.prefs.suit)
-			H.equip_to_slot_or_del(new preference_source.prefs.suit(H),SLOT_WEAR_SUIT)
-		if(preference_source.prefs.pocket)
-			if(!H.equip_to_slot_or_del(new preference_source.prefs.pocket(H),SLOT_R_STORE)) //If we fuck up putting it in this pocket
-				H.equip_to_slot_or_del(new preference_source.prefs.pocket(H),SLOT_L_STORE) //Then try this one
+		if(ispath(GLOB.roundstarthatlist[preference_source.prefs.hat]))
+			var/obj/item/clothing/C = GLOB.roundstarthatlist[preference_source.prefs.hat]
+			H.equip_to_slot_or_del(new C(H),SLOT_HEAD)
+
+		if(ispath(GLOB.roundstartglasseslist[preference_source.prefs.glasses]))
+			var/obj/item/clothing/C = GLOB.roundstartglasseslist[preference_source.prefs.glasses]
+			H.equip_to_slot_or_del(new C(H),SLOT_GLASSES)
+
+		if(ispath(GLOB.roundstartglasseslist[preference_source.prefs.neckwear]))
+			var/obj/item/clothing/C = GLOB.roundstartglasseslist[preference_source.prefs.neckwear]
+			H.equip_to_slot_or_del(new C(H),SLOT_NECK)
+
+		if(ispath(GLOB.roundstartglasseslist[preference_source.prefs.suit]))
+			var/obj/item/clothing/C = GLOB.roundstartglasseslist[preference_source.prefs.suit]
+			H.equip_to_slot_or_del(new C(H),SLOT_WEAR_SUIT)
+
+		if(ispath(GLOB.roundstartpocketlist[preference_source.prefs.pocket]))
+			var/obj/item/clothing/C = GLOB.roundstartpocketlist[preference_source.prefs.pocket]
+			if(!H.equip_to_slot_or_del(new C(H),SLOT_R_STORE)) //If we fuck up putting it in this pocket
+				H.equip_to_slot_or_del(new C(H),SLOT_L_STORE) //Then try this one
 
 	if(!visualsOnly && announce)
 		announce(H)
