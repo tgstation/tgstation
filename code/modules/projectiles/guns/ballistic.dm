@@ -253,8 +253,8 @@
 	return
 
 /obj/item/gun/ballistic/afterattack()
-	. = ..()
 	empty_checks()
+	. = ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)

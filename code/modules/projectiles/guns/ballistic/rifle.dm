@@ -55,13 +55,10 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	knife_x_offset = 27
 	knife_y_offset = 13
 
-//TODO: bolt action behavior
-
 /obj/item/gun/ballistic/rifle/boltaction/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	var/guns_left = 30
-	var/gun_type
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/enchanted
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage
@@ -72,7 +69,6 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
 	can_bayonet = FALSE
-
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
 
@@ -95,7 +91,7 @@ obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
 /obj/item/gun/ballistic/rifle/boltaction/enchanted/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	..()
 	if(guns_left)
-		var/obj/item/gun/ballistic/rifle/boltaction/enchanted/GUN = new gun_type
+		var/obj/item/gun/ballistic/rifle/boltaction/enchanted/GUN = new type
 		GUN.guns_left = guns_left - 1
 		user.dropItemToGround(src, TRUE)
 		user.swap_hand()
