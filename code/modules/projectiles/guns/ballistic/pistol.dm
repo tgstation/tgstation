@@ -9,6 +9,9 @@
 	fire_delay = 0
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
+	fire_sound = "sound/weapons/pistolshot.ogg"
+	vary_fire_sound = FALSE
+	fire_sound_volume = 90
 	bolt_wording = "slide"
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
