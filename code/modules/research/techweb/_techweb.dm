@@ -214,7 +214,7 @@
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
-	if(!istype(src, /datum/techweb/admin) && get_that_dosh)
+	if(get_that_dosh)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
 			D.adjust_money(SSeconomy.techweb_bounty)
