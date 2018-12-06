@@ -7,17 +7,17 @@
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/cloning
 	req_access = list(ACCESS_HEADS) //ONLY USED FOR RECORD DELETION RIGHT NOW.
-	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
+	var/obj/machinery/dna_scannernew/scanner //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
 	var/scantemp_ckey
 	var/scantemp = "Ready to Scan"
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
-	var/datum/data/record/active_record = null
-	var/obj/item/disk/data/diskette = null //Mostly so the geneticist can steal everything.
-	var/loading = 0 // Nice loading text
-	var/autoprocess = 0
+	var/datum/data/record/active_record
+	var/obj/item/disk/data/diskette //Mostly so the geneticist can steal everything.
+	var/loading = FALSE // Nice loading text
+	var/autoprocess = FALSE
 
 	light_color = LIGHT_COLOR_BLUE
 
@@ -64,7 +64,8 @@
 	if(should_autoprocess && scanner.occupant && scanner.scan_level > 2)
 		scan_occupant(scanner.occupant)
 
-	for(var/datum/data/record/R in records)
+	for(var/the_record in records)
+	    var/datum/data/record/R = the_record
 		var/datum/mind/clonemind = locate(R.fields["mind"]) in SSticker.minds
 		if(!QDELETED(clonemind.current) && (clonemind.current.stat != DEAD))
 			records -= R
@@ -297,7 +298,7 @@
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
 		scantemp = ""
 
-		loading = 1
+		loading = TRUE
 		src.updateUsrDialog()
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		say("Initiating scan...")
