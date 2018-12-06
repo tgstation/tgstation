@@ -8,6 +8,8 @@
     bolt_type = BOLT_TYPE_STANDARD
     semi_auto = FALSE
     internal_magazine = TRUE
+    rack_sound = "sound/weapons/mosinboltout.ogg"
+    bolt_drop_sound = "sound/weapons/mosinboltin.ogg"
 
 obj/item/gun/ballistic/rifle/update_icon()
     ..()
@@ -16,11 +18,17 @@ obj/item/gun/ballistic/rifle/update_icon()
 obj/item/gun/ballistic/rifle/rack(mob/user = null)
     if (bolt_locked == FALSE)
         to_chat(user, "<span class='notice'>You open the bolt of \the [src]</span>")
+        playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+        process_chamber(chamber_next_round = FALSE)
         bolt_locked = TRUE
         update_icon()
         return
-    ..()
+    drop_bolt()
 
+obj/item/gun/ballistic/rifle/can_shoot()
+    if (bolt_locked)
+        return FALSE
+    . = ..()
 
 obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
     if (!bolt_locked)

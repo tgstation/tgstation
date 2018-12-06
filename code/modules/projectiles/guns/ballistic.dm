@@ -100,7 +100,7 @@
 				add_overlay("[icon_state]_mag_[capacity_number]")
 
 
-/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE)
+/obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
@@ -111,13 +111,14 @@
 			chambered = null
 		else if(empty_chamber)
 			chambered = null
-	chamber_round()
+	if (chamber_next_round)
+		chamber_round()
 
 
 /obj/item/gun/ballistic/proc/chamber_round()
 	if (chambered || !magazine)
 		return
-	else if (magazine.ammo_count())
+	if (magazine.ammo_count())
 		chambered = magazine.get_round()
 		chambered.forceMove(src)
 	
@@ -133,8 +134,6 @@
 	update_icon()
 
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
-	if (bolt_type != BOLT_TYPE_LOCKING)
-		return
 	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 	if (user)
 		to_chat(user, "<span class='notice'>You drop the [bolt_wording] of \the [src].</span>")
@@ -179,11 +178,10 @@
 /obj/item/gun/ballistic/can_shoot()
 	if(chambered)
 		return TRUE
+	if(!magazine || !magazine.ammo_count(FALSE))
+		return FALSE
 	else
-		if(!magazine || !magazine.ammo_count(FALSE))
-			return FALSE
-		else
-			return TRUE
+		return TRUE
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
@@ -204,7 +202,7 @@
 				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
 				playsound(src, load_sound, load_sound_volume, load_sound_vary)
 				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
-					rack()
+					process_chamber(TRUE, FALSE)
 				A.update_icon()
 				update_icon()
 	if(istype(A, /obj/item/suppressor))
