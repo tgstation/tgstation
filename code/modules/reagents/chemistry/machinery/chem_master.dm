@@ -13,7 +13,7 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
-	var/pill_style = 1
+	var/list/chosenPillStyle = 1
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
@@ -142,9 +142,7 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
-	data["pillStyle"] = pill_style
-	data["pillImage"] = "pill[pill_style]"
-
+	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
 		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
@@ -162,7 +160,12 @@
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
-
+	var/list/pillStyles = list()
+	for (var/x in 1 to 21)
+		var/list/SL = list()
+		SL["id"] = x
+		pillStyles += list(SL)
+	data["pillStyles"] = pillStyles
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
@@ -237,7 +240,7 @@
 					else
 						P = new(drop_location())
 					P.name = trim("[name] pill")
-					P.icon_state = "pill[pill_style]"
+					P.icon_state = "pill[chosenPillStyle]"
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each, transfered_by = usr)
 			else
@@ -251,51 +254,11 @@
 				P.desc = "A small condiment pack. The label says it contains [name]."
 				reagents.trans_to(P,10, transfered_by = usr)
 			. = TRUE
+
 		if("pillStyle")
-			var/pill_name = input(usr, "Choose your desired pill style:", "Pill Style")  as null|anything in list("capsule 1", "capsule 2", "capsule 3", "capsule 4", "capsule 5", "capsule 6", "capsule 7", "capsule 8", "capsule 9", "capsule 10", "tablet 1", "tablet 2", "tablet 3", "tablet 4", "tablet 5", "tablet 6", "tablet 7", "tablet 8", "tablet 9", "tablet 10", "tablet 11")
-			switch(pill_name)
-				if("capsule 1")
-					pill_style = 1
-				if("capsule 2")
-					pill_style = 2
-				if("capsule 3")
-					pill_style = 3
-				if("capsule 4")
-					pill_style = 4
-				if("capsule 5")
-					pill_style = 5
-				if("capsule 6")
-					pill_style = 6
-				if("capsule 7")
-					pill_style = 18
-				if("capsule 8")
-					pill_style = 19
-				if("capsule 9")
-					pill_style = 20
-				if("capsule 10")
-					pill_style = 21
-				if("tablet 1")
-					pill_style = 7
-				if("tablet 2")
-					pill_style = 8
-				if("tablet 3")
-					pill_style = 9
-				if("tablet 4")
-					pill_style = 10
-				if("tablet 5")
-					pill_style = 11
-				if("tablet 6")
-					pill_style = 12
-				if("tablet 7")
-					pill_style = 13
-				if("tablet 8")
-					pill_style = 14
-				if("tablet 9")
-					pill_style = 15
-				if("tablet 10")
-					pill_style = 16
-				if("tablet 11")
-					pill_style = 17
+			var/id = text2num(params["id"])
+			chosenPillStyle = id
+
 		if("createPatch")
 			var/many = params["many"]
 			if(reagents.total_volume == 0)
