@@ -7,6 +7,7 @@
     bolt_wording = "bolt"
     bolt_type = BOLT_TYPE_STANDARD
     semi_auto = FALSE
+    internal_magazine = TRUE
 
 obj/item/gun/ballistic/rifle/update_icon()
     ..()
