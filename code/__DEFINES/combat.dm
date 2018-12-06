@@ -124,11 +124,17 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+<<<<<<< HEAD
 //Gun bolt types
 #define BOLT_TYPE_STANDARD 1
 #define BOLT_TYPE_OPEN 2
 #define BOLT_TYPE_NO_BOLT 3
 #define BOLT_TYPE_LOCKING 4
+=======
+//Projectile Reflect
+#define REFLECT_NORMAL 				(1<<0)
+#define REFLECT_FAKEPROJECTILE		(1<<1)
+>>>>>>> 219ee5d2b4f1fcb5bf3477d5fd688d4e466e167a
 
 //Object/Item sharpness
 #define IS_BLUNT			0

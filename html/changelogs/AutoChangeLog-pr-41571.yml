@@ -1,6 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - code_imp: "Added missing typepaths for syndicate implanters."
-  - tweak: "Stealth implant now comes in a box."
-  - spellcheck: "Changed the names of some syndicate boxes."
