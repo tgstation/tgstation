@@ -241,6 +241,8 @@
 						P = new(drop_location())
 					P.name = trim("[name] pill")
 					P.icon_state = "pill[chosenPillStyle]"
+					if(P.icon_state == "pill4")
+						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)
 					reagents.trans_to(P,vol_each, transfered_by = usr)
 			else
