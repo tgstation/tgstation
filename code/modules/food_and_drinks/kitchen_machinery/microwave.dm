@@ -111,7 +111,7 @@
 		return TRUE
 
 	if(dirty == 100) // The microwave is all dirty so can't be used!
-		to_chat(user, "<span class='warning'>\the [src] is dirty!</span>")
+		to_chat(user, "<span class='warning'>\The [src] is dirty!</span>")
 		return TRUE
 
 	if(istype(O, /obj/item/storage/bag/tray))
@@ -119,7 +119,7 @@
 		var/loaded = 0
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			if(contents.len >= max_n_of_items)
-				to_chat(user, "<span class='warning'>\the [src] is full, you can't put anything in!</span>")
+				to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 				return TRUE
 			if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 				loaded++
@@ -130,10 +130,10 @@
 
 	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
 		if(contents.len >= max_n_of_items)
-			to_chat(user, "<span class='warning'>\the [src] is full, you can't put anything in!</span>")
+			to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 			return TRUE
 		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
+			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 			return FALSE
 		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 		updateUsrDialog()
@@ -222,7 +222,7 @@
 	start()
 
 /obj/machinery/microwave/proc/turn_on()
-	visible_message("\the [src] turns on.", "<span class='italics'>You hear a microwave humming.</span>")
+	visible_message("\The [src] turns on.", "<span class='italics'>You hear a microwave humming.</span>")
 	operating = TRUE
 
 	set_light(1.5)
@@ -298,7 +298,7 @@
 	loop(MICROWAVE_NORMAL, 10)
 
 /obj/machinery/microwave/proc/muck_finish()
-	visible_message("<span class='warning'>\the [src] gets covered in muck!</span>")
+	visible_message("<span class='warning'>\The [src] gets covered in muck!</span>")
 
 	dirty = 100
 	dirty_anim_playing = FALSE
