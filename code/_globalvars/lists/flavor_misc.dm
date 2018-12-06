@@ -101,6 +101,14 @@ GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_
 #define DDUFFELBAG "Department Duffel Bag"
 GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, GSATCHEL, GDUFFELBAG, LSATCHEL))
 
+	//Clothes
+GLOBAL_LIST_INIT(roundstarthatlist, list("None" = null,"Black Beanie" = /obj/item/clothing/head/beanie/black, "Grey Cap" = /obj/item/clothing/head/soft/grey))
+GLOBAL_LIST_INIT(roundstartglasseslist, list("None" = null,"Eyepatch" =  /obj/item/clothing/glasses/eyepatch, "prescription glasses" = /obj/item/clothing/glasses/regular/hipster)
+GLOBAL_LIST_INIT(roundstartneckwearlist, list("None" = null,"black scarf" = /obj/item/clothing/neck/scarf/black, "Black tie" = /obj/item/clothing/neck/tie/black, "Headphones" = /obj/item/clothing/ears/headphones))
+GLOBAL_LIST_INIT(roundstartsuitlist, list("None" = null,"Bomber jacket" = /obj/item/clothing/suit/jacket, /obj/item/clothing/suit/jacket/leather = "leather jacket"))
+GLOBAL_LIST_INIT(roundstartpocketlist, list("None" = null, "Deck of cards" = /obj/item/toy/cards/deck, /obj/item/storage/fancy/cigarettes = "space cigarettes packet", "space cola" =  /obj/item/reagent_containers/food/drinks/soda_cans/cola))
+
+
 //Uplink spawn loc
 #define UPLINK_PDA		"PDA"
 #define UPLINK_RADIO	"Radio"

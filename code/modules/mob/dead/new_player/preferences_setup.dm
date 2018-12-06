@@ -60,6 +60,19 @@
 	if(previewJob)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
+		if(ispath(GLOB.roundstarthatlist[hat]))
+			var/obj/item/clothing/C = GLOB.roundstarthatlist[hat]
+			mannequin.equip_to_slot_or_del(new C(mannequin),SLOT_HEAD)
+		if(ispath(GLOB.roundstartglasseslist[glasses]))
+			var/obj/item/clothing/C = GLOB.roundstartglasseslist[glasses]
+			mannequin.equip_to_slot_or_del(new C(mannequin),SLOT_GLASSES)
+		if(ispath(GLOB.roundstartneckwearlist[neckwear]))
+			var/obj/item/clothing/C = GLOB.roundstartneckwearlist[neckwear]
+			mannequin.equip_to_slot_or_del(new C(mannequin),SLOT_NECK)
+		if(ispath(GLOB.roundstartsuitlist[suit]))
+			var/obj/item/clothing/C = GLOB.roundstartsuitlist[suit]
+			mannequin.equip_to_slot_or_del(new C(mannequin),SLOT_WEAR_SUIT)
+
 	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")

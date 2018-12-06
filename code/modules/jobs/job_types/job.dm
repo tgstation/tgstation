@@ -96,6 +96,18 @@
 		H.equipOutfit(outfit_override ? outfit_override : outfit, visualsOnly)
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
+	if(preference_source)
+		if(preference_source.prefs.hat)
+			H.equip_to_slot_or_del(new preference_source.prefs.hat(H),SLOT_HEAD)
+		if(preference_source.prefs.glasses)
+			H.equip_to_slot_or_del(new preference_source.prefs.glasses(H),SLOT_GLASSES)
+		if(preference_source.prefs.neckwear)
+			H.equip_to_slot_or_del(new preference_source.prefs.neckwear(H),SLOT_NECK)
+		if(preference_source.prefs.suit)
+			H.equip_to_slot_or_del(new preference_source.prefs.suit(H),SLOT_WEAR_SUIT)
+		if(preference_source.prefs.pocket)
+			if(!H.equip_to_slot_or_del(new preference_source.prefs.pocket(H),SLOT_R_STORE)) //If we fuck up putting it in this pocket
+				H.equip_to_slot_or_del(new preference_source.prefs.pocket(H),SLOT_L_STORE) //Then try this one
 
 	if(!visualsOnly && announce)
 		announce(H)
