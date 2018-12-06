@@ -24,6 +24,7 @@
 	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/atom/movable/moving_from_pull		//attempt to resume grab after moving instead of before.
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
@@ -82,6 +83,7 @@
 	if(pulling)
 		if(state == 0)
 			stop_pulling()
+			to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 			return FALSE
 		// Are we trying to pull something we are already pulling? Then enter grab cycle and end.
 		if(AM == pulling)
@@ -94,6 +96,7 @@
 	if(AM.pulledby)
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
+		to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 	pulling = AM
 	AM.pulledby = src
 	grab_state = state
@@ -105,6 +108,14 @@
 	return TRUE
 
 /atom/movable/proc/stop_pulling()
+
+
+	///////////
+	if(ismob(src) && pulling)
+		stack_trace("Pulling stopped.")
+	///////////
+
+
 	if(pulling)
 		pulling.pulledby = null
 		var/mob/living/ex_pulled = pulling
@@ -119,11 +130,13 @@
 		return
 	if(pulling.anchored || !pulling.Adjacent(src))
 		stop_pulling()
+		to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 		return
 	if(isliving(pulling))
 		var/mob/living/L = pulling
 		if(L.buckled && L.buckled.buckle_prevents_pull) //if they're buckled to something that disallows pulling, prevent it
 			stop_pulling()
+			to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 			return
 	if(A == loc && pulling.density)
 		return
@@ -136,17 +149,24 @@
 		var/atom/movable/pullee = pulling
 		if(pullee && get_dist(src, pullee) > 1)
 			stop_pulling()
+			to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 			return
 		if(!isturf(loc))
 			stop_pulling()
+			to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 			return
 		if(pullee && !isturf(pullee.loc) && pullee.loc != loc) //to be removed once all code that changes an object's loc uses forceMove().
 			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
 			stop_pulling()
+			to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 			return
 		if(pulling.anchored)
 			stop_pulling()
+			to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 			return
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)		//separated from our puller and not in the middle of a diagonal move.
+		pulledby.stop_pulling()
+		to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
@@ -198,13 +218,8 @@
 /atom/movable/Move(atom/newloc, direct)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
-	if(pulling)
-		if(pullee && get_dist(src, pullee) > 1)
-			stop_pulling()
-
-		if(pullee && pullee.loc != loc && !isturf(pullee.loc) ) //to be removed once all code that changes an object's loc uses forceMove().
-			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
-			stop_pulling()
+	if(!moving_from_pull)
+		check_pulling()
 	if(!loc || !newloc)
 		return FALSE
 	var/atom/oldloc = loc
@@ -272,19 +287,18 @@
 
 	if(.)
 		Moved(oldloc, direct)
-	if(. && pulling && pulling == pullee) //we were pulling a thing and didn't lose it during our move.
+	if(. && pulling && pulling == pullee && pulling != moving_from_pull) //we were pulling a thing and didn't lose it during our move.
 		if(pulling.anchored)
 			stop_pulling()
+			to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 		else
 			var/pull_dir = get_dir(src, pulling)
 			//puller and pullee more than one tile away or in diagonal position
 			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
+				pulling.moving_from_pull = src
 				pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
-				if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
-					stop_pulling()
-			if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
-				pulledby.stop_pulling()
-
+				pulling.moving_from_pull = null
+			check_pulling()
 
 	last_move = direct
 	setDir(direct)
