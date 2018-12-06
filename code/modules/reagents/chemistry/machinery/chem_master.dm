@@ -273,7 +273,7 @@
 				if("capsule 9")
 					pill_style = 20
 				if("capsule 10")
-					pill_style = 20
+					pill_style = 21
 				if("tablet 1")
 					pill_style = 7
 				if("tablet 2")
