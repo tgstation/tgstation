@@ -37,6 +37,7 @@
 
 /obj/machinery/microwave/Destroy()
 	QDEL_NULL(wires)
+	ingredients.Cut()
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
