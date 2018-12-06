@@ -214,3 +214,21 @@
 					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
 					owner.throw_item(pick(targets))
 	..()
+	
+/datum/brain_trauma/mild/nervous_cough
+	name = "Nervous Cough"
+	desc = "Patient feels a constant need to cough."
+	scan_desc = "nervous cough"
+	gain_text = "<span class='warning'>Your throat itches incessantly...</span>"
+	lose_text = "<span class='notice'>Your throat stops itching.</span>"
+
+/datum/brain_trauma/mild/nervous_cough/on_life()
+	if(prob(12))
+		if(prob(5))
+			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+			owner.Immobilize(20)
+			owner.emote("cough")
+			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 6)
+			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 12)
+		owner.emote("cough")
+	..()

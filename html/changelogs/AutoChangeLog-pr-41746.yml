@@ -1,0 +1,5 @@
+author: "Blobby and Crossbowby"
+delete-after: True
+changes: 
+  - bugfix: "KAs no longer have increased reload time because of crossbows"
+  - bugfix: "The aiming beam will no longer spam chat when aimed at a reflector blob"
