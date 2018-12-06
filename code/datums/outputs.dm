@@ -2,18 +2,18 @@
 
 /datum/outputs
 	var/text = ""
-	var/list/sounds = list('sound/items/airhorn.ogg'=1) //weighted, put multiple for random selection between sounds
-	var/image/image
-
-/datum/outputs/New()
-	image = image('icons/sound_icon.dmi', ,"circle", HUD_LAYER)
+	var/list/sounds = 'sound/items/airhorn.ogg' //can be either a sound path or a WEIGHTED list, put multiple for random selection between sounds
+	var/list/image = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	var/sound/sound_output
 	//Pick sound
-	if(sounds.len)
-		var/soundin = pickweight(sounds)
-		sound_output = sound(get_sfx(soundin))
+	if(islist(sounds))
+		if(sounds.len)
+			var/soundin = pickweight(sounds)
+			sound_output = sound(get_sfx(soundin))
+	else
+		sound_output = sound(get_sfx(sounds))
 	//Process sound
 	if(sound_output)
 		sound_output.wait = 0 //No queue
@@ -64,43 +64,46 @@
 			sound_output.y = 1
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	receiver.display_output(sound_output, image, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	//Process image
+	var/image/sound_icon = image(image[1], , image[2], image[3])
+
+	receiver.display_output(sound_output, sound_icon, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."
-	sounds = list('sound/items/bikehorn.ogg' = 1)
+	sounds = 'sound/items/bikehorn.ogg'
 
 /datum/outputs/airhorn
 	text = "You hear the violent blaring of an airhorn."
-	sounds = list('sound/items/airhorn2.ogg' = 1)
+	sounds = 'sound/items/airhorn2.ogg'
 
 /datum/outputs/alarm
 	text = "You hear a blaring alarm."
-	sounds = list('sound/machines/alarm.ogg' = 1)
+	sounds = 'sound/machines/alarm.ogg'
 
 /datum/outputs/squeak
 	text = "You hear a squeak."
-	sounds = list('sound/effects/mousesqueek.ogg' = 1)
+	sounds = 'sound/effects/mousesqueek.ogg'
 
 /datum/outputs/clownstep
 	sounds = list('sound/effects/clownstep1.ogg' = 1,'sound/effects/clownstep2.ogg' = 1)
 
 /datum/outputs/bite
 	text = "You hear ravenous biting."
-	sounds = list('sound/weapons/bite.ogg' = 1)
+	sounds = 'sound/weapons/bite.ogg'
 
 /datum/outputs/demonattack
 	text = "You hear a terrifying, unholy noise."
-	sounds = list('sound/magic/demon_attack1.ogg' = 1)
+	sounds = 'sound/magic/demon_attack1.ogg'
 
 /datum/outputs/slash
 	text = "You hear a slashing noise."
-	sounds = list('sound/weapons/slash.ogg' = 1)
+	sounds = 'sound/weapons/slash.ogg'
 
 /datum/outputs/punch
 	text = "You hear a punch."
-	sounds = list('sound/effects/hit_punch.ogg' = 1)
+	sounds = 'sound/effects/hit_punch.ogg'
 
 /datum/outputs/squelch
 	text = "You hear a horrendous squelching sound."
-	sounds = list('sound/effects/blobattack.ogg' = 1)
+	sounds = 'sound/effects/blobattack.ogg'
