@@ -2321,6 +2321,7 @@
 #include "code\modules\projectiles\guns\ballistic\launchers.dm"
 #include "code\modules\projectiles\guns\ballistic\pistol.dm"
 #include "code\modules\projectiles\guns\ballistic\revolver.dm"
+#include "code\modules\projectiles\guns\ballistic\rifle.dm"
 #include "code\modules\projectiles\guns\ballistic\shotgun.dm"
 #include "code\modules\projectiles\guns\ballistic\toy.dm"
 #include "code\modules\projectiles\guns\energy\energy_gun.dm"

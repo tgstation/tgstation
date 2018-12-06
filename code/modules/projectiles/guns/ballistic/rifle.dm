@@ -1,3 +1,36 @@
+/obj/item/gun/ballistic/rifle
+    name = "Bolt Rifle"
+    desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
+    icon_state = "moistnugget"
+    icon_state = "moistnugget"
+    mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+    bolt_wording = "bolt"
+    bolt_type = BOLT_TYPE_STANDARD
+    semi_auto = FALSE
+
+obj/item/gun/ballistic/rifle/update_icon()
+    ..()
+    add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
+
+obj/item/gun/ballistic/rifle/rack(mob/user = null)
+    if (bolt_locked == FALSE)
+        to_chat(user, "<span class='notice'>You open the bolt of \the [src]</span>")
+        bolt_locked = TRUE
+        update_icon()
+        return
+    ..()
+
+
+obj/item/gun/ballistic/rifle/attackby(obj/item/A, mob/user, params)
+    if (!bolt_locked)
+        to_chat(user, "<span class='notice'>The bolt is closed!</span>")
+        return
+    . = ..()
+
+/obj/item/gun/ballistic/rifle/examine(mob/user)
+    ..()
+    to_chat(user, "The bolt is [bolt_locked ? "open" : "closed"].")
+
 ///////////////////////
 // BOLT ACTION RIFLE //
 ///////////////////////
@@ -9,24 +42,11 @@
 	item_state = "moistnugget"
 	slot_flags = 0 //no ITEM_SLOT_BACK sprite, alas
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
-	var/bolt_open = FALSE
 	can_bayonet = TRUE
 	knife_x_offset = 27
 	knife_y_offset = 13
-	bolt_wording = "bolt"
 
 //TODO: bolt action behavior
-
-/obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/A, mob/user, params)
-	if(!bolt_open)
-		to_chat(user, "<span class='notice'>The bolt is closed!</span>")
-		return
-	. = ..()
-
-/obj/item/gun/ballistic/rifle/boltaction/examine(mob/user)
-	..()
-	to_chat(user, "The bolt is [bolt_open ? "open" : "closed"].")
-
 
 /obj/item/gun/ballistic/rifle/boltaction/enchanted
 	name = "enchanted bolt action rifle"
