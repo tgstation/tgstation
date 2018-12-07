@@ -156,9 +156,8 @@
 	return
 	
 /obj/item/tank/internals/plasmaman/belt/empty/Initialize()
-	..() // Plasma asserted in parent
+	. = ..() // Plasma asserted in parent
 	air_contents.gases[/datum/gas/plasma][MOLES] = 0
-	return
 
 
 
@@ -183,10 +182,9 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 	return
 	
-/obj/item/tank/internals/emergency_oxygen/empty/New()
-	..()
+/obj/item/tank/internals/emergency_oxygen/empty/Initialize()
+	. = ..()
 	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
-	return
 
 /obj/item/tank/internals/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"
