@@ -477,10 +477,10 @@
 		M.vomit(20, TRUE) //blood vomit
 	if(stage = 3 && current_cycle == 150)
 		to_chat(M, "<span class='warning'>You can't feel your body anymore.</span>")
-		L.add_trait(TRAIT_PARALYSIS_L_ARM, id)
-		L.add_trait(TRAIT_PARALYSIS_R_ARM, id)
-		L.add_trait(TRAIT_PARALYSIS_L_LEG, id)
-		L.add_trait(TRAIT_PARALYSIS_R_LEG, id)
+		M.add_trait(TRAIT_PARALYSIS_L_ARM, id)
+		M.add_trait(TRAIT_PARALYSIS_R_ARM, id)
+		M.add_trait(TRAIT_PARALYSIS_L_LEG, id)
+		M.add_trait(TRAIT_PARALYSIS_R_LEG, id)
 		stage++
 	..()
 	. = 1
