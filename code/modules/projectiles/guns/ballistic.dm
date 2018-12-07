@@ -184,6 +184,8 @@
 
 /obj/item/gun/ballistic/attackby(obj/item/A, mob/user, params)
 	..()
+	if (.)
+		return
 	if (istype(A, /obj/item/ammo_box/magazine) && !internal_magazine)
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
@@ -193,7 +195,7 @@
 				eject_magazine(user, FALSE, AM)
 			else
 				to_chat(user, "<span class='notice'>There's already a [magazine_wording] in \the [src].</span>")
-			
+		return	
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
 			var/num_loaded = magazine.attackby(A, user, params, TRUE)
@@ -201,9 +203,10 @@
 				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
 				playsound(src, load_sound, load_sound_volume, load_sound_vary)
 				if (chambered == null && bolt_type == BOLT_TYPE_NO_BOLT)
-					process_chamber(TRUE, FALSE)
+					chamber_round()
 				A.update_icon()
 				update_icon()
+			return
 	if(istype(A, /obj/item/suppressor))
 		var/obj/item/suppressor/S = A
 		if(!can_suppress)
