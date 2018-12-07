@@ -148,11 +148,11 @@
 	..()
 	switch(select)
 		if(0)
-			add_overlay("[initial(icon_state)]semi")
+			add_overlay("[initial(icon_state)]_semi")
 		if(1)
-			add_overlay("[initial(icon_state)]burst")
+			add_overlay("[initial(icon_state)]_burst")
 		if(2)
-			add_overlay("[initial(icon_state)]gren")
+			add_overlay("[initial(icon_state)]_gren")
 	return
 
 /obj/item/gun/ballistic/automatic/m90/burst_select()
