@@ -56,6 +56,26 @@
 	if(in_range(user, src) || isobserver(user))
 		to_chat(user, "<span class='notice'>The status display reads: Grinding reagents at <b>[speed*100]%</b>.<span>")
 
+	if(!beaker && !length(holdingitems))
+		return
+	to_chat(user, "It contains:")
+	for(var/i in holdingitems)
+		var/obj/item/O = i
+		to_chat(user, "\A [O.name]")
+	if(beaker)
+		if(!length(beaker.reagents.reagent_list))
+			to_chat(user, "An empty [beaker]")
+		else if(user.can_see_reagents() || issilicon(user))
+			to_chat(user, "\A [beaker] containing:<ul>")
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				to_chat(user, "<li>[R.volume] units of [R.name]</li>")
+			to_chat(user, "</ul>")
+		else
+			var/volume = 0
+			for(var/datum/reagent/R in beaker.reagents.reagent_list)
+				volume += R.volume
+			to_chat(user, "\A [beaker] containing [volume] units of something.")
+
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
 	if(A == beaker)
@@ -181,21 +201,6 @@
 			mix(user)
 		if("examine")
 			examine(user)
-
-/obj/machinery/reagentgrinder/examine(mob/user)
-	. = ..()
-	if(!beaker && !length(holdingitems))
-		return
-	to_chat(user, "It contains:")
-	for(var/i in holdingitems)
-		var/obj/item/O = i
-		to_chat(user, "\A [O.name]")
-	if(beaker)
-		to_chat(user, "\A [beaker]")
-		if(!(stat & (NOPOWER|BROKEN)))
-			to_chat(user, "The screen reads:")
-			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-				to_chat(user, "[R.volume] units of [R.name]")
 
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
 	for(var/i in holdingitems)
