@@ -65,15 +65,15 @@
 	to_chat(user, "<span class='notice'>It contains:</span>")
 	for(var/i in holdingitems)
 		var/obj/item/O = i
-		to_chat(user, "<span class='notice'>- \A [O.name]</span>")
+		to_chat(user, "<span class='notice'>- \A [O.name].</span>")
 
 	if(beaker)
 		if(!length(beaker.reagents.reagent_list))
-			to_chat(user, "<span class='notice'>- An empty [beaker]</span>")
+			to_chat(user, "<span class='notice'>- An empty [beaker].</span>")
 		else if(user.can_see_reagents() || issilicon(user) || isobserver(user))
 			to_chat(user, "<span class='notice'>- \A [beaker] containing:</span>")
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-				to_chat(user, "<span class='notice'>&nbsp;&nbsp;- [R.volume] units of [R.name]</span>")
+				to_chat(user, "<span class='notice'>&nbsp;&nbsp;- [R.volume] units of [R.name].</span>")
 		else
 			var/volume = 0
 			for(var/datum/reagent/R in beaker.reagents.reagent_list)
