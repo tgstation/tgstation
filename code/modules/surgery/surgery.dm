@@ -88,13 +88,10 @@
 /datum/surgery/advanced/can_start(mob/user, mob/living/carbon/target)
 	if(!..())
 		return FALSE
-	//Abductor scientists need no instructions
-	if(isabductor(user))
-		var/mob/living/carbon/human/H = user
-		var/datum/species/abductor/S = H.dna.species
-		if(S.scientist)
-			return TRUE
-	
+	// True surgeons (like abductor scientists) need no instructions
+	if(user.has_trait(TRAIT_SURGEON))
+		return TRUE
+
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/obj/item/surgical_processor/SP = locate() in R.module.modules
@@ -102,7 +99,7 @@
 			return FALSE
 		if(type in SP.advanced_surgeries)
 			return TRUE
-	
+
 	var/turf/T = get_turf(target)
 	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
 	if(!table || !table.computer)
