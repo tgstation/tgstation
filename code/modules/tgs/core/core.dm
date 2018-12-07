@@ -31,13 +31,16 @@
 				if(0)
 					api_datum = /datum/tgs_api/v4
 
-	if(version.suite != null && version.major != null && version.minor != null && version.patch != null && version.deprefixed_parameter > TgsMaximumAPIVersion())
+	var/tgs_version/max_api_version = TgsMaximumAPIVersion();
+	if(version.suite != null && version.major != null && version.minor != null && version.patch != null && version.deprefixed_parameter > max_api_version.deprefixed_parameter)
 		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
 		api_datum = /datum/tgs_api/latest
 
 	if(!api_datum)
 		TGS_ERROR_LOG("Found unsupported API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
 		return
+
+	TGS_INFO_LOG(json_encode(version.vars))
 
 	TGS_INFO_LOG("Activating API for version [version.deprefixed_parameter]")
 	var/datum/tgs_api/new_api = new api_datum(version)
