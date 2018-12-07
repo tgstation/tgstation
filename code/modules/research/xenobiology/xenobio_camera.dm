@@ -33,7 +33,6 @@
 	var/datum/component/redirect/listener
 
 	var/obj/machinery/monkey_recycler/connected_recycler
-	var/initialized_recycler = FALSE
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
@@ -59,7 +58,6 @@
 		if(get_area(recycler.loc) == get_area(loc))
 			connected_recycler = recycler
 			connected_recycler.connected += src
-			initialized_recycler = TRUE
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
@@ -122,13 +120,11 @@
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)	
 	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 
-	if(!initialized_recycler)
+	if(!connected_recycler)
 		for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 			if(get_area(recycler.loc) == get_area(loc))
 				connected_recycler = recycler
 				connected_recycler.connected += src
-				initialized_recycler = TRUE
-
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	
