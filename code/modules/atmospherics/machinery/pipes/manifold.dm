@@ -28,6 +28,8 @@
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
 	cut_overlays()
+	if(!center)
+		center = mutable_appearance(icon, "manifold_center")
 	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
 	add_overlay(center)
 
