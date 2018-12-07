@@ -6,7 +6,7 @@
 	armor = list("melee" = 100, "bullet" = 80, "laser" = 80, "energy" = 100, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
 	density = FALSE
 	anchored = TRUE
-	layer = ABOVE_MOB_LAYER
+	layer = BELOW_MOB_LAYER //you aren't hiding below it
 	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/plasticflaps/opaque

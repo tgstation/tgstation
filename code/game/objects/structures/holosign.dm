@@ -77,10 +77,9 @@
 	desc = "A holographic barrier resembling a firelock. Though it does not prevent solid objects from passing through, gas is kept out."
 	icon_state = "holo_firelock"
 	density = FALSE
-	layer = ABOVE_MOB_LAYER
+	layer = BELOW_MOB_LAYER //you aren't hiding below it
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
-	layer = ABOVE_MOB_LAYER
 	alpha = 150
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_LIGHT_INSULATION
@@ -108,7 +107,7 @@
 	desc = "A holobarrier that uses biometrics to detect human viruses. Denies passing to personnel with easily-detected, malicious viruses. Good for quarantines."
 	icon_state = "holo_medical"
 	alpha = 125 //lazy :)
-	layer = ABOVE_MOB_LAYER
+	layer = BELOW_MOB_LAYER //you aren't hiding below it
 	var/force_allaccess = FALSE
 	var/buzzcd = 0
 
