@@ -15,6 +15,16 @@
 	var/mind_control_uses = 1
 	var/mind_control_duration = 1800
 	var/active_mind_control = FALSE
+	var/gland_desc = " generic"
+
+/obj/item/organ/heart/gland/examine(mob/user)
+	.=..()
+	if(istype(user, /mob/living/carbon))
+		var/mob/living/carbon/M = user
+		if(istype(M.dna.species, /datum/species/abductor))
+			var/datum/species/abductor/S = M.dna.species
+			if(S.scientist)
+				to_chat(user, "You discern it to be a[gland_desc] gland.")
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -101,6 +111,7 @@
 	icon_state = "health"
 	mind_control_uses = 3
 	mind_control_duration = 3000
+	gland_desc = " healing"
 
 /obj/item/organ/heart/gland/heals/activate()
 	to_chat(owner, "<span class='notice'>You feel curiously revitalized.</span>")
@@ -115,6 +126,7 @@
 	icon_state = "slime"
 	mind_control_uses = 1
 	mind_control_duration = 2400
+	gland_desc = " slime"
 
 /obj/item/organ/heart/gland/slime/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -136,6 +148,7 @@
 	icon_state = "mindshock"
 	mind_control_uses = 1
 	mind_control_duration = 6000
+	gland_desc = " mindshock"
 
 /obj/item/organ/heart/gland/mindshock/activate()
 	to_chat(owner, "<span class='notice'>You get a headache.</span>")
@@ -163,6 +176,7 @@
 	icon_state = "species"
 	mind_control_uses = 5
 	mind_control_duration = 300
+	gland_desc = " species shifting"
 
 /obj/item/organ/heart/gland/pop/activate()
 	to_chat(owner, "<span class='notice'>You feel unlike yourself.</span>")
@@ -177,6 +191,7 @@
 	icon_state = "vent"
 	mind_control_uses = 4
 	mind_control_duration = 1800
+	gland_desc = " ventcrawling"
 
 /obj/item/organ/heart/gland/ventcrawling/activate()
 	to_chat(owner, "<span class='notice'>You feel very stretchy.</span>")
@@ -189,6 +204,7 @@
 	icon_state = "viral"
 	mind_control_uses = 1
 	mind_control_duration = 1800
+	gland_desc = " viral"
 
 /obj/item/organ/heart/gland/viral/activate()
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
@@ -223,6 +239,7 @@
 	icon_state = "emp"
 	mind_control_uses = 3
 	mind_control_duration = 1800
+	gland_desc = " brain trauma"
 
 /obj/item/organ/heart/gland/trauma/activate()
 	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
@@ -241,6 +258,7 @@
 	icon_state = "spider"
 	mind_control_uses = 2
 	mind_control_duration = 2400
+	gland_desc = " spider"
 
 /obj/item/organ/heart/gland/spiderman/activate()
 	to_chat(owner, "<span class='warning'>You feel something crawling in your skin.</span>")
@@ -257,6 +275,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	mind_control_uses = 2
 	mind_control_duration = 1800
+	gland_desc = " egg-laying" 
 
 /obj/item/organ/heart/gland/egg/activate()
 	owner.visible_message("<span class='alertalien'>[owner] [pick(EGG_LAYING_MESSAGES)]</span>")
@@ -269,6 +288,7 @@
 	uses = -1
 	mind_control_uses = 2
 	mind_control_duration = 900
+	gland_desc = " electric"
 
 /obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -294,6 +314,7 @@
 	uses = -1
 	mind_control_uses = 3
 	mind_control_duration = 1200
+	gland_desc = " chem"
 	var/list/possible_reagents = list()
 
 /obj/item/organ/heart/gland/chem/Initialize()
@@ -320,6 +341,7 @@
 	uses = -1
 	mind_control_uses = 1
 	mind_control_duration = 800
+	gland_desc = " plasma"
 
 /obj/item/organ/heart/gland/plasma/activate()
 	to_chat(owner, "<span class='warning'>You feel bloated.</span>")
