@@ -17,7 +17,7 @@
 		return
 	var/turf/T = get_turf(target)
 	if(T)
-		do_teleport(chassis, T, 4)
+		do_teleport(chassis, T, 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 		return 1
 
 

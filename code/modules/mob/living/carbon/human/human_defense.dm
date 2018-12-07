@@ -55,7 +55,7 @@
 					return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(P.is_reflectable)
+		if(P.reflectable & REFLECT_NORMAL)
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -463,12 +463,18 @@
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
+
+	dna.species.spec_electrocute_act(src, shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
 
+/mob/living/carbon/human/emag_act(mob/user)
+	.=..()
+	dna?.species.spec_emag_act(src)
 
 /mob/living/carbon/human/emp_act(severity)
+	dna?.species.spec_emp_act(src, severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
@@ -720,19 +726,20 @@
 				else if(oxyloss > 30)
 					to_chat(src, "<span class='danger'>You're choking!</span>")
 
-		switch(nutrition)
-			if(NUTRITION_LEVEL_FULL to INFINITY)
-				to_chat(src, "<span class='info'>You're completely stuffed!</span>")
-			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				to_chat(src, "<span class='info'>You're well fed!</span>")
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				to_chat(src, "<span class='info'>You're not hungry.</span>")
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				to_chat(src, "<span class='info'>You feel quite hungry.</span>")
-			if(0 to NUTRITION_LEVEL_STARVING)
-				to_chat(src, "<span class='danger'>You're starving!</span>")
+		if(!has_trait(TRAIT_NOHUNGER))
+			switch(nutrition)
+				if(NUTRITION_LEVEL_FULL to INFINITY)
+					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
+				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+					to_chat(src, "<span class='info'>You're well fed!</span>")
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					to_chat(src, "<span class='info'>You're not hungry.</span>")
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					to_chat(src, "<span class='info'>You feel quite hungry.</span>")
+				if(0 to NUTRITION_LEVEL_STARVING)
+					to_chat(src, "<span class='danger'>You're starving!</span>")
 
 		if(roundstart_quirks.len)
 			to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")

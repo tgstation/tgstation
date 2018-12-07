@@ -175,3 +175,8 @@
 	volume = 250
 	list_reagents = list("holywater" = 150, "tiresolution" = 50, "dizzysolution" = 50)
 	amount_per_transfer_from_this = 50
+
+/obj/item/reagent_containers/hypospray/medipen/atropine
+	name = "atropine autoinjector"
+	desc = "A rapid way to save a person from a critical injury state!"
+	list_reagents = list("atropine" = 10)

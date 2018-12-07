@@ -333,6 +333,7 @@
 
 	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
 	cached_gases[/datum/gas/miasma][MOLES] += 0.02
+	miasma_turf.air_update_turf()
 
 /mob/living/carbon/proc/handle_blood()
 	return
@@ -417,7 +418,7 @@
 			if(SSmobs.times_fired%3==1)
 				if(!(M.status_flags & GODMODE))
 					M.adjustBruteLoss(5)
-				nutrition += 10
+				adjust_nutrition(10)
 
 
 /*

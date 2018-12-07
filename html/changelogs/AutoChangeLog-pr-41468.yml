@@ -1,0 +1,4 @@
+author: "Steelpoint"
+delete-after: True
+changes: 
+  - rscadd: "A new advanced first aid kit is now purchasable from any approved medical vendor. The kit contains an array of advanced healing items for more complex wounds and injuries."

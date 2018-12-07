@@ -8,6 +8,7 @@
 
 	move_resist=INFINITY // just killing it tears a massive hole in the ground, let's not move it
 	anchored = TRUE
+	density = TRUE
 
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	max_integrity = 200

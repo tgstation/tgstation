@@ -160,6 +160,12 @@
 	list_reagents = list("psicodine" = 10)
 	icon_state = "pill22"
 	roundstart = 1
+/obj/item/reagent_containers/pill/penacid
+	name = "pentetic acid pill"
+	desc = "Used to expunge radioation and toxins."
+	list_reagents = list("pen_acid" = 10)
+	icon_state = "pill22"
+	roundstart = 1
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"

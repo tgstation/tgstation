@@ -8,6 +8,7 @@
 
 //A flashy ability, good for crowd control and sewing chaos.
 /obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
+	..()
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -35,6 +36,7 @@
 
 //A flashy ability, good for crowd control and sewing chaos.
 /obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(mob/user)
+	..()
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1
 		L.break_light_tube()

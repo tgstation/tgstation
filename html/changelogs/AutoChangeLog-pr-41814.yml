@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Cryo tubes will only ever send one message, even if they are auto ejecting."

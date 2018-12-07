@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Adds the Physically Obstructive negative quirk. A person with this
+quirk can't swap places with other people when moving, akin to someone
+always being in non-help intent."

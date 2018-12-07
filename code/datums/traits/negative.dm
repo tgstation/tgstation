@@ -15,6 +15,35 @@
 	else
 		quirk_holder.blood_volume -= 0.275
 
+/datum/quirk/blindness
+	name = "Blind"
+	desc = "You are completely blind, nothing can counteract this."
+	value = -4
+	gain_text = "<span class='danger'>You can't see anything.</span>"
+	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
+	medical_record_text = "Subject has permanent blindness."
+
+/datum/quirk/blindness/add()
+	quirk_holder.become_blind(ROUNDSTART_TRAIT)
+
+/datum/quirk/blindness/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/glasses/blindfold/white/B = new(get_turf(H))
+	if(!H.equip_to_slot_if_possible(B, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
+		H.put_in_hands(B)
+	H.regenerate_icons()
+
+/datum/quirk/brainproblems
+	name = "Brain Tumor"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
+	value = -3
+	gain_text = "<span class='danger'>You feel smooth.</span>"
+	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
+	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
+
+/datum/quirk/brainproblems/on_process()
+	quirk_holder.adjustBrainLoss(0.2)
+
 /datum/quirk/deafness
 	name = "Deaf"
 	desc = "You are incurably deaf."
@@ -156,17 +185,6 @@
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 
-/datum/quirk/brainproblems
-	name = "Brain Tumor"
-	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
-	value = -3
-	gain_text = "<span class='danger'>You feel smooth.</span>"
-	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
-	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
-
-/datum/quirk/brainproblems/on_process()
-	quirk_holder.adjustBrainLoss(0.2)
-
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
@@ -289,6 +307,14 @@
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
+/datum/quirk/obstructive
+	name = "Physically Obstructive"
+	desc = "You somehow manage to always be in the way. You can't swap places with other people."
+	value = -1
+	mob_trait = TRAIT_NOMOBSWAP
+	gain_text = "<span class='danger'>You feel like you're in the way.</span>"
+	lose_text = "<span class='notice'>You feel less like you're in the way.</span>"
+
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
@@ -315,20 +341,3 @@
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
 
-/datum/quirk/blindness
-	name = "Blind"
-	desc = "You are completely blind, nothing can counteract this."
-	value = -4
-	gain_text = "<span class='danger'>You can't see anything.</span>"
-	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
-	medical_record_text = "Subject has permanent blindness."
-
-/datum/quirk/blindness/add()
-	quirk_holder.become_blind(ROUNDSTART_TRAIT)
-
-/datum/quirk/blindness/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/clothing/glasses/sunglasses/blindfold/white/glasses = new(get_turf(H))
-	if(!H.equip_to_slot_if_possible(glasses, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
-		H.put_in_hands(glasses)
-	H.regenerate_icons()

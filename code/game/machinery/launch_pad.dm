@@ -135,7 +135,7 @@
 				if(first_inner)
 					log_msg += "empty"
 				log_msg += ")"
-		do_teleport(ROI, dest, no_effects = !first)
+		do_teleport(ROI, dest, no_effects = !first, channel = TELEPORT_CHANNEL_BLUESPACE)
 		first = FALSE
 
 	if (first)
