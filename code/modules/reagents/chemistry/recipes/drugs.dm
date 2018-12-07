@@ -47,3 +47,10 @@
 	results = list("happiness" = 4)
 	required_reagents = list("nitrous_oxide" = 2, "epinephrine" = 1, "ethanol" = 1)
 	required_catalysts = list("plasma" = 5)
+	
+/datum/chemical_reaction/last_wish
+	name = "Last Wish"
+	id = "last_wish"
+	results = list("last_wish" = 3)
+	required_reagents = list("ghoulpowder" = 1, "ephedrine" = 1, "corazone" = 1)
+	required_catalysts = list("strange_reagent" = 5)

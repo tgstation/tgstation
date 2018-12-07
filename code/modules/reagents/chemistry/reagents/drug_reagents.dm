@@ -446,3 +446,65 @@
 		M.emote(pick("twitch","laugh","frown"))
 	..()
 	. = 1
+	
+/datum/reagent/drug/last_wish
+	name = "Last Wish"
+	id = "last_wish"
+	description = "A byproduct of romerol testing, this combat drug can keep the user alive far beyond human standards, but will kill them as soon as it runs out."
+	reagent_state = LIQUID
+	color = "#BF4095"
+	var/stage = 0 //Used for message tracking
+	overdose_threshold = 30
+	//No addiction threshold, if you run out you're too dead to want more
+	
+/datum/reagent/drug/last_wish/overdose_process(mob/living/M)
+	current_cycle++ //Still works, but you feel the side effects twice as fast
+	..()
+	. = 1
+
+/datum/reagent/drug/last_wish/on_mob_life(mob/living/carbon/M)
+	if(stage == 0 && current_cycle >= 10)
+		to_chat(M, "<span class='warning'>You feel an impending sense of doom.</span>")
+		stage++
+	if(stage == 1 && current_cycle >= 30)
+		to_chat(M, "<span class='warning'>Your heartbeat booms loudly in your head. You feel tired. Slower.</span>")
+		stage++
+		M.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=2, blacklisted_movetypes=(FLYING|FLOATING))
+	if(stage == 2 && current_cycle >= 60)
+		to_chat(M, "<span class='warning'>You start feeling sick.</span>")
+		stage++
+	if(prob(5 + (current_cycle / 25)) && current_cycle > 60)
+		M.vomit(20, TRUE) //blood vomit
+	if(stage = 3 && current_cycle == 150)
+		to_chat(M, "<span class='warning'>You can't feel your body anymore.</span>")
+		L.add_trait(TRAIT_PARALYSIS_L_ARM, id)
+		L.add_trait(TRAIT_PARALYSIS_R_ARM, id)
+		L.add_trait(TRAIT_PARALYSIS_L_LEG, id)
+		L.add_trait(TRAIT_PARALYSIS_R_LEG, id)
+		stage++
+	..()
+	. = 1
+	
+/datum/reagent/drug/last_wish/on_mob_add(mob/living/L)
+	..()
+	L.add_trait(TRAIT_NODEATH, id)
+	L.add_trait(TRAIT_NOSOFTCRIT, id)
+	L.add_trait(TRAIT_NOHARDCRIT, id)
+
+/datum/reagent/drug/last_wish/on_mob_delete(mob/living/L)
+	L.remove_trait(TRAIT_NODEATH, id)
+	L.remove_trait(TRAIT_NOSOFTCRIT, id)
+	L.remove_trait(TRAIT_NOHARDCRIT, id)
+	L.remove_trait(TRAIT_PARALYSIS_L_ARM, id)
+	L.remove_trait(TRAIT_PARALYSIS_R_ARM, id)
+	L.remove_trait(TRAIT_PARALYSIS_L_LEG, id)
+	L.remove_trait(TRAIT_PARALYSIS_R_LEG, id)
+	L.remove_movespeed_modifier(id)
+	if(current_cycle >= 10)
+		L.death()
+	if(current_cycle >= 60)
+		L.become_husk(id)
+		L.add_trait(TRAIT_NOCLONE, id)
+	if(current_cycle >= 120)
+		L.gib()
+	..()
