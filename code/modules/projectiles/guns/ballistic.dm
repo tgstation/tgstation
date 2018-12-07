@@ -114,7 +114,6 @@
 	if (chamber_next_round)
 		chamber_round()
 
-
 /obj/item/gun/ballistic/proc/chamber_round()
 	if (chambered || !magazine)
 		return

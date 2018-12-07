@@ -23,6 +23,12 @@
 	..()
 	chamber_round(1)
 
+/obj/item/gun/ballistic/revolver/AltClick(mob/user)
+	if (unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+		reskin_obj(user)
+		return
+	spin()
+
 /obj/item/gun/ballistic/revolver/verb/spin()
 	set name = "Spin Chamber"
 	set category = "Object"
@@ -58,6 +64,8 @@
 	..()
 	var/live_ammo = get_ammo(FALSE, FALSE)
 	to_chat(user, "[live_ammo ? live_ammo : "None"] of those are live rounds.")
+	if (current_skin)
+		to_chat(user, "It can be spun with <b>alt+click</b>")
 
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
