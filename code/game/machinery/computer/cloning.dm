@@ -210,14 +210,17 @@
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
+
+	// Do not use unless you know what they are.
+	var/mob/living/carbon/C = mob_occupant
+	var/mob/living/brain/B = mob_occupant
+
 	if(ishuman(mob_occupant))
-		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
 		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
 	if(isbrain(mob_occupant))
-		var/mob/living/brain/B = mob_occupant
 		dna = B.stored_dna
 
 	if(!istype(dna))
@@ -254,12 +257,19 @@
 
 	var/mind
 	if(mob_occupant.mind)
-		mind = "[REF(mob_occupant.mind)]"	
+		mind = "[REF(mob_occupant.mind)]"
 
-	var/quirks = list()
+	var/list/quirks = list()
 	for(var/V in mob_occupant.roundstart_quirks)
 		var/datum/quirk/T = V
 		quirks[T.type] = T.clone_data()
+
+	var/list/traumas = list()
+
+	if(ishuman(mob_occupant))
+		traumas = C.get_traumas()
+	if(isbrain(mob_occupant))
+		traumas = B.get_traumas()
 
 	var/obj/machinery/clonepod/pod = GetAvailablePod()
 	//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
@@ -275,7 +285,7 @@
 	else if(pod.occupant)
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-	else if(pod.growclone(mob_occupant.ckey, mob_occupant.real_name, dna.uni_identity, dna.struc_enzymes, mind, mrace, dna.features, mob_occupant.faction, quirks, has_bank_account))
+	else if(pod.growclone(mob_occupant.ckey, mob_occupant.real_name, dna.uni_identity, dna.struc_enzymes, mind, mrace, dna.features, mob_occupant.faction, quirks, has_bank_account, traumas))
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning cycle in progress...</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 	else

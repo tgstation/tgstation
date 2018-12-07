@@ -29,6 +29,9 @@
 	trigger_species = SStraumas.phobia_species[phobia_type]
 	..()
 
+/datum/brain_trauma/mild/phobia/on_clone()
+	. = phobia_type
+
 /datum/brain_trauma/mild/phobia/on_life()
 	..()
 	if(owner.has_trait(TRAIT_FEARLESS))
