@@ -89,3 +89,8 @@
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
 	timeout = 1800
+
+/datum/mood_event/universe
+	description = "<span class='nicegreen'>I have seen the truth!</span>\n"
+	mood_change = 12
+	timeout = 1200

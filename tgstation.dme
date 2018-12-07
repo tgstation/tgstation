@@ -1545,6 +1545,7 @@
 #include "code\modules\events\anomaly_pyro.dm"
 #include "code\modules\events\anomaly_vortex.dm"
 #include "code\modules\events\aurora_caelus.dm"
+#include "code\modules\events\blessings.dm"
 #include "code\modules\events\blob.dm"
 #include "code\modules\events\brand_intelligence.dm"
 #include "code\modules\events\bureaucratic_error.dm"

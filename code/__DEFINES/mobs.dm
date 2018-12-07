@@ -278,3 +278,8 @@
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+//cpr defines
+
+#define CPR_NORMAL 1
+#define CPR_GOOD 2

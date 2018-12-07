@@ -27,7 +27,7 @@
 
 		//Subtypes from the above that actually should explode.
 		var/list/unsafe_area_subtypes = typecacheof(list(/area/engine/break_room))
-		
+
 		allowed_areas = make_associative(GLOB.the_station_areas) - safe_area_types + unsafe_area_subtypes
 
 	return safepick(typecache_filter_list(GLOB.sortedAreas,allowed_areas))
@@ -50,43 +50,3 @@
 		newAnomaly = new anomaly_path(T)
 	if (newAnomaly)
 		announce_to_ghosts(newAnomaly)
-
-/datum/round_event_control/chosen_one
-	name = "The Chosen One"
-	typepath = /datum/round_event/chosen_one
-	weight = 7 //more often than aliens, less often then appendicitis
-	max_occurrences = 1
-	earliest_start = 15 MINUTES
-	min_players = 35
-
-/datum/round_event/chosen_one
-
-/datum/round_event/chosen_one/start()
-	for(var/mob/living/L in apply_luck(GLOB.alive_mob_list, POSITIVE_EVENT))//even a sentient slime could be the chosen one
-		if(!L.client)
-			continue
-		if(L.stat == DEAD)
-			continue
-		if(L.mind.antag_datums.len > 0)
-			continue
-		
-		L.apply_status_effect(/datum/status_effect/chosen_one)
-		announce_to_ghosts(L)
-		break
-
-/datum/status_effect/chosen_one
-	id = "chosen_one"
-
-/datum/status_effect/chosen_one/tick()
-	if(owner.health <= owner.maxHealth/5)
-		a_hero_rises()
-
-/datum/status_effect/chosen_one/proc/a_hero_rises()
-	owner.heal_overall_damage(10, 10)
-	to_chat(owner, "<span class='green'><b>Your will to live gives you a burst of energy!</b></span>")
-	owner.SetStun(0, FALSE)
-	owner.SetKnockdown(0, FALSE)
-	owner.SetParalyzed(0, FALSE)
-	owner.SetImmobilized(0)
-	owner.add_stun_absorption("chosen", 30, 1, self_message = "The adrenaline keeps you from falling!")
-	owner.remove_status_effect(/datum/status_effect/chosen_one)

@@ -635,10 +635,17 @@
 		log_combat(src, C, "CPRed")
 
 		if(they_breathe && they_lung)
+			var/suffheal = 7
+			if(CPR_GOOD)
+				suffheal += 5
+				var/brute = min(C.getBruteLoss(), 2)
+				C.adjustBruteLoss(-brute)
+				to_chat(C, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels <b>great</b>...</span>")
+			else
+				to_chat(C, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
 			var/suff = min(C.getOxyLoss(), 7)
 			C.adjustOxyLoss(-suff)
 			C.updatehealth()
-			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air enter your lungs... It feels good...</span>")
 		else if(they_breathe && !they_lung)
 			to_chat(C, "<span class='unconscious'>You feel a breath of fresh air... but you don't feel any better...</span>")
 		else
