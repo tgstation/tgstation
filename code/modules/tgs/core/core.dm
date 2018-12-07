@@ -40,8 +40,6 @@
 		TGS_ERROR_LOG("Found unsupported API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
 		return
 
-	TGS_INFO_LOG(json_encode(version.vars))
-
 	TGS_INFO_LOG("Activating API for version [version.deprefixed_parameter]")
 	var/datum/tgs_api/new_api = new api_datum(version)
 
