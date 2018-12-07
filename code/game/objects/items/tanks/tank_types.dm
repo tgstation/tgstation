@@ -193,18 +193,16 @@
 	icon_state = "emergency_engi"
 	volume = 6
 
-/obj/item/tank/internals/emergency_oxygen/engi/empty/New()
-	..()
+/obj/item/tank/internals/emergency_oxygen/engi/empty/Initialise()
+	. = ..()
 	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
-	return
 
 /obj/item/tank/internals/emergency_oxygen/double
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
 	volume = 10
 	
-/obj/item/tank/internals/emergency_oxygen/double/empty/New()
-	..()
+/obj/item/tank/internals/emergency_oxygen/double/empty/Initialise()
+	. = ..()
 	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
-	return
 	
