@@ -538,6 +538,22 @@
 	surgery = /datum/surgery/advanced/bioware/vein_threading
 	research_icon_state = "surgery_chest"
 
+/datum/design/surgery/ligament_hook
+	name = "Ligament Hook"
+	desc = "A surgical procedure which reshapes the connections between torso and limbs, making it so limbs can be attached manually if severed. \
+	However this weakens the connection, making them easier to detach as well."
+	id = "surgery_ligament_hook"
+	surgery = /datum/surgery/advanced/bioware/ligament_hook
+	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/ligament_reinforcement
+	name = "Ligament Reinforcement"
+	desc = "A surgical procedure which adds a protective tissue and bone cage around the connections between the torso and limbs, preventing dismemberment. \
+	However, the nerve connections as a result are more easily interrupted, making it easier to disable limbs with damage."
+	id = "surgery_ligament_reinforcement"
+	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
+	research_icon_state = "surgery_chest"
+
 /datum/design/surgery/necrotic_revival
 	name = "Necrotic Revival"
 	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."
