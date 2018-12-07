@@ -71,18 +71,7 @@
 /obj/effect/decal/cleanable/blood/gibs/proc/start_rotting(rename=TRUE)
 	name = "rotting [initial(name)]"
 	desc += " It smells terrible."
-	START_PROCESSING(SSobj, src)
-
-/obj/effect/decal/cleanable/blood/gibs/process()
-	var/turf/open/T = get_turf(src)
-	if(!istype(T))
-		return
-
-	var/list/cached_gases = T.air.gases
-	ASSERT_GAS(/datum/gas/miasma, T.air)
-	// 1/4 miasma emission of a rotting corpse.
-	cached_gases[/datum/gas/miasma][MOLES] += 0.005
-	T.air_update_turf()
+	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return

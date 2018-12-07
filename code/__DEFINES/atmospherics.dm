@@ -298,3 +298,6 @@ GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"violet" = rgb(64,0,128),
 		"yellow" = rgb(255,198,0)
 ))
+
+#define MIASMA_CORPSE_MOLES 0.02
+#define MISASMA_GIBS_MOLES 0.005
