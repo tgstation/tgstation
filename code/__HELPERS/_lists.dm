@@ -573,7 +573,7 @@
 	return ret
 
 /proc/compare_list(list/l,list/d)
-	if(!istype(l, /list) || !istype(d, /list))
+	if(!islist(l) || !islist(d))
 		return FALSE
 
 	if(l.len != d.len)
