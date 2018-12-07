@@ -31,7 +31,7 @@
 				if(0)
 					api_datum = /datum/tgs_api/v4
 
-	var/tgs_version/max_api_version = TgsMaximumAPIVersion();
+	var/datum/tgs_version/max_api_version = TgsMaximumAPIVersion();
 	if(version.suite != null && version.major != null && version.minor != null && version.patch != null && version.deprefixed_parameter > max_api_version.deprefixed_parameter)
 		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
 		api_datum = /datum/tgs_api/latest
