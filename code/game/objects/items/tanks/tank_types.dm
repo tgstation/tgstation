@@ -191,7 +191,7 @@
 	icon_state = "emergency_engi"
 	volume = 2 // should last a bit over 30 minutes if full
 
-/obj/item/tank/internals/emergency_oxygen/engi/empty/Initialise()
+/obj/item/tank/internals/emergency_oxygen/engi/empty/Initialize()
 	. = ..()
 	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
 
@@ -200,7 +200,7 @@
 	icon_state = "emergency_double"
 	volume = 8
 	
-/obj/item/tank/internals/emergency_oxygen/double/empty/Initialise()
+/obj/item/tank/internals/emergency_oxygen/double/empty/Initialize()
 	. = ..()
 	air_contents.gases[/datum/gas/oxygen][MOLES] = 0
 	
