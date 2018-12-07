@@ -1,7 +1,3 @@
-/*
-blocked crates needs a redo
-*/
-
 GLOBAL_LIST_EMPTY(perseus_supplypacks)
 /obj/machinery/computer/perseussupply
 	name = "Perseus Supply Pad"

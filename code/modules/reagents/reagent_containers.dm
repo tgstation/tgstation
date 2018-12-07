@@ -102,7 +102,8 @@
 
 		if(thrownby)
 			add_logs(thrownby, M, "splashed", R)
-		reagents.reaction(target, TOUCH)
+		Splash(target)
+		//reagents.reaction(target, TOUCH)
 
 	else if(bartender_check(target) && thrown)
 		visible_message("<span class='notice'>[src] lands onto the [target.name] without spilling a single drop.</span>")
@@ -114,11 +115,17 @@
 			log_game("[key_name(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [COORD(target)].")
 			message_admins("[key_name_admin(thrownby)] splashed (thrown) [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
 		visible_message("<span class='notice'>[src] spills its contents all over [target].</span>")
-		reagents.reaction(target, TOUCH)
+		Splash(target)
+		//reagents.reaction(target, TOUCH)
 		if(QDELETED(src))
 			return
 
 	reagents.clear_reagents()
+
+/obj/item/reagent_containers/proc/Splash(atom/A)
+	if(reagents && A)
+		reagents.reaction(A, TOUCH)
+		playsound(get_turf(A), 'sound/effects/splat.ogg', 50, 0)
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)

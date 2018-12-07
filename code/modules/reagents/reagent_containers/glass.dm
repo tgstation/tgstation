@@ -32,7 +32,8 @@
 				add_logs(thrownby, target, "splashed [english_list(reagents.reagent_list)]", "at [target][COORD(target)]")
 				log_game("[key_name(thrownby)] splashed [english_list(reagents.reagent_list)] at [COORD(target)].")
 				message_admins("[key_name_admin(thrownby)] splashed [english_list(reagents.reagent_list)] at [ADMIN_COORDJMP(target)].")
-			reagents.reaction(M, TOUCH)
+			Splash(M)
+			//reagents.reaction(M, TOUCH)
 			add_logs(user, M, "splashed", R)
 			reagents.clear_reagents()
 		else
@@ -84,7 +85,8 @@
 		if(user.a_intent == INTENT_HARM)
 			user.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 								"<span class='notice'>You splash the contents of [src] onto [target].</span>")
-			reagents.reaction(target, TOUCH)
+			Splash(target)
+			//reagents.reaction(target, TOUCH)
 			reagents.clear_reagents()
 
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)

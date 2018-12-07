@@ -81,6 +81,8 @@ GLOBAL_LIST_EMPTY(hub_features)
 	world.status = dat
 
 //modifying a player after hes equipped when spawning in as crew member.
+/datum/outfit
+	var/ignore_special_events = 0
 /datum/outfit/proc/update_toolbox_inventory(mob/living/carbon/human/H)
 	var/themonth = text2num(time2text(world.timeofday,"MM"))
 	var/theday = text2num(time2text(world.timeofday,"DD"))
@@ -90,7 +92,7 @@ GLOBAL_LIST_EMPTY(hub_features)
 	if(!H.wear_mask && H.ckey == "landrydragon")
 		H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/mime(H),slot_wear_mask)
 	//st patricks day
-	if(themonth == 3 && theday == 17)
+	if(themonth == 3 && theday == 17 && !ignore_special_events)
 		if(H.w_uniform)
 			H.w_uniform.name = "Green [H.w_uniform.name]"
 			H.w_uniform.icon_state = "green"

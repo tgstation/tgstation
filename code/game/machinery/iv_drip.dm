@@ -7,7 +7,7 @@
 	icon_state = "iv_drip"
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
-	var/mob/living/carbon/attached = null
+	var/atom/movable/attached = null
 	var/mode = IV_INJECTING
 	var/obj/item/reagent_containers/beaker = null
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
@@ -67,19 +67,24 @@
 			filling_overlay.color = list("#0000", "#0000", "#0000", "#000f", mix_color_from_reagents(beaker.reagents.reagent_list))
 			add_overlay(filling_overlay)
 
-/obj/machinery/iv_drip/MouseDrop(mob/living/target)
+/obj/machinery/iv_drip/MouseDrop(atom/movable/target)
 	. = ..()
-	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !isliving(target))
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE))
+		return
+
+	var/mob/living/carbon/M
+	if(istype(target,/mob/living))
+		M = target
+		if(!M.has_dna())
+			to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
+			return
+	if(!M && !target.is_injectable() && !(M && M.can_inject()))
 		return
 
 	if(attached)
 		visible_message("<span class='warning'>[attached] is detached from [src].</span>")
 		attached = null
 		update_icon()
-		return
-
-	if(!target.has_dna())
-		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
@@ -118,9 +123,16 @@
 	if(!attached)
 		return PROCESS_KILL
 
+	var/mob/living/M
+	if(istype(attached,/mob/living))
+		M = attached
+	var/ripped = 0
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		to_chat(attached, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
-		attached.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
+		ripped = 1
+	if((M && !M.can_inject())||ripped||!attached.is_injectable())
+		if(M && ripped)
+			to_chat(M, "<span class='userdanger'>The IV drip needle is ripped out of you!</span>")
+			M.apply_damage(3, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 		attached = null
 		update_icon()
 		return PROCESS_KILL
@@ -128,19 +140,31 @@
 	if(beaker)
 		// Give blood
 		var/transfer_amount = 0
+		var/transfer_text = "nothing"
 		if(mode)
 			if(beaker.reagents.total_volume)
 				transfer_amount = 5
 				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
+				if(beaker.reagents.reagent_list.len)
+					transfer_text = ""
+					for(var/i=1,i<=beaker.reagents.reagent_list.len,i++)
+						var/datum/reagent/R = beaker.reagents.reagent_list[i]
+						if(istype(R))
+							transfer_text += "[R.id]"
+							if(i < beaker.reagents.reagent_list.len-1)
+								transfer_text += ", "
+							else if(i == beaker.reagents.reagent_list.len-1)
+								transfer_text += " and "
 				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume
 				beaker.reagents.reaction(attached, INJECT, fraction, FALSE) //make reagents reacts, but don't spam messages
 				beaker.reagents.trans_to(attached, transfer_amount)
 				update_icon()
 
-		// Take blood
+
 		else
+			// Take blood
 			transfer_amount = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 			transfer_amount = min(transfer_amount, 4)
 			// If the beaker is full, ping
@@ -148,25 +172,30 @@
 				if(prob(5))
 					visible_message("[src] pings.")
 				return
-
-			// If the human is losing too much blood, beep.
-			if(attached.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
-				visible_message("[src] beeps loudly.")
-				playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-			attached.transfer_blood_to(beaker, transfer_amount)
+			if(M)
+				transfer_text = "blood"
+				// If the human is losing too much blood, beep.
+				if(M.blood_volume < BLOOD_VOLUME_SAFE && prob(5))
+					visible_message("[src] beeps loudly.")
+					playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
+				M.transfer_blood_to(beaker, transfer_amount)
+			else if(isobj(attached))
+				attached.reagents.trans_to(beaker, transfer_amount)
 			update_icon()
-		if(lastuser || lastuserckey)
-			var/turf/T = get_turf(attached)
-			if(T)
-				var/attackertext = ""
-				if(lastuser)
-					attackertext = "[lastuser.name]([lastuser.ckey])"
-				else if(lastuserckey)
-					attackertext = "lastckey:[lastuserckey]"
-				var/logtext = "[attackertext] has [mode ? "injected" : "extracted"] [transfer_amount] units of blood from [attached]([attached.ckey]) with the [name] at [T.x] [T.y] [T.z]"
-				if(lastuser && attached != lastuser)
-					lastuser.log_message("<font color='red'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
-				attached.log_message("<font color='orange'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
+		if(istype(attached,/mob/living/carbon))
+			var/mob/living/carbon/C = attached
+			if((lastuser || lastuserckey) && transfer_amount)
+				var/turf/T = get_turf(C)
+				if(T)
+					var/attackertext = ""
+					if(lastuser)
+						attackertext = "[lastuser.name]([lastuser.ckey])"
+					else if(lastuserckey)
+						attackertext = "lastckey:[lastuserckey]"
+					var/logtext = "[attackertext] has [mode ? "injected" : "extracted"] [transfer_amount] total units of reagents containing [transfer_text] [mode ? "in to" : "from"] [C][C.ckey ? "([C.ckey])" : ""] with the [name] at [T.x] [T.y] [T.z]"
+					if(lastuser && C != lastuser)
+						lastuser.log_message("<font color='red'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
+					C.log_message("<font color='orange'>[logtext]</font>", INDIVIDUAL_ATTACK_LOG)
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
 	. = ..()

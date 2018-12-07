@@ -254,6 +254,7 @@
 	default_cartridge = /obj/item/cartridge/perseus
 	icon = 'icons/oldschool/perseus.dmi'
 	icon_state = "pda-perc"
+	toff = TRUE
 
 /obj/item/device/pda/perseus/update_icon()
 
