@@ -69,9 +69,6 @@
 		if(ispath(GLOB.roundstartneckwearlist[neckwear]))
 			var/obj/item/clothing/C = GLOB.roundstartneckwearlist[neckwear]
 			mannequin.equip_to_slot_or_del(new C(mannequin),SLOT_NECK)
-		if(ispath(GLOB.roundstartsuitlist[suit]))
-			var/obj/item/clothing/C = GLOB.roundstartsuitlist[suit]
-			mannequin.equip_to_slot_or_del(new C(mannequin),SLOT_WEAR_SUIT)
 
 	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK

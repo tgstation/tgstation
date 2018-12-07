@@ -65,8 +65,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hat								//hat type		
 	var/glasses							//glasses type		
 	var/neckwear						//neckwear type		
-	var/suit							//suit type		
-	var/pocket							//pocket type
 	var/hair_style = "Bald"				//Hair type
 	var/hair_color = "000"				//Hair color
 	var/facial_hair_style = "Shaved"	//Face hair type
@@ -251,8 +249,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Hat:</b><BR><a href ='?_src_=prefs;preference=hat;task=input'>[hat]</a><BR>"
 			dat += "<b>Glasses:</b><BR><a href ='?_src_=prefs;preference=glasses;task=input'>[glasses]</a><BR>"
 			dat += "<b>Neckwear:</b><BR><a href ='?_src_=prefs;preference=neckwear;task=input'>[neckwear]</a><BR>"
-			dat += "<b>Suit:</b><BR><a href ='?_src_=prefs;preference=suit;task=input'>[suit]</a><BR>"
-			dat += "<b>Pocket Item:</b><BR><a href ='?_src_=prefs;preference=pocket;task=input'>[pocket]</a><BR>"
 			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
 			var/use_skintones = pref_species.use_skintones
@@ -1358,16 +1354,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_neckwear = input(user, "Choose your character's neckwear:", "Character Preference")  as null|anything in GLOB.roundstartneckwearlist
 					if(new_neckwear)
 						neckwear = new_neckwear
-
-				if("suit")
-					var/new_suit = input(user, "Choose your character's suit:", "Character Preference")  as null|anything in GLOB.roundstartsuitlist
-					if(new_suit)
-						suit = new_suit
-
-				if("pocket")
-					var/new_pocket = input(user, "Choose your character's starting pocket item:", "Character Preference")  as null|anything in GLOB.roundstartpocketlist
-					if(new_pocket)
-						pocket = new_pocket
 
 				if("uplink_loc")
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list

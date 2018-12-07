@@ -103,11 +103,8 @@ GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFELBAG, GBACKPACK, G
 
 	//Clothes
 GLOBAL_LIST_INIT(roundstarthatlist, list("None" = null,"Black Beanie" = /obj/item/clothing/head/beanie/black, "Grey Cap" = /obj/item/clothing/head/soft/grey))
-GLOBAL_LIST_INIT(roundstartglasseslist, list("None" = null, "Eyepatch" =  /obj/item/clothing/glasses/eyepatch, "prescription glasses" = /obj/item/clothing/glasses/regular/hipster))
+GLOBAL_LIST_INIT(roundstartglasseslist, list("None" = null, "Eyepatch" =  /obj/item/clothing/glasses/eyepatch))
 GLOBAL_LIST_INIT(roundstartneckwearlist, list("None" = null,"Black scarf" = /obj/item/clothing/neck/scarf/black, "Black tie" = /obj/item/clothing/neck/tie/black, "Headphones" = /obj/item/clothing/ears/headphones))
-GLOBAL_LIST_INIT(roundstartsuitlist, list("None" = null,"Bomber jacket" = /obj/item/clothing/suit/jacket, "leather jacket" = /obj/item/clothing/suit/jacket/leather))
-GLOBAL_LIST_INIT(roundstartpocketlist, list("None" = null, "Deck of cards" = /obj/item/toy/cards/deck, "space cigarettes packet" = /obj/item/storage/fancy/cigarettes, "space cola" =  /obj/item/reagent_containers/food/drinks/soda_cans/cola))
-
 
 //Uplink spawn loc
 #define UPLINK_PDA		"PDA"
