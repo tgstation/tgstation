@@ -418,10 +418,6 @@
 	if(gen_primary && gen_secondary)
 		needs_power = TRUE
 		setDir(get_dir(gen_primary, gen_secondary))
-	for(var/mob/living/L in get_turf(src))
-		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]!</span>")
-		L.gib()
-
 /obj/machinery/shieldwall/Destroy()
 	gen_primary = null
 	gen_secondary = null
