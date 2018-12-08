@@ -5,7 +5,7 @@
 /obj/structure/stairs
 	name = "stairs"
 	icon = 'icons/obj/stairs.dmi'
-	icon_state = ""
+	icon_state = "stairs"
 	//dir = direction of travel to go upwards
 
 	var/force_open_above = FALSE
@@ -14,15 +14,37 @@
 
 /obj/structure/stairs/Initialize(mapload)
 	if(force_open_above)
-		var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
-		if(T && !istype(T))
-			T.ChangeTurf(/turf/open/openspace)
+		force_open_above()
 		build_signal_listener()
 	return ..()
 
 /obj/structure/stairs/Destroy()
 	QDEL_NULL(multiz_signal_listener)
 	return ..()
+
+/obj/structure/stairs/Move()			//Look this should never happen but...
+	. = ..()
+	if(force_open_above)
+		build_signal_listener()
+
+/obj/structure/stairs/Uncross(atom/movable/AM, turf/newloc)
+	if(!newloc || !AM)
+		return ..()
+	if(isliving(AM) && isTerminator() && (get_dir(src, newloc) == dir))
+		stair_ascend(AM)
+		return FALSE
+	return ..()
+
+/obj/structure/stairs/update_icon()
+	if(isTerminator())
+		icon_state = "stairs_t"
+	else
+		icon_state = "stairs"
+
+/obj/structure/stairs/proc/stair_ascend(atom/movable/AM)
+	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
+	if(istype(target))
+		AM.forceMove(target)
 
 /obj/structure/stairs/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -32,11 +54,17 @@
 				QDEL_NULL(multiz_signal_listener)
 			else
 				build_signal_listener()
+				force_open_above()
 
 /obj/structure/stairs/proc/build_signal_listener()
 	QDEL_NULL(multiz_signal_listener)
 	var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
 	multiz_signal_listener = T.AddComponent(/datum/component/redirect, list(COMSIG_TURF_MULTIZ_NEW = CALLBACK(src, .proc/on_multiz_new)))
+
+/obj/structure/stairs/proc/force_open_above()
+	var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
+	if(T && !istype(T))
+		T.ChangeTurf(/turf/open/openspace)
 
 /obj/structure/stairs/proc/on_multiz_new(turf/source, dir)
 	if(dir == UP)

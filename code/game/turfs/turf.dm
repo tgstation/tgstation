@@ -156,9 +156,9 @@
 
 /turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
 	var/turf/target = get_step_multiz(src, DOWN)
-	if(!target)
+	if(!target || (!isobj(A) && !ismob(A)))
 		return FALSE
-	if(!force && !can_zFall(A, levels, target) && A.can_zFall(src, levels, target, DOWN))
+	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
 		return FALSE
 	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
 	A.zfalling = TRUE
