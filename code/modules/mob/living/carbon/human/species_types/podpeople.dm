@@ -42,8 +42,14 @@
 		H.take_overall_damage(2,0)
 	
 /datum/species/pod/random_name(gender,unique,lastname)
-	return pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
-	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper")
+
+	var/name = pick("Tomato", "Potato", "Broccoli", "Carrot", "Ambrosia", "Pumpkin", "Ivy", "Kudzu", "Banana", "Moss", "Flower", "Bloom", "Root", "Bark", "Glowshroom", "Petal", "Leaf", \
+	"Venus", "Sprout","Cocoa", "Strawberry", "Citrus", "Oak", "Cactus", "Pepper", "Juniper", "Poppy", "Daffodil", "Aubergine", "Cabbage", "Walnut")
+	if(lastname)
+		var/prefix = pick("Flowering", "Blooming", "Fruiting", "Withering", "Blossoming", "Evergreen", "Rustling", "Coniferous", "Wilting", "Flourishing", "Composted", "Agrarian")
+		return "[prefix] [name]"
+	else
+		return name
 
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)

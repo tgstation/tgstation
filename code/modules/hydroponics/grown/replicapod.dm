@@ -176,7 +176,7 @@
 
 	var/mob/living/carbon/human/podman = new /mob/living/carbon/human(get_turf(parent))
 	podman.hardset_dna(mrace = new /datum/species/pod)
-	podman.fully_replace_character_name(null, podman.dna.species.random_name())
+	podman.fully_replace_character_name(null, podman.dna.species.random_name(lastname = TRUE))
 	podman.underwear = "Nude"
 	podman.update_body()
 	podman.ckey = ghost.ckey
