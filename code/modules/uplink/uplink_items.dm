@@ -1600,6 +1600,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/vehicle/sealed/car/clowncar
 	cost = 20
 	restricted_roles = list("Clown")
+	
+/datum/uplink_item/role_restricted/honkshoes
+	name = "mk-honk prototype shoes"
+	desc = "Bless by the Honkmother herself, these shoes leave funny chaos whereever they may step \
+		WARNING: may cause lynching, dismemberment, or divine punishment."
+	item = /obj/item/clothing/shoes/clown_shoes/banana_shoes
+	cost = 12
+	restricted_roles = list("Clown")
 
 /datum/uplink_item/role_restricted/concealed_weapon_bay
 	name = "Concealed Weapon Bay"
