@@ -15,7 +15,6 @@
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
-	mutatelist = list(/obj/item/seeds/genesispod)
 	var/volume = 5
 	var/ckey = null
 	var/realName = null
