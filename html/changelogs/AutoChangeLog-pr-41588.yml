@@ -1,6 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - rscadd: "Signalers can now be attached to active paystands to send a signal when a certain amount of money is deposited."
-  - rscadd: "Swiping your card on a paystand you own will let you lock it down, preventing it from being unbolted from the ground."
-  - tweak: "Paystands now ask for how much you want to deposit when interacting instead of a static price."

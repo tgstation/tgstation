@@ -11,7 +11,7 @@
 	grind_results = list()
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
-	var/roundstart = 0
+	var/roundstart = FALSE
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
 
@@ -29,20 +29,20 @@
 
 /obj/item/reagent_containers/pill/attack(mob/M, mob/user, def_zone)
 	if(!canconsume(M, user))
-		return 0
+		return FALSE
 
 	if(M == user)
 		M.visible_message("<span class='notice'>[user] attempts to [apply_method] [src].</span>")
 		if(self_delay)
 			if(!do_mob(user, M, self_delay))
-				return 0
+				return FALSE
 		to_chat(M, "<span class='notice'>You [apply_method] [src].</span>")
 
 	else
 		M.visible_message("<span class='danger'>[user] attempts to force [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] attempts to force [M] to [apply_method] [src].</span>")
 		if(!do_mob(user, M))
-			return 0
+			return FALSE
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
@@ -51,7 +51,7 @@
 		reagents.reaction(M, apply_type)
 		reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 	qdel(src)
-	return 1
+	return TRUE
 
 
 /obj/item/reagent_containers/pill/afterattack(obj/target, mob/user , proximity)
@@ -79,87 +79,93 @@
 	desc = "Highly toxic."
 	icon_state = "pill5"
 	list_reagents = list("toxin" = 50)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/cyanide
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	list_reagents = list("cyanide" = 50)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
 	list_reagents = list("adminordrazine" = 50)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/morphine
 	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
 	list_reagents = list("morphine" = 30)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
 	list_reagents = list("ephedrine" = 10, "antihol" = 10, "coffee" = 30)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
 	list_reagents = list("salbutamol" = 30)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/charcoal
 	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 	list_reagents = list("charcoal" = 10)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill5"
 	list_reagents = list("epinephrine" = 15)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/mannitol
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
 	list_reagents = list("mannitol" = 50)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/mutadone
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
 	list_reagents = list("mutadone" = 50)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill9"
 	list_reagents = list("sal_acid" = 24)
-	roundstart = 1
+	roundstart = TRUE
 /obj/item/reagent_containers/pill/oxandrolone
 	name = "oxandrolone pill"
 	desc = "Used to stimulate burn healing."
 	icon_state = "pill11"
 	list_reagents = list("oxandrolone" = 24)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
-	roundstart = 1
+	roundstart = TRUE
 
 /obj/item/reagent_containers/pill/psicodine
 	name = "psicodine pill"
 	desc = "Used to treat mental instability and traumas."
 	list_reagents = list("psicodine" = 10)
 	icon_state = "pill22"
-	roundstart = 1
+	roundstart = TRUE
+/obj/item/reagent_containers/pill/penacid
+	name = "pentetic acid pill"
+	desc = "Used to expunge radioation and toxins."
+	list_reagents = list("pen_acid" = 10)
+	icon_state = "pill22"
+	roundstart = TRUE
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
