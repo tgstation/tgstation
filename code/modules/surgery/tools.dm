@@ -264,14 +264,13 @@
 
 /obj/item/scalpel/advanced
 	name = "laser scalpel"
-	desc = "An advanced scalpel which uses laser technology to cut. Its set scalpel mode."
+	desc = "An advanced scalpel which uses laser technology to cut. It's set to scalpel mode."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel_a"
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
 	toolspeed = 0.25
 	light_color = LIGHT_COLOR_GREEN
-
 
 /obj/item/scalpel/advanced/Initialize()
 	set_light(1)
@@ -280,8 +279,6 @@
 /obj/item/scalpel/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-
 
 /obj/item/scalpel/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
@@ -292,7 +289,7 @@
 
 /obj/item/circular_saw/advanced
 	name = "laser scalpel"
-	desc = "An advanced scalpel which uses laser technology to cut. Its set saw mode."
+	desc = "An advanced scalpel which uses laser technology to cut. It's to set saw mode."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw_a"
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -300,7 +297,6 @@
 	toolspeed = 0.25
 	sharpness = IS_SHARP_ACCURATE
 	light_color = LIGHT_COLOR_GREEN
-
 
 /obj/item/circular_saw/advanced/Initialize()
 	set_light(2)
@@ -310,7 +306,6 @@
 /obj/item/circular_saw/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
 
 /obj/item/circular_saw/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
@@ -357,12 +352,10 @@
 	toolspeed = 0.25
 	light_color = LIGHT_COLOR_RED
 
-
 /obj/item/surgicaldrill/advanced/Initialize()
 	set_light(1)
 	START_PROCESSING(SSobj, src)
 	..()
-
 
 /obj/item/surgicaldrill/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -377,14 +370,13 @@
 
 /obj/item/cautery/advanced
 	name = "searing tool"
-	desc = "Its lenses are focused making small nano holes."
+	desc = "Its lenses are focused making it able to do small holes inside bones."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery_a"
 	hitsound = 'sound/items/welder2.ogg'
 	force = 17
 	toolspeed = 0.25
 	light_color = LIGHT_COLOR_RED
-
 
 /obj/item/cautery/advanced/Initialize()
 	set_light(1)
@@ -401,8 +393,3 @@
 	to_chat(user, "<span class='notice'>You focus the lenses. It can now create small holes.</span>")
 	qdel(src)
 	user.put_in_active_hand(surgicaldrill)
-
-
-
-
-

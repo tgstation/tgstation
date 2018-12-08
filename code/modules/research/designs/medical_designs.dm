@@ -184,7 +184,7 @@
 
 /datum/design/laserscalpel
 	name = "Laser Scalpel"
-	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
+	desc = "A laser scalpel used for precise cutting."
 	id = "laserscalpel"
 	build_path = /obj/item/scalpel/advanced
 	build_type = PROTOLATHE
@@ -194,7 +194,7 @@
 
 /datum/design/mechanicalpinches
 	name = "Mechanical Pinches"
-	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
+	desc = "These pinches can be either used as retractor or hemostat."
 	id = "mechanicalpinches"
 	build_path = /obj/item/retractor/advanced
 	build_type = PROTOLATHE
@@ -204,7 +204,7 @@
 
 /datum/design/searingtool
 	name = "Searing Tool"
-	desc = "A medical spray bottle, designed for precision application, with an unscrewable cap."
+	desc = "Used to mend tissue togheter."
 	id = "searingtool"
 	build_path = /obj/item/cautery/advanced
 	build_type = PROTOLATHE
