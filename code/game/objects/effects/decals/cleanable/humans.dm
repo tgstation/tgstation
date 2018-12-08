@@ -64,10 +64,6 @@
 	else
 		addtimer(CALLBACK(src, .proc/start_rotting), 2 MINUTES)
 
-/obj/effect/decal/cleanable/blood/gibs/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
 /obj/effect/decal/cleanable/blood/gibs/proc/start_rotting(rename=TRUE)
 	name = "rotting [initial(name)]"
 	desc += " It smells terrible."
