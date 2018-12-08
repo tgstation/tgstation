@@ -29,8 +29,8 @@
 
 	pipe_state = "scrubber"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Initialize()
+	. = ..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 

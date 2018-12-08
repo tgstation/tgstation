@@ -14,8 +14,8 @@
 	var/volume = 10000 //in liters
 	var/gas_type = 0
 
-/obj/machinery/atmospherics/components/unary/tank/New()
-	..()
+/obj/machinery/atmospherics/components/unary/tank/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = volume
 	air_contents.temperature = T20C
@@ -30,8 +30,8 @@
 	icon_state = "grey"
 	name = "pressure tank (Air)"
 
-/obj/machinery/atmospherics/components/unary/tank/air/New()
-	..()
+/obj/machinery/atmospherics/components/unary/tank/air/Initialize()
+	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = AIR_CONTENTS * 0.2

@@ -11,8 +11,8 @@
 	user.IgniteMob()
 	return FIRELOSS
 
-/obj/item/assembly/igniter/New()
-	..()
+/obj/item/assembly/igniter/Initialize()
+	. = ..()
 	sparks.set_up(2, 0, src)
 	sparks.attach(src)
 

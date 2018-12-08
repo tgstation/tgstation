@@ -9,19 +9,19 @@
 	..()
 	to_chat(finder, "<span class='warning'>You found an unknown alien organism in [owner]'s [zone]!</span>")
 
-/obj/item/organ/body_egg/New(loc)
+/obj/item/organ/body_egg/Initialize(loc)
+	. = ..()
 	if(iscarbon(loc))
 		src.Insert(loc)
-	return ..()
 
-/obj/item/organ/body_egg/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/body_egg/Insert(mob/living/carbon/M, special = 0)
 	..()
 	owner.add_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)
 	START_PROCESSING(SSobj, src)
 	owner.med_hud_set_status()
 	INVOKE_ASYNC(src, .proc/AddInfectionImages, owner)
 
-/obj/item/organ/body_egg/Remove(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/body_egg/Remove(mob/living/carbon/M, special = 0)
 	STOP_PROCESSING(SSobj, src)
 	if(owner)
 		owner.remove_trait(TRAIT_XENO_HOST, TRAIT_GENERIC)

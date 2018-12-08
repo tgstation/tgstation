@@ -195,13 +195,14 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	var/list/debris = list()
 
-/obj/structure/table/glass/New()
+/obj/structure/table/glass/Initialize()
 	. = ..()
 	debris += new frame
 	debris += new /obj/item/shard
 
 /obj/structure/table/glass/Destroy()
-	QDEL_LIST(debris)
+	if(debris.len)
+		QDEL_LIST(debris)
 	. = ..()
 
 /obj/structure/table/glass/Crossed(atom/movable/AM)
@@ -370,9 +371,9 @@
 	buildstackamount = 1
 	canSmoothWith = list(/obj/structure/table/reinforced/brass, /obj/structure/table/bronze)
 
-/obj/structure/table/reinforced/brass/New()
+/obj/structure/table/reinforced/brass/Initialize()
+	. = ..()
 	change_construction_value(2)
-	..()
 
 /obj/structure/table/reinforced/brass/Destroy()
 	change_construction_value(-2)
@@ -423,8 +424,8 @@
 	var/mob/living/carbon/human/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/New()
-	..()
+/obj/structure/table/optable/Initialize()
+	. = ..()
 	for(var/direction in GLOB.cardinals)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(computer)

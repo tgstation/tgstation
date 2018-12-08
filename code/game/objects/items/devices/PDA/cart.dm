@@ -186,8 +186,8 @@
 	bot_access_flags = SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	spam_enabled = 1
 
-/obj/item/cartridge/captain/New()
-	..()
+/obj/item/cartridge/captain/Initialize()
+	. = ..()
 	radio = new(src)
 
 /obj/item/cartridge/proc/post_status(command, data1, data2)

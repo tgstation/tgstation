@@ -334,11 +334,10 @@
 	walltype = /turf/closed/wall/clockwork
 	mineral = /obj/item/stack/tile/brass
 
-/obj/structure/falsewall/brass/New(loc)
-	..()
-	var/turf/T = get_turf(src)
-	new /obj/effect/temp_visual/ratvar/wall/false(T)
-	new /obj/effect/temp_visual/ratvar/beam/falsewall(T)
+/obj/structure/falsewall/brass/Initialize(loc)
+	. = ..()
+	new /obj/effect/temp_visual/ratvar/wall/false(src)
+	new /obj/effect/temp_visual/ratvar/beam/falsewall(src)
 	change_construction_value(4)
 
 /obj/structure/falsewall/brass/Destroy()

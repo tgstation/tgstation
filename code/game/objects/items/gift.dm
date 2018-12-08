@@ -18,8 +18,8 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	item_state = "gift"
 	resistance_flags = FLAMMABLE
 
-/obj/item/a_gift/New()
-	..()
+/obj/item/a_gift/Initialize()
+	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
 	icon_state = "giftdeliverypackage[rand(1,5)]"

@@ -54,8 +54,7 @@
 	force = 8
 
 	var/max_uses = 20
-	var/uses = 0
-	var/failmsg = ""
+	var/uses = 10
 	// How much to increase per each glass?
 	var/increment = 5
 	// How much to take from the glass?
@@ -66,11 +65,6 @@
 	var/bulb_shards = 0
 	// when we get this many shards, we get a free bulb.
 	var/shards_required = 4
-
-/obj/item/lightreplacer/New()
-	uses = max_uses / 2
-	failmsg = "The [name]'s refill light blinks red."
-	..()
 
 /obj/item/lightreplacer/examine(mob/user)
 	..()
@@ -218,7 +212,7 @@
 			return
 
 		else
-			to_chat(U, failmsg)
+			to_chat(U, "The [name]'s refill light blinks red.")
 			return
 	else
 		to_chat(U, "<span class='warning'>There is a working [target.fitting] already inserted!</span>")
@@ -256,7 +250,7 @@
 			ReplaceLight(A, U)
 
 	if(!used)
-		to_chat(U, failmsg)
+		to_chat(U, "The [name]'s refill light blinks red.")
 
 /obj/item/lightreplacer/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)
