@@ -19,7 +19,7 @@
 
 /datum/martial_art/cqc/can_use(mob/living/carbon/human/H)
 	var/area/A = get_area(H)
-	if(just_a_cook && (!(istype(A, /area/crew_quarters/kitchen)) || !(istype(A, /area/crew_quarters/kitchen/coldroom))))
+	if(just_a_cook && !(istype(A, /area/crew_quarters/kitchen)))
 		return FALSE
 	return ..()
 
