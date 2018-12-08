@@ -289,7 +289,7 @@
 
 /obj/item/circular_saw/advanced
 	name = "laser scalpel"
-	desc = "An advanced scalpel which uses laser technology to cut. It's to set saw mode."
+	desc = "An advanced scalpel which uses laser technology to cut. It's set to saw mode."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw_a"
 	hitsound = 'sound/weapons/blade1.ogg'
@@ -344,7 +344,7 @@
 
 /obj/item/surgicaldrill/advanced
 	name = "searing tool"
-	desc = "It projects an high power laser used to mend tissue togheter."
+	desc = "It projects a high power laser used for medical application. It's set to drilling mode."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgicaldrill_a"
 	hitsound = 'sound/items/welder.ogg'
@@ -364,13 +364,13 @@
 /obj/item/surgicaldrill/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/weapons/tap.ogg',50,1)
 	var/obj/item/cautery/advanced/cautery = new /obj/item/cautery/advanced(drop_location())
-	to_chat(user, "<span class='notice'>You dilate the lenses.</span>")
+	to_chat(user, "<span class='notice'>You dilate the lenses, setting it to mending mode.</span>")
 	qdel(src)
 	user.put_in_active_hand(cautery)
 
 /obj/item/cautery/advanced
 	name = "searing tool"
-	desc = "Its lenses are focused making it able to do small holes inside bones."
+	desc = "It projects a high power laser used for medical application. It's set to mending mode."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery_a"
 	hitsound = 'sound/items/welder2.ogg'
@@ -390,6 +390,6 @@
 /obj/item/cautery/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/welderdeactivate.ogg',50,1)
 	var/obj/item/surgicaldrill/advanced/surgicaldrill = new /obj/item/surgicaldrill/advanced(drop_location())
-	to_chat(user, "<span class='notice'>You focus the lenses. It can now create small holes.</span>")
+	to_chat(user, "<span class='notice'>You focus the lensess, it is now set to drilling mode.</span>")
 	qdel(src)
 	user.put_in_active_hand(surgicaldrill)
