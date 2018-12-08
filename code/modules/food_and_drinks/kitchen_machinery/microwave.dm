@@ -234,7 +234,7 @@
 
 	if(disabled)
 		audible_message("[src] buzzes.")
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
 	start()
