@@ -66,9 +66,11 @@
 
 	for(var/the_record in records)
 		var/datum/data/record/R = the_record
+		if(R.fields["outdated"])
+			continue
 		var/datum/mind/clonemind = locate(R.fields["mind"]) in SSticker.minds
 		if(!QDELETED(clonemind.current) && (clonemind.current.stat != DEAD))
-			records -= R
+			R.fields["outdated"] = TRUE
 			continue
 		if(!should_autoprocess)
 			continue
@@ -413,6 +415,9 @@
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			else if(C.fields["outdated"])
+				temp = "<font class='bad'>Cannot clone from outdated record.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"], C.fields["quirks"], C.fields["bank_account"]))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -439,11 +444,6 @@
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 
-	if(mob_occupant.stat != DEAD)
-		scantemp = "<font class='bad'>Cannot scan living subject.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-		return
-		
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
 	if(ishuman(mob_occupant))
@@ -472,7 +472,8 @@
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
-	if (find_record("ckey", mob_occupant.ckey, records))
+	var/datum/data/record/old_record = find_record("ckey", mob_occupant.ckey, records)
+	if (old_record && !old_record.fields["outdated"])
 		scantemp = "<font class='average'>Subject already in database.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
@@ -482,6 +483,7 @@
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 			return
 	var/datum/data/record/R = new()
+	R.fields["outdated"] = (mob_occupant.stat != DEAD)
 	if(dna.species)
 		// We store the instance rather than the path, because some
 		// species (abductors, slimepeople) store state in their
@@ -520,6 +522,8 @@
 		imp.implant(mob_occupant)
 	R.fields["imp"] = "[REF(imp)]"
 
+	if(old_record)
+		records -= old_record
 	src.records += R
 	scantemp = "Subject successfully scanned."
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
