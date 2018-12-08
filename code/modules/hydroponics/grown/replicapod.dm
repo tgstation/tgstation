@@ -15,6 +15,7 @@
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
+	mutatelist = list(/obj/item/seeds/genesispod)
 	var/volume = 5
 	var/ckey = null
 	var/realName = null
@@ -137,7 +138,7 @@
 	name = "pack of genesis pod seeds"
 	desc = "These seeds grow into genesis pods. They say these are used to harvest PODDERS."
 	icon_state = "seed-replicapod"
-	species = "genesispod"
+	species = "replicapod"
 	plantname = "Genesis Pod"
 	product = /obj/item/seeds/genesispod
 	lifespan = 50
@@ -146,14 +147,25 @@
 	production = 1
 	yield = 1 
 	potency = 30
+	var/registered = FALSE
+
+//covers mutations
+/obj/item/seeds/genesispod/Initialize()
+	.=..()
+	START_PROCESSING(SSprocessing, src)
+
 
 /obj/item/seeds/genesispod/process()
-	var/obj/machinery/hydroponics/parent = loc
-	if(parent.harvest)
-		notify_ghosts("A genesis pod has matured in [get_area(src)]", source = parent)
-		STOP_PROCESSING(SSprocessing, src)
+	if(istype(loc, /obj/machinery/hydroponics))
+		var/obj/machinery/hydroponics/parent = loc
+		if(!registered)
+			RegisterSignal(loc, COMSIG_ATOM_ATTACK_GHOST, .proc/create_podman)
+			registered = TRUE
+		if(parent.harvest)
+			notify_ghosts("A genesis pod has matured in [get_area(src)]", source = parent)
+			return PROCESS_KILL
 
-/obj/item/seeds/genesispod/proc/create_podman(mob/dead/observer/ghost)
+/obj/item/seeds/genesispod/proc/create_podman(source, mob/dead/observer/ghost)
 	var/obj/machinery/hydroponics/parent = loc
 	if(!parent.harvest)
 		return
@@ -164,13 +176,27 @@
 
 	var/mob/living/carbon/human/podman = new /mob/living/carbon/human(get_turf(parent))
 	podman.hardset_dna(mrace = new /datum/species/pod)
-	name_podperson(podman)
+	podman.fully_replace_character_name(null, podman.dna.species.random_name())
+	podman.underwear = "Nude"
+	podman.update_body()
 	podman.ckey = ghost.ckey
+	parent.myseed = null
+	parent.update_icon()
+	qdel(src)
 
 /obj/item/seeds/genesispod/afterattack(obj/target, mob/user, proximity)
-	if(istype(loc, /obj/machinery/hydroponics))
-		RegisterSignal(loc, COMSIG_ATOM_ATTACK_GHOST, .proc/create_podman)
-		START_PROCESSING(SSprocessing, src)
 
-	
+/obj/item/seeds/genesispod/harvest(mob/user) //shameful copypaste, but too small to be worth refactoring
+	var/obj/machinery/hydroponics/parent = loc
+	var/list/result = list()
+	var/seed_count = 1
+	if(prob(getYield() * 20))
+		seed_count++
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	for(var/i=0,i<seed_count,i++)
+		var/obj/item/seeds/genesispod/harvestseeds = src.Copy()
+		result.Add(harvestseeds)
+		harvestseeds.forceMove(output_loc)
+	parent.update_tray()
+	return result
 
