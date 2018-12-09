@@ -1,4 +1,0 @@
-author: "monster860"
-delete-after: True
-changes: 
-  - bugfix: "Teleports now go back to force-moving you instead of Move()"

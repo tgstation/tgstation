@@ -1,7 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Metastation's kitchen cold room is now really cold! Make sure to wear warm clothing."
-  - tweak: "The kitchen clothing vendor now stocks two winter jackets by default."
-  - tweak: "Goats are now fine with temperatures as low as 180°K. This is so that Pete doesn't freeze to death inside the cold room."
-  - code_imp: "Added a kitchen area subtype for cold rooms and adjusted chef CQC to work inside it (no gameplay changes)."

@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Projected forcefields can no longer be stacked onto the same tile."
