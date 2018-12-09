@@ -18,6 +18,7 @@ SUBSYSTEM_DEF(ticker)
 	var/datum/game_mode/mode = null
 
 	var/login_music							//music played in pregame lobby
+	var/endround_music						//music that takes the place of lobby music when round ends
 	var/round_end_sound						//music/jingle played when the world reboots
 	var/round_end_sound_sent = TRUE			//If all clients have loaded it
 

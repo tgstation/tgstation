@@ -171,6 +171,9 @@
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
+	if(world.time - SSticker.round_start_time <= 5 MINUTES)
+		SSticker.endround_music = "sound/misc/curb-your-meme.ogg"
+
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
@@ -414,7 +417,7 @@
 		if(!A.members)
 			continue
 		all_teams |= A
-	
+
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue
