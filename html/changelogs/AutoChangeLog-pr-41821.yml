@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - admin: "The Centcom Pod Launcher has been reorganized, making it easier to navigate at the expense of compact-ness."
