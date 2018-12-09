@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - bugfix: "Fixed repair droids not damaging mechs when the mech has a short circuit."

@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Heirlooms are no longer named \"Cherry family bag of dice\", but
+rather their heirloom status can be determined by the owner on examine."

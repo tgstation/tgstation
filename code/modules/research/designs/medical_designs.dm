@@ -162,6 +162,16 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/genescanner
+	name = "Genetic Sequence Analyzer"
+	desc = "A handy hand-held analyzers for quickly determining mutations and collecting the full sequence."
+	id = "genescanner"
+	build_path = /obj/item/sequence_scanner
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/healthanalyzer_advanced
 	name = "Advanced Health Analyzer"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
