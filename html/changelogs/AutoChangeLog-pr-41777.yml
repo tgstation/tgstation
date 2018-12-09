@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Fixes bug where Curse of Madness was not giving proper brain traumas."
