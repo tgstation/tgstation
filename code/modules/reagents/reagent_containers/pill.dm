@@ -14,6 +14,7 @@
 	var/roundstart = FALSE
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
+	var/makes_me_think
 
 /obj/item/reagent_containers/pill/Initialize()
 	. = ..()
@@ -46,8 +47,9 @@
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
+	makes_me_think = pick(strings("redpill.json", "redpill_questions"))
 	if(icon_state == "pill4" && prob(1)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		to_chat(M, "<span class='notice'>[pick("What happened to the ceiling?", "Why is it called the emergency shuttle if it arrives every single shift?", "Where does the chef get all this meat from?", "Space wind? How does that even make sense?")]</span>")
+		to_chat(M, "<span class='notice'>[makes_me_think]</span>")
 
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
