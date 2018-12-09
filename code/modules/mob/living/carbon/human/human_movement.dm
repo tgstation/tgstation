@@ -44,7 +44,7 @@
 /mob/living/carbon/human/Move(NewLoc, direct)
 	. = ..()
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_move(src, NewLoc)
+		HM.on_move(NewLoc)
 
 	if(shoes)
 		if(mobility_flags & MOBILITY_STAND)

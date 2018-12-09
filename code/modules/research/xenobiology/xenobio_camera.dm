@@ -32,6 +32,7 @@
 
 	var/datum/component/redirect/listener
 
+	var/obj/machinery/monkey_recycler/connected_recycler
 	var/list/stored_slimes
 	var/obj/item/slimepotion/slime/current_potion
 	var/max_slimes = 5
@@ -53,6 +54,10 @@
 	hotkey_help = new
 	stored_slimes = list()
 	listener = AddComponent(/datum/component/redirect, list(COMSIG_ATOM_CONTENTS_DEL = CALLBACK(src, .proc/on_contents_del)))
+	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
+		if(get_area(recycler.loc) == get_area(loc))
+			connected_recycler = recycler
+			connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
 	stored_slimes = null
@@ -113,8 +118,14 @@
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)	
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)	
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)	
-	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)	
+	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 
+	//Checks for recycler on every interact, prevents issues with load order on certain maps. 
+	if(!connected_recycler)
+		for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
+			if(get_area(recycler.loc) == get_area(loc))
+				connected_recycler = recycler
+				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	
@@ -159,6 +170,13 @@
 		to_chat(user, "<span class='notice'>You load [O] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""].</span>")
 		return
 	..()
+
+/obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/I)
+	if (istype(I) && istype(I.buffer,/obj/machinery/monkey_recycler))
+		to_chat(user, "<span class='notice'>You link [src] with [I.buffer] in [I] buffer.</span>")
+		connected_recycler = I.buffer
+		connected_recycler.connected += src
+		return TRUE
 
 /datum/action/innate/slime_place
 	name = "Place Slimes"
@@ -223,10 +241,13 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc, TRUE, owner)
 			if (!QDELETED(food))
 				food.LAssailant = C
-				X.monkeys --
-				to_chat(owner, "[X] now has [X.monkeys] monkeys left.")
-	else
-		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
+				X.monkeys--
+				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+				to_chat(owner, "[X] now has [X.monkeys] monkeys stored.")
+		else
+			to_chat(owner, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
+	else 
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /datum/action/innate/monkey_recycle
@@ -240,14 +261,20 @@
 	var/mob/living/C = owner
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
+	var/obj/machinery/monkey_recycler/recycler = X.connected_recycler
 
+	if(!recycler)
+		to_chat(owner, "<span class='notice'>There is no connected monkey recycler.  Use a multitool to link one.</span>")
+		return
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
 			if(M.stat)
 				M.visible_message("[M] vanishes as [M.p_theyre()] reclaimed for recycling!")
-				X.monkeys = round(X.monkeys + 0.2,0.1)
-				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
+				recycler.use_power(500)
+				X.monkeys += recycler.cube_production
+				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
 				qdel(M)
+				to_chat(owner, "[X] now has [X.monkeys] monkeys available.")
 	else
 		to_chat(owner, "<span class='warning'>Target is not near a camera. Cannot proceed.</span>")
 
@@ -416,8 +443,11 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(T, TRUE, C)
 			if (!QDELETED(food))
 				food.LAssailant = C
-				X.monkeys --
-				to_chat(C, "[X] now has [X.monkeys] monkeys left.")
+				X.monkeys--
+				X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors
+				to_chat(C, "[X] now has [X.monkeys] monkeys stored.")
+		else
+			to_chat(C, "[X] needs to have at least 1 monkey stored. Currently has [X.monkeys] monkeys stored.")
 
 //Pick up monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoMonkeyClickCtrl(mob/living/user, mob/living/carbon/monkey/M)
@@ -428,10 +458,15 @@
 	var/mob/camera/aiEye/remote/xenobio/E = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/X = E.origin
 	var/area/mobarea = get_area(M.loc)
+	if(!X.connected_recycler)
+		to_chat(C, "<span class='notice'>There is no connected monkey recycler.  Use a multitool to link one.</span>")
+		return
 	if(mobarea.name == E.allowed_area || mobarea.xenobiology_compatible)
 		if(!M.stat)
 			return
 		M.visible_message("[M] vanishes as [p_theyre()] reclaimed for recycling!")
-		X.monkeys = round(X.monkeys + 0.2, 0.1)
-		to_chat(C, "[X] now has [X.monkeys] monkeys available.")
+		X.connected_recycler.use_power(500)
+		X.monkeys += connected_recycler.cube_production
+		X.monkeys = round(X.monkeys, 0.1)		//Prevents rounding errors	
 		qdel(M)
+		to_chat(C, "[X] now has [X.monkeys] monkeys available.")

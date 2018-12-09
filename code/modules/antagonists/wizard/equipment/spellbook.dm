@@ -532,12 +532,12 @@
 	if(times>0)
 		. += "You cast it [times] times.<br>"
 	return .
-	
+
 /datum/spellbook_entry/summon/curse_of_madness
 	name = "Curse of Madness"
 	desc = "Curses the station, warping the minds of everyone inside, causing lasting traumas. Warning: this spell can affect you if not cast from a safe distance."
 	cost = 4
-	
+
 /datum/spellbook_entry/summon/curse_of_madness/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	active = TRUE

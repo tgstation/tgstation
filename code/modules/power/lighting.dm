@@ -617,6 +617,7 @@
 					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
 					H.dna?.species.adjust_charge(5)
 					return
+				return
 				
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
