@@ -1,0 +1,4 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - bugfix: "Fixes signalers not working properly on paystands"

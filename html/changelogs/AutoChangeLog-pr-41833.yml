@@ -1,0 +1,4 @@
+author: "Swindly"
+delete-after: True
+changes: 
+  - rscadd: "Arm-mounted implants that contain more than one item use a radial menu instead of a list menu."

@@ -1,0 +1,4 @@
+author: "subject217"
+delete-after: True
+changes: 
+  - admin: "Admin PMs are now multi-line text prompts, making it easier to write big admin PMs."

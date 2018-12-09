@@ -234,6 +234,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/depsec/science
 	name = "science_sec"
 
+//Antagonist spawns
+
 /obj/effect/landmark/start/wizard
 	name = "wizard"
 	icon = 'icons/effects/landmarks_static.dmi'
@@ -284,17 +286,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	SSjob.latejoin_trackers += loc
 	return INITIALIZE_HINT_QDEL
 
-// carp.
+//space carps, magicarps, lone ops, slaughter demons, possibly revenants spawn here
 /obj/effect/landmark/carpspawn
 	name = "carpspawn"
 	icon_state = "carp_spawn"
 
-// observer-start.
+//observer start
 /obj/effect/landmark/observer_start
 	name = "Observer-Start"
 	icon_state = "observer_start"
 
-// xenos.
+//xenos, morphs and nightmares spawn here
 /obj/effect/landmark/xeno_spawn
 	name = "xeno_spawn"
 	icon_state = "xeno_spawn"
@@ -304,7 +306,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.xeno_spawn += loc
 	return INITIALIZE_HINT_QDEL
 
-// blobs.
+//objects with the stationloving component (nuke disk) respawn here. 
+//also blobs that have their spawn forcemoved (running out of time when picking their spawn spot), santa and respawning devils
 /obj/effect/landmark/blobstart
 	name = "blobstart"
 	icon_state = "blob_start"
@@ -314,6 +317,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.blobstart += loc
 	return INITIALIZE_HINT_QDEL
 
+//spawns sec equipment lockers depending on the number of sec officers
 /obj/effect/landmark/secequipment
 	name = "secequipment"
 	icon_state = "secequipment"
@@ -323,6 +327,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.secequipment += loc
 	return INITIALIZE_HINT_QDEL
 
+//players that get put in admin jail show up here
 /obj/effect/landmark/prisonwarp
 	name = "prisonwarp"
 	icon_state = "prisonwarp"
@@ -341,6 +346,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.emergencyresponseteamspawn += loc
 	return INITIALIZE_HINT_QDEL
 
+//ninja energy nets teleport victims here
 /obj/effect/landmark/holding_facility
 	name = "Holding Facility"
 	icon_state = "holding_facility"
@@ -407,7 +413,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.city_of_cogs_spawns += loc
 	return INITIALIZE_HINT_QDEL
 
-//generic event spawns
+//handles clockwork portal+eminence teleport destinations
 /obj/effect/landmark/event_spawn
 	name = "generic event spawn"
 	icon_state = "generic_event"

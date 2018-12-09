@@ -5,23 +5,23 @@ GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
 GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created
 GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security spawns
-GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
-GLOBAL_LIST_EMPTY(jobspawn_overrides)					//These will take precedence over normal spawnpoints if created.
+GLOBAL_LIST_EMPTY(generic_event_spawns)			//handles clockwork portal+eminence teleport destinations
+GLOBAL_LIST_EMPTY(jobspawn_overrides)			//These will take precedence over normal spawnpoints if created.
 
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
-GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
-GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here
-GLOBAL_LIST_EMPTY(xeno_spawn)//Aliens spawn at these.
+GLOBAL_LIST_EMPTY(prisonwarp)	//admin prisoners go to these
+GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here (ninja energy net)
+GLOBAL_LIST_EMPTY(xeno_spawn)//aliens, morphs and nightmares spawn at these
 GLOBAL_LIST_EMPTY(tdome1)
 GLOBAL_LIST_EMPTY(tdome2)
 GLOBAL_LIST_EMPTY(tdomeobserve)
 GLOBAL_LIST_EMPTY(tdomeadmin)
 GLOBAL_LIST_EMPTY(prisonwarped)	//list of players already warped
-GLOBAL_LIST_EMPTY(blobstart)
-GLOBAL_LIST_EMPTY(secequipment)
+GLOBAL_LIST_EMPTY(blobstart) //stationloving objects, blobs, santa, respawning devils
+GLOBAL_LIST_EMPTY(secequipment) //sec equipment lockers that scale with the number of sec players
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(servant_spawns) //Servants of Ratvar spawn here

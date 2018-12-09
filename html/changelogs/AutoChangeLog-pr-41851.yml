@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Xenobio consoles that didn't connect to recycler in the xenobio lab should now do so."
