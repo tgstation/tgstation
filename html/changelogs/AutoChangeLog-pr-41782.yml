@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Gibs will now rot if not cleaned, and produce small amounts of miasma, approximately
+equal to a quarter of a corpse."

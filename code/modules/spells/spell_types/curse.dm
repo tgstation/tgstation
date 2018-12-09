@@ -4,26 +4,30 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] sent a curse of madness with the message \"[message]\"!")
 		log_game("[key_name(user)] sent a curse of madness with the message \"[message]\"!")
 
+	deadchat_broadcast("<span class='deadsay'>A <span class='name'>Curse of Madness</span> has stricken the station, shattering their minds with the awful secret: \"<span class='big hypnophrase'>[message]</span>\"</span>")
+
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		if(H.stat == DEAD)
+			continue
 		var/turf/T = get_turf(H)
 		if(T && !is_station_level(T.z))
 			continue
-		if(H.stat == DEAD)
-			continue
 		if(H.anti_magic_check(TRUE, FALSE))
+			to_chat(H, "<span class='notice'>You have a strange feeling for a moment, but then it passes.</span>")
 			continue
 		if(istype(H.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
+			to_chat(H, "<span class='warning'>Your protective headgear successfully deflects mind controlling brainwaves!</span>")
 			continue
 		H.playsound_local(H,'sound/hallucinations/veryfar_noise.ogg',40,1)
-		to_chat(H, "<span class='hypnophrase'>[message]</span>")
+		to_chat(H, "<span class='reallybig hypnophrase'>[message]</span>")
 		to_chat(H, "<span class='warning'>Your mind shatters!</span>")
 		switch(rand(1,10))
 			if(1 to 3)
-				H.gain_trauma(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
-				H.gain_trauma(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
+				H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
+				H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_LOBOTOMY)
 			if(4 to 6)
-				H.gain_trauma(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
+				H.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_LOBOTOMY)
 			if(7 to 8)
-				H.gain_trauma(BRAIN_TRAUMA_MAGIC, TRAUMA_RESILIENCE_LOBOTOMY)
+				H.gain_trauma_type(BRAIN_TRAUMA_MAGIC, TRAUMA_RESILIENCE_LOBOTOMY)
 			if(9 to 10)
-				H.gain_trauma(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_LOBOTOMY)
+				H.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRAUMA_RESILIENCE_LOBOTOMY)

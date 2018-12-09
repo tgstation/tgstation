@@ -54,9 +54,20 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6")
 	mergeable_decal = FALSE
 
+	var/already_rotting = FALSE
+
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	reagents.add_reagent("liquidgibs", 5)
+	if(already_rotting)
+		start_rotting(rename=FALSE)
+	else
+		addtimer(CALLBACK(src, .proc/start_rotting), 2 MINUTES)
+
+/obj/effect/decal/cleanable/blood/gibs/proc/start_rotting(rename=TRUE)
+	name = "rotting [initial(name)]"
+	desc += " It smells terrible."
+	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return
@@ -108,6 +119,7 @@
 	name = "old rotting gibs"
 	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
 	bloodiness = 0
+	already_rotting = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
