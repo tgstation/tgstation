@@ -23,7 +23,7 @@
 	status += "The intelligence link display shows [R.connected_ai ? R.connected_ai.name : "NULL"]."
 	status += "The camera light is [!isnull(R.builtInCamera) && R.builtInCamera.status ? "on" : "off"]."
 	status += "The lockdown indicator is [R.lockcharge ? "on" : "off"]."
-	status += "The reset module hardware light is [R.has_module() ? "on" : "off"]."
+	status += "There is a star symbol above the [get_color_of_wire(WIRE_RESET_MODULE)] wire."
 	return status
 
 /datum/wires/robot/on_pulse(wire, user)
