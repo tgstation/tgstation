@@ -44,12 +44,11 @@
 	if(has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
 
-/obj/item/clothing/under/New()
+/obj/item/clothing/under/Initialize()
+	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
-	adjusted = NORMAL_STYLE
-	..()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()

@@ -3,7 +3,7 @@
 	desc = "A small electronic device able to ignite combustible substances."
 	icon_state = "igniter"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/sparks
 	heat = 1000
 
 /obj/item/assembly/igniter/suicide_act(mob/living/carbon/user)
@@ -11,13 +11,15 @@
 	user.IgniteMob()
 	return FIRELOSS
 
-/obj/item/assembly/igniter/New()
-	..()
+/obj/item/assembly/igniter/Initialize()
+	. = ..()
+	sparks = new
 	sparks.set_up(2, 0, src)
 	sparks.attach(src)
 
 /obj/item/assembly/igniter/Destroy()
-	qdel(sparks)
+	if(sparks)
+		qdel(sparks)
 	sparks = null
 	. = ..()
 

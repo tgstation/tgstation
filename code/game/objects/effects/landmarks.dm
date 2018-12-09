@@ -48,6 +48,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 			GLOB.jobspawn_overrides[name] = list()
 		GLOB.jobspawn_overrides[name] += src
 	..()
+
+/obj/effect/landmark/start/Initialize()
+	. = ..()
 	if(name != "start")
 		tag = "start*[name]"
 

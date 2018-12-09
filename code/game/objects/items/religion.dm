@@ -347,20 +347,18 @@
 	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
 
 
-/obj/item/storage/box/itemset/crusader/blue/New()
-	..()
+/obj/item/storage/box/itemset/crusader/blue/Initialize()
+	. = ..()
 	contents = list()
-	sleep(1)
 	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
 	new /obj/item/clothing/gloves/plate/blue(src)
 	new /obj/item/clothing/shoes/plate/blue(src)
 
 
-/obj/item/storage/box/itemset/crusader/red/New()
-	..()
+/obj/item/storage/box/itemset/crusader/red/Initialize()
+	. = ..()
 	contents = list()
-	sleep(1)
 	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)

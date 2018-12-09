@@ -22,11 +22,12 @@
 	var/aisync = 1
 	var/panel_locked = TRUE
 
-/obj/item/robot_suit/New()
-	..()
-	updateicon()
+/obj/item/robot_suit/Initialize()
+	. = ..()
+	update_icon()
 
-/obj/item/robot_suit/prebuilt/New()
+/obj/item/robot_suit/prebuilt/Initialize()
+	. = ..()
 	l_arm = new(src)
 	r_arm = new(src)
 	l_leg = new(src)
@@ -37,9 +38,8 @@
 	chest = new(src)
 	chest.wired = TRUE
 	chest.cell = new /obj/item/stock_parts/cell/high/plus(chest)
-	..()
 
-/obj/item/robot_suit/proc/updateicon()
+/obj/item/robot_suit/update_icon()
 	cut_overlays()
 	if(l_arm)
 		add_overlay("[l_arm.icon_state]+o")
@@ -96,7 +96,7 @@
 			to_chat(user, "<span class='notice'>You disassemble the cyborg shell.</span>")
 	else
 		to_chat(user, "<span class='notice'>There is nothing to remove from the endoskeleton.</span>")
-	updateicon()
+	update_icon()
 
 /obj/item/robot_suit/proc/put_in_hand_or_drop(mob/living/user, obj/item/I) //normal put_in_hands() drops the item ontop of the player, this drops it at the suit's loc
 	if(!user.put_in_hands(I))
@@ -153,14 +153,14 @@
 				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
-		if(src.l_leg)
+		if(l_leg)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.l_leg = W
-		src.updateicon()
+		l_leg = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/r_leg/robot))
 		if(src.r_leg)
@@ -169,40 +169,40 @@
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.r_leg = W
-		src.updateicon()
+		r_leg = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/l_arm/robot))
-		if(src.l_arm)
+		if(l_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)
 		W.cut_overlays()
-		src.l_arm = W
-		src.updateicon()
+		l_arm = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/r_arm/robot))
-		if(src.r_arm)
+		if(r_arm)
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		W.icon_state = initial(W.icon_state)//in case it is a dismembered robotic limb
 		W.cut_overlays()
-		src.r_arm = W
-		src.updateicon()
+		r_arm = W
+		update_icon()
 
 	else if(istype(W, /obj/item/bodypart/chest/robot))
 		var/obj/item/bodypart/chest/robot/CH = W
-		if(src.chest)
+		if(chest)
 			return
 		if(CH.wired && CH.cell)
 			if(!user.transferItemToLoc(CH, src))
 				return
 			CH.icon_state = initial(CH.icon_state) //in case it is a dismembered robotic limb
 			CH.cut_overlays()
-			src.chest = CH
-			src.updateicon()
+			chest = CH
+			update_icon()
 		else if(!CH.wired)
 			to_chat(user, "<span class='warning'>You need to attach wires to it first!</span>")
 		else
@@ -214,15 +214,15 @@
 			if(istype(X, /obj/item/organ))
 				to_chat(user, "<span class='warning'>There are organs inside [HD]!</span>")
 				return
-		if(src.head)
+		if(head)
 			return
 		if(HD.flash2 && HD.flash1)
 			if(!user.transferItemToLoc(HD, src))
 				return
 			HD.icon_state = initial(HD.icon_state)//in case it is a dismembered robotic limb
 			HD.cut_overlays()
-			src.head = HD
-			src.updateicon()
+			head = HD
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
