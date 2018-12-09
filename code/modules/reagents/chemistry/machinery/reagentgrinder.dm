@@ -57,6 +57,10 @@
 		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
 		return
 
+	if(operating)
+		to_chat(user, "<span class='warning'>\The [src] is operating.</span>")
+		return
+
 	if(beaker || length(holdingitems))
 		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
 		if(beaker)
