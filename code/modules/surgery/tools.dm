@@ -38,7 +38,7 @@
 	materials = list(MAT_METAL=5000, MAT_GLASS=2500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	toolspeed = 0.5
+	toolspeed = 0.3
 	attack_verb = list("attacked", "pinched")
 
 
@@ -61,7 +61,7 @@
 	materials = list(MAT_METAL=2500, MAT_GLASS=750)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
-	toolspeed = 0.5
+	toolspeed = 0.3
 	attack_verb = list("burnt")
 
 
@@ -90,7 +90,7 @@
 	flags_1 = CONDUCT_1
 	force = 10
 	w_class = WEIGHT_CLASS_SMALL
-	toolspeed = 0.5
+	toolspeed = 0.3
 	attack_verb = list("drilled")
 
 
@@ -129,7 +129,7 @@
 	throw_range = 5
 	materials = list(MAT_METAL=4000, MAT_GLASS=1000)
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	toolspeed = 0.5
+	toolspeed = 0.3
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
 
@@ -175,7 +175,7 @@
 	throw_speed = 2
 	throw_range = 5
 	materials = list(MAT_METAL=10000, MAT_GLASS=6000)
-	toolspeed = 0.5
+	toolspeed = 0.3
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
 	sharpness = IS_SHARP
 
@@ -269,7 +269,7 @@
 	icon_state = "scalpel_a"
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
-	toolspeed = 0.25
+	toolspeed = 0.4
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/scalpel/advanced/Initialize()
@@ -293,8 +293,8 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "saw_a"
 	hitsound = 'sound/weapons/blade1.ogg'
-	force = 19
-	toolspeed = 0.25
+	force = 17
+	toolspeed = 0.4
 	sharpness = IS_SHARP_ACCURATE
 	light_color = LIGHT_COLOR_GREEN
 
@@ -319,7 +319,7 @@
 	desc = "An agglomerate of rods and gears. It resembles a retractor."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "retractor_a"
-	toolspeed = 0.25
+	toolspeed = 0.4
 
 /obj/item/retractor/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
@@ -333,7 +333,7 @@
 	desc = "An agglomerate of rods and gears. It resembles an hemostat."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "hemostat_a"
-	toolspeed = 0.25
+	toolspeed = 0.4
 
 /obj/item/hemostat/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
@@ -348,8 +348,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgicaldrill_a"
 	hitsound = 'sound/items/welder.ogg'
-	force = 15
-	toolspeed = 0.25
+	toolspeed = 0.4
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/surgicaldrill/advanced/Initialize()
@@ -374,8 +373,8 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cautery_a"
 	hitsound = 'sound/items/welder2.ogg'
-	force = 17
-	toolspeed = 0.25
+	force = 15
+	toolspeed = 0.4
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/cautery/advanced/Initialize()
