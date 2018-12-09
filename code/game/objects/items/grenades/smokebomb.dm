@@ -10,7 +10,7 @@
 
 /obj/item/grenade/smokebomb/Initialize()
 	. = ..()
-	smoke = new /datum/effect_system/smoke_spread/bad
+	smoke = new
 	smoke.attach(src)
 
 /obj/item/grenade/smokebomb/Destroy()
