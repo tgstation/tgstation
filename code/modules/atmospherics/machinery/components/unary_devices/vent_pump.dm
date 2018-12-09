@@ -34,8 +34,8 @@
 
 	pipe_state = "uvent"
 
-/obj/machinery/atmospherics/components/unary/vent_pump/Initialize()
-	. = ..()
+/obj/machinery/atmospherics/components/unary/vent_pump/New()
+	..()
 	if(!id_tag)
 		id_tag = assign_uid_vents()
 
@@ -295,8 +295,8 @@
 	name = "large air vent"
 	power_channel = EQUIP
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/Initialize()
-	. = ..()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
+	..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
 
