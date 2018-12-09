@@ -77,7 +77,7 @@
 	var/perc_identifier = "ERROR"
 	var/datum/mind/owner_mind = null
 	var/mob/living/last_mob = null
-	var/list/action_datums = list(/datum/action/padrenal,/datum/action/pdoors) //must be /datum/action -falaskian
+	var/list/action_datums = list(/datum/action/padrenal = 10,/datum/action/pdoors = 0) //must be /datum/action. Added number is how many players are required to be playing for this to work. -falaskian
 	var/list/active_actions = list()
 	var/iscommander = 0
 	var/list/handled_client_images = list()
@@ -125,8 +125,24 @@
 		if(!istype(A,/datum/action))
 			qdel(A)
 			continue
-		active_actions += A
+		var/playersneeded = 0
+		if(action_datums[path] && isnum(action_datums[path]))
+			playersneeded = action_datums[path]
+		active_actions[A] = playersneeded
 		A.Grant(affecting.current)
+
+/datum/extra_role/perseus/proc/update_actions()
+	if(affecting && affecting.current && GLOB)
+		var/playercount = GLOB.joined_player_list.len
+		for(var/datum/action/A in active_actions)
+			var/thenum = active_actions[A]
+			if(thenum && isnum(thenum))
+				if(playercount >= thenum)
+					if(!A.owner)
+						A.Grant(affecting.current)
+				else
+					if(A.owner)
+						A.Remove(A.owner)
 
 /datum/extra_role/perseus/proc/give_identifier(ckey)
 	var/whitelistnumbers = is_pwhitelisted(ckey)
@@ -203,6 +219,7 @@
 			action.Grant(last_mob)
 			action.UpdateButtonIcon()
 		last_mob.give_perseus_hud()
+	update_actions()
 	clear_implants()
 	clear_antag()
 	handle_client_images()
@@ -265,7 +282,7 @@
 	if (!istype(H))
 		return 0
 
-	to_chat(H, "<span class='notice'>You feel a sudden surge of energy!</span>")
+	to_chat(H, "<span class='notice'>You feel a sudden surge of energy! Return to the Mycenae to recharge your [name].</span>")
 	H.SetStun(0)
 	H.SetKnockdown(0)
 	H.SetUnconscious(0)
@@ -280,13 +297,13 @@
 	UpdateButtonIcon()
 
 	spawn(PERSEUS_ADRENAL_COOLDOWN * 10)
-		if(!owner || !check_perseus(owner))
-			qdel(src)
-			return 0
-		cooldown = 0
-		UpdateButtonIcon()
-		owner << sound('sound/items/timer.ogg')
-		to_chat(owner, "<span class='notice'>Your PercTech adrenal has recharged.</span>")
+		while(cooldown)
+			sleep(10)
+			if(owner && istype(get_area(owner),/area/shuttle/perseus_mycenae))
+				cooldown = 0
+				UpdateButtonIcon()
+				owner << sound('sound/items/timer.ogg')
+				to_chat(owner, "<span class='notice'>Your PercTech adrenal has recharged.</span>")
 
 	return 1
 

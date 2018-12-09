@@ -164,7 +164,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			ID = 0
 		for(var/datum/job/job in SSjob.occupations)
 			dat += "<tr>"
-			if(job.title in blacklisted)
+			if((job.title in blacklisted) || job.override_station_procedures)
 				continue
 			dat += "<td>[job.title]</td>"
 			dat += "<td>[job.current_positions]/[job.total_positions]</td>"

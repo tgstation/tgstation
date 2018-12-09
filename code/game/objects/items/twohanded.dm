@@ -461,7 +461,7 @@
 	slot_flags = SLOT_BACK
 	force_unwielded = 10
 	force_wielded = 18
-	throwforce = 20
+	throwforce = 21
 	throw_speed = 4
 	embedding = list("embedded_impact_pain_multiplier" = 3)
 	armour_penetration = 10

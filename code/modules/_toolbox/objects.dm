@@ -213,3 +213,44 @@
 	plant_disks = list()
 	return ..()
 #undef EMPTYDISKNAME
+
+//animal cookies
+/obj/item/reagent_containers/food/snacks/cracker
+	var/copied = 0
+
+/obj/item/reagent_containers/food/snacks/cracker/New()
+	var/list/available = list()
+	for(var/mob/living/M in range(3,get_turf(src)))
+		if(istype(M,/mob/living/carbon/monkey) || (istype(M,/mob/living/simple_animal) && !istype(M,/mob/living/simple_animal/hostile) && !istype(M,/mob/living/simple_animal/bot) && !istype(M,/mob/living/simple_animal/slime)))
+			available += M
+	var/choice
+	if(available.len)
+		choice = pick(available)
+	if(choice)
+		copy_animal(choice)
+	. = ..()
+
+/obj/item/reagent_containers/food/snacks/cracker/proc/copy_animal(atom/A)
+	if(!A)
+		return
+	overlays.Cut()
+	var/matrix/M = new()
+	transform = M
+	name = "animal cracker"
+	desc = "Its a [A.name]!"
+	var/icon/mask = icon(A.icon,initial(A.icon_state),dir = 4)
+	mask.Blend(rgb(255,255,255))
+	mask.BecomeAlphaMask()
+	var/icon/cracker = new/icon('icons/oldschool/objects.dmi', "crackertexture")
+	cracker.AddAlphaMask(mask)
+	var/image/overlay = image(cracker)
+	overlays += overlay
+	/*var/image/shades = new()
+	shades.icon = A.icon
+	shades.icon_state = A.icon_state
+	shades.overlays += A.overlays
+	shades.color = list(0.30,0.30,0.30,0, 0.60,0.60,0.60,0, 0.10,0.10,0.10,0, 0,0,0,1, 0,0,0,0)
+	shades.alpha = round(255*0.5,1)
+	overlays += shades*/
+	M *= 0.6
+	transform = M

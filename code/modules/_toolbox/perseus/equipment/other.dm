@@ -57,6 +57,7 @@
 					<li><a href='#8'>Impersonations</a></li>
 					<li><a href='#9'>Caution on Calls</a></li>
 					<li><a href='#10'>Levels of force</a></li>
+					<li><a href='#11'>Hivemind</a></li>
 				</ol>
 
 				<a name='1'><H4>When to enter the station</H4>
@@ -105,12 +106,8 @@
 				Enforcers are invited to warn subjects when lethal force is considered an option. They are not obligated to, particularly when it would be tactically unwise.
 				Upon completion of a mission, Enforcers are expected to immediately depart the celestial complex.
 
-
-				<H4>Hivemind</H4>
-				11. Information contained in Hive-mind, Perseus Chat, and the Commander Chat is not to be shared with anyone not in those chats without the express permission of the Head Perseus Commander.
-
-				<H4>Skype</H4>
-				12. Participating, when possible, in the Perseus Skype Chat and commenting on new enforcer applications (even if only on application content) is an expectation of continued Perseus membership.
+				<a name='10'><H4>Hivemind</H4>
+				11. Information contained in the Perseus Hive-mind is not to be shared with anyone who did not participate in that session.{This is an OOC rule as well as an IC rule}.
 
 				<p>Good luck and stay safe.
 
@@ -119,6 +116,16 @@
 				</body>
 				</html>
 				"}
+/*
+removed sections which read.
+<H4>Hivemind</H4>
+11. Information contained in Hive-mind, Perseus Chat, and the Commander Chat is not to be shared with anyone not in those chats without the express permission of the Head Perseus Commander.
+
+
+<H4>Skype</H4>
+12. Participating, when possible, in the Perseus Skype Chat and commenting on new enforcer applications (even if only on application content) is an expectation of continued Perseus membership.
+*/
+
 
 /*
 * Oxygen Tank
@@ -362,8 +369,6 @@
 				menu += "<b><i> Total Enforcer Implants: [implantnumber]</i></b><br>"
 		return menu
 	else
-		if(host_pda)
-			host_pda.mode = 0
 		return ..()
 
 
