@@ -8,6 +8,7 @@
 	item_state = "qmcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	flags_inv = HIDESUITSTORAGE
 
 /obj/item/clothing/head/cloakhood
 	name = "cloak hood"

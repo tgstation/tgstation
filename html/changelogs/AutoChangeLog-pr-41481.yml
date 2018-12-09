@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Corrected some doors still being called Circuitry Lab."
-  - bugfix: "Replaced the circuitry lab telescreen in the sci security checkpoint in science with a standard science telescreen."
-  - bugfix: "Corrected the Nanite lab's camera tags on Box."

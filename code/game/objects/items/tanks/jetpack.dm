@@ -18,7 +18,7 @@
 	..()
 	if(gas_type)
 		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
+		air_contents.gases[gas_type][MOLES] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 	ion_trail = new
 	ion_trail.set_up(src)
@@ -72,18 +72,18 @@
 	if(!on)
 		return
 	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off()
+		turn_off(user)
 		return
 
 	var/datum/gas_mixture/removed = air_contents.remove(num)
 	if(removed.total_moles() < 0.005)
-		turn_off()
+		turn_off(user)
 		return
 
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
 
-	return 1
+	return TRUE
 
 /obj/item/tank/jetpack/suicide_act(mob/user)
 	if (istype(user, /mob/living/carbon/human/))
@@ -107,22 +107,22 @@
 	if(!on)
 		return
 	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off()
+		turn_off(user)
 		return
 	if(rand(0,250) == 0)
 		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
-		turn_off()
+		turn_off(user)
 		return
 
 	var/datum/gas_mixture/removed = air_contents.remove(num)
 	if(removed.total_moles() < 0.005)
-		turn_off()
+		turn_off(user)
 		return
 
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
 
-	return 1
+	return TRUE
 
 /obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"

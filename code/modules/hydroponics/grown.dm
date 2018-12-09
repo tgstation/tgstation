@@ -9,7 +9,7 @@
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""
 	var/bitesize_mod = 0
-	var/splat_type = /obj/effect/decal/cleanable/plant_smudge
+	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 	dried_type = -1
 	// Saves us from having to define each stupid grown's dried_type as itself.
@@ -101,7 +101,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
-	if(ispath(splat_type, /obj/effect/decal/cleanable/plant_smudge))
+	if(ispath(splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
 		if(filling_color)
 			var/obj/O = new splat_type(T)
 			O.color = filling_color

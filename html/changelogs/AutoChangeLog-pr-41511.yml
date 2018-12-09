@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Droppers will now work if the target's wearing eyeglasses which don't cover the mob's eyes."
-  - bugfix: "Fixed eye protection checks checking if your mask covers your mouth instead of your eyes."

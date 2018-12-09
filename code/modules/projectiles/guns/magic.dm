@@ -9,6 +9,7 @@
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags_1 =  CONDUCT_1
 	w_class = WEIGHT_CLASS_HUGE
+	var/checks_antimagic = TRUE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 4
@@ -31,6 +32,9 @@
 			return
 		else
 			no_den_usage = 0
+	if(checks_antimagic && user.anti_magic_check(TRUE, FALSE))
+		to_chat(user, "<span class='warning'>Something is interfering with [src].</span>")
+		return
 	. = ..()
 
 /obj/item/gun/magic/can_shoot()
