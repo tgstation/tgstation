@@ -2630,6 +2630,8 @@
 #include "code\modules\surgery\advanced\bioware\bioware.dm"
 #include "code\modules\surgery\advanced\bioware\bioware_surgery.dm"
 #include "code\modules\surgery\advanced\bioware\experimental_dissection.dm"
+#include "code\modules\surgery\advanced\bioware\ligament_hook.dm"
+#include "code\modules\surgery\advanced\bioware\ligament_reinforcement.dm"
 #include "code\modules\surgery\advanced\bioware\nerve_grounding.dm"
 #include "code\modules\surgery\advanced\bioware\nerve_splicing.dm"
 #include "code\modules\surgery\advanced\bioware\vein_threading.dm"
