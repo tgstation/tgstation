@@ -119,7 +119,8 @@
 		return
 	if (magazine.ammo_count())
 		chambered = magazine.get_round()
-		chambered.forceMove(src)
+		if (bolt_type != BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
+			chambered.forceMove(src)
 	
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
 	if (bolt_type == BOLT_TYPE_OPEN || bolt_type == BOLT_TYPE_NO_BOLT)
@@ -154,8 +155,6 @@
 
 /obj/item/gun/ballistic/proc/eject_magazine(mob/user, display_message = TRUE, obj/item/ammo_box/magazine/tac_load = null)
 	if(bolt_type == BOLT_TYPE_OPEN)
-		var/obj/item/ammo_casing/AC = chambered
-		magazine.give_round(AC)
 		chambered = null
 	if (magazine.ammo_count())
 		playsound(src, load_sound, load_sound_volume, load_sound_vary)
