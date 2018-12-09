@@ -13,10 +13,13 @@
 	buckle_requires_restraints = 1
 	buckle_lying = -1
 
+/obj/machinery/atmospherics/pipe/New()
+	volume = 35 * device_type
+	..()
+
 /obj/machinery/atmospherics/pipe/Initialize()
 	. = ..()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
-	volume = 35 * device_type
 
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]
