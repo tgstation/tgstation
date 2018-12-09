@@ -222,9 +222,9 @@
 /obj/item/bodypart/proc/is_disabled()
 	if(has_trait(TRAIT_PARALYSIS))
 		return BODYPART_DISABLED_PARALYSIS
-	if(can_dismember() && !owner.has_trait(TRAIT_NODISMEMBER))
+	if(can_dismember() && !owner.has_trait(TRAIT_NOLIMBDISABLE))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
-		if((get_damage(TRUE) >= max_damage))
+		if((get_damage(TRUE) >= max_damage) || (owner.has_trait(TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of 0%
 			return BODYPART_DISABLED_DAMAGE
 		if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
 			return BODYPART_NOT_DISABLED

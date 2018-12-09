@@ -35,6 +35,8 @@
 #define TRAIT_NOHUNGER			"no_hunger"
 #define TRAIT_EASYDISMEMBER		"easy_dismember"
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
+#define TRAIT_NOLIMBDISABLE		"no_limb_disable"
+#define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
@@ -56,6 +58,7 @@
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
 #define TRAIT_DISK_VERIFIER     "disk-verifier"
+#define TRAIT_NOMOBSWAP            "no-mob-swap"
 #define TRAIT_XRAY_VISION       "xray_vision"
 
 //non-mob traits

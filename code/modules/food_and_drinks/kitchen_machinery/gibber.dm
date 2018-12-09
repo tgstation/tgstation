@@ -21,12 +21,12 @@
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	gibtime = 40
+	meat_produced = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gib_time -= 5 * M.rating
-		gibtime = gib_time
+		gibtime -= 5 * M.rating
 		if(M.rating >= 2)
 			ignore_clothing = TRUE
 
