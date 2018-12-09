@@ -372,7 +372,6 @@
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
-		var/datum/mutation/human/HM
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -395,9 +394,9 @@
 						dna.previous.Remove("blood_type")
 					dna.temporary_mutations.Remove(mut)
 					continue
-				HM = GLOB.mutations_list[mut]
-				HM.force_lose(src)
-				dna.temporary_mutations.Remove(mut)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			if(HM && HM.timed)
+				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
