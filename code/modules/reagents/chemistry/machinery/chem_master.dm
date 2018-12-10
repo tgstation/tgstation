@@ -1,3 +1,6 @@
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
@@ -13,7 +16,7 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
-	var/list/chosenPillStyle = 1
+	var/chosenPillStyle = 1
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
@@ -161,7 +164,7 @@
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
 	var/list/pillStyles = list()
-	for (var/x in 1 to 22)
+	for (var/x in 1 to PILL_STYLE_COUNT)
 		var/list/SL = list()
 		SL["id"] = x
 		pillStyles += list(SL)
@@ -240,7 +243,7 @@
 					else
 						P = new(drop_location())
 					P.name = trim("[name] pill")
-					if(chosenPillStyle == 22)
+					if(chosenPillStyle == RANDOM_PILL_STYLE)
 						P.icon_state ="pill[rand(1,21)]"
 					else
 						P.icon_state = "pill[chosenPillStyle]"
@@ -384,3 +387,6 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+
+#undef PILL_STYLE_COUNT
+#undef RANDOM_PILL_STYLE
