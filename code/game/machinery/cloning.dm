@@ -223,8 +223,9 @@
 
 		for(var/t in traumas)
 			var/datum/brain_trauma/BT = t
-			var/datum/brain_trauma/cloned_trauma = new BT.type(BT.on_clone())
-			H.gain_trauma(cloned_trauma, BT.resilience)
+			var/datum/brain_trauma/cloned_trauma = BT.on_clone()
+			if(cloned_trauma)
+				H.gain_trauma(cloned_trauma, BT.resilience)
 
 		H.set_cloned_appearance()
 

@@ -70,15 +70,27 @@
 	var/close_stalker = FALSE //For heartbeat
 
 /datum/brain_trauma/magic/stalker/on_gain()
+	create_stalker()
+	..()
+
+/datum/brain_trauma/magic/stalker/proc/create_stalker()
 	var/turf/stalker_source = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z) //random corner
 	stalker = new(stalker_source, owner)
-	..()
 
 /datum/brain_trauma/magic/stalker/on_lose()
 	QDEL_NULL(stalker)
 	..()
 
 /datum/brain_trauma/magic/stalker/on_life()
+	// Dead and unconscious people are not interesting to the psychic stalker.
+	if(owner.stat != CONSCIOUS)
+		return
+
+	// Not even nullspace will keep it at bay.
+	if(!stalker || !stalker.loc || stalker.z != owner.z)
+		qdel(stalker)
+		create_stalker()
+
 	if(get_dist(owner, stalker) <= 1)
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50)
 		owner.visible_message("<span class='warning'>[owner] is torn apart by invisible claws!</span>", "<span class='userdanger'>Ghostly claws tear your body apart!</span>")
