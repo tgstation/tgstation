@@ -453,6 +453,7 @@
 	description = "A byproduct of romerol testing, this combat drug can keep the user alive far beyond human standards, but will kill them as soon as it runs out."
 	reagent_state = LIQUID
 	color = "#BF4095"
+	self_consuming = TRUE
 	var/stage = 0 //Used for message tracking
 	overdose_threshold = 30
 	//No addiction threshold, if you run out you're too dead to want more
