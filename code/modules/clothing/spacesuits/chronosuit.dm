@@ -33,7 +33,7 @@
 	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
-	var/cooldowntime = 20 //deciseconds
+	var/cooldowntime = 50 //deciseconds
 	var/teleporting = 0
 	var/phase_timer_id
 
@@ -51,8 +51,6 @@
 	user.reset_perspective(camera)
 	user.set_machine(camera)
 	user.remote_control = camera
-	if(user.client)
-		user.reset_perspective(camera)
 
 /obj/item/clothing/suit/space/chronos/ui_action_click()
 	if((cooldown <= world.time) && !teleporting && !activating)
@@ -109,7 +107,6 @@
 			camera.forceMove(user)
 			user.reset_perspective(camera)
 		teleport_now.UpdateButtonIcon()
-		deactivate(TRUE)
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
 	var/mob/living/carbon/human/user = src.loc
@@ -180,7 +177,7 @@
 		if(user && ishuman(user) && (user.wear_suit == src))
 			if(camera && (user.remote_control == camera))
 				if(!teleporting)
-					if(get_turf(user) != get_turf(camera))
+					if(camera.loc != user && ((camera.x != user.x) || (camera.y != user.y) || (camera.z != user.z)))
 						if(camera.phase_time <= world.time)
 							chronowalk(camera)
 					else
@@ -246,7 +243,6 @@
 			helmet.item_flags &= ~NODROP
 			helmet.suit = null
 			helmet = null
-
 		if(camera)
 			QDEL_NULL(camera)
 
