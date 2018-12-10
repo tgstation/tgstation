@@ -997,6 +997,7 @@
 #include "code\game\objects\structures\reflector.dm"
 #include "code\game\objects\structures\safe.dm"
 #include "code\game\objects\structures\showcase.dm"
+#include "code\game\objects\structures\shower.dm"
 #include "code\game\objects\structures\spawner.dm"
 #include "code\game\objects\structures\spirit_board.dm"
 #include "code\game\objects\structures\statues.dm"
