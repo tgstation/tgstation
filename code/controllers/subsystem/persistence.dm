@@ -62,12 +62,15 @@ SUBSYSTEM_DEF(persistence)
 	var/obj/item/storage/backpack/satchel/flat/F
 	if(old_secret_satchels && old_secret_satchels.len >= 10) //guards against low drop pools assuring that one player cannot reliably find his own gear.
 		var/pos = rand(1, old_secret_satchels.len)
+		var/end = pos + 1
+		if (end > old_secret_satchels.len)
+			end = 0
 		F = new()
 		F.x = old_secret_satchels[pos]["x"]
 		F.y = old_secret_satchels[pos]["y"]
 		F.z = SSmapping.station_start
 		path = text2path(old_secret_satchels[pos]["saved_obj"])
-		old_secret_satchels.Cut(pos, (pos+1) % old_secret_satchels.len)
+		old_secret_satchels.Cut(pos, end)
 
 	if(F)
 		if(isfloorturf(F.loc) && !isplatingturf(F.loc))
