@@ -308,7 +308,7 @@
 
 /mob/living/carbon/human/proc/handle_active_genes()
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_life(src)
+		HM.on_life()
 
 /mob/living/carbon/human/proc/handle_heart()
 	var/we_breath = !has_trait(TRAIT_NOBREATH, SPECIES_TRAIT)
