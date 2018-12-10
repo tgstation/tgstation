@@ -14,33 +14,25 @@
 	var/list/add_mutations = list()
 	var/list/remove_mutations = list()
 
-	var/list/add_mutations_static = list()
-	var/list/remove_mutations_static = list()
-
 	var/used = 0
 
 /obj/item/dnainjector/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/item/dnainjector/proc/prepare()
-	for(var/mut_key in add_mutations_static)
-		add_mutations.Add(GLOB.mutations_list[mut_key])
-	for(var/mut_key in remove_mutations_static)
-		remove_mutations.Add(GLOB.mutations_list[mut_key])
-
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	prepare()
-
 	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
-		for(var/datum/mutation/human/HM in remove_mutations)
-			HM.force_lose(M)
-		for(var/datum/mutation/human/HM in add_mutations)
-			if(HM.name == RACEMUT)
+		for(var/HM in remove_mutations)
+			M.dna.remove_mutation(HM)
+		for(var/HM in add_mutations)
+			if(HM == RACEMUT)
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-			HM.force_give(M)
+			if(mutation_in_sequence(HM, M.dna))
+				M.dna.activate_mutation(HM)
+			else
+				M.dna.add_mutation(HM, MUT_EXTRA)
 		if(fields)
 			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				M.real_name = fields["name"]
@@ -90,123 +82,123 @@
 /obj/item/dnainjector/antihulk
 	name = "\improper DNA injector (Anti-Hulk)"
 	desc = "Cures green skin."
-	remove_mutations_static = list(HULK)
+	remove_mutations = list(HULK)
 
 /obj/item/dnainjector/hulkmut
 	name = "\improper DNA injector (Hulk)"
 	desc = "This will make you big and strong, but give you a bad skin condition."
-	add_mutations_static = list(HULK)
+	add_mutations = list(HULK)
 
 /obj/item/dnainjector/xraymut
 	name = "\improper DNA injector (X-ray)"
 	desc = "Finally you can see what the Captain does."
-	add_mutations_static = list(XRAY)
+	add_mutations = list(XRAY)
 
 /obj/item/dnainjector/antixray
 	name = "\improper DNA injector (Anti-X-ray)"
 	desc = "It will make you see harder."
-	remove_mutations_static = list(XRAY)
+	remove_mutations = list(XRAY)
 
 /////////////////////////////////////
 /obj/item/dnainjector/antiglasses
 	name = "\improper DNA injector (Anti-Glasses)"
 	desc = "Toss away those glasses!"
-	remove_mutations_static = list(BADSIGHT)
+	remove_mutations = list(BADSIGHT)
 
 /obj/item/dnainjector/glassesmut
 	name = "\improper DNA injector (Glasses)"
 	desc = "Will make you need dorkish glasses."
-	add_mutations_static = list(BADSIGHT)
+	add_mutations = list(BADSIGHT)
 
 /obj/item/dnainjector/epimut
 	name = "\improper DNA injector (Epi.)"
 	desc = "Shake shake shake the room!"
-	add_mutations_static = list(EPILEPSY)
+	add_mutations = list(EPILEPSY)
 
 /obj/item/dnainjector/antiepi
 	name = "\improper DNA injector (Anti-Epi.)"
 	desc = "Will fix you up from shaking the room."
-	remove_mutations_static = list(EPILEPSY)
+	remove_mutations = list(EPILEPSY)
 ////////////////////////////////////
 /obj/item/dnainjector/anticough
 	name = "\improper DNA injector (Anti-Cough)"
 	desc = "Will stop that awful noise."
-	remove_mutations_static = list(COUGH)
+	remove_mutations = list(COUGH)
 
 /obj/item/dnainjector/coughmut
 	name = "\improper DNA injector (Cough)"
 	desc = "Will bring forth a sound of horror from your throat."
-	add_mutations_static = list(COUGH)
+	add_mutations = list(COUGH)
 
 /obj/item/dnainjector/antidwarf
 	name = "\improper DNA injector (Anti-Dwarfism)"
 	desc = "Helps you grow big and strong."
-	remove_mutations_static = list(DWARFISM)
+	remove_mutations = list(DWARFISM)
 
 /obj/item/dnainjector/dwarf
 	name = "\improper DNA injector (Dwarfism)"
 	desc = "It's a small world after all."
-	add_mutations_static = list(DWARFISM)
+	add_mutations = list(DWARFISM)
 
 /obj/item/dnainjector/clumsymut
 	name = "\improper DNA injector (Clumsy)"
 	desc = "Makes clown minions."
-	add_mutations_static = list(CLOWNMUT)
+	add_mutations = list(CLOWNMUT)
 
 /obj/item/dnainjector/anticlumsy
 	name = "\improper DNA injector (Anti-Clumsy)"
 	desc = "Apply this for Security Clown."
-	remove_mutations_static = list(CLOWNMUT)
+	remove_mutations = list(CLOWNMUT)
 
 /obj/item/dnainjector/antitour
 	name = "\improper DNA injector (Anti-Tour.)"
 	desc = "Will cure Tourette's."
-	remove_mutations_static = list(TOURETTES)
+	remove_mutations = list(TOURETTES)
 
 /obj/item/dnainjector/tourmut
 	name = "\improper DNA injector (Tour.)"
 	desc = "Gives you a nasty case of Tourette's."
-	add_mutations_static = list(TOURETTES)
+	add_mutations = list(TOURETTES)
 
 /obj/item/dnainjector/stuttmut
 	name = "\improper DNA injector (Stutt.)"
 	desc = "Makes you s-s-stuttterrr."
-	add_mutations_static = list(NERVOUS)
+	add_mutations = list(NERVOUS)
 
 /obj/item/dnainjector/antistutt
 	name = "\improper DNA injector (Anti-Stutt.)"
 	desc = "Fixes that speaking impairment."
-	remove_mutations_static = list(NERVOUS)
+	remove_mutations = list(NERVOUS)
 
 /obj/item/dnainjector/antifire
 	name = "\improper DNA injector (Anti-Fire)"
 	desc = "Cures fire."
-	remove_mutations_static = list(COLDRES)
+	remove_mutations = list(SPACEMUT)
 
 /obj/item/dnainjector/firemut
 	name = "\improper DNA injector (Fire)"
 	desc = "Gives you fire."
-	add_mutations_static = list(COLDRES)
+	add_mutations = list(SPACEMUT)
 
 /obj/item/dnainjector/blindmut
 	name = "\improper DNA injector (Blind)"
 	desc = "Makes you not see anything."
-	add_mutations_static = list(BLINDMUT)
+	add_mutations = list(BLINDMUT)
 
 /obj/item/dnainjector/antiblind
 	name = "\improper DNA injector (Anti-Blind)"
 	desc = "IT'S A MIRACLE!!!"
-	remove_mutations_static = list(BLINDMUT)
+	remove_mutations = list(BLINDMUT)
 
 /obj/item/dnainjector/antitele
 	name = "\improper DNA injector (Anti-Tele.)"
 	desc = "Will make you not able to control your mind."
-	remove_mutations_static = list(TK)
+	remove_mutations = list(TK)
 
 /obj/item/dnainjector/telemut
 	name = "\improper DNA injector (Tele.)"
 	desc = "Super brain man!"
-	add_mutations_static = list(TK)
+	add_mutations = list(TK)
 
 /obj/item/dnainjector/telemut/darkbundle
 	name = "\improper DNA injector"
@@ -215,100 +207,99 @@
 /obj/item/dnainjector/deafmut
 	name = "\improper DNA injector (Deaf)"
 	desc = "Sorry, what did you say?"
-	add_mutations_static = list(DEAFMUT)
+	add_mutations = list(DEAFMUT)
 
 /obj/item/dnainjector/antideaf
 	name = "\improper DNA injector (Anti-Deaf)"
 	desc = "Will make you hear once more."
-	remove_mutations_static = list(DEAFMUT)
+	remove_mutations = list(DEAFMUT)
 
 /obj/item/dnainjector/h2m
 	name = "\improper DNA injector (Human > Monkey)"
 	desc = "Will make you a flea bag."
-	add_mutations_static = list(RACEMUT)
+	add_mutations = list(RACEMUT)
 
 /obj/item/dnainjector/m2h
 	name = "\improper DNA injector (Monkey > Human)"
 	desc = "Will make you...less hairy."
-	remove_mutations_static = list(RACEMUT)
+	remove_mutations = list(RACEMUT)
 
 /obj/item/dnainjector/antichameleon
 	name = "\improper DNA injector (Anti-Chameleon)"
-	remove_mutations_static = list(CHAMELEON)
+	remove_mutations = list(CHAMELEON)
 
 /obj/item/dnainjector/chameleonmut
 	name = "\improper DNA injector (Chameleon)"
-	add_mutations_static = list(CHAMELEON)
+	add_mutations = list(CHAMELEON)
 
 /obj/item/dnainjector/antiwacky
 	name = "\improper DNA injector (Anti-Wacky)"
-	remove_mutations_static = list(WACKY)
+	remove_mutations = list(WACKY)
 
 /obj/item/dnainjector/wackymut
 	name = "\improper DNA injector (Wacky)"
-	add_mutations_static = list(WACKY)
+	add_mutations = list(WACKY)
 
 /obj/item/dnainjector/antimute
 	name = "\improper DNA injector (Anti-Mute)"
-	remove_mutations_static = list(MUT_MUTE)
+	remove_mutations = list(MUT_MUTE)
 
 /obj/item/dnainjector/mutemut
 	name = "\improper DNA injector (Mute)"
-	add_mutations_static = list(MUT_MUTE)
+	add_mutations = list(MUT_MUTE)
 
 /obj/item/dnainjector/antismile
 	name = "\improper DNA injector (Anti-Smile)"
-	remove_mutations_static = list(SMILE)
+	remove_mutations = list(SMILE)
 
 /obj/item/dnainjector/smilemut
 	name = "\improper DNA injector (Smile)"
-	add_mutations_static = list(SMILE)
+	add_mutations = list(SMILE)
 
 /obj/item/dnainjector/unintelligiblemut
 	name = "\improper DNA injector (Unintelligible)"
-	add_mutations_static = list(UNINTELLIGIBLE)
+	add_mutations = list(UNINTELLIGIBLE)
 
 /obj/item/dnainjector/antiunintelligible
 	name = "\improper DNA injector (Anti-Unintelligible)"
-	remove_mutations_static = list(UNINTELLIGIBLE)
+	remove_mutations = list(UNINTELLIGIBLE)
 
 /obj/item/dnainjector/swedishmut
 	name = "\improper DNA injector (Swedish)"
-	add_mutations_static = list(SWEDISH)
+	add_mutations = list(SWEDISH)
 
 /obj/item/dnainjector/antiswedish
 	name = "\improper DNA injector (Anti-Swedish)"
-	remove_mutations_static = list(SWEDISH)
+	remove_mutations = list(SWEDISH)
 
 /obj/item/dnainjector/chavmut
 	name = "\improper DNA injector (Chav)"
-	add_mutations_static = list(CHAV)
+	add_mutations = list(CHAV)
 
 /obj/item/dnainjector/antichav
 	name = "\improper DNA injector (Anti-Chav)"
-	remove_mutations_static = list(CHAV)
+	remove_mutations = list(CHAV)
 
 /obj/item/dnainjector/elvismut
 	name = "\improper DNA injector (Elvis)"
-	add_mutations_static = list(ELVIS)
+	add_mutations = list(ELVIS)
 
 /obj/item/dnainjector/antielvis
 	name = "\improper DNA injector (Anti-Elvis)"
-	remove_mutations_static = list(ELVIS)
+	remove_mutations = list(ELVIS)
 
 /obj/item/dnainjector/lasereyesmut
 	name = "\improper DNA injector (Laser Eyes)"
-	add_mutations_static = list(LASEREYES)
+	add_mutations = list(LASEREYES)
 
 /obj/item/dnainjector/antilasereyes
 	name = "\improper DNA injector (Anti-Laser Eyes)"
-	remove_mutations_static = list(LASEREYES)
+	remove_mutations = list(LASEREYES)
 
 /obj/item/dnainjector/timed
 	var/duration = 600
 
 /obj/item/dnainjector/timed/inject(mob/living/carbon/M, mob/user)
-	prepare()
 	if(M.stat == DEAD)	//prevents dead people from having their DNA changed
 		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
@@ -317,23 +308,22 @@
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
-		for(var/datum/mutation/human/HM in remove_mutations)
-			if(HM.name == RACEMUT)
+		for(var/mutation in remove_mutations)
+			if(mutation == RACEMUT)
 				if(ishuman(M))
 					continue
-				M = HM.force_lose(M)
+				M = M.dna.remove_mutation(mutation)
 			else
-				HM.force_lose(M)
-		for(var/datum/mutation/human/HM in add_mutations)
-			if((HM in M.dna.mutations) && !(M.dna.temporary_mutations[HM.name]))
+				M.dna.remove_mutation(mutation)
+		for(var/mutation in add_mutations)
+			if(M.dna.get_mutation(mutation))
 				continue //Skip permanent mutations we already have.
-			if(HM.name == RACEMUT && ishuman(M))
+			if(mutation == RACEMUT && ishuman(M))
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-				M = HM.force_give(M)
+				M = M.dna.add_mutation(mutation, MUT_OTHER, endtime)
 			else
-				HM.force_give(M)
-			M.dna.temporary_mutations[HM.name] = endtime
+				M.dna.add_mutation(mutation, MUT_OTHER, endtime)
 		if(fields)
 			if(fields["name"] && fields["UE"] && fields["blood_type"])
 				if(!M.dna.previous["name"])
@@ -361,9 +351,30 @@
 /obj/item/dnainjector/timed/hulk
 	name = "\improper DNA injector (Hulk)"
 	desc = "This will make you big and strong, but give you a bad skin condition."
-	add_mutations_static = list(HULK)
+	add_mutations = list(HULK)
 
 /obj/item/dnainjector/timed/h2m
 	name = "\improper DNA injector (Human > Monkey)"
 	desc = "Will make you a flea bag."
-	add_mutations_static = list(RACEMUT)
+	add_mutations = list(RACEMUT)
+
+/obj/item/dnainjector/activator
+	name = "\improper DNA activator"
+	desc = "Activates the current mutation on injection, if the subject has it."
+	var/doitanyway = FALSE
+
+/obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
+	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
+		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
+		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
+		for(var/mutation in add_mutations)
+			if(!M.dna.activate_mutation(mutation) && !doitanyway)
+				log_msg += "(FAILED)"
+			else if(doitanyway)
+				M.dna.add_mutation(mutation, MUT_EXTRA)
+			log_msg += "([mutation])"
+		log_attack("[log_msg] [loc_name(user)]")
+		M.dna.update_instability(TRUE)
+		return TRUE
+	return FALSE
+

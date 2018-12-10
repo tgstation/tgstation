@@ -266,6 +266,12 @@
 	print_mood(user)
 
 /datum/component/mood/proc/HandleNutrition(mob/living/L)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(isethereal(H))
+			HandleCharge(H)
+		if(H.has_trait(TRAIT_NOHUNGER))
+			return FALSE //no mood events for nutrition
 	switch(L.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
 			if (!L.has_trait(TRAIT_VORACIOUS))
@@ -282,6 +288,18 @@
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+
+/datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
+	var/datum/species/ethereal/E = H.dna?.species
+	switch(E.ethereal_charge)
+		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
+			add_event(null, "charge", /datum/mood_event/decharged)
+		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
+			add_event(null, "charge", /datum/mood_event/lowpower)
+		if(ETHEREAL_CHARGE_NORMAL to ETHEREAL_CHARGE_ALMOSTFULL)
+			clear_event(null, "charge")
+		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
+			add_event(null, "charge", /datum/mood_event/charged)
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

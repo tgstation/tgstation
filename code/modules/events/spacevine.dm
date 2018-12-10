@@ -22,7 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, src) //spawn a controller at turf
+		new /datum/spacevine_controller(T, event = src) //spawn a controller at turf
 
 
 /datum/spacevine_mutation
@@ -381,8 +381,9 @@
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, var/datum/round_event/event = null)
 	vines = list()
 	growth_queue = list()
+	var/obj/structure/spacevine/SV = spawn_spacevine_piece(location, null, muts)
 	if (event)
-		event.announce_to_ghosts(spawn_spacevine_piece(location, null, muts))
+		event.announce_to_ghosts(SV)
 	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
