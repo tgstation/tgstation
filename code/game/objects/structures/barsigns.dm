@@ -47,8 +47,8 @@
 		broken = TRUE
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(loc, 2)
-	new /obj/item/stack/cable_coil(loc, 2)
+	new /obj/item/stack/sheet/metal(drop_location(), 2)
+	new /obj/item/stack/cable_coil(drop_location(), 2)
 	qdel(src)
 
 /obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -122,18 +122,19 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
-	populate_bar_names()
-	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in GLOB.bar_names
+	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in get_bar_names()
 	if(!picked_name)
 		return
 	chosen_sign = set_sign_by_name(picked_name)
+	SSblackbox.record_feedback("tally", "barsign_picked", 1, chosen_sign.type)
 
-/proc/populate_bar_names()
-	if(!GLOB.bar_names.len)
-		for(var/d in subtypesof(/datum/barsign))
-			var/datum/barsign/D = d
-			if(initial(D.name) && !initial(D.hidden))
-				GLOB.bar_names += initial(D.name)
+/proc/get_bar_names()
+	var/list/names = list()
+	for(var/d in subtypesof(/datum/barsign))
+		var/datum/barsign/D = d
+		if(initial(D.name) && !initial(D.hidden))
+			names += initial(D.name)
+	. = names
 
 /datum/barsign
 	var/name = "Name"
