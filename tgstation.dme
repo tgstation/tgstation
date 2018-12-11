@@ -2592,6 +2592,7 @@
 #include "code\modules\spells\spell_types\santa.dm"
 #include "code\modules\spells\spell_types\shadow_walk.dm"
 #include "code\modules\spells\spell_types\shapeshift.dm"
+#include "code\modules\spells\spell_types\soultap.dm"
 #include "code\modules\spells\spell_types\spacetime_distortion.dm"
 #include "code\modules\spells\spell_types\summonitem.dm"
 #include "code\modules\spells\spell_types\telepathy.dm"
