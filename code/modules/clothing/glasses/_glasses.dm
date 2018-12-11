@@ -93,7 +93,7 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	item_state = "glasses"
-	scan_reagents = 1 //You can see reagents while wearing science goggles
+	scan_reagents = TRUE //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
@@ -191,7 +191,7 @@
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
-	scan_reagents = 1
+	scan_reagents = TRUE
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -253,42 +253,44 @@
 	weldingvisortoggle(user)
 
 
-/obj/item/clothing/glasses/sunglasses/blindfold
+/obj/item/clothing/glasses/blindfold
 	name = "blindfold"
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	flash_protect = 2
-	tint = 3			// to make them blind
+	tint = 3
+	darkness_view = 1
+	dog_fashion = /datum/dog_fashion/head
 
-/obj/item/clothing/glasses/sunglasses/blindfold/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/glasses/blindfold/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot == SLOT_GLASSES)
 		user.become_blind("blindfold_[REF(src)]")
 
-/obj/item/clothing/glasses/sunglasses/blindfold/dropped(mob/living/carbon/human/user)
+/obj/item/clothing/glasses/blindfold/dropped(mob/living/carbon/human/user)
 	..()
 	user.cure_blind("blindfold_[REF(src)]")
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white
+/obj/item/clothing/glasses/blindfold/white
 	name = "blind personnel blindfold"
 	desc = "Indicates that the wearer suffers from blindness."
 	icon_state = "blindfoldwhite"
 	item_state = "blindfoldwhite"
 	var/colored_before = FALSE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/glasses/blindfold/white/equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == SLOT_GLASSES)
 		update_icon(user)
 		user.update_inv_glasses() //Color might have been changed by update_icon.
 	..()
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/update_icon(mob/living/carbon/human/user)
+/obj/item/clothing/glasses/blindfold/white/update_icon(mob/living/carbon/human/user)
 	if(ishuman(user) && !colored_before)
 		add_atom_colour("#[user.eye_color]", FIXED_COLOUR_PRIORITY)
 		colored_before = TRUE
 
-/obj/item/clothing/glasses/sunglasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
+/obj/item/clothing/glasses/blindfold/white/worn_overlays(isinhands = FALSE, file2use)
 	. = list()
 	if(!isinhands && ishuman(loc) && !colored_before)
 		var/mob/living/carbon/human/H = loc
@@ -393,7 +395,7 @@
 	item_state = "godeye"
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
-	scan_reagents = 1
+	scan_reagents = TRUE
 	item_flags = NODROP
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF

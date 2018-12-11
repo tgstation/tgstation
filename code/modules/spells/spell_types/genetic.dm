@@ -4,7 +4,7 @@
 
 	var/list/active_on = list()
 	var/list/traits = list() //disabilities
-	var/list/mutations = list() //mutation strings
+	var/list/mutations = list() //mutation defines
 	var/duration = 100 //deciseconds
 	/*
 		Disabilities

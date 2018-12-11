@@ -34,7 +34,7 @@
 		if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL)
 			H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(1,1)
+			H.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
 			H.adjustToxLoss(-1)
 			H.adjustOxyLoss(-1)
 
@@ -55,9 +55,9 @@
 				H.Paralyze(100)
 				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
-					H.randmutb()
+					H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 				else
-					H.randmutg()
+					H.easy_randmut(POSITIVE)
 				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))
