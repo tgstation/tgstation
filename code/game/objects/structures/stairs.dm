@@ -6,6 +6,7 @@
 	name = "stairs"
 	icon = 'icons/obj/stairs.dmi'
 	icon_state = "stairs"
+	anchored = TRUE
 	//dir = direction of travel to go upwards
 
 	var/force_open_above = FALSE
