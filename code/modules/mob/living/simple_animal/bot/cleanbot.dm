@@ -201,15 +201,12 @@
 		target_types += /mob/living/simple_animal/mouse
 
 	if(trash)
-		target_types += list(
-		/obj/item/trash,
-		/obj/item/cigbutt,
-		/obj/item/ammo_casing/spent,
-		/obj/item/light/tube/broken,
-		/obj/item/light/bulb/broken,
-		/obj/item/reagent_containers/food/snacks/deadmouse
-		)
-		
+		target_types += /obj/item/trash
+		target_types += /obj/item/cigbutt
+		target_types += /obj/item/ammo_casing/spent
+		target_types += /obj/item/light/tube/broken
+		target_types += /obj/item/light/bulb/broken
+		target_types += /obj/item/reagent_containers/food/snacks/deadmouse
 
 	target_types = typecacheof(target_types)
 
