@@ -114,6 +114,7 @@
 	action_background_icon_state = "bg_revenant"
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
+	holy_check = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0

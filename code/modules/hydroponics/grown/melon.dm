@@ -70,5 +70,5 @@
 		to_chat(user, "<span class='warning'>[src] hums slightly, and seems to decay a bit.</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/proc/expire(mob/user)
-	to_chat(user, "<span class='warning'>[parent] rapidly turns into ash!</span>")
+	to_chat(user, "<span class='warning'>[src] rapidly turns into ash!</span>")
 	new /obj/effect/decal/cleanable/ash(drop_location())

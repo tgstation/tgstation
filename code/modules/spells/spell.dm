@@ -167,7 +167,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return FALSE
 	
 	if(!antimagic_allowed)
-		var/antimagic = user.anti_magic_check(TRUE, FALSE)
+		var/antimagic = user.anti_magic_check(TRUE, FALSE, minor = TRUE, self = TRUE)
 		if(antimagic)
 			if(isitem(antimagic))
 				to_chat(user, "<span class='notice'>[antimagic] is interfering with your magic.</span>")

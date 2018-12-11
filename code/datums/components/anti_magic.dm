@@ -24,15 +24,15 @@
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
 	if(slot == SLOT_IN_BACKPACK)
-		UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
+		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		return
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 
-/datum/component/anti_magic/proc/protect(datum/source, mob/user, _magic, _holy, major, list/protection_sources)
-	if((_magic && magic) || (_holy && holy))
+/datum/component/anti_magic/proc/protect(datum/source, mob/user, _magic, _holy, major, self, list/protection_sources)
+	if(((_magic && magic) || (_holy && holy)) && (!self || !blocks_self))
 		protection_sources += parent
 		reaction.Invoke(user, major)
 		if(major)
