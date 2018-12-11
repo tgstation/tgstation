@@ -70,9 +70,15 @@ client/verb/check_antag_token()
 	var/tokens = 0
 	S["[ckey]"] >> tokens
 	if(isnum(tokens) && tokens >= 1)
-		if(mob.mind && mob.mind.special_role)
-			to_chat(src, "<B>You are already an antagonist.</B>")
-			return 0
+		if(mob.mind)
+			if(mob.mind.special_role)
+				to_chat(src, "<B>You are already an antagonist.</B>")
+				return 0
+			if(mob.mind.assigned_role)
+				var/datum/job/J = SSjob.GetJob("[mob.mind.assigned_role]")
+				if(J && J.antagonist_immune)
+					to_chat(src, "<B>A [mob.mind.assigned_role] cannot be an antagonist.</B>")
+					return 0
 		var/success = 0
 		switch(antagtype)
 			if("traitor")

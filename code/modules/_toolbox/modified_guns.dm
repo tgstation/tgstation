@@ -39,4 +39,3 @@
 		ammo_x_offset = 2
 		charge_sections = 5
 	. = ..()
-	update_icon()
