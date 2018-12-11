@@ -257,7 +257,7 @@
 	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
-	death_sound = "bodyfall"
+	deathsound = "bodyfall"
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()

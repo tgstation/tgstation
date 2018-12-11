@@ -41,6 +41,11 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		heater_coefficient *= M.rating
 
+/obj/machinery/chem_heater/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Heating reagents at <b>[heater_coefficient*1000]%</b> speed.<span>")
+
 /obj/machinery/chem_heater/process()
 	..()
 	if(stat & NOPOWER)

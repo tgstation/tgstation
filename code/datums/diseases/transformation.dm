@@ -61,7 +61,7 @@
 			affected_mob.dropItemToGround(I)
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
 		if(istype(new_mob))
-			if(bantype && jobban_isbanned(affected_mob, bantype))
+			if(bantype && is_banned_from(affected_mob.ckey, bantype))
 				replace_banned_player(new_mob)
 			new_mob.a_intent = INTENT_HARM
 			if(affected_mob.mind)
@@ -80,7 +80,7 @@
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(affected_mob, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbaned player.")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(0)
 		affected_mob.key = C.key
 	else

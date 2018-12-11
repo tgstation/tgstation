@@ -118,19 +118,23 @@
 		alarm()
 	..()
 
-/obj/machinery/firealarm/proc/alarm()
-	if(!is_operational() && (last_alarm+FIREALARM_COOLDOWN < world.time))
+/obj/machinery/firealarm/proc/alarm(mob/user)
+	if(!is_operational() || (last_alarm+FIREALARM_COOLDOWN > world.time))
 		return
 	last_alarm = world.time
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	if(user)
+		log_game("[user] triggered a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/proc/reset()
+/obj/machinery/firealarm/proc/reset(mob/user)
 	if(!is_operational())
 		return
 	var/area/A = get_area(src)
 	A.firereset(src)
+	if(user)
+		log_game("[user] reset a fire alarm at [COORD(src)]")
 
 /obj/machinery/firealarm/attack_hand(mob/user)
 	if(buildstage != 2)
@@ -138,9 +142,9 @@
 	add_fingerprint(user)
 	var/area/A = get_area(src)
 	if(A.fire)
-		reset()
+		reset(user)
 	else
-		alarm()
+		alarm(user)
 
 /obj/machinery/firealarm/attack_ai(mob/user)
 	return attack_hand(user)

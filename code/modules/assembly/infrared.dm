@@ -142,7 +142,7 @@
 	. = ..()
 	olddir = dir
 
-/obj/item/assembly/infra/throw_impact()
+/obj/item/assembly/infra/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!olddir)
 		return

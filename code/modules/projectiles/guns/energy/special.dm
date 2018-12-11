@@ -3,7 +3,7 @@
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	can_flashlight = 1
+	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
@@ -93,7 +93,7 @@
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_flashlight = 0
+	can_flashlight = FALSE
 	max_mod_capacity = 0
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
@@ -144,13 +144,17 @@
 		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
+	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
 	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+		charge_multiplier = 2
+	if(istype(I, /obj/item/stack/ore/plasma))
+		charge_multiplier = 1
+	if(charge_multiplier)
+		if(cell.charge == cell.maxcharge)
+			to_chat(user, "<span class='notice'>You try to insert [I] into [src], but it's fully charged.</span>") //my cell is round and full
+			return
 		I.use(1)
-		cell.give(1000)
-		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
-	else if(istype(I, /obj/item/stack/ore/plasma))
-		I.use(1)
-		cell.give(500)
+		cell.give(500*charge_multiplier)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else
 		..()
@@ -278,7 +282,7 @@
 
 /obj/item/gun/energy/printer
 	name = "cyborg lmg"
-	desc = "A machinegun that fires 3d-printed flechettes slowly regenerated using a cyborg's internal power source."
+	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
 	icon_state = "l6closed0"
 	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/stock_parts/cell/secborg"

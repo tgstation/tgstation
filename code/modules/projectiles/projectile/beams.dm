@@ -13,7 +13,7 @@
 	light_color = LIGHT_COLOR_RED
 	ricochets_max = 50	//Honk!
 	ricochet_chance = 80
-	is_reflectable = TRUE
+	reflectable = REFLECT_NORMAL
 
 /obj/item/projectile/beam/laser
 	tracer_type = /obj/effect/projectile/tracer/laser
@@ -69,7 +69,7 @@
 /obj/item/projectile/beam/disabler
 	name = "disabler beam"
 	icon_state = "omnilaser"
-	damage = 36
+	damage = 40
 	damage_type = STAMINA
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'

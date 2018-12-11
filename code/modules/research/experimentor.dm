@@ -82,6 +82,11 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
+/obj/machinery/rnd/experimentor/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Malfunction probability reduced by <b>[badThingCoeff]%</b>.<br>Cooldown interval between experiments at <b>[resetTime*0.1]</b> seconds.<span>")
+
 /obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
 	if(istype(O, /obj/item/transfer_valve))
@@ -651,7 +656,7 @@
 	if(loc == user && !is_centcom_level(userturf.z)) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
 		visible_message("<span class='notice'>[src] twists and bends, relocating itself!</span>")
 		throwSmoke(userturf)
-		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg')
+		do_teleport(user, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		throwSmoke(get_turf(user))
 		warn_admins(user, "Teleport", 0)
 

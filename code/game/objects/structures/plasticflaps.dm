@@ -55,15 +55,15 @@
 /obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
 	if(isliving(caller))
 		if(isbot(caller))
-			return 1
+			return TRUE
 
 		var/mob/living/M = caller
 		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
-			return 0
+			return FALSE
 	var/atom/movable/M = caller
 	if(M && M.pulling)
 		return CanAStarPass(ID, to_dir, M.pulling)
-	return 1 //diseases, stings, etc can pass
+	return TRUE //diseases, stings, etc can pass
 
 /obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
 	if(istype(A) && (A.pass_flags & PASSGLASS))
@@ -71,24 +71,24 @@
 
 	var/obj/structure/bed/B = A
 	if(istype(A, /obj/structure/bed) && (B.has_buckled_mobs() || B.density))//if it's a bed/chair and is dense or someone is buckled, it will not pass
-		return 0
+		return FALSE
 
 	if(istype(A, /obj/structure/closet/cardboard))
 		var/obj/structure/closet/cardboard/C = A
 		if(C.move_delay)
-			return 0
+			return FALSE
 
 	if(ismecha(A))
-		return 0
+		return FALSE
 
 	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if(isbot(A)) //Bots understand the secrets
-			return 1
+			return TRUE
 		if(M.buckled && istype(M.buckled, /mob/living/simple_animal/bot/mulebot)) // mulebot passenger gets a free pass.
-			return 1
+			return TRUE
 		if((M.mobility_flags & MOBILITY_STAND) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
-			return 0
+			return FALSE
 	return ..()
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)

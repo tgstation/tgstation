@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Syndicate MMI's having their name swapped when inserting a brain."
-  - tweak: "Added better user feedback when inserting a dead brain into an MMI."

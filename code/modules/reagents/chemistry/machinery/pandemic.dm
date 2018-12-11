@@ -24,11 +24,27 @@
 	QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
+/obj/machinery/computer/pandemic/examine(mob/user)
 	. = ..()
+	if(beaker)
+		var/is_close
+		if(Adjacent(user)) //don't reveal exactly what's inside unless they're close enough to see the UI anyway.
+			to_chat(user, "It contains \a [beaker].")
+			is_close = TRUE
+		else
+			to_chat(user, "It has a beaker inside it.")
+		to_chat(user, "<span class='info'>Alt-click to eject [is_close ? beaker : "the beaker"].</span>")
+
+/obj/machinery/computer/pandemic/AltClick(mob/user)
+	. = ..()
+	if(user.canUseTopic(src, BE_CLOSE))
+		eject_beaker()
+
+/obj/machinery/computer/pandemic/handle_atom_del(atom/A)
 	if(A == beaker)
 		beaker = null
 		update_icon()
+	return ..()
 
 /obj/machinery/computer/pandemic/proc/get_by_index(thing, index)
 	if(!beaker || !beaker.reagents)
@@ -112,7 +128,7 @@
 /obj/machinery/computer/pandemic/proc/reset_replicator_cooldown()
 	wait = FALSE
 	update_icon()
-	playsound(loc, 'sound/machines/ping.ogg', 30, 1)
+	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 
 /obj/machinery/computer/pandemic/update_icon()
 	if(stat & BROKEN)

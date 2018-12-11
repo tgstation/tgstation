@@ -33,6 +33,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_list
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
+	var/num_of_res_levels = 1
 
 //dlete dis once #39770 is resolved
 /datum/controller/subsystem/mapping/proc/HACK_LoadMapConfig()
@@ -444,6 +445,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		for(var/i in levels_by_trait(ZTRAIT_RESERVED))
 			if(reserve.Reserve(width, height, i))
 				return reserve
+		//If we didn't return at this point, theres a good chance we ran out of room on the exisiting reserved z levels, so lets try a new one
+		num_of_res_levels += 1
+		var/newReserved = add_new_zlevel("Transit/Reserved [num_of_res_levels]", list(ZTRAIT_RESERVED = TRUE))
+		if(reserve.Reserve(width, height, newReserved))
+			return reserve
 	else
 		if(!level_trait(z, ZTRAIT_RESERVED))
 			qdel(reserve)
@@ -476,6 +482,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		LAZYINITLIST(unused_turfs["[T.z]"])
 		unused_turfs["[T.z]"] |= T
 		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		GLOB.areas_by_type[world.area].contents += T
 		CHECK_TICK
 
 //DO NOT CALL THIS PROC DIRECTLY, CALL wipe_reservations().
@@ -494,3 +501,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing)
+
+
+
+/datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
+	for(var/B in areas)
+		var/area/A = B
+		A.reg_in_areas_in_z()

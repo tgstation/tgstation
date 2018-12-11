@@ -166,7 +166,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
-	flood_images += image(image_icon,center,image_state,MOB_LAYER)
+	var/image/plasma_image = image(image_icon,center,image_state,FLY_LAYER)
+	plasma_image.alpha = 50
+	plasma_image.plane = GAME_PLANE
+	flood_images += plasma_image
 	flood_turfs += center
 	if(target.client)
 		target.client.images |= flood_images
@@ -185,12 +188,17 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
 /datum/hallucination/fake_flood/proc/Expand()
+	for(var/image/I in flood_images)
+		I.alpha = min(I.alpha + 50, 255)
 	for(var/turf/FT in flood_turfs)
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
-			flood_images += image(image_icon,T,image_state,MOB_LAYER)
+			var/image/new_plasma = image(image_icon,T,image_state,FLY_LAYER)
+			new_plasma.alpha = 50
+			new_plasma.plane = GAME_PLANE
+			flood_images += new_plasma
 			flood_turfs += T
 	if(target.client)
 		target.client.images |= flood_images
@@ -213,9 +221,9 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	. = ..()
 	name = "alien hunter ([rand(1, 1000)])"
 
-/obj/effect/hallucination/simple/xeno/throw_impact(A)
+/obj/effect/hallucination/simple/xeno/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	update_icon("alienh_pounce")
-	if(A == target && target.stat!=DEAD)
+	if(hit_atom == target && target.stat!=DEAD)
 		target.Paralyze(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 

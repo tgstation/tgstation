@@ -388,6 +388,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return
 	var/movedsomething = FALSE
 	var/moveuserlater = FALSE
+	var/movesuccess = FALSE
 	for(var/atom/movable/A in T)
 		if(ishuman(A))
 			new /obj/effect/temp_visual/dir_setting/cult/phase/out(T, A.dir)
@@ -398,20 +399,26 @@ structure_check() searches for nearby cultist structures required for the invoca
 			continue
 		if(!A.anchored)
 			movedsomething = TRUE
-			A.forceMove(target)
+			if(do_teleport(A, target, forceMove = TRUE, channel = TELEPORT_CHANNEL_CULT))
+				movesuccess = TRUE
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
-		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
-			user.forceMove(target)
+			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
+				movesuccess = TRUE
+		if(movesuccess)
+			visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
+			to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
+		else
+			to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs briefly, but nothing happens":"  try send everything above the rune away, but the teleportation fails"].</span>")
 		if(is_mining_level(z) && !is_mining_level(target.z)) //No effect if you stay on lavaland
 			actual_selected_rune.handle_portal("lava")
 		else
 			var/area/A = get_area(T)
 			if(A.map_name == "Space")
 				actual_selected_rune.handle_portal("space", T)
-		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
+		if(movesuccess)
+			target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
@@ -841,7 +848,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)
-			if(O.client && !jobban_isbanned(O, ROLE_CULTIST) && !QDELETED(src) && !QDELETED(O))
+			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !QDELETED(O))
 				ghosts_on_rune += O
 		if(!ghosts_on_rune.len)
 			to_chat(user, "<span class='cultitalic'>There are no spirits near [src]!</span>")

@@ -10,18 +10,14 @@
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "mid"
-	var/tune_time = 0
 
 /obj/item/instrument/Initialize()
 	. = ..()
 	song = new(instrumentId, src, instrumentExt)
 
 /obj/item/instrument/Destroy()
-	if (tune_time)
-		STOP_PROCESSING(SSobj, src)
-	qdel(song)
-	song = null
-	return ..()
+	QDEL_NULL(song)
+	. = ..()
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -47,34 +43,6 @@
 
 	user.set_machine(src)
 	song.interact(user)
-
-/obj/item/instrument/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/musicaltuner))
-		var/mob/living/carbon/human/H = user
-		if (H.has_trait(TRAIT_MUSICIAN))
-			if (!tune_time)
-				H.visible_message("[H] tunes [src] to perfection!", "<span class='notice'>You tune [src] to perfection!</span>")
-				tune_time = 300
-				START_PROCESSING(SSobj, src)
-			else
-				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
-		else
-			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
-
-/obj/item/instrument/process()
-	if (tune_time)
-		if (song.playing)
-			for (var/mob/living/M in song.hearing_mobs)
-				M.dizziness = max(0,M.dizziness-2)
-				M.jitteriness = max(0,M.jitteriness-2)
-				M.confused = max(M.confused-1)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
-		tune_time--
-	else
-		if (!tune_time)
-			if (song.playing)
-				loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
-			STOP_PROCESSING(SSobj, src)
 
 /obj/item/instrument/violin
 	name = "space violin"
@@ -255,60 +223,28 @@
 
 ///
 
-/obj/item/musicaltuner
-	name = "musical tuner"
-	desc = "A device for tuning musical instruments both manual and electronic alike."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "musicaltuner"
-	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-
-/obj/item/musicbeacon
-	name = "express delivery beacon"
+/obj/item/choice_beacon/music
+	name = "instrument delivery beacon"
 	desc = "Summon your tool of art."
-	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-red"
-	item_state = "radio"
-	var/static/list/display_names = list()
 
-/obj/item/musicbeacon/attack_self(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		beacon_music(user)
-
-/obj/item/musicbeacon/proc/beacon_music(mob/living/M)
-	if(!display_names)
-		var/static/list/instruments = list(
-								/obj/item/instrument/violin,
-								/obj/item/instrument/piano_synth,
-								/obj/item/instrument/guitar,
-								/obj/item/instrument/eguitar,
-								/obj/item/instrument/glockenspiel,
-								/obj/item/instrument/accordion,
-								/obj/item/instrument/trumpet,
-								/obj/item/instrument/saxophone,
-								/obj/item/instrument/trombone,
-								/obj/item/instrument/recorder,
-								/obj/item/instrument/harmonica
-								)
-		for(var/V in instruments)
+/obj/item/choice_beacon/music/generate_display_names()
+	var/static/list/instruments
+	if(!instruments)
+		instruments = list()
+		var/list/templist = list(/obj/item/instrument/violin,
+							/obj/item/instrument/piano_synth,
+							/obj/item/instrument/guitar,
+							/obj/item/instrument/eguitar,
+							/obj/item/instrument/glockenspiel,
+							/obj/item/instrument/accordion,
+							/obj/item/instrument/trumpet,
+							/obj/item/instrument/saxophone,
+							/obj/item/instrument/trombone,
+							/obj/item/instrument/recorder,
+							/obj/item/instrument/harmonica
+							)
+		for(var/V in templist)
 			var/atom/A = V
-			display_names[initial(A.name)] = A
-	var/choice = input(M,"What instrument would you like to order?","Jazz Express") as null|anything in display_names
-	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	var/obj/instrument = new display_names[choice]
-	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-	pod.explosionSize = list(0,0,0,2)
-	instrument.forceMove(pod)
-	var/msg = "<span class = danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
-	if (ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(istype(H.ears, /obj/item/radio/headset))
-			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Instrument request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
-	to_chat(M, msg)
-
-	new /obj/effect/DPtarget(get_turf(src), pod)
-	qdel(src)
+			instruments[initial(A.name)] = A
+	return instruments

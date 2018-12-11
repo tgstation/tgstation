@@ -249,7 +249,7 @@
 /mob/living/simple_animal/hostile/jungle/leaper/Goto()
 	return
 
-/mob/living/simple_animal/hostile/jungle/leaper/throw_impact()
+/mob/living/simple_animal/hostile/jungle/leaper/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	return
 
 /mob/living/simple_animal/hostile/jungle/leaper/update_icons()

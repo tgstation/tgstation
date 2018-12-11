@@ -136,7 +136,7 @@
 			if(prob(30))
 				do_sparks(2, 1, T)
 			T.ex_act(EXPLODE_LIGHT)
-			T.hotspot_expose(700,25,1)
+			T.hotspot_expose(1000,500,1)
 
 	if(!(obj_flags & EMAGGED))
 		for(var/item in spawned)
@@ -157,7 +157,7 @@
 	playsound(src, "sparks", 75, 1)
 	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
-	to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
+	say("Warning. Automatic shutoff and derezzing protocols have been corrupted. Please call Nanotrasen maintenance and do not use the simulator.")
 	log_game("[key_name(user)] emagged the Holodeck Control Console")
 	nerf(!(obj_flags & EMAGGED))
 

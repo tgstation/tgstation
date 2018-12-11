@@ -20,6 +20,7 @@
 	var/mech_sized = FALSE
 	var/obj/effect/portal/linked
 	var/hardlinked = TRUE			//Requires a linked portal at all times. Destroy if there's no linked portal, if there is destroy it when this one is deleted.
+	var/teleport_channel = TELEPORT_CHANNEL_BLUESPACE
 	var/creator
 	var/turf/hard_target			//For when a portal needs a hard target and isn't to be linked.
 	var/atmos_link = FALSE			//Link source/destination atmos.
@@ -33,7 +34,9 @@
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
+	layer = RIPPLE_LAYER
 	mech_sized = TRUE
+	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -160,7 +163,7 @@
 		no_effect = TRUE
 	else
 		last_effect = world.time
-	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect))
+	if(do_teleport(M, real_target, innate_accuracy_penalty, no_effects = no_effect, channel = teleport_channel))
 		if(istype(M, /obj/item/projectile))
 			var/obj/item/projectile/P = M
 			P.ignore_source_check = TRUE

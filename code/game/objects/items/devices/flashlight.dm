@@ -95,7 +95,7 @@
 
 			if(BODY_ZONE_PRECISE_MOUTH)
 
-				if((M.head && M.head.flags_cover & HEADCOVERSMOUTH) || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
+				if(M.is_mouth_covered())
 					to_chat(user, "<span class='notice'>You're going to need to remove that [(M.head && M.head.flags_cover & HEADCOVERSMOUTH) ? "helmet" : "mask"] first.</span>")
 					return
 
@@ -347,6 +347,13 @@
 	desc = "An old lantern that has seen plenty of use."
 	brightness_on = 4
 
+/obj/item/flashlight/lantern/syndicate
+	name = "suspicious lantern"
+	desc = "A suspicious looking lantern."
+	icon_state = "syndilantern"
+	item_state = "syndilantern"
+	brightness_on = 10
+
 /obj/item/flashlight/slime
 	gender = PLURAL
 	name = "glowing slime extract"
@@ -473,13 +480,8 @@
 	. = ..()
 	if(.)
 		user.visible_message("<span class='notice'>[user] cracks and shakes [src].</span>", "<span class='notice'>You crack and shake [src], turning it on!</span>")
-		activate()
-
-/obj/item/flashlight/glowstick/proc/activate()
-	if(!on)
-		on = TRUE
 		START_PROCESSING(SSobj, src)
-		
+
 /obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
 	if(!fuel)
 		user.visible_message("<span class='suicide'>[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!</span>")

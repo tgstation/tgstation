@@ -9,7 +9,7 @@
 	// A list will be created in initialization that figures out the baseturf's baseturf etc.
 	// In the case of a list it is sorted from bottom layer to top.
 	// This shouldn't be modified directly, use the helper procs.
-	var/list/baseturfs = /turf/open/space
+	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
@@ -39,7 +39,7 @@
 		return FALSE
 	. = ..()
 
-/turf/Initialize()
+/turf/Initialize(mapload)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
@@ -68,6 +68,15 @@
 	if (light_power && light_range)
 		update_light()
 
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_new(src, DOWN)
+		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_new(src, UP)
+		SEND_SIGNAL(T, COMSIG_TURF_MULTIZ_NEW, src, UP)
+
 	if (opacity)
 		has_opaque_atom = TRUE
 
@@ -83,6 +92,12 @@
 	if(!changing_turf)
 		stack_trace("Incorrect turf deletion")
 	changing_turf = FALSE
+	var/turf/T = SSmapping.get_turf_above(src)
+	if(T)
+		T.multiz_turf_del(src, DOWN)
+	T = SSmapping.get_turf_below(src)
+	if(T)
+		T.multiz_turf_del(src, UP)
 	if(force)
 		..()
 		//this will completely wipe turf state
@@ -104,6 +119,54 @@
 	if(.)
 		return
 	user.Move_Pulled(src)
+
+/turf/proc/multiz_turf_del(turf/T, dir)
+
+/turf/proc/multiz_turf_new(turf/T, dir)
+
+//zPassIn doesn't necessarily pass an atom!
+//direction is direction of travel of air
+/turf/proc/zPassIn(atom/movable/A, direction, turf/source)
+	return FALSE
+
+//direction is direction of travel of air
+/turf/proc/zPassOut(atom/movable/A, direction, turf/destination)
+	return FALSE
+
+//direction is direction of travel of air
+/turf/proc/zAirIn(direction, turf/source)
+	return FALSE
+
+//direction is direction of travel of air
+/turf/proc/zAirOut(direction, turf/source)
+	return FALSE
+
+/turf/proc/zImpact(atom/movable/A, levels = 1)
+	for(var/i in contents)
+		var/atom/thing = i
+		if(thing.intercept_zImpact(A, levels))
+			return FALSE
+	if(zFall(A, ++levels))
+		return FALSE
+	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
+	A.onZImpact(src, levels)
+	return TRUE
+
+/turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
+	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
+
+/turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
+	var/turf/target = get_step_multiz(src, DOWN)
+	if(!target || (!isobj(A) && !ismob(A)))
+		return FALSE
+	if(!force && (!can_zFall(A, levels, target) || !A.can_zFall(src, levels, target, DOWN)))
+		return FALSE
+	A.visible_message("<span class='danger'>[A] falls through [src]!</span>")
+	A.zfalling = TRUE
+	A.forceMove(target)
+	A.zfalling = FALSE
+	target.zImpact(A, levels)
+	return TRUE
 
 /turf/proc/handleRCL(obj/item/twohanded/rcl/C, mob/user)
 	if(C.loaded)
@@ -193,6 +256,8 @@
 		var/obj/O = AM
 		if(O.obj_flags & FROZEN)
 			O.make_unfrozen()
+	if(!AM.zfalling)
+		zFall(AM)
 
 /turf/proc/is_plasteel_floor()
 	return FALSE
@@ -464,7 +529,7 @@
 		clear_reagents_to_vomit_pool(M,V)
 
 /proc/clear_reagents_to_vomit_pool(mob/living/carbon/M, obj/effect/decal/cleanable/vomit/V)
-	M.reagents.trans_to(V, M.reagents.total_volume / 10)
+	M.reagents.trans_to(V, M.reagents.total_volume / 10, transfered_by = M)
 	for(var/datum/reagent/R in M.reagents.reagent_list)                //clears the stomach of anything that might be digested as food
 		if(istype(R, /datum/reagent/consumable))
 			var/datum/reagent/consumable/nutri_check = R

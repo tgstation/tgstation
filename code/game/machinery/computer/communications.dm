@@ -562,7 +562,8 @@
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=[REF(src)];operation=enableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
 
 		if(STATE_PURCHASE)
-			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			dat += "Budget: [D.account_balance] Credits.<BR>"
 			dat += "<BR>"
 			dat += "<b>Caution: Purchasing dangerous shuttles may lead to mutiny and/or death.</b><br>"
 			dat += "<BR>"
@@ -710,7 +711,7 @@
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)
-	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> made an priority announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", user)
+	deadchat_broadcast("<span class='deadsay'><span class='name'>[user.real_name]</span> made a priority announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", user)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 

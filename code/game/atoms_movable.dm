@@ -29,12 +29,57 @@
 	glide_size = 8
 	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
-	var/floating = FALSE
 	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 	var/atom/movable/pulling
 	var/grab_state = 0
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
+	var/can_be_z_moved = TRUE
+
+	var/zfalling = FALSE
+
+/atom/movable/proc/can_zFall(turf/source, levels = 1, turf/target, direction)
+	if(!direction)
+		direction = DOWN
+	if(!source)
+		source = get_turf(src)
+		if(!source)
+			return FALSE
+	if(!target)
+		target = get_step_multiz(source, direction)
+		if(!target)
+			return FALSE
+	return !(movement_type & FLYING) && has_gravity(source) && !throwing
+
+/atom/movable/proc/onZImpact(turf/T, levels)
+	var/atom/highest = T
+	for(var/i in T.contents)
+		var/atom/A = i
+		if(!A.density)
+			continue
+		if(isobj(A) || ismob(A))
+			if(A.layer > highest.layer)
+				highest = A
+	INVOKE_ASYNC(src, .proc/SpinAnimation, 5, 2)
+	throw_impact(highest)
+	return TRUE
+
+//For physical constraints to travelling up/down.
+/atom/movable/proc/can_zTravel(turf/destination, direction)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return FALSE
+	if(!direction)
+		if(!destination)
+			return FALSE
+		direction = get_dir(T, destination)
+	if(direction != UP && direction != DOWN)
+		return FALSE
+	if(!destination)
+		destination = get_step_multiz(src, direction)
+		if(!destination)
+			return FALSE
+	return T.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, T)
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x", "step_y", "step_size")
@@ -466,19 +511,19 @@
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = 0
 	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
-	return hit_atom.hitby(src)
+	return hit_atom.hitby(src, throwingdatum=throwingdatum)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)
 	if(!anchored && hitpush && (!throwingdatum || (throwingdatum.force >= (move_resist * MOVE_FORCE_PUSH_RATIO))))
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY)
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
 	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = INFINITY) //If this returns FALSE then callback will not be called.
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG) //If this returns FALSE then callback will not be called.
 	. = FALSE
 	if (!target || speed <= 0)
 		return
@@ -704,14 +749,14 @@
 /atom/movable/proc/float(on)
 	if(throwing)
 		return
-	if(on && !floating)
+	if(on && !(movement_type & FLOATING))
 		animate(src, pixel_y = pixel_y + 2, time = 10, loop = -1)
 		sleep(10)
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
-		floating = TRUE
-	else if (!on && floating)
+		setMovetype(movement_type | FLOATING)
+	else if (!on && (movement_type & FLOATING))
 		animate(src, pixel_y = initial(pixel_y), time = 10)
-		floating = FALSE
+		setMovetype(movement_type & ~FLOATING)
 
 /* Language procs */
 /atom/movable/proc/get_language_holder(shadow=TRUE)

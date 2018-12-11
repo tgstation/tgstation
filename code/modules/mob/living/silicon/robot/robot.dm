@@ -501,8 +501,6 @@
 			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 
 	else if (istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))			// trying to unlock the interface with an ID card
-		if(emagged)//still allow them to open the cover
-			to_chat(user, "<span class='notice'>The interface seems slightly damaged.</span>")
 		if(opened)
 			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else
@@ -510,6 +508,8 @@
 				locked = !locked
 				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] [src]'s cover.</span>")
 				update_icons()
+				if(emagged)
+					to_chat(user, "<span class='notice'>The cover interface glitches out for a split second.</span>")
 			else
 				to_chat(user, "<span class='danger'>Access denied.</span>")
 

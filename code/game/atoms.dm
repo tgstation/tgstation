@@ -33,6 +33,7 @@
 	var/list/filter_data //For handling persistent filters
 
 	var/custom_price
+	var/custom_premium_price
 
 	var/datum/component/orbiter/orbiters
 
@@ -185,6 +186,10 @@
 			else
 				M.forceMove(src)
 
+//common name
+/atom/proc/update_multiz(prune_on_fail = FALSE)
+	return FALSE
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null
@@ -208,10 +213,10 @@
 /atom/proc/is_open_container()
 	return is_refillable() && is_drainable()
 
-/atom/proc/is_injectable(allowmobs = TRUE)
+/atom/proc/is_injectable(mob/user, allowmobs = TRUE)
 	return reagents && (container_type & (INJECTABLE | REFILLABLE))
 
-/atom/proc/is_drawable(allowmobs = TRUE)
+/atom/proc/is_drawable(mob/user, allowmobs = TRUE)
 	return reagents && (container_type & (DRAWABLE | DRAINABLE))
 
 /atom/proc/is_refillable()
@@ -321,7 +326,7 @@
 	if(AM && isturf(AM.loc))
 		step(AM, turn(AM.dir, 180))
 
-/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+/atom/proc/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze, force_drop)
 	return
 
 //returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
@@ -342,6 +347,9 @@
 
 /mob/living/carbon/alien/get_blood_dna_list()
 	return list("UNKNOWN DNA" = "X*")
+
+/mob/living/silicon/get_blood_dna_list()
+	return list("MOTOR OIL" = "SAE 5W-30") //just a little flavor text.
 
 //to add a mob's dna info into an object's blood_DNA list.
 /atom/proc/transfer_mob_blood_dna(mob/living/L)
@@ -538,7 +546,7 @@
 	var/atom/L = loc
 	if(!L)
 		return null
-	return L.AllowDrop() ? L : get_turf(L)
+	return L.AllowDrop() ? L : L.drop_location()
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -722,3 +730,6 @@ Proc for attack log creation, because really why not
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
+	return FALSE

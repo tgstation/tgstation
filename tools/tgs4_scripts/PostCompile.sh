@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -96,6 +96,7 @@ shopt -s extglob dotglob
 mv !(build) build
 shopt -u dotglob
 
+chmod +x build/tools/deploy.sh
 build/tools/deploy.sh $1 $1/build
 
 rm -rf build

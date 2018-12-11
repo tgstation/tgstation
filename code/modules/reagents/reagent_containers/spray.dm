@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = A.reagents.trans_to(src, 50) //transfer 50u , using the spray's transfer amount would take too long to refill
+		var/trans = A.reagents.trans_to(src, 50, transfered_by = user) //transfer 50u , using the spray's transfer amount would take too long to refill
 		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>")
 		return
 

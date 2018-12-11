@@ -170,13 +170,13 @@
 
 /datum/antagonist/clockcult/admin_add(datum/mind/new_owner,mob/admin)
 	add_servant_of_ratvar(new_owner.current, TRUE)
-	message_admins("[key_name_admin(admin)] has made [new_owner.current] into a servant of Ratvar.")
-	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
+	message_admins("[key_name_admin(admin)] has made [key_name_admin(new_owner)] into a servant of Ratvar.")
+	log_admin("[key_name(admin)] has made [key_name(new_owner)] into a servant of Ratvar.")
 
 /datum/antagonist/clockcult/admin_remove(mob/user)
 	remove_servant_of_ratvar(owner.current, TRUE)
-	message_admins("[key_name_admin(user)] has removed clockwork servant status from [owner.current].")
-	log_admin("[key_name(user)] has removed clockwork servant status from [owner.current].")
+	message_admins("[key_name_admin(user)] has removed clockwork servant status from [key_name_admin(owner)].")
+	log_admin("[key_name(user)] has removed clockwork servant status from [key_name(owner)].")
 
 /datum/antagonist/clockcult/get_admin_commands()
 	. = ..()
@@ -203,7 +203,7 @@
 /datum/team/clockcult/Destroy(force, ...)
 	STOP_PROCESSING(SSobj,src)
 	. = ..()
-	
+
 /datum/team/clockcult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
 		return TRUE

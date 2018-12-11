@@ -169,7 +169,8 @@
 					/obj/item/clothing/suit/apron = 2,
 					/obj/item/clothing/suit/apron/overalls = 3,
 					/obj/item/clothing/under/rank/hydroponics = 3,
-					/obj/item/clothing/mask/bandana = 3)
+					/obj/item/clothing/mask/bandana = 3,
+					/obj/item/clothing/accessory/armband/hydro = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/hydro_wardrobe
@@ -239,7 +240,8 @@
 					/obj/item/clothing/suit/toggle/chef = 1,
 					/obj/item/clothing/under/rank/chef = 1,
 					/obj/item/clothing/head/chefhat = 1,
-					/obj/item/reagent_containers/glass/rag = 1)
+					/obj/item/reagent_containers/glass/rag = 1,
+					/obj/item/clothing/suit/hooded/wintercoat = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV
 /obj/item/vending_refill/wardrobe/chef_wardrobe
@@ -299,7 +301,7 @@
 	icon_state = "chapdrobe"
 	product_ads = "Are you being bothered by cultists or pesky revenants? Then come and dress like the holy man!;Clothes for men of the cloth!"
 	vend_reply = "Thank you for using the ChapDrobe!"
-	products = list(/obj/item/holybeacon = 1,
+	products = list(/obj/item/choice_beacon/holy = 1,
 					/obj/item/storage/backpack/cultpack = 1,
 					/obj/item/clothing/accessory/pocketprotector/cosmetology = 1,
 					/obj/item/clothing/under/rank/chaplain = 1,
@@ -311,7 +313,7 @@
 	contraband = list(/obj/item/toy/plush/plushvar = 1,
 					/obj/item/toy/plush/narplush = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
-
+	payment_department = ACCOUNT_CIV
 /obj/item/vending_refill/wardrobe/chap_wardrobe
 	machine_name = "ChapDrobe"
 

@@ -83,7 +83,17 @@
 	..()
 	if(panel_open)
 		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
-
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[(powerefficiency*1000)-100]%</b>.<span>")
+		switch(macrotier)
+			if(1)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>5u</b>.<span>")
+			if(2)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>3u</b>.<span>")
+			if(3)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>2u</b>.<span>")
+			if(4)
+				to_chat(user, "<span class='notice'>Macro granularity at <b>1u</b>.<span>")
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
 		if(!is_operational())
@@ -459,6 +469,7 @@
 		"lemonjuice",
 		"menthol"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"thirteenloko",
 		"whiskeycola",
@@ -509,6 +520,7 @@
 		"triple_sec",
 		"sake"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
@@ -539,6 +551,7 @@
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	upgrade_reagents = null
 	emagged_reagents = list("plasma")
 
 
@@ -561,6 +574,7 @@
 		"ammonia",
 		"ash",
 		"diethylamine")
+	upgrade_reagents = null
 
 /obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
 	. = ..()

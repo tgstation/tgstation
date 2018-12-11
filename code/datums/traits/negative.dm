@@ -15,6 +15,44 @@
 	else
 		quirk_holder.blood_volume -= 0.275
 
+/datum/quirk/blindness
+	name = "Blind"
+	desc = "You are completely blind, nothing can counteract this."
+	value = -4
+	gain_text = "<span class='danger'>You can't see anything.</span>"
+	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
+	medical_record_text = "Subject has permanent blindness."
+
+/datum/quirk/blindness/add()
+	quirk_holder.become_blind(ROUNDSTART_TRAIT)
+
+/datum/quirk/blindness/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/glasses/blindfold/white/B = new(get_turf(H))
+	if(!H.equip_to_slot_if_possible(B, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
+		H.put_in_hands(B)
+	H.regenerate_icons()
+
+/datum/quirk/brainproblems
+	name = "Brain Tumor"
+	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
+	value = -3
+	gain_text = "<span class='danger'>You feel smooth.</span>"
+	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
+	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
+
+/datum/quirk/brainproblems/on_process()
+	quirk_holder.adjustBrainLoss(0.2)
+
+/datum/quirk/deafness
+	name = "Deaf"
+	desc = "You are incurably deaf."
+	value = -2
+	mob_trait = TRAIT_DEAF
+	gain_text = "<span class='danger'>You can't hear anything.</span>"
+	lose_text = "<span class='notice'>You're able to hear again!</span>"
+	medical_record_text = "Subject's cochlear nerve is incurably damaged."
+
 /datum/quirk/depression
 	name = "Depression"
 	desc = "You sometimes just hate life."
@@ -121,8 +159,11 @@
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>")
-	var/list/family_name = splittext(quirk_holder.real_name, " ")
-	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
+
+	var/list/names = splittext(quirk_holder.real_name, " ")
+	var/family_name = names[names.len]
+
+	heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
 /datum/quirk/family_heirloom/on_process()
 	if(heirloom in quirk_holder.GetAllContents())
@@ -140,23 +181,12 @@
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
-	desc = "You sleep like a rock! Whenever you're put to sleep, you sleep for a little bit longer."
+	desc = "You sleep like a rock! Whenever you're put to sleep or knocked unconscious, you take a little bit longer to wake up."
 	value = -1
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = "<span class='danger'>You feel sleepy.</span>"
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
-
-/datum/quirk/brainproblems
-	name = "Brain Tumor"
-	desc = "You have a little friend in your brain that is slowly destroying it. Better bring some mannitol!"
-	value = -3
-	gain_text = "<span class='danger'>You feel smooth.</span>"
-	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
-	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
-
-/datum/quirk/brainproblems/on_process()
-	quirk_holder.adjustBrainLoss(0.2)
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
@@ -280,6 +310,14 @@
 	to_chat(quirk_holder, "<span class='big bold info'>Please note that your dissociation syndrome does NOT give you the right to attack people or otherwise cause any interference to \
 	the round. You are not an antagonist, and the rules will treat you the same as other crewmembers.</span>")
 
+/datum/quirk/obstructive
+	name = "Physically Obstructive"
+	desc = "You somehow manage to always be in the way. You can't swap places with other people."
+	value = -1
+	mob_trait = TRAIT_NOMOBSWAP
+	gain_text = "<span class='danger'>You feel like you're in the way.</span>"
+	lose_text = "<span class='notice'>You feel less like you're in the way.</span>"
+
 /datum/quirk/social_anxiety
 	name = "Social Anxiety"
 	desc = "Talking to people is very difficult for you, and you often stutter or even lock up."
@@ -304,4 +342,5 @@
 		to_chat(H, "<span class='userdanger'>You think of a dumb thing you said a long time ago and scream internally.</span>")
 		dumb_thing = FALSE //only once per life
 		if(prob(1))
-			new/obj/item/reagent_containers/food/snacks/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
+

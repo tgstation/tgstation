@@ -43,6 +43,8 @@
 #define HEALTH_THRESHOLD_FULLCRIT -30
 #define HEALTH_THRESHOLD_DEAD -100
 
+#define HEALTH_THRESHOLD_NEARDEATH -90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
+
 //Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
@@ -122,6 +124,9 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//Projectile Reflect
+#define REFLECT_NORMAL 				(1<<0)
+#define REFLECT_FAKEPROJECTILE		(1<<1)
 
 //Object/Item sharpness
 #define IS_BLUNT			0

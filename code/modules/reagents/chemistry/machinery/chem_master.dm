@@ -232,7 +232,7 @@
 						P = new(drop_location())
 					P.name = trim("[name] pill")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P,vol_each)
+					reagents.trans_to(P,vol_each, transfered_by = usr)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
@@ -242,7 +242,7 @@
 				P.originalname = name
 				P.name = trim("[name] pack")
 				P.desc = "A small condiment pack. The label says it contains [name]."
-				reagents.trans_to(P,10)
+				reagents.trans_to(P,10, transfered_by = usr)
 			. = TRUE
 
 		if("createPatch")
@@ -265,7 +265,7 @@
 				P = new/obj/item/reagent_containers/pill/patch(drop_location())
 				P.name = trim("[name] patch")
 				adjust_item_drop_location(P)
-				reagents.trans_to(P,vol_each)
+				reagents.trans_to(P,vol_each, transfered_by = usr)
 			. = TRUE
 
 		if("createBottle")
@@ -280,7 +280,7 @@
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
 				P.name = trim("[name] bottle")
-				reagents.trans_to(P, P.volume)
+				reagents.trans_to(P, P.volume, transfered_by = usr)
 			else
 				var/amount_full = 0
 				var/vol_part = min(reagents.total_volume, 30)
@@ -296,13 +296,13 @@
 					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, 30)
+					reagents.trans_to(P, 30, transfered_by = usr)
 
 				if(vol_part)
 					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, vol_part)
+					reagents.trans_to(P, vol_part, transfered_by = usr)
 			. = TRUE
 
 		if("analyze")

@@ -193,7 +193,7 @@
 		if(INCORPOREAL_MOVE_JAUNT) //Incorporeal move, but blocked by holy-watered tiles and salt piles.
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			if(stepTurf)
-				for(var/obj/effect/decal/cleanable/salt/S in stepTurf)
+				for(var/obj/effect/decal/cleanable/food/salt/S in stepTurf)
 					to_chat(L, "<span class='warning'>[S] bars your passage!</span>")
 					if(isrevenant(L))
 						var/mob/living/simple_animal/revenant/R = L
@@ -260,7 +260,7 @@
 	return FALSE
 
 
-/mob/proc/slip(s_amount, w_amount, obj/O, lube)
+/mob/proc/slip(knockdown, paralyze, forcedrop, w_amount, obj/O, lube)
 	return
 
 /mob/proc/update_gravity()
@@ -368,3 +368,35 @@
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_icon(src)
+
+/mob/verb/up()
+	set name = "Move Upwards"
+	set category = "IC"
+
+	if(zMove(UP, TRUE))
+		to_chat(src, "<span class='notice'>You move upwards.</span>")
+
+/mob/verb/down()
+	set name = "Move Down"
+	set category = "IC"
+
+	if(zMove(DOWN, TRUE))
+		to_chat(src, "<span class='notice'>You move down.</span>")
+
+/mob/proc/zMove(dir, feedback = FALSE)
+	if(dir != UP && dir != DOWN)
+		return FALSE
+	var/turf/target = get_step_multiz(src, dir)
+	if(!target)
+		if(feedback)
+			to_chat(src, "<span class='warning'>There's nothing in that direction!</span>")
+		return FALSE
+	if(!canZMove(dir, target))
+		if(feedback)
+			to_chat(src, "<span class='warning'>You couldn't move there!</span>")
+		return FALSE
+	forceMove(target)
+	return TRUE
+
+/mob/proc/canZMove(direction, turf/target)
+	return FALSE

@@ -23,7 +23,7 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, pixel_y = final_pixel_y, dir = final_dir, easing = EASE_IN|EASE_OUT)
-		floating = FALSE  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
+		setMovetype(movement_type & ~FLOATING)  // If we were without gravity, the bouncing animation got stopped, so we make sure we restart it in next life().
 
 /mob/living/carbon
 	var/list/overlays_standing[TOTAL_LAYERS]
@@ -122,7 +122,7 @@
 		inv.update_icon()
 
 	if(wear_mask)
-		if(!(head && (head.flags_inv & HIDEMASK)))
+		if(!(SLOT_WEAR_MASK in check_obscured_slots()))
 			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
 		update_hud_wear_mask(wear_mask)
 
@@ -136,7 +136,7 @@
 		inv.update_icon()
 
 	if(wear_neck)
-		if(!(head && (head.flags_inv & HIDENECK)))
+		if(!(SLOT_NECK in check_obscured_slots()))
 			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
 		update_hud_neck(wear_neck)
 

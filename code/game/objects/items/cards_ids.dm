@@ -48,13 +48,6 @@
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
-/obj/item/card/data/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/integrated_electronics/detailer))
-		var/obj/item/integrated_electronics/detailer/D = I
-		detail_color = D.detail_color
-		update_icon()
-	return ..()
-
 /obj/item/proc/GetCard()
 
 /obj/item/card/data/GetCard()
@@ -493,6 +486,9 @@ update_label("John Doe", "Clowny")
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
+
+/obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
+	name = "bunker access ID"
 
 /obj/item/card/id/departmental_budget
 	name = "departmental card (FUCK)"

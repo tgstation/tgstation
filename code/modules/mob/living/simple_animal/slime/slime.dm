@@ -2,7 +2,7 @@
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
-	pass_flags = PASSTABLE
+	pass_flags = PASSTABLE | PASSGRILLE
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	var/is_adult = 0
@@ -62,6 +62,8 @@
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
+	do_footstep = TRUE
+
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
@@ -97,7 +99,7 @@
 	create_reagents(100)
 	set_colour(new_colour)
 	. = ..()
-	nutrition = 700
+	set_nutrition(700)
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -259,7 +261,7 @@
 			return
 		attacked += 5
 		if(nutrition >= 100) //steal some nutrition. negval handled in life()
-			nutrition -= (50 + (40 * M.is_adult))
+			adjust_nutrition(-(50 + (40 * M.is_adult)))
 			M.add_nutrition(50 + (40 * M.is_adult))
 		if(health > 0)
 			M.adjustBruteLoss(-10 + (-10 * M.is_adult))

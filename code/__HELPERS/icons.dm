@@ -712,8 +712,19 @@ world
 	var/static/icon/flat_template = icon('icons/effects/effects.dmi', "nothing")
 
 	#define BLANK icon(flat_template)
-	#define SET_SELF(SETVAR) var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null);if(A.alpha<255)SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);if(A.color)SELF_ICON.Blend(A.color,ICON_MULTIPLY);;##SETVAR=SELF_ICON;
-
+	#define SET_SELF(SETVAR) do { \
+		var/icon/SELF_ICON=icon(icon(curicon, curstate, base_icon_dir),"",SOUTH,no_anim?1:null); \
+		if(A.alpha<255) { \
+			SELF_ICON.Blend(rgb(255,255,255,A.alpha),ICON_MULTIPLY);\
+		} \
+		if(A.color) { \
+			if(islist(A.color)){ \
+				SELF_ICON.MapColors(arglist(A.color))} \
+			else{ \
+				SELF_ICON.Blend(A.color,ICON_MULTIPLY)} \
+		} \
+		##SETVAR=SELF_ICON;\
+		} while (0)
 	#define INDEX_X_LOW 1
 	#define INDEX_X_HIGH 2
 	#define INDEX_Y_LOW 3
@@ -860,7 +871,11 @@ world
 			flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
 		if(A.color)
-			flat.Blend(A.color, ICON_MULTIPLY)
+			if(islist(A.color))
+				flat.MapColors(arglist(A.color))
+			else
+				flat.Blend(A.color, ICON_MULTIPLY)
+		
 		if(A.alpha < 255)
 			flat.Blend(rgb(255, 255, 255, A.alpha), ICON_MULTIPLY)
 
