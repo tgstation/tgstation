@@ -1723,40 +1723,6 @@
 	color = "#f7eded"
 	taste_description = "plastic"
 
-/datum/reagent/glitter
-	name = "generic glitter"
-	id = "glitter"
-	description = "if you can see this description, contact a coder."
-	color = "#FFFFFF" //pure white
-	taste_description = "plastic"
-	reagent_state = SOLID
-	var/glitter_type = /obj/effect/decal/cleanable/glitter
-
-/datum/reagent/glitter/reaction_turf(turf/T, reac_volume)
-	if(!istype(T))
-		return
-	new glitter_type(T)
-
-/datum/reagent/glitter/pink
-	name = "pink glitter"
-	id = "pink_glitter"
-	description = "pink sparkles that get everywhere"
-	color = "#ff8080" //A light pink color
-	glitter_type = /obj/effect/decal/cleanable/glitter/pink
-
-/datum/reagent/glitter/white
-	name = "white glitter"
-	id = "white_glitter"
-	description = "white sparkles that get everywhere"
-	glitter_type = /obj/effect/decal/cleanable/glitter/white
-
-/datum/reagent/glitter/blue
-	name = "blue glitter"
-	id = "blue_glitter"
-	description = "blue sparkles that get everywhere"
-	color = "#4040FF" //A blueish color
-	glitter_type = /obj/effect/decal/cleanable/glitter/blue
-
 /datum/reagent/pax
 	name = "pax"
 	id = "pax"
