@@ -233,7 +233,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
-	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
 	charge_max = 600
 	action_icon_state = "force"
 	active  = FALSE
