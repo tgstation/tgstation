@@ -124,6 +124,7 @@
 
 /turf/proc/multiz_turf_new(turf/T, dir)
 
+//zPassIn doesn't necessarily pass an atom!
 //direction is direction of travel of air
 /turf/proc/zPassIn(atom/movable/A, direction, turf/source)
 	return FALSE

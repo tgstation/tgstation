@@ -16,6 +16,7 @@
 	if(force_open_above)
 		force_open_above()
 		build_signal_listener()
+	update_surrounding()
 	return ..()
 
 /obj/structure/stairs/Destroy()
@@ -26,6 +27,15 @@
 	. = ..()
 	if(force_open_above)
 		build_signal_listener()
+	update_surrounding()
+
+/obj/structure/stairs/proc/update_surrounding()
+	update_icon()
+	for(var/i in GLOB.cardinals)
+		var/turf/T = get_step(get_turf(src), i)
+		var/obj/structure/stairs/S = locate() in T
+		if(S)
+			S.update_icon()
 
 /obj/structure/stairs/Uncross(atom/movable/AM, turf/newloc)
 	if(!newloc || !AM)
@@ -42,6 +52,11 @@
 		icon_state = "stairs"
 
 /obj/structure/stairs/proc/stair_ascend(atom/movable/AM)
+	var/turf/checking = get_step_multiz(get_turf(src), UP)
+	if(!istype(checking))
+		return
+	if(!checking.zPassIn(AM, UP, get_turf(src)))
+		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
 	if(istype(target))
 		AM.forceMove(target)

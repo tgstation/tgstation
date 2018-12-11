@@ -7,6 +7,8 @@
 	plane = FLOOR_OPENSPACE_PLANE
 	layer = OPENSPACE_LAYER
 	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/can_cover_up = TRUE
+	var/can_build_on = TRUE
 
 /turf/open/openspace/debug/update_multiz()
 	..()
@@ -58,10 +60,10 @@
 	return TRUE
 
 /turf/open/openspace/proc/CanCoverUp()
-	return TRUE
+	return can_cover_up
 
 /turf/open/openspace/proc/CanBuildHere()
-	return TRUE
+	return can_build_on
 
 /turf/open/openspace/attackby(obj/item/C, mob/user, params)
 	..()
