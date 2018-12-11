@@ -59,6 +59,7 @@
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
 #define TRAIT_CANNOT_OPEN_PRESENTS "cannot-open-presents"
 #define TRAIT_PRESENT_VISION    "present-vision"
+#define TRAIT_DISK_VERIFIER     "disk-verifier"
 #define TRAIT_NOMOBSWAP            "no-mob-swap"
 #define TRAIT_XRAY_VISION       "xray_vision"
 
@@ -93,6 +94,7 @@
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
+#define JOB_TRAIT "job"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -107,3 +109,5 @@
 #define CULT_EYES "cult_eyes"
 #define TRAIT_SANTA "santa"
 #define SCRYING_ORB "scrying-orb"
+#define NUKEOP_TRAIT "nuke-op"
+#define DEATHSQUAD_TRAIT "deathsquad"

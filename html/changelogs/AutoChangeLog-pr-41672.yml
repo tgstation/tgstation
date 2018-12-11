@@ -1,6 +1,0 @@
-author: "HideAndSeekLOGIC"
-delete-after: True
-changes: 
-  - rscadd: "Added emergency oxygen tanks and extended capacity emergency tanks to the autolathe and protolathe"
-  - rscadd: "Added them to the Industrial Engineering tech node"
-  - tweak: "Only Cargo and Engineering can print extended capacities; the rest are available for everyone."
