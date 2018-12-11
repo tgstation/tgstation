@@ -26,9 +26,9 @@
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		H.randmutvg()
+		H.easy_randmut(POSITIVE)
 	if(efficiency < 3 && prob(50))
-		var/mob/M = H.randmutb()
+		var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		if(ismob(M))
 			H = M
 
@@ -294,6 +294,6 @@
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 	else
-		pod.growclone(null, mob_occupant.real_name, dna.uni_identity, dna.struc_enzymes, clone_species, dna.features, mob_occupant.faction)
+		pod.growclone(null, mob_occupant.real_name, dna.uni_identity, dna.mutation_index, clone_species, dna.features, mob_occupant.faction)
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning data sent to pod.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)

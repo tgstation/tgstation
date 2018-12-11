@@ -23,6 +23,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 40
 	maxHealth = 40
+	minbodytemp = 180
 	melee_damage_lower = 1
 	melee_damage_upper = 2
 	environment_smash = ENVIRONMENT_SMASH_NONE
