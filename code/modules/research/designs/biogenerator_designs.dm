@@ -10,6 +10,14 @@
 	make_reagents = list("milk" = 10)
 	category = list("initial","Food")
 
+/datum/design/soymilk
+	name = "10 Soy Milk"
+	id = "soymilk"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 20)
+	make_reagents = list("soymilk" = 10)
+	category = list("initial","Food")
+
 /datum/design/cream
 	name = "10 Cream"
 	id = "cream"
@@ -24,6 +32,14 @@
 	build_type = BIOGENERATOR
 	materials = list(MAT_BIOMASS = 100)
 	build_path = /obj/item/reagent_containers/food/condiment/milk
+	category = list("initial","Food")
+
+/datum/design/soymilk_carton
+	name = "Soy Milk Carton"
+	id = "soymilk_carton"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 100)
+	build_path = /obj/item/reagent_containers/food/condiment/soymilk
 	category = list("initial","Food")
 
 /datum/design/cream_carton
