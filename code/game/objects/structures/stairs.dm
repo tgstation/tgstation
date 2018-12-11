@@ -45,6 +45,11 @@
 		return FALSE
 	return ..()
 
+/obj/structure/stairs/Cross(atom/movable/AM)
+	if(isTerminator() && (get_dir(src, AM) == dir))
+		return FALSE
+	return ..()
+
 /obj/structure/stairs/update_icon()
 	if(isTerminator())
 		icon_state = "stairs_t"
@@ -58,7 +63,7 @@
 	if(!checking.zPassIn(AM, UP, get_turf(src)))
 		return
 	var/turf/target = get_step_multiz(get_turf(src), (dir|UP))
-	if(istype(target))
+	if(istype(target) && !target.can_zFall(AM, null, get_step_multiz(target, DOWN)))			//Don't throw them into a tile that will just dump them back down.
 		AM.forceMove(target)
 
 /obj/structure/stairs/vv_edit_var(var_name, var_value)

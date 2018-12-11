@@ -25,10 +25,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/inventory_shown = FALSE		//Equipped item inventory
 	var/hotkey_ui_hidden = FALSE	//This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
-	//Holders for secondary map views
-	var/obj/screen/turf_vis_contents_holder/multiz_lookup/multiz_lookup
-	//End
-
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
 
@@ -296,8 +292,3 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/hud/proc/update_locked_slots()
 	return
-
-/datum/hud/proc/get_multiz_lookup_holder()
-	if(QDELETED(multiz_lookup))
-		multiz_lookup = new
-	return multiz_lookup
