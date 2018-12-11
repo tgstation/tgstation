@@ -16,6 +16,22 @@
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
 
+//direction is direction of travel of A
+/turf/open/zPassIn(atom/movable/A, direction, turf/source)
+	return (direction == DOWN)
+
+//direction is direction of travel of A
+/turf/open/zPassOut(atom/movable/A, direction, turf/destination)
+	return (direction == UP)
+
+//direction is direction of travel of air
+/turf/open/zAirIn(direction, turf/source)
+	return (direction == DOWN)
+
+//direction is direction of travel of air
+/turf/open/zAirOut(direction, turf/source)
+	return (direction == UP)
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
@@ -157,43 +173,14 @@
 	update_visuals()
 
 	current_cycle = times_fired
-
-	//cache some vars
-	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-
-	for(var/direction in GLOB.cardinals)
-		var/turf/open/enemy_tile = get_step(src, direction)
-		if(!istype(enemy_tile))
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= enemy_tile
-			continue
+	CalculateAdjacentTurfs()
+	for(var/i in atmos_adjacent_turfs)
+		var/turf/open/enemy_tile = i
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-
-		//only check this turf, if it didn't check us when it was initalized
-		if(enemy_tile.current_cycle < times_fired)
-			if(CANATMOSPASS(src, enemy_tile))
-				LAZYINITLIST(atmos_adjacent_turfs)
-				LAZYINITLIST(enemy_tile.atmos_adjacent_turfs)
-				atmos_adjacent_turfs[enemy_tile] = TRUE
-				enemy_tile.atmos_adjacent_turfs[src] = TRUE
-			else
-				if (atmos_adjacent_turfs)
-					atmos_adjacent_turfs -= enemy_tile
-				if (enemy_tile.atmos_adjacent_turfs)
-					enemy_tile.atmos_adjacent_turfs -= src
-				UNSETEMPTY(enemy_tile.atmos_adjacent_turfs)
-				continue
-		else
-			if (!atmos_adjacent_turfs || !atmos_adjacent_turfs[enemy_tile])
-				continue
-
 		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
 			SSair.active_turfs |= src
-	UNSETEMPTY(atmos_adjacent_turfs)
-	if (atmos_adjacent_turfs)
-		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
