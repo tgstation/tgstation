@@ -710,26 +710,3 @@
 /obj/screen/component_button/Click(params)
 	if(parent)
 		parent.component_click(src, params)
-
-/obj/screen/turf_vis_contents_holder
-	name = "turf visual contents holder"
-	icon_state = null
-
-/obj/screen/turf_vis_contents_holder/proc/set_turfs(list/turfs)
-	vis_contents.Cut()
-	vis_contents += turfs
-
-/obj/screen/turf_vis_contents_holder/proc/set_turf_block(turf/topleft, turf/bottomright)
-	set_turfs(block(topleft, bottomright))
-
-/obj/screen/turf_vis_contents_holder/proc/set_coord_block(x1, y1, z1, x2, y2, z2)
-	set_turfs(block(locate(x1, y1, z1), locate(x2, y2, z2)))
-
-/obj/screen/turf_vis_contents_holder/multiz_lookup
-	screen_loc = "map_multiz_lookup:CENTER"
-
-/obj/screen/turf_vis_contents_holder/multiz_lookup/proc/force_show(mob/user)
-	winshow(user, "window_multiz_lookup", TRUE)
-
-/obj/screen/turf_vis_contents/holder/multiz_lookup/proc/force_hide(mob/user)
-	winshow(user, "window_multiz_lookup", FALSE)
