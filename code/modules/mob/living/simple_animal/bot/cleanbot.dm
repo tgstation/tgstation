@@ -204,7 +204,7 @@
 		target_types += list(
 		/obj/item/trash,
 		/obj/item/cigbutt,
-		obj/item/ammo_casing/spent,
+		/obj/item/ammo_casing/spent,
 		/obj/item/light/tube/broken,
 		/obj/item/light/bulb/broken,
 		/obj/item/reagent_containers/food/snacks/deadmouse
