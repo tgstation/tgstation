@@ -269,7 +269,7 @@
 	icon_state = "scalpel_a"
 	hitsound = 'sound/weapons/blade1.ogg'
 	force = 16
-	toolspeed = 0.4
+	toolspeed = 0.7
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/scalpel/advanced/Initialize()
