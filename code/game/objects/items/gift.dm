@@ -41,9 +41,12 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	if(M.has_trait(TRAIT_CANNOT_OPEN_PRESENTS) || (M.mind && M.mind.has_trait(TRAIT_CANNOT_OPEN_PRESENTS)))
 		to_chat(M, "<span class='warning'>You're supposed to be spreading gifts, not opening them yourself!</span>")
 		return
+
 	qdel(src)
 
-	var/obj/item/I = new contains_type(M)
+	var/obj/item/I = new contains_type(get_turf(M))
+	M.visible_message("<span class='notice'>[M] unwraps \the [src], finding \a [I] inside!</span>")
+	I.investigate_log("([I.type]) was found in a present by [key_name(M)].", INVESTIGATE_PRESENTS)
 	M.put_in_hands(I)
 	I.add_fingerprint(M)
 
