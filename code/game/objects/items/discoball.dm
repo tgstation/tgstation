@@ -1,8 +1,8 @@
 /obj/item/etherealballdeployer
 	name = "Portable Ethereal Disco Ball"
 	desc = "Press the button for a deployment of PARTY!"
-	icon = 'icons/mob/human_parts.dmi'
-	icon_state = "ethereal_head_m"
+	icon = 'icons/obj/etherealball.dmi'
+	icon_state = "ethdisc_carry"
 
 /obj/item/etherealballdeployer/attack_self(mob/living/carbon/user)
 	new /obj/structure/etherealball(user.loc)
@@ -11,7 +11,7 @@
 /obj/structure/etherealball
 	name = "Ethereal Disco Ball"
 	desc = "The ethics of this discoball are questionable. Be sure to feed it snacks or else it might turn off!"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/etherealball.dmi'
 	icon_state = "ethdisco_head_0"
 	anchored = TRUE
 	density = TRUE
@@ -42,13 +42,14 @@
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same
 	DiscoFever()
+	anchored = TRUE
 
 /obj/structure/etherealball/proc/TurnOff()
 	TurnedOn = FALSE
 	set_light(0)
-
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	update_icon()
+	anchored = FALSE
 
 /obj/structure/etherealball/proc/DiscoFever()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
