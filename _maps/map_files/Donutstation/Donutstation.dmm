@@ -46548,6 +46548,11 @@
 "bLZ" = (
 /obj/structure/table/wood,
 /obj/effect/landmark/event_spawn,
+/obj/item/clothing/glasses/sunglasses/big,
+/obj/item/clothing/glasses/sunglasses/big{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/wood,
 /area/lawoffice)
 "bMa" = (
