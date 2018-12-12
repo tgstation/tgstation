@@ -178,6 +178,13 @@
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
 
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
+	name = "cold room freezer"
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize()
+	. = ..()
+	target_temperature = T0C-80
+
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()
 	var/L

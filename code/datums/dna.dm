@@ -2,17 +2,19 @@
 /////////////////////////// DNA DATUM
 /datum/dna
 	var/unique_enzymes
-	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
 	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
 	var/list/mutations = list()   //All mutations are from now on here
-	var/list/temporary_mutations = list() //Timers for temporary mutations
+	var/list/temporary_mutations = list() //Temporary changes to the UE
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/holder
 	var/delete_species = TRUE //Set to FALSE when a body is scanned by a cloner to fix #38875
+	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
+	var/stability = 100
+	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -45,11 +47,11 @@
 	destination.dna.real_name = real_name
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
-		destination.dna.struc_enzymes = struc_enzymes
+		destination.dna.mutation_index = mutation_index
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
-	new_dna.struc_enzymes = struc_enzymes
+	new_dna.mutation_index = mutation_index
 	new_dna.uni_identity = uni_identity
 	new_dna.blood_type = blood_type
 	new_dna.features = features.Copy()
@@ -57,26 +59,28 @@
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations.Copy()
 
-/datum/dna/proc/add_mutation(mutation_name)
-	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
-	HM.on_acquiring(holder)
+//See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
+/datum/dna/proc/add_mutation(mutation_type, class = MUT_OTHER, time)
+	if(get_mutation(mutation_type))
+		return
+	force_give(new mutation_type (class, time))
 
-/datum/dna/proc/remove_mutation(mutation_name)
-	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
-	HM.on_losing(holder)
+/datum/dna/proc/remove_mutation(mutation_type)
+	force_lose(get_mutation(mutation_type))
 
-/datum/dna/proc/check_mutation(mutation_name)
-	var/datum/mutation/human/HM = GLOB.mutations_list[mutation_name]
-	return mutations.Find(HM)
+/datum/dna/proc/check_mutation(mutation_type)
+	return get_mutation(mutation_type)
 
-/datum/dna/proc/remove_all_mutations()
-	remove_mutation_group(mutations)
+/datum/dna/proc/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
+	remove_mutation_group(mutations, classes)
+	scrambled = FALSE
 
-/datum/dna/proc/remove_mutation_group(list/group)
+/datum/dna/proc/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
 	if(!group)
 		return
 	for(var/datum/mutation/human/HM in group)
-		HM.force_lose(holder)
+		if(HM.class in classes)
+			force_lose(HM)
 
 /datum/dna/proc/generate_uni_identity()
 	. = ""
@@ -103,19 +107,49 @@
 			. += random_string(DNA_BLOCK_SIZE,GLOB.hex_characters)
 	return .
 
-/datum/dna/proc/generate_struc_enzymes()
-	var/list/sorting = new /list(DNA_STRUC_ENZYMES_BLOCKS)
-	var/result = ""
-	for(var/datum/mutation/human/A in GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations)
-		if(A.name == RACEMUT && ismonkey(holder))
-			sorting[A.dna_block] = num2hex(A.lowest_value + rand(0, 256 * 6), DNA_BLOCK_SIZE)
-			mutations |= A
-		else
-			sorting[A.dna_block] = random_string(DNA_BLOCK_SIZE, list("0","1","2","3","4","5","6"))
+/datum/dna/proc/generate_dna_blocks()
+	var/bonus
+	if(species && species.inert_mutation)
+		bonus = get_initialized_mutation(species.inert_mutation)
+	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
+	if(!LAZYLEN(mutations_temp))
+		return
+	mutation_index.Cut()
+	shuffle_inplace(mutations_temp)
+	if(ismonkey(holder))
+		mutations |= new RACEMUT(MUT_NORMAL)
+		mutation_index[RACEMUT] = get_sequence(RACEMUT)
+	else
+		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
+	for(var/i in 2 to DNA_MUTATION_BLOCKS)
+		var/datum/mutation/human/M = mutations_temp[i]
+		mutation_index[M.type] = create_sequence(M.type, FALSE,M.difficulty)
+	shuffle_inplace(mutation_index)
 
-	for(var/B in sorting)
-		result += B
-	return result
+//Used to generate original gene sequences for every mutation
+/proc/generate_gene_sequence(length=4)
+	var/static/list/active_sequences = list("AT","TA","GC","CG")
+	var/sequence
+	for(var/i in 1 to length*DNA_SEQUENCE_LENGTH)
+		sequence += pick(active_sequences)
+	return sequence
+
+//Used to create a chipped gene sequence
+/proc/create_sequence(mutation, active, difficulty)
+	if(!difficulty)
+		var/datum/mutation/human/A = get_initialized_mutation(mutation) //leaves the possibility to change difficulty mid-round
+		if(A)
+			return
+		difficulty = A.difficulty
+	difficulty += rand(-2,4)
+	var/sequence = get_sequence(mutation)
+	if(active)
+		return sequence
+	while(difficulty)
+		var/randnum = rand(1, length(sequence))
+		sequence = copytext(sequence, 1, randnum) + "X" + copytext(sequence, randnum+1, length(sequence)+1)
+		difficulty--
+	return sequence
 
 /datum/dna/proc/generate_unique_enzymes()
 	. = ""
@@ -146,6 +180,21 @@
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(GLOB.hair_styles_list.Find(H.hair_style), GLOB.hair_styles_list.len))
 
+//Please use add_mutation or activate_mutation instead
+/datum/dna/proc/force_give(datum/mutation/human/HM)
+	if(holder && HM)
+		if(HM.class == MUT_NORMAL)
+			set_se(1, HM)
+		. = HM.on_acquiring(holder)
+		if(.)
+			qdel(HM)
+
+//Use remove_mutation instead
+/datum/dna/proc/force_lose(datum/mutation/human/HM)
+	if(holder && (HM in mutations))
+		set_se(0, HM)
+		return HM.on_losing(holder)
+
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
 		for(var/datum/mutation/human/M in mutations)
@@ -166,10 +215,75 @@
 
 
 /datum/dna/proc/is_same_as(datum/dna/D)
-	if(uni_identity == D.uni_identity && struc_enzymes == D.struc_enzymes && real_name == D.real_name)
+	if(uni_identity == D.uni_identity && mutation_index == D.mutation_index && real_name == D.real_name)
 		if(species.type == D.species.type && features == D.features && blood_type == D.blood_type)
 			return 1
 	return 0
+
+/datum/dna/proc/update_instability(alert=FALSE)
+	stability = 100
+	for(var/datum/mutation/human/M in mutations)
+		if(M.class == MUT_EXTRA)
+			stability -= M.instability
+	if(holder && alert)
+		var/message
+		switch(stability)
+			if(90 to 70)
+				message = "<span class='warning'>You shiver.</span>"
+			if(69 to 60)
+				message = "<span class='warning'>You feel cold.</span>"
+			if(59 to 40)
+				message = "<span class='warning'>You feel sick.</span>"
+			if(39 to 20)
+				message = "<span class='warning'>It feels like your skin is moving.</span>"
+			if(19 to 1)
+				message = "<span class='warning'>You can feel your cells burning.</span>"
+			if(0 to -INFINITY)
+				message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
+				addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
+
+		if(message)
+			to_chat(holder,message)
+
+/datum/dna/proc/something_horrible()
+	if(!holder || (stability > 0))
+		return
+	var/instability = -stability
+	remove_all_mutations()
+	stability = 100
+	if(!ishuman(holder))
+		holder.gib()
+		return
+	var/mob/living/carbon/human/H = holder
+	if(prob(max(70-instability,0)))
+		switch(rand(0,3)) //not complete and utter death
+			if(0)
+				H.monkeyize()
+			if(1)
+				H.gain_trauma(/datum/brain_trauma/severe/paralysis)
+			if(2)
+				H.corgize()
+			if(3)
+				to_chat(H, "<span class='notice'>Oh, we actually feel quite alright!</span>")
+	else
+		switch(rand(0,3))
+			if(0)
+				H.gib()
+			if(1)
+				H.dust()
+
+			if(2)
+				H.death()
+				H.petrify(INFINITY)
+			if(3)
+				if(prob(90))
+					var/obj/item/bodypart/BP = H.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+					if(BP)
+						BP.dismember()
+					else
+						H.gib()
+				else
+					H.set_species(/datum/species/dullahan)
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
@@ -181,7 +295,7 @@
 		blood_type = newblood_type
 	unique_enzymes = generate_unique_enzymes()
 	uni_identity = generate_uni_identity()
-	struc_enzymes = generate_struc_enzymes()
+	generate_dna_blocks()
 	features = random_features()
 
 
@@ -246,7 +360,7 @@
 	return dna
 
 
-/mob/living/carbon/human/proc/hardset_dna(ui, se, newreal_name, newblood_type, datum/species/mrace, newfeatures)
+/mob/living/carbon/human/proc/hardset_dna(ui, list/mutation_index, newreal_name, newblood_type, datum/species/mrace, newfeatures)
 
 	if(newfeatures)
 		dna.features = newfeatures
@@ -267,8 +381,8 @@
 		dna.uni_identity = ui
 		updateappearance(icon_update=0)
 
-	if(se)
-		dna.struc_enzymes = se
+	if(LAZYLEN(mutation_index))
+		dna.mutation_index = mutation_index
 		domutcheck()
 
 	if(mrace || newfeatures || ui)
@@ -311,19 +425,56 @@
 /mob/proc/domutcheck()
 	return
 
-/mob/living/carbon/domutcheck(force_powers=0) //Set force_powers to 1 to bypass the power chance
+/mob/living/carbon/domutcheck()
 	if(!has_dna())
 		return
 
-	for(var/datum/mutation/human/A in GLOB.good_mutations | GLOB.bad_mutations | GLOB.not_good_mutations)
-		if(ismob(A.check_block(src, force_powers)))
+	for(var/mutation in dna.mutation_index)
+		if(ismob(dna.check_block(mutation)))
 			return //we got monkeyized/humanized, this mob will be deleted, no need to continue.
 
 	update_mutations_overlay()
 
+/datum/dna/proc/check_block(mutation)
+	var/datum/mutation/human/HM = get_mutation(mutation)
+	if(check_block_string(mutation))
+		if(!HM)
+			. = add_mutation(mutation, MUT_NORMAL)
+		return
+	return force_lose(HM)
 
+//Return the active mutation of a type if there is one
+/datum/dna/proc/get_mutation(A)
+	for(var/datum/mutation/human/HM in mutations)
+		if(HM.type == A)
+			return HM
+
+/datum/dna/proc/check_block_string(mutation)
+	if((LAZYLEN(mutation_index) > DNA_MUTATION_BLOCKS) || !(mutation in mutation_index))
+		return 0
+	return is_gene_active(mutation)
+
+/datum/dna/proc/is_gene_active(mutation)
+	return (mutation_index[mutation] == get_sequence(mutation))
+
+/datum/dna/proc/set_se(on=TRUE, datum/mutation/human/HM)
+	if(!HM || !(HM.type in mutation_index) || (LAZYLEN(mutation_index) < DNA_MUTATION_BLOCKS))
+		return
+	. = TRUE
+	if(on)
+		mutation_index[HM.type] = get_sequence(HM.type)
+	else if(get_sequence(HM.type) == mutation_index[HM.type])
+		mutation_index[HM.type] = create_sequence(HM.type, FALSE, HM.difficulty)
+
+/datum/dna/proc/activate_mutation(mutation)
+	if(!mutation)
+		return
+	if(!mutation_in_sequence(mutation, src)) //cant activate what we dont have, use add_mutation
+		return FALSE
+	return add_mutation(mutation, MUT_NORMAL)
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
+
 /proc/getleftblocks(input,blocknumber,blocksize)
 	if(blocknumber > 1)
 		return copytext(input,1,((blocksize*blocknumber)-(blocksize-1)))
@@ -343,26 +494,33 @@
 /mob/living/carbon/proc/randmut(list/candidates, difficulty = 2)
 	if(!has_dna())
 		return
-	var/datum/mutation/human/num = pick(candidates)
-	. = num.force_give(src)
+	var/mutation = pick(candidates)
+	. = dna.add_mutation(mutation)
 
-/mob/living/carbon/proc/randmutb()
+/mob/living/carbon/proc/easy_randmut(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE)
 	if(!has_dna())
 		return
-	var/datum/mutation/human/HM = pick((GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT])
-	. = HM.force_give(src)
-
-/mob/living/carbon/proc/randmutg()
-	if(!has_dna())
-		return
-	var/datum/mutation/human/HM = pick(GLOB.good_mutations)
-	. = HM.force_give(src)
-
-/mob/living/carbon/proc/randmutvg()
-	if(!has_dna())
-		return
-	var/datum/mutation/human/HM = pick((GLOB.good_mutations) - GLOB.mutations_list[HULK] - GLOB.mutations_list[DWARFISM])
-	. = HM.force_give(src)
+	var/list/mutations = list()
+	if(quality & POSITIVE)
+		mutations += GLOB.good_mutations
+	if(quality & NEGATIVE)
+		mutations += GLOB.bad_mutations
+	if(quality & MINOR_NEGATIVE)
+		mutations += GLOB.not_good_mutations
+	var/list/possible = list()
+	for(var/datum/mutation/human/A in mutations)
+		if((!sequence || mutation_in_sequence(A.type, dna)) && !dna.get_mutation(A.type))
+			possible += A.type
+	if(exclude_monkey)
+		possible.Remove(RACEMUT)
+	if(LAZYLEN(possible))
+		var/mutation = pick(possible)
+		. = dna.activate_mutation(mutation)
+		if(scrambled)
+			var/datum/mutation/human/HM = dna.get_mutation(mutation)
+			if(HM)
+				HM.scrambled = TRUE
+		return TRUE
 
 /mob/living/carbon/proc/randmuti()
 	if(!has_dna())
@@ -385,9 +543,9 @@
 	if(!M.has_dna())
 		return 0
 	if(se)
-		for(var/i=1, i<=DNA_STRUC_ENZYMES_BLOCKS, i++)
+		for(var/i=1, i<=DNA_MUTATION_BLOCKS, i++)
 			if(prob(probability))
-				M.dna.struc_enzymes = setblock(M.dna.struc_enzymes, i, random_string(DNA_BLOCK_SIZE, GLOB.hex_characters))
+				M.dna.generate_dna_blocks()
 		M.domutcheck()
 	if(ui)
 		for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)

@@ -118,8 +118,14 @@
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)	
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)	
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)	
-	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)	
+	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
 
+	//Checks for recycler on every interact, prevents issues with load order on certain maps. 
+	if(!connected_recycler)
+		for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
+			if(get_area(recycler.loc) == get_area(loc))
+				connected_recycler = recycler
+				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
 	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)	
