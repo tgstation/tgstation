@@ -18,15 +18,7 @@
 	var/TurnedOn = FALSE
 	var/current_color
 	var/TimerID
-	var/static/list/wirecutter_colors = list(
-		"blue" = "#1861d5",
-		"red" = "#951710",
-		"pink" = "#d5188d",
-		"brown" = "#a05212",
-		"green" = "#0e7f1b",
-		"cyan" = "#18a2d5",
-		"yellow" = "#d58c18"
-	)
+
 /obj/structure/etherealball/Initialize()
 	. = ..()
 	update_icon()
@@ -61,8 +53,7 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	current_color = random_color()
 	set_light(4, 3, current_color)
-	var/our_color = pick(wirecutter_colors)
-	add_atom_colour(wirecutter_colors[our_color], FIXED_COLOUR_PRIORITY)
+	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
 	update_icon()
 	TimerID = addtimer(CALLBACK(src, .proc/DiscoFever), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
 
