@@ -452,3 +452,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define VARSET_FROM_LIST_IF(L, V, C...) if(L && L[#V] && (C)) V = L[#V]
 #define VARSET_TO_LIST(L, V) if(L) L[#V] = V
 #define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
+
+#define BUMP_MODE_DEFAULT 0
+#define BUMP_MODE_ENTERING 1
+#define BUMP_MODE_EXITING 2

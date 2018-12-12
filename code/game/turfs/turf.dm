@@ -222,7 +222,7 @@
 			if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
 				firstbump = thing
 	if(firstbump)
-		mover.Bump(firstbump)
+		mover.Bump(firstbump, BUMP_MODE_ENTERING)
 		return FALSE
 	return TRUE
 
@@ -236,7 +236,7 @@
 		var/atom/movable/thing = i
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
-				mover.Bump(thing)
+				mover.Bump(thing, BUMP_MODE_EXITING)
 			return FALSE
 
 /turf/Entered(atom/movable/AM)

@@ -214,7 +214,7 @@
 	beam_index = pcache
 	beam_segments[beam_index] = null
 
-/obj/item/projectile/Bump(atom/A)
+/obj/item/projectile/Bump(atom/A, mode)
 	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
@@ -241,19 +241,19 @@
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
 
-	var/turf/target_turf = get_turf(A)
+	var/turf/dodge_turf = ((mode == BUMP_MODE_EXITING) && (A.flags_1 & ON_BORDER_1))? get_step(get_turf(A), A.dir) : get_turf(A)
 
 	if(!prehit(A))
 		if(forcedodge)
 			trajectory_ignore_forcemove = TRUE
-			forceMove(target_turf)
+			forceMove(dodge_turf)
 			trajectory_ignore_forcemove = FALSE
 		return FALSE
 
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		trajectory_ignore_forcemove = TRUE
-		forceMove(target_turf)
+		forceMove(dodge_turf)
 		trajectory_ignore_forcemove = FALSE
 		if(A)
 			permutated.Add(A)
