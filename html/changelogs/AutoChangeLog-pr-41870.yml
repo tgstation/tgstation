@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Admin and event only pair pinpointers! They come in a box of two, and each pinpointer will always point at its corresponding pair. Aww."
