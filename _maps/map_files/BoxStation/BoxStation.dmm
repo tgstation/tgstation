@@ -5089,10 +5089,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "akt" = (
-/obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -55588,6 +55588,15 @@
 /area/science/mixing/chamber)
 "fgq" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "flc" = (
@@ -57404,6 +57413,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/courtroom)
+"tuC" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "tDw" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -57580,6 +57601,11 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"vad" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/brig)
 "vbD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -88405,9 +88431,9 @@ ajd
 ajI
 ahY
 fgq
-ajc
-ajc
-fgq
+tuC
+tuC
+vad
 anz
 anz
 aoz
