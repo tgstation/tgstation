@@ -255,14 +255,14 @@
 				vessel.ghostize(0)
 			else
 				vessel.mind.transfer_to(original_body, 1)
+				original_body.Sleeping(vessel.AmountSleeping()) // Mirrors any sleep or unconsciousness from the vessel
+				original_body.Unconscious(vessel.AmountUnconscious())
 
 	if(!QDELETED(backseat) && backseat.mind)
 		if(QDELETED(vessel))
 			backseat.ghostize(0)
 		else
 			backseat.mind.transfer_to(vessel,1)
-			vessel.SetSleeping(0)
-			to_chat(vessel, "<span class='userdanger'>You feel control return to your body, as your most recent memories are erased from your mind.</span>")
 
 	message_admins("[ADMIN_LOOKUPFLW(vessel)] is no longer being controlled by [ADMIN_LOOKUPFLW(original_body)] (Hivemind Host).")
 	log_game("[key_name(vessel)] was released from Mind Control by [key_name(original_body)].")
@@ -325,6 +325,7 @@
 			backseat.real_name = vessel.real_name
 			vessel.mind.transfer_to(backseat, 1)
 			user.mind.transfer_to(vessel, 1)
+			backseat.SetSleeping(power)
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
