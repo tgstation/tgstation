@@ -192,6 +192,36 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+/datum/design/laserscalpel
+	name = "Laser Scalpel"
+	desc = "A laser scalpel used for precise cutting."
+	id = "laserscalpel"
+	build_path = /obj/item/scalpel/advanced
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 1500, MAT_DIAMOND = 200, MAT_TITANIUM = 4000)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/mechanicalpinches
+	name = "Mechanical Pinches"
+	desc = "These pinches can be either used as retractor or hemostat."
+	id = "mechanicalpinches"
+	build_path = /obj/item/retractor/advanced
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 4000, MAT_SILVER = 4000, MAT_TITANIUM = 5000)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/searingtool
+	name = "Searing Tool"
+	desc = "Used to mend tissue togheter."
+	id = "searingtool"
+	build_path = /obj/item/cautery/advanced
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PLASMA = 2000, MAT_URANIUM = 3000, MAT_TITANIUM = 3000)
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
+
 /////////////////////////////////////////
 //////////Cybernetic Implants////////////
 /////////////////////////////////////////

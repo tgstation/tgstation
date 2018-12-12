@@ -1,0 +1,4 @@
+author: "Anonmare"
+delete-after: True
+changes: 
+  - bugfix: "Fixes cameras being attacked with multitools when used to mess up their focus."
