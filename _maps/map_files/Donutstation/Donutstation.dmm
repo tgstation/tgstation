@@ -2800,7 +2800,6 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "agF" = (
-/obj/effect/landmark/xmastree/rdrod,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -8437,6 +8436,7 @@
 	pixel_y = 3
 	},
 /obj/item/stock_parts/scanning_module,
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "asl" = (
@@ -24706,14 +24706,19 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "aYZ" = (
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 2;
+	external_pressure_bound = 140;
+	pressure_checks = 0;
+	name = "killroom vent"
 	},
-/obj/effect/turf_decal/tile/bar,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel,
-/area/crew_quarters/bar)
+/obj/machinery/camera{
+	c_tag = "Research - Xenobiology Northen Kill Chamber";
+	dir = 2;
+	network = list("ss13","Research","Xenobiology")
+	},
+/turf/open/floor/circuit/telecomms,
+/area/science/xenobiology)
 "aZa" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -28861,6 +28866,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
+/obj/effect/spawner/xmastree/rdrod,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
 "bgP" = (
@@ -34155,10 +34161,12 @@
 /area/hallway/secondary/entry)
 "bqd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 2;
-	external_pressure_bound = 140;
-	pressure_checks = 0;
-	name = "killroom vent"
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Research - Xenobiology Southern Kill Chamber";
+	dir = 1;
+	network = list("ss13","Research","Xenobiology")
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -53482,6 +53490,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"bZT" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/plasteel,
+/area/crew_quarters/bar)
 "bZV" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -53935,7 +53953,6 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/segment,
-/obj/effect/landmark/xmastree,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "caR" = (
@@ -54253,12 +54270,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
-"cbE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/open/floor/circuit/telecomms,
-/area/science/xenobiology)
 "cbF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4;
@@ -73259,7 +73270,7 @@ bSv
 bSv
 bYd
 ano
-bqd
+aYZ
 aQa
 bme
 bqe
@@ -73271,7 +73282,7 @@ bJq
 cfd
 bme
 aQa
-cbE
+bqd
 ano
 bTU
 bXN
@@ -87172,9 +87183,9 @@ bGU
 bGU
 aXf
 caQ
-aYZ
+bZT
 baK
-aYZ
+caQ
 bbg
 bbJ
 bgb
