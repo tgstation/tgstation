@@ -62,7 +62,7 @@
 				to_chat(user, "<span class='notice'>We bruteforce our way past the mental barriers of [target.name] and begin linking our minds!</span>")
 			else
 				to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
-			if(do_after(user,5*(1.5**get_dist(user, target)),0,target) && do_after(user,5*(1.5**get_dist(user, target)),0,target))
+			if(do_after(user,5*(1.5**get_dist(user, target)),0,target) && target in view(range) && do_after(user,5*(1.5**get_dist(user, target)),0,user))
 				if((target in view(range)))
 					to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 					success = TRUE
@@ -89,7 +89,7 @@
 	action_icon_state = "remove"
 
 	charge_max = 100
-	range = 4
+	range = 7
 
 /obj/effect/proc_holder/spell/target_hive/hive_remove/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/human/target = targets[1]
