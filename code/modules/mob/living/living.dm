@@ -539,7 +539,6 @@
 
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
-		to_chat(world, "DEBUG: LINE [__LINE__] IN FILE [__FILE__] EXECUTING")
 	else
 		if(isliving(pulledby))
 			var/mob/living/L = pulledby
