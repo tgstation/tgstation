@@ -12,7 +12,7 @@
 	name = "Ethereal Disco Ball"
 	desc = "The ethics of this discoball are questionable. Be sure to feed it snacks or else it might turn off!"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "ethdisco_head"
+	icon_state = "ethdisco_head_0"
 	anchored = TRUE
 	density = TRUE
 	var/TurnedOn = FALSE
@@ -29,14 +29,15 @@
 		return //Bish we only play human
 	var/mob/living/carbon/human/coolperson = user
 	if(!(coolperson.ckey == "qustinnus" || coolperson.ckey == "mrdoombringer"))
-		to_chat(user, "Hello buddy, sorry, only cool people can turn the Ethereal Ball 3000 on or off, you can feed it or give it water, though!")
+
+		to_chat(user, "<span class='notice'>Hello buddy, sorry, only cool people can turn the Ethereal Ball 3000 on or off, you can feed it or give it water, though!</span>")
 		return
 	if(TurnedOn)
 		TurnOff()
-		to_chat(user, "You turn the disco ball off!")
+		to_chat(user, "<span class='notice'>You turn the disco ball off!</span>")
 	else
 		TurnOn()
-		to_chat(user, "You turn the disco ball on!")
+		to_chat(user, "<span class='notice'>You turn the disco ball on!</span>")
 
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same
@@ -45,9 +46,9 @@
 /obj/structure/etherealball/proc/TurnOff()
 	TurnedOn = FALSE
 	set_light(0)
+
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	if(TimerID)
-		deltimer(TimerID)
+	update_icon()
 
 /obj/structure/etherealball/proc/DiscoFever()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
@@ -59,9 +60,7 @@
 
 /obj/structure/etherealball/update_icon()
 	cut_overlays()
+	icon_state = "ethdisco_head_[TurnedOn]"
 	var/mutable_appearance/base_overlay = mutable_appearance(icon, "ethdisco_base")
-	var/mutable_appearance/glass_overlay = mutable_appearance(icon, "ethdisco_glass")
 	base_overlay.appearance_flags = RESET_COLOR
-	glass_overlay.appearance_flags = RESET_COLOR
 	add_overlay(base_overlay)
-	add_overlay(glass_overlay)
