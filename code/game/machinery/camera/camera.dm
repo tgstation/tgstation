@@ -202,7 +202,7 @@
 
 	setViewRange((view_range == initial(view_range)) ? short_range : initial(view_range))
 	to_chat(user, "<span class='notice'>You [(view_range == initial(view_range)) ? "restore" : "mess up"] the camera's focus.</span>")
-	return
+	return TRUE
 
 /obj/machinery/camera/welder_act(mob/living/user, obj/item/I)
 	if(!panel_open)
