@@ -222,8 +222,8 @@
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
 			ignore_source_check = TRUE
-			decayed_range = max(1, decayed_range - reflect_range_decrease)
-			range = decayed_range
+			decayedRange = max(1, decayedRange - reflect_range_decrease)
+			range = decayedRange
 			if(hitscan)
 				store_hitscan_collision(pcache)
 			return TRUE
