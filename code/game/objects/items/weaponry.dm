@@ -613,15 +613,12 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		var/mob/living/carbon/human/L = M
 		if(L && L.dna && L.dna.species)
 			L.dna.species.stop_wagging_tail(M)
-		user.do_attack_animation(M)
-		playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
-		"<span class='notice'>You slap [M]!</span>",\
-		"You hear a slap.")
-		return
-	else
-		..()
-
+	user.do_attack_animation(M)
+	playsound(M, 'sound/weapons/slap.ogg', 50, 1, -1)
+	user.visible_message("<span class='danger'>[user] slaps [M]!</span>",
+	"<span class='notice'>You slap [M]!</span>",\
+	"You hear a slap.")
+	return
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
 		return FALSE
