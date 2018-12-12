@@ -3,6 +3,7 @@
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
 	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	phase_allowed = TRUE
 	selection_type = "range"
 	range = -1
@@ -58,7 +59,7 @@
 	if(light_amount > 0.2) // jaunt ends
 		end_jaunt(TRUE)
 	else if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage(1,1)
+		jaunter.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
 
 /obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
 	if(jaunter)

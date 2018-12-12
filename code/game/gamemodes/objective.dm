@@ -808,6 +808,18 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	..()
 	wanted_items = typecacheof(wanted_items)
 
+/datum/objective/steal_five_of_type/check_completion()
+	var/list/datum/mind/owners = get_owners()
+	var/stolen_count = 0
+	for(var/datum/mind/M in owners)
+		if(!isliving(M.current))
+			continue
+		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
+		for(var/obj/I in all_items) //Check for wanted items
+			if(is_type_in_typecache(I, wanted_items))
+				stolen_count++
+	return stolen_count >= 5
+
 /datum/objective/steal_five_of_type/summon_guns
 	name = "steal guns"
 	explanation_text = "Steal at least five guns!"
@@ -822,7 +834,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	wanted_items = GLOB.summoned_magic_objectives
 	..()
 
-/datum/objective/steal_five_of_type/check_completion()
+/datum/objective/steal_five_of_type/summon_magic/check_completion()
 	var/list/datum/mind/owners = get_owners()
 	var/stolen_count = 0
 	for(var/datum/mind/M in owners)
@@ -830,7 +842,11 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			continue
 		var/list/all_items = M.current.GetAllContents()	//this should get things in cheesewheels, books, etc.
 		for(var/obj/I in all_items) //Check for wanted items
-			if(is_type_in_typecache(I, wanted_items))
+			if(istype(I, /obj/item/book/granter/spell))
+				var/obj/item/book/granter/spell/spellbook = I
+				if(!spellbook.used || !spellbook.oneuse) //if the book still has powers...
+					stolen_count++ //it counts. nice.
+			else if(is_type_in_typecache(I, wanted_items))
 				stolen_count++
 	return stolen_count >= 5
 

@@ -45,10 +45,10 @@
 	on = FALSE
 
 /turf/open/floor/circuit/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/circuit/telecomms/mainframe
 	name = "mainframe base"
@@ -72,10 +72,10 @@
 	floor_tile = /obj/item/stack/tile/circuit/green/anim
 
 /turf/open/floor/circuit/green/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/green/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/circuit/green/telecomms/mainframe
 	name = "mainframe base"
@@ -96,10 +96,10 @@
 	floor_tile = /obj/item/stack/tile/circuit/red/anim
 
 /turf/open/floor/circuit/red/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/circuit/red/telecomms
-	initial_gas_mix = "n2=100;TEMP=80"
+	initial_gas_mix = TCOMMS_ATMOS
 
 /turf/open/floor/pod
 	name = "pod floor"
