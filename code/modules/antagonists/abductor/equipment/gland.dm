@@ -10,12 +10,16 @@
 	var/cooldown_high = 300
 	var/next_activation = 0
 	var/uses // -1 For infinite
-	var/human_only = 0
-	var/active = 0
+	var/human_only = FALSE
+	var/active = FALSE
 
 	var/mind_control_uses = 1
 	var/mind_control_duration = 1800
 	var/active_mind_control = FALSE
+
+/obj/item/organ/heart/gland/Initialize()
+	. = ..()
+	icon_state = pick(list("health", "spider", "slime", "emp", "species", "egg", "vent", "mindshock", "viral"))
 
 /obj/item/organ/heart/gland/examine(mob/user)
 	. = ..()
@@ -314,7 +318,7 @@
 	var/list/possible_reagents = list()
 
 /obj/item/organ/heart/gland/chem/Initialize()
-	..()
+	. = ..()
 	for(var/X in subtypesof(/datum/reagent/drug))
 		var/datum/reagent/R = X
 		possible_reagents += initial(R.id)
