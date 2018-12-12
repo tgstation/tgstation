@@ -1,17 +1,21 @@
 /obj/item/etherealballdeployer
 	name = "Portable Ethereal Disco Ball"
-	desc = "Press the button for a deployment of PARTY!"
-	icon = 'icons/obj/etherealball.dmi'
-	icon_state = "ethdisc_carry"
+	desc = "Press the button for a deployment of slightly-unethical PARTY!"
+	icon = 'icons/obj/eth_disco.dmi'
+	icon_state = "ethdisco"
 
 /obj/item/etherealballdeployer/attack_self(mob/living/carbon/user)
+	var/mob/living/carbon/human/coolperson = user
+	if(!(coolperson.ckey == "qustinnus" || coolperson.ckey == "mrdoombringer"))
+		to_chat(user, "<span class='notice'>Hello buddy, sorry, only cool people can turn the Ethereal Ball 3000 on or off, you can feed it or give it water, though!</span>")
+		return
 	new /obj/structure/etherealball(user.loc)
 	qdel(src)
 
 /obj/structure/etherealball
 	name = "Ethereal Disco Ball"
 	desc = "The ethics of this discoball are questionable. Be sure to feed it snacks or else it might turn off!"
-	icon = 'icons/obj/etherealball.dmi'
+	icon = 'icons/obj/eth_disco.dmi'
 	icon_state = "ethdisco_head_0"
 	anchored = TRUE
 	density = TRUE
@@ -25,11 +29,8 @@
 
 /obj/structure/etherealball/attack_hand(mob/living/carbon/human/user)
 	. = ..()
-	if(!ishuman(user))
-		return //Bish we only play human
 	var/mob/living/carbon/human/coolperson = user
 	if(!(coolperson.ckey == "qustinnus" || coolperson.ckey == "mrdoombringer"))
-
 		to_chat(user, "<span class='notice'>Hello buddy, sorry, only cool people can turn the Ethereal Ball 3000 on or off, you can feed it or give it water, though!</span>")
 		return
 	if(TurnedOn)
@@ -38,6 +39,18 @@
 	else
 		TurnOn()
 		to_chat(user, "<span class='notice'>You turn the disco ball on!</span>")
+
+/obj/structure/etherealball/AltClick(mob/living/carbon/human/user)
+	. = ..()
+	if(!ishuman(user))
+		return //Bish we only play human
+	var/mob/living/carbon/human/coolperson = user
+	if(!(coolperson.ckey == "qustinnus" || coolperson.ckey == "mrdoombringer"))
+		to_chat(user, "<span class='notice'>Hello buddy, sorry, only cool people can pack up the Ethereal Ball 3000!</span>")
+		return
+	var/obj/item/etherealballdeployer/big_pp = new /obj/item/etherealballdeployer(user.loc)
+	user.put_in_hands(big_pp)
+	qdel(src)
 
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same
@@ -50,6 +63,8 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	update_icon()
 	anchored = FALSE
+	if(TimerID)
+		deltimer(TimerID)
 
 /obj/structure/etherealball/proc/DiscoFever()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
