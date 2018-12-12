@@ -226,7 +226,7 @@
 				store_hitscan_collision(pcache)
 			return TRUE
 	if(firer && !ignore_source_check)
-		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
+		if((A == firer) || ((A in checking.buckled_mobs) || (A == checking.buckled)) || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
 			trajectory_ignore_forcemove = TRUE
 			forceMove(get_turf(A))
 			trajectory_ignore_forcemove = FALSE
