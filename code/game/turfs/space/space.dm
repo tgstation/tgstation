@@ -19,7 +19,6 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 	bullet_bounce_sound = null
 
-
 /turf/open/space/basic/New()	//Do not convert to Initialize
 	//This is used to optimize the map loader
 	return

@@ -113,7 +113,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "ax" = (
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/structure/disposalpipe/segment{
 	invisibility = 101
 	},
@@ -246,9 +246,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aE" = (
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -355,7 +353,7 @@
 	dir = 4;
 	invisibility = 101
 	},
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -546,7 +544,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "ba" = (
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -618,7 +616,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -865,9 +863,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "bF" = (
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/indestructible/sound{
 	icon_state = "bananium";
 	name = "bananium floor";
@@ -1247,7 +1243,7 @@
 	},
 /area/lavaland/surface/outdoors/explored)
 "Hj" = (
-/obj/effect/decal/cleanable/pie_smudge,
+/obj/effect/decal/cleanable/food/pie_smudge,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},

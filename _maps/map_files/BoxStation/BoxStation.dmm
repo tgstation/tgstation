@@ -6319,10 +6319,7 @@
 /obj/item/electronics/airalarm,
 /obj/item/circuitboard/machine/seed_extractor,
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ano" = (
@@ -6497,7 +6494,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anK" = (
-/obj/effect/decal/cleanable/egg_smudge,
+/obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "anL" = (
@@ -7233,10 +7230,7 @@
 /area/construction/mining/aux_base)
 "apL" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
@@ -7593,10 +7587,7 @@
 /area/maintenance/port/fore)
 "aqO" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqP" = (
@@ -7778,10 +7769,7 @@
 "arq" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 8;
-	name = "8maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "arr" = (
@@ -7929,17 +7917,11 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arN" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arO" = (
@@ -8202,10 +8184,7 @@
 /area/crew_quarters/dorms)
 "asv" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "asw" = (
@@ -8531,10 +8510,7 @@
 /area/maintenance/starboard/fore)
 "atw" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "atx" = (
@@ -8686,10 +8662,7 @@
 /area/maintenance/port/fore)
 "atU" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "atV" = (
@@ -9158,10 +9131,7 @@
 /area/space/nearstation)
 "avc" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "avd" = (
@@ -9535,10 +9505,7 @@
 /area/maintenance/port/fore)
 "avW" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "avX" = (
@@ -9821,10 +9788,7 @@
 /area/maintenance/starboard/fore)
 "awF" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awG" = (
@@ -11436,10 +11400,7 @@
 /area/maintenance/starboard/fore)
 "aAs" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAt" = (
@@ -12755,10 +12716,7 @@
 /area/gateway)
 "aDz" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fore)
@@ -15275,6 +15233,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aJn" = (
@@ -16354,7 +16313,11 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe";
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aLV" = (
@@ -18741,7 +18704,7 @@
 /turf/open/floor/plating,
 /area/storage/emergency/port)
 "aSn" = (
-/obj/item/extinguisher,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/storage/emergency/port)
 "aSo" = (
@@ -25411,7 +25374,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/extinguisher,
+/obj/structure/closet/firecloset,
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
 "biF" = (
@@ -26310,11 +26273,10 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bkN" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/quartermaster/office)
 "bkO" = (
 /obj/machinery/light_switch{
@@ -27010,11 +26972,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/sorting)
-"bml" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "bmm" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -27608,6 +27565,9 @@
 "bnJ" = (
 /obj/machinery/firealarm{
 	pixel_y = 27
+	},
+/obj/structure/chair{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -28726,10 +28686,10 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bqo" = (
-/obj/machinery/autolathe,
 /obj/machinery/light_switch{
 	pixel_x = -27
 	},
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bqp" = (
@@ -29275,6 +29235,7 @@
 	pixel_y = 6
 	},
 /obj/item/pen,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "brE" = (
@@ -29888,10 +29849,7 @@
 /area/maintenance/starboard)
 "btq" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "btr" = (
@@ -30492,10 +30450,11 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "buJ" = (
-/obj/structure/chair{
-	dir = 8
+/obj/effect/turf_decal/loading_area,
+/obj/machinery/door/poddoor/shutters{
+	id = "public_autolathe";
+	name = "public autolathe shutters"
 	},
-/obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "buK" = (
@@ -30957,11 +30916,15 @@
 /area/crew_quarters/heads/hor)
 "bvL" = (
 /obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "bvO" = (
@@ -31614,7 +31577,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "bxm" = (
-/obj/effect/landmark/xmastree/rdrod,
+/obj/effect/spawner/xmastree/rdrod,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -31671,24 +31634,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
-"bxB" = (
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/security/checkpoint/supply)
 "bxC" = (
 /obj/machinery/recharger{
 	pixel_y = 4
@@ -31697,34 +31642,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/checkpoint/supply)
-"bxD" = (
-/obj/item/book/manual/wiki/security_space_law,
-/obj/structure/table,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/checkpoint/supply)
-"bxE" = (
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
@@ -32214,6 +32131,10 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/supply)
 "byK" = (
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
+/obj/item/radio/off,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "byL" = (
@@ -32224,17 +32145,19 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "byM" = (
-/obj/item/radio/intercom{
-	dir = 4;
-	pixel_x = 27
-	},
-/obj/machinery/computer/security/mining{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "byN" = (
@@ -32813,16 +32736,16 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bAd" = (
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/radio/off,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/item/radio/intercom{
+	dir = 4;
+	pixel_x = 27
+	},
+/obj/machinery/computer/secure_data{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
@@ -33281,7 +33204,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bBf" = (
-/obj/structure/filingcabinet,
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 30
 	},
@@ -33297,6 +33219,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/computer/security/mining{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -34204,10 +34129,7 @@
 /area/science/storage)
 "bDg" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bDh" = (
@@ -34811,10 +34733,7 @@
 /area/maintenance/starboard)
 "bEF" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bEG" = (
@@ -37456,10 +37375,7 @@
 /area/quartermaster/sorting)
 "bKQ" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -38520,10 +38436,7 @@
 /area/maintenance/starboard/aft)
 "bNB" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bNC" = (
@@ -39858,10 +39771,7 @@
 /area/maintenance/port/aft)
 "bRe" = (
 /obj/structure/table/wood,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "bRf" = (
@@ -39872,17 +39782,11 @@
 /area/maintenance/port/aft)
 "bRg" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bRh" = (
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/three,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bRi" = (
@@ -44537,9 +44441,7 @@
 /area/maintenance/aft)
 "ccG" = (
 /obj/structure/chair/stool,
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -44623,6 +44525,21 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"ccR" = (
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/pen,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/checkpoint/supply)
 "ccU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -45355,10 +45272,7 @@
 /area/maintenance/starboard/aft)
 "ceV" = (
 /obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ceW" = (
@@ -45488,10 +45402,7 @@
 /area/maintenance/disposal/incinerator)
 "cfm" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/item/toy/minimeteor,
 /obj/item/poster/random_contraband,
 /turf/open/floor/plating,
@@ -45759,9 +45670,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
-/obj/effect/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -45901,10 +45810,7 @@
 "cgu" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cgv" = (
@@ -46831,10 +46737,7 @@
 /area/maintenance/aft)
 "ciH" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/item/latexballon,
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -47273,10 +47176,7 @@
 /area/solar/port/aft)
 "cjI" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cjJ" = (
@@ -47531,10 +47431,7 @@
 /area/maintenance/starboard/aft)
 "ckp" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -47878,10 +47775,7 @@
 "clq" = (
 /obj/structure/rack,
 /obj/structure/disposalpipe/segment,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "clr" = (
@@ -47892,10 +47786,7 @@
 /area/maintenance/starboard/aft)
 "cls" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/three,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -48124,7 +48015,7 @@
 /area/engine/atmos)
 "clX" = (
 /obj/effect/landmark/event_spawn,
-/obj/effect/landmark/xmastree,
+/obj/effect/spawner/xmastree,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -48498,10 +48389,7 @@
 /area/maintenance/aft)
 "cnf" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cng" = (
@@ -49726,10 +49614,7 @@
 /area/solar/starboard/aft)
 "cqK" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cqL" = (
@@ -50329,7 +50214,7 @@
 /area/engine/engineering)
 "csT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/xmastree,
+/obj/effect/spawner/xmastree,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "csU" = (
@@ -53039,10 +52924,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
-"cBv" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/security/checkpoint/supply)
 "cBw" = (
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/event_spawn,
@@ -55864,6 +55745,12 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"gby" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "gbT" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -56154,10 +56041,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
-"jlm" = (
-/obj/machinery/rnd/production/techfab/department/cargo,
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "jrH" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "rnd2";
@@ -56460,10 +56343,7 @@
 /area/hallway/secondary/service)
 "kQk" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "kQq" = (
@@ -56501,6 +56381,7 @@
 /area/vacant_room/commissary)
 "kSb" = (
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "kXt" = (
@@ -56742,6 +56623,16 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"nEa" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "public_autolathe";
+	name = "public autolathe shutters"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "nEP" = (
 /obj/structure/closet/l3closet/scientist{
 	pixel_x = -2
@@ -56824,6 +56715,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"ofT" = (
+/obj/machinery/computer/bounty,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "olh" = (
 /obj/machinery/holopad,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -56850,6 +56745,12 @@
 /obj/machinery/light,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"oEF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/autolathe,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "oHU" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -56933,6 +56834,13 @@
 	dir = 1
 	},
 /area/engine/break_room)
+"pqP" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "psy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -57146,6 +57054,7 @@
 /obj/item/wrench,
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "rKc" = (
@@ -57183,6 +57092,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"sdX" = (
+/turf/closed/wall,
+/area/quartermaster/office)
 "sjr" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/loading_area,
@@ -57297,8 +57209,11 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/computer/bounty{
-	dir = 8
+/obj/machinery/button/door{
+	id = "public_autolathe";
+	name = "Autolathe Shutters Control";
+	pixel_x = 28;
+	req_access_txt = "31"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -57634,10 +57549,7 @@
 /area/maintenance/fore)
 "vxh" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 8;
-	name = "8maintenance loot spawner"
-	},
+/obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "vzp" = (
@@ -78379,7 +78291,7 @@ aZF
 aZF
 bgy
 aZE
-bjr
+ofT
 bjr
 ama
 bmh
@@ -80700,7 +80612,7 @@ bnz
 bpA
 bbR
 sWR
-jlm
+bbR
 bud
 eyM
 kSb
@@ -80957,8 +80869,8 @@ boS
 bfm
 bNK
 bkN
-bml
-bwe
+bfm
+oEF
 bwe
 bwd
 bwY
@@ -81214,9 +81126,9 @@ boR
 bqs
 bbR
 bkM
-bbR
+nEa
+bqs
 bwd
-bxB
 bvL
 byI
 byH
@@ -81471,10 +81383,10 @@ boT
 bbR
 bbR
 buI
-bbR
+bfm
+bqs
 bwd
-bxD
-byL
+ccR
 byK
 byT
 bwe
@@ -81723,16 +81635,16 @@ cNG
 cNJ
 bLF
 aZK
-bbR
+gby
 bbR
 bqt
 cBq
 bbR
-bbR
+bfm
+bqs
 bwd
 bxC
-byK
-cBv
+byL
 byO
 bwe
 bAo
@@ -81981,13 +81893,13 @@ bKF
 bNH
 aZK
 bnJ
-bbR
-bbR
-bbR
 bty
+bbR
+bbR
+bbR
 buJ
-bwe
-bxE
+pqP
+bwd
 byM
 bAd
 bBf
@@ -82243,7 +82155,7 @@ bqu
 bqu
 bnK
 bnK
-bwe
+sdX
 bwe
 bwe
 bwe

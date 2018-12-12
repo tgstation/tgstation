@@ -247,6 +247,12 @@
 	category = "Assistance"
 	cost = 1
 
+/datum/spellbook_entry/tap
+	name = "Soul Tap"
+	spell_type = /obj/effect/proc_holder/spell/self/tap
+	category = "Assistance"
+	cost = 3
+
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
 	spell_type = /obj/effect/proc_holder/spell/spacetime_dist
@@ -532,6 +538,22 @@
 	if(times>0)
 		. += "You cast it [times] times.<br>"
 	return .
+
+/datum/spellbook_entry/summon/curse_of_madness
+	name = "Curse of Madness"
+	desc = "Curses the station, warping the minds of everyone inside, causing lasting traumas. Warning: this spell can affect you if not cast from a safe distance."
+	cost = 4
+
+/datum/spellbook_entry/summon/curse_of_madness/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
+	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+	active = TRUE
+	var/message = stripped_input(user, "Whisper a secret truth to drive your victims to madness.", "Whispers of Madness")
+	if(!message)
+		return FALSE
+	curse_of_madness(user, message)
+	to_chat(user, "<span class='notice'>You have cast the curse of insanity!</span>")
+	playsound(user, 'sound/magic/mandswap.ogg', 50, 1)
+	return TRUE
 
 /obj/item/spellbook
 	name = "spell book"

@@ -4803,7 +4803,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jn" = (
-/obj/effect/decal/cleanable/flour,
+/obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -5345,7 +5345,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kr" = (
-/obj/effect/decal/cleanable/egg_smudge,
+/obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
