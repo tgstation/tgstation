@@ -29,8 +29,7 @@
 
 	var/selected = input("Investigate what?", "Investigate") as null|anything in combined
 
-	if(!selected in combined)
-		// no.
+	if(!selected || !selected in combined)
 		return
 
 	selected = replacetext(selected, " (empty)", "")
