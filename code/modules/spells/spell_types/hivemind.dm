@@ -231,6 +231,9 @@
 	to_chat(src, "<span class='warning'>You find yourself unable to emote, you aren't in control of your body!</span>")
 	return
 
+/mob/living/passenger/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	return
+
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
 	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
@@ -325,11 +328,11 @@
 			backseat.real_name = vessel.real_name
 			vessel.mind.transfer_to(backseat, 1)
 			user.mind.transfer_to(vessel, 1)
-			backseat.SetSleeping(power)
+			backseat.blind_eyes(power)
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
-			to_chat(vessel, "<span class='assimilator'>We can sustain our control for a maximum of [round(power/10)] seconds./span>")
+			to_chat(vessel, "<span class='assimilator'>We can sustain our control for a maximum of [round(power/10)] seconds.</span>")
 			if(do_after(user,power,0,user))
 				to_chat(vessel, "<span class='warning'>We cannot sustain the mind control any longer and release control!</span>")
 			else
@@ -391,7 +394,7 @@
 		if(target.stat == DEAD)
 			continue
 		target.Jitter(14)
-		target.adjustStaminaLoss(min(35,hive.hive_size))
+		target.apply_damage(min(35,hive.hive_size), STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
 		if(prob(50))
 			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
 			target.say(text, forced = "panic")
@@ -414,7 +417,7 @@
 			if(4)
 				to_chat(target, "<span class='userdanger'>You feel nauseous as dread washes over you!</span>")
 				target.Dizzy(15)
-				target.adjustStaminaLoss(45)
+				target.apply_damage(45, STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
 				target.hallucination += 45
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack
@@ -460,13 +463,13 @@
 		if(user == victim)
 			continue
 		if(pulses < 4)
-			victim.adjustStaminaLoss(7)
+			victim.apply_damage(10, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 25 over 10 seconds when taking stamina regen (3 per tick(2 seconds)) into account
 			victim.hallucination += 5
 		else if(pulses < 8)
-			victim.adjustStaminaLoss(14)
+			victim.apply_damage(15, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 45 over 10 seconds when taking stamina regen into account
 			victim.hallucination += 10
 		else
-			victim.adjustStaminaLoss(21)
+			victim.apply_damage(20, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 65 over 10 seconds when taking stamina regen into account
 			victim.hallucination += 15
 
 	if(pulses < pulse_cap && user && target)
