@@ -782,6 +782,7 @@
 #include "code\game\objects\items\defib.dm"
 #include "code\game\objects\items\dehy_carp.dm"
 #include "code\game\objects\items\dice.dm"
+#include "code\game\objects\items\discoball.dm"
 #include "code\game\objects\items\dna_injector.dm"
 #include "code\game\objects\items\documents.dm"
 #include "code\game\objects\items\eightball.dm"
