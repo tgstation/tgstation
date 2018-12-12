@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Abductor scientists, or people who have had training similar to an
-abductor's scientist will be able to examine alien glands to determine
-their scientific purpose."
-  - rscadd: "Abductor glands now have their appearances randomized."
