@@ -632,3 +632,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 		Insert(initial(D.id), I)
 	return ..()
+
+/datum/asset/simple/genetics
+	assets = list(
+		"dna_discovered.png"	= 'html/dna_discovered.png',
+		"dna_undiscovered.png"	= 'html/dna_undiscovered.png',
+		"dna_extra.png" 		= 'html/dna_extra.png'
+)

@@ -20,13 +20,14 @@
 	var/largest_bomb_value = 0
 	var/organization = "Third-Party"							//Organization name, used for display.
 	var/list/last_bitcoins = list()								//Current per-second production, used for display only.
+	var/list/discovered_mutations = list()                           //Mutations discovered by genetics, this way they are shared and cant be destroyed by destroying a single console
 	var/list/tiers = list()										//Assoc list, id = number, 1 is available, 2 is all reqs are 1, so on
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
 	for(var/i in SSresearch.techweb_nodes_starting)
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
-		research_node(DN, TRUE, FALSE)
+		research_node(DN, TRUE, FALSE, FALSE)
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
 	return ..()
 
@@ -38,7 +39,7 @@
 	. = ..()
 	for(var/i in SSresearch.techweb_nodes)
 		var/datum/techweb_node/TN = SSresearch.techweb_nodes[i]
-		research_node(TN, TRUE)
+		research_node(TN, TRUE, TRUE, FALSE)
 	for(var/i in SSresearch.point_types)
 		research_points[i] = INFINITY
 	hidden_nodes = list()
@@ -112,7 +113,7 @@
 /datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
 	for(var/i in researched_nodes)
 		CHECK_TICK
-		receiver.research_node_id(i, TRUE, FALSE)
+		receiver.research_node_id(i, TRUE, FALSE, FALSE)
 	for(var/i in researched_designs)
 		CHECK_TICK
 		receiver.add_design_by_id(i)
@@ -195,10 +196,10 @@
 /datum/techweb/proc/printout_points()
 	return techweb_point_display_generic(research_points)
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points)
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE)
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -214,7 +215,7 @@
 	for(var/id in node.design_ids)
 		add_design_by_id(id)
 	update_node_status(node)
-	if(!istype(src, /datum/techweb/admin))
+	if(get_that_dosh)
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
 			D.adjust_money(SSeconomy.techweb_bounty)
@@ -344,7 +345,7 @@
 
 /datum/techweb/specialized/autounlocking/proc/autounlock()
 	for(var/id in node_autounlock_ids)
-		research_node_id(id, TRUE, FALSE)
+		research_node_id(id, TRUE, FALSE, FALSE)
 	for(var/id in SSresearch.techweb_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
 		if(D.build_type & design_autounlock_buildtypes)

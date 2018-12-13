@@ -20,6 +20,7 @@
 	exotic_bloodtype = "L"
 	disliked_food = GRAIN | DAIRY
 	liked_food = GROSS | MEAT
+	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 
 /datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)

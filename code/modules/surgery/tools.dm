@@ -243,7 +243,7 @@
 	icon_state = "spectrometer"
 	item_flags = NOBLUDGEON
 	var/list/advanced_surgeries = list()
-	
+
 /obj/item/surgical_processor/afterattack(obj/item/O, mob/user, proximity)
 	. = ..()
 	if(!proximity)
@@ -261,3 +261,134 @@
 			advanced_surgeries |= OC.advanced_surgeries
 		return TRUE
 	return
+
+/obj/item/scalpel/advanced
+	name = "laser scalpel"
+	desc = "An advanced scalpel which uses laser technology to cut. It's set to scalpel mode."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "scalpel_a"
+	hitsound = 'sound/weapons/blade1.ogg'
+	force = 16
+	toolspeed = 0.7
+	light_color = LIGHT_COLOR_GREEN
+
+/obj/item/scalpel/advanced/Initialize()
+	set_light(1)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/scalpel/advanced/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/scalpel/advanced/attack_self(mob/user)
+	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
+	var/obj/item/circular_saw/advanced/saw = new /obj/item/circular_saw/advanced(drop_location())
+	to_chat(user, "<span class='notice'>You incease the power, now it can cut bones.</span>")
+	qdel(src)
+	user.put_in_active_hand(saw)
+
+/obj/item/circular_saw/advanced
+	name = "laser scalpel"
+	desc = "An advanced scalpel which uses laser technology to cut. It's set to saw mode."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "saw_a"
+	hitsound = 'sound/weapons/blade1.ogg'
+	force = 17
+	toolspeed = 0.7
+	sharpness = IS_SHARP_ACCURATE
+	light_color = LIGHT_COLOR_GREEN
+
+/obj/item/circular_saw/advanced/Initialize()
+	set_light(2)
+	START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/circular_saw/advanced/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/circular_saw/advanced/attack_self(mob/user)
+	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
+	var/obj/item/scalpel/advanced/scalpel = new /obj/item/scalpel/advanced(drop_location())
+	to_chat(user, "<span class='notice'>You lower the power.</span>")
+	qdel(src)
+	user.put_in_active_hand(scalpel)
+
+/obj/item/retractor/advanced
+	name = "mechanical pinches"
+	desc = "An agglomerate of rods and gears. It resembles a retractor."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "retractor_a"
+	toolspeed = 0.7
+
+/obj/item/retractor/advanced/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/hemostat/advanced/hemostat = new /obj/item/hemostat/advanced(drop_location())
+	to_chat(user, "<span class='notice'>You set the [src] to hemostat mode.</span>")
+	qdel(src)
+	user.put_in_active_hand(hemostat)
+
+/obj/item/hemostat/advanced
+	name = "mechanical pinches"
+	desc = "An agglomerate of rods and gears. It resembles an hemostat."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "hemostat_a"
+	toolspeed = 0.7
+
+/obj/item/hemostat/advanced/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/change_drill.ogg',50,1)
+	var/obj/item/retractor/advanced/retractor = new /obj/item/retractor/advanced(drop_location())
+	to_chat(user, "<span class='notice'>You set the [src] to retractor mode.</span>")
+	qdel(src)
+	user.put_in_active_hand(retractor)
+
+/obj/item/surgicaldrill/advanced
+	name = "searing tool"
+	desc = "It projects a high power laser used for medical application. It's set to drilling mode."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "surgicaldrill_a"
+	hitsound = 'sound/items/welder.ogg'
+	toolspeed = 0.7
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/surgicaldrill/advanced/Initialize()
+	set_light(1)
+	START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/surgicaldrill/advanced/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/surgicaldrill/advanced/attack_self(mob/user)
+	playsound(get_turf(user),'sound/weapons/tap.ogg',50,1)
+	var/obj/item/cautery/advanced/cautery = new /obj/item/cautery/advanced(drop_location())
+	to_chat(user, "<span class='notice'>You dilate the lenses, setting it to mending mode.</span>")
+	qdel(src)
+	user.put_in_active_hand(cautery)
+
+/obj/item/cautery/advanced
+	name = "searing tool"
+	desc = "It projects a high power laser used for medical application. It's set to mending mode."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "cautery_a"
+	hitsound = 'sound/items/welder2.ogg'
+	force = 15
+	toolspeed = 0.7
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/cautery/advanced/Initialize()
+	set_light(1)
+	START_PROCESSING(SSobj, src)
+	..()
+
+/obj/item/cautery/advanced/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/cautery/advanced/attack_self(mob/user)
+	playsound(get_turf(user),'sound/items/welderdeactivate.ogg',50,1)
+	var/obj/item/surgicaldrill/advanced/surgicaldrill = new /obj/item/surgicaldrill/advanced(drop_location())
+	to_chat(user, "<span class='notice'>You focus the lensess, it is now set to drilling mode.</span>")
+	qdel(src)
+	user.put_in_active_hand(surgicaldrill)
