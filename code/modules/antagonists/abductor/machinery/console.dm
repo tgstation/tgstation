@@ -134,7 +134,12 @@
 		dummy.overlays = snap.overlays
 		disguises2[name] = dummy
 
-	var/entry_name = show_radial_menu(usr, src, disguises2)
+	var/entry_name
+	if(remote)
+		entry_name = show_radial_menu(usr, camera.eyeobj, disguises2)
+	else
+		entry_name = show_radial_menu(usr, src, disguises2)
+
 	var/datum/icon_snapshot/chosen = disguises[entry_name]
 	if(chosen && vest && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
