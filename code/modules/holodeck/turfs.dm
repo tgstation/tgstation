@@ -143,3 +143,27 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	tiled_dirt = FALSE
+
+/turf/open/floor/holofloor/ice
+	name = "ice sheet"
+	desc = "A sheet of solid ice. Looks slippery."
+	icon = 'icons/turf/floors/ice_turf.dmi'
+	icon_state = "unsmooth"
+	baseturfs = /turf/open/floor/holofloor/ice
+	slowdown = 1
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+/turf/open/floor/holofloor/ice/smooth
+	icon_state = "smooth"
+	smooth = SMOOTH_MORE | SMOOTH_BORDER
+	canSmoothWith = list(/turf/open/floor/plating/ice/smooth, /turf/open/floor/plating/ice, /turf/open/floor/holofloor/ice)
+	baseturfs = /turf/open/floor/holofloor/ice/smooth
+
+/turf/open/floor/holofloor/ice/Initialize()
+	. = ..()
+	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
+
+

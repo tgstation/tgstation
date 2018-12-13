@@ -49,6 +49,14 @@
 	baseturfs = /turf/closed/indestructible/sandstone
 	smooth = SMOOTH_TRUE
 
+/turf/closed/indestructible/wood
+	name = "wooden wall"
+	desc = "A wall with wooden plating. Stiff."
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood"
+	baseturfs = /turf/closed/indestructible/wood
+	smooth = SMOOTH_TRUE
+
 /turf/closed/indestructible/oldshuttle/corner
 	icon_state = "corner"
 
