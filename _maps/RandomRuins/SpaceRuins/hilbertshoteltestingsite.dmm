@@ -201,6 +201,14 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/ruin/unpowered/no_grav)
+"U" = (
+/turf/open/floor/plasteel/stairs/medium{
+	initial_gas_mix = "TEMP=2.7"
+	},
+/area/ruin/unpowered/no_grav)
+"X" = (
+/turf/open/floor/plasteel/stairs/left,
+/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
 a
@@ -784,7 +792,7 @@ B
 B
 B
 d
-K
+X
 b
 b
 b
@@ -812,7 +820,7 @@ B
 B
 B
 I
-K
+U
 b
 b
 b
