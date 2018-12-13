@@ -227,7 +227,7 @@
 			return TRUE
 	if(firer && !ignore_source_check)
 		var/mob/checking = firer
-		if((A == firer) || ((A in firer.buckled_mobs) || (istype(checking) && (A == checking.buckled))) || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
+		if((A == firer) || (((A in firer.buckled_mobs) || (istype(checking) && (A == checking.buckled))) && (A != original)) || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
 			trajectory_ignore_forcemove = TRUE
 			forceMove(get_turf(A))
 			trajectory_ignore_forcemove = FALSE
