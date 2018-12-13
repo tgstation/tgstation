@@ -1,7 +1,7 @@
 /datum/component/anti_magic
 	var/magic = FALSE
 	var/holy = FALSE
-	var/charges = -1
+	var/charges = INFINITY
 	var/blocks_self = TRUE
 	var/datum/callback/reaction
 	var/datum/callback/expire
@@ -37,7 +37,7 @@
 		reaction.Invoke(user, major)
 		if(major)
 			charges--
-			if(charges == 0)
+			if(charges <= 0)
 				expire.Invoke(user)
 		return COMPONENT_BLOCK_MAGIC
 		
