@@ -88,6 +88,10 @@
 	name = "Space Cola"
 	list_reagents = list("cola" = 50)
 
+obj/item/reagent_containers/food/drinks/drinkingglass/filled/narsour
+	name = "Narsour"
+	list_reagents = list("narsour" = 50)
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list("nuka_cola" = 50)
