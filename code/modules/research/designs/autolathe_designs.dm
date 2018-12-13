@@ -304,7 +304,7 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/kitchen/knife
-	category = list("initial","Dinnerware")
+	category = list("initial","Dinnerware", "Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/fork
@@ -313,7 +313,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 80)
 	build_path = /obj/item/kitchen/fork
-	category = list("initial","Dinnerware")
+	category = list("initial","Dinnerware", "Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/tray
@@ -322,7 +322,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 3000)
 	build_path = /obj/item/storage/bag/tray
-	category = list("initial","Dinnerware")
+	category = list("initial","Dinnerware", "Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/bowl
@@ -331,7 +331,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 500)
 	build_path = /obj/item/reagent_containers/glass/bowl
-	category = list("initial","Dinnerware")
+	category = list("initial","Dinnerware", "Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/drinking_glass
@@ -340,7 +340,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 500)
 	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass
-	category = list("initial","Dinnerware")
+	category = list("initial","Dinnerware", "Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/shot_glass
@@ -349,7 +349,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
-	category = list("initial","Dinnerware")
+	category = list("initial","Dinnerware", "Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/shaker
@@ -358,7 +358,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 1500)
 	build_path = /obj/item/reagent_containers/food/drinks/shaker
-	category = list("initial","Dinnerware")
+	category = list("initial","Dinnerware", "Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/cultivator
@@ -622,7 +622,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/light/tube
-	category = list("initial", "Construction")
+	category = list("initial", "Construction", "Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/light_bulb
@@ -631,7 +631,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_GLASS = 100)
 	build_path = /obj/item/light/bulb
-	category = list("initial", "Construction")
+	category = list("initial", "Construction", "Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/camera_assembly
@@ -656,7 +656,7 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GLASS = 20)
 	build_path = /obj/item/reagent_containers/syringe
-	category = list("initial", "Medical")
+	category = list("initial", "Medical", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/prox_sensor
