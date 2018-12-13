@@ -47,6 +47,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/inert_mutation 	= DWARFISM //special mutation that can be found in the genepool. Dont leave empty or changing species will be a headache
 	var/deathsound //used to set the mobs deathsound on species change
+	var/list/special_step_sounds
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()

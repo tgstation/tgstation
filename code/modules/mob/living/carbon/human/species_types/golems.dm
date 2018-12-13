@@ -807,3 +807,70 @@
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.ventcrawler = initial(C.ventcrawler)
+
+/datum/species/golem/bronze
+	name = "Bronze Golem"
+	id = "bronze golem"
+	prefix = "Bronze"
+	special_names = null
+	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
+	fixed_mut_color = "cd7f32"
+	info_text = "As a <span class='danger'>Bronze Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
+	special_step_sounds = list('sound/machines/clockcult/integration_cog_install.ogg', 'sound/magic/clockwork/fellowship_armory.ogg' )
+	mutantears = /obj/item/organ/ears/bronze
+	var/last_gong_time = 0
+	var/gong_cooldown = 150
+
+/datum/species/golem/bronze/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+	if(!(world.time > last_gong_time + gong_cooldown))
+		return 0
+	if(P.flag == "bullet" || P.flag == "bomb")
+		gong(H)
+		return 0
+
+/datum/species/golem/bronze/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_gong_time + gong_cooldown)
+		gong(H)
+
+/datum/species/golem/bronze/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+	..()
+	if(world.time > last_gong_time + gong_cooldown &&  M.a_intent != INTENT_HELP)
+		gong(H)
+
+/datum/species/golem/bronze/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_gong_time + gong_cooldown)
+		gong(H)
+
+/datum/species/golem/bronze/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_gong_time + gong_cooldown)
+		gong(H)
+
+/datum/species/golem/bronze/proc/gong(mob/living/carbon/human/H)
+	last_gong_time = world.time
+	for(var/mob/living/M in get_hearers_in_view(7,H))
+		if(M.stat == DEAD)	//F
+			return
+		if(M == H)
+			H.show_message("<span class='narsiesmall'>You cringe with pain as your body rings around you!</span>", 2)
+			H.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
+			H.soundbang_act(2, 0, 100, 1)
+			H.jitteriness += 7
+		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))	
+		message_admins("[distance]")
+		switch(distance)
+			if(0 to 1)
+				M.show_message("<span class='narsiesmall'>GONG!</span>", 2)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
+				M.soundbang_act(1, 0, 30, 3)
+				M.jitteriness += 4
+			if(2 to 3)
+				M.show_message("<span class='cult'>GONG!</span>", 2)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 75, TRUE)
+				M.soundbang_act(1, 0, 15, 2)
+				M.jitteriness += 3
+			else
+				M.show_message("<span class='warning'>GONG!</span>", 2)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 50, TRUE)
