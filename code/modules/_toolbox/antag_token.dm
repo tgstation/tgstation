@@ -76,7 +76,7 @@ client/verb/check_antag_token()
 				return 0
 			if(mob.mind.assigned_role)
 				var/datum/job/J = SSjob.GetJob("[mob.mind.assigned_role]")
-				if(J && J.antagonist_immune)
+				if((CONFIG_GET(flag/protect_roles_from_antagonist) && SSticker && SSticker.mode && (mob.mind.assigned_role in SSticker.mode.restricted_jobs))||(J && J.antagonist_immune))
 					to_chat(src, "<B>A [mob.mind.assigned_role] cannot be an antagonist.</B>")
 					return 0
 		var/success = 0

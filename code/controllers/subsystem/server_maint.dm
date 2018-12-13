@@ -37,8 +37,11 @@ SUBSYSTEM_DEF(server_maint)
 				to_chat(C, "<span class='danger'>You have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span>")
 				qdel(C)
 
-		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
-			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")
+		/*if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
+			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")*/
+		//turning this into just a proc, it was messing with client inactivity.
+		if(C && (world.time - C.connection_time >= PING_BUFFER_TIME))
+			C.update_ping_proc(world.time+world.tick_lag*TICK_USAGE_REAL/100)
 
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return

@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(antagtokens)
 		for(var/client/C in GLOB.clients)
 			if(IsGuestKey(C.key)) //guests dont get counted.
 				continue
-			if(C.is_afk())
+			if(C.is_afk(300))
 				continue
 			if(!isliving(C.mob) && !isobserver(C.mob))//no sitting in the lobby for antag tokens.
 				continue

@@ -90,6 +90,9 @@
 			qdel(src)
 
 //Toggle exosuits for different aesthetic styles (hoodies, suit jacket buttons, etc)
+/obj/item/clothing/suit/toggle/New()
+	toggle_icons()
+	..()
 
 /obj/item/clothing/suit/toggle/AltClick(mob/user)
 	..()
@@ -108,16 +111,19 @@
 		return 0
 
 	to_chat(usr, "<span class='notice'>You toggle [src]'s [togglename].</span>")
+	toggle_icons()
+	usr.update_inv_wear_suit()
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
+/obj/item/clothing/suit/toggle/proc/toggle_icons()
 	if(src.suittoggled)
 		src.icon_state = "[initial(icon_state)]"
 		src.suittoggled = FALSE
 	else if(!src.suittoggled)
 		src.icon_state = "[initial(icon_state)]_t"
 		src.suittoggled = TRUE
-	usr.update_inv_wear_suit()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/clothing/suit/toggle/examine(mob/user)
 	..()

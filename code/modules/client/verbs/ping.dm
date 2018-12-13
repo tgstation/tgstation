@@ -1,6 +1,17 @@
 /client/verb/update_ping(time as num)
 	set instant = TRUE
 	set name = ".update_ping"
+	update_ping_proc(time)
+	/*var/ping = pingfromtime(time)
+	lastping = ping
+	if (!avgping)
+		avgping = ping
+	else
+		avgping = MC_AVERAGE_SLOW(avgping, ping)*/
+
+/client/proc/update_ping_proc(time)
+	if(!time || !isnum(time))
+		time = 0
 	var/ping = pingfromtime(time)
 	lastping = ping
 	if (!avgping)
