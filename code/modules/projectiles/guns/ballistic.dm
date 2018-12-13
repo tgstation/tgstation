@@ -119,7 +119,7 @@
 		return
 	if (magazine.ammo_count())
 		chambered = magazine.get_round()
-		if (bolt_type != BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
+		if (bolt_type != BOLT_TYPE_NO_BOLT && bolt_type != BOLT_TYPE_OPEN)
 			chambered.forceMove(src)
 	
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
