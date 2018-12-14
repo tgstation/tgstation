@@ -14,7 +14,7 @@
 			if(W.use_tool(src, user, W.pull_effort))
 				new W.loom_result(drop_location())
 				user.show_message("<span class='notice'>You weave the [W.name] into a workable fabric.</span>", 1)
-				W.amount = (W.amount - 2)
+				W.amount = (W.amount - 4)
 				if(W.amount < 1)
 					qdel(W)
 		else

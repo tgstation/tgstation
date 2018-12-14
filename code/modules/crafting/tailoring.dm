@@ -1,5 +1,5 @@
 /datum/crafting_recipe/durathread_vest
-	name = "Makeshift Durathread Vest"
+	name = "Durathread Vest"
 	result = /obj/item/clothing/suit/armor/vest/durathread
 	reqs = list(/obj/item/stack/sheet/cloth/durathread = 5,
 				/obj/item/stack/sheet/leather = 4)
@@ -7,7 +7,7 @@
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/durathread_helmet
-	name = "Makeshift Durathread Helmet"
+	name = "Durathread Helmet"
 	result = /obj/item/clothing/head/helmet/durathread
 	reqs = list(/obj/item/stack/sheet/cloth/durathread = 4,
 				/obj/item/stack/sheet/leather = 3,

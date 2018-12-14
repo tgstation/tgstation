@@ -274,7 +274,7 @@
 	strip_delay = 100
 
 /obj/item/clothing/head/helmet/durathread
-	name = "makeshift helmet"
+	name = "durathread helmet"
 	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
 	icon_state = "durathread"
 	item_state = "durathread"
