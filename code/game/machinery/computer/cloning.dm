@@ -277,19 +277,19 @@
 						dat += "<span class='linkOff'>Cannot Load From Disk: Access Denied</span>"
 					if(diskette.fields["SE"])
 						if(!include_se)
-							dat += "<br /><a href='byond://?src=[REF(src)];task=include_se'>Include SE</a>"
+							dat += "<br /><a href='byond://?src=[REF(src)];task=include_se'>Currently Excluding SE</a>"
 						else
-							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_se'>Exclude SE</a>"
+							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_se'>Currently Including SE</a>"
 					if(diskette.fields["UI"])
 						if(!include_ui)
-							dat += "<br /><a href='byond://?src=[REF(src)];task=include_ui'>Include UI</a>"
+							dat += "<br /><a href='byond://?src=[REF(src)];task=include_ui'>Currently Excluding UI</a>"
 						else
-							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_ui'>Exclude UI</a>"
+							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_ui'>Currently Including UI</a>"
 					if(diskette.fields["UE"])
 						if(!include_ue)
-							dat += "<br /><a href='byond://?src=[REF(src)];task=include_ue'>Include UE</a>"
+							dat += "<br /><a href='byond://?src=[REF(src)];task=include_ue'>Currently Excluding UE</a>"
 						else
-							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_ue'>Exclude UE</a>"
+							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_ue'>Currently Including UE</a>"
 
 
 					dat += "<br /><a href='byond://?src=[REF(src)];disk=save'>Save to Disk</a>"
