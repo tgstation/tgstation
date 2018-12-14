@@ -174,3 +174,11 @@
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
+
+/obj/structure/fluff/snowlegion
+	name = "snowlegion"
+	desc = "Looks like that weird kid with the tiger plushie has been round here again."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "snowlegion"
+	anchored = TRUE
+	deconstructible = FALSE
