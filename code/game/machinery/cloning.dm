@@ -137,7 +137,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -145,15 +145,14 @@
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
+	if(clonemind.last_death != last_death) //The soul has advanced, the record has not.
+		return FALSE
 	if(!QDELETED(clonemind.current))
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
 			return FALSE
-	if(clonemind.active)	//somebody is using that mind
-		if( ckey(clonemind.key)!=ckey )
-			return FALSE
-	else
+	if(!clonemind.active)
 		// get_ghost() will fail if they're unable to reenter their body
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)

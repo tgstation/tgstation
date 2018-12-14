@@ -57,6 +57,9 @@
 			else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
 				. = pod
 
+/proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R)
+	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"]) 	
+
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
 		return
@@ -71,9 +74,9 @@
 			return
 
 		if(pod.occupant)
-			continue	//how though?
+			break
 
-		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"]))
+		if(grow_clone_from_record(pod, R))
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 			records -= R
 
@@ -326,12 +329,7 @@
 		playsound(src, "terminal_type", 25, 0)
 		active_record = find_record("id", href_list["view_rec"], records)
 		if(active_record)
-			if(!active_record.fields["ckey"])
-				records -= active_record
-				active_record = null
-				temp = "<font class='bad'>Record Corrupt</font>"
-			else
-				menu = 3
+			menu = 3
 		else
 			temp = "Record missing."
 
@@ -415,7 +413,7 @@
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(pod.growclone(C.fields["ckey"], C.fields["name"], C.fields["UI"], C.fields["SE"], C.fields["mind"], C.fields["mrace"], C.fields["features"], C.fields["factions"], C.fields["quirks"], C.fields["bank_account"]))
+			else if(grow_clone_from_record(pod, C))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				records.Remove(C)
@@ -464,12 +462,8 @@
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return
-	if ((!mob_occupant.ckey) || (!mob_occupant.client))
+	if (isnull(mob_occupant.mind))
 		scantemp = "<font class='bad'>Mental interface failure.</font>"
-		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-		return
-	if (find_record("ckey", mob_occupant.ckey, records))
-		scantemp = "<font class='average'>Subject already in database.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
 	if(SSeconomy.full_ancap)
@@ -488,7 +482,6 @@
 		var/datum/species/rando_race = pick(GLOB.roundstart_races)
 		R.fields["mrace"] = rando_race.type
 
-	R.fields["ckey"] = mob_occupant.ckey
 	R.fields["name"] = mob_occupant.real_name
 	R.fields["id"] = copytext(md5(mob_occupant.real_name), 2, 6)
 	R.fields["UE"] = dna.unique_enzymes
@@ -503,8 +496,8 @@
 		var/datum/quirk/T = V
 		R.fields["quirks"][T.type] = T.clone_data()
 
-	if (!isnull(mob_occupant.mind)) //Save that mind so traitors can continue traitoring after cloning.
-		R.fields["mind"] = "[REF(mob_occupant.mind)]"
+	R.fields["mind"] = "[REF(mob_occupant.mind)]"
+	R.fields["last_death"] = mob_occupant.stat == DEAD ? mob_occupant.mind.last_death : -1
 
    //Add an implant if needed
 	var/obj/item/implant/health/imp
@@ -515,7 +508,11 @@
 		imp = new /obj/item/implant/health(mob_occupant)
 		imp.implant(mob_occupant)
 	R.fields["imp"] = "[REF(imp)]"
-
+	var/old_record = find_record("mind", REF(mob_occupant.mind), records)
+	if(old_record)
+		records -= old_record
+		scantemp = "Record updated."
+	else
+		scantemp = "Subject successfully scanned."
 	records += R
-	scantemp = "Subject successfully scanned."
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
