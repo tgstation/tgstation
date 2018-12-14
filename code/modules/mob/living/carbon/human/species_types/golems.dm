@@ -859,12 +859,12 @@
 			H.soundbang_act(2, 0, 100, 1)
 			H.jitteriness += 7
 		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))	
-		message_admins("[distance]")
 		switch(distance)
 			if(0 to 1)
 				M.show_message("<span class='narsiesmall'>GONG!</span>", 2)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 				M.soundbang_act(1, 0, 30, 3)
+				M.confused += 10
 				M.jitteriness += 4
 			if(2 to 3)
 				M.show_message("<span class='cult'>GONG!</span>", 2)
