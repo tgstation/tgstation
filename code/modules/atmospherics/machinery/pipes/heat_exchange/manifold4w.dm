@@ -2,7 +2,7 @@
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
 	icon = 'icons/obj/atmospherics/pipes/he-manifold.dmi'
-	icon_state = "manifold4w"
+	icon_state = "manifold4w-2"
 
 	name = "4-way pipe manifold"
 	desc = "A manifold composed of heat-exchanging pipes."

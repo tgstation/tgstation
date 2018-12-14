@@ -921,7 +921,7 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
-	
+
 /mob/living/carbon/proc/hypnosis_vulnerable()
 	if(has_trait(TRAIT_MINDSHIELD))
 		return FALSE
