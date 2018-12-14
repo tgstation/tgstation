@@ -1,5 +1,3 @@
-#define INVESTIGATE_FILE(subject) file("[GLOB.log_directory]/[subject].html")
-
 /atom/proc/investigate_log(message, subject)
 	if(!message || !subject)
 		return
