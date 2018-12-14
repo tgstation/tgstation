@@ -64,6 +64,12 @@
 	desc = "A wondrous decorated Christmas tree. It has presents!"
 	var/gift_type = /obj/item/a_gift/anything
 	var/unlimited = FALSE
+	var/static/list/took_presents //shared between all xmas trees
+
+/obj/structure/flora/tree/pine/xmas/presents/Initialize()
+	. = ..()
+	if(!took_presents)
+		took_presents = list()
 
 /obj/structure/flora/tree/pine/xmas/presents/attack_hand(mob/living/user)
 	. = ..()
@@ -72,11 +78,14 @@
 	if(!user.ckey)
 		return
 
-	if(GLOB.got_xmas_presents[user.ckey] && !unlimited)
+	if(took_presents[user.ckey] && !unlimited)
 		to_chat(user, "<span class='warning'>There are no presents with your name on.</span>")
 		return
 	to_chat(user, "<span class='warning'>After a bit of rummaging, you locate a gift with your name on it!</span>")
-	GLOB.got_xmas_presents[user.ckey] = TRUE
+
+	if(!unlimited)
+		took_presents[user.ckey] = TRUE
+
 	var/obj/item/G = new gift_type(src)
 	user.put_in_hands(G)
 
