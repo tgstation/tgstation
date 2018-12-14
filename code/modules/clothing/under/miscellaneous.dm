@@ -753,7 +753,7 @@
 
 /obj/item/clothing/under/durathread
 	name = "durathread jumpsuit"
-	desc = "A jumpsuit made from durathread, its resilient fibres provides some protection to the wearer."
+	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
 	icon_state = "durathread"
 	item_state = "durathread"
 	item_color = "durathread"
