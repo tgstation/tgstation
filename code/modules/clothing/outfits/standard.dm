@@ -437,4 +437,10 @@
 	glasses = /obj/item/clothing/glasses/meson/night
 	ears = /obj/item/radio/headset/headset_cent/commander
 	back = /obj/item/storage/backpack/holding
-	backpack_contents = list(/obj/item/card/emag=1,	/obj/item/flashlight/emp/debug=1, /obj/item/construction/rcd/combat=1, /obj/item/gun/magic/wand/resurrection/debug=1, /obj/item/melee/transforming/energy/axe=1)
+	backpack_contents = list(/obj/item/card/emag=1,\
+		/obj/item/flashlight/emp/debug=1,\
+		/obj/item/construction/rcd/combat=1,\
+		/obj/item/gun/magic/wand/resurrection/debug=1,\
+		/obj/item/melee/transforming/energy/axe=1,\
+		/obj/item/storage/box/stockparts/deluxe=1,\
+		/obj/item/storage/part_replacer/bluespace=1)
