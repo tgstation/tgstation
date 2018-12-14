@@ -35,6 +35,8 @@
 #define TRAIT_NOHUNGER			"no_hunger"
 #define TRAIT_EASYDISMEMBER		"easy_dismember"
 #define TRAIT_LIMBATTACHMENT 	"limb_attach"
+#define TRAIT_NOLIMBDISABLE		"no_limb_disable"
+#define TRAIT_EASYLIMBDISABLE	"easy_limb_disable"
 #define TRAIT_TOXINLOVER		"toxinlover"
 #define TRAIT_NOBREATH			"no_breath"
 #define TRAIT_ANTIMAGIC			"anti_magic"
@@ -55,8 +57,12 @@
 #define TRAIT_PARALYSIS_R_ARM	"para-r-arm"
 #define TRAIT_PARALYSIS_L_LEG	"para-l-leg"
 #define TRAIT_PARALYSIS_R_LEG	"para-r-leg"
+#define TRAIT_DISK_VERIFIER     "disk-verifier"
 #define TRAIT_NOMOBSWAP            "no-mob-swap"
 #define TRAIT_XRAY_VISION       "xray_vision"
+#define TRAIT_ABDUCTOR_TRAINING "abductor-training"
+#define TRAIT_ABDUCTOR_SCIENTIST_TRAINING "abductor-scientist-training"
+#define TRAIT_SURGEON           "surgeon"
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -89,6 +95,7 @@
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
+#define JOB_TRAIT "job"
 
 // unique trait sources, still defines
 #define STATUE_MUTE "statue"
@@ -102,3 +109,6 @@
 #define EYES_COVERED "eyes_covered"
 #define CULT_EYES "cult_eyes"
 #define SCRYING_ORB "scrying-orb"
+#define ABDUCTOR_ANTAGONIST "abductor-antagonist"
+#define NUKEOP_TRAIT "nuke-op"
+#define DEATHSQUAD_TRAIT "deathsquad"

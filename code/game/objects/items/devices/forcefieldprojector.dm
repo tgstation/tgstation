@@ -27,6 +27,10 @@
 			qdel(F)
 			return
 	var/turf/T = get_turf(target)
+	var/obj/structure/projected_forcefield/found_field = locate() in T
+	if(found_field)
+		to_chat(user, "<span class='warning'>There is already a forcefield in that location!</span>")
+		return
 	if(T.density)
 		return
 	if(get_dist(T,src) > field_distance_limit)

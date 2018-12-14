@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Metastation: Adds missing access requirement to xenobiology airlock buttons."

@@ -1,0 +1,4 @@
+author: "YoYoBatty"
+delete-after: True
+changes: 
+  - rscadd: "Blurry eyes now actually blur instead of an overlay."

@@ -78,13 +78,20 @@
 	icon_state = "solarpanel"
 
 
-
 /turf/open/floor/plasteel/freezer
 	icon_state = "freezerfloor"
-/turf/open/floor/plasteel/freezer/kitchen_coldroom
-	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+
 /turf/open/floor/plasteel/freezer/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+
+/turf/open/floor/plasteel/kitchen_coldroom
+	name = "cold room floor"
+	initial_gas_mix = KITCHEN_COLDROOM_ATMOS
+
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor
+	icon_state = "freezerfloor"
+
 
 /turf/open/floor/plasteel/grimy
 	icon_state = "grimy"
