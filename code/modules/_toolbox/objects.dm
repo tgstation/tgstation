@@ -254,3 +254,180 @@
 	overlays += shades*/
 	M *= 0.6
 	transform = M
+
+//**********************
+//Chemical Reagents Book
+//**********************
+
+/obj/item/book/manual/wiki/chemistry/Initialize(roundstart)
+	. = ..()
+	if(roundstart)
+		var/bookcount = 0
+		for(var/obj/item/book/manual/falaskian_chemistry/F in loc)
+			bookcount++
+		if(!bookcount)
+			new /obj/item/book/manual/falaskian_chemistry(loc)
+
+/obj/item/book/manual/falaskian_chemistry
+	name = "Full Guide to Chemical Recipes"
+	desc = "A full list of every chemical recipe in the known universe."
+	author = "Mangoulium XCIX"
+	unique = 1
+	icon_state = "book8"
+	window_size = "970x710"
+
+/obj/item/book/manual/falaskian_chemistry/New()
+	..()
+	var/image/I = new()
+	I.icon = 'icons/obj/chemical.dmi'
+	I.icon_state = "dispenser"
+	I.transform = I.transform*0.5
+	overlays += I
+
+/obj/item/book/manual/falaskian_chemistry/update_icon()
+
+/obj/item/book/manual/falaskian_chemistry/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/pen))
+		return
+	. = ..()
+
+/obj/item/book/manual/falaskian_chemistry/attack_self(mob/user)
+	if(is_blind(user))
+		to_chat(user, "<span class='warning'>As you are trying to read, you suddenly feel very stupid!</span>")
+		return
+	if(ismonkey(user))
+		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
+		return
+	if(dat)
+		var/sizex = 970
+		var/sizey = 710
+		if(window_size)
+			var/xlocation = findtext(window_size,"x",1,length(window_size)+1)
+			if(xlocation && isnum(text2num(copytext(window_size,1,xlocation))) && isnum(text2num(copytext(window_size,xlocation,length(window_size)+1))))
+				sizex = text2num(copytext(window_size,1,xlocation))
+				sizey = text2num(copytext(window_size,xlocation,length(window_size)+1))
+		var/datum/browser/popup = new(user, "book", "[name]", sizex, sizey)
+		popup.set_content(dat)
+		popup.open()
+		title = name
+		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
+		user.SendSignal(COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+		onclose(user, "book")
+	else
+		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
+
+/obj/item/book/manual/falaskian_chemistry/Initialize()
+	. = ..()
+	if(!dat)
+		for(var/obj/item/book/manual/falaskian_chemistry/F in world)
+			if(F == src)
+				continue
+			if(F.dat)
+				dat = F.dat
+				break
+	if(!dat)
+		populate_reagents()
+
+/obj/item/book/manual/falaskian_chemistry/proc/populate_reagents()
+	var/list/reactions = list()
+	for(var/path in typesof(/datum/chemical_reaction))
+		var/datum/chemical_reaction/C = new path()
+		if(!C.name || !C.id || !C.results || !C.results.len)
+			qdel(C)
+			continue
+		for(var/t in C.results)
+			reactions[t] = C
+	var/list/all_reagents = list()
+	var/list/crafted_reagents = list(
+		"Medicine" = list(),
+		"Toxin" = list(),
+		"Ethanol" = list(),
+		"Consumable" = list(),
+		"Drug" = list(),
+		"Other Various Chemicals" = list())
+	for(var/path in typesof(/datum/reagent))
+		var/datum/reagent/R = new path()
+		if(!R.id || R.id == "reagent")
+			qdel(R)
+			continue
+		all_reagents[R.id] = R
+		if(R.id in reactions)
+			if(istype(R,/datum/reagent/medicine))
+				crafted_reagents["Medicine"][R.name] = R
+			else if(istype(R,/datum/reagent/toxin))
+				crafted_reagents["Toxin"][R.name] = R
+			else if(istype(R,/datum/reagent/consumable))
+				if(istype(R,/datum/reagent/consumable/ethanol))
+					crafted_reagents["Ethanol"][R.name] = R
+				else
+					crafted_reagents["Consumable"][R.name] = R
+			else if(istype(R,/datum/reagent/drug))
+				crafted_reagents["Drug"][R.name] = R
+			else
+				crafted_reagents["Other Various Chemicals"][R.name] = R
+		else
+			qdel(R)
+	for(var/cat in crafted_reagents)
+		crafted_reagents[cat] = sortList(crafted_reagents[cat])
+	dat = "<h1>All Chemical Recipes In The Known Universe</h1>"
+	dat += "Written by [author].<BR>"
+	for(var/cat in crafted_reagents)
+		dat += "<h2>[cat]</h2><br>"
+		for(var/crafted in crafted_reagents[cat])
+			var/datum/reagent/R = crafted_reagents[cat][crafted]
+			dat += "<B>[R.name]</B><BR>"
+			if(R.description)
+				dat += "[R.description]<BR>"
+			var/datum/chemical_reaction/C = reactions[R.id]
+			dat += "<B>Formula:</B> "
+			var/totalparts = 0
+			for(var/i=1,i<=C.required_reagents.len,i++)
+				var/t = C.required_reagents[i]
+				var/parts = "1 part"
+				if(C.required_reagents[t] && isnum(C.required_reagents[t]))
+					parts = C.required_reagents[t]
+					totalparts += parts
+					if(parts > 1)
+						parts = "[parts] parts"
+					else
+						parts = "[parts] part"
+				var/partname = t
+				if(t in all_reagents)
+					var/datum/reagent/R2 = all_reagents[t]
+					partname = R2.name
+				dat += "[parts] [partname]"
+				if(i < C.required_reagents.len)
+					dat += ", "
+			dat += "<BR>"
+			if(C.required_catalysts.len)
+				dat += "<B>Catalyst"
+				if(C.required_catalysts.len > 1)
+					dat += "s"
+				dat += ":</B> "
+				for(var/t in C.required_catalysts)
+					var/units = 1
+					if(C.required_catalysts[t])
+						units = C.required_catalysts[t]
+					if(units > 1)
+						units = "[units] units"
+					else
+						units = "[units] unit"
+					var/catalystname = t
+					if(t in all_reagents)
+						var/datum/reagent/R2 = all_reagents[t]
+						catalystname = R2.name
+					dat += "[units] of [catalystname]"
+				dat += "<BR>"
+			var/craftedunits = C.results[R.id]
+			if(totalparts && craftedunits && totalparts != craftedunits)
+				if(craftedunits > 1)
+					craftedunits = "[craftedunits] units"
+				else
+					craftedunits = "[craftedunits] unit"
+				dat += "Results in [craftedunits] for every [totalparts] units in reagents.<BR>"
+			if(C.required_temp)
+				var/heated = "heated"
+				if(C.is_cold_recipe)
+					heated = "cooled"
+				dat += "Must be [heated] to a temperature of [C.required_temp]<BR>"
+			dat += "<BR>"
