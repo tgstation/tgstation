@@ -159,12 +159,12 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	var/succumbed = FALSE
 
-	var/fullcrit = InFullCritical()
-	if((InCritical() && !fullcrit) || message_mode == MODE_WHISPER)
+	var/cansuccumb = CanSuccumb()
+	if((InCritical() && !cansuccumb) || message_mode == MODE_WHISPER)
 		message_range = 1
 		message_mode = MODE_WHISPER
 		src.log_talk(message, LOG_WHISPER)
-		if(fullcrit)
+		if(cansuccumb)
 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
 			// If we cut our message short, abruptly end it with a-..
 			var/message_len = length(message)

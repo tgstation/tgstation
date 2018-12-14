@@ -310,13 +310,15 @@
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
-	if (InCritical())
+	if (CanSuccumb())
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
+	else
+		to_chat(src, "<span class='notice'>You don't feel like giving up yet.</span>")
 
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE)
 	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)))
@@ -332,6 +334,9 @@
 
 /mob/living/proc/InFullCritical()
 	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
+
+/mob/living/proc/CanSuccumb()
+	return (health <= HEALTH_THRESHOLD_SUCCUMB && stat == UNCONSCIOUS)
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
