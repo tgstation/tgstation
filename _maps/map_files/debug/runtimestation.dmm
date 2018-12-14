@@ -484,22 +484,16 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "bC" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/base)
+/obj/structure/fluff/snowlegion,
+/turf/open/floor/holofloor/snow,
+/area/awaymission/snowdin/outside)
 "bD" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "bE" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
-	dir = 8
-	},
+/obj/structure/mineral_door/woodrustic,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "bF" = (
@@ -2110,7 +2104,10 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/base)
 "gv" = (
-/obj/structure/chair/comfy/black,
+/obj/structure/chair/comfy/plywood{
+	icon_state = "plywood_chair";
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "gw" = (
@@ -3128,8 +3125,9 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "ja" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
+/obj/structure/chair/comfy/plywood{
+	icon_state = "plywood_chair";
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
@@ -3565,22 +3563,14 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "ki" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C3";
-	name = "Privacy Shutters"
+/obj/structure/mineral_door/woodrustic{
+	name = "Gender's Mansion"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kj" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C4";
-	name = "Privacy Shutters"
+/obj/structure/mineral_door/woodrustic{
+	name = "Abandoned Chapel"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
@@ -3605,22 +3595,17 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "km" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
 	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C2";
-	name = "Privacy Shutters"
+/turf/open/floor/holofloor/snow,
+/turf/open/indestructible/cobble/side{
+	dir = 4
 	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/base)
+/area/awaymission/snowdin/outside)
 "kn" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C5";
-	name = "Privacy Shutters"
+/obj/structure/mineral_door/woodrustic{
+	name = "Vehicle Garage"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
@@ -3668,13 +3653,7 @@
 /turf/open/indestructible/cobble/side,
 /area/awaymission/snowdin/outside)
 "ku" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C1";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
+/obj/structure/chair/comfy/plywood,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kv" = (
@@ -3685,12 +3664,9 @@
 	},
 /area/awaymission/snowdin/outside)
 "kw" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C6";
-	name = "Privacy Shutters"
+/obj/structure/chair/comfy/plywood{
+	icon_state = "plywood_chair";
+	dir = 1
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
@@ -3718,31 +3694,25 @@
 	},
 /area/awaymission/snowdin/outside)
 "kA" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
+/obj/structure/fence{
+	pixel_x = 12
 	},
-/turf/open/floor/holofloor/snow,
-/turf/open/indestructible/cobble/side{
-	dir = 4
+/obj/structure/fence/corner{
+	pixel_x = 12;
+	pixel_y = 12
 	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
 /area/awaymission/snowdin/outside)
 "kB" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C10";
-	name = "Privacy Shutters"
+/obj/structure/mineral_door/woodrustic{
+	name = "Bar"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kC" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C8";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/airlock{
-	name = "Cabin"
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
@@ -3775,22 +3745,14 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kG" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C11";
-	name = "Privacy Shutters"
+/obj/structure/mineral_door/woodrustic{
+	name = "Costume Shop"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kH" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C7";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/airlock{
-	name = "Cabin"
+/obj/structure/mineral_door/woodrustic{
+	name = "Gambling Den"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
@@ -3829,12 +3791,12 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kM" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
-	id = "C12";
+	id = "C3";
 	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
@@ -3987,17 +3949,46 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/base)
 "lk" = (
-/obj/structure/fence{
-	pixel_x = 12
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C4";
+	name = "Privacy Shutters"
 	},
-/obj/structure/fence/corner{
-	pixel_x = 12;
-	pixel_y = 12
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
 	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "ll" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C2";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"lm" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C5";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"ln" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C1";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"lo" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
@@ -4006,7 +3997,17 @@
 	dir = 1
 	},
 /area/awaymission/snowdin/outside)
-"lm" = (
+"lp" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C6";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"lq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
@@ -4015,14 +4016,14 @@
 	dir = 1
 	},
 /area/awaymission/snowdin/outside)
-"ln" = (
+"lr" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
 /turf/open/indestructible/cobble,
 /turf/open/indestructible/cobble/corner,
 /area/awaymission/snowdin/outside)
-"lo" = (
+"ls" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
@@ -4031,7 +4032,7 @@
 	dir = 4
 	},
 /area/awaymission/snowdin/outside)
-"lp" = (
+"lt" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
@@ -4040,6 +4041,56 @@
 	dir = 8
 	},
 /area/awaymission/snowdin/outside)
+"lu" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C10";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"lv" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C8";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"lw" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C11";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"lx" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C7";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Cabin"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"ly" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C12";
+	name = "Privacy Shutters"
+	},
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 
 (1,1,1) = {"
 aa
@@ -13569,7 +13620,7 @@ ae
 ae
 aQ
 ae
-ae
+bC
 aQ
 ae
 aS
@@ -16830,7 +16881,7 @@ eg
 fr
 ko
 ks
-ae
+bC
 fk
 ae
 ae
@@ -16900,13 +16951,13 @@ aU
 aU
 aU
 aU
-ku
+ln
 ea
 er
 er
 er
 fz
-kH
+lx
 aU
 aU
 aU
@@ -18315,10 +18366,10 @@ at
 at
 eK
 eK
-lm
+lq
 er
 er
-lo
+ls
 ae
 ae
 ae
@@ -19121,13 +19172,13 @@ aU
 aU
 aU
 aU
-km
+ll
 ea
 er
 er
 er
 fz
-kC
+lv
 aU
 aU
 aU
@@ -19716,7 +19767,7 @@ aJ
 aJ
 aJ
 aJ
-bv
+kH
 aJ
 aJ
 ae
@@ -20111,7 +20162,7 @@ iN
 iM
 aU
 aU
-bv
+kB
 ea
 er
 er
@@ -20536,10 +20587,10 @@ ae
 ae
 ae
 ae
-ll
-er
-er
 lo
+er
+er
+ls
 dx
 ah
 ae
@@ -20906,7 +20957,7 @@ ag
 ae
 ae
 an
-lk
+kA
 hu
 hH
 aJ
@@ -21267,7 +21318,7 @@ aJ
 aJ
 aJ
 aJ
-bv
+bE
 aJ
 aJ
 dx
@@ -21337,18 +21388,18 @@ aU
 aJ
 ae
 jN
+ku
 aU
 aU
 aU
 aU
-aU
-ki
+kM
 ea
 er
 er
 er
 fz
-km
+ll
 aU
 aU
 aU
@@ -22137,7 +22188,7 @@ fp
 er
 er
 fz
-bv
+kG
 aU
 jH
 jK
@@ -22280,11 +22331,11 @@ cZ
 cZ
 cZ
 cZ
-bv
+bE
 cZ
 cZ
 cZ
-bv
+kj
 aA
 aA
 aA
@@ -22482,11 +22533,11 @@ cZ
 eH
 cZ
 cZ
-bv
+aJ
 cZ
 eH
 cZ
-bv
+aJ
 ax
 ax
 at
@@ -23489,7 +23540,7 @@ aJ
 aJ
 aJ
 aJ
-bv
+bE
 aJ
 aJ
 ae
@@ -23531,12 +23582,12 @@ ea
 er
 er
 eZ
-kA
-kA
-kA
-kA
-kA
-kA
+km
+km
+km
+km
+km
+km
 es
 eZ
 es
@@ -23700,7 +23751,7 @@ ae
 ae
 ae
 ae
-ae
+bC
 ae
 ae
 ah
@@ -24955,7 +25006,7 @@ io
 aJ
 hy
 hp
-gv
+ku
 cB
 cx
 aW
@@ -25145,19 +25196,19 @@ er
 fd
 ae
 aJ
-gv
+ku
 cB
-dE
+kw
 aU
-gv
+ku
 hK
-dE
+kw
 aJ
 aU
 aJ
 hy
 hp
-gv
+ku
 cB
 cB
 aW
@@ -25347,21 +25398,21 @@ er
 fd
 ae
 aJ
-gv
+ku
 gR
-dE
+kw
 aU
-gv
+ku
 cx
-dE
+kw
 hz
 hp
 iD
 hp
 hp
 hp
-dk
-dk
+ja
+ja
 aW
 ae
 dY
@@ -25382,13 +25433,13 @@ aU
 aU
 aU
 aU
-kj
+lk
 ea
 er
 er
 er
 fz
-kB
+lu
 aU
 aU
 aU
@@ -25970,7 +26021,7 @@ hp
 hL
 aJ
 aJ
-ae
+bC
 fp
 er
 fd
@@ -26195,7 +26246,7 @@ ae
 gd
 er
 er
-lp
+lt
 ae
 ae
 ae
@@ -26575,7 +26626,7 @@ hQ
 ca
 hp
 hp
-bv
+kC
 ea
 er
 er
@@ -27605,13 +27656,13 @@ aU
 aU
 aU
 aU
-kn
+lm
 ea
 er
 er
 er
 fz
-kG
+lw
 aU
 aU
 aU
@@ -27771,21 +27822,21 @@ er
 fe
 ae
 aJ
-gv
+ku
 cx
-dE
+kw
 aU
-gv
+ku
 cB
-dE
+kw
 hz
 hp
 iF
 hp
 hp
 hp
-ja
-ja
+gv
+gv
 aW
 ae
 ae
@@ -27973,19 +28024,19 @@ er
 fd
 ae
 aJ
-gv
+ku
 gU
-dE
+kw
 aU
-gv
+ku
 cB
-dE
+kw
 aJ
 aU
 aJ
 hy
 hp
-gv
+ku
 cB
 cB
 aW
@@ -28187,7 +28238,7 @@ iq
 aJ
 hy
 hp
-gv
+ku
 cx
 cB
 aW
@@ -28415,10 +28466,10 @@ ae
 ae
 ae
 ah
-ln
+lr
 er
 er
-lp
+lt
 ae
 ae
 ae
@@ -28727,7 +28778,7 @@ bu
 aJ
 aJ
 aJ
-bv
+bE
 aJ
 aJ
 aJ
@@ -29127,7 +29178,7 @@ aJ
 bc
 aU
 aJ
-bC
+gv
 ca
 ca
 ca
@@ -29531,7 +29582,7 @@ aW
 bd
 aU
 aJ
-bE
+ja
 ca
 cc
 cc
@@ -29562,29 +29613,29 @@ eq
 er
 er
 eZ
-kA
-kA
-kA
-kA
-kA
-kA
+km
+km
+km
+km
+km
+km
 fC
 fC
-kA
-kA
-kA
+km
+km
+km
 er
 er
 er
 es
 es
 eZ
-kA
+km
 gf
 gf
 gf
-kA
-kA
+km
+km
 es
 gq
 ae
@@ -29732,7 +29783,7 @@ ac
 aW
 bd
 aU
-bv
+bE
 aU
 ca
 ca
@@ -29740,7 +29791,7 @@ ca
 ca
 cE
 aU
-bv
+ki
 at
 at
 at
@@ -29828,13 +29879,13 @@ aU
 aU
 aU
 aU
-kw
+lp
 ea
 er
 er
 er
 fz
-kM
+ly
 aU
 aU
 aU
@@ -29935,7 +29986,7 @@ aW
 bd
 aU
 aJ
-bC
+gv
 ca
 cc
 cc
@@ -30180,7 +30231,7 @@ fI
 aJ
 aJ
 aW
-bv
+kn
 aW
 aJ
 aJ
@@ -30339,7 +30390,7 @@ aJ
 bc
 aU
 aJ
-bE
+ja
 ca
 ca
 ca
@@ -30747,7 +30798,7 @@ bM
 aJ
 aJ
 aJ
-bv
+bE
 aJ
 aJ
 cM
@@ -33598,7 +33649,7 @@ ab
 ae
 ae
 ae
-ae
+bC
 gd
 es
 gs
@@ -36625,7 +36676,7 @@ ae
 ae
 ae
 ae
-ae
+bC
 ae
 ae
 lb
@@ -36833,7 +36884,7 @@ fP
 ae
 ae
 ae
-ae
+bC
 ae
 ab
 ab
@@ -37633,7 +37684,7 @@ ab
 ae
 ae
 ae
-ae
+bC
 ae
 ae
 an
@@ -37841,7 +37892,7 @@ ae
 an
 aE
 ae
-ae
+bC
 ae
 ae
 ab
@@ -38035,7 +38086,7 @@ ab
 ab
 ab
 ae
-ae
+bC
 ae
 ae
 ae
@@ -38244,7 +38295,7 @@ ae
 an
 at
 au
-ae
+bC
 ae
 ae
 ae
@@ -38440,7 +38491,7 @@ ab
 ab
 ae
 ae
-ae
+bC
 ae
 ae
 an
@@ -38644,12 +38695,12 @@ aA
 aD
 ae
 ae
-ae
+bC
 an
 aE
 ae
 ae
-ae
+bC
 ae
 ab
 ab
@@ -39256,7 +39307,7 @@ kv
 at
 aE
 ae
-ae
+bC
 ab
 ab
 ab
@@ -39660,7 +39711,7 @@ at
 at
 at
 aE
-ae
+bC
 ae
 ab
 ab
