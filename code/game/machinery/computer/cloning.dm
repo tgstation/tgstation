@@ -6,6 +6,7 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/cloning
+	req_access = list(ACCESS_GENETICS) //for modifying records
 	var/obj/machinery/dna_scannernew/scanner //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
@@ -14,7 +15,12 @@
 	var/menu = 1 //Which menu screen to display
 	var/list/records = list()
 	var/datum/data/record/active_record
-	var/obj/item/disk/data/diskette //Mostly so the geneticist can steal everything.
+	var/obj/item/disk/data/diskette //Incompatible format to genetics machine
+	//select which parts of the diskette to load
+	var/include_se = FALSE //mutations
+	var/include_ui = FALSE //appearance 
+	var/include_ue = FALSE //blood type, UE, and name
+
 	var/loading = FALSE // Nice loading text
 	var/autoprocess = FALSE
 
@@ -243,7 +249,8 @@
 				for(var/key in active_record.fields["SE"])
 					if(key != RACEMUT)
 						var/val = active_record.fields["SE"][key]
-						dat +="[val]<br />"
+						var/alias = GLOB.all_mutations[key].alias
+						dat +="[alias]: [val]<br />"
 
 				dat += "</span><br />"
 
@@ -259,7 +266,31 @@
 					if(diskette.fields["SE"])
 						L += "Structural Enzymes"
 					dat += english_list(L, "Empty", " + ", " + ")
-					dat += "<br /><a href='byond://?src=[REF(src)];disk=load'>Load from Disk</a>"
+					var/obj/item/card/id/C = user.get_idcard(TRUE)
+					var/can_load = FALSE
+					if(C)
+						if(check_access(C))
+							can_load = TRUE
+					if(can_load)
+						dat += "<br /><a href='byond://?src=[REF(src)];disk=load'>Load From Disk</a>"
+					else
+						dat += "<span class='linkOff'>Cannot Load From Disk: Access Denied</span>"
+					if(diskette.fields["SE"])
+						if(!include_se)
+							dat += "<br /><a href='byond://?src=[REF(src)];task=include_se'>Include SE</a>"
+						else
+							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_se'>Exclude SE</a>"
+					if(diskette.fields["UI"])
+						if(!include_ui)
+							dat += "<br /><a href='byond://?src=[REF(src)];task=include_ui'>Include UI</a>"
+						else
+							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_ui'>Exclude UI</a>"
+					if(diskette.fields["UE"])
+						if(!include_ue)
+							dat += "<br /><a href='byond://?src=[REF(src)];task=include_ue'>Include UE</a>"
+						else
+							dat += "<br /><a href='byond://?src=[REF(src)];task=exclude_ue'>Exclude UE</a>"
+
 
 					dat += "<br /><a href='byond://?src=[REF(src)];disk=save'>Save to Disk</a>"
 					dat += "</div>"
@@ -269,11 +300,14 @@
 		if(4)
 			if (!active_record)
 				menu = 2
-			dat = "[temp]<br>"
-			dat += "<h3>Confirm Record Deletion</h3>"
-
-			dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Scan card to confirm.</a></b><br>"
-			dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
+			var/obj/item/card/id/C = user.get_idcard(TRUE)
+			if(C)
+				if(check_access(C))
+					dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Please confirm.</a></b><br>"
+					dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
+				else
+					src.temp = "<font class='bad'>Access Denied.</font>"
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
@@ -298,6 +332,18 @@
 				autoprocess = FALSE
 				STOP_PROCESSING(SSmachines, src)
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			if("include_se")
+				include_se = TRUE
+			if("exclude_se")
+				include_se = FALSE
+			if("include_ui")
+				include_ui = TRUE
+			if("exclude_ui")
+				include_ui = FALSE
+			if("include_ue")
+				include_ue = TRUE
+			if("exclude_ue")
+				include_ue = FALSE
 
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
 		scantemp = ""
@@ -350,7 +396,9 @@
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
 			if("load")
-				if (!diskette || !istype(diskette.fields) || !diskette.fields["name"] || !diskette.fields)
+						
+
+				if (!diskette || !istype(diskette.fields))
 					temp = "<font class='bad'>Load error.</font>"
 					updateUsrDialog()
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -362,8 +410,15 @@
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 
-				for(var/key in diskette.fields)
-					active_record.fields[key] = diskette.fields[key]
+				if(include_ue)
+					overwrite_field_if_available(active_record, diskette, "UE")
+					overwrite_field_if_available(active_record, diskette, "name")
+					overwrite_field_if_available(active_record, diskette, "blood_type")
+				if(include_ui)
+					overwrite_field_if_available(active_record, diskette, "UI")
+				if(include_se)
+					overwrite_field_if_available(active_record, diskette, "SE")
+					
 				temp = "Load successful."
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 
