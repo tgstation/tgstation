@@ -107,7 +107,7 @@
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"
-	desc =  "A beret made from durathread, its resilient fibres provides some protection to the wearer."
+	desc =  "A beret made from durathread, its resilient fibres provide some protection to the wearer."
 	icon_state = "beretdurathread"
 	item_color = null
 	armor = list("melee" = 15, "bullet" = 5, "laser" = 15, "energy" = 5, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 5)
