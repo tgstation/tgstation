@@ -83,7 +83,6 @@
 
 		if(grow_clone_from_record(pod, R))
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-			records -= R
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	scanner = findscanner()
@@ -464,7 +463,6 @@
 			else if(grow_clone_from_record(pod, C))
 				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-				records.Remove(C)
 				if(active_record == C)
 					active_record = null
 				menu = 1
