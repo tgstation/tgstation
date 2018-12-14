@@ -5,16 +5,26 @@
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
 	beating = TRUE
+	var/true_name = "baseline placebo referencer"
 	var/cooldown_low = 300
 	var/cooldown_high = 300
 	var/next_activation = 0
 	var/uses // -1 For infinite
-	var/human_only = 0
-	var/active = 0
+	var/human_only = FALSE
+	var/active = FALSE
 
 	var/mind_control_uses = 1
 	var/mind_control_duration = 1800
 	var/active_mind_control = FALSE
+
+/obj/item/organ/heart/gland/Initialize()
+	. = ..()
+	icon_state = pick(list("health", "spider", "slime", "emp", "species", "egg", "vent", "mindshock", "viral"))
+
+/obj/item/organ/heart/gland/examine(mob/user)
+	. = ..()
+	if(user.has_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
+		to_chat(user, "<span class='notice'>It is \a [true_name].</span>")
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -95,6 +105,7 @@
 	return
 
 /obj/item/organ/heart/gland/heals
+	true_name = "coherency harmonizer"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
@@ -109,6 +120,7 @@
 	owner.adjustOxyLoss(-20)
 
 /obj/item/organ/heart/gland/slime
+	true_name = "gastric animation galvanizer"
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = -1
@@ -130,6 +142,7 @@
 	Slime.Leader = owner
 
 /obj/item/organ/heart/gland/mindshock
+	true_name = "neural crosstalk uninhibitor"
 	cooldown_low = 400
 	cooldown_high = 700
 	uses = -1
@@ -156,6 +169,7 @@
 				H.hallucination += 60
 
 /obj/item/organ/heart/gland/pop
+	true_name = "anthropmorphic translocator"
 	cooldown_low = 900
 	cooldown_high = 1800
 	uses = -1
@@ -171,6 +185,7 @@
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
+	true_name = "pliant cartilage enabler"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -183,6 +198,7 @@
 	owner.ventcrawler = VENTCRAWLER_ALWAYS
 
 /obj/item/organ/heart/gland/viral
+	true_name = "contamination incubator"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -217,6 +233,7 @@
 	return A
 
 /obj/item/organ/heart/gland/trauma
+	true_name = "white matter randomiser"
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = 5
@@ -235,6 +252,7 @@
 			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 
 /obj/item/organ/heart/gland/spiderman
+	true_name = "araneae cloister accelerator"
 	cooldown_low = 450
 	cooldown_high = 900
 	uses = -1
@@ -249,6 +267,7 @@
 	S.directive = "Protect your nest inside [owner.real_name]."
 
 /obj/item/organ/heart/gland/egg
+	true_name = "roe/enzymatic synthesizer"
 	cooldown_low = 300
 	cooldown_high = 400
 	uses = -1
@@ -264,6 +283,7 @@
 	new /obj/item/reagent_containers/food/snacks/egg/gland(T)
 
 /obj/item/organ/heart/gland/electric
+	true_name = "electron accumulator/discharger"
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = -1
@@ -289,6 +309,7 @@
 	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, 1)
 
 /obj/item/organ/heart/gland/chem
+	true_name = "intrinsic pharma-provider"
 	cooldown_low = 50
 	cooldown_high = 50
 	uses = -1
@@ -297,7 +318,7 @@
 	var/list/possible_reagents = list()
 
 /obj/item/organ/heart/gland/chem/Initialize()
-	..()
+	. = ..()
 	for(var/X in subtypesof(/datum/reagent/drug))
 		var/datum/reagent/R = X
 		possible_reagents += initial(R.id)
@@ -315,6 +336,7 @@
 	..()
 
 /obj/item/organ/heart/gland/plasma
+	true_name = "effluvium sanguine-synonym emitter"
 	cooldown_low = 1200
 	cooldown_high = 1800
 	uses = -1

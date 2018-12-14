@@ -28,7 +28,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!isabductor(user))
+	if(!user.has_trait(TRAIT_ABDUCTOR_TRAINING))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100, target = src))
 			TeleporterSend()
