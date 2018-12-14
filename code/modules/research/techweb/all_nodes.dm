@@ -462,7 +462,7 @@
 	display_name = "Upgraded Cybernetic Organs"
 	description = "We have the technology to upgrade him."
 	prereq_ids = list("cyber_organs")
-	design_ids = list("cybernetic_liver_u", "cybernetic_lungs_u")
+	design_ids = list("cybernetic_heart_u", "cybernetic_liver_u", "cybernetic_lungs_u")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 	export_price = 5000
 
@@ -534,8 +534,8 @@
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
 	display_name = "Experimental Tools"
-	description = "Highly advanced construction tools."
-	design_ids = list("exwelder", "jawsoflife", "handdrill")
+	description = "Highly advanced tools."
+	design_ids = list("exwelder", "jawsoflife", "handdrill", "laserscalpel", "mechanicalpinches", "searingtool")
 	prereq_ids = list("adv_engi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
