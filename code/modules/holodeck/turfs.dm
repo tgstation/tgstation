@@ -134,6 +134,15 @@
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
 
+/turf/open/floor/holofloor/snow/attack_hand(mob/living/user)
+	. = ..()
+	if(.)
+		return
+	user.visible_message("<span class='notice'>[user] scroops up some snow from [src].</span>", "<span class='notice'>You scoop up some snow from [src].</span>")
+	var/obj/item/toy/snowball/S = new(get_turf(src))
+	user.put_in_hands(S)
+
+
 /turf/open/floor/holofloor/snow/cold
 	initial_gas_mix = "nob=7500;TEMP=2.7"
 

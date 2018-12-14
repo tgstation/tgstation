@@ -13,28 +13,46 @@
 /obj/structure/fluff/bus/passable/seat{
 	icon_state = "backseat"
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = ""
+	},
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
 /area/shuttle/arrival)
 "d" = (
+/obj/structure/fluff/bus/passable/seat{
+	icon_state = "backseat"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = ""
+	},
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
 /area/shuttle/arrival)
 "e" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat";
-	pixel_y = 15
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = ""
 	},
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
 /area/shuttle/arrival)
 "f" = (
-/obj/structure/fluff/bus/passable/seat/driver{
-	icon_state = "driverseat";
-	pixel_y = 17
+/obj/structure/fluff/bus/passable/seat{
+	icon_state = "backseat";
+	pixel_y = 15
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = ""
 	},
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
@@ -43,6 +61,9 @@
 "g" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "hoodtop"
+	},
+/obj/docking_port/mobile/arrivals{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/arrival)
@@ -98,11 +119,13 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/arrival)
 "p" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
+/obj/structure/fluff/bus/passable/seat/driver{
+	icon_state = "driverseat";
+	pixel_y = 17
 	},
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = ""
 	},
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
@@ -117,58 +140,71 @@
 	icon_state = "bus"
 	},
 /area/shuttle/arrival)
+"r" = (
+/obj/structure/fluff/bus/passable/seat{
+	icon_state = "backseat"
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 4;
+	icon_state = ""
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/plasteel/dark{
+	icon_state = "bus"
+	},
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 a
-p
+c
 q
 k
 "}
 (2,1,1) = {"
 a
-c
+r
 h
 l
 "}
 (3,1,1) = {"
 a
-c
+d
 h
 m
 "}
 (4,1,1) = {"
 a
-d
+e
 h
 l
 "}
 (5,1,1) = {"
 a
-e
+f
 h
 l
 "}
 (6,1,1) = {"
 a
-c
+d
 h
 l
 "}
 (7,1,1) = {"
 a
-c
+d
 h
 l
 "}
 (8,1,1) = {"
 a
-c
+r
 h
 l
 "}
 (9,1,1) = {"
 a
-f
+p
 i
 n
 "}

@@ -71,7 +71,7 @@
 /area/awaymission/snowdin/outside)
 "ap" = (
 /turf/closed/wall/mineral/snow,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "aq" = (
 /obj/structure/flora/grass/brown,
 /turf/open/floor/holofloor/snow,
@@ -182,37 +182,22 @@
 	},
 /area/awaymission/snowdin/outside)
 "aG" = (
-/obj/structure/festivus,
 /turf/open/floor/holofloor/snow{
 	icon_state = "snow_dug"
 	},
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "aH" = (
 /turf/closed/indestructible/wood,
 /area/awaymission/snowdin/outside)
 "aI" = (
-/obj/structure/rack,
-/obj/item/grown/log{
-	pixel_x = 2;
-	pixel_y = 2
+/obj/structure/festivus,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
 	},
-/obj/item/grown/log{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/grown/log,
-/obj/item/grown/log,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "aJ" = (
-/obj/structure/rack,
-/obj/item/hatchet,
-/obj/item/hatchet{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/turf/closed/indestructible/wood,
+/area/awaymission/snowdin/base)
 "aK" = (
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
@@ -245,20 +230,52 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "aR" = (
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/obj/structure/rack,
+/obj/item/grown/log{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/grown/log{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/grown/log,
+/obj/item/grown/log,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "aS" = (
 /turf/open/floor/plating/airless,
 /area/awaymission/snowdin/outside)
 "aT" = (
+/obj/structure/rack,
+/obj/item/hatchet,
+/obj/item/hatchet{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"aU" = (
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"aV" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
+	},
+/area/awaymission/snowdin/base)
+"aW" = (
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"aX" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofacorner";
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"aU" = (
+/area/awaymission/snowdin/base)
+"aY" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_left"
 	},
@@ -266,35 +283,11 @@
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"aV" = (
+/area/awaymission/snowdin/base)
+"aZ" = (
 /obj/item/reagent_containers/food/drinks/bottle/gin,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"aW" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"aX" = (
-/obj/structure/easel,
-/obj/item/canvas/twentythreeXnineteen,
-/obj/item/canvas/twentythreeXtwentythree,
-/obj/item/canvas/twentythreeXtwentythree,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"aY" = (
-/obj/structure/chair/sofa{
-	icon_state = "sofaend_right"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"aZ" = (
-/obj/structure/chair/sofa/corner,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ba" = (
 /obj/item/bodybag,
 /turf/open/floor/plating/airless,
@@ -304,19 +297,16 @@
 /turf/open/floor/holofloor/ice/smooth,
 /area/awaymission/snowdin/outside)
 "bc" = (
-/obj/structure/chair/sofa{
-	icon_state = "sofamiddle";
-	dir = 4
-	},
+/obj/structure/bookcase/random,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "bd" = (
-/obj/structure/chair/sofa{
-	icon_state = "sofamiddle";
-	dir = 8
-	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXnineteen,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "be" = (
 /obj/effect/turf_decal/caution,
 /turf/open/floor/plating/airless,
@@ -333,28 +323,25 @@
 /turf/open/floor/holofloor/ice/smooth,
 /area/awaymission/snowdin/outside)
 "bh" = (
-/obj/structure/table/wood,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/item/pen/red,
-/obj/item/pen/red,
+/obj/structure/chair/sofa{
+	icon_state = "sofaend_right"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "bi" = (
-/obj/structure/mineral_door/wood,
+/obj/structure/chair/sofa/corner,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "bj" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
+/obj/structure/chair/sofa{
+	icon_state = "sofamiddle";
+	dir = 4
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/turf/open/floor/plating/airless,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "bk" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -373,23 +360,12 @@
 /turf/open/floor/plasteel/dark/side,
 /area/awaymission/snowdin/outside)
 "bm" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
+/obj/structure/chair/sofa{
+	icon_state = "sofamiddle";
+	dir = 8
 	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable,
-/obj/structure/cable{
-	icon_state = "1-4"
-	},
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "bn" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -435,6 +411,68 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "bu" = (
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/item/pen/red,
+/obj/item/pen/red,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"bv" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"bw" = (
+/obj/machinery/shieldwallgen{
+	active = 2;
+	anchored = 1;
+	power = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/turf/open/floor/plating/airless,
+/area/awaymission/snowdin/base)
+"bx" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"by" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/highsecurity{
+	name = "Bio Containment";
+	req_one_access_txt = "47"
+	},
+/turf/open/floor/plasteel/dark/side,
+/area/awaymission/snowdin/base)
+"bz" = (
+/obj/machinery/shieldwallgen{
+	active = 2;
+	anchored = 1;
+	power = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"bA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/outside)
+"bB" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_right";
 	dir = 4
@@ -444,66 +482,26 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"bv" = (
-/obj/structure/table/wood,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/item/pen/red,
-/obj/item/pen/red,
-/turf/open/space/basic,
-/area/awaymission/snowdin/outside)
-"bw" = (
+/area/awaymission/snowdin/base)
+"bC" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"bx" = (
+/area/awaymission/snowdin/base)
+"bD" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"by" = (
+/area/awaymission/snowdin/base)
+"bE" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"bz" = (
-/obj/structure/chair/sofa{
-	icon_state = "sofaend_left";
-	dir = 8
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"bA" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"bB" = (
-/obj/structure/flora/ausbushes/sunnybush,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"bC" = (
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"bD" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/mob/living/simple_animal/hostile/carp,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"bE" = (
-/obj/structure/flora/ausbushes/palebush,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "bF" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -542,12 +540,23 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "bM" = (
-/turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/obj/structure/table/wood,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/item/pen/red,
+/obj/item/pen/red,
+/turf/open/space/basic,
+/area/awaymission/snowdin/base)
 "bN" = (
-/obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/obj/structure/chair/sofa{
+	icon_state = "sofaend_left";
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "bO" = (
 /obj/structure/alien/resin/wall,
 /turf/open/floor/plating/airless,
@@ -575,19 +584,16 @@
 	},
 /area/awaymission/snowdin/outside)
 "bR" = (
-/obj/structure/displaycase,
-/turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "bS" = (
-/obj/structure/flora/ausbushes/reedbush,
+/obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "bT" = (
-/mob/living/simple_animal/crab{
-	faction = list("carp")
-	},
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "bU" = (
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/plating/airless,
@@ -608,55 +614,38 @@
 	},
 /area/awaymission/snowdin/outside)
 "bX" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/wine,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/machinery/light{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/carp,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "bY" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/obj/structure/flora/ausbushes/palebush,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "bZ" = (
-/obj/structure/piano{
-	icon_state = "piano"
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "ca" = (
-/obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/folder,
-/obj/item/storage/fancy/candle_box{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/storage/fancy/candle_box{
-	pixel_x = 3
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
 "cb" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/rum,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "cc" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/drinks/bottle/whiskey,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/structure/displaycase,
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
 "cd" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "ce" = (
 /obj/item/shard,
 /turf/open/floor/plating/airless,
@@ -694,31 +683,28 @@
 	},
 /area/awaymission/snowdin/outside)
 "cj" = (
-/obj/structure/table/wood,
-/obj/item/camera,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/mob/living/simple_animal/crab{
+	faction = list("carp")
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "ck" = (
 /obj/structure/table/wood,
-/obj/item/storage/fancy/donut_box,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "cl" = (
-/obj/structure/rack,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/awaymission/snowdin/base)
 "cm" = (
-/obj/machinery/shieldwallgen{
-	active = 2;
-	anchored = 1;
-	power = 1
+/obj/structure/piano{
+	icon_state = "piano"
 	},
-/obj/structure/cable{
-	icon_state = "1-8"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/airless,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "cn" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -765,26 +751,95 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "ct" = (
+/obj/structure/table/wood,
+/obj/item/clipboard,
+/obj/item/folder,
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/storage/fancy/candle_box{
+	pixel_x = 3
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cu" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/rum,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cv" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/drinks/bottle/whiskey,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cw" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cx" = (
+/obj/structure/table/wood,
+/obj/item/camera,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cy" = (
+/obj/structure/table/wood,
+/obj/item/storage/fancy/donut_box,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cz" = (
+/obj/structure/rack,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cA" = (
+/obj/machinery/shieldwallgen{
+	active = 2;
+	anchored = 1;
+	power = 1
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/awaymission/snowdin/base)
+"cB" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cC" = (
 /obj/structure/bed,
 /obj/item/bedsheet/ian,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = 32
+	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cu" = (
+/area/awaymission/snowdin/base)
+"cD" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"cv" = (
+/area/awaymission/snowdin/base)
+"cE" = (
 /turf/open/floor/plasteel/stairs,
-/area/awaymission/snowdin/outside)
-"cw" = (
+/area/awaymission/snowdin/base)
+"cF" = (
 /obj/structure/bed,
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/item/bedsheet/ian,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = 32
+	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cx" = (
+/area/awaymission/snowdin/base)
+"cG" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
 /obj/item/reagent_containers/food/drinks/mug/coco,
@@ -793,22 +848,26 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"cH" = (
+/obj/structure/camera_assembly,
+/turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
-"cy" = (
+"cI" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cz" = (
+/area/awaymission/snowdin/base)
+"cJ" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cA" = (
+/area/awaymission/snowdin/base)
+"cK" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
 /obj/item/reagent_containers/food/drinks/mug/coco,
@@ -816,49 +875,45 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"cB" = (
+/area/awaymission/snowdin/base)
+"cL" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"cC" = (
+/area/awaymission/snowdin/base)
+"cM" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-05"
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cD" = (
+/area/awaymission/snowdin/base)
+"cN" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cE" = (
+/area/awaymission/snowdin/base)
+"cO" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cF" = (
+/area/awaymission/snowdin/base)
+"cP" = (
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"cG" = (
+/area/awaymission/snowdin/base)
+"cQ" = (
 /obj/structure/bed/dogbed/ian,
 /mob/living/simple_animal/pet/dog/corgi/Ian,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cH" = (
-/obj/structure/camera_assembly,
-/turf/open/floor/holofloor/snow,
-/area/awaymission/snowdin/outside)
-"cI" = (
+/area/awaymission/snowdin/base)
+"cR" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cJ" = (
+/area/awaymission/snowdin/base)
+"cS" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck/cas{
 	pixel_x = -5;
@@ -869,74 +924,74 @@
 	pixel_y = 5
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cK" = (
+/area/awaymission/snowdin/base)
+"cT" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
 /obj/item/folder,
 /obj/item/pen/fourcolor,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cL" = (
+/area/awaymission/snowdin/base)
+"cU" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"cM" = (
+/area/awaymission/snowdin/base)
+"cV" = (
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cN" = (
+/area/awaymission/snowdin/base)
+"cW" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cO" = (
+/area/awaymission/snowdin/base)
+"cX" = (
 /obj/item/candle,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cP" = (
+/area/awaymission/snowdin/base)
+"cY" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lantern,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cQ" = (
+/area/awaymission/snowdin/base)
+"cZ" = (
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"cR" = (
+/area/awaymission/snowdin/base)
+"da" = (
 /obj/structure/table/wood/fancy,
 /obj/item/flashlight/lantern,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cS" = (
+/area/awaymission/snowdin/base)
+"db" = (
 /obj/item/candle,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cT" = (
+/area/awaymission/snowdin/base)
+"dc" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cU" = (
+/area/awaymission/snowdin/base)
+"dd" = (
 /obj/structure/flora/rock/icy{
 	desc = "She's so beautiful. You feel embarrassed for even looking at her.";
 	icon_state = "basalt2";
@@ -950,177 +1005,115 @@
 	dir = 4;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"cV" = (
+/area/awaymission/snowdin/base)
+"de" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"cW" = (
+/area/awaymission/snowdin/base)
+"df" = (
 /obj/structure/chair/office/dark,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cX" = (
+/area/awaymission/snowdin/base)
+"dg" = (
 /obj/item/clothing/suit/hooded/ian_costume,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"cY" = (
+/area/awaymission/snowdin/base)
+"dh" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"cZ" = (
+/area/awaymission/snowdin/base)
+"di" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"da" = (
+/area/awaymission/snowdin/base)
+"dj" = (
 /obj/structure/table/wood,
 /obj/item/storage/pill_bottle/dice,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"db" = (
+/area/awaymission/snowdin/base)
+"dk" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"dc" = (
+/area/awaymission/snowdin/base)
+"dl" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"dd" = (
+/area/awaymission/snowdin/base)
+"dm" = (
 /obj/item/candle,
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"de" = (
+/area/awaymission/snowdin/base)
+"dn" = (
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"df" = (
+/area/awaymission/snowdin/base)
+"do" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"dg" = (
+/area/awaymission/snowdin/base)
+"dp" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/book/bible,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"dh" = (
+/area/awaymission/snowdin/base)
+"dq" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/book/bible{
 	icon_state = "koran"
 	},
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"di" = (
+/area/awaymission/snowdin/base)
+"dr" = (
 /obj/structure/table/wood/fancy,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"dj" = (
+/area/awaymission/snowdin/base)
+"ds" = (
 /obj/structure/fermenting_barrel,
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"dk" = (
+/area/awaymission/snowdin/base)
+"dt" = (
 /obj/item/candle,
 /turf/open/floor/plasteel{
 	dir = 8;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"dl" = (
+/area/awaymission/snowdin/base)
+"du" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel{
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
-"dm" = (
+/area/awaymission/snowdin/base)
+"dv" = (
 /obj/structure/table/wood,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/lamp,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"dn" = (
-/obj/structure/table/wood,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/folder,
-/obj/item/pen,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"do" = (
-/obj/item/cartridge/lawyer,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"dp" = (
-/obj/item/twohanded/required/kirbyplants{
-	tag = "icon-plant-02";
-	icon_state = "plant-02"
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"dq" = (
-/obj/structure/chair/comfy/black{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"dr" = (
-/obj/structure/chair/comfy/brown{
-	dir = 1
-	},
-/obj/machinery/light,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"ds" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-05"
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"dt" = (
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "chapel"
-	},
-/area/awaymission/snowdin/outside)
-"du" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "chapel"
-	},
-/area/awaymission/snowdin/outside)
-"dv" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "chapel"
-	},
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "dw" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -1137,34 +1130,20 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "dy" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "chapel"
-	},
-/area/awaymission/snowdin/outside)
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/folder,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "dz" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "chapel"
-	},
-/area/awaymission/snowdin/outside)
+/obj/item/cartridge/lawyer,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "dA" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
-	},
-/turf/open/floor/holofloor/snow,
-/turf/open/indestructible/cobble/side{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
+/obj/effect/landmark/observer_start,
+/turf/open/indestructible/cobble,
+/area/space)
 "dB" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1175,41 +1154,27 @@
 	},
 /area/awaymission/snowdin/outside)
 "dC" = (
-/obj/structure/fence{
-	pixel_x = 12
-	},
-/obj/structure/fence/corner{
-	pixel_x = 12;
-	pixel_y = 12
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
-"dD" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
-	dir = 1
-	},
-/obj/machinery/light{
+/obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "chapel"
+/obj/effect/landmark/start,
+/turf/open/indestructible/cobble/side{
+	dir = 8
 	},
 /area/awaymission/snowdin/outside)
+"dD" = (
+/obj/item/twohanded/required/kirbyplants{
+	tag = "icon-plant-02";
+	icon_state = "plant-02"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "dE" = (
-/obj/structure/chair/wood{
-	icon_state = "wooden_chair";
+/obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "chapel"
-	},
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "dF" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -1217,48 +1182,53 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "dG" = (
-/obj/structure/table/wood,
-/obj/item/storage/backpack/cultpack,
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
+/obj/structure/chair/comfy/brown{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "dH" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-05"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "dI" = (
-/obj/structure/bookcase,
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/awaymission/snowdin/base)
 "dJ" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 8
-	},
 /turf/open/floor/plasteel{
-	dir = 1;
+	dir = 8;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "dK" = (
 /obj/structure/chair/wood{
 	icon_state = "wooden_chair";
 	dir = 1
 	},
-/obj/machinery/light{
-	dir = 4
-	},
 /turf/open/floor/plasteel{
-	dir = 4;
 	icon_state = "chapel"
 	},
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "dL" = (
-/obj/structure/bookcase,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/awaymission/snowdin/base)
 "dM" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/tree/dead,
@@ -1319,23 +1289,45 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "dU" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/awaymission/snowdin/base)
+"dV" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "chapel"
+	},
+/area/awaymission/snowdin/base)
+"dW" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "chapel"
+	},
+/area/awaymission/snowdin/base)
+"dX" = (
 /obj/structure/table/wood,
 /obj/item/storage/backpack/cultpack,
-/obj/item/storage/photo_album,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"dV" = (
-/obj/structure/bookcase/random/religion,
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"dW" = (
-/mob/living/simple_animal/cockroach,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"dX" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "dY" = (
 /obj/structure/fluff/lightpost,
 /turf/open/floor/holofloor/snow,
@@ -1388,44 +1380,62 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/outside)
 "ei" = (
-/obj/structure/fluff/bus/dense,
-/turf/open/floor/plasteel/dark,
+/obj/effect/landmark/start,
+/turf/open/indestructible/cobble,
 /area/awaymission/snowdin/outside)
 "ej" = (
-/obj/structure/fluff/bus/passable{
-	icon_state = "wheredahoodat"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"ek" = (
-/obj/machinery/light{
+/obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"el" = (
-/obj/machinery/vending,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"em" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
+/obj/effect/landmark/start,
+/turf/open/indestructible/cobble/side{
+	dir = 4
 	},
 /area/awaymission/snowdin/outside)
-"en" = (
-/obj/structure/fermenting_barrel,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"eo" = (
+"ek" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
+"el" = (
+/obj/structure/bookcase,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
+"em" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
 /obj/machinery/light{
 	dir = 8
 	},
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "chapel"
+	},
+/area/awaymission/snowdin/base)
+"en" = (
+/obj/structure/chair/wood{
+	icon_state = "wooden_chair";
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "chapel"
+	},
+/area/awaymission/snowdin/base)
+"eo" = (
+/obj/structure/bookcase,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ep" = (
-/obj/structure/bookcase/random/religion,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/structure/table/wood,
+/obj/item/storage/backpack/cultpack,
+/obj/item/storage/photo_album,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
 "eq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -1450,57 +1460,49 @@
 /turf/open/floor/mineral/gold,
 /area/space)
 "eu" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat"
-	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "bus"
-	},
-/area/awaymission/snowdin/outside)
-"ev" = (
-/turf/open/floor/plasteel/dark{
-	icon_state = "bus"
-	},
-/area/awaymission/snowdin/outside)
-"ew" = (
-/obj/structure/fluff/bus/passable/seat{
-	icon_state = "backseat";
-	pixel_y = 15
-	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "bus"
-	},
-/area/awaymission/snowdin/outside)
-"ex" = (
-/obj/structure/fluff/bus/passable/seat/driver{
-	icon_state = "driverseat";
-	pixel_y = 17
-	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "bus"
-	},
-/area/awaymission/snowdin/outside)
-"ey" = (
-/obj/structure/fluff/bus/dense{
-	icon_state = "hoodtop"
+/obj/docking_port/stationary{
+	area_type = /area/awaymission/snowdin/outside;
+	dir = 8;
+	dwidth = 3;
+	height = 15;
+	id = "arrivals_stationary";
+	name = "arrivals";
+	roundstart_template = /datum/map_template/shuttle/arrival/bus;
+	width = 7
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/outside)
-"ez" = (
-/obj/structure/chair/sofa{
-	icon_state = "sofaend_left";
+"ev" = (
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
+"ew" = (
+/mob/living/simple_animal/cockroach,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"ex" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"ey" = (
+/obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"ez" = (
+/obj/machinery/vending,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "eA" = (
-/obj/structure/table_frame/wood,
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/awaymission/snowdin/base)
 "eB" = (
-/obj/structure/barricade/wooden,
-/turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
+/obj/structure/fermenting_barrel,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "eC" = (
 /mob/living/simple_animal/crab/kreb{
 	name = "secret Kreb"
@@ -1508,49 +1510,44 @@
 /turf/open/floor/mineral/gold,
 /area/space)
 "eD" = (
-/obj/structure/fluff/bus/passable,
-/turf/open/floor/plasteel/dark{
-	icon_state = "bus"
+/obj/machinery/light{
+	dir = 8
 	},
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "eE" = (
-/obj/structure/fluff/bus/passable{
-	icon_state = "topdoor"
-	},
-/turf/open/floor/plasteel/dark{
-	icon_state = "bus"
-	},
-/area/awaymission/snowdin/outside)
+/obj/structure/bookcase/random/religion,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "eF" = (
-/obj/structure/fluff/bus/dense{
-	icon_state = "hoodbottom"
+/obj/structure/chair/sofa{
+	icon_state = "sofaend_left";
+	dir = 4
 	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
 "eG" = (
+/obj/structure/table_frame/wood,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
+"eH" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plasteel/grimy,
+/area/awaymission/snowdin/base)
+"eI" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofacorner";
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"eH" = (
+/area/awaymission/snowdin/base)
+"eJ" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_left";
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"eI" = (
-/obj/structure/table/wood,
-/obj/item/storage/fancy/candle_box,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"eJ" = (
-/turf/open/floor/wood{
-	icon_state = "wood-broken5"
-	},
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "eK" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -1574,42 +1571,36 @@
 	},
 /area/awaymission/snowdin/outside)
 "eM" = (
-/obj/structure/fluff/bus/dense{
-	icon_state = "frontwallbottomrear"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
+/obj/structure/table/wood,
+/obj/item/storage/fancy/candle_box,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "eN" = (
-/obj/structure/fluff/bus/dense{
-	icon_state = "frontwallbottom"
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
 	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "eO" = (
-/obj/structure/fluff/bus/dense{
-	icon_state = "reartire"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"eP" = (
-/obj/structure/fluff/bus/passable{
-	icon_state = "bottomdoor";
-	layer = 3
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"eQ" = (
-/obj/structure/fluff/bus/dense{
-	icon_state = "fronttire"
-	},
-/turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"eR" = (
 /obj/structure/table/wood,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"eP" = (
+/obj/structure/table/wood/fancy,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"eQ" = (
+/mob/living/simple_animal/hostile/bear/snow/raid,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
+	},
 /area/awaymission/snowdin/outside)
+"eR" = (
+/obj/item/twohanded/required/kirbyplants/random,
+/mob/living/simple_animal/cockroach,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "eS" = (
 /obj/structure/fluff/lightpost,
 /turf/open/floor/plasteel/dark,
@@ -1634,20 +1625,27 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "eW" = (
-/obj/structure/table/wood/fancy,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"eX" = (
-/obj/item/twohanded/required/kirbyplants/random,
-/mob/living/simple_animal/cockroach,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"eY" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/structure/table/wood/fancy,
 /obj/item/phone,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"eX" = (
+/obj/structure/table/wood/fancy,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"eY" = (
+/obj/structure/table/wood/fancy,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "eZ" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
@@ -1658,20 +1656,14 @@
 	},
 /area/awaymission/snowdin/outside)
 "fa" = (
-/obj/structure/table/wood/fancy,
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
+/obj/structure/fluff/paper,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "fb" = (
-/obj/structure/table/wood/fancy,
-/obj/machinery/light{
-	dir = 4
+/obj/effect/decal/remains/human,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/holywater,
-/turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "fc" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1707,9 +1699,13 @@
 	},
 /area/awaymission/snowdin/outside)
 "fi" = (
-/obj/structure/fluff/paper,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/vehicle/ridden/atv{
+	icon_state = "atv";
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
 "fj" = (
 /obj/item/flashlight/lantern,
 /turf/open/floor/holofloor/snow,
@@ -1803,13 +1799,14 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "fx" = (
-/obj/vehicle/ridden/atv{
-	icon_state = "atv";
+/obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "fy" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -1841,19 +1838,13 @@
 /area/awaymission/snowdin/outside)
 "fD" = (
 /obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"fE" = (
-/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"fE" = (
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
 "fF" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -1868,9 +1859,6 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "fH" = (
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"fI" = (
 /obj/structure/table,
 /obj/item/key,
 /obj/item/key/displaycase{
@@ -1890,32 +1878,36 @@
 	pixel_y = -2
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"fI" = (
+/obj/machinery/space_heater,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
 "fJ" = (
 /obj/item/flashlight,
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "fK" = (
-/obj/machinery/space_heater,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"fL" = (
 /obj/structure/closet/cardboard,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"fM" = (
+/area/awaymission/snowdin/base)
+"fL" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"fN" = (
+/area/awaymission/snowdin/base)
+"fM" = (
 /obj/structure/table,
 /obj/item/phone,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"fO" = (
+/area/awaymission/snowdin/base)
+"fN" = (
 /obj/structure/table,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"fO" = (
+/obj/machinery/photocopier,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "fP" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
@@ -1930,13 +1922,14 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "fR" = (
-/obj/machinery/photocopier,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"fS" = (
 /obj/machinery/space_heater,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"fS" = (
+/obj/structure/table,
+/obj/item/storage/firstaid,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "fT" = (
 /mob/living/simple_animal/mouse/white,
 /turf/open/floor/holofloor/snow,
@@ -1965,20 +1958,19 @@
 /turf/open/indestructible/cobble/corner,
 /area/awaymission/snowdin/outside)
 "fX" = (
-/obj/structure/table,
-/obj/item/storage/firstaid,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"fY" = (
 /obj/structure/closet/cabinet,
 /obj/item/taperecorder,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"fZ" = (
+/area/awaymission/snowdin/base)
+"fY" = (
 /obj/structure/table,
 /obj/item/phone,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"fZ" = (
+/obj/structure/closet/crate/large,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "ga" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/indestructible/cobble/corner{
@@ -1986,9 +1978,10 @@
 	},
 /area/awaymission/snowdin/outside)
 "gb" = (
-/obj/structure/closet/crate/large,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/obj/structure/kitchenspike,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/snowdin/base)
 "gc" = (
 /obj/item/banner/medical,
 /turf/open/floor/holofloor/snow,
@@ -2082,11 +2075,6 @@
 	},
 /area/awaymission/snowdin/outside)
 "gt" = (
-/obj/structure/kitchenspike,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gu" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -2099,8 +2087,8 @@
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gv" = (
+/area/awaymission/snowdin/base)
+"gu" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/freezer,
 /obj/item/reagent_containers/food/snacks/grown/tomato,
@@ -2120,67 +2108,67 @@
 /obj/item/reagent_containers/food/snacks/grown/apple,
 /obj/item/reagent_containers/food/snacks/grown/apple,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gw" = (
+/area/awaymission/snowdin/base)
+"gv" = (
 /obj/structure/chair/comfy/black,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"gx" = (
+/area/awaymission/snowdin/base)
+"gw" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_right"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"gy" = (
+/area/awaymission/snowdin/base)
+"gx" = (
 /obj/structure/chair/sofa,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"gz" = (
+/area/awaymission/snowdin/base)
+"gy" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_left"
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"gA" = (
+/area/awaymission/snowdin/base)
+"gz" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"gB" = (
+/area/awaymission/snowdin/base)
+"gA" = (
 /obj/structure/fireplace,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"gC" = (
+/area/awaymission/snowdin/base)
+"gB" = (
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"gD" = (
+/area/awaymission/snowdin/base)
+"gC" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_right"
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"gE" = (
+/area/awaymission/snowdin/base)
+"gD" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_left"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"gE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/snowdin/base)
 "gF" = (
 /obj/item/storage/briefcase/lawyer,
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "gG" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -2188,8 +2176,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gI" = (
+/area/awaymission/snowdin/base)
+"gH" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/freezer,
 /obj/item/reagent_containers/food/snacks/spaghetti,
@@ -2213,8 +2201,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gJ" = (
+/area/awaymission/snowdin/base)
+"gI" = (
 /obj/structure/rack,
 /obj/item/book/manual/chef_recipes{
 	pixel_x = 2;
@@ -2228,8 +2216,8 @@
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
-/area/awaymission/snowdin/outside)
-"gK" = (
+/area/awaymission/snowdin/base)
+"gJ" = (
 /obj/structure/table,
 /obj/machinery/microwave{
 	pixel_x = -3;
@@ -2238,8 +2226,8 @@
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
-/area/awaymission/snowdin/outside)
-"gL" = (
+/area/awaymission/snowdin/base)
+"gK" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/beaker{
 	pixel_x = 5
@@ -2250,42 +2238,47 @@
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
-/area/awaymission/snowdin/outside)
-"gM" = (
+/area/awaymission/snowdin/base)
+"gL" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets,
 /obj/item/storage/bag/trash,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
-/area/awaymission/snowdin/outside)
-"gN" = (
+/area/awaymission/snowdin/base)
+"gM" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
-/area/awaymission/snowdin/outside)
-"gO" = (
+/area/awaymission/snowdin/base)
+"gN" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
-/area/awaymission/snowdin/outside)
-"gP" = (
+/area/awaymission/snowdin/base)
+"gO" = (
 /obj/structure/closet/secure_closet/freezer/meat,
 /turf/open/floor/plasteel/cafeteria,
-/area/awaymission/snowdin/outside)
-"gQ" = (
+/area/awaymission/snowdin/base)
+"gP" = (
 /turf/open/floor/plasteel/cafeteria,
-/area/awaymission/snowdin/outside)
-"gR" = (
+/area/awaymission/snowdin/base)
+"gQ" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"gR" = (
+/obj/structure/table/wood,
+/obj/item/phone,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "gS" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
@@ -2303,15 +2296,10 @@
 /area/awaymission/snowdin/outside)
 "gU" = (
 /obj/structure/table/wood,
-/obj/item/phone,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"gV" = (
-/obj/structure/table/wood,
 /obj/item/toy/gun,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"gW" = (
+/area/awaymission/snowdin/base)
+"gV" = (
 /obj/structure/closet/chefcloset,
 /obj/effect/turf_decal/bot,
 /obj/item/clothing/suit/toggle/chef,
@@ -2321,29 +2309,29 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gX" = (
+/area/awaymission/snowdin/base)
+"gW" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gY" = (
+/area/awaymission/snowdin/base)
+"gX" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"gZ" = (
+/area/awaymission/snowdin/base)
+"gY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"ha" = (
+/area/awaymission/snowdin/base)
+"gZ" = (
 /obj/machinery/door/airlock{
 	name = "Station Service Department";
 	req_access_txt = "0";
@@ -2351,8 +2339,8 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/cafeteria,
-/area/awaymission/snowdin/outside)
-"hb" = (
+/area/awaymission/snowdin/base)
+"ha" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = -3
@@ -2364,14 +2352,14 @@
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
-/area/awaymission/snowdin/outside)
-"hc" = (
+/area/awaymission/snowdin/base)
+"hb" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"hd" = (
+/area/awaymission/snowdin/base)
+"hc" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/freezer,
 /obj/item/reagent_containers/food/snacks/meat/slab/monkey,
@@ -2392,8 +2380,8 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
 /obj/item/reagent_containers/food/snacks/meat/slab/bear,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"he" = (
+/area/awaymission/snowdin/base)
+"hd" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -2401,30 +2389,36 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"hf" = (
+/area/awaymission/snowdin/base)
+"he" = (
 /obj/machinery/icecream_vat,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"hg" = (
+/area/awaymission/snowdin/base)
+"hf" = (
 /obj/machinery/chem_master/condimaster,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
-"hh" = (
+/area/awaymission/snowdin/base)
+"hg" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
-/area/awaymission/snowdin/outside)
-"hi" = (
+/area/awaymission/snowdin/base)
+"hh" = (
 /obj/machinery/processor,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
+	},
+/area/awaymission/snowdin/base)
+"hi" = (
+/obj/effect/gibspawner/human,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
 	},
 /area/awaymission/snowdin/outside)
 "hj" = (
@@ -2491,25 +2485,25 @@
 	dir = 8
 	},
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hp" = (
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hq" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hr" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/drinkingglasses,
 /turf/open/floor/plasteel/cafeteria,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hs" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/cafeteria,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ht" = (
 /obj/structure/closet/crate/trashcart,
 /turf/open/indestructible/cobble,
@@ -2525,10 +2519,10 @@
 "hv" = (
 /obj/machinery/status_display,
 /turf/closed/indestructible/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hw" = (
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hx" = (
 /obj/structure/sink{
 	dir = 4;
@@ -2539,15 +2533,15 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hy" = (
 /obj/structure/bookcase,
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hz" = (
 /obj/item/twohanded/required/kirbyplants,
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hA" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -2567,7 +2561,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hB" = (
 /obj/machinery/door/airlock{
 	id_tag = "Toilet4x";
@@ -2575,29 +2569,29 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hC" = (
 /obj/machinery/icecream_vat,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hD" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hE" = (
 /obj/item/clothing/head/jester,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hF" = (
 /obj/item/dice/d100,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hG" = (
 /obj/machinery/vending/dinnerware,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hH" = (
 /obj/structure/fence/end{
 	pixel_x = 12
@@ -2625,7 +2619,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hJ" = (
 /obj/machinery/door/airlock{
 	id_tag = "Toilet3x";
@@ -2633,29 +2627,29 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hK" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hL" = (
 /obj/machinery/light/floor,
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hM" = (
 /obj/structure/chair/wood/normal,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hN" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hO" = (
 /obj/machinery/status_display,
 /obj/effect/turf_decal/delivery,
 /turf/closed/indestructible/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hP" = (
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
@@ -2668,13 +2662,13 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hQ" = (
 /turf/open/floor/light/colour_cycle/dancefloor_b,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hR" = (
 /turf/open/floor/light/colour_cycle/dancefloor_a,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hS" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -2694,7 +2688,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hT" = (
 /obj/machinery/door/airlock{
 	id_tag = "Toilet4x";
@@ -2702,66 +2696,66 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hU" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hV" = (
 /obj/structure/table/wood,
 /obj/item/dice/d20,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hW" = (
 /obj/structure/table/wood,
 /obj/item/toy/plush/slimeplushie,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hX" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-10"
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hY" = (
 /obj/structure/table/wood,
 /obj/item/toy/gun,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hZ" = (
 /obj/structure/table/wood,
 /obj/item/dice/d10,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ia" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ib" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ic" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "id" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/trash,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ie" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
 /turf/closed/indestructible/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "if" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -2781,7 +2775,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ig" = (
 /obj/machinery/door/airlock{
 	id_tag = "Toilet2x";
@@ -2789,37 +2783,37 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ih" = (
 /obj/machinery/newscaster,
 /turf/closed/indestructible/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ii" = (
 /obj/structure/table/wood,
 /obj/item/toy/cards/deck,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ij" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ik" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "il" = (
 /obj/machinery/chem_master/condimaster{
 	name = "HoochMaster 2000"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "im" = (
 /obj/structure/table/wood,
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "in" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/drinkingglasses,
@@ -2827,7 +2821,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "io" = (
 /obj/machinery/door/airlock/silver{
 	name = "Bathroom"
@@ -2836,7 +2830,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ip" = (
 /obj/item/clipboard,
 /obj/item/lipstick/random{
@@ -2848,7 +2842,7 @@
 	},
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iq" = (
 /obj/machinery/door/airlock/silver{
 	name = "Bathroom"
@@ -2857,7 +2851,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ir" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -2868,19 +2862,19 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "is" = (
 /obj/structure/chair/wood/normal{
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "it" = (
 /obj/machinery/vending/boozeomat{
 	req_access = null
 	},
 /turf/closed/indestructible/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iu" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks,
@@ -2892,7 +2886,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iv" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer,
@@ -2901,7 +2895,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iw" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/barman_recipes{
@@ -2916,23 +2910,23 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ix" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iy" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iz" = (
 /obj/structure/closet/secure_closet/bar,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iA" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -2952,7 +2946,7 @@
 	specialfunctions = 4
 	},
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iB" = (
 /obj/machinery/door/airlock{
 	id_tag = "Toilet1x";
@@ -2960,35 +2954,35 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iC" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iD" = (
 /obj/item/twohanded/required/kirbyplants,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iE" = (
 /obj/machinery/jukebox/disco/indestructible,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iF" = (
 /obj/item/twohanded/required/kirbyplants,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/carpet/black,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iG" = (
 /obj/structure/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iH" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -2996,7 +2990,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iI" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3007,14 +3001,17 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iJ" = (
+/turf/open/floor/plasteel/dark,
+/area/awaymission/snowdin/base)
+"iK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"iK" = (
+/area/awaymission/snowdin/base)
+"iL" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
 /obj/item/ammo_casing/shotgun/buckshot,
@@ -3024,12 +3021,12 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"iL" = (
+/area/awaymission/snowdin/base)
+"iM" = (
 /obj/structure/chair/stool/bar,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"iM" = (
+/area/awaymission/snowdin/base)
+"iN" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3037,8 +3034,8 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"iN" = (
+/area/awaymission/snowdin/base)
+"iO" = (
 /obj/machinery/door/airlock{
 	name = "Station Service Department";
 	req_access_txt = "0";
@@ -3046,35 +3043,35 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"iO" = (
+/area/awaymission/snowdin/base)
+"iP" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"iP" = (
+/area/awaymission/snowdin/base)
+"iQ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
-"iQ" = (
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
-	pixel_y = 5
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iR" = (
 /obj/item/picket_sign,
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "iS" = (
 /obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"iT" = (
+/obj/structure/table/wood,
 /obj/item/toy/eightball,
 /turf/open/floor/carpet,
-/area/awaymission/snowdin/outside)
-"iT" = (
+/area/awaymission/snowdin/base)
+"iU" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3083,8 +3080,8 @@
 	},
 /obj/item/toy/plush/carpplushie,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"iU" = (
+/area/awaymission/snowdin/base)
+"iV" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3095,12 +3092,12 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"iV" = (
+/area/awaymission/snowdin/base)
+"iW" = (
 /obj/structure/sign/poster/contraband/smoke,
 /turf/closed/indestructible/riveted,
-/area/awaymission/snowdin/outside)
-"iW" = (
+/area/awaymission/snowdin/base)
+"iX" = (
 /obj/structure/closet/gmcloset,
 /obj/item/wrench,
 /obj/item/stack/sheet/glass{
@@ -3114,8 +3111,8 @@
 /obj/item/storage/box/rubbershot,
 /obj/item/storage/box/rubbershot,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"iX" = (
+/area/awaymission/snowdin/base)
+"iY" = (
 /obj/structure/table/wood,
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
@@ -3123,13 +3120,7 @@
 	amount = 15
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"iY" = (
-/obj/structure/chair/comfy/black{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "iZ" = (
 /obj/structure/chair/wood/normal{
 	dir = 4
@@ -3137,38 +3128,31 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "ja" = (
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"jb" = (
+/obj/structure/chair/wood/normal{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"jc" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jb" = (
+/area/awaymission/snowdin/base)
+"jd" = (
 /obj/structure/chair/wood/normal{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jc" = (
-/obj/item/twohanded/required/kirbyplants{
-	icon_state = "plant-17";
-	pixel_x = 5;
-	pixel_y = 0
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jd" = (
-/obj/structure/table/wood/poker,
-/obj/item/clothing/mask/cigarette/cigar,
-/obj/item/toy/cards/deck,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "je" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 1
-	},
+/obj/structure/fluff/fokoff_sign,
+/turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "jf" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -3301,48 +3285,62 @@
 	},
 /area/awaymission/snowdin/outside)
 "jw" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-17";
+	pixel_x = 5;
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"jx" = (
+/obj/structure/table/wood/poker,
+/obj/item/clothing/mask/cigarette/cigar,
+/obj/item/toy/cards/deck,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"jy" = (
 /obj/machinery/vending/autodrobe,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jx" = (
+/area/awaymission/snowdin/base)
+"jz" = (
 /obj/item/target/clown,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jy" = (
+/area/awaymission/snowdin/base)
+"jA" = (
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/mineral/silver,
-/area/awaymission/snowdin/outside)
-"jz" = (
+/area/awaymission/snowdin/base)
+"jB" = (
 /obj/item/toy/plush/carpplushie,
 /turf/open/floor/mineral/silver,
-/area/awaymission/snowdin/outside)
-"jA" = (
+/area/awaymission/snowdin/base)
+"jC" = (
 /turf/open/floor/mineral/silver,
-/area/awaymission/snowdin/outside)
-"jB" = (
+/area/awaymission/snowdin/base)
+"jD" = (
 /obj/structure/table,
 /obj/item/clothing/head/festive,
 /obj/item/clothing/head/festive,
 /obj/item/clothing/head/festive,
 /obj/item/clothing/head/festive,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"jC" = (
+/area/awaymission/snowdin/base)
+"jE" = (
 /obj/structure/table,
 /obj/item/banhammer,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"jD" = (
+/area/awaymission/snowdin/base)
+"jF" = (
 /obj/structure/table,
 /obj/item/taperecorder,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"jE" = (
+/area/awaymission/snowdin/base)
+"jG" = (
 /obj/structure/table,
 /obj/item/toy/katana,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"jF" = (
+/area/awaymission/snowdin/base)
+"jH" = (
 /obj/structure/rack,
 /obj/structure/window/spawner,
 /obj/item/toy/xmas_cracker,
@@ -3362,18 +3360,18 @@
 /obj/item/toy/xmas_cracker,
 /obj/item/clothing/head/fedora,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jG" = (
+/area/awaymission/snowdin/base)
+"jI" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jH" = (
+/area/awaymission/snowdin/base)
+"jJ" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"jI" = (
+/area/awaymission/snowdin/base)
+"jK" = (
 /obj/structure/rack,
 /obj/item/toy/xmas_cracker,
 /obj/item/toy/xmas_cracker,
@@ -3393,66 +3391,69 @@
 /obj/structure/window/spawner/north,
 /obj/item/clothing/head/fedora,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jJ" = (
+/area/awaymission/snowdin/base)
+"jL" = (
 /obj/item/target/clown,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"jK" = (
+/area/awaymission/snowdin/base)
+"jM" = (
 /obj/item/target,
 /turf/open/floor/plasteel/grimy,
-/area/awaymission/snowdin/outside)
-"jL" = (
+/area/awaymission/snowdin/base)
+"jN" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C3";
 	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"jM" = (
+/area/awaymission/snowdin/base)
+"jO" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C4";
 	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"jN" = (
+/area/awaymission/snowdin/base)
+"jP" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C2";
 	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"jO" = (
+/area/awaymission/snowdin/base)
+"jQ" = (
 /obj/structure/bed,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jP" = (
+/area/awaymission/snowdin/base)
+"jR" = (
 /obj/structure/dresser,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jQ" = (
+/area/awaymission/snowdin/base)
+"jS" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C1";
 	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"jR" = (
+/area/awaymission/snowdin/base)
+"jT" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jS" = (
+/area/awaymission/snowdin/base)
+"jU" = (
 /obj/structure/toilet{
 	pixel_y = 8
 	},
@@ -3460,11 +3461,11 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/snowdin/outside)
-"jT" = (
+/area/awaymission/snowdin/base)
+"jV" = (
 /turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/snowdin/outside)
-"jU" = (
+/area/awaymission/snowdin/base)
+"jW" = (
 /obj/structure/mirror{
 	pixel_x = 28
 	},
@@ -3474,23 +3475,23 @@
 	pixel_y = -4
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/snowdin/outside)
-"jV" = (
+/area/awaymission/snowdin/base)
+"jX" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jW" = (
+/area/awaymission/snowdin/base)
+"jY" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C6";
 	name = "Privacy Shutters"
 	},
 /obj/effect/spawner/structure/window/ice,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"jX" = (
+/area/awaymission/snowdin/base)
+"jZ" = (
 /obj/structure/rack,
 /obj/item/grown/log{
 	pixel_x = -2;
@@ -3505,30 +3506,30 @@
 	pixel_y = -2
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"jY" = (
+/area/awaymission/snowdin/base)
+"ka" = (
 /obj/structure/toilet{
 	dir = 4
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/snowdin/outside)
-"jZ" = (
+/area/awaymission/snowdin/base)
+"kb" = (
 /obj/structure/fireplace{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"ka" = (
+/area/awaymission/snowdin/base)
+"kc" = (
 /obj/structure/chair/wood/normal,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kb" = (
+/area/awaymission/snowdin/base)
+"kd" = (
 /obj/structure/fireplace{
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kc" = (
+/area/awaymission/snowdin/base)
+"ke" = (
 /obj/machinery/button/door{
 	id = "C3";
 	name = "Cabin Privacy Control";
@@ -3537,13 +3538,13 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kd" = (
+/area/awaymission/snowdin/base)
+"kf" = (
 /obj/structure/table/wood,
 /obj/item/clothing/head/festive,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"ke" = (
+/area/awaymission/snowdin/base)
+"kg" = (
 /obj/machinery/button/door{
 	id = "C4";
 	name = "Cabin Privacy Control";
@@ -3552,8 +3553,8 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kf" = (
+/area/awaymission/snowdin/base)
+"kh" = (
 /obj/machinery/button/door{
 	id = "C2";
 	name = "Cabin Privacy Control";
@@ -3562,8 +3563,8 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kg" = (
+/area/awaymission/snowdin/base)
+"ki" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
 	},
@@ -3572,8 +3573,8 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kh" = (
+/area/awaymission/snowdin/base)
+"kj" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
 	},
@@ -3582,8 +3583,8 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"ki" = (
+/area/awaymission/snowdin/base)
+"kk" = (
 /obj/machinery/button/door{
 	id = "C2";
 	name = "Cabin Privacy Control";
@@ -3592,8 +3593,8 @@
 	req_access_txt = null
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kj" = (
+/area/awaymission/snowdin/base)
+"kl" = (
 /obj/machinery/button/door{
 	id = "C1";
 	name = "Cabin Privacy Control";
@@ -3602,8 +3603,8 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kk" = (
+/area/awaymission/snowdin/base)
+"km" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
 	},
@@ -3612,8 +3613,8 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kl" = (
+/area/awaymission/snowdin/base)
+"kn" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
 	},
@@ -3622,27 +3623,7 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"km" = (
-/obj/machinery/button/door{
-	id = "C6";
-	name = "Cabin Privacy Control";
-	pixel_x = 8;
-	pixel_y = -24;
-	req_access_txt = "0"
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kn" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C1";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "ko" = (
 /obj/effect/landmark/start/assistant,
 /turf/open/indestructible/cobble,
@@ -3657,15 +3638,15 @@
 	},
 /area/awaymission/snowdin/outside)
 "kq" = (
-/obj/machinery/door/airlock{
-	name = "Cabin"
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
+/obj/machinery/button/door{
 	id = "C6";
-	name = "Privacy Shutters"
+	name = "Cabin Privacy Control";
+	pixel_x = 8;
+	pixel_y = -24;
+	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "kr" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
@@ -3687,6 +3668,65 @@
 /turf/open/indestructible/cobble/side,
 /area/awaymission/snowdin/outside)
 "ku" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C1";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/door/airlock{
+	name = "Cabin"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"kv" = (
+/obj/effect/decal/remains/human,
+/obj/item/twohanded/spear,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
+	},
+/area/awaymission/snowdin/outside)
+"kw" = (
+/obj/machinery/door/airlock{
+	name = "Cabin"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C6";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"kx" = (
+/obj/effect/decal/remains/human,
+/obj/effect/gibspawner/human,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
+	},
+/area/awaymission/snowdin/outside)
+"ky" = (
+/obj/effect/decal/remains/human,
+/obj/item/melee/transforming/energy/axe,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
+	},
+/area/awaymission/snowdin/outside)
+"kz" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/floor/holofloor/snow{
+	icon_state = "snow_dug"
+	},
+/area/awaymission/snowdin/outside)
+"kA" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/floor/holofloor/snow,
+/turf/open/indestructible/cobble/side{
+	dir = 4
+	},
+/area/awaymission/snowdin/outside)
+"kB" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
 	},
@@ -3695,8 +3735,8 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kv" = (
+/area/awaymission/snowdin/base)
+"kC" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C8";
 	name = "Privacy Shutters"
@@ -3705,8 +3745,8 @@
 	name = "Cabin"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kw" = (
+/area/awaymission/snowdin/base)
+"kD" = (
 /obj/machinery/button/door{
 	id = "C9";
 	name = "Cabin Privacy Control";
@@ -3715,16 +3755,16 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kx" = (
+/area/awaymission/snowdin/base)
+"kE" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/item/phone,
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"ky" = (
+/area/awaymission/snowdin/base)
+"kF" = (
 /obj/machinery/button/door{
 	id = "C10";
 	name = "Cabin Privacy Control";
@@ -3733,8 +3773,8 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kz" = (
+/area/awaymission/snowdin/base)
+"kG" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
 	},
@@ -3743,8 +3783,8 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kA" = (
+/area/awaymission/snowdin/base)
+"kH" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C7";
 	name = "Privacy Shutters"
@@ -3753,8 +3793,8 @@
 	name = "Cabin"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kB" = (
+/area/awaymission/snowdin/base)
+"kI" = (
 /obj/machinery/button/door{
 	id = "C8";
 	name = "Cabin Privacy Control";
@@ -3763,22 +3803,22 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kC" = (
+/area/awaymission/snowdin/base)
+"kJ" = (
 /obj/structure/table/wood,
 /obj/item/clothing/head/festive,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kD" = (
+/area/awaymission/snowdin/base)
+"kK" = (
 /obj/structure/chair/wood/normal{
 	dir = 1
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kE" = (
+/area/awaymission/snowdin/base)
+"kL" = (
 /obj/machinery/button/door{
 	id = "C11";
 	name = "Cabin Privacy Control";
@@ -3787,8 +3827,8 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kF" = (
+/area/awaymission/snowdin/base)
+"kM" = (
 /obj/machinery/door/airlock{
 	name = "Cabin"
 	},
@@ -3797,8 +3837,8 @@
 	name = "Privacy Shutters"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kG" = (
+/area/awaymission/snowdin/base)
+"kN" = (
 /obj/machinery/button/door{
 	id = "C7";
 	name = "Cabin Privacy Control";
@@ -3807,8 +3847,8 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kH" = (
+/area/awaymission/snowdin/base)
+"kO" = (
 /obj/machinery/button/door{
 	id = "C12";
 	name = "Cabin Privacy Control";
@@ -3817,79 +3857,26 @@
 	req_access_txt = "0"
 	},
 /turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kI" = (
+/area/awaymission/snowdin/base)
+"kP" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/snowdin/outside)
-"kJ" = (
+/area/awaymission/snowdin/base)
+"kQ" = (
 /obj/structure/toilet{
 	dir = 8
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/awaymission/snowdin/outside)
-"kK" = (
-/obj/structure/dresser,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kL" = (
-/obj/structure/table/wood,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/hot_potato/harmless/toy,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/outside)
-"kM" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C9";
-	name = "Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"kN" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C10";
-	name = "Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"kO" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C8";
-	name = "Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"kP" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C11";
-	name = "Privacy Shutters"
-	},
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
-"kQ" = (
-/obj/effect/spawner/structure/window/ice,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C7";
-	name = "Privacy Shutters"
-	},
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "kR" = (
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "C12";
-	name = "Privacy Shutters"
+/obj/structure/bed,
+/obj/structure/sign/poster/official/no_erp{
+	pixel_y = -32
 	},
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "kS" = (
 /obj/structure/flora/grass/green,
 /obj/item/clothing/accessory/lawyers_badge,
@@ -3928,6 +3915,98 @@
 	},
 /area/awaymission/snowdin/outside)
 "la" = (
+/obj/structure/fluff/fokoff_sign{
+	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint. Seriously though fok of."
+	},
+/turf/open/floor/holofloor/snow,
+/area/awaymission/snowdin/outside)
+"lb" = (
+/obj/structure/fluff/fokoff_sign{
+	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint. Last chance"
+	},
+/turf/open/floor/holofloor/snow,
+/area/awaymission/snowdin/outside)
+"lc" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"ld" = (
+/obj/structure/table/wood,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/hot_potato/harmless/toy,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"le" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C9";
+	name = "Privacy Shutters"
+	},
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"lf" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C10";
+	name = "Privacy Shutters"
+	},
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"lg" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C8";
+	name = "Privacy Shutters"
+	},
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"lh" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C11";
+	name = "Privacy Shutters"
+	},
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"li" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C7";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"lj" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C12";
+	name = "Privacy Shutters"
+	},
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"lk" = (
+/obj/structure/fence{
+	pixel_x = 12
+	},
+/obj/structure/fence/corner{
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
+/area/awaymission/snowdin/outside)
+"ll" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"lm" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
@@ -3936,14 +4015,14 @@
 	dir = 1
 	},
 /area/awaymission/snowdin/outside)
-"lb" = (
+"ln" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
 /turf/open/indestructible/cobble,
 /turf/open/indestructible/cobble/corner,
 /area/awaymission/snowdin/outside)
-"lc" = (
+"lo" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
@@ -3952,7 +4031,7 @@
 	dir = 4
 	},
 /area/awaymission/snowdin/outside)
-"ld" = (
+"lp" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
@@ -11070,12 +11149,12 @@ ab
 ae
 ae
 ae
-bj
-bA
-bA
-bA
-bA
-bj
+bw
+bR
+bR
+bR
+bR
+bw
 ab
 ab
 ab
@@ -11272,12 +11351,12 @@ ab
 ae
 ae
 ae
-bk
-bB
-bC
+bx
 bS
-bC
-bk
+bT
+cd
+bT
+bx
 ab
 ab
 ab
@@ -11474,12 +11553,12 @@ ab
 ae
 ae
 ae
-bl
-bC
-bC
+by
 bT
-bC
-bk
+bT
+cj
+bT
+bx
 ab
 ab
 ab
@@ -11676,12 +11755,12 @@ ab
 aS
 ae
 be
-bk
-bD
-bC
-bC
-bC
-bk
+bx
+bX
+bT
+bT
+bT
+bx
 ab
 ab
 ab
@@ -11878,12 +11957,12 @@ ab
 ae
 ae
 ae
-bk
-bE
-bN
-bC
-bC
-bk
+bx
+bY
+cb
+bT
+bT
+bx
 ab
 ab
 ab
@@ -12080,12 +12159,12 @@ ae
 ae
 aS
 aQ
-bm
-bF
-bF
-bF
-bF
-cm
+bz
+bZ
+bZ
+bZ
+bZ
+cA
 ab
 ab
 ab
@@ -13280,10 +13359,10 @@ ab
 ab
 ab
 ab
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -13482,10 +13561,10 @@ ab
 ab
 ab
 ab
-aH
-aI
-aK
-aK
+aJ
+aR
+aU
+aU
 ae
 ae
 aQ
@@ -13684,10 +13763,10 @@ ab
 ab
 ab
 ab
-aH
 aJ
-aK
-aK
+aT
+aU
+aU
 ae
 ae
 ae
@@ -13886,10 +13965,10 @@ ab
 ab
 ab
 ab
-aH
-aI
-aK
-aK
+aJ
+aR
+aU
+aU
 ae
 ae
 ae
@@ -14088,10 +14167,10 @@ ab
 ab
 ab
 ab
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -15329,10 +15408,10 @@ ae
 ae
 af
 ae
-ei
-eu
-eD
-eM
+eg
+eg
+eg
+eg
 eS
 ae
 ae
@@ -15499,10 +15578,10 @@ ab
 ae
 ap
 ap
-at
-at
-at
-at
+aG
+aG
+aG
+aG
 ap
 ap
 ae
@@ -15531,10 +15610,10 @@ ae
 bL
 ae
 ae
-ei
-eu
-eD
-eN
+eg
+eg
+eg
+eg
 eg
 fh
 hn
@@ -15700,12 +15779,12 @@ ab
 ab
 ae
 ap
-at
-at
-at
-at
-at
-at
+aG
+aG
+aG
+aG
+aG
+aG
 ap
 ap
 ap
@@ -15733,10 +15812,10 @@ ag
 ae
 ae
 ae
-ei
-eu
-eD
-eO
+eg
+eg
+eg
+eg
 eg
 fr
 ko
@@ -15902,16 +15981,16 @@ ab
 ab
 ae
 ap
-at
-at
-at
 aG
-at
-at
-at
-at
-at
-aE
+aG
+aG
+aI
+aG
+aG
+aG
+aG
+aG
+aV
 ae
 ae
 ae
@@ -15935,10 +16014,10 @@ ae
 ae
 ae
 ag
-ei
-ev
-eD
-eN
+eg
+eg
+eg
+eg
 eg
 fr
 ko
@@ -15976,11 +16055,11 @@ ae
 dY
 ah
 ae
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -16104,16 +16183,16 @@ ab
 ab
 ae
 ap
-at
-at
-at
-at
-at
-at
-at
-at
-at
-aE
+aG
+aG
+aG
+aG
+aG
+aG
+aG
+aG
+aG
+aV
 ae
 ae
 ae
@@ -16137,17 +16216,17 @@ ae
 ae
 ae
 ae
-ei
-ew
-eD
-eN
+eg
+eg
+eg
+eg
 eg
 fr
 ko
 ko
-eq
-eq
-eq
+dC
+dC
+dC
 eq
 eq
 eq
@@ -16177,12 +16256,12 @@ eq
 eq
 fc
 ah
-aH
-aH
-gt
-gW
-hd
-aH
+aJ
+aJ
+gb
+gV
+hc
+aJ
 ae
 ae
 ae
@@ -16209,12 +16288,12 @@ ac
 ac
 ac
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ah
 fp
@@ -16222,12 +16301,12 @@ er
 fd
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -16306,12 +16385,12 @@ ab
 ab
 ae
 ap
-at
-at
-at
-at
-at
-at
+aG
+aG
+aG
+aG
+aG
+aG
 ap
 ap
 ap
@@ -16339,17 +16418,17 @@ ag
 ae
 ae
 ae
-ei
-eu
-eD
-eN
+eg
+eg
+eg
+eg
 eg
 fr
 ko
 ko
-er
-er
-er
+ei
+dA
+ei
 er
 er
 er
@@ -16379,12 +16458,12 @@ er
 er
 fd
 ah
-aH
-gt
-gG
-gX
-he
-aH
+aJ
+gb
+gE
+gW
+hd
+aJ
 ae
 ah
 ae
@@ -16411,25 +16490,25 @@ ae
 ae
 ae
 ae
-aH
-jO
-cs
-jX
+aJ
+jQ
+cB
 jZ
-aH
-aH
+kb
+aJ
+aJ
 dY
 fp
 er
 fe
 ah
-aH
-aH
+aJ
+aJ
+kb
 jZ
-jX
-cs
-jO
-aH
+cB
+kR
+aJ
 ae
 ae
 ag
@@ -16509,10 +16588,10 @@ ae
 ae
 ap
 ap
-at
-at
-at
-at
+aG
+aG
+aG
+aG
 ap
 ap
 ag
@@ -16541,17 +16620,17 @@ ae
 ae
 ah
 ae
-ei
-eu
-eD
-eN
+eg
+eg
+eg
+eg
 eg
 fr
 ko
 kY
-es
-es
-es
+ej
+ej
+ej
 es
 es
 es
@@ -16581,12 +16660,12 @@ er
 er
 fe
 ae
-aH
-gu
-gH
-gY
-hf
-aH
+aJ
+gt
+gG
+gX
+he
+aJ
 ae
 ah
 ae
@@ -16613,25 +16692,25 @@ ae
 ae
 ag
 ae
-jQ
-aK
-aK
-aK
-aK
-kj
-aH
+jS
+aU
+aU
+aU
+aU
+kl
+aJ
 dZ
 er
 er
 er
 fy
-aH
-kG
-aK
-aK
-aK
-aK
-kQ
+aJ
+kN
+aU
+aU
+aU
+aU
+li
 ae
 ae
 ae
@@ -16743,10 +16822,10 @@ ae
 ae
 ae
 ae
-ei
-eu
-eD
-eN
+eg
+eg
+eg
+eg
 eg
 fr
 ko
@@ -16783,12 +16862,12 @@ fp
 er
 fd
 ae
-aH
-gv
-gI
-gZ
-hg
-aH
+aJ
+gu
+gH
+gY
+hf
+aJ
 ae
 ah
 ae
@@ -16815,25 +16894,25 @@ ae
 ae
 ae
 ae
-jQ
-aK
-aK
-aK
-aK
-aK
-kn
+jS
+aU
+aU
+aU
+aU
+aU
+ku
 ea
 er
 er
 er
 fz
-kA
-aK
-aK
-aK
-aK
-aK
-kQ
+kH
+aU
+aU
+aU
+aU
+aU
+li
 ae
 ae
 ae
@@ -16945,10 +17024,10 @@ ae
 ae
 ag
 ae
-ei
-ex
-eE
-eP
+eg
+eg
+eg
+eg
 eg
 fr
 ko
@@ -16985,24 +17064,24 @@ fp
 er
 fd
 ae
-ae
-aH
-aH
-ha
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+gZ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 fp
 er
@@ -17017,25 +17096,25 @@ ae
 dx
 ah
 ae
-jQ
-aK
-aK
-aK
-aK
-kd
-aH
+jS
+aU
+aU
+aU
+aU
+kf
+aJ
 eb
 er
 er
 ff
 fA
-aH
-kd
-aK
-aK
-aK
-aK
-kQ
+aJ
+kf
+aU
+aU
+aU
+aU
+li
 ae
 ah
 ah
@@ -17147,10 +17226,10 @@ ae
 ae
 ae
 ae
-ej
-ey
-eF
-eQ
+eg
+eg
+eu
+eg
 eS
 fu
 kp
@@ -17188,23 +17267,23 @@ er
 fd
 ag
 ae
-aH
-gJ
-gQ
-hh
-aH
+aJ
+gI
+gP
+hg
+aJ
 hC
-bM
+ca
 hU
-bM
-bM
-bM
-bM
-bM
-bM
+ca
+ca
+ca
+ca
+ca
+ca
 hU
-bM
-aH
+ca
+aJ
 jf
 er
 er
@@ -17219,25 +17298,25 @@ ag
 ah
 ah
 ae
-aH
-jP
-aK
-aK
-ka
-cs
-aH
+aJ
+jR
+aU
+aU
+kc
+cB
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-cs
-kD
-aK
-jG
+aJ
+cB
 kK
-aH
+aU
+jI
+lc
+aJ
 ae
 aO
 ah
@@ -17390,23 +17469,23 @@ er
 fd
 ae
 ae
-aH
-gK
-gQ
-gQ
-gQ
-bM
+aJ
+gJ
+gP
+gP
+gP
+ca
 hM
 hV
 ii
 is
-bM
+ca
 hM
 ii
 hV
 is
-bM
-aR
+ca
+aW
 jg
 er
 er
@@ -17421,25 +17500,25 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 iq
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 iq
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -17592,23 +17671,23 @@ er
 fd
 ah
 ah
-aH
-gK
-gQ
-gQ
-aH
+aJ
+gJ
+gP
+gP
+aJ
 hD
 hM
 hW
-gC
+gB
 is
-bM
+ca
 hM
-iS
+iT
 hZ
 is
-bM
-aR
+ca
+aW
 jh
 er
 er
@@ -17624,10 +17703,10 @@ ae
 ag
 ae
 ae
-aH
-jS
-jT
-aH
+aJ
+jU
+jV
+aJ
 ae
 ae
 ae
@@ -17637,10 +17716,10 @@ fd
 ae
 ae
 ae
-aH
-jT
-kI
-aH
+aJ
+jV
+kP
+aJ
 ae
 ae
 ae
@@ -17794,23 +17873,23 @@ er
 fd
 ah
 ah
-aH
-gL
-gQ
-gQ
+aJ
+gK
+gP
+gP
 hr
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-aR
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+aW
 ea
 er
 er
@@ -17826,10 +17905,10 @@ ae
 ae
 ae
 ae
-aH
-jT
-jU
-aH
+aJ
+jV
+jW
+aJ
 ae
 ae
 ae
@@ -17839,10 +17918,10 @@ fd
 ae
 bL
 ae
-aH
-jU
-kJ
-aH
+aJ
+jW
+kQ
+aJ
 ae
 ah
 fj
@@ -17996,23 +18075,23 @@ er
 fd
 ae
 ag
-aH
-gM
-gQ
-gQ
+aJ
+gL
+gP
+gP
 hs
 hE
-bM
+ca
 hX
-bM
-bM
+ca
+ca
 iG
-bM
+ca
 hX
-bM
-bM
-bM
-aR
+ca
+ca
+ca
+aW
 ea
 er
 er
@@ -18028,10 +18107,10 @@ eK
 aA
 aA
 aA
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -18041,10 +18120,10 @@ fd
 ae
 ae
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -18198,23 +18277,23 @@ er
 fd
 ae
 ae
-aH
-gN
-gQ
-gQ
+aJ
+gM
+gP
+gP
 hs
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-aR
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+aW
 ea
 er
 er
@@ -18236,10 +18315,10 @@ at
 at
 eK
 eK
-la
+lm
 er
 er
-lc
+lo
 ae
 ae
 ae
@@ -18400,23 +18479,23 @@ er
 fd
 ae
 ae
-aH
-gO
-gQ
-gQ
+aJ
+gN
+gP
+gP
 hs
-bM
+ca
 hM
 hY
 hV
 is
-bM
+ca
 hM
 hZ
 hV
 is
-bM
-aR
+ca
+aW
 ji
 er
 er
@@ -18430,12 +18509,12 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 fj
 fp
@@ -18443,12 +18522,12 @@ er
 fd
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -18602,23 +18681,23 @@ er
 fe
 ae
 ae
-aH
+aJ
+gO
 gP
-gQ
-gQ
+gP
 hs
-bM
+ca
 hM
 hZ
 ii
 is
-bM
+ca
 hM
 hW
 ii
 is
-bM
-aR
+ca
+aW
 jg
 er
 er
@@ -18632,25 +18711,25 @@ ae
 ag
 ae
 ae
-aH
-jO
-cs
-jX
+aJ
+jQ
+cB
 jZ
-aH
-aH
+kb
+aJ
+aJ
 dY
 fp
 er
 fe
 ae
-aH
-aH
+aJ
+aJ
+kb
 jZ
-jX
-cs
-jO
-aH
+cB
+kR
+aJ
 ae
 ah
 ah
@@ -18804,55 +18883,55 @@ er
 fd
 ae
 ah
-aH
-gQ
-gQ
-gQ
+aJ
+gP
+gP
+gP
 hs
 hF
-bM
+ca
 ia
-bM
-bM
-bM
-bM
-bM
-bM
+ca
+ca
+ca
+ca
+ca
+ca
 ia
-bM
-aH
+ca
+aJ
 jj
 er
 er
 fd
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
-jN
-aK
-aK
-aK
-aK
-kf
-aH
+jP
+aU
+aU
+aU
+aU
+kh
+aJ
 dZ
 er
 er
 er
 fy
-aH
-kB
-aK
-aK
-aK
-aK
-kO
+aJ
+kI
+aU
+aU
+aU
+aU
+lg
 ae
 aO
 ah
@@ -19006,55 +19085,55 @@ er
 fd
 ae
 aO
-aH
-gR
-hb
-hi
-aH
+aJ
+gQ
+ha
+hh
+aJ
 hG
 hN
-aH
+aJ
 ij
-aK
-aK
-aK
+aU
+aU
+aU
 ij
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 dY
 fp
 er
 fe
 ae
-aH
-jy
-jz
-jy
-jz
-aH
+aJ
+jA
+jB
+jA
+jB
+aJ
 ak
 ae
-jN
-aK
-aK
-aK
-aK
-aK
-kk
+jP
+aU
+aU
+aU
+aU
+aU
+km
 ea
 er
 er
 er
 fz
-kv
-aK
-aK
-aK
-aK
-aK
-kO
+kC
+aU
+aU
+aU
+aU
+aU
+lg
 ae
 ae
 ah
@@ -19208,55 +19287,55 @@ er
 fd
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ik
-aK
-aK
-aK
+aU
+aU
+aU
 ik
-aK
-eo
-iZ
-aH
+aU
+eD
+jb
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-jy
-jz
-jy
-jz
-aH
+aJ
+jA
+jB
+jA
+jB
+aJ
 ae
 ae
-jN
-aK
-aK
-aK
-aK
-kd
-aH
+jP
+aU
+aU
+aU
+aU
+kf
+aJ
 eb
 er
 er
 ff
 fA
-aH
-kC
-aK
-aK
-aK
-aK
-kO
+aJ
+kJ
+aU
+aU
+aU
+aU
+lg
 ae
 ae
 ae
@@ -19416,49 +19495,49 @@ ae
 hj
 ht
 ht
-aH
+aJ
 ib
-aK
-aK
-aK
-aK
-aK
-aK
-aK
-ja
-aH
+aU
+aU
+aU
+aU
+aU
+aU
+aU
+jc
+aJ
 ah
 fp
 er
 fd
 ae
-aH
-jy
+aJ
 jA
-jA
-jz
-aH
+jC
+jC
+jB
+aJ
 ae
 ae
-aH
-jP
-aK
-aK
-ka
-cs
-aH
+aJ
+jR
+aU
+aU
+kc
+cB
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-cs
-kD
-aK
-jG
+aJ
+cB
 kK
-aH
+aU
+jI
+lc
+aJ
 ae
 ae
 ae
@@ -19618,49 +19697,49 @@ ae
 hk
 er
 er
-aH
+aJ
 ib
-aK
-aK
-aK
-iL
-iL
-aK
-aK
-jb
-aH
+aU
+aU
+aU
+iM
+iM
+aU
+aU
+jd
+aJ
 ae
 fp
 er
 fz
-aH
-aH
-aH
-aH
-bi
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+bv
+aJ
+aJ
 ae
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 iq
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 iq
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ah
 ae
@@ -19820,35 +19899,35 @@ ae
 hk
 er
 er
-aH
-aH
-bi
-aH
+aJ
+aJ
+bv
+aJ
 iH
+iN
+iU
 iM
-iT
-iL
-aK
-jc
-aH
+aU
+jw
+aJ
 fo
 er
 er
 fz
-aH
-jw
-eo
-jB
-cQ
-cQ
-aH
+aJ
+jy
+eD
+jD
+cZ
+cZ
+aJ
 ah
 ae
 ae
-aH
-jS
-jT
-aH
+aJ
+jU
+jV
+aJ
 ae
 ae
 ae
@@ -19858,10 +19937,10 @@ fd
 ae
 ak
 ae
-aH
-jT
-kI
-aH
+aJ
+jV
+kP
+aJ
 ae
 ae
 aO
@@ -20022,35 +20101,35 @@ ae
 hk
 er
 er
-aH
-aK
-aK
-aH
+aJ
+aU
+aU
+aJ
 iI
 iH
+iN
 iM
-iL
-aK
-aK
-bi
+aU
+aU
+bv
 ea
 er
 er
 fz
-aR
-jw
-aK
-jB
-cQ
-jJ
-aH
+aW
+jy
+aU
+jD
+cZ
+jL
+aJ
 ah
 ah
 ae
-aH
-jT
-jU
-aH
+aJ
+jV
+jW
+aJ
 ae
 ak
 ae
@@ -20060,10 +20139,10 @@ fd
 ae
 ae
 ah
-aH
-jU
-kJ
-aH
+aJ
+jW
+kQ
+aJ
 ae
 ae
 ah
@@ -20224,35 +20303,35 @@ ag
 hk
 er
 er
-aH
+aJ
 ic
-aH
+aJ
 it
 iH
 iH
+iN
 iM
-iL
-aK
-jc
-aH
+aU
+jw
+aJ
 gd
 er
 er
 fz
-aR
-jx
-aK
-jC
-cQ
-jK
-aH
+aW
+jz
+aU
+jE
+cZ
+jM
+aJ
 ah
 ah
 dx
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -20262,10 +20341,10 @@ fd
 ae
 ae
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ah
@@ -20376,13 +20455,13 @@ ag
 ag
 ae
 ag
-aH
-aH
-aR
-aR
-aH
-aH
-aH
+aJ
+aJ
+aW
+aW
+aJ
+aJ
+aJ
 ae
 ae
 ag
@@ -20426,28 +20505,28 @@ cg
 hl
 er
 er
-bi
-aK
-aH
+bv
+aU
+aJ
 iu
 iH
 iH
+iN
 iM
-iL
-aK
-iZ
-aH
+aU
+jb
+aJ
 ae
 fp
 er
 fz
-aR
-jx
-aK
-jD
-cQ
-cQ
-aH
+aW
+jz
+aU
+jF
+cZ
+cZ
+aJ
 dx
 ah
 ae
@@ -20457,10 +20536,10 @@ ae
 ae
 ae
 ae
-je
+ll
 er
 er
-lc
+lo
 dx
 ah
 ae
@@ -20578,13 +20657,13 @@ ae
 bL
 ae
 ae
-aH
-dG
-dU
-dG
-ez
-eG
-aR
+aJ
+dX
+ep
+dX
+eF
+eI
+aW
 ah
 ah
 ae
@@ -20628,35 +20707,35 @@ at
 hm
 er
 er
-aH
+aJ
 id
-aH
+aJ
 iv
 iH
 iH
+iN
 iM
-iL
-aK
-jd
-aH
+aU
+jx
+aJ
 ae
 fp
 er
 fz
-aR
-jw
-aK
-jE
-jH
-cQ
-aH
+aW
+jy
+aU
+jG
+jJ
+cZ
+aJ
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 fp
@@ -20664,12 +20743,12 @@ er
 fd
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ag
 ae
@@ -20780,13 +20859,13 @@ ag
 ae
 ae
 dx
-aH
-dH
-cQ
-cQ
-cQ
-eH
-aR
+aJ
+ek
+cZ
+cZ
+cZ
+eJ
+aW
 ah
 ah
 ae
@@ -20827,51 +20906,51 @@ ag
 ae
 ae
 an
-dC
+lk
 hu
 hH
-aH
-aH
-aH
+aJ
+aJ
+aJ
 iw
 iH
 iH
-iU
-iL
-aK
-jb
-aH
+iV
+iM
+aU
+jd
+aJ
 ah
 fp
 er
 fz
-aH
-jw
-aK
-aK
-aK
-aK
-aH
+aJ
+jy
+aU
+aU
+aU
+aU
+aJ
 ae
-aH
-jO
-jR
-jX
+aJ
+jQ
+jT
 jZ
-aH
-aH
+kb
+aJ
+aJ
 dY
 fp
 er
 fe
 ah
-aH
-aH
+aJ
+aJ
+kb
 jZ
-jX
-cs
-jO
-aH
+cB
+kR
+aJ
 ae
 ae
 ae
@@ -20982,13 +21061,13 @@ ae
 ae
 ag
 ah
-aH
-dI
-dV
-ek
-cQ
-dI
-aH
+aJ
+el
+ev
+ey
+cZ
+el
+aJ
 dx
 dx
 ae
@@ -21033,47 +21112,47 @@ ax
 ax
 at
 at
-aH
+aJ
 hv
 ih
-aH
-iN
-iV
-aH
-aH
-aH
-aH
+aJ
+iO
+iW
+aJ
+aJ
+aJ
+aJ
 dY
 fp
 er
 jt
-aH
-aH
-aK
-aK
-aK
-aK
-aH
+aJ
+aJ
+aU
+aU
+aU
+aU
+aJ
 ae
-jL
-aK
-aK
-aK
-aK
-kc
-aH
+jN
+aU
+aU
+aU
+aU
+ke
+aJ
 dZ
 er
 er
 er
 fy
-aH
-kw
-aK
-aK
-aK
-aK
-kM
+aJ
+kD
+aU
+aU
+aU
+aU
+le
 ae
 ae
 ae
@@ -21179,18 +21258,18 @@ ae
 ae
 ae
 ae
-aH
-aR
-aR
-aR
-aH
-aH
-aH
-aH
-aH
-bi
-aH
-aH
+aJ
+aW
+aW
+aW
+aJ
+aJ
+aJ
+aJ
+aJ
+bv
+aJ
+aJ
 dx
 dx
 ae
@@ -21238,10 +21317,10 @@ ax
 ie
 il
 ix
-eg
-iO
-iW
-aH
+iJ
+iP
+iX
+aJ
 ae
 ah
 ae
@@ -21250,32 +21329,32 @@ fp
 er
 er
 jv
-aH
+aJ
 ic
-jF
-jI
-aK
-aH
+jH
+jK
+aU
+aJ
 ae
-jL
-aK
-aK
-aK
-aK
-aK
-kg
+jN
+aU
+aU
+aU
+aU
+aU
+ki
 ea
 er
 er
 er
 fz
-kk
-aK
-aK
-aK
-aK
-aK
-jN
+km
+aU
+aU
+aU
+aU
+aU
+jP
 ae
 ae
 ak
@@ -21380,20 +21459,20 @@ ae
 ae
 ae
 ae
-aH
-cM
-dc
-cO
-du
-dy
-dD
+aJ
+cV
+dl
+cX
 dJ
-du
-el
-cQ
-eI
-eI
-aH
+dL
+dV
+em
+dJ
+ez
+cZ
+eM
+eM
+aJ
 eV
 dx
 ae
@@ -21437,13 +21516,13 @@ ae
 ae
 bL
 ae
-aH
+aJ
 im
 iy
-iJ
-iP
-iX
-aH
+iK
+iQ
+iY
+aJ
 ae
 ae
 ae
@@ -21452,32 +21531,32 @@ fp
 er
 er
 fz
-aH
-aK
-jF
-jI
-aK
-aH
+aJ
+aU
+jH
+jK
+aU
+aJ
 ae
-jL
-aK
-aK
-aK
-aK
-kd
-aH
+jN
+aU
+aU
+aU
+aU
+kf
+aJ
 eb
 er
 er
 ff
 fA
-aH
-kd
-aK
-aK
-aK
-aK
-jN
+aJ
+kf
+aU
+aU
+aU
+aU
+jP
 dx
 ah
 ah
@@ -21582,24 +21661,24 @@ ae
 ae
 ae
 ae
-aR
-cN
-dd
-dt
-dv
-dz
-dv
-dz
-dv
-em
-cQ
-aK
-eR
-aH
-aH
-aH
-aH
-aH
+aW
+cW
+dm
+dI
+dK
+dU
+dK
+dU
+dK
+eA
+cZ
+aU
+eO
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -21639,13 +21718,13 @@ ae
 ae
 ae
 ae
-aH
+aJ
 in
 iz
-iK
-iQ
-aH
-aH
+iL
+iS
+aJ
+aJ
 ae
 ag
 ae
@@ -21654,32 +21733,32 @@ fp
 er
 er
 fz
-aH
-aK
-jF
-jI
-aK
-aH
+aJ
+aU
+jH
+jK
+aU
+aJ
 ae
-aH
-jP
-aK
-aK
-ka
-gU
-aH
+aJ
+jR
+aU
+aU
+kc
+gR
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-kx
-kD
-aK
-jG
+aJ
+kE
 kK
-aH
+aU
+jI
+lc
+aJ
 ah
 ah
 ah
@@ -21784,24 +21863,24 @@ ae
 ag
 ae
 ae
-aR
-cO
-de
-cM
-du
-dy
-du
-dy
-du
-dX
-eA
-aK
-eR
-aH
-eW
-fa
-eW
-aH
+aW
+cX
+dn
+cV
+dJ
+dL
+dJ
+dL
+dJ
+ex
+eG
+aU
+eO
+aJ
+eP
+eX
+eP
+aJ
 dY
 ae
 bL
@@ -21841,12 +21920,12 @@ ag
 ae
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -21856,32 +21935,32 @@ jp
 er
 er
 fz
-aH
-aK
-jF
-jI
-aK
-aH
+aJ
+aU
+jH
+jK
+aU
+aJ
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 iq
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 iq
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 aO
 ah
@@ -21986,24 +22065,24 @@ ae
 ae
 ae
 ae
-aH
-cP
-df
-dt
-dv
-dz
-dv
-dz
-dv
-aK
-cQ
-aK
-dX
-aH
-eX
-em
-fi
-aH
+aJ
+cY
+do
+dI
+dK
+dU
+dK
+dU
+dK
+aU
+cZ
+aU
+ex
+aJ
+eR
+eA
+fa
+aJ
 ae
 ae
 ae
@@ -22058,18 +22137,18 @@ fp
 er
 er
 fz
-bi
-aK
-jF
-jI
-aK
-aH
+bv
+aU
+jH
+jK
+aU
+aJ
 ae
 ak
-aH
-jS
-jT
-aH
+aJ
+jU
+jV
+aJ
 ae
 ae
 ah
@@ -22079,10 +22158,10 @@ fd
 ah
 ah
 ae
-aH
-jT
-kI
-aH
+aJ
+jV
+kP
+aJ
 ae
 ae
 ae
@@ -22188,24 +22267,24 @@ ae
 ae
 ae
 bL
-aR
-cQ
-dg
-cQ
-cQ
-cQ
-cQ
-cQ
-cQ
-cQ
-cQ
-cQ
-cQ
-bi
-cQ
-cQ
-cQ
-bi
+aW
+cZ
+dp
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+bv
+cZ
+cZ
+cZ
+bv
 aA
 aA
 aA
@@ -22260,18 +22339,18 @@ fp
 er
 er
 fA
-aH
-aK
-jG
-aK
-aK
-aH
+aJ
+aU
+jI
+aU
+aU
+aJ
 ae
 ak
-aH
-jT
-jU
-aH
+aJ
+jV
+jW
+aJ
 ae
 ag
 ae
@@ -22281,10 +22360,10 @@ fd
 ah
 aO
 ae
-aH
-jU
-kJ
-aH
+aJ
+jW
+kQ
+aJ
 ae
 ae
 ae
@@ -22390,24 +22469,24 @@ aD
 ae
 ae
 ae
-aR
-cQ
-dh
-cQ
-cQ
-cQ
-cQ
-cQ
-cQ
-cQ
-eB
-cQ
-cQ
-bi
-cQ
-eB
-cQ
-bi
+aW
+cZ
+dq
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+cZ
+eH
+cZ
+cZ
+bv
+cZ
+eH
+cZ
+bv
 ax
 ax
 at
@@ -22462,18 +22541,18 @@ fp
 er
 fd
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -22483,10 +22562,10 @@ fd
 ae
 ae
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -22592,24 +22671,24 @@ aE
 ae
 ae
 ae
-aH
-cR
-di
-cM
-du
-dy
-du
-dy
-du
-aK
-cQ
-aK
-dX
-aH
-dX
-dW
-aK
-aH
+aJ
+da
+dr
+cV
+dJ
+dL
+dJ
+dL
+dJ
+aU
+cZ
+aU
+ex
+aJ
+ex
+ew
+aU
+aJ
 dY
 ae
 bW
@@ -22794,24 +22873,24 @@ au
 ae
 ae
 ae
-aR
-cS
-dj
-dt
-dv
-dz
-dv
-dz
-dv
-dX
-cQ
-eJ
-eR
-aH
-eY
-fb
+aW
+db
+ds
+dI
+dK
+dU
+dK
+dU
+dK
+ex
+cZ
+eN
+eO
+aJ
 eW
-aH
+eY
+eP
+aJ
 ae
 ae
 ae
@@ -22996,24 +23075,24 @@ ae
 ae
 ag
 ae
-aR
-cT
-dk
-cM
-du
-dy
-du
-dy
-du
-aK
-cQ
-aK
-eR
-aH
-aH
-aH
-aH
-aH
+aW
+dc
+dt
+cV
+dJ
+dL
+dJ
+dL
+dJ
+aU
+cZ
+aU
+eO
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -23198,20 +23277,20 @@ ae
 ae
 ae
 ae
-aH
-cU
-dl
-cS
-dv
-dz
-dE
+aJ
+dd
+du
+db
 dK
-dv
+dU
+dW
 en
-cQ
-eI
-eI
-aH
+dK
+eB
+cZ
+eM
+eM
+aJ
 ae
 ae
 ae
@@ -23401,18 +23480,18 @@ cq
 ae
 ae
 ae
-aH
-aR
-aR
-aR
-aH
-aH
-aH
-aH
-aH
-bi
-aH
-aH
+aJ
+aW
+aW
+aW
+aJ
+aJ
+aJ
+aJ
+aJ
+bv
+aJ
+aJ
 ae
 ak
 ae
@@ -23452,12 +23531,12 @@ ea
 er
 er
 eZ
-dA
-dA
-dA
-dA
-dA
-dA
+kA
+kA
+kA
+kA
+kA
+kA
 es
 eZ
 es
@@ -23608,13 +23687,13 @@ ae
 ae
 ae
 ae
-aH
-dL
-aK
+aJ
 eo
-cQ
-dI
-aR
+aU
+eD
+cZ
+el
+aW
 ae
 ae
 ae
@@ -23810,13 +23889,13 @@ ag
 ae
 ag
 ae
-aH
-dL
-dW
-ep
-cQ
-dI
-aR
+aJ
+eo
+ew
+eE
+cZ
+el
+aW
 ae
 ae
 ae
@@ -23858,13 +23937,13 @@ ae
 gT
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ah
 ae
@@ -24012,13 +24091,13 @@ ae
 ae
 ae
 ae
-aH
-dL
-dX
-dL
-cQ
-dI
-aH
+aJ
+eo
+ex
+eo
+cZ
+el
+aJ
 ae
 ae
 ae
@@ -24062,11 +24141,11 @@ ae
 ae
 hv
 hI
-aH
+aJ
 if
-aH
+aJ
 iA
-aH
+aJ
 ae
 ae
 ae
@@ -24086,10 +24165,10 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ag
@@ -24099,10 +24178,10 @@ fd
 ae
 ah
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 dx
 ah
@@ -24214,13 +24293,13 @@ ag
 ae
 ae
 ae
-aH
-aH
-aR
-aR
-aH
-aH
-aH
+aJ
+aJ
+aW
+aW
+aJ
+aJ
+aJ
 ae
 ae
 dx
@@ -24261,14 +24340,14 @@ ah
 dx
 ae
 ae
-aH
-aH
+aJ
+aJ
 hJ
 hO
 ig
 hO
 iB
-aH
+aJ
 ae
 ah
 ah
@@ -24288,10 +24367,10 @@ ae
 ae
 ae
 ae
-aH
-jT
-jY
-aH
+aJ
+jV
+ka
+aJ
 ae
 ae
 ae
@@ -24301,10 +24380,10 @@ fd
 ae
 ae
 ae
-aH
-jY
-jT
-aH
+aJ
+ka
+jV
+aJ
 ae
 ae
 ae
@@ -24463,14 +24542,14 @@ ah
 ah
 ae
 ak
-aH
+aJ
 hw
 hw
 hw
 hw
 hw
 iC
-aH
+aJ
 iR
 ah
 ah
@@ -24490,10 +24569,10 @@ ah
 ah
 ae
 ak
-aH
-jU
-jT
-aH
+aJ
+jW
+jV
+aJ
 ae
 ah
 ae
@@ -24503,10 +24582,10 @@ fd
 ah
 ae
 ak
-aH
-jT
-jU
-aH
+aJ
+jV
+jW
+aJ
 ae
 ae
 ak
@@ -24665,19 +24744,19 @@ ah
 ag
 ae
 ag
-aH
+aJ
 hx
 hx
 hP
 ih
 hw
 ir
-aH
-aR
-aR
-aR
-aR
-aH
+aJ
+aW
+aW
+aW
+aW
+aJ
 ae
 ag
 fp
@@ -24691,25 +24770,25 @@ ah
 ah
 ah
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 io
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 io
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ae
 ag
@@ -24863,23 +24942,23 @@ fp
 er
 fd
 ae
-aH
-aR
-aR
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aW
+aW
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 io
-aH
+aJ
 hy
 hp
-gw
-cs
-cj
-aR
+gv
+cB
+cx
+aW
 ae
 ae
 fp
@@ -24893,25 +24972,25 @@ ah
 dx
 ah
 ae
-aH
-jP
-aK
-aK
-ka
-gU
-aH
+aJ
+jR
+aU
+aU
+kc
+gR
+aJ
 dY
 fp
 er
 fe
 ae
-aH
-kx
-kD
-aK
-aK
+aJ
+kE
 kK
-aH
+aU
+aU
+lc
+aJ
 ae
 ae
 ae
@@ -25065,23 +25144,23 @@ fp
 er
 fd
 ae
-aH
-gw
-cs
-dq
-aK
-gw
+aJ
+gv
+cB
+dE
+aU
+gv
 hK
-dq
-aH
-aK
-aH
+dE
+aJ
+aU
+aJ
 hy
 hp
-gw
-cs
-cs
-aR
+gv
+cB
+cB
+aW
 ae
 ae
 fp
@@ -25095,25 +25174,25 @@ ah
 ah
 ah
 ae
-jM
-aK
-aK
-aK
-aK
-kd
-aH
+jO
+aU
+aU
+aU
+aU
+kf
+aJ
 dZ
 er
 er
 er
 fy
-aH
-kd
-aK
-aK
-aK
-aK
-kN
+aJ
+kf
+aU
+aU
+aU
+aU
+lf
 ae
 ae
 ae
@@ -25267,23 +25346,23 @@ fp
 er
 fd
 ae
-aH
-gw
-gU
-dq
-aK
-gw
-cj
-dq
+aJ
+gv
+gR
+dE
+aU
+gv
+cx
+dE
 hz
 hp
 iD
 hp
 hp
 hp
-db
-db
-aR
+dk
+dk
+aW
 ae
 dY
 fp
@@ -25297,25 +25376,25 @@ dx
 ah
 ah
 ah
-jM
-aK
-aK
-aK
-aK
-aK
-kh
+jO
+aU
+aU
+aU
+aU
+aU
+kj
 ea
 er
 er
 er
 fz
-ku
-aK
-aK
-aK
-aK
-aK
-kN
+kB
+aU
+aU
+aU
+aU
+aU
+lf
 ae
 ae
 ah
@@ -25469,12 +25548,12 @@ fp
 er
 fd
 ae
-aH
-aK
-aK
-aK
-aK
-aK
+aJ
+aU
+aU
+aU
+aU
+aU
 hp
 hL
 hp
@@ -25485,7 +25564,7 @@ hp
 hL
 hp
 hp
-aR
+aW
 ae
 ae
 fp
@@ -25499,25 +25578,25 @@ dx
 dx
 ah
 ah
-jM
-aK
-aK
-aK
-aK
-ke
-aH
+jO
+aU
+aU
+aU
+aU
+kg
+aJ
 eb
 er
 er
 ff
 fA
-aH
-ky
-aK
-aK
-aK
-aK
-kN
+aJ
+kF
+aU
+aU
+aU
+aU
+lf
 ae
 ae
 aO
@@ -25671,23 +25750,23 @@ fp
 er
 fd
 ae
-aH
-gx
-aK
-aK
-aH
+aJ
+gw
+aU
+aU
+aJ
 hy
 hL
 hp
-bM
-gC
-gC
+ca
+gB
+gB
 ip
-bM
+ca
 hp
 hL
 hp
-aH
+aJ
 ae
 ae
 fp
@@ -25701,25 +25780,25 @@ dx
 ah
 ah
 ah
-aH
-jO
-jV
+aJ
+jQ
 jX
-kb
-aH
-aH
+jZ
+kd
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-kb
+aJ
+aJ
+kd
+jZ
 jX
-jV
-jO
-aH
+kR
+aJ
 ae
 ae
 ah
@@ -25873,24 +25952,24 @@ fp
 er
 fe
 ae
-aH
-gy
-bM
-aK
-aH
+aJ
+gx
+ca
+aU
+aJ
 hz
 hp
-bM
+ca
 hQ
 hR
 hQ
 hR
 hQ
-bM
+ca
 hp
 hL
-aH
-aH
+aJ
+aJ
 ae
 fp
 er
@@ -25903,12 +25982,12 @@ ah
 ah
 ah
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 fp
@@ -25916,12 +25995,12 @@ er
 fd
 ae
 ak
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 dx
@@ -26075,13 +26154,13 @@ fp
 er
 fd
 ae
-aH
-gz
-bM
-hc
+aJ
+gy
+ca
+hb
 ho
 hp
-bM
+ca
 hQ
 hR
 hQ
@@ -26089,10 +26168,10 @@ hR
 hQ
 hR
 hQ
-bM
+ca
 hp
 hz
-aH
+aJ
 jm
 er
 er
@@ -26116,7 +26195,7 @@ ae
 gd
 er
 er
-ld
+lp
 ae
 ae
 ae
@@ -26277,13 +26356,13 @@ fp
 er
 fd
 ae
-aH
-gA
-bM
-hc
+aJ
+gz
+ca
+hb
 hp
 hp
-bM
+ca
 hR
 hQ
 hR
@@ -26291,10 +26370,10 @@ hQ
 hR
 hQ
 hR
-bM
+ca
 hp
 hp
-aH
+aJ
 ea
 er
 er
@@ -26309,10 +26388,10 @@ ah
 ae
 ah
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 aO
 ae
@@ -26322,10 +26401,10 @@ fd
 dx
 ah
 bL
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -26479,13 +26558,13 @@ fp
 er
 fd
 ae
-aH
-gB
-bM
-bM
+aJ
+gA
+ca
+ca
 hp
 hp
-bM
+ca
 hQ
 hR
 hQ
@@ -26493,10 +26572,10 @@ iE
 hQ
 hR
 hQ
-bM
+ca
 hp
 hp
-bi
+bv
 ea
 er
 er
@@ -26511,10 +26590,10 @@ ah
 ae
 ah
 ae
-aH
-jT
-jY
-aH
+aJ
+jV
+ka
+aJ
 ae
 ah
 dx
@@ -26524,10 +26603,10 @@ fd
 ae
 dx
 ae
-aH
-jY
-jT
-aH
+aJ
+ka
+jV
+aJ
 ae
 ae
 ah
@@ -26681,13 +26760,13 @@ fp
 er
 fd
 ae
-aH
-gC
-bM
-hc
+aJ
+gB
+ca
+hb
 hp
 hp
-bM
+ca
 hR
 hQ
 hR
@@ -26695,10 +26774,10 @@ hQ
 hR
 hQ
 hR
-bM
+ca
 hp
 hp
-aH
+aJ
 ea
 er
 er
@@ -26713,10 +26792,10 @@ ae
 ae
 ae
 ae
-aH
-jU
-jT
-aH
+aJ
+jW
+jV
+aJ
 gT
 ah
 ae
@@ -26726,10 +26805,10 @@ fd
 ae
 ae
 ae
-aH
-jT
-jU
-aH
+aJ
+jV
+jW
+aJ
 ae
 ae
 ah
@@ -26883,13 +26962,13 @@ fp
 er
 fd
 ae
-aH
-gD
-bM
-hc
+aJ
+gC
+ca
+hb
 hq
 hp
-bM
+ca
 hQ
 hR
 hQ
@@ -26897,10 +26976,10 @@ hR
 hQ
 hR
 hQ
-bM
+ca
 hp
 hz
-aH
+aJ
 jn
 er
 er
@@ -26914,25 +26993,25 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 io
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 io
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ah
 ae
@@ -27085,24 +27164,24 @@ fp
 er
 fd
 ae
-aH
-gy
-bM
-aK
-aH
+aJ
+gx
+ca
+aU
+aJ
 hz
 hp
-bM
+ca
 hQ
 hR
 hQ
 hR
 hQ
-bM
+ca
 hp
 hL
-aH
-aH
+aJ
+aJ
 ae
 fp
 er
@@ -27116,25 +27195,25 @@ ae
 ae
 ae
 ae
-aH
-jP
-aK
-aK
-ka
-gU
-aH
+aJ
+jR
+aU
+aU
+kc
+gR
+aJ
 dY
 fp
 er
 fe
 ae
-aH
-gU
-kD
-aK
-aK
+aJ
+gR
 kK
-aH
+aU
+aU
+lc
+aJ
 ae
 ae
 ae
@@ -27287,23 +27366,23 @@ fp
 er
 fd
 ae
-aH
-gE
-aK
-aK
-aH
+aJ
+gD
+aU
+aU
+aJ
 hy
 hL
 hp
-bM
+ca
 ip
-gC
-gC
-bM
+gB
+gB
+ca
 hp
 hL
 hp
-aH
+aJ
 aH
 ag
 fp
@@ -27318,25 +27397,25 @@ ae
 ae
 ae
 ag
-jM
-aK
-aK
-aK
-aK
-kd
-aH
+jO
+aU
+aU
+aU
+aU
+kf
+aJ
 dZ
 er
 er
 er
 fy
-aH
-kC
-aK
-aK
-aK
-aK
-kP
+aJ
+kJ
+aU
+aU
+aU
+aU
+lh
 ae
 ae
 ae
@@ -27489,12 +27568,12 @@ fp
 er
 fd
 ae
-aH
-aK
-aK
-aK
-aK
-aK
+aJ
+aU
+aU
+aU
+aU
+aU
 hp
 hL
 hp
@@ -27505,7 +27584,7 @@ hp
 hL
 hp
 hp
-aR
+aW
 ae
 dY
 fp
@@ -27520,25 +27599,25 @@ ae
 ae
 ae
 ae
-jM
-aK
-aK
-aK
-aK
-aK
-kl
+jO
+aU
+aU
+aU
+aU
+aU
+kn
 ea
 er
 er
 er
 fz
-kz
-aK
-aK
-aK
-aK
-aK
-kP
+kG
+aU
+aU
+aU
+aU
+aU
+lh
 ae
 ae
 ah
@@ -27691,23 +27770,23 @@ fp
 er
 fe
 ae
-aH
-gw
-cj
-dq
-aK
-gw
-cs
-dq
+aJ
+gv
+cx
+dE
+aU
+gv
+cB
+dE
 hz
 hp
 iF
 hp
 hp
 hp
-iY
-iY
-aR
+ja
+ja
+aW
 ae
 ae
 fp
@@ -27722,25 +27801,25 @@ ae
 ae
 ae
 ae
-jM
-aK
-aK
-aK
-aK
-ki
-aH
+jO
+aU
+aU
+aU
+aU
+kk
+aJ
 eb
 er
 er
 ff
 fA
-aH
-kE
-aK
-aK
-aK
-aK
-kP
+aJ
+kL
+aU
+aU
+aU
+aU
+lh
 ae
 ag
 ah
@@ -27838,16 +27917,16 @@ ac
 ac
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ah
 ae
@@ -27893,23 +27972,23 @@ fp
 er
 fd
 ae
-aH
-gw
-gV
-dq
-aK
-gw
-cs
-dq
-aH
-aK
-aH
+aJ
+gv
+gU
+dE
+aU
+gv
+cB
+dE
+aJ
+aU
+aJ
 hy
 hp
-gw
-cs
-cs
-aR
+gv
+cB
+cB
+aW
 ae
 ae
 fp
@@ -27924,25 +28003,25 @@ ae
 ae
 ae
 ak
-aH
-jO
-jV
+aJ
+jQ
 jX
-kb
-aH
-aH
+jZ
+kd
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-kb
-jX
-kL
-jO
-aH
+aJ
+aJ
+kd
+jZ
+ld
+kR
+aJ
 ae
 ae
 ae
@@ -28034,22 +28113,22 @@ ac
 ac
 ac
 ac
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-bX
-cj
-cs
-aK
-aK
-aK
-cV
-dm
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+ck
+cx
+cB
+aU
+aU
+aU
+de
+dv
+aJ
 aO
 ah
 ae
@@ -28095,23 +28174,23 @@ fp
 er
 fd
 ae
-aH
-aR
-aR
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aW
+aW
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 iq
-aH
+aJ
 hy
 hp
-gw
-cj
-cs
-aR
+gv
+cx
+cB
+aW
 ae
 ae
 fp
@@ -28126,12 +28205,12 @@ dx
 ae
 ae
 dx
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ah
 fp
@@ -28139,12 +28218,12 @@ er
 fd
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ah
 ae
@@ -28236,22 +28315,22 @@ ac
 ac
 ac
 ac
-aH
-aT
-bc
-bc
-bu
-aK
-aH
-bY
-bM
-bM
-bM
-bM
-bM
-cW
-dn
-aH
+aJ
+aX
+bj
+bj
+bB
+aU
+aJ
+cl
+ca
+ca
+ca
+ca
+ca
+df
+dy
+aJ
 ah
 ah
 ag
@@ -28301,19 +28380,19 @@ ae
 ae
 ae
 ae
-aH
+aJ
 hA
-aH
+aJ
 hS
-aH
+aJ
 hw
-aH
-aH
-aR
-aR
-aR
-aR
-aH
+aJ
+aJ
+aW
+aW
+aW
+aW
+aJ
 ag
 ah
 fp
@@ -28336,10 +28415,10 @@ ae
 ae
 ae
 ah
-lb
+ln
 er
 er
-ld
+lp
 ae
 ae
 ae
@@ -28438,22 +28517,22 @@ ac
 ac
 ac
 ac
-aH
+aJ
+aY
 aU
-aK
-aK
-aK
-aK
-aH
-bM
-bM
-ct
-cw
-bM
-bM
-bM
-ck
-aH
+aU
+aU
+aU
+aJ
+ca
+ca
+cC
+cF
+ca
+ca
+ca
+cy
+aJ
 ah
 ah
 ae
@@ -28503,14 +28582,14 @@ ae
 ah
 ah
 ae
-aH
+aJ
 hB
-aH
+aJ
 hT
-aH
+aJ
 hw
 hw
-aH
+aJ
 ae
 ae
 ae
@@ -28532,10 +28611,10 @@ ah
 ah
 ae
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -28545,10 +28624,10 @@ fd
 ae
 aO
 ah
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ak
@@ -28640,22 +28719,22 @@ ac
 ac
 ac
 ac
-aR
-aK
-aK
-bh
-bh
-aH
-aH
-aH
-bi
-aH
-aH
-aH
-cG
-bM
-do
-aH
+aW
+aU
+aU
+bu
+bu
+aJ
+aJ
+aJ
+bv
+aJ
+aJ
+aJ
+cQ
+ca
+dz
+aJ
 ah
 ah
 ae
@@ -28705,14 +28784,14 @@ ae
 ah
 ah
 ae
-aH
+aJ
 hw
 hw
 hw
 hw
 hw
 hw
-aH
+aJ
 ae
 ae
 ae
@@ -28734,10 +28813,10 @@ ae
 ae
 ag
 ae
-aH
-jT
-jY
-aH
+aJ
+jV
+ka
+aJ
 ak
 ae
 ae
@@ -28747,10 +28826,10 @@ fd
 ae
 ah
 ah
-aH
-jY
-jT
-aH
+aJ
+ka
+jV
+aJ
 ae
 ae
 ag
@@ -28842,22 +28921,22 @@ ac
 ac
 ac
 ac
-aR
-aV
-aK
-aH
-aH
-aH
-aK
-bZ
-aK
-cu
-cx
-aH
-aK
-aK
-aK
-aH
+aW
+aZ
+aU
+aJ
+aJ
+aJ
+aU
+cm
+aU
+cD
+cG
+aJ
+aU
+aU
+aU
+aJ
 ae
 ae
 ae
@@ -28907,14 +28986,14 @@ ah
 ae
 ah
 ae
-aH
+aJ
 hx
 hx
 hP
 ih
 ir
 ir
-aH
+aJ
 ae
 ae
 ag
@@ -28936,10 +29015,10 @@ ae
 ae
 ae
 ae
-aH
-jU
-jT
-aH
+aJ
+jW
+jV
+aJ
 ae
 ae
 ah
@@ -28949,10 +29028,10 @@ fd
 ae
 ae
 ak
-aH
-jT
-jU
-aH
+aJ
+jV
+jW
+aJ
 ae
 ae
 ae
@@ -29044,22 +29123,22 @@ ac
 ac
 ac
 ac
-aH
-aW
-aK
-aH
-bw
-bM
-bM
-bM
-bM
-bM
-cy
-aH
-aH
-aH
-aH
-aH
+aJ
+bc
+aU
+aJ
+bC
+ca
+ca
+ca
+ca
+ca
+cI
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -29109,14 +29188,14 @@ ae
 ae
 ae
 bL
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -29137,25 +29216,25 @@ ac
 ae
 ae
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 io
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 io
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -29246,18 +29325,18 @@ ac
 ac
 ac
 ac
-aH
-aW
-aK
-aH
-bx
-bM
-bM
-bM
-bM
-bM
-aH
-aH
+aJ
+bc
+aU
+aJ
+bD
+ca
+ca
+ca
+ca
+ca
+aJ
+aJ
 cH
 ae
 ae
@@ -29339,25 +29418,25 @@ ac
 ae
 ae
 ae
-aH
-jP
-aK
-aK
-ka
-cs
-aH
+aJ
+jR
+aU
+aU
+kc
+cB
+aJ
 dY
 fp
 er
 fe
 ae
-aH
-gU
-kD
-aK
-aK
+aJ
+gR
 kK
-aH
+aU
+aU
+lc
+aJ
 ae
 ae
 ag
@@ -29448,18 +29527,18 @@ ac
 ac
 ac
 ac
-aR
-aX
-aK
-aH
-by
-bM
-bR
-bR
-bM
-aH
-aK
-aR
+aW
+bd
+aU
+aJ
+bE
+ca
+cc
+cc
+ca
+aJ
+aU
+aW
 aA
 aA
 aA
@@ -29483,29 +29562,29 @@ eq
 er
 er
 eZ
-dA
-dA
-dA
-dA
-dA
-dA
+kA
+kA
+kA
+kA
+kA
+kA
 fC
 fC
-dA
-dA
-dA
+kA
+kA
+kA
 er
 er
 er
 es
 es
 eZ
-dA
+kA
 gf
 gf
 gf
-dA
-dA
+kA
+kA
 es
 gq
 ae
@@ -29541,25 +29620,25 @@ ac
 ac
 ah
 ah
-jW
-aK
-aK
-aK
-aK
-kd
-aH
+jY
+aU
+aU
+aU
+aU
+kf
+aJ
 dZ
 er
 er
 er
 fy
-aH
-kC
-aK
-aK
-aK
-aK
-kR
+aJ
+kJ
+aU
+aU
+aU
+aU
+lj
 ae
 ae
 ae
@@ -29650,18 +29729,18 @@ ac
 ac
 ac
 ac
-aR
-aX
-aK
-bi
-aK
-bM
-bM
-bM
-bM
-cv
-aK
-bi
+aW
+bd
+aU
+bv
+aU
+ca
+ca
+ca
+ca
+cE
+aU
+bv
 at
 at
 at
@@ -29743,25 +29822,25 @@ ac
 ac
 ah
 ah
-jW
-aK
-aK
-aK
-aK
-aK
-kq
+jY
+aU
+aU
+aU
+aU
+aU
+kw
 ea
 er
 er
 er
 fz
-kF
-aK
-aK
-aK
-aK
-aK
-kR
+kM
+aU
+aU
+aU
+aU
+aU
+lj
 ag
 ah
 ah
@@ -29852,18 +29931,18 @@ ac
 ac
 ac
 ac
-aR
-aX
-aK
-aH
-bw
-bM
-bR
-bR
-bM
-aH
-aK
-aR
+aW
+bd
+aU
+aJ
+bC
+ca
+cc
+cc
+ca
+aJ
+aU
+aW
 ax
 ax
 ax
@@ -29891,12 +29970,12 @@ ae
 ae
 ae
 ae
-aH
-aH
-fD
-fD
-aH
-aH
+aJ
+aJ
+fx
+fx
+aJ
+aJ
 fQ
 fW
 fC
@@ -29945,25 +30024,25 @@ ac
 ac
 ae
 dx
-jW
-aK
-aK
-aK
-aK
-km
-aH
+jY
+aU
+aU
+aU
+aU
+kq
+aJ
 eb
 er
 er
 ff
 fA
-aH
-kH
-aK
-aK
-aK
-aK
-kR
+aJ
+kO
+aU
+aU
+aU
+aU
+lj
 ae
 ah
 ah
@@ -30054,18 +30133,18 @@ ac
 ac
 ac
 ac
-aH
-aW
-aK
-aH
-bx
-bM
-bM
-bM
-bM
-bM
-aH
-aH
+aJ
+bc
+aU
+aJ
+bD
+ca
+ca
+ca
+ca
+ca
+aJ
+aJ
 cH
 ae
 ae
@@ -30093,18 +30172,18 @@ ae
 ae
 ae
 ag
-aH
-fx
+aJ
+fi
+fD
 fE
-fH
-fK
-aH
-aH
-aR
-bi
-aR
-aH
-aH
+fI
+aJ
+aJ
+aW
+bv
+aW
+aJ
+aJ
 ae
 ae
 ae
@@ -30147,25 +30226,25 @@ ac
 ac
 ae
 ae
-aH
-jO
-jV
+aJ
+jQ
 jX
-kb
-aH
-aH
+jZ
+kd
+aJ
+aJ
 ae
 fp
 er
 fd
 ae
-aH
-aH
-kb
+aJ
+aJ
+kd
+jZ
 jX
-jV
-jO
-aH
+kR
+aJ
 ae
 ah
 ah
@@ -30256,22 +30335,22 @@ ac
 ac
 ac
 ac
-aH
-aW
-aK
-aH
-by
-bM
-bM
-bM
-bM
-bM
-cz
-aH
-aH
-aH
-aH
-aH
+aJ
+bc
+aU
+aJ
+bE
+ca
+ca
+ca
+ca
+ca
+cJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 dB
 ae
@@ -30295,18 +30374,18 @@ ae
 ae
 ae
 ae
-aH
-bC
+aJ
+bT
+fD
 fE
-fH
-fL
-aH
+fK
+aJ
+fO
+aU
+aU
+aU
 fR
-aK
-aK
-aK
-fS
-aH
+aJ
 ae
 ae
 ae
@@ -30349,12 +30428,12 @@ ac
 ae
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 fp
@@ -30362,12 +30441,12 @@ er
 fd
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -30458,22 +30537,22 @@ ac
 ac
 ac
 ac
-aR
-aK
-aK
-aH
-aH
-aH
-aK
-aK
-aK
-cu
-cA
-aH
-aK
-cX
-cX
-aH
+aW
+aU
+aU
+aJ
+aJ
+aJ
+aU
+aU
+aU
+cD
+cK
+aJ
+aU
+dg
+dg
+aJ
 ae
 dB
 ae
@@ -30497,18 +30576,18 @@ ae
 ah
 ae
 ae
-aH
-fx
+aJ
+fi
+fD
 fE
-fH
-fH
-aK
-aK
-aK
-aK
-aK
-aK
-aH
+fE
+aU
+aU
+aU
+aU
+aU
+aU
+aJ
 ae
 ae
 ae
@@ -30660,22 +30739,22 @@ ae
 ae
 ae
 ah
-aR
-aK
-aK
-bh
+aW
+aU
+aU
+bu
+bM
+aJ
+aJ
+aJ
 bv
-aH
-aH
-aH
-bi
-aH
-aH
-cC
-cI
-cY
-dp
-aH
+aJ
+aJ
+cM
+cR
+dh
+dD
+aJ
 ah
 dB
 ae
@@ -30699,18 +30778,18 @@ ae
 ae
 ae
 ae
-aH
-bC
+aJ
+bT
+fD
 fE
-fH
-fM
-aH
-aK
-aK
-aK
-aK
-aK
-aH
+fL
+aJ
+aU
+aU
+aU
+aU
+aU
+aJ
 ae
 ae
 ae
@@ -30862,22 +30941,22 @@ ae
 ae
 ag
 ae
-aH
-aY
-aK
-aK
-aK
-aK
-aH
+aJ
+bh
+aU
+aU
+aU
+aU
+aJ
+ct
 ca
-bM
-bM
-bM
-cD
-cJ
-cZ
-dq
-aH
+ca
+ca
+cN
+cS
+di
+dE
+aJ
 ah
 dB
 ag
@@ -30901,18 +30980,18 @@ ae
 ae
 aO
 ae
-aH
-fx
+aJ
+fi
+fD
 fE
-fH
-fM
-aH
-aK
-fX
-fX
-aK
-gb
-aH
+fL
+aJ
+aU
+fS
+fS
+aU
+fZ
+aJ
 ae
 ae
 ae
@@ -31064,22 +31143,22 @@ ah
 ae
 ae
 ae
-aH
-aZ
-bd
-bd
-bz
-aK
-aH
-cb
-bM
-bM
-bM
-cE
-cK
-da
-dr
-aH
+aJ
+bi
+bm
+bm
+bN
+aU
+aJ
+cu
+ca
+ca
+ca
+cO
+cT
+dj
+dG
+aJ
 ah
 dB
 ah
@@ -31103,18 +31182,18 @@ ae
 ae
 ae
 ae
-aH
-bC
+aJ
+bT
+fD
 fE
-fH
-fM
-aH
-aK
-aK
-fX
-aK
-gb
-aH
+fL
+aJ
+aU
+aU
+fS
+aU
+fZ
+aJ
 ae
 ae
 ae
@@ -31266,22 +31345,22 @@ aO
 aP
 ah
 ah
-aH
-aH
-aH
-aH
-aH
-aH
-aH
-cc
-ck
-cj
-cB
-aK
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+cv
+cy
+cx
 cL
-db
-ds
-aH
+aU
+cU
+dk
+dH
+aJ
 ae
 dB
 ah
@@ -31305,18 +31384,18 @@ ae
 ag
 ae
 ae
-aH
-fx
+aJ
+fi
+fD
 fE
-fH
-fH
-aK
-aK
-aK
+fE
+aU
+aU
+aU
+fY
+aU
 fZ
-aK
-gb
-aH
+aJ
 ae
 ae
 ae
@@ -31474,16 +31553,16 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-cF
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+cP
+aJ
+aJ
+aJ
+aJ
 ae
 dB
 ae
@@ -31507,18 +31586,18 @@ ae
 ae
 ae
 ag
-aH
-bC
+aJ
+bT
+fD
 fE
-fH
-fN
-aH
-fS
-fY
+fM
+aJ
+fR
 fX
-gb
 fS
-aH
+fZ
+fR
+aJ
 ae
 ae
 ah
@@ -31680,9 +31759,9 @@ ae
 ah
 ah
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -31709,18 +31788,18 @@ ae
 ae
 ae
 ae
-aH
-fx
-fE
-fI
-fO
-aH
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+fi
+fD
+fH
+fN
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -31911,12 +31990,12 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 fT
 ae
 ae
@@ -32080,10 +32159,10 @@ ag
 ae
 ae
 ae
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -32282,10 +32361,10 @@ ab
 ab
 ab
 ae
-aH
-aK
-aK
-bi
+aJ
+aU
+aU
+bv
 aA
 aA
 aA
@@ -32484,10 +32563,10 @@ ab
 ab
 ab
 ab
-aH
-cd
-cl
-aH
+aJ
+cw
+cz
+aJ
 ab
 ab
 ab
@@ -32686,10 +32765,10 @@ ab
 ab
 ab
 ab
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
 ab
 ab
 ab
@@ -33520,10 +33599,10 @@ ae
 ae
 ae
 ae
-fp
-er
-fd
-ae
+gd
+es
+gs
+je
 ae
 ae
 ab
@@ -34328,8 +34407,8 @@ ab
 ae
 ae
 ae
-ae
-ae
+cg
+aD
 ae
 ae
 ae
@@ -34530,8 +34609,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+bW
+au
 ae
 ae
 ae
@@ -34933,7 +35012,7 @@ ab
 ae
 ae
 ae
-ae
+la
 ae
 ae
 ae
@@ -35135,8 +35214,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+cg
+aD
 ae
 ae
 ae
@@ -35337,8 +35416,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+an
+aE
 ae
 ae
 ae
@@ -35539,8 +35618,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+an
+aE
 ae
 ae
 ae
@@ -35741,8 +35820,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+an
+au
 ae
 ae
 ae
@@ -35943,7 +36022,7 @@ ae
 ae
 ae
 ae
-ae
+dB
 ae
 ae
 ae
@@ -36145,7 +36224,7 @@ ae
 ae
 ae
 ae
-ae
+kz
 ae
 ae
 ae
@@ -36549,7 +36628,7 @@ ae
 ae
 ae
 ae
-ae
+lb
 ae
 ae
 ae
@@ -36750,7 +36829,7 @@ ae
 ae
 ae
 ae
-ae
+fP
 ae
 ae
 ae
@@ -36952,7 +37031,7 @@ ae
 ae
 ae
 ae
-ae
+dB
 ae
 ae
 ae
@@ -37154,7 +37233,7 @@ ae
 ae
 ae
 ae
-ae
+dB
 ae
 ae
 ae
@@ -37355,8 +37434,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+cg
+aE
 ae
 ae
 ae
@@ -37557,8 +37636,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+an
+aE
 ae
 ae
 ae
@@ -37759,8 +37838,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+an
+aE
 ae
 ae
 ae
@@ -37960,9 +38039,9 @@ ae
 ae
 ae
 ae
-ae
-ae
-ae
+cg
+at
+aE
 ae
 ae
 ae
@@ -38162,9 +38241,9 @@ ae
 ae
 ae
 ae
-ae
-ae
-ae
+an
+at
+au
 ae
 ae
 ae
@@ -38364,8 +38443,8 @@ ae
 ae
 ae
 ae
-ae
-ae
+an
+aE
 ae
 ae
 ae
@@ -38560,14 +38639,14 @@ ab
 ab
 ab
 ab
+at
+aA
+aD
 ae
 ae
 ae
-ae
-ae
-ae
-ae
-ae
+an
+aE
 ae
 ae
 ae
@@ -38760,17 +38839,17 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+aA
+aA
+aA
+at
+at
+aD
 ae
 ae
 ae
@@ -38962,18 +39041,18 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+aD
 ae
 ae
 ab
@@ -39164,18 +39243,18 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+kx
+at
+at
+at
+at
+kv
+at
+aE
 ae
 ae
 ab
@@ -39366,19 +39445,19 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+aD
 ae
 ae
 ab
@@ -39568,19 +39647,19 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+kv
+at
+at
+at
+eQ
+at
+at
+at
+at
+at
+aE
 ae
 ae
 ab
@@ -39767,22 +39846,22 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+aE
 ae
 ae
 ab
@@ -39969,22 +40048,22 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+at
+at
+at
+fb
+at
+at
+at
+fb
+at
+at
+at
 ab
 ab
 ab
@@ -40171,22 +40250,22 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+fb
+at
+at
+hi
+at
+at
+at
+at
+hi
+at
+at
+at
+at
+at
+at
 ab
 ab
 ab
@@ -40373,22 +40452,22 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+at
+at
+fb
+at
+at
+at
+at
+at
+at
+at
+at
 ab
 ab
 ab
@@ -40575,22 +40654,22 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+ky
+at
+at
+at
+at
 ab
 ab
 ab
@@ -40781,18 +40860,18 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+kv
+at
+at
+at
+at
+at
+at
+at
+hi
+at
 ab
 ab
 ab
@@ -40983,18 +41062,18 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
+at
 ab
 ab
 ab
@@ -41186,14 +41265,14 @@ ab
 ab
 ab
 ab
-ae
-ae
-ae
+at
+at
+at
 ab
 ab
-ae
-ae
-ae
+at
+at
+at
 ab
 ab
 ab

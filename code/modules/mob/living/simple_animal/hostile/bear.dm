@@ -55,6 +55,29 @@
 	desc = "It's a polar bear, in space, but not actually in space."
 	weather_immunities = list("snow")
 
+/mob/living/simple_animal/hostile/bear/snow/raid
+	name = "big fuckin' raid boss polar bear that'll kick your shit in if you get too close but also moves so incredibly slowly that dying to it is entirely your fault"
+	icon_state = "snowbear"
+	icon_living = "snowbear"
+	icon_dead = "snowbear_dead"
+	desc = "The description is mostly in the title."
+	butcher_results = list(/obj/item/reagent_containers/food/drinks/trophy/gold_cup/bearkill = 1, /obj/item/clothing/head/bearpelt = 5)
+	melee_damage_lower = 40
+	melee_damage_upper = 60
+	maxHealth = 6000
+	health = 6000
+	move_to_delay = 80
+	weather_immunities = list("snow")
+
+/mob/living/simple_animal/hostile/bear/snow/raid/Initialize()
+	. = ..()
+	resize = 2.5
+	update_transform()
+
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup/bearkill
+	name = "raid boss killer"
+	desc = ":clap: :clap: :clap:"
+
 /mob/living/simple_animal/hostile/bear/russian
 	name = "combat bear"
 	desc = "A ferocious brown bear decked out in armor plating, a red star with yellow outlining details the shoulder plating."

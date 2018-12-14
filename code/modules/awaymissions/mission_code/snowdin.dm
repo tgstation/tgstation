@@ -116,7 +116,7 @@
 	name = "Snowdin Main Base"
 	icon_state = "awaycontent16"
 	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
-	requires_power = TRUE
+	requires_power = FALSE
 
 /area/awaymission/snowdin/dungeon1
 	name = "Snowdin Depths"
