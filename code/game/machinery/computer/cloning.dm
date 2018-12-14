@@ -6,7 +6,6 @@
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
 	circuit = /obj/item/circuitboard/computer/cloning
-	req_access = list(ACCESS_HEADS) //ONLY USED FOR RECORD DELETION RIGHT NOW.
 	var/obj/machinery/dna_scannernew/scanner //Linked scanner. For scanning.
 	var/list/pods //Linked cloning pods
 	var/temp = "Inactive"
@@ -342,17 +341,11 @@
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 
 		else if (menu == 4)
-			var/obj/item/card/id/C = usr.get_active_held_item()
-			if (istype(C)||istype(C, /obj/item/pda))
-				if(check_access(C))
-					temp = "[active_record.fields["name"]] => Record deleted."
-					records.Remove(active_record)
-					active_record = null
-					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-					menu = 2
-				else
-					temp = "<font class='bad'>Access Denied.</font>"
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			temp = "[active_record.fields["name"]] => Record deleted."
+			records.Remove(active_record)
+			active_record = null
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+			menu = 2
 
 	else if (href_list["disk"]) //Load or eject.
 		switch(href_list["disk"])
