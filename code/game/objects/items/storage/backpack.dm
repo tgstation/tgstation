@@ -97,7 +97,7 @@
 	var/mob/M = get(loc, /mob)
 	if(!istype(M))
 		return
-	if(M.has_trait(TRAIT_CANNOT_OPEN_PRESENTS) || (M.mind && M.mind.has_trait(TRAIT_CANNOT_OPEN_PRESENTS)))
+	if(M.has_trait(TRAIT_CANNOT_OPEN_PRESENTS))
 		GET_COMPONENT(STR, /datum/component/storage)
 		var/turf/floor = get_turf(src)
 		var/obj/item/I = new /obj/item/a_gift/anything(floor)
