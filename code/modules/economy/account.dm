@@ -1,6 +1,6 @@
 /datum/bank_account
 	var/account_holder = "Rusty Venture"
-	var/account_balance = 0
+	var/account_balance = 9999
 	var/datum/job/account_job
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
