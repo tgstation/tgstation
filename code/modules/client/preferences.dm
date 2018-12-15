@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
 		//Mob preview
-	var/icon/preview_icon = null
+	//var/icon/preview_icon = null
 
 		//Quirk list
 	var/list/positive_quirks = list()
@@ -150,8 +150,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
-	user << browse_rsc(preview_icon, "previewicon.png")
+	//update_preview_icon()
+	//user << browse_rsc(preview_icon, "previewicon.png")
 	var/list/dat = list("<center>")
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
@@ -223,7 +223,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<td valign='center'>"
 
-			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
+			dat += "<div class='statusDisplay'><center>Preview Disabled</center></div>"
 
 			dat += "</td></tr></table>"
 
