@@ -366,3 +366,286 @@
 	payment_department = ACCOUNT_MED
 /obj/item/vending_refill/wardrobe/viro_wardrobe
 	machine_name = "ViroDrobe"
+
+
+/obj/machinery/vending/wardrobe/marine_wardrobe
+	name = "MarineVend"
+	desc = "An automated closet hooked up to a colossal storage unit of standard-issue uniform and armor."
+	icon = 'icons/marine.dmi'
+	icon_state = "marineuniform"
+	icon_vend = "marineuniform-vend"
+	icon_deny = "marineuniform"
+	product_slogans = "If it moves, it's hostile!;How many enemies have you killed today?;Shoot first, perform autopsy later!"
+	product_ads = "Semper Fidelis!"
+	vend_reply = "Thank you for using the MarineVend!"
+	products = list(/obj/item/clothing/under/marine = 50,
+					/obj/item/clothing/under/marine/SO = 50,
+					/obj/item/clothing/under/marine/XO = 50,
+					/obj/item/clothing/under/marine/CO = 50,
+					/obj/item/clothing/under/marine/RO = 50,
+					/obj/item/clothing/under/marine/E = 50,
+					/obj/item/clothing/under/marine/CE = 50,
+					/obj/item/clothing/under/marine/MP = 50,
+					/obj/item/clothing/under/marine/WO = 50,
+					/obj/item/clothing/under/marine/liaison = 50,
+					/obj/item/clothing/under/marine/liaison_formal = 50,
+					/obj/item/clothing/under/marine/researcher = 50,
+					/obj/item/clothing/shoes/marine = 50,
+					/obj/item/clothing/shoes/marine/laceup = 50,
+					/obj/item/clothing/head/marine/beret = 50,
+					/obj/item/clothing/head/marine/beret/MP = 50,
+					/obj/item/clothing/head/marine/beret/WO = 50,
+					/obj/item/clothing/head/marine/bandana = 50,
+					/obj/item/clothing/head/marine/headband = 50,
+					/obj/item/clothing/head/marine/headband/red = 50,
+					/obj/item/clothing/head/marine/cap = 50,
+					/obj/item/clothing/head/marine/helmet = 50,
+					/obj/item/storage/backpack/satchel/marine = 50,
+					/obj/item/storage/backpack/marine = 50,
+					/obj/item/clothing/gloves/marine = 50,
+					/obj/item/clothing/gloves/marine/white = 50,
+					/obj/item/clothing/gloves/marine/officer = 50,
+					/obj/item/clothing/gloves/marine/CO = 50,
+					/obj/item/clothing/suit/marine = 50,
+					/obj/item/clothing/suit/marine/alt = 50,
+					/obj/item/clothing/suit/marine/MP = 50,
+					/obj/item/clothing/suit/marine/WO = 50,
+					/obj/item/clothing/suit/marine/officer = 50)
+	refill_canister = /obj/item/vending_refill/wardrobe/marine_wardrobe
+	payment_department = ACCOUNT_CIV
+	default_price = 0
+	extra_price = 0
+
+/obj/item/vending_refill/wardrobe/marine_wardrobe
+	machine_name = "MarineVend"
+
+
+/obj/item/clothing/under/marine
+	name = "\improper TGMC uniform"
+	desc = "A standard-issue Marine uniform. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_jumpsuit"
+
+
+/obj/item/clothing/under/marine/SO
+	name = "staff officer uniform"
+	desc = "A uniform worn by commissioned officers of the TGMC. Do the corps proud. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "so_jumpsuit"
+
+
+/obj/item/clothing/under/marine/XO
+	name = "executive officer uniform"
+	desc = "A uniform typically worn by a first-lieutenant Executive Officer in the TGMC. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "xo_jumpsuit"
+
+
+/obj/item/clothing/under/marine/CO
+	name = "commander uniform"
+	desc = "The well-ironed uniform of a TGMC commander. Even looking at it the wrong way could result in being court-marshalled. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "co_jumpsuit"
+
+
+/obj/item/clothing/under/marine/RO
+	name = "requisition officer uniform"
+	desc = "A nicely-fitting military suit for a requisition officer. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "ro_jumpsuit"
+
+
+/obj/item/clothing/under/marine/E
+	name = "engineer uniform"
+	desc = "A uniform for a military engineer. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "e_jumpsuit"
+
+
+/obj/item/clothing/under/marine/CE
+	name = "chief engineer uniform"
+	desc = "A uniform for a military engineer. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "ce_jumpsuit"
+
+
+/obj/item/clothing/under/marine/MP
+	name = "military police jumpsuit"
+	desc = "A standard-issue Military Police uniform. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "mp_jumpsuit"
+
+
+/obj/item/clothing/under/marine/WO
+	name = "warrant officer uniform"
+	desc = "A uniform typically worn by a Chief MP of the TGMC. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions. This uniform includes a small EMF distributor to help nullify energy-based weapon fire, along with a hazmat chemical filter woven throughout the material to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "wo_jumpsuit"
+
+
+/obj/item/clothing/under/marine/liaison
+	name = "liaison's tan suit"
+	desc = "A stiff, stylish tan suit commonly worn by businessmen from the Nanotrasen corporation. Expertly crafted to make you look like a prick."
+	icon = 'icons/marine.dmi'
+	icon_state = "liaison_regular"
+
+
+/obj/item/clothing/under/marine/liaison_formal
+	name = "liaison's white suit"
+	desc = "A formal, white suit. Looks like something you'd wear to a funeral, a Nanotrasen corporate dinner, or both. Stiff as a board, but makes you feel like rolling out of a Rolls-Royce."
+	icon = 'icons/marine.dmi'
+	icon_state = "liaison_formal"
+
+
+/obj/item/clothing/under/marine/researcher
+	name = "researcher uniform"
+	desc = "A simple set of civilian clothes worn by researchers. It has shards of light Kevlar to help protect against stabbing weapons, bullets, and shrapnel from explosions, a small EMF distributor to help null energy-based weapons, and a hazmat chemical filter weave to ward off biological and radiation hazards."
+	icon = 'icons/marine.dmi'
+	icon_state = "research_jumpsuit"
+
+
+/obj/item/clothing/shoes/marine
+	name = "marine combat boots"
+	desc = "Standard issue combat boots for combat scenarios or combat situations. All combat, all the time."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_shoes"
+
+
+/obj/item/clothing/shoes/marine/laceup
+	name = "chief officer shoes"
+	desc = "Only a small amount of monkeys, kittens, and orphans were killed in making this."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_laceups"
+
+
+/obj/item/clothing/head/marine/beret
+	name = "\improper TGMC beret"
+	desc = "A hat typically worn by the field-officers of the TGMC. Occasionally they find their way down the ranks into the hands of squad-leaders and decorated grunts."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_beret"
+
+
+/obj/item/clothing/head/marine/beret/MP
+	name = "\improper TGMC MP beret"
+	desc = "A beret with the staff seargant insignia emblazoned on it. It shines with the glow of corrupt authority and a smudge of doughnut."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_beretred"
+
+
+/obj/item/clothing/head/marine/beret/WO
+	name = "\improper TGMC chief MP beret"
+	desc = "A beret with the lieutenant insignia emblazoned on it. It shines with the glow of corrupt authority and a smudge of doughnut."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_beretwo"
+
+
+/obj/item/clothing/head/marine/bandana
+	name = "\improper TGMC bandana"
+	desc = "Typically worn by heavy-weapon operators, mercenaries and scouts, the bandana serves as a lightweight and comfortable hat. Comes in two stylish colors."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_bandana"
+
+
+/obj/item/clothing/head/marine/headband
+	name = "\improper TGMC green headband"
+	desc = "A rag typically worn by the less-orthodox weapons operators in the TGMC. While it offers no protection, it is certainly comfortable to wear compared to the standard helmet. Comes in two stylish colors."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_headband"
+
+
+/obj/item/clothing/head/marine/headband/red
+	name = "\improper TGMC red headband"
+	desc = "A rag typically worn by the less-orthodox weapons operators in the TGMC. While it offers no protection, it is certainly comfortable to wear compared to the standard helmet. Comes in two stylish colors."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_headbandred"
+
+
+/obj/item/clothing/head/marine/cap
+	name = "\improper TGMC cap"
+	desc = "A casual cap occasionally worn by Squad-leaders and Combat-Engineers. While it has limited combat functionality, some prefer to wear it instead of the standard issue helmet."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_cap"
+
+
+/obj/item/clothing/head/marine/helmet
+	name = "\improper M10 pattern marine helmet"
+	desc = "A standard M10 Pattern Helmet. It reads on the label, 'The difference between an open-casket and closed-casket funeral. Wear on head for best results.'. Contains a small built-in camera."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_helmet"
+
+
+/obj/item/storage/backpack/satchel/marine
+	name = "\improper TGMC satchel"
+	desc = "A heavy-duty satchel carried by some TGMC soldiers and support personnel."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_satchel"
+
+
+/obj/item/storage/backpack/marine
+	name = "\improper lightweight IMP backpack"
+	desc = "The standard-issue pack of the TGMC forces. Designed to slug gear into the battlefield."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_backpack"
+
+
+/obj/item/clothing/gloves/marine
+	name = "marine combat gloves"
+	desc = "Standard issue marine tactical gloves. It reads: 'knit by Marine Widows Association'."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_gloves"
+
+
+/obj/item/clothing/gloves/marine/white
+	name = "latex gloves"
+	desc = "Cheap sterile gloves made from latex."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_glovesw"
+
+
+/obj/item/clothing/gloves/marine/officer
+	name = "officer gloves"
+	desc = "Shiny and impressive. They look expensive."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_gloveso"
+
+
+/obj/item/clothing/gloves/marine/CO
+	name = "commander's gloves"
+	desc = "You may like these gloves, but THEY think you are unworthy of them."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_glovesco"
+
+
+/obj/item/clothing/suit/marine
+	name = "\improper M3 pattern marine armor"
+	desc = "A standard TerraGov Marine Corps M3 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. It has a small leather pouch strapped to it for limited storage."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_armor1"
+
+
+/obj/item/clothing/suit/marine/alt
+	name = "\improper M4 pattern marine armor"
+	desc = "A standard TerraGov Marine Corps M4 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. It has a small leather pouch strapped to it for limited storage."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_armor2"
+
+
+/obj/item/clothing/suit/marine/MP
+	name = "\improper M2 pattern MP armor"
+	desc = "A standard TerraGov Marine Corps M2 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. It has a small leather pouch strapped to it for limited storage."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_mparmor"
+
+
+/obj/item/clothing/suit/marine/WO
+	name = "\improper M3 pattern CMP armor"
+	desc = "A well-crafted suit of M3 Pattern Armor typically distributed to Chief MPs. Useful for letting your men know who is in charge."
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_cmparmor"
+
+
+/obj/item/clothing/suit/marine/officer
+	name = "\improper M3 pattern officer armor"
+	desc = "A well-crafted suit of M3 Pattern Armor typically found in the hands of higher-ranking officers. Useful for letting your men know who is in charge when taking to the field"
+	icon = 'icons/marine.dmi'
+	icon_state = "marine_officerarmor"
