@@ -269,6 +269,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	It does not work with duplicate_key and the mysql server ignores it in those cases
 */
 /datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = TRUE)
+	stack_trace()
 	if (!table || !rows || !istype(rows))
 		return
 	var/list/columns = list()
