@@ -1019,6 +1019,7 @@
 #include "code\game\objects\structures\crates_lockers\closets\cardboardbox.dm"
 #include "code\game\objects\structures\crates_lockers\closets\fitness.dm"
 #include "code\game\objects\structures\crates_lockers\closets\gimmick.dm"
+#include "code\game\objects\structures\crates_lockers\closets\infinite.dm"
 #include "code\game\objects\structures\crates_lockers\closets\job_closets.dm"
 #include "code\game\objects\structures\crates_lockers\closets\l3closet.dm"
 #include "code\game\objects\structures\crates_lockers\closets\syndicate.dm"
