@@ -2675,7 +2675,7 @@
 "hf" = (
 /obj/structure/flora/ausbushes/palebush,
 /turf/open/floor/plating,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/outside/vip)
 "hg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{

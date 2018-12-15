@@ -10,6 +10,10 @@
 	name = "Snowdin Tundra Plains"
 	icon_state = "awaycontent25"
 
+/area/awaymission/snowdin/outside/vip
+	name = "Snowdin Tundra Plains"
+	icon_state = "awaycontent25"
+
 /area/awaymission/snowdin/post
 	name = "Snowdin Outpost"
 	icon_state = "awaycontent2"

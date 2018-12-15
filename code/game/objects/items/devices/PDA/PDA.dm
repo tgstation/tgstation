@@ -512,6 +512,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 				tnote = null
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				if (t == "helen_has_a_monster_dong")
+					var/mob/living/carbon/human/coolperson = U
+					if(coolperson.ckey != "qustinnus" && coolperson.ckey != "mrdoombringer")
+						to_chat(U, "<span class='notice'>[src] softly beeps, and a message flashes across the screen: \"Hello buddy, sorry, only cool people can activate that special ability!\"</span>")
+						return
+					to_chat(U, "<span class='warning'>You hear a soft beep as [src]'s true power is unleashed...</span>")
+					new /obj/machinery/vip_door(U.loc)
 				if(in_range(src, U) && loc == U && t)
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")

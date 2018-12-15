@@ -2246,6 +2246,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/tdome/arena_source)
+"fR" = (
+/turf/closed/wall/mineral/wood,
+/area/space)
 "fS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2933,6 +2936,9 @@
 /obj/machinery/capture_the_flag/red,
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
+"hH" = (
+/turf/open/floor/wood,
+/area/space)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3707,6 +3713,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/control)
+"jA" = (
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/space)
 "jB" = (
 /obj/structure/noticeboard{
 	dir = 8;
@@ -4811,6 +4821,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+"lS" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space)
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -6488,6 +6502,12 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
+"oU" = (
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/space)
 "oV" = (
 /obj/machinery/vr_sleeper{
 	dir = 4
@@ -6847,6 +6867,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
+"px" = (
+/obj/structure/fireplace,
+/turf/open/floor/wood,
+/area/space)
 "py" = (
 /obj/machinery/smartfridge,
 /turf/closed/indestructible{
@@ -6855,6 +6879,44 @@
 	smooth = 1
 	},
 /area/centcom/holding)
+"pz" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/space)
+"pA" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
+"pB" = (
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/wood,
+/area/space)
+"pC" = (
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/space)
+"pD" = (
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	pixel_y = 5
+	},
+/obj/item/storage/box/donkpockets,
+/obj/structure/closet/wardrobe/cargotech{
+	desc = "It's a storage unit for only the coolest of people.";
+	name = "based couple supply closet"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/space)
 "pE" = (
 /obj/machinery/plantgenes/seedvault,
 /obj/effect/turf_decal/tile/green{
@@ -7022,6 +7084,18 @@
 /obj/item/stack/packageWrap,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
+"pT" = (
+/obj/structure/table/wood,
+/obj/item/card/id/centcom,
+/obj/item/folder/red,
+/obj/item/lighter,
+/turf/open/floor/wood,
+/area/space)
+"pU" = (
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
 "pV" = (
 /obj/machinery/light{
 	dir = 4
@@ -7032,6 +7106,14 @@
 /obj/effect/landmark/ai_multicam_room,
 /turf/open/ai_visible,
 /area/ai_multicam_room)
+"pX" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
 "pY" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/freezer{
@@ -7133,6 +7215,16 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
+"qh" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
 "qi" = (
 /obj/structure/table/wood,
 /obj/item/storage/secure/briefcase{
@@ -7389,6 +7481,17 @@
 "qE" = (
 /turf/closed/indestructible/riveted/uranium,
 /area/wizard_station)
+"qF" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
+"qG" = (
+/obj/structure/table/wood,
+/obj/item/camera,
+/turf/open/floor/wood,
+/area/space)
 "qH" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -7530,6 +7633,20 @@
 /obj/machinery/computer/shuttle,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rb" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
+"rc" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
 "rd" = (
 /obj/structure/flora/grass/brown,
 /obj/effect/light_emitter{
@@ -8086,6 +8203,18 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rY" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
+"rZ" = (
+/obj/machinery/vending/cola,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/space)
 "sa" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
@@ -56445,11 +56574,11 @@ By
 Ca
 Cw
 mD
-aa
-aa
-aa
-aa
-aa
+fR
+jA
+pB
+jA
+fR
 aa
 aa
 aa
@@ -56702,11 +56831,11 @@ Bz
 Cb
 Cx
 mD
-aa
-aa
-aa
-aa
-aa
+fR
+lS
+lS
+lS
+fR
 aa
 aa
 aa
@@ -56959,11 +57088,11 @@ BA
 Ca
 Cy
 mD
-aa
-aa
-aa
-aa
-aa
+fR
+oU
+oU
+qG
+fR
 Ep
 Ep
 Ep
@@ -57216,11 +57345,11 @@ Ah
 sw
 Cz
 mD
-aa
-aa
-aa
-aa
-aa
+fR
+hH
+hH
+pC
+fR
 Ep
 Fm
 FD
@@ -57473,11 +57602,11 @@ sw
 zA
 CA
 mD
-aa
-aa
-aa
-aa
-aa
+fR
+px
+hH
+pD
+fR
 Ep
 Fn
 FE
@@ -57730,11 +57859,11 @@ Ai
 rz
 nU
 mD
-aa
-aa
-aa
-aa
-aa
+fR
+hH
+hH
+pT
+fR
 Ep
 Fo
 FF
@@ -57987,10 +58116,10 @@ sw
 zD
 CB
 mD
-aa
-aa
-aa
-aa
+fR
+hH
+hH
+fR
 Ep
 Ep
 Ep
@@ -58244,10 +58373,10 @@ sw
 sw
 CC
 mD
-aa
-aa
-aa
-aa
+fR
+pz
+pz
+fR
 Ep
 EE
 Ep
@@ -58501,10 +58630,10 @@ BB
 sw
 CD
 mD
-aa
-aa
-aa
-aa
+pA
+hH
+hH
+rb
 Eq
 EF
 Eq
@@ -58758,10 +58887,10 @@ BC
 sw
 CE
 mD
-aa
-aa
-aa
-aa
+pU
+pX
+pX
+rc
 Ep
 Ev
 Ep
@@ -59015,10 +59144,10 @@ sw
 sw
 CF
 nT
-aa
-aa
-aa
-aa
+pU
+qh
+pU
+rY
 Ep
 EG
 Ev
@@ -59272,10 +59401,10 @@ BD
 pR
 CG
 mD
-aa
-aa
-aa
-aa
+pU
+qF
+pU
+rZ
 Ep
 EH
 Ev
