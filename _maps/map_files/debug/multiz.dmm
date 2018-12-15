@@ -1171,15 +1171,12 @@
 /area/storage/primary)
 "dG" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1245,11 +1242,9 @@
 /area/storage/primary)
 "dS" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1293,7 +1288,6 @@
 /area/bridge)
 "ed" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -1397,7 +1391,6 @@
 /area/storage/primary)
 "ey" = (
 /obj/effect/turf_decal/stripes/asteroid/corner{
-	icon_state = "ast_warn_corner";
 	dir = 1
 	},
 /obj/structure/ladder,
@@ -1416,7 +1409,6 @@
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -1441,42 +1433,36 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/construction)
 "eI" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/construction)
 "eJ" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/construction)
 "eK" = (
 /obj/effect/turf_decal/stripes/asteroid/corner{
-	icon_state = "ast_warn_corner";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/construction)
 "eL" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/construction)
 "eM" = (
 /obj/effect/turf_decal/stripes/asteroid/corner{
-	icon_state = "ast_warn_corner";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1489,7 +1475,6 @@
 /area/engine/engineering)
 "eO" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /obj/effect/spawner/structure/window/reinforced,
@@ -1497,54 +1482,45 @@
 /area/bridge)
 "eP" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "eQ" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "eR" = (
 /obj/effect/turf_decal/stripes/asteroid/corner{
-	icon_state = "ast_warn_corner";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/asteroid/corner{
-	icon_state = "ast_warn_corner";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "eS" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "eT" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "eU" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1556,7 +1532,6 @@
 "eW" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -1568,7 +1543,6 @@
 "eY" = (
 /obj/effect/turf_decal/stripes/asteroid/line,
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -1584,11 +1558,9 @@
 /area/space)
 "fo" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /obj/machinery/door/airlock/external/glass,
@@ -1663,7 +1635,6 @@
 /area/maintenance/department/bridge)
 "Fz" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/asteroid/line,
@@ -1676,7 +1647,6 @@
 /area/construction)
 "Jz" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -1690,29 +1660,24 @@
 /area/hallway/secondary/entry)
 "Kq" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/security)
 "KL" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/security)
 "KM" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -1727,7 +1692,6 @@
 /area/maintenance/department/bridge)
 "Pl" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/asteroid/line,
@@ -1739,14 +1703,12 @@
 /area/security)
 "WC" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security)
 "YD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
-	icon_state = "ast_warn";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
