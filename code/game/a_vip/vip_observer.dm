@@ -27,7 +27,7 @@
 		DP = new /obj/effect/DPtarget(get_turf(observetarget), pod)
 	else
 		DP = new /obj/effect/DPtarget(get_turf(src), pod)
-	DP.visible_message("<span class='notice'>YOU SEE A BEAUTIFUL COUPLE FLYING IN FROM THE HEAVENS. WHAT MAJESTY! IT PUTS MIKE MURDOCK TO SHAME!</span>")
+	DP.visible_message("<span class='reallybig'>YOU SEE A BEAUTIFUL COUPLE FLYING IN FROM THE HEAVENS. WHAT MAJESTY! IT PUTS MIKE MURDOCK TO SHAME!</span>")
 	src.mind.transfer_to(oldMob)
 	qdel(src)
 	
