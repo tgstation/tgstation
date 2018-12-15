@@ -12,13 +12,19 @@
 	var/on = FALSE
 	var/current_temperature = SHOWER_NORMAL
 	var/datum/looping_sound/showering/soundloop
+	var/reagent_id = "water"
+	var/reaction_volume = 200
 
 /obj/machinery/shower/Initialize()
 	. = ..()
+	create_reagents(reaction_volume)
+	reagents.add_reagent(reagent_id, reaction_volume)
+
 	soundloop = new(list(src), FALSE)
 
 /obj/machinery/shower/Destroy()
 	QDEL_NULL(soundloop)
+	QDEL_NULL(reagents)
 	return ..()
 
 /obj/machinery/shower/interact(mob/M)
@@ -28,15 +34,11 @@
 	add_fingerprint(M)
 	if(on)
 		START_PROCESSING(SSmachines, src)
+		process()
 		soundloop.start()
-		wash_turf()
+		wash_atom(loc)
 		for(var/atom/movable/G in loc)
-			SEND_SIGNAL(G, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-			if(isliving(G))
-				var/mob/living/L = G
-				wash_mob(L)
-			else if(isobj(G)) // Skip the light objects
-				wash_obj(G)
+			wash_atom(G)
 	else
 		soundloop.stop()
 		if(isopenturf(loc))
@@ -60,7 +62,7 @@
 			if(SHOWER_BOILING)
 				current_temperature = SHOWER_NORMAL
 		user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I] to [current_temperature] temperature.</span>")
-		log_game("[key_name(user)] has wrenched a shower to [current_temperature] at ([x],[y],[z])")
+		user.log_message("has wrenched a shower at [AREACOORD(src)] to [current_temperature].", LOG_ATTACK)
 		add_hiddenprint(user)
 	handle_mist()
 	return TRUE
@@ -76,10 +78,10 @@
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
 	// If there was already mist, and the shower was turned off (or made cold): remove the existing mist in 25 sec
 	var/obj/effect/mist/mist = locate() in loc
-	if(on && !mist && current_temperature != SHOWER_FREEZING)
+	if(!mist && on && current_temperature != SHOWER_FREEZING)
 		addtimer(CALLBACK(src, .proc/make_mist), 5 SECONDS)
 
-	if(!on && mist)
+	if(mist && (!on || current_temperature == SHOWER_FREEZING))
 		addtimer(CALLBACK(src, .proc/clear_mist), 25 SECONDS)
 
 /obj/machinery/shower/proc/make_mist()
@@ -96,43 +98,38 @@
 /obj/machinery/shower/Crossed(atom/movable/AM)
 	..()
 	if(on)
-		if(isliving(AM))
-			var/mob/living/L = AM
-			wash_mob(L)
-			check_heat(L)
+		wash_atom(AM)
 
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.slip(80, null, NO_SLIP_WHEN_WALKING)
+/obj/machinery/shower/proc/wash_atom(atom/A)
+	SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	reagents.reaction(A, TOUCH, reaction_volume)
 
-		else if(isobj(AM))
-			wash_obj(AM)
+	if(isobj(A))
+		wash_obj(A)
+	else if(isturf(A))
+		wash_turf(A)
+	else if(ismob(A))
+		wash_mob(A)
+		check_heat(A)
 
+	contamination_cleanse(A)
 
 /obj/machinery/shower/proc/wash_obj(obj/O)
 	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	if(isitem(O))
-		var/obj/item/I = O
-		I.acid_level = 0
-		I.extinguish()
 
 
-/obj/machinery/shower/proc/wash_turf()
-	if(isturf(loc))
-		var/turf/tile = loc
-		SEND_SIGNAL(tile, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-		tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		for(var/obj/effect/E in tile)
-			if(is_cleanable(E))
-				qdel(E)
+/obj/machinery/shower/proc/wash_turf(turf/tile)
+	SEND_SIGNAL(tile, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	for(var/obj/effect/E in tile)
+		if(is_cleanable(E))
+			qdel(E)
 
 
 /obj/machinery/shower/proc/wash_mob(mob/living/L)
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
-	L.ExtinguishMob()
-	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
@@ -190,7 +187,7 @@
 	else
 		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
-/obj/machinery/shower/proc/contamination_cleanse(atom/movable/thing)
+/obj/machinery/shower/proc/contamination_cleanse(atom/thing)
 	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
 	if(!healthy_green_glow || QDELETED(healthy_green_glow))
 		return
@@ -202,13 +199,9 @@
 
 /obj/machinery/shower/process()
 	if(on)
-		wash_turf()
+		wash_atom(loc)
 		for(var/atom/movable/AM in loc)
-			if(isliving(AM))
-				wash_mob(AM)
-			else if(isobj(AM))
-				wash_obj(AM)
-			contamination_cleanse(AM)
+			wash_atom(AM)
 	else
 		return PROCESS_KILL
 
@@ -222,12 +215,12 @@
 	if(current_temperature == SHOWER_FREEZING)
 		if(iscarbon(L))
 			C.adjust_bodytemperature(-80, 80)
-		to_chat(L, "<span class='warning'>The water is freezing!</span>")
+		to_chat(L, "<span class='warning'>The shower is freezing!</span>")
 	else if(current_temperature == SHOWER_BOILING)
 		if(iscarbon(L))
 			C.adjust_bodytemperature(35, 0, 500)
 		L.adjustFireLoss(5)
-		to_chat(L, "<span class='danger'>The water is searing!</span>")
+		to_chat(L, "<span class='danger'>The shower is searing!</span>")
 
 /obj/effect/mist
 	name = "mist"
