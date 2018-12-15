@@ -982,15 +982,14 @@
 	},
 /area/awaymission/snowdin/base)
 "dd" = (
-/obj/structure/flora/rock/icy{
-	desc = "She's so beautiful. You feel embarrassed for even looking at her.";
+/obj/structure/flora/rock{
+	desc = "She's absolutely beautiful. You avert your gaze to not meet her directly.";
 	icon_state = "basalt2";
 	name = "Background Boulder"
 	},
 /obj/item/organ/ears/cat{
 	anchored = 1
 	},
-/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "chapel"
@@ -1974,6 +1973,9 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "gf" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
 /turf/open/floor/holofloor/snow,
 /turf/open/indestructible/cobble/side{
 	dir = 4
@@ -3074,8 +3076,11 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/base)
 "iW" = (
-/obj/structure/sign/poster/contraband/smoke,
-/turf/closed/indestructible/riveted,
+/obj/structure/table/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/carpet,
 /area/awaymission/snowdin/base)
 "iX" = (
 /obj/structure/closet/gmcloset,
@@ -3093,14 +3098,16 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "iY" = (
-/obj/structure/table/wood,
-/obj/item/stack/packageWrap,
-/obj/item/hand_labeler,
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 15
+/obj/structure/fence{
+	pixel_x = 12
 	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/base)
+/obj/structure/fence/corner{
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
+/area/awaymission/snowdin/outside)
 "iZ" = (
 /obj/structure/chair/wood/normal{
 	dir = 4
@@ -3284,8 +3291,8 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "jz" = (
-/obj/item/target/clown,
-/turf/open/floor/wood,
+/obj/structure/sign/poster/contraband/smoke,
+/turf/closed/indestructible/wood,
 /area/awaymission/snowdin/base)
 "jA" = (
 /obj/machinery/computer/slot_machine,
@@ -3494,19 +3501,9 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/base)
 "jZ" = (
-/obj/structure/rack,
-/obj/item/grown/log{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/grown/log{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/item/grown/log{
-	pixel_x = -2;
-	pixel_y = -2
-	},
+/obj/structure/table/wood,
+/obj/item/stack/packageWrap,
+/obj/item/hand_labeler,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "ka" = (
@@ -4424,26 +4421,67 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/outside)
 "mj" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 4
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
 	},
-/turf/open/floor/holofloor/snow,
-/turf/open/indestructible/cobble/side{
-	dir = 4
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/snowdin/outside)
 "mk" = (
-/obj/structure/fence{
-	pixel_x = 12
-	},
-/obj/structure/fence/corner{
-	pixel_x = 12;
-	pixel_y = 12
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
+/obj/machinery/vending/clothing,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "ml" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Prison Wing";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mm" = (
+/obj/structure/mirror{
+	pixel_x = 28
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"mn" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mo" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/item/key/security,
+/obj/item/key/security,
+/obj/item/key/security,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mp" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C5";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
+/area/awaymission/snowdin/base)
+"mq" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"mr" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
@@ -4452,38 +4490,13 @@
 	dir = 1
 	},
 /area/awaymission/snowdin/outside)
-"mm" = (
+"ms" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
 /turf/open/indestructible/cobble,
 /turf/open/indestructible/cobble/corner{
 	dir = 1
-	},
-/area/awaymission/snowdin/outside)
-"mn" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 5
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
-"mo" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 6
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
-"mp" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 10
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 8
 	},
 /area/awaymission/snowdin/outside)
 "mt" = (
@@ -4505,19 +4518,23 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/outside)
 "mv" = (
-/turf/open/indestructible/cobble/corner{
-	dir = 4
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
 	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
 /area/awaymission/snowdin/outside)
 "mw" = (
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/snowdin/outside)
 "mx" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Checkpoint";
-	req_access_txt = "203"
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
 	},
-/turf/open/floor/plasteel,
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 4
+	},
 /area/awaymission/snowdin/outside)
 "my" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -4813,6 +4830,33 @@
 	req_access_txt = null
 	},
 /turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"nb" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 8
+	},
+/area/awaymission/snowdin/outside)
+"nc" = (
+/obj/structure/mineral_door/woodrustic{
+	name = "Event Hall"
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C9";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"nd" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "C9";
+	name = "Privacy Shutters"
+	},
+/turf/open/floor/plating,
 /area/awaymission/snowdin/base)
 "nf" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -16046,7 +16090,7 @@ ae
 ae
 ae
 ae
-ae
+aH
 ae
 ae
 ac
@@ -17311,7 +17355,7 @@ ae
 aJ
 jQ
 ck
-jZ
+mq
 kb
 aJ
 aJ
@@ -17323,7 +17367,7 @@ ah
 aJ
 aJ
 kb
-jZ
+mq
 cB
 kR
 aJ
@@ -19133,10 +19177,10 @@ at
 at
 eK
 eK
-mm
+ms
 er
 er
-mo
+mx
 ae
 ae
 ae
@@ -19532,7 +19576,7 @@ ae
 aJ
 jQ
 ck
-jZ
+mq
 kb
 aJ
 aJ
@@ -19544,7 +19588,7 @@ ae
 aJ
 aJ
 kb
-jZ
+mq
 cB
 kR
 aJ
@@ -21137,7 +21181,7 @@ er
 er
 fz
 aW
-jz
+mk
 aU
 jE
 cZ
@@ -21339,7 +21383,7 @@ fp
 er
 fz
 aW
-jz
+mk
 aU
 jF
 cZ
@@ -21354,10 +21398,10 @@ ae
 ae
 ae
 ae
-ml
+mr
 er
 er
-mo
+mx
 dx
 ah
 ae
@@ -21724,7 +21768,7 @@ ag
 ae
 ae
 an
-mk
+iY
 hu
 hH
 aJ
@@ -21753,7 +21797,7 @@ ae
 aJ
 jQ
 mY
-jZ
+mq
 kb
 aJ
 aJ
@@ -21765,7 +21809,7 @@ ah
 aJ
 aJ
 kb
-jZ
+mq
 cB
 kR
 aJ
@@ -21935,7 +21979,7 @@ hv
 ih
 aJ
 iO
-iW
+jz
 aJ
 aJ
 aJ
@@ -22166,13 +22210,13 @@ er
 er
 er
 fz
-ll
+nc
 aU
 aU
 aU
 aU
 aU
-jP
+nd
 ae
 ae
 ak
@@ -22339,7 +22383,7 @@ im
 iy
 iK
 iQ
-iY
+jZ
 aJ
 ae
 ae
@@ -22374,7 +22418,7 @@ kK
 aU
 aU
 aU
-jP
+nd
 dx
 ah
 ah
@@ -23158,10 +23202,10 @@ er
 er
 fA
 aJ
-aU
+mm
 jI
 aU
-aU
+mm
 aJ
 ae
 ak
@@ -24349,12 +24393,12 @@ ea
 er
 er
 eZ
-mj
-mj
-mj
-mj
-mj
-mj
+gf
+gf
+gf
+gf
+gf
+gf
 es
 eZ
 es
@@ -25181,7 +25225,7 @@ aH
 mz
 mN
 mN
-mP
+mo
 aH
 ae
 ae
@@ -26601,7 +26645,7 @@ ah
 aJ
 jQ
 mZ
-jZ
+mq
 kd
 aJ
 aJ
@@ -26613,7 +26657,7 @@ ae
 aJ
 aJ
 kd
-jZ
+mq
 mZ
 kR
 aJ
@@ -27013,7 +27057,7 @@ ae
 gd
 er
 er
-mp
+nb
 ae
 ae
 ae
@@ -27401,7 +27445,7 @@ fz
 aH
 aH
 aH
-mx
+mn
 aH
 aH
 aH
@@ -27579,7 +27623,7 @@ er
 fd
 ae
 aJ
-gB
+iW
 ca
 hb
 aU
@@ -28206,7 +28250,7 @@ ag
 fp
 er
 fz
-mx
+mj
 mB
 mE
 mE
@@ -28215,7 +28259,7 @@ mV
 aH
 ae
 ag
-jO
+mp
 mX
 aU
 aU
@@ -28417,7 +28461,7 @@ mW
 aH
 ae
 ae
-jO
+mp
 aU
 aU
 aU
@@ -28611,7 +28655,7 @@ fp
 er
 fz
 aH
-mx
+ml
 aH
 mw
 mw
@@ -28619,7 +28663,7 @@ aH
 aH
 ae
 ae
-jO
+mp
 aU
 aU
 aU
@@ -28824,7 +28868,7 @@ ak
 aJ
 jQ
 mZ
-jZ
+mq
 kd
 aJ
 aJ
@@ -28836,7 +28880,7 @@ ae
 aJ
 aJ
 kd
-jZ
+mq
 nl
 kR
 aJ
@@ -29233,10 +29277,10 @@ ae
 ae
 ae
 ah
-mn
+mv
 er
 er
-mp
+nb
 ae
 ae
 ae
@@ -29417,7 +29461,7 @@ ae
 ae
 gd
 es
-mv
+fA
 aH
 mE
 mw
@@ -30380,29 +30424,29 @@ eq
 er
 er
 eZ
-mj
-mj
-mj
-mj
-mj
-mj
+gf
+gf
+gf
+gf
+gf
+gf
 fC
 fC
-mj
-mj
-mj
+gf
+gf
+gf
 er
 er
 er
 es
 es
 eZ
-mj
 gf
 gf
 gf
-mj
-mj
+gf
+gf
+gf
 es
 gq
 ae
@@ -31047,7 +31091,7 @@ ae
 aJ
 jQ
 mZ
-jZ
+mq
 kd
 aJ
 aJ
@@ -31059,7 +31103,7 @@ ae
 aJ
 aJ
 kd
-jZ
+mq
 mZ
 kR
 aJ

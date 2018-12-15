@@ -16,8 +16,6 @@ MAP_REMOVE_JOB(captain) //job_types/captain.dm
 MAP_REMOVE_JOB(hop) //job_types/cargo_service.dm
 MAP_REMOVE_JOB(janitor)
 MAP_REMOVE_JOB(hydro)
-MAP_REMOVE_JOB(cook)
-MAP_REMOVE_JOB(bartender)
 MAP_REMOVE_JOB(qm)
 MAP_REMOVE_JOB(mining)
 MAP_REMOVE_JOB(cargo_tech)
@@ -40,6 +38,4 @@ MAP_REMOVE_JOB(roboticist)
 MAP_REMOVE_JOB(hos) //job_types/security.dm
 MAP_REMOVE_JOB(warden)
 MAP_REMOVE_JOB(detective)
-MAP_REMOVE_JOB(officer)
 MAP_REMOVE_JOB(ai) //job_types/silicon.dm
-MAP_REMOVE_JOB(cyborg)
