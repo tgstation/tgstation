@@ -38078,7 +38078,7 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
-/obj/structure/sign/barsign{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
