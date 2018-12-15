@@ -494,6 +494,7 @@
 #include "code\datums\wires\autolathe.dm"
 #include "code\datums\wires\emitter.dm"
 #include "code\datums\wires\explosive.dm"
+#include "code\datums\wires\microwave.dm"
 #include "code\datums\wires\mulebot.dm"
 #include "code\datums\wires\particle_accelerator.dm"
 #include "code\datums\wires\r_n_d.dm"
