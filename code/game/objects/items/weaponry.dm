@@ -450,6 +450,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_range = 2
 	attack_verb = list("busted")
 
+/obj/item/statuebust/hippocratic
+	name = "hippocrates bust"
+	desc = "A bust of the famous Greek physician Hippocrates of Kor, often sighted as the father of western medicine."
+	icon_state = "hippocratic"
+
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."
