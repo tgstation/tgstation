@@ -309,19 +309,18 @@
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_icon()
 		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
+			eject_beaker(user)
 		if(!user.transferItemToLoc(B, src))
 			return
 		beaker = B
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		src.updateUsrDialog()
 		update_icon()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
@@ -369,7 +368,15 @@
 			dispensable_reagents |= upgrade_reagents
 	powerefficiency = round(newpowereff, 0.01)
 
-
+/obj/machinery/chem_dispenser/proc/eject_beaker(mob/user)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(Adjacent(user) && !issilicon(user))
+			user.put_in_hands(beaker)
+		else
+			adjust_item_drop_location(beaker)
+		beaker = null
+		update_icon()
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null
@@ -404,6 +411,13 @@
 		var/list/fuck = splittext(reagents, "=")
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
+
+
+/obj/machinery/chem_dispenser/AltClick(mob/living/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+		return
+	eject_beaker(user)
+	return
 
 /obj/machinery/chem_dispenser/drinks/Initialize()
 	. = ..()

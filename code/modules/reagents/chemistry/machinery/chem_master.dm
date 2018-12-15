@@ -83,35 +83,37 @@
 
 	if(default_unfasten_wrench(user, I))
 		return
-
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+		var/obj/item/reagent_containers/B = I
 		. = 1 // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+			eject_beaker(user)
+		if(!user.transferItemToLoc(B, src))
 			return
-		if(!user.transferItemToLoc(I, src))
-			return
-
-		beaker = I
-		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
+		beaker = B
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		src.updateUsrDialog()
 		update_icon()
-
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-
 		bottle = I
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
 		src.updateUsrDialog()
 	else
 		return ..()
+
+/obj/machinery/chem_master/AltClick(mob/living/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+		return
+	eject_beaker(user)
+	return
 
 /obj/machinery/chem_master/on_deconstruction()
 	eject_beaker()
