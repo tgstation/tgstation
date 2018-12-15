@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/prefered_security_department = SEC_DEPT_RANDOM
 
 		//Mob preview
-	//var/icon/preview_icon = null
+	var/icon/preview_icon = null
 
 		//Quirk list
 	var/list/positive_quirks = list()
