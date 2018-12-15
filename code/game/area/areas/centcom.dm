@@ -29,6 +29,14 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/vip
+	name = "VIP Zone"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/centcom/winterball
+	name = "winterball Zone"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
 /area/centcom/supplypod
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
