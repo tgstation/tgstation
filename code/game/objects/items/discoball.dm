@@ -14,7 +14,7 @@
 
 /obj/structure/etherealball
 	name = "Ethereal Disco Ball"
-	desc = "The ethics of this discoball are questionable. Be sure to feed it snacks or else it might turn off!"
+	desc = "The ethics of this discoball are questionable."
 	icon = 'icons/obj/eth_disco.dmi'
 	icon_state = "ethdisco_head_0"
 	anchored = TRUE
@@ -31,7 +31,7 @@
 	. = ..()
 	var/mob/living/carbon/human/coolperson = user
 	if(!(coolperson.ckey == "qustinnus" || coolperson.ckey == "mrdoombringer"))
-		to_chat(user, "<span class='notice'>Hello buddy, sorry, only cool people can turn the Ethereal Ball 3000 on or off, you can feed it or give it water, though!</span>")
+		to_chat(user, "<span class='notice'>Hello buddy, sorry, only cool people can turn the Ethereal Ball 3000 on or off.</span>")
 		return
 	if(TurnedOn)
 		TurnOff()
