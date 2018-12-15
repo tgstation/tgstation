@@ -1853,26 +1853,14 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "fH" = (
-/obj/structure/table,
-/obj/item/key,
-/obj/item/key/displaycase{
-	pixel_x = 1;
-	pixel_y = 2
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
 	},
-/obj/item/key/displaycase{
-	pixel_x = 3;
-	pixel_y = 4
+/turf/open/floor/holofloor/snow,
+/turf/open/indestructible/cobble/side{
+	dir = 4
 	},
-/obj/item/key/displaycase{
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/item/key/displaycase{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/base)
+/area/awaymission/snowdin/outside)
 "fI" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plasteel,
@@ -2017,10 +2005,14 @@
 /turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
 "gl" = (
-/obj/structure/flora/grass/green,
-/obj/structure/flora/grass/green,
-/turf/open/floor/holofloor/snow,
-/area/awaymission/snowdin/outside)
+/obj/structure/table,
+/obj/item/key,
+/obj/item/key,
+/obj/item/key,
+/obj/item/key,
+/obj/item/key,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
 "gm" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
@@ -2038,7 +2030,7 @@
 	},
 /area/awaymission/snowdin/outside)
 "gp" = (
-/obj/structure/flora/tree/pine/xmas/presents,
+/obj/structure/flora/tree/pine/xmas,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/outside)
 "gq" = (
@@ -2478,19 +2470,18 @@
 	},
 /area/awaymission/snowdin/outside)
 "ho" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/carpet/black,
-/area/awaymission/snowdin/base)
+/obj/effect/spawner/structure/window/ice,
+/turf/open/space/basic,
+/area/awaymission/snowdin/outside)
 "hp" = (
-/turf/open/floor/carpet/black,
-/area/awaymission/snowdin/base)
-"hq" = (
-/obj/machinery/light{
-	dir = 4
+/obj/machinery/vending/medical{
+	pixel_x = -2
 	},
-/turf/open/floor/carpet/black,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"hq" = (
+/obj/structure/bookcase,
+/turf/open/floor/carpet,
 /area/awaymission/snowdin/base)
 "hr" = (
 /obj/structure/table/reinforced,
@@ -2537,7 +2528,7 @@
 /area/awaymission/snowdin/base)
 "hz" = (
 /obj/item/twohanded/required/kirbyplants,
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet,
 /area/awaymission/snowdin/base)
 "hA" = (
 /obj/structure/toilet{
@@ -2632,7 +2623,7 @@
 /area/awaymission/snowdin/base)
 "hL" = (
 /obj/machinery/light/floor,
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet,
 /area/awaymission/snowdin/base)
 "hM" = (
 /obj/structure/chair/wood/normal,
@@ -2958,10 +2949,7 @@
 /area/awaymission/snowdin/base)
 "iD" = (
 /obj/item/twohanded/required/kirbyplants,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/carpet/black,
+/turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "iE" = (
 /obj/machinery/jukebox/disco/indestructible,
@@ -2970,9 +2958,9 @@
 "iF" = (
 /obj/item/twohanded/required/kirbyplants,
 /obj/machinery/light{
-	dir = 4
+	dir = 8
 	},
-/turf/open/floor/carpet/black,
+/turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "iG" = (
 /obj/structure/piano{
@@ -3445,12 +3433,24 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/base)
 "jT" = (
-/obj/structure/table/wood,
-/obj/machinery/light{
+/obj/structure/table,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/circular_saw,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/surgicaldrill,
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/base)
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
 "jU" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -3475,12 +3475,21 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/awaymission/snowdin/base)
 "jX" = (
-/obj/structure/table/wood,
-/obj/machinery/light{
+/obj/structure/table,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/item/cautery{
+	pixel_x = 4
+	},
+/obj/item/surgical_drapes,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/base)
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
 "jY" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C6";
@@ -3575,15 +3584,11 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kk" = (
-/obj/machinery/button/door{
-	id = "C2";
-	name = "Cabin Privacy Control";
-	pixel_x = 8;
-	pixel_y = -24;
-	req_access_txt = null
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/floor/wood,
-/area/awaymission/snowdin/base)
+/turf/closed/indestructible/wood,
+/area/awaymission/snowdin/outside)
 "kl" = (
 /obj/machinery/button/door{
 	id = "C1";
@@ -3595,14 +3600,12 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "km" = (
-/obj/effect/turf_decal/weather/snow/corner{
+/obj/item/twohanded/required/kirbyplants,
+/obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/holofloor/snow,
-/turf/open/indestructible/cobble/side{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
 "kn" = (
 /obj/structure/mineral_door/woodrustic{
 	name = "Vehicle Garage"
@@ -3694,15 +3697,13 @@
 	},
 /area/awaymission/snowdin/outside)
 "kA" = (
-/obj/structure/fence{
-	pixel_x = 12
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/obj/structure/fence/corner{
-	pixel_x = 12;
-	pixel_y = 12
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
+/turf/open/floor/plasteel/white,
 /area/awaymission/snowdin/outside)
 "kB" = (
 /obj/structure/mineral_door/woodrustic{
@@ -3893,13 +3894,20 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "ld" = (
-/obj/structure/table/wood,
-/obj/machinery/light{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/item/hot_potato/harmless/toy,
-/turf/open/floor/wood,
-/area/awaymission/snowdin/base)
+/obj/structure/table/reinforced,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
 "le" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C9";
@@ -3989,13 +3997,20 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "lo" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
+/obj/structure/table/reinforced,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
 /area/awaymission/snowdin/outside)
 "lp" = (
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -4008,38 +4023,35 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "lq" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/area/awaymission/snowdin/outside)
-"lr" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 5
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
-"ls" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 6
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
-"lt" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 10
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
+/obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lr" = (
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"ls" = (
+/obj/machinery/door/airlock/medical{
+	name = "Operating Theatre";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"lt" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
 /area/awaymission/snowdin/outside)
 "lu" = (
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -4091,6 +4103,908 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
+"lz" = (
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lA" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lB" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/BMinus{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/blood/BPlus{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OPlus{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/random,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lC" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lD" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lE" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/closed/indestructible/wood,
+/area/awaymission/snowdin/outside)
+"lF" = (
+/obj/structure/table/reinforced,
+/obj/item/folder/white,
+/obj/item/pen,
+/obj/item/reagent_containers/glass/bottle/epinephrine,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lG" = (
+/obj/structure/table/reinforced,
+/obj/machinery/camera{
+	c_tag = "Medbay Foyer";
+	network = list("ss13","medbay");
+	dir = 8
+	},
+/obj/machinery/cell_charger,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lH" = (
+/obj/structure/sign/warning/nosmoking{
+	pixel_x = 28
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lI" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lJ" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay Storage";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lK" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lL" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lM" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lN" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lO" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/britcup{
+	desc = "Kingston's personal cup."
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lP" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lQ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lR" = (
+/obj/machinery/door/airlock/medical{
+	name = "Medbay Reception";
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/outside)
+"lS" = (
+/obj/structure/fence{
+	pixel_x = 12
+	},
+/obj/structure/fence/corner{
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
+/area/awaymission/snowdin/outside)
+"lT" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/indestructible/cobble/side{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"lU" = (
+/obj/structure/sign/departments/medbay{
+	pixel_y = 32
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/indestructible/cobble/side{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"lV" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"lW" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"lX" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"lY" = (
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"lZ" = (
+/obj/structure/chair/office/dark{
+	icon_state = "officechair_dark";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"ma" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mb" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/obj/vehicle/ridden/secway,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mc" = (
+/obj/vehicle/ridden/secway,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"md" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"me" = (
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mf" = (
+/turf/open/floor/plasteel,
+/area/space)
+"mg" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/vending/security{
+	req_access = list(203)
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mh" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mi" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/vending/security{
+	req_access = list(203)
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mj" = (
+/obj/structure/table/reinforced,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 1;
+	network = list("Arena Main")
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mk" = (
+/obj/machinery/vending/snack/random,
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"ml" = (
+/obj/machinery/vending/security{
+	req_access = list(203)
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mm" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mn" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mo" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security{
+	locked = 0;
+	req_access = list(203)
+	},
+/obj/item/card/id/away/hotel/securty{
+	desc = "A staff ID used to access the arena's security rooms."
+	},
+/obj/item/clothing/under/rank/security/blueshirt,
+/obj/item/gun/energy/taser{
+	cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/item/storage/belt/security,
+/obj/item/melee/baton/loaded{
+	preload_cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/item/key/security,
+/obj/item/clothing/shoes/jackboots,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mp" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security{
+	locked = 0;
+	req_access = list(203)
+	},
+/obj/item/card/id/away/hotel/securty{
+	desc = "A staff ID used to access the arena's security rooms."
+	},
+/obj/item/clothing/under/rank/security/blueshirt,
+/obj/item/gun/energy/taser{
+	cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/item/storage/belt/security,
+/obj/item/melee/baton/loaded{
+	preload_cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/structure/sign/poster/contraband/donut_corp{
+	pixel_y = -32
+	},
+/obj/item/key/security,
+/obj/item/clothing/shoes/jackboots,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mq" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mr" = (
+/obj/machinery/vending/coffee,
+/obj/machinery/light,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"ms" = (
+/obj/structure/table/reinforced,
+/obj/machinery/camera/autoname{
+	icon_state = "camera";
+	dir = 10;
+	network = list("Arena Main")
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/space)
+"mt" = (
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/machinery/flasher{
+	id = "Cell 2";
+	pixel_x = -28
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mu" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 2";
+	name = "Cell 2 Locker"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mv" = (
+/turf/open/indestructible/cobble/corner{
+	dir = 4
+	},
+/area/awaymission/snowdin/outside)
+"mw" = (
+/turf/closed/indestructible/fakeglass,
+/area/awaymission/snowdin/outside)
+"mx" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Checkpoint";
+	req_access_txt = "203"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"my" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor/snow,
+/area/awaymission/snowdin/outside)
+"mz" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mA" = (
+/obj/vehicle/ridden/secway,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mB" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mC" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mD" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/structure/chair,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mE" = (
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mF" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/vending/security{
+	req_access = list(203)
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mG" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mH" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mI" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mJ" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mK" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mL" = (
+/obj/machinery/door/window/brigdoor/security/cell{
+	id = "Cell";
+	name = "Cell 1"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mM" = (
+/obj/machinery/door/window/brigdoor/security/cell{
+	id = "Cell";
+	name = "Cell 2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mN" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/vending/security{
+	req_access = list(203)
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mO" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mP" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mQ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mR" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security{
+	locked = 0;
+	req_access = list(203)
+	},
+/obj/item/card/id/away/hotel/securty{
+	desc = "A staff ID used to access the arena's security rooms."
+	},
+/obj/item/clothing/under/rank/security/blueshirt,
+/obj/item/gun/energy/taser{
+	cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/item/storage/belt/security,
+/obj/item/melee/baton/loaded{
+	preload_cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/item/key/security,
+/obj/item/clothing/shoes/jackboots,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mS" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/secure_closet/security{
+	locked = 0;
+	req_access = list(203)
+	},
+/obj/item/card/id/away/hotel/securty{
+	desc = "A staff ID used to access the arena's security rooms."
+	},
+/obj/item/clothing/under/rank/security/blueshirt,
+/obj/item/gun/energy/taser{
+	cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/item/storage/belt/security,
+/obj/item/melee/baton/loaded{
+	preload_cell_type = /obj/item/stock_parts/cell/bluespace
+	},
+/obj/structure/sign/poster/contraband/donut_corp{
+	pixel_y = -32
+	},
+/obj/item/key/security,
+/obj/item/clothing/shoes/jackboots,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mT" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mU" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mV" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mW" = (
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/outside)
+"mX" = (
+/obj/machinery/vending/boozeomat{
+	req_access = null
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"mY" = (
+/obj/structure/table/wood,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"mZ" = (
+/obj/structure/table/wood,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"na" = (
+/obj/machinery/button/door{
+	id = "C5";
+	name = "Cabin Privacy Control";
+	pixel_x = 8;
+	pixel_y = -24;
+	req_access_txt = null
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"nb" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"nc" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
+/area/awaymission/snowdin/outside)
+"nd" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 4
+	},
+/area/awaymission/snowdin/outside)
+"ne" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 8
+	},
+/area/awaymission/snowdin/outside)
+"nf" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/indestructible/cobble,
+/area/awaymission/snowdin/outside)
+"ng" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/indestructible/cobble,
+/area/awaymission/snowdin/outside)
+"nh" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/indestructible/cobble,
+/area/awaymission/snowdin/outside)
+"nj" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/festive,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"nk" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/vending/boozeomat{
+	req_access = null
+	},
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"nl" = (
+/obj/structure/table/wood,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/hot_potato/harmless/toy,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/open/floor/wood,
+/area/awaymission/snowdin/base)
+"nm" = (
+/obj/machinery/telecomms/allinone/indestructable,
+/turf/open/floor/plasteel/dark,
+/area/space)
 
 (1,1,1) = {"
 aa
@@ -4598,10 +5512,10 @@ aa
 aa
 aa
 fg
-fg
-fg
-fg
-fg
+aa
+aa
+aa
+aa
 fg
 fg
 fg
@@ -4800,10 +5714,10 @@ aa
 aa
 aa
 fg
-fg
-fg
-fg
-fg
+lW
+mf
+mf
+mj
 fg
 fg
 fg
@@ -5002,10 +5916,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+lX
+mf
+mf
+mk
 aa
 aa
 aa
@@ -5204,10 +6118,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+lY
+mf
+mf
+ml
 aa
 aa
 aa
@@ -5406,10 +6320,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+lZ
+mf
+mf
+ml
 aa
 aa
 aa
@@ -5608,10 +6522,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+ma
+mg
+mg
+mm
 aa
 aa
 aa
@@ -5810,10 +6724,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+lW
+mh
+mh
+mn
 aa
 aa
 aa
@@ -5964,6 +6878,14 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -6004,18 +6926,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lW
+mh
+mh
+mo
 aa
 aa
 aa
@@ -6166,6 +7080,14 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -6206,18 +7128,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mb
+mh
+mh
+mo
 aa
 aa
 aa
@@ -6368,6 +7282,14 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 aa
 aa
 aa
@@ -6408,18 +7330,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mc
+mh
+mh
+mo
 aa
 aa
 aa
@@ -6568,6 +7482,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ec
+ec
+ec
+ec
+ec
+ab
+ab
+ab
 aa
 aa
 aa
@@ -6607,21 +7532,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mc
+mh
+mh
+mo
 aa
 aa
 aa
@@ -6770,6 +7684,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ec
+et
+eC
+et
+ec
+ab
+ab
+ab
 aa
 aa
 aa
@@ -6809,21 +7734,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mc
+mh
+mh
+mo
 aa
 aa
 aa
@@ -6972,6 +7886,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ed
+ed
+et
+ed
+ed
+ab
+ab
+ab
 aa
 aa
 aa
@@ -7011,21 +7936,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mb
+mh
+mh
+mo
 aa
 aa
 aa
@@ -7174,6 +8088,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ee
+ed
+ed
+ed
+ee
+ab
+ab
+ab
 aa
 aa
 aa
@@ -7213,21 +8138,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lW
+mh
+mh
+mp
 aa
 aa
 aa
@@ -7376,6 +8290,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ef
+ef
+ef
+ef
+ef
+ab
+ab
+ab
 aa
 aa
 aa
@@ -7415,21 +8340,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lW
+mh
+mh
+mn
 aa
 aa
 aa
@@ -7578,6 +8492,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+ef
+ef
+ef
+ef
+ef
+ab
+ab
+ab
 aa
 aa
 aa
@@ -7617,21 +8542,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+md
+mi
+mi
+mq
 aa
 aa
 aa
@@ -7780,6 +8694,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+eg
+eg
+eg
+eg
+eg
+ab
+ab
+ab
 aa
 aa
 aa
@@ -7819,21 +8744,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lZ
+mf
+mf
+ml
 aa
 aa
 aa
@@ -7982,6 +8896,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+eg
+eg
+eg
+eg
+eg
+ab
+ab
+ab
 aa
 aa
 aa
@@ -8021,21 +8946,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+me
+mf
+mf
+ml
 aa
 aa
 aa
@@ -8184,6 +9098,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+eg
+eg
+eg
+eg
+eg
+ab
+ab
+ab
 aa
 aa
 aa
@@ -8223,21 +9148,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lX
+mf
+mf
+mr
 aa
 aa
 aa
@@ -8386,6 +9300,17 @@ aa
 aa
 aa
 aa
+ab
+ab
+ab
+eg
+eg
+eg
+eg
+eg
+ab
+ab
+ab
 aa
 aa
 aa
@@ -8425,21 +9350,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+lW
+mf
+mf
+ms
 aa
 aa
 aa
@@ -8588,17 +9502,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+ab
+ab
+ab
+eg
+eg
+eg
+eg
+eg
+ab
+ab
+ab
 aa
 aa
 aa
@@ -8790,14 +9704,14 @@ aa
 aa
 aa
 aa
-aa
-aa
 ab
 ab
 ab
-ab
-ab
-ab
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -8995,11 +9909,11 @@ aa
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -9197,11 +10111,11 @@ aa
 ab
 ab
 ab
-ec
-ec
-ec
-ec
-ec
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -9399,11 +10313,11 @@ aa
 ab
 ab
 ab
-ec
-et
-eC
-et
-ec
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -9601,11 +10515,11 @@ ab
 ab
 ab
 ab
-ed
-ed
-et
-ed
-ed
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -9803,11 +10717,11 @@ ab
 ab
 ab
 ab
-ee
-ed
-ed
-ed
-ee
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -10005,11 +10919,11 @@ ab
 ab
 ab
 ab
-ef
-ef
-ef
-ef
-ef
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -10207,11 +11121,11 @@ ab
 ab
 ab
 ab
-ef
-ef
-ef
-ef
-ef
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -10409,11 +11323,11 @@ ab
 ab
 ab
 ab
-ef
-ef
-ef
-ef
-ef
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -10611,11 +11525,11 @@ ab
 ab
 ab
 ab
-ef
-ef
-ef
-ef
-ef
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -10812,12 +11726,12 @@ ab
 ab
 ab
 ab
-ae
-ef
-ef
-ef
-ef
-ef
+ab
+eh
+eh
+eh
+eh
+eh
 ae
 ab
 ab
@@ -11014,12 +11928,12 @@ ab
 ab
 ab
 ab
-ae
-ef
-ef
-ef
-ef
-ef
+ab
+eg
+eg
+eg
+eg
+eg
 ae
 ab
 ab
@@ -11216,12 +12130,12 @@ ab
 ab
 ab
 ab
-ae
-ef
-ef
-ef
-ef
-ef
+ab
+eg
+eg
+eg
+eg
+eg
 ae
 ab
 ab
@@ -11418,12 +12332,12 @@ ab
 ab
 ab
 ab
-ae
-ef
-ef
-ef
-ef
-ef
+ab
+eg
+eg
+eg
+eg
+eg
 ae
 ab
 ab
@@ -11620,12 +12534,12 @@ ab
 ab
 ae
 ab
-ae
-ef
-ef
-ef
-ef
-ef
+ab
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -11822,12 +12736,12 @@ ab
 ab
 ae
 ae
-ae
-ef
-ef
-ef
-ef
-ef
+ab
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -12024,7 +12938,7 @@ ab
 ab
 ae
 ae
-ae
+ab
 eg
 eg
 eg
@@ -12226,7 +13140,7 @@ ab
 ab
 ab
 ab
-ae
+ab
 eg
 eg
 eg
@@ -12428,7 +13342,7 @@ ab
 ab
 ab
 ab
-ae
+ab
 eg
 eg
 eg
@@ -12630,7 +13544,7 @@ ab
 ab
 ab
 ab
-ae
+ab
 eg
 eg
 eg
@@ -12832,7 +13746,7 @@ ab
 ab
 ab
 ab
-ae
+ab
 eg
 eg
 eg
@@ -13035,11 +13949,11 @@ ab
 ab
 ab
 ab
-eh
-eh
-eh
-eh
-eh
+eg
+eg
+eg
+eg
+eg
 ab
 ab
 ab
@@ -16543,7 +17457,7 @@ ae
 ae
 aJ
 jQ
-cB
+ck
 jZ
 kb
 aJ
@@ -17151,7 +18065,7 @@ jS
 aU
 aU
 aU
-aU
+kc
 kf
 aJ
 eb
@@ -17161,7 +18075,7 @@ ff
 fA
 aJ
 kf
-aU
+kK
 aU
 aU
 aU
@@ -17362,7 +18276,7 @@ er
 fd
 ae
 aJ
-cB
+ck
 kK
 aU
 jI
@@ -18366,10 +19280,10 @@ at
 at
 eK
 eK
-lq
+nb
 er
 er
-ls
+nd
 ae
 ae
 ae
@@ -18764,7 +19678,7 @@ ae
 ae
 aJ
 jQ
-cB
+ck
 jZ
 kb
 aJ
@@ -19156,7 +20070,7 @@ aJ
 dY
 fp
 er
-fe
+mt
 ae
 aJ
 jA
@@ -19358,7 +20272,7 @@ aJ
 ae
 fp
 er
-fd
+mu
 ae
 aJ
 jA
@@ -19369,10 +20283,10 @@ aJ
 ae
 ae
 jP
+mX
 aU
 aU
-aU
-aU
+kc
 kf
 aJ
 eb
@@ -19382,7 +20296,7 @@ ff
 fA
 aJ
 kJ
-aU
+kK
 aU
 aU
 aU
@@ -19583,10 +20497,10 @@ er
 fd
 ae
 aJ
-cB
+ck
 kK
 aU
-jI
+nk
 lc
 aJ
 ae
@@ -20587,10 +21501,10 @@ ae
 ae
 ae
 ae
-lo
+lV
 er
 er
-ls
+nd
 dx
 ah
 ae
@@ -20957,7 +21871,7 @@ ag
 ae
 ae
 an
-kA
+lS
 hu
 hH
 aJ
@@ -20985,7 +21899,7 @@ aJ
 ae
 aJ
 jQ
-jT
+mY
 jZ
 kb
 aJ
@@ -21590,10 +22504,10 @@ aU
 aJ
 ae
 jN
+mX
 aU
 aU
-aU
-aU
+kc
 kf
 aJ
 eb
@@ -21602,8 +22516,8 @@ er
 ff
 fA
 aJ
-kf
-aU
+nj
+kK
 aU
 aU
 aU
@@ -21807,7 +22721,7 @@ aJ
 kE
 kK
 aU
-jI
+nk
 lc
 aJ
 ah
@@ -23216,7 +24130,7 @@ eq
 er
 er
 er
-er
+nf
 ae
 ae
 ae
@@ -23418,7 +24332,7 @@ er
 er
 er
 er
-er
+ng
 ae
 ae
 ae
@@ -23582,12 +24496,12 @@ ea
 er
 er
 eZ
-km
-km
-km
-km
-km
-km
+fH
+fH
+fH
+fH
+fH
+fH
 es
 eZ
 es
@@ -23620,7 +24534,7 @@ eZ
 er
 er
 er
-er
+nh
 ae
 ae
 ae
@@ -24007,7 +24921,7 @@ er
 fd
 ae
 ae
-ah
+ae
 ae
 ae
 ae
@@ -24208,12 +25122,12 @@ fp
 er
 fd
 ae
-ah
-ah
-ah
-ae
-ae
-ae
+aH
+aH
+aH
+aH
+aH
+aH
 ae
 ae
 aJ
@@ -24410,12 +25324,12 @@ fp
 er
 fd
 ae
-ah
-dx
-ah
-ah
-ae
-ae
+aH
+mz
+mN
+mN
+mP
+aH
 ae
 ae
 aJ
@@ -24612,12 +25526,12 @@ fp
 er
 fd
 ae
-ah
-ah
-ah
-ah
-ah
-ah
+aH
+mF
+mI
+mI
+mQ
+aH
 ae
 ak
 aJ
@@ -24814,12 +25728,12 @@ fp
 er
 fd
 ae
-ae
-ah
-ah
-ah
-ah
-ah
+aH
+mF
+mI
+mI
+mR
+aH
 ae
 aJ
 aJ
@@ -25004,8 +25918,8 @@ aJ
 aJ
 io
 aJ
-hy
-hp
+eo
+aU
 ku
 cB
 cx
@@ -25014,14 +25928,14 @@ ae
 ae
 fp
 er
-fd
-ae
-ae
-ah
-ah
-ah
-dx
-ah
+fz
+aH
+aH
+mG
+mI
+mI
+mR
+aH
 ae
 aJ
 jR
@@ -25039,7 +25953,7 @@ aJ
 kE
 kK
 aU
-aU
+mX
 lc
 aJ
 ae
@@ -25206,8 +26120,8 @@ kw
 aJ
 aU
 aJ
-hy
-hp
+eo
+aU
 ku
 cB
 cB
@@ -25216,20 +26130,20 @@ ae
 ae
 fp
 er
-fd
-ae
-ae
-ak
-ah
-ah
-ah
-ah
+fz
+aH
+mz
+mH
+mI
+mI
+mR
+aH
 ae
 jO
+mX
 aU
 aU
-aU
-aU
+kc
 kf
 aJ
 dZ
@@ -25239,7 +26153,7 @@ er
 fy
 aJ
 kf
-aU
+kK
 aU
 aU
 aU
@@ -25405,12 +26319,12 @@ aU
 ku
 cx
 kw
-hz
-hp
 iD
-hp
-hp
-hp
+aU
+iF
+aU
+aU
+aU
 ja
 ja
 aW
@@ -25418,14 +26332,14 @@ ae
 dY
 fp
 er
-fe
-ae
-ae
-ah
-ah
-dx
-ah
-ah
+jt
+mw
+mA
+mI
+mI
+mI
+mR
+aH
 ah
 jO
 aU
@@ -25604,30 +26518,30 @@ aU
 aU
 aU
 aU
-aU
-hp
+ca
+ca
 hL
-hp
-hp
-hp
-hp
-hp
+ca
+ca
+ca
+ca
+ca
 hL
-hp
-hp
+ca
+ca
 aW
 ae
 ae
 fp
 er
-fd
-ah
-ah
-ah
-dx
-dx
-dx
-ah
+fz
+mw
+mA
+mI
+mI
+mI
+mR
+aH
 ah
 jO
 aU
@@ -25806,34 +26720,34 @@ gw
 aU
 aU
 aJ
-hy
+hq
 hL
-hp
+ca
 ca
 gB
 gB
 ip
 ca
-hp
+ca
 hL
-hp
+ca
 aJ
 ae
 ae
 fp
 er
-fd
-ah
-ah
-ah
-ah
-dx
-ah
-ah
+fz
+mw
+mA
+mI
+mI
+mI
+mR
+aH
 ah
 aJ
 jQ
-jX
+mZ
 jZ
 kd
 aJ
@@ -25847,7 +26761,7 @@ aJ
 aJ
 kd
 jZ
-jX
+mZ
 kR
 aJ
 ae
@@ -26009,7 +26923,7 @@ ca
 aU
 aJ
 hz
-hp
+ca
 ca
 hQ
 hR
@@ -26017,21 +26931,21 @@ hQ
 hR
 hQ
 ca
-hp
+ca
 hL
 aJ
 aJ
 bC
 fp
 er
-fd
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+fz
+mw
+mA
+mI
+mI
+mI
+mS
+aH
 ae
 aJ
 aJ
@@ -26209,8 +27123,8 @@ aJ
 gy
 ca
 hb
-ho
-hp
+eD
+ca
 ca
 hQ
 hR
@@ -26220,20 +27134,20 @@ hQ
 hR
 hQ
 ca
-hp
-hz
+ca
+iD
 aJ
 jm
 er
 er
-fd
-ae
-ah
-ah
-ah
-ah
-ah
-ae
+fz
+aH
+mB
+mI
+mI
+mI
+mQ
+aH
 ae
 ae
 ae
@@ -26246,7 +27160,7 @@ ae
 gd
 er
 er
-lt
+ne
 ae
 ae
 ae
@@ -26395,13 +27309,13 @@ ae
 ae
 ae
 ae
+aH
+aH
+aH
 ae
 ae
 ae
 ae
-ah
-ah
-ah
 ae
 fp
 er
@@ -26411,8 +27325,8 @@ aJ
 gz
 ca
 hb
-hp
-hp
+aU
+ca
 ca
 hR
 hQ
@@ -26422,20 +27336,20 @@ hR
 hQ
 hR
 ca
-hp
-hp
+ca
+aU
 aJ
 ea
 er
 er
-fd
-ae
-ah
-dx
-ah
-ah
-ah
-ah
+fz
+aH
+mC
+mJ
+mJ
+mJ
+mT
+aH
 ae
 ah
 ae
@@ -26593,16 +27507,16 @@ ae
 ae
 ae
 ae
-ah
-ah
 ae
-ae
-ae
-ah
-ah
-ag
-ae
-ae
+aH
+ho
+ho
+aH
+lB
+aH
+ho
+ho
+aH
 ae
 ae
 fp
@@ -26613,8 +27527,8 @@ aJ
 gA
 ca
 ca
-hp
-hp
+aU
+ca
 ca
 hQ
 hR
@@ -26624,20 +27538,20 @@ hQ
 hR
 hQ
 ca
-hp
-hp
+ca
+aU
 kC
 ea
 er
 er
-fd
-ae
-ak
-ah
-ah
-ae
-ah
-ah
+fz
+aH
+aH
+aH
+mx
+aH
+aH
+aH
 ae
 ah
 ae
@@ -26795,16 +27709,16 @@ ae
 ae
 ae
 ae
-ah
-ah
 ae
-ae
-ae
-ah
-ah
-ae
-ae
-ae
+ho
+jT
+lq
+lq
+lq
+lE
+lI
+lM
+ho
 ae
 ae
 fp
@@ -26815,8 +27729,8 @@ aJ
 gB
 ca
 hb
-hp
-hp
+aU
+ca
 ca
 hR
 hQ
@@ -26826,20 +27740,20 @@ hR
 hQ
 hR
 ca
-hp
-hp
+ca
+aU
 aJ
 ea
 er
 er
-fd
-ae
-ae
-ah
-ah
-ae
-ae
-ae
+fz
+aH
+mz
+mK
+mK
+mK
+mP
+aH
 ae
 ae
 ae
@@ -26994,19 +27908,19 @@ ae
 ae
 ae
 ae
-ag
 ae
 ae
 ae
 ae
-ae
-ae
-ae
-ae
-ae
-ae
-ak
-ah
+ho
+jX
+lr
+lz
+lC
+aH
+lr
+lN
+ho
 ae
 ae
 fp
@@ -27017,8 +27931,8 @@ aJ
 gC
 ca
 hb
-hq
-hp
+jI
+ca
 ca
 hQ
 hR
@@ -27028,20 +27942,20 @@ hQ
 hR
 hQ
 ca
-hp
-hz
+ca
+iD
 aJ
 jn
 er
 er
-fd
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+fz
+aH
+mD
+mE
+mE
+mE
+mU
+aH
 ae
 ae
 aJ
@@ -27199,19 +28113,19 @@ ae
 ae
 ae
 ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-fp
+aH
+aH
+kk
+ls
+aH
+aH
+aH
+lJ
+aH
+aH
+aH
+lT
+er
 er
 fd
 ae
@@ -27221,7 +28135,7 @@ ca
 aU
 aJ
 hz
-hp
+ca
 ca
 hQ
 hR
@@ -27229,21 +28143,21 @@ hQ
 hR
 hQ
 ca
-hp
+ca
 hL
 aJ
 aJ
 ae
 fp
 er
-fd
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+fz
+aH
+mD
+mE
+mE
+mE
+mU
+aH
 ae
 ae
 aJ
@@ -27262,7 +28176,7 @@ aJ
 gR
 kK
 aU
-aU
+mX
 lc
 aJ
 ae
@@ -27401,19 +28315,19 @@ ae
 ae
 ae
 ae
-ae
-ag
-ae
-ae
-ae
-ae
-ae
-ah
-ah
-ah
-ah
-ae
-fp
+aH
+hp
+kA
+lr
+lr
+lr
+lr
+lr
+lr
+lr
+lR
+ea
+er
 er
 fd
 ae
@@ -27422,37 +28336,37 @@ gD
 aU
 aU
 aJ
-hy
+hq
 hL
-hp
+ca
 ca
 ip
 gB
 gB
 ca
-hp
+ca
 hL
-hp
+ca
 aJ
 aH
 ag
 fp
 er
-fd
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+fz
+mx
+mB
+mE
+mE
+mE
+mV
+aH
 ae
 ag
 jO
+mX
 aU
 aU
-aU
-aU
+kc
 kf
 aJ
 dZ
@@ -27462,7 +28376,7 @@ er
 fy
 aJ
 kJ
-aU
+kK
 aU
 aU
 aU
@@ -27603,19 +28517,19 @@ ae
 ae
 ah
 ah
-ah
-ae
-ae
-ae
-ae
-ae
-ah
-ah
-ah
-ah
-ah
-ae
-fp
+aH
+aH
+ld
+lr
+lA
+lr
+lF
+lK
+lO
+aH
+aH
+lU
+er
 er
 fd
 ae
@@ -27624,30 +28538,30 @@ aU
 aU
 aU
 aU
-aU
-hp
+ca
+ca
 hL
-hp
-hp
-hp
-hp
-hp
+ca
+ca
+ca
+ca
+ca
 hL
-hp
-hp
+ca
+ca
 aW
 ae
 dY
 fp
 er
-fe
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+jt
+aH
+mC
+mJ
+mJ
+mJ
+mW
+aH
 ae
 ae
 jO
@@ -27805,17 +28719,17 @@ ae
 ae
 ah
 ah
-ah
 ae
+ho
+ld
+lr
+lr
+lr
+lG
+lL
+lP
+ho
 ae
-ae
-ae
-ae
-ah
-ah
-ah
-aO
-ah
 dY
 fp
 er
@@ -27829,12 +28743,12 @@ aU
 ku
 cB
 kw
-hz
-hp
-iF
-hp
-hp
-hp
+iD
+aU
+km
+aU
+aU
+aU
 gv
 gv
 aW
@@ -27842,14 +28756,14 @@ ae
 ae
 fp
 er
-fd
-ae
-ae
-ae
-ae
-ae
-ae
-ae
+fz
+aH
+mx
+aH
+mw
+mw
+aH
+aH
 ae
 ae
 jO
@@ -27857,7 +28771,7 @@ aU
 aU
 aU
 aU
-kk
+na
 aJ
 eb
 er
@@ -28008,16 +28922,16 @@ ae
 ae
 ae
 ae
+ho
+lo
+lt
+lt
+lD
+lH
+lD
+lQ
+ho
 ae
-ae
-ae
-aO
-ah
-ah
-ah
-ah
-ah
-ah
 ae
 fp
 er
@@ -28035,7 +28949,7 @@ aJ
 aU
 aJ
 hy
-hp
+aU
 ku
 cB
 cB
@@ -28044,19 +28958,19 @@ ae
 ae
 fp
 er
-fd
-ae
-ae
-ae
-ae
-dx
-ae
-ae
+fz
+aH
+mE
+mw
+mO
+mO
+mt
+aH
 ae
 ak
 aJ
 jQ
-jX
+mZ
 jZ
 kd
 aJ
@@ -28070,7 +28984,7 @@ aJ
 aJ
 kd
 jZ
-ld
+nl
 kR
 aJ
 ae
@@ -28210,16 +29124,16 @@ ae
 ae
 ae
 ae
+aH
+ho
+ho
+aH
+hp
+aH
+ho
+ho
+aH
 ae
-ae
-ae
-ah
-ah
-ak
-ah
-ah
-ah
-gl
 ah
 fp
 er
@@ -28237,7 +29151,7 @@ aJ
 iq
 aJ
 hy
-hp
+aU
 ku
 cx
 cB
@@ -28246,14 +29160,14 @@ ae
 ae
 fp
 er
-fd
-ae
-ae
-ae
-ah
-dx
-dx
-ae
+fz
+aH
+mE
+mL
+mO
+mO
+mu
+aH
 ae
 dx
 aJ
@@ -28411,17 +29325,17 @@ ah
 ah
 ae
 ae
-ag
 ae
 ae
 ae
-ah
-ah
-ah
-ah
-ah
-ah
-gl
+ae
+aH
+aH
+aH
+ae
+ae
+ae
+ae
 ah
 fp
 er
@@ -28448,17 +29362,17 @@ ag
 ah
 fp
 er
-fd
+fz
+aH
+mE
+aH
+mw
+mw
+aH
+aH
 ae
-ah
 ah
 dx
-dx
-dx
-ah
-ae
-ah
-dx
 ae
 ae
 ah
@@ -28466,10 +29380,10 @@ ae
 ae
 ae
 ah
-lr
+nc
 er
 er
-lt
+ne
 ae
 ae
 ae
@@ -28616,14 +29530,14 @@ ae
 ae
 ae
 ae
-ak
-ah
-ah
-ah
-ah
-ah
-aO
-gl
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 ah
 fp
 er
@@ -28650,14 +29564,14 @@ ae
 ae
 gd
 es
-gs
-ae
-ae
-ae
-ah
-ah
-ae
-ae
+mv
+aH
+mE
+mw
+mO
+mO
+mt
+aH
 ah
 ah
 ae
@@ -28820,12 +29734,12 @@ ae
 ae
 ae
 ae
-ah
-ah
-ah
-ah
-ah
-ah
+ae
+ae
+ae
+ae
+ae
+ae
 ae
 fp
 er
@@ -28853,13 +29767,13 @@ ae
 ae
 ae
 ae
-ae
-ac
-ac
-ac
-ac
-ac
-ae
+aH
+mE
+mM
+mO
+mO
+mu
+aH
 ae
 ae
 ag
@@ -29055,13 +29969,13 @@ ae
 ae
 ae
 ae
-ae
-ac
-ac
-ac
-ac
-ac
-ae
+aH
+aH
+aH
+aH
+aH
+aH
+aH
 ae
 ae
 ae
@@ -29256,14 +30170,14 @@ ae
 ae
 ae
 jq
-fF
-jo
-ac
-ac
-ac
-ac
-ac
-ac
+bq
+my
+ae
+ae
+ae
+ae
+ae
+ae
 ae
 ae
 ae
@@ -29485,7 +30399,7 @@ aJ
 gR
 kK
 aU
-aU
+mX
 lc
 aJ
 ae
@@ -29613,29 +30527,29 @@ eq
 er
 er
 eZ
-km
-km
-km
-km
-km
-km
+fH
+fH
+fH
+fH
+fH
+fH
 fC
 fC
-km
-km
-km
+fH
+fH
+fH
 er
 er
 er
 es
 es
 eZ
-km
+fH
 gf
 gf
 gf
-km
-km
+fH
+fH
 es
 gq
 ae
@@ -29672,10 +30586,10 @@ ac
 ah
 ah
 jY
+mX
 aU
 aU
-aU
-aU
+kc
 kf
 aJ
 dZ
@@ -29685,7 +30599,7 @@ er
 fy
 aJ
 kJ
-aU
+kK
 aU
 aU
 aU
@@ -30279,7 +31193,7 @@ ae
 ae
 aJ
 jQ
-jX
+mZ
 jZ
 kd
 aJ
@@ -30293,7 +31207,7 @@ aJ
 aJ
 kd
 jZ
-jX
+mZ
 kR
 aJ
 ae
@@ -31842,7 +32756,7 @@ ae
 aJ
 fi
 fD
-fH
+gl
 fN
 aJ
 aJ
@@ -39001,7 +39915,7 @@ kV
 ee
 ee
 ee
-ee
+kV
 ee
 ee
 ee
@@ -39200,10 +40114,10 @@ aa
 kU
 kU
 kV
+nm
 ee
 ee
-ee
-ee
+kV
 ee
 ee
 ee
