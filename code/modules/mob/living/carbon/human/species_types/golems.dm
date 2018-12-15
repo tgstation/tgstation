@@ -30,6 +30,7 @@
 	var/list/special_names = list("Tarkus")
 	var/human_surname_chance = 3
 	var/special_name_chance = 5
+	var/owner //dobby is a free golem
 
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
@@ -874,3 +875,40 @@
 			else
 				M.show_message("<span class='warning'>GONG!</span>", 2)
 				M.playsound_local(H, 'sound/effects/gong.ogg', 50, TRUE)
+
+
+/datum/species/golem/cardboard //Faster but weaker, can also make new shells on its own
+	name = "Cardboard Golem" 
+	id = "cardboard golem"
+	prefix = "Cardboard"
+	special_names = null
+	fixed_mut_color = "ad8762"
+	info_text = "As a <span class='danger'>Cardboard Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	limbs_id = "golem" //special sprites
+	armor = 30
+	burnmod = 1.25
+	heatmod = 1.5
+	speedmod = 1.5
+	punchdamagelow = 4
+	punchstunthreshold = 7
+	punchdamagehigh = 8
+	var/last_creation
+	var/brother_creation_cooldown = 300
+
+/datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+	..()
+	if(user != H)
+		return FALSE //forced reproduction is rape.
+	if(istype(I, /obj/item/stack/sheet/cardboard))
+		var/obj/item/stack/sheet/cardboard/C
+		if(!C.use(10))
+			return
+		if(world.time > last_creation + brother_creation_cooldown)
+			if(do_after(user, 30, target = user))
+				if(world.time > last_creation + brother_creation_cooldown) //no cheesing dork
+					create_brother(H.loc)
+
+/datum/species/golem/cardboard/proc/create_brother(var/location)
+	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+	last_creation = world.time
