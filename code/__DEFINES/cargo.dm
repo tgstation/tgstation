@@ -11,6 +11,7 @@
 #define STYLE_FRUIT 11
 #define STYLE_INVISIBLE 12
 #define STYLE_GONDOLA 13
+#define STYLE_SEXY 14
 
 #define POD_ICON_STATE 1
 #define POD_NAME 2
@@ -30,4 +31,5 @@
     list("fruitpod", "\improper Orange", "An angry orange."),\
     list("", "\improper S.T.E.A.L.T.H. pod MKVII", "A supply pod that, under normal circumstances, is completely invisible to conventional methods of detection. How are you even seeing this?"),\
     list("gondolapod", "gondola", "The silent walker. This one seems to be part of a delivery agency.")\
+    list("lovepod", "DELUX WINTER DATE SUPPLYPOD", "A BEAUTIFUL DELUX SUPPLYPOD HOLDING ONLY THE SEXIEST OF COUPLES")\
 )

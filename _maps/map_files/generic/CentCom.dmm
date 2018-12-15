@@ -2248,7 +2248,7 @@
 /area/tdome/arena_source)
 "fR" = (
 /turf/closed/wall/mineral/wood,
-/area/space)
+/area/centcom/vip)
 "fS" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2937,8 +2937,11 @@
 /turf/open/floor/circuit/green/anim,
 /area/ctf)
 "hH" = (
-/turf/open/floor/wood,
-/area/space)
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/centcom/vip)
 "hI" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3714,9 +3717,10 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jA" = (
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/plating,
-/area/space)
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/centcom/vip)
 "jB" = (
 /obj/structure/noticeboard{
 	dir = 8;
@@ -4822,9 +4826,9 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "lS" = (
-/obj/structure/table/wood,
-/turf/open/floor/wood,
-/area/space)
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/plating,
+/area/centcom/vip)
 "lT" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -6503,11 +6507,10 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
 "oU" = (
-/obj/structure/chair/comfy/brown{
-	dir = 8
-	},
+/obj/structure/table/wood,
+/obj/item/bodybag/bluespace,
 /turf/open/floor/wood,
-/area/space)
+/area/centcom/vip)
 "oV" = (
 /obj/machinery/vr_sleeper{
 	dir = 4
@@ -6868,9 +6871,11 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/control)
 "px" = (
-/obj/structure/fireplace,
+/obj/structure/chair/comfy/brown{
+	dir = 8
+	},
 /turf/open/floor/wood,
-/area/space)
+/area/centcom/vip)
 "py" = (
 /obj/machinery/smartfridge,
 /turf/closed/indestructible{
@@ -6880,43 +6885,34 @@
 	},
 /area/centcom/holding)
 "pz" = (
+/turf/open/floor/wood,
+/area/centcom/vip)
+"pA" = (
+/obj/structure/fireplace,
+/turf/open/floor/wood,
+/area/centcom/vip)
+"pB" = (
 /obj/structure/mineral_door/wood,
 /turf/open/floor/wood,
-/area/space)
-"pA" = (
-/obj/effect/turf_decal/stripes/line,
+/area/centcom/vip)
+"pC" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-/area/space)
-"pB" = (
-/obj/effect/spawner/structure/window/ice,
-/turf/open/floor/wood,
-/area/space)
-"pC" = (
-/obj/structure/table/wood,
-/obj/item/paper_bin,
-/obj/item/pen,
-/turf/open/floor/wood,
-/area/space)
+/area/centcom/vip)
 "pD" = (
-/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
-/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	pixel_y = 5
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
 	},
-/obj/item/storage/box/donkpockets,
-/obj/structure/closet/wardrobe/cargotech{
-	desc = "It's a storage unit for only the coolest of people.";
-	name = "based couple supply closet"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
-	pixel_y = 5
-	},
-/turf/open/floor/wood,
-/area/space)
+/area/centcom/vip)
 "pE" = (
 /obj/machinery/plantgenes/seedvault,
 /obj/effect/turf_decal/tile/green{
@@ -7085,17 +7081,15 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "pT" = (
-/obj/structure/table/wood,
-/obj/item/card/id/centcom,
-/obj/item/folder/red,
-/obj/item/lighter,
-/turf/open/floor/wood,
-/area/space)
-"pU" = (
+/obj/machinery/vending/coffee,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-/area/space)
+/area/centcom/vip)
+"pU" = (
+/obj/effect/spawner/structure/window/ice,
+/turf/open/floor/wood,
+/area/centcom/vip)
 "pV" = (
 /obj/machinery/light{
 	dir = 4
@@ -7107,13 +7101,10 @@
 /turf/open/ai_visible,
 /area/ai_multicam_room)
 "pX" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
-/area/space)
+/obj/structure/table/wood,
+/obj/item/camera,
+/turf/open/floor/wood,
+/area/centcom/vip)
 "pY" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/freezer{
@@ -7216,15 +7207,11 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "qh" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
-	},
-/area/space)
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/centcom/vip)
 "qi" = (
 /obj/structure/table/wood,
 /obj/item/storage/secure/briefcase{
@@ -7482,16 +7469,30 @@
 /turf/closed/indestructible/riveted/uranium,
 /area/wizard_station)
 "qF" = (
-/obj/machinery/vending/coffee,
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
+/obj/item/reagent_containers/food/drinks/trophy/gold_cup,
+/obj/item/storage/fancy/cigarettes/cigars/cohiba{
+	pixel_y = 3
 	},
-/area/space)
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	pixel_y = 5
+	},
+/obj/item/storage/box/donkpockets,
+/obj/structure/closet/wardrobe/cargotech{
+	desc = "It's a storage unit for only the coolest of people.";
+	name = "based couple supply closet"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+	pixel_y = 5
+	},
+/turf/open/floor/wood,
+/area/centcom/vip)
 "qG" = (
 /obj/structure/table/wood,
-/obj/item/camera,
+/obj/item/card/id/centcom,
+/obj/item/folder/red,
+/obj/item/lighter,
 /turf/open/floor/wood,
-/area/space)
+/area/centcom/vip)
 "qH" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -7640,13 +7641,13 @@
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-/area/space)
+/area/centcom/vip)
 "rc" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-/area/space)
+/area/centcom/vip)
 "rd" = (
 /obj/structure/flora/grass/brown,
 /obj/effect/light_emitter{
@@ -8208,13 +8209,13 @@
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-/area/space)
+/area/centcom/vip)
 "rZ" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
-/area/space)
+/area/centcom/vip)
 "sa" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
@@ -8225,6 +8226,13 @@
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel,
 /area/centcom/supplypod)
+"sc" = (
+/obj/machinery/computer/vip{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/vip)
 "se" = (
 /obj/machinery/light{
 	dir = 8
@@ -56575,9 +56583,9 @@ Ca
 Cw
 mD
 fR
-jA
-pB
-jA
+lS
+pU
+lS
 fR
 aa
 aa
@@ -56832,9 +56840,9 @@ Cb
 Cx
 mD
 fR
-lS
-lS
-lS
+oU
+sc
+oU
 fR
 aa
 aa
@@ -57089,9 +57097,9 @@ Ca
 Cy
 mD
 fR
-oU
-oU
-qG
+px
+px
+pX
 fR
 Ep
 Ep
@@ -57346,9 +57354,9 @@ sw
 Cz
 mD
 fR
-hH
-hH
-pC
+pz
+pz
+qh
 fR
 Ep
 Fm
@@ -57603,9 +57611,9 @@ zA
 CA
 mD
 fR
-px
-hH
-pD
+pA
+pz
+qF
 fR
 Ep
 Fn
@@ -57860,9 +57868,9 @@ rz
 nU
 mD
 fR
-hH
-hH
-pT
+pz
+pz
+qG
 fR
 Ep
 Fo
@@ -58117,8 +58125,8 @@ zD
 CB
 mD
 fR
-hH
-hH
+pz
+pz
 fR
 Ep
 Ep
@@ -58374,8 +58382,8 @@ sw
 CC
 mD
 fR
-pz
-pz
+pB
+pB
 fR
 Ep
 EE
@@ -58630,9 +58638,9 @@ BB
 sw
 CD
 mD
-pA
 hH
-hH
+pz
+pz
 rb
 Eq
 EF
@@ -58887,9 +58895,9 @@ BC
 sw
 CE
 mD
-pU
-pX
-pX
+jA
+pC
+pC
 rc
 Ep
 Ev
@@ -59144,9 +59152,9 @@ sw
 sw
 CF
 nT
-pU
-qh
-pU
+jA
+pD
+jA
 rY
 Ep
 EG
@@ -59401,9 +59409,9 @@ BD
 pR
 CG
 mD
-pU
-qF
-pU
+jA
+pT
+jA
 rZ
 Ep
 EH
