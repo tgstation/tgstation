@@ -2469,13 +2469,13 @@
 "ho" = (
 /obj/effect/spawner/structure/window/ice,
 /turf/open/space/basic,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hp" = (
 /obj/machinery/vending/medical{
 	pixel_x = -2
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "hq" = (
 /obj/structure/bookcase,
 /turf/open/floor/carpet,
@@ -2548,12 +2548,23 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/base)
 "hB" = (
-/obj/machinery/door/airlock{
-	id_tag = "Toilet4x";
-	name = "Unit 2"
+/obj/structure/table,
+/obj/item/scalpel{
+	pixel_y = 12
 	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/freezer,
+/obj/item/circular_saw,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/surgicaldrill,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/snowdin/base)
 "hC" = (
 /obj/machinery/icecream_vat,
@@ -2675,12 +2686,20 @@
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/snowdin/base)
 "hT" = (
-/obj/machinery/door/airlock{
-	id_tag = "Toilet4x";
-	name = "Unit 1"
+/obj/structure/table,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/item/cautery{
+	pixel_x = 4
 	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel/freezer,
+/obj/item/surgical_drapes,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel/white,
 /area/awaymission/snowdin/base)
 "hU" = (
 /obj/machinery/light{
@@ -3098,16 +3117,11 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "iY" = (
-/obj/structure/fence{
-	pixel_x = 12
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
 	},
-/obj/structure/fence/corner{
-	pixel_x = 12;
-	pixel_y = 12
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
+/turf/closed/indestructible/wood,
+/area/awaymission/snowdin/base)
 "iZ" = (
 /obj/structure/chair/wood/normal{
 	dir = 4
@@ -3435,24 +3449,14 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/base)
 "jT" = (
-/obj/structure/table,
-/obj/item/scalpel{
-	pixel_y = 12
-	},
-/obj/item/circular_saw,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/surgicaldrill,
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "jU" = (
 /obj/structure/toilet{
 	pixel_y = 8
@@ -3477,21 +3481,20 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/awaymission/snowdin/base)
 "jX" = (
-/obj/structure/table,
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/item/cautery{
-	pixel_x = 4
-	},
-/obj/item/surgical_drapes,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/table/reinforced,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "jY" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C6";
@@ -3576,11 +3579,21 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "kk" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
+/obj/item/gun/magic/staff/healing,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/closed/indestructible/wood,
-/area/awaymission/snowdin/outside)
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
 "kl" = (
 /obj/machinery/button/door{
 	id = "C1";
@@ -3690,13 +3703,13 @@
 /area/awaymission/snowdin/outside)
 "kA" = (
 /obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "kB" = (
 /obj/structure/mineral_door/woodrustic{
 	name = "Bar"
@@ -3886,20 +3899,8 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "ld" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "le" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C9";
@@ -3989,21 +3990,12 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "lo" = (
-/obj/structure/table/reinforced,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/staff/healing,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
+/obj/machinery/door/airlock/medical{
+	name = "Operating Theatre";
+	req_access_txt = "0"
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
 "lp" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C6";
@@ -4016,25 +4008,6 @@
 /area/awaymission/snowdin/base)
 "lq" = (
 /obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lr" = (
-/turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"ls" = (
-/obj/machinery/door/airlock/medical{
-	name = "Operating Theatre";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"lt" = (
-/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/structure/table/reinforced,
@@ -4044,7 +4017,41 @@
 /obj/item/gun/magic/staff/healing,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"lr" = (
+/obj/structure/table/optable,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"ls" = (
+/obj/machinery/sleeper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"lt" = (
+/obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood,
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/BMinus{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/blood/BPlus{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OPlus{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/random,
+/turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
 "lu" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "C10";
@@ -4096,66 +4103,32 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "lz" = (
-/obj/structure/table/optable,
-/turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lA" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lB" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood,
-/obj/item/reagent_containers/blood/AMinus,
-/obj/item/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/blood/OMinus,
-/obj/item/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/random,
-/obj/item/reagent_containers/blood/APlus,
-/obj/item/reagent_containers/blood/random,
-/turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lC" = (
 /obj/machinery/computer/operating{
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lD" = (
+/area/awaymission/snowdin/base)
+"lA" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lE" = (
+/area/awaymission/snowdin/base)
+"lB" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /turf/closed/indestructible/wood,
-/area/awaymission/snowdin/outside)
-"lF" = (
+/area/awaymission/snowdin/base)
+"lC" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/pen,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lG" = (
+/area/awaymission/snowdin/base)
+"lD" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera{
 	c_tag = "Medbay Foyer";
@@ -4164,8 +4137,8 @@
 	},
 /obj/machinery/cell_charger,
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lH" = (
+/area/awaymission/snowdin/base)
+"lE" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 28
 	},
@@ -4174,8 +4147,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lI" = (
+/area/awaymission/snowdin/base)
+"lF" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -4188,29 +4161,29 @@
 /obj/item/storage/firstaid/toxin,
 /obj/item/storage/firstaid/toxin,
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lJ" = (
+/area/awaymission/snowdin/base)
+"lG" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Storage";
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lK" = (
+/area/awaymission/snowdin/base)
+"lH" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lL" = (
+/area/awaymission/snowdin/base)
+"lI" = (
 /obj/structure/chair/office/light{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lM" = (
+/area/awaymission/snowdin/base)
+"lJ" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -4224,8 +4197,8 @@
 /obj/item/storage/firstaid/fire,
 /obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lN" = (
+/area/awaymission/snowdin/base)
+"lK" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -4236,8 +4209,8 @@
 /obj/item/storage/firstaid/brute,
 /obj/item/storage/firstaid/brute,
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lO" = (
+/area/awaymission/snowdin/base)
+"lL" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/britcup{
 	desc = "Kingston's personal cup."
@@ -4247,15 +4220,15 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lP" = (
+/area/awaymission/snowdin/base)
+"lM" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lQ" = (
+/area/awaymission/snowdin/base)
+"lN" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -4264,14 +4237,41 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/snowdin/outside)
-"lR" = (
+/area/awaymission/snowdin/base)
+"lO" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medbay Reception";
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/white,
+/area/awaymission/snowdin/base)
+"lP" = (
+/obj/structure/fence{
+	pixel_x = 12
+	},
+/obj/structure/fence/corner{
+	pixel_x = 12;
+	pixel_y = 12
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
 /area/awaymission/snowdin/outside)
+"lQ" = (
+/obj/machinery/door/airlock{
+	id_tag = "Toilet5x";
+	name = "Unit 2"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/snowdin/base)
+"lR" = (
+/obj/machinery/door/airlock{
+	id_tag = "Toilet5x";
+	name = "Unit 1"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plasteel/freezer,
+/area/awaymission/snowdin/base)
 "lS" = (
 /obj/structure/fluff/bus/passable/seat{
 	icon_state = "backseat"
@@ -4421,24 +4421,20 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/outside)
 "mj" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/turf/closed/indestructible/fakeglass,
+/area/awaymission/snowdin/base)
 "mk" = (
 /obj/machinery/vending/clothing,
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "ml" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Prison Wing";
-	req_access_txt = "2"
+	id_tag = "outerbrig";
+	name = "Brig";
+	req_access_txt = "63"
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
 "mm" = (
 /obj/structure/mirror{
 	pixel_x = 28
@@ -4447,26 +4443,28 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "mn" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mo" = (
-/obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/item/key/security,
-/obj/item/key/security,
-/obj/item/key/security,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
+/area/awaymission/snowdin/base)
+"mo" = (
+/obj/vehicle/ridden/secway,
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
 "mp" = (
 /obj/effect/spawner/structure/window/ice,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -4482,99 +4480,15 @@
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
 "mr" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 9
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
+/obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/area/awaymission/snowdin/outside)
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
 "ms" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 1
-	},
-/area/awaymission/snowdin/outside)
-"mt" = (
-/obj/structure/bed,
-/obj/item/bedsheet,
-/obj/machinery/flasher{
-	id = "Cell 2";
-	pixel_x = -28
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mu" = (
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 2";
-	name = "Cell 2 Locker"
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mv" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 5
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner,
-/area/awaymission/snowdin/outside)
-"mw" = (
-/turf/closed/indestructible/fakeglass,
-/area/awaymission/snowdin/outside)
-"mx" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 6
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 4
-	},
-/area/awaymission/snowdin/outside)
-"my" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
-	},
-/turf/open/floor/holofloor/snow,
-/area/awaymission/snowdin/outside)
-"mz" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mA" = (
-/obj/vehicle/ridden/secway,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mB" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mC" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4583,8 +4497,8 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mD" = (
+/area/awaymission/snowdin/base)
+"mt" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4593,11 +4507,15 @@
 	},
 /obj/structure/chair,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mE" = (
+/area/awaymission/snowdin/base)
+"mu" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Prison Wing";
+	req_access_txt = "2"
+	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mF" = (
+/area/awaymission/snowdin/base)
+"mv" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4608,8 +4526,8 @@
 	req_access = list(203)
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mG" = (
+/area/awaymission/snowdin/base)
+"mw" = (
 /obj/machinery/light{
 	icon_state = "tube";
 	dir = 1
@@ -4621,14 +4539,20 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mH" = (
+/area/awaymission/snowdin/base)
+"mx" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"my" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor/snow,
 /area/awaymission/snowdin/outside)
-"mI" = (
+"mz" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4640,15 +4564,15 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mJ" = (
+/area/awaymission/snowdin/base)
+"mA" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mK" = (
+/area/awaymission/snowdin/base)
+"mB" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4656,22 +4580,22 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mL" = (
+/area/awaymission/snowdin/base)
+"mC" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell";
 	name = "Cell 1"
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mM" = (
+/area/awaymission/snowdin/base)
+"mD" = (
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell";
 	name = "Cell 2"
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mN" = (
+/area/awaymission/snowdin/base)
+"mE" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -4682,12 +4606,19 @@
 	req_access = list(203)
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mO" = (
+/area/awaymission/snowdin/base)
+"mF" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "Security";
+	req_access_txt = "2"
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"mG" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mP" = (
+/area/awaymission/snowdin/base)
+"mH" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -4696,9 +4627,12 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/item/key/security,
+/obj/item/key/security,
+/obj/item/key/security,
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mQ" = (
+/area/awaymission/snowdin/base)
+"mI" = (
 /obj/structure/table/reinforced,
 /obj/machinery/recharger,
 /obj/effect/turf_decal/tile/red,
@@ -4706,8 +4640,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mR" = (
+/area/awaymission/snowdin/base)
+"mJ" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/security{
 	locked = 0;
@@ -4731,8 +4665,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mS" = (
+/area/awaymission/snowdin/base)
+"mK" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/security{
 	locked = 0;
@@ -4759,8 +4693,8 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mT" = (
+/area/awaymission/snowdin/base)
+"mL" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -4770,8 +4704,19 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mU" = (
+/area/awaymission/snowdin/base)
+"mM" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"mN" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -4780,16 +4725,16 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mV" = (
+/area/awaymission/snowdin/base)
+"mO" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/awaymission/snowdin/outside)
-"mW" = (
+/area/awaymission/snowdin/base)
+"mP" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -4798,6 +4743,67 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"mQ" = (
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/machinery/flasher{
+	id = "Cell 2";
+	pixel_x = -28
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"mR" = (
+/obj/structure/closet/secure_closet/brig{
+	id = "Cell 2";
+	name = "Cell 2 Locker"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/awaymission/snowdin/base)
+"mS" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"mT" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 1
+	},
+/area/awaymission/snowdin/outside)
+"mU" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner,
+/area/awaymission/snowdin/outside)
+"mV" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 4
+	},
+/area/awaymission/snowdin/outside)
+"mW" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/indestructible/cobble,
+/turf/open/indestructible/cobble/corner{
+	dir = 8
+	},
 /area/awaymission/snowdin/outside)
 "mX" = (
 /obj/machinery/vending/boozeomat{
@@ -4831,15 +4837,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/snowdin/base)
-"nb" = (
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 10
-	},
-/turf/open/indestructible/cobble,
-/turf/open/indestructible/cobble/corner{
-	dir = 8
-	},
-/area/awaymission/snowdin/outside)
 "nc" = (
 /obj/structure/mineral_door/woodrustic{
 	name = "Event Hall"
@@ -19177,10 +19174,10 @@ at
 at
 eK
 eK
-ms
+mT
 er
 er
-mx
+mV
 ae
 ae
 ae
@@ -21398,10 +21395,10 @@ ae
 ae
 ae
 ae
-mr
+mS
 er
 er
-mx
+mV
 dx
 ah
 ae
@@ -21768,7 +21765,7 @@ ag
 ae
 ae
 an
-iY
+lP
 hu
 hH
 aJ
@@ -25019,12 +25016,12 @@ fp
 er
 fd
 ae
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 aJ
@@ -25221,12 +25218,12 @@ fp
 er
 fd
 ae
-aH
-mz
-mN
-mN
-mo
-aH
+aJ
+mn
+mE
+mE
+mH
+aJ
 ae
 ae
 aJ
@@ -25423,12 +25420,12 @@ fp
 er
 fd
 ae
-aH
-mF
+aJ
+mv
+mz
+mz
 mI
-mI
-mQ
-aH
+aJ
 ae
 ak
 aJ
@@ -25625,12 +25622,12 @@ fp
 er
 fd
 ae
-aH
-mF
-mI
-mI
-mR
-aH
+aJ
+mv
+mz
+mz
+mJ
+aJ
 ae
 aJ
 aJ
@@ -25826,13 +25823,13 @@ ae
 fp
 er
 fz
-aH
-aH
-mG
-mI
-mI
-mR
-aH
+aJ
+aJ
+mw
+mz
+mz
+mJ
+aJ
 ae
 aJ
 jR
@@ -26028,13 +26025,13 @@ ae
 fp
 er
 fz
-aH
+aJ
+mn
+mx
 mz
-mH
-mI
-mI
-mR
-aH
+mz
+mJ
+aJ
 ae
 jO
 mX
@@ -26230,13 +26227,13 @@ dY
 fp
 er
 jt
-mw
-mA
-mI
-mI
-mI
-mR
-aH
+mj
+mo
+mz
+mz
+mz
+mJ
+aJ
 ah
 jO
 aU
@@ -26432,13 +26429,13 @@ ae
 fp
 er
 fz
-mw
-mA
-mI
-mI
-mI
-mR
-aH
+mj
+mo
+mz
+mz
+mz
+mJ
+aJ
 ah
 jO
 aU
@@ -26634,13 +26631,13 @@ ae
 fp
 er
 fz
-mw
-mA
-mI
-mI
-mI
-mR
-aH
+mj
+mo
+mz
+mz
+mz
+mJ
+aJ
 ah
 aJ
 jQ
@@ -26836,13 +26833,13 @@ bC
 fp
 er
 fz
-mw
-mA
-mI
-mI
-mI
-mS
-aH
+mj
+mo
+mz
+mz
+mz
+mK
+aJ
 ae
 aJ
 aJ
@@ -27038,13 +27035,13 @@ jm
 er
 er
 fz
-aH
-mB
+aJ
+mr
+mz
+mz
+mz
 mI
-mI
-mI
-mQ
-aH
+aJ
 ae
 ae
 ae
@@ -27057,7 +27054,7 @@ ae
 gd
 er
 er
-nb
+mW
 ae
 ae
 ae
@@ -27206,9 +27203,9 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -27240,13 +27237,13 @@ ea
 er
 er
 fz
-aH
-mC
-mJ
-mJ
-mJ
-mT
-aH
+aJ
+ms
+mA
+mA
+mA
+mL
+aJ
 ae
 ah
 ae
@@ -27405,15 +27402,15 @@ ae
 ae
 ae
 ae
-aH
+aJ
 ho
 ho
-aH
-lB
-aH
+aJ
+lt
+aJ
 ho
 ho
-aH
+aJ
 ae
 ae
 fp
@@ -27442,13 +27439,13 @@ ea
 er
 er
 fz
-aH
-aH
-aH
-mn
-aH
-aH
-aH
+aJ
+aJ
+aJ
+mF
+aJ
+aJ
+aJ
 ae
 ah
 ae
@@ -27608,13 +27605,13 @@ ae
 ae
 ae
 ho
-jT
-lq
-lq
-lq
-lE
-lI
-lM
+hB
+kA
+kA
+kA
+lB
+lF
+lJ
 ho
 ae
 ae
@@ -27644,13 +27641,13 @@ ea
 er
 er
 fz
-aH
-mz
-mK
-mK
-mK
-mP
-aH
+aJ
+mn
+mB
+mB
+mB
+mM
+aJ
 ae
 ae
 ae
@@ -27810,13 +27807,13 @@ ae
 ae
 ae
 ho
-jX
+hT
+ld
 lr
 lz
-lC
-aH
-lr
-lN
+aJ
+ld
+lK
 ho
 ae
 ae
@@ -27846,13 +27843,13 @@ jn
 er
 er
 fz
-aH
-mD
-mE
-mE
-mE
-mU
-aH
+aJ
+mt
+fE
+fE
+fE
+mN
+aJ
 ae
 ae
 aJ
@@ -28010,17 +28007,17 @@ ae
 ae
 ae
 ae
-aH
-aH
-kk
-ls
-aH
-aH
-aH
-lJ
-aH
-aH
-aH
+aJ
+aJ
+iY
+lo
+aJ
+aJ
+aJ
+lG
+aJ
+aJ
+aJ
 lT
 er
 er
@@ -28048,13 +28045,13 @@ ae
 fp
 er
 fz
-aH
-mD
-mE
-mE
-mE
-mU
-aH
+aJ
+mt
+fE
+fE
+fE
+mN
+aJ
 ae
 ae
 aJ
@@ -28212,17 +28209,17 @@ ae
 ae
 ae
 ae
-aH
+aJ
 hp
-kA
-lr
-lr
-lr
-lr
-lr
-lr
-lr
-lR
+jT
+ld
+ld
+ld
+ld
+ld
+ld
+ld
+lO
 ea
 er
 er
@@ -28250,13 +28247,13 @@ ag
 fp
 er
 fz
-mj
-mB
-mE
-mE
-mE
-mV
-aH
+ml
+mr
+fE
+fE
+fE
+mO
+aJ
 ae
 ag
 mp
@@ -28414,17 +28411,17 @@ ae
 ae
 ah
 ah
-aH
-aH
+aJ
+aJ
+jX
 ld
-lr
-lA
-lr
-lF
-lK
-lO
-aH
-aH
+ls
+ld
+lC
+lH
+lL
+aJ
+aJ
 lU
 er
 er
@@ -28452,13 +28449,13 @@ dY
 fp
 er
 jt
-aH
-mC
-mJ
-mJ
-mJ
-mW
-aH
+aJ
+ms
+mA
+mA
+mA
+mP
+aJ
 ae
 ae
 mp
@@ -28618,13 +28615,13 @@ ah
 ah
 ae
 ho
+jX
 ld
-lr
-lr
-lr
-lG
-lL
-lP
+ld
+ld
+lD
+lI
+lM
 ho
 ae
 dY
@@ -28654,13 +28651,13 @@ ae
 fp
 er
 fz
-aH
-ml
-aH
-mw
-mw
-aH
-aH
+aJ
+mu
+aJ
+mj
+mj
+aJ
+aJ
 ae
 ae
 mp
@@ -28820,13 +28817,13 @@ ae
 ae
 ae
 ho
-lo
-lt
-lt
-lD
-lH
-lD
-lQ
+kk
+lq
+lq
+lA
+lE
+lA
+lN
 ho
 ae
 ae
@@ -28856,13 +28853,13 @@ ae
 fp
 er
 fz
-aH
-mE
-mw
-mO
-mO
-mt
-aH
+aJ
+fE
+mj
+mG
+mG
+mQ
+aJ
 ae
 ak
 aJ
@@ -29021,15 +29018,15 @@ ae
 ae
 ae
 ae
-aH
+aJ
 ho
 ho
-aH
+aJ
 hp
-aH
+aJ
 ho
 ho
-aH
+aJ
 ae
 ah
 fp
@@ -29058,13 +29055,13 @@ ae
 fp
 er
 fz
-aH
-mE
-mL
-mO
-mO
-mu
-aH
+aJ
+fE
+mC
+mG
+mG
+mR
+aJ
 ae
 dx
 aJ
@@ -29226,9 +29223,9 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
+aJ
+aJ
+aJ
 ae
 ae
 ae
@@ -29243,9 +29240,9 @@ ae
 ae
 ae
 aJ
-hA
-aJ
 hS
+aJ
+hA
 aJ
 hw
 aJ
@@ -29260,13 +29257,13 @@ ah
 fp
 er
 fz
-aH
-mE
-aH
-mw
-mw
-aH
-aH
+aJ
+fE
+aJ
+mj
+mj
+aJ
+aJ
 ae
 ah
 dx
@@ -29277,10 +29274,10 @@ ae
 ae
 ae
 ah
-mv
+mU
 er
 er
-nb
+mW
 ae
 ae
 ae
@@ -29445,9 +29442,9 @@ ah
 ah
 ae
 aJ
-hB
+lQ
 aJ
-hT
+lR
 aJ
 hw
 hw
@@ -29462,13 +29459,13 @@ ae
 gd
 es
 fA
-aH
-mE
-mw
-mO
-mO
-mt
-aH
+aJ
+fE
+mj
+mG
+mG
+mQ
+aJ
 ah
 ah
 ae
@@ -29664,13 +29661,13 @@ ae
 ae
 ae
 ae
-aH
-mE
-mM
-mO
-mO
-mu
-aH
+aJ
+fE
+mD
+mG
+mG
+mR
+aJ
 ae
 ae
 ag
@@ -29866,13 +29863,13 @@ ae
 ae
 ae
 ae
-aH
-aH
-aH
-aH
-aH
-aH
-aH
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 ae
 ae
 ae
