@@ -133,6 +133,7 @@
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null
 	tiled_dirt = FALSE
+	baseturfs = /turf/open/floor/holofloor/snow
 
 /turf/open/floor/holofloor/snow/attack_hand(mob/living/user)
 	. = ..()
