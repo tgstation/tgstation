@@ -374,7 +374,7 @@
 				M.dna.add_mutation(mutation, MUT_EXTRA)
 			log_msg += "([mutation])"
 		log_attack("[log_msg] [loc_name(user)]")
-		M.dna.update_instability(TRUE)
+		M.dna.update_instability()
 		return TRUE
 	return FALSE
 
