@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(dbcore)
 			migration_order += mig
 	
 	log_sql("Applying [migration_order.len] migration[migration_order.len > 1 ? "s" : ""]...")
-	var/single_transact = !CONFIG_GET(flag/single_migration_transaction)
+	var/single_transact = CONFIG_GET(flag/single_migration_transaction)
 
 	var/datum/DBQuery/query
 	. = TRUE
