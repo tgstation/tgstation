@@ -536,7 +536,7 @@
 "bM" = (
 /obj/structure/fluff/bus/dense,
 /turf/open/floor/plasteel/dark,
-/area/awaymission/snowdin/outside)
+/area/shuttle/arrival)
 "bN" = (
 /obj/structure/chair/sofa{
 	icon_state = "sofaend_left";
@@ -1855,7 +1855,7 @@
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/snowdin/outside)
+/area/shuttle/arrival)
 "fI" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plasteel,
@@ -4287,7 +4287,7 @@
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/snowdin/outside)
+/area/shuttle/arrival)
 "lT" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -4318,7 +4318,7 @@
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/snowdin/outside)
+/area/shuttle/arrival)
 "lW" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -4327,7 +4327,7 @@
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/snowdin/outside)
+/area/shuttle/arrival)
 "lX" = (
 /obj/structure/fluff/bus/passable/seat{
 	icon_state = "backseat";
@@ -4340,7 +4340,7 @@
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/snowdin/outside)
+/area/shuttle/arrival)
 "lY" = (
 /obj/structure/fluff/bus/passable/seat/driver{
 	icon_state = "driverseat";
@@ -4353,7 +4353,7 @@
 /turf/open/floor/plasteel/dark{
 	icon_state = "bus"
 	},
-/area/awaymission/snowdin/outside)
+/area/shuttle/arrival)
 "lZ" = (
 /obj/structure/fluff/bus/dense{
 	icon_state = "hoodtop"
