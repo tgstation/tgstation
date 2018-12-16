@@ -63,7 +63,7 @@
 	christmas_tree = null
 
 /datum/round_event_control/santa
-	name = "Santa is coming to town! (Christmas)"
+	name = "Vist by Santa"
 	holidayID = CHRISTMAS
 	typepath = /datum/round_event/santa
 	weight = 20

@@ -1,0 +1,4 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - bugfix: "Fixes runtime spam in pipe manifolds on nonstation z-levels"

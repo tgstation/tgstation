@@ -38078,7 +38078,7 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
-/obj/structure/sign/barsign{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
@@ -76320,7 +76320,8 @@
 	idDoor = "xeno_airlock_exterior";
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
-	pixel_x = -24
+	pixel_x = -24;
+	req_access_txt = "55"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -78362,7 +78363,8 @@
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
 	pixel_x = 29;
-	pixel_y = -8
+	pixel_y = -8;
+	req_access_txt = "55"
 	},
 /obj/machinery/firealarm{
 	dir = 2;
@@ -78590,7 +78592,8 @@
 	idSelf = "xeno_airlock_control";
 	name = "Access Console";
 	pixel_x = -25;
-	pixel_y = -25
+	pixel_y = -25;
+	req_access_txt = "55"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 10

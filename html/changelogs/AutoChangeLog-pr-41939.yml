@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Chem dispenser macros now function properly with higher tier manipulator."

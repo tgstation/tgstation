@@ -689,7 +689,7 @@
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
 				if(A && (!mutation_in_sequence(current_mutation, viable_occupant.dna) || A.scrambled))
 					viable_occupant.dna.remove_mutation(current_mutation)
-					viable_occupant.dna.update_instability(TRUE)
+					viable_occupant.dna.update_instability()
 					current_screen = "mainmenu"
 					current_mutation = null
 		if("pulsegene")

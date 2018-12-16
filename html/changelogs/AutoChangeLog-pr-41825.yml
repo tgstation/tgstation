@@ -1,0 +1,4 @@
+author: "Floyd/Qustinnus, paid for by Kryson"
+delete-after: True
+changes: 
+  - rscadd: "You can now select what your pills will look like when making pills from the Chem Master"

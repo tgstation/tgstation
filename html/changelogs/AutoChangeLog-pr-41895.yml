@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Smuggler satchels now properly deletes if it's the last one in the list."
