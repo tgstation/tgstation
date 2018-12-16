@@ -50,7 +50,7 @@ menu "menu"
 window "character_preview_window"
 	elem "character_preview_window"
 		type = MAIN
-		pos = 1086,100
+		pos = 372,0
 		size = 160x640
 		anchor1 = none
 		anchor2 = none
@@ -64,7 +64,7 @@ window "character_preview_window"
 		size = 160x640
 		anchor1 = 0,0
 		anchor2 = 100,100
-		drop-zone = false
+		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
 
 window "mainwindow"

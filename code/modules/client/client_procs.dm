@@ -841,33 +841,43 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
 
-/client/proc/show_character_previews(mutable_appearance/north, mutable_appearance/south, mutable_appearance/east, mutable_appearance/west)
+/client/proc/show_character_previews(mutable_appearance/MA)
 	LAZYCLEARLIST(char_render_holders)
 	if(north)
 		var/obj/screen/objnorth = new
-		objnorth.appearance = north
+		objnorth.appearance = MA
 		objnorth.screen_loc = "character_preview_map:1,1"
+		objnorth.dir = NORTH
 		LAZYSET(char_render_holders, TEXT_NORTH, objnorth)
 	if(south)
 		var/obj/screen/objsouth = new
-		objsouth.appearance = north
+		objsouth.appearance = MA
 		objsouth.screen_loc = "character_preview_map:1,2"
+		objsouth.dir = SOUTH
 		LAZYSET(char_render_holders, TEXT_SOUTH, objsouth)
 	if(east)
 		var/obj/screen/objeast = new
-		objeast.appearance = north
+		objeast.appearance = MA
 		objeast.screen_loc = "character_preview_map:1,3"
+		objeast.dir = EAST
 		LAZYSET(char_render_holders, TEXT_EAST, objeast)
 	if(west)
 		var/obj/screen/objwest = new
-		objwest.appearance = north
+		objwest.appearance = MA
 		objwest.screen_loc = "character_preview_map:1,4"
+		objwest.dir = WEST
 		LAZYSET(char_render_holders, TEXT_WEST, objwest)
+	for(var/i in char_render_holders)
+		var/I = char_render_holders[i]
+		screen |= I
 	if(LAZYLEN(char_render_holders))
-		winshow(src, "character_preview_map", TRUE)
+		winshow(src, "character_preview_window", TRUE)
 
 /client/proc/hide_character_previews(gc = TRUE)
-	winshow(src, "character_preview_map", FALSE)
+	winshow(src, "character_preview_window", FALSE)
 	if(gc)
+		for(var/i in char_render_holders)
+			var/I = char_render_holders[i]
+			screen -= I
 		QDEL_LIST_ASSOC(char_render_holders)
 		char_render_holders = null
