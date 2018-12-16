@@ -758,3 +758,4 @@
 	item_state = "durathread"
 	item_color = "durathread"
 	can_adjust = FALSE
+	armor = list("melee" = 10, "laser" = 15, "fire" = 40, "acid" = 10)
