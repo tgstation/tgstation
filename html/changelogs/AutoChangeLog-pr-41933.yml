@@ -1,0 +1,5 @@
+author: "Toolby"
+delete-after: True
+changes: 
+  - balance: "Power tools now perform construction slower than the toolarm implant (but still incredibly faster than normal tools)"
+  - balance: "This is to promote trusting a player rather than safely printing off an item via techfab."
