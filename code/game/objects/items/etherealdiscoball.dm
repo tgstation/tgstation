@@ -20,6 +20,8 @@
 	var/TurnedOn = FALSE
 	var/current_color
 	var/TimerID
+	var/range = 7
+	var/power = 3
 
 /obj/structure/etherealball/Initialize()
 	. = ..()
@@ -59,7 +61,7 @@
 /obj/structure/etherealball/proc/DiscoFever()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	current_color = random_color()
-	set_light(4, 3, current_color)
+	set_light(range, power, current_color)
 	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
 	update_icon()
 	TimerID = addtimer(CALLBACK(src, .proc/DiscoFever), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
