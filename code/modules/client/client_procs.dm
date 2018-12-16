@@ -843,41 +843,25 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/proc/show_character_previews(mutable_appearance/MA)
 	LAZYCLEARLIST(char_render_holders)
-	if(north)
-		var/obj/screen/objnorth = new
-		objnorth.appearance = MA
-		objnorth.screen_loc = "character_preview_map:1,1"
-		objnorth.dir = NORTH
-		LAZYSET(char_render_holders, TEXT_NORTH, objnorth)
-	if(south)
-		var/obj/screen/objsouth = new
-		objsouth.appearance = MA
-		objsouth.screen_loc = "character_preview_map:1,2"
-		objsouth.dir = SOUTH
-		LAZYSET(char_render_holders, TEXT_SOUTH, objsouth)
-	if(east)
-		var/obj/screen/objeast = new
-		objeast.appearance = MA
-		objeast.screen_loc = "character_preview_map:1,3"
-		objeast.dir = EAST
-		LAZYSET(char_render_holders, TEXT_EAST, objeast)
-	if(west)
-		var/obj/screen/objwest = new
-		objwest.appearance = MA
-		objwest.screen_loc = "character_preview_map:1,4"
-		objwest.dir = WEST
-		LAZYSET(char_render_holders, TEXT_WEST, objwest)
-	for(var/i in char_render_holders)
-		var/I = char_render_holders[i]
-		screen |= I
+	var/pos = 0
+	for(var/D in GLOB.cardinals)
+		pos++
+		var/obj/screen/O = new
+		O.appearance = MA
+		O.screen_loc = "character_preview_map:1,[pos]"
+		O.dir = D
+		LAZYSET(char_render_holders, "[D]", O)
+	for(var/index in char_render_holders)
+		var/obj/screen/S = char_render_holders[index]
+		screen |= S
 	if(LAZYLEN(char_render_holders))
 		winshow(src, "character_preview_window", TRUE)
 
 /client/proc/hide_character_previews(gc = TRUE)
 	winshow(src, "character_preview_window", FALSE)
 	if(gc)
-		for(var/i in char_render_holders)
-			var/I = char_render_holders[i]
-			screen -= I
+		for(var/index in char_render_holders)
+			var/obj/screen/S = char_render_holders[index]
+			screen -= S
 		QDEL_LIST_ASSOC(char_render_holders)
 		char_render_holders = null
