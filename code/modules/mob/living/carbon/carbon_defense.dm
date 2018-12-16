@@ -35,31 +35,42 @@
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return TRUE
 
-/mob/living/carbon/is_eyes_covered(check_glasses = 1, check_head = 1, check_mask = 1)
-	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
-		return TRUE
+/mob/living/carbon/is_eyes_covered(check_glasses = TRUE, check_head = TRUE, check_mask = TRUE)
 	if(check_head && head && (head.flags_cover & HEADCOVERSEYES))
-		return TRUE
-	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH))
-		return TRUE
+		return head
+	if(check_mask && wear_mask && (wear_mask.flags_cover & MASKCOVERSEYES))
+		return wear_mask
+	if(check_glasses && glasses && (glasses.flags_cover & GLASSESCOVERSEYES))
+		return glasses
 
 /mob/living/carbon/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
 	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
-/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
+	. = FALSE
+	if(!skip_throw_mode_check && !in_throw_mode)
+		return
+	if(get_active_held_item())
+		return
+	if(!(mobility_flags & MOBILITY_MOVE))
+		return
+	if(restrained())
+		return
+	return TRUE
+
+/mob/living/carbon/hitby(atom/movable/AM, skipcatch, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(!skipcatch)	//ugly, but easy
-		if(in_throw_mode && !get_active_held_item())	//empty active hand and we're in throw mode
-			if(canmove && !restrained())
-				if(istype(AM, /obj/item))
-					var/obj/item/I = AM
-					if(isturf(I.loc))
-						I.attack_hand(src)
-						if(get_active_held_item() == I) //if our attack_hand() picks up the item...
-							visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
-							throw_mode_off()
-							return 1
+		if(can_catch_item())
+			if(istype(AM, /obj/item))
+				var/obj/item/I = AM
+				if(isturf(I.loc))
+					I.attack_hand(src)
+					if(get_active_held_item() == I) //if our attack_hand() picks up the item...
+						visible_message("<span class='warning'>[src] catches [I]!</span>") //catch that sucker!
+						throw_mode_off()
+						return 1
 	..()
 
 
@@ -118,7 +129,7 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	if(lying && surgeries.len)
+	if(!(mobility_flags & MOBILITY_STAND) && surgeries.len)
 		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 			for(var/datum/surgery/S in surgeries)
 				if(S.next_step(user, user.a_intent))
@@ -164,7 +175,7 @@
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
-				Knockdown(power*20)
+				Paralyze(power*20)
 				if(stuttering < power)
 					stuttering = power
 				if (prob(stunprob) && M.powerlevel >= 8)
@@ -235,11 +246,11 @@
 	do_jitter_animation(jitteriness)
 	stuttering += 2
 	if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-		Stun(40)
+		Paralyze(40)
 	spawn(20)
 		jitteriness = max(jitteriness - 990, 10) //Still jittery, but vastly less
 		if((!tesla_shock || (tesla_shock && siemens_coeff > 0.5)) && stun)
-			Knockdown(60)
+			Paralyze(60)
 	if(override)
 		return override
 	else
@@ -250,27 +261,25 @@
 		to_chat(M, "<span class='warning'>You can't put [p_them()] out with just your bare hands!</span>")
 		return
 
-	if(health >= 0 && !(has_trait(TRAIT_FAKEDEATH)))
+	if(!(mobility_flags & MOBILITY_STAND))
+		if(buckled)
+			to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
+			return
+		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
+						"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
+	else
+		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
+					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+	AdjustStun(-60)
+	AdjustKnockdown(-60)
+	AdjustUnconscious(-60)
+	AdjustSleeping(-100)
+	AdjustParalyzed(-60)
+	AdjustImmobilized(-60)
+	set_resting(FALSE)
 
-		if(lying)
-			if(buckled)
-				to_chat(M, "<span class='warning'>You need to unbuckle [src] first to do that!")
-				return
-			M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", \
-							"<span class='notice'>You shake [src] trying to get [p_them()] up!</span>")
-		else
-			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
-						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
-		AdjustStun(-60)
-		AdjustKnockdown(-60)
-		AdjustUnconscious(-60)
-		AdjustSleeping(-100)
-		if(resting)
-			resting = 0
-			update_canmove()
-
-		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
@@ -333,7 +342,7 @@
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
-			Knockdown(stun_pwr*effect_amount)
+			Paralyze(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount

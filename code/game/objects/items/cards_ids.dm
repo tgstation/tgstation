@@ -48,13 +48,6 @@
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
-/obj/item/card/data/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/integrated_electronics/detailer))
-		var/obj/item/integrated_electronics/detailer/D = I
-		detail_color = D.detail_color
-		update_icon()
-	return ..()
-
 /obj/item/proc/GetCard()
 
 /obj/item/card/data/GetCard()
@@ -146,59 +139,95 @@
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/holochip))
-		var/obj/item/holochip/holochip = W
-		if(registered_account)
-			registered_account.adjust_money(holochip.credits)
-			to_chat(user, "You insert [holochip] into [src], adding [holochip.credits] credits to your account.")
-			qdel(holochip)
+		insert_money(W, user)
+		return
+	else if(istype(W, /obj/item/stack/spacecash))
+		insert_money(W, user, TRUE)
+		return
+	else if(istype(W, /obj/item/coin))
+		insert_money(W, user, TRUE)
+		return
+	else
+		return ..()
+
+/obj/item/card/id/proc/insert_money(obj/item/I, mob/user, physical_currency)
+	var/cash_money = I.get_item_credit_value()
+	if(!cash_money)
+		to_chat(user, "<span class='warning'>[I] doesn't seem to be worth anything!</span>")
+		return
+
+	if(!registered_account)
+		to_chat(user, "<span class='warning'>[src] doesn't have a linked account to deposit [I] into!</span>")
+		return
+
+	registered_account.adjust_money(cash_money)
+	if(physical_currency)
+		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
+	else
+		to_chat(user, "<span class='notice'>You insert [I] into [src], adding [cash_money] credits to the linked account.</span>")
+
+	to_chat(user, "<span class='notice'>The linked account now reports a balance of $[registered_account.account_balance].</span>")
+	qdel(I)
+
+
+/obj/item/card/id/proc/alt_click_can_use_id(mob/living/user)
+	if(!isliving(user))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(user.get_active_held_item() != src)
+		to_chat(user, "<span class='warning'>You must hold the ID in your hand to do this.</span>")
+		return
+	return TRUE
 
 /obj/item/card/id/AltClick(mob/living/user)
-	if(user.get_active_held_item() != src)
-		to_chat(user, "You must hold the ID in your hand to do this.")
-		return
-	if (!user.canUseTopic(src, BE_CLOSE) || !isliving(user))
+	if(!alt_click_can_use_id(user))
 		return
 	if(!registered_account)
-		var/new_bank_id = input(user, "Enter your account ID.", "Account Reclamation", 111111) as num
+		var/new_bank_id = input(user, "Enter your account ID number.", "Account Reclamation", 111111) as num
+		if(!alt_click_can_use_id(user))
+			return
 		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
-			to_chat(user, "The ID needs to be between 111111 and 999999.")
+			to_chat(user, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span")
 			return
 		for(var/A in SSeconomy.bank_accounts)
 			var/datum/bank_account/B = A
 			if(B.account_id == new_bank_id)
 				B.bank_cards += src
 				registered_account = B
-				to_chat(user, "Your account has been assigned to this ID card.")
+				to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
 				return
-		to_chat(user, "The ID provided is not a real account.")
+		to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 		return
 	var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
+	if(!alt_click_can_use_id(user))
+		return
 	if(registered_account.adjust_money(-amount_to_remove))
-		var/obj/item/holochip/holochip = new (get_turf(user), amount_to_remove)
+		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 		user.put_in_hands(holochip)
-		to_chat(user, "You withdraw [amount_to_remove] credits into a holochip.")
+		to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
 		return
 	else
-		to_chat(user, "You don't have the funds for that.")
-		return
+		to_chat(user, "<span class='warning'>The linked account doesn't have the funds for that.</span>")
 
 /obj/item/card/id/examine(mob/user)
 	..()
+	if(mining_points)
+		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 	if(registered_account)
-		to_chat(user, "The registered account belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
+		to_chat(user, "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of $[registered_account.account_balance].")
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
-		to_chat(user, "Alt-Click your ID in-hand to pull money from your account in the form of holochips.")
-		to_chat(user, "You can insert credits into your account by pressing holochips against the ID.")
-		to_chat(user, "If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card inhand and punching in the account ID.")
+		to_chat(user, "<span class='info'>Alt-Click the ID while holding it to pull money from the linked account in the form of holochips.</span>")
+		to_chat(user, "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>")
+		if(registered_account.account_holder == user.real_name)
+			to_chat(user, "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>")
 	else
-		to_chat(user, "There is no registered account on this card. Alt-Click to add one.")
-	if(mining_points)
-		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
+		to_chat(user, "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>")
 
 /obj/item/card/id/GetAccess()
 	return access
@@ -457,6 +486,9 @@ update_label("John Doe", "Clowny")
 	name = "APC Access ID"
 	desc = "A special ID card that allows access to APC terminals."
 	access = list(ACCESS_ENGINE_EQUIP)
+
+/obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
+	name = "bunker access ID"
 
 /obj/item/card/id/departmental_budget
 	name = "departmental card (FUCK)"

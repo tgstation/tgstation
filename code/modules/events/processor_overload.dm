@@ -29,6 +29,7 @@
 /datum/round_event/processor_overload/start()
 	for(var/obj/machinery/telecomms/processor/P in GLOB.telecomms_list)
 		if(prob(10))
+			announce_to_ghosts(P)
 			// Damage the surrounding area to indicate that it popped
 			explosion(get_turf(P), 0, 0, 2)
 			// Only a level 1 explosion actually damages the machine

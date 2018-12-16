@@ -74,6 +74,8 @@
 			L.SetStun(0)
 			L.SetKnockdown(0)
 			L.SetSleeping(0)
+			L.SetImmobilized(0)
+			L.SetParalyzed(0)
 			L.SetUnconscious(0)
 			L.reagents.add_reagent("muscle_stimulant", CLAMP(5 - L.reagents.get_reagent_amount("muscle_stimulant"), 0, 5))	//If you don't have legs or get bola'd, tough luck!
 			colorize(L)

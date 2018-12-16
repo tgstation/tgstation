@@ -26,7 +26,7 @@
 
 /datum/disease/revblight/stage_act()
 	if(!finalstage)
-		if(affected_mob.lying && prob(stage*6))
+		if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(stage*6))
 			cure()
 			return
 		if(prob(stage*3))

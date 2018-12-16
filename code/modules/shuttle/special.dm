@@ -186,7 +186,7 @@
 		// No climbing on the bar please
 		var/mob/living/M = AM
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
-		M.Knockdown(40)
+		M.Paralyze(40)
 		M.throw_at(throwtarget, 5, 1,src)
 		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
@@ -235,7 +235,7 @@
 		if(payees[AM] >= threshold)
 			break
 		payees[AM] += C.value
-		counted_money += C		
+		counted_money += C
 	for(var/obj/item/stack/spacecash/S in AM.GetAllContents())
 		if(payees[AM] >= threshold)
 			break
@@ -256,7 +256,7 @@
 		var/obj/item/stack/spacecash/S = AM.pulling
 		payees[AM] += S.value * S.amount
 		counted_money += S
-			
+
 	else if(payees[AM] < threshold && istype(AM.pulling, /obj/item/holochip))
 		var/obj/item/holochip/H = AM.pulling
 		payees[AM] += H.credits

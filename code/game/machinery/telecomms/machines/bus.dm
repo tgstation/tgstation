@@ -35,7 +35,7 @@
 		signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
 
 	// Try sending it!
-	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster, /obj/machinery/telecomms/bus)
+	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster)
 
 	var/i = 0
 	for(var/send in try_send)

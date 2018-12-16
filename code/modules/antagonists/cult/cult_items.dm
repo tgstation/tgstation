@@ -49,7 +49,7 @@
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!iscultist(user))
-		user.Knockdown(100)
+		user.Paralyze(100)
 		user.dropItemToGround(src, TRUE)
 		user.visible_message("<span class='warning'>A powerful force shoves [user] away from [target]!</span>", \
 							 "<span class='cultlarge'>\"You shouldn't play with sharp things. You'll poke someone's eye out.\"</span>")
@@ -143,7 +143,7 @@
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			user.dropItemToGround(src, TRUE)
-			user.Knockdown(50)
+			user.Paralyze(50)
 			return
 	force = initial(force)
 	jaunt.Grant(user, src)
@@ -262,7 +262,7 @@
 		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
 		throw_impact(user)
 
-/obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscultist(hit_atom))
 		return
 	. = ..()
@@ -362,10 +362,7 @@
 	prefix = "darkened"
 
 /obj/item/sharpener/cult/update_icon()
-	var/old_state = icon_state
 	icon_state = "cult_sharpener[used ? "_used" : ""]"
-	if(old_state != icon_state)
-		playsound(get_turf(src), 'sound/items/unsheath.ogg', 25, 1)
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 	name = "empowered cultist armor"
@@ -395,7 +392,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Knockdown(100)
+			user.Paralyze(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The armor squeezes at your body!</span>")
@@ -447,7 +444,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.dropItemToGround(src, TRUE)
 			user.Dizzy(30)
-			user.Knockdown(100)
+			user.Paralyze(100)
 		else
 			to_chat(user, "<span class='cultlarge'>\"Trying to use things you don't own is bad, you know.\"</span>")
 			to_chat(user, "<span class='userdanger'>The robes squeeze at your body!</span>")
@@ -468,7 +465,7 @@
 		to_chat(user, "<span class='cultlarge'>\"You want to be blind, do you?\"</span>")
 		user.dropItemToGround(src, TRUE)
 		user.Dizzy(30)
-		user.Knockdown(100)
+		user.Paralyze(100)
 		user.blind_eyes(30)
 
 /obj/item/reagent_containers/glass/beaker/unholywater
@@ -489,7 +486,7 @@
 /obj/item/shuttle_curse/attack_self(mob/living/user)
 	if(!iscultist(user))
 		user.dropItemToGround(src, TRUE)
-		user.Knockdown(100)
+		user.Paralyze(100)
 		to_chat(user, "<span class='warning'>A powerful force shoves you away from [src]!</span>")
 		return
 	if(curselimit > 1)
@@ -551,7 +548,7 @@
 	var/mob/living/carbon/C = user
 	if(C.pulling)
 		var/atom/movable/pulled = C.pulling
-		pulled.forceMove(T)
+		do_teleport(pulled, T, channel = TELEPORT_CHANNEL_CULT)
 		. = pulled
 
 /obj/item/cult_shift/attack_self(mob/user)
@@ -576,13 +573,12 @@
 		new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, C.dir)
 
 		var/atom/movable/pulled = handle_teleport_grab(destination, C)
-		C.forceMove(destination)
-		if(pulled)
-			C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
-
-		new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
-		playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
-		playsound(destination, "sparks", 50, 1)
+		if(do_teleport(C, destination, channel = TELEPORT_CHANNEL_CULT))
+			if(pulled)
+				C.start_pulling(pulled) //forcemove resets pulls, so we need to re-pull
+			new /obj/effect/temp_visual/dir_setting/cult/phase(destination, C.dir)
+			playsound(destination, 'sound/effects/phasein.ogg', 25, 1)
+			playsound(destination, "sparks", 50, 1)
 
 	else
 		to_chat(C, "<span class='danger'>The veil cannot be torn here!</span>")
@@ -673,10 +669,10 @@
 /obj/item/twohanded/cult_spear/update_icon()
 	icon_state = "bloodspear[wielded]"
 
-/obj/item/twohanded/cult_spear/throw_impact(atom/target)
-	var/turf/T = get_turf(target)
-	if(isliving(target))
-		var/mob/living/L = target
+/obj/item/twohanded/cult_spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/turf/T = get_turf(hit_atom)
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(iscultist(L))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			if(L.put_in_active_hand(src))
@@ -686,9 +682,9 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
-					L.Knockdown(100)
+					L.Paralyze(100)
 				else
-					L.Knockdown(50)
+					L.Paralyze(50)
 			break_spear(T)
 	else
 		..()
@@ -820,7 +816,7 @@
 		INVOKE_ASYNC(src, .proc/pewpew, user, params)
 		var/obj/structure/emergency_shield/invoker/N = new(user.loc)
 		if(do_after(user, 90, target = user))
-			user.Knockdown(40)
+			user.Paralyze(40)
 			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
 		firing = FALSE
 		if(N)
@@ -885,7 +881,7 @@
 				else
 					var/mob/living/L = target
 					if(L.density)
-						L.Knockdown(20)
+						L.Paralyze(20)
 						L.adjustBruteLoss(45)
 						playsound(L, 'sound/hallucinations/wail.ogg', 50, 1)
 						L.emote("scream")
@@ -921,10 +917,10 @@
 				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
 				new /obj/effect/temp_visual/cult/sparks(T)
 				playsound(T, 'sound/effects/glassbr3.ogg', 100)
-				owner.Knockdown(25)
+				owner.Paralyze(25)
 				qdel(src)
 				return FALSE
-			if(P.is_reflectable)
+			if(P.reflectable & REFLECT_NORMAL)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
 		if(.)
@@ -964,11 +960,11 @@
 		return TRUE
 	return FALSE
 
-/obj/item/shield/mirror/throw_impact(atom/target, throwingdatum)
-	var/turf/T = get_turf(target)
+/obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	var/turf/T = get_turf(hit_atom)
 	var/datum/thrownthing/D = throwingdatum
-	if(isliving(target))
-		var/mob/living/L = target
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(iscultist(L))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			if(L.put_in_active_hand(src))
@@ -978,9 +974,9 @@
 		else if(!..())
 			if(!L.anti_magic_check())
 				if(is_servant_of_ratvar(L))
-					L.Knockdown(60)
+					L.Paralyze(60)
 				else
-					L.Knockdown(30)
+					L.Paralyze(30)
 				if(D?.thrower)
 					for(var/mob/living/Next in orange(2, T))
 						if(!Next.density || iscultist(Next))

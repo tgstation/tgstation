@@ -12,12 +12,12 @@
 		else
 			icon_state = "alien[caste]_dead"
 
-	else if((stat == UNCONSCIOUS && !asleep) || stat == SOFT_CRIT || IsKnockdown())
+	else if((stat == UNCONSCIOUS && !asleep) || stat == SOFT_CRIT || IsParalyzed())
 		icon_state = "alien[caste]_unconscious"
 	else if(leap_on_click)
 		icon_state = "alien[caste]_pounce"
 
-	else if(lying || resting || asleep)
+	else if(!(mobility_flags & MOBILITY_STAND))
 		icon_state = "alien[caste]_sleep"
 	else if(mob_size == MOB_SIZE_LARGE)
 		icon_state = "alien[caste]"
@@ -41,8 +41,8 @@
 			var/old_icon = icon
 			icon = alt_icon
 			alt_icon = old_icon
-		pixel_x = get_standard_pixel_x_offset(lying)
-		pixel_y = get_standard_pixel_y_offset(lying)
+		pixel_x = get_standard_pixel_x_offset(mobility_flags & MOBILITY_STAND)
+		pixel_y = get_standard_pixel_y_offset(mobility_flags & MOBILITY_STAND)
 	update_inv_hands()
 	update_inv_handcuffed()
 
@@ -52,7 +52,7 @@
 		update_transform()
 
 /mob/living/carbon/alien/humanoid/update_transform() //The old method of updating lying/standing was update_icons(). Aliens still expect that.
-	if(lying > 0)
+	if(lying)
 		lying = 90 //Anything else looks retarded
 	..()
 	update_icons()

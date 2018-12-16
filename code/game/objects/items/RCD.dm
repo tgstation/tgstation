@@ -75,6 +75,10 @@ RLD
 		loaded = loadwithsheets(W, plasmarglassmultiplier*sheetmultiplier, user) //8 matter for one plasma rglass sheet
 	else if(istype(W, /obj/item/stack/sheet/rglass))
 		loaded = loadwithsheets(W, rglassmultiplier*sheetmultiplier, user) //6 matter for one rglass sheet
+	else if(istype(W, /obj/item/stack/rods))
+		loaded = loadwithsheets(W, sheetmultiplier * 0.5, user) // 2 matter for 1 rod, as 2 rods are produced from 1 metal
+	else if(istype(W, /obj/item/stack/tile/plasteel))
+		loaded = loadwithsheets(W, sheetmultiplier * 0.25, user) // 1 matter for 1 floortile, as 4 tiles are produced from 1 metal
 	if(loaded)
 		to_chat(user, "<span class='notice'>[src] now holds [matter]/[max_matter] matter-units.</span>")
 	else
@@ -138,6 +142,7 @@ RLD
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	custom_price = 150
 	max_matter = 160
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
@@ -156,7 +161,17 @@ RLD
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/construction/rcd/verb/toggle_window_type(mob/user)
+/obj/item/construction/rcd/verb/toggle_window_type_verb()
+	set name = "RCD : Toggle Window Type"
+	set category = "Object"
+	set src in view(1)
+
+	if(!usr.canUseTopic(src, BE_CLOSE))
+		return
+
+	toggle_window_type(usr)
+
+/obj/item/construction/rcd/proc/toggle_window_type(mob/user)
 	var/window_type_name
 	if (window_type == /obj/structure/window/fulltile)
 		window_type = /obj/structure/window/reinforced/fulltile
@@ -254,7 +269,7 @@ RLD
 		return FALSE
 	return TRUE
 
-/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)	
+/obj/item/construction/rcd/proc/change_airlock_setting(mob/user)
 	if(!user)
 		return
 
@@ -300,13 +315,13 @@ RLD
 		"External Maintenance" = get_airlock_image(/obj/machinery/door/airlock/maintenance/external/glass)
 	)
 
-	var/airlockcat = show_radial_menu(user, src , solid_or_glass_choices, custom_check = CALLBACK(src,.proc/check_menu,user))
+	var/airlockcat = show_radial_menu(user, src, solid_or_glass_choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 	if(!check_menu(user))
 		return
 	switch(airlockcat)
 		if("Solid")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , solid_choices, radius = 42, custom_check = CALLBACK(src,.proc/check_menu,user))
+				var/airlockpaint = show_radial_menu(user, src, solid_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -351,7 +366,7 @@ RLD
 
 		if("Glass")
 			if(advanced_airlock_setting == 1)
-				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src,.proc/check_menu,user))
+				var/airlockpaint = show_radial_menu(user, src , glass_choices, radius = 42, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 				if(!check_menu(user))
 					return
 				switch(airlockpaint)
@@ -414,21 +429,21 @@ RLD
 /obj/item/construction/rcd/attack_self(mob/user)
 	..()
 	var/list/choices = list(
-		"Airlock" = image(icon = 'icons/obj/interface.dmi', icon_state = "airlock"),
-		"Deconstruct" = image(icon= 'icons/obj/interface.dmi', icon_state = "delete"),
-		"Grilles & Windows" = image(icon = 'icons/obj/interface.dmi', icon_state = "grillewindow"),
-		"Floors & Walls" = image(icon = 'icons/obj/interface.dmi', icon_state = "wallfloor")
+		"Airlock" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlock"),
+		"Deconstruct" = image(icon= 'icons/mob/radial.dmi', icon_state = "delete"),
+		"Grilles & Windows" = image(icon = 'icons/mob/radial.dmi', icon_state = "grillewindow"),
+		"Floors & Walls" = image(icon = 'icons/mob/radial.dmi', icon_state = "wallfloor")
 	)
 	if(mode == RCD_AIRLOCK)
 		choices += list(
-		"Change Access" = image(icon = 'icons/obj/interface.dmi', icon_state = "access"),
-		"Change Airlock Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "airlocktype")
+		"Change Access" = image(icon = 'icons/mob/radial.dmi', icon_state = "access"),
+		"Change Airlock Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "airlocktype")
 		)
 	else if(mode == RCD_WINDOWGRILLE)
 		choices += list(
-			"Change Window Type" = image(icon = 'icons/obj/interface.dmi', icon_state = "windowtype")
+			"Change Window Type" = image(icon = 'icons/mob/radial.dmi', icon_state = "windowtype")
 		)
-	var/choice = show_radial_menu(user,src,choices, custom_check = CALLBACK(src,.proc/check_menu,user))
+	var/choice = show_radial_menu(user, src, choices, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 	if(!check_menu(user))
 		return
 	switch(choice)

@@ -1540,7 +1540,7 @@
 /obj/structure/table/wood{
 	dir = 5
 	},
-/obj/item/storage/backpack/satchel,
+/obj/item/storage/backpack/satchel/fireproof,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "iW" = (

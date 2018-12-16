@@ -489,7 +489,7 @@
 	S.set_up(4,0,get_turf(target))
 	S.start()
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
-	do_teleport(target, F, 0)
+	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	if(!tesla_shock)
@@ -585,7 +585,7 @@
 			playsound(loc,'sound/effects/snap.ogg',50, 1, -1)
 			L.electrocute_act(0, src, 1, 1, 1)
 			if(iscyborg(L))
-				L.Knockdown(100)
+				L.Paralyze(100)
 			qdel(src)
 	..()
 

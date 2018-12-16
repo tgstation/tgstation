@@ -19,8 +19,13 @@
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
+	var/vary_fire_sound = TRUE
+	var/fire_sound_volume = 50
+	var/dry_fire_sound = 'sound/weapons/gun_dry_fire.ogg'
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
+	var/suppressed_sound = 'sound/weapons/gunshot_silenced.ogg'
+	var/suppressed_volume = 10
 	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
@@ -41,20 +46,21 @@
 
 	var/obj/item/firing_pin/pin = /obj/item/firing_pin //standard firing pin for most guns
 
-	var/obj/item/flashlight/gun_light
-	var/can_flashlight = 0
+	var/can_flashlight = FALSE //if a flashlight can be added or removed if it already has one.
+	var/obj/item/flashlight/seclite/gun_light
+	var/mutable_appearance/flashlight_overlay
+	var/datum/action/item_action/toggle_gunlight/alight
+
+	var/can_bayonet = FALSE //if a bayonet can be added or removed if it already has one.
 	var/obj/item/kitchen/knife/bayonet
 	var/mutable_appearance/knife_overlay
-	var/can_bayonet = FALSE
-	var/datum/action/item_action/toggle_gunlight/alight
-	var/mutable_appearance/flashlight_overlay
+	var/knife_x_offset = 0
+	var/knife_y_offset = 0
 
 	var/ammo_x_offset = 0 //used for positioning ammo count overlay on sprite
 	var/ammo_y_offset = 0
 	var/flight_x_offset = 0
 	var/flight_y_offset = 0
-	var/knife_x_offset = 0
-	var/knife_y_offset = 0
 
 	//Zooming
 	var/zoomable = FALSE //whether the gun generates a Zoom action on creation
@@ -68,9 +74,28 @@
 	if(pin)
 		pin = new pin(src)
 	if(gun_light)
-		alight = new /datum/action/item_action/toggle_gunlight(src)
+		alight = new(src)
 	build_zooming()
 
+/obj/item/gun/Destroy()
+	QDEL_NULL(pin)
+	QDEL_NULL(gun_light)
+	QDEL_NULL(bayonet)
+	QDEL_NULL(chambered)
+	QDEL_NULL(azoom)
+	return ..()
+
+/obj/item/gun/handle_atom_del(atom/A)
+	if(A == pin)
+		pin = null
+	if(A == chambered)
+		chambered = null
+		update_icon()
+	if(A == bayonet)
+		clear_bayonet()
+	if(A == gun_light)
+		clear_gunlight()
+	return ..()
 
 /obj/item/gun/CheckParts(list/parts_list)
 	..()
@@ -86,7 +111,21 @@
 	if(pin)
 		to_chat(user, "It has \a [pin] installed.")
 	else
-		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
+		to_chat(user, "It doesn't have a <b>firing pin</b> installed, and won't fire.")
+
+	if(gun_light)
+		to_chat(user, "It has \a [gun_light] [can_flashlight ? "" : "permanently "]mounted on it.")
+		if(can_flashlight) //if it has a light and this is false, the light is permanent.
+			to_chat(user, "<span class='info'>[gun_light] looks like it can be <b>unscrewed</b> from [src].</span>")
+	else if(can_flashlight)
+		to_chat(user, "It has a mounting point for a <b>seclite</b>.")
+
+	if(bayonet)
+		to_chat(user, "It has \a [bayonet] [can_bayonet ? "" : "permanently "]affixed to it.")
+		if(can_bayonet) //if it has a bayonet and this is false, the bayonet is permanent.
+			to_chat(user, "<span class='info'>[bayonet] looks like it can be <b>unscrewed</b> from [src].</span>")
+	else if(can_bayonet)
+		to_chat(user, "It has a <b>bayonet</b> lug on it.")
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
@@ -104,7 +143,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(src, "gun_dry_fire", 30, 1)
+	playsound(src, dry_fire_sound, 30, TRUE)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -112,9 +151,9 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, fire_sound, 10, 1)
+		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound)
 	else
-		playsound(user, fire_sound, 50, 1)
+		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
 			if(pointblank)
 				user.visible_message("<span class='danger'>[user] fires [src] point blank at [pbtarget]!</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -323,12 +362,12 @@
 		if(!gun_light)
 			if(!user.transferItemToLoc(I, src))
 				return
-			to_chat(user, "<span class='notice'>You click \the [S] into place on \the [src].</span>")
+			to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 			if(S.on)
 				set_light(0)
 			gun_light = S
-			update_gunlight(user)
-			alight = new /datum/action/item_action/toggle_gunlight(src)
+			update_gunlight()
+			alight = new(src)
 			if(loc == user)
 				alight.Grant(user)
 	else if(istype(I, /obj/item/kitchen/knife))
@@ -337,7 +376,7 @@
 			return ..()
 		if(!user.transferItemToLoc(I, src))
 			return
-		to_chat(user, "<span class='notice'>You attach \the [K] to the front of \the [src].</span>")
+		to_chat(user, "<span class='notice'>You attach [K] to [src]'s bayonet lug.</span>")
 		bayonet = K
 		var/state = "bayonet"							//Generic state.
 		if(bayonet.icon_state in icon_states('icons/obj/guns/bayonets.dmi'))		//Snowflake state?
@@ -347,24 +386,66 @@
 		knife_overlay.pixel_x = knife_x_offset
 		knife_overlay.pixel_y = knife_y_offset
 		add_overlay(knife_overlay, TRUE)
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(gun_light)
-			var/obj/item/flashlight/seclite/S = gun_light
-			to_chat(user, "<span class='notice'>You unscrew the seclite from \the [src].</span>")
-			gun_light = null
-			S.forceMove(get_turf(user))
-			update_gunlight(user)
-			S.update_brightness(user)
-			QDEL_NULL(alight)
-		if(bayonet)
-			to_chat(user, "<span class='notice'>You unscrew the bayonet from \the [src].</span>")
-			var/obj/item/kitchen/knife/K = bayonet
-			K.forceMove(get_turf(user))
-			bayonet = null
-			cut_overlay(knife_overlay, TRUE)
-			knife_overlay = null
 	else
 		return ..()
+
+/obj/item/gun/screwdriver_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if((can_flashlight && gun_light) && (can_bayonet && bayonet)) //give them a choice instead of removing both
+		var/list/possible_items = list(gun_light, bayonet)
+		var/obj/item/item_to_remove = input(user, "Select an attachment to remove", "Attachment Removal") as null|obj in possible_items
+		if(!item_to_remove || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+			return
+		return remove_gun_attachment(user, I, item_to_remove)
+
+	else if(gun_light && can_flashlight) //if it has a gun_light and can_flashlight is false, the flashlight is permanently attached.
+		return remove_gun_attachment(user, I, gun_light, "unscrewed")
+
+	else if(bayonet && can_bayonet) //if it has a bayonet, and the bayonet can be removed
+		return remove_gun_attachment(user, I, bayonet, "unfix")
+
+/obj/item/gun/proc/remove_gun_attachment(mob/living/user, obj/item/tool_item, obj/item/item_to_remove, removal_verb)
+	if(tool_item)
+		tool_item.play_tool_sound(src)
+	to_chat(user, "<span class='notice'>You [removal_verb ? removal_verb : "remove"] [item_to_remove] from [src].</span>")
+	item_to_remove.forceMove(drop_location())
+
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(item_to_remove)
+
+	if(item_to_remove == bayonet)
+		return clear_bayonet()
+	else if(item_to_remove == gun_light)
+		return clear_gunlight()
+
+/obj/item/gun/proc/clear_bayonet()
+	if(!bayonet)
+		return
+	bayonet = null
+	if(knife_overlay)
+		cut_overlay(knife_overlay, TRUE)
+		knife_overlay = null
+	return TRUE
+
+/obj/item/gun/proc/clear_gunlight()
+	if(!gun_light)
+		return
+	var/obj/item/flashlight/seclite/removed_light = gun_light
+	gun_light = null
+	update_gunlight()
+	removed_light.update_brightness()
+	QDEL_NULL(alight)
+	return TRUE
+
+/obj/item/gun/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, alight))
+		toggle_gunlight()
+	else
+		..()
 
 /obj/item/gun/proc/toggle_gunlight()
 	if(!gun_light)
@@ -374,11 +455,10 @@
 	gun_light.on = !gun_light.on
 	to_chat(user, "<span class='notice'>You toggle the gunlight [gun_light.on ? "on":"off"].</span>")
 
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
-	update_gunlight(user)
-	return
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_gunlight()
 
-/obj/item/gun/proc/update_gunlight(mob/user = null)
+/obj/item/gun/proc/update_gunlight()
 	if(gun_light)
 		if(gun_light.on)
 			set_light(gun_light.brightness_on)
@@ -405,19 +485,15 @@
 	..()
 	if(azoom)
 		azoom.Grant(user)
-	if(alight)
-		alight.Grant(user)
 
 /obj/item/gun/dropped(mob/user)
-	..()
-	if(zoomed)
-		zoom(user,FALSE)
+	. = ..()
 	if(azoom)
 		azoom.Remove(user)
-	if(alight)
-		alight.Remove(user)
+	if(zoomed)
+		zoom(user,FALSE)
 
-/obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params)
+/obj/item/gun/proc/handle_suicide(mob/living/carbon/human/user, mob/living/carbon/human/target, params, bypass_timer)
 	if(!ishuman(user) || !ishuman(target))
 		return
 
@@ -433,7 +509,7 @@
 
 	semicd = TRUE
 
-	if(!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH)
+	if(!bypass_timer && (!do_mob(user, target, 120) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
 			if(user == target)
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
@@ -444,7 +520,7 @@
 
 	semicd = FALSE
 
-	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
+	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[(user == target) ? "You pull" : "[user] pulls"] the trigger!</span>")
 
 	if(chambered && chambered.BB)
 		chambered.BB.damage *= 5
@@ -522,8 +598,3 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
-
-/obj/item/gun/handle_atom_del(atom/A)
-	if(A == chambered)
-		chambered = null
-		update_icon()

@@ -80,14 +80,14 @@
 	item_state = "dodgeball"
 	desc = "Used for playing the most violent and degrading of childhood games."
 
-/obj/item/toy/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom)
+/obj/item/toy/beach_ball/holoball/dodgeball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if((ishuman(hit_atom)))
 		var/mob/living/carbon/M = hit_atom
 		playsound(src, 'sound/items/dodgeball.ogg', 50, 1)
 		M.apply_damage(10, STAMINA)
 		if(prob(5))
-			M.Knockdown(60)
+			M.Paralyze(60)
 			visible_message("<span class='danger'>[M] is knocked right off [M.p_their()] feet!</span>")
 
 //
@@ -117,13 +117,13 @@
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
 		L.forceMove(loc)
-		L.Knockdown(100)
+		L.Paralyze(100)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()
 	else
 		..()
 
-/obj/structure/holohoop/hitby(atom/movable/AM)
+/obj/structure/holohoop/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if (isitem(AM) && !istype(AM,/obj/item/projectile))
 		if(prob(50))
 			AM.forceMove(get_turf(src))

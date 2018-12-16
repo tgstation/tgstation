@@ -13916,7 +13916,6 @@
 	},
 /area/awaymission/undergroundoutpost45/caves)
 "zi" = (
-/obj/effect/mapping_helpers/planet_z,
 /turf/open/space,
 /area/space/nearstation)
 "KE" = (

@@ -640,16 +640,17 @@ Nothing else in the console has ID requirements.
 		var/max_tier = 0
 		for (var/node_ in stored_research.tiers)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_)
-			var/tier = stored_research.tiers[node]
+			var/tier = stored_research.tiers[node.id]
 			LAZYINITLIST(columns["[tier]"])  // String hackery to make the numbers associative
 			columns["[tier]"] += ui_techweb_single_node(node, minimal=(tier != 1))
 			max_tier = max(max_tier, tier)
 
 		l += "<table><tr><th align='left'>Researched</th><th align='left'>Available</th><th align='left'>Future</th></tr><tr>[RDSCREEN_NOBREAK]"
-		for(var/tier in 0 to max_tier)
-			l += "<td valign='top'>[RDSCREEN_NOBREAK]"
-			l += columns["[tier]"]
-			l += "</td>[RDSCREEN_NOBREAK]"
+		if(max_tier)
+			for(var/tier in 0 to max_tier)
+				l += "<td valign='top'>[RDSCREEN_NOBREAK]"
+				l += columns["[tier]"]
+				l += "</td>[RDSCREEN_NOBREAK]"
 		l += "</tr></table>[RDSCREEN_NOBREAK]"
 	else
 		var/list/avail = list()			//This could probably be optimized a bit later.
@@ -778,8 +779,8 @@ Nothing else in the console has ID requirements.
 	for(var/M in all_mats)
 		l += "* [CallMaterialName(M)] x [all_mats[M]]"
 	l += "Unlocked by:"
-	for (var/node in selected_design.unlocked_by)
-		l += ui_techweb_single_node(node)
+	for (var/i in selected_design.unlocked_by)
+		l += ui_techweb_single_node(SSresearch.techweb_node_by_id(i))
 	l += "[RDSCREEN_NOBREAK]</div>"
 	return l
 

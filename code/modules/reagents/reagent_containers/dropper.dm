@@ -20,8 +20,8 @@
 			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
 
-		if(!target.is_injectable())
-			to_chat(user, "<span class='warning'>You cannot directly fill [target]!</span>")
+		if(!target.is_injectable(user))
+			to_chat(user, "<span class='warning'>You cannot transfer reagents to [target]!</span>")
 			return
 
 		var/trans = 0
@@ -31,23 +31,14 @@
 			if(ishuman(target))
 				var/mob/living/carbon/human/victim = target
 
-				var/obj/item/safe_thing = null
-				if(victim.wear_mask)
-					if(victim.wear_mask.flags_cover & MASKCOVERSEYES)
-						safe_thing = victim.wear_mask
-				if(victim.head)
-					if(victim.head.flags_cover & MASKCOVERSEYES)
-						safe_thing = victim.head
-				if(victim.glasses)
-					if(!safe_thing)
-						safe_thing = victim.glasses
+				var/obj/item/safe_thing = victim.is_eyes_covered()
 
 				if(safe_thing)
 					if(!safe_thing.reagents)
 						safe_thing.create_reagents(100)
 
 					reagents.reaction(safe_thing, TOUCH, fraction)
-					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this)
+					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this, transfered_by = user)
 
 					target.visible_message("<span class='danger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>", \
 											"<span class='userdanger'>[user] tries to squirt something into [target]'s eyes, but fails!</span>")
@@ -71,13 +62,13 @@
 					R += num2text(A.volume) + "),"
 			log_combat(user, M, "squirted", R)
 
-		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		trans = src.reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
 		update_icon()
 
 	else
 
-		if(!target.is_drawable(FALSE)) //No drawing from mobs here
+		if(!target.is_drawable(user, FALSE)) //No drawing from mobs here
 			to_chat(user, "<span class='notice'>You cannot directly remove reagents from [target].</span>")
 			return
 
@@ -85,7 +76,7 @@
 			to_chat(user, "<span class='warning'>[target] is empty!</span>")
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the solution.</span>")
 

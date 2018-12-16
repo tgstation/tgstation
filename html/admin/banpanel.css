@@ -1,0 +1,182 @@
+.column {
+    float: left;
+    flex-wrap: wrap;
+}
+
+.left {
+    width: 280px;
+}
+
+.middle {
+    width: 80px;
+}
+
+.right {
+    width: 150px;
+}
+
+.row:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.reason {
+    resize: none;
+    min-height: 40px;
+    width: 340px;
+}
+
+.rolegroup {
+    padding: 3px;
+    width: 430px;
+    border: none;
+    text-align: center;
+    outline: none;
+    display: inline-block;
+}
+
+.long {
+    width: 860px;
+}
+
+.content {
+    text-align: center;
+}
+
+.command {
+    background-color: #948f02;
+}
+
+.security {
+    background-color: #a30000;
+}
+
+.engineering {
+    background-color: #fb5613;
+}
+
+.medical {
+    background-color: #337296;
+}
+
+.science {
+    background-color: #993399;
+}
+
+.supply {
+    background-color: #a8732b;
+}
+
+.silicon {
+    background-color: #ff00ff;
+}
+
+.civilian {
+    background-color: #6eaa2c;
+}
+
+.ghostandotherroles {
+    background-color: #5c00e6;
+}
+
+.antagonistpositions {
+    background-color: #6d3f40;
+}
+
+.inputlabel {
+    position: relative;
+    display: inline;
+    cursor: pointer;
+    padding-left: 20px;
+}
+
+.inputlabel input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.inputbox {
+    position: absolute;
+    top: 0px;
+    left: 4px;
+    width: 14px;
+    height: 14px;
+    background: #e6e6e6;
+}
+
+.radio .inputbox {
+    border-radius: 50%;
+}
+
+.inputlabel:hover input ~ .inputbox {
+    background: #b4b4b4;
+}
+
+.inputlabel input:checked ~ .inputbox {
+    background: #2196F3;
+}
+
+.inputlabel:hover input:not([disabled]):checked ~ .inputbox{
+    background: #0a6ebd;
+}
+
+.inputlabel input:disabled ~ .inputbox {
+    pointer-events: none;
+    background: #838383;
+}
+
+.banned {
+    background: #ff4e4e;
+}
+
+.inputlabel:hover input ~ .banned {
+    background: #ff0000;
+}
+
+.inputlabel input:checked ~ .banned {
+    background: #a80000;
+}
+
+.inputlabel:hover input:not([disabled]):checked ~ .banned{
+    background: #810000;
+}
+
+.inputbox:after {
+    position: absolute;
+    display: none;
+    content: '';
+}
+
+.inputlabel input:checked ~ .inputbox:after {
+    display: block;
+}
+
+.checkbox .inputbox:after {
+    top: 1px;
+    left: 5px;
+    width: 3px;
+    height: 9px;
+    transform: rotate(45deg);
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+}
+
+.radio .inputbox:after {
+    top: 4px;
+    left: 4px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.select {
+    position: relative;
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}

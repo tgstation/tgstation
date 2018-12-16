@@ -98,9 +98,6 @@
 "aw" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"ax" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Emergency Shuttle Airlock"
@@ -365,13 +362,13 @@ aa
 aa
 "}
 (2,1,1) = {"
-ae
+aw
 ae
 ad
 ac
 ae
 ad
-ax
+aw
 ai
 aD
 UA
@@ -557,13 +554,13 @@ bc
 be
 "}
 (10,1,1) = {"
-ae
+aw
 ae
 ad
 ac
 ae
 ad
-ax
+aw
 ai
 aE
 UA

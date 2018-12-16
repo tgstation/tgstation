@@ -35,4 +35,6 @@
 		return
 	if(!L.client) //Only sentient people are going along with it!
 		return
+	if(L.movement_type & FLYING)
+		return
 	L.adjustFireLoss(3)

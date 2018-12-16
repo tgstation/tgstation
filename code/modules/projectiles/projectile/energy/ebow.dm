@@ -4,7 +4,7 @@
 	damage = 8
 	damage_type = TOX
 	nodamage = 0
-	knockdown = 100
+	paralyze = 100
 	stutter = 5
 
 /obj/item/projectile/energy/bolt/halloween

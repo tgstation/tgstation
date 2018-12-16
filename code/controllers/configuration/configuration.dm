@@ -227,11 +227,12 @@
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
-				mode_reports[M.config_tag] = M.generate_report()
+				mode_reports[M.report_type] = M.generate_report()
 				if(probabilities[M.config_tag]>0)
-					mode_false_report_weight[M.config_tag] = M.false_report_weight
+					mode_false_report_weight[M.report_type] = M.false_report_weight
 				else
-					mode_false_report_weight[M.config_tag] = 1
+					//"impossible" modes will still falsly show up occasionally, else they'll stick out like a sore thumb if an admin decides to force a disabled gamemode.
+					mode_false_report_weight[M.report_type] = min(1, M.false_report_weight)
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)

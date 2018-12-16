@@ -115,7 +115,7 @@
 		              /obj/item/clothing/head/powdered_wig = 1,
 		              /obj/item/gun/magic/wand = 2,
 		              /obj/item/clothing/glasses/sunglasses/garb = 2,
-		              /obj/item/clothing/glasses/sunglasses/blindfold = 1,
+		              /obj/item/clothing/glasses/blindfold = 1,
 		              /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 		           /obj/item/clothing/head/pirate/captain = 2,
@@ -128,8 +128,8 @@
 		           /obj/item/skub = 1,)
 
 	refill_canister = /obj/item/vending_refill/autodrobe
-	default_price = 100
-	extra_price = 200
+	default_price = 50
+	extra_price = 75
 	payment_department = ACCOUNT_SRV
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."

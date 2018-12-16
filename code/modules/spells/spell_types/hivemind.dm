@@ -7,6 +7,7 @@
 	action_icon_state = "spell_default"
 	clothes_req = 0
 	human_req = 1
+	antimagic_allowed = TRUE
 	range = 0 //SNOWFLAKE, 0 is unlimited for target_external=0 spells
 	var/target_external = 0 //Whether or not we select targets inside or outside of the hive
 
@@ -166,7 +167,6 @@
 				else
 					power *= 3
 		if(power > 50 && user.z == target.z)
-			to_chat(target, "<span class='userdanger'>You feel a sharp pain, and a foreign presence in your mind!!</span>")
 			to_chat(user, "<span class='notice'>We have overloaded the vessel for a short time!</span>")
 			target.Jitter(round(power/10))
 			target.Unconscious(power)
@@ -194,7 +194,6 @@
 	if(!hive)
 		return
 	var/iterations = 0
-	var/power = 5
 
 	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getBrainLoss())
 		to_chat(user, "<span class='notice'>We cannot heal ourselves any more with this power!</span>")
@@ -202,17 +201,17 @@
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
 	while(iterations < 7)
 		var/mob/living/carbon/human/target = pick(hive.hivemembers)
-		if(!target)
-			break
 		if(!do_mob(user,user,15))
 			to_chat(user, "<span class='warning'>Our concentration has been broken!</span>")
 			break
+		if(!target)
+			to_chat(user, "<span class='warning'>We have run out of vessels to drain.</span>")
+			break
 		target.adjustBrainLoss(5)
-		power = max(5-(round(get_dist(user, target)/40)),2)
 		if(user.getBruteLoss() > user.getFireLoss())
-			user.heal_ordered_damage(power, list(CLONE, BRUTE, BURN))
+			user.heal_ordered_damage(5, list(CLONE, BRUTE, BURN))
 		else
-			user.heal_ordered_damage(power, list(CLONE, BURN, BRUTE))
+			user.heal_ordered_damage(5, list(CLONE, BURN, BRUTE))
 		if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss()) //If we don't have any of these, stop looping
 			to_chat(user, "<span class='warning'>We finish our healing</span>")
 			break
@@ -449,7 +448,7 @@
 	if(power < 10 || target.z != user.z)
 		to_chat(user, "<span class='notice'>We are too far away from [target.name] to affect them!</span>")
 		return
-	to_chat(user, "<span class='notice'>We succesfuly distort reality surrounding [target.name]!</span>")
+	to_chat(user, "<span class='notice'>We successfully distort reality surrounding [target.name]!</span>")
 	switch(hive.hive_size)
 		if(5 to 9)
 		if(10 to 14)

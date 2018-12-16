@@ -7,17 +7,39 @@
 	var/wet
 
 	var/footstep = null
+	var/barefootstep = null
+	var/clawfootstep = null
+	var/heavyfootstep = null
 
 /turf/open/ComponentInitialize()
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
 
+//direction is direction of travel of A
+/turf/open/zPassIn(atom/movable/A, direction, turf/source)
+	return (direction == DOWN)
+
+//direction is direction of travel of A
+/turf/open/zPassOut(atom/movable/A, direction, turf/destination)
+	return (direction == UP)
+
+//direction is direction of travel of air
+/turf/open/zAirIn(direction, turf/source)
+	return (direction == DOWN)
+
+//direction is direction of travel of air
+/turf/open/zAirOut(direction, turf/source)
+	return (direction == UP)
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
 	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = TRUE
 
 /turf/open/indestructible/Melt()
@@ -33,6 +55,9 @@
 /turf/open/indestructible/sound
 	name = "squeaky floor"
 	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 	var/sound
 
 /turf/open/indestructible/sound/Entered(var/mob/AM)
@@ -48,6 +73,9 @@
 	baseturfs = /turf/open/indestructible/necropolis
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	footstep = FOOTSTEP_LAVA
+	barefootstep = FOOTSTEP_LAVA
+	clawfootstep = FOOTSTEP_LAVA
+	heavyfootstep = FOOTSTEP_LAVA
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/necropolis/Initialize()
@@ -56,7 +84,7 @@
 		icon_state = "necro[rand(2,3)]"
 
 /turf/open/indestructible/necropolis/air
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/indestructible/boss //you put stone tiles on this and use it as a base
 	name = "necropolis floor"
@@ -66,7 +94,7 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
 /turf/open/indestructible/boss/air
-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 /turf/open/indestructible/hierophant
 	icon = 'icons/turf/floors/hierophant_floor.dmi'
@@ -85,6 +113,9 @@
 	desc = "A floor made of invulnerable notebook paper."
 	icon_state = "paperfloor"
 	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 	tiled_dirt = FALSE
 
 /turf/open/indestructible/binary
@@ -93,6 +124,9 @@
 	baseturfs = /turf/open/indestructible/binary
 	icon_state = "binary"
 	footstep = null
+	barefootstep = null
+	clawfootstep = null
+	heavyfootstep = null
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
@@ -105,6 +139,9 @@
 	icon_state = "reebe"
 	baseturfs = /turf/open/indestructible/clock_spawn_room
 	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/indestructible/clock_spawn_room/Entered()
 	..()
@@ -136,43 +173,14 @@
 	update_visuals()
 
 	current_cycle = times_fired
-
-	//cache some vars
-	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-
-	for(var/direction in GLOB.cardinals)
-		var/turf/open/enemy_tile = get_step(src, direction)
-		if(!istype(enemy_tile))
-			if (atmos_adjacent_turfs)
-				atmos_adjacent_turfs -= enemy_tile
-			continue
+	CalculateAdjacentTurfs()
+	for(var/i in atmos_adjacent_turfs)
+		var/turf/open/enemy_tile = i
 		var/datum/gas_mixture/enemy_air = enemy_tile.return_air()
-
-		//only check this turf, if it didn't check us when it was initalized
-		if(enemy_tile.current_cycle < times_fired)
-			if(CANATMOSPASS(src, enemy_tile))
-				LAZYINITLIST(atmos_adjacent_turfs)
-				LAZYINITLIST(enemy_tile.atmos_adjacent_turfs)
-				atmos_adjacent_turfs[enemy_tile] = TRUE
-				enemy_tile.atmos_adjacent_turfs[src] = TRUE
-			else
-				if (atmos_adjacent_turfs)
-					atmos_adjacent_turfs -= enemy_tile
-				if (enemy_tile.atmos_adjacent_turfs)
-					enemy_tile.atmos_adjacent_turfs -= src
-				UNSETEMPTY(enemy_tile.atmos_adjacent_turfs)
-				continue
-		else
-			if (!atmos_adjacent_turfs || !atmos_adjacent_turfs[enemy_tile])
-				continue
-
 		if(!excited && air.compare(enemy_air))
 			//testing("Active turf found. Return value of compare(): [is_active]")
 			excited = TRUE
 			SSair.active_turfs |= src
-	UNSETEMPTY(atmos_adjacent_turfs)
-	if (atmos_adjacent_turfs)
-		src.atmos_adjacent_turfs = atmos_adjacent_turfs
 
 /turf/open/proc/GetHeatCapacity()
 	. = air.heat_capacity()
@@ -208,7 +216,7 @@
 			qdel(O)
 	return TRUE
 
-/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube)
+/turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
 	if(C.movement_type & FLYING)
 		return 0
 	if(has_gravity(src))
@@ -218,7 +226,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(C.lying || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
+			if(!(C.mobility_flags & MOBILITY_STAND) || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
@@ -227,16 +235,18 @@
 			playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
 		SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "slipped", /datum/mood_event/slipped)
-		for(var/obj/item/I in C.held_items)
-			C.accident(I)
+		if(force_drop)
+			for(var/obj/item/I in C.held_items)
+				C.accident(I)
 
 		var/olddir = C.dir
 		C.moving_diagonally = 0 //If this was part of diagonal move slipping will stop it.
 		if(!(lube & SLIDE_ICE))
 			C.Knockdown(knockdown_amount)
+			C.Paralyze(paralyze_amount)
 			C.stop_pulling()
 		else
-			C.Stun(20)
+			C.Knockdown(20)
 
 		if(buckled_obj)
 			buckled_obj.unbuckle_mob(C)

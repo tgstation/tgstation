@@ -68,7 +68,7 @@
 	if(current.anti_magic_check())
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 		current.visible_message("<span class='warning'>[current] absorbs the spell, remaining unharmed!</span>", "<span class='userdanger'>You absorb the spell, remaining unharmed!</span>")
-	if(bounces < 1)
+	else if(bounces < 1)
 		current.electrocute_act(bolt_energy,"Lightning Bolt",safety=1)
 		playsound(get_turf(current), 'sound/magic/lightningshock.ogg', 50, 1, -1)
 	else

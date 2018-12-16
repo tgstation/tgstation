@@ -9,7 +9,7 @@
 	health = 25
 	maxHealth = 25
 	radio_key = /obj/item/encryptionkey/headset_service
-	radio_channel = "Service" //Service
+	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = CLEAN_BOT
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
@@ -86,7 +86,7 @@
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.stat != DEAD && C.lying)
+		if(C.stat != DEAD && !(C.mobility_flags & MOBILITY_STAND))
 			return C
 	else if(is_type_in_typecache(A, target_types))
 		return A
@@ -155,7 +155,7 @@
 			else
 				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
 			path = list()
-		
+
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
@@ -179,10 +179,10 @@
 		/obj/effect/decal/cleanable/robot_debris,
 		/obj/effect/decal/cleanable/crayon,
 		/obj/effect/decal/cleanable/molten_object,
-		/obj/effect/decal/cleanable/tomato_smudge,
-		/obj/effect/decal/cleanable/egg_smudge,
-		/obj/effect/decal/cleanable/pie_smudge,
-		/obj/effect/decal/cleanable/flour,
+		/obj/effect/decal/cleanable/food/tomato_smudge,
+		/obj/effect/decal/cleanable/food/egg_smudge,
+		/obj/effect/decal/cleanable/food/pie_smudge,
+		/obj/effect/decal/cleanable/food/flour,
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,

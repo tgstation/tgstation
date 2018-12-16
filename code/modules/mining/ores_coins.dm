@@ -99,18 +99,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	recipes = GLOB.sand_recipes
 	. = ..()
 
-/obj/item/stack/ore/glass/throw_impact(atom/hit_atom)
+/obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
 		return
 	var/mob/living/carbon/human/C = hit_atom
-	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
-		return
-	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
-		return
-	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+	if(C.is_eyes_covered())
+		C.visible_message("<span class='danger'>[C]'s eye protection blocks the sand!</span>", "<span class='warning'>Your eye protection blocks the sand!</span>")
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
@@ -322,6 +316,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/value = 1
 	var/coinflip
 
+/obj/item/coin/get_item_credit_value()
+	return value
+
 /obj/item/coin/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
 	if (!attack_self(user))
@@ -353,7 +350,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "gold coin"
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
-	value = 50
+	value = 25
 	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list("gold" = 4)
 
@@ -361,7 +358,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "silver coin"
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
-	value = 20
+	value = 10
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list("silver" = 4)
 
@@ -369,7 +366,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "diamond coin"
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
-	value = 500
+	value = 100
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list("carbon" = 4)
 
@@ -385,7 +382,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "plasma coin"
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
-	value = 100
+	value = 40
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list("plasma" = 4)
 
@@ -393,7 +390,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "uranium coin"
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
-	value = 80
+	value = 25
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list("uranium" = 4)
 
@@ -401,7 +398,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
-	value = 1000 //makes the clown cry
+	value = 200 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
 	grind_results = list("banana" = 4)
 
@@ -409,13 +406,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "adamantine coin"
 	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
-	value = 1500
+	value = 100
 
 /obj/item/coin/mythril
 	name = "mythril coin"
 	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
-	value = 3000
+	value = 300
 
 /obj/item/coin/twoheaded
 	cmineral = "iron"

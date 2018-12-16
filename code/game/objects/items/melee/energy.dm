@@ -139,6 +139,11 @@
 	sharpness = IS_SHARP
 	light_color = "#40ceff"
 
+/obj/item/melee/transforming/energy/sword/cyborg/saw/cyborg_unequip(mob/user)
+	if(!active)
+		return
+	transform_weapon(user, TRUE)
+
 /obj/item/melee/transforming/energy/sword/cyborg/saw/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
 

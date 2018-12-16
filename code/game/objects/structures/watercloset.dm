@@ -131,9 +131,9 @@
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
-/obj/structure/urinal/New()
-	..()
-	hiddenitem = new /obj/item/reagent_containers/food/urinalcake
+/obj/structure/urinal/Initialize()
+	. = ..()
+	hiddenitem = new /obj/item/reagent_containers/food/snacks/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
 	. = ..()
@@ -193,15 +193,16 @@
 	return TRUE
 
 
-/obj/item/reagent_containers/food/urinalcake
+/obj/item/reagent_containers/food/snacks/urinalcake
 	name = "urinal cake"
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "urinalcake"
 	w_class = WEIGHT_CLASS_TINY
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
+	foodtype = TOXIC | GROSS
 
-/obj/item/reagent_containers/food/urinalcake/attack_self(mob/living/user)
+/obj/item/reagent_containers/food/snacks/urinalcake/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] squishes [src]!</span>", "<span class='notice'>You squish [src].</span>", "<i>You hear a squish.</i>")
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
@@ -348,56 +349,52 @@
 		check_heat(M)
 		for(var/obj/item/I in M.held_items)
 			wash_obj(I)
-		if(M.back)
-			if(wash_obj(M.back))
-				M.update_inv_back(0)
+
+		if(M.back && wash_obj(M.back))
+			M.update_inv_back(0)
+
+		var/list/obscured = M.check_obscured_slots()
+
+		if(M.head && wash_obj(M.head))
+			M.update_inv_head()
+
+		if(M.glasses && !(SLOT_GLASSES in obscured) && wash_obj(M.glasses))
+			M.update_inv_glasses()
+
+		if(M.wear_mask && !(SLOT_WEAR_MASK in obscured) && wash_obj(M.wear_mask))
+			M.update_inv_wear_mask()
+
+		if(M.ears && !(HIDEEARS in obscured) && wash_obj(M.ears))
+			M.update_inv_ears()
+
+		if(M.wear_neck && !(SLOT_NECK in obscured) && wash_obj(M.wear_neck))
+			M.update_inv_neck()
+
+		if(M.shoes && !(HIDESHOES in obscured) && wash_obj(M.shoes))
+			M.update_inv_shoes()
+
+		var/washgloves = FALSE
+		if(M.gloves && !(HIDEGLOVES in obscured))
+			washgloves = TRUE
+
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/washgloves = TRUE
-			var/washshoes = TRUE
-			var/washmask = TRUE
-			var/washears = TRUE
-			var/washglasses = TRUE
 
-			if(H.wear_suit)
-				washgloves = !(H.wear_suit.flags_inv & HIDEGLOVES)
-				washshoes = !(H.wear_suit.flags_inv & HIDESHOES)
-
-			if(H.head)
-				washmask = !(H.head.flags_inv & HIDEMASK)
-				washglasses = !(H.head.flags_inv & HIDEEYES)
-				washears = !(H.head.flags_inv & HIDEEARS)
-
-			if(H.wear_mask)
-				if (washears)
-					washears = !(H.wear_mask.flags_inv & HIDEEARS)
-				if (washglasses)
-					washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
-
-			if(H.head && wash_obj(H.head))
-				H.update_inv_head()
 			if(H.wear_suit && wash_obj(H.wear_suit))
 				H.update_inv_wear_suit()
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
+
 			if(washgloves)
 				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-			if(H.shoes && washshoes && wash_obj(H.shoes))
-				H.update_inv_shoes()
-			if(H.wear_mask && washmask && wash_obj(H.wear_mask))
-				H.update_inv_wear_mask()
-			else
+
+			if(!H.is_mouth_covered())
 				H.lip_style = null
 				H.update_body()
-			if(H.glasses && washglasses && wash_obj(H.glasses))
-				H.update_inv_glasses()
-			if(H.ears && washears && wash_obj(H.ears))
-				H.update_inv_ears()
+
 			if(H.belt && wash_obj(H.belt))
 				H.update_inv_belt()
 		else
-			if(M.wear_mask && wash_obj(M.wear_mask))
-				M.update_inv_wear_mask(0)
 			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 	else
 		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
@@ -521,7 +518,7 @@
 			if(B.cell.charge > 0 && B.status == 1)
 				flick("baton_active", src)
 				var/stunforce = B.stunforce
-				user.Knockdown(stunforce)
+				user.Paralyze(stunforce)
 				user.stuttering = stunforce/20
 				B.deductcharge(B.hitcost)
 				user.visible_message("<span class='warning'>[user] shocks [user.p_them()]self while attempting to wash the active [B.name]!</span>", \

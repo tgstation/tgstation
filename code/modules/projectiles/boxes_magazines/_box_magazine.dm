@@ -105,19 +105,21 @@
 /obj/item/ammo_box/attack_self(mob/user)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
-		if(!user.put_in_hands(A))
+		A.forceMove(drop_location())
+		if(!user.is_holding(src) || !user.put_in_hands(A))	//incase they're using TK
 			A.bounce_away(FALSE, NONE)
-		playsound(src, 'sound/weapons/bulletinsert.ogg', 60, 1)
-		to_chat(user, "<span class='notice'>You remove a round from \the [src]!</span>")
+		playsound(src, 'sound/weapons/bulletinsert.ogg', 60, TRUE)
+		to_chat(user, "<span class='notice'>You remove a round from [src]!</span>")
 		update_icon()
 
 /obj/item/ammo_box/update_icon()
+	var/shells_left = stored_ammo.len
 	switch(multiple_sprites)
 		if(1)
-			icon_state = "[initial(icon_state)]-[stored_ammo.len]"
+			icon_state = "[initial(icon_state)]-[shells_left]"
 		if(2)
-			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
-	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
+			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
+	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
 	for (var/material in bullet_cost)
 		var/material_amount = bullet_cost[material]
 		material_amount = (material_amount*stored_ammo.len) + base_cost[material]

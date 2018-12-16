@@ -28,6 +28,9 @@
 		if(!hand_items.len)
 			to_chat(M, "<span class='caution'>You must hold an item you wish to make your phylactery...</span>")
 			return
+		if(!M.mind.hasSoul)
+			to_chat(user, "<span class='caution'>You do not possess a soul.</span>")
+			return
 
 		var/obj/item/marked_item
 
@@ -57,6 +60,7 @@
 		new /obj/item/phylactery(marked_item, M.mind)
 
 		to_chat(M, "<span class='userdanger'>With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!</span>")
+		M.mind.hasSoul = FALSE
 		M.set_species(/datum/species/skeleton)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -135,7 +139,7 @@
 	lich.hardset_dna(null,null,lich.real_name,null, new /datum/species/skeleton)
 	to_chat(lich, "<span class='warning'>Your bones clatter and shudder as you are pulled back into this world!</span>")
 	var/turf/body_turf = get_turf(old_body)
-	lich.Knockdown(200 + 200*resurrections)
+	lich.Paralyze(200 + 200*resurrections)
 	resurrections++
 	if(old_body && old_body.loc)
 		if(iscarbon(old_body))

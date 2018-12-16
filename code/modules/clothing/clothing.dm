@@ -20,8 +20,6 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-	var/obj/item/flashlight/F = null
-	var/can_flashlight = 0
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 	var/clothing_flags = NONE
@@ -110,6 +108,7 @@
 
 /obj/item/clothing/examine(mob/user)
 	..()
+	clothing_resistance_flag_examine_message(user)
 	if(damaged_clothes)
 		to_chat(user,  "<span class='warning'>It looks damaged!</span>")
 	GET_COMPONENT(pockets, /datum/component/storage)

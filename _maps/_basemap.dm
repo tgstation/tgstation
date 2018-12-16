@@ -10,6 +10,7 @@
 		#include "map_files\MetaStation\MetaStation.dmm"
 		#include "map_files\PubbyStation\PubbyStation.dmm"
 		#include "map_files\BoxStation\BoxStation.dmm"
+		#include "map_files\Donutstation\Donutstation.dmm"
 		#include "map_files\BirdStation\BirdStation2.dmm"
 
 		#ifdef TRAVISBUILDING

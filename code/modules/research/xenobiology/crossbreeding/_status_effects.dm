@@ -57,6 +57,156 @@
 	owner.visible_message("<span class='warning'>[owner]'s gel coating liquefies and dissolves away.</span>",
 		"<span class='notice'>Your gel second-skin dissolves!</span>")
 
+/datum/status_effect/slimerecall
+	id = "slime_recall"
+	duration = -1 //Will be removed by the extract.
+	alert_type = null
+	var/interrupted = FALSE
+	var/mob/target
+	var/icon/bluespace
+	var/datum/weakref/redirect_component
+
+/datum/status_effect/slimerecall/on_apply()
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/resistField))))
+	to_chat(owner, "<span class='danger'>You feel a sudden tug from an unknown force, and feel a pull to bluespace!</span>")
+	to_chat(owner, "<span class='notice'>Resist if you wish avoid the force!</span>")
+	bluespace = icon('icons/effects/effects.dmi',"chronofield")
+	owner.add_overlay(bluespace)
+	return ..()
+
+/datum/status_effect/slimerecall/proc/resistField()
+	interrupted = TRUE
+	owner.remove_status_effect(src)
+/datum/status_effect/slimerecall/on_remove()
+	qdel(redirect_component.resolve())
+	redirect_component = null
+	owner.cut_overlay(bluespace)
+	if(interrupted || !ismob(target))
+		to_chat(owner, "<span class='warning'>The bluespace tug fades away, and you feel that the force has passed you by.</span>")
+		return
+	owner.visible_message("<span class='warning'>[owner] disappears in a flurry of sparks!</span>",
+		"<span class='warning'>The unknown force snatches briefly you from reality, and deposits you next to [target]!</span>")
+	do_sparks(3, TRUE, owner)
+	owner.forceMove(target.loc)
+
+/obj/screen/alert/status_effect/freon/stasis
+	desc = "You're frozen inside of a protective ice cube! While inside, you can't do anything, but are immune to harm! Resist to get out."
+
+/datum/status_effect/frozenstasis
+	id = "slime_frozen"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1 //Will remove self when block breaks.
+	alert_type = /obj/screen/alert/status_effect/freon/stasis
+	var/obj/structure/ice_stasis/cube
+	var/datum/weakref/redirect_component
+
+/datum/status_effect/frozenstasis/on_apply()
+	redirect_component = WEAKREF(owner.AddComponent(/datum/component/redirect, list(COMSIG_LIVING_RESIST = CALLBACK(src, .proc/breakCube))))
+	cube = new /obj/structure/ice_stasis(get_turf(owner))
+	owner.forceMove(cube)
+	owner.status_flags |= GODMODE
+	return ..()
+
+/datum/status_effect/frozenstasis/tick()
+	if(!cube || owner.loc != cube)
+		owner.remove_status_effect(src)
+
+/datum/status_effect/frozenstasis/proc/breakCube()
+	owner.remove_status_effect(src)
+
+/datum/status_effect/frozenstasis/on_remove()
+	if(cube)
+		qdel(cube)
+	owner.status_flags &= ~GODMODE
+	qdel(redirect_component.resolve())
+	redirect_component = null
+
+/datum/status_effect/slime_clone
+	id = "slime_cloned"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1
+	alert_type = null
+	var/mob/living/clone
+	var/datum/mind/originalmind //For when the clone gibs.
+
+/datum/status_effect/slime_clone/on_apply()
+	var/typepath = owner.type
+	clone = new typepath(owner.loc)
+	var/mob/living/carbon/O = owner
+	var/mob/living/carbon/C = clone
+	if(istype(C) && istype(O))
+		C.real_name = O.real_name
+		O.dna.transfer_identity(C)
+		C.updateappearance(mutcolor_update=1)
+	if(owner.mind)
+		originalmind = owner.mind
+		owner.mind.transfer_to(clone)
+	clone.apply_status_effect(/datum/status_effect/slime_clone_decay)
+	return ..()
+
+/datum/status_effect/slime_clone/tick()
+	if(!istype(clone) || clone.stat != CONSCIOUS)
+		owner.remove_status_effect(src)
+
+/datum/status_effect/slime_clone/on_remove()
+	if(clone && clone.mind && owner)
+		clone.mind.transfer_to(owner)
+	else
+		if(owner && originalmind)
+			originalmind.transfer_to(owner)
+			if(originalmind.key)
+				owner.ckey = originalmind.key
+	if(clone)
+		clone.unequip_everything()
+		qdel(clone)
+
+/obj/screen/alert/status_effect/clone_decay
+	name = "Clone Decay"
+	desc = "You are simply a construct, and cannot maintain this form forever. You will be returned to your original body if you should fall."
+	icon_state = "slime_clonedecay"
+
+/datum/status_effect/slime_clone_decay
+	id = "slime_clonedecay"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1
+	alert_type = /obj/screen/alert/status_effect/clone_decay
+
+/datum/status_effect/slime_clone_decay/tick()
+	owner.adjustToxLoss(1, 0)
+	owner.adjustOxyLoss(1, 0)
+	owner.adjustBruteLoss(1, 0)
+	owner.adjustFireLoss(1, 0)
+	owner.color = "#007BA7"
+
+/obj/screen/alert/status_effect/bloodchill
+	name = "Bloodchilled"
+	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
+	icon_state = "bloodchill"
+
+/datum/status_effect/bloodchill
+	id = "bloodchill"
+	duration = 100
+	alert_type = /obj/screen/alert/status_effect/bloodchill
+
+/datum/status_effect/bloodchill/on_apply()
+	owner.add_movespeed_modifier("bloodchilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	return ..()
+
+/datum/status_effect/bloodchill/tick()
+	if(prob(50))
+		owner.adjustFireLoss(2)
+
+/datum/status_effect/bloodchill/on_remove()
+	owner.remove_movespeed_modifier("bloodchilled")
+
+/datum/status_effect/rebreathing
+	id = "rebreathing"
+	duration = -1
+	alert_type = null
+
+datum/status_effect/rebreathing/tick()
+	owner.adjustOxyLoss(-6, 0) //Just a bit more than normal breathing.
+
 ///////////////////////////////////////////////////////
 //////////////////CONSUMING EXTRACTS///////////////////
 ///////////////////////////////////////////////////////
@@ -197,15 +347,11 @@
 	duration = 30
 
 /datum/status_effect/tarfoot/on_apply()
-	var/mob/living/carbon/human/H = owner
-	if(istype(H))
-		H.physiology.speed_mod += 0.5
+	owner.add_movespeed_modifier(MOVESPEED_ID_TARFOOT, update=TRUE, priority=100, multiplicative_slowdown=0.5, blacklisted_movetypes=(FLYING|FLOATING))
 	return ..()
 
 /datum/status_effect/tarfoot/on_remove()
-	var/mob/living/carbon/human/H = owner
-	if(istype(H))
-		H.physiology.speed_mod -= 0.5
+	owner.remove_movespeed_modifier(MOVESPEED_ID_TARFOOT)
 
 /datum/status_effect/spookcookie
 	id = "spookcookie"
@@ -412,7 +558,9 @@ datum/status_effect/stabilized/blue/on_remove()
 	if(istype(F))
 		if(F.cooked_type)
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
-			F.microwave_act()
+			var/obj/item/result = F.microwave_act()
+			if(istype(result))
+				owner.put_in_hands(result)
 	else
 		I.attackby(fire, owner)
 	return ..()
@@ -502,7 +650,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		if(!F)
 			F = get_turf(owner)
 			range = 50
-		if(do_teleport(owner, F, range))
+		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
 			to_chat(owner, "<span class='notice'>[linked_extract] will take some time to re-align you on the bluespace axis.</span>")
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
@@ -517,20 +665,15 @@ datum/status_effect/stabilized/blue/on_remove()
 /datum/status_effect/stabilized/sepia/tick()
 	if(prob(50) && mod > -1)
 		mod--
-		var/mob/living/carbon/human/H = owner
-		if(istype(H))
-			H.physiology.speed_mod--
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	else if(mod < 1)
 		mod++
-		var/mob/living/carbon/human/H = owner
-		if(istype(H))
-			H.physiology.speed_mod++
+		// yeah a value of 0 does nothing but replacing the trait in place is cheaper than removing and adding repeatedly
+		owner.add_movespeed_modifier(MOVESPEED_ID_SEPIA, update=TRUE, priority=100, multiplicative_slowdown=0, blacklisted_movetypes=(FLYING|FLOATING))
 	return ..()
 
 /datum/status_effect/stabilized/sepia/on_remove()
-	var/mob/living/carbon/human/H = owner
-	if(istype(H))
-		H.physiology.speed_mod += -mod //Reset the changes.
+	owner.remove_movespeed_modifier(MOVESPEED_ID_SEPIA)
 
 /datum/status_effect/stabilized/cerulean
 	id = "stabilizedcerulean"
@@ -726,7 +869,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			healing_types += CLONE
 
 		owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
-		owner.nutrition += 3
+		owner.adjust_nutrition(3)
 		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
 	else
 		messagedelivered = FALSE
@@ -738,7 +881,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "light pink"
 
 /datum/status_effect/stabilized/lightpink/on_apply()
-	owner.add_trait(TRAIT_GOTTAGOFAST,"slimestatus")
+	owner.add_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick()
@@ -749,7 +892,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/on_remove()
-	owner.remove_trait(TRAIT_GOTTAGOFAST,"slimestatus")
+	owner.remove_movespeed_modifier(MOVESPEED_ID_SLIME_STATUS)
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"

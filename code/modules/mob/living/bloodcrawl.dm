@@ -47,7 +47,7 @@
 	var/turf/mobloc = get_turf(src.loc)
 
 	src.visible_message("<span class='warning'>[src] sinks into the pool of blood!</span>")
-	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
+	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 50, 1, -1)
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
 	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(mobloc)
@@ -98,7 +98,7 @@
 		sound = 'sound/magic/demon_consume.ogg'
 
 	for(var/i in 1 to 3)
-		playsound(get_turf(src),sound, 100, 1)
+		playsound(get_turf(src),sound, 50, 1)
 		sleep(30)
 
 	if(!victim)
@@ -138,10 +138,10 @@
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	item_flags = NODROP | ABSTRACT
+	item_flags = NODROP | ABSTRACT | DROPDEL
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
-	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
+	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 50, 1, -1)
 	//Makes the mob have the color of the blood pool it came out of
 	var/newcolor = rgb(149, 10, 10)
 	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
