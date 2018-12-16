@@ -11,6 +11,7 @@
 	item_flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	movement_type = FLYING
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
@@ -98,10 +99,11 @@
 	var/drowsy = 0
 	var/stamina = 0
 	var/jitter = 0
-	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+
+	var/temporary_unstoppable_movement = FALSE
 
 /obj/item/projectile/Initialize()
 	. = ..()
@@ -243,20 +245,14 @@
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
 
-	var/turf/target_turf = get_turf(A)
-
 	if(!prehit(A))
-		if(forcedodge)
-			trajectory_ignore_forcemove = TRUE
-			forceMove(target_turf)
-			trajectory_ignore_forcemove = FALSE
 		return FALSE
 
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
-	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
-		trajectory_ignore_forcemove = TRUE
-		forceMove(target_turf)
-		trajectory_ignore_forcemove = FALSE
+	if(permutation == -1)	// the bullet passes through a dense object!
+		if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
+			temporary_unstoppable_movement = TRUE
+			ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
 		if(A)
 			permutated.Add(A)
 		return FALSE
@@ -266,8 +262,14 @@
 			if(!prehit(alt))
 				return FALSE
 			alt.bullet_act(src, def_zone)
-	qdel(src)
+	if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
+		qdel(src)
 	return TRUE
+
+/obj/item/projectile/Move()
+	. = ..()
+	if(temporary_unstoppable_movement)
+		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
 
 /obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
 	if(!A || !A.density || (A.flags_1 & ON_BORDER_1) || ismob(A) || A == original)	//if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
@@ -313,7 +315,7 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return getline(current, ending)
 
-/obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
+/obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
 /obj/item/projectile/process()
