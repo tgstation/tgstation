@@ -110,6 +110,14 @@
 /mob/proc/set_drugginess(amount)
 	return
 
+/////////////////////////////////// HYGIENE ////////////////////////////////////
+
+/mob/proc/adjust_hygiene(amount)
+	return
+
+/mob/proc/set_hygiene(amount)
+	return
+
 /////////////////////////////////// GROSSED OUT ////////////////////////////////////
 
 /mob/proc/adjust_disgust(amount)

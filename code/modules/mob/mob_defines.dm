@@ -49,6 +49,7 @@
 	var/jitteriness = 0//Carbon
 	var/nutrition = NUTRITION_LEVEL_START_MIN // randomised in Initialize
 	var/satiety = 0//Carbon
+	var/hygiene = HYGIENE_LEVEL_NORMAL//Human
 
 	var/overeatduration = 0		// How long this guy is overeating //Carbon
 	var/a_intent = INTENT_HELP//Living
