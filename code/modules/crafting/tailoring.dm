@@ -10,8 +10,7 @@
 	name = "Durathread Helmet"
 	result = /obj/item/clothing/head/helmet/durathread
 	reqs = list(/obj/item/stack/sheet/cloth/durathread = 4,
-				/obj/item/stack/sheet/leather = 3,
-				/obj/item/clothing/head/hardhat = 1)
+				/obj/item/stack/sheet/leather = 5)
 	time = 40
 	category = CAT_CLOTHING
 
