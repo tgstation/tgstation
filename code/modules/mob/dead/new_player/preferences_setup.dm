@@ -25,12 +25,10 @@
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
-				preview_icon = icon('icons/mob/ai.dmi', resolve_ai_icon(preferred_ai_core_display), SOUTH)
-				preview_icon.Scale(64, 64)
+				parent.show_character_previews(image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(preferred_ai_core_display), dir = SOUTH))
 				return
 			if(CYBORG)
-				preview_icon = icon('icons/mob/robots.dmi', "robot", SOUTH)
-				preview_icon.Scale(64, 64)
+				parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))
 				return
 
 	// Set up the dummy for its photoshoot
@@ -61,26 +59,13 @@
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
 	COMPILE_OVERLAYS(mannequin)
-	CHECK_TICK
-	preview_icon = icon('icons/effects/effects.dmi', "nothing")
-	preview_icon.Scale(48+32, 16+32)
-	CHECK_TICK
 	mannequin.setDir(NORTH)
-
-	var/icon/stamp = getFlatIcon(mannequin)
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
-	CHECK_TICK
-	mannequin.setDir(WEST)
-	stamp = getFlatIcon(mannequin)
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
-	CHECK_TICK
+	var/mutable_appearance/N = new(mannequin)
 	mannequin.setDir(SOUTH)
-	stamp = getFlatIcon(mannequin)
-	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
-	CHECK_TICK
-	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
-	CHECK_TICK
+	var/mutable_appearance/S = new(mannequin)
+	mannequin.setDir(EAST)
+	var/mutable_appearance/E = new(mannequin)
+	mannequin.setDir(WEST)
+	var/mutable_appearance/W = new(mannequin)
+	parent.show_character_previews(N, S, E, W)
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

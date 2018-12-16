@@ -425,6 +425,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
+	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
@@ -839,3 +840,30 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
+
+/client/proc/show_character_previews(mutable_appearance/north, mutable_appearance/south, mutable_appearance/east, mutable_appearance/west)
+	LAZYCLEARLIST(char_render_holders)
+	if(north)
+		var/obj/screen/objnorth = new
+		objnorth.appearance = north
+		LAZYSET(char_render_holders, TEXT_NORTH, objnorth)
+	if(south)
+		var/obj/screen/objsouth = new
+		objsouth.appearance = north
+		LAZYSET(char_render_holders, TEXT_SOUTH, objsouth)
+	if(east)
+		var/obj/screen/objeast = new
+		objeast.appearance = north
+		LAZYSET(char_render_holders, TEXT_EAST, objeast)
+	if(west)
+		var/obj/screen/objwest = new
+		objwest.appearance = north
+		LAZYSET(char_render_holders, TEXT_WEST, objwest)
+	if(LAZYLEN(char_render_holders))
+		winshow(src, "character_preview_map", TRUE)
+
+/client/proc/hide_character_previews(gc = TRUE)
+	winshow(src, "character_preview_map", FALSE)
+	if(gc)
+		QDEL_LIST_ASSOC(char_render_holders)
+		char_render_holders = null

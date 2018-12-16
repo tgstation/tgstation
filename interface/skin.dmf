@@ -1,5 +1,6 @@
 macro "default"
 
+
 menu "menu"
 	elem 
 		name = "&File"
@@ -45,6 +46,26 @@ menu "menu"
 		category = "&Help"
 		saved-params = "is-checked"
 
+
+window "character_preview_window"
+	elem "character_preview_window"
+		type = MAIN
+		pos = 1086,100
+		size = 160x640
+		anchor1 = none
+		anchor2 = none
+		background-color = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		statusbar = false
+	elem "character_preview_map"
+		type = MAP
+		pos = 0,0
+		size = 160x640
+		anchor1 = 0,0
+		anchor2 = 100,100
+		drop-zone = false
+		saved-params = "zoom;letterbox;zoom-mode"
 
 window "mainwindow"
 	elem "mainwindow"
