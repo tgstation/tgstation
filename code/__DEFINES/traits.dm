@@ -86,6 +86,8 @@
 #define	TRAIT_TAGGER			"tagger"
 #define	TRAIT_PHOTOGRAPHER		"photographer"
 #define	TRAIT_MUSICIAN			"musician"
+#define	TRAIT_NEET				"NEET"
+#define	TRAIT_NEAT				"neat"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

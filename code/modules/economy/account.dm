@@ -5,6 +5,7 @@
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
+	var/welfare = FALSE
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -42,14 +43,25 @@
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
 	if(free)
 		adjust_money(account_job.paycheck * amt_of_paychecks)
+		if(welfare)
+			adjust_money(PAYCHECK_WELFARE * amt_of_paychecks)
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
-			if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
-				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
-				return FALSE
+			if(!welfare)
+				if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
+					bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
+					return FALSE
+				else
+					bank_card_talk("Payday processed, account now holds $[account_balance].")
+
 			else
-				bank_card_talk("Payday processed, account now holds $[account_balance].")
+				if(!transfer_money(D, account_job.paycheck * amt_of_paychecks + PAYCHECK_WELFARE * amt_of_paychecks))
+					bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
+					return FALSE
+				else
+					bank_card_talk("Payday processed, account now holds $[account_balance]. $[PAYCHECK_WELFARE] extra was received as social welfare.")
+				
 				return TRUE
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
