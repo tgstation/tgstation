@@ -12,6 +12,7 @@
 	var/force_replace = 0 // Can forcefully replace other pins.
 	var/pin_removeable = 0 // Can be replaced by any pin.
 	var/obj/item/gun/gun
+	var/cant_be_craft_removed = 0
 
 
 /obj/item/device/firing_pin/New(newloc)
@@ -23,7 +24,7 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
-			if(G.pin && (force_replace || G.pin.pin_removeable))
+			if(G.pin && !G.pin.cant_be_craft_removed && (force_replace || G.pin.pin_removeable))
 				G.pin.forceMove(get_turf(G))
 				G.pin.gun_remove(user)
 				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")

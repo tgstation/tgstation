@@ -2,16 +2,6 @@
 * All weapon related code goes here.
 */
 
-/*
-* Variables
-*/
-var/const/SKNIFE_STUNTIME = 6
-var/const/SKNIFE_CHARGE_COST = 125 // floor(1000 / n) = # of hits, 1000 / # of hits = cost
-
-var/const/USE_SKNIFE_CHARGES = 1
-var/const/SKNIFE_IS_AUTO_RECHARGING = 0
-var/const/SKNIFE_CHARGE_INTERVAL = 50
-var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 
 /*
 * Five Seven
@@ -40,6 +30,7 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 // PIN
 
 /obj/item/device/firing_pin/implant/perseus
+	cant_be_craft_removed = 1
 	var/required = /datum/extra_role/perseus
 	var/emagged = 0
 
@@ -92,6 +83,12 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 * Stun Knife
 */
 
+/*
+* Variables
+*/
+
+#define SKNIFE_RECHARGES 1 //set to 1 if you want the stun knife to require charge and to automatically recharge.
+
 /obj/item/stun_knife
 	name = "Stun Knife"
 	icon = 'icons/oldschool/perseus.dmi'
@@ -99,66 +96,120 @@ var/const/SKNIFE_LETHAL_USE_CHARGE = 0
 	righthand_file = 'icons/oldschool/perseus_inhand_right.dmi'
 	icon_state = "sknife"
 	item_state = "sknife"
-
-	force = 17
-	throwforce = 2
+	force = 0 //We start in stun move, force 0.
 	w_class = 2
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	flags_1 = CONDUCT_1
+	throw_speed = 3
+	throw_range = 6
+	throwforce = 2
+	materials = list(MAT_METAL=12000)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
-	var/locked = /datum/extra_role/perseus
+	var/locked = 1 //Will it shock you if you are not perseus.
 	var/mode = 1 //0 = attack | 1 = stun
+
+	//power supply
 	var/obj/item/stock_parts/cell/power_supply
+	var/charge_cost = 125
+	var/charge_interval = 50 //time between charge ticks
+	var/charge_per_tick = 200
+	var/last_recharge = 0 //the world.time of last recharge
+
+	//offense
+	var/lethalforce = 17 //Force changes to this when lethal mode is on.
+	var/lethalsharpness = IS_SHARP_ACCURATE
+	var/stun_time = 4
+	var/max_stacked_stun = 12 //User must stun multiple times to get max stun
+	var/last_stun = 0 //the world.time of the last time a stun happened, this is used to delay recharging.
+	var/last_stun_delay = 80 //how long from the last stun does the knife start recharging again.
+	var/list/lethal_attack_verbs = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
+
+	//knife is now emaggable
+	var/emagged = 0
+
+	process()
+		if((last_recharge+charge_interval <= world.time) && (last_stun+last_stun_delay <= world.time))
+			last_recharge = world.time
+			if(power_supply)
+				power_supply.give(charge_per_tick)
 
 	update_icon()
 		icon_state = "[initial(icon_state)][mode]"
 		item_state = icon_state
 
-	New()
+	Initialize()
 		..()
-		if(USE_SKNIFE_CHARGES)
+		if(SKNIFE_RECHARGES)
 			power_supply = new()
-			if(SKNIFE_IS_AUTO_RECHARGING)
-				SSobj.processing += src
+			power_supply.give(power_supply.maxcharge)
+			SSobj.processing += src
 		update_icon()
 
 	examine()
 		..()
-
+		if(power_supply && SKNIFE_RECHARGES)
+			var/remaining = power_supply.charge
+			if(power_supply.charge < charge_cost)
+				remaining = 0
+			to_chat(usr,"<font color='blue'>Energy level is at [round(remaining/power_supply.maxcharge*100,1)]%.</font>")
+		if(emagged)
+			to_chat(usr,"<font color='red'>It looks damaged.</font>")
 
 	attack(var/mob/living/M, var/mob/living/user)
-		if(locked)
+		if(locked && !emagged)
 			if(!check_perseus(user))
+				. = 1
 				var/datum/effect_system/spark_spread/S = new(get_turf(src))
 				S.set_up(3, 0, get_turf(src))
 				S.start()
 				to_chat(user, "<div class='warning'>The [src] shocks you.</div>")
 				user.AdjustKnockdown(40)
 				return
-		add_fingerprint(user)
-		//user.do_attack_animation(M)
-		switch(mode)
-			if(1)
-				if(issilicon(M))
-					return
-				M.SetStun(SKNIFE_STUNTIME * 20)
-				M.SetKnockdown(SKNIFE_STUNTIME * 20)
-				M.stuttering = SKNIFE_STUNTIME
-				M.lastattacker = user
-				var/turf/T = get_turf(M)
-				T.visible_message("<span class='danger'> [M] has been stunned by [user] with \the [src]")
-				add_logs(user, M, "stunned", object=src.name, addition=" (DAMAGE: [src.force]) (REMHP: [M.health - src.force]) (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
-			if(0)
-				M.apply_damage(force, BRUTE)
-				M.lastattacker = user
-				var/turf/T = get_turf(M)
-				T.visible_message("<span class='danger'> [M] has been attacked by [user] with \the [src]")
-				add_logs(user, M, "stabbed", object=src.name, addition=" (DAMAGE: [src.force]) (REMHP: [M.health - src.force]) (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
+		if(mode)
+			if(!issilicon(M))
+				var/do_stun = 1
+				if(SKNIFE_RECHARGES && !power_supply.use(charge_cost))
+					do_stun = 0
+					to_chat(user,"<div class='warning'>The [src] is out of charge!</div>")
+				if(do_stun)
+					do_stun(M,user)
+			else
+				. = 1
+		..()
+
+	proc/do_stun(mob/living/M, mob/living/user)
+		last_stun = world.time
+		var/theknockdown = M.AmountKnockdown()
+		if(theknockdown <= 0)
+			M.SetKnockdown(stun_time*10)
+		else
+			M.SetKnockdown(min(theknockdown+(stun_time*10),max_stacked_stun*10))
+		var/turf/T = get_turf(M)
+		playsound(get_turf(src), "sparks", 100, 1)
+		T.visible_message("<span class='danger'> [M] has been stunned by [user] with \the [src]")
+		add_logs(user, M, "stunned", object=src.name, addition=" (DAMAGE: [src.force]) (REMHP: [M.health - src.force]) (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])")
 
 	attack_self(var/mob/user)
 		..()
 		mode = !mode
 		to_chat(user, "<div class='notice'>The [src] is now set to [mode ? "stun" : "lethal"].</div>")
-		force = mode == 0 ? 17 : 1
+		force = mode == 0 ? lethalforce : initial(force)
+		sharpness = mode == 0 ? lethalsharpness : initial(sharpness)
+		throwforce = mode == 0 ? round(lethalforce*0.7,1) : initial(throwforce)
+		attack_verb = mode == 0 ? lethal_attack_verbs : initial(attack_verb)
 		update_icon()
+
+	emag_act(mob/living/user)
+		if(!emagged)
+			emagged = 1
+			to_chat(user, "<div class='notice'>You emag the [src].</div>")
+			var/datum/effect_system/spark_spread/system = new()
+			system.set_up(3, 0, get_turf(src))
+			system.start()
+
+	get_cell()
+		return power_supply
 
 	unlocked/
 		locked = 0

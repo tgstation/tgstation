@@ -24,8 +24,8 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	ammo_type = list(/obj/item/ammo_casing/energy/ep90_single, /obj/item/ammo_casing/energy/ep90_aoe, /obj/item/ammo_casing/energy/ep90_burst_3, /obj/item/ammo_casing/energy/ep90_burst_5)
 	fire_sound = 'sound/toolbox/ep90.ogg'
 	pin = /obj/item/device/firing_pin/implant/perseus
-	selfcharge = 1
-	charge_delay = 2
+	//selfcharge = 0 //nerfing self charge. You can use your extra power cells, thats what theyre for. -falaskian
+	//charge_delay = 2
 	var/emagged = 0
 	var/panel = 0
 
@@ -58,7 +58,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 			update_icon()
 			if(!M.equip_to_slot_if_possible(I, slot_hands))	return
 			return
-		..()
+		. = ..()
 
 	attackby(var/obj/item/I, var/mob/living/M)
 		if(istype(I, /obj/item/stock_parts/cell/magazine/ep90))
@@ -81,18 +81,6 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 			chambered = ammo_type[select]
 			to_chat(M, "<div class='notice'>You insert the [I] into the [src].</div>")
 			update_icon()
-		if(istype(I, /obj/item/card/emag) && !emagged && istype(pin,/obj/item/device/firing_pin/implant/perseus))
-			var/obj/item/device/firing_pin/implant/perseus/ppin = pin
-			ppin.emagged = 1
-			emagged = 1
-			selfcharge = 0
-			for (var/obj/item/ammo_casing/E in ammo_type)
-				if (E.BB)
-					E.BB.emagged = 1
-			to_chat(M, "<div class='notice'>You emag the [src].</div>")
-			var/datum/effect_system/spark_spread/system = new()
-			system.set_up(3, 0, get_turf(src))
-			system.start()
 		if(istype(I, /obj/item/screwdriver))
 			panel = !panel
 			to_chat(M, "<div class='danger'>You [panel ? "open" : "close"] the maintenance panel.</div>")
@@ -113,9 +101,21 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 			var/datum/effect_system/spark_spread/system = new()
 			system.set_up(3, 0, get_turf(src))
 			system.start()
-		..()
+		. = ..()
 
 	emag_act(mob/living/user)
+		if(!emagged && istype(pin,/obj/item/device/firing_pin/implant/perseus))
+			var/obj/item/device/firing_pin/implant/perseus/ppin = pin
+			ppin.emagged = 1
+			emagged = 1
+			//selfcharge = 0 //commenting this because we nerfed ep90 self charge -falaskian
+			for (var/obj/item/ammo_casing/E in ammo_type)
+				if (E.BB)
+					E.BB.emagged = 1
+			to_chat(user, "<div class='notice'>You emag the [src].</div>")
+			var/datum/effect_system/spark_spread/system = new()
+			system.set_up(3, 0, get_turf(src))
+			system.start()
 		return
 
 	examine()
@@ -182,7 +182,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	name = "energy"
 	icon_state = "ep90shot"
 	icon = 'icons/oldschool/perseus.dmi'
-	hitsound = 0
+	hitsound = 'sound/weapons/taserhit.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	stun = EP_STUNTIME_SINGLE
 	knockdown = EP_STUNTIME_SINGLE
@@ -234,7 +234,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 	name = "energy"
 	icon_state = "ep90shot"
 	icon = 'icons/oldschool/perseus.dmi'
-	hitsound = 0
+	hitsound = 'sound/weapons/taserhit.ogg'
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
 	stun = EP_STUNTIME_AOE
@@ -247,6 +247,7 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 
 	//bump_at_tile = 1
 	luminosity = 1
+	var/maxrange = 0
 
 	on_hit(var/atom/target, var/blocked = 0)
 		for(var/turf/T in range(1, target))
@@ -265,8 +266,14 @@ var/const/EP_MAX_AOE_STACK = 7 * 20
 					M.SetKnockdown(60)
 
 	Range()
+		if(!maxrange && firer && original)
+			maxrange = get_dist(get_turf(firer),get_turf(original))+1
 		if(isturf(original) && loc == original)
 			Collide(loc)
+		else
+			maxrange = max(maxrange-1,0)
+			if(maxrange <= 0)
+				Collide(loc)
 		return ..()
 
 /*
