@@ -14,6 +14,34 @@
 	time = 40
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/durathread_jumpsuit
+	name = "Durathread Jumpsuit"
+	result = /obj/item/clothing/under/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 4)
+	time = 40
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_beret
+	name = "Durathread Beret"
+	result = /obj/item/clothing/head/beret/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 2)
+	time = 40
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_beanie
+	name = "Durathread Beanie"
+	result = /obj/item/clothing/head/beanie/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 2)
+	time = 40
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/durathread_bandana
+	name = "Durathread Bandana"
+	result = /obj/item/clothing/mask/bandana/durathread
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 1)
+	time = 25
+	category = CAT_CLOTHING
+
 /datum/crafting_recipe/fannypack
 	name = "Fannypack"
 	result = /obj/item/storage/belt/fannypack
