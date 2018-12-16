@@ -150,7 +150,7 @@
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		if(has_owner)
-			var/datum/species/golum/G = H.dna.species
+			var/datum/species/golem/G = H.dna.species
 			G.owner = owner
 		H.set_cloned_appearance()
 		if(!name)

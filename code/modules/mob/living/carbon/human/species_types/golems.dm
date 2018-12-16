@@ -883,9 +883,12 @@
 	prefix = "Cardboard"
 	special_names = null
 	fixed_mut_color = "ad8762"
-	info_text = "As a <span class='danger'>Cardboard Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
+	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself."
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	limbs_id = "golem" //special sprites
+	attack_verb = "whips"
+	attack_sound = 'sound/weapons/whip.ogg'
+	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
@@ -897,18 +900,32 @@
 	var/brother_creation_cooldown = 300
 
 /datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
-	..()
-	if(user != H)
+	. = ..()
+	if(user != H || intent != INTENT_HELP)
 		return FALSE //forced reproduction is rape.
 	if(istype(I, /obj/item/stack/sheet/cardboard))
-		var/obj/item/stack/sheet/cardboard/C
-		if(!C.use(10))
+		var/obj/item/stack/sheet/cardboard/C = I
+		if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
 			return
-		if(world.time > last_creation + brother_creation_cooldown)
-			if(do_after(user, 30, target = user))
-				if(world.time > last_creation + brother_creation_cooldown) //no cheesing dork
-					create_brother(H.loc)
+		to_chat(H, "<span class='notice'>You attept to create a new cardboard brother.</span>")
+		if(do_after(user, 30, target = user))
+			if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
+				return
+			if(!C.use(10))
+				to_chat(H, "<span class='warning'>You do not have enough cardboard!</span>")
+				return FALSE
+			to_chat(H, "<span class='notice'>You create a new cardboard golem shell.</span>")
+			create_brother(H.loc)
 
 /datum/species/golem/cardboard/proc/create_brother(var/location)
 	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
+
+/datum/species/golem/leather
+	name = "Leather Golem"
+	id = "leather golem"
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_STRONG_GRABBER)
+	prefix = "Leather"
+	fixed_mut_color = "624a2e"
+	info_text = "As a <span class='danger'>Leather Golem</span>, you are flammable, but you can grab things with incredible ease, allowing all your grabs to start at a strong level."
+	grab_sound = 'sound/weapons/whipgrab.ogg'

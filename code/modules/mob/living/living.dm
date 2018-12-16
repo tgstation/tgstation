@@ -251,14 +251,19 @@
 	pulling = AM
 	AM.pulledby = src
 	if(!supress_message)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna.species.grab_sound)
+				sound_to_play = H.dna.species.grab_sound 	
+		playsound(src.loc, sound_to_play, 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
 		var/mob/M = AM
 
 		log_combat(src, M, "grabbed", addition="passive grab")
-		if(!supress_message)
+		if(!supress_message && !(iscarbon(AM) && has_trait(TRAIT_STRONG_GRABBER)))
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
@@ -276,6 +281,12 @@
 				var/datum/disease/D = thing
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 					ContactContractDisease(D)
+
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				if(src.has_trait(TRAIT_STRONG_GRABBER))
+					C.grippedby(src)
+					
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
