@@ -1,8 +1,4 @@
-
-
 GLOBAL_LIST_EMPTY(preferences_datums)
-
-
 
 /datum/preferences
 	var/client/parent

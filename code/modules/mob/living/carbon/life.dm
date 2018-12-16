@@ -33,7 +33,7 @@
 
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
-		rot()
+		LoadComponent(/datum/component/rot/corpse)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -303,38 +303,6 @@
 			if(!.)
 				return FALSE //to differentiate between no internals and active, but empty internals
 
-// Make corpses rot, emitting miasma
-/mob/living/carbon/proc/rot()
-	// Properly stored corpses shouldn't create miasma
-	if(istype(loc, /obj/structure/closet/crate/coffin)|| istype(loc, /obj/structure/closet/body_bag) || istype(loc, /obj/structure/bodycontainer))
-		return
-
-	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(reagents.has_reagent("formaldehyde", 15) || has_trait(TRAIT_HUSK))
-		return
-
-	// Also no decay if corpse chilled or not organic/undead
-	if(bodytemperature <= T0C-10 || (!(MOB_ORGANIC in mob_biotypes) && !(MOB_UNDEAD in mob_biotypes)))
-		return
-
-	// Wait a bit before decaying
-	if(world.time - timeofdeath < 1200)
-		return
-
-	var/deceasedturf = get_turf(src)
-
-	// Closed turfs don't have any air in them, so no gas building up
-	if(!istype(deceasedturf,/turf/open))
-		return
-
-	var/turf/open/miasma_turf = deceasedturf
-
-	var/list/cached_gases = miasma_turf.air.gases
-
-	ASSERT_GAS(/datum/gas/miasma, miasma_turf.air)
-	cached_gases[/datum/gas/miasma][MOLES] += 0.02
-	miasma_turf.air_update_turf()
-
 /mob/living/carbon/proc/handle_blood()
 	return
 
@@ -372,7 +340,6 @@
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
-		var/datum/mutation/human/HM
 		for(var/mut in dna.temporary_mutations)
 			if(dna.temporary_mutations[mut] < world.time)
 				if(mut == UI_CHANGED)
@@ -395,9 +362,9 @@
 						dna.previous.Remove("blood_type")
 					dna.temporary_mutations.Remove(mut)
 					continue
-				HM = GLOB.mutations_list[mut]
-				HM.force_lose(src)
-				dna.temporary_mutations.Remove(mut)
+		for(var/datum/mutation/human/HM in dna.mutations)
+			if(HM && HM.timed)
+				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
 	if(radiation > RAD_MOB_SAFE)
