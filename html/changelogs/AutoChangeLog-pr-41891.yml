@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "fixes monkey and species mutations not working"
-  - bugfix: "fixes not getting gibbed"
