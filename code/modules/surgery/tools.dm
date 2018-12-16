@@ -273,12 +273,8 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/scalpel/advanced/Initialize()
+	. = ..()
 	set_light(1)
-	START_PROCESSING(SSobj, src)
-
-/obj/item/scalpel/advanced/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/scalpel/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
@@ -299,13 +295,8 @@
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/item/circular_saw/advanced/Initialize()
+	. = ..()
 	set_light(2)
-	START_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/circular_saw/advanced/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/circular_saw/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/machines/click.ogg',50,1)
@@ -352,13 +343,8 @@
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/surgicaldrill/advanced/Initialize()
+	. = ..()
 	set_light(1)
-	START_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/surgicaldrill/advanced/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/surgicaldrill/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/weapons/tap.ogg',50,1)
@@ -378,13 +364,8 @@
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/cautery/advanced/Initialize()
+	. = ..()
 	set_light(1)
-	START_PROCESSING(SSobj, src)
-	..()
-
-/obj/item/cautery/advanced/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/cautery/advanced/attack_self(mob/user)
 	playsound(get_turf(user),'sound/items/welderdeactivate.ogg',50,1)
