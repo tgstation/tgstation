@@ -299,14 +299,20 @@
 		if(4)
 			if (!active_record)
 				menu = 2
+			var/has_access = FALSE
 			var/obj/item/card/id/C = user.get_idcard(TRUE)
 			if(C)
 				if(check_access(C))
+					has_access = TRUE
 					dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Please confirm.</a></b><br>"
 					dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
-				else
-					src.temp = "<font class='bad'>Access Denied.</font>"
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+			if(!has_access)
+				src.temp = "<font class='bad'>Access Denied.</font>"
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				menu = 2
+				ui_interact(user)
+				return
+					
 
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
