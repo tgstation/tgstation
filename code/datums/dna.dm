@@ -71,15 +71,15 @@
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
 
-/datum/dna/proc/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
-	remove_mutation_group(mutations, classes)
+/datum/dna/proc/remove_all_mutations(list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
+	remove_mutation_group(mutations, classes, mutadone)
 	scrambled = FALSE
 
-/datum/dna/proc/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER))
+/datum/dna/proc/remove_mutation_group(list/group, list/classes = list(MUT_NORMAL, MUT_EXTRA, MUT_OTHER), mutadone = FALSE)
 	if(!group)
 		return
 	for(var/datum/mutation/human/HM in group)
-		if(HM.class in classes)
+		if((HM.class in classes) && !(HM.mutadone_proof && mutadone))
 			force_lose(HM)
 
 /datum/dna/proc/generate_uni_identity()
@@ -188,12 +188,16 @@
 		. = HM.on_acquiring(holder)
 		if(.)
 			qdel(HM)
+		update_instability()
 
 //Use remove_mutation instead
 /datum/dna/proc/force_lose(datum/mutation/human/HM)
 	if(holder && (HM in mutations))
 		set_se(0, HM)
-		return HM.on_losing(holder)
+		update_instability(alert=TRUE)
+		 . = HM.on_losing(holder)
+		 update_instability(FALSE)
+		 return
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -224,7 +228,7 @@
 	stability = 100
 	for(var/datum/mutation/human/M in mutations)
 		if(M.class == MUT_EXTRA)
-			stability -= M.instability
+			stability -= M.instability * get_stabilizer(M)
 	if(holder)
 		var/message
 		if(alert)

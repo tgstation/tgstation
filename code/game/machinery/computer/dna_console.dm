@@ -36,9 +36,11 @@
 	var/combine
 	var/radduration = 2
 	var/radstrength = 1
+	var/max_chromosomes = 6
 
 	var/list/buffer[NUMBER_OF_BUFFERS]
 	var/list/stored_mutations = list()
+	var/list/chromosome_storage = list()
 
 	var/injectorready = 0	//world timer cooldown var
 	var/jokerready = 0
@@ -59,6 +61,12 @@
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
 			return
+	if (istype(I, /obj/item/chromosome))
+		if(LAZYLEN(chromosomes) < max_chromosomes)
+			I.forceMove(src)
+			chromosomes.Add(I)
+		else
+			to_chat(user, "<span class='warnning'>You cannot store any more chromosomes.</span>")
 	else
 		return ..()
 
@@ -336,6 +344,12 @@
 				else
 					temp_html += "<td><a href='?src=[REF(src)];task=combine;num=[i]'>Combine</a></td></tr>"
 			temp_html += "</table>"
+			temp_html += "<h3>Chromosome Storage:<br></h3>"
+			temp_html += "<table>"
+			for(var/obj/item/chromosome/CM in stored_mutations)
+				temp_html += "<td><a href='?src=[REF(src)];task=ejectchromosome;num=[i]'>[HM.name]</a></td>"
+			temp_html += "</table>"
+
 		else
 			temp_html += status
 			temp_html += buttons
@@ -409,7 +423,6 @@
 	var/extra
 	if(viable_occupant && !(storage_slot || mutation_in_sequence(mutation, viable_occupant.dna)))
 		extra = TRUE
-	var/datum/mutation/human/HM = get_initialized_mutation(mutation)
 
 	if(discovered && !scrambled)
 		var/mutcolor
@@ -424,9 +437,18 @@
 	else
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
+	if(active && !storage_slot)
+		var/datum/mutation/human/HM = get_valid_mutation(mutation)
+		if(HM && HM.can_chromosome)
+			var/chromosome_name = "<a href='?src=[REF(src)];task=applychromosome;path=[mutation];num=[i];'>----</a>"
+			if(HM.chromosome_name)
+				chromosome_name = HM.chromosome_name
+			temp_html += "<div class='statusLine'>Chromosome status: [chromosome_name]<br></div>"
+
+		temp_html += "<div class='statusLine'>Chromosome status: ----<br><br></div>"
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
-		for(var/block in 1 to HM.blocks)
+		for(var/block in 1 to A.blocks)
 			var/whole_sequence = get_valid_gene_string(mutation)
 			var/sequence = copytext(whole_sequence, 1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
 			temp_html += "<div class='statusLine'><table class='statusDisplay'><tr>"
@@ -689,7 +711,6 @@
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
 				if(A && (!mutation_in_sequence(current_mutation, viable_occupant.dna) || A.scrambled))
 					viable_occupant.dna.remove_mutation(current_mutation)
-					viable_occupant.dna.update_instability()
 					current_screen = "mainmenu"
 					current_mutation = null
 		if("pulsegene")
@@ -757,9 +778,29 @@
 						to_chat(usr,"<span class='notice'>Selected [A.name] for combining</span>")
 				else
 					to_chat(usr, "<span class='warning'>Not enough space to store potential mutation.</span>")
+		if("ejectchromosome")
+			if(LAZYLEN(chromosome_storage) <= num)
+			var/obj/item/chromosome/CM = chromosome_storage[num]
+				CM.forceMove(drop_location())
+				adjust_item_drop_location(CM)
+				chromosomes_storage.Remove(CM)
+		if("applychromosome")
+			if(viable_occupant && (LAZYLEN(viable_occupant.dna.mutations) <= num))
+				var/datum/mutation/human/HM = viable_occupant.dna.mutations[num]
+				var/list/chromosomes = list()
+				for(var/obj/item/chromosome/CM in chromosome_storage)
+					if(CM.can_apply(HM))
+						chromosomes.Add(CM)
+				if(LAZYLEN(chromosomes))
+					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in chromosomes
+					if(CM)
+						to_chat(user, "<span class='notice'>You apply [CM] to [HM.name].")
+						chromosome_storage.Remove(CM)
+						CM.apply(HM)
+
 	ui_interact(usr,last_change)
 
-/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd)
+/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd) //hexadecimal genetics. dont confuse with scramble button
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
 	if(ran == 0)
@@ -819,12 +860,12 @@
 		delayed_action = null //or make it stick + reset button ?
 
 /obj/machinery/computer/scan_consolenew/proc/get_valid_mutation(mutation)
-	for(var/datum/mutation/human/A in stored_mutations)
-		if(A.type == mutation)
-			return A
 	var/mob/living/carbon/C = get_viable_occupant()
 	if(C)
 		return C.dna.get_mutation(mutation)
+	for(var/datum/mutation/human/A in stored_mutations)
+		if(A.type == mutation)
+			return A
 
 
 /obj/machinery/computer/scan_consolenew/proc/get_mutation_list(include_storage) //Returns a list of the mutation index types and any extra mutations

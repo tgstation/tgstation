@@ -31,6 +31,16 @@
 	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
+
+	//Chromosome stuff - set to -1 to prevent people from applying that chromosome
+	var/can_chromosome = 1 //can we take chromosomes? 0: never,  1:yeah, 2: already have one
+	var/chromosome_name   //purely cosmetic
+	var/mutadone_proof = FALSE
+	var/stabilizer_coeff = 1 //genetic stability coeff
+	var/synchronizer_coeff = 1 //makes the mutation hurt the user less
+	var/power_coeff = 1 //boosts mutation strength
+	var/energy_coeff = 1 //lowers mutation cooldown
+
 /datum/mutation/human/New(class_ = MUT_OTHER, timer)
 	. = ..()
 	class = class_
@@ -127,7 +137,25 @@
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
 
-/datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM) //Not yet implemented, useful for when assigning specific stats.
+/datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM)
+	if(!HM)
+		return
+	chromosome_name = HM.chromosome_name
+	stabilizer_coeff = HM.stabilizer_coeff
+	synchronizer_coeff = HM.synchronizer_coeff
+	power_coeff = HM.power_coeff
+	energy_coeff = HM.energy_coeff
+	mutadone_proof = HM.mutadone_proof
+	can_chromosome = HM.can_chromosome
+
+/datum/mutation/human/proc/remove_chromosome(obj/item/chromosome)
+	stabilizer_coeff = initial(stabilizer_coeff)
+	synchronizer_coeff = initial(synchronizer_coeff)
+	power_coeff = initial(power_coeff)
+	energy_coeff = initial(energy_coeff)
+	mutadone_proof = initial(mutadone_proof)
+	can_chromosome = initial(can_chromosome)
+
 
 /datum/mutation/human/proc/remove()
 	if(dna)
