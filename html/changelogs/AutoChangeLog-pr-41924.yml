@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - admin: "The Admin->Investigate verb will indicate investigate
+topics that have had no messages logged this round. The view notes
+option is always visible."
