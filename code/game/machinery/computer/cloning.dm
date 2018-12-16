@@ -299,20 +299,10 @@
 		if(4)
 			if (!active_record)
 				menu = 2
-			var/has_access = FALSE
-			var/obj/item/card/id/C = user.get_idcard(TRUE)
-			if(C)
-				if(check_access(C))
-					has_access = TRUE
-					dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Please confirm.</a></b><br>"
-					dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
-			if(!has_access)
-				src.temp = "<font class='bad'>Access Denied.</font>"
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-				menu = 2
 				ui_interact(user)
 				return
-					
+			dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Please confirm.</a></b><br>"
+			dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
 
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
@@ -387,9 +377,20 @@
 		if ((!active_record) || (menu < 3))
 			return
 		if (menu == 3) //If we are viewing a record, confirm deletion
-			temp = "Delete record?"
-			menu = 4
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+			var/obj/item/card/id/C = user.get_idcard(TRUE)
+			var/has_access = FALSE
+			if(C)
+				if(check_access(C))
+					has_access = TRUE
+			if(has_access)
+				temp = "Delete record?"
+				menu = 4
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+			else
+				temp = "Access Denied"
+				menu = 2 
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				
 
 		else if (menu == 4)
 			temp = "[active_record.fields["name"]] => Record deleted."
