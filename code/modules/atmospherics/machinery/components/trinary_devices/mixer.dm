@@ -40,7 +40,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/power_change()
 	var/old_stat = stat
-	..()
+	..(1
 	if(stat != old_stat)
 		update_icon()
 
@@ -164,8 +164,6 @@
 		if("node2")
 			var/value = text2num(params["concentration"])
 			adjust_node1_value(-value)
-			node2_concentration = round(max(0, min(1, node2_concentration + value))*100)/100
-			node1_concentration = round(max(0, min(1, node1_concentration - value))*100)/100
 			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()
