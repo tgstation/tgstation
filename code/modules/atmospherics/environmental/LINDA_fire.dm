@@ -82,7 +82,7 @@
 
 	if(bypassing)
 		if(!just_spawned)
-			location.air.temperature = temperature
+			location.air.temperature = max(temperature, location.air.temperature)
 			location.air.react(src)
 			temperature = location.air.temperature
 			volume = location.air.reaction_results["fire"]*FIRE_GROWTH_RATE
