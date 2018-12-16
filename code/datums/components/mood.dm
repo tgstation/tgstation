@@ -310,6 +310,7 @@
 				add_event(null, "neat", /datum/mood_event/dirty)
 			if(has_trait(TRAIT_NEET))
 				add_event(null, "NEET", /datum/mood_event/happy_neet)
+			HygieneMiasma(H)
 		if(HYGIENE_LEVEL_DIRTY to HYGIENE_LEVEL_NORMAL)
 			if(has_trait(TRAIT_NEAT))
 				clear_event(null, "neat")
@@ -320,6 +321,19 @@
 				add_event(null, "neat", /datum/mood_event/neat)
 			if(has_trait(TRAIT_NEET))
 				clear_event(null, "NEET")
+
+/datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
+	// Properly stored humans shouldn't create miasma
+	if(istype(C.loc, /obj/structure/closet/crate/coffin)|| istype(C.loc, /obj/structure/closet/body_bag) || istype(C.loc, /obj/structure/bodycontainer))
+		return
+
+	var/turf/T = get_turf(H)
+	var/datum/gas_mixture/air = T.return_air()
+	var/list/cached_gases = air.gases
+
+	ASSERT_GAS(/datum/gas/miasma, air)
+	cached_gases[/datum/gas/miasma][MOLES] += MIASMA_HYGIENE_MOLES
+	T.air_update_turf()
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
