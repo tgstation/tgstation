@@ -129,8 +129,8 @@
 	data["on"] = on
 	data["set_pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
-	data["node1_concentration"] = round(node1_concentration*100)
-	data["node2_concentration"] = round(node2_concentration*100)
+	data["node1_concentration"] = round(node1_concentration*100, 1)
+	data["node2_concentration"] = round(node2_concentration*100, 1)
 	return data
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
