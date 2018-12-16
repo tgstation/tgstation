@@ -364,7 +364,7 @@
 	var/doitanyway = FALSE
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
-	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
+	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/mutation in add_mutations)
