@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Bartenders can now rename the generic area \"Bar\" to the bar name of their choice with the use of their bar sign. This will rename air alarms, doors and APCs, so everyone knows what you're calling your bar this shift. (The bar sign chosen is also now a statistic that's tracked!)"

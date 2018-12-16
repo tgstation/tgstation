@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an exploit where you could get admin-only infinite power cells
-from the EXPERIMENTOR."
