@@ -846,18 +846,22 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(north)
 		var/obj/screen/objnorth = new
 		objnorth.appearance = north
+		objnorth.screen_loc = "character_preview_map:1,1"
 		LAZYSET(char_render_holders, TEXT_NORTH, objnorth)
 	if(south)
 		var/obj/screen/objsouth = new
 		objsouth.appearance = north
+		objsouth.screen_loc = "character_preview_map:1,2"
 		LAZYSET(char_render_holders, TEXT_SOUTH, objsouth)
 	if(east)
 		var/obj/screen/objeast = new
 		objeast.appearance = north
+		objeast.screen_loc = "character_preview_map:1,3"
 		LAZYSET(char_render_holders, TEXT_EAST, objeast)
 	if(west)
 		var/obj/screen/objwest = new
 		objwest.appearance = north
+		objwest.screen_loc = "character_preview_map:1,4"
 		LAZYSET(char_render_holders, TEXT_WEST, objwest)
 	if(LAZYLEN(char_render_holders))
 		winshow(src, "character_preview_map", TRUE)
