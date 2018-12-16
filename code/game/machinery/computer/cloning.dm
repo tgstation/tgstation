@@ -265,8 +265,8 @@
 					if(diskette.fields["SE"])
 						L += "Structural Enzymes"
 					dat += english_list(L, "Empty", " + ", " + ")
-					var/obj/item/card/id/C = user.get_idcard(TRUE)
 					var/can_load = FALSE
+					var/obj/item/card/id/C = user.get_idcard(TRUE)
 					if(C)
 						if(check_access(C))
 							can_load = TRUE
@@ -350,7 +350,7 @@
 
 		spawn(20)
 			scan_occupant(scanner.occupant)
-
+				
 			loading = FALSE
 			updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -377,11 +377,13 @@
 		if ((!active_record) || (menu < 3))
 			return
 		if (menu == 3) //If we are viewing a record, confirm deletion
-			var/obj/item/card/id/C = user.get_idcard(TRUE)
 			var/has_access = FALSE
-			if(C)
-				if(check_access(C))
-					has_access = TRUE
+			if(ishuman(usr))
+				var/mob/living/carbon/human/user = usr
+				var/obj/item/card/id/C = user.get_idcard(TRUE)
+				if(C)
+					if(check_access(C))
+						has_access = TRUE
 			if(has_access)
 				temp = "Delete record?"
 				menu = 4
