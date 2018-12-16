@@ -169,7 +169,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/trinary/mixer/proc/adjust_node1_value(delta)
-	node1_concentration = round(max(0, min(1, node1_concentration + delta))*100)/100
+	node1_concentration = round(max(0, min(1, node1_concentration + delta), 0.01)
 	node2_concentration = 1 - node1_concentration
 
 /obj/machinery/atmospherics/components/trinary/mixer/can_unwrench(mob/user)
