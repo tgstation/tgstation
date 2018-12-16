@@ -863,5 +863,5 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		for(var/index in char_render_holders)
 			var/obj/screen/S = char_render_holders[index]
 			screen -= S
-		QDEL_LIST_ASSOC(char_render_holders)
+			qdel(S)
 		char_render_holders = null
