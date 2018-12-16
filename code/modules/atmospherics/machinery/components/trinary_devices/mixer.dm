@@ -40,7 +40,7 @@
 
 /obj/machinery/atmospherics/components/trinary/mixer/power_change()
 	var/old_stat = stat
-	..(1
+	..()
 	if(stat != old_stat)
 		update_icon()
 
