@@ -1,0 +1,12 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - rscadd: "Re-added autoprocessing function on the cloner"
+  - balance: "records now have an associated last death time, which must sync with the mind to clone. This means you need a new record every time someone dies."
+  - rscadd: "diskette records can be partially applied to records in the cloner, for instance to overwrite a name."
+  - rscadd: "you can still scan living people to obtain their records for disk use, but these records can't be cloned from."
+  - bugfix: "cloning records are no longer based upon ckey"
+  - tweak: "ghosts are no longer required for scanning"
+  - balance: "Head access is no longer needed to delete records"
+  - balance: "genetics access is required to alter (but not delete) records"
+  - rscadd: "do not resuscitate verb added for ghosts (can be toggled on and off)"
