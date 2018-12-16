@@ -198,15 +198,15 @@
 /datum/quirk/hypersensitive/add()
 	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
 	if(mood)
-		mood.mood_modifier = 1.5
+		mood.mood_modifier += 0.5
 
 /datum/quirk/hypersensitive/remove()
 	if(quirk_holder)
 		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
 		if(mood)
-			mood.mood_modifier = 1 //Change this once/if species get their own mood modifiers.
+			mood.mood_modifier -= 0.5 //Change this once/if species get their own mood modifiers.
 
- /datum/quirk/light_drinker
+/datum/quirk/light_drinker
 	name = "Light Drinker"
 	desc = "You just can't handle your drinks and get drunk very quickly."
 	value = -1
