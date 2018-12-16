@@ -1,0 +1,12 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - code_imp: "Several minor updates to Assimilation."
+  - balance: "Hosts no longer lose abilities if they fall below the required hive size."
+  - balance: "Mind Control victims can no longer see nor hear for the duration of the control."
+  - tweak: "Distortion Field now affects the victim and those surrounding them over time instead of instantly."
+  - bugfix: "Abilities that inflict stamina damage now affect the head instead of spreading damage over the entire body."
+  - tweak: "Mind Control now informs you of how long you have control for upon activation."
+  - tweak: "Changed various do_mob for do_after. All hivemind abilities except for Mass Assimilation should now work in certain situations where they didn't before."
+  - balance: "Abusing the sleep verb while mind controlling is no longer a viable tactic."
+  - balance: "Assimilating/removing people into/from the hive now has screen-wide range, with time taken to assimilate increasing exponentially with distance. The time to assimilate from 4 tiles away is approximately the same. Assimilation's cooldown has also been increased by five seconds to compensate."
