@@ -217,10 +217,10 @@
 		T += MB.rating*75000
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = T
-	T=1.2
+	T = 0
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		T -= M.rating*0.2
-	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
+		T += M.rating * 2
+	prod_coeff = round(1 / T, 0.01)
 
 /obj/machinery/autolathe/examine(mob/user)
 	..()
