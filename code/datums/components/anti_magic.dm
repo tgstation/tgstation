@@ -17,7 +17,7 @@
 
 	magic = _magic
 	holy = _holy
-	if(_charges)
+	if(!isnull(_charges))
 		charges = _charges
 	blocks_self = _blocks_self
 	reaction = _reaction
