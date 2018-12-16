@@ -6,7 +6,7 @@
 	var/datum/callback/reaction
 	var/datum/callback/expire
 
-/datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE, _charges = -1, _blocks_self = TRUE, datum/callback/_reaction, datum/callback/_expire)
+/datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE, _charges, _blocks_self = TRUE, datum/callback/_reaction, datum/callback/_expire)
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
@@ -17,7 +17,8 @@
 
 	magic = _magic
 	holy = _holy
-	charges = _charges
+	if(_charges)
+		charges = _charges
 	blocks_self = _blocks_self
 	reaction = _reaction
 	expire = _expire
@@ -40,4 +41,4 @@
 			if(charges <= 0)
 				expire.Invoke(user)
 		return COMPONENT_BLOCK_MAGIC
-		
+
