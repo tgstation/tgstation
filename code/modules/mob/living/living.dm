@@ -507,7 +507,6 @@
 	SetImmobilized(0, FALSE)
 	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
-	set_hygiene(HYGIENE_LEVEL_CLEAN)
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL

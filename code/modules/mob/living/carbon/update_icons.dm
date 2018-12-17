@@ -92,13 +92,6 @@
 
 	apply_overlay(FIRE_LAYER)
 
-/mob/living/carbon/proc/update_smell(var/smelly_icon = "generic_mob_smell")
-	remove_overlay(SMELL_LAYER)
-	if(hygiene <= HYGIENE_LEVEL_DIRTY)
-		var/mutable_appearance/new_smell_overlay = mutable_appearance('icons/mob/smelly.dmi', smelly_icon, -SMELL_LAYER)
-		overlays_standing[SMELL_LAYER] = new_smell_overlay
- 	apply_overlay(SMELL_LAYER)
-
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
 

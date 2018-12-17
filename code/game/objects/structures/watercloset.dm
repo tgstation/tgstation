@@ -251,7 +251,7 @@
 				wash_mob(L)
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if(if(check_clothes(H)))
+					if(check_clothes(H))
 						to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>")
 			else if(isobj(G)) // Skip the light objects
 				wash_obj(G)
@@ -396,7 +396,7 @@
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
 			else
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
-				M.set_hygiene(HYGIENE_LEVEL_CLEAN)
+				H.set_hygiene(HYGIENE_LEVEL_CLEAN)
 
 			if(washgloves)
 				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
@@ -523,7 +523,7 @@
 	else
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		if(ishuman(user))
-			var/mob/living/carbon/dirtyboy
+			var/mob/living/carbon/human/dirtyboy
 			dirtyboy.adjust_hygiene(10)
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)

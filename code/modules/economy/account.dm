@@ -56,7 +56,7 @@
 	return FALSE
 
 
-/datum/bank_account/add_neetbux()
+/datum/bank_account/proc/add_neetbux()
 	account_job.paycheck += PAYCHECK_WELFARE
 
 /datum/bank_account/proc/bank_card_talk(message)
