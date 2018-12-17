@@ -1138,15 +1138,16 @@
 	mob_pickup(user)
 	return TRUE
 
-/mob/living/display_output(sound/S, image/I, text, turf/turf_source, vol as num)
+/mob/living/display_output(sound/S, list/sound_image, text, turf/turf_source, vol as num)
 	. = ..()
 		//Process icon
-	if(I && audiolocation)
+	if(sound_image && audiolocation)
+		var/image/sound_icon = image(sound_image[1], , sound_image[2], sound_image[3])
 		if(vol && S)
-			I.alpha = I.alpha * (vol / 100)
-		I.loc = turf_source
-		client.images += I
-		addtimer(CALLBACK(src, .proc/remove_image, I), 7)
+			sound_icon.alpha = sound_icon.alpha * (vol / 100)
+		sound_icon.loc = turf_source
+		client.images += sound_icon
+		addtimer(CALLBACK(src, .proc/remove_image, sound_icon), 7)
 
 /mob/living/proc/remove_image(image)
 	if(image && client)

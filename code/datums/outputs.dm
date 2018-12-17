@@ -64,10 +64,7 @@
 			sound_output.y = 1
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	//Process image
-	var/image/sound_icon = image(image[1], , image[2], image[3])
-
-	receiver.display_output(sound_output, sound_icon, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	receiver.display_output(sound_output, image, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."
