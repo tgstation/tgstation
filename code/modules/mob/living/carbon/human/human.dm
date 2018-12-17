@@ -974,6 +974,9 @@
 /mob/living/carbon/human/species/golem/leather
 	race = /datum/species/golem/leather
 
+/mob/living/carbon/human/species/golem/bone
+	race = /datum/species/golem/bone
+
 /mob/living/carbon/human/species/golem/clockwork
 	race = /datum/species/golem/clockwork
 

@@ -215,15 +215,15 @@
 	glass_desc = "White and nutritious goodness!"
 
 /datum/reagent/consumable/milk/on_mob_life(mob/living/carbon/M)
-	if(M.getBruteLoss() && prob(20))
-		M.heal_bodypart_damage(1,0, 0)
+	if(M.has_trait(TRAIT_CALCIUM_HEALER))
+		M.heal_bodypart_damage(1.5,0, 0)
 		. = 1
+	else
+		if(M.getBruteLoss() && prob(20))
+			M.heal_bodypart_damage(1,0, 0)
+			. = 1
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 2)
-	var/datum/dna/Mdna = M.has_dna()
-	if(Mdna && Mdna.species && (Mdna.species.id == "plasmaman" || Mdna.species.id == "skeleton"))
-		M.heal_bodypart_damage(1,0, 0)
-		. = 1
 	..()
 
 /datum/reagent/consumable/soymilk

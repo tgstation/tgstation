@@ -814,7 +814,6 @@
 	id = "bronze golem"
 	prefix = "Bronze"
 	special_names = null
-	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	fixed_mut_color = "cd7f32"
 	info_text = "As a <span class='danger'>Bronze Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
 	special_step_sounds = list('sound/machines/clockcult/integration_cog_install.ogg', 'sound/magic/clockwork/fellowship_armory.ogg' )
@@ -929,3 +928,48 @@
 	fixed_mut_color = "624a2e"
 	info_text = "As a <span class='danger'>Leather Golem</span>, you are flammable, but you can grab things with incredible ease, allowing all your grabs to start at a strong level."
 	grab_sound = 'sound/weapons/whipgrab.ogg'
+	attack_sound = 'sound/weapons/whip.ogg'
+
+/datum/species/golem/bone
+	name = "Bone Golem"
+	id = "bone golem"
+	prefix = "Bone"
+	liked_food = GROSS | MEAT | RAW
+	toxic_food = null
+	fixed_mut_color = "ffffff"
+	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH,TRAIT_CALCIUM_HEALER)
+	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
+	var/datum/action/innate/bonechill/bonechill
+
+/datum/species/golem/bone/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(ishuman(C))
+		bonechill = new
+		bonechill.Grant(C)
+
+/datum/species/golem/bone/on_species_loss(mob/living/carbon/C)
+	if(bonechill)
+		bonechill.Remove(C)
+	..()
+
+/datum/action/innate/bonechill
+	name = "Bone Chill"
+	desc = "Rattle your bones and strike fear into your enemies!"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "sacredflame"
+	var/cooldown = 600
+	var/last_use
+
+/datum/action/innate/bonechill/Activate()
+	if(world.time < last_use + cooldown)
+		to_chat("<span class='notice'>You aren't ready yet to rattle your bones again</span>")
+	owner.visible_message("<span class='warning'>[owner] rattles his/her bones harrowingly.</span>", "<span class='notice'>You rattle your bones</span>")
+	last_use = world.time
+	playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
+	for(var/mob/living/L in orange(7, get_turf(owner)))
+		message_admins("[L]")
+		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L))
+			return //Do not affect our brothers
+		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
+		L.apply_status_effect(/datum/status_effect/bonechill)
