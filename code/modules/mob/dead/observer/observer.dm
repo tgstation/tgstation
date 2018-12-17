@@ -347,9 +347,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			to_chat(src, "You can now re-enter your corpse, and can be cloned.")
 			can_reenter_corpse = TRUE
 			do_not_resuscitate = FALSE
-			return
+			return TRUE
 		else
 			to_chat(usr, "<span class='warning'>You're already stuck out of your body!</span>")
+			return FALSE
 			
 	can_reenter_corpse = FALSE
 	do_not_resuscitate = TRUE
