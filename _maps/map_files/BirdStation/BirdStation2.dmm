@@ -15952,7 +15952,7 @@
 /obj/item/clothing/mask/breath/medical,
 /obj/item/tank/internals/anesthetic,
 /obj/item/clothing/mask/muzzle,
-/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "OK" = (
@@ -16717,8 +16717,8 @@
 /area/medical/medbay)
 "QP" = (
 /obj/structure/closet/secure_closet/medical2,
-/obj/item/clothing/glasses/sunglasses/blindfold,
-/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/mask/muzzle,
 /obj/item/clothing/suit/straight_jacket,
