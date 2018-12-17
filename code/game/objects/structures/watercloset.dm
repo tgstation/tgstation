@@ -251,7 +251,7 @@
 				wash_mob(L)
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
-					if((H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))|| (H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY)) || (H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY)) || (H.ears && !(H.ears.clothing_flags & SHOWEROKAY)) || (H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY)) || (H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY)) || (H.head && !(H.head.clothing_flags & SHOWEROKAY)))
+					if(if(check_clothes(H)))
 						to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>")
 			else if(isobj(G)) // Skip the light objects
 				wash_obj(G)
@@ -319,7 +319,7 @@
 				C.slip(80,null,NO_SLIP_WHEN_WALKING)
 				if(ishuman(C))
 					var/mob/living/carbon/human/H = C
-					if((H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))|| (H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY)) || (H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY)) || (H.ears && !(H.ears.clothing_flags & SHOWEROKAY)) || (H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY)) || (H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY)) || (H.head && !(H.head.clothing_flags & SHOWEROKAY)))
+					if(check_clothes(H))
 						to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>")
 		else if(isobj(AM))
 			wash_obj(AM)
@@ -392,7 +392,7 @@
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
 
-			if((H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))|| (H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY)) || (H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY)) || (H.ears && !(H.ears.clothing_flags & SHOWEROKAY)) || (H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY)) || (H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY)) || (H.head && !(H.head.clothing_flags & SHOWEROKAY)))
+			if(check_clothes(H))
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
 			else
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
@@ -449,6 +449,16 @@
 		C.adjustFireLoss(5)
 		to_chat(C, "<span class='danger'>The water is searing!</span>")
 
+/obj/machinery/shower/proc/check_clothes(mob/living/carbon/human/H)
+	var/result 
+	result &= (H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))
+	result &= (H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
+	result &= (H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY))
+	result &= (H.ears && !(H.ears.clothing_flags & SHOWEROKAY))
+	result &= (H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY))
+	result &= (H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY))
+	result &= (H.head && !(H.head.clothing_flags & SHOWEROKAY))
+	return result
 
 
 
