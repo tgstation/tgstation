@@ -100,7 +100,6 @@
 
 	..(user)
 
-
 	// DNA manipulators cannot operate on severed heads or brains
 	if(iscarbon(occupant))
 		var/obj/machinery/computer/scan_consolenew/console = locate_computer(/obj/machinery/computer/scan_consolenew)
