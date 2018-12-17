@@ -158,3 +158,4 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/datum/bank_account/D = H.get_bank_account()
 	D.welfare = TRUE
+	D.add_neetbux()
