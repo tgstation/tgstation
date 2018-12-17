@@ -96,6 +96,7 @@
 #define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
+#define BRAIN_TRAUMA_MAGIC /datum/brain_trauma/magic
 
 #define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
@@ -116,6 +117,7 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
+#define BIOWARE_LIGAMENTS "ligaments"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -278,3 +280,7 @@
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define GRAB_PIXEL_SHIFT_PASSIVE 6
+#define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
+#define GRAB_PIXEL_SHIFT_NECK 16

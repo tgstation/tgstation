@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Printed oxygen or plasma tanks at the protolathe are now empty."

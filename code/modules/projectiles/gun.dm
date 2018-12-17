@@ -21,8 +21,11 @@
 	var/fire_sound = "gunshot"
 	var/vary_fire_sound = TRUE
 	var/fire_sound_volume = 50
+	var/dry_fire_sound = 'sound/weapons/gun_dry_fire.ogg'
 	var/suppressed = null					//whether or not a message is displayed when fired
 	var/can_suppress = FALSE
+	var/suppressed_sound = 'sound/weapons/gunshot_silenced.ogg'
+	var/suppressed_volume = 10
 	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
 	var/clumsy_check = TRUE
@@ -140,7 +143,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(src, "gun_dry_fire", 30, TRUE)
+	playsound(src, dry_fire_sound, 30, TRUE)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
@@ -148,7 +151,7 @@
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
-		playsound(user, fire_sound, 10, vary_fire_sound)
+		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound)
 	else
 		playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)

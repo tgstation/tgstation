@@ -20832,11 +20832,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"aXu" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/autolathe,
-/turf/open/floor/plasteel/dark,
-/area/quartermaster/office)
 "aXv" = (
 /obj/machinery/newscaster{
 	pixel_x = 32
@@ -22390,6 +22385,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
+/obj/machinery/autolathe,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "baz" = (
@@ -55890,6 +55886,11 @@
 /obj/machinery/atmospherics/pipe/simple/purple/visible,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"jMS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/spawner/xmastree,
+/turf/open/floor/carpet,
+/area/library)
 "jOB" = (
 /turf/open/floor/plating,
 /area/storage/emergency/starboard)
@@ -79058,7 +79059,7 @@ cjQ
 cjQ
 cjQ
 cjQ
-cjQ
+jMS
 czL
 czY
 cAi
@@ -98494,7 +98495,7 @@ aTb
 aOT
 aVp
 aWu
-aXu
+aPW
 aYq
 aPY
 bav

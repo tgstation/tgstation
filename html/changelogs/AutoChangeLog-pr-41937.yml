@@ -1,0 +1,4 @@
+author: "Powercreep Balance Committee"
+delete-after: True
+changes: 
+  - rscdel: "Public autolathes have been removed. Please ask (or break into) cargo if you need something."

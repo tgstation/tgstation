@@ -14,6 +14,12 @@
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/beanbag_slug/sec
+	id = "sec_beanbag_slug"
+	build_type = PROTOLATHE
+	category = list("Ammo")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
 /datum/design/shotgun_slug/sec
 	id = "sec_slug"
 	build_type = PROTOLATHE

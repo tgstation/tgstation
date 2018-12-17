@@ -266,7 +266,7 @@
 
 /datum/reagent/medicine/oxandrolone/overdose_process(mob/living/M)
 	if(M.getFireLoss()) //It only makes existing burns worse
-		M.adjustFireLoss(4.5*REM, 0) // it's going to be healing either 4 or 0.5
+		M.adjustFireLoss(4.5*REM, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
 
@@ -334,8 +334,8 @@
 		holder.add_reagent("sugar", 1)
 		holder.remove_reagent("salglu_solution", 0.5)
 	if(prob(33))
-		M.adjustBruteLoss(0.5*REM, 0)
-		M.adjustFireLoss(0.5*REM, 0)
+		M.adjustBruteLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
+		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 		. = TRUE
 	..()
 
@@ -433,8 +433,8 @@
 /datum/reagent/medicine/omnizine/overdose_process(mob/living/M)
 	M.adjustToxLoss(1.5*REM, 0)
 	M.adjustOxyLoss(1.5*REM, 0)
-	M.adjustBruteLoss(1.5*REM, 0)
-	M.adjustFireLoss(1.5*REM, 0)
+	M.adjustBruteLoss(1.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(1.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -506,7 +506,7 @@
 
 /datum/reagent/medicine/sal_acid/overdose_process(mob/living/M)
 	if(M.getBruteLoss()) //It only makes existing bruises worse
-		M.adjustBruteLoss(4.5*REM, 0) // it's going to be healing either 4 or 0.5
+		M.adjustBruteLoss(4.5*REM, FALSE, FALSE, BODYPART_ORGANIC) // it's going to be healing either 4 or 0.5
 		. = 1
 	..()
 
@@ -790,11 +790,11 @@
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/carbon/human/M, method=TOUCH, reac_volume)
 	if(M.stat == DEAD)
-		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100)
+		if(M.getBruteLoss() >= 100 || M.getFireLoss() >= 100 || M.has_trait(TRAIT_HUSK))
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(M.has_trait(TRAIT_NOCLONE)) && !M.hellbound)
+		if(!M.suiciding && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))
@@ -824,7 +824,7 @@
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/carbon/C)
 	C.adjustBrainLoss(-2*REM)
 	..()
-	
+
 /datum/reagent/medicine/neurine
 	name = "Neurine"
 	id = "neurine"
@@ -934,7 +934,7 @@
 	. = 1
 
 /datum/reagent/medicine/bicaridine/overdose_process(mob/living/M)
-	M.adjustBruteLoss(4*REM, 0)
+	M.adjustBruteLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -970,7 +970,7 @@
 	. = 1
 
 /datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
-	M.adjustFireLoss(4*REM, 0)
+	M.adjustFireLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -1028,8 +1028,8 @@
 /datum/reagent/medicine/tricordrazine/overdose_process(mob/living/M)
 	M.adjustToxLoss(2*REM, 0)
 	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
-	M.adjustFireLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -1128,8 +1128,8 @@
 	return TRUE
 
 /datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0)
-	M.adjustFireLoss(3*REM, 0)
+	M.adjustBruteLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(3*REM, 0)
 	..()
 	return TRUE
