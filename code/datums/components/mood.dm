@@ -304,7 +304,7 @@
 
 
 /datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
-	switch(hygiene)
+	switch(H.hygiene)
 		if(0 to HYGIENE_LEVEL_DIRTY)
 			if(has_trait(TRAIT_NEAT))
 				add_event(null, "neat", /datum/mood_event/dirty)
@@ -324,7 +324,7 @@
 
 /datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
 	// Properly stored humans shouldn't create miasma
-	if(istype(C.loc, /obj/structure/closet/crate/coffin)|| istype(C.loc, /obj/structure/closet/body_bag) || istype(C.loc, /obj/structure/bodycontainer))
+	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
 		return
 
 	var/turf/T = get_turf(H)
