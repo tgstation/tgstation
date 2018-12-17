@@ -249,6 +249,10 @@
 			if(isliving(G))
 				var/mob/living/L = G
 				wash_mob(L)
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					if(H.wear_suit || H.w_uniform || H.shoes || M.ears || M.gloves || M.wear_mask || M.head)
+						to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>"
 			else if(isobj(G)) // Skip the light objects
 				wash_obj(G)
 	else
@@ -313,6 +317,10 @@
 			if(wash_mob(L)) //it's a carbon mob.
 				var/mob/living/carbon/C = L
 				C.slip(80,null,NO_SLIP_WHEN_WALKING)
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					if(H.wear_suit || H.w_uniform || H.shoes || M.ears || M.gloves || M.wear_mask || M.head)
+						to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>")
 		else if(isobj(AM))
 			wash_obj(AM)
 
@@ -385,7 +393,6 @@
 				H.update_inv_w_uniform()
 
 			if(H.wear_suit || H.w_uniform || H.shoes || M.ears || M.gloves || M.wear_mask || M.head)
-				to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>")
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
 			else
 				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
