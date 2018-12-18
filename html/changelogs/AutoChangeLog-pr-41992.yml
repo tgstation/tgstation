@@ -1,0 +1,4 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "ghosts can no longer regain their ability to re-enter their bodies through the DNR verb unless the reason they cannot re-enter was due to use of the verb in the first place"
