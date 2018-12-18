@@ -105,7 +105,7 @@
 	else
 		to_chat(src, msg)
 
-/mob/proc/display_output(sound/S, list/image, text, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+/mob/proc/display_output(sound/S, list/image_details, text, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	if(!can_hear())
 		return
 	//Process sound

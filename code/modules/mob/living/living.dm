@@ -1149,10 +1149,10 @@
 		client.images += sound_icon
 		addtimer(CALLBACK(src, .proc/remove_image, sound_icon), 7)
 
-/mob/living/proc/remove_image(image)
-	if(image && client)
-		client.images -= image
-		qdel(image)
+/mob/living/proc/remove_image(sound_image)
+	if(sound_image && client)
+		client.images -= sound_image
+		qdel(sound_image)
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))

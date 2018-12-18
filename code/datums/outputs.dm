@@ -3,7 +3,7 @@
 /datum/outputs
 	var/text = ""
 	var/list/sounds = 'sound/items/airhorn.ogg' //can be either a sound path or a WEIGHTED list, put multiple for random selection between sounds
-	var/list/image = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
+	var/list/vfx = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	var/sound/sound_output
@@ -64,7 +64,7 @@
 			sound_output.y = 1
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	receiver.display_output(sound_output, image, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."

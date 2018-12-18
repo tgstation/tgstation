@@ -1,5 +1,5 @@
 /datum/component/squeak
-	var/squeak_datum
+	var/datum/outputs/squeak_datum
 	var/squeak_chance = 100
 	var/volume = 30
 

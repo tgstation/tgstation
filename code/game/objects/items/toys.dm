@@ -986,7 +986,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
-	var/output
+	var/datum/outputs/output
 	var/cooldown = 0
 
 /obj/item/toy/nuke/Initialize()
