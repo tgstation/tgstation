@@ -48,7 +48,6 @@
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same
 	DiscoFever()
-	anchored = TRUE
 
 /obj/structure/etherealball/proc/TurnOff()
 	TurnedOn = FALSE
