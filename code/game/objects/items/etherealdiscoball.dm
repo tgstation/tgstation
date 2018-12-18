@@ -43,7 +43,7 @@
 		anchored = FALSE
 	else
 		to_chat(user, "<span class='notice'>You lock the Ethereal Disco Ball</span>")
-		anchored = FALSE
+ 		anchored = TRUE
 
 /obj/structure/etherealball/proc/TurnOn()
 	TurnedOn = TRUE //Same
