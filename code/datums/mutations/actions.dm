@@ -5,7 +5,7 @@
 	text_gain_indication = "<span class='notice'>You can hear your own voice echoing in your mind!</span>"
 	text_lose_indication = "<span class='notice'>You don't hear your mind echo anymore.</span>"
 	difficulty = 12
-	power = /obj/effect/proc_holder/spell/targeted/telepathy/genetic
+	power = /obj/effect/proc_holder/spell/targeted/telepathy
 	instability = 10
 
 /datum/mutation/human/telepathy/on_acquiring(mob/living/carbon/human/owner)
@@ -13,9 +13,6 @@
 
 /datum/mutation/human/telepathy/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-
-/obj/effect/proc_holder/spell/targeted/telepathy/genetic
-	magic_check = FALSE
 
 /datum/mutation/human/firebreath
 	name = "Fire Breath"
