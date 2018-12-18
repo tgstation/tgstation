@@ -275,7 +275,7 @@
 
 /obj/item/clothing/head/helmet/durathread
 	name = "durathread helmet"
-	desc = "A hardhat with strips of leather and durathread for additional blunt protection."
+	desc = "A helmet made from durathread and leather."
 	icon_state = "durathread"
 	item_state = "durathread"
 	armor = list("melee" = 25, "bullet" = 10, "laser" = 20,"energy" = 10, "bomb" = 30, "bio" = 15, "rad" = 20, "fire" = 100, "acid" = 50)
