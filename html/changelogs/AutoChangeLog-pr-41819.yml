@@ -1,0 +1,6 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - balance: "DNA-damaging methods (changeling draining, mainly) no longer prevent alternative revival methods, but can no longer be circumvented by upgrading DNA scanners."
+  - balance: "Any source of husking now prevents cloning on unupgraded cloning scanners, instead of only husking caused by changelings."
+  - balance: "Husking now fully prevents revival from several non-cloning methods, including defibrillation, surgery, and strange reagent."
