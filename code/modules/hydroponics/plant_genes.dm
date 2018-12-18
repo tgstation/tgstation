@@ -310,10 +310,10 @@
 
 /datum/plant_gene/trait/noreact/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
 	..()
-	G.reagents.set_reacting(FALSE)
+	ENABLE_BITFIELD(G.reagents, NO_REACT)
 
 /datum/plant_gene/trait/noreact/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	G.reagents.set_reacting(TRUE)
+	DISABLE_BITFIELD(G.reagents, NO_REACT)
 	G.reagents.handle_reactions()
 
 
