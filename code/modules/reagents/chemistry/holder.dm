@@ -161,7 +161,7 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0, mob/transfered_by)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = 1, no_react = 0, mob/transfered_by)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -201,7 +201,7 @@
 		src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
+/datum/reagents/proc/copy_to(obj/target, amount = 1, multiplier = 1, preserve_data = 1)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -232,7 +232,7 @@
 	src.handle_reactions()
 	return amount
 
-/datum/reagents/proc/trans_id_to(obj/target, reagent, amount=1, preserve_data=1)//Not sure why this proc didn't exist before. It does now! /N
+/datum/reagents/proc/trans_id_to(obj/target, reagent, amount = 1, preserve_data = 1)//Not sure why this proc didn't exist before. It does now! /N
 	var/list/cached_reagents = reagent_list
 	if (!target)
 		return
@@ -278,11 +278,11 @@
 			if(C.reagent_check(R) != 1)
 				if(can_overdose)
 					if(R.overdose_threshold)
-						if(R.volume >= R.overdose_threshold && !R.overdosed)
-							R.overdosed = 1
+						if(R.volume > R.overdose_threshold && !R.overdosed)
+							R.overdosed = TRUE
 							need_mob_update += R.overdose_start(C)
 					if(R.addiction_threshold)
-						if(R.volume >= R.addiction_threshold && !is_type_in_list(R, cached_addictions))
+						if(R.volume > R.addiction_threshold && !is_type_in_list(R, cached_addictions))
 							var/datum/reagent/new_reagent = new R.type()
 							cached_addictions.Add(new_reagent)
 					if(R.overdosed)
@@ -349,10 +349,10 @@
 	if(reagents_holder_flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
-	var/reaction_occurred = 0
+	var/reaction_occurred = FALSE
 	do
 		var/list/possible_reactions = list()
-		reaction_occurred = 0
+		reaction_occurred = FALSE
 		for(var/reagent in cached_reagents)
 			var/datum/reagent/R = reagent
 			for(var/reaction in cached_reactions[R.id]) // Was a big list but now it should be smaller since we filtered it with our reagent id
@@ -366,11 +366,11 @@
 				var/list/cached_required_catalysts = C.required_catalysts
 				var/total_required_catalysts = cached_required_catalysts.len
 				var/total_matching_catalysts= 0
-				var/matching_container = 0
-				var/matching_other = 0
+				var/matching_container = FALSE
+				var/matching_other = FALSE
 				var/required_temp = C.required_temp
 				var/is_cold_recipe = C.is_cold_recipe
-				var/meets_temp_requirement = 0
+				var/meets_temp_requirement = FALSE
 
 				for(var/B in cached_required_reagents)
 					if(!has_reagent(B, cached_required_reagents[B]))
@@ -382,29 +382,29 @@
 					total_matching_catalysts++
 				if(cached_my_atom)
 					if(!C.required_container)
-						matching_container = 1
+						matching_container = TRUE
 
 					else
 						if(cached_my_atom.type == C.required_container)
-							matching_container = 1
+							matching_container = TRUE
 					if (isliving(cached_my_atom) && !C.mob_react) //Makes it so certain chemical reactions don't occur in mobs
 						return
 					if(!C.required_other)
-						matching_other = 1
+						matching_other = TRUE
 
 					else if(istype(cached_my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/M = cached_my_atom
 
 						if(M.Uses > 0) // added a limit to slime cores -- Muskets requested this
-							matching_other = 1
+							matching_other = TRUE
 				else
 					if(!C.required_container)
-						matching_container = 1
+						matching_container = TRUE
 					if(!C.required_other)
-						matching_other = 1
+						matching_other = TRUE
 
 				if(required_temp == 0 || (is_cold_recipe && chem_temp <= required_temp) || (!is_cold_recipe && chem_temp >= required_temp))
-					meets_temp_requirement = 1
+					meets_temp_requirement = TRUE
 
 				if(total_matching_reagents == total_required_reagents && total_matching_catalysts == total_required_catalysts && matching_container && matching_other && meets_temp_requirement)
 					possible_reactions  += C
@@ -427,7 +427,7 @@
 				multiplier = min(multiplier, round(get_reagent_amount(B) / cached_required_reagents[B]))
 
 			for(var/B in cached_required_reagents)
-				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = 1)
+				remove_reagent(B, (multiplier * cached_required_reagents[B]), safety = TRUE)
 
 			for(var/P in selected_reaction.results)
 				multiplier = max(multiplier, 1) //this shouldnt happen ...
@@ -454,11 +454,11 @@
 							ME2.desc = "This extract has been used up."
 
 			selected_reaction.on_reaction(src, multiplier)
-			reaction_occurred = 1
+			reaction_occurred = TRUE
 
 	while(reaction_occurred)
 	update_total()
-	return 0
+	return FALSE
 
 /datum/reagents/proc/isolate_reagent(reagent)
 	var/list/cached_reagents = reagent_list
@@ -481,7 +481,7 @@
 			update_total()
 			if(my_atom)
 				my_atom.on_reagent_change(DEL_REAGENT)
-	return 1
+	return TRUE
 
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
@@ -493,16 +493,16 @@
 		else
 			total_volume += R.volume
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
 		del_reagent(R.id)
-	return 0
+	return FALSE
 
-/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = 1)
+/datum/reagents/proc/reaction(atom/A, method = TOUCH, volume_modifier = 1, show_message = TRUE)
 	var/react_type
 	if(isliving(A))
 		react_type = "LIVING"
@@ -548,7 +548,7 @@
 	var/S = specific_heat()
 	chem_temp = CLAMP(chem_temp + (J / (S * total_volume)), 2.7, 1000)
 
-/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = 0)
+/datum/reagents/proc/add_reagent(reagent, amount, list/data=null, reagtemp = 300, no_react = FALSE)
 	if(!isnum(amount) || !amount)
 		return FALSE
 
@@ -660,9 +660,9 @@
 				if(R.volume >= amount)
 					return R
 				else
-					return 0
+					return FALSE
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagent_amount(reagent)
 	var/list/cached_reagents = reagent_list
@@ -671,7 +671,7 @@
 		if (R.id == reagent)
 			return R.volume
 
-	return 0
+	return FALSE
 
 /datum/reagents/proc/get_reagents()
 	var/list/names = list()
@@ -682,22 +682,22 @@
 
 	return jointext(names, ",")
 
-/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = 0, safety = 1) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
+/datum/reagents/proc/remove_all_type(reagent_type, amount, strict = FALSE, safety = TRUE) // Removes all reagent of X type. @strict set to 1 determines whether the childs of the type are included.
 	if(!isnum(amount))
-		return 1
+		return TRUE
 	var/list/cached_reagents = reagent_list
-	var/has_removed_reagent = 0
+	var/has_removed_reagent = FALSE
 
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
-		var/matches = 0
+		var/matches = FALSE
 		// Switch between how we check the reagent type
 		if(strict)
 			if(R.type == reagent_type)
-				matches = 1
+				matches = TRUE
 		else
 			if(istype(R, reagent_type))
-				matches = 1
+				matches = TRUE
 		// We found a match, proceed to remove the reagent.	Keep looping, we might find other reagents of the same type.
 		if(matches)
 			// Have our other proc handle removement
@@ -745,7 +745,7 @@
 	var/list/cached_reagents = reagent_list
 	. = locate(type) in cached_reagents
 
-/datum/reagents/proc/generate_taste_message(minimum_percent=15)
+/datum/reagents/proc/generate_taste_message(minimum_percent = 15)
 	// the lower the minimum percent, the more sensitive the message is.
 	var/list/out = list()
 	var/list/tastes = list() //descriptor = strength
@@ -790,7 +790,7 @@
 
 	return english_list(out, "something indescribable")
 
-/datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+/datum/reagents/proc/expose_temperature(var/temperature, var/coeff = 0.02)
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)
 		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
