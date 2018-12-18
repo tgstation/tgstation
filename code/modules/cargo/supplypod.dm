@@ -30,7 +30,7 @@
 	var/effectQuiet = FALSE //The female sniper. If true, the pod makes no noise (including related explosions, opening sounds, etc)
 	var/effectMissile = FALSE //If true, the pod deletes the second it lands. If you give it an explosion, it will act like a missile exploding as it hits the ground
 	var/effectCircle = FALSE //If true, allows the pod to come in at any angle. Bit of a weird feature but whatever its here
-	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod. 
+	var/style = STYLE_STANDARD //Style is a variable that keeps track of what the pod is supposed to look like. It acts as an index to the POD_STYLES list in cargo.dm defines to get the proper icon/name/desc for the pod.
 	var/reversing = FALSE //If true, the pod will not send any items. Instead, after opening, it will close again (picking up items/mobs) and fly back to centcom
 	var/fallDuration = 4
 	var/fallingSoundLength = 11
@@ -80,7 +80,7 @@
 
 /obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
 	if (bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
-		return FALSE 
+		return FALSE
 	else
 		..()
 
@@ -121,9 +121,9 @@
 			for (var/obj/item/bodypart/bodypart in CM.bodyparts) //Look at the bodyparts in our poor mob beneath our pod as it lands
 				var/destination = get_edge_target_turf(T, pick(GLOB.alldirs))
 				if (bodypart.dismemberable)
-					bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!	
+					bodypart.dismember() //Using the power of flextape i've sawed this man's bodypart in half!
 					bodypart.throw_at(destination, 2, 3)
-					sleep(1)		
+					sleep(1)
 
 		if (effectGib) //effectGib is on, that means whatever's underneath us better be fucking oof'd on
 			M.adjustBruteLoss(5000) //THATS A LOT OF DAMAGE (called just in case gib() doesnt work on em)
@@ -169,10 +169,10 @@
 		playsound(get_turf(holder), leavingSound, soundVolume, 0, 0)
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
-	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists) 
-		if (style != STYLE_INVISIBLE) 
+	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
+		if (style != STYLE_INVISIBLE)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
-		qdel(src) //Delete ourselves and the holder 
+		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
 			qdel(holder)
 

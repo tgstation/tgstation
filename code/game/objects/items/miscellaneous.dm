@@ -23,6 +23,12 @@
 	if(canUseBeacon(user))
 		generate_options(user)
 
+/obj/item/choice_beacon/emag_act(mob/user)
+	if(!CHECK_BITFIELD(obj_flags, EMAGGED))
+		to_chat(user, "<span class='notice'>You modify [src] to connect to a Syndicate supplier. They have the same goods, they're just less careful when dropping them.</span>")
+		to_chat(user, "<span class='danger'>#@& CONNECTED TO: SYNDICATE SHOP(tm); HOW CAN WE TAKE YOUR ORDER &@#</span>")
+		ENABLE_BITFIELD(obj_flags, EMAGGED)
+
 /obj/item/choice_beacon/proc/generate_display_names() // return the list that will be used in the choice selection. entries should be in (type.name = type) fashion. see choice_beacon/hero for how this is done.
 	return list()
 
@@ -47,10 +53,14 @@
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
 	var/obj/new_item = new choice()
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
-	pod.explosionSize = list(0,0,0,2)
+	if(CHECK_BITFIELD(obj_flags, EMAGGED))
+		pod.explosionSize = list(0,1,3,3)
+		pod.setStyle(STYLE_SYNDICATE)
+	else
+		pod.explosionSize = list(0,0,0,0)
 	new_item.forceMove(pod)
-	var/msg = "<span class = danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
-	if (ishuman(M))
+	var/msg = "<span class=danger>After making your selection, you notice a strange target on the ground. It might be best to step back!</span>"
+	if(ishuman(M) && !CHECK_BITFIELD(obj_flags, EMAGGED))
 		var/mob/living/carbon/human/H = M
 		if(istype(H.ears, /obj/item/radio/headset))
 			msg = "You hear something crackle in your ears for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows: <span class='bold'>Item request received. Your package is inbound, please stand back from the landing site.</span> Message ends.\""
