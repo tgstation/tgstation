@@ -28,6 +28,12 @@
 	else
 		icon_state = "mixer0b"
 
+/obj/machinery/chem_heater/AltClick(mob/living/user)
+	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+		return
+	eject_beaker(user)
+	return
+
 /obj/machinery/chem_heater/proc/eject_beaker(mob/user)
 	if(beaker)
 		beaker.forceMove(drop_location())
@@ -65,9 +71,7 @@
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
-
+			eject_beaker(user)
 		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I

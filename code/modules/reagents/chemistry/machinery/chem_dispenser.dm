@@ -242,13 +242,8 @@
 				work_animation()
 				. = TRUE
 		if("eject")
-			if(beaker)
-				beaker.forceMove(drop_location())
-				if(Adjacent(usr) && !issilicon(usr))
-					usr.put_in_hands(beaker)
-				beaker = null
-				update_icon()
-				. = TRUE
+			eject_beaker(usr)
+			. = TRUE
 		if("dispense_recipe")
 			if(!is_operational() || QDELETED(cell))
 				return
@@ -411,7 +406,6 @@
 		var/list/fuck = splittext(reagents, "=")
 		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
 	return final_list
-
 
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
 	if(!istype(user) || !Adjacent(user) || user.incapacitated())
