@@ -209,7 +209,6 @@
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
-	var/unstoppable = (mover.movement_type & UNSTOPPABLE)
 	var/atom/firstbump
 	if(!CanPass(mover, src))
 		firstbump = src
@@ -221,7 +220,7 @@
 				break
 			var/atom/movable/thing = i
 			if(!thing.Cross(mover))
-				if(unstoppable)
+				if(CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
 					thing?.Bump(mover)
 					continue
 				else
@@ -229,14 +228,13 @@
 						firstbump = thing
 	if(firstbump)
 		mover?.Bump(firstbump)
-		return unstoppable
+		return CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
 	. = ..()
 	if(!.)
 		return FALSE
-	var/unstoppable = (mover.movement_type & UNSTOPPABLE)
 	for(var/i in contents)
 		if(QDELETED(mover))
 			break
@@ -246,7 +244,7 @@
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover?.Bump(thing)
-			if(!unstoppable)
+			if(!CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
 				return FALSE
 
 /turf/Entered(atom/movable/AM)

@@ -101,7 +101,10 @@ GLOBAL_LIST_INIT(bitfields, list(
 		),
 	"movement_type" = list(
 		"GROUND" = GROUND,
-		"FLYING" = FLYING
+		"FLYING" = FLYING,
+		"VENTCRAWLING" = VENTCRAWLING,
+		"FLOATING" = FLOATING,
+		"UNSTOPPABLE" = UNSTOPPABLE
 		),
 	"resistance_flags" = list(
 		"LAVA_PROOF" = LAVA_PROOF,
