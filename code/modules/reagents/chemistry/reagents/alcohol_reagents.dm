@@ -39,6 +39,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/booze_power = boozepwr
 		if(C.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
+		if(C.has_trait(TRAIT_LIGHT_DRINKER))
+			booze_power *= 2
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if (istype(L))

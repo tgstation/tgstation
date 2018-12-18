@@ -11,7 +11,7 @@
 //	select_query		:	'SELECT' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
 //	delete_query		:	'DELETE' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
 //	update_query		:	'UPDATE' select_list [('FROM' | 'IN') from_list] 'SET' assignments ['WHERE' bool_expression]
-//	call_query			:	'CALL' call_function ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
+//	call_query			:	'CALL' variable ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
 //
 //	select_list			:	select_item [',' select_list]
 //	select_item			:	'*' | select_function | object_type
@@ -28,7 +28,7 @@
 //
 //	assignments			:	assignment, [',' assignments]
 //	assignment			:	<variable name> '=' expression
-//	variable			:	<variable name> | <variable name> '.' variable
+//	variable			:	<variable name> | <variable name> '.' variable | call_function
 //
 //	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
 //	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
