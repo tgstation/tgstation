@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - balance: "Holymelons can now block a limited amount of spells: one spell per 20 points of potency. They will not consume charges when blocking passive or continuous magical effects."
-  - balance: "Anti-magic items no longer work when put inside backpacks."
-  - bugfix: "Gem-encrusted hardsuits no longer block spellcasting."

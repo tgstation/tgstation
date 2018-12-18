@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Fixes bug where sufferers of monophobia would enter negative
-stress levels when around people."

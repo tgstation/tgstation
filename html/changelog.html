@@ -55,6 +55,58 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">18 December 2018</h2>
+			<h3 class="author">4dplanner updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Re-added autoprocessing function on the cloner</li>
+				<li class="balance">records now have an associated last death time, which must sync with the mind to clone. This means you need a new record every time someone dies.</li>
+				<li class="rscadd">diskette records can be partially applied to records in the cloner, for instance to overwrite a name.</li>
+				<li class="rscadd">you can still scan living people to obtain their records for disk use, but these records can't be cloned from.</li>
+				<li class="bugfix">cloning records are no longer based upon ckey</li>
+				<li class="tweak">ghosts are no longer required for scanning</li>
+				<li class="balance">genetics access is required to alter and delete records</li>
+				<li class="rscadd">do not resuscitate verb added for ghosts (can be toggled on and off)</li>
+				<li class="bugfix">ghosts can no longer regain their ability to re-enter their bodies through the DNR verb unless the reason they cannot re-enter was due to use of the verb in the first place</li>
+			</ul>
+			<h3 class="author">Floyd / Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixes ethereal runtime</li>
+			</ul>
+			<h3 class="author">Kierany9 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Several minor updates to Assimilation.</li>
+				<li class="balance">Hosts no longer lose abilities if they fall below the required hive size.</li>
+				<li class="balance">Mind Control victims can no longer see nor hear for the duration of the control.</li>
+				<li class="tweak">Distortion Field now affects the victim and those surrounding them over time instead of instantly.</li>
+				<li class="bugfix">Abilities that inflict stamina damage now affect the head instead of spreading damage over the entire body.</li>
+				<li class="tweak">Mind Control now informs you of how long you have control for upon activation.</li>
+				<li class="tweak">Changed various do_mob for do_after. All hivemind abilities except for Mass Assimilation should now work in certain situations where they didn't before.</li>
+				<li class="balance">Abusing the sleep verb while mind controlling is no longer a viable tactic.</li>
+				<li class="balance">Assimilating/removing people into/from the hive now has screen-wide range, with time taken to assimilate increasing exponentially with distance. The time to assimilate from 4 tiles away is approximately the same. Assimilation's cooldown has also been increased by five seconds to compensate.</li>
+			</ul>
+			<h3 class="author">Mickyan updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Added the Hypersensitive and Light Drinker quirks</li>
+			</ul>
+			<h3 class="author">Powercreep Balance Committee updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">Public autolathes have been removed. Please ask (or break into) cargo if you need something.</li>
+			</ul>
+			<h3 class="author">XDTM updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="balance">Holymelons can now block a limited amount of spells: one spell per 20 points of potency. They will not consume charges when blocking passive or continuous magical effects.</li>
+				<li class="balance">Anti-magic items no longer work when put inside backpacks.</li>
+				<li class="bugfix">Gem-encrusted hardsuits no longer block spellcasting.</li>
+				<li class="balance">DNA-damaging methods (changeling draining, mainly) no longer prevent alternative revival methods, but can no longer be circumvented by upgrading DNA scanners.</li>
+				<li class="balance">Any source of husking now prevents cloning on unupgraded cloning scanners, instead of only husking caused by changelings.</li>
+				<li class="balance">Husking now fully prevents revival from several non-cloning methods, including defibrillation, surgery, and strange reagent.</li>
+			</ul>
+			<h3 class="author">coiax updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Printed oxygen or plasma tanks at the protolathe are now empty.</li>
+				<li class="bugfix">Fixes bug where sufferers of monophobia would enter negative stress levels when around people.</li>
+			</ul>
+
 			<h2 class="date">16 December 2018</h2>
 			<h3 class="author">Floyd/Qustinnus, paid for by Kryson updated:</h3>
 			<ul class="changes bgimages16">
@@ -1461,46 +1513,6 @@
 			<ul class="changes bgimages16">
 				<li class="tweak">borg upgrades price changes</li>
 				<li class="tweak">mediborg chemical upgrades have been unified</li>
-			</ul>
-
-			<h2 class="date">16 October 2018</h2>
-			<h3 class="author">ShizCalev updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Due to a recent policy review by Nanotrasen Central Command, we have determined that personnel who have committed suicide are too great of a risk to be borged, and are making half of the Robotics staff's job redundant (we pay them good money to do that!) As such, suicide is now considered a PERMANENT decision.</li>
-				<li class="bugfix">Fixed a specific scenario where ghosts would not be passed their suicider status.</li>
-				<li class="bugfix">Fixed a specific scenario where brains that suicided would not have their suicider var corrected upon being revived.</li>
-				<li class="bugfix">Defibrillator units will now correctly consider 180 damage in either brute or burn damage to be the cutoff for revival (down from 181.)</li>
-				<li class="bugfix">Fixed mobs suiciding in VR.</li>
-				<li class="bugfix">Admin revives will now properly restore mutant organs.</li>
-			</ul>
-			<h3 class="author">deathride58 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Mechs now properly filter out non-ascii input, and can no longer have null names</li>
-			</ul>
-			<h3 class="author">spook-o-log updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds the intelliLantern, a big ol' spooky intelliCard skin</li>
-				<li class="rscadd">crafting recipe for the new intelliCard skin (requires 1 pumpkin, 1 intelliCard, 5 cables and a wirecutter as a tool)</li>
-				<li class="tweak">changed the intelliTater crafting recipe to match the intelliLantern recipe (but with a potato for obvious reasons)</li>
-			</ul>
-
-			<h2 class="date">15 October 2018</h2>
-			<h3 class="author">Confused Rock updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Pais can now install the loudness booster to play horrible music so they can sound and look awful at the same time!</li>
-			</ul>
-			<h3 class="author">Iamgoofball updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">If you are somehow a revolutionary head as a monkey, you can now properly teach others the plight of the working class.</li>
-				<li class="bugfix">A monkey with superior intellect can also now be taught the way of Marx.</li>
-			</ul>
-			<h3 class="author">Naksu updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">the hazy chameleon effect has been restored to the saboteur borg's chameleon module</li>
-			</ul>
-			<h3 class="author">Swindly updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixed urinal cakes being inedible</li>
 			</ul>
 		</div>
 
