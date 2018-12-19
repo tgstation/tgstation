@@ -65,7 +65,10 @@
 		return
 
 	if(length(ingredients))
-		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		if(issilicon(user))
+			to_chat(user, "<span class='notice'>\The [src] camera shows:</span>")
+		else
+			to_chat(user, "<span class='notice'>\The [src] contains:</span>")
 		var/list/items_counts = new
 		for(var/i in ingredients)
 			if(istype(i, /obj/item/stack))
