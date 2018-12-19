@@ -27,6 +27,9 @@
 					M.visible_message("<span class='danger'>The bluespace collapse crushes the air towards it, pulling [M] towards the ground...</span>")
 					M.Paralyze(5, TRUE, TRUE)		//Overrides stun absorbs.
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
+		for(var/fabricarea in get_areas(/area/fabric_of_reality))
+			var/area/fabric_of_reality/R = fabricarea
+			R.origin = loccheck
 		for (var/obj/structure/ladder/unbreakable/binary/ladder in GLOB.ladders)
 			ladder.ActivateAlmonds()
 		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
