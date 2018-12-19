@@ -121,7 +121,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(elements.len < max_elements)
 		var/elements_to_add = max_elements - elements.len
 		for(var/i in 1 to elements_to_add) //Create all elements
-			var/obj/screen/radial/new_element = new /obj/screen/radial/slice
+			var/obj/screen/radial/slice/new_element = new /obj/screen/radial/slice
 			new_element.tooltips = use_tooltips
 			new_element.parent = src
 			elements += new_element
