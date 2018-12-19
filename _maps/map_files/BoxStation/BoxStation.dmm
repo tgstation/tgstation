@@ -4833,7 +4833,6 @@
 /turf/open/floor/plasteel,
 /area/security/courtroom)
 "ajS" = (
-/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -4849,6 +4848,10 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/door/window/southleft{
+	name = "Court Cell";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
