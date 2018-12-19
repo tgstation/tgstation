@@ -282,8 +282,6 @@
 	qdel(parser)
 	return querys
 
-
-
 /proc/SDQL_testout(list/query_tree, indent = 0)
 	var/static/whitespace = "&nbsp;&nbsp;&nbsp; "
 	var/spaces = ""
