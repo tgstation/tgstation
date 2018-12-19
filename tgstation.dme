@@ -1254,6 +1254,7 @@
 #include "code\modules\antagonists\clockcult\clock_structures\trap_triggers\repeater.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\traps\brass_skewer.dm"
 #include "code\modules\antagonists\clockcult\clock_structures\traps\steam_vent.dm"
+#include "code\modules\antagonists\creep\creep.dm"
 #include "code\modules\antagonists\cult\blood_magic.dm"
 #include "code\modules\antagonists\cult\cult.dm"
 #include "code\modules\antagonists\cult\cult_comms.dm"

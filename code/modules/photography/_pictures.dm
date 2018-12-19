@@ -1,6 +1,7 @@
 /datum/picture
 	var/picture_name = "picture"
 	var/picture_desc = "This is a picture."
+	var/mobs_seen = list()
 	var/caption
 	var/icon/picture_image
 	var/icon/picture_icon
@@ -10,11 +11,13 @@
 	var/logpath						//If the picture has been logged this is the path.
 	var/id							//this var is NOT protected because the worst you can do with this that you couldn't do otherwise is overwrite photos, and photos aren't going to be used as attack logs/investigations anytime soon.
 
-/datum/picture/New(name, desc, image, icon, size_x, size_y, bp, caption_, autogenerate_icon)
+/datum/picture/New(name, desc, mobs_spotted, image, icon, size_x, size_y, bp, caption_, autogenerate_icon)
 	if(!isnull(name))
 		picture_name = name
 	if(!isnull(desc))
 		picture_desc = desc
+	if(!isnull(mobs_spotted))
+		mobs_seen = mobs_spotted
 	if(!isnull(image))
 		picture_image = image
 	if(!isnull(icon))
