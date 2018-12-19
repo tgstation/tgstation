@@ -137,7 +137,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
+/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, mutation_index, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -220,12 +220,6 @@
 		for(var/V in quirks)
 			var/datum/quirk/Q = new V(H)
 			Q.on_clone(quirks[V])
-
-		for(var/t in traumas)
-			var/datum/brain_trauma/BT = t
-			var/datum/brain_trauma/cloned_trauma = BT.on_clone()
-			if(cloned_trauma)
-				H.gain_trauma(cloned_trauma, BT.resilience)
 
 		H.set_cloned_appearance()
 

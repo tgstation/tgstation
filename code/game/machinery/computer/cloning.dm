@@ -260,13 +260,6 @@
 		var/datum/quirk/T = V
 		quirks[T.type] = T.clone_data()
 
-	var/list/traumas = list()
-
-	if(ishuman(mob_occupant))
-		traumas = C.get_traumas()
-	if(isbrain(mob_occupant))
-		traumas = B.get_traumas()
-
 	var/obj/machinery/clonepod/pod = GetAvailablePod()
 	//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 	if(!LAZYLEN(pods))
@@ -281,7 +274,7 @@
 	else if(pod.occupant)
 		temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-	else if(pod.growclone(mob_occupant.ckey, mob_occupant.real_name, dna.uni_identity, dna.mutation_index, mind, mrace, dna.features, mob_occupant.faction, quirks, has_bank_account, traumas))
+	else if(pod.growclone(mob_occupant.ckey, mob_occupant.real_name, dna.uni_identity, dna.mutation_index, mind, mrace, dna.features, mob_occupant.faction, quirks, has_bank_account))
 		temp = "[mob_occupant.real_name] => <font class='good'>Cloning cycle in progress...</font>"
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 	else
