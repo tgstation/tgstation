@@ -29,7 +29,7 @@
 		icon_state = "mixer0b"
 
 /obj/machinery/chem_heater/AltClick(mob/living/user)
-	if(!istype(user) || !Adjacent(user) || user.incapacitated())
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	eject_beaker(user)
 	return
@@ -37,10 +37,23 @@
 /obj/machinery/chem_heater/proc/eject_beaker(mob/user)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
 			user.put_in_hands(beaker)
 		beaker = null
 		update_icon()
+
+/obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	var/obj/item/reagent_containers/newbeaker = new_beaker
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(newbeaker)
+		beaker = newbeaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
 
 /obj/machinery/chem_heater/RefreshParts()
 	heater_coefficient = 0.1
@@ -70,12 +83,14 @@
 
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		. = 1 //no afterattack
-		if(beaker)
-			eject_beaker(user)
-		if(!user.transferItemToLoc(I, src))
+		var/obj/item/reagent_containers/B = I
+		if(!user.transferItemToLoc(B, src))
 			return
-		beaker = I
-		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
+		if(beaker)
+			replace_beaker(user, B)
+		beaker = B
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_icon()
 		return
 	return ..()

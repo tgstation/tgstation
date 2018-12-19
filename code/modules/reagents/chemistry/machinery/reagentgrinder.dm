@@ -39,16 +39,10 @@
 /obj/machinery/reagentgrinder/proc/eject_beaker(mob/user)
 	if(beaker)
 		beaker.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
+		if(user && Adjacent(user) && !issilicon(user))
 			user.put_in_hands(beaker)
 		beaker = null
 		update_icon()
-
-/obj/machinery/reagentgrinder/AltClick(mob/living/user)
-	if(!istype(user) || !Adjacent(user) || user.incapacitated())
-		return
-	eject_beaker(user)
-	return
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
@@ -109,6 +103,19 @@
 	else
 		icon_state = "juicer0"
 
+/obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	var/obj/item/reagent_containers/newbeaker = new_beaker
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(newbeaker)
+		beaker = newbeaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
 	//You can only screw open empty grinder
 	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -124,15 +131,16 @@
 		return TRUE
 
 	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		if (!beaker)
-			if(!user.transferItemToLoc(I, src))
-				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
-				return TRUE
-			to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
-			beaker = I
-			update_icon()
-		else
-			to_chat(user, "<span class='warning'>There's already a container inside [src].</span>")
+		var/obj/item/reagent_containers/B = I
+		. = 1 //no afterattack
+		if(!user.transferItemToLoc(B, src))
+			return
+		if(beaker)
+			replace_beaker(user, B)
+		beaker = B
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
+		update_icon()
 		return TRUE //no afterattack
 
 	if(holdingitems.len >= limit)
