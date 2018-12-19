@@ -83,28 +83,24 @@
 
 /mob/proc/blur_eyes(amount)
 	if(amount>0)
-		var/old_eye_blurry = eye_blurry
 		eye_blurry = max(amount, eye_blurry)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+	update_eye_blur()
 
 /mob/proc/adjust_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(eye_blurry+amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry && !eye_blurry)
-		clear_fullscreen("blurry")
+	update_eye_blur()
 
 /mob/proc/set_blurriness(amount)
-	var/old_eye_blurry = eye_blurry
 	eye_blurry = max(amount, 0)
-	if(amount>0)
-		if(!old_eye_blurry)
-			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
-	else if(old_eye_blurry)
-		clear_fullscreen("blurry")
+	update_eye_blur()
+
+/mob/proc/update_eye_blur()
+	if(!client)
+		return
+	var/obj/screen/plane_master/floor/OT = locate(/obj/screen/plane_master/floor) in client.screen
+	var/obj/screen/plane_master/game_world/GW = locate(/obj/screen/plane_master/game_world) in client.screen
+	GW.backdrop(src)
+	OT.backdrop(src)
 
 /////////////////////////////////// DRUGGY ////////////////////////////////////
 

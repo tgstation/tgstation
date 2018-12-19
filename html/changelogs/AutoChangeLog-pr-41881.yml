@@ -1,4 +1,0 @@
-author: "monster860"
-delete-after: True
-changes: 
-  - bugfix: "Fixes teleport runes not working, at all."

@@ -162,7 +162,7 @@
 		if(stress > 10 && (prob(5)))
 			stress_reaction()
 	else
-		stress -= 4
+		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	if(owner.has_trait(TRAIT_BLIND))
