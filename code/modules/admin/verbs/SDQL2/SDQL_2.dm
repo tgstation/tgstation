@@ -213,7 +213,6 @@
 				for(var/i in objs)
 					SDQL_print(i, text_list)
 					refs[REF(i)] = TRUE
-					text_list += "<br>"
 					CHECK_TICK
 				var/text = text_list.Join()
 				if (text)
@@ -329,8 +328,8 @@
 				out += d
 			CHECK_TICK
 		return out
-
-	type = text2path(type)
+	if(istext(type))
+		type = text2path(type)
 	var/typecache = typecacheof(type)
 
 	if(ispath(type, /mob))
@@ -715,7 +714,7 @@
 /proc/SDQL_is_proper_datum(thing)
 	return istype(thing, /datum) || istype(thing, /client)
 
-/proc/SDQL_print(object, list/text_list)
+/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
 	if(SDQL_is_proper_datum(object))
 		text_list += "<A HREF='?_src_=vars;[HrefToken()];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
 		if(istype(object, /atom))
@@ -736,7 +735,7 @@
 				text_list += " <font color='gray'>in</font> area [a]"
 				if(T.loc != a)
 					text_list += " <font color='gray'>inside</font> [T]"
-
+		text_list += "<br>"
 	else if(islist(object))
 		var/list/L = object
 		var/first = TRUE
@@ -749,9 +748,9 @@
 			if (!isnull(x) && !isnum(x) && L[x] != null)
 				text_list += " -> "
 				SDQL_print(L[L[x]])
-		text_list += "]"
+		text_list += "]<br>"
 	else
-		if(isnull(object))
-			text_list += "NULL"
+		if(isnull(object) && print_nulls)
+			text_list += "NULL<br>"
 		else
-			text_list += "[object]"
+			text_list += "[object]<br>"
