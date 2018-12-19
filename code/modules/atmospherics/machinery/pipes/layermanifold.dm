@@ -61,12 +61,11 @@
 	var/image/I
 
 	if(p_color)
-		I = getpipeimage(icon, "pipe", p_dir, p_color)
+		I = getpipeimage(icon, "pipe", p_dir, p_color, piping_layer = piping_layer)
 	else
-		I = getpipeimage(icon, "pipe", p_dir)
+		I = getpipeimage(icon, "pipe", p_dir, piping_layer = piping_layer)
 
 	I.layer = layer - 0.01
-	PIPING_LAYER_SHIFT(I, p_layer)
 	add_overlay(I)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/SetInitDirections()
