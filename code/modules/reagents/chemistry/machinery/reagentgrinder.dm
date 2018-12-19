@@ -112,17 +112,17 @@
 	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		if (!beaker)
 			if(!user.transferItemToLoc(I, src))
-				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
+				to_chat(user, "<span class='warning'>\The [I] is stuck to your hand!</span>")
 				return TRUE
-			to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
+			to_chat(user, "<span class='notice'>You slide [I] into \the [src].</span>")
 			beaker = I
 			update_icon()
 		else
-			to_chat(user, "<span class='warning'>There's already a container inside [src].</span>")
+			to_chat(user, "<span class='warning'>There's already a container inside \the [src].</span>")
 		return TRUE //no afterattack
 
 	if(holdingitems.len >= limit)
-		to_chat(user, "<span class='warning'>[src] is filled to capacity!</span>")
+		to_chat(user, "<span class='warning'>\The [src] is filled to capacity!</span>")
 		return TRUE
 
 	//Fill machine with a bag!
