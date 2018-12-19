@@ -28,6 +28,10 @@
 	var/static/radial_eject = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject")
 	var/static/radial_use = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_use")
 
+	// we show the button even if the proc will not work
+	var/static/list/radial_options = list("eject" = radial_eject, "use" = radial_use)
+	var/static/list/ai_radial_options = list("eject" = radial_eject, "use" = radial_use, "examine" = radial_examine)
+
 /obj/machinery/microwave/Initialize()
 	. = ..()
 	wires = new /datum/wires/microwave(src)
@@ -101,7 +105,7 @@
 		return
 
 	if(dirty < 100)
-		if(default_deconstruction_screwdriver(user, "", "", O) || default_unfasten_wrench(user, O))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O) || default_unfasten_wrench(user, O))
 			update_icon()
 			return
 
@@ -192,27 +196,17 @@
 
 	if(operating || panel_open || !anchored || !user.canUseTopic(src))
 		return
-
-	var/list/options = list()
-
-	if(length(ingredients))
-		options["eject"] = radial_eject
-		options["use"] = radial_use // if there is no power or it's broken, the proc will fail but the button will still show
-
-	if(isAI(user))
-		if(stat & NOPOWER)
-			return
-		options["examine"] = radial_examine
-
-	var/choice
-
-	if(length(options) < 1)
+	if(isAI(user) && (stat & NOPOWER))
 		return
-	if(length(options) == 1)
-		for(var/key in options)
-			choice = key
-	else
-		choice = show_radial_menu(user, src, options, require_near = !issilicon(user))
+
+	if(!length(ingredients))
+		if(isAI(user))
+			examine(user)
+		else
+			to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
+		return
+
+	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
 
 	// post choice verification
 	if(operating || panel_open || !anchored || !user.canUseTopic(src))
