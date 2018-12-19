@@ -40,7 +40,7 @@
 
 	var/list/buffer[NUMBER_OF_BUFFERS]
 	var/list/stored_mutations = list()
-	var/list/chromosome_storage = list()
+	var/list/stored_chromosomes = list()
 
 	var/injectorready = 0	//world timer cooldown var
 	var/jokerready = 0
@@ -62,11 +62,28 @@
 			src.updateUsrDialog()
 			return
 	if (istype(I, /obj/item/chromosome))
-		if(LAZYLEN(chromosomes) < max_chromosomes)
+		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
 			I.forceMove(src)
-			chromosomes.Add(I)
+			stored_chromosomes.Add(I)
+			to_chat(user, "<span class='notice'>You insert [I]</span>")
 		else
 			to_chat(user, "<span class='warnning'>You cannot store any more chromosomes.</span>")
+		return
+	if(istype(I, /obj/item/dnainjector/activator))
+		var/obj/item/dnainjector/activator/A = I
+		if(A.used)
+			to_chat(user,"<span class='notice'>Recycled [I].</span>")
+			if(A.research)
+				var/c_typepath = generate_chromosome()
+				var/obj/item/chromosome/CM = new c_typepath (drop_location())
+				to_chat(user,"<span class='notice'>Recycled [I].</span>")
+				if(LAZYLEN(stored_chromosomes) < max_chromosomes)
+					CM.forceMove(src)
+					stored_chromosomes.Add(CM)
+					to_chat(user,"<span class='notice'>[capitalize(CM)] added to storage.</span>")
+			qdel(I)
+			return
+
 	else
 		return ..()
 
@@ -224,7 +241,7 @@
 						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "---------"
-			temp_html += "</div></div><h1>Buffer Menu</h1>"
+			temp_html += "</div></div><br><h1>Buffer Menu</h1>"
 
 			if(istype(buffer))
 				for(var/i=1, i<=buffer.len, i++)
@@ -343,11 +360,12 @@
 					temp_html += "<td><span class='linkOff'>Combine</span></td></tr>"
 				else
 					temp_html += "<td><a href='?src=[REF(src)];task=combine;num=[i]'>Combine</a></td></tr>"
-			temp_html += "</table>"
+			temp_html += "</table><br>"
 			temp_html += "<h3>Chromosome Storage:<br></h3>"
 			temp_html += "<table>"
-			for(var/obj/item/chromosome/CM in stored_mutations)
-				temp_html += "<td><a href='?src=[REF(src)];task=ejectchromosome;num=[i]'>[HM.name]</a></td>"
+			for(var/obj/item/chromosome/CM in stored_chromosomes)
+				var/i = stored_chromosomes.Find(CM)
+				temp_html += "<td><a href='?src=[REF(src)];task=ejectchromosome;num=[i]'>[CM.name]</a></td>"
 			temp_html += "</table>"
 
 		else
@@ -421,7 +439,7 @@
 		mut_desc = A.desc
 		discovered = TRUE
 	var/extra
-	if(viable_occupant && !(storage_slot || mutation_in_sequence(mutation, viable_occupant.dna)))
+	if(viable_occupant && !(storage_slot || viable_occupant.dna.mutation_in_sequence(mutation)))
 		extra = TRUE
 
 	if(discovered && !scrambled)
@@ -439,13 +457,12 @@
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
 	if(active && !storage_slot)
 		var/datum/mutation/human/HM = get_valid_mutation(mutation)
-		if(HM && HM.can_chromosome)
+		if(HM && HM.can_chromosome && (HM in viable_occupant.dna.mutations))
+			var/i = viable_occupant.dna.mutations.Find(HM)
 			var/chromosome_name = "<a href='?src=[REF(src)];task=applychromosome;path=[mutation];num=[i];'>----</a>"
 			if(HM.chromosome_name)
 				chromosome_name = HM.chromosome_name
 			temp_html += "<div class='statusLine'>Chromosome status: [chromosome_name]<br></div>"
-
-		temp_html += "<div class='statusLine'>Chromosome status: ----<br><br></div>"
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
 		for(var/block in 1 to A.blocks)
@@ -690,9 +707,10 @@
 					var/datum/mutation/human/HM = get_valid_mutation(mutation)
 					if(HM)
 						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
-						I.add_mutations += HM.type
+						I.add_mutations += new HM.type (copymut = HM)
 						I.name = "[HM.name] activator"
 						I.damage_coeff = connected.damage_coeff*4
+						I.research = TRUE
 						injectorready = world.time + INJECTOR_TIMEOUT
 		if("mutator")
 			if(injectorready < world.time)
@@ -701,7 +719,7 @@
 					var/datum/mutation/human/HM = get_valid_mutation(mutation)
 					if(HM)
 						var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
-						I.add_mutations += HM.type
+						I.add_mutations += new HM.type (copymut = HM)
 						I.doitanyway = TRUE
 						I.name = "[HM.name] injector"
 						I.damage_coeff = connected.damage_coeff
@@ -709,7 +727,7 @@
 		if("nullify")
 			if(viable_occupant)
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
-				if(A && (!mutation_in_sequence(current_mutation, viable_occupant.dna) || A.scrambled))
+				if(A && (!viable_occupant.dna.mutation_in_sequence(current_mutation) || A.scrambled))
 					viable_occupant.dna.remove_mutation(current_mutation)
 					current_screen = "mainmenu"
 					current_mutation = null
@@ -779,23 +797,23 @@
 				else
 					to_chat(usr, "<span class='warning'>Not enough space to store potential mutation.</span>")
 		if("ejectchromosome")
-			if(LAZYLEN(chromosome_storage) <= num)
-			var/obj/item/chromosome/CM = chromosome_storage[num]
+			if(LAZYLEN(stored_chromosomes) <= num)
+				var/obj/item/chromosome/CM = stored_chromosomes[num]
 				CM.forceMove(drop_location())
 				adjust_item_drop_location(CM)
-				chromosomes_storage.Remove(CM)
+				stored_chromosomes.Remove(CM)
 		if("applychromosome")
 			if(viable_occupant && (LAZYLEN(viable_occupant.dna.mutations) <= num))
 				var/datum/mutation/human/HM = viable_occupant.dna.mutations[num]
 				var/list/chromosomes = list()
-				for(var/obj/item/chromosome/CM in chromosome_storage)
+				for(var/obj/item/chromosome/CM in stored_chromosomes)
 					if(CM.can_apply(HM))
 						chromosomes.Add(CM)
 				if(LAZYLEN(chromosomes))
 					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in chromosomes
 					if(CM)
-						to_chat(user, "<span class='notice'>You apply [CM] to [HM.name].")
-						chromosome_storage.Remove(CM)
+						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].")
+						stored_chromosomes.Remove(CM)
 						CM.apply(HM)
 
 	ui_interact(usr,last_change)

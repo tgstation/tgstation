@@ -1,6 +1,6 @@
 /obj/item/chromosome
 	name = "blank chromosome"
-	icon = 'icons/obj/chromosomes'
+	icon = 'icons/obj/chromosomes.dmi'
 	icon_state = ""
 	desc = "A tube holding chromosomic data."
 	force = 0
@@ -11,10 +11,12 @@
 	var/power_coeff = 1 //higher is better
 	var/energy_coeff = 1 //lower is better
 
-/obj/item/chromosome/stabilizer/proc/can_apply(datum/mutation/human/HM)
+	var/weight = 5
+
+/obj/item/chromosome/proc/can_apply(datum/mutation/human/HM)
 	if(!HM || !(HM.can_chromosome == 1))
 		return
-	if((stabilizer_coeff != 1) && (HM.stabilizer_coeff != -1)) //if the chromosome is 1, we dont change anything. If the mutation is -1, we can change it. sorry
+	if((stabilizer_coeff != 1) && (HM.stabilizer_coeff != -1)) //if the chromosome is 1, we dont change anything. If the mutation is -1, we cant change it. sorry
 		return TRUE
 	if((synchronizer_coeff != 1) && (HM.synchronizer_coeff != -1))
 		return TRUE
@@ -23,7 +25,7 @@
 	if((energy_coeff != 1) && (HM.energy_coeff != -1))
 		return TRUE
 
-/obj/item/chromosome/stabilizer/proc/apply(datum/mutation/human/HM)
+/obj/item/chromosome/proc/apply(datum/mutation/human/HM)
 	if(!HM || !HM.can_chromosome)
 		return
 	if(HM.stabilizer_coeff != -1)
@@ -34,13 +36,33 @@
 		HM.power_coeff = power_coeff
 	if(HM.energy_coeff != -1)
 		HM.energy_coeff = energy_coeff
-	HM.can_chromosome = FALSE
+	HM.can_chromosome = 2
+	HM.chromosome_name = name
 	qdel(src)
+
+/proc/generate_chromosome()
+	var/static/list/chromosomes
+	to_chat(world, "1")
+	if(!chromosomes)
+		to_chat(world, "2")
+		chromosomes = list()
+		for(var/A in subtypesof(/obj/item/chromosome))
+			to_chat(world, "3-[A]")
+			var/obj/item/chromosome/CM = A
+			to_chat(world, "4-[CM]")
+			if(!initial(CM.weight))
+				to_chat(world, "5")
+				break
+			chromosomes[A] = initial(CM.weight)
+	var/deleteme = pickweight(chromosomes)
+	to_chat(world, "6-[deleteme]")
+	return deleteme
+
 
 /obj/item/chromosome/stabilizer
 	name = "stabilizer chromosome"
 	icon_state = "stabilizer"
-	stabilizier_coeff = 0.5
+	stabilizer_coeff = 0.5
 
 /obj/item/chromosome/synchronizer
 	name = "synchronizer chromosome"
@@ -50,10 +72,10 @@
 /obj/item/chromosome/power
 	name = "power chromosome"
 	icon_state = "power"
-	stabilizier_coeff = 1.5
+	power_coeff = 1.5
 
 /obj/item/chromosome/energy
 	name = "stabilizer chromosome"
 	icon_state = "stabilizer"
-	stabilizier_coeff = 0.5
+	energy_coeff = 0.5
 

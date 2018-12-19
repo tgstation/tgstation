@@ -32,21 +32,24 @@
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
 
-	//Chromosome stuff - set to -1 to prevent people from applying that chromosome
-	var/can_chromosome = 1 //can we take chromosomes? 0: never,  1:yeah, 2: already have one
+	var/can_chromosome = 1 //can we take chromosomes? 0: never,  1:yeah, 2: no, already have one
 	var/chromosome_name   //purely cosmetic
 	var/mutadone_proof = FALSE
+
+	//Chromosome stuff - set to -1 to prevent people from applying that chromosome
 	var/stabilizer_coeff = 1 //genetic stability coeff
 	var/synchronizer_coeff = 1 //makes the mutation hurt the user less
 	var/power_coeff = 1 //boosts mutation strength
 	var/energy_coeff = 1 //lowers mutation cooldown
 
-/datum/mutation/human/New(class_ = MUT_OTHER, timer)
+/datum/mutation/human/New(class_ = MUT_OTHER, timer, copymut)
 	. = ..()
 	class = class_
 	if(timer)
 		addtimer(CALLBACK(src, .proc/remove), timer)
 		timed = TRUE
+	if(copymut && istype(copymut, /datum/mutation/human))
+		copy_mutation(copymut)
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
 	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))

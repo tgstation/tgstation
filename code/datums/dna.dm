@@ -60,13 +60,16 @@
 	new_dna.mutations = mutations.Copy()
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
-/datum/dna/proc/add_mutation(mutation_type, class = MUT_OTHER, time)
-	if(get_mutation(mutation_type))
+/datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
+	if(get_mutation(mutation))
 		return
-	force_give(new mutation_type (class, time))
+	if(istype(mutation, /datum/mutation/human))
+		var/datum/mutation/human/HM = mutation
+		mutation = HM.type
+	return force_give(new mutation (class, time, copymut = mutation))
 
 /datum/dna/proc/remove_mutation(mutation_type)
-	force_lose(get_mutation(mutation_type))
+	return force_lose(get_mutation(mutation_type))
 
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
@@ -194,10 +197,10 @@
 /datum/dna/proc/force_lose(datum/mutation/human/HM)
 	if(holder && (HM in mutations))
 		set_se(0, HM)
-		update_instability(alert=TRUE)
-		 . = HM.on_losing(holder)
-		 update_instability(FALSE)
-		 return
+		update_instability(FALSE)
+		. = HM.on_losing(holder)
+		update_instability(FALSE)
+		return
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -471,12 +474,13 @@
 	else if(get_sequence(HM.type) == mutation_index[HM.type])
 		mutation_index[HM.type] = create_sequence(HM.type, FALSE, HM.difficulty)
 
-/datum/dna/proc/activate_mutation(mutation)
+/datum/dna/proc/activate_mutation(mutation) //note that this returns a boolean and not a new mob
 	if(!mutation)
-		return
-	if(!mutation_in_sequence(mutation, src)) //cant activate what we dont have, use add_mutation
 		return FALSE
-	return add_mutation(mutation, MUT_NORMAL)
+	if(!mutation_in_sequence(mutation)) //cant activate what we dont have, use add_mutation
+		return FALSE
+	add_mutation(mutation, MUT_NORMAL)
+	return TRUE
 
 /////////////////////////// DNA HELPER-PROCS //////////////////////////////
 
@@ -496,6 +500,17 @@
 		return 0
 	return getleftblocks(istring, blocknumber, blocksize) + replacement + getrightblocks(istring, blocknumber, blocksize)
 
+/datum/dna/proc/mutation_in_sequence(mutation)
+	if(!mutation)
+		return
+	if(istype(mutation, /datum/mutation/human))
+		var/datum/mutation/human/HM = mutation
+		if(HM.type in mutation_index)
+			return TRUE
+	else if(mutation in mutation_index)
+		return TRUE
+
+
 /mob/living/carbon/proc/randmut(list/candidates, difficulty = 2)
 	if(!has_dna())
 		return
@@ -514,7 +529,7 @@
 		mutations += GLOB.not_good_mutations
 	var/list/possible = list()
 	for(var/datum/mutation/human/A in mutations)
-		if((!sequence || mutation_in_sequence(A.type, dna)) && !dna.get_mutation(A.type))
+		if((!sequence || dna.mutation_in_sequence(A.type)) && !dna.get_mutation(A.type))
 			possible += A.type
 	if(exclude_monkey)
 		possible.Remove(RACEMUT)

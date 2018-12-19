@@ -29,7 +29,7 @@
 			if(HM == RACEMUT)
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-			if(mutation_in_sequence(HM, M.dna))
+			if(M.dna.mutation_in_sequence(HM))
 				M.dna.activate_mutation(HM)
 			else
 				M.dna.add_mutation(HM, MUT_EXTRA)
@@ -362,16 +362,28 @@
 	name = "\improper DNA activator"
 	desc = "Activates the current mutation on injection, if the subject has it."
 	var/doitanyway = FALSE
+	var/research = FALSE //Set to true to get expended and filled injectors for chromosomes
+	var/filled = FALSE
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/mutation in add_mutations)
-			if(!M.dna.activate_mutation(mutation) && !doitanyway)
-				log_msg += "(FAILED)"
-			else if(doitanyway)
-				M.dna.add_mutation(mutation, MUT_EXTRA)
+			var/datum/mutation/human/HM = mutation
+			if(istype(HM, /datum/mutation/human))
+				mutation = HM.type
+			if(!M.dna.activate_mutation(HM))
+				if(!doitanyway)
+					log_msg += "(FAILED)"
+				else
+					M.dna.add_mutation(HM, MUT_EXTRA)
+					name = "expended [name]"
+			else if(research)
+				filled = TRUE
+				name = "filled [name]"
+			else
+				name = "expended [name]"
 			log_msg += "([mutation])"
 		log_attack("[log_msg] [loc_name(user)]")
 		return TRUE
