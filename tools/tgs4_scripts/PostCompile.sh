@@ -68,7 +68,6 @@ fi
 
 echo "Deploying rust-g..."
 cd rust-g
-git clean -fxd
 git checkout $RUST_G_VERSION
 ~/.cargo/bin/cargo build --release
 mv target/release/librust_g.so $1/rust_g
@@ -76,7 +75,6 @@ cd ..
 
 echo "Deploying BSQL..."
 cd BSQL
-git clean -fxd
 git checkout $BSQL_VERSION
 mkdir mysql
 mkdir artifacts
