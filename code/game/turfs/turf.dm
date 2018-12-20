@@ -244,8 +244,8 @@
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
 				mover?.Bump(thing)
-			if(!CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
-				return FALSE
+				if(!CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+					return FALSE
 
 /turf/Entered(atom/movable/AM)
 	..()
