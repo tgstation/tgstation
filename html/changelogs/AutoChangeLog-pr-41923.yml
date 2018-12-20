@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Id-locked chemistry and kitchen closets now checks for access."

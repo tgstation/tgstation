@@ -22652,8 +22652,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/disposalpipe/junction{
-	dir = 4
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
@@ -24440,6 +24440,7 @@
 	req_access_txt = "31"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bgv" = (
@@ -28689,7 +28690,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -27
 	},
-/obj/machinery/rnd/production/techfab/department/cargo,
+/obj/machinery/autolathe,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bqp" = (
@@ -30446,14 +30447,6 @@
 "buI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
-"buJ" = (
-/obj/effect/turf_decal/loading_area,
-/obj/machinery/door/poddoor/shutters{
-	id = "public_autolathe";
-	name = "public autolathe shutters"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -56623,16 +56616,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"nEa" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 1
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "public_autolathe";
-	name = "public autolathe shutters"
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "nEP" = (
 /obj/structure/closet/l3closet/scientist{
 	pixel_x = -2
@@ -56745,12 +56728,6 @@
 /obj/machinery/light,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"oEF" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/autolathe,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "oHU" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -56838,7 +56815,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/turf_decal/bot,
+/obj/structure/chair{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "psy" = (
@@ -80870,7 +80849,7 @@ bfm
 bNK
 bkN
 bfm
-oEF
+bfm
 bwe
 bwd
 bwY
@@ -81126,8 +81105,8 @@ boR
 bqs
 bbR
 bkM
-nEa
-bqs
+bbR
+bbR
 bwd
 bvL
 byI
@@ -81383,8 +81362,8 @@ boT
 bbR
 bbR
 buI
-bfm
-bqs
+bbR
+bbR
 bwd
 ccR
 byK
@@ -81640,8 +81619,8 @@ bbR
 bqt
 cBq
 bbR
-bfm
-bqs
+bbR
+bbR
 bwd
 bxC
 byL
@@ -81896,8 +81875,8 @@ bnJ
 bty
 bbR
 bbR
-bbR
-buJ
+bty
+bty
 pqP
 bwd
 byM

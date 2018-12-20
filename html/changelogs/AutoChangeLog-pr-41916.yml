@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - admin: "Added the infinite closet, a closet that replicates the first thing that's put into it."

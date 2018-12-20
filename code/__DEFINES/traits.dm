@@ -6,7 +6,7 @@
 #define TRAIT_NEARSIGHT			"nearsighted"
 #define TRAIT_FAT				"fat"
 #define TRAIT_HUSK				"husk"
-#define TRAIT_NOCLONE			"noclone"
+#define TRAIT_BADDNA			"baddna"
 #define TRAIT_CLUMSY			"clumsy"
 #define TRAIT_DUMB				"dumb"
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
@@ -82,10 +82,11 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
-#define	TRAIT_DRUNK_HEALING		"drunk_healing"
-#define	TRAIT_TAGGER			"tagger"
-#define	TRAIT_PHOTOGRAPHER		"photographer"
-#define	TRAIT_MUSICIAN			"musician"
+#define TRAIT_DRUNK_HEALING		"drunk_healing"
+#define TRAIT_TAGGER			"tagger"
+#define TRAIT_PHOTOGRAPHER		"photographer"
+#define TRAIT_MUSICIAN			"musician"
+#define TRAIT_LIGHT_DRINKER		"light_drinker"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

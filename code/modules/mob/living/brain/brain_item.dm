@@ -78,8 +78,8 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-		if(L.has_trait(TRAIT_NOCLONE))
-			brainmob.status_traits[TRAIT_NOCLONE] = L.status_traits[TRAIT_NOCLONE]
+		if(L.has_trait(TRAIT_BADDNA))
+			brainmob.status_traits[TRAIT_BADDNA] = L.status_traits[TRAIT_BADDNA]
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
