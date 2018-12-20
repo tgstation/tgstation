@@ -1095,8 +1095,8 @@
 				return
 
 			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
-			log_admin("[key_name(usr)] has cured all traumas [key_name(C)] from [BT.name]")
-			message_admins("<span class='notice'>[key_name_admin(usr)] has cured all traumas [key_name_admin(C)] from [BT.name].</span>")
+			log_admin("[key_name(usr)] has cured all traumas from [key_name(C)].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has cured all traumas from [key_name_admin(C)].</span>")
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(NONE))
