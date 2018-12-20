@@ -76,8 +76,8 @@ cd ..
 echo "Deploying BSQL..."
 cd BSQL
 git checkout $BSQL_VERSION
-mkdir mysql
-mkdir artifacts
+mkdir -p mysql
+mkdir -p artifacts
 cd artifacts
 cmake .. -DCMAKE_CXX_COMPILER=g++-6 -DMARIA_LIBRARY=/usr/lib/i386-linux-gnu/libmariadb.so.2
 make
