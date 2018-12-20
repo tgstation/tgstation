@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Old rotting gibs no longer have the name \"rotting old rotting gibs\"."
