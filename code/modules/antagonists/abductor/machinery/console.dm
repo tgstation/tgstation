@@ -136,9 +136,9 @@
 
 	var/entry_name
 	if(remote)
-		entry_name = show_radial_menu(usr, camera.eyeobj, disguises2)
+		entry_name = show_radial_menu(usr, camera.eyeobj, disguises2, tooltips = TRUE)
 	else
-		entry_name = show_radial_menu(usr, src, disguises2)
+		entry_name = show_radial_menu(usr, src, disguises2, require_near = TRUE, tooltips = TRUE)
 
 	var/datum/icon_snapshot/chosen = disguises[entry_name]
 	if(chosen && vest && (remote || in_range(usr,src)))
