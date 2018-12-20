@@ -451,6 +451,8 @@
 
 /obj/machinery/shower/proc/check_clothes(mob/living/carbon/human/H)
 	var/result 
+	if(H.wear_suit && (H.wear_suit.clothing_flags & SHOWEROKAY))
+		return FALSE
 	result &= (H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))
 	result &= (H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
 	result &= (H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY))
