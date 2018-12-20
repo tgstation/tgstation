@@ -69,3 +69,11 @@
 /datum/status_effect/in_love/tick()
 	if(date)
 		new /obj/effect/temp_visual/love_heart/invisible(get_turf(date.loc), owner)
+
+/datum/status_effect/deathcheck
+	id = "deathchecker"
+	duration = -1
+	status_type = STATUS_EFFECT_UNIQUE
+	var/datum/antagonist/antagonist
+
+/datum/status_effect/deathcheck
