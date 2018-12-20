@@ -842,26 +842,21 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		to_chat(src, announcement)
 
 /client/proc/show_character_previews(mutable_appearance/MA)
-	LAZYCLEARLIST(char_render_holders)
 	var/pos = 0
 	for(var/D in GLOB.cardinals)
 		pos++
-		var/obj/screen/O = new
+		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		if(!O)
+			O = new
+			LAZYSET(char_render_holders, "[D]", O)
+			screen |= O
 		O.appearance = MA
-		O.screen_loc = "character_preview_map:1,[pos]"
 		O.dir = D
-		LAZYSET(char_render_holders, "[D]", O)
+		O.screen_loc = "character_preview_map:1,[pos]"
+
+/client/proc/clear_character_previews()
 	for(var/index in char_render_holders)
 		var/obj/screen/S = char_render_holders[index]
-		screen |= S
-	if(LAZYLEN(char_render_holders))
-		winshow(src, "character_preview_window", TRUE)
-
-/client/proc/hide_character_previews(gc = TRUE)
-	winshow(src, "character_preview_window", FALSE)
-	if(gc)
-		for(var/index in char_render_holders)
-			var/obj/screen/S = char_render_holders[index]
-			screen -= S
-			qdel(S)
-		char_render_holders = null
+		screen -= S
+		qdel(S)
+	char_render_holders = null
