@@ -1,0 +1,5 @@
+author: "Garen"
+delete-after: True
+changes: 
+  - bugfix: "Beepsky, ED-209s, and Honkbots will once again will defend themselves when attacked."
+  - bugfix: "You need the item you're using on an unbuilt cyborg to actually be a multitool to modify it once again."
