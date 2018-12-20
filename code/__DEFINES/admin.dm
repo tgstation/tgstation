@@ -72,6 +72,7 @@
 #define ADMIN_PUNISHMENT_SUPPLYPOD_QUICK "Supply Pod (Quick)"
 #define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
 #define ADMIN_PUNISHMENT_MAZING "Puzzle"
+#define ADMIN_PUNISHMENT_MARK_FOR_DEATH "Mark for Death"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
