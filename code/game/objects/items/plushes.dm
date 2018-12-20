@@ -375,7 +375,7 @@
 	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
-	attack_verb = list("rended")
+	attack_verb = list("rent")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
 /obj/item/toy/plush/plushvar
