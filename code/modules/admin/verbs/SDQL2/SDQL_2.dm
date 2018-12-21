@@ -136,6 +136,379 @@
 	* A few special variables: src (the object currently scoped on), usr (your mob), marked (your marked datum), global(global scope)
 */
 
+#define SDQL2_STATE_ERROR 0
+#define SDQL2_STATE_IDLE 1
+#define SDQL2_STATE_SEARCHING 2
+#define SDQL2_STATE_EXECUTING 3
+#define SDQL2_STATE_SWITCHING 4
+
+#define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS			(1<<0)
+#define SDQL2_OPTION_BLOCKING_CALLS						(1<<2)
+#define SDQL2_OPTION_SELECT_OUTPUT_DISBALED				(1<<3)		//Makes the stuff only stored in refs list and not actually made into a select text list.
+
+#define SDQL2_OPTIONS_DEFAULT		(SDQL2_OPTION_SKIP_NULLS)
+
+#define SDQL2_RUNNING_CHECK if(state == SDQL2_STATE_EXECUTING || state == SDQL2_STATE_SEARCHING)
+#define SDQL2_HALT_CHECK if(state != SDQL2_STATE_EXECUTING && state != SDQL2_STATE_SEARCHING)
+
+/datum/SDQL2_query
+	var/list/query_tree
+	var/state = SDQL2_STATE_IDLE
+	var/options = SDQL2_OPTIONS_DEFAULT
+	var/superuser = FALSE		//Run things like proccalls without using admin protections
+	var/allow_admin_interact = TRUE		//Allow admins to do things to this excluding varedit these two vars
+
+	//Last run
+	var/start_time
+	var/end_time
+	var/list/refs
+	var/where_switched = FALSE
+
+	//These three are weird. For best performance, they are only a number when they're not being changed by the SDQL searching/execution code. They only become numbers when they finish changing.
+	var/list/obj_count_all
+	var/list/obj_count_eligible
+	var/list/obj_count_finished
+
+/datum/SDQL2_query/New(tree, SU = FALSE, admin_interact = TRUE, _options = SDQL2_OPTIONS_DEFAULT)
+	if(IsAdminAdvancedProccall() || !LAZYLEN(tree))
+		qdel(src)
+		return
+	superuser = SU
+	allow_admin_interact = admin_interact
+	query_tree = tree
+	options = _options
+
+/datum/SDQL2_query/Destroy()
+	query_tree = null
+	obj_count_all = null
+	obj_count_eligible = null
+	obj_count_finished = null
+	return ..()
+
+/datum/SDQL2_query/proc/Run()
+	if(SDQL2_RUNNING_CHECK)
+		return FALSE
+	refs = list()
+	obj_count_all = 0
+	obj_count_eligible = 0
+	obj_count_finished = 0
+	start_time = REALTIMEOFDAY
+	state = SDQL2_STATE_SEARCHING
+	var/list/found = Search()
+	if(state != SDQL2_STATE_SWITCHING)
+		CRASH("SDQL2 fatal error")
+	state = SDQL2_STATE_EXECUTING
+	Execute(found)
+	if(state != SDQL2_STATE_SWITCHING)
+		CRASH("SDQL2 fatal error")
+	end_time = REALTIMEOFDAY
+	state = SDQL2_STATE_IDLE
+	return TRUE
+
+/datum/SDQL2_query/proc/Search()
+	if(IsAdminAdvancedProccall())
+		return
+	. = list()
+	var/type = query_tree[1]
+	var/list/from = query_tree[2]
+	var/list/objs = SDQL_from_objs(from)
+	CHECK_TICK
+	objs = SDQL_get_all(type, objs)
+	CHECK_TICK
+
+	// 1 and 2 are type and FROM.
+	var/i = 3
+	while (i <= tree.len)
+		var/key = tree[i++]
+		var/list/expression = tree[i++]
+		switch (key)
+			if ("map")
+				for(var/j = 1 to objs.len)
+					var/x = objs[j]
+					objs[j] = SDQL_expression(x, expression)
+					CHECK_TICK
+
+			if ("where")
+				where_switched = TRUE
+				var/list/out = list()
+				objs_count_eligible = out
+				for(var/x in objs)
+					if(SDQL_expression(x, expression))
+						out += x
+					CHECK_TICK
+				objs = out
+	if(islist(objs_count_eligible))
+		objs_count_eligible = objs_count_eligible.len
+	else
+		objs_count_eligible = objs_count_all
+	state = SDQL2_STATE_SWITCHING
+
+/datum/SDQL2_query/proc/Execute(list/found)
+
+/datum/SDQL2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
+	if(is_proper_datum(object))
+		text_list += "<A HREF='?_src_=vars;[HrefToken()];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
+		if(istype(object, /atom))
+			var/atom/A = object
+			var/turf/T = A.loc
+			var/area/a
+			if(istype(T))
+				text_list += " <font color='gray'>at</font> [T] [ADMIN_COORDJMP(T)]"
+				a = T.loc
+			else
+				var/turf/final = get_turf(T)		//Recursive, hopefully?
+				if(istype(final))
+					text_list += " <font color='gray'>at</font> [final] [ADMIN_COORDJMP(final)]"
+					a = final.loc
+				else
+					text_list += " <font color='gray'>at</font> nonexistant location"
+			if(a)
+				text_list += " <font color='gray'>in</font> area [a]"
+				if(T.loc != a)
+					text_list += " <font color='gray'>inside</font> [T]"
+		text_list += "<br>"
+	else if(islist(object))
+		var/list/L = object
+		var/first = TRUE
+		text_list += "\["
+		for (var/x in L)
+			if (!first)
+				text_list += ", "
+			first = FALSE
+			SDQL_print(x, text_list)
+			if (!isnull(x) && !isnum(x) && L[x] != null)
+				text_list += " -> "
+				SDQL_print(L[L[x]])
+		text_list += "]<br>"
+	else
+		if(isnull(object) && print_nulls)
+			text_list += "NULL<br>"
+		else
+			text_list += "[object]<br>"
+
+/datum/SDQL2_query/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, superuser) || var_name == NAMEOF(src, allow_admin_interact) || var_name == NAMEOF(src, query_tree))
+		return FALSE
+	return ..()
+
+/datum/SDQL2_query/proc/SDQL_internal_vv(d, list/set_list)
+	for(var/list/sets in set_list)
+		var/datum/temp = d
+		var/i = 0
+		for(var/v in sets)
+			if(++i == sets.len)
+				if(superuser)
+					if(temp.vars.Find(v))
+						temp.vars[v] = SDQL_expression(d, set_list[sets])
+				else
+					temp.vv_edit_var(v, SDQL_expression(d, set_list[sets]))
+				break
+			if(temp.vars.Find(v) && (istype(temp.vars[v], /datum) || istype(temp.vars[v], /client)))
+				temp = temp.vars[v]
+			else
+				break
+
+/datum/SDQL2_query/proc/SDQL_get_all(type, location)
+	var/list/out = list()
+	objs_count_all = out
+
+// If only a single object got returned, wrap it into a list so the for loops run on it.
+	if(!islist(location) && location != world)
+		location = list(location)
+
+	if(type == "*")
+		for(var/i in location)
+			var/datum/d = i
+			if(d.can_vv_get() || superuser)
+				out += d
+			CHECK_TICK
+		return out
+	if(istext(type))
+		type = text2path(type)
+	var/typecache = typecacheof(type)
+
+	if(ispath(type, /mob))
+		for(var/mob/d in location)
+			if(typecache[d.type] && (d.can_vv_get() || superuser))
+				out += d
+			CHECK_TICK
+
+	else if(ispath(type, /turf))
+		for(var/turf/d in location)
+			if(typecache[d.type] && (d.can_vv_get() || superuser))
+				out += d
+			CHECK_TICK
+
+	else if(ispath(type, /obj))
+		for(var/obj/d in location)
+			if(typecache[d.type] && (d.can_vv_get() || superuser))
+				out += d
+			CHECK_TICK
+
+	else if(ispath(type, /area))
+		for(var/area/d in location)
+			if(typecache[d.type] && (d.can_vv_get() || superuser))
+				out += d
+			CHECK_TICK
+
+	else if(ispath(type, /atom))
+		for(var/atom/d in location)
+			if(typecache[d.type] && (d.can_vv_get() || superuser))
+				out += d
+			CHECK_TICK
+
+	else if(ispath(type, /datum))
+		if(location == world) //snowflake for byond shortcut
+			for(var/datum/d) //stupid byond trick to have it not return atoms to make this less laggy
+				if(typecache[d.type] (d.can_vv_get() || superuser))
+					out += d
+				CHECK_TICK
+		else
+			for(var/datum/d in location)
+				if(typecache[d.type] (d.can_vv_get() || superuser))
+					out += d
+				CHECK_TICK
+	objs_count_all = objs_count_all.len
+	return out
+
+/datum/SDQL2_query/proc/SDQL_from_objs(list/tree)
+	if(IsAdminAdvancedProcCall())
+		return
+	if("world" in tree)
+		return src
+	return SDQL_expression(src, tree)
+
+/datum/SDQL2_query/proc/SDQL_function_blocking(datum/object, procname, list/arguments, source)
+	var/list/new_args = list()
+	for(var/arg in arguments)
+		new_args[++new_args.len] = SDQL_expression(source, arg)
+	if(object == GLOB) // Global proc.
+		procname = "/proc/[procname]"
+		if(superuser)
+			return call(procname)(new_args)
+		return WrapAdminProcCall(GLOBAL_PROC, procname, new_args)
+	if(superuser)
+		return call(object, procname)(new_args)
+	return WrapAdminProcCall(object, procname, new_args)
+
+/datum/SDQL2_query/proc/SDQL_function_async(datum/object, procname, list/arguments, source)
+	set waitfor = FALSE
+	return SDQL_function_blocking(object, procname, arguments, source)
+
+/datum/SDQL2_query/proc/SDQL_expression(datum/object, list/expression, start = 1)
+	var/result = 0
+	var/val
+
+	for(var/i = start, i <= expression.len, i++)
+		var/op = ""
+
+		if(i > start)
+			op = expression[i]
+			i++
+
+		var/list/ret = SDQL_value(object, expression, i)
+		val = ret["val"]
+		i = ret["i"]
+
+		if(op != "")
+			switch(op)
+				if("+")
+					result = (result + val)
+				if("-")
+					result = (result - val)
+				if("*")
+					result = (result * val)
+				if("/")
+					result = (result / val)
+				if("&")
+					result = (result & val)
+				if("|")
+					result = (result | val)
+				if("^")
+					result = (result ^ val)
+				if("%")
+					result = (result % val)
+				if("=", "==")
+					result = (result == val)
+				if("!=", "<>")
+					result = (result != val)
+				if("<")
+					result = (result < val)
+				if("<=")
+					result = (result <= val)
+				if(">")
+					result = (result > val)
+				if(">=")
+					result = (result >= val)
+				if("and", "&&")
+					result = (result && val)
+				if("or", "||")
+					result = (result || val)
+				else
+					to_chat(usr, "<span class='danger'>SDQL2: Unknown op [op]</span>")
+					result = null
+		else
+			result = val
+
+	return result
+
+/datum/SDQL2_query/proc/SDQL_value(datum/object, list/expression, start = 1)
+	var/i = start
+	var/val = null
+
+	if(i > expression.len)
+		return list("val" = null, "i" = i)
+
+	if(istype(expression[i], /list))
+		val = SDQL_expression(object, expression[i])
+
+	else if(expression[i] == "!")
+		var/list/ret = SDQL_value(object, expression, i + 1)
+		val = !ret["val"]
+		i = ret["i"]
+
+	else if(expression[i] == "~")
+		var/list/ret = SDQL_value(object, expression, i + 1)
+		val = ~ret["val"]
+		i = ret["i"]
+
+	else if(expression[i] == "-")
+		var/list/ret = SDQL_value(object, expression, i + 1)
+		val = -ret["val"]
+		i = ret["i"]
+
+	else if(expression[i] == "null")
+		val = null
+
+	else if(isnum(expression[i]))
+		val = expression[i]
+
+	else if(ispath(expression[i]))
+		val = expression[i]
+
+	else if(copytext(expression[i], 1, 2) in list("'", "\""))
+		val = copytext(expression[i], 2, length(expression[i]))
+
+	else if(expression[i] == "\[")
+		var/list/expressions_list = expression[++i]
+		val = list()
+		for(var/list/expression_list in expressions_list)
+			var/result = SDQL_expression(object, expression_list)
+			var/assoc
+			if(expressions_list[expression_list] != null)
+				assoc = SDQL_expression(object, expressions_list[expression_list])
+			if(assoc != null)
+				// Need to insert the key like this to prevent duplicate keys fucking up.
+				var/list/dummy = list()
+				dummy[result] = assoc
+				result = dummy
+			val += result
+	else
+		val = world.SDQL_var(object, expression, i, object, superuser)
+		i = expression.len
+
+	return list("val" = val, "i" = i)
+
 /client/proc/SDQL2_query(query_text as message)
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
@@ -153,54 +526,13 @@
 	query_log = "[log_entry2] [query_log]"
 	log_game(query_log)
 	NOTICE(query_log)
-	var/objs_all = 0
-	var/objs_eligible = 0
-	var/start_time = REALTIMEOFDAY
-
-	if(!query_text || length(query_text) < 1)
-		return
-
-
-	var/list/query_list = SDQL2_tokenize(query_text)
-
-	if(!query_list || query_list.len < 1)
-		return
-
-	var/list/querys = SDQL_parse(query_list)
-
-
-	if(!querys || querys.len < 1)
-		return
-
-	var/list/refs = list()
-	var/selectors_used = FALSE
-
-	for(var/list/query_tree in querys)
-		var/list/object_selectors = list()
-
-		switch(query_tree[1])
-			if("explain")
-				SDQL_testout(query_tree["explain"])
-				return
-
-			if("call")
-				object_selectors = query_tree["on"]
-
-			if("select", "delete", "update")
-				object_selectors = query_tree[query_tree[1]]
-
-		var/list/selector_info = list(0, 0, FALSE)
-		var/list/objs = SDQL_from_object_selectors(object_selectors, selector_info)
-		selectors_used = selector_info[3]
-		objs_all = selector_info[1]
-		objs_eligible = selector_info[2]
 
 		switch(query_tree[1])
 			if("call")
 				for(var/i in objs)
-					if(!SDQL_is_proper_datum(i))
+					if(!is_proper_datum(i))
 						continue
-					world.SDQL_var(i, query_tree["call"][1], source = i)
+					world.SDQL_var(i, query_tree["call"][1], source = i, superuser)
 					CHECK_TICK
 
 			if("delete")
@@ -223,7 +555,7 @@
 				if("set" in query_tree)
 					var/list/set_list = query_tree["set"]
 					for(var/d in objs)
-						if(!SDQL_is_proper_datum(d))
+						if(!is_proper_datum(d))
 							continue
 						SDQL_internal_vv(d, set_list)
 						CHECK_TICK
@@ -233,19 +565,6 @@
 	return list("<span class='admin'>SDQL query results: [query_text]</span>",\
 		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [selectors_used ? objs_eligible : objs_all] objects executed on after WHERE filtering/MAPping if applicable.</span>",\
 		"<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>") + refs
-
-/proc/SDQL_internal_vv(d, list/set_list)
-	for(var/list/sets in set_list)
-		var/datum/temp = d
-		var/i = 0
-		for(var/v in sets)
-			if(++i == sets.len)
-				temp.vv_edit_var(v, SDQL_expression(d, set_list[sets]))
-				break
-			if(temp.vars.Find(v) && (istype(temp.vars[v], /datum) || istype(temp.vars[v], /client)))
-				temp = temp.vars[v]
-			else
-				break
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
@@ -307,236 +626,13 @@
 			else
 				to_chat(usr, "[spaces][whitespace][query_tree[item]]")
 
-/world/proc/SDQL_from_objs(list/tree)
-	if("world" in tree)
-		return src
-	return SDQL_expression(src, tree)
-
-/proc/SDQL_get_all(type, location)
-	var/list/out = list()
-
-// If only a single object got returned, wrap it into a list so the for loops run on it.
-	if(!islist(location) && location != world)
-		location = list(location)
-
-	if(type == "*")
-		for(var/i in location)
-			var/datum/d = i
-			if(d.can_vv_get())
-				out += d
-			CHECK_TICK
-		return out
-	if(istext(type))
-		type = text2path(type)
-	var/typecache = typecacheof(type)
-
-	if(ispath(type, /mob))
-		for(var/mob/d in location)
-			if(typecache[d.type] && d.can_vv_get())
-				out += d
-			CHECK_TICK
-
-	else if(ispath(type, /turf))
-		for(var/turf/d in location)
-			if(typecache[d.type] && d.can_vv_get())
-				out += d
-			CHECK_TICK
-
-	else if(ispath(type, /obj))
-		for(var/obj/d in location)
-			if(typecache[d.type] && d.can_vv_get())
-				out += d
-			CHECK_TICK
-
-	else if(ispath(type, /area))
-		for(var/area/d in location)
-			if(typecache[d.type] && d.can_vv_get())
-				out += d
-			CHECK_TICK
-
-	else if(ispath(type, /atom))
-		for(var/atom/d in location)
-			if(typecache[d.type] && d.can_vv_get())
-				out += d
-			CHECK_TICK
-
-	else if(ispath(type, /datum))
-		if(location == world) //snowflake for byond shortcut
-			for(var/datum/d) //stupid byond trick to have it not return atoms to make this less laggy
-				if(typecache[d.type] && d.can_vv_get())
-					out += d
-				CHECK_TICK
-		else
-			for(var/datum/d in location)
-				if(typecache[d.type] && d.can_vv_get())
-					out += d
-				CHECK_TICK
-
-	return out
-
-/world/proc/SDQL_from_object_selectors(list/tree, list/info_out)
-	var/type = tree[1]
-	var/list/from = tree[2]
-
-	var/list/objs = world.SDQL_from_objs(from)
-	CHECK_TICK
-	objs = SDQL_get_all(type, objs)
-	CHECK_TICK
-
-	var/use_info_out = info_out && info_out.len >= 3
-
-	if(use_info_out)
-		info_out[1] = objs.len
-
-	// 1 and 2 are type and FROM.
-	var/i = 3
-	while (i <= tree.len)
-		var/key = tree[i++]
-		var/list/expression = tree[i++]
-		switch (key)
-			if ("map")
-				if(use_info_out)
-					info_out[3] = TRUE
-				for(var/j = 1 to objs.len)
-					var/x = objs[j]
-					objs[j] = SDQL_expression(x, expression)
-					CHECK_TICK
-
-			if ("where")
-				if(use_info_out)
-					info_out[3] = TRUE
-				var/list/out = list()
-				for(var/x in objs)
-					if(SDQL_expression(x, expression))
-						out += x
-					CHECK_TICK
-				objs = out
-
-	if(use_info_out)
-		info_out[2] = objs.len
-
-	return objs
-
-/proc/SDQL_expression(datum/object, list/expression, start = 1)
-	var/result = 0
-	var/val
-
-	for(var/i = start, i <= expression.len, i++)
-		var/op = ""
-
-		if(i > start)
-			op = expression[i]
-			i++
-
-		var/list/ret = SDQL_value(object, expression, i)
-		val = ret["val"]
-		i = ret["i"]
-
-		if(op != "")
-			switch(op)
-				if("+")
-					result = (result + val)
-				if("-")
-					result = (result - val)
-				if("*")
-					result = (result * val)
-				if("/")
-					result = (result / val)
-				if("&")
-					result = (result & val)
-				if("|")
-					result = (result | val)
-				if("^")
-					result = (result ^ val)
-				if("%")
-					result = (result % val)
-				if("=", "==")
-					result = (result == val)
-				if("!=", "<>")
-					result = (result != val)
-				if("<")
-					result = (result < val)
-				if("<=")
-					result = (result <= val)
-				if(">")
-					result = (result > val)
-				if(">=")
-					result = (result >= val)
-				if("and", "&&")
-					result = (result && val)
-				if("or", "||")
-					result = (result || val)
-				else
-					to_chat(usr, "<span class='danger'>SDQL2: Unknown op [op]</span>")
-					result = null
-		else
-			result = val
-
-	return result
-
-/proc/SDQL_value(datum/object, list/expression, start = 1)
-	var/i = start
-	var/val = null
-
-	if(i > expression.len)
-		return list("val" = null, "i" = i)
-
-	if(istype(expression[i], /list))
-		val = SDQL_expression(object, expression[i])
-
-	else if(expression[i] == "!")
-		var/list/ret = SDQL_value(object, expression, i + 1)
-		val = !ret["val"]
-		i = ret["i"]
-
-	else if(expression[i] == "~")
-		var/list/ret = SDQL_value(object, expression, i + 1)
-		val = ~ret["val"]
-		i = ret["i"]
-
-	else if(expression[i] == "-")
-		var/list/ret = SDQL_value(object, expression, i + 1)
-		val = -ret["val"]
-		i = ret["i"]
-
-	else if(expression[i] == "null")
-		val = null
-
-	else if(isnum(expression[i]))
-		val = expression[i]
-
-	else if(ispath(expression[i]))
-		val = expression[i]
-
-	else if(copytext(expression[i], 1, 2) in list("'", "\""))
-		val = copytext(expression[i], 2, length(expression[i]))
-
-	else if(expression[i] == "\[")
-		var/list/expressions_list = expression[++i]
-		val = list()
-		for(var/list/expression_list in expressions_list)
-			var/result = SDQL_expression(object, expression_list)
-			var/assoc
-			if(expressions_list[expression_list] != null)
-				assoc = SDQL_expression(object, expressions_list[expression_list])
-			if(assoc != null)
-				// Need to insert the key like this to prevent duplicate keys fucking up.
-				var/list/dummy = list()
-				dummy[result] = assoc
-				result = dummy
-			val += result
-	else
-		val = world.SDQL_var(object, expression, i, object)
-		i = expression.len
-
-	return list("val" = val, "i" = i)
-
-/world/proc/SDQL_var(object, list/expression, start = 1, source)
+//Staying as a world proc as this is called too often for changes to offset the potential IsAdminAdvancedProccall checking overhead.
+/world/proc/SDQL_var(object, list/expression, start = 1, source, superuser)
 	var/v
 	var/static/list/exclude = list("usr", "src", "marked", "global")
 	var/long = start < expression.len
 	var/datum/D
-	if(SDQL_is_proper_datum(object))
+	if(is_proper_datum(object))
 		D = object
 
 	if (object == world && (!long || expression[start + 1] == ".") && !(expression[start] in exclude))
@@ -554,7 +650,7 @@
 		start++
 		long = start < expression.len
 	else if(D != null && (!long || expression[start + 1] == ".") && (expression[start] in D.vars))
-		if(D.can_vv_get(expression[start]))
+		if(D.can_vv_get(expression[start]) || superuser)
 			v = D.vars[expression[start]]
 		else
 			v = "SECRET"
@@ -581,7 +677,7 @@
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")
-			return SDQL_var(v, expression[start + 2], source = source)
+			return SDQL_var(v, expression[start + 2], source = source, superuser)
 		else if(expression[start + 1] == ":")
 			return SDQL_function(object, v, expression[start + 2], source)
 		else if(expression[start + 1] == "\[" && islist(v))
@@ -592,16 +688,6 @@
 				return null
 			return L[index]
 	return v
-
-/proc/SDQL_function(datum/object, procname, list/arguments, source)
-	set waitfor = FALSE
-	var/list/new_args = list()
-	for(var/arg in arguments)
-		new_args[++new_args.len] = SDQL_expression(source, arg)
-	if(object == GLOB) // Global proc.
-		procname = "/proc/[procname]"
-		return WrapAdminProcCall(GLOBAL_PROC, procname, new_args)
-	return WrapAdminProcCall(object, procname, new_args)
 
 /proc/SDQL2_tokenize(query_text)
 
@@ -709,46 +795,5 @@
 		query_list += word
 	return query_list
 
-/proc/SDQL_is_proper_datum(thing)
+/proc/is_proper_datum(thing)
 	return istype(thing, /datum) || istype(thing, /client)
-
-/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
-	if(SDQL_is_proper_datum(object))
-		text_list += "<A HREF='?_src_=vars;[HrefToken()];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
-		if(istype(object, /atom))
-			var/atom/A = object
-			var/turf/T = A.loc
-			var/area/a
-			if(istype(T))
-				text_list += " <font color='gray'>at</font> [T] [ADMIN_COORDJMP(T)]"
-				a = T.loc
-			else
-				var/turf/final = get_turf(T)		//Recursive, hopefully?
-				if(istype(final))
-					text_list += " <font color='gray'>at</font> [final] [ADMIN_COORDJMP(final)]"
-					a = final.loc
-				else
-					text_list += " <font color='gray'>at</font> nonexistant location"
-			if(a)
-				text_list += " <font color='gray'>in</font> area [a]"
-				if(T.loc != a)
-					text_list += " <font color='gray'>inside</font> [T]"
-		text_list += "<br>"
-	else if(islist(object))
-		var/list/L = object
-		var/first = TRUE
-		text_list += "\["
-		for (var/x in L)
-			if (!first)
-				text_list += ", "
-			first = FALSE
-			SDQL_print(x, text_list)
-			if (!isnull(x) && !isnum(x) && L[x] != null)
-				text_list += " -> "
-				SDQL_print(L[L[x]])
-		text_list += "]<br>"
-	else
-		if(isnull(object) && print_nulls)
-			text_list += "NULL<br>"
-		else
-			text_list += "[object]<br>"
