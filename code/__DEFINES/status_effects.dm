@@ -36,6 +36,8 @@
 
 #define STATUS_EFFECT_GOOD_MUSIC /datum/status_effect/good_music
 
+#define STATUS_EFFECT_CREEP /datum/status_effect/creep //you feel fuckin great around your obsession
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -93,8 +95,6 @@
 #define STATUS_EFFECT_SYPHONMARK /datum/status_effect/syphon_mark //tracks kills for the KA death syphon module
 
 #define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //Displays you as being in love with someone else, and makes hearts appear around them.
-
-#define STATUS_EFFECT_DEATHRATTLE /datum/status_effect/deathrattle //Triggers the deathrattle() proc on the attached objective. make sure you actually attach it though, it won't do it itself.
 
 /////////////
 //  SLIME  //

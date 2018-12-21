@@ -57,6 +57,12 @@
 	mood_change = 15
 	hidden = TRUE
 
+/datum/mood_event/creep
+	description = "<span class='nicegreen'>Heh...hehehe...hehe...</span>\n" //creeps get it when they are around their obsession
+	mood_change = 20
+	timeout = 110
+	hidden = TRUE
+
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
 	mood_change = 3

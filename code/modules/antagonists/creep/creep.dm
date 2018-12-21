@@ -4,8 +4,16 @@
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "creeps"
-	var/creepiness = 0 //how many sets of people the creep has successfully vvvv
-	var/max_creepiness = 3 //how many sets of people the creep needs to protect, kill, polaroid, etc
+	var/datum/mind/obsession
+	var/datum/status_effect/creep/creep_status
+
+
+/datum/antagonist/creep/on_gain()
+	owner.current.apply_status_effect(STATUS_EFFECT_CREEP, owner)
+	creep_status = owner.current.has_status_effect(STATUS_EFFECT_CREEP)
+	forge_objectives()
+	creep_status.obsession = src.obsession
+	. = ..()
 
 /datum/antagonist/creep/greet()
 	to_chat(owner, "<span class='boldannounce'>You are the Creep!</span>")
@@ -15,48 +23,20 @@
 
 /datum/antagonist/creep/proc/forge_objectives()
 
-	var/datum/objective/protect/timed/mypretties = new
-	mypretties.owner = owner
-	objectives += mypretties
+	var/datum/objective/assassinate/creep/realtarget = new
+	realtarget.owner = owner
 
 	var/datum/objective/polaroid/polaroid = new
 	polaroid.owner = owner
-	polaroid.target = mypretties.target
+	polaroid.target = realtarget.target
 	objectives += polaroid
 
-	var/datum/objective/assassinate/creep/kill = new
-	kill.owner = owner
-	kill.target = mypretties.target
-	objectives += kill
-
-/datum/antagonist/creep/proc/add_objectives(var/mob/living/old_target) //for when you're done with the first obsession set
-
-	var/datum/objective/protect/timed/mypretties = new
-	mypretties.owner = owner
-	objectives += mypretties
-
-	var/datum/objective/polaroid/polaroid = new
-	polaroid.owner = owner
-	polaroid.target = mypretties.target
-	objectives += polaroid
-
-	var/datum/objective/assassinate/creep/kill = new
-	kill.owner = owner
-	kill.target = mypretties.target
-	objectives += kill
-
-	if(owner.current.stat != DEAD)//would be annoying to keep getting these after you're dead
-		to_chat(owner, "<span class='boldannounce'>You sense your obsession has died. They weren't good enough for you anyways!</span>")
-		var/niceguy = pick("looked at you", "opened the airlock for you", "picked up your PDA for you", "said hi in the hallways")
-		to_chat(owner, "<B>Besides, the way [mypretties.target.name] [niceguy] that one time means they're way more madly in love with you than [old_target.name] ever was!</B>")
-		owner.announce_objectives()
-
-/datum/antagonist/creep/on_gain()
-	forge_objectives()
-	. = ..()
+	objectives += realtarget//finally add the assassinate last
+	owner.current.apply_status_effect(STATUS_EFFECT_INLOVE, realtarget.target.current)
+	obsession = realtarget.target
 
 /datum/antagonist/creep/roundend_report_header()
-	return 	"<span class='header'>There was a Creep!</span><br>"
+	return 	"<span class='header'>Someone became a creep!</span><br>"
 
 /datum/antagonist/creep/roundend_report()
 	var/list/report = list()
@@ -73,6 +53,8 @@
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
+	if(creep_status)
+		report += "<span class='greentext big'>The [name] spent a total of [creep_status.total_time_creeping] being near [creep_status.obsession]!</span>"
 
 	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
@@ -81,25 +63,62 @@
 
 	return report.Join("<br>")
 
+///creep creepy objectives (few chosen per obsession)///
 
-///CREEPY OBJECTIVES///
 
-/datum/objective/protect/timed //protect someone for a set amount of time. Then, it doesn't really matter what happens to them :3
-	var/timer = 9000 //15 minutes
-	var/ididwin = FALSE
+/datum/objective/spendtime //spend some time around someone, handled by the creep status effect since it also looks for the target
+	var/timer = 3000 //5 minutes
 
-/datum/objective/protect/timed/update_explanation_text()
-	addtimer(CALLBACK(src, .proc/didiwin), timer)
+/datum/objective/spendtime/New()
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+	if(!creeper)
+		return
+	if(creeper.creep_status)
+		creeper.creep_status.attachedcreepobj = src
 
-/datum/objective/protect/timed/proc/didiwin()
-	if(!target || considered_alive(target, enforce_human = human_check))
-		ididwin = TRUE
+/datum/objective/spendtime/update_explanation_text()
+	if(timer == 3000)//just so admins can mess with it
+		timer += pick(-1200, -600, 600, 1200)
+	explanation_text = "Spend [timer / 600] minutes around [target.name] while they are alive."
 
-/datum/objective/protect/timed/check_completion()
-	return ididwin
+/datum/objective/spendtime/check_completion()
+	return timer <= 0
 
+/datum/objective/assassinate/creep //just a creepy version of assassinate
+
+/datum/objective/assassinate/creep/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+	else
+		explanation_text = "Free Objective"
+/*
+/datum/objective/hug
+	name = "hugs"
+	var/hugs_needed
+	var/hugs_counted = 0
+
+/datum/objective/hug/update_explanation_text()
+	..()
+	if(!hugs_needed)//just so admins can mess with it
+		hugs_needed = rand(4,6)
+	if(target && target.current)
+		explanation_text = "Hug [target.name] [hugs_needed] times!"
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/hug/check_completion()
+	return hugs_counted >= hugs_needed
+*/
 /datum/objective/polaroid //take a picture of the target with you in it.
 	name = "polaroid"
+
+/datum/objective/polaroid/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Take a photo with [target.name] while they're alive."
+	else
+		explanation_text = "Free Objective"
 
 /datum/objective/polaroid/check_completion()
 	var/list/datum/mind/owners = get_owners()
@@ -114,29 +133,5 @@
 					return TRUE
 	return FALSE
 
-/datum/objective/polaroid/update_explanation_text()
-	..()
-	if(target && target.current)
-		explanation_text = "Take a photo with [target.name] while they're alive."
-	else
-		explanation_text = "Free Objective"
 
-/datum/objective/assassinate/creep //triggers the next set of objectives when the target dies
-	var/datum/status_effect/deathrattle/deathrattle
 
-/datum/objective/assassinate/creep/update_explanation_text()
-	..()
-	if(target && target.current)
-		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
-		target.current.apply_status_effect(STATUS_EFFECT_DEATHRATTLE, "deathrattle")
-		deathrattle = target.current.has_status_effect(STATUS_EFFECT_DEATHRATTLE)
-		deathrattle.objective = src
-	else
-		explanation_text = "Free Objective"
-
-/datum/objective/assassinate/creep/deathrattle(var/suicided = FALSE)
-	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
-	if(creeper.creepiness < creeper.max_creepiness)
-		if(creeper.creepiness == 0 && suicided)//your first target suicided, AKA suicide in the first 15 minutes
-			creeper.max_creepiness++ //give them another obsession total
-		creeper.add_objectives(target)

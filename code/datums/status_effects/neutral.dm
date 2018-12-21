@@ -69,15 +69,3 @@
 /datum/status_effect/in_love/tick()
 	if(date)
 		new /obj/effect/temp_visual/love_heart/invisible(get_turf(date.loc), owner)
-
-/datum/status_effect/deathrattle //triggers the deathrattle proc on an objective when the owner dies
-	id = "deathrattle"
-	duration = -1
-	status_type = STATUS_EFFECT_UNIQUE
-	alert_type = null
-	var/datum/objective/objective
-
-/datum/status_effect/deathrattle/tick()
-	if(owner.stat == DEAD)
-		objective.deathrattle()
-		qdel(src)
