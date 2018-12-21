@@ -2,7 +2,8 @@
 
 /*
 	Welcome admins, badmins and coders alike, to Structured Datum Query Language.
-	SDQL allows you to powerfully run code on batches of objects (or single objects, it's still unmatched even there.)
+	SDQL allows you to powerfully run code on batches of objects (or single objects, it's still unmatched
+	even there.)
 	When I say "powerfully" I mean it you're in for a ride.
 
 	Ok so say you want to get a list of every mob. How does one do this?
@@ -20,7 +21,8 @@
 	These expressions can also do variable access and proc calls (yes, both on-object and globals!)
 	Keep reading!
 
-	Ok. What if you want to get every machine in the SSmachine process list? Looping through world is kinda slow.
+	Ok. What if you want to get every machine in the SSmachine process list? Looping through world is kinda
+	slow.
 
 	"SELECT * IN SSmachines.machinery"
 
@@ -48,15 +50,18 @@
 
 	This will give you a list of all the APCs, their charge AND RCon tag. Useful eh?
 
-	[] being a list here. Yeah you can write out lists directly without > lol lists in VV. Color matrix shenanigans inbound.
+	[] being a list here. Yeah you can write out lists directly without > lol lists in VV. Color matrix
+	shenanigans inbound.
 
-	After the "MAP" segment is executed, the rest of the query executes as if it's THAT object you just made (here the list).
+	After the "MAP" segment is executed, the rest of the query executes as if it's THAT object you just made
+	(here the list).
 	Yeah, by the way, you can chain these MAP / WHERE things FOREVER!
 
 	"SELECT /mob WHERE client MAP client WHERE holder MAP holder"
 
 	What if some dumbass admin spawned a bajillion spiders and you need to kill them all?
-	Oh yeah you'd rather not delete all the spiders in maintenace. Only that one room the spiders were spawned in.
+	Oh yeah you'd rather not delete all the spiders in maintenace. Only that one room the spiders were
+	spawned in.
 
 	"DELETE /mob/living/carbon/superior_animal/giant_spider WHERE loc.loc == marked"
 
@@ -79,7 +84,8 @@
 
 	You can also run multiple queries sequentially:
 
-	"CALL forceMove(marked) ON /mob/living/carbon/superior_animal; CALL gib() ON /mob/living/carbon/superior_animal"
+	"CALL forceMove(marked) ON /mob/living/carbon/superior_animal; CALL gib() ON
+	/mob/living/carbon/superior_animal"
 
 	And finally, you can directly modify variables on objects.
 
@@ -87,7 +93,8 @@
 
 	Don't crash the server, OK?
 
-	A quick recommendation: before you run something like a DELETE or another query.. Run it through SELECT first.
+	A quick recommendation: before you run something like a DELETE or another query.. Run it through SELECT
+	first.
 	You'd rather not gib every player on accident.
 	Or crash the server.
 
@@ -113,7 +120,8 @@
 	All names inside the IN block are global scope, so you can do living_mob_list (a global var) easily.
 	You can also run it on a single object. Because SDQL is that convenient even for single operations.
 
-	<type> filters out objects of, well, that type easily. "*" is a wildcard and just takes everything in the source list.
+	<type> filters out objects of, well, that type easily. "*" is a wildcard and just takes everything in
+	the source list.
 
 	And then there's the MAP/WHERE chain.
 	These operate on each individual object being ran through the query.
@@ -133,7 +141,8 @@
 	* \ref referencing: {0x30000cc} grabs the object with \ref [0x30000cc]
 	* Lists: [a, b, c] or [a: b, c: d]
 	* Math and stuff.
-	* A few special variables: src (the object currently scoped on), usr (your mob), marked (your marked datum), global(global scope)
+	* A few special variables: src (the object currently scoped on), usr (your mob),
+		marked (your marked datum), global(global scope)
 */
 
 #define SDQL2_STATE_ERROR 0
