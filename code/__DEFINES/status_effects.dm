@@ -94,6 +94,8 @@
 
 #define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //Displays you as being in love with someone else, and makes hearts appear around them.
 
+#define STATUS_EFFECT_DEATHRATTLE /datum/status_effect/deathrattle //Triggers the deathrattle() proc on the attached objective. make sure you actually attach it though, it won't do it itself.
+
 /////////////
 //  SLIME  //
 /////////////

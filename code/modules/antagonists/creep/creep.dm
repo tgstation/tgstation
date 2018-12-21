@@ -24,10 +24,32 @@
 	polaroid.target = mypretties.target
 	objectives += polaroid
 
-	var/datum/objective/assassinate/deathcheck/kill = new
+	var/datum/objective/assassinate/creep/kill = new
 	kill.owner = owner
 	kill.target = mypretties.target
 	objectives += kill
+
+/datum/antagonist/creep/proc/add_objectives(var/mob/living/old_target) //for when you're done with the first obsession set
+
+	var/datum/objective/protect/timed/mypretties = new
+	mypretties.owner = owner
+	objectives += mypretties
+
+	var/datum/objective/polaroid/polaroid = new
+	polaroid.owner = owner
+	polaroid.target = mypretties.target
+	objectives += polaroid
+
+	var/datum/objective/assassinate/creep/kill = new
+	kill.owner = owner
+	kill.target = mypretties.target
+	objectives += kill
+
+	if(owner.current.stat != DEAD)//would be annoying to keep getting these after you're dead
+		to_chat(owner, "<span class='boldannounce'>You sense your obsession has died. They weren't good enough for you anyways!</span>")
+		var/niceguy = pick("looked at you", "opened the airlock for you", "picked up your PDA for you", "said hi in the hallways")
+		to_chat(owner, "<B>Besides, the way [mypretties.target.name] [niceguy] that one time means they're way more madly in love with you than [old_target.name] ever was!</B>")
+		owner.announce_objectives()
 
 /datum/antagonist/creep/on_gain()
 	forge_objectives()
@@ -99,6 +121,22 @@
 	else
 		explanation_text = "Free Objective"
 
-/datum/objective/assassinate/deathcheck //triggers a proc when it is completed (the target dies) through a status effect
-	var/datum/status_effect/deathcheck
+/datum/objective/assassinate/creep //triggers the next set of objectives when the target dies
+	var/datum/status_effect/deathrattle/deathrattle
 
+/datum/objective/assassinate/creep/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		target.current.apply_status_effect(STATUS_EFFECT_DEATHRATTLE, "deathrattle")
+		deathrattle = target.current.has_status_effect(STATUS_EFFECT_DEATHRATTLE)
+		deathrattle.objective = src
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/assassinate/creep/deathrattle(var/suicided = FALSE)
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+	if(creeper.creepiness < creeper.max_creepiness)
+		if(creeper.creepiness == 0 && suicided)//your first target suicided, AKA suicide in the first 15 minutes
+			creeper.max_creepiness++ //give them another obsession total
+		creeper.add_objectives(target)
