@@ -19,7 +19,7 @@
 	circuit = /obj/item/circuitboard/machine/clonepod
 
 	var/heal_level //The clone is released once its health reaches this level.
-	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
+	var/obj/machinery/computer/cloning/connected //So we remember the connected clone machine.
 	var/mess = FALSE //Need to clean out it if it's full of exploded clone.
 	var/attempting = FALSE //One clone attempt at a time thanks
 	var/speed_coeff
@@ -31,7 +31,7 @@
 	var/internal_radio = TRUE
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = "Medical"
+	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	var/obj/effect/countdown/clonepod/countdown
 
@@ -74,13 +74,23 @@
 	if(heal_level > 100)
 		heal_level = 100
 
+/obj/machinery/clonepod/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>The <i>linking</i> device can be <i>scanned<i> with a multitool.</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Cloning speed at <b>[speed_coeff*50]%</b>.<br>Predicted amount of cellular damage: <b>[100-heal_level]%</b>.<span>")
+		if(efficiency > 5)
+			to_chat(user, "<span class='notice'>Pod has been upgraded to support autoprocessing and apply beneficial mutations.<span>")
+
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
 //TO-DO: Make the genetics machine accept them.
 /obj/item/disk/data
 	name = "cloning data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	var/list/fields = list()
-	var/read_only = 0 //Well,it's still a floppy disk
+	var/list/mutations = list()
+	var/max_mutations = 6
+	var/read_only = FALSE //Well,it's still a floppy disk
 
 //Disk stuff.
 /obj/item/disk/data/Initialize()
@@ -127,7 +137,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(ckey, clonename, ui, se, mindref, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
 		return FALSE
 	if(mess || attempting)
@@ -135,15 +145,14 @@
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
 		return FALSE
+	if(clonemind.last_death != last_death) //The soul has advanced, the record has not.
+		return FALSE
 	if(!QDELETED(clonemind.current))
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
 			return FALSE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
 			return FALSE
-	if(clonemind.active)	//somebody is using that mind
-		if( ckey(clonemind.key)!=ckey )
-			return FALSE
-	else
+	if(!clonemind.active)
 		// get_ghost() will fail if they're unable to reenter their body
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)
@@ -162,17 +171,20 @@
 
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src)
 
-	H.hardset_dna(ui, se, H.real_name, null, mrace, features)
+	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
 
 	if(efficiency > 2)
 		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
 		H.dna.remove_mutation_group(unclean_mutations)
 	if(efficiency > 5 && prob(20))
-		H.randmutvg()
-	if(efficiency < 3 && prob(50))
-		var/mob/M = H.randmutb()
-		if(ismob(M))
-			H = M
+		H.easy_randmut(POSITIVE)
+	if(efficiency < 3)
+		if(prob(50))
+			H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_BASIC)
+		if(prob(50))
+			var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			if(ismob(M))
+				H = M
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
@@ -210,7 +222,7 @@
 
 		H.set_cloned_appearance()
 
-		H.suiciding = FALSE
+		H.set_suicide(FALSE)
 	attempting = FALSE
 	return TRUE
 
@@ -367,7 +379,7 @@
 			fl.forceMove(T)
 		unattached_flesh.Cut()
 		mess = FALSE
-		new /obj/effect/gibspawner/generic(get_turf(src))
+		new /obj/effect/gibspawner/generic(get_turf(src), mob_occupant)
 		audible_message("<span class='italics'>You hear a splat.</span>")
 		icon_state = "pod_0"
 		return
@@ -409,7 +421,7 @@
 		mob_occupant.grab_ghost() // We really just want to make you suffer.
 		flash_color(mob_occupant, flash_color="#960000", flash_time=100)
 		to_chat(mob_occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
-		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
+		playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		SEND_SOUND(mob_occupant, sound('sound/hallucinations/veryfar_noise.ogg',0,1,50))
 		QDEL_IN(mob_occupant, 40)
 

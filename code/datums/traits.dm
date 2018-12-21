@@ -1,16 +1,16 @@
 /datum/proc/add_trait(trait, source)
 	LAZYINITLIST(status_traits)
-		
+
 	if(!status_traits[trait])
 		status_traits[trait] = list(source)
 	else
 		status_traits[trait] |= list(source)
-		
+
 
 /datum/proc/remove_trait(trait, list/sources, force)
 	if(!status_traits)
 		return //nothing to remove
-		
+
 	if(!status_traits[trait])
 		return
 
@@ -33,11 +33,11 @@
 
 	if(!LAZYLEN(status_traits[trait]))
 		status_traits -= trait
-		
+
 /datum/proc/has_trait(trait, list/sources)
 	if(!status_traits)
 		return FALSE //well of course it doesn't have the trait
-		
+
 	if(!status_traits[trait])
 		return FALSE
 
@@ -51,11 +51,11 @@
 				return TRUE
 	else if(LAZYLEN(status_traits[trait]))
 		return TRUE
-		
+
 /datum/proc/remove_all_traits(remove_species_traits = FALSE, remove_organ_traits = FALSE, remove_quirks = FALSE)
 	if(!status_traits)
 		return //nothing to remove
-		
+
 	var/list/blacklisted_sources = list()
 	if(!remove_species_traits)
 		blacklisted_sources += SPECIES_TRAIT

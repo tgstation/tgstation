@@ -7,12 +7,12 @@
 //create this define if you want to do configuration outside of this file
 #ifndef TGS_EXTERNAL_CONFIGURATION
 
+//Comment this out once you've filled in the below
+#error TGS API unconfigured
+
 //Uncomment this if you wish to allow the game to interact with TGS 3
 //This will raise the minimum required security level of your game to TGS_SECURITY_TRUSTED due to it utilizing call()()
 //#define TGS_V3_API
-
-//Comment this out once you've filled in the below
-#error TGS API unconfigured
 
 //Required interfaces (fill in with your codebase equivalent):
 
@@ -51,7 +51,21 @@
 #define TGS_EVENT_PORT_SWAP -2	//before a port change is about to happen, extra parameter is new port
 #define TGS_EVENT_REBOOT_MODE_CHANGE -1	//before a reboot mode change, extras parameters are the current and new reboot mode enums
 
-//TODO
+//See the descriptions for these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
+#define TGS_EVENT_REPO_RESET_ORIGIN 0
+#define TGS_EVENT_REPO_CHECKOUT 1
+#define TGS_EVENT_REPO_FETCH 2
+#define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
+#define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
+#define TGS_EVENT_BYOND_INSTALL_START 5
+#define TGS_EVENT_BYOND_INSTALL_FAIL 6
+#define TGS_EVENT_BYOND_ACTIVE_VERSION_CHANGE 7
+#define TGS_EVENT_COMPILE_START 8
+#define TGS_EVENT_COMPILE_CANCELLED 9
+#define TGS_EVENT_COMPILE_FAILURE 10
+#define TGS_EVENT_COMPILE_COMPLETE 11
+#define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
+#define TGS_EVENT_REPO_MERGE_CONFLICT 13
 
 //OTHER ENUMS
 
@@ -78,8 +92,8 @@
 /world/proc/TgsInitializationComplete()
 	return
 
-//Put this somewhere in /world/Topic(T, Addr, Master, Keys) that is always run before T is modified
-#define TGS_TOPIC var/tgs_topic_return = TgsTopic(T); if(tgs_topic_return) return tgs_topic_return
+//Put this at the start of /world/Topic()
+#define TGS_TOPIC var/tgs_topic_return = TgsTopic(args[1]); if(tgs_topic_return) return tgs_topic_return
 
 //Call this at the beginning of world/Reboot(reason)
 /world/proc/TgsReboot()
@@ -92,6 +106,22 @@
 /datum/tgs_revision_information
 	var/commit			//full sha of compiled commit
 	var/origin_commit	//full sha of last known remote commit. This may be null if the TGS repository is not currently tracking a remote branch
+
+//represents a version of tgstation-server
+/datum/tgs_version
+	var/suite			//The suite version, can be >=3
+
+	//this group of variables can be null to represent a wild card
+	var/major					//The major version
+	var/minor					//The minor version
+	var/patch					//The patch version
+
+	var/raw_parameter			//The unparsed parameter
+	var/deprefixed_parameter	//The version only bit of raw_parameter
+
+//if the tgs_version is a wildcard version
+/datum/tgs_version/proc/Wildcard()
+	return
 
 //represents a merge of a GitHub pull request
 /datum/tgs_revision_information/test_merge
@@ -141,20 +171,20 @@
 
 //FUNCTIONS
 
-//Returns the respective string version of the API
+//Returns the respective supported /datum/tgs_version of the API
 /world/proc/TgsMaximumAPIVersion()
 	return
 
 /world/proc/TgsMinimumAPIVersion()
 	return
 
-//Gets the current version of the server tools running the server
-/world/proc/TgsVersion()
-	return
-
 //Returns TRUE if the world was launched under the server tools and the API matches, FALSE otherwise
 //No function below this succeeds if it returns FALSE
 /world/proc/TgsAvailable()
+	return
+
+//Gets the current /datum/tgs_version of the server tools running the server
+/world/proc/TgsVersion()
 	return
 
 /world/proc/TgsInstanceName()

@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "The cyborg reset module wire has a star symbol marking, allowing a trained Roboticist to easily provide resets without altering any other cyborg settings."

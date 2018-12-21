@@ -29,7 +29,7 @@
 	if(fly)
 		fly.Remove(H)
 	if(H.movement_type & FLYING)
-		H.movement_type &= ~FLYING
+		H.setMovetype(H.movement_type & ~FLYING)
 	ToggleFlight(H,0)
 	if(H.dna && H.dna.species && (H.dna.features["wings"] == "Angel"))
 		if("wings" in H.dna.species.mutant_bodyparts)
@@ -131,14 +131,14 @@
 	if(flight && CanFly(H))
 		stunmod = 2
 		speedmod = -0.35
-		H.movement_type |= FLYING
+		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
-		H.movement_type &= ~FLYING
+		H.setMovetype(H.movement_type & ~FLYING)
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

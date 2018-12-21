@@ -60,11 +60,11 @@ Difficulty: Medium
 	medal_type = BOSS_MEDAL_DRAKE
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	deathsound = 'sound/magic/demon_dies.ogg'
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/drake()
-	
+
 	do_footstep = TRUE
-	
+
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
 	. = ..()
@@ -106,7 +106,7 @@ Difficulty: Medium
 		return
 	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
-	
+
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth*0.5)
 			swoop_attack()
@@ -132,7 +132,7 @@ Difficulty: Medium
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
 		sleep(0.8)
-		
+
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
 	swoop_attack(FALSE, target, 1000) // longer cooldown until it gets reset below
@@ -143,7 +143,7 @@ Difficulty: Medium
 		sleep(10)
 		fire_cone()
 	SetRecoveryTime(40)
-			
+
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
 	lava_swoop(15)
 	lava_swoop(15)
@@ -178,7 +178,7 @@ Difficulty: Medium
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		sleep(24)
-	
+
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone()
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
 	if(QDELETED(src) || stat == DEAD) // we dead no fire
@@ -191,7 +191,7 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
 	turfs = line_target(40, range)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-	
+
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(var/offset, var/range)
 	if(!target)
 		return
@@ -203,7 +203,7 @@ Difficulty: Medium
 			return
 		T = check
 	return (getline(src, T) - get_turf(src))
-	
+
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_line(var/list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
@@ -217,7 +217,7 @@ Difficulty: Medium
 			hit_list += L
 			L.adjustFireLoss(20)
 			to_chat(L, "<span class='userdanger'>You're hit by [src]'s fire breath!</span>")
-			
+
 		// deals damage to mechs
 		for(var/obj/mecha/M in T.contents)
 			if(M in hit_list)
@@ -266,16 +266,16 @@ Difficulty: Medium
 	swooping |= SWOOP_INVULNERABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	sleep(7)
-	
+
 	while(target && loc != get_turf(target))
 		forceMove(get_step(src, get_dir(src, target)))
 		sleep(0.5)
-	
+
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10;
 	if(lava_arena)
 		lava_arena()
-	
+
 	//ensure swoop direction continuity.
 	if(negative)
 		if(ISINRANGE(x, initial_x + 1, initial_x + DRAKE_SWOOP_DIRECTION_CHANGE_RANGE))
@@ -345,23 +345,23 @@ Difficulty: Medium
 	INVOKE_ASYNC(src, .proc/fall, reset_time)
 	src.alpha = 63.75
 	animate(src, alpha = 255, time = duration)
-	
+
 /obj/effect/temp_visual/lava_warning/proc/fall(var/reset_time)
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
 	sleep(duration)
 	playsound(T,'sound/magic/fireball.ogg', 200, 1)
-	
+
 	for(var/mob/living/L in T.contents)
 		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
 			continue
 		L.adjustFireLoss(10)
 		to_chat(L, "<span class='userdanger'>You fall directly into the pool of lava!</span>")
-		
+
 	// deals damage to mechs
 	for(var/obj/mecha/M in T.contents)
 		M.take_damage(45, BRUTE, "melee", 1)
-		
+
 	// changes turf to lava temporarily
 	if(!istype(T, /turf/closed) && !istype(T, /turf/open/lava))
 		var/lava_turf = /turf/open/lava/smooth
@@ -369,7 +369,7 @@ Difficulty: Medium
 		T.ChangeTurf(lava_turf)
 		sleep(reset_time)
 		T.ChangeTurf(reset_turf)
-		
+
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."
 	name = "Fire Barrier"
@@ -381,7 +381,7 @@ Difficulty: Medium
 	CanAtmosPass = ATMOS_PASS_DENSITY
 	duration = 82
 	color = COLOR_DARK_ORANGE
-	
+
 /obj/effect/temp_visual/lava_safe
 	icon = 'icons/obj/hand_of_god_structures.dmi'
 	icon_state = "trap-earth"

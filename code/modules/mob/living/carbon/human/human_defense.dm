@@ -55,7 +55,7 @@
 					return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(P.is_reflectable)
+		if(P.reflectable & REFLECT_NORMAL)
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -117,7 +117,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(dna && dna.species)
 		var/spec_return = dna.species.spec_hitby(AM, src)
 		if(spec_return)
@@ -134,7 +134,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
-		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if((I.throw_speed >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !has_trait(TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
@@ -463,12 +463,18 @@
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
+
+	dna.species.spec_electrocute_act(src, shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
 
+/mob/living/carbon/human/emag_act(mob/user)
+	.=..()
+	dna?.species.spec_emag_act(src)
 
 /mob/living/carbon/human/emp_act(severity)
+	dna?.species.spec_emp_act(src, severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
@@ -486,7 +492,7 @@
 					L.receive_damage(0,5)
 					Paralyze(100)
 
-/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
+/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots()
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
@@ -633,7 +639,7 @@
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
 			gain = 100
 		if(mind.assigned_role == "Clown")
-			gain = rand(-300, 300)
+			gain = rand(-1000, 1000)
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
@@ -642,85 +648,85 @@
 	if(!istype(M))
 		return
 
-	if(health >= 0)
-		if(src == M)
-			visible_message("[src] examines [p_them()]self.", \
-				"<span class='notice'>You check yourself for injuries.</span>")
+	if(src == M)
+		visible_message("[src] examines [p_them()]self.", \
+			"<span class='notice'>You check yourself for injuries.</span>")
 
-			var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-			for(var/X in bodyparts)
-				var/obj/item/bodypart/LB = X
-				missing -= LB.body_zone
-				if(LB.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
-					continue
-				var/limb_max_damage = LB.max_damage
-				var/status = ""
-				var/brutedamage = LB.brute_dam
-				var/burndamage = LB.burn_dam
-				if(hallucination)
-					if(prob(30))
-						brutedamage += rand(30,40)
-					if(prob(30))
-						burndamage += rand(30,40)
+		var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+		for(var/X in bodyparts)
+			var/obj/item/bodypart/LB = X
+			missing -= LB.body_zone
+			if(LB.is_pseudopart) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
+				continue
+			var/limb_max_damage = LB.max_damage
+			var/status = ""
+			var/brutedamage = LB.brute_dam
+			var/burndamage = LB.burn_dam
+			if(hallucination)
+				if(prob(30))
+					brutedamage += rand(30,40)
+				if(prob(30))
+					burndamage += rand(30,40)
 
-				if(has_trait(TRAIT_SELF_AWARE))
-					status = "[brutedamage] brute damage and [burndamage] burn damage"
-					if(!brutedamage && !burndamage)
-						status = "no damage"
-
-				else
-					if(brutedamage > 0)
-						status = LB.light_brute_msg
-					if(brutedamage > (limb_max_damage*0.4))
-						status = LB.medium_brute_msg
-					if(brutedamage > (limb_max_damage*0.8))
-						status = LB.heavy_brute_msg
-					if(brutedamage > 0 && burndamage > 0)
-						status += " and "
-
-					if(burndamage > (limb_max_damage*0.8))
-						status += LB.heavy_burn_msg
-					else if(burndamage > (limb_max_damage*0.2))
-						status += LB.medium_burn_msg
-					else if(burndamage > 0)
-						status += LB.light_burn_msg
-
-					if(status == "")
-						status = "OK"
-				var/no_damage
-				if(status == "OK" || status == "no damage")
-					no_damage = TRUE
-				to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
-
-				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
-
-			for(var/t in missing)
-				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
-
-			if(bleed_rate)
-				to_chat(src, "<span class='danger'>You are bleeding!</span>")
-			if(getStaminaLoss())
-				if(getStaminaLoss() > 30)
-					to_chat(src, "<span class='info'>You're completely exhausted.</span>")
-				else
-					to_chat(src, "<span class='info'>You feel fatigued.</span>")
 			if(has_trait(TRAIT_SELF_AWARE))
-				if(toxloss)
-					if(toxloss > 10)
-						to_chat(src, "<span class='danger'>You feel sick.</span>")
-					else if(toxloss > 20)
-						to_chat(src, "<span class='danger'>You feel nauseated.</span>")
-					else if(toxloss > 40)
-						to_chat(src, "<span class='danger'>You feel very unwell!</span>")
-				if(oxyloss)
-					if(oxyloss > 10)
-						to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
-					else if(oxyloss > 20)
-						to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
-					else if(oxyloss > 30)
-						to_chat(src, "<span class='danger'>You're choking!</span>")
+				status = "[brutedamage] brute damage and [burndamage] burn damage"
+				if(!brutedamage && !burndamage)
+					status = "no damage"
 
+			else
+				if(brutedamage > 0)
+					status = LB.light_brute_msg
+				if(brutedamage > (limb_max_damage*0.4))
+					status = LB.medium_brute_msg
+				if(brutedamage > (limb_max_damage*0.8))
+					status = LB.heavy_brute_msg
+				if(brutedamage > 0 && burndamage > 0)
+					status += " and "
+
+				if(burndamage > (limb_max_damage*0.8))
+					status += LB.heavy_burn_msg
+				else if(burndamage > (limb_max_damage*0.2))
+					status += LB.medium_burn_msg
+				else if(burndamage > 0)
+					status += LB.light_burn_msg
+
+				if(status == "")
+					status = "OK"
+			var/no_damage
+			if(status == "OK" || status == "no damage")
+				no_damage = TRUE
+			to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name] [has_trait(TRAIT_SELF_AWARE) ? "has" : "is"] [status].</span>")
+
+			for(var/obj/item/I in LB.embedded_objects)
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+
+		for(var/t in missing)
+			to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
+
+		if(bleed_rate)
+			to_chat(src, "<span class='danger'>You are bleeding!</span>")
+		if(getStaminaLoss())
+			if(getStaminaLoss() > 30)
+				to_chat(src, "<span class='info'>You're completely exhausted.</span>")
+			else
+				to_chat(src, "<span class='info'>You feel fatigued.</span>")
+		if(has_trait(TRAIT_SELF_AWARE))
+			if(toxloss)
+				if(toxloss > 10)
+					to_chat(src, "<span class='danger'>You feel sick.</span>")
+				else if(toxloss > 20)
+					to_chat(src, "<span class='danger'>You feel nauseated.</span>")
+				else if(toxloss > 40)
+					to_chat(src, "<span class='danger'>You feel very unwell!</span>")
+			if(oxyloss)
+				if(oxyloss > 10)
+					to_chat(src, "<span class='danger'>You feel lightheaded.</span>")
+				else if(oxyloss > 20)
+					to_chat(src, "<span class='danger'>Your thinking is clouded and distant.</span>")
+				else if(oxyloss > 30)
+					to_chat(src, "<span class='danger'>You're choking!</span>")
+
+		if(!has_trait(TRAIT_NOHUNGER))
 			switch(nutrition)
 				if(NUTRITION_LEVEL_FULL to INFINITY)
 					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
@@ -735,15 +741,15 @@
 				if(0 to NUTRITION_LEVEL_STARVING)
 					to_chat(src, "<span class='danger'>You're starving!</span>")
 
-			if(roundstart_quirks.len)
-				to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
-		else
-			if(wear_suit)
-				wear_suit.add_fingerprint(M)
-			else if(w_uniform)
-				w_uniform.add_fingerprint(M)
+		if(roundstart_quirks.len)
+			to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
+	else
+		if(wear_suit)
+			wear_suit.add_fingerprint(M)
+		else if(w_uniform)
+			w_uniform.add_fingerprint(M)
 
-			..()
+		..()
 
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)

@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - bugfix: "You can click on things that are under flaps or holo barriers."

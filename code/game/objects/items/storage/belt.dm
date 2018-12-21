@@ -27,12 +27,18 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/belt/examine(mob/user)
+	..()
+	clothing_resistance_flag_examine_message(user)
+
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_price = 50
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -208,6 +214,19 @@
 	new /obj/item/melee/baton/loaded(src)
 	update_icon()
 
+/obj/item/storage/belt/security/webbing
+	name = "security webbing"
+	desc = "Unique and versatile chest rig, can hold security gear."
+	icon_state = "securitywebbing"
+	item_state = "securitywebbing"
+	content_overlays = FALSE
+	custom_premium_price = 800
+
+/obj/item/storage/belt/security/webbing/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
 	desc = "A versatile chest rig, cherished by miners and hunters alike."
@@ -361,7 +380,7 @@
 		/obj/item/reagent_containers/food/snacks/cheesynachos,
 		/obj/item/reagent_containers/food/snacks/cubannachos,
 		/obj/item/reagent_containers/food/snacks/nugget,
-		/obj/item/reagent_containers/food/snacks/pastatomato,
+		/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato,
 		/obj/item/reagent_containers/food/snacks/rofflewaffles,
 		/obj/item/reagent_containers/food/snacks/donkpocket,
 		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
@@ -431,34 +450,20 @@
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/facid(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/screwdriver(src)
-	new /obj/item/multitool(src)
+	var/static/items_inside = list(
+		/obj/item/grenade/flashbang = 1,
+		/obj/item/grenade/smokebomb = 4,
+		/obj/item/grenade/empgrenade = 1,
+		/obj/item/grenade/empgrenade = 1,
+		/obj/item/grenade/syndieminibomb/concussion/frag = 10,
+		/obj/item/grenade/gluon = 4,
+		/obj/item/grenade/chem_grenade/incendiary = 2,
+		/obj/item/grenade/chem_grenade/facid = 1,
+		/obj/item/grenade/syndieminibomb = 2,
+		/obj/item/screwdriver = 1,
+		/obj/item/multitool = 1)
+	generate_items_inside(items_inside,src)
+
 
 /obj/item/storage/belt/wands
 	name = "wand belt"
@@ -545,9 +550,10 @@
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
-	new /obj/item/gun/ballistic/revolver/detective(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/ammo_box/c38(src)
+	var/static/items_inside = list(
+		/obj/item/gun/ballistic/revolver/detective = 1,
+		/obj/item/ammo_box/c38 = 2)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
@@ -555,6 +561,7 @@
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
 	item_color = "fannypackleather"
+	custom_price = 15
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()

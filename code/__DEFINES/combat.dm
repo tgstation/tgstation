@@ -43,6 +43,8 @@
 #define HEALTH_THRESHOLD_FULLCRIT -30
 #define HEALTH_THRESHOLD_DEAD -100
 
+#define HEALTH_THRESHOLD_NEARDEATH -90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
+
 //Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
@@ -66,9 +68,9 @@
 #define GRAB_KILL					3
 
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
-#define SOFTCRIT_ADD_SLOWDOWN 4
+#define SOFTCRIT_ADD_SLOWDOWN 2
 //slowdown when crawling
-#define CRAWLING_ADD_SLOWDOWN 2
+#define CRAWLING_ADD_SLOWDOWN 4
 
 //Attack types for checking shields/hit reactions
 #define MELEE_ATTACK 1
@@ -122,6 +124,9 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//Projectile Reflect
+#define REFLECT_NORMAL 				(1<<0)
+#define REFLECT_FAKEPROJECTILE		(1<<1)
 
 //Object/Item sharpness
 #define IS_BLUNT			0

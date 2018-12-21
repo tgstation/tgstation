@@ -49,12 +49,11 @@
 	O.updateappearance(icon_update=0)
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=1)//we don't want to keep the race block inactive
+		O.dna.mutation_index = dna.mutation_index
+		O.dna.set_se(1, get_initialized_mutation(RACEMUT))
 
 	if(suiciding)
-		O.suiciding = suiciding
+		O.set_suicide(suiciding)
 	if(hellbound)
 		O.hellbound = hellbound
 	O.a_intent = INTENT_HARM
@@ -205,13 +204,12 @@
 	O.name = O.real_name
 
 	if(tr_flags & TR_KEEPSE)
-		O.dna.struc_enzymes = dna.struc_enzymes
-		var/datum/mutation/human/race/R = GLOB.mutations_list[RACEMUT]
-		O.dna.struc_enzymes = R.set_se(O.dna.struc_enzymes, on=0)//we don't want to keep the race block active
+		O.dna.mutation_index = dna.mutation_index
+		O.dna.set_se(0, get_initialized_mutation(RACEMUT))
 		O.domutcheck()
 
 	if(suiciding)
-		O.suiciding = suiciding
+		O.set_suicide(suiciding)
 	if(hellbound)
 		O.hellbound = hellbound
 
@@ -301,7 +299,7 @@
 
 	qdel(src)
 
-/mob/living/carbon/human/AIize()
+/mob/living/carbon/human/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
 		return
 	for(var/t in bodyparts)
@@ -309,7 +307,7 @@
 
 	return ..()
 
-/mob/living/carbon/AIize()
+/mob/living/carbon/AIize(transfer_after = TRUE, client/preference_source)
 	if (notransform)
 		return
 	notransform = TRUE
@@ -321,7 +319,7 @@
 	invisibility = INVISIBILITY_MAXIMUM
 	return ..()
 
-/mob/proc/AIize(transfer_after = TRUE)
+/mob/proc/AIize(transfer_after = TRUE, client/preference_source)
 	var/list/turf/landmark_loc = list()
 	for(var/obj/effect/landmark/start/ai/sloc in GLOB.landmarks_list)
 		if(locate(/mob/living/silicon/ai) in sloc.loc)
@@ -348,6 +346,9 @@
 
 	. = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
 
+	if(preference_source)
+		apply_pref_name("ai",preference_source)
+
 	qdel(src)
 
 /mob/living/carbon/human/proc/Robotize(delete_items = 0, transfer_after = TRUE)
@@ -372,6 +373,9 @@
 	R.gender = gender
 	R.invisibility = 0
 
+	if(client)
+		R.updatename(client)
+
 	if(mind)		//TODO
 		if(!transfer_after)
 			mind.active = FALSE
@@ -379,10 +383,8 @@
 	else if(transfer_after)
 		R.key = key
 
-	R.apply_pref_name("cyborg")
-
 	if(R.mmi)
-		R.mmi.name = "Man-Machine Interface: [real_name]"
+		R.mmi.name = "[initial(R.mmi.name)]: [real_name]"
 		if(R.mmi.brain)
 			R.mmi.brain.name = "[real_name]'s brain"
 		if(R.mmi.brainmob)
@@ -445,7 +447,7 @@
 		var/list/babies = list()
 		for(var/i=1,i<=number,i++)
 			var/mob/living/simple_animal/slime/M = new/mob/living/simple_animal/slime(loc)
-			M.nutrition = round(nutrition/number)
+			M.set_nutrition(round(nutrition/number))
 			step_away(M,src)
 			babies += M
 		new_slime = pick(babies)

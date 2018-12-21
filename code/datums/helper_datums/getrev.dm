@@ -28,6 +28,7 @@
 	for(var/line in testmerge)
 		var/datum/tgs_revision_information/test_merge/tm = line
 		msg += "Test merge active of PR #[tm.number] commit [tm.commit]"
+		SSblackbox.record_feedback("associative", "testmerged_prs", 1, list("number" = "[tm.number]", "commit" = "[tm.commit]", "title" = "[tm.title]", "author" = "[tm.author]"))
 
 	if(commit && commit != originmastercommit)
 		msg += "HEAD: [commit]"
@@ -75,7 +76,8 @@
 	else if(!pc)
 		msg += "No commit information"
 	if(world.TgsAvailable())
-		msg += "Server tools version: [world.TgsVersion()]"
+		var/datum/tgs_version/version = world.TgsVersion()
+		msg += "Server tools version: [version.raw_parameter]"
 
 	// Game mode odds
 	msg += "<br><b>Current Informational Settings:</b>"

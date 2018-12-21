@@ -64,6 +64,10 @@
 	var/list/mobs = list()
 	for(var/i in stored_items)
 		var/mob/thismob = i
+		if(QDELETED(thismob))
+			say("Alert! Unable to locate vital signals of a previously processed prisoner. Ejecting equipment!")
+			drop_items(thismob)
+			continue
 		var/list/mob_info = list()
 		mob_info["name"] = thismob.real_name
 		mob_info["mob"] = "[REF(thismob)]"

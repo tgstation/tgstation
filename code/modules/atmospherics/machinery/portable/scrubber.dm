@@ -89,6 +89,16 @@
 		data["holding"]["pressure"] = round(holding.air_contents.return_pressure())
 	return data
 
+/obj/machinery/portable_atmospherics/scrubber/replace_tank(mob/living/user, close_valve)
+	. = ..()
+	if(.)
+		if(close_valve)
+			if(on)
+				on = FALSE
+				update_icon()
+		else if(on && holding)
+			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+
 /obj/machinery/portable_atmospherics/scrubber/ui_act(action, params)
 	if(..())
 		return
@@ -98,8 +108,7 @@
 			. = TRUE
 		if("eject")
 			if(holding)
-				holding.forceMove(drop_location())
-				holding = null
+				replace_tank(usr, FALSE)
 				. = TRUE
 		if("toggle_filter")
 			scrubbing ^= gas_id2path(params["val"])

@@ -170,7 +170,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.add_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
+	victim.add_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 	sleep(duration)
-	victim.remove_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
+	victim.remove_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")

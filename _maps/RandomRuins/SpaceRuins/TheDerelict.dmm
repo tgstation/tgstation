@@ -1329,14 +1329,6 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/bridge/access)
-"er" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plating,
-/area/ruin/space/derelict/bridge)
-"es" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel,
-/area/ruin/space/derelict/bridge)
 "et" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1759,10 +1751,6 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/singularity_engine)
-"fM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
 "fN" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -1956,17 +1944,6 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gu" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/singularity_engine)
-"gv" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "gw" = (
@@ -2432,10 +2409,6 @@
 	dir = 8
 	},
 /area/ruin/space/derelict/medical/chapel)
-"ih" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/chapel,
-/area/ruin/space/derelict/medical/chapel)
 "ii" = (
 /turf/open/floor/plasteel/chapel{
 	dir = 8
@@ -2527,14 +2500,6 @@
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
-/area/ruin/space/derelict/medical/chapel)
-"iy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/dark,
-/area/ruin/space/derelict/medical/chapel)
-"iz" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel/dark,
 /area/ruin/space/derelict/medical/chapel)
 "iA" = (
 /obj/machinery/sleeper{
@@ -2727,10 +2692,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel,
 /area/ruin/space/derelict/arrival)
-"je" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel/chapel,
-/area/ruin/space/derelict/medical/chapel)
 "jf" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -3101,10 +3062,6 @@
 /turf/open/floor/plasteel/airless{
 	icon_state = "floorscorched1"
 	},
-/area/ruin/space/derelict/hallway/primary)
-"kn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/primary)
 "ko" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
@@ -3756,10 +3713,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
-"mE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary)
 "mF" = (
 /obj/structure/chair{
 	dir = 1
@@ -3785,10 +3738,6 @@
 /area/ruin/space/derelict/hallway/secondary)
 "mJ" = (
 /obj/item/stack/cable_coil/cut/red,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/hallway/primary)
-"mK" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary)
 "mL" = (
@@ -3871,10 +3820,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/airless,
-/area/ruin/space/derelict/hallway/secondary)
-"nb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nc" = (
@@ -4036,10 +3981,6 @@
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/hallway/secondary)
-"nw" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/plasteel/airless,
-/area/ruin/space/derelict/hallway/secondary)
 "ny" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional,
 /turf/open/floor/plating/airless,
@@ -4178,10 +4119,6 @@
 "nV" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/se_solar)
-"nW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/turf/open/floor/plasteel/airless,
-/area/ruin/space/derelict/se_solar)
 "nX" = (
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/plasteel/airless,
@@ -4260,10 +4197,6 @@
 	desc = "This guy seemed to have died in terrible way! Half his remains are dust.";
 	name = "Syndicate agent remains"
 	},
-/turf/open/floor/plasteel/airless,
-/area/ruin/space/derelict/se_solar)
-"oj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/derelict/se_solar)
 "ok" = (
@@ -5197,11 +5130,11 @@ hj
 hj
 gX
 hS
-ih
+ij
 iw
 iK
 iV
-je
+ij
 ju
 jL
 ZB
@@ -5989,7 +5922,7 @@ hu
 hk
 hk
 hk
-iy
+hk
 hk
 hk
 gX
@@ -6215,7 +6148,7 @@ gX
 hk
 hk
 hk
-iz
+hk
 hk
 hk
 gX
@@ -6674,7 +6607,7 @@ hV
 iA
 fZ
 go
-kn
+go
 ku
 fZ
 kN
@@ -6791,7 +6724,7 @@ go
 gc
 fZ
 jZ
-kn
+go
 fZ
 gL
 gL
@@ -7239,11 +7172,11 @@ jg
 jA
 fZ
 go
-ko
+go
 gc
 fZ
 jZ
-kn
+go
 fZ
 lo
 go
@@ -7822,7 +7755,7 @@ gL
 gL
 gL
 gL
-mE
+gL
 gL
 md
 mU
@@ -7930,7 +7863,7 @@ lg
 go
 fZ
 gn
-mE
+gL
 gn
 go
 fZ
@@ -8044,14 +7977,14 @@ go
 kD
 go
 go
-mK
+gL
 go
 fZ
 gm
 mR
 gm
 md
-nb
+mU
 mU
 nz
 ac
@@ -8123,10 +8056,10 @@ fj
 fr
 fj
 fJ
-fM
+dW
 dX
 gh
-gu
+gj
 dW
 dW
 dW
@@ -8482,7 +8415,7 @@ hv
 hv
 fZ
 go
-kn
+go
 go
 gc
 go
@@ -8708,7 +8641,7 @@ ay
 jp
 fZ
 go
-ko
+go
 go
 gc
 go
@@ -9256,7 +9189,7 @@ fE
 fN
 fV
 dW
-gv
+dW
 dW
 gK
 gS
@@ -9366,7 +9299,7 @@ fd
 ft
 ft
 ew
-fM
+dW
 dW
 gi
 gw
@@ -10996,7 +10929,7 @@ nB
 nB
 nB
 nQ
-nW
+nR
 nR
 oh
 nR
@@ -11103,7 +11036,7 @@ mI
 mI
 mX
 nn
-nw
+mU
 mZ
 mZ
 nG
@@ -11225,7 +11158,7 @@ nS
 nR
 ob
 nR
-oj
+nR
 nB
 aa
 aa
@@ -12295,7 +12228,7 @@ cK
 cs
 dI
 eb
-er
+eb
 ea
 eK
 ea
@@ -12408,7 +12341,7 @@ cK
 cs
 dJ
 ea
-es
+ea
 ea
 eM
 eR

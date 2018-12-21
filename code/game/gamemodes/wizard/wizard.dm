@@ -5,6 +5,7 @@
 /datum/game_mode/wizard
 	name = "wizard"
 	config_tag = "wizard"
+	report_type = "wizard"
 	antag_flag = ROLE_WIZARD
 	false_report_weight = 10
 	required_players = 20

@@ -1,17 +1,21 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
-	name = "thermomachine"
-	desc = "Heats or cools gas in connected pipes."
 	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
-	var/icon_state_off = "freezer"
-	var/icon_state_on = "freezer_1"
-	var/icon_state_open = "freezer-o"
+
+	name = "thermomachine"
+	desc = "Heats or cools gas in connected pipes."
+
 	density = TRUE
 	max_integrity = 300
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
+
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+
+	var/icon_state_off = "freezer"
+	var/icon_state_on = "freezer_1"
+	var/icon_state_open = "freezer-o"
 
 	var/min_temperature = 0
 	var/max_temperature = 0
@@ -173,6 +177,13 @@
 	. = ..()
 	if(target_temperature == initial(target_temperature))
 		target_temperature = min_temperature
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
+	name = "cold room freezer"
+
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize()
+	. = ..()
+	target_temperature = T0C-80
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/RefreshParts()
 	..()

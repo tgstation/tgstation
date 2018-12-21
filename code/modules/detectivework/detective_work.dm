@@ -30,7 +30,7 @@
 		. = AddComponent(/datum/component/forensics, fingerprints)
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
-/atom/proc/add_fingerprint(mob/living/M, ignoregloves = FALSE)
+/atom/proc/add_fingerprint(mob/M, ignoregloves = FALSE)
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_fingerprint(M, ignoregloves)
 
@@ -57,7 +57,7 @@
 	if(length(hiddenprints))
 		. = AddComponent(/datum/component/forensics, null, hiddenprints)
 
-/atom/proc/add_hiddenprint(mob/living/M)
+/atom/proc/add_hiddenprint(mob/M)
 	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 

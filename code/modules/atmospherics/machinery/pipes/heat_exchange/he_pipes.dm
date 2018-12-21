@@ -1,5 +1,4 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging
-	icon = 'icons/obj/atmospherics/pipes/heat.dmi'
 	level = 2
 	var/minimum_temperature_difference = 20
 	var/thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT

@@ -102,6 +102,7 @@
 	var/datum/component/redirect/listener
 	var/datum/callback/CB
 	var/stun_cap_amount = 40
+	var/working = FALSE
 
 /obj/item/organ/cyberimp/brain/anti_stun/Initialize()
 	. = ..()
@@ -128,8 +129,9 @@
 	))
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
-	if(crit_fail)
+	if(crit_fail || working)
 		return
+	working = TRUE
 	if(owner.AmountStun() > stun_cap_amount)
 		owner.SetStun(stun_cap_amount)
 	if(owner.AmountKnockdown() > stun_cap_amount)
@@ -138,6 +140,7 @@
 		owner.SetImmobilized(stun_cap_amount)
 	if(owner.AmountParalyzed() > stun_cap_amount)
 		owner.SetParalyzed(stun_cap_amount)
+	working = FALSE
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()

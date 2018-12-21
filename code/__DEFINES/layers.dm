@@ -9,6 +9,7 @@
 #define FLOOR_PLANE -2
 #define GAME_PLANE -1
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
@@ -82,11 +83,15 @@
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16
 
-#define BYOND_LIGHTING_PLANE 17
-#define BYOND_LIGHTING_LAYER 17
+#define FLOOR_OPENSPACE_PLANE 17
+#define OPENSPACE_LAYER 17
 
-#define CAMERA_STATIC_PLANE 18
-#define CAMERA_STATIC_LAYER 18
+#define BYOND_LIGHTING_PLANE 18
+#define BYOND_LIGHTING_LAYER 18
+
+#define CAMERA_STATIC_PLANE 19
+#define CAMERA_STATIC_LAYER 19
+
 //HUD layer defines
 
 #define FULLSCREEN_PLANE 19

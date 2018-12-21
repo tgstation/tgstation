@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Moved machines below items so you don't vend stuff and have to right click to pick it up. Let us know if you see something that seems out of place!"

@@ -698,6 +698,11 @@
 	. = ..()
 	update_icon()
 
+/obj/structure/window/paperframe/examine(mob/user)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		to_chat(user, "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>")
+
 /obj/structure/window/paperframe/spawnDebris(location)
 	. = list(new /obj/item/stack/sheet/mineral/wood(location))
 	for (var/i in 1 to rand(1,4))

@@ -338,6 +338,15 @@
 	begin_day = 1
 	begin_month = NOVEMBER
 
+/datum/holiday/october_revolution
+	name = "October Revolution"
+	begin_day = 6
+	begin_month = NOVEMBER
+	end_day = 7
+
+/datum/holiday/october_revolution/getStationPrefix()
+	return pick("Communist", "Soviet", "Bolshevik", "Socialist", "Red", "Workers'")
+
 /datum/holiday/kindness
 	name = "Kindness Day"
 	begin_day = 13
@@ -460,6 +469,11 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/xmas/celebrate()
 	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
+	GLOB.maintenance_loot += list(
+		/obj/item/toy/xmas_cracker = 3,
+		/obj/item/clothing/head/santa = 1,
+		/obj/item/a_gift/anything = 1
+	)
 
 /datum/holiday/xmas/proc/roundstart_celebrate()
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)

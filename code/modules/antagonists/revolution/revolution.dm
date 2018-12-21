@@ -98,8 +98,8 @@
 	give_hud = TRUE
 	remove_clumsy = TRUE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has head-rev'ed [new_owner.current].")
-	log_admin("[key_name(admin)] has head-rev'ed [new_owner.current].")
+	message_admins("[key_name_admin(admin)] has head-rev'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has head-rev'ed [key_name(new_owner)].")
 	to_chat(new_owner.current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
 
 /datum/antagonist/rev/head/get_admin_commands()
@@ -141,8 +141,8 @@
 		flash.update_icon()
 
 /datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)
-	message_admins("[key_name_admin(user)] has demoted [owner.current] from head revolutionary.")
-	log_admin("[key_name(user)] has demoted [owner.current] from head revolutionary.")
+	message_admins("[key_name_admin(user)] has demoted [key_name_admin(owner)] from head revolutionary.")
+	log_admin("[key_name(user)] has demoted [key_name(owner)] from head revolutionary.")
 	demote()
 
 /datum/antagonist/rev/head
@@ -200,7 +200,7 @@
 	to_chat(old_owner, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
 
 /datum/antagonist/rev/farewell()
-	if(ishuman(owner.current))
+	if(ishuman(owner.current) || ismonkey(owner.current))
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>You are no longer a brainwashed revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</span>")
 	else if(issilicon(owner.current))
@@ -224,8 +224,8 @@
 	. = ..()
 
 /datum/antagonist/rev/head/equip_rev()
-	var/mob/living/carbon/human/H = owner.current
-	if(!istype(H))
+	var/mob/living/carbon/H = owner.current
+	if(!ishuman(H) && !ismonkey(H))
 		return
 
 	if(remove_clumsy && owner.assigned_role == "Clown")
@@ -285,10 +285,16 @@
 		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
 			var/list/datum/mind/promotable = list()
+			var/list/datum/mind/nonhuman_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !khrushchev.current.restrained() && khrushchev.current.client && khrushchev.current.stat != DEAD)
 					if(ROLE_REV in khrushchev.current.client.prefs.be_special)
-						promotable += khrushchev
+						if(ishuman(khrushchev.current))
+							promotable += khrushchev
+						else
+							nonhuman_promotable += khrushchev
+			if(!promotable.len && nonhuman_promotable.len) //if only nonhuman revolutionaries remain, promote one of them to the leadership.
+				promotable = nonhuman_promotable
 			if(promotable.len)
 				var/datum/mind/new_leader = pick(promotable)
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)

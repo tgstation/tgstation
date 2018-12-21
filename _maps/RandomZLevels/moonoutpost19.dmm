@@ -4803,7 +4803,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jn" = (
-/obj/effect/decal/cleanable/flour,
+/obj/effect/decal/cleanable/food/flour,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -5345,7 +5345,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "kr" = (
-/obj/effect/decal/cleanable/egg_smudge,
+/obj/effect/decal/cleanable/food/egg_smudge,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -7127,10 +7127,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"oV" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/open/space,
-/area/space)
 "vV" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -7424,7 +7420,7 @@ aa
 aa
 aa
 aa
-oV
+aa
 "}
 (2,1,1) = {"
 aa

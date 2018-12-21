@@ -2,21 +2,30 @@
 	icon = 'icons/mob/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
-	var/obj/item/clothing/neck/petcollar/pcollar
-	var/collar_type
-	var/unique_pet = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
+	var/unique_pet = FALSE // if the mob can be renamed
+	var/obj/item/clothing/neck/petcollar/pcollar
+	var/collar_type //if the mob has collar sprites, define them.
+
+/mob/living/simple_animal/pet/handle_atom_del(atom/A)
+	if(A == pcollar)
+		pcollar = null
+	return ..()
+
+/mob/living/simple_animal/pet/proc/add_collar(obj/item/clothing/neck/petcollar/P, mob/user)
+	if(QDELETED(P) || pcollar)
+		return
+	if(!user.transferItemToLoc(P, src))
+		return
+	pcollar = P
+	regenerate_icons()
+	to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
+	if(P.tagname && !unique_pet)
+		fully_replace_character_name(null, "\proper [P.tagname]")
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar && collar_type)
-		var/obj/item/clothing/neck/petcollar/P = O
-		pcollar = P.type
-		regenerate_icons()
-		to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
-		if(P.tagname && !unique_pet)
-			real_name = "\proper [P.tagname]"
-			name = real_name
-		qdel(P)
+		add_collar(O, user)
 		return
 
 	if(istype(O, /obj/item/newspaper))
@@ -35,12 +44,16 @@
 		pcollar = new(src)
 		regenerate_icons()
 
+/mob/living/simple_animal/pet/Destroy()
+	QDEL_NULL(pcollar)
+	return ..()
+
 /mob/living/simple_animal/pet/revive(full_heal = 0, admin_revive = 0)
-	if(..())
+	. = ..()
+	if(.)
 		if(collar_type)
 			collar_type = "[initial(collar_type)]"
 		regenerate_icons()
-		. = TRUE
 
 /mob/living/simple_animal/pet/death(gibbed)
 	..(gibbed)
@@ -50,7 +63,8 @@
 
 /mob/living/simple_animal/pet/gib()
 	if(pcollar)
-		new pcollar(drop_location())
+		pcollar.forceMove(drop_location())
+		pcollar = null
 	..()
 
 /mob/living/simple_animal/pet/regenerate_icons()
