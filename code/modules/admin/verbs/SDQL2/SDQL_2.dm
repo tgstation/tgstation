@@ -145,6 +145,7 @@
 		marked (your marked datum), global(global scope)
 */
 
+
 #define SDQL2_STATE_ERROR 0
 #define SDQL2_STATE_IDLE 1
 #define SDQL2_STATE_SEARCHING 2
@@ -154,11 +155,69 @@
 #define SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS			(1<<0)
 #define SDQL2_OPTION_BLOCKING_CALLS						(1<<2)
 #define SDQL2_OPTION_SELECT_OUTPUT_DISBALED				(1<<3)		//Makes the stuff only stored in refs list and not actually made into a select text list.
+#define SDQL2_OPTION_HIGH_PRIORITY						(1<<4)		//High priority SDQL query, allow using almost all of the tick.
 
-#define SDQL2_OPTIONS_DEFAULT		(SDQL2_OPTION_SKIP_NULLS)
+#define SDQL2_OPTIONS_DEFAULT		(SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
 
 #define SDQL2_RUNNING_CHECK if(state == SDQL2_STATE_EXECUTING || state == SDQL2_STATE_SEARCHING)
 #define SDQL2_HALT_CHECK if(state != SDQL2_STATE_EXECUTING && state != SDQL2_STATE_SEARCHING)
+
+#define SDQL2_TICK_CHECK ((options & SDQL2_OPTION_HIGH_PRIORITY)? CHECK_TICK_HIGH_PRIORITY : CHECK_TICK)
+
+/client/proc/SDQL2_query(query_text as message)
+	set category = "Debug"
+	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
+		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!</span>")
+		log_admin("Non-admin [key_name(usr)] attempted to execute a SDQL query!")
+		return FALSE
+	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
+	for(var/I in 1 to 3)
+		to_chat(usr, results[I])
+	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
+
+/world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
+	var/query_log = "executed SDQL query: \"[query_text]\"."
+	message_admins("[log_entry1] [query_log]")
+	query_log = "[log_entry2] [query_log]"
+	log_game(query_log)
+	NOTICE(query_log)
+
+	if(!length(query_text))
+		return
+	var/list/query_list = SDQL2_tokenize(query_text)
+	if(!length(query_list))
+		return
+	var/list/querys = SDQL_parse(query_list)
+	if(!length(querys))
+		return
+	var/list/datum/SDQL2_query/running = list()
+	for(var/list/query_tree in querys)
+		set waitfor = FALSE
+		var/datum/SDQL2_query/query = new /datum/SDQL2_query(query_tree)
+		running += query
+		query.ARun()
+	var/finished = FALSE
+	do
+		CHECK_TICK
+		finished = TRUE
+		for(var/i in running)
+			var/datum/SDQL2_query/query = i
+			if(!QDELETED(query) && query.state != SDQL2_STATE_IDLE)
+				finished = FALSE
+				break
+	while(!finished)
+
+	for(var/i in running)
+		var/datum/SDQL2_query/query = i
+		if(!length(query.select_text))
+			continue
+		var/text = islist(query.select_text)? query.select_text.Join() : query.select_text
+		var/static/result_offset = 0
+		usr << browse(text, "window=SDQL-result-[result_offset++]")
+
+	return list("<span class='admin'>SDQL query results: [query_text]</span>",\
+		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [selectors_used ? objs_eligible : objs_all] objects executed on after WHERE filtering/MAPping if applicable.</span>",\
+		"<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>") + refs
 
 /datum/SDQL2_query
 	var/list/query_tree
@@ -168,12 +227,15 @@
 	var/allow_admin_interact = TRUE		//Allow admins to do things to this excluding varedit these two vars
 
 	//Last run
+		//General
 	var/start_time
 	var/end_time
-	var/list/refs
 	var/where_switched = FALSE
-
-	//These three are weird. For best performance, they are only a number when they're not being changed by the SDQL searching/execution code. They only become numbers when they finish changing.
+		//Select query only
+	var/list/select_refs
+	var/select_text
+		//Runtime tracked
+			//These three are weird. For best performance, they are only a number when they're not being changed by the SDQL searching/execution code. They only become numbers when they finish changing.
 	var/list/obj_count_all
 	var/list/obj_count_eligible
 	var/list/obj_count_finished
@@ -193,6 +255,10 @@
 	obj_count_eligible = null
 	obj_count_finished = null
 	return ..()
+
+/datum/SDQL2_query/proc/ARun()
+	set waitfor = FALSE
+	Run()
 
 /datum/SDQL2_query/proc/Run()
 	if(SDQL2_RUNNING_CHECK)
@@ -221,9 +287,9 @@
 	var/type = query_tree[1]
 	var/list/from = query_tree[2]
 	var/list/objs = SDQL_from_objs(from)
-	CHECK_TICK
+	CHECK_TICK_SDQL2
 	objs = SDQL_get_all(type, objs)
-	CHECK_TICK
+	CHECK_TICK_SDQL2
 
 	// 1 and 2 are type and FROM.
 	var/i = 3
@@ -235,7 +301,7 @@
 				for(var/j = 1 to objs.len)
 					var/x = objs[j]
 					objs[j] = SDQL_expression(x, expression)
-					CHECK_TICK
+					CHECK_TICK_SDQL2
 
 			if ("where")
 				where_switched = TRUE
@@ -244,7 +310,7 @@
 				for(var/x in objs)
 					if(SDQL_expression(x, expression))
 						out += x
-					CHECK_TICK
+					CHECK_TICK_SDQL2
 				objs = out
 	if(islist(objs_count_eligible))
 		objs_count_eligible = objs_count_eligible.len
@@ -253,6 +319,37 @@
 	state = SDQL2_STATE_SWITCHING
 
 /datum/SDQL2_query/proc/Execute(list/found)
+	select_refs = list()
+	select_text = list()
+	switch(query_tree[1])
+		if("call")
+			for(var/i in found)
+				if(!is_proper_datum(i))
+					continue
+				world.SDQL_var(i, query_tree["call"][1], source = i, superuser)
+				CHECK_TICK_SDQL2
+
+		if("delete")
+			for(var/datum/d in found)
+				SDQL_qdel_datum(d)
+				CHECK_TICK_SDQL2
+
+		if("select")
+			var/list/text_list = list()
+			for(var/i in found)
+				SDQL_print(i, text_list)
+				refs[REF(i)] = TRUE
+				CHECK_TICK_SDQL2
+			select_text = text_list.Join()
+
+		if("update")
+			if("set" in query_tree)
+				var/list/set_list = query_tree["set"]
+				for(var/d in found)
+					if(!is_proper_datum(d))
+						continue
+					SDQL_internal_vv(d, set_list)
+					CHECK_TICK_SDQL2
 
 /datum/SDQL2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
 	if(is_proper_datum(object))
@@ -517,63 +614,6 @@
 		i = expression.len
 
 	return list("val" = val, "i" = i)
-
-/client/proc/SDQL2_query(query_text as message)
-	set category = "Debug"
-	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
-		message_admins("<span class='danger'>ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!</span>")
-		log_admin("Non-admin [key_name(usr)] attempted to execute a SDQL query!")
-		return FALSE
-	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
-	for(var/I in 1 to 3)
-		to_chat(usr, results[I])
-	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
-
-/world/proc/SDQL2_query(query_text, log_entry1, log_entry2)
-	var/query_log = "executed SDQL query: \"[query_text]\"."
-	message_admins("[log_entry1] [query_log]")
-	query_log = "[log_entry2] [query_log]"
-	log_game(query_log)
-	NOTICE(query_log)
-
-		switch(query_tree[1])
-			if("call")
-				for(var/i in objs)
-					if(!is_proper_datum(i))
-						continue
-					world.SDQL_var(i, query_tree["call"][1], source = i, superuser)
-					CHECK_TICK
-
-			if("delete")
-				for(var/datum/d in objs)
-					SDQL_qdel_datum(d)
-					CHECK_TICK
-
-			if("select")
-				var/list/text_list = list()
-				for(var/i in objs)
-					SDQL_print(i, text_list)
-					refs[REF(i)] = TRUE
-					CHECK_TICK
-				var/text = text_list.Join()
-				if (text)
-					var/static/result_offset = 0
-					usr << browse(text, "window=SDQL-result-[result_offset++]")
-
-			if("update")
-				if("set" in query_tree)
-					var/list/set_list = query_tree["set"]
-					for(var/d in objs)
-						if(!is_proper_datum(d))
-							continue
-						SDQL_internal_vv(d, set_list)
-						CHECK_TICK
-
-	var/end_time = REALTIMEOFDAY
-	end_time -= start_time
-	return list("<span class='admin'>SDQL query results: [query_text]</span>",\
-		"<span class='admin'>SDQL query completed: [objs_all] objects selected by path, and [selectors_used ? objs_eligible : objs_all] objects executed on after WHERE filtering/MAPping if applicable.</span>",\
-		"<span class='admin'>SDQL query took [DisplayTimeText(end_time)] to complete.</span>") + refs
 
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
