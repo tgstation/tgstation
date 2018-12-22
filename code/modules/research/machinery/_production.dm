@@ -73,7 +73,8 @@
 		total_rating = CLAMP(total_rating - (M.rating * 0.1), 0, 1)
 	if(total_rating == 0)
 		efficiency_coeff = INFINITY
-	efficiency_coeff = 1/total_rating
+	else
+		efficiency_coeff = 1/total_rating
 
 //we eject the materials upon deconstruction.
 /obj/machinery/rnd/production/on_deconstruction()
