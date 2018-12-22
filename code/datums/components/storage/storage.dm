@@ -96,6 +96,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
 
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
@@ -154,6 +155,12 @@
 	for(var/i in master.slaves)
 		var/datum/component/storage/slave = i
 		next += slave.parent
+
+/datum/component/storage/proc/on_move()
+	var/atom/A = parent
+	for(var/mob/living/L in can_see_contents())
+		if(!L.CanReach(A))
+			hide_from(L)
 
 /datum/component/storage/proc/attack_self(datum/source, mob/M)
 	if(locked)
@@ -588,7 +595,8 @@
 				to_chat(M, "<span class='warning'>[IP] cannot hold [I] as it's a storage item of the same size!</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
 	if(I.item_flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
-		to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
+		if(!stop_messages)
+			to_chat(M, "<span class='warning'>\the [I] is stuck to your hand, you can't put it in \the [host]!</span>")
 		return FALSE
 	var/datum/component/storage/concrete/master = master()
 	if(!istype(master))
@@ -599,7 +607,7 @@
 	return FALSE
 
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
-//The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
+//The prevent_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
 /datum/component/storage/proc/handle_item_insertion(obj/item/I, prevent_warning = FALSE, mob/M, datum/component/storage/remote)
 	var/atom/parent = src.parent

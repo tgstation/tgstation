@@ -261,10 +261,10 @@
 
 //HELPERS
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
-	if(T.dir & NORTH || T.dir & SOUTH) {									\
+	if(T.dir & (NORTH|SOUTH)) {									\
 		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
 	}																		\
-	if(T.dir & WEST || T.dir & EAST) {										\
+	if(T.dir & (EAST|WEST)) {										\
 		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
 	}
 

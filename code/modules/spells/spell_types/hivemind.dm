@@ -46,8 +46,8 @@
 	selection_type = "view"
 	action_icon_state = "add"
 
-	charge_max = 150
-	range = 4
+	charge_max = 200
+	range = 7
 	target_external = 1
 	var/ignore_mindshield = FALSE
 
@@ -62,8 +62,8 @@
 				to_chat(user, "<span class='notice'>We bruteforce our way past the mental barriers of [target.name] and begin linking our minds!</span>")
 			else
 				to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
-			if(do_mob(user,user,50))
-				if((target in view(range)))
+			if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
+				if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
 					to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
 					success = TRUE
 					hive.add_to_hive(target)
@@ -72,7 +72,7 @@
 						for(var/obj/item/implant/mindshield/M in target.implants)
 							qdel(M)
 				else
-					to_chat(user, "<span class='notice'>[target.name] is too far away to assimilate!</span>")
+					to_chat(user, "<span class='notice'>We fail to connect to [target.name].</span>")
 			else
 				to_chat(user, "<span class='notice'>We fail to connect to [target.name].</span>")
 		else
@@ -89,7 +89,7 @@
 	action_icon_state = "remove"
 
 	charge_max = 100
-	range = 4
+	range = 7
 
 /obj/effect/proc_holder/spell/target_hive/hive_remove/cast(list/targets, mob/living/user = usr)
 	var/mob/living/carbon/human/target = targets[1]
@@ -153,7 +153,7 @@
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
 	to_chat(user, "<span class='notice'>We begin increasing the psionic bandwidth between ourself and the vessel!</span>")
-	if(do_mob(user,user,60))
+	if(do_after(user,60,0,user))
 		var/power = 120-get_dist(user, target)
 		if(!is_hivehost(target))
 			switch(hive.hive_size)
@@ -191,7 +191,7 @@
 
 /obj/effect/proc_holder/spell/self/hive_drain/cast(mob/living/carbon/human/user)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
-	if(!hive)
+	if(!hive || !hive.hivemembers)
 		return
 	var/iterations = 0
 
@@ -201,7 +201,7 @@
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
 	while(iterations < 7)
 		var/mob/living/carbon/human/target = pick(hive.hivemembers)
-		if(!do_mob(user,user,15))
+		if(!do_after(user,15,0,user))
 			to_chat(user, "<span class='warning'>Our concentration has been broken!</span>")
 			break
 		if(!target)
@@ -231,9 +231,12 @@
 	to_chat(src, "<span class='warning'>You find yourself unable to emote, you aren't in control of your body!</span>")
 	return
 
+/mob/living/passenger/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	return
+
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
-	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
 	charge_max = 600
 	action_icon_state = "force"
 	active  = FALSE
@@ -255,6 +258,8 @@
 				vessel.ghostize(0)
 			else
 				vessel.mind.transfer_to(original_body, 1)
+				original_body.Sleeping(vessel.AmountSleeping()) // Mirrors any sleep or unconsciousness from the vessel
+				original_body.Unconscious(vessel.AmountUnconscious())
 
 	if(!QDELETED(backseat) && backseat.mind)
 		if(QDELETED(vessel))
@@ -293,7 +298,7 @@
 		original_body = user
 		vessel = targets[1]
 		to_chat(user, "<span class='notice'>We begin merging our mind with [vessel.name].</span>")
-		if(!do_mob(user,user,50))
+		if(!do_after(user,50,0,user))
 			to_chat(user, "<span class='notice'>We fail to assume control of the target.</span>")
 			revert_cast()
 			return
@@ -323,10 +328,12 @@
 			backseat.real_name = vessel.real_name
 			vessel.mind.transfer_to(backseat, 1)
 			user.mind.transfer_to(vessel, 1)
+			backseat.blind_eyes(power)
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
-			if(do_mob(user,user,power))
+			to_chat(vessel, "<span class='assimilator'>We can sustain our control for a maximum of [round(power/10)] seconds.</span>")
+			if(do_after(user,power,0,user))
 				to_chat(vessel, "<span class='warning'>We cannot sustain the mind control any longer and release control!</span>")
 			else
 				to_chat(vessel, "<span class='warning'>Our body has been disturbed, interrupting the mind control!</span>")
@@ -387,7 +394,7 @@
 		if(target.stat == DEAD)
 			continue
 		target.Jitter(14)
-		target.adjustStaminaLoss(min(35,hive.hive_size))
+		target.apply_damage(min(35,hive.hive_size), STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
 		if(prob(50))
 			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
 			target.say(text, forced = "panic")
@@ -410,7 +417,7 @@
 			if(4)
 				to_chat(target, "<span class='userdanger'>You feel nauseous as dread washes over you!</span>")
 				target.Dizzy(15)
-				target.adjustStaminaLoss(45)
+				target.apply_damage(45, STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
 				target.hallucination += 45
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack
@@ -433,7 +440,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_warp
 	name = "Distortion Field"
-	desc = "We warp reality surrounding a vessel, causing hallucinations in everybody around them. This power gets weaker over distance but increases in strength the larger our hive is, and will eventually weaken those caught within the field."
+	desc = "We warp reality surrounding a vessel, causing hallucinations in everybody around them over a short period of time, eventually weakening those caught within the field. This power's effectiveness scales with hive size."
 
 	charge_max = 900
 	action_icon_state = "warp"
@@ -444,26 +451,29 @@
 	if(!hive)
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
-	var/power = 50-round(get_dist(user, target)/2)
-	if(power < 10 || target.z != user.z)
+	if(target.z != user.z)
 		to_chat(user, "<span class='notice'>We are too far away from [target.name] to affect them!</span>")
 		return
 	to_chat(user, "<span class='notice'>We successfully distort reality surrounding [target.name]!</span>")
-	switch(hive.hive_size)
-		if(5 to 9)
-		if(10 to 14)
-			power *= 1.5
-		if(15 to 19)
-			power *= 2
-		if(20 to 24)
-			power *= 2.5
-		else
-			power *= 3
+	var/pulse_cap = min(12,max(6, round(3+hive.hive_size/3)))
+	distort(user, target, pulse_cap)
+
+/obj/effect/proc_holder/spell/target_hive/hive_warp/proc/distort(user, target, pulse_cap, pulses = 0)
 	for(var/mob/living/carbon/human/victim in view(7,target))
 		if(user == victim)
 			continue
-		victim.hallucination += power
-		victim.adjustStaminaLoss(max(0,power-100))
+		if(pulses < 4)
+			victim.apply_damage(10, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 25 over 10 seconds when taking stamina regen (3 per tick(2 seconds)) into account
+			victim.hallucination += 5
+		else if(pulses < 8)
+			victim.apply_damage(15, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 45 over 10 seconds when taking stamina regen into account
+			victim.hallucination += 10
+		else
+			victim.apply_damage(20, STAMINA, victim.get_bodypart(BODY_ZONE_HEAD)) // 65 over 10 seconds when taking stamina regen into account
+			victim.hallucination += 15
+
+	if(pulses < pulse_cap && user && target)
+		addtimer(CALLBACK(src, "distort", user, target, pulse_cap, pulses+1), 25)
 
 /obj/effect/proc_holder/spell/targeted/hive_hack
 	name = "Network Invasion"
@@ -489,10 +499,10 @@
 	var/enemy_names = ""
 
 	to_chat(user, "<span class='notice'>We begin probing [target.name]'s mind!</span>")
-	if(do_mob(user,target,100))
+	if(do_after(user,100,0,target))
 		if(!in_hive)
 			to_chat(user, "<span class='notice'>Their mind slowly opens up to us.</span>")
-			if(!do_mob(user,target,200))
+			if(!do_after(user,200,0,target))
 				to_chat(user, "<span class='notice'>Our concentration has been broken!</span>")
 				revert_cast()
 				return
@@ -542,7 +552,7 @@
 
 	to_chat(user, "<span class='notice'>We tear into [target.name]'s mind with all our power!</span>")
 	to_chat(target, "<span class='userdanger'>You feel an excruciating pain in your head!</span>")
-	if(do_mob(user,target,150))
+	if(do_after(user,150,1,target))
 		if(!target.mind)
 			to_chat(user, "<span class='notice'>This being has no mind!</span>")
 			revert_cast()
@@ -553,7 +563,7 @@
 			to_chat(target, "<span class='userdanger'>Our grip on our mind is slipping!</span>")
 			target.Jitter(14)
 			target.setBrainLoss(125)
-			if(do_mob(user,target,300))
+			if(do_after(user,300,1,target))
 				enemy_hive = target.mind.has_antag_datum(/datum/antagonist/hivemind) //Check again incase they lost it somehow
 				if(enemy_hive)
 					to_chat(user, "<span class='userdanger'>Ours. It is ours. Our mind has never been stronger, never been larger, never been mightier. And theirs is no more.</span>")

@@ -18,6 +18,7 @@
 	pass_flags = PASSTABLE
 	light_color = LIGHT_COLOR_YELLOW
 	light_power = 3
+	var/wire_disabled = FALSE // is its internal wire cut?
 	var/operating = FALSE
 	var/dirty = 0 // 0 to 100 // Does it need cleaning?
 	var/dirty_anim_playing = FALSE
@@ -25,11 +26,19 @@
 	var/max_n_of_items = 10
 	var/efficiency = 0
 	var/datum/looping_sound/microwave/soundloop
+	var/list/ingredients
 
 /obj/machinery/microwave/Initialize()
 	. = ..()
+	wires = new /datum/wires/microwave(src)
+	ingredients = list()
 	create_reagents(100)
 	soundloop = new(list(src), FALSE)
+
+/obj/machinery/microwave/Destroy()
+	QDEL_NULL(wires)
+	ingredients.Cut()
+	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
 	efficiency = 0
@@ -40,7 +49,7 @@
 		break
 
 /obj/machinery/microwave/examine(mob/user)
-	..()
+	. = ..()
 	if(!operating)
 		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
 	if(in_range(user, src) || isobserver(user))
@@ -65,6 +74,15 @@
 		return
 	if(default_deconstruction_crowbar(O))
 		return
+
+	if(dirty < 100)
+		if(default_deconstruction_screwdriver(user, "", "", O) || default_unfasten_wrench(user, O))
+			update_icon()
+			return
+
+	if(panel_open && is_wire_tool(O))
+		wires.interact(user)
+		return TRUE
 
 	if(broken > 0)
 		if(broken == 2 && O.tool_behaviour == TOOL_WIRECUTTER) // If it's broken and they're using a screwdriver
@@ -118,37 +136,35 @@
 		var/obj/item/storage/T = O
 		var/loaded = 0
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
-			if(contents.len >= max_n_of_items)
+			if(ingredients.len >= max_n_of_items)
 				to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 				return TRUE
 			if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
 				loaded++
+				ingredients += S
 		if(loaded)
 			to_chat(user, "<span class='notice'>You insert [loaded] items into \the [src].</span>")
 		updateUsrDialog()
 		return
 
 	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
-		if(contents.len >= max_n_of_items)
+		if(ingredients.len >= max_n_of_items)
 			to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 			return TRUE
 		if(!user.transferItemToLoc(O, src))
 			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
 			return FALSE
+
+		ingredients += O
 		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
 		updateUsrDialog()
 		return
-
-	if(dirty < 100)
-		if(default_deconstruction_screwdriver(user, "", "", O) || default_unfasten_wrench(user, O))
-			update_icon()
-			return
 
 	..()
 	updateUsrDialog()
 
 /obj/machinery/microwave/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE) && !(operating || broken > 0 || panel_open || !anchored || dirty == 100))
+	if(user.canUseTopic(src, BE_CLOSE))
 		cook()
 
 /obj/machinery/microwave/ui_interact(mob/user)
@@ -164,7 +180,7 @@
 		dat += "ERROR: >> 0 --Response input zero<BR>Contact your operator of the device manufacturer support.</div>"
 	else
 		var/list/items_counts = new
-		for (var/obj/O in contents)
+		for (var/obj/O in ingredients)
 			if(istype(O, /obj/item/stack/))
 				var/obj/item/stack/S = O
 				items_counts[O.name] += S.amount
@@ -201,7 +217,7 @@
 	updateUsrDialog()
 
 /obj/machinery/microwave/proc/dispose()
-	for(var/obj/O in contents)
+	for(var/obj/O in ingredients)
 		O.forceMove(drop_location())
 	to_chat(usr, "<span class='notice'>You dispose of \the [src] contents.</span>")
 	updateUsrDialog()
@@ -209,10 +225,18 @@
 /obj/machinery/microwave/proc/cook()
 	if(stat & (NOPOWER|BROKEN))
 		return
+	if(operating || broken > 0 || panel_open || !anchored || dirty == 100)
+		return
+
+	if(wire_disabled)
+		audible_message("[src] buzzes.")
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		return
+
 	if(prob(max((5 / efficiency) - 5, dirty * 5))) //a clean unupgraded microwave has no risk of failure
 		muck()
 		return
-	for(var/obj/O in contents)
+	for(var/obj/O in ingredients)
 		if(istype(O, /obj/item/reagent_containers/food) || istype(O, /obj/item/grown))
 			continue
 		if(prob(min(dirty * 5, 100)))
@@ -273,7 +297,7 @@
 	operating = FALSE
 
 	var/metal = 0
-	for(var/obj/item/O in contents)
+	for(var/obj/item/O in ingredients)
 		O.microwave_act(src)
 		if(O.materials[MAT_METAL])
 			metal += O.materials[MAT_METAL]
@@ -284,7 +308,8 @@
 		if(prob(max(metal / 2, 33)))
 			explosion(loc, 0, 1, 2)
 	else
-		dropContents()
+		dropContents(ingredients)
+		ingredients.Cut()
 
 	after_finish_loop()
 

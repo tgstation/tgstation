@@ -18,6 +18,10 @@
 		to_chat(user, "<span class='danger'>The Bluespace interfaces of the two devices catastrophically malfunction!</span>")
 		qdel(W)
 		playsound(loccheck,'sound/effects/supermatter.ogg', 200, 1)
+
+		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
+		log_game("[key_name(user)] detonated a bag of holding at [loc_name(loccheck)].")
+
 		user.gib(TRUE, TRUE, TRUE)
 		for(var/turf/T in range(6,loccheck))
 			if(istype(T, /turf/open/space/transit))
@@ -29,8 +33,6 @@
 			T.TerraformTurf(/turf/open/chasm/magic, /turf/open/chasm/magic)
 		for (var/obj/structure/ladder/unbreakable/binary/ladder in GLOB.ladders)
 			ladder.ActivateAlmonds()
-		message_admins("[ADMIN_LOOKUPFLW(user)] detonated a bag of holding at [ADMIN_VERBOSEJMP(loccheck)].")
-		log_game("[key_name(user)] detonated a bag of holding at [loc_name(loccheck)].")
 		qdel(A)
 		return
 	. = ..()

@@ -235,7 +235,7 @@
 	materials = list(MAT_METAL = 500)
 	build_path = /obj/item/tank/internals/emergency_oxygen/empty
 	category = list("initial","Misc","Equipment")
-	
+
 /datum/design/emergency_oxygen_engi
 	name = "Extended-Capacity Emergency Oxygen Tank"
 	id = "emergency_oxygen_engi"
@@ -244,7 +244,7 @@
 	build_path = /obj/item/tank/internals/emergency_oxygen/engi/empty
 	category = list("hacked","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
-	
+
 /datum/design/plasmaman_tank_belt
 	name = "Plasmaman Belt Tank"
 	id = "plasmaman_tank_belt"

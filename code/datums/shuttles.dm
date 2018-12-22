@@ -257,6 +257,13 @@
 	credit_cost = 2000
 	description = "The gold standard in emergency exfiltration, this tried and true design is equipped with everything the crew needs for a safe flight home."
 
+/datum/map_template/shuttle/emergency/donut
+	suffix = "donut"
+	name = "Donutstation Emergency Shuttle"
+	description = "The perfect spearhead for any crude joke involving the station's shape, this shuttle supports a separate containment cell for prisoners and a compact medical wing."
+	admin_notes = "Has airlocks on both sides of the shuttle and will probably intersect near the front on some stations that build past departures."
+	credit_cost = 2500
+
 /datum/map_template/shuttle/emergency/clown
 	suffix = "clown"
 	name = "Snappop(tm)!"
@@ -419,6 +426,10 @@
 	suffix = "birdboat"
 	name = "supply shuttle (Birdboat)"
 
+/datum/map_template/shuttle/cargo/donut
+	suffix = "donut"
+	name = "supply shuttle (Donut)"
+
 /datum/map_template/shuttle/emergency/delta
 	suffix = "delta"
 	name = "Delta Station Emergency Shuttle"
@@ -448,6 +459,10 @@
 /datum/map_template/shuttle/labour/box
 	suffix = "box"
 	name = "labour shuttle (Box)"
+
+/datum/map_template/shuttle/arrival/donut
+	suffix = "donut"
+	name = "arrival shuttle (Donut)"
 
 /datum/map_template/shuttle/infiltrator/basic
 	suffix = "basic"

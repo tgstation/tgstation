@@ -123,7 +123,7 @@
 		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
-		mutation_index[M.type] = create_sequence(M.type, FALSE,M.difficulty)
+		mutation_index[M.type] = create_sequence(M.type, FALSE, M.difficulty)
 	shuffle_inplace(mutation_index)
 
 //Used to generate original gene sequences for every mutation
@@ -138,7 +138,7 @@
 /proc/create_sequence(mutation, active, difficulty)
 	if(!difficulty)
 		var/datum/mutation/human/A = get_initialized_mutation(mutation) //leaves the possibility to change difficulty mid-round
-		if(A)
+		if(!A)
 			return
 		difficulty = A.difficulty
 	difficulty += rand(-2,4)
@@ -220,30 +220,31 @@
 			return 1
 	return 0
 
-/datum/dna/proc/update_instability(alert=FALSE)
+/datum/dna/proc/update_instability(alert=TRUE)
 	stability = 100
 	for(var/datum/mutation/human/M in mutations)
 		if(M.class == MUT_EXTRA)
 			stability -= M.instability
-	if(holder && alert)
+	if(holder)
 		var/message
-		switch(stability)
-			if(90 to 70)
-				message = "<span class='warning'>You shiver.</span>"
-			if(69 to 60)
-				message = "<span class='warning'>You feel cold.</span>"
-			if(59 to 40)
-				message = "<span class='warning'>You feel sick.</span>"
-			if(39 to 20)
-				message = "<span class='warning'>It feels like your skin is moving.</span>"
-			if(19 to 1)
-				message = "<span class='warning'>You can feel your cells burning.</span>"
-			if(0 to -INFINITY)
-				message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
-				addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
-
+		if(alert)
+			switch(stability)
+				if(70 to 90)
+					message = "<span class='warning'>You shiver.</span>"
+				if(60 to 69)
+					message = "<span class='warning'>You feel cold.</span>"
+				if(40 to 59)
+					message = "<span class='warning'>You feel sick.</span>"
+				if(20 to 39)
+					message = "<span class='warning'>It feels like your skin is moving.</span>"
+				if(1 to 19)
+					message = "<span class='warning'>You can feel your cells burning.</span>"
+				if(-INFINITY to 0)
+					message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
+		if(stability <= 0)
+			addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
 		if(message)
-			to_chat(holder,message)
+			to_chat(holder, message)
 
 /datum/dna/proc/something_horrible()
 	if(!holder || (stability > 0))
