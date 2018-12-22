@@ -1077,8 +1077,13 @@
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
-			if(result)
-				C.gain_trauma(result)
+			if(!result)
+				return
+
+			var/datum/brain_trauma/BT = C.gain_trauma(result)
+			if(BT)
+				log_admin("[key_name(usr)] has traumatized [key_name(C)] with [BT.name]")
+				message_admins("<span class='notice'>[key_name_admin(usr)] has traumatized [key_name_admin(C)] with [BT.name].</span>")
 
 		else if(href_list["curetraumas"])
 			if(!check_rights(NONE))
@@ -1090,6 +1095,8 @@
 				return
 
 			C.cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
+			log_admin("[key_name(usr)] has cured all traumas from [key_name(C)].")
+			message_admins("<span class='notice'>[key_name_admin(usr)] has cured all traumas from [key_name_admin(C)].</span>")
 
 		else if(href_list["hallucinate"])
 			if(!check_rights(NONE))
