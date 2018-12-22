@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(antagtokens)
 		/obj/machinery/disposal)
 	var/list/minutes_tracked
 
-/datum/controller/subsystem/antagtokens/fire(resumed = 0)
+/datum/controller/subsystem/antagtokens/fire(resumed)
 	if(!last_check)
 		last_check = world.time
 	if(!istype(minutes_tracked,/list))

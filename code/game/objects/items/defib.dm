@@ -569,7 +569,11 @@
 				else if(total_burn >= 180 || total_brute >= 180)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
 				else if(H.get_ghost())
-					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
+					//failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"
+					//I see no reason why a ghosted person should not get to be defibbed. -falaskian
+					var/mob/dead/observer/O = H.get_ghost()
+					to_chat(O,"<B>You have been Resuscitated! Return to your corpse now.</B>")
+					O.playsound_local(get_turf(O), 'sound/machines/defib_success.ogg', 100)
 				else
 					var/obj/item/organ/brain/BR = H.getorgan(/obj/item/organ/brain)
 					if(!BR || BR.damaged_brain)

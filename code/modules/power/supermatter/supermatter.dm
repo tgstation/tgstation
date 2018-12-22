@@ -140,6 +140,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 	var/exploding = 0
 	var/explodesleeping = 0
 
+	var/alerted_discord = 0
+
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
 	uid = gl_uid++
@@ -276,6 +278,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				sleep(10)
 		if(exploding == 0)
 			return
+		if(GLOB && GLOB.admins.len <= 0)
+			send_admin_notice_to_discord("","Super Matter Explosion")
 		exploding = 0
 		var/turf/T = get_turf(src)
 		for(var/mob/M in GLOB.player_list)
@@ -465,10 +469,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_shard)
 				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
 				if(percentintegrity <= 60 && loc)
 					message_admins("<B>SUPERMATTER INTEGRITY FAILURE, NOW [percentintegrity]%</B> at [get_area(src)] [ADMIN_JMP(src)]",'sound/machines/terminal_alert.ogg')
+					if(!alerted_discord && GLOB && GLOB.admins.len <= 0)
+						send_admin_notice_to_discord(message="Integrity [percentintegrity]%",title="Super Matter Critical")
+						alerted_discord = 1
 
 			else                                                 // Phew, we're safe
 				radio.talk_into(src, "[safe_alert] Integrity: [get_integrity()]%", engineering_channel, get_spans(), get_default_language())
 				lastwarning = REALTIMEOFDAY
+				alerted_discord = 0
 
 			if(power > POWER_PENALTY_THRESHOLD)
 				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.", engineering_channel, get_spans(), get_default_language())
