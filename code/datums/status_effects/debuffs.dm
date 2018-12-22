@@ -83,6 +83,25 @@
 	icon_state = "asleep"
 
 //OTHER DEBUFFS
+/datum/status_effect/pacify
+	id = "pacify"
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = 1
+	duration = 100
+	alert_type = null
+	
+/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()	
+
+/datum/status_effect/pacify/on_apply()
+	owner.add_trait(TRAIT_PACIFISM, "status_effect")
+	return ..()
+
+/datum/status_effect/pacify/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "status_effect")
+
 /datum/status_effect/his_wrath //does minor damage over time unless holding His Grace
 	id = "his_wrath"
 	duration = -1
@@ -127,7 +146,7 @@
 
 /datum/status_effect/belligerent/proc/do_movement_toggle(force_damage)
 	var/number_legs = owner.get_num_legs(FALSE)
-	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check() && number_legs)
+	if(iscarbon(owner) && !is_servant_of_ratvar(owner) && !owner.anti_magic_check(major = FALSE) && number_legs)
 		if(force_damage || owner.m_intent != MOVE_INTENT_WALK)
 			if(GLOB.ratvar_awakens)
 				owner.Paralyze(20)
@@ -220,7 +239,7 @@
 		if(owner.confused)
 			owner.confused = 0
 		severity = 0
-	else if(!owner.anti_magic_check() && owner.stat != DEAD && severity)
+	else if(!owner.anti_magic_check(major = FALSE) && owner.stat != DEAD && severity)
 		var/static/hum = get_sfx('sound/effects/screech.ogg') //same sound for every proc call
 		if(owner.getToxLoss() > MANIA_DAMAGE_TO_CONVERT)
 			if(is_eligible_servant(owner))
@@ -535,6 +554,12 @@
 	tick_interval = 10
 	examine_text = "<span class='warning'>SUBJECTPRONOUN seems slow and unfocused.</span>"
 	var/stun = TRUE
+	alert_type = /obj/screen/alert/status_effect/trance
+	
+/obj/screen/alert/status_effect/trance
+	name = "Trance"
+	desc = "Everything feels so distant, and you can feel your thoughts forming loops inside your head..."
+	icon_state = "high"
 
 /datum/status_effect/trance/tick()
 	if(stun)
@@ -555,7 +580,7 @@
 /datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
 	duration = _duration
 	stun = _stun
-	. = ..()
+	return ..()
 
 /datum/status_effect/trance/on_remove()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)

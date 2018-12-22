@@ -118,11 +118,6 @@
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
 
-/obj/screen/fullscreen/blurry
-	icon = 'icons/mob/screen_gen.dmi'
-	screen_loc = "WEST,SOUTH to EAST,NORTH"
-	icon_state = "blurry"
-
 /obj/screen/fullscreen/flash
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"

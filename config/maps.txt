@@ -32,6 +32,10 @@ map deltastation
 	disabled
 endmap
 
+map donutstation
+	minplayers 50
+endmap
+
 map runtimestation
 	disabled
 endmap
@@ -43,4 +47,7 @@ endmap
 
 map nssfrenzy
 	maxplayers 20
+endmap
+
+map multiz_debug
 endmap

@@ -10,6 +10,7 @@
 	req_stat = UNCONSCIOUS
 
 /obj/effect/proc_holder/changeling/regenerate/sting_action(mob/living/user)
+	..()
 	to_chat(user, "<span class='notice'>You feel an itching, both inside and \
 		outside as your tissues knit and reknit.</span>")
 	if(iscarbon(user))
@@ -25,7 +26,6 @@
 				and tearing!</span>")
 			C.emote("scream")
 			C.regenerate_limbs(1)
-		C.regenerate_organs()
 		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
 			var/obj/item/organ/brain/B
 			if(C.has_dna() && C.dna.species.mutant_brain)
@@ -35,6 +35,7 @@
 			B.vital = FALSE
 			B.decoy_override = TRUE
 			B.Insert(C)
+		C.regenerate_organs()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.restore_blood()

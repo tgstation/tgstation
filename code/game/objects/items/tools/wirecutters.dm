@@ -91,7 +91,7 @@
 
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_cut.ogg'
-	toolspeed = 0.25
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/wirecutters/power/suicide_act(mob/user)

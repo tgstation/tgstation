@@ -124,6 +124,9 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//Projectile Reflect
+#define REFLECT_NORMAL 				(1<<0)
+#define REFLECT_FAKEPROJECTILE		(1<<1)
 
 //Object/Item sharpness
 #define IS_BLUNT			0

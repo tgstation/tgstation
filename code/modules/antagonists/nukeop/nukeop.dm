@@ -23,10 +23,12 @@
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_added(M)
+	owner.add_trait(TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	update_synd_icons_removed(M)
+	owner.remove_trait(TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/proc/equip_op()
 	if(!ishuman(owner.current))
@@ -42,7 +44,6 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
 	to_chat(owner, "<span class='notice'>You are a [nuke_team ? nuke_team.syndicate_name : "syndicate"] agent!</span>")
 	owner.announce_objectives()
-	return
 
 /datum/antagonist/nukeop/on_gain()
 	give_alias()

@@ -60,6 +60,8 @@
 	var/unconvertable = FALSE
 	var/late_joiner = FALSE
 
+	var/last_death = 0
+
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 
 /datum/mind/New(var/key)
@@ -87,6 +89,7 @@
 /datum/mind/proc/transfer_to(mob/new_character, var/force_key_move = 0)
 	if(current)	// remove ourself from our old body's mind variable
 		current.mind = null
+		UnregisterSignal(current, COMSIG_MOB_DEATH)
 		SStgui.on_transfer(current, new_character)
 
 	if(!language_holder)
@@ -117,8 +120,12 @@
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
+	RegisterSignal(new_character, COMSIG_MOB_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+
+/datum/mind/proc/set_death_time()
+	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"

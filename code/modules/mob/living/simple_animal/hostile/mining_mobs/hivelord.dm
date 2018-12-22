@@ -99,6 +99,7 @@
 	icon_dead = "legion"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mouse_opacity = MOUSE_OPACITY_ICON
 	obj_damage = 60
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -356,7 +357,7 @@
 			uniform = /obj/item/clothing/under/color/black
 			shoes = /obj/item/clothing/shoes/sneakers/black
 			suit = /obj/item/clothing/suit/toggle/labcoat
-			glasses = /obj/item/clothing/glasses/sunglasses/blindfold
+			glasses = /obj/item/clothing/glasses/blindfold
 			back = /obj/item/tank/internals/oxygen
 			mask = /obj/item/clothing/mask/breath
 		if("Cultist")
