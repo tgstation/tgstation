@@ -1,5 +1,5 @@
 /datum/martial_art/mushpunch
-	name = "Mushroom Punch"
+	name = MARTIALART_MUSHPUNCH
 
 /datum/martial_art/mushpunch/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	var/atk_verb

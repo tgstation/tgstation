@@ -5,7 +5,7 @@
 #define CONSECUTIVE_COMBO "DDH"
 
 /datum/martial_art/cqc
-	name = "CQC"
+	name = MARTIALART_CQC
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
 	var/just_a_cook = FALSE

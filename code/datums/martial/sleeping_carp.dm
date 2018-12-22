@@ -5,7 +5,7 @@
 #define ELBOW_DROP_COMBO "HDHDH"
 
 /datum/martial_art/the_sleeping_carp
-	name = "The Sleeping Carp"
+	name = MARTIALART_SLEEPINGCARP
 	deflection_chance = 100
 	no_guns = TRUE
 	allow_temp_override = FALSE

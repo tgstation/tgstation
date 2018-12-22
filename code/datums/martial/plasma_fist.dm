@@ -3,7 +3,7 @@
 #define PLASMA_COMBO "HDDDH"
 
 /datum/martial_art/plasma_fist
-	name = "Plasma Fist"
+	name = MARTIALART_PLASMAFIST
 	help_verb = /mob/living/carbon/human/proc/plasma_fist_help
 
 
