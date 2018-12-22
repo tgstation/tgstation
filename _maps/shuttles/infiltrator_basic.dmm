@@ -4,7 +4,6 @@
 /area/template_noop)
 "ab" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 9
 	},
 /turf/closed/wall/r_wall/syndicate,
@@ -14,7 +13,6 @@
 /area/shuttle/syndicate/bridge)
 "ad" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 10
 	},
 /turf/closed/wall/r_wall/syndicate,
@@ -170,7 +168,6 @@
 /area/shuttle/syndicate/bridge)
 "aw" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 9
 	},
 /turf/closed/wall/r_wall/syndicate,
@@ -269,14 +266,12 @@
 /area/shuttle/syndicate/hallway)
 "aF" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 5
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/armory)
 "aG" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 9
 	},
 /turf/closed/wall/r_wall/syndicate,
@@ -1175,14 +1170,12 @@
 /area/shuttle/syndicate/armory)
 "dp" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 10
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/armory)
 "pd" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 5
 	},
 /turf/closed/wall/r_wall/syndicate,
@@ -1194,14 +1187,12 @@
 /area/shuttle/syndicate/eva)
 "In" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 6
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "MJ" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
-	icon_state = "syndie_off";
 	dir = 6
 	},
 /turf/closed/wall/r_wall/syndicate,
