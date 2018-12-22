@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Boxstation disposal pipes no longer empty themselves in the Vacant Commissary."

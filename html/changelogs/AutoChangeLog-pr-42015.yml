@@ -1,4 +1,0 @@
-author: "monster860"
-delete-after: True
-changes: 
-  - bugfix: "Fixes pumps and valves appearing super broken on maps that make heavy use of pipe layers."

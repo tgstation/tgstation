@@ -1,4 +1,0 @@
-author: "anconfuzedrock"
-delete-after: True
-changes: 
-  - tweak: "\"remove embedded object\" surgery is now only two steps, instead of four."
