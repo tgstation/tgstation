@@ -35,7 +35,7 @@
 		if(oxy < 0.5)
 			return 0
 
-		active_hotspot = new /obj/effect/hotspot(src, exposed_temperature, exposed_volume*25)
+		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
