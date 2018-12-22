@@ -14061,10 +14061,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"JU" = (
-/obj/machinery/droneDispenser,
-/turf/open/floor/plasteel,
-/area/maintenance/starboard)
 "JV" = (
 /obj/machinery/computer/security{
 	dir = 8
@@ -66495,7 +66491,7 @@ MJ
 AX
 AX
 Ca
-JU
+AX
 Kd
 AX
 HT
