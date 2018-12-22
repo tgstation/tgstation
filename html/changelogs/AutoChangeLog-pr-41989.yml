@@ -1,0 +1,4 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "deleting a record without access resets the menu, instead of locking the machine"
