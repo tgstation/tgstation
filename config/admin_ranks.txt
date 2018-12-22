@@ -1,7 +1,7 @@
 #Admin Rank format is as follows:
 #
 #Name = Game Admin
-#Include = @ ADMIN BAN SOUNDS
+#Include = @ ADMIN BAN SOUND
 #Exclude = FUN
 #Edit =
 #
@@ -27,16 +27,16 @@
 #DEBUG = debug tools used for diagnosing and fixing problems. It's useful to give this to coders so they can investigate problems on a live server.
 #VAREDIT = everyone may view viewvars/debugvars/whatever you call it. This keyword allows you to actually EDIT those variables.
 #PERMISSIONS = allows you to promote and/or demote people.
-#SOUNDS = allows you to upload and play sounds.
+#SOUND = allows you to upload and play SOUND.
 #SPAWN = mob transformations, spawning of most atoms including mobs (high-risk atoms, e.g. blackholes, will require the +FUN flag too).
-#AUTOLOGIN = admin gains powers upon connect. This defaults to on, you can exclude AUTOLOGIN to make a role require using the readmin verb to gain powers (this does not effect the admin's ability to walk past bans or other on-connect limitations like panic bunker or pop limit).
+#AUTOADMIN = admin gains powers upon connect. This defaults to on, you can exclude AUTOADMIN to make a role require using the readmin verb to gain powers (this does not effect the admin's ability to walk past bans or other on-connect limitations like panic bunker or pop limit).
 #DBRANKS = when sql-based admin loading is enabled, allows for non-temporary changes in the permissions panel to be saved (requires DB).
 #EVERYTHING = Simply gives you everything without having to type every flag.
 #@ = special keyword for the current permission type that adds all the keywords that the preceding rank has of the same type.
 
 Name = Admin Observer
 Include =
-Exclude = AUTOLOGIN
+Exclude = AUTOADMIN
 Edit =
 
 Name = Moderator
@@ -60,7 +60,7 @@ Exclude =
 Edit =
 
 Name = Game Admin
-Include = @ STEALTH SOUNDS DEBUG
+Include = @ STEALTH SOUND DEBUG
 Exclude =
 Edit =
 
@@ -71,7 +71,7 @@ Edit = EVERYTHING
 
 Name = Lazy Master
 Include = EVERYTHING
-Exclude = AUTOLOGIN
+Exclude = AUTOADMIN
 Edit = EVERYTHING
 
 Name = Host
@@ -81,5 +81,5 @@ Edit = EVERYTHING
 
 Name = Coder
 Include = DEBUG VAREDIT SERVER SPAWN POLL
-Exclude = AUTOLOGIN
+Exclude = AUTOADMIN
 Edit =
