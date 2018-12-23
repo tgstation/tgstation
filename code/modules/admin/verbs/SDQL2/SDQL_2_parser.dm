@@ -54,12 +54,8 @@
 	var/list/binary_operators = list("+", "-", "/", "*", "&", "|", "^", "%")
 	var/list/comparitors = list("=", "==", "!=", "<>", "<", "<=", ">", ">=")
 
-
-
 /datum/SDQL_parser/New(query_list)
 	query = query_list
-
-
 
 /datum/SDQL_parser/proc/parse_error(error_message)
 	error = 1
@@ -68,7 +64,7 @@
 
 /datum/SDQL_parser/proc/parse()
 	tree = list()
-	query(1, tree)
+	query_options(1, tree)
 
 	if(error)
 		return list()
@@ -91,6 +87,35 @@
 
 /datum/SDQL_parser/proc/tokenl(i)
 	return lowertext(token(i))
+
+/datum/SDQL_parser/proc/query_options(i, list/node)
+	var/list/options = list()
+	if(tokenl(i) == "using")
+		i = option_assignment(i + 1, node, options)
+	query(i, node)
+	node["options"] = options
+
+//option_assignment:	query_option '=' define
+/datum/SDQL_parser/proc/option_assignment(var/i, var/list/node, var/list/assignment_list = list())
+	var/type = tokenl(i)
+	if(!(type in SDQL2_VALID_OPTION_TYPES))
+		parse_error("Invalid option type: [type]")
+	if(!(token(i + 1) == "="))
+		parse_error("Invalid option assignment symbol: [token(i + 1)]")
+	var/val = tokenl(i + 2)
+	if(!(val in SDQL2_VALID_OPTION_VALUES))
+		parse_error("Invalid optoin value: [val]")
+	assignment_list[type] = val
+	return (i + 3)
+
+//option_assignments: option_assignment, [',' option_assignments]
+/datum/SDQL_parser/proc/option_assignments(i, list/node)
+	i = option_assignment(i, node)
+
+	if(token(i) == ",")
+		i = option_assignments(i + 1, node)
+
+	return i
 
 //query:	select_query | delete_query | update_query
 /datum/SDQL_parser/proc/query(i, list/node)
