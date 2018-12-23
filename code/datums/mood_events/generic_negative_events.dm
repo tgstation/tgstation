@@ -137,6 +137,27 @@
 	mood_change = -5
 	timeout = 600
 
+/datum/mood_event/notcreeping
+	description = "<span class='warning'>I sure wish I was around my obsession...</span>\n"
+	mood_change = -3
+	timeout = 10
+	hidden = TRUE
+
+/datum/mood_event/notcreeping/add_effects(name)
+	description = "<span class='warning'>I sure wish I was around [name]...</span>\n"
+
+/datum/mood_event/notcreepingsevere//not hidden since it's so severe
+	description = "<span class='boldwarning'>OBSESSIONNNN WHERE ARE YOUUUUUUUUUUUUU?!</span>\n"
+	mood_change = -10
+	timeout = 10
+
+/datum/mood_event/notcreepingsevere/add_effects(name)
+	var/list/unstable = list(name)
+	for(var/i in 1 to rand(3,5))
+		unstable += copytext(name, -1)
+	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
+	description = "<span class='boldwarning'>[unhinged] WHERE ARE YOUUUUUUUUUUUUU?!</span>\n"
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"

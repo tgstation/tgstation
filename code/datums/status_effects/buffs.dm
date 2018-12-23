@@ -554,25 +554,3 @@
 	owner.jitteriness = max(0, owner.jitteriness - 2)
 	owner.confused = max(0, owner.confused - 1)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
-
-/datum/status_effect/creep //you feel fuckin great around your obsession!
-	id = "Creepy"
-	duration = -1
-	alert_type = null
-	var/mob/living/obsession
-	var/datum/objective/spendtime/attachedcreepobj
-	var/total_time_creeping = 0 //just for roundend fun
-
-/datum/status_effect/creep/tick()
-	if(!obsession)
-		return
-	var/foundyou = FALSE
-	for(var/mob/living/L in range(7, owner))
-		if(L == obsession)
-			foundyou = TRUE
-			break
-	if(foundyou)
-		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creep)
-		total_time_creeping += 10
-		if(attachedcreepobj)
-			attachedcreepobj.timer -= 10 //ticks every second, remove 10 deciseconds from the timer. sure, that makes sense.
