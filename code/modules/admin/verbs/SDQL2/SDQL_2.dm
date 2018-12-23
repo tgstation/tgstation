@@ -148,12 +148,14 @@
 
 	TG ADDITIONS START:
 	Add USING keyword to the front of the query to use options system
+	The defaults aren't necessarily implemented, as there is no need to.
 	Available options: (D) means default
 	PROCCALL = (D)ASYNC, BLOCKING
 	SELECT = FORCE_NULLS, (D)SKIP_NULLS
 	PRIORITY = HIGH, (D) NORMAL
+	AUTOGC = (D) AUTOGC, KEEP_ALIVE
 
-	Example: USING PROCCALL = ASYNC, SELECT = FORCE_NULLS, PRIORITY = HIGH SELECT /mob FROM world WHERE z == 1
+	Example: USING PROCCALL = BLOCKING, SELECT = FORCE_NULLS, PRIORITY = HIGH SELECT /mob FROM world WHERE z == 1
 
 */
 
