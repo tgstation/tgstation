@@ -684,7 +684,7 @@
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
 /datum/mind/proc/has_martialart(var/string)
-	if(martial_art && martial_art.name == string)
+	if(martial_art && martial_art.id == string)
 		return martial_art
 	return FALSE
 
