@@ -32,6 +32,8 @@
 	if(the_spell && the_spell.active)
 		if(the_spell.original_body == M)
 			return TRUE
+	else
+		return TRUE
 	return FALSE
 
 /proc/is_hivemember(mob/living/M)
