@@ -424,7 +424,10 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-	if(bomb_location && is_station_level(bomb_location.z))
+	if(istype(A, /area/fabric_of_reality))
+		var/area/fabric_of_reality/fabric = A
+		new /obj/singularity(fabric.origin, 2000) // Stage five singulo back on the station, as a gift
+	else if(bomb_location && is_station_level(bomb_location.z))
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
@@ -445,7 +448,13 @@
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(off_station)
 	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
-	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
+	var/area/A = get_area(src)
+	if(istype(A, /area/fabric_of_reality))
+		var/area/fabric_of_reality/fabric = A
+		var/turf/T = fabric.origin
+		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, T.z)
+	else
+		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
 	if(off_station < 2)
