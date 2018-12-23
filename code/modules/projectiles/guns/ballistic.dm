@@ -123,7 +123,9 @@
 			chambered.forceMove(src)
 	
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
-	if (bolt_type == BOLT_TYPE_OPEN || bolt_type == BOLT_TYPE_NO_BOLT)
+	if (bolt_type == BOLT_TYPE_NO_BOLT)
+		return
+	if (bolt_type == BOLT_TYPE_OPEN && chambered != null)
 		return
 	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 	if (user)
