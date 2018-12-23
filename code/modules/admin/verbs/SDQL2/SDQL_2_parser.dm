@@ -91,7 +91,7 @@
 /datum/SDQL_parser/proc/query_options(i, list/node)
 	var/list/options = list()
 	if(tokenl(i) == "using")
-		i = option_assignment(i + 1, node, options)
+		i = option_assignments(i + 1, node, options)
 	query(i, node)
 	node["options"] = options
 
