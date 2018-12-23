@@ -4,7 +4,7 @@
 
 /datum/brain_trauma/magic
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
-	
+
 /datum/brain_trauma/magic/lumiphobia
 	name = "Lumiphobia"
 	desc = "Patient has an inexplicable adverse reaction to light."
@@ -23,7 +23,7 @@
 				to_chat(owner, "<span class='warning'><b>The light burns you!</b></span>")
 				next_damage_warning = world.time + 100 //Avoid spamming
 			owner.take_overall_damage(0,3)
-			
+
 /datum/brain_trauma/magic/poltergeist
 	name = "Poltergeist"
 	desc = "Patient appears to be targeted by a violent invisible entity."
@@ -44,7 +44,7 @@
 				throwing = I
 		if(throwing)
 			throwing.throw_at(owner, 8, 2)
-			
+
 /datum/brain_trauma/magic/antimagic
 	name = "Athaumasia"
 	desc = "Patient is completely inert to magical forces."
@@ -59,7 +59,7 @@
 /datum/brain_trauma/magic/antimagic/on_lose()
 	owner.remove_trait(TRAIT_ANTIMAGIC, TRAUMA_TRAIT)
 	..()
-	
+
 /datum/brain_trauma/magic/stalker
 	name = "Stalking Phantom"
 	desc = "Patient is stalked by a phantom only they can see."
@@ -70,15 +70,27 @@
 	var/close_stalker = FALSE //For heartbeat
 
 /datum/brain_trauma/magic/stalker/on_gain()
+	create_stalker()
+	..()
+
+/datum/brain_trauma/magic/stalker/proc/create_stalker()
 	var/turf/stalker_source = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z) //random corner
 	stalker = new(stalker_source, owner)
-	..()
-	
+
 /datum/brain_trauma/magic/stalker/on_lose()
 	QDEL_NULL(stalker)
 	..()
-	
+
 /datum/brain_trauma/magic/stalker/on_life()
+	// Dead and unconscious people are not interesting to the psychic stalker.
+	if(owner.stat != CONSCIOUS)
+		return
+
+	// Not even nullspace will keep it at bay.
+	if(!stalker || !stalker.loc || stalker.z != owner.z)
+		qdel(stalker)
+		create_stalker()
+
 	if(get_dist(owner, stalker) <= 1)
 		playsound(owner, 'sound/magic/demon_attack1.ogg', 50)
 		owner.visible_message("<span class='warning'>[owner] is torn apart by invisible claws!</span>", "<span class='userdanger'>Ghostly claws tear your body apart!</span>")
@@ -95,7 +107,7 @@
 			owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 			close_stalker = FALSE
 	..()
-	
+
 /obj/effect/hallucination/simple/stalker_phantom
 	name = "???"
 	desc = "It's coming closer..."

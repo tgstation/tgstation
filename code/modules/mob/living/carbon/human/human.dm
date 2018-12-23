@@ -851,13 +851,13 @@
 				if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
 					M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
 					return
-			. = ..(M, force, check_loc)
 			stop_pulling()
+			. = ..(M, force, check_loc)
 		else
 			visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
 	else
-		. = ..(M,force,check_loc)
 		stop_pulling()
+		. = ..(M,force,check_loc)
 
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()

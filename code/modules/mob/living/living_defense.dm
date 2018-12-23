@@ -189,6 +189,7 @@
 				update_mobility() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
+		user.set_pull_offsets(src, grab_state)
 		return 1
 
 

@@ -28,30 +28,30 @@
 	amount = MIASMA_CORPSE_MOLES
 
 /datum/component/rot/corpse/Initialize()
-	if(!ishuman(parent))
+	if(!iscarbon(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 
 /datum/component/rot/corpse/process()
-	var/mob/living/carbon/human/H = parent
-	if(H.stat != DEAD)
+	var/mob/living/carbon/C = parent
+	if(C.stat != DEAD)
 		qdel(src)
 		return
 
 	// Wait a bit before decaying
-	if(world.time - H.timeofdeath < 2 MINUTES)
+	if(world.time - C.timeofdeath < 2 MINUTES)
 		return
 
 	// Properly stored corpses shouldn't create miasma
-	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
+	if(istype(C.loc, /obj/structure/closet/crate/coffin)|| istype(C.loc, /obj/structure/closet/body_bag) || istype(C.loc, /obj/structure/bodycontainer))
 		return
 
 	// No decay if formaldehyde in corpse or when the corpse is charred
-	if(H.reagents.has_reagent("formaldehyde", 15) || H.has_trait(TRAIT_HUSK))
+	if(C.reagents.has_reagent("formaldehyde", 15) || C.has_trait(TRAIT_HUSK))
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(H.bodytemperature <= T0C-10 || (!(MOB_ORGANIC in H.mob_biotypes) && !(MOB_UNDEAD in H.mob_biotypes)))
+	if(C.bodytemperature <= T0C-10 || (!(MOB_ORGANIC in C.mob_biotypes) && !(MOB_UNDEAD in C.mob_biotypes)))
 		return
 
 	..()

@@ -69,8 +69,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
 	if(showpipe)
-		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions)
-		PIPING_LAYER_SHIFT(cap, piping_layer)
+		var/image/cap = getpipeimage(icon, "scrub_cap", initialize_directions, piping_layer = piping_layer)
 		add_overlay(cap)
 
 	if(welded)
@@ -97,7 +96,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
-	
+
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
@@ -186,7 +185,7 @@
 			air_contents.merge(filtered_out)
 			tile.assume_air(removed)
 			tile.air_update_turf()
-	
+
 	else //Just siphoning all air
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
@@ -284,7 +283,7 @@
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-		
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber/examine(mob/user)
 	..()
 	if(welded)
