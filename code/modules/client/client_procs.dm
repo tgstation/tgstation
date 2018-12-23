@@ -852,7 +852,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			screen |= O
 		O.appearance = MA
 		O.dir = D
-		O.screen_loc = "character_preview_map:1,[pos]"
+		O.screen_loc = "character_preview_map:0,[pos]"
 
 /client/proc/clear_character_previews()
 	for(var/index in char_render_holders)
