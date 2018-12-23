@@ -95,7 +95,6 @@
 			if(O.use_tool(src, user, 20))
 				user.visible_message("[user] fixes \the [src].", "<span class='notice'>You fix \the [src].</span>")
 				broken = 0
-				container_type = OPENCONTAINER
 				update_icon()
 				return FALSE //to use some fuel
 		else
@@ -111,7 +110,6 @@
 			playsound(loc, 'sound/effects/spray3.ogg', 50, 1, -6)
 			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
-			container_type = OPENCONTAINER
 			update_icon()
 			updateUsrDialog()
 		else
@@ -124,7 +122,6 @@
 		if(do_after(user, P.cleanspeed, target = src))
 			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
-			container_type = OPENCONTAINER
 			update_icon()
 		return TRUE
 
