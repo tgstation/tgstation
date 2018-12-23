@@ -1,5 +1,7 @@
 #define SDQL_qdel_datum(d) qdel(d)
 
+//SDQL2 datumized, /tg/station special!
+
 /*
 	Welcome admins, badmins and coders alike, to Structured Datum Query Language.
 	SDQL allows you to powerfully run code on batches of objects (or single objects, it's still unmatched
@@ -275,7 +277,7 @@
 		"<span class='admin'>SDQL combined querys took [DisplayTimeText(end_time_total)] to complete.</span>") + combined_refs
 
 GLOBAL_LIST_INIT(sdql2_queries, GLOB.sdql2_queries || list())
-GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VIEW VARIABLES (all)", null))
+GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null, "VIEW VARIABLES (all)", null))
 
 /datum/SDQL2_query
 	var/list/query_tree
@@ -320,8 +322,6 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 	qdel_on_finish = finished_qdel
 
 /datum/SDQL2_query/Destroy()
-	return QDEL_HINT_LETMELIVE
-	//debug
 	state = SDQL2_STATE_HALTING
 	query_tree = null
 	obj_count_all = null
@@ -334,6 +334,44 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 
 /datum/SDQL2_query/proc/get_query_text()
 	var/list/out = list()
+	recursive_list_print(out, query_tree)
+	return out.Join()
+
+/proc/recursive_list_print(list/output = list(), list/input, datum/callback/datum_handler, datum/callback/atom_handler)
+	output += "\[ "
+	for(var/i in 1 to input.len)
+		var/final = i == input.len
+		var/key = input[i]
+
+		//print the key
+		if(islist(key))
+			recursive_list_print(output, key, datum_handler, atom_handler)
+		else if(is_proper_datum(key) && (datum_handler || (isatom(key) && atom_handler)))
+			if(isatom(key) && atom_handler)
+				output += atom_handler.Invoke(key)
+			else
+				output += datum_handler.Invoke(key)
+		else
+			output += "[key]"
+
+		//print the value
+		var/is_value = (!isnum(key) && !isnull(input[key]))
+		if(is_value)
+			var/value = input[key]
+			if(islist(value))
+				recursive_list_print(output, value, datum_handler, atom_handler)
+			else if(is_proper_datum(value) && (datum_handler || (isatom(value) && atom_handler)))
+				if(isatom(value) && atom_handler)
+					output += atom_handler.Invoke(value)
+				else
+					output += datum_handler.Invoke(value)
+			else
+				output += " = [value]"
+
+		if(!final)
+			output += " , "
+
+	output += " \]"
 
 /datum/SDQL2_query/proc/text_state()
 	switch(state)
@@ -397,7 +435,6 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 	qdel(src)
 
 /datum/SDQL2_query/proc/set_option(name, value)
-	to_chat(world, "DEBUG: Setting [name] to [value]")
 	switch(name)
 		if("select")
 			switch(value)
@@ -425,7 +462,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 	if(query_tree["options"])
 		for(var/name in query_tree["options"])
 			var/value = query_tree["options"][name]
-			set_option(type, value)
+			set_option(name, value)
 	select_refs = list()
 	obj_count_all = 0
 	obj_count_eligible = 0
@@ -597,18 +634,21 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 				if(!is_proper_datum(i))
 					continue
 				world.SDQL_var(i, query_tree["call"][1], source = i, superuser)
+				obj_count_finished++
 				SDQL2_TICK_CHECK
 				SDQL2_HALT_CHECK
 
 		if("delete")
 			for(var/datum/d in found)
 				SDQL_qdel_datum(d)
+				obj_count_finished++
 				SDQL2_TICK_CHECK
 				SDQL2_HALT_CHECK
 
 		if("select")
 			var/list/text_list = list()
 			var/print_nulls = !(options & SDQL2_OPTION_SELECT_OUTPUT_SKIP_NULLS)
+			obj_count_finished = select_refs
 			for(var/i in found)
 				SDQL_print(i, text_list, print_nulls)
 				select_refs[REF(i)] = TRUE
@@ -623,8 +663,11 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 					if(!is_proper_datum(d))
 						continue
 					SDQL_internal_vv(d, set_list)
+					obj_count_finished++
 					SDQL2_TICK_CHECK
 					SDQL2_HALT_CHECK
+	if(islist(obj_count_finished))
+		obj_count_finished = obj_count_finished.len
 	state = SDQL2_STATE_SWITCHING
 
 /datum/SDQL2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
@@ -936,13 +979,57 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 				v = world
 			if("global")
 				v = GLOB
+			if("MC")
+				v = Master
+			if("FS")
+				v = Failsafe
+			if("CFG")
+				v = config
+			//Subsystem switches
+			if("SSgarbage")
+				v = SSgarbage
+			if("SSmachines")
+				v = SSmachines
+			if("SSobj")
+				v = SSobj
+			if("SSresearch")
+				v = SSresearch
+			if("SSprojectiles")
+				v = SSprojectiles
+			if("SSfastprocess")
+				v = SSfastprocess
+			if("SSticker")
+				v = SSticker
+			if("SStimer")
+				v = SStimer
+			if("SSradiation")
+				v = SSradiation
+			if("SSnpcpool")
+				v = SSnpcpool
+			if("SSmobs")
+				v = SSmobs
+			if("SSmood")
+				v = SSmood
+			if("SSquirks")
+				v = SSquirks
+			if("SSwet_floors")
+				v = SSwet_floors
+			if("SSshuttle")
+				v = SSshuttle
+			if("SSmapping")
+				v = SSmapping
+			if("SSevents")
+				v = SSevents
+			if("SSeconomy")
+				v = SSeconomy
+			//End
 			else
 				return null
 	else if(object == GLOB) // Shitty ass hack kill me.
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")
-			return SDQL_var(v, expression[start + 2], source = source, superuser)
+			return SDQL_var(v, expression[start + 2], source = source, superuser = superuser, query = query)
 		else if(expression[start + 1] == ":")
 			return (query.options & SDQL2_OPTION_BLOCKING_CALLS)? query.SDQL_function_async(object, v, expression[start + 2], source) : query.SDQL_function_blocking(object, v, expression[start + 2], source)
 		else if(expression[start + 1] == "\[" && islist(v))
@@ -1075,4 +1162,4 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /datum/statclick/SDQL2_VV_all, new(null, "VI
 	name = "VIEW VARIABLES"
 
 /obj/effect/statclick/SDQL2_VV_all/Click()
-	usr.client.debug_variables(GLOB.SDQL2_queries)
+	usr.client.debug_variables(GLOB.sdql2_queries)

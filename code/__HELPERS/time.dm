@@ -61,24 +61,31 @@ GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 		else
 			return 1
 
-#define DTT_SECONDS_TEXT "[second] second[(second != 1)? "s":""]"
-#define DTT_MINUTES_TEXT "[minute] minute[(minute != 1)? "s":""] and [DTT_SECONDS_TEXT]"
-#define DTT_HOURS_TEXT "[hour] hour[(hour != 1)? "s":""] and [DTT_MINUTES_TEXT]"
-#define DTT_DAYS_TEXT "[day] day[(day != 1)? "s":""] and [DTT_HOURS_TEXT]"
 //Takes a value of time in deciseconds.
 //Returns a text value of that number in hours, minutes, or seconds.
 /proc/DisplayTimeText(time_value, round_seconds_to = 0.1)
 	var/second = round(time_value * 0.1, round_seconds_to)
+	if(!second)
+		return "right now"
 	if(second < 60)
-		return DTT_SECONDS_TEXT
+		return "[second] second[(second != 1)? "s":""]"
 	var/minute = FLOOR(second / 60, 1)
 	second = MODULUS(second, 60)
+	var/secondT
+	if(second)
+		secondT = " and [second] second[(second != 1)? "s":""]"
 	if(minute < 60)
-		return DTT_MINUTES_TEXT
+		return "[minute] minute[(minute != 1)? "s":""][secondT]"
 	var/hour = FLOOR(minute / 60, 1)
 	minute = MODULUS(minute, 60)
+	var/minuteT
+	if(minute)
+		minuteT = " and [minute] minute[(minute != 1)? "s":""]"
 	if(hour < 24)
-		return DTT_HOURS_TEXT
+		return "[hour] hour[(hour != 1)? "s":""][minuteT][secondT]"
 	var/day = FLOOR(hour / 24, 1)
 	hour = MODULUS(hour, 24)
-	return DTT_DAYS_TEXT
+	var/hourT
+	if(hour)
+		hourT = " and [hour] hour[(hour != 1)? "s":""]"
+	return "[day] day[(day != 1)? "s":""][hourT][minuteT][secondT]"
