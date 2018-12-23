@@ -597,19 +597,24 @@ This is here to make the tiles around the station mininuke change when it's arme
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop))
 				loneop.weight += 1
+				message_admins("[src] being stationary in [ADMIN_VERBOSEJMP(newturf)] has increased the weight of the Lone Operative event to [loneop.weight]!")
+				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+
 	else
 		lastlocation = newturf
 		last_disk_move = world.time
 		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 		if(istype(loneop) && prob(loneop.weight))
 			loneop.weight = max(loneop.weight - 1, 0)
+			message_admins("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
+			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
 	if(!fake)
 		return
 
-	if(isobserver(user) || user.has_trait(TRAIT_DISK_VERIFIER) || (user.mind && user.mind.has_trait(TRAIT_DISK_VERIFIER)))
+	if(isobserver(user) || user.has_trait(TRAIT_DISK_VERIFIER))
 		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
