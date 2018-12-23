@@ -181,6 +181,9 @@
 	name = "engineering external airlock";
 	req_access_txt = "10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aB" = (
@@ -686,6 +689,7 @@
 	name = "engineering external airlock";
 	req_access_txt = "10"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bT" = (
@@ -1129,7 +1133,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "df" = (
-/obj/effect/landmark/start/ai,
+/obj/machinery/door/window/southright,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
@@ -1184,17 +1188,14 @@
 	name = "\improper AI Core"
 	})
 "dn" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "telecomms and ai module door";
-	req_access_txt = "61"
-	},
 /obj/machinery/turretid{
 	icon_state = "control_stun";
 	name = "AI Chamber turret control";
 	pixel_x = 32;
 	pixel_y = 6
 	},
-/turf/open/floor/plasteel,
+/obj/effect/landmark/start/ai,
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai{
 	name = "\improper AI Core"
 	})
@@ -2803,6 +2804,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore{
 	name = "\improper Command Hallway"
@@ -3647,6 +3649,7 @@
 	req_one_access_txt = "0"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "jI" = (
@@ -4007,15 +4010,6 @@
 /area/hallway/primary/fore{
 	name = "\improper Command Hallway"
 	})
-"kC" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "13"
-	},
-/obj/structure/cable/cyan{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "kD" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "maintenance door";
@@ -4100,6 +4094,9 @@
 	},
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
@@ -4361,7 +4358,6 @@
 "lr" = (
 /obj/structure/table/wood,
 /obj/item/storage/lockbox/medal,
-/obj/item/card/id/captains_spare,
 /obj/item/door_remote/chief_engineer,
 /obj/item/door_remote/chief_medical_officer,
 /obj/item/door_remote/research_director,
@@ -4416,6 +4412,7 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ly" = (
@@ -4458,6 +4455,9 @@
 	},
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -5391,6 +5391,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/bridge)
 "nJ" = (
@@ -5603,6 +5604,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/bridge)
 "op" = (
@@ -6327,6 +6329,9 @@
 	name = "cargo bay airlock";
 	req_access_txt = "31"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "qi" = (
@@ -6613,12 +6618,18 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "rb" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "command door";
 	req_access_txt = "19"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -7258,6 +7269,9 @@
 	req_access_txt = "31"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
@@ -7721,6 +7735,9 @@
 /obj/machinery/door/airlock/external{
 	name = "cargo bay airlock";
 	req_access_txt = "31"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
@@ -9665,6 +9682,9 @@
 "yJ" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "yK" = (
@@ -10451,6 +10471,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics/cloning)
 "AH" = (
@@ -10546,6 +10567,9 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -10978,6 +11002,9 @@
 /area/science/robotics)
 "Ce" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
 "Cf" = (
@@ -11591,6 +11618,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "DD" = (
@@ -12327,6 +12355,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
+/obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "FB" = (
@@ -12580,6 +12609,9 @@
 	name = "xenobiology door";
 	req_access_txt = "55";
 	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -12845,6 +12877,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
+"GF" = (
+/obj/structure/cable/cyan{
+	icon_state = "4-8"
+	},
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/dark,
+/area/medical/morgue)
 "GG" = (
 /turf/open/floor/plasteel,
 /area/science/robotics)
@@ -12958,6 +12997,9 @@
 	},
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -15176,6 +15218,9 @@
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "MH" = (
@@ -17126,6 +17171,9 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "RU" = (
@@ -17270,6 +17318,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-2"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "Sk" = (
@@ -17519,6 +17568,9 @@
 	req_access_txt = "13"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
 "SY" = (
@@ -17530,6 +17582,9 @@
 	req_access_txt = "13"
 	},
 /obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -17606,6 +17661,18 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/nanite)
+"Ty" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "TF" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
@@ -17739,10 +17806,42 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"UB" = (
+/obj/machinery/door/airlock/research{
+	name = "xenobiology door";
+	req_access_txt = "55";
+	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "UI" = (
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation,
 /turf/open/floor/circuit,
 /area/tcommsat/server)
+"UL" = (
+/obj/machinery/door/airlock/external{
+	name = "cargo bay airlock";
+	req_access_txt = "31"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/quartermaster/storage)
+"UZ" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/door/airlock/external{
+	name = "engineering external airlock";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "Vd" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/white,
@@ -17807,6 +17906,23 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
+"Wa" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay)
+"Wf" = (
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay)
 "Wk" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -17852,6 +17968,15 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"WN" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "engineering door";
+	req_access_txt = "10";
+	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "WR" = (
 /obj/structure/table,
 /obj/item/paper_bin,
@@ -17872,12 +17997,31 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"Xj" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Xk" = (
 /obj/machinery/computer/nanite_chamber_control{
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/science/nanite)
+"Xv" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "Xz" = (
 /obj/structure/closet/cardboard,
 /obj/structure/cable/cyan{
@@ -17902,21 +18046,81 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
+"XL" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "4-8"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard)
+"XN" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "engineering door";
+	req_access_txt = "10";
+	req_one_access_txt = "0"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "XQ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"XR" = (
+/obj/machinery/door/airlock/security/glass{
+	name = "security airlock";
+	req_access_txt = "63"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "Ya" = (
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plating,
 /area/engine/engineering)
+"Yc" = (
+/obj/machinery/door/airlock/external{
+	req_access_txt = "13"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "YD" = (
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plating,
 /area/maintenance/central)
+"YH" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "command door";
+	req_access_txt = "19"
+	},
+/obj/structure/cable/cyan{
+	icon_state = "1-2"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore{
+	name = "\improper Command Hallway"
+	})
 "YJ" = (
 /turf/closed/wall/r_wall,
 /area/science/nanite)
@@ -17948,6 +18152,13 @@
 /obj/machinery/nanite_program_hub,
 /turf/open/floor/plasteel/white,
 /area/science/nanite)
+"Zl" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable/cyan{
+	icon_state = "2-4"
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "Zm" = (
 /obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/white,
@@ -17984,6 +18195,10 @@
 /obj/machinery/recycler,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
+"Zz" = (
+/obj/effect/landmark/start/medical_doctor,
+/turf/open/floor/plasteel/dark,
+/area/medical/medbay)
 "ZA" = (
 /obj/machinery/telecomms/receiver/preset_left/birdstation,
 /turf/open/floor/circuit,
@@ -18019,6 +18234,20 @@
 /area/storage/primary{
 	name = "Tool Storage"
 	})
+"ZJ" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	icon_state = "intact";
+	dir = 4
+	},
+/obj/machinery/door/airlock/external{
+	name = "engineering external airlock";
+	req_access_txt = "10"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "ZQ" = (
 /obj/structure/table,
 /obj/item/nanite_remote{
@@ -47964,9 +48193,9 @@ nM
 nM
 nN
 rP
-qh
+UL
 nM
-qh
+UL
 pR
 nN
 nM
@@ -48694,7 +48923,7 @@ aN
 aN
 bS
 ch
-bS
+UZ
 cw
 cl
 cX
@@ -50229,7 +50458,7 @@ aa
 aa
 aa
 ai
-aA
+ZJ
 ai
 bc
 bv
@@ -50525,7 +50754,7 @@ km
 ae
 lx
 je
-lx
+Yc
 kk
 kc
 os
@@ -50816,7 +51045,7 @@ CO
 DC
 Ek
 EV
-DC
+XR
 EW
 Hm
 HZ
@@ -51330,7 +51559,7 @@ CP
 DC
 Em
 EX
-DC
+XR
 EW
 Ho
 Hi
@@ -51613,7 +51842,7 @@ RE
 RY
 Sj
 Lq
-Sj
+Ty
 ah
 TX
 aa
@@ -52061,12 +52290,12 @@ ar
 dr
 ar
 ar
-ik
+WN
 ar
 ar
 ar
 ar
-ik
+XN
 lh
 mA
 mW
@@ -55453,7 +55682,7 @@ DN
 Mb
 MK
 JA
-JD
+Wf
 JD
 JD
 Kz
@@ -56492,7 +56721,7 @@ DN
 LI
 Ra
 Rq
-RI
+GF
 Ru
 Rq
 Ru
@@ -56727,21 +56956,21 @@ CR
 zD
 Ex
 Ex
-Ex
+oN
 Ex
 Ex
 Ih
 Ex
 FA
 Gl
-Gl
+Wa
 Ja
-Ex
+oN
 DN
-JL
+Zz
 JK
 Id
-Ex
+oN
 PU
 Qu
 Ex
@@ -57970,7 +58199,7 @@ he
 he
 he
 he
-hy
+YH
 he
 jO
 hf
@@ -64138,10 +64367,10 @@ ad
 ad
 ad
 ad
-ae
-ad
-jb
-kk
+Zl
+ah
+Xv
+kc
 kM
 lw
 kc
@@ -64395,10 +64624,10 @@ ad
 aa
 aa
 aa
-ae
+kl
 aa
 jb
-kC
+jb
 jb
 iQ
 iQ
@@ -64655,7 +64884,7 @@ ad
 ae
 ad
 ad
-kl
+ae
 ad
 aa
 aa
@@ -67273,7 +67502,7 @@ FH
 LR
 zd
 EG
-MG
+XL
 EG
 Ca
 ND
@@ -67286,7 +67515,7 @@ Ca
 ad
 ad
 Ne
-RT
+Xj
 Ne
 aa
 al
@@ -68807,7 +69036,7 @@ Ca
 zd
 Aj
 AU
-GZ
+UB
 Aj
 Aj
 Aj
