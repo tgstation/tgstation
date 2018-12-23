@@ -7,6 +7,7 @@
 	instability = 5
 	difficulty = 8
 
+
 /datum/mutation/human/radioactive/on_life()
 	radiation_pulse(owner, 20)
 

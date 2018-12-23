@@ -34,13 +34,14 @@
 
 	var/can_chromosome = 1 //can we take chromosomes? 0: never,  1:yeah, 2: no, already have one
 	var/chromosome_name   //purely cosmetic
+	var/modified = FALSE  //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
 	var/mutadone_proof = FALSE
 
-	//Chromosome stuff - set to -1 to prevent people from applying that chromosome
+	//Chromosome stuff - set to -1 to prevent people from changing it. Example: It'd be a waste to decrease cooldown on mutism
 	var/stabilizer_coeff = 1 //genetic stability coeff
-	var/synchronizer_coeff = 1 //makes the mutation hurt the user less
-	var/power_coeff = 1 //boosts mutation strength
-	var/energy_coeff = 1 //lowers mutation cooldown
+	var/synchronizer_coeff = -1 //makes the mutation hurt the user less
+	var/power_coeff = -1 //boosts mutation strength
+	var/energy_coeff = -1 //lowers mutation cooldown
 
 /datum/mutation/human/New(class_ = MUT_OTHER, timer, copymut)
 	. = ..()
@@ -73,11 +74,9 @@
 		owner.remove_overlay(layer_used)
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
-	if(power)
-		power = new power()
-		power.action_background_icon_state = "bg_tech_blue_on"
-		power.panel = "Genetic"
-		owner.AddSpell(power)
+	grant_spell() //we do checks here so nothing about hulk getting magic
+	if(!modified)
+		addtimer(CALLBACK(src, .proc/modify)) //gonna want children calling ..() to run first
 
 /datum/mutation/human/proc/get_visual_indicator()
 	return
@@ -140,6 +139,12 @@
 				overlays_standing[CM.layer_used] = mut_overlay
 				apply_overlay(CM.layer_used)
 
+/datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
+	if(modified || !power || !owner)
+		return
+	power.charge_max *= get_energy(src)
+	modified = TRUE
+
 /datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM)
 	if(!HM)
 		return
@@ -159,10 +164,18 @@
 	mutadone_proof = initial(mutadone_proof)
 	can_chromosome = initial(can_chromosome)
 
-
 /datum/mutation/human/proc/remove()
 	if(dna)
 		dna.force_lose(src)
 	else
 		qdel(src)
 
+/datum/mutation/human/proc/grant_spell()
+	if(!power || !owner)
+		return FALSE
+
+	power = new power()
+	power.action_background_icon_state = "bg_tech_blue_on"
+	power.panel = "Genetic"
+	owner.AddSpell(power)
+	return TRUE

@@ -6,10 +6,10 @@
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 
-	var/stabilizer_coeff = 1 //lower is better
-	var/synchronizer_coeff = 1 //lower is better
-	var/power_coeff = 1 //higher is better
-	var/energy_coeff = 1 //lower is better
+	var/stabilizer_coeff = 1 //lower is better, affects genetic stability
+	var/synchronizer_coeff = 1 //lower is better, affects chance to backfire
+	var/power_coeff = 1 //higher is better, affects "strength"
+	var/energy_coeff = 1 //lower is better. affects recharge time
 
 	var/weight = 5
 
@@ -38,25 +38,19 @@
 		HM.energy_coeff = energy_coeff
 	HM.can_chromosome = 2
 	HM.chromosome_name = name
+	HM.modify()
 	qdel(src)
 
 /proc/generate_chromosome()
 	var/static/list/chromosomes
-	to_chat(world, "1")
 	if(!chromosomes)
-		to_chat(world, "2")
 		chromosomes = list()
 		for(var/A in subtypesof(/obj/item/chromosome))
-			to_chat(world, "3-[A]")
 			var/obj/item/chromosome/CM = A
-			to_chat(world, "4-[CM]")
 			if(!initial(CM.weight))
-				to_chat(world, "5")
 				break
 			chromosomes[A] = initial(CM.weight)
-	var/deleteme = pickweight(chromosomes)
-	to_chat(world, "6-[deleteme]")
-	return deleteme
+	return pickweight(chromosomes)
 
 
 /obj/item/chromosome/stabilizer
