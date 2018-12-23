@@ -881,16 +881,17 @@
 	id = "cardboard golem"
 	prefix = "Cardboard"
 	special_names = null
-	fixed_mut_color = "ad8762"
 	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself."
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
-	limbs_id = "golem" //special sprites
+	limbs_id = "c_golem" //special sprites
 	attack_verb = "whips"
 	attack_sound = 'sound/weapons/whip.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
-	armor = 30
+	fixed_mut_color = null
+	armor = 25
 	burnmod = 1.25
-	heatmod = 1.5
+	heatmod = 2
 	speedmod = 1.5
 	punchdamagelow = 4
 	punchstunthreshold = 7
@@ -934,10 +935,13 @@
 	name = "Bone Golem"
 	id = "bone golem"
 	prefix = "Bone"
+	limbs_id = "b_golem"
 	liked_food = GROSS | MEAT | RAW
 	toxic_food = null
-	fixed_mut_color = "ffffff"
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	sexes = FALSE
+	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH,TRAIT_CALCIUM_HEALER)
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
 	var/datum/action/innate/bonechill/bonechill
@@ -957,19 +961,31 @@
 	name = "Bone Chill"
 	desc = "Rattle your bones and strike fear into your enemies!"
 	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "sacredflame"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "bonechill"
 	var/cooldown = 600
 	var/last_use
+	var/snas_chance = 3
 
 /datum/action/innate/bonechill/Activate()
 	if(world.time < last_use + cooldown)
 		to_chat("<span class='notice'>You aren't ready yet to rattle your bones again</span>")
 	owner.visible_message("<span class='warning'>[owner] rattles [owner.p_their()] bones harrowingly.</span>", "<span class='notice'>You rattle your bones</span>")
 	last_use = world.time
-	playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
+	if(prob(snas_chance))
+		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES2.ogg', 100)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/mutable_appearance/badtime = mutable_appearance('icons/mob/human_parts.dmi', "b_golem_eyes", -FIRE_LAYER-0.5)
+			badtime.appearance_flags = RESET_COLOR
+			H.overlays_standing[FIRE_LAYER+0.5] = badtime
+			H.apply_overlay(FIRE_LAYER+0.5)
+			addtimer(CALLBACK(H, /mob/living/carbon/.proc/remove_overlay, FIRE_LAYER+0.5), 25)
+	else
+		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
-		message_admins("[L]")
 		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L))
 			return //Do not affect our brothers
 		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
 		L.apply_status_effect(/datum/status_effect/bonechill)
+
