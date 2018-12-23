@@ -8,16 +8,30 @@
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	var/datum/brain_trauma/special/creep/trauma
 
-
-/datum/antagonist/creep/on_gain()
-	. = ..()
+/datum/antagonist/creep/admin_add(datum/mind/new_owner,mob/admin)
+	var/mob/living/carbon/C = new_owner.current
+	if(!istype(C))
+		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to at least be a carbon!")
+		return
+	if(!C.getorgan(/obj/item/organ/brain)) // If only I had a brain
+		to_chat(admin, "[roundend_category] come from a brain trauma, so they need to HAVE A BRAIN.")
+		return
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
+	//PRESTO FUCKIN MAJESTO
+	C.gain_trauma(/datum/brain_trauma/special/creep)//ZAP
 
 /datum/antagonist/creep/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE)
 	to_chat(owner, "<span class='boldannounce'>You are the Creep!</span>")
-	to_chat(owner, "<B>They would call it an obsession. They would call you crazy, because they don't understand your unrequited love. You know what you know. And you. will. show them.</B>")
-	to_chat(owner, "<B>I will surely go insane if I don't spend enough time around [trauma.obsession], but when i'm near them too long i'm going to stutter, making me look like some kind of CREEP!</B>")
+	to_chat(owner, "<B>They would call it an obsession. They would call you crazy, because they don't understand your unrequited love.<br>All you know is that you love [trauma.obsession]. And you. will. show them.</B>")
+	to_chat(owner, "<B>I will surely go insane if I don't spend enough time around [trauma.obsession], but when i'm near them too long it gets too difficult to speak properly, making me look like a CREEP!</B>")
 	owner.announce_objectives()
+
+/datum/antagonist/creep/Destroy()
+	if(trauma)
+		qdel(trauma)
+	. = ..()
 
 /datum/antagonist/creep/proc/forge_objectives(var/datum/mind/obsessionmind)
 
@@ -25,12 +39,25 @@
 	kill.owner = owner
 	kill.target = obsessionmind
 
-	var/datum/objective/polaroid/camera = new
-	camera.owner = owner
-	camera.target = obsessionmind
-	objectives += camera
+	var/list/objectives_left = list("spendtime", "polaroid")
+	for(var/i in 1 to 2)//set to 3 when hugs gets in, after that sit
+		var/chosen_objective = pick(objectives_left)
+		objectives_left.Remove(chosen_objective)
+		switch(chosen_objective)
+			if("spendtime")
+				var/datum/objective/spendtime/spendtime = new
+				spendtime.owner = owner
+				spendtime.target = obsessionmind
+				objectives += spendtime
+			if("polaroid")
+				var/datum/objective/polaroid/polaroid = new
+				polaroid.owner = owner
+				polaroid.target = obsessionmind
+				objectives += polaroid
 
 	objectives += kill//finally add the assassinate last, because you'd have to complete it last to greentext.
+	for(var/datum/objective/O in objectives)
+		O.update_explanation_text()
 
 /datum/antagonist/creep/roundend_report_header()
 	return 	"<span class='header'>Someone became a creep!</span><br>"
@@ -56,7 +83,7 @@
 		else
 			report += "<span class='redtext'>The [name] did not go near their obsession the entire round! That's extremely impressive, but you are a shit [name]!</span>"
 	else
-		report += "<span class='greentext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan Creep and it broke! You might as well show yourself!!</span>"
+		report += "<span class='greentext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
 
 	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"

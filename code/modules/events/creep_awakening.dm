@@ -16,7 +16,8 @@
 		var/alreadycreepy = H.mind.has_antag_datum(/datum/antagonist/creep)
 		if(alreadycreepy)
 			continue
-
-		H.gain_trauma_type(/datum/brain_trauma/creep, TRAUMA_RESILIENCE_SURGERY)
+		if(!H.getorgan(/obj/item/organ/brain))
+			continue
+		H.gain_trauma(/datum/brain_trauma/special/creep)
 		announce_to_ghosts(H)
 		break

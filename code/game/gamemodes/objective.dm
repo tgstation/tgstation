@@ -164,9 +164,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
 
-/datum/objective/proc/deathrattle(var/suicided = FALSE) //does something when the deathrattle status effect linked to this objective goes off. you could set it to be your own deathrattle, or someone elses. see creep.dm and neutral.dm for an example
-
-
 /datum/objective/assassinate
 	name = "assasinate"
 	var/target_role_type=FALSE

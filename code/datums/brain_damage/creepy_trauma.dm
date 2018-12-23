@@ -16,9 +16,10 @@
 
 	//setup, linking, etc//
 	..()
-	obsession = find_obsession()
-	if(!obsession)
-		qdel(src)
+	if(!obsession)//admins didn't set one
+		obsession = find_obsession()
+		if(!obsession)//we didn't find one
+			qdel(src)
 	owner.mind.add_antag_datum(/datum/antagonist/creep)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/creep)
 	antagonist.trauma = src
@@ -37,7 +38,8 @@
 			foundyou = TRUE
 			break
 	if(foundyou)
-		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "notcreeping")
+		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
+		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "notcreeping")//lets make sure they instantly become estatic
 		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "notcreepingsevere")
 		total_time_creeping += 10
 		time_spent_away = 0
@@ -46,8 +48,10 @@
 	else
 		time_spent_away += 10
 		if(time_spent_away > 1800) //3 minutes
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "notcreeping")
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "notcreepingsevere", /datum/mood_event/notcreepingsevere, obsession.name)
 		else
+			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "creeping")
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "notcreeping", /datum/mood_event/notcreeping, obsession.name)
 
 /datum/brain_trauma/special/creep/on_lose()
@@ -102,10 +106,10 @@
 	var/list/possible_targets = list()
 	var/list/viable_minds = list()
 	for(var/mob/Player in GLOB.mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client)
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner)
 			viable_minds += Player.mind
 	for(var/datum/mind/possible_target in viable_minds)
-		if(!(possible_target == owner) && ishuman(possible_target.current))
+		if(possible_target != owner && ishuman(possible_target.current))
 			possible_targets += possible_target.current
 	if(possible_targets.len > 0)
 		chosen_victim = pick(possible_targets)

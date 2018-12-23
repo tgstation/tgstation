@@ -140,7 +140,7 @@
 /datum/mood_event/notcreeping
 	description = "<span class='warning'>I sure wish I was around my obsession...</span>\n"
 	mood_change = -3
-	timeout = 10
+	timeout = 100
 	hidden = TRUE
 
 /datum/mood_event/notcreeping/add_effects(name)
@@ -149,7 +149,7 @@
 /datum/mood_event/notcreepingsevere//not hidden since it's so severe
 	description = "<span class='boldwarning'>OBSESSIONNNN WHERE ARE YOUUUUUUUUUUUUU?!</span>\n"
 	mood_change = -10
-	timeout = 10
+	timeout = 100
 
 /datum/mood_event/notcreepingsevere/add_effects(name)
 	var/list/unstable = list(name)
