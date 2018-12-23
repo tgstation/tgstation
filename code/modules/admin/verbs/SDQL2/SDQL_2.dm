@@ -635,7 +635,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			for(var/i in found)
 				if(!is_proper_datum(i))
 					continue
-				world.SDQL_var(i, query_tree["call"][1], source = i, superuser = superuser, src)
+				world.SDQL_var(i, query_tree["call"][1], null, i, superuser, src)
 				obj_count_finished++
 				SDQL2_TICK_CHECK
 				SDQL2_HALT_CHECK
@@ -1031,7 +1031,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 		v = expression[start]
 	if(long)
 		if(expression[start + 1] == ".")
-			return SDQL_var(v, expression[start + 2], source = source, superuser = superuser, query = query)
+			return SDQL_var(v, expression[start + 2], null, source, superuser, query)
 		else if(expression[start + 1] == ":")
 			return (query.options & SDQL2_OPTION_BLOCKING_CALLS)? query.SDQL_function_async(object, v, expression[start + 2], source) : query.SDQL_function_blocking(object, v, expression[start + 2], source)
 		else if(expression[start + 1] == "\[" && islist(v))
