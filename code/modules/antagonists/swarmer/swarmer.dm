@@ -426,10 +426,6 @@
 	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
 	return FALSE
 
-/obj/machinery/power/supermatter_crystal/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
-	to_chat(S, "<span class='warning'>This object contains matter alien to our systems and cannot be processed. Aborting.</span>")
-	return FALSE
-
 ////END CTRL CLICK FOR SWARMERS////
 
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(atom/fabrication_object,fabrication_cost = 0)
