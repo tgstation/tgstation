@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - admin: "Admins now have access to a \"wand of safety\", a supercharged teleportation
+wand that moves people to a safe turf, like a swarmer teleport without the cuffing."
