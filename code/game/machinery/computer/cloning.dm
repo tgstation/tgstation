@@ -18,7 +18,7 @@
 	var/obj/item/disk/data/diskette //Incompatible format to genetics machine
 	//select which parts of the diskette to load
 	var/include_se = FALSE //mutations
-	var/include_ui = FALSE //appearance 
+	var/include_ui = FALSE //appearance
 	var/include_ue = FALSE //blood type, UE, and name
 
 	var/loading = FALSE // Nice loading text
@@ -495,14 +495,17 @@
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
+
+	// Do not use unless you know what they are.
+	var/mob/living/carbon/C = mob_occupant
+	var/mob/living/brain/B = mob_occupant
+
 	if(ishuman(mob_occupant))
-		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
 		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
 	if(isbrain(mob_occupant))
-		var/mob/living/brain/B = mob_occupant
 		dna = B.stored_dna
 
 	if(!istype(dna))
