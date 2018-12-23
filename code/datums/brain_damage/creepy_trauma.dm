@@ -70,7 +70,6 @@
 	if(mood)
 		switch(mood.sanity)
 			if(SANITY_GREAT to INFINITY)
-				message = stutter(message)
 				choked_up = social_interaction()
 	if(choked_up)
 		return ""
@@ -78,23 +77,22 @@
 
 /datum/brain_trauma/special/creep/proc/social_interaction()
 	var/fail = FALSE //whether you can finish a sentence while doing it
-	switch(rand(1,11))
+	owner.stuttering = max(3, owner.stuttering)
+	owner.blur_eyes(10)
+	switch(rand(1,4))
 		if(1)
+			shake_camera(owner, 15, 1)
 			owner.vomit()
 			fail = TRUE
-		if(2,3)
+		if(2)
 			owner.emote("cough")
 			owner.dizziness += 10
 			fail = TRUE
-		if(4,5)
-			owner.confused += 10
-			owner.blur_eyes(10)
-		if(6 to 9)
-			owner.slurring += 30//you'll make it, just embarassing slur-stutter
-		if(10)
+		if(3)
 			to_chat(owner, "<span class='userdanger'>You feel your heart lurching in your chest...</span>")
 			owner.Stun(20)
-		if(11)
+			shake_camera(owner, 15, 1)
+		if(4)
 			to_chat(owner, "<span class='warning'>You faint.</span>")
 			owner.Unconscious(80)
 			fail = TRUE

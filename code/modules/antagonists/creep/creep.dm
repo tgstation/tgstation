@@ -106,6 +106,7 @@
 		explanation_text = "Free Objective"
 
 /datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks
+	name = "spendtime"
 	var/timer = 3000 //5 minutes
 	var/freeobj = FALSE //if it can't find the trauma to attach it to.
 
