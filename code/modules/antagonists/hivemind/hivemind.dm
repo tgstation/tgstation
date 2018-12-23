@@ -108,10 +108,9 @@
 
 
 /datum/antagonist/hivemind/on_removal()
-
 	//Remove all hive powers here
-	hive_size = -1
-	check_powers()
+	for(var/power in upgrade_tiers)
+		owner.RemoveSpell(power)
 
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='userdanger'> Your psionic powers fade, you are no longer the hivemind's host! </span>")
