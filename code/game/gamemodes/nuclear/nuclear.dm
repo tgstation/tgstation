@@ -170,3 +170,7 @@
 		/obj/item/tank/jetpack/oxygen/harness=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1,\
 		/obj/item/kitchen/knife/combat/survival)
+
+/datum/outfit/syndicate/full/loneop
+	name = "Syndicate Lone Operative - Full Kit"
+	uplink_type = /obj/item/uplink/nuclear/loneop

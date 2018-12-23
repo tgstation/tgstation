@@ -45,6 +45,12 @@
 	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
 	hidden_uplink.name = "debug nuclear uplink"
 
+/obj/item/uplink/nuclear/loneop/Initialize()
+	. = ..()
+	GET_COMPONENT(hidden_uplink, /datum/component/uplink)
+	hidden_uplink.allow_restricted_loneop = FALSE
+	hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
+
 /obj/item/uplink/nuclear_restricted/Initialize()
 	. = ..()
 	GET_COMPONENT(hidden_uplink, /datum/component/uplink)

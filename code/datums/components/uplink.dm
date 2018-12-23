@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/lockable = TRUE
 	var/locked = TRUE
 	var/allow_restricted = TRUE
+	var/allow_restricted_loneop = TRUE
 	var/telecrystals
 	var/selected_cat
 	var/owner = null
@@ -44,7 +45,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	GLOB.uplinks += src
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, allow_restricted_loneop)
 
 	if(_owner)
 		owner = _owner
@@ -85,7 +86,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/proc/set_gamemode(_gamemode)
 	gamemode = _gamemode
-	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted)
+	uplink_items = get_uplink_items(gamemode, TRUE, allow_restricted, allow_restricted_loneop)
 
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
 	if(!active)
