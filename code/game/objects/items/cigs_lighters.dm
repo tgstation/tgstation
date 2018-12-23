@@ -739,19 +739,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(O.is_drainable())
-		if(reagents.total_volume < chem_volume)
-			if(O.reagents.total_volume > 0)
-				O.reagents.trans_to(src,25, transfered_by = user)
-				to_chat(user, "<span class='notice'>You add the contents of [O] to [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>[O] is empty!</span>")
-		else
-			to_chat(user, "<span class='warning'>[src] can't hold anymore reagents!</span>")
-
 	if(O.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!screw)
 			screw = 1
+			flags |= OPENCONTAINER
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
 			if(super)
 				add_overlay("vapeopen_med")
@@ -759,6 +750,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				add_overlay("vapeopen_low")
 		else
 			screw = 0
+			flags &= ~OPENCONTAINER
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
 			cut_overlays()
 
