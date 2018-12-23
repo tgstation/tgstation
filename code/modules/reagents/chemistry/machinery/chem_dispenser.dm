@@ -303,9 +303,7 @@
 		. = 1 //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
-		if(beaker)
-			replace_beaker(user, B)
-		beaker = B
+		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
 		updateUsrDialog()
 		update_icon()
@@ -364,13 +362,12 @@
 		update_icon()
 
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
-	var/obj/item/reagent_containers/newbeaker = new_beaker
 	if(beaker)
 		beaker.forceMove(drop_location())
 		if(user && Adjacent(user) && !issiliconoradminghost(user))
 			user.put_in_hands(beaker)
-	if(newbeaker)
-		beaker = newbeaker
+	if(new_beaker)
+		beaker = new_beaker
 	else
 		beaker = null
 	update_icon()
