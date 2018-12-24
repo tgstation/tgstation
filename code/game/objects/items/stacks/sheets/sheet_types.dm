@@ -277,7 +277,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cloth/durathread
 
 /obj/item/stack/sheet/cloth/durathread/Initialize(mapload, new_amount, merge = TRUE)
-	..()
+	. = ..()
 	recipes = null //ree override
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
