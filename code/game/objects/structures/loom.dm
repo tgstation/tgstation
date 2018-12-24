@@ -23,3 +23,5 @@
 			user.show_message("<span class='notice'>You need a valid fabric and at least [FABRIC_PER_SHEET] of said fabric before using this.</span>")
 	else
 		return ..()
+
+#undef FABRIC_PER_SHEET
