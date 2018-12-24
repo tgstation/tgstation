@@ -486,12 +486,12 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	if(show_next_to_key)
 		var/mob/showmob = GLOB.directory[show_next_to_key]
 		if(showmob)
-			to_chat(showmob, "<span class='admin'>SDQL query results: [query.get_query_text()]<br>\
-			SDQL query completed: [islist(query.obj_count_all)? length(query.obj_count_all) : query.obj_count_all] objects selected by path, and \
-			[query.where_switched? "[islist(query.obj_count_eligible)? length(query.obj_count_eligible) : query.obj_count_eligible] objects executed on after WHERE keyword selection." : ""]<br>\
-			SDQL query took [DisplayTimeText(query.end_time - query.start_time)] to complete.</span>")
-			if(length(query.select_text))
-				var/text = islist(query.select_text)? query.select_text.Join() : query.select_text
+			to_chat(showmob, "<span class='admin'>SDQL query results: [get_query_text()]<br>\
+			SDQL query completed: [islist(obj_count_all)? length(obj_count_all) : obj_count_all] objects selected by path, and \
+			[where_switched? "[islist(obj_count_eligible)? length(obj_count_eligible) : obj_count_eligible] objects executed on after WHERE keyword selection." : ""]<br>\
+			SDQL query took [DisplayTimeText(end_time - start_time)] to complete.</span>")
+			if(length(select_text))
+				var/text = islist(select_text)? select_text.Join() : select_text
 				var/static/result_offset = 0
 				showmob << browse(text, "window=SDQL-result-[result_offset++]")
 	show_next_to_key = null
