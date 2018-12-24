@@ -39,20 +39,16 @@
 			break
 	if(foundyou)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
-		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "notcreeping")//lets make sure they instantly become estatic
-		SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "notcreepingsevere")
-		total_time_creeping += 10
+		total_time_creeping += 20
 		time_spent_away = 0
 		if(attachedcreepobj)
-			attachedcreepobj.timer -= 10 //ticks every second, remove 10 deciseconds from the timer. sure, that makes sense.
+			attachedcreepobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
-		time_spent_away += 10
+		time_spent_away += 20
 		if(time_spent_away > 1800) //3 minutes
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "notcreeping")
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "notcreepingsevere", /datum/mood_event/notcreepingsevere, obsession.name)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreepingsevere, obsession.name)
 		else
-			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "creeping")
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "notcreeping", /datum/mood_event/notcreeping, obsession.name)
+			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreeping, obsession.name)
 
 /datum/brain_trauma/special/creep/on_lose()
 	..()

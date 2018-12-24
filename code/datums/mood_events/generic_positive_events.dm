@@ -60,7 +60,7 @@
 /datum/mood_event/creeping
 	description = "<span class='greentext'>I'm so close to my obsession and I never want this to end.</span>\n" //creeps get it when they are around their obsession
 	mood_change = 18
-	timeout = 100
+	timeout = 30
 	hidden = TRUE
 
 /datum/mood_event/creeping/add_effects(name)

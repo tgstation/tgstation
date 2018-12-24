@@ -39,7 +39,7 @@
 	kill.owner = owner
 	kill.target = obsessionmind
 
-	var/list/objectives_left = list("spendtime", "polaroid")
+	var/list/objectives_left = list("spendtime", "polaroid", "hug")
 	for(var/i in 1 to 2)//set to 3 when hugs gets in, after that sit
 		var/chosen_objective = pick(objectives_left)
 		objectives_left.Remove(chosen_objective)
@@ -54,6 +54,11 @@
 				polaroid.owner = owner
 				polaroid.target = obsessionmind
 				objectives += polaroid
+			if("hug")
+				var/datum/objective/hug/hug = new
+				hug.owner = owner
+				hug.target = obsessionmind
+				objectives += hug
 
 	objectives += kill//finally add the assassinate last, because you'd have to complete it last to greentext.
 	for(var/datum/objective/O in objectives)
@@ -108,46 +113,42 @@
 /datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks
 	name = "spendtime"
 	var/timer = 3000 //5 minutes
-	var/freeobj = FALSE //if it can't find the trauma to attach it to.
-
-/datum/objective/spendtime/New()
-	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
-	if(!creeper)
-		return
-	if(creeper.trauma)
-		creeper.trauma.attachedcreepobj = src
-	else
-		freeobj = TRUE
 
 /datum/objective/spendtime/update_explanation_text()
-	if(timer == 3000)//just so admins can mess with it
-		timer += pick(-1200, -600, 600, 1200)
-	if(target && target.current && !freeobj)
+	if(timer == 1800)//just so admins can mess with it
+		timer += pick(-600, 0)
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+	if(target && target.current && creeper)
+		creeper.trauma.attachedcreepobj = src
 		explanation_text = "Spend [DisplayTimeText(timer)] around [target.name] while they're alive."
 	else
 		explanation_text = "Free Objective"
 
 /datum/objective/spendtime/check_completion()
-	return timer <= 0 || freeobj
+	return timer <= 0 || explanation_text == "Free Objective"
 
-/*
+
 /datum/objective/hug
 	name = "hugs"
 	var/hugs_needed
-	var/hugs_counted = 0
 
 /datum/objective/hug/update_explanation_text()
 	..()
 	if(!hugs_needed)//just so admins can mess with it
 		hugs_needed = rand(4,6)
 	if(target && target.current)
+		var/datum/component/hugcounter/hugcounter = owner.current.AddComponent(/datum/component/hugcounter)
+		hugcounter.target = target
 		explanation_text = "Hug [target.name] [hugs_needed] times while they're alive."
 	else
 		explanation_text = "Free Objective"
 
 /datum/objective/hug/check_completion()
-	return hugs_counted >= hugs_needed
-*/
+	GET_COMPONENT(hugcounter, /datum/component/hugcounter)
+	if(!hugcounter || !hugs_needed)
+		return TRUE//free objective
+	return hugcounter.hugnumber >= hugs_needed
+
 /datum/objective/polaroid //take a picture of the target with you in it.
 	name = "polaroid"
 
