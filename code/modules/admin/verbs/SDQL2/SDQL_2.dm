@@ -422,6 +422,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	var/msg = "[key_name(user)] has (re)started query #[id]"
 	message_admins(msg)
 	log_admin(msg)
+	show_next_to_key = user
 	ARun()
 
 /datum/SDQL2_query/proc/admin_del(user = usr)
@@ -493,7 +494,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				var/text = islist(query.select_text)? query.select_text.Join() : query.select_text
 				var/static/result_offset = 0
 				showmob << browse(text, "window=SDQL-result-[result_offset++]")
-
+	show_next_to_key = null
 	if(qdel_on_finish)
 		qdel(src)
 
