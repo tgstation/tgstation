@@ -13,16 +13,19 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	icon_state = "radial_slice"
 	var/choice
 	var/next_page = FALSE
+	var/tooltips = FALSE
 
 /obj/screen/radial/slice/MouseEntered(location, control, params)
 	. = ..()
 	icon_state = "radial_slice_focus"
-	openToolTip(usr, src, params, title = name)
+	if(tooltips)
+		openToolTip(usr, src, params, title = name)
 
 /obj/screen/radial/slice/MouseExited(location, control, params)
 	. = ..()
 	icon_state = "radial_slice"
-	closeToolTip(usr)
+	if(tooltips)
+		closeToolTip(usr)
 
 /obj/screen/radial/slice/Click(location, control, params)
 	if(usr.client == parent.current_user)
@@ -107,7 +110,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			starting_angle = 180
 			ending_angle = 45
 
-/datum/radial_menu/proc/setup_menu()
+/datum/radial_menu/proc/setup_menu(use_tooltips)
 	if(ending_angle > starting_angle)
 		zone = ending_angle - starting_angle
 	else
@@ -118,7 +121,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(elements.len < max_elements)
 		var/elements_to_add = max_elements - elements.len
 		for(var/i in 1 to elements_to_add) //Create all elements
-			var/obj/screen/radial/new_element = new /obj/screen/radial/slice
+			var/obj/screen/radial/slice/new_element = new /obj/screen/radial/slice
+			new_element.tooltips = use_tooltips
 			new_element.parent = src
 			elements += new_element
 
@@ -217,7 +221,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/proc/get_next_id()
 	return "c_[choices.len]"
 
-/datum/radial_menu/proc/set_choices(list/new_choices)
+/datum/radial_menu/proc/set_choices(list/new_choices, use_tooltips)
 	if(choices.len)
 		Reset()
 	for(var/E in new_choices)
@@ -228,7 +232,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			var/I = extract_image(new_choices[E])
 			if(I)
 				choices_icons[id] = I
-	setup_menu()
+	setup_menu(use_tooltips)
 
 
 /datum/radial_menu/proc/extract_image(E)
@@ -280,7 +284,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE)
 	if(!user || !anchor || !length(choices))
 		return
 	if(!uniqueid)
@@ -297,7 +301,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		menu.custom_check_callback = custom_check
 	menu.anchor = anchor
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
-	menu.set_choices(choices)
+	menu.set_choices(choices, tooltips)
 	menu.show_to(user)
 	menu.wait(user, anchor, require_near)
 	var/answer = menu.selected_choice

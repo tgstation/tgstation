@@ -6,11 +6,16 @@
 	armor = list("melee" = 100, "bullet" = 80, "laser" = 80, "energy" = 100, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
 	density = FALSE
 	anchored = TRUE
-	layer = ABOVE_MOB_LAYER
+	layer = BELOW_OBJ_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/plasticflaps/opaque
 	opacity = TRUE
+
+/obj/structure/plasticflaps/Initialize()
+	. = ..()
+	alpha = 0
+	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/plasticflaps/examine(mob/user)
 	. = ..()

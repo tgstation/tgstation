@@ -80,6 +80,7 @@
 
 /obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
 	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
+	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
 		return FALSE
 	else
 		..()

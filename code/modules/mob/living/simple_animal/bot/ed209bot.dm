@@ -188,7 +188,7 @@ Auto Patrol[]"},
 	..()
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(!W.tool_behaviour == TOOL_SCREWDRIVER && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(W.tool_behaviour != TOOL_SCREWDRIVER && (!target)) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		if(W.force && W.damtype != STAMINA)//If force is non-zero and damage type isn't stamina.
 			retaliate(user)
 			if(lasercolor)//To make up for the fact that lasertag bots don't hunt

@@ -424,7 +424,10 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-	if(bomb_location && is_station_level(bomb_location.z))
+	if(istype(A, /area/fabric_of_reality))
+		var/area/fabric_of_reality/fabric = A
+		new /obj/singularity(fabric.origin, 2000) // Stage five singulo back on the station, as a gift
+	else if(bomb_location && is_station_level(bomb_location.z))
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
@@ -445,7 +448,13 @@
 
 /obj/machinery/nuclearbomb/proc/really_actually_explode(off_station)
 	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
-	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
+	var/area/A = get_area(src)
+	if(istype(A, /area/fabric_of_reality))
+		var/area/fabric_of_reality/fabric = A
+		var/turf/T = fabric.origin
+		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, T.z)
+	else
+		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
 	if(off_station < 2)
@@ -588,19 +597,24 @@ This is here to make the tiles around the station mininuke change when it's arme
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop))
 				loneop.weight += 1
+				message_admins("[src] being stationary in [ADMIN_VERBOSEJMP(newturf)] has increased the weight of the Lone Operative event to [loneop.weight]!")
+				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+
 	else
 		lastlocation = newturf
 		last_disk_move = world.time
 		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 		if(istype(loneop) && prob(loneop.weight))
 			loneop.weight = max(loneop.weight - 1, 0)
+			message_admins("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
+			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
 	if(!fake)
 		return
 
-	if(isobserver(user) || user.has_trait(TRAIT_DISK_VERIFIER) || (user.mind && user.mind.has_trait(TRAIT_DISK_VERIFIER)))
+	if(isobserver(user) || user.has_trait(TRAIT_DISK_VERIFIER))
 		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
