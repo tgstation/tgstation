@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "Reverse-Supplypods (the admin-launched ones) no longer stay behind after rising up, and also auto-delete from centcom."

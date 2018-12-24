@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - admin: "The use of the Give brain trauma and Cure all traumas options on
-View Variables is now logged, and messages admins."

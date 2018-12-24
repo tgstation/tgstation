@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "The fridge in Pubbystation's public monastery kitchen is no longer locked by default."
