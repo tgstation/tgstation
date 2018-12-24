@@ -224,6 +224,8 @@
 		var/datum/SDQL2_query/query = new /datum/SDQL2_query(query_tree)
 		if(QDELETED(query))
 			continue
+		if(usr)
+			query.show_next_to_key = usr.ckey
 		running += query
 		var/msg = "Starting query #[query.id] - [query.get_query_text()]."
 		if(usr)
@@ -251,19 +253,10 @@
 				running -= query
 			else
 				if(query.finished)
-					if(length(query.select_text))
-						var/text = islist(query.select_text)? query.select_text.Join() : query.select_text
-						var/static/result_offset = 0
-						usr << browse(text, "window=SDQL-result-[result_offset++]")
 					objs_all += islist(query.obj_count_all)? length(query.obj_count_all) : query.obj_count_all
 					objs_eligible += islist(query.obj_count_eligible)? length(query.obj_count_eligible) : query.obj_count_eligible
 					selectors_used |= query.where_switched
 					combined_refs |= query.select_refs
-					if(usr)
-						to_chat(usr, "<span class='admin'>SDQL query results: [query.get_query_text()]<br>\
-						SDQL query completed: [islist(query.obj_count_all)? length(query.obj_count_all) : query.obj_count_all] objects selected by path, and \
-						[query.where_switched? "[islist(query.obj_count_eligible)? length(query.obj_count_eligible) : query.obj_count_eligible] objects executed on after WHERE keyword selection." : ""]<br>\
-						SDQL query took [DisplayTimeText(query.end_time - query.start_time)] to complete.</span>")
 					running -= query
 					if(!CHECK_BITFIELD(query.options, SDQL2_OPTION_DO_NOT_AUTOGC))
 						QDEL_IN(query, 50)
@@ -298,6 +291,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	var/start_time
 	var/end_time
 	var/where_switched = FALSE
+	var/show_next_to_key
 		//Select query only
 	var/list/select_refs
 	var/list/select_text
@@ -466,6 +460,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 			var/value = query_tree["options"][name]
 			set_option(name, value)
 	select_refs = list()
+	select_text = null
 	obj_count_all = 0
 	obj_count_eligible = 0
 	obj_count_finished = 0
@@ -487,6 +482,18 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	state = SDQL2_STATE_IDLE
 	finished = TRUE
 	. = TRUE
+	if(show_next_to_key)
+		var/mob/showmob = GLOB.directory[show_next_to_key]
+		if(showmob)
+			to_chat(showmob, "<span class='admin'>SDQL query results: [query.get_query_text()]<br>\
+			SDQL query completed: [islist(query.obj_count_all)? length(query.obj_count_all) : query.obj_count_all] objects selected by path, and \
+			[query.where_switched? "[islist(query.obj_count_eligible)? length(query.obj_count_eligible) : query.obj_count_eligible] objects executed on after WHERE keyword selection." : ""]<br>\
+			SDQL query took [DisplayTimeText(query.end_time - query.start_time)] to complete.</span>")
+			if(length(query.select_text))
+				var/text = islist(query.select_text)? query.select_text.Join() : query.select_text
+				var/static/result_offset = 0
+				showmob << browse(text, "window=SDQL-result-[result_offset++]")
+
 	if(qdel_on_finish)
 		qdel(src)
 
