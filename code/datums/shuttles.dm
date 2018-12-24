@@ -12,6 +12,8 @@
 	var/credit_cost = INFINITY
 	var/can_be_bought = TRUE
 
+	var/list/movement_force // If set, overrides default movement_force on shuttle
+
 	var/port_x_offset
 	var/port_y_offset
 
@@ -95,8 +97,9 @@
 					port.dheight = width - port_x_offset
 
 //Whatever special stuff you want
-/datum/map_template/shuttle/proc/on_bought()
-	return
+/datum/map_template/shuttle/proc/post_load(obj/docking_port/mobile/M)
+	if(movement_force)
+		M.movement_force = movement_force.Copy()
 
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
@@ -175,7 +178,8 @@
 	// first 10 minutes only
 	return world.time - SSticker.round_start_time < 6000
 
-/datum/map_template/shuttle/emergency/airless/on_bought()
+/datum/map_template/shuttle/emergency/airless/post_load()
+	. = ..()
 	//enable buying engines from cargo
 	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
 	P.special_enabled = TRUE
@@ -208,6 +212,7 @@
 	description = "A hollowed out asteroid with engines strapped to it. Due to its size and difficulty in steering it, this shuttle may damage the docking area."
 	admin_notes = "This shuttle will likely crush escape, killing anyone there."
 	credit_cost = -5000
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/luxury
 	suffix = "luxury"
@@ -292,6 +297,7 @@
 	credit_cost = -1000
 	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean too heavily on the exterior windows, they are fragile."
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -327,6 +333,7 @@
 	It does, however, still dust anything on contact, emits high levels of radiation, and induce hallucinations in anyone looking at it without protective goggles. \
 	Emitters spawn powered on, expect admin notices, they are harmless."
 	credit_cost = 100000
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
@@ -335,6 +342,7 @@
 	Aw, come space on. Why not? No, I can't. Anyway, how is your space roleplay life?"
 	admin_notes = "Tiny, with a single airlock and wooden walls. What could go wrong?"
 	credit_cost = -5000
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
