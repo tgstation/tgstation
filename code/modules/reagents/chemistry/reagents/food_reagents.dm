@@ -633,7 +633,7 @@
 	..()
 
 /datum/reagents/consumable/bakingsoda
-  name = "Baking Soda"
+	name = "Baking Soda"
 	id = "bakingsoda"
 	description = "A powder used in baking that reacts with acids."
 	reagent_state = SOLID
