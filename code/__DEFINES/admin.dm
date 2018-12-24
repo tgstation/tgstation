@@ -20,7 +20,7 @@
 #define BANTYPE_ANY_JOB		9 //used to remove jobbans
 
 //Admin Permissions
-#define R_BUILDMODE		(1<<0)
+#define R_BUILD		(1<<0)
 #define R_ADMIN			(1<<1)
 #define R_BAN			(1<<2)
 #define R_FUN			(1<<3)
@@ -31,12 +31,12 @@
 #define R_STEALTH		(1<<8)
 #define R_POLL			(1<<9)
 #define R_VAREDIT		(1<<10)
-#define R_SOUNDS		(1<<11)
+#define R_SOUND		(1<<11)
 #define R_SPAWN			(1<<12)
-#define R_AUTOLOGIN		(1<<13)
+#define R_AUTOADMIN		(1<<13)
 #define R_DBRANKS		(1<<14)
 
-#define R_DEFAULT R_AUTOLOGIN
+#define R_DEFAULT R_AUTOADMIN
 
 #define R_EVERYTHING (1<<15)-1 //the sum of all other rank permissions, used for +EVERYTHING
 
