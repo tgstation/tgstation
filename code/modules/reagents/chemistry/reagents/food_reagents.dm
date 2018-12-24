@@ -632,6 +632,13 @@
 		M.adjust_nutrition(-3*nutriment_factor)
 	..()
 
+/datum/reagents/consumable/bakingsoda
+  name = "Baking Soda"
+	id = "bakingsoda"
+	description = "A powder used in baking that reacts with acids."
+	reagent_state = SOLID
+	color = "#ffffff" // rgb: 255, 255, 255
+
 ////Lavaland Flora Reagents////
 
 

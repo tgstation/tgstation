@@ -132,6 +132,12 @@
 	results = list("mulligan" = 1)
 	required_reagents = list("slime_toxin" = 1, "mutagen" = 1)
 
+datum/chemical_reaction/bakingsoda
+  name = "Baking Soda"
+	id = "bakingsoda"
+	results = list("bakingsoda" = 3)
+	required_reagents = list("sodium" = 1, "carbon" = 2)
+
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
 
