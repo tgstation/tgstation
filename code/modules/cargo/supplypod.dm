@@ -187,7 +187,9 @@
 	risingPod.pixel_z = 0 //The initial value of risingPod's pixel_z is 200 because it normally comes down from a high spot
 	holder.forceMove(bay) //Move the pod back to centcom, where it belongs
 	animate(risingPod, pixel_z = 200, time = 10, easing = LINEAR_EASING) //Animate our rising pod
+	QDEL_IN(risingPod, 10)
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
+	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 	open(holder, forced = TRUE)
 	return
 
