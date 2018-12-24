@@ -20832,6 +20832,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
+"aXu" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/autolathe,
+/turf/open/floor/plasteel/dark,
+/area/quartermaster/office)
 "aXv" = (
 /obj/machinery/newscaster{
 	pixel_x = 32
@@ -22385,7 +22390,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/machinery/autolathe,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "baz" = (
@@ -98497,7 +98501,7 @@ aTb
 aOT
 aVp
 aWu
-aPW
+aXu
 aYq
 aPY
 bav
