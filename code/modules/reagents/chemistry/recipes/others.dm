@@ -136,7 +136,7 @@ datum/chemical_reaction/bakingsoda
 	name = "Baking Soda"
 	id = "bakingsoda"
 	results = list("bakingsoda" = 3)
-	required_reagents = list("sodium" = 1, "carbon" = 2)
+	required_reagents = list("sodium" = 1, "hydrogen" = 1, "carbon" = 1, "oxygen" = 3)
 
 
 ////////////////////////////////// VIROLOGY //////////////////////////////////////////
