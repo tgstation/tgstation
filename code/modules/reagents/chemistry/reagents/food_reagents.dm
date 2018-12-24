@@ -632,7 +632,7 @@
 		M.adjust_nutrition(-3*nutriment_factor)
 	..()
 
-/datum/reagents/consumable/bakingsoda
+/datum/reagent/consumable/bakingsoda
 	name = "Baking Soda"
 	id = "bakingsoda"
 	description = "A powder used in baking that reacts with acids."
