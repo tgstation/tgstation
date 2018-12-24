@@ -97,7 +97,7 @@
 		node["options"] = options
 
 //option_assignment:	query_option '=' define
-/datum/SDQL_parser/proc/option_assignment(var/i, var/list/node, var/list/assignment_list = list())
+/datum/SDQL_parser/proc/option_assignment(i, list/node, list/assignment_list = list())
 	var/type = tokenl(i)
 	if(!(type in SDQL2_VALID_OPTION_TYPES))
 		parse_error("Invalid option type: [type]")
@@ -110,11 +110,11 @@
 	return (i + 3)
 
 //option_assignments: option_assignment, [',' option_assignments]
-/datum/SDQL_parser/proc/option_assignments(i, list/node)
-	i = option_assignment(i, node)
+/datum/SDQL_parser/proc/option_assignments(i, list/node, list/store)
+	i = option_assignment(i, node, store)
 
 	if(token(i) == ",")
-		i = option_assignments(i + 1, node)
+		i = option_assignments(i + 1, node, store)
 
 	return i
 

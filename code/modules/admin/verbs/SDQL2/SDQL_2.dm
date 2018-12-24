@@ -396,7 +396,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	stat("[id]		", delete_click.update("DELETE QUERY | STATE : [text_state()] | ALL/ELIG/FIN \
 	[islist(obj_count_all)? length(obj_count_all) : (isnull(obj_count_all)? "0" : obj_count_all)]/\
 	[islist(obj_count_eligible)? length(obj_count_eligible) : (isnull(obj_count_eligible)? "0" : obj_count_eligible)]/\
-	[islist(obj_count_finished)? length(obj_count_finished) : (isnull(obj_count_finished)? "0" : obj_count_finished)]"))
+	[islist(obj_count_finished)? length(obj_count_finished) : (isnull(obj_count_finished)? "0" : obj_count_finished)] - [get_query_text()]"))
 	stat("			", action_click.update("[SDQL2_IS_RUNNING? "HALT" : "RUN"]"))
 
 /datum/SDQL2_query/proc/delete_click()
@@ -416,13 +416,13 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	log_admin(msg)
 	state = SDQL2_STATE_HALTING
 
-/datum/SDQL2_query/proc/admin_run(user = usr)
+/datum/SDQL2_query/proc/admin_run(mob/user = usr)
 	if(SDQL2_IS_RUNNING)
 		return
 	var/msg = "[key_name(user)] has (re)started query #[id]"
 	message_admins(msg)
 	log_admin(msg)
-	show_next_to_key = user
+	show_next_to_key = user.ckey
 	ARun()
 
 /datum/SDQL2_query/proc/admin_del(user = usr)
@@ -484,8 +484,9 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 	finished = TRUE
 	. = TRUE
 	if(show_next_to_key)
-		var/mob/showmob = GLOB.directory[show_next_to_key]
-		if(showmob)
+		var/client/C = GLOB.directory[show_next_to_key]
+		if(C)
+			var/mob/showmob = C.mob
 			to_chat(showmob, "<span class='admin'>SDQL query results: [get_query_text()]<br>\
 			SDQL query completed: [islist(obj_count_all)? length(obj_count_all) : obj_count_all] objects selected by path, and \
 			[where_switched? "[islist(obj_count_eligible)? length(obj_count_eligible) : obj_count_eligible] objects executed on after WHERE keyword selection." : ""]<br>\
@@ -664,7 +665,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				select_refs[REF(i)] = TRUE
 				SDQL2_TICK_CHECK
 				SDQL2_HALT_CHECK
-			select_text = text_list.Join()
+			select_text = text_list
 
 		if("update")
 			if("set" in query_tree)
@@ -682,7 +683,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 
 /datum/SDQL2_query/proc/SDQL_print(object, list/text_list, print_nulls = TRUE)
 	if(is_proper_datum(object))
-		text_list += "<A HREF='?_src_=vars;[HrefToken()];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
+		text_list += "<A HREF='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(object)]'>[REF(object)]</A> : [object]"
 		if(istype(object, /atom))
 			var/atom/A = object
 			var/turf/T = A.loc
