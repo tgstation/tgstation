@@ -1,0 +1,5 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "fires will no longer burn quite so hot"
+  - bugfix: "the first spark of a hotspot is no longer always the same temperature"
