@@ -135,6 +135,23 @@
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/firstaid/advanced
+	name = "advanced first aid kit"
+	desc = "An advanced kit to help deal with advanced wounds."
+	icon_state = "radfirstaid"
+	item_state = "firstaid-rad"
+	custom_premium_price = 600
+
+/obj/item/storage/firstaid/advanced/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/storage/pill_bottle/penacid = 1)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
@@ -278,3 +295,11 @@
 /obj/item/storage/pill_bottle/happiness/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/happiness(src)
+
+/obj/item/storage/pill_bottle/penacid
+	name = "bottle of pentetic acid"
+	desc = "Contains pills to expunge radioation and toxins"
+
+/obj/item/storage/pill_bottle/penacid/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/penacid(src)

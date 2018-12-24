@@ -10,7 +10,6 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	container_type = INJECTABLE | DRAWABLE
 	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
@@ -39,7 +38,7 @@
 
 /obj/item/slime_extract/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, INJECTABLE | DRAWABLE)
 
 /obj/item/slime_extract/on_grind()
 	if(Uses)
@@ -726,7 +725,7 @@
 	if(SM.sentience_type != animal_type)
 		to_chat(user, "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" )
 		return ..()
-	var/jb = jobban_isbanned(user, ROLE_MIND_TRANSFER)
+	var/jb = is_banned_from(user.ckey, ROLE_MIND_TRANSFER)
 	if(QDELETED(src) || QDELETED(M) || QDELETED(user))
 		return
 

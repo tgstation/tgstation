@@ -558,7 +558,7 @@ Difficulty: Very Hard
 					H.regenerate_limbs()
 					H.regenerate_organs()
 					H.revive(1,0)
-					H.add_trait(TRAIT_NOCLONE, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
+					H.add_trait(TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans

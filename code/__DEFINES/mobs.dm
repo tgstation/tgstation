@@ -117,6 +117,7 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
+#define BIOWARE_LIGAMENTS "ligaments"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -279,3 +280,7 @@
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define GRAB_PIXEL_SHIFT_PASSIVE 6
+#define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
+#define GRAB_PIXEL_SHIFT_NECK 16

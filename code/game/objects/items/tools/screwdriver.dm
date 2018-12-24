@@ -120,7 +120,7 @@
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
 	hitsound = 'sound/items/drill_hit.ogg'
 	usesound = 'sound/items/drill_use.ogg'
-	toolspeed = 0.25
+	toolspeed = 0.7
 	random_color = FALSE
 
 /obj/item/screwdriver/power/suicide_act(mob/user)

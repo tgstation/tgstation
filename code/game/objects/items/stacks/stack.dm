@@ -396,7 +396,7 @@
 	//TODO bloody overlay
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
-	if(M && M.dirty < 100)
+	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
 
 /*

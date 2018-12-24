@@ -59,7 +59,6 @@
 	name = "energy snare"
 	icon_state = "e_snare"
 	nodamage = 1
-	paralyze = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
 

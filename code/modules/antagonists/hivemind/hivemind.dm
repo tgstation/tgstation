@@ -42,9 +42,6 @@
 			owner.AddSpell(the_spell)
 			if(hive_size > 0)
 				to_chat(owner, "<span class='assimilator'>We have unlocked [the_spell.name].</span><span class='bold'> [the_spell.desc]</span>")
-		else if(hive_size < level && (locate(power) in owner.spell_list))
-			owner.RemoveSpell(power)
-
 
 /datum/antagonist/hivemind/proc/get_real_name() //Gets the real name of the host, even if they're temporarily in another one
 	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in owner.spell_list
