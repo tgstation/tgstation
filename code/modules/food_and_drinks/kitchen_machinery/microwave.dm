@@ -238,7 +238,7 @@
 		return
 
 	if(wire_disabled)
-		audible_message("\The [src] buzzes.")
+		audible_message("[src] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
