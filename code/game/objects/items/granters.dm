@@ -341,7 +341,7 @@
 	if(!martial)
 		return
 	var/datum/martial_art/MA = new martial
-	if(user.mind.has_martialart(MA.name))
+	if(user.mind.has_martialart(MA.id))
 		to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
 		return
 	if(used == TRUE && oneuse == TRUE)
