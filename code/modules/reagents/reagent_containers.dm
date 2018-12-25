@@ -124,8 +124,34 @@
 
 /obj/item/reagent_containers/proc/Splash(atom/A)
 	if(reagents && A)
-		reagents.reaction(A, TOUCH)
+		if(!(reagents.reagents_holder_flags & REAGENT_NOREACT))
+			reagents.reaction(A, TOUCH)
+		else
+			delayed_splash(src,A,TOUCH)
 		playsound(get_turf(A), 'sound/effects/splat.ogg', 50, 0)
+
+/proc/delayed_splash(datum/reagents/source,atom/target,reaction_type = TOUCH)
+	if(!source || !target)
+		return
+	var/datum/reagents/R = new()
+	R.set_reacting(FALSE)
+	if(istype(source,/atom))
+		var/atom/A = source
+		source = A.reagents
+	if(istype(source))
+		source.trans_to(R,source.total_volume,no_react = 1)
+		var/turf/T = get_turf(target)
+		spawn(0)
+			sleep(10)
+			if(isturf(T))
+				T.visible_message("Reagents begin to pour out on to the [T].")
+				sleep(20)
+				if(isturf(T))
+					R.set_reacting(TRUE)
+					if(target && !isturf(target) && target.loc == T)
+						R.reaction(target, reaction_type)
+					else
+						R.reaction(T, reaction_type)
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)

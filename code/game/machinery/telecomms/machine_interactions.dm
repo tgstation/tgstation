@@ -34,9 +34,10 @@
 /obj/machinery/telecomms/ui_interact(mob/user)
 	. = ..()
 	// You need a multitool to use this, or be silicon
-	if(!issilicon(user))
+	var/isadmin = (user.has_unlimited_silicon_privilege && IsAdminGhost(user))
+	if(!issilicon(user) && !isadmin)
 		// istype returns false if the value is null
-		if(!istype(user.get_active_held_item(), /obj/item/device/multitool))
+		if(isliving(user) && !istype(user.get_active_held_item(), /obj/item/device/multitool))
 			return
 	var/obj/item/device/multitool/P = get_multitool(user)
 	var/dat
@@ -88,6 +89,8 @@
 				dat += "<br><br>MULTITOOL BUFFER: [T] ([T.id]) <a href='?src=[REF(src)];link=1'>\[Link\]</a> <a href='?src=[REF(src)];flush=1'>\[Flush\]"
 			else
 				dat += "<br><br>MULTITOOL BUFFER: <a href='?src=[REF(src)];buffer=1'>\[Add Machine\]</a>"
+		else if(isadmin)
+			dat += "<br><br>Admin Add Machine: <a href='?src=[REF(src)];link=1;adminaddmachine=1'>\[Add Machine\]</a>"
 
 	dat += "</font>"
 	temp = ""
@@ -166,8 +169,9 @@
 	if(..())
 		return
 
-	if(!issilicon(usr))
-		if(!istype(usr.get_active_held_item(), /obj/item/device/multitool))
+	var/isadmin = (usr.has_unlimited_silicon_privilege && IsAdminGhost(usr))
+	if(!issilicon(usr) && !isadmin)
+		if(isliving(usr) && !istype(usr.get_active_held_item(), /obj/item/device/multitool))
 			return
 
 	var/obj/item/device/multitool/P = get_multitool(usr)
@@ -241,20 +245,42 @@
 				temp = "<font color = #666633>-% Unable to locate machine to unlink from, try again. %-</font color>"
 
 	if(href_list["link"])
-
+		var/obj/machinery/telecomms/T
 		if(P)
-			var/obj/machinery/telecomms/T = P.buffer
-			if(istype(T) && T != src)
-				if(!(src in T.links))
-					T.links += src
+			T = P.buffer
+		else if(href_list["adminaddmachine"] && isadmin)
+			T = locate(href_list["adminaddmachine"])
+			if(!istype(T, /obj/machinery/telecomms))
+				var/newdat = "<B>Choose a machine to link.</B><BR>"
+				for(var/obj/machinery/telecomms/machine in world)
+					if(!machine.loc || machine == src || (machine in links))
+						continue
+					newdat += "<a href='?src=[REF(src)];link=1;adminaddmachine=[REF(machine)]'>[machine.name]</a>"
+					var/list/theinfo = list()
+					if(machine.id)
+						theinfo += "id:\"[machine.id]\""
+					if(machine.network)
+						theinfo += "network:\"[machine.network]\""
+					theinfo += "Area:\"[get_area(machine)]\""
+					if(theinfo.len)
+						newdat += " - "
+						for(var/text in theinfo)
+							newdat += "[text]"
+							if(text != theinfo[theinfo.len])
+								newdat += " "
+					newdat += "<br>"
+					usr << browse(newdat, "window=tcommachineadmin;size=600x500")
+		if(istype(T) && T != src)
+			if(!(src in T.links))
+				T.links += src
 
-				if(!(T in links))
-					links += T
+			if(!(T in links))
+				links += T
 
-				temp = "<font color = #666633>-% Successfully linked with [REF(T)] [T.name] %-</font color>"
+			temp = "<font color = #666633>-% Successfully linked with [REF(T)] [T.name] %-</font color>"
 
-			else
-				temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
+		else
+			temp = "<font color = #666633>-% Unable to acquire buffer %-</font color>"
 
 	if(href_list["buffer"])
 
@@ -266,6 +292,7 @@
 
 		temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
 		P.buffer = null
+
 
 	Options_Topic(href, href_list)
 

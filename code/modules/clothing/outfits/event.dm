@@ -23,6 +23,19 @@
 	H.facial_hair_style = "Full Beard"
 	H.hair_color = "FFF"
 	H.facial_hair_color = "FFF"
+	//Locking santas dna and making him always male. -falaskian
+	H.gender = MALE
+	H.dna.update_dna_identity()
+	H.updateappearance()
+
+	//giveing santa all access as I believe was intended from previous build. -falaskian
+	if(istype(H.wear_id,/obj/item/card/id))
+		var/obj/item/card/id/id = H.wear_id
+		var/datum/job/captain/J = new/datum/job/captain
+		id.access = J.get_access()
+		id.registered_name = H.real_name
+		id.assignment = "Santa Claus"
+		id.name = "[id.registered_name]'s ID Card ([id.assignment])"
 
 	var/obj/item/storage/backpack/bag = H.back
 	var/obj/item/a_gift/gift = new(H)

@@ -74,6 +74,7 @@
 	facial_hair_color = "000"
 	hair_style = "Long Fringe"
 	hair_color = "000"
+	gender = MALE
 	if (istype(D))
 		D.update_dna_identity()
 	updateappearance()

@@ -27,13 +27,22 @@ GLOBAL_LIST_EMPTY(discord_channels)
 	GLOB.discord_channels["#admin_discussion"] = "325394561323237376"
 	//GLOB.discord_channels["#fullmins_only"] = "344499705499090945"
 	//GLOB.discord_channels["#founderchat"] = "344499881601400832"
+	GLOB.discord_channels["#new_round_notifications"] = "526419363918512149"
+	GLOB.discord_channels["#killingfuckswithbot"] = "525350221337591808"
 
 /proc/send_to_discord_channel(channel,message)
-	if(!CONFIG_GET(flag/use_discord_bot))
+	if(!CONFIG_GET(flag/use_discord_bot)||!channel||!message||!istext(message)||!GLOB)
 		return 0
-	if(!channel||!message||!istext(message))
-		return 0
-	if(!GLOB || !(channel in GLOB.discord_channels))
+	var/channelid
+	if(copytext(channel,1,2) == "#")
+		if(GLOB.discord_channels[channel])
+			channelid = GLOB.discord_channels[channel]
+	else
+		for(var/t in GLOB.discord_channels)
+			if(GLOB.discord_channels[t] == channel)
+				channelid = channel
+				break
+	if(!channelid)
 		return 0
 	message = sanitize_simple(message,repl_chars = list("\\"="\\u005c", ","="\\u002c", "\"" = "\\u0022"))
 	var/thedate = "[time2text(world.realtime,"YYYY_MM_DD_hh_mm_ss")]"
@@ -52,7 +61,7 @@ GLOBAL_LIST_EMPTY(discord_channels)
 	filename = "[DISCORDBOTFILE_MESSAGE]/[filename].txt"
 	var/thefile = file(filename)
 	if(thefile)
-		thefile << "{\"msg\":\"[message]\", \"chid\":\"[GLOB.discord_channels[channel]]\"}"
+		thefile << "{\"msg\":\"[message]\", \"chid\":\"[channelid]\"}"
 		return 1
 	return 0
 
@@ -70,5 +79,5 @@ GLOBAL_LIST_EMPTY(discord_channels)
 	if(themessage && thechannel)
 		send_to_discord_channel(thechannel,themessage)
 
-/proc/send_admin_notice_to_discord(message,title="AdminHelp",channel="#admin_help",zeroadmins = 1)
-	send_to_discord_channel("#admin_help","_**[title]**_ [message ? "[message] " : ""]***(Round ID: [GLOB.round_id][zeroadmins ? ", 0 admins online" : ""])***")
+/proc/send_admin_notice_to_discord(Message, Title = "AdminHelp", Channel = "#admin_help", zeroadmins = 1)
+	send_to_discord_channel(Channel,"_**[Title]**_ [Message ? "[Message] " : ""]***(Round ID: [GLOB.round_id][zeroadmins ? ", 0 admins online" : ""])***")

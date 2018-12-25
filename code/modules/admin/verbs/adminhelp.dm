@@ -202,7 +202,13 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			//to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>")
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent to the ToolBox Server's Discord.</span>")
 			heard_by_no_admins = TRUE
-			send_admin_notice_to_discord("from **[C.key]**: **\"[msg]\"**.")
+			var/list/adm = get_admin_counts()
+			if(istype(adm) && adm.len)
+				spawn(100)
+					adm = get_admin_counts()
+					var/list/activemins = adm["present"]
+					if(activemins.len <= 0)
+						send_admin_notice_to_discord("from **[C.key]**: **\"[msg]\"**.")
 	GLOB.ahelp_tickets.active_tickets += src
 
 /datum/admin_help/Destroy()

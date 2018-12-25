@@ -125,6 +125,6 @@ SUBSYSTEM_DEF(discord_bot)
 		playercount++
 	for(var/c in GLOB.discord_channels)
 		if(channel == GLOB.discord_channels[c])
-			send_to_discord_channel(c,"@[discorduser] Toolbox Station Server currently has **[playercount]** player[playercount == 1 ? "" : "s"] online. [GLOB && GLOB.round_id ? " ***(Round ID: [GLOB.round_id])***" : ""]")
+			send_to_discord_channel(c,"**Toolbox Station Server** currently has **[playercount]** player[playercount == 1 ? "" : "s"] online. [GLOB && GLOB.round_id ? " ***(Round ID: [GLOB.round_id])***" : ""]")
 			break
 

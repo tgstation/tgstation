@@ -67,6 +67,8 @@ SUBSYSTEM_DEF(ticker)
 	var/end_state = "undefined"
 	var/last_hub_update = 0
 
+	var/informed_discord_of_new_round = 0
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 	/*
@@ -149,6 +151,9 @@ SUBSYSTEM_DEF(ticker)
 			if(CONFIG_GET(flag/irc_announce_new_game))
 				SERVER_TOOLS_CHAT_BROADCAST("New round starting on [SSmapping.config.map_name]!")
 			current_state = GAME_STATE_PREGAME
+			if(!informed_discord_of_new_round)
+				send_admin_notice_to_discord(Message = null,Title="New Round Starting!",Channel="#new_round_notifications",zeroadmins = 0)
+				informed_discord_of_new_round = 1
 			world.update_status()
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
