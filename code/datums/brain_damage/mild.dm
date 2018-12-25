@@ -84,7 +84,7 @@
 /datum/brain_trauma/mild/concussion
 	name = "Concussion"
 	desc = "Patient's brain is concussed."
-	scan_desc = "a concussion"
+	scan_desc = "concussion"
 	gain_text = "<span class='warning'>Your head hurts!</span>"
 	lose_text = "<span class='notice'>The pressure inside your head starts fading.</span>"
 
@@ -214,7 +214,7 @@
 					owner.log_message("threw [I] due to a Muscle Spasm", LOG_ATTACK)
 					owner.throw_item(pick(targets))
 	..()
-	
+
 /datum/brain_trauma/mild/nervous_cough
 	name = "Nervous Cough"
 	desc = "Patient feels a constant need to cough."
