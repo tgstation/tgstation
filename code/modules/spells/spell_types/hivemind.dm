@@ -64,13 +64,16 @@
 				to_chat(user, "<span class='notice'>We begin linking our mind with [target.name]!</span>")
 			if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
 				if(do_after(user,5*(1.5**get_dist(user, target)),0,user) && target in view(range))
-					to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
-					success = TRUE
-					hive.add_to_hive(target)
-					if(ignore_mindshield)
-						SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
-						for(var/obj/item/implant/mindshield/M in target.implants)
-							qdel(M)
+					if((!target.has_trait(TRAIT_MINDSHIELD) || ignore_mindshield) && target in view(range))
+						to_chat(user, "<span class='notice'>[target.name] was added to the Hive!</span>")
+						success = TRUE
+						hive.add_to_hive(target)
+						if(ignore_mindshield)
+							SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
+							for(var/obj/item/implant/mindshield/M in target.implants)
+								qdel(M)
+					else
+						to_chat(user, "<span class='notice'>We fail to connect to [target.name].</span>")
 				else
 					to_chat(user, "<span class='notice'>We fail to connect to [target.name].</span>")
 			else
