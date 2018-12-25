@@ -353,7 +353,7 @@
 		if(M.back && wash_obj(M.back))
 			M.update_inv_back(0)
 
-		var/list/obscured = M.check_obscured_slots()
+		var/list/obscured = M.check_obscured_slots(TRUE) //can't wash a gas mask through a visor
 
 		if(M.head && wash_obj(M.head))
 			M.update_inv_head()
