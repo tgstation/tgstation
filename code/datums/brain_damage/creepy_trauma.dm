@@ -30,6 +30,8 @@
 
 
 /datum/brain_trauma/special/creep/on_life()
+	if(!obsession)//gibbing, etc
+		return
 	if(obsession.stat == DEAD) //killing them "cures" you! kinda! ish!
 		return
 	var/foundyou = FALSE

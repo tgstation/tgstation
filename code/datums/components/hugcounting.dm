@@ -6,9 +6,9 @@
 /datum/component/hugcounter/Initialize()
     if(!iscarbon(parent))
         return COMPONENT_INCOMPATIBLE
-    RegisterSignal(parent, COMSIG_MOB_HUG, .proc/hugs)
+    RegisterSignal(parent, COMSIG_MOB_HUG, .proc/hugged)
 
-/datum/component/hugcounter/proc/hugs(var/mob/hugvictim)
+/datum/component/hugcounter/proc/hugged(var/mob/hugvictim)
 	if(target)
 		if(target == hugvictim)
 			hugnumber++

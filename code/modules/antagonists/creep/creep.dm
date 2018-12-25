@@ -33,14 +33,29 @@
 		qdel(trauma)
 	. = ..()
 
-/datum/antagonist/creep/proc/forge_objectives(var/datum/mind/obsessionmind)
+/datum/antagonist/creep/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_creep_icons_added(M)
 
+/datum/antagonist/creep/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_creep_icons_removed(M)
+
+/datum/antagonist/creep/proc/forge_objectives(var/datum/mind/obsessionmind)
+	var/list/objectives_left = list("spendtime", "polaroid", "hug")
 	var/datum/objective/assassinate/creep/kill = new
 	kill.owner = owner
 	kill.target = obsessionmind
+	var/datum/quirk/family_heirloom/family_heirloom
 
-	var/list/objectives_left = list("spendtime", "polaroid", "hug")
-	for(var/i in 1 to 2)//set to 3 when hugs gets in, after that sit
+	for(var/datum/quirk/quirky in obsessionmind.current.roundstart_quirks)
+		if(istype(quirky, /datum/quirk/family_heirloom))
+			family_heirloom = quirky
+			break
+	if(family_heirloom)//oh, they have an heirloom? Well you know we have to steal that.
+		objectives_left += "heirloom"
+
+	for(var/i in 1 to 3)
 		var/chosen_objective = pick(objectives_left)
 		objectives_left.Remove(chosen_objective)
 		switch(chosen_objective)
@@ -59,6 +74,12 @@
 				hug.owner = owner
 				hug.target = obsessionmind
 				objectives += hug
+			if("heirloom")
+				var/datum/objective/steal/heirloom_thief/heirloom_thief = new
+				heirloom_thief.owner = owner
+				heirloom_thief.target = obsessionmind//while you usually wouldn't need this for stealing, we need the name of the obsession
+				heirloom_thief.steal_target = family_heirloom.heirloom
+				objectives += heirloom_thief
 
 	objectives += kill//finally add the assassinate last, because you'd have to complete it last to greentext.
 	for(var/datum/objective/O in objectives)
@@ -88,7 +109,7 @@
 		else
 			report += "<span class='redtext'>The [name] did not go near their obsession the entire round! That's extremely impressive, but you are a shit [name]!</span>"
 	else
-		report += "<span class='greentext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
+		report += "<span class='redtext'>The [name] had no trauma attached to their antagonist ways! Either it bugged out or an admin incorrectly gave this good samaritan antag and it broke! You might as well show yourself!!</span>"
 
 	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
@@ -128,26 +149,26 @@
 	return timer <= 0 || explanation_text == "Free Objective"
 
 
-/datum/objective/hug
+/datum/objective/hug//this objective isn't perfect. hugging the correct amount of times, then switching bodies, might fail the objective anyway. maybe i'll come back and fix this sometime.
 	name = "hugs"
 	var/hugs_needed
+	var/datum/component/hugcounter/component
 
 /datum/objective/hug/update_explanation_text()
 	..()
 	if(!hugs_needed)//just so admins can mess with it
 		hugs_needed = rand(4,6)
 	if(target && target.current)
-		var/datum/component/hugcounter/hugcounter = owner.current.AddComponent(/datum/component/hugcounter)
-		hugcounter.target = target
+		component = owner.current.AddComponent(/datum/component/hugcounter)
+		component.target = target
 		explanation_text = "Hug [target.name] [hugs_needed] times while they're alive."
 	else
 		explanation_text = "Free Objective"
 
 /datum/objective/hug/check_completion()
-	GET_COMPONENT(hugcounter, /datum/component/hugcounter)
-	if(!hugcounter || !hugs_needed)
+	if(!component || !hugs_needed)
 		return TRUE//free objective
-	return hugcounter.hugnumber >= hugs_needed
+	return component.hugnumber >= hugs_needed
 
 /datum/objective/polaroid //take a picture of the target with you in it.
 	name = "polaroid"
@@ -173,4 +194,22 @@
 	return FALSE
 
 
+/datum/objective/steal/heirloom_thief //exactly what it sounds like, steal someone's heirloom.
+	name = "heirloomthief"
 
+/datum/objective/steal/heirloom_thief/update_explanation_text()
+	..()
+	if(steal_target)
+		explanation_text = "Steal [target.name]'s family heirloom, [steal_target] they cherish."
+	else
+		explanation_text = "Free Objective"
+
+/datum/antagonist/creep/proc/update_creep_icons_added(var/mob/living/carbon/human/creep)
+	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_CREEP]
+	creephud.join_hud(creep)
+	set_antag_hud(creep, "creep")
+
+/datum/antagonist/creep/proc/update_creep_icons_removed(var/mob/living/carbon/human/creep)
+	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_CREEP]
+	creephud.leave_hud(creep)
+	set_antag_hud(creep, null)
