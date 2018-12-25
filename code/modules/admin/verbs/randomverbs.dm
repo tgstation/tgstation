@@ -1313,13 +1313,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
 
-		if(ADMIN_PUNISHMENT_MARK_FOR_DEATH)
-			if(target.mind)
-				var/datum/antagonist/blood_contract/A = new
-				target.mind.add_antag_datum(A)
-			else
-				to_chat(usr, "<span class='warning'>[target] has no mind.</span>")
-
 	punish_log(target, punishment)
 
 /client/proc/punish_log(var/whom, var/punishment)
