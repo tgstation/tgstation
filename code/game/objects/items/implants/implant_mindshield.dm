@@ -42,13 +42,17 @@
 			return FALSE
 
 		if(is_hivemember(target))
-			var/warning = ""
 			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
 				if(hive.hivemembers.Find(target))
-					var/hive_name = hive.get_real_name()
-					if(hive_name)
-						warning += "[hive_name]. "
-			to_chat(target, "<span class='warning'>You hear supernatural wailing echo throughout your mind. If you listen closely you can hear... [warning]Are those... names?</span>")
+					var/mob/living/carbon/C = get_real_hivehost(hive.owner.current)
+					if(C)
+						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target)
+						target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, C)
+						if(C.mind) //If you were using mind control, too bad
+							C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+							to_chat(C, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+			to_chat(target, "<span class='assimilator'>You hear supernatural wailing echo throughout your mind as you are finally set free. Deep down, you can feel the lingering presence of those who enslaved you... as can they!</span>")
+			target.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 			remove_hivemember(target)
 
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)

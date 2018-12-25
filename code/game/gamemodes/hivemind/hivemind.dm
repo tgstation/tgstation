@@ -22,6 +22,16 @@
 /proc/is_hivehost(mob/living/M)
 	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/hivemind)
 
+/proc/get_real_hivehost(mob/living/M) //Returns M unless it's under mind control, then it returns the original body
+	if(!M)
+		return
+	if(!is_hivehost(M) || is_real_hivehost(M))
+		return M
+	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in M.mind.spell_list
+	if(the_spell && the_spell.active)
+		return the_spell.original_body
+	return M
+
 /proc/is_hivemember(mob/living/M)
 	if(!M)
 		return FALSE
@@ -37,6 +47,27 @@
 		if(H.hivemembers.Find(M))
 			H.hivemembers -= M
 			H.calc_size()
+
+/proc/handle_ejection(mob/living/carbon/human/H, datum/antagonist/hivemind/hive)
+	var/user_warning = ""
+
+	if(!H || !hive || !hive.owner)
+		return
+
+	var/mob/living/carbon/human/H2 = hive.owner.current
+	if(!H2)
+		return
+
+	if(is_real_hivehost(H))
+		H2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, H)
+		H.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+		to_chat(H, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+	if(is_real_hivehost(H2))
+		H.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, H2)
+		H2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+		user_warning = " and we've managed to pinpoint their location"
+
+	to_chat(H2, "<span class='userdanger'>The enemy hivemind host has been ejected from our hive[user_warning]!</span>")
 
 /datum/game_mode/hivemind/pre_setup()
 

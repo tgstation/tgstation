@@ -109,10 +109,11 @@
 	var/mob/vessel
 	var/mob/living/host //Didn't really have any other way to auto-reset the perspective if the other mob got qdeled
 
-	charge_max = 50
+	charge_max = 20
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/on_lose(mob/living/user)
 	user.reset_perspective()
+	user.clear_fullscreen("hive_eyes")
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/cast(list/targets, mob/living/user = usr)
 	if(!active)
@@ -121,10 +122,17 @@
 			user.reset_perspective(vessel)
 			active = TRUE
 			host = user
+			user.clear_fullscreen("hive_mc")
+			user.overlay_fullscreen("hive_eyes", /obj/screen/fullscreen/hive_eyes)
 		revert_cast()
 	else
 		user.reset_perspective()
+		user.clear_fullscreen("hive_eyes")
+		var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in user.mind.spell_list
+		if(the_spell && the_spell.active)
+			user.overlay_fullscreen("hive_mc", /obj/screen/fullscreen/hive_mc)
 		active = FALSE
+		revert_cast()
 
 /obj/effect/proc_holder/spell/target_hive/hive_see/process()
 	if(active && (!vessel || !is_hivemember(vessel) || QDELETED(vessel)))
@@ -236,7 +244,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
-	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it. Our ability to sense psionic energy is completely nullified while using this power."
 	charge_max = 600
 	action_icon_state = "force"
 	active  = FALSE
@@ -253,6 +261,7 @@
 	charge_counter = max((0.5-(world.time-time_initialized)/power)*charge_max, 0) //Partially refund the power based on how long it was used, up to a max of half the charge time
 
 	if(!QDELETED(vessel))
+		vessel.clear_fullscreen("hive_mc")
 		if(vessel.mind)
 			if(QDELETED(original_body))
 				vessel.ghostize(0)
@@ -322,6 +331,8 @@
 			message_admins("[ADMIN_LOOKUPFLW(vessel)] has been temporarily taken over by [ADMIN_LOOKUPFLW(user)] (Hivemind Host).")
 			log_game("[key_name(vessel)] was Mind Controlled by [key_name(user)].")
 
+			deadchat_broadcast("<span class='deadsay'><span class='name'>[vessel]</span> has just been mind controlled!</span>", vessel)
+
 			original_body = user
 			backseat.loc = vessel
 			backseat.name = vessel.real_name
@@ -329,6 +340,7 @@
 			vessel.mind.transfer_to(backseat, 1)
 			user.mind.transfer_to(vessel, 1)
 			backseat.blind_eyes(power)
+			vessel.overlay_fullscreen("hive_mc", /obj/screen/fullscreen/hive_mc)
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
@@ -359,9 +371,10 @@
 		else if(!QDELETED(original_body) && original_body.z != vessel.z) //Return to original bodies
 			release_control()
 			to_chat(original_body, "<span class='warning'>Our vessel is too far away to control!</span>")
-		if(QDELETED(original_body) || original_body.stat == DEAD) //Return vessel to its body, either return or ghost the original
+		else if(QDELETED(original_body) || original_body.stat == DEAD) //Return vessel to its body, either return or ghost the original
 			to_chat(vessel, "<span class='userdanger'>Our body has been destroyed, the hive cannot survive without its host!</span>")
 			release_control()
+
 	..()
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/choose_targets(mob/user = usr)
@@ -435,6 +448,7 @@
 		to_chat(user, "<span class='notice'>We have overloaded the vessel's medulla! Without medical attention, they will shortly die.</span>")
 		if(target.stat == CONSCIOUS)
 			target.visible_message("<span class='userdanger'>[target] clutches at [target.p_their()] chest as if [target.p_their()] heart stopped!</span>")
+			deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> has suffered a mysterious heart attack!</span>", target)
 	else
 		to_chat(user, "<span class='warning'>We are unable to induce a heart attack!</span>")
 
@@ -496,7 +510,6 @@
 	var/mob/living/carbon/human/target = targets[1]
 	var/in_hive = hive.hivemembers.Find(target)
 	var/list/enemies = list()
-	var/enemy_names = ""
 
 	to_chat(user, "<span class='notice'>We begin probing [target.name]'s mind!</span>")
 	if(do_after(user,100,0,target))
@@ -511,19 +524,21 @@
 			if(!M || M.current == user)
 				continue
 			if(enemy.hivemembers.Find(target))
-				var/hive_name = enemy.get_real_name()
-				if(hive_name)
-					enemies += hive_name
+				enemies += (get_real_hivehost(M.current))
 				enemy.remove_from_hive(target)
-				to_chat(M.current, "<span class='userdanger'>We detect a surge of psionic energy from [target.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>")
-			if(enemy.owner == target)
+				M.current.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, user)
+				if(is_real_hivehost(enemy.owner.current)) //If they were using mind control, too bad
+					M.current.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+					target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, M.current)
+					to_chat(M.current, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+			if(enemy.owner == target && is_real_hivehost(target))
 				user.Stun(70)
 				user.Jitter(14)
 				to_chat(user, "<span class='userdanger'>A sudden surge of psionic energy rushes into your mind, only a Hive host could have such power!!</span>")
 				return
 		if(enemies.len)
-			enemy_names = enemies.Join(". ")
-			to_chat(user, "<span class='userdanger'>In a moment of clarity, we see all. Another hive. Faces. Our nemesis. [enemy_names]. They are watching us. They know we are coming.</span>")
+			to_chat(user, "<span class='userdanger'>In a moment of clarity, we see all. Another hive. Faces. Our nemesis. They have heard our call. They know we are coming.</span>")
+			user.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		else
 			to_chat(user, "<span class='notice'>We peer into the inner depths of their mind and see nothing, no enemies lurk inside this mind.</span>")
 	else
@@ -559,6 +574,7 @@
 			return
 		var/datum/antagonist/hivemind/enemy_hive = target.mind.has_antag_datum(/datum/antagonist/hivemind)
 		if(enemy_hive)
+			deadchat_broadcast("<span class='deadsay'>A hivemind host is about to get assimilated!</span>", target)
 			to_chat(user, "<span class='danger'>We begin assimilating every psionic link we can find!.</span>")
 			to_chat(target, "<span class='userdanger'>Our grip on our mind is slipping!</span>")
 			target.Jitter(14)

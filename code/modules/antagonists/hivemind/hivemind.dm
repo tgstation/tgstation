@@ -43,27 +43,13 @@
 			if(hive_size > 0)
 				to_chat(owner, "<span class='assimilator'>We have unlocked [the_spell.name].</span><span class='bold'> [the_spell.desc]</span>")
 
-/datum/antagonist/hivemind/proc/get_real_name() //Gets the real name of the host, even if they're temporarily in another one
-	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in owner.spell_list
-	var/datum/mind/M = owner
-	if(M)
-		var/mob/living/L = owner.current
-		if(L)
-			if(the_spell && the_spell.active)
-				if(the_spell.original_body)
-					return the_spell.original_body.real_name
-			return L.real_name
-	return ""
-
 /datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/human/H)
-	var/warning = "<span class='userdanger'>We detect a surge of psionic energy from [H.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>"
 	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
 	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
-		if(H.mind == enemy_hive.owner)
+		if(is_real_hivehost(H))
 			var/eject_time = rand(1400,1600) //2.5 minutes +- 10 seconds
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, H, user_warning), rand(500,1300)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, owner, warning), eject_time) //As well as the host who just added them as soon as they're ejected
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_hivemember, H), eject_time)
+			addtimer(CALLBACK(GLOBAL_PROC, /proc/handle_ejection, H, src), eject_time)
 	hivemembers |= H
 	calc_size()
 
