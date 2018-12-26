@@ -271,7 +271,8 @@
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
-		SEND_SIGNAL(M, COMSIG_MOB_HUG, src)
+		for(var/datum/brain_trauma/trauma in M.get_traumas())
+			trauma.on_hug(M, src)
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)

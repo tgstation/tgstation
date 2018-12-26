@@ -9,8 +9,10 @@
 	var/mob/living/obsession
 	var/datum/objective/spendtime/attachedcreepobj
 	var/datum/antagonist/creep/antagonist
+
 	var/total_time_creeping = 0 //just for roundend fun
 	var/time_spent_away = 0
+	var/obsession_hug_count = 0
 
 /datum/brain_trauma/special/creep/on_gain()
 
@@ -66,12 +68,15 @@
 	var/choked_up
 	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
 	if(mood)
-		switch(mood.sanity)
-			if(SANITY_GREAT to INFINITY)
-				choked_up = social_interaction()
+		if(mood.sanity >= SANITY_GREAT)
+			choked_up = social_interaction()
 	if(choked_up)
 		return ""
 	return message
+
+/datum/brain_trauma/special/creep/on_hug(mob/living/hugger, mob/living/hugged)
+	if(hugged == obsession)
+		obsession_hug_count++
 
 /datum/brain_trauma/special/creep/proc/social_interaction()
 	var/fail = FALSE //whether you can finish a sentence while doing it

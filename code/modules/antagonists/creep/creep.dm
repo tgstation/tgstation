@@ -152,23 +152,22 @@
 /datum/objective/hug//this objective isn't perfect. hugging the correct amount of times, then switching bodies, might fail the objective anyway. maybe i'll come back and fix this sometime.
 	name = "hugs"
 	var/hugs_needed
-	var/datum/component/hugcounter/component
 
 /datum/objective/hug/update_explanation_text()
 	..()
 	if(!hugs_needed)//just so admins can mess with it
 		hugs_needed = rand(4,6)
-	if(target && target.current)
-		component = owner.current.AddComponent(/datum/component/hugcounter)
-		component.target = target
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+	if(target && target.current && creeper)
 		explanation_text = "Hug [target.name] [hugs_needed] times while they're alive."
 	else
 		explanation_text = "Free Objective"
 
 /datum/objective/hug/check_completion()
-	if(!component || !hugs_needed)
+	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
+	if(!creeper || !creeper.trauma || !hugs_needed)
 		return TRUE//free objective
-	return component.hugnumber >= hugs_needed
+	return creeper.trauma.obsession_hug_count >= hugs_needed
 
 /datum/objective/polaroid //take a picture of the target with you in it.
 	name = "polaroid"
