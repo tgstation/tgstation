@@ -126,7 +126,7 @@
 			add_points(BLOB_REFLECTOR_COST)	
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified properly!</span>")
 			return
-		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced intregrity.</span>")
+		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity.</span>")
 		S.change_to(/obj/structure/blob/shield/reflective, src)
 	else
 		createSpecial(15, /obj/structure/blob/shield, 0, 0, T)
