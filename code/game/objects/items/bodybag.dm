@@ -47,7 +47,7 @@
 
 /obj/item/bodybag/bluespace/Initialize()
 	. = ..()
-	RegisterSignal(COMSIG_ATOM_CANREACH, canreach_blocking_callback)
+	RegisterSignal(src, COMSIG_ATOM_CANREACH, canreach_blocking_callback)
 
 /proc/__bluespace_bodybag_canreach_block()
 	return COMPONENT_BLOCK_REACH
