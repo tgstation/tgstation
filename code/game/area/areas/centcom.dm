@@ -29,6 +29,11 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/supplypod/flyMeToTheMoon
+	name = "Supplypod Shipping lane"
+	icon_state = "supplypod_flight"
+	outdoors = TRUE //Prevents people in supplypods from dying to the elements
+
 /area/centcom/supplypod
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
