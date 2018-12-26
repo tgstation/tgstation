@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - admin: "When the nuclear authentication disk remains stationary
-for too long, the chances of a Lone Operative increase. Admins are
-now notified when the chances go up or down."
