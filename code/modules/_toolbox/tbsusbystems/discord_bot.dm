@@ -3,10 +3,13 @@
 //****************************
 
 #define DISCORDBOTCOMMANDSFOLDER "data/discordbot/commands/"
+#define DISCORDBOTSTATUSFILE "data/discordbot/statics/server_status.txt"
 
 SUBSYSTEM_DEF(discord_bot)
 	name = "Discord Bot"
 	runlevels = (RUNLEVEL_LOBBY|RUNLEVEL_SETUP|RUNLEVEL_GAME|RUNLEVEL_POSTGAME)
+	var/last_status_report = 0
+	var/status_report_interval = 60
 	var/list/discord_commands = list()
 	var/list/discord_roles = list(
 		"280754671394750465" = "@everyone",
@@ -41,6 +44,58 @@ SUBSYSTEM_DEF(discord_bot)
 
 /datum/controller/subsystem/discord_bot/fire(resumed)
 	if(CONFIG_GET(flag/use_discord_bot))
+		//Server status file
+		if(!last_status_report || (last_status_report+(status_report_interval*10) <= world.time))
+			last_status_report = world.time
+			if(fexists(DISCORDBOTSTATUSFILE))
+				fdel(DISCORDBOTSTATUSFILE)
+			var/list/reports = list()
+			var/lastcheck = time2text(world.timeofday,"hh:mm:ss")
+			if(lastcheck)
+				reports += "Last Update: **[lastcheck](GMT)**"
+			if(SSticker)
+				var/thestate = null
+				if(SSticker.current_state < GAME_STATE_PLAYING)
+					thestate = "New Round Starting"
+				else if (SSticker.current_state > GAME_STATE_PLAYING)
+					thestate = "Round Finished"
+				else
+					var/worldtime = max(world.time-SSticker.round_start_time,0)
+					var/hours = 0
+					var/minutes = 0
+					var/timeout = 24
+					while(worldtime >= 36000 && timeout > 0)
+						timeout--
+						hours++
+						worldtime -= 36000
+					timeout = 59
+					while(worldtime >= 600 && timeout > 0)
+						timeout--
+						minutes++
+						worldtime -= 600
+					if(minutes >= 300)
+						minutes++
+					if(length("[minutes]") < 2)
+						minutes = "0[minutes]"
+					thestate = "Round Active: **[hours]h [minutes]m**"
+				if(thestate)
+					reports += "Game State: **[thestate]**"
+			if(GLOB)
+				if(GLOB.round_id)
+					reports += "Round ID: **[GLOB.round_id]**"
+				reports += "Players online: **[GLOB.clients.len]**"
+			var/report = "{"
+			var/line = 1
+			for(var/R in reports)
+				report += "[line]:\"[R]\""
+				if(line != reports.len)
+					report += ","
+				line++
+			report += "}"
+			var/thefile = file(DISCORDBOTSTATUSFILE)
+			if(thefile)
+				thefile << "[report]"
+		//Reading commands from the discord bot
 		var/list/filelist = flist(DISCORDBOTCOMMANDSFOLDER)
 		if(istype(filelist,/list) && filelist.len)
 			for(var/file in filelist)

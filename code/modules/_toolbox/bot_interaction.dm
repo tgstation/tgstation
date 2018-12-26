@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(discord_channels)
 	//GLOB.discord_channels["#fullmins_only"] = "344499705499090945"
 	//GLOB.discord_channels["#founderchat"] = "344499881601400832"
 	GLOB.discord_channels["#new_round_notifications"] = "526419363918512149"
-	GLOB.discord_channels["#killingfuckswithbot"] = "525350221337591808"
+	GLOB.discord_channels["#devsfuckswithbot"] = "525350221337591808"
 
 /proc/send_to_discord_channel(channel,message)
 	if(!CONFIG_GET(flag/use_discord_bot)||!channel||!message||!istext(message)||!GLOB)
