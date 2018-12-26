@@ -114,15 +114,16 @@
 /mob/camera/blob/verb/create_shield_power()
 	set category = "Blob"
 	set name = "Create/Upgrade Shield Blob (15)"
-	set desc = "Create a shield blob, which will block fire and is hard to kill. Using this on an existing shield blob turns it into a reflective blob, capable of reflecting most projectiles but making it much weaker than usual to brute attacks."
+	set desc = "Create a shield blob, which will block fire and is hard to kill. Using this on an existing shield blob turns it into a reflective blob, capable of reflecting most projectiles but making it twice as weak to brute attacks."
 	create_shield()
 
 /mob/camera/blob/proc/create_shield(turf/T)
 	var/obj/structure/blob/shield/S = locate(/obj/structure/blob/shield) in T
 	if(S)
-		if(!can_buy(15))
+		if(!can_buy(BLOB_REFLECTOR_COST))
 			return
 		if(S.obj_integrity < S.max_integrity * 0.5)
+			add_points(BLOB_REFLECTOR_COST)	
 			to_chat(src, "<span class='warning'>This shield blob is too damaged to be modified properly!</span>")
 			return
 		to_chat(src, "<span class='warning'>You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced intregrity.</span>")
