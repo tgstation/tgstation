@@ -114,7 +114,9 @@
 		target = AM
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
-		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with [det_time] second fuse")
+		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with a [det_time] second fuse")
+
+		notify_ghosts("[user] has planted [name] on [target.name] with a [det_time] second fuse!", source = src, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/beep.ogg')
 
 		moveToNullspace()	//Yep
 
