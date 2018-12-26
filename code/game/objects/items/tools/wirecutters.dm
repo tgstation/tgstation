@@ -53,6 +53,9 @@
 		user.visible_message("<span class='notice'>[user] cuts [C]'s restraints with [src]!</span>")
 		qdel(C.handcuffed)
 		return
+	else if(istype(C) && C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
+		if(do_after(user, 15, null, C))
+			C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 	else
 		..()
 

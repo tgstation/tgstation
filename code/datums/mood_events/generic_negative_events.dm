@@ -137,6 +137,17 @@
 	mood_change = -5
 	timeout = 600
 
+/datum/mood_event/spooked
+	description = "<span class='warning'>The rattling of those bones...It still haunts me.</span>\n"
+	mood_change = -4
+	timeout = 2400
+
+/datum/mood_event/loud_gong
+	description = "<span class='warning'>That loud gong noise really hurt my ears!</span>\n"
+	mood_change = -3
+	timeout = 1200
+
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
