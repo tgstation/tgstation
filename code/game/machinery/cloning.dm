@@ -196,11 +196,11 @@
 	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
-	H.add_trait(TRAIT_STABLEHEART, "cloning")
-	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
-	H.add_trait(TRAIT_MUTE, "cloning")
-	H.add_trait(TRAIT_NOBREATH, "cloning")
-	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	H.add_trait(TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_MUTE, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_NOBREATH, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
@@ -387,11 +387,11 @@
 	if(!mob_occupant)
 		return
 	current_insurance = null
-	mob_occupant.remove_trait(TRAIT_STABLEHEART, "cloning")
-	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_MUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOBREATH, "cloning")
+	mob_occupant.remove_trait(TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_MUTE, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_NOBREATH, CLONING_POD_TRAIT)
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()

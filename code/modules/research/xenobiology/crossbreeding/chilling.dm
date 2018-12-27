@@ -7,11 +7,11 @@ Chilling extracts:
 	name = "chilling extract"
 	desc = "It's cold to the touch, as if frozen solid."
 	effect = "chilling"
-	container_type = INJECTABLE | DRAWABLE
 	icon_state = "chilling"
+
 /obj/item/slimecross/chilling/Initialize()
 	. = ..()
-	create_reagents(10)
+	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
 	if(!reagents.has_reagent("plasma",10))

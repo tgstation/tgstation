@@ -453,6 +453,10 @@ ROUNDSTART_RACES ethereal
 
 ##-------------------------------------------------------------------------------------------
 
+## Roundstart no-reset races
+## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
+#ROUNDSTART_NO_HARD_CHECK felinid
+
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 JOIN_WITH_MUTANT_HUMANS
 

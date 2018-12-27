@@ -60,9 +60,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define FLOATING		(1<<3)
 #define UNSTOPPABLE		(1<<4)			//When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
 
-// Flags for reagents
-#define REAGENT_NOREACT (1<<0)
-
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)
 #define FIRE_PROOF		(1<<1) //100% immune to fire damage (but not necessarily to lava or heat)
