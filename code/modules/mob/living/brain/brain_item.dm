@@ -181,9 +181,9 @@
 
 /obj/item/organ/brain/proc/has_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 	//Repairing bad code here so code works in other places in the codebase making the args no longer fail.
-	if(isnum(brain_trauma_type) && !isnum(resilience))
+	if(isnum(brain_trauma_type))
 		resilience = brain_trauma_type
-	if(!isnum(brain_trauma_type))
+	if(!isnum(resilience))
 		resilience = TRAUMA_RESILIENCE_ABSOLUTE
 	if(!ispath(brain_trauma_type))
 		brain_trauma_type = /datum/brain_trauma
