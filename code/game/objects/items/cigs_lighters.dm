@@ -742,7 +742,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(O.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!screw)
 			screw = 1
-			flags |= OPENCONTAINER
+			reagent_flags |= OPENCONTAINER
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
 			if(super)
 				add_overlay("vapeopen_med")
@@ -750,7 +750,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				add_overlay("vapeopen_low")
 		else
 			screw = 0
-			flags &= ~OPENCONTAINER
+			reagent_flags &= ~OPENCONTAINER
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
 			cut_overlays()
 
