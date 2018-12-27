@@ -825,14 +825,14 @@
 /datum/reagent/medicine/mannitol
 	name = "Mannitol"
 	id = "mannitol"
-	description = "Efficiently restores brain damage."
+	description = "Reacts with neural tissue, efficiently restores brain damage and helps reform damaged connections. Can cure minor traumas."
 	color = "#DCDCFF"
 
 /datum/reagent/medicine/mannitol/on_mob_life(mob/living/M)
 	M.adjustBrainLoss(-2*REM)
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(prob(10))
+		if(prob(15))
 			C.cure_trauma_type(TRAUMA_RESILIENCE_BASIC)
 	..()
 
