@@ -793,6 +793,7 @@
 #include "code\game\objects\items\dna_injector.dm"
 #include "code\game\objects\items\documents.dm"
 #include "code\game\objects\items\eightball.dm"
+#include "code\game\objects\items\etherealdiscoball.dm"
 #include "code\game\objects\items\extinguisher.dm"
 #include "code\game\objects\items\flamethrower.dm"
 #include "code\game\objects\items\gift.dm"
