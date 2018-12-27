@@ -795,7 +795,7 @@
 			src.cmd_admin_gib(M)
 
 		else if(href_list["build_mode"])
-			if(!check_rights(R_BUILDMODE))
+			if(!check_rights(R_BUILD))
 				return
 
 			var/mob/M = locate(href_list["build_mode"]) in GLOB.mob_list

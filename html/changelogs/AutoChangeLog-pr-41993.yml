@@ -1,0 +1,4 @@
+author: "Carbonhell"
+delete-after: True
+changes: 
+  - config: "Added a new config setting to allow for species that aren't roundstart races anymore to still be used by players with a character set to that species prior to its removal."
