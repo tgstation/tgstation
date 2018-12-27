@@ -25818,7 +25818,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/xmastree,
+/obj/effect/spawner/xmastree,
 /turf/open/floor/carpet,
 /area/chapel/main)
 "bdr" = (
