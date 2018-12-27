@@ -36,14 +36,6 @@
 	QDEL_NULL(beaker)
 	update_icon()
 
-/obj/machinery/reagentgrinder/proc/eject_beaker(mob/user)
-	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issilicon(user))
-			user.put_in_hands(beaker)
-		beaker = null
-		update_icon()
-
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)
 		beaker.forceMove(drop_location())
@@ -226,7 +218,7 @@
 		O.forceMove(drop_location())
 		holdingitems -= O
 	if(beaker)
-		eject_beaker(user)
+		replace_beaker(user)
 
 /obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
 	holdingitems -= O

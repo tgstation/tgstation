@@ -102,20 +102,10 @@
 	else
 		return ..()
 
-/obj/machinery/chem_master/proc/eject_beaker(mob/user)
-	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
-		else
-			adjust_item_drop_location(beaker)
-		beaker = null
-		update_icon()
-
 /obj/machinery/chem_master/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	eject_beaker(user)
+	replace_beaker(user)
 	return
 
 /obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
@@ -131,7 +121,7 @@
 	return TRUE
 
 /obj/machinery/chem_master/on_deconstruction()
-	eject_beaker()
+	replace_beaker()
 	if(bottle)
 		bottle.forceMove(drop_location())
 		adjust_item_drop_location(bottle)
@@ -189,7 +179,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject_beaker(usr)
+			replace_beaker(usr)
 			. = TRUE
 
 		if("ejectp")

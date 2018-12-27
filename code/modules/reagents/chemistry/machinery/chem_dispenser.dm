@@ -234,7 +234,7 @@
 				work_animation()
 				. = TRUE
 		if("eject")
-			eject_beaker(usr)
+			replace_beaker(usr)
 			. = TRUE
 		if("dispense_recipe")
 			if(!is_operational() || QDELETED(cell))
@@ -353,14 +353,6 @@
 			dispensable_reagents |= upgrade_reagents
 	powerefficiency = round(newpowereff, 0.01)
 
-/obj/machinery/chem_dispenser/proc/eject_beaker(mob/user)
-	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
-		beaker = null
-		update_icon()
-
 /obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
 		beaker.forceMove(drop_location())
@@ -405,7 +397,7 @@
 /obj/machinery/chem_dispenser/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	eject_beaker(user)
+	replace_beaker(user)
 	return
 
 /obj/machinery/chem_dispenser/drinks/Initialize()

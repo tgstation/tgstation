@@ -31,16 +31,8 @@
 /obj/machinery/chem_heater/AltClick(mob/living/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	eject_beaker(user)
+	replace_beaker(user)
 	return
-
-/obj/machinery/chem_heater/proc/eject_beaker(mob/user)
-	if(beaker)
-		beaker.forceMove(drop_location())
-		if(user && Adjacent(user) && !issiliconoradminghost(user))
-			user.put_in_hands(beaker)
-		beaker = null
-		update_icon()
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(beaker)
@@ -93,7 +85,7 @@
 	return ..()
 
 /obj/machinery/chem_heater/on_deconstruction()
-	eject_beaker()
+	replace_beaker()
 	return ..()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -143,5 +135,5 @@
 				target_temperature = CLAMP(target, 0, 1000)
 		if("eject")
 			on = FALSE
-			eject_beaker(usr)
+			replace_beaker(usr)
 			. = TRUE
