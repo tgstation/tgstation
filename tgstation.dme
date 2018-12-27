@@ -1609,6 +1609,7 @@
 #include "code\modules\events\wizard\imposter.dm"
 #include "code\modules\events\wizard\invincible.dm"
 #include "code\modules\events\wizard\lava.dm"
+#include "code\modules\events\wizard\madness.dm"
 #include "code\modules\events\wizard\magicarp.dm"
 #include "code\modules\events\wizard\petsplosion.dm"
 #include "code\modules\events\wizard\race.dm"
