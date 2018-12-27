@@ -55,6 +55,9 @@
 	if(family_heirloom)//oh, they have an heirloom? Well you know we have to steal that.
 		objectives_left += "heirloom"
 
+	if(obsessionmind.assigned_role && obsessionmind.assigned_role != "Captain" && !(obsessionmind.assigned_role in GLOB.nonhuman_positions))
+		objectives_left += "jealous"//they have a role that has viable coworkers to get jelly about?
+
 	for(var/i in 1 to 3)
 		var/chosen_objective = pick(objectives_left)
 		objectives_left.Remove(chosen_objective)
@@ -80,6 +83,11 @@
 				heirloom_thief.target = obsessionmind//while you usually wouldn't need this for stealing, we need the name of the obsession
 				heirloom_thief.steal_target = family_heirloom.heirloom
 				objectives += heirloom_thief
+			if("jealous")
+				var/datum/objective/assassinate/jealous/jealous = new
+				jealous.owner = owner
+				jealous.target = obsessionmind//will reroll into a coworker on the objective itself
+				objectives += jealous
 
 	objectives += kill//finally add the assassinate last, because you'd have to complete it last to greentext.
 	for(var/datum/objective/O in objectives)
@@ -130,6 +138,64 @@
 		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/assassinate/jealous //assassinate, but it changes the target to someone else in the previous target's department. cool, right?
+	var/mob/living/oldtarget
+
+/datum/objective/assassinate/jealous/update_explanation_text()
+	..()
+	oldtarget = find_coworker(target)
+	if(target && target.current && oldtarget)
+		explanation_text = "Murder [target.name], [oldtarget]'s coworker."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/assassinate/jealous/proc/find_coworker(mob/living/oldtarget)//returning null = free objective
+	if(!oldtarget.job)
+		return
+	var/list/viable_coworkers = list()
+	var/chosen_department
+	var/their_chosen_department
+	//note that command and sillycone are gone because borgs can't be obsessions and the heads have their respective department. Sorry cap, your place is more with centcom or something
+	if(oldtarget.job in GLOB.security_positions)
+		chosen_department = "security"
+	if(oldtarget.job in GLOB.engineering_positions)
+		chosen_department = "engineering"
+	if(oldtarget.job in GLOB.medical_positions)
+		chosen_department = "medical"
+	if(oldtarget.job in GLOB.science_positions)
+		chosen_department = "science"
+	if(oldtarget.job in GLOB.supply_positions)
+		chosen_department = "supply"
+	if(oldtarget.job in GLOB.civilian_positions)
+		chosen_department = "civilian"
+	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+		if(H == oldtarget)
+			continue
+		if(!H.job)
+			continue
+		//this won't be called often thankfully.
+		if(H.job in GLOB.security_positions)
+			their_chosen_department = "security"
+		if(oldtarget.job in GLOB.engineering_positions)
+			their_chosen_department = "engineering"
+		if(oldtarget.job in GLOB.medical_positions)
+			their_chosen_department = "medical"
+		if(oldtarget.job in GLOB.science_positions)
+			their_chosen_department = "science"
+		if(oldtarget.job in GLOB.supply_positions)
+			their_chosen_department = "supply"
+		if(oldtarget.job in GLOB.civilian_positions)
+			their_chosen_department = "civilian"
+		if(their_chosen_department != chosen_department)
+			continue
+		viable_coworkers += H
+
+	if(viable_coworkers.len > 0)
+		target = pick(viable_coworkers)
+	else
+		return
+	return oldtarget
 
 /datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks
 	name = "spendtime"
