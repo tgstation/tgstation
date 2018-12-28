@@ -12,6 +12,7 @@
 	fire_sound = "sound/weapons/pistolshot.ogg"
 	vary_fire_sound = FALSE
 	fire_sound_volume = 90
+	bolt_drop_sound = "sound/weapons/pistolslidedrop.ogg"
 	bolt_wording = "slide"
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
