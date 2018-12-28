@@ -59,6 +59,7 @@
 
 /datum/brain_trauma/special/creep/on_lose()
 	..()
+	owner.remove_status_effect(STATUS_EFFECT_INLOVE)
 	owner.mind.remove_antag_datum(/datum/antagonist/creep)
 
 /datum/brain_trauma/special/creep/on_say(message)
