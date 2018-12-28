@@ -35,11 +35,10 @@
 		A.build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
-	return front_nodes + back_nodes + nodes
+	return front_nodes | back_nodes | nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	cut_overlays()
-	layer = initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE)	//This is above everything else.
 
 	for(var/node in front_nodes)
 		add_attached_images(node)
@@ -51,19 +50,15 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_images(obj/machinery/atmospherics/A)
 	if(!A)
 		return
-	if(istype(A, /obj/machinery/atmospherics/pipe/layer_manifold))
-		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-			add_attached_image(get_dir(src, A), i)
-			return
 	add_attached_image(get_dir(src, A), A.piping_layer, A.pipe_color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_image(p_dir, p_layer, p_color = null)
 	var/image/I
 
 	if(p_color)
-		I = getpipeimage(icon, "pipe", p_dir, p_color, piping_layer = piping_layer)
+		I = getpipeimage(icon, "pipe", p_dir, p_color, piping_layer = p_layer)
 	else
-		I = getpipeimage(icon, "pipe", p_dir, piping_layer = piping_layer)
+		I = getpipeimage(icon, "pipe", p_dir, piping_layer = p_layer)
 
 	I.layer = layer - 0.01
 	add_overlay(I)
