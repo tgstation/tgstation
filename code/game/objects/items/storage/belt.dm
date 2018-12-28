@@ -538,7 +538,7 @@
 /obj/item/storage/belt/bandolier/magspear/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 15
+	STR.max_items = 20
 	STR.display_numerical_stacking = TRUE
 	STR.can_hold = typecacheof(list(
 		/obj/item/throwing_star/magspear
