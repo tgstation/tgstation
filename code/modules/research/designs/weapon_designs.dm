@@ -297,3 +297,54 @@
 	build_path = /obj/item/ammo_casing/shotgun/dart/noreact
 	category = list("Ammo")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+///////////////////////////////////////
+//            SPACE DISKS            //
+///////////////////////////////////////
+
+
+/obj/item/disk/design_disk/
+	name = "lost blueprints"
+	desc = "A design disc containing the design of something. It's compatible with a research console."
+	icon_state = "datadisk1"
+	var/stored_design = null
+
+/obj/item/disk/design_disk/Initialize()
+	. = ..()
+	blueprints[1] = new stored_design
+
+/obj/item/disk/design_disk/mosin_nagat_parts
+	name = "mosin nagat blueprints"
+	desc = "A design disc containing the design of an ancient weapon. It's compatible with a research console."
+	var/stored_design = /datum/design/mosin_nagat_parts
+
+/obj/item/disk/design_disk/russian_firing_pin
+	name = "russian firing pin blueprints"
+	desc = "A design disc containing the design of an ancient weapon. It's compatible with a research console."
+	var/stored_design = /datum/design/russian_firing_pin
+
+/datum/design/mosin_nagat_parts
+	name = "Mosin Nagat parts"
+	desc = "All you need to build your own gun. Stock not included"
+	id = "mosin_nagat_parts"
+	materials = list(MAT_METAL = 55000, MAT_GLASS = 5000)
+	build_path = /obj/item/mosin_nagat_parts
+
+/datum/design/russian_firing_pin
+	name = "Kinetic Accelerator Resonator Blast Mod"
+	desc = "A strange firing pin"
+	id = "russian_firing_pin"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000)
+	build_path = /obj/item/firing_pin/russian
+
+/obj/item/disk/design_disk/mosin_nagat_ammo
+	name = "mosin nagat blueprints"
+	desc = "A design disc containing the design of an ancient weapon. It's compatible with a research console."
+	var/stored_design = /datum/design/mosin_nagat_parts
+
+/datum/design/mosin_nagat_ammo
+	name = "a762 clips"
+	desc = "Mosin nagat magazine."
+	id = "mosin_nagat_ammo"
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 500)
+	build_path = /obj/item/ammo_box/a762

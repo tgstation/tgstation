@@ -595,3 +595,7 @@
 	if(zoomable)
 		azoom = new()
 		azoom.gun = src
+
+/obj/item/mosin_nagat_parts
+	name = "mosin nagat parts"
+	desc = "various parts, comes with a manual written in cyrilic"
