@@ -34,8 +34,8 @@ Chief Medical Officer
 	jobtype = /datum/job/cmo
 
 	id = /obj/item/card/id/silver
-	belt = /obj/item/pda/heads/cmo
-	l_pocket = /obj/item/pinpointer/crew
+	belt = /obj/item/storage/belt/medical/chief/full
+	l_pocket = /obj/item/pda/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
 	uniform = /obj/item/clothing/under/rank/chief_medical_officer
 	shoes = /obj/item/clothing/shoes/sneakers/brown

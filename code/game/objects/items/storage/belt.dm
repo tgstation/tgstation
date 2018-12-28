@@ -175,6 +175,20 @@
 		/obj/item/pinpointer/crew
 		))
 
+/obj/item/storage/belt/medical/chief
+	name = "\improper Chief Medical Officer's medical belt"
+	desc = "Holds medical supplies. Looks boring."
+	icon_state = "medicalbelt"
+	item_state = "medical"
+
+/obj/item/storage/belt/medical/chief/full/PopulateContents()
+	new /obj/item/retractor/advanced(src)
+	new /obj/item/scalpel/advanced(src)
+	new /obj/item/cautery/advanced
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/pinpointer/crew(src)
+	new /obj/item/healthanalyzer/advanced(src)
+
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
