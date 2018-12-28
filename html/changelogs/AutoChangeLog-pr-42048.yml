@@ -1,0 +1,14 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - rscadd: "Assimilation now looks and sounds prettier!"
+  - rscadd: "Ghosts are now notified when hivemind hosts do something interesting."
+  - tweak: "Minor sprite changes."
+  - balance: "Hive Sight no longer has a cooldown."
+  - bugfix: "Fixed a couple of potential runtimes."
+  - bugfix: "Fixed a recent bug where hivemind hosts kept their powers after losing antag status."
+  - bugfix: "Added extra sanity checks to assimilate vessel."
+  - bugfix: "Removed the buggy and useless progress bar on Mind Control."
+  - bugfix: "Network Invasion can no longer be cheesed by mind controlling the interrogated vessel."
+  - soundadd: "Assimilation now has its own greeting sound."
+  - imageadd: "Added vignettes when using Mind Control and Hive Sight."
