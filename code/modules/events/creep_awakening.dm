@@ -8,10 +8,12 @@
 	fakeable = FALSE
 
 /datum/round_event/creep/start()
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.player_list))
 		if(!H.client)
 			continue
 		if(H.stat == DEAD)
+			continue
+		if(!H.mind.assigned_role || H.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL] || H.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_ANTAG]) //prevents ashwalkers falling in love with crewmembers they never met
 			continue
 		var/alreadycreepy = H.mind.has_antag_datum(/datum/antagonist/creep)
 		if(alreadycreepy)

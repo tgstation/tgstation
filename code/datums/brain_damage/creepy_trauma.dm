@@ -9,6 +9,7 @@
 	var/mob/living/obsession
 	var/datum/objective/spendtime/attachedcreepobj
 	var/datum/antagonist/creep/antagonist
+	var/viewing = FALSE //it's a lot better to store if the owner is watching the obsession than checking it twice between two procs
 
 	var/total_time_creeping = 0 //just for roundend fun
 	var/time_spent_away = 0
@@ -21,11 +22,12 @@
 	if(!obsession)//admins didn't set one
 		obsession = find_obsession()
 		if(!obsession)//we didn't find one
+			lose_text = ""
 			qdel(src)
 	owner.mind.add_antag_datum(/datum/antagonist/creep)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/creep)
 	antagonist.trauma = src
-	//antag stuff, //
+	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
 
@@ -34,18 +36,17 @@
 /datum/brain_trauma/special/creep/on_life()
 	if(!obsession)//gibbing, etc
 		return
-	if(obsession.stat == DEAD) //killing them "cures" you! kinda! ish!
-		return
-	var/foundyou = FALSE
-	for(var/mob/living/L in range(7, owner))
-		if(L == obsession)
-			foundyou = TRUE
-			break
-	if(foundyou)
+	if(get_dist(get_turf(owner), get_turf(obsession)) > 7 || obsession.stat == DEAD)
+		return//so we're not searching everything in view every tick
+	if(obsession in view(7, owner))
+		viewing = TRUE
+	else
+		viewing = FALSE
+	if(viewing)
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
 		total_time_creeping += 20
 		time_spent_away = 0
-		if(attachedcreepobj)
+		if(attachedcreepobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
 			attachedcreepobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		time_spent_away += 20
@@ -59,11 +60,7 @@
 	owner.mind.remove_antag_datum(/datum/antagonist/creep)
 
 /datum/brain_trauma/special/creep/on_say(message)
-	var/foundyou = FALSE
-	for(var/mob/living/L in range(7, owner))
-		if(L == obsession)
-			foundyou = TRUE
-	if(!foundyou)
+	if(!viewing)
 		return message
 	var/choked_up
 	GET_COMPONENT_FROM(mood, /datum/component/mood, owner)
@@ -106,8 +103,8 @@
 	var/chosen_victim
 	var/list/possible_targets = list()
 	var/list/viable_minds = list()
-	for(var/mob/Player in GLOB.mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner)
+	for(var/mob/Player in GLOB.player_list)//prevents crewmembers falling in love with nuke ops they never met
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client && Player != owner && !(Player.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL] || Player.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_ANTAG]))
 			viable_minds += Player.mind
 	for(var/datum/mind/possible_target in viable_minds)
 		if(possible_target != owner && ishuman(possible_target.current))

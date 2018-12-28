@@ -137,6 +137,7 @@
 	if(target && target.current)
 		explanation_text = "Murder [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
+		message_admins("WARNING! [ADMIN_LOOKUPFLW(owner)] creep objectives forged without an obsession!")
 		explanation_text = "Free Objective"
 
 /datum/objective/assassinate/jealous //assassinate, but it changes the target to someone else in the previous target's department. cool, right?
@@ -199,10 +200,10 @@
 
 /datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks
 	name = "spendtime"
-	var/timer = 3000 //5 minutes
+	var/timer = 1800 //5 minutes
 
 /datum/objective/spendtime/update_explanation_text()
-	if(timer == 1800)//just so admins can mess with it
+	if(timer == initial(timer))//just so admins can mess with it
 		timer += pick(-600, 0)
 	var/datum/antagonist/creep/creeper = owner.has_antag_datum(/datum/antagonist/creep)
 	if(target && target.current && creeper)
