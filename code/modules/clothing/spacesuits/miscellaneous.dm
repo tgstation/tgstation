@@ -363,3 +363,21 @@ Contains:
 		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+/obj/item/clothing/head/space/rus_hat
+	name = "\improper russian hat"
+	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
+	icon_state = "russianfurhat"
+	item_state = "russianfurhat"
+	armor = list("melee" = 40, "bullet" = 20, "laser" = 20,"energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 50, "fire" = 50, "acid" = 50)
+	strip_delay = 80
+	dog_fashion = null
+
+/obj/item/clothing/suit/space/rus_coat
+	name = "russian coat"
+	desc = "A bulky, air-tight suit meant to protect the user during emergency situations. It doesn't look very durable."
+	var/torn = FALSE
+	icon_state = "russianfurcoat"
+	item_state = "russianfurcoat"
+	armor = list("melee" = 40, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 50, "fire" = 50, "acid" = 50)
+	strip_delay = 65

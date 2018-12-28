@@ -223,6 +223,17 @@
 	time = 10
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
+	tools = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/mosin_nagat
+	name = "mosin nagat"
+	result = /obj/item/gun/ballistic/shotgun/boltaction/pinless
+	tools = list(TOOL_SCREWDRIVER)
+	reqs = list(/obj/item/mosin_nagat_parts = 1,
+			/obj/item/weaponcrafting/stock = 1,)
+	time = 100
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/meteorslug
 	name = "Meteorslug Shell"
