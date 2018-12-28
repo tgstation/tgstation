@@ -37,6 +37,7 @@
 	if(!obsession)//gibbing, etc
 		return
 	if(get_dist(get_turf(owner), get_turf(obsession)) > 7 || obsession.stat == DEAD)
+		viewing = FALSE //they are further than our viewrange they are not viewing us
 		return//so we're not searching everything in view every tick
 	if(obsession in view(7, owner))
 		viewing = TRUE
