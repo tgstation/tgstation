@@ -24,6 +24,7 @@
 		if(!obsession)//we didn't find one
 			lose_text = ""
 			qdel(src)
+	owner.apply_status_effect(STATUS_EFFECT_INLOVE, obsession)
 	owner.mind.add_antag_datum(/datum/antagonist/creep)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/creep)
 	antagonist.trauma = src
