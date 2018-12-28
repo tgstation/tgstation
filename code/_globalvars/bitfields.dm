@@ -47,7 +47,6 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"NO_MAT_REDEMPTION" = NO_MAT_REDEMPTION,
 		"DROPDEL" = DROPDEL,
 		"NOBLUDGEON" = NOBLUDGEON,
-		"NODROP" = NODROP,
 		"ABSTRACT" = ABSTRACT,
 		),
 	"admin_flags" = list(
