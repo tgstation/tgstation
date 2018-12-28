@@ -750,6 +750,14 @@
 	lethal_projectile = /obj/item/projectile/beam/weak/penetrator
 	faction = list("neutral","silicon","turret")
 
+/obj/machinery/porta_turret/syndicate/russian
+	stun_projectile = /obj/item/projectile/bullet/a84mm_he
+	lethal_projectile = /obj/item/projectile/bullet/a84mm_he
+	lethal_projectile_sound = 'sound/weapons/rocketlaunch.ogg'
+	stun_projectile_sound = 'sound/weapons/rocketlaunch.ogg'
+	faction = list("russian")
+	desc = "An anti-ship turret."
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////
