@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscdel: "Normal shuttles that are not emagged will no longer throw things around.
-People will still be knocked down."
-  - rscadd: "Emagged shuttles and poorly designed shuttles will also throw things
-around on tables, as well as closets."

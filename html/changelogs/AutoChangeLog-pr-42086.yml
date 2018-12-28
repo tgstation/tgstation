@@ -1,5 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Strange Reagent now takes ten seconds to revive people and also notifies ghosts that their body is being revived."
-  - spellcheck: "Improved Strange Reagent's description and added a separate \"does not react\" message for when players try to revive hellbound or suicided corpses."

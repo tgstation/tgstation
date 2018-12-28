@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Ghosts now get notified whenever a bomb or C4/X4 get activated."
