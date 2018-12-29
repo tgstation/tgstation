@@ -172,9 +172,11 @@ Class Procs:
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/proc/dropContents()
+/obj/machinery/proc/dropContents(list/subset = null)
 	var/turf/T = get_turf(src)
 	for(var/atom/movable/A in contents)
+		if(subset && !(A in subset))
+			continue
 		A.forceMove(T)
 		if(isliving(A))
 			var/mob/living/L = A

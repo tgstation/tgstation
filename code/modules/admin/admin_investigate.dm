@@ -4,19 +4,39 @@
 	var/F = file("[GLOB.log_directory]/[subject].html")
 	WRITE_FILE(F, "<small>[time_stamp()] [REF(src)] ([x],[y],[z])</small> || [src] [message]<br>")
 
-/client/proc/investigate_show(subject in list("notes, memos, watchlist", INVESTIGATE_RESEARCH, INVESTIGATE_EXONET, INVESTIGATE_PORTAL, INVESTIGATE_SINGULO, INVESTIGATE_WIRES, INVESTIGATE_TELESCI, INVESTIGATE_GRAVITY, INVESTIGATE_RECORDS, INVESTIGATE_CARGO, INVESTIGATE_SUPERMATTER, INVESTIGATE_ATMOS, INVESTIGATE_EXPERIMENTOR, INVESTIGATE_BOTANY, INVESTIGATE_HALLUCINATIONS, INVESTIGATE_RADIATION, INVESTIGATE_CIRCUIT, INVESTIGATE_NANITES) )
+/client/proc/investigate_show()
 	set name = "Investigate"
 	set category = "Admin"
 	if(!holder)
 		return
-	switch(subject)
-		if("notes, memos, watchlist")
-			if(!check_rights(R_ADMIN))
-				return
-			browse_messages()
+
+	var/list/investigates = list(INVESTIGATE_RESEARCH, INVESTIGATE_EXONET, INVESTIGATE_PORTAL, INVESTIGATE_SINGULO, INVESTIGATE_WIRES, INVESTIGATE_TELESCI, INVESTIGATE_GRAVITY, INVESTIGATE_RECORDS, INVESTIGATE_CARGO, INVESTIGATE_SUPERMATTER, INVESTIGATE_ATMOS, INVESTIGATE_EXPERIMENTOR, INVESTIGATE_BOTANY, INVESTIGATE_HALLUCINATIONS, INVESTIGATE_RADIATION, INVESTIGATE_NANITES, INVESTIGATE_PRESENTS)
+
+	var/list/logs_present = list("notes, memos, watchlist")
+	var/list/logs_missing = list("---")
+
+	for(var/subject in investigates)
+		var/temp_file = file("[GLOB.log_directory]/[subject].html")
+		if(fexists(temp_file))
+			logs_present += subject
 		else
-			var/F = file("[GLOB.log_directory]/[subject].html")
-			if(!fexists(F))
-				to_chat(src, "<span class='danger'>No [subject] logfile was found.</span>")
-				return
-			src << browse(F,"window=investigate[subject];size=800x300")
+			logs_missing += "[subject] (empty)"
+
+	var/list/combined = logs_present + logs_missing
+
+	var/selected = input("Investigate what?", "Investigate") as null|anything in combined
+
+	if(!(selected in combined) || selected == "---")
+		return
+
+	selected = replacetext(selected, " (empty)", "")
+
+	if(selected == "notes, memos, watchlist" && check_rights(R_ADMIN))
+		browse_messages()
+		return
+
+	var/F = file("[GLOB.log_directory]/[selected].html")
+	if(!fexists(F))
+		to_chat(src, "<span class='danger'>No [selected] logfile was found.</span>")
+		return
+	src << browse(F,"window=investigate[selected];size=800x300")

@@ -195,6 +195,7 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
+!/.vscode/extensions.json
 tools/MapAtmosFixer/MapAtmosFixer/obj/*
 tools/MapAtmosFixer/MapAtmosFixer/bin/*
 

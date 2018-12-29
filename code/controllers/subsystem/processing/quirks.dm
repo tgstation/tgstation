@@ -16,11 +16,14 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	if(!quirks.len)
 		SetupQuirks()
-	quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic"),list("Ageusia","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"))
+	quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic","Hypersensitive"),list("Ageusia","Vegetarian","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"),list("Alcohol Tolerance","Light Drinker"))
 	return ..()
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
-	for(var/V in subtypesof(/datum/quirk))
+	// Sort by Positive, Negative, Neutral; and then by name
+	var/list/quirk_list = sortList(subtypesof(/datum/quirk), /proc/cmp_quirk_asc)
+
+	for(var/V in quirk_list)
 		var/datum/quirk/T = V
 		quirks[initial(T.name)] = T
 		quirk_points[initial(T.name)] = initial(T.value)
