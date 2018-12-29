@@ -37,7 +37,7 @@
 		process()
 		soundloop.start()
 		wash_atom(loc)
-		for(var/atom/movable/G in loc)
+		for(var/G in loc)
 			wash_atom(G)
 	else
 		soundloop.stop()
@@ -135,7 +135,7 @@
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
-		for(var/obj/item/I in M.held_items)
+		for(var/I in M.held_items)
 			wash_obj(I)
 
 		if(M.back && wash_obj(M.back))
@@ -200,13 +200,13 @@
 /obj/machinery/shower/process()
 	if(on)
 		wash_atom(loc)
-		for(var/atom/movable/AM in loc)
+		for(var/AM in loc)
 			wash_atom(AM)
 	else
 		return PROCESS_KILL
 
 /obj/machinery/shower/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal(loc, 3)
+	new /obj/item/stack/sheet/metal(drop_location(), 3)
 	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/L)
