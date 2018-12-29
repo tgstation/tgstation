@@ -2,9 +2,6 @@
 //Discord Bot Subsystem Ticker
 //****************************
 
-#define DISCORDBOTCOMMANDSFOLDER "data/discordbot/commands/"
-#define DISCORDBOTSTATUSFILE "data/discordbot/statics/server_status.txt"
-
 SUBSYSTEM_DEF(discord_bot)
 	name = "Discord Bot"
 	runlevels = (RUNLEVEL_LOBBY|RUNLEVEL_SETUP|RUNLEVEL_GAME|RUNLEVEL_POSTGAME)
@@ -36,9 +33,11 @@ SUBSYSTEM_DEF(discord_bot)
 
 /datum/controller/subsystem/discord_bot/Shutdown()
 	. = ..()
-	var/list/filelist = flist(DISCORDBOTCOMMANDSFOLDER)
+	var/list/filelist = flist("data/discordbot/commands/")
 	for(var/file in filelist)
-		var/f = DISCORDBOTCOMMANDSFOLDER+file
+		var/f = "data/discordbot/commands/"+file
+		if(!findtextEx(f,"txt",length(f)-3,length(f)+1))
+			continue
 		if(fexists(f))
 			fdel(f)
 
@@ -47,8 +46,8 @@ SUBSYSTEM_DEF(discord_bot)
 		//Server status file
 		if(!last_status_report || (last_status_report+(status_report_interval*10) <= world.time))
 			last_status_report = world.time
-			if(fexists(DISCORDBOTSTATUSFILE))
-				fdel(DISCORDBOTSTATUSFILE)
+			if(fexists("data/discordbot/statics/server_status.txt"))
+				fdel("data/discordbot/statics/server_status.txt")
 			var/list/reports = list()
 			var/lastcheck = time2text(world.timeofday,"hh:mm:ss")
 			if(lastcheck)
@@ -92,14 +91,16 @@ SUBSYSTEM_DEF(discord_bot)
 					report += ","
 				line++
 			report += "}"
-			var/thefile = file(DISCORDBOTSTATUSFILE)
+			var/thefile = file("data/discordbot/statics/server_status.txt")
 			if(thefile)
 				thefile << "[report]"
 		//Reading commands from the discord bot
-		var/list/filelist = flist(DISCORDBOTCOMMANDSFOLDER)
+		var/list/filelist = flist("data/discordbot/commands/")
 		if(istype(filelist,/list) && filelist.len)
 			for(var/file in filelist)
-				var/f = DISCORDBOTCOMMANDSFOLDER+file
+				if(!findtextEx(file,"txt",length(file)-3,length(file)+1))
+					continue
+				var/f = "data/discordbot/commands/"+file
 				if(fexists(f))
 					var/filecontents = file2text(f)
 					fdel(f)

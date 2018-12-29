@@ -1057,6 +1057,7 @@
 #include "code\modules\_toolbox\perseus\machines\security_system.dm"
 #include "code\modules\_toolbox\seasonal\halloween.dm"
 #include "code\modules\_toolbox\silly\clothing.dm"
+#include "code\modules\_toolbox\silly\hallucination.dm"
 #include "code\modules\_toolbox\silly\mice.dm"
 #include "code\modules\_toolbox\silly\pokerchips.dm"
 #include "code\modules\_toolbox\silly\redphones.dm"

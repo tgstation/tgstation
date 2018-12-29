@@ -39,7 +39,8 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 	/datum/hallucination/xeno_attack,
 	/datum/hallucination/singularity_scare,
 	/datum/hallucination/delusion,
-	/datum/hallucination/oh_yeah))
+	/datum/hallucination/oh_yeah,
+	/datum/hallucination/uber_mice_attack))
 
 /mob/living/carbon/proc/handle_hallucinations()
 	if(world.time < next_hallucination)
