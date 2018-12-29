@@ -229,7 +229,7 @@
 	name = "mosin nagat"
 	result = /obj/item/gun/ballistic/shotgun/boltaction/pinless
 	tools = list(TOOL_SCREWDRIVER)
-	reqs = list(/obj/item/mosin_nagat_parts = 1,
+	reqs = list(/obj/item/weaponcrafting/mosin_nagat_parts = 1,
 			/obj/item/weaponcrafting/stock = 1,)
 	time = 100
 	category = CAT_WEAPONRY

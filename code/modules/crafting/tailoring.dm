@@ -105,7 +105,7 @@
 
 /datum/crafting_recipe/rushat
 	name = "russian hat"
-	result = /obj/item/clothing/head/space/rus_hat
+	result = /obj/item/clothing/head/rus_hat
 	time = 50
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/stack/sheet/cloth/durathread = 1,
@@ -115,7 +115,7 @@
 
 /datum/crafting_recipe/russuit
 	name = "russian suit"
-	result = /obj/item/clothing/suit/space/rus_coat
+	result = /obj/item/clothing/suit/rus_coat
 	time = 50
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/stack/sheet/cloth/durathread = 3,

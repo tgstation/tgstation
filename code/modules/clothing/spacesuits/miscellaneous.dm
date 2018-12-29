@@ -364,20 +364,24 @@ Contains:
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 
-/obj/item/clothing/head/space/rus_hat
-	name = "\improper russian hat"
-	desc = "An extremely robust, space-worthy helmet in a nefarious red and black stripe pattern."
-	icon_state = "russianfurhat"
-	item_state = "russianfurhat"
+/obj/item/clothing/head/rus_hat
+	name = "russian hat"
+	desc = "An russian hat made out of space bear pelts, it seems spaceowrthy."
+	icon_state = "rhat"
+	item_state = "rhat"
 	armor = list("melee" = 40, "bullet" = 20, "laser" = 20,"energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 50, "fire" = 50, "acid" = 50)
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	strip_delay = 80
-	dog_fashion = null
 
-/obj/item/clothing/suit/space/rus_coat
+/obj/item/clothing/suit/rus_coat
 	name = "russian coat"
-	desc = "A bulky, air-tight suit meant to protect the user during emergency situations. It doesn't look very durable."
-	var/torn = FALSE
-	icon_state = "russianfurcoat"
-	item_state = "russianfurcoat"
+	desc = "An russian coat made out of space bear pelts, it seems spaceowrthy."
+	icon_state = "rcoat"
+	item_state = "rcoat"
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
 	armor = list("melee" = 40, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 50, "fire" = 50, "acid" = 50)
 	strip_delay = 65
