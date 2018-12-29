@@ -1138,14 +1138,15 @@
 	mob_pickup(user)
 	return TRUE
 
-/mob/living/display_output(sound/S, list/sound_image, text, turf/turf_source, vol as num)
+./mob/living/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num)
 	. = ..()
 		//Process icon
-	if(sound_image && audiolocation)
-		var/image/sound_icon = image(sound_image[1], , sound_image[2], sound_image[3])
+	if(vfx && audiolocation)
+		var/image/sound_icon = image(vfx)
+		sound_icon.loc = turf_source
+		to_chat(src, "[sound_icon.loc]")
 		if(vol && S)
 			sound_icon.alpha = sound_icon.alpha * (vol / 100)
-		sound_icon.loc = turf_source
 		client.images += sound_icon
 		addtimer(CALLBACK(src, .proc/remove_image, sound_icon), 7)
 

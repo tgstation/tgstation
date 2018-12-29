@@ -3,7 +3,10 @@
 /datum/outputs
 	var/text = ""
 	var/list/sounds = 'sound/items/airhorn.ogg' //can be either a sound path or a WEIGHTED list, put multiple for random selection between sounds
-	var/list/vfx = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
+	var/mutable_appearance/vfx = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
+
+/datum/outputs/New()
+	vfx = mutable_appearance(vfx[1],vfx[2],vfx[3])
 
 /datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	var/sound/sound_output
