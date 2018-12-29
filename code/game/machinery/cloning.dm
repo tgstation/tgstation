@@ -139,32 +139,32 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
-		return FALSE
+		return 0
 	if(mess || attempting)
-		return FALSE
+		return 0
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
-		return FALSE
+		return 0
 	if(clonemind.last_death != last_death) //The soul has advanced, the record has not.
-		return FALSE
+		return 0
 	if(!QDELETED(clonemind.current))
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
-			return FALSE
+			return 0
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
-			return FALSE
+			return 0
 	if(!clonemind.active)
 		// get_ghost() will fail if they're unable to reenter their body
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)
-			return FALSE
+			return 0
 		if(G.suiciding) // The ghost came from a body that is suiciding.
-			return FALSE
+			return 0
 	if(clonemind.damnation_type) //Can't clone the damned.
 		INVOKE_ASYNC(src, .proc/horrifyingsound)
 		mess = TRUE
 		icon_state = "pod_g"
 		update_icon()
-		return FALSE
+		return 0
 	current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
@@ -224,7 +224,7 @@
 
 		H.set_suicide(FALSE)
 	attempting = FALSE
-	return TRUE
+	return CLONING_SUCCESS
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
