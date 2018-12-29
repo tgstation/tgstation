@@ -24,7 +24,12 @@
 				var/their_loc = get_turf(C)
 				var/distance = get_dist_euclidian(my_loc, their_loc)
 				if (distance < HIVEMIND_RADAR_MAX_DISTANCE)
-					targets[C] = (HIVEMIND_RADAR_MAX_DISTANCE ** 2) - (distance ** 2)
+					var/multiplier = 0.5
+					if(C.mind)
+						var/datum/antagonist/hivemind/hive = C.mind.has_antag_datum(/datum/antagonist/hivemind)
+						if(hive)
+							multiplier = hive.get_threat_multiplier()
+					targets[C] = ((HIVEMIND_RADAR_MAX_DISTANCE ** 2) - (distance ** 2)) * multiplier
 
 	if(targets.len)
 		scan_target = pickweight(targets) //Point at a 'random' target, biasing heavily towards closer ones.
@@ -42,12 +47,12 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 
-/datum/status_effect/hive_track/on_creation(mob/living/new_owner, mob/living/hunter, set_duration)
+/datum/status_effect/hive_track/on_creation(mob/living/new_owner, mob/living/hunter, multiply_duration)
 	. = ..()
 	if(.)
 		tracked_by = hunter
-		if(isnum(set_duration))
-			duration = set_duration
+		if(isnum(multiply_duration))
+			duration *= set_duration
 
 //Screen alert
 /obj/screen/alert/status_effect/agent_pinpointer/hivemind

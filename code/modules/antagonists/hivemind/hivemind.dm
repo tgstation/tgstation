@@ -7,6 +7,7 @@
 	var/special_role = ROLE_HIVE
 	var/list/hivemembers = list()
 	var/hive_size = 0
+	var/threat_level = 0 // Part of what determines how strong the radar is, on a scale of 0 to 10
 	var/static/datum/objective/hivemind/assimilate_common/common_assimilation_obj //Make it static since we want a common target for all the antags
 
 	var/list/upgrade_tiers = list(
@@ -33,6 +34,10 @@
 	hive_size = hivemembers.len
 	if(hive_size != old_size)
 		check_powers()
+
+/datum/antagonist/hivemind/proc/get_threat_multiplier()
+	calc_size()
+	return min(hive.hive_size/50 + hive.threat_level/20, 1)
 
 /datum/antagonist/hivemind/proc/check_powers()
 	for(var/power in upgrade_tiers)

@@ -281,6 +281,14 @@
 
 	QDEL_NULL(backseat)
 
+	if(original_body && original_body.mind)
+		var/datum/antagonist/hivemind/hive = original_body.mind.has_antag_datum(/datum/antagonist/hivemind)
+		if(hive)
+			if((world.time-time_initialized) <= 300)
+				hive.threat_level += 0.5
+			else
+				hive.threat_level += 1
+
 /obj/effect/proc_holder/spell/target_hive/hive_control/on_lose(mob/user)
 	release_control()
 
@@ -451,6 +459,9 @@
 			deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> has suffered a mysterious heart attack!</span>", target)
 	else
 		to_chat(user, "<span class='warning'>We are unable to induce a heart attack!</span>")
+	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(hive)
+		hive.threat_level += 2
 
 /obj/effect/proc_holder/spell/target_hive/hive_warp
 	name = "Distortion Field"
@@ -521,16 +532,17 @@
 				return
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
 			var/datum/mind/M = enemy.owner
-			if(!M || M.current == user)
+			if(!M || !M.current || M.current == user)
 				continue
 			if(enemy.hivemembers.Find(target))
-				enemies += (get_real_hivehost(M.current))
+				var/mob/living/real_enemy = (get_real_hivehost(M.current))
+				enemies += real_enemy
 				enemy.remove_from_hive(target)
-				M.current.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, user)
-				if(is_real_hivehost(enemy.owner.current)) //If they were using mind control, too bad
-					M.current.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-					target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, M.current)
-					to_chat(M.current, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+				real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, user)
+				if(is_real_hivehost(M.current)) //If they were using mind control, too bad
+					real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+					target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_enemy)
+					to_chat(real_enemy, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
 			if(enemy.owner == target && is_real_hivehost(target))
 				user.Stun(70)
 				user.Jitter(14)
