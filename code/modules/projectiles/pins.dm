@@ -218,3 +218,11 @@
 	if(gun)
 		gun.pin = null
 	return ..()
+
+/obj/item/firing_pin/russian
+	name = "russian firing pin"
+
+/obj/item/firing_pin/russian/pin_auth(mob/living/carbon/user)
+	if(user.reagents.has_reagent("vodka"))
+		return TRUE
+	return FALSE

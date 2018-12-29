@@ -1,0 +1,3308 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/space)
+"ab" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"ac" = (
+/turf/open/space/basic,
+/area/ruin/space/has_grav/russian_ship/space)
+"ad" = (
+/obj/item/restraints/legcuffs/beartrap{
+	armed = 1
+	},
+/turf/open/space/basic,
+/area/ruin/space/has_grav/russian_ship/space)
+"af" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"ag" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"ah" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"ai" = (
+/turf/open/space,
+/area/ruin/space/has_grav/russian_ship/space)
+"aj" = (
+/obj/machinery/scanner_gate,
+/obj/effect/turf_decal/stripes/end,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"ak" = (
+/obj/machinery/power/rtg,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"al" = (
+/obj/machinery/power/rtg,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"am" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/extinguisher,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"an" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"ao" = (
+/obj/item/wallframe/light_fixture{
+	icon_state = "tube-empty";
+	dir = 1
+	},
+/obj/structure/fermenting_barrel/vodka,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"ap" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aq" = (
+/obj/machinery/door/airlock/hatch{
+	id_tag = "russian_external";
+	locked = 1
+	},
+/obj/effect/mine/stun,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"ar" = (
+/obj/structure/punching_bag,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"as" = (
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"at" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"au" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"av" = (
+/obj/machinery/power/emitter{
+	icon_state = "emitter";
+	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"aw" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"ax" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"ay" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"az" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aA" = (
+/obj/machinery/porta_turret/syndicate/russian,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aB" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aC" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aD" = (
+/obj/structure/falsewall/plastitanium,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aE" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"aF" = (
+/obj/structure/barricade/sandbags,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"aG" = (
+/obj/structure/barricade/sandbags,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"aH" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aI" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aJ" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/mob/living/simple_animal/cockroach,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aK" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aL" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aM" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"aN" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"aO" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aP" = (
+/obj/machinery/satellite,
+/obj/item/stack/sheet/mineral/sandbags,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aQ" = (
+/obj/structure/closet/crate/radiation,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aR" = (
+/obj/structure/glowshroom/glowcap,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aS" = (
+/obj/item/storage/box/lights,
+/obj/item/stock_parts/cell/potato,
+/obj/item/stock_parts/cell/potato,
+/obj/item/stock_parts/cell/potato,
+/obj/item/stock_parts/cell/potato,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aT" = (
+/obj/machinery/power/smes/magical{
+	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit.";
+	dir = 1;
+	name = "power storage unit"
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aU" = (
+/mob/living/simple_animal/hostile/bear/russian,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"aV" = (
+/obj/machinery/porta_turret/syndicate/russian,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aW" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"aX" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/rus_coat,
+/obj/item/clothing/head/rus_hat,
+/obj/item/clothing/head/rus_hat,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"aY" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"aZ" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"ba" = (
+/obj/structure/window/plastitanium,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bb" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bc" = (
+/obj/structure/rack,
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"bd" = (
+/obj/structure/shuttle/engine/large{
+	icon_state = "large_engine";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"be" = (
+/obj/machinery/space_heater,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"bf" = (
+/obj/machinery/computer{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bg" = (
+/obj/structure/chair/comfy/shuttle{
+	icon_state = "shuttle_chair";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bh" = (
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bi" = (
+/obj/structure/window/reinforced{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/obj/structure/shuttle/engine/heater{
+	icon_state = "heater";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bj" = (
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bk" = (
+/mob/living/simple_animal/hostile/russian/ranged/mosin,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bl" = (
+/obj/structure/fireplace,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"bm" = (
+/obj/structure/curtain{
+	icon_state = "closed"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/russian_ship/office)
+"bn" = (
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bo" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bp" = (
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bq" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/under/soviet,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"br" = (
+/obj/structure/chair,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bs" = (
+/obj/structure/chair,
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bt" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bu" = (
+/obj/item/cigbutt,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bv" = (
+/mob/living/simple_animal/hostile/russian/ranged/trooper,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/ruin/space/has_grav/russian_ship/office)
+"bw" = (
+/obj/machinery/door/poddoor{
+	id = "russian poddoor"
+	},
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bx" = (
+/obj/structure/window/reinforced/tinted,
+/obj/structure/window/reinforced/tinted{
+	icon_state = "twindow";
+	dir = 8
+	},
+/obj/structure/dresser,
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/russian_ship/office)
+"by" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/office)
+"bz" = (
+/obj/machinery/blackbox_recorder,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bA" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/item/reagent_containers/pill/cyanide,
+/obj/item/reagent_containers/pill/cyanide,
+/obj/item/reagent_containers/pill/cyanide,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bB" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/rus_coat,
+/obj/item/clothing/suit/rus_coat,
+/obj/item/clothing/head/rus_hat,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/engine)
+"bC" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/n762,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bD" = (
+/obj/item/bear_armor,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bE" = (
+/turf/closed/indestructible/opshuttle,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bF" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bG" = (
+/obj/structure/table/reinforced,
+/obj/item/card/data/disk,
+/obj/item/taperecorder,
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bH" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bI" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/soup/mystery,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bJ" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bK" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bL" = (
+/obj/machinery/space_heater,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bM" = (
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"bN" = (
+/obj/machinery/washing_machine,
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"bO" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bP" = (
+/obj/effect/mine/explosive,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bQ" = (
+/obj/machinery/door/poddoor{
+	id = "russian poddoor"
+	},
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bR" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bS" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"bT" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bU" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bV" = (
+/obj/structure/table,
+/obj/item/trash/tray,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bW" = (
+/obj/structure/window/reinforced/tinted,
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/obj/machinery/button/door{
+	id = "russian_vault"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/russian_ship/office)
+"bX" = (
+/obj/structure/shuttle/engine/router,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"bY" = (
+/obj/structure/table,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"bZ" = (
+/obj/structure/table,
+/obj/item/storage/box/matches,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"ca" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cb" = (
+/obj/structure/falsewall/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"cc" = (
+/obj/machinery/flasher{
+	id = "russian flasher"
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/office)
+"cd" = (
+/obj/structure/rack,
+/obj/item/gun/grenadelauncher,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"ce" = (
+/obj/machinery/door/poddoor{
+	id = "russian poddoor"
+	},
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/grille,
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"cf" = (
+/obj/structure/chair/wood/normal,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"cg" = (
+/obj/structure/chair/wood/normal,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/effect/turf_decal/stripes/red/line{
+	icon_state = "warningline_red";
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"ch" = (
+/obj/machinery/door/airlock/vault{
+	id_tag = "russian_vault";
+	locked = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/office)
+"ci" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/item/clothing/head/bearpelt,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"cj" = (
+/obj/machinery/door/airlock/vault{
+	id_tag = "russian_vault";
+	locked = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/vault)
+"ck" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cl" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/mine/explosive,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cm" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cn" = (
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"co" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cp" = (
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"cq" = (
+/obj/structure/window/reinforced{
+	icon_state = "rwindow";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cr" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction{
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cs" = (
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking bear bed. You can even strap your pet in, in case the gravity turns off.";
+	name = "bear bed"
+	},
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"ct" = (
+/obj/structure/shuttle/engine/router,
+/obj/item/rupee,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cu" = (
+/obj/item/cigbutt/cigarbutt,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cv" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cw" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cx" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cy" = (
+/obj/structure/bed,
+/obj/item/bedsheet/hos{
+	name = "officer's bedsheet"
+	},
+/turf/open/floor/carpet,
+/area/ruin/space/has_grav/russian_ship/office)
+"cz" = (
+/obj/structure/table/wood/bar,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"cA" = (
+/obj/structure/table/wood/bar,
+/obj/machinery/button/flasher{
+	id = "russian flasher"
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"cB" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/mine/explosive,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cC" = (
+/obj/machinery/door/poddoor{
+	id = "russian poddoor"
+	},
+/obj/effect/spawner/structure/window/plastitanium,
+/obj/structure/grille,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"cD" = (
+/obj/machinery/computer/monitor/secret{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"cE" = (
+/obj/effect/decal/cleanable/vomit/old{
+	icon_state = "vomittox_4"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cF" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cG" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cH" = (
+/obj/structure/chair{
+	icon_state = "chair";
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cI" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cJ" = (
+/mob/living/simple_animal/hostile/russian/ranged/officer,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/ruin/space/has_grav/russian_ship/office)
+"cK" = (
+/obj/structure/chair/comfy/brown{
+	icon_state = "comfychair";
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"cL" = (
+/obj/machinery/autolathe,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cM" = (
+/obj/structure/rack,
+/obj/item/storage/box/firingpins,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cN" = (
+/obj/structure/piano,
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cO" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cP" = (
+/obj/machinery/computer/gulag_teleporter_computer{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"cQ" = (
+/obj/structure/mopbucket,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cR" = (
+/obj/effect/decal/cleanable/vomit/old{
+	icon_state = "xgibbl4"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"cS" = (
+/obj/structure/displaycase/trophy,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"cT" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"cU" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/a762,
+/obj/item/ammo_box/n762,
+/obj/machinery/light{
+	icon_state = "tube";
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"cV" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"cW" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"cX" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"cY" = (
+/obj/structure/weightmachine/weightlifter,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"cZ" = (
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"da" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"db" = (
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"dc" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/head/bearpelt,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/under/soviet,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dd" = (
+/mob/living/simple_animal/hostile/bear/russian,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"de" = (
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking bear bed. You can even strap your pet in, in case the gravity turns off.";
+	name = "bear bed"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_1)
+"df" = (
+/mob/living/simple_animal/cockroach,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dg" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction{
+	pixel_y = 5
+	},
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"dh" = (
+/obj/machinery/power/emitter{
+	icon_state = "emitter";
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"di" = (
+/obj/structure/closet/crate/bin,
+/obj/item/reagent_containers/food/snacks/customizable/kebab,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dj" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dk" = (
+/obj/structure/cable,
+/obj/machinery/power/apc,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"dl" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dm" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dn" = (
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/obj/effect/decal/cleanable/shreds,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"do" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dp" = (
+/obj/structure/curtain,
+/obj/machinery/shower,
+/obj/item/soap/homemade,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dq" = (
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dr" = (
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/russian/ranged/trooper,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"ds" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"dt" = (
+/obj/machinery/scanner_gate,
+/obj/effect/turf_decal/stripes/end{
+	icon_state = "warn_end";
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"du" = (
+/obj/structure/safe/floor,
+/obj/item/disk/design_disk/space/russian_firing_pin,
+/obj/item/disk/design_disk/space/mosin_nagat_parts,
+/obj/item/disk/design_disk/space/mosin_nagat_ammo,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"dv" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dw" = (
+/obj/structure/kitchenspike,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dx" = (
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dy" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/trash/tray,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dz" = (
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dA" = (
+/obj/item/seeds/potato,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dB" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dC" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dD" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"dE" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"dF" = (
+/obj/structure/barricade/sandbags,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"dG" = (
+/obj/structure/table,
+/obj/machinery/dish_drive,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dH" = (
+/obj/machinery/hydroponics,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dI" = (
+/obj/structure/rack,
+/obj/item/doorCharge,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"dJ" = (
+/obj/machinery/porta_turret/syndicate/russian,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dK" = (
+/obj/machinery/porta_turret/syndicate/russian,
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dL" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dM" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"dN" = (
+/obj/structure/bookcase/random/fiction,
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"dO" = (
+/obj/structure/rack,
+/obj/item/grenade/syndieminibomb/concussion,
+/obj/item/grenade/syndieminibomb/concussion,
+/obj/item/grenade/syndieminibomb/concussion,
+/obj/structure/cable,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"dP" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/has_grav/russian_ship/office)
+"dQ" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/suit/armor/bulletproof,
+/obj/item/clothing/under/soviet,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dR" = (
+/obj/structure/weightmachine/stacklifter,
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dS" = (
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"dT" = (
+/obj/item/cigbutt,
+/obj/effect/decal/cleanable/vomit/old{
+	icon_state = "xfloor5"
+	},
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/central_zone)
+"dU" = (
+/obj/structure/rack,
+/obj/machinery/light,
+/obj/item/bombcore,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"dV" = (
+/obj/machinery/space_heater,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dW" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"dX" = (
+/obj/structure/fermenting_barrel/vodka,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/russian_ship/vault)
+"dY" = (
+/obj/structure/rack,
+/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/structure/cable,
+/obj/machinery/power/apc,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"dZ" = (
+/obj/item/reagent_containers/food/snacks/rationpack,
+/obj/item/reagent_containers/food/snacks/rationpack,
+/obj/structure/closet/crate/freezer,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/grown/potato,
+/obj/item/reagent_containers/food/snacks/rationpack,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"ea" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/machinery/light,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"eb" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/machinery/button/door{
+	id = "russian poddoor";
+	pixel_x = -5
+	},
+/obj/machinery/light,
+/obj/machinery/button/door{
+	id = "russian_external";
+	step_x = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/bridge)
+"ec" = (
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking bear bed. You can even strap your pet in, in case the gravity turns off.";
+	name = "bear bed"
+	},
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"ed" = (
+/obj/structure/bed/dogbed{
+	desc = "A comfy-looking bear bed. You can even strap your pet in, in case the gravity turns off.";
+	name = "bear bed"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/barracks_2)
+"ee" = (
+/obj/machinery/light,
+/obj/structure/fermenting_barrel/vodka,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+"ef" = (
+/obj/structure/fermenting_barrel/vodka,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/russian_ship/kitchen)
+
+(1,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(2,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(3,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(4,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(5,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(6,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(7,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aZ
+bw
+bQ
+bQ
+ce
+bQ
+bQ
+cC
+aZ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(8,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aZ
+aZ
+bf
+bf
+bF
+bR
+bF
+cD
+cP
+aZ
+aZ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(9,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aZ
+aZ
+bG
+bg
+bg
+da
+bS
+bF
+bg
+bg
+eb
+aZ
+aZ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(10,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aZ
+ba
+aZ
+aZ
+aZ
+aZ
+cb
+ds
+cb
+aZ
+aZ
+aZ
+aZ
+ba
+aZ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(11,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aZ
+av
+aM
+aM
+aM
+bo
+aW
+bT
+aW
+bo
+aM
+cV
+aM
+dh
+aZ
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(12,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+aZ
+bj
+aN
+aw
+cp
+aZ
+ah
+bU
+dk
+aZ
+cp
+aw
+aw
+dW
+aZ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(13,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aA
+aO
+aO
+aO
+aO
+aZ
+aZ
+ah
+aE
+cu
+aZ
+aZ
+cW
+cW
+cW
+cW
+dJ
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(14,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aO
+ak
+ax
+aP
+aO
+bh
+cN
+ah
+aE
+ah
+bn
+bh
+cW
+dj
+dy
+dG
+cW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(15,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aO
+al
+ay
+aQ
+aO
+ah
+ah
+ah
+aE
+bk
+ah
+ah
+cW
+dS
+dz
+dH
+cW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(16,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aO
+ao
+au
+aT
+aO
+ab
+ah
+aU
+aE
+ah
+cE
+dM
+cW
+dZ
+dA
+dH
+cW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(17,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aO
+am
+ay
+aS
+aO
+ah
+br
+bH
+bV
+bJ
+cF
+ah
+cW
+dv
+dA
+ee
+cW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(18,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aO
+aR
+aB
+aX
+aO
+ah
+br
+bI
+bY
+cv
+cF
+ah
+cW
+dw
+dB
+ef
+cW
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(19,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aO
+ap
+aC
+bB
+aO
+ah
+bs
+bJ
+bY
+bI
+cG
+ah
+cW
+dx
+dB
+ef
+cW
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(20,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+aO
+aO
+at
+aO
+aO
+bk
+br
+bI
+bY
+bJ
+cF
+ah
+cW
+cW
+dC
+cW
+cW
+aa
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(21,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ag
+ah
+ah
+aE
+bn
+ag
+ah
+bs
+bJ
+bZ
+bH
+cH
+ah
+ag
+dT
+aE
+ah
+ah
+ag
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+"}
+(22,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aq
+aj
+ah
+aF
+aU
+ag
+ab
+bt
+ah
+aE
+ah
+cI
+dM
+ag
+aU
+aF
+ah
+dt
+aq
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(23,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ag
+ab
+ah
+aG
+aW
+bb
+aW
+bu
+bK
+ca
+cw
+aW
+aW
+bb
+aW
+dD
+ah
+dM
+ag
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(24,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ag
+ah
+ah
+aF
+ah
+ag
+ah
+ah
+ah
+aE
+cx
+ah
+cQ
+ag
+ah
+dE
+ah
+ah
+ag
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(25,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aq
+aj
+ah
+aF
+aU
+ag
+ah
+bp
+bL
+aE
+ah
+bp
+cR
+ag
+aU
+dF
+ah
+dt
+aq
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+"}
+(26,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ag
+ah
+ah
+aE
+bp
+ag
+by
+by
+cc
+ch
+cc
+by
+by
+ag
+bp
+aE
+ah
+ah
+ag
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(27,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+af
+af
+aH
+af
+af
+bl
+bv
+db
+ci
+dr
+bM
+cS
+cX
+cX
+dl
+cX
+cX
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(28,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+aa
+af
+ar
+aI
+cs
+af
+bm
+bx
+dd
+cf
+cz
+cJ
+dN
+cX
+ec
+dm
+dp
+cX
+aa
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(29,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+af
+as
+aI
+de
+af
+cy
+bW
+dP
+cg
+cA
+cK
+cT
+cX
+ed
+dm
+dq
+cX
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(30,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ac
+ac
+ac
+af
+as
+aI
+de
+af
+bE
+bE
+bE
+cj
+bE
+bE
+bE
+cX
+ed
+dm
+dq
+cX
+ac
+ac
+ai
+ai
+ai
+ac
+ad
+ac
+ac
+ac
+"}
+(31,1,1) = {"
+ac
+ac
+ad
+ac
+ac
+ac
+ai
+ac
+ac
+ac
+af
+as
+aJ
+aL
+bN
+bE
+bz
+bO
+ck
+bO
+cL
+bE
+dQ
+df
+dm
+dq
+cX
+ac
+ac
+ai
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+"}
+(32,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ai
+ai
+ac
+ac
+af
+an
+aK
+aL
+bq
+bE
+bA
+bP
+ck
+bO
+dI
+bE
+dc
+cZ
+dn
+dY
+cX
+ac
+ac
+ai
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(33,1,1) = {"
+ai
+ac
+ac
+ac
+ac
+ac
+ai
+aV
+ac
+ac
+af
+bc
+aL
+aL
+be
+bE
+cO
+bO
+ck
+bO
+cM
+bE
+di
+cZ
+cZ
+ea
+cX
+ac
+ac
+dK
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(34,1,1) = {"
+ai
+ac
+ac
+ac
+ac
+ac
+ai
+af
+ac
+ac
+af
+as
+aL
+aY
+as
+bE
+cU
+bO
+cl
+du
+dU
+bE
+cY
+cZ
+do
+dq
+cX
+ac
+ac
+cX
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(35,1,1) = {"
+ai
+ac
+ac
+ac
+ac
+ac
+ai
+af
+af
+ac
+af
+as
+aL
+aL
+as
+bE
+bC
+bO
+cm
+cB
+dO
+bE
+cZ
+cZ
+cZ
+dq
+cX
+ac
+cX
+cX
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(36,1,1) = {"
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+af
+af
+az
+af
+as
+aL
+aL
+cn
+bE
+bD
+cd
+dg
+cr
+dX
+bE
+dR
+dV
+cZ
+dq
+cX
+dL
+cX
+cX
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(37,1,1) = {"
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+af
+af
+af
+af
+af
+af
+af
+aD
+bE
+bE
+bE
+bE
+bE
+bE
+bE
+aD
+af
+af
+af
+af
+cX
+cX
+cX
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(38,1,1) = {"
+ai
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+af
+af
+af
+bO
+bd
+bi
+bO
+bd
+bX
+bX
+co
+bX
+ct
+bO
+bd
+bi
+bO
+bd
+cX
+cX
+cX
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+"}
+(39,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+aV
+ac
+ac
+ac
+ac
+ac
+bO
+bd
+cq
+bO
+bd
+ac
+ac
+ac
+ac
+ac
+dK
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(40,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(41,1,1) = {"
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(42,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(43,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(44,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(45,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(46,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(47,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+"}
+(48,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(49,1,1) = {"
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}
+(50,1,1) = {"
+ac
+ac
+ad
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+"}

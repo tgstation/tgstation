@@ -77,3 +77,11 @@
 	reqs = list(/obj/item/stack/sheet/mineral/wood = 30)
 	time = 50
 	category = CAT_PRIMAL
+
+/obj/structure/fermenting_barrel/vodka
+	name = "wooden barrel"
+	desc = "A large wooden barrel full of vodka."
+
+/obj/structure/fermenting_barrel/vodka/Initialize()
+	. = ..()
+	reagents.add_reagent("vodka",300)

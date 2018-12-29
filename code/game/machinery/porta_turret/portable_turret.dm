@@ -686,6 +686,14 @@
 	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
 
+/obj/machinery/porta_turret/syndicate/russian
+	stun_projectile = /obj/item/projectile/bullet/a84mm_he
+	lethal_projectile = /obj/item/projectile/bullet/a84mm_he
+	lethal_projectile_sound = 'sound/weapons/rocketlaunch.ogg'
+	stun_projectile_sound = 'sound/weapons/rocketlaunch.ogg'
+	faction = list("russian")
+	desc = "An anti-ship turret."
+
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
 

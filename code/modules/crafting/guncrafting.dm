@@ -13,3 +13,9 @@
 	desc = "A classic rifle stock that doubles as a grip, roughly carved out of wood."
 	icon = 'icons/obj/improvised.dmi'
 	icon_state = "riflestock"
+
+/obj/item/weaponcrafting/mosin_nagat_parts
+	name = "mosin nagat parts"
+	desc = "A bunch of parts."
+	icon = 'icons/obj/mysterybox.dmi'
+	icon_state = "cigarbox_locked"

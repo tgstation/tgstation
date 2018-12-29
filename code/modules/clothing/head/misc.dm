@@ -364,3 +364,14 @@
 		if(prob(3))
 			M += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
 	return trim(M)
+
+/obj/item/clothing/head/rus_hat
+	name = "russian hat"
+	desc = "An russian hat made out of space bear pelts, it seems spaceowrthy."
+	icon_state = "rhat"
+	item_state = "rhat"
+	armor = list("melee" = 40, "bullet" = 20, "laser" = 20,"energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 50, "fire" = 50, "acid" = 50)
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	strip_delay = 80

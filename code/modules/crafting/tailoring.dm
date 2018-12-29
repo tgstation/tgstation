@@ -102,3 +102,23 @@
 	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/bedsheet = 1)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/rushat
+	name = "russian hat"
+	result = /obj/item/clothing/head/rus_hat
+	time = 50
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 1,
+				/obj/item/stack/sheet/cloth = 1,
+				/obj/item/clothing/head/bearpelt = 1)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/russuit
+	name = "russian suit"
+	result = /obj/item/clothing/suit/rus_coat
+	time = 50
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/stack/sheet/cloth/durathread = 3,
+				/obj/item/stack/sheet/cloth = 3,
+				/obj/item/clothing/head/bearpelt = 2)
+	category = CAT_CLOTHING

@@ -621,3 +621,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_inv = HIDEGLOVES|HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	alternate_worn_layer = UNDER_HEAD_LAYER
+
+/obj/item/clothing/suit/rus_coat
+	name = "russian coat"
+	desc = "An russian coat made out of space bear pelts, it seems spaceowrthy."
+	icon_state = "rcoat"
+	item_state = "rcoat"
+	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
+	armor = list("melee" = 40, "bullet" = 20, "laser" = 20, "energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 50, "fire" = 50, "acid" = 50)
+	strip_delay = 65

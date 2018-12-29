@@ -287,3 +287,9 @@
 	suffix = "hilbertshoteltestingsite.dmm"
 	name = "Hilbert Research Facility"
 	description = "A research facility of great bluespace discoveries. Long since abandoned, willingly or not..."
+
+datum/map_template/ruin/space/russianship
+	id = "russianship"
+	suffix = "russian_ship.dmm"
+	name = "Russian Ship"
+	description = "A space russia ship on an unknown mission."

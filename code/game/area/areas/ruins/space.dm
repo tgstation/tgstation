@@ -406,3 +406,38 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle
 	name = "Ancient Shuttle"
 	icon_state = "yellow"
+
+//RUSSIAN SHIP
+/area/ruin/space/has_grav/russian_ship/engine
+	name = "Engine"
+	icon_state = "yellow"
+
+/area/ruin/space/has_grav/russian_ship/barracks_1
+	name = "Barracks 1"
+	icon_state = "Sleep"
+
+/area/ruin/space/has_grav/russian_ship/barracks_2
+	name = "Barracks 2"
+	icon_state = "Sleep"
+
+/area/ruin/space/has_grav/russian_ship/central_zone
+	name = "Canteen"
+	icon_state = "hallP"
+/area/ruin/space/has_grav/russian_ship/bridge
+	name = "Bridge"
+	icon_state = "bridge"
+
+/area/ruin/space/has_grav/russian_ship/vault
+	name = "Vault"
+	icon_state = "red"
+
+/area/ruin/space/has_grav/russian_ship/office
+	name = "Office"
+	icon_state = "red"
+
+/area/ruin/space/has_grav/russian_ship/kitchen
+	name = "Kitchen"
+	icon_state = "hydro"
+
+/area/ruin/space/has_grav/russian_ship/space
+	name = "Russian Space"
