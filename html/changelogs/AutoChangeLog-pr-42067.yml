@@ -1,0 +1,8 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - balance: "blobs now receive a 50% cost refund on attacks that don't spread"
+  - balance: "blobs receive a free chemical re-roll every 4 minutes"
+  - balance: "reflector blobs are considerably tougher"
+  - bugfix: "attempting to turn a damaged strong blob into a reflector blob now refunds points"
+  - bugfix: "fixed an intregrity"
