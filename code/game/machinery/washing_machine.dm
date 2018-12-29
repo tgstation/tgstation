@@ -7,7 +7,6 @@
 	state_open = TRUE
 	var/busy = FALSE
 	var/bloody_mess = 0
-	var/has_corgi = 0
 	var/obj/item/color_source
 	var/max_wash_capacity = 5
 
@@ -34,26 +33,24 @@
 		to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
 		return
 
-	if(has_corgi)
-		bloody_mess = 1
-
 	busy = TRUE
 	update_icon()
 	addtimer(CALLBACK(src, .proc/wash_cycle), 200)
+
 	START_PROCESSING(SSfastprocess, src)
 
 /obj/machinery/washing_machine/process()
-	if (!busy)
+	if(!busy)
 		animate(src, transform=matrix(), time=2)
 		return PROCESS_KILL
-	if (anchored)
-		if (prob(5))
+	if(anchored)
+		if(prob(5))
 			var/matrix/M = new
 			M.Translate(rand(-1, 1), rand(0, 1))
 			animate(src, transform=M, time=1)
 			animate(transform=matrix(), time=1)
 	else
-		if (prob(1))
+		if(prob(1))
 			step(src, pick(GLOB.cardinals))
 		var/matrix/M = new
 		M.Translate(rand(-3, 3), rand(-1, 3))
@@ -75,7 +72,6 @@
 		qdel(color_source)
 		color_source = null
 	update_icon()
-
 
 //what happens to this object when washed inside a washing machine
 /atom/movable/proc/machine_wash(obj/machinery/washing_machine/WM)
@@ -100,15 +96,22 @@
 				add_atom_colour(RF.color, WASHABLE_COLOUR_PRIORITY)
 
 /mob/living/simple_animal/pet/dog/corgi/machine_wash(obj/machinery/washing_machine/WM)
+	WM.bloody_mess = TRUE
 	gib()
 
+/obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/WM)
+	freshly_laundered = TRUE
+
 /obj/item/clothing/under/color/machine_wash(obj/machinery/washing_machine/WM)
+	..()
 	jumpsuit_wash(WM)
 
 /obj/item/clothing/under/rank/machine_wash(obj/machinery/washing_machine/WM)
+	..()
 	jumpsuit_wash(WM)
 
 /obj/item/clothing/under/proc/jumpsuit_wash(obj/machinery/washing_machine/WM)
+
 	if(WM.color_source)
 		var/wash_color = WM.color_source.item_color
 		var/obj/item/clothing/under/U
@@ -128,7 +131,7 @@
 			icon_state = initial(U.icon_state)
 			item_color = wash_color
 			name = initial(U.name)
-			desc = "The colors are a bit dodgy."
+			dodgy_colours = TRUE
 			can_adjust = initial(U.can_adjust)
 			if(!can_adjust && adjusted) //we deadjust the uniform if it's now unadjustable
 				toggle_jumpsuit_adjust()
@@ -283,7 +286,6 @@
 			return
 		if(state_open)
 			if(iscorgi(L))
-				has_corgi = 1
 				L.forceMove(src)
 				update_icon()
 		return
@@ -295,11 +297,10 @@
 		update_icon()
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 2)
+	new /obj/item/stack/sheet/metal(drop_location(), 2)
 	qdel(src)
 
 /obj/machinery/washing_machine/open_machine(drop = 1)
 	..()
 	density = TRUE //because machinery/open_machine() sets it to 0
 	color_source = null
-	has_corgi = 0
