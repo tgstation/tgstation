@@ -17,6 +17,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 	icon_state = "giftdeliverypackage3"
 	item_state = "gift"
 	resistance_flags = FLAMMABLE
+
 	var/obj/item/contains_type
 
 /obj/item/a_gift/Initialize()
