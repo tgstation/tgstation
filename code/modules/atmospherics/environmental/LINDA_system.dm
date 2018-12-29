@@ -45,7 +45,7 @@
 
 /turf/proc/CalculateAdjacentTurfs()
 	var/canpass = CANATMOSPASS(src, src) 
-	var/canvpass = CANVERTICALATMOSPASS(src, src))
+	var/canvpass = CANVERTICALATMOSPASS(src, src)
 	for(var/direction in GLOB.cardinals_multiz)
 		var/turf/T = get_step_multiz(src, direction)
 		if(!isopenturf(T))
