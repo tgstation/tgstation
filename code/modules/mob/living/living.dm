@@ -1199,7 +1199,6 @@
 	if(vfx && audiolocation)
 		var/image/sound_icon = image(vfx)
 		sound_icon.loc = turf_source
-		to_chat(src, "[sound_icon.loc]")
 		if(vol && S)
 			sound_icon.alpha = sound_icon.alpha * (vol / 100)
 		client.images += sound_icon
