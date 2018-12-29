@@ -84,7 +84,7 @@
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
 
-/obj/item/storage/box/evidence/Initialize()
+/obj/item/storage/box/evidence/PopulateContents()
 	. = ..()
 	new /obj/item/evidencebag(src)
 	new /obj/item/evidencebag(src)
