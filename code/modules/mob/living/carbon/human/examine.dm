@@ -35,7 +35,7 @@
 	if(wear_suit)
 		msg += "[t_He] [t_is] wearing [wear_suit.get_examine_string(user)].\n"
 		//suit/armor storage
-		if(s_store)
+		if(s_store && !(SLOT_S_STORE in obscured))
 			msg += "[t_He] [t_is] carrying [s_store.get_examine_string(user)] on [t_his] [wear_suit.name].\n"
 	//back
 	if(back)
@@ -76,7 +76,7 @@
 	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
 		msg += "[t_He] [t_has] [wear_mask.get_examine_string(user)] on [t_his] face.\n"
 
-	if (wear_neck && !(SLOT_NECK in obscured))
+	if(wear_neck && !(SLOT_NECK in obscured))
 		msg += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck.\n"
 
 	//eyes

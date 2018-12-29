@@ -55,7 +55,7 @@ GLOBAL_PROTECT(href_token)
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
-	if (force_active || (R.rights & R_AUTOLOGIN))
+	if (force_active || (R.rights & R_AUTOADMIN))
 		activate()
 	else
 		deactivate()

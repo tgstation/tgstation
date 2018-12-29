@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - balance: "Putting an item back into your inventory as a cyborg will now automatically turn said item off (ie welders, lighters, ect.)"
-  - bugfix: "Cyborgs can now longer conceal unconcealable energy saws (ie ones that are activated) inside themselves. They will now turn off automatically."

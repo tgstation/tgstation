@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"ABSTRACT" = ABSTRACT,
 		),
 	"admin_flags" = list(
-		"BUILDMODE" = R_BUILDMODE,
+		"BUILDMODE" = R_BUILD,
 		"ADMIN" = R_ADMIN,
 		"BAN" = R_BAN,
 		"FUN" = R_FUN,
@@ -62,9 +62,9 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"STEALTH" = R_STEALTH,
 		"POLL" = R_POLL,
 		"VAREDIT" = R_VAREDIT,
-		"SOUNDS" = R_SOUNDS,
+		"SOUNDS" = R_SOUND,
 		"SPAWN" = R_SPAWN,
-		"AUTOLOGIN" = R_AUTOLOGIN,
+		"AUTOLOGIN" = R_AUTOADMIN,
 		"DBRANKS" = R_DBRANKS
 		),
 	"interaction_flags_atom" = list(
@@ -113,9 +113,6 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"INDESTRUCTIBLE" = INDESTRUCTIBLE,
 		"FREEZE_PROOF" = FREEZE_PROOF
 		),
-	"reagents_holder_flags" = list(
-		"REAGENT_NOREACT" = REAGENT_NOREACT
-		),
 	"flags_1" = list(
 		"NOJAUNT_1" = NOJAUNT_1,
 		"UNUSED_RESERVATION_TURF_1" = UNUSED_RESERVATION_TURF_1,
@@ -155,14 +152,6 @@ GLOBAL_LIST_INIT(bitfields, list(
 		"SMOOTH_DIAGONAL" = SMOOTH_DIAGONAL,
 		"SMOOTH_BORDER" = SMOOTH_BORDER,
 		"SMOOTH_QUEUED" = SMOOTH_QUEUED,
-		),
-	"container_type" = list(
-		"INJECTABLE" = INJECTABLE,
-		"DRAWABLE" = DRAWABLE,
-		"REFILLABLE" = REFILLABLE,
-		"DRAINABLE" = DRAINABLE,
-		"TRANSPARENT" = TRANSPARENT,
-		"AMOUNT_VISIBLE" = AMOUNT_VISIBLE,
 		),
 	"car_traits" = list(
 		"CAN_KIDNAP" = CAN_KIDNAP,

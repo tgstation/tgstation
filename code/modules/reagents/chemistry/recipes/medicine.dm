@@ -165,6 +165,12 @@
 	results = list("mannitol" = 3)
 	required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
 	mix_message = "The solution slightly bubbles, becoming thicker."
+	
+/datum/chemical_reaction/neurine
+	name = "Neurine"
+	id = "neurine"
+	results = list("neurine" = 3)
+	required_reagents = list("mannitol" = 1, "acetone" = 1, "oxygen" = 1)
 
 /datum/chemical_reaction/mutadone
 	name = "Mutadone"

@@ -130,7 +130,7 @@
 
 /datum/design/board/overlord_module
 	name = "Core Module Design (Overlord)"
-	desc = "Allows for the construction of a Overlord AI Module."
+	desc = "Allows for the construction of an Overlord AI Module."
 	id = "overlord_module"
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/aiModule/core/full/overlord

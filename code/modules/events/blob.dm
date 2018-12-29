@@ -24,7 +24,6 @@
 		return NOT_ENOUGH_PLAYERS
 	var/mob/dead/observer/new_blob = pick(candidates)
 	var/mob/camera/blob/BC = new_blob.become_overmind()
-	atom_of_interest = BC
 	spawned_mobs += BC
 	message_admins("[ADMIN_LOOKUPFLW(BC)] has been made into a blob overmind by an event.")
 	log_game("[key_name(BC)] was spawned as a blob overmind by an event.")

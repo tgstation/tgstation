@@ -1,6 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - rscadd: "Added three new .38 ammo types. TRAC bullets, which embed a tracking implant inside the target's body. The implant only lasts for five minutes and doesn't work as a teleport beacon. Hot Shot bullets set targets on fire; Iceblox bullets drastically lower the target's body temperature. They are available after researching the Subdermal Implants node (TRAC) or Exotic Ammunition node (Hot Shot/Iceblox)."
-  - tweak: "Renamed the Technological Shells research node to Exotic Ammunition."
-  - code_imp: "The \"lifespan_postmortem\" var now determines how long tracking implants work after death."

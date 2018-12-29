@@ -40,6 +40,15 @@
 	QDEL_LIST(diseases)
 	return ..()
 
+/mob/living/onZImpact(turf/T, levels)
+	ZImpactDamage(T, levels)
+	return ..()
+
+/mob/living/proc/ZImpactDamage(turf/T, levels)
+	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
+	adjustBruteLoss((levels * 5) ** 1.5)
+	Knockdown(levels * 50)
+
 /mob/living/proc/OpenCraftingMenu()
 	return
 
@@ -105,13 +114,15 @@
 		return 1
 
 	if(!M.buckled && !M.has_buckled_mobs())
-		var/mob_swap
+		var/mob_swap = FALSE
 		//the puller can always swap with its victim if on grab intent
 		if(M.pulledby == src && a_intent == INTENT_GRAB)
-			mob_swap = 1
+			mob_swap = TRUE
+		else if(M.has_trait(TRAIT_NOMOBSWAP) || has_trait(TRAIT_NOMOBSWAP))
+			mob_swap = FALSE
 		//restrained people act if they were on 'help' intent to prevent a person being pulled from being separated from their puller
 		else if((M.restrained() || M.a_intent == INTENT_HELP) && (restrained() || a_intent == INTENT_HELP))
-			mob_swap = 1
+			mob_swap = TRUE
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
@@ -266,6 +277,33 @@
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 					ContactContractDisease(D)
 
+		set_pull_offsets(M, state)
+
+/mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
+	var/offset = 0
+	switch(grab_state)
+		if(GRAB_PASSIVE)
+			offset = GRAB_PIXEL_SHIFT_PASSIVE
+		if(GRAB_AGGRESSIVE)
+			offset = GRAB_PIXEL_SHIFT_AGGRESSIVE
+		if(GRAB_NECK)
+			offset = GRAB_PIXEL_SHIFT_NECK
+		if(GRAB_KILL)
+			offset = GRAB_PIXEL_SHIFT_NECK
+	M.setDir(get_dir(M, src))
+	switch(M.dir)
+		if(NORTH)
+			animate(M, pixel_x = 0, pixel_y = offset, 3)
+		if(SOUTH)
+			animate(M, pixel_x = 0, pixel_y = -offset, 3)
+		if(EAST)
+			animate(M, pixel_x = offset, pixel_y = 0, 3)
+		if(WEST)
+			animate(M, pixel_x = -offset, pixel_y = 0, 3)
+
+/mob/living/proc/reset_pull_offsets(mob/living/M)
+	animate(M, pixel_x = 0, pixel_y = 0, 1)
+
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
@@ -278,6 +316,8 @@
 		stop_pulling()
 
 /mob/living/stop_pulling()
+	if(ismob(pulling))
+		reset_pull_offsets(pulling)
 	..()
 	update_pull_hud_icon()
 
@@ -327,7 +367,6 @@
 /mob/living/proc/calculate_affecting_pressure(pressure)
 	return pressure
 
-
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
 	var/temperature = actual
 	var/difference = abs(actual-desired)	//get difference
@@ -345,8 +384,6 @@
 		if(actual < desired)
 			temperature = desired
 	return temperature
-
-
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -471,7 +508,7 @@
 	SetParalyzed(0, FALSE)
 	SetSleeping(0, FALSE)
 	radiation = 0
-	nutrition = NUTRITION_LEVEL_FED + 50
+	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
@@ -480,7 +517,7 @@
 	cure_blind()
 	cure_husk()
 	hallucination = 0
-	heal_overall_damage(INFINITY, INFINITY, INFINITY, FALSE, FALSE, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
+	heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
@@ -509,8 +546,12 @@
 	var/turf/T = loc
 	. = ..()
 
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
+	else
+		if(isliving(pulledby))
+			var/mob/living/L = pulledby
+			L.set_pull_offsets(src, pulledby.grab_state)
 
 	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
@@ -704,6 +745,11 @@
 				if(who.dropItemToGround(what))
 					log_combat(src, who, "stripped [what] off")
 
+	if(Adjacent(who)) //update inventory window
+		who.show_inv(src)
+	else
+		src << browse(null,"window=mob[REF(who)]")
+
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
@@ -735,11 +781,16 @@
 					else
 						who.equip_to_slot(what, where, TRUE)
 
+		if(Adjacent(who)) //update inventory window
+			who.show_inv(src)
+		else
+			src << browse(null,"window=mob[REF(who)]")
+
 /mob/living/singularity_pull(S, current_size)
 	..()
-	if(current_size >= STAGE_SIX)
+	if(current_size >= STAGE_SIX) //your puny magboots/wings/whatever will not save you against supermatter singularity
 		throw_at(S, 14, 3, src, TRUE)
-	else
+	else if(!src.mob_negates_gravity())
 		step_towards(src,S)
 
 /mob/living/proc/do_jitter_animation(jitteriness)
@@ -890,7 +941,7 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
 	. = ..()
 	if(.)
 		return
@@ -939,18 +990,22 @@
 /mob/living/proc/spreadFire(mob/living/L)
 	if(!istype(L))
 		return
-	var/L_old_on_fire = L.on_fire
 
-	if(on_fire) //Only spread fire stacks if we're on fire
-		fire_stacks /= 2
-		L.fire_stacks += fire_stacks
-		if(L.IgniteMob())
-			log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
+	if(on_fire)
+		if(L.on_fire) // If they were also on fire
+			var/firesplit = (fire_stacks + L.fire_stacks)/2
+			fire_stacks = firesplit
+			L.fire_stacks = firesplit
+		else // If they were not
+			fire_stacks /= 2
+			L.fire_stacks += fire_stacks
+			if(L.IgniteMob()) // Ignite them
+				log_game("[key_name(src)] bumped into [key_name(L)] and set them on fire")
 
-	if(L_old_on_fire) //Only ignite us and gain their stacks if they were onfire before we bumped them
+	else if(L.on_fire) // If they were on fire and we were not
 		L.fire_stacks /= 2
 		fire_stacks += L.fire_stacks
-		IgniteMob()
+		IgniteMob() // Ignite us
 
 //Mobs on Fire end
 

@@ -54,6 +54,10 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 
+#define BODYPART_NOT_DISABLED 0
+#define BODYPART_DISABLED_DAMAGE 1
+#define BODYPART_DISABLED_PARALYSIS 2
+
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
 
@@ -92,6 +96,7 @@
 #define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
+#define BRAIN_TRAUMA_MAGIC /datum/brain_trauma/magic
 
 #define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
@@ -112,6 +117,7 @@
 #define BIOWARE_GENERIC "generic"
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
+#define BIOWARE_LIGAMENTS "ligaments"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -157,6 +163,13 @@
 
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535
+
+//Charge levels for Ethereals
+#define ETHEREAL_CHARGE_NONE 0
+#define ETHEREAL_CHARGE_LOWPOWER 20
+#define ETHEREAL_CHARGE_NORMAL 50
+#define ETHEREAL_CHARGE_ALMOSTFULL 75
+#define ETHEREAL_CHARGE_FULL 100
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -248,6 +261,7 @@
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
+#define	ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -266,3 +280,7 @@
 #define MAX_REVIVE_BRUTE_DAMAGE 180
 
 #define HUMAN_FIRE_STACK_ICON_NUM	3
+
+#define GRAB_PIXEL_SHIFT_PASSIVE 6
+#define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
+#define GRAB_PIXEL_SHIFT_NECK 16

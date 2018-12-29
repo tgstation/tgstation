@@ -678,17 +678,22 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 10)
 	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, 1, extrarange = 7)
-	for(var/atom/P in orange(pull_range,center))
-		if(ismovableatom(P))
-			var/atom/movable/pulled_object = P
-			if(ishuman(P))
-				var/mob/living/carbon/human/H = P
-				H.apply_effect(40, EFFECT_PARALYZE, 0)
-			if(pulled_object && !pulled_object.anchored && !ishuman(P))
-				step_towards(pulled_object,center)
-				step_towards(pulled_object,center)
-				step_towards(pulled_object,center)
-				step_towards(pulled_object,center)
+	for(var/atom/movable/P in orange(pull_range,center))
+		if(P.anchored || P.move_resist >= MOVE_FORCE_EXTREMELY_STRONG) //move resist memes.
+			return
+		if(ishuman(P))
+			var/mob/living/carbon/human/H = P
+			if(H.incapacitated() || !(H.mobility_flags & MOBILITY_STAND) || H.mob_negates_gravity())
+				return //You can't knock down someone who is already knocked down or has immunity to gravity
+			H.visible_message("<span class='danger'>[H] is suddenly knocked down, as if [H.p_their()] [(H.get_num_legs() == 1) ? "leg had" : "legs have"] been pulled out from underneath [H.p_them()]!</span>",\
+				"<span class='userdanger'>A sudden gravitational pulse knocks you down!</span>",\
+				"<span class='italics'>You hear a thud.</span>")
+			H.apply_effect(40, EFFECT_PARALYZE, 0)
+		else //you're not human so you get sucked in
+			step_towards(P,center)
+			step_towards(P,center)
+			step_towards(P,center)
+			step_towards(P,center)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))

@@ -1,5 +1,0 @@
-author: "Youbar"
-delete-after: True
-changes: 
-  - bugfix: "clipboards now display held papers properly"
-  - bugfix: "mice can be butchered"

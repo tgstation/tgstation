@@ -33,6 +33,9 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/has_gravity(turf/T)
+	return FALSE
+
 /obj/docking_port/take_damage()
 	return
 
@@ -251,7 +254,7 @@
 
 	var/launch_status = NOLAUNCH
 
-	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff

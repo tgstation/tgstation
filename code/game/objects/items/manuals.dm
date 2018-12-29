@@ -381,13 +381,6 @@
 	title = "To Serve Man"
 	page_link = "Guide_to_food_and_drinks"
 
-/obj/item/book/manual/wiki/circuitry
-	name = "Circuitry for Dummies"
-	icon_state = "book1"
-	author = "Dr. Hans Asperger"
-	title = "Circuitry for Dummies"
-	page_link = "Guide_to_circuits"
-
 /obj/item/book/manual/wiki/tcomms
 	name = "Subspace Telecommunications And You"
 	icon_state = "book3"

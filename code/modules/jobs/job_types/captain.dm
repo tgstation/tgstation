@@ -26,6 +26,9 @@ Captain
 /datum/job/captain/get_access()
 	return get_all_accesses()
 
+/datum/job/captain/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	H.mind.add_trait(TRAIT_DISK_VERIFIER, JOB_TRAIT)
+
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, .proc/minor_announce, "Captain [H.real_name] on deck!"))
@@ -58,7 +61,7 @@ Captain
 	name = "Captain (Hardsuit)"
 
 	mask = /obj/item/clothing/mask/gas/sechailer
-	suit = /obj/item/clothing/suit/space/hardsuit/captain
+	suit = /obj/item/clothing/suit/space/hardsuit/swat/captain
 	suit_store = /obj/item/tank/internals/oxygen
 
 /*
@@ -69,7 +72,7 @@ Head of Personnel
 	flag = HOP
 	department_head = list("Captain")
 	department_flag = CIVILIAN
-	head_announce = list("Supply", "Service")
+	head_announce = list(RADIO_CHANNEL_SUPPLY, RADIO_CHANNEL_SERVICE)
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1

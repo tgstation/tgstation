@@ -1,6 +1,0 @@
-author: "anconfuzedrock"
-delete-after: True
-changes: 
-  - tweak: "nicotine now metabolizes far slower, but is actually dangerous at high doses. Try actually smoking!"
-  - tweak: "cigarettes don't last as long, but more slowly inject reagents to hopefully last its entire lifetime. if you need it to burn fast, try a pipe or vape."
-  - bugfix: "overdosing on nicotine now causes oxygen and toxin damage, as the description said it did."

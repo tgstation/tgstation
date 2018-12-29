@@ -55,7 +55,7 @@
 					return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		if(P.is_reflectable)
+		if(P.reflectable & REFLECT_NORMAL)
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 								"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -117,7 +117,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(dna && dna.species)
 		var/spec_return = dna.species.spec_hitby(AM, src)
 		if(spec_return)
@@ -134,7 +134,7 @@
 		skipcatch = TRUE
 		blocked = TRUE
 	else if(I)
-		if(I.throw_speed >= EMBED_THROWSPEED_THRESHOLD)
+		if((I.throw_speed >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
 			if(can_embed(I))
 				if(prob(I.embedding.embed_chance) && !has_trait(TRAIT_PIERCEIMMUNE))
 					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
@@ -463,12 +463,18 @@
 			if(stat == CONSCIOUS)
 				to_chat(src, "<span class='notice'>You feel your heart beating again!</span>")
 	siemens_coeff *= physiology.siemens_coeff
+
+	dna.species.spec_electrocute_act(src, shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	. = ..(shock_damage,source,siemens_coeff,safety,override,tesla_shock, illusion, stun)
 	if(.)
 		electrocution_animation(40)
 
+/mob/living/carbon/human/emag_act(mob/user)
+	.=..()
+	dna?.species.spec_emag_act(src)
 
 /mob/living/carbon/human/emp_act(severity)
+	dna?.species.spec_emp_act(src, severity)
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
@@ -486,7 +492,7 @@
 					L.receive_damage(0,5)
 					Paralyze(100)
 
-/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit)
+/mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots()
 	var/list/damaged = list()
 	var/list/inventory_items_to_kill = list()
 	var/acidity = acidpwr * min(acid_volume*0.005, 0.1)
@@ -633,7 +639,7 @@
 		if((mind.assigned_role == "Station Engineer") || (mind.assigned_role == "Chief Engineer") )
 			gain = 100
 		if(mind.assigned_role == "Clown")
-			gain = rand(-300, 300)
+			gain = rand(-1000, 1000)
 	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
@@ -720,19 +726,20 @@
 				else if(oxyloss > 30)
 					to_chat(src, "<span class='danger'>You're choking!</span>")
 
-		switch(nutrition)
-			if(NUTRITION_LEVEL_FULL to INFINITY)
-				to_chat(src, "<span class='info'>You're completely stuffed!</span>")
-			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
-				to_chat(src, "<span class='info'>You're well fed!</span>")
-			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-				to_chat(src, "<span class='info'>You're not hungry.</span>")
-			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-				to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
-			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-				to_chat(src, "<span class='info'>You feel quite hungry.</span>")
-			if(0 to NUTRITION_LEVEL_STARVING)
-				to_chat(src, "<span class='danger'>You're starving!</span>")
+		if(!has_trait(TRAIT_NOHUNGER))
+			switch(nutrition)
+				if(NUTRITION_LEVEL_FULL to INFINITY)
+					to_chat(src, "<span class='info'>You're completely stuffed!</span>")
+				if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+					to_chat(src, "<span class='info'>You're well fed!</span>")
+				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+					to_chat(src, "<span class='info'>You're not hungry.</span>")
+				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+					to_chat(src, "<span class='info'>You could use a bite to eat.</span>")
+				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+					to_chat(src, "<span class='info'>You feel quite hungry.</span>")
+				if(0 to NUTRITION_LEVEL_STARVING)
+					to_chat(src, "<span class='danger'>You're starving!</span>")
 
 		if(roundstart_quirks.len)
 			to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
