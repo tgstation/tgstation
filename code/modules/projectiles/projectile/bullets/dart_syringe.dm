@@ -6,8 +6,7 @@
 
 /obj/item/projectile/bullet/dart/Initialize()
 	. = ..()
-	create_reagents(50)
-	reagents.set_reacting(FALSE)
+	create_reagents(50, NO_REACT)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
@@ -24,7 +23,7 @@
 									   "<span class='userdanger'>You were protected against \the [src]!</span>")
 
 	..(target, blocked)
-	reagents.set_reacting(TRUE)
+	DISABLE_BITFIELD(reagents.flags, NO_REACT)
 	reagents.handle_reactions()
 	return TRUE
 

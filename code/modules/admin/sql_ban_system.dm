@@ -87,7 +87,9 @@
 		panel_height = 240
 	var/datum/browser/panel = new(usr, "banpanel", "Banning Panel", 910, panel_height)
 	panel.add_stylesheet("banpanelcss", 'html/admin/banpanel.css')
-	panel.add_script("banpaneljs", 'html/admin/banpanel.js')
+	if(usr.client.prefs.tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
+		panel.add_stylesheet("banpanelcss3", 'html/admin/banpanel_css3.css')
+		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
 	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>
 	<label class='inputlabel checkbox'>Key:
@@ -139,11 +141,11 @@
 			Ban type
 			<br>
 			<label class='inputlabel radio'>Server
-			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
+			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
 			<br>
 			<label class='inputlabel radio'>Role
-			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " onclick='return false' onkeydown='return false'" : ""]>
+			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
 		</div>
 		<div class='column right'>
@@ -200,14 +202,14 @@
 				banned_from += query_get_banned_roles.item[1]
 			qdel(query_get_banned_roles)
 		var/break_counter = 0
-		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' onClick='toggle_checkboxes(this, \"_dep\")'>Command</label><div class='content'>"
+		output += "<div class='row'><div class='column'><label class='rolegroup command'><input type='checkbox' name='Command' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_dep\")'" : ""]>Command</label><div class='content'>"
 		//all heads are listed twice so have a javascript call to toggle both their checkboxes when one is pressed
 		//for simplicity this also includes the captain even though it doesn't do anything
 		for(var/job in GLOB.command_positions)
 			if(break_counter > 0 && (break_counter % 3 == 0))
 				output += "<br>"
 			output += {"<label class='inputlabel checkbox'>[job]
-						<input type='checkbox' id='[job]_com' name='[job]' class='Command' onClick='toggle_head(this, \"_dep\")' value='1'>
+						<input type='checkbox' id='[job]_com' name='[job]' class='Command' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_dep\")'" : ""]>
 						<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
 			"}
 			break_counter++
@@ -221,9 +223,9 @@
 							"Silicon" = GLOB.nonhuman_positions) //another cheat for simplicity
 		for(var/department in job_lists)
 			//the first element is the department head so they need the same javascript call as above
-			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			output += {"<label class='inputlabel checkbox'>[job_lists[department][1]]
-						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' onClick='toggle_head(this, \"_com\")' value='1'>
+						<input type='checkbox' id='[job_lists[department][1]]_dep' name='[job_lists[department][1]]' class='[department]' value='1'[usr.client.prefs.tgui_fancy ? " onClick='toggle_head(this, \"_com\")'" : ""]>
 						<div class='inputbox[(job_lists[department][1] in banned_from) ? " banned" : ""]'></div></label>
 			"}
 			break_counter = 1
@@ -246,7 +248,7 @@
 									ROLE_REV_HEAD, ROLE_SERVANT_OF_RATVAR, ROLE_SYNDICATE,
 									ROLE_TRAITOR, ROLE_WIZARD)) //ROLE_REV_HEAD is excluded from this because rev jobbans are handled by ROLE_REV
 		for(var/department in long_job_lists)
-			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' onClick='toggle_checkboxes(this, \"_com\")'>[department]</label><div class='content'>"
+			output += "<div class='column'><label class='rolegroup long [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
 				if(break_counter > 0 && (break_counter % 10 == 0))
@@ -462,7 +464,8 @@
 	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]")
 	if(applies_to_admins)
 		send2irc("BAN ALERT","[kn] [msg]")
-	create_message("note", player_ckey, null, reason, null, null, 0, 0, null, 0, severity)
+	var/note_reason = "Banned from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"] [isnull(duration) ? "permanently" : "for [time_message]"] - [reason]"
+	create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
 	var/client/C = GLOB.directory[player_ckey]
 	var/datum/admin_help/AH = admin_ticket_log(player_ckey, msg)
 	var/appeal_url = "No ban appeal url set!"
@@ -566,7 +569,7 @@
 				output += "<br>Unbanned by <b>[unban_key]</b> on <b>[unban_datetime]</b> during round <b>#[unban_round_id]</b>."
 			output += "</div><div class='container'><div class='reason'>[reason]</div><div class='edit'>"
 			if(!expired && !unban_datetime)
-				output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[reason];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
+				output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
 			if(edits)
 				output += "<br><a href='?_src_=holder;[HrefToken()];unbanlog=[ban_id]'>Edit log</a>"
 			output += "</div></div></div>"

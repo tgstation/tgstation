@@ -1,6 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - rscadd: "Bloodbags for ethereal filled with liquid electricity"
-  - bugfix: "Ethereals cant clone lightbulbs anymore"
-  - bugfix: "Fixes runtime in Ethereal charge handling"

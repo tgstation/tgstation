@@ -228,7 +228,7 @@
 		pressures = int_air.return_pressure() - env_air.return_pressure()
 
 	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
-	
+
 	// if get_dir(src, user) is not 0, target is the edge_target_turf on that dir
 	// otherwise, edge_target_turf uses a random cardinal direction
 	// range is pressures / 250
@@ -245,19 +245,20 @@
 			transfer_fingerprints_to(stored)
 	..()
 
-/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255))
+/obj/machinery/atmospherics/proc/getpipeimage(iconset, iconstate, direction, col=rgb(255,255,255), piping_layer=2)
 
 	//Add identifiers for the iconset
 	if(iconsetids[iconset] == null)
 		iconsetids[iconset] = num2text(iconsetids.len + 1)
 
 	//Generate a unique identifier for this image combination
-	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]"
+	var/identifier = iconsetids[iconset] + "_[iconstate]_[direction]_[col]_[piping_layer]"
 
 	if((!(. = pipeimages[identifier])))
 		var/image/pipe_overlay
 		pipe_overlay = . = pipeimages[identifier] = image(iconset, iconstate, dir = direction)
 		pipe_overlay.color = col
+		PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
 
 /obj/machinery/atmospherics/on_construction(obj_color, set_layer)
 	if(can_unwrench)

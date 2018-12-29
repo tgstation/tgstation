@@ -102,7 +102,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
-	container_type = INJECTABLE
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	grind_results = list()
@@ -125,8 +124,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/Initialize()
 	. = ..()
-	create_reagents(chem_volume)
-	reagents.set_reacting(FALSE) // so it doesn't react until you light it
+	create_reagents(chem_volume, INJECTABLE | NO_REACT)
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
@@ -186,7 +184,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	reagents.set_reacting(TRUE)
+	DISABLE_BITFIELD(reagents.flags, NO_REACT)
 	reagents.handle_reactions()
 	icon_state = icon_on
 	item_state = icon_on
@@ -729,8 +727,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/Initialize(mapload, param_color)
 	. = ..()
-	create_reagents(chem_volume)
-	reagents.set_reacting(FALSE) // so it doesn't react until you light it
+	create_reagents(chem_volume, NO_REACT)
 	reagents.add_reagent("nicotine", 50)
 	if(!icon_state)
 		if(!param_color)
@@ -799,13 +796,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(reagents.total_volume > 0)
 		to_chat(user, "<span class='notice'>You empty [src] of all reagents.</span>")
 		reagents.clear_reagents()
-	return
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == SLOT_WEAR_MASK)
 		if(!screw)
 			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
-			reagents.set_reacting(TRUE)
+			DISABLE_BITFIELD(reagents.flags, NO_REACT)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
@@ -813,7 +809,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	var/mob/living/carbon/C = user
 	if(C.get_item_by_slot(SLOT_WEAR_MASK) == src)
-		reagents.set_reacting(FALSE)
+		ENABLE_BITFIELD(reagents.flags, NO_REACT)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error

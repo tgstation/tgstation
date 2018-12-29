@@ -389,7 +389,7 @@
 
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_held_item()
-	if(!item_in_hand || !item_in_hand.tool_behaviour == TOOL_MULTITOOL)
+	if(!item_in_hand || item_in_hand.tool_behaviour != TOOL_MULTITOOL)
 		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 

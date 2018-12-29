@@ -1,0 +1,4 @@
+author: "MadmanMartian"
+delete-after: True
+changes: 
+  - code_imp: "Adds helpers for finding if a user has a martial art type"
