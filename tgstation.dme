@@ -61,6 +61,7 @@
 #include "code\__DEFINES\maths.dm"
 #include "code\__DEFINES\MC.dm"
 #include "code\__DEFINES\medal.dm"
+#include "code\__DEFINES\melee.dm"
 #include "code\__DEFINES\menu.dm"
 #include "code\__DEFINES\misc.dm"
 #include "code\__DEFINES\mobs.dm"
