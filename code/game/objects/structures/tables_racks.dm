@@ -298,10 +298,14 @@
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
 	canSmoothWith = list(/obj/structure/table/wood/fancy, /obj/structure/table/wood/fancy/black)
-	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi'
+	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
 /obj/structure/table/wood/fancy/Initialize()
 	. = ..()
+	// Needs to be set dynamically because table smooth sprites are 32x34,
+	// which the editor treats as a two-tile-tall object. The sprites are that
+	// size so that the north/south corners look nice - examine the detail on
+	// the sprites in the editor to see why.
 	icon = smooth_icon
 
 /obj/structure/table/wood/fancy/black
