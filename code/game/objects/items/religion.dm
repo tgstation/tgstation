@@ -348,8 +348,6 @@
 
 
 /obj/item/storage/box/itemset/crusader/blue/PopulateContents()
-	. = ..()
-	contents = list()
 	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
 	new /obj/item/clothing/gloves/plate/blue(src)
@@ -357,8 +355,6 @@
 
 
 /obj/item/storage/box/itemset/crusader/red/PopulateContents()
-	. = ..()
-	contents = list()
 	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)
