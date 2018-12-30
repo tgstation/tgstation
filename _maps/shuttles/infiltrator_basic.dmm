@@ -508,7 +508,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	layer = 4
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "be" = (
 /obj/machinery/suit_storage_unit/syndicate,
