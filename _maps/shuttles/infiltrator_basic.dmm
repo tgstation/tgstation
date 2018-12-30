@@ -147,7 +147,7 @@
 /area/shuttle/syndicate/bridge)
 "au" = (
 /obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/bridge)
 "av" = (
 /obj/machinery/door/airlock/hatch{
