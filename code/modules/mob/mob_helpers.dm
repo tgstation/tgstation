@@ -377,7 +377,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				continue
 			if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
 				continue
-			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
+			var/orbit_link
+			if (source && action == NOTIFY_ORBIT)
+				orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
 			if(ghost_sound)
 				SEND_SOUND(O, sound(ghost_sound))
 			if(flashwindow)

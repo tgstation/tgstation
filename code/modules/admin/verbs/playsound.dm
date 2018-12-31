@@ -1,7 +1,7 @@
 /client/proc/play_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Global Sound"
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_SOUND))
 		return
 
 	var/freq = 1
@@ -44,7 +44,7 @@
 /client/proc/play_local_sound(S as sound)
 	set category = "Fun"
 	set name = "Play Local Sound"
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_SOUND))
 		return
 
 	log_admin("[key_name(src)] played a local sound [S]")
@@ -55,7 +55,7 @@
 /client/proc/play_web_sound()
 	set category = "Fun"
 	set name = "Play Internet Sound"
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_SOUND))
 		return
 
 	var/ytdl = CONFIG_GET(string/invoke_youtubedl)
@@ -135,7 +135,7 @@
 /client/proc/set_round_end_sound(S as sound)
 	set category = "Fun"
 	set name = "Set Round End Sound"
-	if(!check_rights(R_SOUNDS))
+	if(!check_rights(R_SOUND))
 		return
 
 	SSticker.SetRoundEndSound(S)

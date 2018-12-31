@@ -683,6 +683,11 @@
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
 	mind.active = 1		//indicates that the mind is currently synced with a client
 
+/datum/mind/proc/has_martialart(var/string)
+	if(martial_art && martial_art.id == string)
+		return martial_art
+	return FALSE
+
 /mob/dead/new_player/sync_mind()
 	return
 

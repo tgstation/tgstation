@@ -10,7 +10,7 @@
 	volume = 30
 	possible_transfer_amounts = list()
 	resistance_flags = ACID_PROOF
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE
@@ -73,7 +73,7 @@
 	desc = "A modified air-needle autoinjector with a small single-use reservoir. It contains an experimental serum."
 	icon_state = "combat_hypo"
 	volume = 5
-	container_type = NONE
+	reagent_flags = NONE
 	list_reagents = list("magillitis" = 5)
 
 //MediPens
@@ -88,7 +88,7 @@
 	amount_per_transfer_from_this = 10
 	volume = 10
 	ignore_flags = 1 //so you can medipen through hardsuits
-	container_type = DRAWABLE
+	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list("epinephrine" = 10)
 	custom_price = 40
@@ -104,7 +104,7 @@
 	..()
 	if(!iscyborg(user))
 		reagents.maximum_volume = 0 //Makes them useless afterwards
-		container_type = NONE
+		reagents.flags = NONE
 	update_icon()
 	addtimer(CALLBACK(src, .proc/cyborg_recharge, user), 80)
 

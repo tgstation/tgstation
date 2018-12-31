@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "A player who bag of holding bombs now correctly has their
-ckey entered in the admin log, and admin messages."
