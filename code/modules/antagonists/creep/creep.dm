@@ -26,7 +26,7 @@
 	to_chat(owner, "<span class='boldannounce'>You are the Creep!</span>")
 	to_chat(owner, "<B>They would call it an obsession. They would call you crazy, because they don't understand your unrequited love.<br>All you know is that you love [trauma.obsession]. And you. will. show them.</B>")
 	to_chat(owner, "<B>I will surely go insane if I don't spend enough time around [trauma.obsession], but when i'm near them too long it gets too difficult to speak properly, making me look like a CREEP!</B>")
-	to_chat(owner, "<span class='boldannounce'>This role is not a license to break rules, ESPECIALLY RULE 8. Make stories and have fun with your role because it's a game we're all trying to enjoy, but know the limits. Don't do something a regular antagonist would get banned for.</span>")
+	to_chat(owner, "<span class='boldannounce'>The gods would like to remind you that this role, as with all other antags, does not allow you to break ANY server rules, especially Rule 8 (These rules being listed from the \"Rules\" button at the top right of your mind's screen). Feel free to murder and pillage just like any other antag, though.</span>")
 	owner.announce_objectives()
 
 /datum/antagonist/creep/Destroy()
