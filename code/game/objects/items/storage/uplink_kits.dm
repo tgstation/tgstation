@@ -206,10 +206,12 @@
 	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	if(prob(50))
+	switch (pickweight(list("goon" = 1, "normal" = 1)))
+		if("normal")
 			new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-	if(prob(50))
+	
+		if("goon")
 			new /obj/item/clothing/head/helmet/space/syndicate(src)
 			new /obj/item/clothing/suit/space/syndicate(src)
 
