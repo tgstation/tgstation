@@ -47,12 +47,12 @@
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
 
-/datum/status_effect/hive_track/on_creation(mob/living/new_owner, mob/living/hunter, multiply_duration)
+/datum/status_effect/hive_track/on_creation(mob/living/new_owner, mob/living/hunter, set_duration)
 	. = ..()
 	if(.)
 		tracked_by = hunter
-		if(isnum(multiply_duration))
-			duration *= set_duration
+		if(isnum(set_duration))
+			duration = set_duration
 
 //Screen alert
 /obj/screen/alert/status_effect/agent_pinpointer/hivemind

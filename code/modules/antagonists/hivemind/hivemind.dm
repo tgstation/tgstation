@@ -37,7 +37,7 @@
 
 /datum/antagonist/hivemind/proc/get_threat_multiplier()
 	calc_size()
-	return min(hive.hive_size/50 + hive.threat_level/20, 1)
+	return min(hive_size/50 + threat_level/20, 1)
 
 /datum/antagonist/hivemind/proc/check_powers()
 	for(var/power in upgrade_tiers)
