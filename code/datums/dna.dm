@@ -198,7 +198,6 @@
 /datum/dna/proc/force_lose(datum/mutation/human/HM)
 	if(holder && (HM in mutations))
 		set_se(0, HM)
-		update_instability(FALSE)
 		. = HM.on_losing(holder)
 		update_instability(FALSE)
 		return
