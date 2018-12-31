@@ -61,12 +61,13 @@
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
-	if(get_mutation(mutation))
-		return
+	var/mutation_type = mutation
 	if(istype(mutation, /datum/mutation/human))
 		var/datum/mutation/human/HM = mutation
-		mutation = HM.type
-	return force_give(new mutation (class, time, copymut = mutation))
+		mutation_type = HM.type
+	if(get_mutation(mutation))
+		return
+	return force_give(new mutation_type (class, time, copymut = mutation))
 
 /datum/dna/proc/remove_mutation(mutation_type)
 	return force_lose(get_mutation(mutation_type))
@@ -477,7 +478,11 @@
 /datum/dna/proc/activate_mutation(mutation) //note that this returns a boolean and not a new mob
 	if(!mutation)
 		return FALSE
-	if(!mutation_in_sequence(mutation)) //cant activate what we dont have, use add_mutation
+	var/mutation_type = mutation
+	if(istype(mutation, /datum/mutation/human))
+		var/datum/mutation/human/M = mutation
+		mutation_type = M.type
+	if(!mutation_in_sequence(mutation_type)) //cant activate what we dont have, use add_mutation
 		return FALSE
 	add_mutation(mutation, MUT_NORMAL)
 	return TRUE

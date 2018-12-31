@@ -31,11 +31,11 @@
 	energy_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/firebreath/grant_spell()
-	. = ..()
-	if(.)
+/datum/mutation/human/firebreath/modify()
+	if(power)
 		var/obj/effect/proc_holder/spell/aimed/firebreath/S = power
 		S.strength = get_power(src)
+
 
 /obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
@@ -51,6 +51,7 @@
 	active_msg = "You built up heat in your mouth."
 	deactive_msg = "You swallow the flame."
 	var/strength = 1
+
 
 /obj/effect/proc_holder/spell/aimed/firebreath/before_cast(list/targets)
 	. = ..()
