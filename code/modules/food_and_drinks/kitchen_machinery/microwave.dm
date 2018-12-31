@@ -230,6 +230,7 @@
 	for(var/i in ingredients)
 		var/atom/movable/AM = i
 		AM.forceMove(drop_location())
+	ingredients.Cut()
 
 /obj/machinery/microwave/proc/cook()
 	if(stat & (NOPOWER|BROKEN))
