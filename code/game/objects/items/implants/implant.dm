@@ -10,7 +10,6 @@
 	var/uses = -1
 	item_flags = DROPDEL
 
-
 /obj/item/implant/proc/trigger(emote, mob/living/carbon/source)
 	return
 

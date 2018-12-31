@@ -102,6 +102,7 @@
 		icon_dead = "original_dead"
 	Read_Memory()
 	. = ..()
+	AddComponent(/datum/component/grief/pet)
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)

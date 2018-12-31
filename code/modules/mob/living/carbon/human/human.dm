@@ -29,6 +29,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/redirect, list(COMSIG_COMPONENT_CLEAN_ACT = CALLBACK(src, .proc/clean_blood)))
+	AddComponent(/datum/component/grief)
 
 
 /mob/living/carbon/human/ComponentInitialize()

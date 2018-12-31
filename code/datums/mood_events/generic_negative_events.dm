@@ -142,6 +142,16 @@
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
 	mood_change = -6
 
+/datum/mood_event/someone_died
+	description = "<span class='warning'>I saw someone die, and it has affected me deeply.</span>\n"
+	mood_change = -6
+	timeout = 10 MINUTES
+
+/datum/mood_event/pet_died
+	description = "<span class='boldwarning'>A precious pet died in front of me, and my heart might break.</span>\n"
+	mood_change = -10
+	timeout = 20 MINUTES // OH GOD, NOT IAN/RUNTIME/WAGS-HIS-TAIL! TAKE POLY INSTEAD, PLEASE
+
 /datum/mood_event/surgery
 	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
 	mood_change = -8

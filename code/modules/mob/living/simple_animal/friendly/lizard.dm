@@ -39,3 +39,11 @@
 		return TRUE
 	else
 		return ..()
+
+/mob/living/simple_animal/hostile/lizard/wags
+	name = "Wags-His-Tail"
+	real_name = "Wags-His-Tail"
+
+/mob/living/simple_animal/hostile/lizard/wags/Initialize()
+	. = ..()
+	AddComponent(/datum/component/grief/pet)
