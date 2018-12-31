@@ -30,15 +30,12 @@
 /datum/antagonist/ert/proc/update_name()
 	owner.current.fully_replace_character_name(owner.current.real_name,"[role] [pick(name_source)]")
 
+/datum/antagonist/ert/deathsquad
+	mind_traits = list(TRAIT_DISK_VERIFIER)
+
 /datum/antagonist/ert/deathsquad/New()
 	. = ..()
 	name_source = GLOB.commando_names
-
-/datum/antagonist/ert/deathsquad/apply_innate_effects(mob/living/mob_override)
-	owner.add_trait(TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
-
-/datum/antagonist/ert/deathsquad/remove_innate_effects(mob/living/mob_override)
-	owner.remove_trait(TRAIT_DISK_VERIFIER, DEATHSQUAD_TRAIT)
 
 /datum/antagonist/ert/security // kinda handled by the base template but here for completion
 

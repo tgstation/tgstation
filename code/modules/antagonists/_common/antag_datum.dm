@@ -15,6 +15,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/antag_memory = ""//These will be removed with antag datum
 	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
 	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+	var/list/mind_traits // Traits assigned to the owner's mind on grant, and removed on removal
 
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
@@ -59,6 +60,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_innate_effects(mob/living/mob_override)
 	return
 
+// Handles application of traits to the mind, such as being jaded, or special abilities
+/datum/antagonist/proc/apply_mind_traits()
+	if(mind_traits)
+		for(var/trait in mind_traits)
+			owner.add_trait(trait, "antagonist_[name]")
+
+// Handles removal of traits to the mind, such as being jaded, or special abilities
+/datum/antagonist/proc/remove_mind_traits()
+	if(mind_traits)
+		for(var/trait in mind_traits)
+			owner.remove_trait(trait, "antagonist_[name]")
+
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/proc/create_team(datum/team/team)
 	return
@@ -69,6 +82,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(!silent)
 			greet()
 		apply_innate_effects()
+		apply_mind_traits()
 		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
@@ -91,6 +105,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()
+	remove_mind_traits()
 	clear_antag_moodies()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)

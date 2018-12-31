@@ -18,6 +18,7 @@
 	sub_role = "Agent"
 	outfit = /datum/outfit/abductor/agent
 	landmark_type = /obj/effect/landmark/abductor/agent
+	mind_traits = list(TRAIT_ABDUCTOR_TRAINING)
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
 	show_in_antagpanel = TRUE
 
@@ -26,6 +27,7 @@
 	sub_role = "Scientist"
 	outfit = /datum/outfit/abductor/scientist
 	landmark_type = /obj/effect/landmark/abductor/scientist
+	mind_traits = list(TRAIT_ABDUCTOR_TRAINING, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_SURGEON)
 	greet_text = "Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve."
 	show_in_antagpanel = TRUE
 
@@ -44,14 +46,12 @@
 	owner.assigned_role = "[name] [sub_role]"
 	objectives += team.objectives
 	finalize_abductor()
-	owner.add_trait(TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/on_removal()
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [owner.special_role]!</span>")
 	owner.special_role = null
-	owner.remove_trait(TRAIT_ABDUCTOR_TRAINING, ABDUCTOR_ANTAGONIST)
 	return ..()
 
 /datum/antagonist/abductor/greet()
@@ -77,16 +77,6 @@
 			break
 
 	update_abductor_icons_added(owner,"abductor")
-
-/datum/antagonist/abductor/scientist/on_gain()
-	owner.add_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
-	owner.add_trait(TRAIT_SURGEON, ABDUCTOR_ANTAGONIST)
-	. = ..()
-
-/datum/antagonist/abductor/scientist/on_removal()
-	owner.remove_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING, ABDUCTOR_ANTAGONIST)
-	owner.remove_trait(TRAIT_SURGEON, ABDUCTOR_ANTAGONIST)
-	. = ..()
 
 /datum/antagonist/abductor/admin_add(datum/mind/new_owner,mob/admin)
 	var/list/current_teams = list()
