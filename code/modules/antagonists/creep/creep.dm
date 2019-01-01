@@ -57,7 +57,7 @@
 		objectives_left += "heirloom"
 
 	if(obsessionmind.assigned_role && obsessionmind.assigned_role != "Captain" && !(obsessionmind.assigned_role in GLOB.nonhuman_positions))
-		objectives_left += "jealous"//they have a role that has viable coworkers to get jelly about?
+		objectives_left += "jealous"//while this will sometimes be a free objective during lowpop, this works fine most of the time and is less intensive
 
 	for(var/i in 1 to 3)
 		var/chosen_objective = pick(objectives_left)
@@ -142,62 +142,64 @@
 		explanation_text = "Free Objective"
 
 /datum/objective/assassinate/jealous //assassinate, but it changes the target to someone else in the previous target's department. cool, right?
-	var/mob/living/oldtarget
+	var/datum/mind/old //the target the coworker was picked from.
 
 /datum/objective/assassinate/jealous/update_explanation_text()
 	..()
-	oldtarget = find_coworker(target)
-	if(target && target.current && oldtarget)
-		explanation_text = "Murder [target.name], [oldtarget]'s coworker."
+	old = find_coworker(target)
+	if(target && target.current && old)
+		explanation_text = "Murder [target.name], [old]'s coworker."
 	else
 		explanation_text = "Free Objective"
 
-/datum/objective/assassinate/jealous/proc/find_coworker(mob/living/oldtarget)//returning null = free objective
-	if(!oldtarget.job)
+/datum/objective/assassinate/jealous/proc/find_coworker(datum/mind/oldmind)//returning null = free objective
+	if(!oldmind.assigned_role)
 		return
 	var/list/viable_coworkers = list()
+	var/list/all_coworkers = list()
 	var/chosen_department
 	var/their_chosen_department
 	//note that command and sillycone are gone because borgs can't be obsessions and the heads have their respective department. Sorry cap, your place is more with centcom or something
-	if(oldtarget.job in GLOB.security_positions)
+	if(oldmind.assigned_role in GLOB.security_positions)
 		chosen_department = "security"
-	if(oldtarget.job in GLOB.engineering_positions)
+	if(oldmind.assigned_role in GLOB.engineering_positions)
 		chosen_department = "engineering"
-	if(oldtarget.job in GLOB.medical_positions)
+	if(oldmind.assigned_role in GLOB.medical_positions)
 		chosen_department = "medical"
-	if(oldtarget.job in GLOB.science_positions)
+	if(oldmind.assigned_role in GLOB.science_positions)
 		chosen_department = "science"
-	if(oldtarget.job in GLOB.supply_positions)
+	if(oldmind.assigned_role in GLOB.supply_positions)
 		chosen_department = "supply"
-	if(oldtarget.job in GLOB.civilian_positions)
+	if(oldmind.assigned_role in GLOB.civilian_positions)
 		chosen_department = "civilian"
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
-		if(H == oldtarget)
+		if(!H.mind)
 			continue
-		if(!H.job)
+		if(!H.mind.assigned_role || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep)) //the jealousy target has to have a job, and not be the obsession or creep.
 			continue
 		//this won't be called often thankfully.
-		if(H.job in GLOB.security_positions)
+		if(H.mind.assigned_role in GLOB.security_positions)
 			their_chosen_department = "security"
-		if(oldtarget.job in GLOB.engineering_positions)
+		if(H.mind.assigned_role in GLOB.engineering_positions)
 			their_chosen_department = "engineering"
-		if(oldtarget.job in GLOB.medical_positions)
+		if(H.mind.assigned_role in GLOB.medical_positions)
 			their_chosen_department = "medical"
-		if(oldtarget.job in GLOB.science_positions)
+		if(H.mind.assigned_role in GLOB.science_positions)
 			their_chosen_department = "science"
-		if(oldtarget.job in GLOB.supply_positions)
+		if(H.mind.assigned_role in GLOB.supply_positions)
 			their_chosen_department = "supply"
-		if(oldtarget.job in GLOB.civilian_positions)
+		if(H.mind.assigned_role in GLOB.civilian_positions)
 			their_chosen_department = "civilian"
 		if(their_chosen_department != chosen_department)
 			continue
 		viable_coworkers += H
 
-	if(viable_coworkers.len > 0)
+	if(viable_coworkers.len > 0)//find someone in the same department
 		target = pick(viable_coworkers)
+	else if(all_coworkers.len > 0)//find someone who works on the station
 	else
-		return
-	return oldtarget
+		return//there is nobody but you and the obsession
+	return oldmind
 
 /datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks
 	name = "spendtime"

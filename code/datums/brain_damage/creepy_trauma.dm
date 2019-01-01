@@ -2,7 +2,7 @@
 	name = "Erotomania"
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
 	scan_desc = "severe erotomaniac delusions"
-	gain_text = ""
+	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
 	lose_text = "<span class='warning'>You no longer feel so attached.</span>"
 	can_gain = TRUE
 	resilience = TRAUMA_RESILIENCE_SURGERY
@@ -18,27 +18,28 @@
 /datum/brain_trauma/special/creep/on_gain()
 
 	//setup, linking, etc//
-	..()
 	if(!obsession)//admins didn't set one
 		obsession = find_obsession()
 		if(!obsession)//we didn't find one
 			lose_text = ""
 			qdel(src)
+	gain_text = "<span class='warning'>You feel a strange attachment to [obsession].</span>"
 	owner.apply_status_effect(STATUS_EFFECT_INLOVE, obsession)
 	owner.mind.add_antag_datum(/datum/antagonist/creep)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/creep)
 	antagonist.trauma = src
+	..()
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
 
-
-
 /datum/brain_trauma/special/creep/on_life()
-	if(!obsession)//gibbing, etc
+	if(!obsession || obsession.stat == DEAD)
+		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
-	if(get_dist(get_turf(owner), get_turf(obsession)) > 7 || obsession.stat == DEAD)
+	if(get_dist(get_turf(owner), get_turf(obsession)) > 7)
 		viewing = FALSE //they are further than our viewrange they are not viewing us
+		out_of_view()
 		return//so we're not searching everything in view every tick
 	if(obsession in view(7, owner))
 		viewing = TRUE
@@ -51,12 +52,14 @@
 		if(attachedcreepobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
 			attachedcreepobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
-		time_spent_away += 20
-		if(time_spent_away > 1800) //3 minutes
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreepingsevere, obsession.name)
-		else
-			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreeping, obsession.name)
+		out_of_view()
 
+/datum/brain_trauma/special/creep/proc/out_of_view()
+	time_spent_away += 20
+	if(time_spent_away > 1800) //3 minutes
+		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreepingsevere, obsession.name)
+	else
+		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreeping, obsession.name)
 /datum/brain_trauma/special/creep/on_lose()
 	..()
 	owner.remove_status_effect(STATUS_EFFECT_INLOVE)
