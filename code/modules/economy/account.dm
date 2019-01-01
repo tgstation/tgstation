@@ -5,6 +5,7 @@
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
+	var/welfare = TRUE
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -49,10 +50,14 @@
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
-				bank_card_talk("Payday processed, account now holds $[account_balance].")
+				bank_card_talk("Payday processed, account now holds $[account_balance].")		
 				return TRUE
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
+
+
+/datum/bank_account/proc/add_neetbux()
+	account_job.paycheck += PAYCHECK_WELFARE
 
 /datum/bank_account/proc/bank_card_talk(message)
 	if(!message || !bank_cards.len)
