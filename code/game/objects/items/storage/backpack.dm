@@ -296,11 +296,6 @@
 	icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
-	component_type = /datum/component/storage/concrete/secret_satchel
-
-/obj/item/storage/backpack/satchel/flat/Initialize()
-	. = ..()
-	SSpersistence.new_secret_satchels += src
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
@@ -310,7 +305,7 @@
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
-		invisibility = INVISIBILITY_MAXIMUM
+		invisibility = INVISIBILITY_OBSERVER
 		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
 	else
@@ -322,30 +317,15 @@
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/crowbar(src)
 
-/obj/item/storage/backpack/satchel/flat/Destroy()
-	SSpersistence.new_secret_satchels -= src
-	return ..()
+	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
+	for(var/i in 1 to 2)
+		var/ctype = pick(C.contains)
+		new ctype(src)
 
-/obj/item/storage/backpack/satchel/flat/secret
-	var/list/reward_one_of_these = list() //Intended for map editing
-	var/list/reward_all_of_these = list() //use paths!
-	var/revealed = FALSE
+	qdel(C)
 
-/obj/item/storage/backpack/satchel/flat/secret/Initialize()
-	. = ..()
-
-	if(isfloorturf(loc) && !isplatingturf(loc))
-		hide(1)
-
-/obj/item/storage/backpack/satchel/flat/secret/hide(intact)
-	..()
-	if(!intact && !revealed)
-		if(reward_one_of_these.len > 0)
-			var/reward = pick(reward_one_of_these)
-			new reward(src)
-		for(var/R in reward_all_of_these)
-			new R(src)
-		revealed = TRUE
+/obj/item/storage/backpack/satchel/flat/empty/PopulateContents()
+	return
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
