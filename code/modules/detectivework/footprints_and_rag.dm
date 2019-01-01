@@ -13,7 +13,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5
@@ -47,4 +47,3 @@
 		if(do_after(user,30, target = A))
 			user.visible_message("[user] finishes wiping off [A]!", "<span class='notice'>You finish wiping off [A].</span>")
 			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-	return

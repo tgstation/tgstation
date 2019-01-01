@@ -82,6 +82,8 @@
 #define TRAIT_SKITTISH			"skittish"
 #define TRAIT_POOR_AIM			"poor_aim"
 #define TRAIT_PROSOPAGNOSIA		"prosopagnosia"
+#define	TRAIT_NEET				"NEET"
+#define	TRAIT_NEAT				"neat"
 #define TRAIT_DRUNK_HEALING		"drunk_healing"
 #define TRAIT_TAGGER			"tagger"
 #define TRAIT_PHOTOGRAPHER		"photographer"
@@ -101,6 +103,7 @@
 #define JOB_TRAIT "job"
 
 // unique trait sources, still defines
+#define CLONING_POD_TRAIT "cloning-pod"
 #define STATUE_MUTE "statue"
 #define CHANGELING_DRAIN "drain"
 #define CHANGELING_HIVEMIND_MUTE "ling_mute"
