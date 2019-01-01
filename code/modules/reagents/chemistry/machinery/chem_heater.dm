@@ -73,7 +73,7 @@
 		return
 
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		. = 1 //no afterattack
+		. = TRUE //no afterattack
 		var/obj/item/reagent_containers/B = I
 		if(!user.transferItemToLoc(B, src))
 			return
