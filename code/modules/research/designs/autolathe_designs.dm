@@ -202,6 +202,14 @@
 	build_path = /obj/item/camera_film
 	category = list("initial", "Misc")
 
+/datum/design/sunglasses
+	name = "Sunglasses"
+	id = "sunglasses"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 250)
+	build_path = /obj/item/clothing/glasses/sunglasses
+	category = list("initial", "Misc")
+
 /datum/design/earmuffs
 	name = "Earmuffs"
 	id = "earmuffs"
