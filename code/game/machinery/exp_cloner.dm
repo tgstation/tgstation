@@ -11,9 +11,9 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/experimental/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
-		return FALSE
+		return NONE
 	if(mess || attempting)
-		return FALSE
+		return NONE
 
 	attempting = TRUE //One at a time!!
 	countdown.start()
