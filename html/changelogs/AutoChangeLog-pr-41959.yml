@@ -1,0 +1,6 @@
+author: "Floyd / Qustinnus for code, MrDoomBringer for Sprites"
+delete-after: True
+changes: 
+  - rscadd: "Durathread jumpsuit, beret, beanie and bandana"
+  - imageadd: "new sprites for all durathread objects"
+  - tweak: "it now takes 4 strands to make one piece of durathread cloth"
