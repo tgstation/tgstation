@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - admin: "Admins are only notified about the Lone Operative event weight
+every five increments or decrements to the weight."
