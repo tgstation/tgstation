@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Uplink pens now require two seperate rotations to unlock. This also
-applies to failsafe codes."

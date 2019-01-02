@@ -1,6 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - tweak: "You now have to be naked to get the nice shower moodlet, if you shower with clothes you get a bad moodie"
-  - rscadd: "Hygiene, you slowly become dirty over time, the more covered in blood you are the faster you will lose hygiene. When you are too dirty you will have a stink overlay. (Hygiene doesn't affect mood currently) It also spawns miasma slowly if you smell like shit."
-  - rscadd: "adds NEET and neat traits. NEET's get 20 bucks social welfare extra and like being unhygienic, while neat people dislike being unhygienic and like being hygienic"

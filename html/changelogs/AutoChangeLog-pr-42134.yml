@@ -1,4 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Ghosts can now see where an abductor camera console is looking."
