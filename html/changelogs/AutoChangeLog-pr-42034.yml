@@ -1,0 +1,8 @@
+author: "Robustin, Subject217"
+delete-after: True
+changes: 
+  - balance: "The NukeOp Shuttle hull has been dramatically hardened. The walls are now \"R-Walls\" with far greater explosion resistance."
+  - balance: "The NukeOp Shuttle guns have been significantly buffed. They now rapidly fire a new type of penetrator round, at a greater range, and have far greater explosion resistance."
+  - balance: "The nuclear device on the NukeOp Shuttle is now in an anchored state by default, the Nuke can only be unanchored by inserting the disk and entering the proper code."
+  - balance: "Non-Syndicate cyborgs are now unable to access the NukeOp Shuttle Console."
+  - bugfix: "You can now unanchor Nukes even when the floor under them has been destroyed"
