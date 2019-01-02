@@ -329,6 +329,8 @@
 
 	var/turf/T = get_turf(H)
 	var/datum/gas_mixture/air = T.return_air()
+	if(istype(air, /datum/gas_mixture/immutable))
+		return
 	var/list/cached_gases = air.gases
 
 	ASSERT_GAS(/datum/gas/miasma, air)
