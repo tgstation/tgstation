@@ -61,9 +61,9 @@
 	var/image/I
 
 	if(p_color)
-		I = getpipeimage(icon, "pipe", p_dir, p_color, piping_layer = piping_layer)
+		I = getpipeimage(icon, "pipe", p_dir, p_color, piping_layer = p_layer)
 	else
-		I = getpipeimage(icon, "pipe", p_dir, piping_layer = piping_layer)
+		I = getpipeimage(icon, "pipe", p_dir, piping_layer = p_layer)
 
 	I.layer = layer - 0.01
 	add_overlay(I)
