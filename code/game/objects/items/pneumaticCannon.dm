@@ -315,3 +315,23 @@
 /obj/item/pneumatic_cannon/speargun/Initialize()
 	. = ..()
 	allowed_typecache = magspear_typecache
+
+/obj/item/storage/backpack/magspear_quiver
+	name = "quiver"
+	desc = "A quiver for holding magspears."
+	icon_state = "quiver"
+	item_state = "quiver"
+
+/obj/item/storage/backpack/magspear_quiver/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 20
+	STR.max_combined_w_class = 40
+	STR.display_numerical_stacking = TRUE
+	STR.can_hold = typecacheof(list(
+		/obj/item/throwing_star/magspear
+		))
+
+/obj/item/storage/backpack/magspear_quiver/PopulateContents()
+	for(var/i in 1 to 20)
+		new /obj/item/throwing_star/magspear(src)

@@ -531,24 +531,6 @@
 		/obj/item/ammo_casing/shotgun
 		))
 
-/obj/item/storage/belt/bandolier/magspear
-	name = "magspear bandolier"
-	desc = "A bandolier for holding magnetic spears."
-
-/obj/item/storage/belt/bandolier/magspear/ComponentInitialize()
-	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_items = 20
-	STR.display_numerical_stacking = TRUE
-	STR.can_hold = typecacheof(list(
-		/obj/item/throwing_star/magspear
-		))
-
-/obj/item/storage/belt/bandolier/magspear/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/throwing_star/magspear = 15)
-	generate_items_inside(items_inside,src)
-
 /obj/item/storage/belt/holster
 	name = "shoulder holster"
 	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
