@@ -172,6 +172,15 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
                 var/turf/T = locate(_x, _y, _z)
                 A.forceMove(T)
 
+/obj/item/hilbertshotel/Move(atom/newloc, direct)
+    var/area/newArea = get_area(newloc)
+    if(istype(newArea, /area/hilbertshotel))
+        var/area/hilbertshotel/hotelArea = newArea
+        if(hotelArea.parentSphere == src)
+            forceMove(get_turf(src))
+            return
+    ..()
+
 //Template Stuff
 /datum/map_template/hilbertshotel
     name = "Hilbert's Hotel Room"
