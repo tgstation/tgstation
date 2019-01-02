@@ -393,7 +393,7 @@
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES]  -= 2*reaction_efficency
 
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, reaction_efficency*100)
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, (reaction_efficency**0.5)*200)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -428,7 +428,7 @@
 	cached_gases[/datum/gas/tritium][MOLES] -= heat_scale
 	cached_gases[/datum/gas/plasma][MOLES] -= heat_scale
 	cached_gases[/datum/gas/nitryl][MOLES] -= heat_scale
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, stim_energy_change/100)
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, 50*max(stim_energy_change,0))
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -490,4 +490,4 @@
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.temperature += cleaned_air * 0.002
-	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, cleaned_air*1000)//Turns out the burning of miasma is kinda interesting.
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, cleaned_air*160)//Turns out the burning of miasma is kinda interesting to scientists
