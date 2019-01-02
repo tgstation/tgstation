@@ -130,7 +130,7 @@
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
-	CanAtmosPass = ATMOS_PASS_NO
+	blocks_air = TRUE
 	baseturfs = /turf/open/indestructible/airblock
 
 /turf/open/indestructible/clock_spawn_room
