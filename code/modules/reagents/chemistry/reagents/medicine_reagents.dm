@@ -574,12 +574,6 @@
 	return TRUE
 
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/M)
-	if(prob(33))
-		M.adjustToxLoss(0.5*REM, 0)
-		M.losebreath++
-		. = 1
-	return TRUE
-
 	if(prob(30) && iscarbon(M))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
@@ -600,6 +594,12 @@
 		M.ForceContractDisease(D)
 		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
 		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+
+	if(prob(33))
+		M.adjustToxLoss(0.5*REM, 0)
+		M.losebreath++
+		. = 1
+	return TRUE
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
