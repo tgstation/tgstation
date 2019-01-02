@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Heroine bugs no longer make people appear partially bald when wearing them."
