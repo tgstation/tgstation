@@ -1,0 +1,5 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "Some items cover equipment while still letting you see it"
+  - bugfix: "in particular, this stops clothes burning off underneath drake armor"
