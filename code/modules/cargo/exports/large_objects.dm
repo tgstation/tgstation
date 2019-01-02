@@ -142,10 +142,10 @@
 	var/gas_worth = 0
 	var/gases = C.air_contents.gases
 	C.air_contents.assert_gases(/datum/gas/bz,/datum/gas/stimulum,/datum/gas/hypernoblium,/datum/gas/miasma,/datum/gas/tritium,/datum/gas/pluox)
-	gas_worth += gases[/datum/gas/bz][MOLES]*50
+	gas_worth += gases[/datum/gas/bz][MOLES]*4
 	gas_worth += gases[/datum/gas/stimulum][MOLES]*100
 	gas_worth += gases[/datum/gas/hypernoblium][MOLES]*1000
 	gas_worth += gases[/datum/gas/miasma][MOLES]*40
 	gas_worth += gases[/datum/gas/tritium]*10
-	gas_worth += gases[/datum/gas/pluox]*100
+	gas_worth += gases[/datum/gas/pluoxium]*100
 	return ..() + gas_worth
