@@ -488,7 +488,7 @@
 	. = 1
 
 /datum/reagent/medicine/pen_acid/overdose_process(mob/living/M)
-	M.adjustToxLoss(8*REM, 0) // Meaning 6 toxin damage
+	M.adjustToxLoss(6*REM, 0) // Meaning 4 toxin damage
 	..()
 	. = 1
 	
