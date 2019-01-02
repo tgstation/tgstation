@@ -25,7 +25,6 @@
 		return
 
 	H.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
-	addtimer(CALLBACK(H, /atom/.proc/remove_atom_colour, ADMIN_COLOUR_PRIORITY, "#FF0000"), duration)
 
 	var/obj/effect/mine/pickup/bloodbath/B = new(H)
 	B.duration = duration
