@@ -476,6 +476,7 @@
 	reagent_state = LIQUID
 	color = "#E6FFF0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
+	overdose_threshold = 25
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/M)
 	M.radiation -= max(M.radiation-RAD_MOB_SAFE, 0)/50
@@ -486,6 +487,11 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/pen_acid/overdose_process(mob/living/M)
+	M.adjustToxLoss(8*REM, 0) // Meaning 6 toxin damage
+	..()
+	. = 1
+	
 /datum/reagent/medicine/sal_acid
 	name = "Salicyclic Acid"
 	id = "sal_acid"
@@ -517,6 +523,7 @@
 	reagent_state = LIQUID
 	color = "#00FFFF"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+	overdose_threshold = 40
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M)
 	M.adjustOxyLoss(-3*REM, 0)
@@ -549,8 +556,8 @@
 	reagent_state = LIQUID
 	color = "#D2FFFA"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
-	overdose_threshold = 45
-	addiction_threshold = 30
+	overdose_threshold = 20
+	addiction_threshold = 15
 
 /datum/reagent/medicine/ephedrine/on_mob_add(mob/living/L)
 	..()
@@ -572,6 +579,27 @@
 		M.losebreath++
 		. = 1
 	return TRUE
+
+	if(prob(30) && iscarbon(M))
+		var/obj/item/I = M.get_active_held_item()
+		if(I)
+			M.dropItemToGround(I)
+			to_chat(M, "<span class ='notice'>Your hands spazz out!</span>")
+			M.Jitter(10)
+
+	if(prob(10))
+		to_chat(M, "<span class='notice'>[pick("You feel energetic.", "Your chest hurts.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
+
+	if(prob(7) && iscarbon(M))
+		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
+		M.Unconscious(100)
+		M.Jitter(350)
+
+	if(prob(3) && iscarbon(M))
+		var/datum/disease/D = new /datum/disease/heart_failure
+		M.ForceContractDisease(D)
+		to_chat(M, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 
 /datum/reagent/medicine/ephedrine/addiction_act_stage1(mob/living/M)
 	if(prob(33))
