@@ -290,63 +290,6 @@
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
 
-/obj/item/storage/backpack/satchel/flat
-	name = "smuggler's satchel"
-	desc = "A very slim satchel that can easily fit into tight spaces."
-	icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
-	level = 1
-	component_type = /datum/component/storage/concrete/secret_satchel
-
-/obj/item/storage/backpack/satchel/flat/Initialize()
-	. = ..()
-	SSpersistence.new_secret_satchels += src
-
-/obj/item/storage/backpack/satchel/flat/ComponentInitialize()
-	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
-	STR.max_combined_w_class = 15
-	STR.cant_hold = typecacheof(list(/obj/item/storage/backpack/satchel/flat)) //muh recursive backpacks
-
-/obj/item/storage/backpack/satchel/flat/hide(intact)
-	if(intact)
-		invisibility = INVISIBILITY_MAXIMUM
-		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
-		icon_state = "[initial(icon_state)]2"
-	else
-		invisibility = initial(invisibility)
-		anchored = FALSE
-		icon_state = initial(icon_state)
-
-/obj/item/storage/backpack/satchel/flat/PopulateContents()
-	new /obj/item/stack/tile/plasteel(src)
-	new /obj/item/crowbar(src)
-
-/obj/item/storage/backpack/satchel/flat/Destroy()
-	SSpersistence.new_secret_satchels -= src
-	return ..()
-
-/obj/item/storage/backpack/satchel/flat/secret
-	var/list/reward_one_of_these = list() //Intended for map editing
-	var/list/reward_all_of_these = list() //use paths!
-	var/revealed = FALSE
-
-/obj/item/storage/backpack/satchel/flat/secret/Initialize()
-	. = ..()
-
-	if(isfloorturf(loc) && !isplatingturf(loc))
-		hide(1)
-
-/obj/item/storage/backpack/satchel/flat/secret/hide(intact)
-	..()
-	if(!intact && !revealed)
-		if(reward_one_of_these.len > 0)
-			var/reward = pick(reward_one_of_these)
-			new reward(src)
-		for(var/R in reward_all_of_these)
-			new R(src)
-		revealed = TRUE
-
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"
 	desc = "A large duffel bag for holding extra things."
