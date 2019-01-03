@@ -202,7 +202,7 @@
 /obj/structure/urinal/update_icon()
 	cut_overlays()
 	if(!exposed)
-		add_overlay("urinal_cap")
+		add_overlay("urinal-cap")
 
 
 /obj/item/reagent_containers/food/snacks/urinalcake
