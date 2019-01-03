@@ -938,7 +938,7 @@
 	name = "Durathread Golem"
 	id = "durathread golem"
 	prefix = "Durathread"
-	limbs_id = "b_golem"
+	limbs_id = "d_golem"
 	special_names = list("Boll","Weave")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR)
 	fixed_mut_color = null
