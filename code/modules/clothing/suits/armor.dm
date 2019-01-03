@@ -37,8 +37,8 @@
 	slowdown = 1
 
 /obj/item/clothing/suit/armor/vest/blueshirt
-	name = "bulky armor vest"
-	desc = "Hey, catch me later I'll buy you a beer."
+	name = "large armor vest"
+	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 	custom_premium_price = 600
