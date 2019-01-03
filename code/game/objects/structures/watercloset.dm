@@ -510,11 +510,11 @@
 	busy = TRUE
 	update_icon()
 
-	var/sucess = do_after(user, 40, target = src)
+	var/success = do_after(user, 40, target = src)
 	busy = FALSE
 	update_icon()
 
-	if(!sucess)
+	if(!success)
 		return TRUE
 
 	user.visible_message("<span class='notice'>[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src].</span>", \
@@ -592,11 +592,11 @@
 		busy = TRUE
 		update_icon()
 
-		var/sucess = do_after(user, 40, target = src)
+		var/success = do_after(user, 40, target = src)
 		busy = FALSE
 		update_icon()
 
-		if(!sucess)
+		if(!success)
 			return TRUE
 
 		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
