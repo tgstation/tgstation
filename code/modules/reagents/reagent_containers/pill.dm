@@ -11,7 +11,7 @@
 	grind_results = list()
 	var/apply_type = INGEST
 	var/apply_method = "swallow"
-	var/roundstart = FALSE
+	var/rename_with_volume = FALSE
 	var/self_delay = 0 //pills are instant, this is because patches inheret their aplication from pills
 	var/dissolvable = TRUE
 
@@ -19,7 +19,7 @@
 	. = ..()
 	if(!icon_state)
 		icon_state = "pill[rand(1,20)]"
-	if(reagents.total_volume && roundstart)
+	if(reagents.total_volume && rename_with_volume)
 		name += " ([reagents.total_volume]u)"
 
 
@@ -83,93 +83,103 @@
 	desc = "Highly toxic."
 	icon_state = "pill5"
 	list_reagents = list("toxin" = 50)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/cyanide
 	name = "cyanide pill"
 	desc = "Don't swallow this."
 	icon_state = "pill5"
 	list_reagents = list("cyanide" = 50)
-	roundstart = TRUE
+
 /obj/item/reagent_containers/pill/adminordrazine
 	name = "adminordrazine pill"
 	desc = "It's magic. We don't have to explain it."
 	icon_state = "pill16"
 	list_reagents = list("adminordrazine" = 50)
-	roundstart = TRUE
+
 /obj/item/reagent_containers/pill/morphine
 	name = "morphine pill"
 	desc = "Commonly used to treat insomnia."
 	icon_state = "pill8"
 	list_reagents = list("morphine" = 30)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
 	list_reagents = list("ephedrine" = 10, "antihol" = 10, "coffee" = 30)
-	roundstart = TRUE
+
 /obj/item/reagent_containers/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
 	icon_state = "pill16"
 	list_reagents = list("salbutamol" = 30)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/charcoal
 	name = "charcoal pill"
 	desc = "Neutralizes many common toxins."
 	icon_state = "pill17"
 	list_reagents = list("charcoal" = 10)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/epinephrine
 	name = "epinephrine pill"
 	desc = "Used to stabilize patients."
 	icon_state = "pill5"
 	list_reagents = list("epinephrine" = 15)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/mannitol
 	name = "mannitol pill"
 	desc = "Used to treat brain damage."
 	icon_state = "pill17"
 	list_reagents = list("mannitol" = 50)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/mutadone
 	name = "mutadone pill"
 	desc = "Used to treat genetic damage."
 	icon_state = "pill20"
 	list_reagents = list("mutadone" = 50)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/salicyclic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill9"
 	list_reagents = list("sal_acid" = 24)
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/oxandrolone
 	name = "oxandrolone pill"
 	desc = "Used to stimulate burn healing."
 	icon_state = "pill11"
 	list_reagents = list("oxandrolone" = 24)
-	roundstart = TRUE
+	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/insulin
 	name = "insulin pill"
 	desc = "Handles hyperglycaemic coma."
 	icon_state = "pill18"
 	list_reagents = list("insulin" = 50)
-	roundstart = TRUE
+	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/psicodine
 	name = "psicodine pill"
 	desc = "Used to treat mental instability and traumas."
 	list_reagents = list("psicodine" = 10)
 	icon_state = "pill22"
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 /obj/item/reagent_containers/pill/penacid
 	name = "pentetic acid pill"
 	desc = "Used to expunge radioation and toxins."
 	list_reagents = list("pen_acid" = 10)
 	icon_state = "pill22"
-	roundstart = TRUE
+	rename_with_volume = TRUE
+
 ///////////////////////////////////////// this pill is used only in a legion mob drop
 /obj/item/reagent_containers/pill/shadowtoxin
 	name = "black pill"
@@ -177,25 +187,34 @@
 	icon_state = "pill9"
 	color = "#454545"
 	list_reagents = list("shadowmutationtoxin" = 1)
+
 //////////////////////////////////////// drugs
 /obj/item/reagent_containers/pill/zoom
-	name = "zoom pill"
+	name = "yellow pill"
+	desc = "A poorly made canary-yellow pill; it is slightly crumbly."
 	list_reagents = list("synaptizine" = 10, "nicotine" = 10, "methamphetamine" = 1)
+	icon_state = "pill7"
 
 
 /obj/item/reagent_containers/pill/happy
 	name = "happy pill"
+	desc = "They have little happy faces on them, and they smell like marker pens."
 	list_reagents = list("sugar" = 10, "space_drugs" = 10)
+	icon_state = "pill_happy"
 
 
 /obj/item/reagent_containers/pill/lsd
-	name = "hallucinogen pill"
+	name = "sunshine pill"
+	desc = "Engraved on this split-coloured pill is a half-sun, half-moon."
 	list_reagents = list("mushroomhallucinogen" = 15, "mindbreaker" = 15)
+	icon_state = "pill14"
 
 
-/obj/item/reagent_containers/pill/aranesp
-	name = "speedy pill"
-	list_reagents = list("aranesp" = 10)
+/obj/item/reagent_containers/pill/smugglers_run
+	name = "smuggler's run pill"
+	desc = "These pills are the chemical rebuke to disabler shots; amazingly taken by smugglers on the run."
+	list_reagents = list("smugglers_run" = 10)
+	icon_state = "pill3"
 
 /obj/item/reagent_containers/pill/happiness
 	name = "happiness pill"

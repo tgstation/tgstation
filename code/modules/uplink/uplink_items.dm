@@ -1015,6 +1015,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/jammer
 	cost = 5
 
+/datum/uplink_item/stealthy_tools/smugglersatchel
+	name = "Smuggler's Satchel"
+	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
+			your stolen goods. Comes with a crowbar, a floor tile and some contraband inside."
+	item = /obj/item/storage/backpack/satchel/flat/with_tools
+	cost = 2
+	surplus = 30
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
