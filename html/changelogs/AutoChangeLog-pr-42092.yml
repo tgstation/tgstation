@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "The rift in reality area and Hilbert's hotel no longer throw \"HEY LISTEN!\" AT warnings on server start."

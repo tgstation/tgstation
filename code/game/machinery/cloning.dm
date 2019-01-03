@@ -180,8 +180,6 @@
 		H.easy_randmut(POSITIVE)
 	if(efficiency < 3)
 		if(prob(50))
-			H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_BASIC)
-		if(prob(50))
 			var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 			if(ismob(M))
 				H = M
@@ -278,9 +276,6 @@
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
 					BP.attach_limb(mob_occupant)
-
-			//Premature clones may have brain damage.
-			mob_occupant.adjustBrainLoss(-((speed_coeff / 2) * dmg_mult))
 
 			use_power(7500) //This might need tweaking.
 
@@ -393,10 +388,13 @@
 	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	mob_occupant.remove_trait(TRAIT_NOBREATH, CLONING_POD_TRAIT)
 
+
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
+
+	mob_occupant.adjustBrainLoss(mob_occupant.getCloneLoss())
 
 	occupant.forceMove(T)
 	icon_state = "pod_0"
@@ -472,10 +470,9 @@
 		unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
-	// In addition to being cellularly damaged and having barely any
-
-	// brain function, they also have no limbs or internal organs.
+	// In addition to being cellularly damaged, they also have no limbs or internal organs.
+	// Applying brainloss is done when the clone leaves the pod, so application of traumas can happen
+	// based on the level of damage sustained.
 
 	if(!H.has_trait(TRAIT_NODISMEMBER))
 		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)

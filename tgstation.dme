@@ -1196,7 +1196,6 @@
 #include "code\modules\antagonists\changeling\powers\panacea.dm"
 #include "code\modules\antagonists\changeling\powers\pheromone_receptors.dm"
 #include "code\modules\antagonists\changeling\powers\regenerate.dm"
-#include "code\modules\antagonists\changeling\powers\revive.dm"
 #include "code\modules\antagonists\changeling\powers\shriek.dm"
 #include "code\modules\antagonists\changeling\powers\spiders.dm"
 #include "code\modules\antagonists\changeling\powers\strained_muscles.dm"

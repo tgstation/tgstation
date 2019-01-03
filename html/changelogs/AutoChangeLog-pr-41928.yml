@@ -1,0 +1,6 @@
+author: "0d0be32, PKPenguin321, Armhulen, epochayur"
+delete-after: True
+changes: 
+  - refactor: "Changeling powers are now action buttons rather than verbs."
+  - imageadd: "Thanks to epochayur for creating and compiling sprites for every single changeling action button!"
+  - imageadd: "Thanks to Armhulen for the changeling button background sprite!"
