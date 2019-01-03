@@ -85,7 +85,7 @@
 
 /obj/item/clothing/head/helmet/blueshirt
 	name = "blue helmet"
-	desc = "A reliable, blue tinted helmet, you can't but help to think of beer."
+	desc = "A reliable, blue tinted helmet. Just looking at it reminds you of beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
 	custom_premium_price = 600
