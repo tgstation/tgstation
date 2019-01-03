@@ -37,9 +37,12 @@
 	slowdown = 1
 
 /obj/item/clothing/suit/armor/vest/blueshirt
+	name = "blue armor"
+	desc = "Hey, catch me later I'll buy you a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
-
+	custom_premium_price = 600
+	
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence."
