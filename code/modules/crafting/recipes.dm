@@ -663,3 +663,15 @@
 	reqs = list(/obj/item/tank/internals/oxygen/red = 2, /obj/item/extinguisher = 1, /obj/item/pipe = 3, /obj/item/stack/cable_coil = 30)//red oxygen tank so it looks right
 	category = CAT_MISC
 	tools = list(TOOL_WRENCH, TOOL_WELDER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/improvisedbruisepack/
+	name = "Improvised Bruise Pack"
+	result = /obj/item/stack/medical/bruise_pack/improvised
+	time = 30
+	reqs = list(/obj/item/stack/sheet/cloth = 1, /obj/item/reagent_containers/food/snacks/donkpocket = 1)
+	category = CAT_MISC
+	tools = list(TOOL_WELDER)
+
+/datum/crafting_recipe/improvisedbruisepack/ointment
+	name = "Improvised Ointment"
+	result =  /obj/item/stack/medical/ointment/improvised
