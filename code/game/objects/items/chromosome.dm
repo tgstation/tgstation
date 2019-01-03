@@ -26,7 +26,7 @@
 		return TRUE
 
 /obj/item/chromosome/proc/apply(datum/mutation/human/HM)
-	if(!HM || !HM.can_chromosome)
+ 	if(!HM.can_chromosome)
 		return
 	if(HM.stabilizer_coeff != -1)
 		HM.stabilizer_coeff = stabilizer_coeff

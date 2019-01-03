@@ -64,7 +64,7 @@
 	if (istype(I, /obj/item/chromosome))
 		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
 			I.forceMove(src)
-			stored_chromosomes.Add(I)
+ 			stored_chromosomes += I
 			to_chat(user, "<span class='notice'>You insert [I]</span>")
 		else
 			to_chat(user, "<span class='warnning'>You cannot store any more chromosomes.</span>")
@@ -79,7 +79,7 @@
 				to_chat(user,"<span class='notice'>Recycled [I].</span>")
 				if(LAZYLEN(stored_chromosomes) < max_chromosomes)
 					CM.forceMove(src)
-					stored_chromosomes.Add(CM)
+ 					stored_chromosomes += CM
 					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
 			qdel(I)
 			return
@@ -363,7 +363,7 @@
 			temp_html += "</table><br>"
 			temp_html += "<h3>Chromosome Storage:<br></h3>"
 			temp_html += "<table>"
-			for(var/obj/item/chromosome/CM in stored_chromosomes)
+ 			for(var/i in 1 to stored_chromosomes.len)
 				var/i = stored_chromosomes.Find(CM)
 				temp_html += "<td><a href='?src=[REF(src)];task=ejectchromosome;num=[i]'>[CM.name]</a></td>"
 			temp_html += "</table>"
@@ -690,7 +690,7 @@
 							var/datum/mutation/human/A = new HM.type()
 							A.copy_mutation(HM)
 							succes = TRUE
-							stored_mutations.Add(A)
+ 							stored_mutations += A
 							to_chat(usr,"<span class='notice'>Mutation succesfully stored.</span>")
 				if(!succes) //we can exactly return here
 					to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
@@ -774,7 +774,7 @@
 					var/datum/mutation/human/A = diskette.mutations[num]
 					var/datum/mutation/human/HM = new A.type()
 					HM.copy_mutation(A)
-					stored_mutations.Add(HM)
+ 					stored_mutations += HM
 					to_chat(usr,"<span class='notice'>Succesfully written [A.name] to storage.")
 		if("combine")
 			if(num && (LAZYLEN(stored_mutations) >= num))
@@ -784,7 +784,7 @@
 					if(combine)
 						var/result_path = get_mixed_mutation(combine, path)
 						if(result_path)
-							stored_mutations.Add(new result_path())
+ 							stored_mutations += new result_path()
 							to_chat(usr, "<span class='boldnotice'>Succes! New mutation has been added to storage</span>")
 							discover(result_path)
 							combine = null
@@ -801,19 +801,19 @@
 				var/obj/item/chromosome/CM = stored_chromosomes[num]
 				CM.forceMove(drop_location())
 				adjust_item_drop_location(CM)
-				stored_chromosomes.Remove(CM)
+ 				stored_chromosomes -= CM
 		if("applychromosome")
 			if(viable_occupant && (LAZYLEN(viable_occupant.dna.mutations) <= num))
 				var/datum/mutation/human/HM = viable_occupant.dna.mutations[num]
 				var/list/chromosomes = list()
 				for(var/obj/item/chromosome/CM in stored_chromosomes)
 					if(CM.can_apply(HM))
-						chromosomes.Add(CM)
-				if(LAZYLEN(chromosomes))
+ 						chromosomes += CM
+ 				if(chromosomes.len)
 					var/obj/item/chromosome/CM = input("Select a chromosome to apply", "Apply Chromosome") as null|anything in chromosomes
 					if(CM)
 						to_chat(usr, "<span class='notice'>You apply [CM] to [HM.name].")
-						stored_chromosomes.Remove(CM)
+ 						stored_chromosomes -= CM
 						CM.apply(HM)
 
 	ui_interact(usr,last_change)
