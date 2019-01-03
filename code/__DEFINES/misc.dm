@@ -454,6 +454,6 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define VARSET_TO_LIST(L, V) if(L) L[#V] = V
 #define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
 
-#define DICE_NOT_RIGGED "not-rigged"
-#define DICE_BASICALLY_RIGGED "basically-rigged"
-#define DICE_TOTALLY_RIGGED "totally-rigged"
+#define DICE_NOT_RIGGED 1
+#define DICE_BASICALLY_RIGGED 2
+#define DICE_TOTALLY_RIGGED 3

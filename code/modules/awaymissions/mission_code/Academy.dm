@@ -330,10 +330,9 @@
 		if(19)
 			//Instrinct Resistance
 			T.visible_message("<span class='userdanger'>[user] looks very robust!</span>")
-			var/datum/species/S = user.dna.species
-			S.brutemod *= 0.5
-			S.burnmod *= 0.5
-			S.coldmod *= 0.5
+			user.physiology.brute_mod *= 0.5
+			user.physiology.burn_mod *= 0.5
+
 		if(20)
 			//Free wizard!
 			T.visible_message("<span class='userdanger'>Magic flows out of [src] and into [user]!</span>")
