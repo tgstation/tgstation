@@ -63,7 +63,7 @@
 
 /obj/structure/toilet/update_icon()
 	cut_overlays()
-	if(dir == NORTH)
+	if(dir == SOUTH)
 		icon_state = cistern_open ? "toilet-cistern-open" : "toilet-cistern"
 		add_overlay("toilet")
 	else
@@ -75,8 +75,12 @@
 		to_chat(user, "<span class='notice'>You start to [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(I.use_tool(src, user, 30))
-			user.visible_message("[user] [cistern_open ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
-			cistern_open = !cistern_open
+			if(cistern_open)
+				user.visible_message("[user] replaces the lid on the cistern!", "<span class='notice'>You replace the lid on the cistern!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
+				cistern_open = FALSE
+			else
+				user.visible_message("[user] lifts the lid off the cistern!", "<span class='notice'>You lift the lid off the cistern!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
+				cistern_open = TRUE
 			update_icon()
 		return TRUE
 
@@ -129,6 +133,7 @@
 /obj/structure/urinal/Initialize()
 	. = ..()
 	hiddenitem = new /obj/item/reagent_containers/food/snacks/urinalcake
+	update_icon()
 
 /obj/structure/urinal/attack_hand(mob/user)
 	if(..())
@@ -184,12 +189,14 @@
 		if(I.use_tool(src, user, 20))
 			user.visible_message("[user] screws the cap back into place!", "<span class='notice'>You screw the cap back into place!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
 			exposed = FALSE
+			update_icon()
 	else
 		to_chat(user, "<span class='notice'>You start to unscrew the cap to the drain protector...</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(I.use_tool(src, user, 20))
 			user.visible_message("[user] unscrews the cap to the drain protector!", "<span class='notice'>You unscrew the cap on the drain!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
 			exposed = TRUE
+			update_icon()
 	return TRUE
 
 /obj/structure/urinal/update_icon()
@@ -589,7 +596,7 @@
 		busy = FALSE
 		update_icon()
 
-		if(!success())
+		if(!success)
 			return TRUE
 
 		SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
@@ -597,8 +604,7 @@
 		create_reagents(5)
 		reagents.add_reagent(dispensedreagent, 5)
 		reagents.reaction(O, TOUCH)
-		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
-							"<span class='notice'>You wash [O] using [src].</span>")
+		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", "<span class='notice'>You wash [O] using [src].</span>")
 		return TRUE
 
 	return ..()
