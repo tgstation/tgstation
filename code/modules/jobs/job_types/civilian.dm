@@ -50,7 +50,7 @@ Clown
 	chameleon_extras = /obj/item/stamp/clown
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
+	. = ..()
 	if(visualsOnly)
 		return
 

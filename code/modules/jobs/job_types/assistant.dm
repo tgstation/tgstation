@@ -17,6 +17,8 @@ Assistant
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
 	paycheck_department = ACCOUNT_CIV
 
+	roundstart_traits = list(TRAIT_SMELLY)
+
 /datum/job/assistant/get_access()
 	if(CONFIG_GET(flag/assistants_have_maint_access) || !CONFIG_GET(flag/jobs_have_minimal_access)) //Config has assistant maint access set
 		. = ..()

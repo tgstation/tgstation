@@ -353,7 +353,14 @@
 		IF_HAS_BLOOD_DNA(feet)
 			hygiene_loss -= 2 * HYGIENE_FACTOR
 
-	adjust_hygiene(hygiene_loss)
+	adjust_hygiene(hygiene_loss * get_negative_hygiene_mod)
+
+/mob/living/carbon/human/get_negative_hygiene_mod()
+	. = 1
+
+	if(has_trait(TRAIT_SMELLY))
+		. *= 1.5
+		message_admins("gay")
 	
 
 #undef THERMAL_PROTECTION_HEAD

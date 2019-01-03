@@ -55,6 +55,8 @@
 	var/paycheck = PAYCHECK_MINIMAL
 	var/paycheck_department = ACCOUNT_CIV
 
+	var/list/roundstart_traits = list()
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -211,6 +213,9 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
+
+	for(var/i in roundstart_traits)
+		add_trait(i)
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
