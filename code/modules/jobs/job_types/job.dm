@@ -60,6 +60,8 @@
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
+	for(var/i in roundstart_traits)
+		H.add_trait(i)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
@@ -214,8 +216,6 @@
 		PDA.ownjob = J.title
 		PDA.update_label()
 
-	for(var/i in roundstart_traits)
-		add_trait(i)
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()

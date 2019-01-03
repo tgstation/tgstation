@@ -112,7 +112,7 @@
 					user.add_mob_blood(src)
 					if(ishuman(user))
 						var/mob/living/carbon/human/dirtyboy
-						dirtyboy.adjust_hygiene(-10 * get_negative_hygiene_mod)
+						dirtyboy.adjust_hygiene(-10 * get_negative_hygiene_mod())
 		return TRUE //successful attack
 
 /mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)

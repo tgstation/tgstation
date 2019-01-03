@@ -1353,7 +1353,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					user.add_mob_blood(H)
 					if(ishuman(user))
 						var/mob/living/carbon/human/dirtyboy
-						dirtyboy.adjust_hygiene(-10 * get_negative_hygiene_mod)
+						dirtyboy.adjust_hygiene(-10 * get_negative_hygiene_mod())
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
