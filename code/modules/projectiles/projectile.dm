@@ -267,11 +267,6 @@
 		qdel(src)
 	return TRUE
 
-/obj/item/projectile/Move()
-	. = ..()
-	if(temporary_unstoppable_movement)
-		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
-
 /obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
 	if(!A || !A.density || (A.flags_1 & ON_BORDER_1) || ismob(A) || A == original)	//if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
 		return
@@ -480,8 +475,6 @@
 		else if(T != loc)
 			step_towards(src, T)
 			hitscan_last = loc
-		if(can_hit_target(original, permutated))
-			Bump(original)
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
@@ -510,8 +503,26 @@
 		homing_offset_y = -homing_offset_y
 
 //Returns true if the target atom is on our current turf and above the right layer
-/obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
-	return (target && ((target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target)) && (loc == get_turf(target)) && (!(target in passthrough)))
+//If direct target is true it's the originally clicked target.
+//attempting_cross is if the projectile is trying to pass something (so don't check loc)
+/obj/item/projectile/proc/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, attempting_cross = FALSE)
+	if(QDELETED(target))
+		return FALSE
+	if(attempting_cross && (loc != target.loc))
+		return FALSE
+	if(target in passthrough)
+		return FALSE
+	if(target.density)		//This thing blocks projectiles, hit it regardless of layer.
+		return TRUE
+	if(!isliving(target))
+		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
+			return FALSE
+	else
+		var/mob/living/L = target
+		if(!direct_target)
+			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE))		//If they're able to 1. stand or 2. use or 3. move, they are not stunned enough to dodge projectiles passing over.
+				return FALSE
+	return TRUE
 
 //Spread is FORCED!
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
@@ -576,12 +587,16 @@
 	. = ..()
 	if(isliving(AM) && !(pass_flags & PASSMOB))
 		var/mob/living/L = AM
-		if(AM == original)		//specific aiming for
+		if(can_hit_target(L, permutated, (AM == original)))
 			Bump(AM)
-		if(AM.density)			//blocks projectiles
-			Bump(AM)
-		if((L.mobility_flags & MOBILITY_USE|MOBILITY_STAND|MOBILITY_MOVE) & (MOBILITY_USE|MOBILITY_MOVE))	//If they're either able to move or use items, while crawling, they're not stunned enough to avoid projectiles.
-			Bump(AM)
+
+/obj/item/projectile/Move(atom/newloc, dir = NONE)
+	. = ..()
+	if(.)
+		if(temporary_unstoppable_movement)
+			DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
+		if(fired && can_hit_target(original, permutated, TRUE))
+			Bump(original)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)
