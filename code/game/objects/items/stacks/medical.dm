@@ -118,7 +118,7 @@
 	singular_name = "improvised bruise pack"
 	desc = "A pack used for treating tissue damage. This one is made from junk from all around the station."
 	heal_brute = 20
-	grind_results = list("styptic_powder" = 5, "omnizine" = 5)
+	grind_results = list("styptic_powder" = 5)
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -180,7 +180,7 @@
 	desc = "Used to treat burns. Made from junk from the station"
 	singular_name = "improvised ointment"
 	heal_burn = 20
-	grind_results = list("silver_sulfadiazine" = 5, "omnizine" = 5)
+	grind_results = list("silver_sulfadiazine" = 5)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
