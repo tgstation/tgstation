@@ -37,7 +37,7 @@
 	slowdown = 1
 
 /obj/item/clothing/suit/armor/vest/blueshirt
-	name = "blue armor"
+	name = "bulky armor vest"
 	desc = "Hey, catch me later I'll buy you a beer."
 	icon_state = "blueshift"
 	item_state = "blueshift"
