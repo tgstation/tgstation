@@ -89,6 +89,13 @@
 		species.liked_food = initial(species.liked_food)
 		species.disliked_food = initial(species.disliked_food)
 
+/datum/quirk/neat
+	name = "Neat"
+	desc = "You really don't like being unhygienic, and will get sad if you are."
+	mob_trait = TRAIT_NEAT
+	gain_text = "<span class='notice'>You feel like you have to stay clean.</span>"
+	lose_text = "<span class='danger'>You no longer feel the need to always be clean.</span>"
+
 /datum/quirk/monochromatic
 	name = "Monochromacy"
 	desc = "You suffer from full colorblindness, and perceive nearly the entire world in blacks and whites."

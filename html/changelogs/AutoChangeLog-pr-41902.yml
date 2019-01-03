@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "The MultiZ test map is no longer the default map."

@@ -171,6 +171,7 @@
 	icon = 'icons/effects/atmospherics.dmi'
 	icon_state = "plasma_old"
 	gender = NEUTER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"

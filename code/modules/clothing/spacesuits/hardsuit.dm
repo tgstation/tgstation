@@ -135,7 +135,7 @@
 			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
-		jetpack.turn_off()
+		jetpack.turn_off(user)
 		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
@@ -423,7 +423,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, FALSE, _blocks_self = FALSE)
 
 
 	//Medical hardsuit

@@ -137,6 +137,7 @@
 	has_gravity = TRUE
 	noteleport = TRUE
 	blob_allowed = FALSE
+	var/turf/origin
 
 //CAPTURE THE FLAG
 

@@ -255,6 +255,10 @@
 			if(isliving(G))
 				var/mob/living/L = G
 				wash_mob(L)
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if(check_clothes(H))
+						to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>")
 			else if(isobj(G)) // Skip the light objects
 				wash_obj(G)
 	else
@@ -319,6 +323,10 @@
 			if(wash_mob(L)) //it's a carbon mob.
 				var/mob/living/carbon/C = L
 				C.slip(80,null,NO_SLIP_WHEN_WALKING)
+				if(ishuman(C))
+					var/mob/living/carbon/human/H = C
+					if(check_clothes(H))
+						to_chat(H, "<span class='warning'>You step into the shower with your clothes on and feel like an idiot.</span>")
 		else if(isobj(AM))
 			wash_obj(AM)
 
@@ -348,7 +356,6 @@
 	L.ExtinguishMob()
 	L.adjust_fire_stacks(-20) //Douse ourselves with water to avoid fire more easily
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
@@ -359,7 +366,7 @@
 		if(M.back && wash_obj(M.back))
 			M.update_inv_back(0)
 
-		var/list/obscured = M.check_obscured_slots()
+		var/list/obscured = M.check_obscured_slots(TRUE) //can't wash a gas mask through a visor
 
 		if(M.head && wash_obj(M.head))
 			M.update_inv_head()
@@ -391,6 +398,12 @@
 			else if(H.w_uniform && wash_obj(H.w_uniform))
 				H.update_inv_w_uniform()
 
+			if(check_clothes(H))
+				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
+			else
+				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
+				H.set_hygiene(HYGIENE_LEVEL_CLEAN)
+
 			if(washgloves)
 				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
@@ -402,8 +415,10 @@
 				H.update_inv_belt()
 		else
 			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	else
 		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
 /obj/machinery/shower/proc/contamination_cleanse(atom/movable/thing)
 	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
@@ -441,7 +456,7 @@
 		to_chat(C, "<span class='danger'>The water is searing!</span>")
 
 /obj/machinery/shower/proc/check_clothes(mob/living/carbon/human/H)
-	var/result
+	var/result = 0
 	if(H.wear_suit && (H.wear_suit.clothing_flags & SHOWEROKAY))
 		return FALSE
 	result &= (H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))
@@ -504,9 +519,13 @@
 			H.lip_color = initial(H.lip_color)
 			H.wash_cream()
 			H.regenerate_icons()
+			H.adjust_hygiene(10)
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		if(ishuman(user))
+			var/mob/living/carbon/human/dirtyboy
+			dirtyboy.adjust_hygiene(10)
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/dirtyboy

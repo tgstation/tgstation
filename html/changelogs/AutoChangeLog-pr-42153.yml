@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Silicons and drones can use vending machines once again, but only if they are not on station."

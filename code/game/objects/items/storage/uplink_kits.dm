@@ -206,9 +206,14 @@
 	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
-	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-
+	if(prob(50))
+		new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
+		new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+		
+	else
+		new /obj/item/clothing/head/helmet/space/syndicate(src)
+		new /obj/item/clothing/suit/space/syndicate(src)
+		
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
 

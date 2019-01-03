@@ -74,7 +74,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
 	var/override_float = FALSE
-
 ///////////
 // PROCS //
 ///////////
@@ -152,14 +151,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
 	var/should_have_tail = mutanttail
 
-	if(brain && (replace_current || !should_have_brain))
-		if(!brain.decoy_override)//Just keep it if it's fake
-			brain.Remove(C,TRUE,TRUE)
-			QDEL_NULL(brain)
-	if(should_have_brain && !brain)
-		brain = new mutant_brain()
-		brain.Insert(C, TRUE, TRUE)
-
 	if(heart && (!should_have_heart || replace_current))
 		heart.Remove(C,1)
 		QDEL_NULL(heart)
@@ -212,6 +203,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		tail.Insert(C)
 
 	if(C.get_bodypart(BODY_ZONE_HEAD))
+		if(brain && (replace_current || !should_have_brain))
+			if(!brain.decoy_override)//Just keep it if it's fake
+				brain.Remove(C,TRUE,TRUE)
+				QDEL_NULL(brain)
+		if(should_have_brain && !brain)
+			brain = new mutant_brain()
+			brain.Insert(C, TRUE, TRUE)
+
 		if(eyes && (replace_current || !should_have_eyes))
 			eyes.Remove(C,1)
 			QDEL_NULL(eyes)
@@ -1352,6 +1351,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					H.add_splatter_floor(location)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(H)
+					if(ishuman(user))
+						var/mob/living/carbon/human/dirtyboy
+						dirtyboy.adjust_hygiene(-10)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
@@ -1577,7 +1579,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.on_fire)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
-		var/list/obscured = H.check_obscured_slots()
+		var/list/obscured = H.check_obscured_slots(TRUE)
 		//HEAD//
 
 		if(H.glasses && !(SLOT_GLASSES in obscured))

@@ -156,6 +156,7 @@
 			clear_event(null, "depression")
 
 	HandleNutrition(owner)
+	HandleHygiene(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
 	if(amount == sanity)
@@ -300,6 +301,39 @@
 			clear_event(null, "charge")
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			add_event(null, "charge", /datum/mood_event/charged)
+
+
+/datum/component/mood/proc/HandleHygiene(mob/living/carbon/human/H)
+	switch(H.hygiene)
+		if(0 to HYGIENE_LEVEL_DIRTY)
+			if(has_trait(TRAIT_NEAT))
+				add_event(null, "neat", /datum/mood_event/dirty)
+			if(has_trait(TRAIT_NEET))
+				add_event(null, "NEET", /datum/mood_event/happy_neet)
+			HygieneMiasma(H)
+		if(HYGIENE_LEVEL_DIRTY to HYGIENE_LEVEL_NORMAL)
+			if(has_trait(TRAIT_NEAT))
+				clear_event(null, "neat")
+			if(has_trait(TRAIT_NEET))
+				clear_event(null, "NEET")
+		if(HYGIENE_LEVEL_NORMAL to HYGIENE_LEVEL_CLEAN)
+			if(has_trait(TRAIT_NEAT))
+				add_event(null, "neat", /datum/mood_event/neat)
+			if(has_trait(TRAIT_NEET))
+				clear_event(null, "NEET")
+
+/datum/component/mood/proc/HygieneMiasma(mob/living/carbon/human/H)
+	// Properly stored humans shouldn't create miasma
+	if(istype(H.loc, /obj/structure/closet/crate/coffin)|| istype(H.loc, /obj/structure/closet/body_bag) || istype(H.loc, /obj/structure/bodycontainer))
+		return
+
+	var/turf/T = get_turf(H)
+	var/datum/gas_mixture/air = T.return_air()
+	var/list/cached_gases = air.gases
+
+	ASSERT_GAS(/datum/gas/miasma, air)
+	cached_gases[/datum/gas/miasma][MOLES] += MIASMA_HYGIENE_MOLES
+	T.air_update_turf()
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

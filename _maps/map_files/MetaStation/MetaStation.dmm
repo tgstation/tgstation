@@ -38078,7 +38078,7 @@
 /obj/machinery/computer/slot_machine{
 	pixel_y = 2
 	},
-/obj/structure/sign/barsign{
+/obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
 /turf/open/floor/carpet,
@@ -76320,7 +76320,8 @@
 	idDoor = "xeno_airlock_exterior";
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
-	pixel_x = -24
+	pixel_x = -24;
+	req_access_txt = "55"
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -78362,7 +78363,8 @@
 	idSelf = "xeno_airlock_control";
 	name = "Access Button";
 	pixel_x = 29;
-	pixel_y = -8
+	pixel_y = -8;
+	req_access_txt = "55"
 	},
 /obj/machinery/firealarm{
 	dir = 2;
@@ -78590,7 +78592,8 @@
 	idSelf = "xeno_airlock_control";
 	name = "Access Console";
 	pixel_x = -25;
-	pixel_y = -25
+	pixel_y = -25;
+	req_access_txt = "55"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -83243,32 +83246,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"izu" = (
-/obj/machinery/autolathe{
-	name = "public autolathe"
-	},
-/obj/machinery/door/window/eastright{
-	dir = 2;
-	name = "Research and Development Desk";
-	req_one_access_txt = "7;29"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "research_shutters";
-	name = "research shutters"
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/science/lab)
 "iAj" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/power/apc{
@@ -114090,7 +114067,7 @@ cay
 cci
 cdM
 ceR
-izu
+cge
 chm
 ciG
 ckc

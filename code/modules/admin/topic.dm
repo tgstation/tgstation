@@ -1859,7 +1859,7 @@
 		var/role = href_list["editbanrole"]
 		var/duration = href_list["editbanduration"]
 		var/applies_to_admins = text2num(href_list["editbanadmins"])
-		var/reason = href_list["editbanreason"]
+		var/reason = url_decode(href_list["editbanreason"])
 		var/page = href_list["editbanpage"]
 		var/admin_key = href_list["editbanadminkey"]
 		ban_panel(player_key, player_ip, player_cid, role, duration, applies_to_admins, reason, edit_id, page, admin_key)

@@ -3,7 +3,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
@@ -197,12 +197,9 @@
 		reactions. Can hold up to 50 units."
 	icon_state = "beakernoreact"
 	materials = list(MAT_METAL=3000)
+	reagent_flags = OPENCONTAINER | NO_REACT
 	volume = 50
 	amount_per_transfer_from_this = 10
-
-/obj/item/reagent_containers/glass/beaker/noreact/Initialize()
-	. = ..()
-	reagents.set_reacting(FALSE)
 
 /obj/item/reagent_containers/glass/beaker/bluespace
 	name = "bluespace beaker"
@@ -294,11 +291,11 @@
 			to_chat(user, "<span class='userdanger'>[src]'s contents spill all over you!</span>")
 			reagents.reaction(user, TOUCH)
 			reagents.clear_reagents()
-		container_type = NONE
+		reagents.flags = NONE
 
 /obj/item/reagent_containers/glass/bucket/dropped(mob/user)
 	. = ..()
-	container_type = initial(container_type)
+	reagents.flags = initial(reagent_flags)
 
 /obj/item/reagent_containers/glass/bucket/equip_to_best_slot(var/mob/M)
 	if(reagents.total_volume) //If there is water in a bucket, don't quick equip it to the head
