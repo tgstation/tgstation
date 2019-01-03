@@ -3,42 +3,35 @@
 	build_path = /obj/machinery/sleeper
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/stack/sheet/glass = 2)
+		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/vr_sleeper
 	name = "VR Sleeper (Machine Board)"
 	build_path = /obj/machinery/vr_sleeper
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/stock_parts/scanning_module = 2,
-		/obj/item/stack/sheet/glass = 2)
+		/obj/item/stock_parts/scanning_module = 2)
 
 /obj/item/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
 	build_path = /obj/machinery/announcement_system
 	req_components = list(
-		/obj/item/stack/cable_coil = 2,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/subspace/amplifier = 1,
+		/obj/item/stock_parts/subspace/crystal = 1)
 
 /obj/item/circuitboard/machine/autolathe
 	name = "Autolathe (Machine Board)"
 	build_path = /obj/machinery/autolathe
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 3,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
 	req_components = list(
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/scanning_module = 2,
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/manipulator = 2)
 
 /obj/item/circuitboard/machine/clonepod/experimental
 	name = "Experimental Clone Pod (Machine Board)"
@@ -58,9 +51,7 @@
 	req_components = list(
 		/obj/item/stock_parts/scanning_module = 1,
 		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stack/cable_coil = 2)
+		/obj/item/stock_parts/micro_laser = 1)
 
 /obj/item/circuitboard/machine/holopad
 	name = "AI Holopad (Machine Board)"
@@ -81,8 +72,7 @@
 	build_path = /obj/machinery/limbgrower
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/reagent_containers/glass/beaker = 2)
 
 /obj/item/circuitboard/machine/quantumpad
 	name = "Quantum Pad (Machine Board)"
@@ -90,8 +80,7 @@
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/cable_coil = 1)
+		/obj/item/stock_parts/manipulator = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/recharger
@@ -128,8 +117,7 @@
 	build_path = /obj/machinery/space_heater
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/capacitor = 1,
-		/obj/item/stack/cable_coil = 3)
+		/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/telecomms/broadcaster
@@ -137,7 +125,6 @@
 	build_path = /obj/machinery/telecomms/broadcaster
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/subspace/filter = 1,
 		/obj/item/stock_parts/subspace/crystal = 1,
 		/obj/item/stock_parts/micro_laser = 2)
@@ -147,7 +134,6 @@
 	build_path = /obj/machinery/telecomms/bus
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/subspace/filter = 1)
 
 /obj/item/circuitboard/machine/telecomms/hub
@@ -155,7 +141,6 @@
 	build_path = /obj/machinery/telecomms/hub
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/subspace/filter = 2)
 
 /obj/item/circuitboard/machine/telecomms/processor
@@ -166,7 +151,6 @@
 		/obj/item/stock_parts/subspace/filter = 1,
 		/obj/item/stock_parts/subspace/treatment = 2,
 		/obj/item/stock_parts/subspace/analyzer = 1,
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/subspace/amplifier = 1)
 
 /obj/item/circuitboard/machine/telecomms/receiver
@@ -183,7 +167,6 @@
 	build_path = /obj/machinery/telecomms/relay
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/subspace/filter = 2)
 
 /obj/item/circuitboard/machine/telecomms/server
@@ -191,7 +174,6 @@
 	build_path = /obj/machinery/telecomms/server
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/subspace/filter = 1)
 
 /obj/item/circuitboard/machine/teleporter_hub
@@ -207,8 +189,7 @@
 	build_path = /obj/machinery/teleport/station
 	req_components = list(
 		/obj/item/stack/ore/bluespace_crystal = 2,
-		/obj/item/stock_parts/capacitor = 2,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/capacitor = 2)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/vendor
@@ -273,7 +254,6 @@
 	name = "Mechbay Recharger (Machine Board)"
 	build_path = /obj/machinery/mech_bay_recharge_port
 	req_components = list(
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/capacitor = 5)
 
 /obj/item/circuitboard/machine/mechfab
@@ -282,25 +262,21 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/micro_laser = 1)
 
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/stack/sheet/glass = 4)
+		/obj/item/stack/sheet/glass = 5)
 
 /obj/item/circuitboard/machine/thermomachine
 	name = "Thermomachine (Machine Board)"
 	desc = "You can use a screwdriver to switch between heater and freezer."
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/stock_parts/micro_laser = 2,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/micro_laser = 2)
 
 #define PATH_FREEZER /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 #define PATH_HEATER  /obj/machinery/atmospherics/components/unary/thermomachine/heater
@@ -427,9 +403,7 @@
 	build_path = /obj/machinery/biogenerator
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/cable_coil = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/plantgenes
 	name = "Plant DNA Manipulator (Machine Board)"
@@ -437,7 +411,6 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/scanning_module = 1)
 
 /obj/item/circuitboard/machine/plantgenes/vault
@@ -455,8 +428,7 @@
 	build_path = /obj/machinery/hydroponics/constructable
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/seed_extractor
@@ -471,18 +443,15 @@
 	name = "Ore Redemption (Machine Board)"
 	build_path = /obj/machinery/mineral/ore_redemption
 	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/assembly/igniter = 1)
+		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/mining_equipment_vendor
 	name = "Mining Equipment Vendor (Machine Board)"
 	build_path = /obj/machinery/mineral/equipment_vendor
 	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/matter_bin = 3)
 
 /obj/item/circuitboard/machine/mining_equipment_vendor/golem
@@ -493,7 +462,6 @@
 	name = "NTNet Relay (Machine Board)"
 	build_path = /obj/machinery/ntnet_relay
 	req_components = list(
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/subspace/filter = 1)
 
 /obj/item/circuitboard/machine/scanner_gate
@@ -508,7 +476,6 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/capacitor = 1)
 	needs_anchored = FALSE
 
@@ -524,7 +491,6 @@
 	name = "RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stack/sheet/mineral/uranium = 10) // We have no Pu-238, and this is the closest thing to it.
 
@@ -532,7 +498,6 @@
 	name = "Advanced RTG (Machine Board)"
 	build_path = /obj/machinery/power/rtg/advanced
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/micro_laser = 1,
 		/obj/item/stack/sheet/mineral/uranium = 10,
@@ -561,7 +526,6 @@
 	name = "SMES (Machine Board)"
 	build_path = /obj/machinery/power/smes
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/cell = 5,
 		/obj/item/stock_parts/capacitor = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
@@ -570,7 +534,6 @@
 	name = "Radiation Collector (Machine Board)"
 	build_path = /obj/machinery/power/rad_collector
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stack/sheet/plasmarglass = 2,
 		/obj/item/stock_parts/capacitor = 1,
@@ -631,14 +594,12 @@
 	name = "Power Compressor (Machine Board)"
 	build_path = /obj/machinery/power/compressor
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/manipulator = 6)
 
 /obj/item/circuitboard/machine/power_turbine
 	name = "Power Turbine (Machine Board)"
 	build_path = /obj/machinery/power/turbine
 	req_components = list(
-		/obj/item/stack/cable_coil = 5,
 		/obj/item/stock_parts/capacitor = 6)
 
 /obj/item/circuitboard/machine/chem_dispenser
@@ -648,7 +609,6 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell = 1)
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
@@ -668,7 +628,6 @@
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/cell = 1)
 	needs_anchored = FALSE
 
@@ -676,8 +635,7 @@
 	name = "Chemical Heater (Machine Board)"
 	build_path = /obj/machinery/chem_heater
 	req_components = list(
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/micro_laser = 1)
 
 /obj/item/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
@@ -685,8 +643,7 @@
 	desc = "You can turn the \"mode selection\" dial using a screwdriver."
 	req_components = list(
 		/obj/item/reagent_containers/glass/beaker = 2,
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stack/sheet/glass = 1)
+		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
@@ -721,7 +678,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 1,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/glass/beaker = 1)
 
 /obj/item/circuitboard/machine/circuit_imprinter/department
 	name = "Departmental Circuit Imprinter (Machine Board)"
@@ -794,7 +751,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/glass/beaker = 1)
 
 /obj/item/circuitboard/machine/protolathe/department
 	name = "Departmental Protolathe (Machine Board)"
@@ -830,7 +787,7 @@
 	req_components = list(
 		/obj/item/stock_parts/matter_bin = 2,
 		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/reagent_containers/glass/beaker = 2)
+		/obj/item/reagent_containers/glass/beaker = 1)
 
 /obj/item/circuitboard/machine/techfab/department
 	name = "\improper Departmental Techfab (Machine Board)"
@@ -864,67 +821,57 @@
 	name = "R&D Server (Machine Board)"
 	build_path = /obj/machinery/rnd/server
 	req_components = list(
-		/obj/item/stack/cable_coil = 2,
 		/obj/item/stock_parts/scanning_module = 1)
 
 /obj/item/circuitboard/machine/bsa/back
 	name = "Bluespace Artillery Generator (Machine Board)"
 	build_path = /obj/machinery/bsa/back //No freebies!
 	req_components = list(
-		/obj/item/stock_parts/capacitor/quadratic = 5,
-		/obj/item/stack/cable_coil = 2)
+		/obj/item/stock_parts/capacitor/quadratic = 5)
 
 /obj/item/circuitboard/machine/bsa/middle
 	name = "Bluespace Artillery Fusor (Machine Board)"
 	build_path = /obj/machinery/bsa/middle
 	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 20,
-		/obj/item/stack/cable_coil = 2)
+		/obj/item/stack/ore/bluespace_crystal = 20)
 
 /obj/item/circuitboard/machine/bsa/front
 	name = "Bluespace Artillery Bore (Machine Board)"
 	build_path = /obj/machinery/bsa/front
 	req_components = list(
-		/obj/item/stock_parts/manipulator/femto = 5,
-		/obj/item/stack/cable_coil = 2)
+		/obj/item/stock_parts/manipulator/femto = 5)
 
 /obj/item/circuitboard/machine/dna_vault
 	name = "DNA Vault (Machine Board)"
 	build_path = /obj/machinery/dna_vault //No freebies!
 	req_components = list(
 		/obj/item/stock_parts/capacitor/super = 5,
-		/obj/item/stock_parts/manipulator/pico = 5,
-		/obj/item/stack/cable_coil = 2)
+		/obj/item/stock_parts/manipulator/pico = 5)
 
 /obj/item/circuitboard/machine/microwave
 	name = "Microwave (Machine Board)"
 	build_path = /obj/machinery/microwave
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stock_parts/matter_bin = 1,
-		/obj/item/stack/cable_coil = 2,
-		/obj/item/stack/sheet/glass = 2)
+		/obj/item/stock_parts/matter_bin = 1)
 	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	name = "Donksoft Toy Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/donksofttoyvendor
 	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
 
 /obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
 	name = "Syndicate Donksoft Toy Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/toyliberationstation
 	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/vending_refill/donksoft = 1)
 
 /obj/item/circuitboard/machine/dish_drive
 	name = "Dish Drive (Machine Board)"
 	build_path = /obj/machinery/dish_drive
 	req_components = list(
-		/obj/item/stack/sheet/glass = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/matter_bin = 2)
 	var/suction = TRUE
@@ -950,8 +897,7 @@
 	name = "Stacking Machine Console (Machine Board)"
 	build_path = /obj/machinery/mineral/stacking_unit_console
 	req_components = list(
-		/obj/item/stack/sheet/glass = 2,
-		/obj/item/stack/cable_coil = 5)
+		/obj/item/stock_parts/manipulator = 1)
 
 /obj/item/circuitboard/machine/stacking_machine
 	name = "Stacking Machine (Machine Board)"
