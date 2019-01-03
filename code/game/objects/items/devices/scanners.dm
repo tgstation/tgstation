@@ -697,13 +697,13 @@ NANITE SCANNER
 		return
 	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
 	for(var/A in C.dna.mutation_index)
-		var/datum/mutation/human/HM = get_initialized_mutation(A)
+		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(A)
 		var/mut_name
 		if(G && (A in G.discovered))
 			mut_name = "[HM.name] ([HM.alias])"
 		else
 			mut_name = HM.alias
-		var/temp = get_gene_string(HM.type, C.dna)
+		var/temp = GET_GENE_STRING(HM.type, C.dna)
 		var/display
 		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
 			if(i)

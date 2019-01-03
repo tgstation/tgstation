@@ -10,10 +10,10 @@
 	power_coeff = 1
 
 /datum/mutation/human/epilepsy/on_life()
-	if(prob(1 * get_synchronizer(src)) && owner.stat == CONSCIOUS)
+	if(prob(1 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
-		owner.Unconscious(200 * get_power(src))
-		owner.Jitter(1000 * get_power(src))
+		owner.Unconscious(200 * GET_MUTATION_POWER(src))
+		owner.Jitter(1000 * GET_MUTATION_POWER(src))
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
 		addtimer(CALLBACK(src, .proc/jitter_less), 90)
 
@@ -58,13 +58,13 @@
 	power_coeff = 1
 
 /datum/mutation/human/cough/on_life()
-	if(prob(5 * get_synchronizer(src)) && owner.stat == CONSCIOUS)
+	if(prob(5 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
 		owner.drop_all_held_items()
 		owner.emote("cough")
-		if(get_power(src) > 1)
-			var/cough_range = get_power(src) * 4
+		if(GET_MUTATION_POWER(src) > 1)
+			var/cough_range = GET_MUTATION_POWER(src) * 4
 			var/turf/target = get_ranged_target_turf(owner, turn(owner.dir, 180), cough_range)
-			owner.throw_at(target, cough_range, get_power(src))
+			owner.throw_at(target, cough_range, GET_MUTATION_POWER(src))
 
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
@@ -119,7 +119,7 @@
 	synchronizer_coeff = 1
 
 /datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
-	if(prob(10 * get_synchronizer(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
+	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
 		owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
@@ -187,7 +187,7 @@
 
 /datum/mutation/human/glow/modify(mob/living/carbon/human/owner)
 	if(glowth)
-		glowth.set_light(glow + get_power(src) , glow + get_power(src), dna.features["mcolor"])
+		glowth.set_light(glow + GET_MUTATION_POWER(src) , glow + GET_MUTATION_POWER(src), dna.features["mcolor"])
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -212,8 +212,8 @@
 	power_coeff = 1
 
 /datum/mutation/human/fire/on_life()
-	if(prob((1+(100-dna.stability)/10)) * get_synchronizer(src))
-		owner.adjust_fire_stacks(2 * get_power(src))
+	if(prob((1+(100-dna.stability)/10)) * GET_MUTATION_SYNCHRONIZER(src))
+		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.IgniteMob()
 
 /datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)

@@ -32,7 +32,7 @@
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
 
-	var/can_chromosome = 1 //can we take chromosomes? 0: never,  1:yeah, 2: no, already have one
+	var/can_chromosome = 1 //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
 	var/chromosome_name   //purely cosmetic
 	var/modified = FALSE  //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
 	var/mutadone_proof = FALSE
@@ -76,7 +76,7 @@
 		owner.apply_overlay(layer_used)
 	grant_spell() //we do checks here so nothing about hulk getting magic
 	if(!modified)
-		addtimer(CALLBACK(src, .proc/modify)) //gonna want children calling ..() to run first
+		addtimer(CALLBACK(src, .proc/modify, 5)) //gonna want children calling ..() to run first
 
 /datum/mutation/human/proc/get_visual_indicator()
 	return
@@ -142,7 +142,8 @@
 /datum/mutation/human/proc/modify() //called when a genome is applied so we can properly update some stats without having to remove and reapply the mutation from someone
 	if(modified || !power || !owner)
 		return
-	power.charge_max *= get_energy(src)
+	power.charge_max *= GET_MUTATION_ENERGY(src)
+	power.charge_counter *= GET_MUTATION_ENERGY(src)
 	modified = TRUE
 
 /datum/mutation/human/proc/copy_mutation(datum/mutation/human/HM)
@@ -156,13 +157,14 @@
 	mutadone_proof = HM.mutadone_proof
 	can_chromosome = HM.can_chromosome
 
-/datum/mutation/human/proc/remove_chromosome(obj/item/chromosome)
+/datum/mutation/human/proc/remove_chromosome()
 	stabilizer_coeff = initial(stabilizer_coeff)
 	synchronizer_coeff = initial(synchronizer_coeff)
 	power_coeff = initial(power_coeff)
 	energy_coeff = initial(energy_coeff)
 	mutadone_proof = initial(mutadone_proof)
 	can_chromosome = initial(can_chromosome)
+	chromosome_name = null
 
 /datum/mutation/human/proc/remove()
 	if(dna)

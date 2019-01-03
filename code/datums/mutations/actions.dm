@@ -34,7 +34,7 @@
 /datum/mutation/human/firebreath/modify()
 	if(power)
 		var/obj/effect/proc_holder/spell/aimed/firebreath/S = power
-		S.strength = get_power(src)
+		S.strength = GET_MUTATION_POWER(src)
 
 
 /obj/effect/proc_holder/spell/aimed/firebreath
@@ -68,7 +68,7 @@
 		return
 	var/obj/item/projectile/magic/aoe/fireball/F = P
 	switch(strength)
- 		if(0 to 3)
+		if(0 to 3)
 			F.exp_light = strength-1
 		if(4 to INFINITY)
 			F.exp_heavy = strength-4
@@ -96,7 +96,7 @@
 	var/obj/effect/proc_holder/spell/self/void/voidpower = power
 	if(voidpower.in_use) //i don't know how rare this is but coughs are 10% on life so in theory this should be okay
 		return
-	if(prob((0.5+((100-dna.stability)/20))) * get_synchronizer(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
+	if(prob((0.5+((100-dna.stability)/20))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
 		if(voidpower.action)
 			voidpower.action.UpdateButtonIcon()
 		voidpower.invocation_type = "none"

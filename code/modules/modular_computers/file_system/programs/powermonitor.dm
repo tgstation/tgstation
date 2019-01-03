@@ -32,7 +32,7 @@
 
 
 /datum/computer_file/program/power_monitor/process_tick()
-	if(!get_powernet())
+	if(!GET_MUTATION_POWERnet())
 		search()
 	else
 		record()
@@ -51,7 +51,7 @@
 	if(!local_apc.terminal) //this really shouldn't happen without badminnery.
 		local_apc = null
 
-/datum/computer_file/program/power_monitor/proc/get_powernet() //keep in sync with /obj/machinery/computer/monitor's version
+/datum/computer_file/program/power_monitor/proc/GET_MUTATION_POWERnet() //keep in sync with /obj/machinery/computer/monitor's version
 	if(attached_wire || (local_apc && local_apc.terminal))
 		return attached_wire ? attached_wire.powernet : local_apc.terminal.powernet
 	return FALSE
@@ -60,7 +60,7 @@
 	if(world.time >= next_record)
 		next_record = world.time + record_interval
 
-		var/datum/powernet/connected_powernet = get_powernet()
+		var/datum/powernet/connected_powernet = GET_MUTATION_POWERnet()
 
 		var/list/supply = history["supply"]
 		if(connected_powernet)
@@ -75,7 +75,7 @@
 			demand.Cut(1, 2)
 
 /datum/computer_file/program/power_monitor/ui_data()
-	var/datum/powernet/connected_powernet = get_powernet()
+	var/datum/powernet/connected_powernet = GET_MUTATION_POWERnet()
 	var/list/data = get_header_data()
 	data["stored"] = record_size
 	data["interval"] = record_interval / 10

@@ -114,7 +114,7 @@
 /datum/dna/proc/generate_dna_blocks()
 	var/bonus
 	if(species && species.inert_mutation)
-		bonus = get_initialized_mutation(species.inert_mutation)
+		bonus = GET_INITIALIZED_MUTATION(species.inert_mutation)
 	var/list/mutations_temp = GLOB.good_mutations + GLOB.bad_mutations + GLOB.not_good_mutations + bonus
 	if(!LAZYLEN(mutations_temp))
 		return
@@ -122,7 +122,7 @@
 	shuffle_inplace(mutations_temp)
 	if(ismonkey(holder))
 		mutations |= new RACEMUT(MUT_NORMAL)
-		mutation_index[RACEMUT] = get_sequence(RACEMUT)
+		mutation_index[RACEMUT] = GET_SEQUENCE(RACEMUT)
 	else
 		mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
@@ -141,12 +141,12 @@
 //Used to create a chipped gene sequence
 /proc/create_sequence(mutation, active, difficulty)
 	if(!difficulty)
-		var/datum/mutation/human/A = get_initialized_mutation(mutation) //leaves the possibility to change difficulty mid-round
+		var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(mutation) //leaves the possibility to change difficulty mid-round
 		if(!A)
 			return
 		difficulty = A.difficulty
 	difficulty += rand(-2,4)
-	var/sequence = get_sequence(mutation)
+	var/sequence = GET_SEQUENCE(mutation)
 	if(active)
 		return sequence
 	while(difficulty)
@@ -231,7 +231,7 @@
 	stability = 100
 	for(var/datum/mutation/human/M in mutations)
 		if(M.class == MUT_EXTRA)
-			stability -= M.instability * get_stabilizer(M)
+			stability -= M.instability * GET_MUTATION_STABILIZER(M)
 	if(holder)
 		var/message
 		if(alert)
@@ -463,15 +463,15 @@
 	return is_gene_active(mutation)
 
 /datum/dna/proc/is_gene_active(mutation)
-	return (mutation_index[mutation] == get_sequence(mutation))
+	return (mutation_index[mutation] == GET_SEQUENCE(mutation))
 
 /datum/dna/proc/set_se(on=TRUE, datum/mutation/human/HM)
 	if(!HM || !(HM.type in mutation_index) || (LAZYLEN(mutation_index) < DNA_MUTATION_BLOCKS))
 		return
 	. = TRUE
 	if(on)
-		mutation_index[HM.type] = get_sequence(HM.type)
-	else if(get_sequence(HM.type) == mutation_index[HM.type])
+		mutation_index[HM.type] = GET_SEQUENCE(HM.type)
+	else if(GET_SEQUENCE(HM.type) == mutation_index[HM.type])
 		mutation_index[HM.type] = create_sequence(HM.type, FALSE, HM.difficulty)
 
 /datum/dna/proc/activate_mutation(mutation) //note that this returns a boolean and not a new mob
