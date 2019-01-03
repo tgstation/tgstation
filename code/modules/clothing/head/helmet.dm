@@ -84,8 +84,11 @@
 	tint = 2
 
 /obj/item/clothing/head/helmet/blueshirt
+	name = "blue helmet"
+	desc = "Have a good one, Calhoun."
 	icon_state = "blueshift"
 	item_state = "blueshift"
+	custom_premium_price = 600
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
