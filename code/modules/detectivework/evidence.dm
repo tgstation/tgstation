@@ -84,12 +84,6 @@
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
 
-/obj/item/storage/box/evidence/New()
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	..()
-	return
+/obj/item/storage/box/evidence/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/evidencebag(src)

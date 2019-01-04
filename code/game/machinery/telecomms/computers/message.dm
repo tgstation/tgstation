@@ -59,7 +59,7 @@
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
 /obj/machinery/computer/message_monitor/New()
-	. = ..()
+	..()
 	GLOB.telecomms_list += src
 
 /obj/machinery/computer/message_monitor/Initialize()
@@ -75,7 +75,7 @@
 
 /obj/machinery/computer/message_monitor/Destroy()
 	GLOB.telecomms_list -= src
-	. = ..()
+	return ..()
 
 /obj/machinery/computer/message_monitor/ui_interact(mob/living/user)
 	. = ..()
