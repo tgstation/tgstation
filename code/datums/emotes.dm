@@ -63,9 +63,10 @@
 	user.log_message(msg, LOG_EMOTE)
 	msg = "<b>[user]</b> " + msg
 
-	if(get_sound(user))
+	var/tmp_sound = get_sound(user)
+	if(tmp_sound)
 		if(!only_forced_audio || !intentional)
-			playsound(user, get_sound(user), 50, vary)
+			playsound(user, tmp_sound, 50, vary)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
