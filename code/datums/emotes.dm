@@ -22,6 +22,10 @@
 	var/stat_allowed = CONSCIOUS
 	var/static/list/emote_list = list()
 
+	var/sound //Sound to play when emote is called
+	var/vary = FALSE	//used for the honk borg emote
+	var/only_forced_audio = FALSE //can only code call this event instead of the player.
+
 /datum/emote/New()
 	if(key_third_person)
 		emote_list[key_third_person] = src
@@ -59,6 +63,12 @@
 	user.log_message(msg, LOG_EMOTE)
 	msg = "<b>[user]</b> " + msg
 
+	if(get_sound(user))
+		if(!only_forced_audio)
+			playsound(user.loc, get_sound(user), 50, vary)
+		else if(!intentional)
+			playsound(user.loc, get_sound(user), 50, vary)
+
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
@@ -70,6 +80,9 @@
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
+
+/datum/emote/proc/get_sound(mob/user)
+	return sound //by default just return this var.
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
@@ -138,13 +151,3 @@
 		var/mob/living/L = user
 		if(L.has_trait(TRAIT_EMOTEMUTE))
 			return FALSE
-
-/datum/emote/sound
-	var/sound //Sound to play when emote is called
-	var/vary = FALSE	//used for the honk borg emote
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-
-/datum/emote/sound/run_emote(mob/user, params)
-	. = ..()
-	if(.)
-		playsound(user.loc, sound, 50, vary)
