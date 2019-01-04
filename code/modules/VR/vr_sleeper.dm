@@ -115,20 +115,20 @@
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else
 						to_chat(occupant, "<span class='warning'>The virtual world does not support the creation of new virtual avatars, aborting transfer</span>")
-			. = TRUE
+			return TRUE
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
 				if(vr_human)
 					cleanup_vr_human()
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
-			. = TRUE
+			return TRUE
 		if("toggle_open")
 			if(state_open)
 				close_machine()
 			else if ((!occupant || usr == occupant) || !only_current_user_can_interact)
 				open_machine()
-			. = TRUE
+			return TRUE
 
 /obj/machinery/vr_sleeper/ui_data(mob/user)
 	var/list/data = list()
