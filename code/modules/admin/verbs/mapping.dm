@@ -383,8 +383,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	var/static/t_ray_view = FALSE
 	t_ray_view = !t_ray_view
 
-	var/static/list/t_ray_images = list()
-	for(var/obj/O in orange(256, src) )
+	var/list/t_ray_images = list()
+	var/static/list/stored_t_ray_images = list()
+	for(var/obj/O in orange(view, src) )
 		if(O.level != 1)
 			continue
 
@@ -395,9 +396,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 			MA.dir = O.dir
 			I.appearance = MA
 			t_ray_images += I
-
+	stored_t_ray_images += t_ray_images
 	if(t_ray_images.len)
 		if(t_ray_view)
 			images += t_ray_images
 		else
-			images -= t_ray_images
+			images -= stored_t_ray_images
