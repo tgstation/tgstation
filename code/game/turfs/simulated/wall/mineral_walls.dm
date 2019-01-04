@@ -249,7 +249,7 @@
 
 /turf/closed/wall/mineral/plastitanium
 	name = "wall"
-	desc = "An evil wall of plasma and titanium."
+	desc = "An durable wall made of an alloy of plasma and titanium."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
 	explosion_block = 4
