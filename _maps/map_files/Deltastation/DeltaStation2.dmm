@@ -94963,8 +94963,7 @@
 /turf/open/floor/plasteel,
 /area/medical/abandoned)
 "ddn" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_y = 28
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -95007,8 +95006,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/abandoned)
 "ddr" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt,

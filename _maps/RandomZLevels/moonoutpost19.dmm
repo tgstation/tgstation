@@ -4271,8 +4271,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/structure/mirror{
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/freezer{

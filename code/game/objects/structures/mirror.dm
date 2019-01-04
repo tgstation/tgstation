@@ -1,4 +1,3 @@
-//wip wip wup
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -8,11 +7,7 @@
 	anchored = TRUE
 	max_integrity = 200
 	integrity_failure = 100
-
-/obj/structure/mirror/Initialize(mapload)
-	. = ..()
-	if(icon_state == "mirror_broke" && !broken)
-		obj_break(null, mapload)
+	var/broken_icon_state = "mirror_broke"
 
 /obj/structure/mirror/attack_hand(mob/user)
 	. = ..()
@@ -51,11 +46,10 @@
 		return // no message spam
 	..()
 
-/obj/structure/mirror/obj_break(damage_flag, mapload)
+/obj/structure/mirror/obj_break(damage_flag)
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
-		icon_state = "mirror_broke"
-		if(!mapload)
-			playsound(src, "shatter", 70, 1)
+		icon_state = broken_icon_state
+		playsound(src, "shatter", 70, 1)
 		if(desc == initial(desc))
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
@@ -92,11 +86,17 @@
 		if(BURN)
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
+/obj/structure/mirror/broken
+	desc = "Oh no, seven years of bad luck!"
+	icon_state = "mirror_broke"
+	broken = TRUE
+
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
 	desc = "Turn and face the strange... face."
 	icon_state = "magic_mirror"
+	broken_icon_state = "magic_mirror_broke"
 	var/list/races_blacklist = list("skeleton", "agent", "angel", "military_synth", "memezombies", "clockwork golem servant", "android", "synth", "mush", "zombie")
 	var/list/choosable_races = list()
 

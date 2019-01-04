@@ -9032,16 +9032,14 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "auX" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_y = 28
 	},
 /obj/machinery/iv_drip,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "auY" = (
-/obj/structure/mirror{
-	icon_state = "mirror_broke";
+/obj/structure/mirror/broken{
 	pixel_y = 28
 	},
 /obj/item/shard{
