@@ -351,14 +351,14 @@
 	..()
 	. = 1
 
-/datum/reagent/drug/aranesp
-	name = "Aranesp"
-	id = "aranesp"
-	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
+/datum/reagent/drug/smugglers_run
+	name = "Smuggler's Run"
+	id = "smugglers_run"
+	description = "Taken by smugglers free running past security members with disablers, this drug fixes all stamina damage you might have but will cause some toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 
-/datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/smugglers_run/on_mob_life(mob/living/carbon/M)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")

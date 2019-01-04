@@ -272,13 +272,13 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/lsd(src)
 
-/obj/item/storage/pill_bottle/aranesp
+/obj/item/storage/pill_bottle/smugglers_run
 	name = "suspicious pill bottle"
-	desc = "The label says 'gotta go fast'."
+	desc = "The label has 'fuck disablers' hastily scrawled in black marker."
 
-/obj/item/storage/pill_bottle/aranesp/PopulateContents()
+/obj/item/storage/pill_bottle/smugglers_run/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/aranesp(src)
+		new /obj/item/reagent_containers/pill/smugglers_run(src)
 
 /obj/item/storage/pill_bottle/psicodine
 	name = "bottle of psicodine pills"
@@ -304,6 +304,7 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/penacid(src)
 
+
 /obj/item/storage/pill_bottle/neurine
 	name = "bottle of neurine pills"
 	desc = "Contains pills to treat non-severe mental traumas."
@@ -311,3 +312,20 @@
 /obj/item/storage/pill_bottle/neurine/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/neurine(src)
+
+/obj/item/storage/pill_bottle/floorpill
+	name = "bottle of floorpills"
+	desc = "An old pill bottle. It smells musty."
+
+/obj/item/storage/pill_bottle/floorpill/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/pill/P = locate() in src
+	name = "bottle of [P.name]s"
+
+/obj/item/storage/pill_bottle/floorpill/PopulateContents()
+	for(var/i in 1 to rand(1,7))
+		new /obj/item/reagent_containers/pill/floorpill(src)
+
+/obj/item/storage/pill_bottle/floorpill/full/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/floorpill(src)
