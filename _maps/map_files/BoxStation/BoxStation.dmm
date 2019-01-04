@@ -2186,6 +2186,40 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
+"aeD" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
+"aeE" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
+"aeF" = (
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
 "aeG" = (
 /obj/structure/cable,
 /obj/machinery/power/solar{
@@ -2582,6 +2616,22 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"afq" = (
+/obj/structure/cable{
+	icon_state = "1-8"
+	},
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
+"afr" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
+"afs" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
 "aft" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
@@ -2890,6 +2940,12 @@
 /obj/machinery/atmospherics/pipe/manifold4w/general/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"age" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/closed/wall/r_wall,
+/area/engine/gravity_generator)
 "agf" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal,
@@ -3043,6 +3099,14 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
+"agv" = (
+/obj/machinery/camera{
+	c_tag = "Mining Dock";
+	dir = 4
+	},
+/obj/machinery/computer/security/mining,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "agw" = (
 /obj/structure/table,
 /obj/machinery/syndicatebomb/training,
@@ -3538,6 +3602,21 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
+"ahw" = (
+/obj/machinery/computer/shuttle/mining{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
 "ahx" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -4855,6 +4934,49 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
+"ajT" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -23
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat_interior)
+"ajU" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/computer/monitor{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/aisat_interior)
 "ajV" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -4870,6 +4992,13 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
+"ajX" = (
+/obj/machinery/computer/teleporter{
+	icon_state = "computer";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ai_monitored/turret_protected/aisat_interior)
 "ajZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external{
@@ -28191,19 +28320,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
-"bpi" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
 "bpj" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -28757,19 +28873,6 @@
 /obj/item/pen/blue,
 /obj/item/radio/intercom{
 	pixel_y = -35
-	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"bqE" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"bqF" = (
-/obj/structure/cable{
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -29388,15 +29491,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"bse" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "bsf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -34708,14 +34802,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"bEK" = (
-/obj/machinery/camera{
-	c_tag = "Mining Dock";
-	dir = 4
-	},
-/obj/machinery/computer/security/mining,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock)
 "bEM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -35298,21 +35384,6 @@
 "bGi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/quartermaster/miningdock)
-"bGj" = (
-/obj/machinery/computer/shuttle/mining{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bGk" = (
 /obj/structure/chair/stool,
@@ -50341,24 +50412,6 @@
 "ctv" = (
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
-"ctw" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23
-	},
-/obj/machinery/computer/station_alert,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
 "ctx" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
 /turf/open/floor/plasteel/grimy,
@@ -50422,26 +50475,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/grimy,
-/area/ai_monitored/turret_protected/aisat_interior)
-"ctH" = (
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = -31
-	},
-/obj/machinery/computer/monitor,
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -50556,10 +50589,6 @@
 	},
 /obj/structure/chair,
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/aisat_interior)
-"ctW" = (
-/obj/machinery/computer/teleporter,
-/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat_interior)
 "ctX" = (
 /obj/machinery/camera{
@@ -55376,6 +55405,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"dgk" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/button/door{
+	id = "public_autolathe";
+	name = "Autolathe Shutters Control";
+	pixel_x = 28;
+	req_access_txt = "31"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "dgS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -57269,18 +57310,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
-"sWR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/button/door{
-	id = "public_autolathe";
-	name = "Autolathe Shutters Control";
-	pixel_x = 28;
-	req_access_txt = "31"
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -79742,7 +79771,7 @@ bym
 bxu
 bxy
 bxy
-bGj
+ahw
 bHA
 bHA
 bKl
@@ -79998,7 +80027,7 @@ bwW
 bGm
 bCo
 bDk
-bEK
+agv
 byE
 byE
 byE
@@ -80760,7 +80789,7 @@ bnG
 bnz
 bpA
 bbR
-sWR
+dgk
 bbR
 bud
 eyM
@@ -86668,8 +86697,8 @@ big
 bii
 bgN
 bnV
-bph
-bqF
+aeD
+afq
 bsd
 btG
 buQ
@@ -86925,8 +86954,8 @@ bgN
 bkZ
 bgN
 bnU
-bph
-bqE
+aeE
+afr
 bsc
 btF
 bph
@@ -87182,8 +87211,8 @@ big
 bih
 bgN
 bnV
-bph
-bqF
+aeE
+afs
 bsf
 btG
 buS
@@ -87439,9 +87468,9 @@ bgN
 bjy
 bmw
 bnW
-bpi
+aeF
 bqG
-bse
+age
 bij
 buR
 bwo
@@ -95982,8 +96011,8 @@ czk
 cti
 cua
 cua
-ctw
-ctH
+ajT
+ajU
 ctQ
 cuc
 cuj
@@ -97783,7 +97812,7 @@ aaf
 cua
 ctE
 ctL
-ctW
+ajX
 cuf
 cum
 cuw
