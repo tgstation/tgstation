@@ -65,7 +65,7 @@
 
 	if(get_sound(user))
 		if(!only_forced_audio || !intentional)
-			playsound(user.loc, get_sound(user), 50, vary)
+			playsound(user, get_sound(user), 50, vary)
 			playsound(user.loc, get_sound(user), 50, vary)
 
 	for(var/mob/M in GLOB.dead_mob_list)
