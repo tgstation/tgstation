@@ -1,0 +1,5 @@
+author: "duckay"
+delete-after: True
+changes: 
+  - rscadd: "Added better names and descriptions for blueshirt"
+  - rscadd: "Added Blueshirt helmet and armor to the sectech for $600 each"
