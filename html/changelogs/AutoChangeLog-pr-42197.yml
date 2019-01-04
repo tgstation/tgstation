@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "The Spontaneous Brain Trauma event now has a range of possible severities,
+and no longer runtimes."
