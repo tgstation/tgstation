@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/camera_view, 				//-errorage
 	/client/proc/sec_camera_report, 		//-errorage
 	/client/proc/intercom_view, 			//-errorage
+	/client/proc/tray_view,
 	/client/proc/air_status, //Air things
 	/client/proc/Cell, //More air things
 	/client/proc/atmosscan, //check plumbing
@@ -374,3 +375,29 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	messages += "</table>"
 
 	to_chat(src, messages.Join(""))
+
+/client/proc/tray_view()
+	set category = "Mapping"
+	set name = "T-ray view"
+
+	var/static/t_ray_view = FALSE
+	t_ray_view = !t_ray_view
+
+	var/static/list/t_ray_images = list()
+	for(var/obj/O in orange(256, src) )
+		if(O.level != 1)
+			continue
+
+		if(O.invisibility == INVISIBILITY_MAXIMUM)
+			var/image/I = new(loc = get_turf(O))
+			var/mutable_appearance/MA = new(O)
+			MA.alpha = 128
+			MA.dir = O.dir
+			I.appearance = MA
+			t_ray_images += I
+
+	if(t_ray_images.len)
+		if(t_ray_view)
+			images += t_ray_images
+		else
+			images -= t_ray_images
