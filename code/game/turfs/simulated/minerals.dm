@@ -11,7 +11,6 @@
 	initial_gas_mix = AIRLESS_ATMOS
 	opacity = 1
 	density = TRUE
-	blocks_air = 1
 	layer = EDGED_TURF_LAYER
 	temperature = TCMB
 	var/environment_type = "asteroid"
