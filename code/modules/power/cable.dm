@@ -499,6 +499,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list (new/datum/stack_recipe("cable restrai
 	materials = list()
 	cost = 1
 
+/obj/item/stack/cable_coil/get_part_rating()
+	return TRUE
+
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
 	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
 	item_color = cable_color

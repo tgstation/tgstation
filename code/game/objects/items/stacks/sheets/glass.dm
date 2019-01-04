@@ -38,6 +38,9 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 /obj/item/stack/sheet/glass/fifty
 	amount = 50
 
+/obj/item/stack/sheet/glass/get_part_rating()
+	return TRUE
+
 /obj/item/stack/sheet/glass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.glass_recipes
 	return ..()
