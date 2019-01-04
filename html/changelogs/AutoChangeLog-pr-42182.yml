@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Humans with the Void mutation will no longer be able to enter the void
-while inside something else (eg. cloning pod, cryotube) willingly or unwillingly."

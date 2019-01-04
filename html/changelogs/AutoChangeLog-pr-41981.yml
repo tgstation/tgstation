@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - admin: "New 'Podspawn' verb, which functions like 'Spawn', except
-any atoms movable spawned will be dropped in via a no-damage, no-explosion
-Centcom supply pod."
