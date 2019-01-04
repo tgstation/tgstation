@@ -64,7 +64,7 @@
 	msg = "<b>[user]</b> " + msg
 
 	if(get_sound(user))
-		if(!only_forced_audio)
+		if(!only_forced_audio || !intentional)
 			playsound(user.loc, get_sound(user), 50, vary)
 		else if(!intentional)
 			playsound(user.loc, get_sound(user), 50, vary)
