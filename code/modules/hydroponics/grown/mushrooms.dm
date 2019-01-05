@@ -129,7 +129,7 @@
 
 /obj/item/seeds/plump/on_chem_reaction(datum/reagents/S, mob/user, obj/item/seeds/myseed)
 	if(S.has_reagent("potash", 5))
-		to_chat(user, "<span class='warning'>These PlumpHelmets look like a meal worthy of Armoc himself</span>")
+		to_chat(user, "<span class='warning'>These PlumpHelmets look like a meal worthy of Armok himself</span>")
 		myseed.adjust_yield(round(S.get_reagent_amount("potash") / 5))
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet
