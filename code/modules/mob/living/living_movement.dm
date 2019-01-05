@@ -9,6 +9,7 @@
 		var/obj/item/projectile/P = mover
 		if(P.can_hit_target(src, P.permutated, src == P.original, TRUE))
 			P.Bump(src)
+		return TRUE			//If the projectile is deleted by the hit turf/Enter() will catch it, we don't need to try to block it first.
 	if(mover.throwing)
 		return (!density || !(mobility_flags & MOBILITY_STAND))
 	if(buckled == mover)
