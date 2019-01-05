@@ -1016,7 +1016,7 @@
 	id = "potassiumchloride"
 	description = "A poision which causes cardiac arrest by halting impacting the muscles"
 	toxpwr = 0
-	metabolization_rate = 0.2 // 75 cycles to cause cardiac arrest
+	metabolization_rate = 0.2
 
 /datum/reagent/toxin/potassiumchloride/on_mob_life(mob/living/carbon/M)
 	if (!M.can_heartattack())
@@ -1030,9 +1030,7 @@
 		M.losebreath += 2
 		M.Paralyze(10)
 
-	to_chat(M, "attack at [round(15/metabolization_rate)] current [current_cycle]")
-	// 15u minimum required to trigger heart attack in a regular human
-	if (current_cycle+1 >= 15/metabolization_rate && M.stat != DEAD && !M.undergoing_cardiac_arrest())
+	if (current_cycle >= 50 && holder.get_reagent_amount("potassiumchloride") > 5 && M.stat != DEAD && !M.undergoing_cardiac_arrest())
 		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 		if(M.stat == CONSCIOUS)
 			M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart is stopping!</span>")

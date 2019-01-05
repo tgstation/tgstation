@@ -55,7 +55,7 @@
 	text += "\n- Plant Mutations: [(text_string == "") ? "None" : text_string]"
 	return text
 
-/obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/S)
+/obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/S, mob/user, obj/item/seeds/myseed)
 	var/list/temp_mut_list = list()
 
 	if(S.has_reagent("sterilizine", 5))
