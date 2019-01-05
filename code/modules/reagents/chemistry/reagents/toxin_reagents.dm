@@ -876,14 +876,14 @@
 	description = "Causes heavy toxin damage after a brief time of inactivity."
 	reagent_state = LIQUID
 	metabolization_rate = 0 //stays in the system until active.
-	var/actual_metaboliztion_rate = REAGENTS_METABOLISM
+	var/actual_metabolization_rate = REAGENTS_METABOLISM
 	toxpwr = 0
 	var/actual_toxpwr = 5
 	var/delay = 30
 
 /datum/reagent/toxin/delayed/on_mob_life(mob/living/carbon/M)
 	if(current_cycle > delay)
-		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
+		holder.remove_reagent(id, actual_metabolization_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
 			M.Paralyze(20, 0)
@@ -966,4 +966,77 @@
 			else
 				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
 				M.emote("sigh")
+	return ..()
+
+/datum/reagent/toxin/potash
+	name = "Potash"
+	id = "potash"
+	description = "An odorless white crystal resembling and tasting of salt. Used to cause heart arrhythmias in high doses or cardiac arrest through injection. Also an affective fertiliser"
+	taste_description = "salt"
+	reagent_state = SOLID
+	color = "#FFFFFF" // rgb: 255,255,255
+	toxpwr = 0
+	metabolization_rate = 0.4
+	var/amount_to_convert = 0
+
+/datum/reagent/toxin/potash/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
+	if (method==INJECT)
+		M.reagents.add_reagent("injectedpotash", reac_volume)
+	return ..()
+
+/datum/reagent/toxin/potash/on_mob_life(mob/living/carbon/M)
+	if (!M.can_heartattack())
+		return ..()
+
+	if (holder.get_reagent_amount("potash") >= 15 && prob(min(round(current_cycle/5), 20)))
+		if (M.stat != UNCONSCIOUS)
+			to_chat(M, "<span class='danger'>Your heart falters for a moment</span>")
+		// the longer its in you the longer it'll take you to recover from your heart faltering
+		M.losebreath += 2
+		M.Paralyze(10)
+
+	return ..()
+
+/datum/reagent/toxin/injectedpotash // serves essentially as a save state of how much potash was injected compared to other methods
+	name = "Injected Potash"
+	id = "injectedpotash"
+	description = "As Potash enters the bloodsteam it builds up as Potassium Chloride"
+	toxpwr = 0
+	metabolization_rate = 0
+
+/datum/reagent/toxin/injectedpotash/on_mob_life(mob/living/carbon/M)
+	// for the amount of injected potash we have, we remove that much potash and gain that much potassium chloride
+	var/amount = holder.get_reagent_amount("injectedpotash")
+	holder.remove_reagent("potash", amount)
+	holder.add_reagent("potassiumchloride", amount)
+	holder.remove_reagent("injectedpotash", amount)
+
+/datum/reagent/toxin/potassiumchloride
+	name = "Potassium Chloride"
+	id = "potassiumchloride"
+	description = "A poision which causes cardiac arrest by halting impacting the muscles"
+	toxpwr = 0
+	metabolization_rate = 0.2 // 75 cycles to cause cardiac arrest
+
+/datum/reagent/toxin/potassiumchloride/on_mob_life(mob/living/carbon/M)
+	if (!M.can_heartattack())
+		return ..()
+
+	// we make sure it triggers on cycle 5 so the victims know for sure that their heart is failing, likelyhood increases at double the rate of potash until cap of 20
+	if (current_cycle == 5 || prob(min(round(current_cycle/5), 20)))
+		if (M.stat != UNCONSCIOUS)
+			to_chat(M, "<span class='danger'>Your heart falters for a moment</span>")
+		// the longer its in you the longer it'll take you to recover from your heart faltering
+		M.losebreath += 2
+		M.Paralyze(10)
+
+	to_chat(M, "attack at [round(15/metabolization_rate)] current [current_cycle]")
+	// 15u minimum required to trigger heart attack in a regular human
+	if (current_cycle+1 >= 15/metabolization_rate && M.stat != DEAD && !M.undergoing_cardiac_arrest())
+		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+		if(M.stat == CONSCIOUS)
+			M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart is stopping!</span>")
+		M.adjustStaminaLoss(60)
+		M.set_heartattack(TRUE)
+
 	return ..()

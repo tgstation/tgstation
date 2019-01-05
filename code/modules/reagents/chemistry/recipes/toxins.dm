@@ -126,3 +126,10 @@
 	results = list("bonehurtingjuice" = 5)
 	required_reagents = list("mutagen" = 1, "itching_powder" = 3, "milk" = 1)
 	mix_message = "<span class='danger'>The mixture suddenly becomes clear and looks a lot like water. You feel a strong urge to drink it.</span>"
+
+/datum/chemical_reaction/potash
+    name = "Potash"
+    id = "potash"
+    results = list ("potash" = 2)
+    required_reagents = list ("potassium" = 1, "chlorine" = 1)
+    required_temp = 393

@@ -613,9 +613,9 @@
 		if(myseed)
 			myseed.adjust_yield(round(S.get_reagent_amount("ammonia") * 0.01))
 
-	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
-	if(S.has_reagent("saltpetre", 1))
-		var/salt = S.get_reagent_amount("saltpetre")
+	// Saltpetre and Potash are used for gardening IRL, to simplify highly, they speeds up growth and strengthens plants. Both are potassium salts (nitrate || chloride)
+	if(S.has_reagent("saltpetre", 1) || S.has_reagent("potash", 1))
+		var/salt = S.get_reagent_amount("saltpetre") + S.get_reagent_amount("potash")
 		adjustHealth(round(salt * 0.25))
 		if (myseed)
 			myseed.adjust_production(-round(salt/100)-prob(salt%100))
