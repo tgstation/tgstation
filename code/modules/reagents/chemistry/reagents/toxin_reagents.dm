@@ -1030,7 +1030,7 @@
 		M.losebreath += 2
 		M.Paralyze(10)
 
-	if (current_cycle >= 50 && holder.get_reagent_amount("potassiumchloride") > 5 && M.stat != DEAD && !M.undergoing_cardiac_arrest())
+	if (current_cycle >= 50 && volume > 5 && M.stat != DEAD && !M.undergoing_cardiac_arrest())
 		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
 		if(M.stat == CONSCIOUS)
 			M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart is stopping!</span>")
