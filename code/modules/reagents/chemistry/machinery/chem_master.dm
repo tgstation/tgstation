@@ -83,7 +83,7 @@
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
 		var/obj/item/reagent_containers/B = I
-		. = 1 //no afterattack
+		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
 		replace_beaker(user, B)
