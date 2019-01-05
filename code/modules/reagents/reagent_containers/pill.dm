@@ -46,7 +46,7 @@
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
-	var/makes_me_think = pick(strings("redpill.json", "redpill_questions"))
+	var/makes_me_think = pick(strings(REDPILL_FILE, "redpill_questions"))
 	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
 		sleep(50)
 		to_chat(M, "<span class='notice'>[makes_me_think]</span>")
