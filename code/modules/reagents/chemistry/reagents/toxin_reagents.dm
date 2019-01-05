@@ -1014,7 +1014,7 @@
 /datum/reagent/toxin/potassiumchloride
 	name = "Potassium Chloride"
 	id = "potassiumchloride"
-	description = "A poision which causes cardiac arrest by halting impacting the muscles"
+	description = "A poision which causes cardiac arrest by impacting the muscles"
 	toxpwr = 0
 	metabolization_rate = 0.2
 

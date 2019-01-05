@@ -310,7 +310,7 @@
 	return text
 
 //in case seeds have some special interaction with special chems
-/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S, mob/user, obj/item/seeds/myseed)
+/obj/item/seeds/proc/on_chem_reaction(datum/reagents/S, mob/user)
 	return
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)

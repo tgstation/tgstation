@@ -441,7 +441,7 @@
 
 /obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S, mob/user)
 	if(myseed)
-		myseed.on_chem_reaction(S, user, myseed) //In case seeds have some special interactions with special chems, currently only used by vines
+		myseed.on_chem_reaction(S, user) //In case seeds have some special interactions with special chems
 
 	// Requires 5 mutagen to possibly change species.// Poor man's mutagen.
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))

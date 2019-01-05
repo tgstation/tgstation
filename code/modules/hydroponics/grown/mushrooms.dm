@@ -127,10 +127,10 @@
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
-/obj/item/seeds/plump/on_chem_reaction(datum/reagents/S, mob/user, obj/item/seeds/myseed)
+/obj/item/seeds/plump/on_chem_reaction(datum/reagents/S, mob/user)
 	if(S.has_reagent("potash", 5))
-		to_chat(user, "<span class='warning'>These PlumpHelmets look like a meal worthy of Armok himself</span>")
-		myseed.adjust_yield(round(S.get_reagent_amount("potash") / 5))
+		to_chat(user, "<span class='warning'>These mushrooms look like a meal worthy of Armok himself</span>")
+		adjust_yield(round(S.get_reagent_amount("potash") / 5))
 
 /obj/item/reagent_containers/food/snacks/grown/mushroom/plumphelmet
 	seed = /obj/item/seeds/plump
