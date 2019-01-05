@@ -976,8 +976,6 @@
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	toxpwr = 0
-	metabolization_rate = 0.4
-	var/amount_to_convert = 0
 
 /datum/reagent/toxin/potash/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if (method==INJECT)
@@ -1006,15 +1004,14 @@
 
 /datum/reagent/toxin/injectedpotash/on_mob_life(mob/living/carbon/M)
 	// for the amount of injected potash we have, we remove that much potash and gain that much potassium chloride
-	var/amount = holder.get_reagent_amount("injectedpotash")
-	holder.remove_reagent("potash", amount)
-	holder.add_reagent("potassiumchloride", amount)
-	holder.remove_reagent("injectedpotash", amount)
+	holder.remove_reagent("potash", volume)
+	holder.add_reagent("potassiumchloride", volume)
+	holder.remove_reagent("injectedpotash", volume)
 
 /datum/reagent/toxin/potassiumchloride
 	name = "Potassium Chloride"
 	id = "potassiumchloride"
-	description = "A poision which causes cardiac arrest by impacting the muscles"
+	description = "A poison which causes cardiac arrest by impacting the muscles"
 	toxpwr = 0
 	metabolization_rate = 0.2
 
