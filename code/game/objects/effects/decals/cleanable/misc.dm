@@ -79,12 +79,12 @@
 	light_range = 2
 	light_color = LIGHT_COLOR_GREEN
 
-/obj/effect/decal/cleanable/greenglow/Initialize(mapload, radium_volume=5)
-	. = ..()
-	reagents.add_reagent("radium", radium_volume)
-
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
+
+/obj/effect/decal/cleanable/greenglow/filled/Initialize()
+	. = ..()
+	reagents.add_reagent(pick("uranium", "radium"), 5)
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
