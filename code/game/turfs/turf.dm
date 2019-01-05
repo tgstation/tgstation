@@ -217,7 +217,7 @@
 			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
 			if(QDELETED(mover))
-				break
+				return FALSE		//We were deleted, do not attempt to proceed with movement.
 			var/atom/movable/thing = i
 			if(!thing.Cross(mover))
 				if(CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
@@ -229,6 +229,8 @@
 	if(firstbump)
 		if(!QDELETED(mover))
 			mover.Bump(firstbump)
+		else
+			return FALSE		//We were deleted.
 		return CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE)
 	return TRUE
 
@@ -238,7 +240,7 @@
 		return FALSE
 	for(var/i in contents)
 		if(QDELETED(mover))
-			break
+			return FALSE		//We were deleted.
 		if(i == mover)
 			continue
 		var/atom/movable/thing = i
@@ -549,3 +551,6 @@
 //Should return new turf
 /turf/proc/Melt()
 	return ScrapeAway()
+
+/turf/bullet_act(obj/item/projectile/P)
+	return BULLET_ACT_TURF

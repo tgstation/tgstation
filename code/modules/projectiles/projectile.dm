@@ -246,45 +246,64 @@
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
 
-	if(!prehit(A))
-		return FALSE
+	return process_hit(get_turf(A), A)
 
-	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
-	if(permutation == -1)	// the bullet passes through a dense object!
+#define QDEL_SELF 1			//Delete if we're not UNSTOPPABLE flagged non-temporarily
+#define DO_NOT_QDEL 2		//Pass through.
+#define FORCE_QDEL 3		//Force deletion.
+
+/obj/item/projectile/proc/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)		//probably needs to be reworked entirely when pixel movement is done.
+	if(QDELETED(src) || !T || !target)		//We're done, nothing's left.
+		if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !CHECK_BITFIELD(movement_type, UNSTOPPABLE)))
+			qdel(src)
+		return hit_something
+	permutated |= target		//Make sure we're never hitting it again. If we ever run into weirdness with piercing projectiles needing to hit something multiple times.. well.. that's a to-do.
+	if(!prehit(target))
+		return process_hit(T, select_target(T), qdel_self, hit_something)		//Hit whatever else we can since that didn't work.
+	var/result = target.bullet_act(src, def_zone)
+	if(result == BULLET_ACT_FORCE_PIERCE)
 		if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
 			temporary_unstoppable_movement = TRUE
 			ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
-		if(A)
-			permutated.Add(A)
-		return FALSE
-	else
-		var/atom/alt = select_target(A)
-		if(alt)
-			if(!prehit(alt))
-				return FALSE
-			alt.bullet_act(src, def_zone)
-	if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
+		return process_hit(T, select_target(T), qdel_self, TRUE)		//Hit whatever else we can since we're piercing through but we're still on the same tile.
+	else if(result == BULLET_ACT_TURF)									//We hit the turf but instead we're going to also hit something else on it.
+		return process_hit(T, select_target(T), QDEL_SELF, TRUE)
+	else		//Whether it hit or blocked, we're done!
+		qdel_self = QDEL_SELF
+		hit_something = TRUE
+	if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !CHECK_BITFIELD(movement_type, UNSTOPPABLE)))
 		qdel(src)
-	return TRUE
+	return hit_something
 
-/obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
-	if(!A || !A.density || (A.flags_1 & ON_BORDER_1) || ismob(A) || A == original)	//if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
-		return
-	var/turf/T = get_turf(A)
-	if(original in T)
+#undef QDEL_SELF
+#undef DO_NOT_QDEL
+#undef FORCE_QDEL
+
+/obj/item/projectile/proc/select_target(turf/T)			//Select a target from a turf.
+	if((original in T) && can_hit_target(original, permutated, TRUE, TRUE))
 		return original
-	var/list/mob/living/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob) - A
+	var/list/mob/living/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob)
 	var/list/mob/mobs = list()
 	for(var/mob/living/M in possible_mobs)
-		if(!(M.mobility_flags & MOBILITY_STAND))
+		if(!can_hit_target(M, permutated, M == original, TRUE))
 			continue
 		mobs += M
 	var/mob/M = safepick(mobs)
 	if(M)
 		return M.lowest_buckled_mob()
-	var/obj/O = safepick(typecache_filter_list(T, GLOB.typecache_machine_or_structure) - A)
+	var/list/obj/possible_objs = typecache_filter_list(T, GLOB.typecache_machine_or_structure)
+	var/list/obj/objs = list()
+	for(var/obj/O in possible_objs)
+		if(!can_hit_target(O, permutated, O == original, TRUE))
+			continue
+		objs += O
+	var/obj/O = safepick(objs)
 	if(O)
 		return O
+	//Nothing else is here that we can hit, hit the turf if we haven't.
+	if(!(T in permutated) && can_hit_target(T, permutated, T == original, TRUE))
+		return T
+	//Returns null if nothing at all was found.
 
 /obj/item/projectile/proc/check_ricochet()
 	if(prob(ricochet_chance))
@@ -511,7 +530,7 @@
 		return FALSE
 	if(target in passthrough)
 		return FALSE
-	if(target.density)		//This thing blocks projectiles, hit it regardless of layer.
+	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
 	if(!isliving(target))
 		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
@@ -519,7 +538,7 @@
 	else
 		var/mob/living/L = target
 		if(!direct_target)
-			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE))		//If they're able to 1. stand or 2. use or 3. move, they are not stunned enough to dodge projectiles passing over.
+			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE) && (L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
 				return FALSE
 	return TRUE
 

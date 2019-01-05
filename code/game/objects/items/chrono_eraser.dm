@@ -244,7 +244,7 @@
 		if(Pgun && istype(Pgun))
 			Pgun.field_connect(src)
 	else
-		return 0
+		return BULLET_ACT_HIT
 
 /obj/structure/chrono_field/assume_air()
 	return 0

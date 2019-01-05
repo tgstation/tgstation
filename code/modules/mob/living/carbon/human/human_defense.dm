@@ -80,9 +80,9 @@
 
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
-			return 2
+			return BULLET_ACT_HIT
 
-	return (..(P , def_zone))
+	return ..(P, def_zone)
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit)
