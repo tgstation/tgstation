@@ -219,6 +219,7 @@
 
 /obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
+	var/turf/T = get_turf(A)
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
@@ -233,11 +234,11 @@
 		var/mob/checking = firer
 		if((A == firer) || (((A in firer.buckled_mobs) || (istype(checking) && (A == checking.buckled))) && (A != original)) || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
 			trajectory_ignore_forcemove = TRUE
-			forceMove(get_turf(A))
+			forceMove(T)
 			trajectory_ignore_forcemove = FALSE
 			return FALSE
 
-	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
+	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
@@ -246,7 +247,7 @@
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
 
-	return process_hit(get_turf(A), A)
+	return process_hit(T, select_target(T, A))
 
 #define QDEL_SELF 1			//Delete if we're not UNSTOPPABLE flagged non-temporarily
 #define DO_NOT_QDEL 2		//Pass through.
@@ -279,9 +280,11 @@
 #undef DO_NOT_QDEL
 #undef FORCE_QDEL
 
-/obj/item/projectile/proc/select_target(turf/T)			//Select a target from a turf.
+/obj/item/projectile/proc/select_target(turf/T, atom/target)			//Select a target from a turf.
 	if((original in T) && can_hit_target(original, permutated, TRUE, TRUE))
 		return original
+	if(target && can_hit_target(target, permutated, target == original, TRUE))
+		return target
 	var/list/mob/living/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob)
 	var/list/mob/mobs = list()
 	for(var/mob/living/M in possible_mobs)
@@ -538,7 +541,7 @@
 	else
 		var/mob/living/L = target
 		if(!direct_target)
-			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE) && (L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
+			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE) || !(L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
 				return FALSE
 	return TRUE
 

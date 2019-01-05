@@ -553,4 +553,5 @@
 	return ScrapeAway()
 
 /turf/bullet_act(obj/item/projectile/P)
+	. = ..()
 	return BULLET_ACT_TURF
