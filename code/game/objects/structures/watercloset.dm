@@ -207,7 +207,6 @@
 	icon_state = "urinalcake_squish"
 	addtimer(VARSET_CALLBACK(src, icon_state, "urinalcake"), 8)
 
-
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
@@ -262,9 +261,13 @@
 			H.lip_color = initial(H.lip_color)
 			H.wash_cream()
 			H.regenerate_icons()
+			H.adjust_hygiene(10)
 		user.drowsyness = max(user.drowsyness - rand(2,3), 0) //Washing your face wakes you up if you're falling asleep
 	else
 		SEND_SIGNAL(user, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		if(ishuman(user))
+			var/mob/living/carbon/human/dirtyboy
+			dirtyboy.adjust_hygiene(10)
 
 /obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
 	if(busy)

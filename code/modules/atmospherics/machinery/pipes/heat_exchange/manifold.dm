@@ -17,7 +17,7 @@
 
 	var/mutable_appearance/center
 
-/obj/machinery/atmospherics/pipe/manifold/Initialize()
+/obj/machinery/atmospherics/pipe/manifold/New()
 	icon_state = ""
 	center = mutable_appearance(icon, "manifold_center")
 	return ..()

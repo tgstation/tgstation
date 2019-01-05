@@ -18,7 +18,7 @@
 
 /obj/item/watertank/Initialize()
 	. = ..()
-	create_reagents(volume)
+	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
 
 /obj/item/watertank/ui_action_click(mob/user)
@@ -113,7 +113,6 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	item_flags = NOBLUDGEON | ABSTRACT  // don't put in storage
-	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
@@ -336,7 +335,7 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 

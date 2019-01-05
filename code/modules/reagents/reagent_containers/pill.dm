@@ -46,6 +46,10 @@
 		M.visible_message("<span class='danger'>[user] forces [M] to [apply_method] [src].</span>", \
 							"<span class='userdanger'>[user] forces [M] to [apply_method] [src].</span>")
 
+	var/makes_me_think = pick(strings("redpill.json", "redpill_questions"))
+	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
+		sleep(50)
+		to_chat(M, "<span class='notice'>[makes_me_think]</span>")
 
 	if(reagents.total_volume)
 		reagents.reaction(M, apply_type)
@@ -156,10 +160,11 @@
 
 /obj/item/reagent_containers/pill/psicodine
 	name = "psicodine pill"
-	desc = "Used to treat mental instability and traumas."
+	desc = "Used to treat mental instability and phobias."
 	list_reagents = list("psicodine" = 10)
 	icon_state = "pill22"
 	roundstart = TRUE
+
 /obj/item/reagent_containers/pill/penacid
 	name = "pentetic acid pill"
 	desc = "Used to expunge radioation and toxins."
@@ -198,6 +203,13 @@
 	desc = "It has a creepy smiling face on it."
 	icon_state = "pill_happy"
 	list_reagents = list("happiness" = 10)
+
+/obj/item/reagent_containers/pill/neurine
+	name = "neurine pill"
+	desc = "Used to treat non-severe mental traumas."
+	list_reagents = list("neurine" = 10)
+	icon_state = "pill22"
+	roundstart = TRUE
 
 
 /obj/item/reagent_containers/pill/floorpill

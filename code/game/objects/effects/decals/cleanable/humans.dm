@@ -65,8 +65,9 @@
 		addtimer(CALLBACK(src, .proc/start_rotting), 2 MINUTES)
 
 /obj/effect/decal/cleanable/blood/gibs/proc/start_rotting(rename=TRUE)
-	name = "rotting [initial(name)]"
-	desc += " It smells terrible."
+	if(rename)
+		name = "rotting [initial(name)]"
+		desc += " They smell terrible."
 	AddComponent(/datum/component/rot/gibs)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
@@ -117,7 +118,7 @@
 
 /obj/effect/decal/cleanable/blood/gibs/old
 	name = "old rotting gibs"
-	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
+	desc = "Space Jesus, why didn't anyone clean this up? They smell terrible."
 	bloodiness = 0
 	already_rotting = TRUE
 

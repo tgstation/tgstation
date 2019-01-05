@@ -188,6 +188,32 @@
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
 
+/datum/quirk/hypersensitive
+	name = "Hypersensitive"
+	desc = "For better or worse, everything seems to affect your mood more than it should."
+	value = -1
+	gain_text = "<span class='danger'>You seem to make a big deal out of everything.</span>"
+	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
+
+/datum/quirk/hypersensitive/add()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+	if(mood)
+		mood.mood_modifier += 0.5
+
+/datum/quirk/hypersensitive/remove()
+	if(quirk_holder)
+		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+		if(mood)
+			mood.mood_modifier -= 0.5
+
+/datum/quirk/light_drinker
+	name = "Light Drinker"
+	desc = "You just can't handle your drinks and get drunk very quickly."
+	value = -1
+	mob_trait = TRAIT_LIGHT_DRINKER
+	gain_text = "<span class='notice'>Just the thought of drinking alcohol makes your head spin.</span>"
+	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
+
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
 	desc = "You are nearsighted without prescription glasses, but spawn with a pair."

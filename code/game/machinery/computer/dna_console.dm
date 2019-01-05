@@ -101,7 +101,7 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
-			if(viable_occupant.has_dna() && !viable_occupant.has_trait(TRAIT_RADIMMUNE) && !viable_occupant.has_trait(TRAIT_NOCLONE) || (connected.scan_level == 3)) //occupant is viable for dna modification
+			if(viable_occupant.has_dna() && !viable_occupant.has_trait(TRAIT_RADIMMUNE) && !viable_occupant.has_trait(TRAIT_BADDNA) || (connected.scan_level == 3)) //occupant is viable for dna modification
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -689,7 +689,7 @@
 				var/datum/mutation/human/A = viable_occupant.dna.get_mutation(current_mutation)
 				if(A && (!mutation_in_sequence(current_mutation, viable_occupant.dna) || A.scrambled))
 					viable_occupant.dna.remove_mutation(current_mutation)
-					viable_occupant.dna.update_instability(TRUE)
+					viable_occupant.dna.update_instability()
 					current_screen = "mainmenu"
 					current_mutation = null
 		if("pulsegene")
@@ -778,7 +778,7 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
-		if(!istype(viable_occupant) || !viable_occupant.dna || viable_occupant.has_trait(TRAIT_RADIMMUNE) || viable_occupant.has_trait(TRAIT_NOCLONE))
+		if(!istype(viable_occupant) || !viable_occupant.dna || viable_occupant.has_trait(TRAIT_RADIMMUNE) || viable_occupant.has_trait(TRAIT_BADDNA))
 			viable_occupant = null
 	return viable_occupant
 

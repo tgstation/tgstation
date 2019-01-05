@@ -36,9 +36,6 @@
 		START_PROCESSING(SSmachines, src)
 		process()
 		soundloop.start()
-		wash_atom(loc)
-		for(var/G in loc)
-			wash_atom(G)
 	else
 		soundloop.stop()
 		if(isopenturf(loc))
@@ -131,7 +128,12 @@
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
+	if(ishuman(L))
+		if(check_clothes(L))
+			to_chat(H, "<span class='warning'>You step into the shower with your clothes on, and feel like an idiot.</span>")
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
+		else
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
@@ -221,6 +223,20 @@
 			C.adjust_bodytemperature(35, 0, 500)
 		L.adjustFireLoss(5)
 		to_chat(L, "<span class='danger'>The shower is searing!</span>")
+
+/obj/machinery/shower/proc/check_clothes(mob/living/carbon/human/H)
+	var/result
+	if(H.wear_suit && (H.wear_suit.clothing_flags & SHOWEROKAY))
+		return FALSE
+	result &= (H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))
+	result &= (H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
+	result &= (H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY))
+	result &= (H.ears && !(H.ears.clothing_flags & SHOWEROKAY))
+	result &= (H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY))
+	result &= (H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY))
+	result &= (H.head && !(H.head.clothing_flags & SHOWEROKAY))
+	return result
+
 
 /obj/effect/mist
 	name = "mist"

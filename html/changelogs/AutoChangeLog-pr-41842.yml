@@ -1,7 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Added two new surgery procedures, under the Experimental Surgery techweb node."
-  - rscadd: "Ligament Hook makes it so you can attach limbs manually (like skeletons) but makes dismemberment more likely as well."
-  - rscadd: "Ligament Reinforcement prevents dismemberment, but makes limbs easier to disable through damage."
-  - tweak: "Golem limbs can now be disabled, although they are still undismemberable."

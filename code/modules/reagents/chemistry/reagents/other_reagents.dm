@@ -1546,7 +1546,7 @@
 		if(M && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.hair_style = "Very Long Hair"
-			H.facial_hair_style = "Very Long Beard"
+			H.facial_hair_style = "Beard (Very Long)"
 			H.update_hair()
 
 /datum/reagent/saltpetre

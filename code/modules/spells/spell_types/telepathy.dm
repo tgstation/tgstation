@@ -10,7 +10,8 @@
 	action_background_icon_state = "bg_spell"
 	var/notice = "notice"
 	var/boldnotice = "boldnotice"
-	var/magic_check = TRUE
+	var/magic_check = FALSE
+	var/holy_check = FALSE
 
 /obj/effect/proc_holder/spell/targeted/telepathy/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
@@ -20,7 +21,7 @@
 			return
 		log_directed_talk(user, M, msg, LOG_SAY, "[name]")
 		to_chat(user, "<span class='[boldnotice]'>You transmit to [M]:</span> <span class='[notice]'>[msg]</span>")
-		if(!magic_check || !M.anti_magic_check(FALSE, TRUE)) //hear no evil
+		if(!M.anti_magic_check(magic_check, holy_check)) //hear no evil
 			to_chat(M, "<span class='[boldnotice]'>You hear something behind you talking...</span> <span class='[notice]'>[msg]</span>")
 		for(var/ded in GLOB.dead_mob_list)
 			if(!isobserver(ded))

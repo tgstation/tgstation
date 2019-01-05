@@ -10,7 +10,7 @@
 
 
 //Parent to shields and blades because muh copypasted code.
-/obj/effect/proc_holder/changeling/weapon
+/datum/action/changeling/weapon
 	name = "Organic Weapon"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
@@ -21,13 +21,13 @@
 	var/weapon_type
 	var/weapon_name_simple
 
-/obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
+/datum/action/changeling/weapon/try_to_sting(mob/user, mob/target)
 	for(var/obj/item/I in user.held_items)
 		if(check_weapon(user, I))
 			return
 	..(user, target)
 
-/obj/effect/proc_holder/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
+/datum/action/changeling/weapon/proc/check_weapon(mob/user, obj/item/hand_item)
 	if(istype(hand_item, weapon_type))
 		user.temporarilyRemoveItemFromInventory(hand_item, TRUE) //DROPDEL will delete the item
 		if(!silent)
@@ -36,7 +36,7 @@
 		user.update_inv_hands()
 		return 1
 
-/obj/effect/proc_holder/changeling/weapon/sting_action(mob/living/user)
+/datum/action/changeling/weapon/sting_action(mob/living/user)
 	var/obj/item/held = user.get_active_held_item()
 	if(held && !user.dropItemToGround(held))
 		to_chat(user, "<span class='warning'>[held] is stuck to your hand, you cannot grow a [weapon_name_simple] over it!</span>")
@@ -56,13 +56,14 @@
 		playsound(user, 'sound/effects/blobattack.ogg', 30, 1)
 	return W
 
-/obj/effect/proc_holder/changeling/weapon/on_refund(mob/user)
+/datum/action/changeling/weapon/Remove(mob/user)
 	for(var/obj/item/I in user.held_items)
 		check_weapon(user, I)
+	..()
 
 
 //Parent to space suits and armor.
-/obj/effect/proc_holder/changeling/suit
+/datum/action/changeling/suit
 	name = "Organic Suit"
 	desc = "Go tell a coder if you see this"
 	helptext = "Yell at Miauw and/or Perakp"
@@ -76,14 +77,14 @@
 	var/recharge_slowdown = 0
 	var/blood_on_castoff = 0
 
-/obj/effect/proc_holder/changeling/suit/try_to_sting(mob/user, mob/target)
+/datum/action/changeling/suit/try_to_sting(mob/user, mob/target)
 	if(check_suit(user))
 		return
 	var/mob/living/carbon/human/H = user
 	..(H, target)
 
 //checks if we already have an organic suit and casts it off.
-/obj/effect/proc_holder/changeling/suit/proc/check_suit(mob/user)
+/datum/action/changeling/suit/proc/check_suit(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!ishuman(user) || !changeling)
 		return 1
@@ -103,13 +104,14 @@
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return 1
 
-/obj/effect/proc_holder/changeling/suit/on_refund(mob/user)
+/datum/action/changeling/suit/Remove(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	check_suit(H)
+	..()
 
-/obj/effect/proc_holder/changeling/suit/sting_action(mob/living/carbon/human/user)
+/datum/action/changeling/suit/sting_action(mob/living/carbon/human/user)
 	if(!user.canUnEquip(user.wear_suit))
 		to_chat(user, "\the [user.wear_suit] is stuck to your body, you cannot grow a [suit_name_simple] over it!")
 		return
@@ -132,10 +134,11 @@
 /***************************************\
 |***************ARM BLADE***************|
 \***************************************/
-/obj/effect/proc_holder/changeling/weapon/arm_blade
+/datum/action/changeling/weapon/arm_blade
 	name = "Arm Blade"
-	desc = "We reform one of our arms into a deadly blade."
+	desc = "We reform one of our arms into a deadly blade. Costs 20 chemicals."
 	helptext = "We may retract our armblade in the same manner as we form it. Cannot be used while in lesser form."
+	button_icon_state = "armblade"
 	chemical_cost = 20
 	dna_cost = 2
 	req_human = 1
@@ -211,12 +214,13 @@
 |***********COMBAT TENTACLES*************|
 \***************************************/
 
-/obj/effect/proc_holder/changeling/weapon/tentacle
+/datum/action/changeling/weapon/tentacle
 	name = "Tentacle"
-	desc = "We ready a tentacle to grab items or victims with."
+	desc = "We ready a tentacle to grab items or victims with. Costs 10 chemicals."
 	helptext = "We can use it once to retrieve a distant item. If used on living creatures, the effect depends on the intent: \
 	Help will simply drag them closer, Disarm will grab whatever they're holding instead of them, Grab will put the victim in our hold after catching it, \
 	and Harm will stun it, and stab it if we're also holding a sharp weapon. Cannot be used while in lesser form."
+	button_icon_state = "tentacle"
 	chemical_cost = 10
 	dna_cost = 2
 	req_human = 1
@@ -391,10 +395,11 @@
 /***************************************\
 |****************SHIELD*****************|
 \***************************************/
-/obj/effect/proc_holder/changeling/weapon/shield
+/datum/action/changeling/weapon/shield
 	name = "Organic Shield"
-	desc = "We reform one of our arms into a hard shield."
+	desc = "We reform one of our arms into a hard shield. Costs 20 chemicals."
 	helptext = "Organic tissue cannot resist damage forever; the shield will break after it is hit too much. The more genomes we absorb, the stronger it is. Cannot be used while in lesser form."
+	button_icon_state = "organic_shield"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
@@ -402,7 +407,7 @@
 	weapon_type = /obj/item/shield/changeling
 	weapon_name_simple = "shield"
 
-/obj/effect/proc_holder/changeling/weapon/shield/sting_action(mob/user)
+/datum/action/changeling/weapon/shield/sting_action(mob/user)
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling) //So we can read the absorbedcount.
 	if(!changeling)
 		return
@@ -443,10 +448,11 @@
 /***************************************\
 |*********SPACE SUIT + HELMET***********|
 \***************************************/
-/obj/effect/proc_holder/changeling/suit/organic_space_suit
+/datum/action/changeling/suit/organic_space_suit
 	name = "Organic Space Suit"
-	desc = "We grow an organic suit to protect ourselves from space exposure."
+	desc = "We grow an organic suit to protect ourselves from space exposure. Costs 20 chemicals."
 	helptext = "We must constantly repair our form to make it space-proof, reducing chemical production while we are protected. Cannot be used in lesser form."
+	button_icon_state = "organic_suit"
 	chemical_cost = 20
 	dna_cost = 2
 	req_human = 1
@@ -490,10 +496,11 @@
 /***************************************\
 |*****************ARMOR*****************|
 \***************************************/
-/obj/effect/proc_holder/changeling/suit/armor
+/datum/action/changeling/suit/armor
 	name = "Chitinous Armor"
-	desc = "We turn our skin into tough chitin to protect us from damage."
+	desc = "We turn our skin into tough chitin to protect us from damage. Costs 20 chemicals."
 	helptext = "Upkeep of the armor requires a low expenditure of chemicals. The armor is strong against brute force, but does not provide much protection from lasers. Cannot be used in lesser form."
+	button_icon_state = "chitinous_armor"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1

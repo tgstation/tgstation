@@ -40,8 +40,8 @@
 	icon_state = "blob_glow"
 	flags_1 = CHECK_RICOCHET_1
 	point_return = 8
-	max_integrity = 50
-	brute_resist = 1
+	max_integrity = 100
+	brute_resist = 0.5
 	explosion_block = 2
 
 /obj/structure/blob/shield/reflective/handle_ricochet(obj/item/projectile/P)
