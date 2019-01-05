@@ -1000,7 +1000,7 @@
 /datum/reagent/toxin/injectedpotash // serves essentially as a save state of how much potash was injected compared to other "method" options like TOUCH
 	name = "Injected Potash"
 	id = "injectedpotash"
-	description = "As Potash enters the bloodsteam it builds up as Potassium Chloride"
+	description = "As Potash enters the bloodstream it builds up as Potassium Chloride."
 	toxpwr = 0
 	metabolization_rate = 0
 
