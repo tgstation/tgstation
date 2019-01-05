@@ -130,6 +130,6 @@
 /datum/chemical_reaction/potash
     name = "Potash"
     id = "potash"
-    results = list ("potash" = 2)
-    required_reagents = list ("potassium" = 1, "chlorine" = 1)
+    results = list ("potash" = 3)
+    required_reagents = list ("potassium" = 1, "chlorine" = 1, "oxygen" = 3)
     required_temp = 393
