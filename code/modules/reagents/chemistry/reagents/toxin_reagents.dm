@@ -997,7 +997,7 @@
 
 	return ..()
 
-/datum/reagent/toxin/injectedpotash // serves essentially as a save state of how much potash was injected compared to other methods
+/datum/reagent/toxin/injectedpotash // serves essentially as a save state of how much potash was injected compared to other "method" options like TOUCH
 	name = "Injected Potash"
 	id = "injectedpotash"
 	description = "As Potash enters the bloodsteam it builds up as Potassium Chloride"
@@ -1022,7 +1022,7 @@
 	if (!M.can_heartattack())
 		return ..()
 
-	// we make sure it triggers on cycle 5 so the victims know for sure that their heart is failing, likelyhood increases at double the rate of potash until cap of 20
+	// we make sure it triggers on cycle 5 so the victims know for sure that their heart is failing
 	if (current_cycle == 5 || prob(min(round(current_cycle/5), 20)))
 		if (M.stat == CONSCIOUS)
 			to_chat(M, "<span class='danger'>Your heart falters for a moment</span>")
