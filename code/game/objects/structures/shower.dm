@@ -128,12 +128,6 @@
 	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 	L.wash_cream()
 	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	if(ishuman(L))
-		if(check_clothes(L))
-			to_chat(H, "<span class='warning'>You step into the shower with your clothes on, and feel like an idiot.</span>")
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
-		else
-			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	if(iscarbon(L))
 		var/mob/living/carbon/M = L
 		. = TRUE
@@ -169,6 +163,12 @@
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
+			if(check_clothes(L))
+				to_chat(L, "<span class='warning'>You shower with your clothes on, and feel like an idiot.</span>")
+				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "badshower", /datum/mood_event/idiot_shower)
+			else
+				H.set_hygiene(HYGIENE_LEVEL_CLEAN)
+				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
 			if(H.wear_suit && wash_obj(H.wear_suit))
 				H.update_inv_wear_suit()
@@ -186,8 +186,10 @@
 				H.update_inv_belt()
 		else
 			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+			SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 	else
 		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
 /obj/machinery/shower/proc/contamination_cleanse(atom/thing)
 	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
@@ -225,17 +227,27 @@
 		to_chat(L, "<span class='danger'>The shower is searing!</span>")
 
 /obj/machinery/shower/proc/check_clothes(mob/living/carbon/human/H)
-	var/result
 	if(H.wear_suit && (H.wear_suit.clothing_flags & SHOWEROKAY))
+		// Do not check underclothing if the over-suit is suitable.
+		// This stops people feeling dumb if they're showering
+		// with a radiation suit on.
 		return FALSE
-	result &= (H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))
-	result &= (H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
-	result &= (H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY))
-	result &= (H.ears && !(H.ears.clothing_flags & SHOWEROKAY))
-	result &= (H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY))
-	result &= (H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY))
-	result &= (H.head && !(H.head.clothing_flags & SHOWEROKAY))
-	return result
+
+	. = FALSE
+	if(H.wear_suit && !(H.wear_suit.clothing_flags & SHOWEROKAY))
+		. = TRUE
+	else if(H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
+		. = TRUE
+	else if(H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY))
+		. = TRUE
+	else if(H.ears && !(H.ears.clothing_flags & SHOWEROKAY))
+		. = TRUE
+	else if(H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY))
+		. = TRUE
+	else if(H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY))
+		. = TRUE
+	else if(H.head && !(H.head.clothing_flags & SHOWEROKAY))
+		. = TRUE
 
 
 /obj/effect/mist
