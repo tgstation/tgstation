@@ -62,7 +62,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		/mob/dead/observer/proc/dead_tele,
 		/mob/dead/observer/proc/open_spawners_menu,
 		/mob/dead/observer/proc/view_gas,
-		/mob/dead/observer/proc/tray_view())
+		/mob/dead/observer/proc/tray_view)
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
@@ -875,7 +875,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/list/t_ray_images = list()
 	var/static/list/stored_t_ray_images = list()
-	for(var/obj/O in orange(view, src) )
+	for(var/obj/O in orange(client.view, src) )
 		if(O.level != 1)
 			continue
 
@@ -889,6 +889,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	stored_t_ray_images += t_ray_images
 	if(t_ray_images.len)
 		if(t_ray_view)
-			images += t_ray_images
+			client.images += t_ray_images
 		else
-			images -= stored_t_ray_images
+			client.images -= stored_t_ray_images
