@@ -153,10 +153,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/beep_cooldown = 50
 	var/next_beep = 0
 
-/obj/structure/bodycontainer/morgue/New()
+/obj/structure/bodycontainer/morgue/Initialize()
+	. = ..()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
-	..()
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	..()
@@ -217,11 +217,13 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
-	connected = new/obj/structure/tray/c_tray(src)
-	connected.connected = src
-
 	GLOB.crematoriums.Add(src)
 	..()
+
+/obj/structure/bodycontainer/crematorium/Initialize()
+	. = ..()
+	connected = new /obj/structure/tray/c_tray(src)
+	connected.connected = src
 
 /obj/structure/bodycontainer/crematorium/update_icon()
 	if(!connected || connected.loc != src)

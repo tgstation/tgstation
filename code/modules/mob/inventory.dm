@@ -385,12 +385,14 @@
 	drop_all_held_items()
 
 
-/mob/living/carbon/proc/check_obscured_slots()
+/mob/living/carbon/proc/check_obscured_slots(transparent_protection)
 	var/list/obscured = list()
 	var/hidden_slots = NONE
 
 	for(var/obj/item/I in get_equipped_items())
 		hidden_slots |= I.flags_inv
+		if(transparent_protection)
+			hidden_slots |= I.transparent_protection
 
 	if(hidden_slots & HIDENECK)
 		obscured |= SLOT_NECK

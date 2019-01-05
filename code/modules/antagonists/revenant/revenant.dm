@@ -347,8 +347,8 @@
 	var/old_key //key of the previous revenant, will have first pick on reform.
 	var/mob/living/simple_animal/revenant/revenant
 
-/obj/item/ectoplasm/revenant/New()
-	..()
+/obj/item/ectoplasm/revenant/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
 /obj/item/ectoplasm/revenant/proc/scatter()

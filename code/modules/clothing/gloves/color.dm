@@ -13,13 +13,13 @@
 	name = "budget insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
-	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
+	siemens_coefficient = 1			//Set to a default of 1, gets overridden in Initialize()
 	permeability_coefficient = 0.05
-	item_color="yellow"
+	item_color = "yellow"
 	resistance_flags = NONE
 
-/obj/item/clothing/gloves/color/fyellow/New()
-	..()
+/obj/item/clothing/gloves/color/fyellow/Initialize()
+	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/fyellow/old

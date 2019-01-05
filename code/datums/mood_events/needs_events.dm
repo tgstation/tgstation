@@ -53,6 +53,19 @@
 	description = "<span class='warning'>The stench of rotting carcasses is unbearable!</span>\n"
 	mood_change = -7
 
+//Hygiene Events
+/datum/mood_event/neat
+	description = "<span class='nicegreen'>I'm so clean, I love it.</span>\n"
+	mood_change = 3
+
+/datum/mood_event/dirty
+	description = "<span class='warning'>I smell horrid.</span>\n"
+	mood_change = -5
+
+/datum/mood_event/happy_neet
+	description = "<span class='nicegreen'>I smell horrid.</span>\n"
+	mood_change = 2
+
 //Generic needs events
 /datum/mood_event/favorite_food
 	description = "<span class='nicegreen'>I really enjoyed eating that.</span>\n"

@@ -76,6 +76,13 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
+"ao" = (
+/obj/machinery/computer/shuttle/labor/one_way{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "ap" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -273,6 +280,16 @@
 	},
 /turf/closed/wall,
 /area/mine/laborcamp)
+"aV" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/machinery/computer/mech_bay_power_console{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "aW" = (
 /obj/machinery/conveyor{
 	dir = 2;
@@ -348,9 +365,12 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
-/obj/machinery/computer/shuttle/labor/one_way,
+/obj/machinery/computer/secure_data{
+	icon_state = "computer";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp)
+/area/mine/laborcamp/security)
 "bi" = (
 /obj/structure/gulag_beacon,
 /turf/open/floor/plasteel,
@@ -472,6 +492,13 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
+"bw" = (
+/obj/machinery/computer/security/labor{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "bx" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -803,6 +830,13 @@
 "ch" = (
 /turf/open/floor/plating,
 /area/mine/laborcamp)
+"ci" = (
+/obj/machinery/computer/prisoner{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "cj" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -866,13 +900,6 @@
 "cq" = (
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
-"cr" = (
-/obj/machinery/computer/mech_bay_power_console,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
 "cs" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/purple{
@@ -895,21 +922,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"cw" = (
-/obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cx" = (
-/obj/machinery/computer/security{
-	name = "Labor Camp Monitoring";
-	network = list("labor")
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cy" = (
-/obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "cz" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -9017,7 +9029,7 @@ aP
 aq
 aZ
 aq
-bh
+ao
 aq
 aJ
 aq
@@ -9793,7 +9805,7 @@ az
 az
 aq
 cb
-cw
+bh
 cG
 aj
 aj
@@ -10050,7 +10062,7 @@ az
 by
 bL
 cc
-cx
+bw
 cG
 aj
 aj
@@ -10307,7 +10319,7 @@ az
 bz
 aq
 cd
-cy
+ci
 cG
 aj
 aj
@@ -21100,7 +21112,7 @@ bp
 bu
 bI
 bW
-cr
+aV
 bf
 ad
 bq

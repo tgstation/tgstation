@@ -36,3 +36,4 @@
 #define THICKMATERIAL				(1<<5)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
 #define VOICEBOX_TOGGLABLE (1<<6) // The voicebox in this clothing can be toggled.
 #define VOICEBOX_DISABLED (1<<7) // The voicebox is currently turned off.
+#define SHOWEROKAY				(1<<8)	//prevents you from being stupid if you shower in them
