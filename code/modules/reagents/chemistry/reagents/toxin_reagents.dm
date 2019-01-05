@@ -989,7 +989,7 @@
 		return ..()
 
 	if (holder.get_reagent_amount("potash") >= 15 && prob(min(round(current_cycle/5), 20)))
-		if (M.stat != UNCONSCIOUS)
+		if (M.stat == CONSCIOUS)
 			to_chat(M, "<span class='danger'>Your heart falters for a moment</span>")
 		// the longer its in you the longer it'll take you to recover from your heart faltering
 		M.losebreath += 2
@@ -1024,7 +1024,7 @@
 
 	// we make sure it triggers on cycle 5 so the victims know for sure that their heart is failing, likelyhood increases at double the rate of potash until cap of 20
 	if (current_cycle == 5 || prob(min(round(current_cycle/5), 20)))
-		if (M.stat != UNCONSCIOUS)
+		if (M.stat == CONSCIOUS)
 			to_chat(M, "<span class='danger'>Your heart falters for a moment</span>")
 		// the longer its in you the longer it'll take you to recover from your heart faltering
 		M.losebreath += 2
