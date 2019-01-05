@@ -971,7 +971,7 @@
 /datum/reagent/toxin/potash
 	name = "Potash"
 	id = "potash"
-	description = "An odorless white crystal resembling and tasting of salt. Used to cause heart arrhythmias in high doses or cardiac arrest through injection. Also an effective fertiliser"
+	description = "An odorless white crystal resembling and tasting of salt. Used to cause heart arrhythmias in high doses or cardiac arrest through injection. Also an effective fertiliser."
 	taste_description = "salt"
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
