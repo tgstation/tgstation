@@ -192,3 +192,22 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/combat/plus
+	name = "combat gloves plus"
+	desc = "These tactical gloves are fireproof and shock resistant, and using nanochip technology it teaches you the powers of krav maga."
+	var/datum/martial_art/krav_maga/style = new
+
+/obj/item/clothing/gloves/combat/plus/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == SLOT_GLOVES)
+		var/mob/living/carbon/human/H = user
+		style.teach(H,1)
+
+/obj/item/clothing/gloves/combat/plus/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(SLOT_GLOVES) == src)
+		style.remove(H)
