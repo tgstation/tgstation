@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Air scrubbers do not filter miasma by default anymore (\"Filtering\" and \"Refill\" modes)."
