@@ -42,7 +42,7 @@
 
 /obj/item/clothing/gloves/combat/plus
 	name = "combat gloves plus"
-	desc = "These tactical gloves are fireproof and shock resistant,and using a nanochip technology it teaches you the powers of krav maga."
+	desc = "These tactical gloves are fireproof and shock resistant, and using a nanochip technology it teaches you the powers of krav maga."
 	var/datum/martial_art/krav_maga/style = new
 
 /obj/item/clothing/gloves/combat/plus/equipped(mob/user, slot)
