@@ -72426,6 +72426,7 @@
 /obj/item/radio/intercom{
 	pixel_x = -29
 	},
+/obj/item/cautery,
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
