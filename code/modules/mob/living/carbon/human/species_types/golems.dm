@@ -940,14 +940,13 @@
 	prefix = "Durathread"
 	limbs_id = "d_golem"
 	special_names = list("Boll","Weave")
-	species_traits = list(NOBLOOD,NO_UNDERWEAR)
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
 
-/datum/species/golem/durathread/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
+/datum/species/golem/durathread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
-	message_admins("gaaaay")
 	target.apply_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 /datum/species/golem/bone
@@ -982,6 +981,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "bonechill"
+	special_names = list("Head", "Broth", "Fracture")
 	var/cooldown = 600
 	var/last_use
 	var/snas_chance = 3

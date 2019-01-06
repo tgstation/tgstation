@@ -1217,6 +1217,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
+		user.dna.species.spec_unarmedattacked(user, target)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
@@ -1229,6 +1230,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
+
+/datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())

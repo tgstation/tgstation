@@ -101,15 +101,17 @@
 
 /obj/screen/alert/status_effect/strandling
 	name = "Choking strand"
-	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing!"
+	desc = "A magical strand of Durathread is wrapped around your neck, preventing you from breathing! Click this icon to remove the strand."
 	icon_state = "his_grace"
 	alerttooltipstyle = "hisgrace"
 
 /obj/screen/alert/status_effect/strandling/Click(location, control, params)
 	. = ..()
-	if(do_after(mob_viewer, 35))
+	to_chat(mob_viewer, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+	if(do_after(mob_viewer, 35, null, mob_viewer))
 		if(isliving(mob_viewer))
 			var/mob/living/L = mob_viewer
+			to_chat(mob_viewer, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
 
