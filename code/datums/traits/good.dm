@@ -153,6 +153,7 @@
 	mob_trait = TRAIT_NEET
 	gain_text = "<span class='notice'>You feel useless to society.</span>"
 	lose_text = "<span class='danger'>You no longer feel useless to society.</span>"
+	mood_quirk = TRUE
 
 /datum/quirk/neet/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
