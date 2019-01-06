@@ -54,9 +54,9 @@
 		qdel(C.handcuffed)
 		return
 	else if(istype(C) && C.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
-		to_chat(mob_viewer, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+		to_chat(user, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
 		if(do_after(user, 15, null, C))
-			to_chat(mob_viewer, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+			to_chat(user, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 			C.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 	else
 		..()
