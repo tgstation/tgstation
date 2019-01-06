@@ -46,6 +46,8 @@
 	var/minimum_range = PINPOINTER_MINIMUM_RANGE
 	var/range_fuzz_factor = PINPOINTER_EXTRA_RANDOM_RANGE
 	var/mob/scan_target = null
+	var/range_mid = 8
+	var/range_far = 16
 
 /obj/screen/alert/status_effect/agent_pinpointer
 	name = "Internal Affairs Integrated Pinpointer"
@@ -67,11 +69,11 @@
 	else
 		linked_alert.setDir(get_dir(here, there))
 		switch(get_dist(here, there))
-			if(1 to 8)
+			if(1 to range_mid)
 				linked_alert.icon_state = "pinonclose"
-			if(9 to 16)
+			if(range_mid+1 to range_far)
 				linked_alert.icon_state = "pinonmedium"
-			if(16 to INFINITY)
+			if(range_far+1 to INFINITY)
 				linked_alert.icon_state = "pinonfar"
 
 /datum/status_effect/agent_pinpointer/proc/scan_for_target()

@@ -10,6 +10,19 @@
 	tick_interval = HIVEMIND_RADAR_PING_TIME
 	range_fuzz_factor = 0
 
+/datum/status_effect/agent_pinpointer/hivemind/point_to_target() //If we found what we're looking for, show the distance and direction
+	if(scan_target)
+		if(owner.mind)
+			var/datum/antagonist/hivemind/hive = owner.mind.has_antag_datum(/datum/antagonist/hivemind)
+			if(hive)
+				range_far = range_mid * (2-hive.get_threat_multiplier())
+		if(scan_target.mind)
+			var/datum/antagonist/hivemind/enemy_hive = scan_target.mind.has_antag_datum(/datum/antagonist/hivemind)
+			if(enemy_hive)
+				range_far = max(range_mid * (1+enemy_hive.get_threat_multiplier()), range_far)
+
+	..()
+
 /datum/status_effect/agent_pinpointer/hivemind/scan_for_target()
 	var/turf/my_loc = get_turf(owner)
 
