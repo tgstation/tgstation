@@ -84,7 +84,7 @@
 		to_chat(user, "<span class='danger'>This casing doesn't support power cells for backup power.</span>")
 		return
 
-/obj/structure/light_construct/attack_hand(mob/living/carbon/human/user)
+/obj/structure/light_construct/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -96,6 +96,15 @@
 		src.cell = null
 		add_fingerprint(user)
 		return
+
+/obj/structure/light_construct/attack_tk(mob/user)
+	if(!cell)
+		return
+
+	to_chat(user, "<span class='notice'>You telekinetically remove \the [cell].</span>")
+	cell.forceMove(loc)
+	cell.attack_tk(user)
+	cell = null
 
 /obj/structure/light_construct/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
