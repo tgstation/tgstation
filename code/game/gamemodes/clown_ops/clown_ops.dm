@@ -58,3 +58,4 @@
 	id = /obj/item/card/id/syndicate/nuke_leader
 	r_hand = /obj/item/nuclear_challenge/clownops
 	command_radio = TRUE
+	gloves = /obj/item/clothing/gloves/combat/plus
