@@ -1,5 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - bugfix: "Mixers now work on 0% and 100% settings as pumps"
-  - bugfix: "Mixers display rounded percentages, not floored. As such numbers should always add up to 100%"
