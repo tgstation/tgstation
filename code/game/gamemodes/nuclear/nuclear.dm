@@ -134,6 +134,7 @@
 	id = /obj/item/card/id/syndicate/nuke_leader
 	r_hand = /obj/item/nuclear_challenge
 	command_radio = TRUE
+	gloves = /obj/item/clothing/gloves/combat/plus
 
 /datum/outfit/syndicate/no_crystals
 	tc = 0
