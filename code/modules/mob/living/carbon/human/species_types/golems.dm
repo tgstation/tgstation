@@ -954,6 +954,7 @@
 	id = "bone golem"
 	prefix = "Bone"
 	limbs_id = "b_golem"
+	special_names = list("Head", "Broth", "Fracture")
 	liked_food = GROSS | MEAT | RAW
 	toxic_food = null
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)

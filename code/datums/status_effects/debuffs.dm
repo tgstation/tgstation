@@ -92,11 +92,11 @@
 	alert_type = /obj/screen/alert/status_effect/strandling
 
 /datum/status_effect/strandling/on_apply()
-	owner.add_trait(TRAIT_MAGIC_CHOKE)
+	owner.add_trait(TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
 /datum/status_effect/strandling/on_remove()
-	owner.remove_trait(TRAIT_MAGIC_CHOKE)
+	owner.remove_trait(TRAIT_MAGIC_CHOKE, "dumbmoron")
 	return ..()
 
 /obj/screen/alert/status_effect/strandling
