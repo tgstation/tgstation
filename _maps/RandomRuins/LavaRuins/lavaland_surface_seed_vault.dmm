@@ -272,6 +272,10 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
+"Y" = (
+/obj/machinery/shower,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/seedvault)
 
 (1,1,1) = {"
 a
@@ -613,7 +617,7 @@ j
 Q
 j
 Q
-h
+Y
 h
 Q
 j
