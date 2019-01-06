@@ -40,6 +40,23 @@
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 
+/obj/item/clothing/gloves/combat/plus
+	name = "combat gloves plus"
+	desc = "These tactical gloves are fireproof and shock resistant,and using a nanochip it teaches you to perform krav maga."
+
+/obj/item/clothing/gloves/combat/plus/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == SLOT_GLOVES)
+		var/mob/living/carbon/human/H = user
+		style.teach(H,1)
+
+/obj/item/clothing/gloves/combat/plus/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(SLOT_GLOVES) == src)
+		style.remove(H)
 
 /obj/item/clothing/gloves/bracer
 	name = "bone bracers"
