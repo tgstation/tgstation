@@ -452,7 +452,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
-	desc = "A bust of the famous Greek physician Hippocrates of Kor, often sighted as the father of western medicine."
+	desc = "A bust of the famous Greek physician Hippocrates of Kos, often cited as the father of western medicine."
 	icon_state = "hippocratic"
 
 /obj/item/tailclub
