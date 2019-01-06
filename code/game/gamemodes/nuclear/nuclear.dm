@@ -132,7 +132,7 @@
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
-	gloves = /obj/item/clothing/gloves/combat/plus
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
 	r_hand = /obj/item/nuclear_challenge
 	command_radio = TRUE
 
