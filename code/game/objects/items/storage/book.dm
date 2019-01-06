@@ -69,17 +69,16 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "
 	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
-		var/obj/item/storage/book/bible/B = locate(href_list["src"])
-		B.icon_state = GLOB.biblestates[iconi]
-		B.item_state = GLOB.bibleitemstates[iconi]
+		icon_state = GLOB.biblestates[iconi]
+		item_state = GLOB.bibleitemstates[iconi]
 
-		if(B.icon_state == "honk1" || B.icon_state == "honk2")
+		if(icon_state == "honk1" || icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
-		SSreligion.bible_icon_state = B.icon_state
-		SSreligion.bible_item_state = B.item_state
+		SSreligion.bible_icon_state = icon_state
+		SSreligion.bible_item_state = item_state
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")

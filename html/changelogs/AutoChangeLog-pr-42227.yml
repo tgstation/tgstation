@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - code_imp: "The Squeak subsystem has been renamed to Minor Mapping."

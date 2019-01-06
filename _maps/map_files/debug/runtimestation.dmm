@@ -619,15 +619,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bP" = (
-/obj/item/storage/box/beakers,
-/obj/item/storage/box/syringes,
-/obj/structure/table,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/glass/beaker/bluespace,
-/obj/item/reagent_containers/syringe,
 /obj/machinery/airalarm/unlocked{
 	pixel_y = 23
 	},
+/obj/structure/table,
+/obj/machinery/reagentgrinder,
 /turf/open/floor/plasteel/dark,
 /area/medical/chemistry)
 "bQ" = (
@@ -963,6 +959,11 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/structure/table,
+/obj/item/gun/magic/wand/resurrection/debug,
+/obj/item/gun/magic/wand/death/debug{
+	pixel_y = 10
 	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 1
@@ -1499,11 +1500,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"er" = (
-/obj/item/gun/magic/staff/healing,
-/obj/item/gun/magic/wand/resurrection/debug,
-/turf/open/floor/plasteel,
-/area/medical/medbay)
 "es" = (
 /obj/machinery/light,
 /obj/machinery/clonepod,
@@ -2520,6 +2516,9 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
+/obj/structure/closet/secure_closet/chemical/heisenberg{
+	locked = 0
+	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
 "ii" = (
@@ -2770,6 +2769,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"EX" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/structure/table,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
+/turf/open/floor/plasteel,
+/area/medical/chemistry)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/plasteel,
@@ -2909,6 +2918,10 @@
 "Xg" = (
 /obj/machinery/light{
 	dir = 4
+	},
+/obj/machinery/vending/syndichem{
+	onstation = 0;
+	req_access = null
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -8132,7 +8145,7 @@ aI
 aI
 ak
 Ly
-pQ
+EX
 Xg
 Ce
 oV
@@ -8780,7 +8793,7 @@ af
 by
 cz
 by
-er
+cm
 es
 by
 eu

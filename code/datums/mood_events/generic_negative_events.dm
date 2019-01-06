@@ -137,10 +137,10 @@
 	mood_change = -5
 	timeout = 600
 
-//These are unused so far but I want to remember them to use them later
-/datum/mood_event/cloned_corpse
-	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
-	mood_change = -6
+/datum/mood_event/idiot_shower
+	description = "<span class='warning'>I showered with my clothes on, I'm a fucking idiot.</span>\n"
+	mood_change = -3
+	timeout = 900
 
 /datum/mood_event/someone_died
 	description = "<span class='warning'>I saw someone die, and it has affected me deeply.</span>\n"
@@ -151,7 +151,3 @@
 	description = "<span class='boldwarning'>A precious pet died in front of me, and my heart might break.</span>\n"
 	mood_change = -10
 	timeout = 20 MINUTES // OH GOD, NOT IAN/RUNTIME/WAGS-HIS-TAIL! TAKE POLY INSTEAD, PLEASE
-
-/datum/mood_event/surgery
-	description = "<span class='boldwarning'>HE'S CUTTING ME OPEN!!</span>\n"
-	mood_change = -8

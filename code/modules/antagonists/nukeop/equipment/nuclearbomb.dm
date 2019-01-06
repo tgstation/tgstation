@@ -343,10 +343,10 @@
 
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
-	if(!isinspace())
-		anchored = !anchored
-	else
+	if(isinspace() && !anchored)
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
+	else
+		anchored = !anchored
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -597,7 +597,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 			if(istype(loneop))
 				loneop.weight += 1
-				message_admins("[src] being stationary in [ADMIN_VERBOSEJMP(newturf)] has increased the weight of the Lone Operative event to [loneop.weight]!")
+				if(loneop.weight % 5 == 0)
+					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
 				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
 
 	else
@@ -606,7 +607,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
 		if(istype(loneop) && prob(loneop.weight))
 			loneop.weight = max(loneop.weight - 1, 0)
-			message_admins("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
+			if(loneop.weight % 5 == 0)
+				message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
 			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
