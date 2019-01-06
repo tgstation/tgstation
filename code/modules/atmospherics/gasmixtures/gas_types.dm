@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
-	fusion_power = 1.2
+	fusion_power = 1.25
 	rarity = 700
 
 /datum/gas/plasma
