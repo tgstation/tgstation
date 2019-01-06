@@ -349,7 +349,7 @@
 		unset_machine()
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
-		switchCamera(locate(href_list["switchcamera"])) in GLOB.cameranet.cameras
+		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
 	if (href_list["showalerts"])
 		ai_alerts()
 #ifdef AI_VOX
@@ -362,7 +362,7 @@
 			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
 	if(href_list["jumptoholopad"])
-		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"])
+		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"]) in GLOB.machines
 		if(H)
 			H.attack_ai(src) //may as well recycle
 		else
@@ -404,7 +404,7 @@
 		return
 
 	if (href_list["ai_take_control"]) //Mech domination
-		var/obj/mecha/M = locate(href_list["ai_take_control"])
+		var/obj/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
 		if (!M)
 			return
 

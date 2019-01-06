@@ -1,5 +1,0 @@
-author: "hazamaitsuru"
-delete-after: True
-changes: 
-  - tweak: "Various computers on BoxStation and Lavaland now face more logical directions."
-  - tweak: "BoxStation's gravity generator SMES had its terminal moved out of the wall."

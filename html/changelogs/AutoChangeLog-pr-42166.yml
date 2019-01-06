@@ -1,5 +1,0 @@
-author: "subject217"
-delete-after: True
-changes: 
-  - rscdel: "Smuggler's satchels have been removed from the game."
-  - rscdel: "The Miracle ruin has also been removed from the game, because it was disabled and it used Smuggler's satchels."
