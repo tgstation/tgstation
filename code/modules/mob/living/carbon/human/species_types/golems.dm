@@ -909,7 +909,7 @@
 		var/obj/item/stack/sheet/cardboard/C = I
 		if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
 			return
-		to_chat(H, "<span class='notice'>You attept to create a new cardboard brother.</span>")
+		to_chat(H, "<span class='notice'>You attempt to create a new cardboard brother.</span>")
 		if(do_after(user, 30, target = user))
 			if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
 				return
@@ -959,6 +959,7 @@
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
 	sexes = FALSE
+	special_names = list("Head", "Broth", "Fracture")
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH,TRAIT_CALCIUM_HEALER)
 	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
@@ -981,7 +982,6 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "bonechill"
-	special_names = list("Head", "Broth", "Fracture")
 	var/cooldown = 600
 	var/last_use
 	var/snas_chance = 3
