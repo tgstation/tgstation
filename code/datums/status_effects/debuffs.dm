@@ -126,6 +126,7 @@
 
 /datum/status_effect/pacify/on_remove()
 	owner.remove_trait(TRAIT_PACIFISM, "status_effect")
+	
 //OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
