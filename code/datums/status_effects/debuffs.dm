@@ -95,7 +95,7 @@
 	owner.add_trait(TRAIT_MAGIC_CHOKE)
 	return ..()
 
-/datum/status_effect/pacify/on_remove()
+/datum/status_effect/strandling/on_remove()
 	owner.remove_trait(TRAIT_MAGIC_CHOKE)
 	return ..()
 
