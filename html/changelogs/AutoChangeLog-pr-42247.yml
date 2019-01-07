@@ -1,0 +1,5 @@
+author: "GranpaWalton"
+delete-after: True
+changes: 
+  - rscadd: "Xenos now have a liver that processes toxins really well but will reject a human host when it takes too much damage"
+  - bugfix: "Xenos will now process regents because of their new liver, they will still not take toxin damage, stamina damage, or have liver failure"
