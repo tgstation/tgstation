@@ -90,19 +90,18 @@
 		return
 
 	if(cell)
-		user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
+		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
 		user.put_in_hands(cell)
 		cell.update_icon()
-		src.cell = null
+		cell = null
 		add_fingerprint(user)
-		return
 
 /obj/structure/light_construct/attack_tk(mob/user)
 	if(!cell)
 		return
 
-	to_chat(user, "<span class='notice'>You telekinetically remove \the [cell].</span>")
-	cell.forceMove(loc)
+	to_chat(user, "<span class='notice'>You telekinetically remove [cell].</span>")
+	cell.forceMove(drop_location())
 	cell.attack_tk(user)
 	cell = null
 
@@ -119,10 +118,11 @@
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 			return
 		else
+			if(!user.temporarilyRemoveItemFromInventory(W))
+				return
 			user.visible_message("<span class='notice'>[user] hooks up [W] to [src].</span>", \
 			"<span class='notice'>You add [W] to [src].</span>")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			user.dropItemToGround(W)
 			W.forceMove(src)
 			cell = W
 			add_fingerprint(user)
@@ -139,7 +139,7 @@
 						new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
 						user.visible_message("[user.name] deconstructs [src].", \
 							"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-						playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
+						playsound(src, 'sound/items/deconstruct.ogg', 75, 1)
 						qdel(src)
 					return
 
