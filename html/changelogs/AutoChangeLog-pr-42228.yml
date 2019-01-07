@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Smuggler's satchels have been re-added to the game. They no longer keep their contents and transport it into future rounds, but instead contain some random contraband when purchased. Observers will be able to see where smuggler's satchels have been hidden. A handful of satchels will spawn on the station (under the floor, of course) in random locations each round."
