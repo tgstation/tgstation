@@ -24,10 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-
-/obj/item/reagent_containers/spray/weedspray/Initialize()
-	. = ..()
-	reagents.add_reagent("weedkiller", 100)
+	list_reagents = list("weedkiller" = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -42,10 +39,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-
-/obj/item/reagent_containers/spray/pestspray/Initialize()
-	. = ..()
-	reagents.add_reagent("pestkiller", 100)
+	list_reagents = list("pestkiller" = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -155,7 +149,6 @@
 	name = "bottle of nutrient"
 	icon = 'icons/obj/chemical.dmi'
 	volume = 50
-	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
@@ -169,28 +162,19 @@
 	name = "bottle of E-Z-Nutrient"
 	desc = "Contains a fertilizer that causes mild mutations with each harvest."
 	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/ez/Initialize()
-	. = ..()
-	reagents.add_reagent("eznutriment", 50)
+	list_reagents = list("eznutriment" = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
 	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/l4z/Initialize()
-	. = ..()
-	reagents.add_reagent("left4zednutriment", 50)
+	list_reagents = list("left4zednutriment" = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
 	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/rh/Initialize()
-	. = ..()
-	reagents.add_reagent("robustharvestnutriment", 50)
+	list_reagents = list("robustharvestnutriment" = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	name = "bottle"
@@ -200,7 +184,6 @@
 	name = "bottle"
 	icon = 'icons/obj/chemical.dmi'
 	volume = 50
-	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
@@ -208,16 +191,10 @@
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
 	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/killer/weedkiller/Initialize()
-	. = ..()
-	reagents.add_reagent("weedkiller", 50)
+	list_reagents = list("weedkiller" = 50)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
 	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/killer/pestkiller/Initialize()
-	. = ..()
-	reagents.add_reagent("pestkiller", 50)
+	list_reagents = list("pestkiller" = 50)
