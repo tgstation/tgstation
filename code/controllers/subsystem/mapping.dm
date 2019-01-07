@@ -96,10 +96,6 @@ SUBSYSTEM_DEF(mapping)
 	initialize_reserved_level()
 	return ..()
 
-/* Nuke threats, for making the blue tiles on the station go RED
-   Used by the AI doomsday and the self destruct nuke.
-*/
-
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
 	if(clearing_reserved_turfs || !initialized)			//in either case this is just not needed.
 		return
@@ -128,6 +124,10 @@ SUBSYSTEM_DEF(mapping)
 	if(!error)
 		returning += M
 		qdel(T, TRUE)
+
+/* Nuke threats, for making the blue tiles on the station go RED
+   Used by the AI doomsday and the self destruct nuke.
+*/
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
 	nuke_threats[nuke] = TRUE
@@ -501,3 +501,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing)
+
+
+
+/datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
+	for(var/B in areas)
+		var/area/A = B
+		A.reg_in_areas_in_z()

@@ -467,8 +467,8 @@
 	head.color = C
 	add_overlay(head)
 
-/obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/A)
-	..(A)
+/obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 

@@ -39,6 +39,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		var/booze_power = boozepwr
 		if(C.has_trait(TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
+		if(C.has_trait(TRAIT_LIGHT_DRINKER))
+			booze_power *= 2
 		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 		var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
 		if (istype(L))
@@ -1764,7 +1766,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(1*REM, 0)
-	M.nutrition = max(M.nutrition - 5, 0)
+	M.adjust_nutrition(-5)
 	M.overeatduration = 0
 	return ..()
 
@@ -1783,7 +1785,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(0.5*REM, 0)
-	M.nutrition = max(M.nutrition - 3, 0)
+	M.adjust_nutrition(- 3)
 	M.overeatduration = 0
 	return ..()
 
@@ -1801,7 +1803,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A glass of Fanciulli. It's just Manhattan with Fernet."
 
 /datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/carbon/M)
-	M.nutrition = max(M.nutrition - 5, 0)
+	M.adjust_nutrition(-5)
 	M.overeatduration = 0
 	return ..()
 

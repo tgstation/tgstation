@@ -88,19 +88,19 @@ All foods are distributed among various categories. Use common sense.
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='notice'>None of [src] left, oh no!</span>")
 		qdel(src)
-		return 0
+		return FALSE
 	if(iscarbon(M))
 		if(!canconsume(M, user))
-			return 0
+			return FALSE
 
 		var/fullness = M.nutrition + 10
 		for(var/datum/reagent/consumable/C in M.reagents.reagent_list) //we add the nutrition value of what we're currently digesting
 			fullness += C.nutriment_factor * C.volume / C.metabolization_rate
 
 		if(M == user)								//If you're eating it yourself.
-			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 )
+			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !user.has_trait(TRAIT_VORACIOUS))
 				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
-				return 0
+				return FALSE
 			else if(fullness <= 50)
 				user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [src], gobbling it down!</span>")
 			else if(fullness > 50 && fullness < 150)
@@ -111,7 +111,7 @@ All foods are distributed among various categories. Use common sense.
 				user.visible_message("<span class='notice'>[user] unwillingly [eatverb]s a bit of \the [src].</span>", "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
-				return 0
+				return FALSE
 			if(M.has_trait(TRAIT_VORACIOUS))
 				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
 		else
@@ -122,7 +122,7 @@ All foods are distributed among various categories. Use common sense.
 				else
 					M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
 										"<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>")
-					return 0
+					return FALSE
 
 				if(!do_mob(user, M))
 					return
@@ -146,7 +146,7 @@ All foods are distributed among various categories. Use common sense.
 				bitecount++
 				On_Consume(M)
 				checkLiked(fraction, M)
-				return 1
+				return TRUE
 
 	return 0
 
@@ -291,18 +291,23 @@ All foods are distributed among various categories. Use common sense.
 				S.reagents.add_reagent(r_id, amount)
 
 /obj/item/reagent_containers/food/snacks/microwave_act(obj/machinery/microwave/M)
+	var/turf/T = get_turf(src)
+	var/obj/item/result
+
 	if(cooked_type)
-		var/obj/item/reagent_containers/food/snacks/S = new cooked_type(get_turf(src))
-		if(M)
-			initialize_cooked_food(S, M.efficiency)
+		result = new cooked_type(T)
+		if(istype(M))
+			initialize_cooked_food(result, M.efficiency)
 		else
-			initialize_cooked_food(S, 1)
-		SSblackbox.record_feedback("tally", "food_made", 1, type)
+			initialize_cooked_food(result, 1)
+		SSblackbox.record_feedback("tally", "food_made", 1, result.type)
 	else
-		new /obj/item/reagent_containers/food/snacks/badrecipe(src)
-		if(M && M.dirty < 100)
+		result = new /obj/item/reagent_containers/food/snacks/badrecipe(T)
+		if(istype(M) && M.dirty < 100)
 			M.dirty++
 	qdel(src)
+
+	return result
 
 /obj/item/reagent_containers/food/snacks/Destroy()
 	if(contents)

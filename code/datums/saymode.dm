@@ -11,7 +11,7 @@
 
 
 /datum/saymode/changeling
-	key = "g"
+	key = MODE_KEY_CHANGELING
 	mode = MODE_CHANGELING
 
 /datum/saymode/changeling/handle_message(mob/living/user, message, datum/language/language)
@@ -73,7 +73,7 @@
 
 
 /datum/saymode/vocalcords
-	key = "x"
+	key = MODE_KEY_VOCALCORDS
 	mode = MODE_VOCALCORDS
 
 /datum/saymode/vocalcords/handle_message(mob/living/user, message, datum/language/language)
@@ -87,7 +87,7 @@
 
 
 /datum/saymode/binary //everything that uses .b (silicons, drones, blobbernauts/spores, swarmers)
-	key = "b"
+	key = MODE_KEY_BINARY
 	mode = MODE_BINARY
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)

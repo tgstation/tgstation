@@ -40,6 +40,5 @@
 		if(!picked || !isturf(picked))
 			return
 
-		if(!target.Move(picked))
-			target.forceMove(picked)
-			playsound(get_turf(user), sound2, 50,1)
+		if(do_teleport(user, picked, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC))
+			playsound(get_turf(user), sound1, 50,1)

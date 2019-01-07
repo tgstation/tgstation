@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "Paper airplanes can now have their hit probability adjusted by badmins."
-  - rscadd: "Added syndicate paper airplanes. They are rather robust and are guaranteed to hit someone in the eye."
-  - rscadd: "Added The Art of Origami to the syndicate uplink. This allows you to fold weapons grade paper airplanes. It will also allow you to catch paper airplanes when you have the ability enabled."

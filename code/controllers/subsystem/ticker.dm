@@ -134,8 +134,7 @@ SUBSYSTEM_DEF(ticker)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
-			if(CONFIG_GET(flag/irc_announce_new_game))
-				world.TgsTargetedChatBroadcast("New round starting on [SSmapping.config.map_name]!", FALSE)
+			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
@@ -619,8 +618,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/leavingtg.ogg',
 		'sound/roundend/its_only_game.ogg',
 		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg',
-		'sound/roundend/gondolabridge.ogg'\
+		'sound/roundend/disappointed.ogg'\
 		)
 
 	SEND_SOUND(world, sound(round_end_sound))

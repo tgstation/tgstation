@@ -145,9 +145,9 @@
 			C.throw_mode_on() //so they can catch it on the return.
 	return ..()
 
-/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom)
+/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(active)
-		var/caught = hit_atom.hitby(src, 0, 0)
+		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
 			GET_COMPONENT(slipper, /datum/component/slippery)
 			slipper.Slip(src, hit_atom)

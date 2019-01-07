@@ -555,9 +555,10 @@
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		R.resize = 0.5
-		R.hasExpanded = FALSE
-		R.update_transform()
+		if (R.hasExpanded)
+			R.hasExpanded = FALSE
+			R.resize = 0.5
+			R.update_transform()
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"

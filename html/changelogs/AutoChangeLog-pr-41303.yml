@@ -1,7 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed exosuit console showing some code by accident."
-  - bugfix: "Restored the ability to send EMP pulses via the exosuit console"
-  - bugfix: "Fixed tracking beacons being added to mechas located at ruins allowing you to metagame their spawning."
-  - bugfix: "Fixed exosuit consoles presenting some values via scientific notation (ie pressure being 3.258e-5)"

@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/datum/admins/proc/open_borgopanel
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
-GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/DB_ban_panel, /client/proc/stickybanpanel))
+GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_sounds)
 GLOBAL_LIST_INIT(admin_verbs_sounds, list(/client/proc/play_local_sound, /client/proc/play_sound, /client/proc/set_round_end_sound))
 GLOBAL_PROTECT(admin_verbs_fun)
@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 		var/rights = holder.rank.rights
 		verbs += GLOB.admin_verbs_default
-		if(rights & R_BUILDMODE)
+		if(rights & R_BUILD)
 			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)
 			verbs += GLOB.admin_verbs_admin
@@ -264,7 +264,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			verbs += /client/proc/stealth
 		if(rights & R_ADMIN)
 			verbs += GLOB.admin_verbs_poll
-		if(rights & R_SOUNDS)
+		if(rights & R_SOUND)
 			verbs += GLOB.admin_verbs_sounds
 			if(CONFIG_GET(string/invoke_youtubedl))
 				verbs += /client/proc/play_web_sound
@@ -378,15 +378,21 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 			message_admins("[key_name_admin(usr)] checked antagonists.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Antagonists") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/unban_panel()
-	set name = "Unban Panel"
+/client/proc/ban_panel()
+	set name = "Banning Panel"
 	set category = "Admin"
-	if(holder)
-		if(CONFIG_GET(flag/ban_legacy_system))
-			holder.unbanpanel()
-		else
-			holder.DB_ban_panel()
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unban Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(!check_rights(R_BAN))
+		return
+	holder.ban_panel()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Banning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/unban_panel()
+	set name = "Unbanning Panel"
+	set category = "Admin"
+	if(!check_rights(R_BAN))
+		return
+	holder.unban_panel()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unbanning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/game_panel()
 	set name = "Game Panel"
@@ -605,7 +611,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
 	set category = "Special Verbs"
-	if (!(holder.rank.rights & R_BUILDMODE))
+	if (!(holder.rank.rights & R_BUILD))
 		return
 	if(src.mob)
 		togglebuildmode(src.mob)

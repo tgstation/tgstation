@@ -558,7 +558,9 @@ datum/status_effect/stabilized/blue/on_remove()
 	if(istype(F))
 		if(F.cooked_type)
 			to_chat(owner, "<span class='warning'>[linked_extract] flares up brightly, and your hands alone are enough cook [F]!</span>")
-			F.microwave_act()
+			var/obj/item/result = F.microwave_act()
+			if(istype(result))
+				owner.put_in_hands(result)
 	else
 		I.attackby(fire, owner)
 	return ..()
@@ -648,7 +650,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		if(!F)
 			F = get_turf(owner)
 			range = 50
-		if(do_teleport(owner, F, range))
+		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
 			to_chat(owner, "<span class='notice'>[linked_extract] will take some time to re-align you on the bluespace axis.</span>")
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
@@ -867,7 +869,7 @@ datum/status_effect/stabilized/blue/on_remove()
 			healing_types += CLONE
 
 		owner.apply_damage_type(-heal_amount, damagetype=pick(healing_types))
-		owner.nutrition += 3
+		owner.adjust_nutrition(3)
 		M.adjustCloneLoss(heal_amount * 1.2) //This way, two people can't just convert each other's damage away.
 	else
 		messagedelivered = FALSE

@@ -69,13 +69,15 @@
 	SEND_SIGNAL(t_loc, COMSIG_TURF_MAKE_DRY, TURF_WET_WATER, TRUE, INFINITY)
 
 /obj/item/clothing/shoes/clown_shoes
-	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
+	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge! Ctrl-click to toggle waddle dampeners."
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
+	var/datum/component/waddle
+	var/enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -83,13 +85,29 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
+	if(slot == SLOT_SHOES && enabled_waddle)
+		waddle = user.AddComponent(/datum/component/waddling)
 	if(user.mind && user.mind.assigned_role == "Clown")
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
+	QDEL_NULL(waddle)
 	if(user.mind && user.mind.assigned_role == "Clown")
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
+
+/obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
+	if(!isliving(user))
+		return
+	if(user.get_active_held_item() != src)
+		to_chat(user, "You must hold the [src] in your hand to do this.")
+		return
+	if (!enabled_waddle)
+		to_chat(user, "<span class='notice'>You switch off the waddle dampeners!</span>")
+		enabled_waddle = TRUE
+	else
+		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
+		enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"

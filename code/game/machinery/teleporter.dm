@@ -71,7 +71,7 @@
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
 	if (ismovableatom(M))
-		if(do_teleport(M, com.target))
+		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
 			use_power(5000)
 			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
 				log_game("[M] ([key_name(M)]) was turned into a fly person")

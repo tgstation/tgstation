@@ -61,7 +61,7 @@ Difficulty: Hard
 	medal_type = BOSS_MEDAL_HIEROPHANT
 	score_type = HIEROPHANT_SCORE
 	del_on_death = TRUE
-	death_sound = 'sound/magic/repulse.ogg'
+	deathsound = 'sound/magic/repulse.ogg'
 
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams

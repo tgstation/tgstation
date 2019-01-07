@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
-	desc = "An early design of the proto-kinetic accelerator, it is little more than an combination of various mining tools cobbled together, forming a high-tech club. \
+	desc = "An early design of the proto-kinetic accelerator, it is little more than a combination of various mining tools cobbled together, forming a high-tech club. \
 	While it is an effective mining tool, it did little to aid any but the most skilled and/or suicidal miners against local fauna."
 	force = 20 //As much as a bone spear, but this is significantly more annoying to carry around due to requiring the use of both hands at all times
 	w_class = WEIGHT_CLASS_BULKY
@@ -233,10 +233,10 @@
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/H = target
 		if(H.ranged) //briefly delay ranged attacks
-			if(H.ranged_cooldown_time >= world.time)
-				H.ranged_cooldown_time += bonus_value
+			if(H.ranged_cooldown >= world.time)
+				H.ranged_cooldown += bonus_value
 			else
-				H.ranged_cooldown_time = bonus_value + world.time
+				H.ranged_cooldown = bonus_value + world.time
 
 //magmawing watcher
 /obj/item/crusher_trophy/blaster_tubes/magma_wing

@@ -1,23 +1,22 @@
-/*
-Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
-
-node1, air1, network1 correspond to input
-node2, air2, network2 correspond to output
-
-Thus, the two variables affect pump operation are set in New():
-	air1.volume
-		This is the volume of gas available to the pump that may be transfered to the output
-	air2.volume
-		Higher quantities of this cause more air to be perfected later
-			but overall network volume is also increased as this increases...
-*/
+// Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
+//
+// node1, air1, network1 correspond to input
+// node2, air2, network2 correspond to output
+//
+// Thus, the two variables affect pump operation are set in New():
+//   air1.volume
+//     This is the volume of gas available to the pump that may be transfered to the output
+//   air2.volume
+//     Higher quantities of this cause more air to be perfected later
+//     but overall network volume is also increased as this increases...
 
 /obj/machinery/atmospherics/components/binary/pump
-	icon_state = "pump_map"
+	icon_state = "pump_map-2"
 	name = "gas pump"
 	desc = "A pump that moves gas by pressure."
 
 	can_unwrench = TRUE
+	shift_underlay_only = FALSE
 
 	var/target_pressure = ONE_ATMOSPHERE
 
@@ -28,30 +27,6 @@ Thus, the two variables affect pump operation are set in New():
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 
-/obj/machinery/atmospherics/components/binary/pump/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/binary/pump/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/binary/pump/on
-	on = TRUE
-	icon_state = "pump_on_map"
-
-/obj/machinery/atmospherics/components/binary/pump/on/layer1
-	piping_layer = PIPING_LAYER_MIN
-	pixel_x = -PIPING_LAYER_P_X
-	pixel_y = -PIPING_LAYER_P_Y
-
-/obj/machinery/atmospherics/components/binary/pump/on/layer3
-	piping_layer = PIPING_LAYER_MAX
-	pixel_x = PIPING_LAYER_P_X
-	pixel_y = PIPING_LAYER_P_Y
-
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	if(radio_connection)
@@ -59,11 +34,7 @@ Thus, the two variables affect pump operation are set in New():
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
-	if(!is_operational())
-		icon_state = "pump_off"
-		return
-
-	icon_state = "pump_[on?"on":"off"]"
+	icon_state = (on && is_operational()) ? "pump_on" : "pump_off"
 
 /obj/machinery/atmospherics/components/binary/pump/process_atmos()
 //	..()
@@ -188,3 +159,24 @@ Thus, the two variables affect pump operation are set in New():
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
+
+
+/obj/machinery/atmospherics/components/binary/pump/layer1
+	piping_layer = 1
+	icon_state= "pump_map-1"
+
+/obj/machinery/atmospherics/components/binary/pump/layer3
+	piping_layer = 3
+	icon_state= "pump_map-3"
+
+/obj/machinery/atmospherics/components/binary/pump/on
+	on = TRUE
+	icon_state = "pump_on_map-2"
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer1
+	piping_layer = 1
+	icon_state= "pump_on_map-1"
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer3
+	piping_layer = 3
+	icon_state= "pump_on_map-3"

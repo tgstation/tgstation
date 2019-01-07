@@ -158,8 +158,8 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/rainbow/attackby(obj/item/O, mob/user)
 	var/obj/item/slimecross/regenerative/regen = O
-	if(istype(O) && !regencore)
-		to_chat(user, "<span class='notice'>You place the [O] in the [src], prepping the extract for automatic application!</span>")
+	if(istype(regen) && !regencore)
+		to_chat(user, "<span class='notice'>You place [O] in [src], prepping the extract for automatic application!</span>")
 		regencore = regen
 		regen.forceMove(src)
 		return

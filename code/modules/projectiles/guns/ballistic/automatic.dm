@@ -245,7 +245,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/weapons/shotgunshot.ogg'
+	vary_fire_sound = FALSE
+	fire_sound_volume = 90
 	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 0

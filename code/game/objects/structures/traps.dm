@@ -63,7 +63,10 @@
 		return
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.mind in immune_minds || M.anti_magic_check())
+		if(M.mind in immune_minds)
+			return
+		if(M.anti_magic_check())
+			flare()
 			return
 	if(charges <= 0)
 		return

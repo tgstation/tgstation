@@ -290,15 +290,15 @@
 		var/teleport_radius = max(round(G.seed.potency / 10), 1)
 		var/turf/T = get_turf(target)
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
-		do_teleport(target, T, teleport_radius)
+		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /datum/plant_gene/trait/teleport/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/teleport_radius = max(round(G.seed.potency / 10), 1)
 	var/turf/T = get_turf(C)
 	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
-	do_teleport(C, T, teleport_radius)
+	do_teleport(C, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 	if(prob(50))
-		do_teleport(G, T, teleport_radius)
+		do_teleport(G, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 	else
 		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
 		qdel(G)
@@ -310,10 +310,10 @@
 
 /datum/plant_gene/trait/noreact/on_new(obj/item/reagent_containers/food/snacks/grown/G, newloc)
 	..()
-	G.reagents.set_reacting(FALSE)
+	ENABLE_BITFIELD(G.reagents, NO_REACT)
 
 /datum/plant_gene/trait/noreact/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
-	G.reagents.set_reacting(TRUE)
+	DISABLE_BITFIELD(G.reagents, NO_REACT)
 	G.reagents.handle_reactions()
 
 

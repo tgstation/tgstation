@@ -48,7 +48,7 @@ Difficulty: Very Hard
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/animalhide/ashdrake = 10, /obj/item/stack/sheet/bone = 30)
 	deathmessage = "disintegrates, leaving a glowing core in its wake."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	deathsound = 'sound/magic/demon_dies.ogg'
 
 /mob/living/simple_animal/hostile/megafauna/colossus/devour(mob/living/L)
 	visible_message("<span class='colossus'>[src] disintegrates [L]!</span>")
@@ -558,7 +558,7 @@ Difficulty: Very Hard
 					H.regenerate_limbs()
 					H.regenerate_organs()
 					H.revive(1,0)
-					H.add_trait(TRAIT_NOCLONE, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
+					H.add_trait(TRAIT_BADDNA, MAGIC_TRAIT) //Free revives, but significantly limits your options for reviving except via the crystal
 					H.grab_ghost(force = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans

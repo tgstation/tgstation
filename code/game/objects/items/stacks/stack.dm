@@ -334,7 +334,7 @@
 		merge(o)
 	. = ..()
 
-/obj/item/stack/hitby(atom/movable/AM, skip, hitpush)
+/obj/item/stack/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(istype(AM, merge_type))
 		merge(AM)
 	. = ..()
@@ -396,7 +396,7 @@
 	//TODO bloody overlay
 
 /obj/item/stack/microwave_act(obj/machinery/microwave/M)
-	if(M && M.dirty < 100)
+	if(istype(M) && M.dirty < 100)
 		M.dirty += amount
 
 /*

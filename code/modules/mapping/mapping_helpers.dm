@@ -101,57 +101,58 @@
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
 
-/obj/effect/mapping_helpers/airlock/cyclelink_helper
-	name = "airlock cyclelink helper"
-	icon_state = "airlock_cyclelink_helper"
-
-/obj/effect/mapping_helpers/airlock/cyclelink_helper/Initialize(mapload)
+/obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		log_world("### MAP WARNING, [src] spawned outside of mapload!")
 		return
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
-	if(airlock)
-		if(airlock.cyclelinkeddir)
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
-		else
-			airlock.cyclelinkeddir = dir
-	else
+	if(!airlock)
 		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+	else
+		payload(airlock)
+
+/obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
+	return
+
+/obj/effect/mapping_helpers/airlock/cyclelink_helper
+	name = "airlock cyclelink helper"
+	icon_state = "airlock_cyclelink_helper"
+
+/obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.cyclelinkeddir)
+		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+	else
+		airlock.cyclelinkeddir = dir
 
 
 /obj/effect/mapping_helpers/airlock/locked
 	name = "airlock lock helper"
 	icon_state = "airlock_locked_helper"
 
-/obj/effect/mapping_helpers/airlock/locked/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
-		return
-	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
-	if(airlock)
-		if(airlock.locked)
-			log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
-		else
-			airlock.locked = TRUE
+/obj/effect/mapping_helpers/airlock/locked/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.locked)
+		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to bolt [airlock] but it's already locked!")
 	else
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+		airlock.locked = TRUE
+
 
 /obj/effect/mapping_helpers/airlock/unres
 	name = "airlock unresctricted side helper"
 	icon_state = "airlock_unres_helper"
 
-/obj/effect/mapping_helpers/airlock/unres/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		log_world("### MAP WARNING, [src] spawned outside of mapload!")
-		return
-	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
-	if(airlock)
-		airlock.unres_sides ^= dir
+/obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
+	airlock.unres_sides ^= dir
+
+/obj/effect/mapping_helpers/airlock/abandoned
+	name = "airlock abandoned helper"
+	icon_state = "airlock_abandoned"
+
+/obj/effect/mapping_helpers/airlock/abandoned/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.abandoned)
+		log_world("### MAP WARNING, [src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
 	else
-		log_world("### MAP WARNING, [src] failed to find an airlock at [AREACOORD(src)]")
+		airlock.abandoned = TRUE
 
 
 //needs to do its thing before spawn_rivers() is called

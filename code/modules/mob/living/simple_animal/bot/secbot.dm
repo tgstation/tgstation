@@ -11,7 +11,7 @@
 	pass_flags = PASSMOB
 
 	radio_key = /obj/item/encryptionkey/secbot //AI Priv + Security
-	radio_channel = "Security" //Security channel
+	radio_channel = RADIO_CHANNEL_SECURITY //Security channel
 	bot_type = SEC_BOT
 	model = "Securitron"
 	bot_core_type = /obj/machinery/bot_core/secbot
@@ -61,7 +61,7 @@
 /mob/living/simple_animal/bot/secbot/pingsky
 	name = "Officer Pingsky"
 	desc = "It's Officer Pingsky! Delegated to satellite guard duty for harbouring anti-human sentiment."
-	radio_channel = "AI Private"
+	radio_channel = RADIO_CHANNEL_AI_PRIVATE
 
 /mob/living/simple_animal/bot/secbot/Initialize()
 	. = ..()
@@ -184,7 +184,7 @@ Auto Patrol: []"},
 	..()
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM) // Any intent but harm will heal, so we shouldn't get angry.
 		return
-	if(!W.tool_behaviour == TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
+	if(W.tool_behaviour != TOOL_SCREWDRIVER && (W.force) && (!target) && (W.damtype != STAMINA) ) // Added check for welding tool to fix #2432. Welding tool behavior is handled in superclass.
 		retaliate(user)
 		if(special_retaliate_after_attack(user))
 			return
@@ -220,7 +220,7 @@ Auto Patrol: []"},
 		..()
 
 
-/mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE)
+/mob/living/simple_animal/bot/secbot/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))
 		var/obj/item/I = AM
 		if(I.throwforce < src.health && I.thrownby && ishuman(I.thrownby))

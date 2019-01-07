@@ -288,14 +288,17 @@
 
 /mob/living/silicon/ai/can_interact_with(atom/A)
 	. = ..()
+	var/turf/ai = get_turf(src)
+	var/turf/target = get_turf(A)
 	if (.)
 		return
+	if ((ai.z != target.z) && !is_station_level(ai))
+		return FALSE
+
 	if (istype(loc, /obj/item/aicard))
-		var/turf/T0 = get_turf(src)
-		var/turf/T1 = get_turf(A)
-		if (!T0 || ! T1)
+		if (!ai || !target)
 			return FALSE
-		return ISINRANGE(T1.x, T0.x - interaction_range, T0.x + interaction_range) && ISINRANGE(T1.y, T0.y - interaction_range, T0.y + interaction_range)
+		return ISINRANGE(target.x, ai.x - interaction_range, ai.x + interaction_range) && ISINRANGE(target.y, ai.y - interaction_range, ai.y + interaction_range)
 	else
 		return GLOB.cameranet.checkTurfVis(get_turf(A))
 
@@ -402,6 +405,18 @@
 
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
+		if (!M)
+			return
+
+		var/mech_has_controlbeacon = FALSE
+		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in M.trackers)
+			mech_has_controlbeacon = TRUE
+			break
+		if(!can_dominate_mechs && !mech_has_controlbeacon)
+			message_admins("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
+			log_game("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
+			return
+
 		if(controlled_mech)
 			to_chat(src, "<span class='warning'>You are already loaded into an onboard computer!</span>")
 			return
@@ -412,7 +427,7 @@
 			to_chat(src, "<span class='warning'>You aren't in your core!</span>")
 			return
 		if(M)
-			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
+			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
