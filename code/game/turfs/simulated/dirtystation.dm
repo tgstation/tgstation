@@ -122,7 +122,7 @@
 		//Science messes. Mostly green glowy stuff -WHICH YOU SHOULD NOT INJEST-.
 	var/static/list/science_dirt_areas = typecacheof(list(/area/science,
 														/area/crew_quarters/heads/hor))
-	if(is_type_in_typecache(A, medical_dirt_areas))
+	if(is_type_in_typecache(A, science_dirt_areas))
 		if(prob(20))
 			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
 		return
