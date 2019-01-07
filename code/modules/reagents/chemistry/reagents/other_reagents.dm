@@ -126,7 +126,7 @@
  */
 
 /datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
-	if (!istype(T))
+	if(!istype(T))
 		return
 	var/CT = cooling_temperature
 
