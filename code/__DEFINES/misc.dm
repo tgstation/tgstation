@@ -404,6 +404,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define BRAIN_DAMAGE_FILE "traumas.json"
 #define ION_FILE "ion_laws.json"
 #define PIRATE_NAMES_FILE "pirates.json"
+#define REDPILL_FILE "redpill.json"
 
 
 //Fullscreen overlay resolution in tiles.
