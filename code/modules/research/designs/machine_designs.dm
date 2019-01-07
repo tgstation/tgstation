@@ -473,7 +473,7 @@
 	id = "tesla_coil"
 	build_path = /obj/item/circuitboard/machine/tesla_coil
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/rad_collector
 	name = "Machine Design (Radiation Collector Board)"
@@ -481,7 +481,7 @@
 	id = "rad_collector"
 	build_path = /obj/item/circuitboard/machine/rad_collector
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
@@ -489,7 +489,7 @@
 	id = "grounding_rod"
 	build_path = /obj/item/circuitboard/machine/grounding_rod
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/plantgenes
 	name = "Machine Design (Plant DNA Manipulator Board)"
