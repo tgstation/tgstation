@@ -129,6 +129,6 @@
 
 
 //used for the can_chromosome var on mutations
-#define CHROMOSOME_NONE 0
-#define CHROMOSOME_NEVER 1
+#define CHROMOSOME_NEVER 0
+#define CHROMOSOME_NONE 1
 #define CHROMOSOME_USED 2

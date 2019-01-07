@@ -14,7 +14,7 @@
 	var/weight = 5
 
 /obj/item/chromosome/proc/can_apply(datum/mutation/human/HM)
-	if(!HM || !(HM.can_chromosome == 1))
+	if(!HM || !(HM.can_chromosome == CHROMOSOME_NONE))
 		return
 	if((stabilizer_coeff != 1) && (HM.stabilizer_coeff != -1)) //if the chromosome is 1, we dont change anything. If the mutation is -1, we cant change it. sorry
 		return TRUE
