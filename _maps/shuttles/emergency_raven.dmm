@@ -569,11 +569,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary";
-	req_access_txt = "2"
+	req_one_access_txt = "2;19"
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bp" = (
