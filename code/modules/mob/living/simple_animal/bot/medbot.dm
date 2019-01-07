@@ -549,7 +549,7 @@
 	if(declare_cooldown > world.time)
 		return
 	var/area/location = get_area(src)
-	speak("Medical emergency! [crit_patient ? "<b>[crit_patient]</b>" : "A patient"] is in critical condition at [location]!",radio_channel)
+	speak("Medical emergency! [crit_patient || "A patient"] is in critical condition at [location]!",radio_channel)
 	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
