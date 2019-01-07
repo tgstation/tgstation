@@ -982,7 +982,7 @@
 /area/construction)
 "cZ" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/ladder,
 /turf/open/floor/plasteel,
@@ -1192,12 +1192,6 @@
 "dJ" = (
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"dK" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/construction)
 "dL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1608,6 +1602,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"zf" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/construction)
 "Bm" = (
 /obj/machinery/light{
 	dir = 4
@@ -2455,7 +2455,7 @@ dy
 dy
 dy
 dm
-dK
+dM
 cN
 af
 ad
@@ -3049,7 +3049,7 @@ dz
 dz
 dz
 do
-dM
+zf
 cN
 ME
 ad
