@@ -79,7 +79,9 @@
 		if(C.can_absorb_dna(owner))
 			C.add_new_profile(owner)
 
-		C.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+		var/datum/action/changeling/humanform/hf = new
+		C.purchasedpowers += hf
+		C.regain_powers()
 		M.key = origin.key
 	owner.gib()
 

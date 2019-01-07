@@ -64,16 +64,6 @@
 	else
 		icon_state = "mixer0"
 
-/obj/machinery/chem_master/proc/eject_beaker(mob/user)
-	if(beaker)
-		beaker.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(beaker)
-		else
-			adjust_item_drop_location(beaker)
-		beaker = null
-		update_icon()
-
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
@@ -87,38 +77,51 @@
 
 	if(default_unfasten_wrench(user, I))
 		return
-
 	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		. = 1 // no afterattack
+		. = TRUE // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+		var/obj/item/reagent_containers/B = I
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(B, src))
 			return
-		if(!user.transferItemToLoc(I, src))
-			return
-
-		beaker = I
-		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
-		src.updateUsrDialog()
+		replace_beaker(user, B)
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_icon()
-
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-
 		bottle = I
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
 	else
 		return ..()
 
+/obj/machinery/chem_master/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
+
+/obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/chem_master/on_deconstruction()
-	eject_beaker()
+	replace_beaker()
 	if(bottle)
 		bottle.forceMove(drop_location())
 		adjust_item_drop_location(bottle)
@@ -176,7 +179,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject_beaker(usr)
+			replace_beaker(usr)
 			. = TRUE
 
 		if("ejectp")

@@ -1,17 +1,18 @@
 //Strained Muscles: Temporary speed boost at the cost of rapid damage
 //Limited because of hardsuits and such; ideally, used for a quick getaway
 
-/obj/effect/proc_holder/changeling/strained_muscles
+/datum/action/changeling/strained_muscles
 	name = "Strained Muscles"
 	desc = "We evolve the ability to reduce the acid buildup in our muscles, allowing us to move much faster."
 	helptext = "The strain will make us tired, and we will rapidly become fatigued. Standard weight restrictions, like hardsuits, still apply. Cannot be used in lesser form."
+	button_icon_state = "strained_muscles"
 	chemical_cost = 0
 	dna_cost = 1
 	req_human = 1
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
-	active = 0 //Whether or not you are a hedgehog
+	active = FALSE //Whether or not you are a hedgehog
 
-/obj/effect/proc_holder/changeling/strained_muscles/sting_action(mob/living/carbon/user)
+/datum/action/changeling/strained_muscles/sting_action(mob/living/carbon/user)
 	..()
 	active = !active
 	if(active)
@@ -28,7 +29,7 @@
 
 	return TRUE
 
-/obj/effect/proc_holder/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
+/datum/action/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
 		user.add_movespeed_modifier(MOVESPEED_ID_CHANGELING_MUSCLES, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)

@@ -8,8 +8,7 @@
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
 /turf/open/floor/proc/MakeDirty()
-	if(prob(66))	//fastest possible exit 2/3 of the time
-		return
+	// We start with a 1/3 chance of having this proc called by Initialize()
 
 	if(!(flags_1 & CAN_BE_DIRTY_1))
 		return
@@ -123,9 +122,9 @@
 		//Science messes. Mostly green glowy stuff -WHICH YOU SHOULD NOT INJEST-.
 	var/static/list/science_dirt_areas = typecacheof(list(/area/science,
 														/area/crew_quarters/heads/hor))
-	if(is_type_in_typecache(A, medical_dirt_areas))
+	if(is_type_in_typecache(A, science_dirt_areas))
 		if(prob(20))
-			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
+			new /obj/effect/decal/cleanable/greenglow/filled(src)	//this cleans itself up but it might startle you when you see it.
 		return
 
 	return TRUE

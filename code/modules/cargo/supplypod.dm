@@ -20,7 +20,7 @@
 	var/bluespace = FALSE //If true, the pod deletes (in a shower of sparks) after landing
 	var/landingDelay = 30 //How long the pod takes to land after launching
 	var/openingDelay = 30 //How long the pod takes to open after landing
-	var/departureDelay = 30 //How long the pod takes to leave after opening (if bluespace=true, it deletes. if reversing=true, it flies back to centcom)
+	var/departureDelay = 30 //How long the pod takes to leave after opening. If bluespace = TRUE, it deletes. If reversing = TRUE, it flies back to centcom.
 	var/damage = 0 //Damage that occurs to any mob under the pod when it lands.
 	var/effectStun = FALSE //If true, stuns anyone under the pod when it launches until it lands, forcing them to get hit by the pod. Devilish!
 	var/effectLimb = FALSE //If true, pops off a limb (if applicable) from anyone caught under the pod when it lands
@@ -79,7 +79,7 @@
 	update_icon()
 
 /obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
-	if (bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
+	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
 		return FALSE
 	else
 		..()
@@ -191,7 +191,6 @@
 	reversing = FALSE //Now that we're done reversing, we set this to false (otherwise we would get stuck in an infinite loop of calling the close proc at the bottom of open() )
 	bluespace = TRUE //Make it so that the pod doesn't stay in centcom forever
 	open(holder, forced = TRUE)
-	return
 
 /obj/structure/closet/supplypod/proc/setOpened() //Proc exists here, as well as in any atom that can assume the role of a "holder" of a supplypod. Check the open() proc for more details
 	update_icon()
@@ -202,7 +201,7 @@
 /obj/structure/closet/supplypod/Destroy()
 	if (!opened) //If we havent opened yet, we're opening because we've been destroyed. Lets dump our contents by opening up
 		open(src, broken = TRUE)
-	return ..()
+	. = ..()
 
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
 /obj/effect/DPfall //Falling pod

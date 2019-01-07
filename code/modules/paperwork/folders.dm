@@ -67,14 +67,14 @@
 	if(usr.contents.Find(src))
 
 		if(href_list["remove"])
-			var/obj/item/I = locate(href_list["remove"])
-			if(istype(I) && I.loc == src)
+			var/obj/item/I = locate(href_list["remove"]) in src
+			if(istype(I))
 				I.forceMove(usr.loc)
 				usr.put_in_hands(I)
 
 		if(href_list["read"])
-			var/obj/item/I = locate(href_list["read"])
-			if(istype(I) && I.loc == src)
+			var/obj/item/I = locate(href_list["read"]) in src
+			if(istype(I))
 				usr.examinate(I)
 
 		//Update everything
