@@ -1,6 +1,0 @@
-author: "YoYoBatty"
-delete-after: True
-changes: 
-  - rscadd: "Added a ghost verb that lets you t-ray view underfloor objects"
-  - admin: "Checking plumbing verb checks every atmospheric component instead of just pipes"
-  - code_imp: "Check plumbing verb is less snowflakey"

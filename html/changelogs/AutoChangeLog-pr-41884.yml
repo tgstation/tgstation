@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Monkey cubes now expand in a running shower!"
-  - bugfix: "Slimes now die in running showers."
