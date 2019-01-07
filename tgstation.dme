@@ -129,6 +129,7 @@
 #include "code\__HELPERS\qdel.dm"
 #include "code\__HELPERS\radiation.dm"
 #include "code\__HELPERS\radio.dm"
+#include "code\__HELPERS\records.dm"
 #include "code\__HELPERS\roundend.dm"
 #include "code\__HELPERS\sanitize_values.dm"
 #include "code\__HELPERS\shell.dm"
