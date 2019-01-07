@@ -1117,25 +1117,33 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/lavaland_extract
-	name = "Lavaland Extract"
-	id = "lavaland_extract"
-	description = "An extract of lavaland atmospheric and mineral elements. Heals the user in small doses, but is extremely toxic otherwise."
+/datum/reagent/medicine/borathium //aka lavaland extract, survival medipen juice, star trek reference no.6546515619
+	name = "Borathium"
+	id = "borathium"
+	description = "A cutting-edge drug that greatly accelerates wound healing, but easily causes overdoses."
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	overdose_threshold = 3 //To prevent people stacking massive amounts of a very strong healing reagent
 	can_synth = FALSE
 
-/datum/reagent/medicine/lavaland_extract/on_mob_life(mob/living/carbon/M)
+/datum/reagent/medicine/borathium/on_mob_life(mob/living/carbon/M)
 	M.heal_bodypart_damage(5,5)
 	..()
 	return TRUE
 
-/datum/reagent/medicine/lavaland_extract/overdose_process(mob/living/M)
+/datum/reagent/medicine/borathium/overdose_process(mob/living/M)
 	M.adjustBruteLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
 	M.adjustFireLoss(3*REM, 0, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(3*REM, 0)
 	..()
 	return TRUE
+
+/datum/reagent/medicine/borathium/on_mob_add(mob/living/M)
+	..()
+	to_chat(M, "<span class='notice'>You feel your body glowing hot as Boratium courses through your bloodstream.</span>")
+
+/datum/reagent/medicine/borathium/on_mob_delete(mob/living/M)
+	to_chat(M, "<span class='notice'>You feel the warmth of the Borathium fade away.</span>")
+	..()
 
 //used for changeling's adrenaline power
 /datum/reagent/medicine/changelingadrenaline
