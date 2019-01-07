@@ -8,7 +8,8 @@
 	if(istype(mover, /obj/item/projectile))
 		var/obj/item/projectile/P = mover
 		if(P.can_hit_target(src, P.permutated, src == P.original, TRUE))
-			return P.Bump(src)
+			P.Bump(src)
+		return TRUE
 	if(mover.throwing)
 		return (!density || !(mobility_flags & MOBILITY_STAND))
 	if(buckled == mover)
