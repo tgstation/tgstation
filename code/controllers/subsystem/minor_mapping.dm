@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(minor_mapping)
 
 /datum/controller/subsystem/minor_mapping/Initialize(timeofday)
 	trigger_migration(CONFIG_GET(number/mice_roundstart))
+	place_satchels()
 	return ..()
 
 /datum/controller/subsystem/minor_mapping/proc/trigger_migration(num_mice=10)
@@ -23,11 +24,21 @@ SUBSYSTEM_DEF(minor_mapping)
 			num_mice -= 1
 			M = null
 
+/datum/controller/subsystem/minor_mapping/proc/place_satchels(amount=10)
+	var/list/turfs = find_satchel_suitable_turfs()
+
+	while(turfs.len && amount > 0)
+		var/turf/T = pick_n_take(turfs)
+		var/obj/item/storage/backpack/satchel/flat/S = new(T)
+		S.hide(intact=TRUE)
+		amount--
+
+
 /proc/find_exposed_wires()
 	var/list/exposed_wires = list()
 
 	var/list/all_turfs
-	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		all_turfs += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 	for(var/turf/open/floor/plating/T in all_turfs)
 		if(is_blocked_turf(T))
@@ -36,3 +47,13 @@ SUBSYSTEM_DEF(minor_mapping)
 			exposed_wires += T
 
 	return shuffle(exposed_wires)
+
+/proc/find_satchel_suitable_turfs()
+	var/list/suitable = list()
+
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		for(var/t in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
+			if(isfloorturf(t) && !isplatingturf(t))
+				suitable += t
+
+	return shuffle(suitable)
