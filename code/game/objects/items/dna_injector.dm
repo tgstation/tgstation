@@ -20,7 +20,7 @@
 	return attack_hand(user)
 
 /obj/item/dnainjector/proc/inject(mob/living/carbon/M, mob/user)
-	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
+	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/HM in remove_mutations)
@@ -296,6 +296,14 @@
 	name = "\improper DNA injector (Anti-Laser Eyes)"
 	remove_mutations = list(LASEREYES)
 
+/obj/item/dnainjector/void
+	name = "\improper DNA injector (Void)"
+	add_mutations = list(VOID)
+
+/obj/item/dnainjector/antivoid
+	name = "\improper DNA injector (Anti-Void)"
+	remove_mutations = list(VOID)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 
@@ -304,7 +312,7 @@
 		to_chat(user, "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>")
 		return FALSE
 
-	if(M.has_dna() && !(M.has_trait(TRAIT_NOCLONE)))
+	if(M.has_dna() && !(M.has_trait(TRAIT_BADDNA)))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		var/endtime = world.time+duration
@@ -366,7 +374,7 @@
 	var/filled = FALSE
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
-	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_NOCLONE))
+	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/mutation in add_mutations)

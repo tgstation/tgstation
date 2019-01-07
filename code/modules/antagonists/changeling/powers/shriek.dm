@@ -1,13 +1,14 @@
-/obj/effect/proc_holder/changeling/resonant_shriek
+/datum/action/changeling/resonant_shriek
 	name = "Resonant Shriek"
-	desc = "Our lungs and vocal cords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
+	desc = "Our lungs and vocal cords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded. Costs 20 chemicals."
 	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
+	button_icon_state = "resonant_shriek"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = 1
 
-//A flashy ability, good for crowd control and sewing chaos.
-/obj/effect/proc_holder/changeling/resonant_shriek/sting_action(mob/user)
+//A flashy ability, good for crowd control and sowing chaos.
+/datum/action/changeling/resonant_shriek/sting_action(mob/user)
 	..()
 	for(var/mob/living/M in get_hearers_in_view(4, user))
 		if(iscarbon(M))
@@ -28,14 +29,14 @@
 		L.break_light_tube()
 	return TRUE
 
-/obj/effect/proc_holder/changeling/dissonant_shriek
+/datum/action/changeling/dissonant_shriek
 	name = "Dissonant Shriek"
-	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics."
+	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Costs 20 chemicals."
+	button_icon_state = "dissonant_shriek"
 	chemical_cost = 20
 	dna_cost = 1
 
-//A flashy ability, good for crowd control and sewing chaos.
-/obj/effect/proc_holder/changeling/dissonant_shriek/sting_action(mob/user)
+/datum/action/changeling/dissonant_shriek/sting_action(mob/user)
 	..()
 	for(var/obj/machinery/light/L in range(5, usr))
 		L.on = 1

@@ -140,12 +140,12 @@
 
 /obj/item/roller/robo //ROLLER ROBO DA!
 	name = "roller bed dock"
-	var/loaded = null
-
-/obj/item/roller/robo/New()
-	loaded = new /obj/structure/bed/roller(src)
 	desc = "A collapsed roller bed that can be ejected for emergency use. Must be collected or replaced after use."
-	..()
+	var/obj/structure/bed/roller/loaded = null
+
+/obj/item/roller/robo/Initialize()
+	. = ..()
+	loaded = new(src)
 
 /obj/item/roller/robo/examine(mob/user)
 	..()
@@ -153,8 +153,7 @@
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
-		var/obj/structure/bed/roller/R = loaded
-		R.forceMove(location)
+		loaded.forceMove(location)
 		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
 		loaded = null
 	else

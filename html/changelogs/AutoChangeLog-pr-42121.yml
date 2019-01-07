@@ -1,0 +1,4 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "experimental cloner is compatible with ordinary cloning computer, but deletes records after cloning."

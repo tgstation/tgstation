@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Science areas now have small patches of glowing green goo
+occasionally, as intended."

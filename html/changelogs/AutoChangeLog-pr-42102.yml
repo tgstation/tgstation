@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - tweak: "Wearing a carp costume or hardsuit with its hood equipped now prevents users from being attacked by wild space carp."
+  - tweak: "Reworked the kinetic speargun: Its projectiles now embed and cause more damage."
+  - rscadd: "Added a Syndicate bundle that contains a speargun, a quiver with magspears, a carp hardsuit as well as other carp accessories."

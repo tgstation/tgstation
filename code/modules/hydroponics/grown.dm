@@ -101,6 +101,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
+	forceMove(T)
 	if(ispath(splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
 		if(filling_color)
 			var/obj/O = new splat_type(T)

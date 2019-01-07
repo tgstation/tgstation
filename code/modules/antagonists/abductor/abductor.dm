@@ -64,6 +64,9 @@
 	//Equip
 	var/mob/living/carbon/human/H = owner.current
 	H.set_species(/datum/species/abductor)
+	var/obj/item/organ/tongue/abductor/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+	T.mothership = "[team.name]"
+
 	H.real_name = "[team.name] [sub_role]"
 	H.equipOutfit(outfit)
 

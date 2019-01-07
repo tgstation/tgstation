@@ -1,8 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Robotics can print cybernetic hearts, lungs and livers at their exofabricators (along
-with their upgraded versions)."
-  - rscadd: "Added upgraded cybernetic heart, just like the regular cybernetic heart,
-that doses you with epinephrine when unconscious. But the upgraded version generates a new
-dose after five minutes."

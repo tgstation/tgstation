@@ -572,7 +572,7 @@
 
 /obj/structure/window/plastitanium
 	name = "plastitanium window"
-	desc = "An evil looking window of plasma and titanium."
+	desc = "A durable looking window made of an alloy of of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window"
 	dir = FULLTILE_WINDOW_DIR

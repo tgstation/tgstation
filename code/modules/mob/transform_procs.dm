@@ -93,7 +93,9 @@
 			mind.transfer_to(O)
 			var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
 			if(changeling)
-				changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+				var/datum/action/changeling/humanform/hf = new
+				changeling.purchasedpowers += hf
+				changeling.regain_powers()
 
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
@@ -126,7 +128,9 @@
 		mind.transfer_to(O)
 		var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
+			var/datum/action/changeling/humanform/hf = new
+			changeling.purchasedpowers += hf
+			changeling.regain_powers()
 
 
 	if (tr_flags & TR_DEFAULTMSG)
@@ -248,8 +252,9 @@
 			mind.transfer_to(O)
 			var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
 			if(changeling)
-				for(var/obj/effect/proc_holder/changeling/humanform/HF in changeling.purchasedpowers)
+				for(var/datum/action/changeling/humanform/HF in changeling.purchasedpowers)
 					changeling.purchasedpowers -= HF
+					changeling.regain_powers()
 
 		for(var/X in internal_organs)
 			var/obj/item/organ/I = X
@@ -282,8 +287,9 @@
 		mind.transfer_to(O)
 		var/datum/antagonist/changeling/changeling = O.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			for(var/obj/effect/proc_holder/changeling/humanform/HF in changeling.purchasedpowers)
+			for(var/datum/action/changeling/humanform/HF in changeling.purchasedpowers)
 				changeling.purchasedpowers -= HF
+				changeling.regain_powers()
 
 	O.a_intent = INTENT_HELP
 	if (tr_flags & TR_DEFAULTMSG)

@@ -114,7 +114,9 @@
 		target = AM
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
-		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with [det_time] second fuse")
+		log_game("[key_name(user)] planted [name] on [target.name] at [AREACOORD(user)] with a [det_time] second fuse")
+
+		notify_ghosts("[user] has planted \a [src] on [target] with a [det_time] second fuse!", source = target, action = NOTIFY_ORBIT)
 
 		moveToNullspace()	//Yep
 
@@ -175,9 +177,9 @@
 	var/open_panel = 0
 	can_attach_mob = TRUE
 
-/obj/item/grenade/plastic/c4/New()
+/obj/item/grenade/plastic/c4/Initialize()
+	. = ..()
 	wires = new /datum/wires/explosive/c4(src)
-	..()
 
 /obj/item/grenade/plastic/c4/Destroy()
 	qdel(wires)

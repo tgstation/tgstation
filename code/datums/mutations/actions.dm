@@ -5,18 +5,9 @@
 	text_gain_indication = "<span class='notice'>You can hear your own voice echoing in your mind!</span>"
 	text_lose_indication = "<span class='notice'>You don't hear your mind echo anymore.</span>"
 	difficulty = 12
-	power = /obj/effect/proc_holder/spell/targeted/telepathy/genetic
+	power = /obj/effect/proc_holder/spell/targeted/telepathy
 	instability = 10
 	energy_coeff = 1
-
-/datum/mutation/human/telepathy/on_acquiring(mob/living/carbon/human/owner)
-	. = ..()
-
-/datum/mutation/human/telepathy/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-
-/obj/effect/proc_holder/spell/targeted/telepathy/genetic
-	magic_check = FALSE
 
 /datum/mutation/human/firebreath
 	name = "Fire Breath"
@@ -36,7 +27,6 @@
 		var/obj/effect/proc_holder/spell/aimed/firebreath/S = power
 		S.strength = GET_MUTATION_POWER(src)
 
-
 /obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
 	desc = "You can breathe fire at a target."
@@ -51,7 +41,6 @@
 	active_msg = "You built up heat in your mouth."
 	deactive_msg = "You swallow the flame."
 	var/strength = 1
-
 
 /obj/effect/proc_holder/spell/aimed/firebreath/before_cast(list/targets)
 	. = ..()
@@ -74,7 +63,6 @@
 			F.exp_heavy = strength-4
 	F.exp_fire += strength
 
-
 /obj/item/projectile/magic/aoe/fireball/firebreath
 	name = "fire breath"
 	exp_heavy = 0
@@ -93,14 +81,10 @@
 	synchronizer_coeff = 1
 
 /datum/mutation/human/void/on_life()
-	var/obj/effect/proc_holder/spell/self/void/voidpower = power
-	if(voidpower.in_use) //i don't know how rare this is but coughs are 10% on life so in theory this should be okay
+	if(!isturf(owner.loc))
 		return
 	if(prob((0.5+((100-dna.stability)/20))) * GET_MUTATION_SYNCHRONIZER(src)) //very rare, but enough to annoy you hopefully. +0.5 probability for every 10 points lost in stability
-		if(voidpower.action)
-			voidpower.action.UpdateButtonIcon()
-		voidpower.invocation_type = "none"
-		voidpower.cast(user=owner)
+		new /obj/effect/immortality_talisman/void(get_turf(owner), owner)
 
 /obj/effect/proc_holder/spell/self/void
 	name = "Convoke Void" //magic the gathering joke here
@@ -111,31 +95,12 @@
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
 	invocation_type = "shout"
 	action_icon_state = "void_magnet"
-	var/in_use = FALSE //so it doesnt cast while you are already deep innit
 
 /obj/effect/proc_holder/spell/self/void/can_cast(mob/user = usr)
 	. = ..()
-	if(in_use)
+	if(!isturf(user.loc))
 		return FALSE
 
 /obj/effect/proc_holder/spell/self/void/cast(mob/user = usr)
-	in_use = TRUE
-	user.visible_message("<span class='danger'>[user] is dragged into the void, leaving a hole in [user.p_their()] place!</span>")
-	var/obj/effect/immortality_talisman/Z = new(get_turf(user))
-	Z.name = "hole in reality"
-	Z.desc = "It's shaped an awful lot like [user.name]."
-	Z.setDir(user.dir)
-	user.forceMove(Z)
-	user.notransform = 1
-	user.status_flags |= GODMODE
-	addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
-
-/obj/effect/proc_holder/spell/self/void/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
-	in_use = FALSE
-	invocation_type = initial(invocation_type)
-	user.status_flags &= ~GODMODE
-	user.notransform = 0
-	user.forceMove(get_turf(Z))
-	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
-	Z.can_destroy = TRUE
-	qdel(Z)
+	. = ..()
+	new /obj/effect/immortality_talisman/void(get_turf(user), user)
