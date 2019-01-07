@@ -831,26 +831,6 @@
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "sweetness"
 
-/datum/reagent/radium
-	name = "Radium"
-	id = "radium"
-	description = "Radium is an alkaline earth metal. It is extremely radioactive."
-	reagent_state = SOLID
-	color = "#C7C7C7" // rgb: 199,199,199
-	taste_description = "the colour blue and regret"
-
-/datum/reagent/radium/on_mob_life(mob/living/carbon/M)
-	M.apply_effect(2*REM/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
-	..()
-
-/datum/reagent/radium/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 3)
-		if(!isspaceturf(T))
-			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
-			if(!GG)
-				GG = new/obj/effect/decal/cleanable/greenglow(T)
-			GG.reagents.add_reagent("radium", reac_volume)
-
 /datum/reagent/space_cleaner/sterilizine
 	name = "Sterilizine"
 	id = "sterilizine"
@@ -914,9 +894,10 @@
 	reagent_state = SOLID
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
+	var/irradiation_level = 1
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M)
-	M.apply_effect(1/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
+	M.apply_effect(irradiation_level/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
 	..()
 
 /datum/reagent/uranium/reaction_turf(turf/T, reac_volume)
@@ -925,7 +906,16 @@
 			var/obj/effect/decal/cleanable/greenglow/GG = locate() in T.contents
 			if(!GG)
 				GG = new/obj/effect/decal/cleanable/greenglow(T)
-			GG.reagents.add_reagent("uranium", reac_volume)
+			GG.reagents.add_reagent(id, reac_volume)
+
+/datum/reagent/uranium/radium
+	name = "Radium"
+	id = "radium"
+	description = "Radium is an alkaline earth metal. It is extremely radioactive."
+	reagent_state = SOLID
+	color = "#C7C7C7" // rgb: 199,199,199
+	taste_description = "the colour blue and regret"
+	irradiation_level = 2*REM
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
