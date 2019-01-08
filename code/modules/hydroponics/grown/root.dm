@@ -97,7 +97,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/maxchem)
-	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
+	reagents_add = list("sodium" = 0.1, "vitamin" = 0.05, "nutriment" = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/redbeet
 	seed = /obj/item/seeds/redbeet
