@@ -1,0 +1,6 @@
+author: "Frosty Fridge"
+delete-after: True
+changes: 
+  - rscadd: "Augmented employees are now licensed to perform advanced maintenance on their own augmented body parts."
+  - code_imp: "Added a flag to Surgery subclasses to allow or disallow self surgery"
+  - code_imp: "Made the lying_required var of surgeries apply to all surgery steps, not just initiation"
