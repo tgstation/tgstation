@@ -529,6 +529,12 @@
 	list_reagents = list("grey_bull" = 20)
 	foodtype = SUGAR | JUNKFOOD
 
+obj/item/reagent_containers/food/drinks/soda_cans/strongebow
+	name = "Strong-eBow"
+	desc = "A Syndicate favourite, the sharp flavour of this apple juice has been compared to getting shot by an Energy Bow."
+	icon_state = "strongebow"
+	list_reagents = list("applejuice" = 30, "uranium" = 10)
+
 /obj/item/reagent_containers/food/drinks/soda_cans/air
 	name = "canned air"
 	desc = "There is no air shortage. Do not drink."

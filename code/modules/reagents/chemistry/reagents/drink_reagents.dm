@@ -437,6 +437,17 @@
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
 
+/datum/reagent/consumable/strongebow
+	name = "Strong-eBow"
+	id = "strongebow"
+	description = "A Syndicate favourite, the sharp flavour of this apple juice has been compared to getting shot by an Energy Bow."
+	color = "#879E3F" // rgb: 135, 158, 63
+	quality = DRINK_NICE
+	glass_icon_state = "glass_green"
+	glass_name = "glass of Strong-eBow"
+	glass_desc = "A glass of Strong-eBow. Aftereffects may or may not include mutation."
+
+
 /datum/reagent/consumable/spacemountainwind
 	name = "SM Wind"
 	id = "spacemountainwind"
