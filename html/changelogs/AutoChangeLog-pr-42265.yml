@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Podpeople have the species trait of always being clean, so do not
+need to worry about regular showering. Because they're plants."
