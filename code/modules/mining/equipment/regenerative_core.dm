@@ -20,7 +20,7 @@
 /************************Hivelord core*******************/
 /obj/item/organ/regenerative_core
 	name = "regenerative core"
-	desc = "All that remains of a hivelord. It can be used to heal completely, but it will rapidly decay into uselessness."
+	desc = "All that remains of a hivelord. It can be used to heal physical injuries, but it will rapidly decay into uselessness."
 	icon_state = "roro core 2"
 	item_flags = NOBLUDGEON
 	slot = "hivecore"
@@ -41,7 +41,7 @@
 	inert = FALSE
 	preserved = TRUE
 	update_icon()
-	desc = "All that remains of a hivelord. It is preserved, allowing you to use it to heal completely without danger of decay."
+	desc = "All that remains of a hivelord. It is preserved, allowing you to use it to heal physical injuries without danger of decay."
 	if(implanted)
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "implanted"))
 	else
@@ -81,10 +81,10 @@
 				H.visible_message("[user] forces [H] to apply [src]... [H.p_they()] quickly regenerate all injuries!")
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
 			else
-				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
+				to_chat(user, "<span class='notice'>You smear [src] on yourself. You still feel disgusting, but your wounds appear to be healed.</span>")
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
 			H.adjustBruteLoss(-75)
-			H.adjustFireLoss(-25)
+			H.adjustFireLoss(-75)
 			H.adjustBrainLoss(5)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 			qdel(src)
@@ -106,7 +106,7 @@
 
 /*************************Legion core********************/
 /obj/item/organ/regenerative_core/legion
-	desc = "A strange rock that crackles with power. It can be used to heal completely, but it will rapidly decay into uselessness."
+	desc = "A strange rock that crackles with power. It can be used to heal physical injuries, but it will rapidly decay into uselessness."
 	icon_state = "legion_soul"
 
 /obj/item/organ/regenerative_core/legion/Initialize()
@@ -128,4 +128,4 @@
 
 /obj/item/organ/regenerative_core/legion/preserved(implanted = 0)
 	..()
-	desc = "[src] has been stabilized. It is preserved, allowing you to use it to heal completely without danger of decay."
+	desc = "[src] has been stabilized. It is preserved, allowing you to use it to heal physical injuries without danger of decay."
