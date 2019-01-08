@@ -82,7 +82,8 @@
 	plantname = "Meatwheat"
 	product = /obj/item/reagent_containers/food/snacks/grown/meatwheat
 	mutatelist = list()
-
+	reagents_add = list("nutriment" = 0.04, "liquidgibs" = 0.05)
+	
 /obj/item/reagent_containers/food/snacks/grown/meatwheat
 	name = "meatwheat"
 	desc = "Some blood-drenched wheat stalks. You can crush them into what passes for meat if you squint hard enough."
