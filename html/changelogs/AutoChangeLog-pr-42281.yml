@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Deltastation: Engineers can now open and close the supermatter engine radiation shutters."
