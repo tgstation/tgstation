@@ -1,0 +1,4 @@
+author: "Arachnidnexus/actioninja"
+delete-after: True
+changes: 
+  - imageadd: "New shoe object sprites"
