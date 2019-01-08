@@ -32,7 +32,7 @@
 	plantname = "Space Tobacco Plant"
 	product = /obj/item/reagent_containers/food/snacks/grown/tobacco/space
 	mutatelist = list()
-	reagents_add = list("salbutamol" = 0.05, "nicotine" = 0.08, "nutriment" = 0.03)
+	reagents_add = list("salbutamol" = 0.05, "oxygen" = 0.1, "nicotine" = 0.08, "nutriment" = 0.03)
 	rarity = 20
 
 /obj/item/reagent_containers/food/snacks/grown/tobacco/space
