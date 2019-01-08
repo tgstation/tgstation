@@ -128,8 +128,8 @@
 	var/unlock_amount = 100 //How much essence it costs to unlock
 	var/cast_amount = 50 //How much essence it costs to use
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/New()
-	..()
+/obj/effect/proc_holder/spell/aoe_turf/revenant/Initialize()
+	. = ..()
 	if(locked)
 		name = "[initial(name)] ([unlock_amount]SE)"
 	else

@@ -35,3 +35,4 @@
 #define MASKINTERNALS				    (1<<3)		// mask allows internals
 #define NOSLIP                  (1<<4)   //prevents from slipping on wet floors, in space etc
 #define THICKMATERIAL				(1<<5)	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
+#define SHOWEROKAY				(1<<6)	//prevents you from being stupid if you shower in them
