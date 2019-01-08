@@ -39,7 +39,8 @@
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 
-	handle_hygiene()
+	if(stat != DEAD)
+		handle_hygiene()
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
