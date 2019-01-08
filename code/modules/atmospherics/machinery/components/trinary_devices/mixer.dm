@@ -58,7 +58,7 @@
 	var/datum/gas_mixture/air1 = airs[1]
 	var/datum/gas_mixture/air2 = airs[2]
 
-	if(!air1 || !air2 || air1.temperature <= 0 || air2.temperature <= 0)
+	if(!air1 || !air2)
 		return
 
 	var/datum/gas_mixture/air3 = airs[3]
@@ -70,39 +70,46 @@
 		return
 
 	//Calculate necessary moles to transfer using PV=nRT
-
 	var/general_transfer = (target_pressure - output_starting_pressure) * air3.volume / R_IDEAL_GAS_EQUATION
 
-	var/transfer_moles1 = node1_concentration * general_transfer / air1.temperature
-
-	var/transfer_moles2 = node2_concentration * general_transfer / air2.temperature
-
-	if((transfer_moles2 <= 0) || (transfer_moles1 <= 0))
-		return
-
+	var/transfer_moles1 = air1.temperature ? node1_concentration * general_transfer / air1.temperature : 0
+	var/transfer_moles2 = air2.temperature ? node2_concentration * general_transfer / air2.temperature : 0
 
 	var/air1_moles = air1.total_moles()
 	var/air2_moles = air2.total_moles()
 
-	if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
-		var/ratio = 0
-		ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
-		transfer_moles1 *= ratio
-		transfer_moles2 *= ratio
+	if(!node2_concentration)
+		if(air1.temperature <= 0)
+			return	
+		transfer_moles1 = min(transfer_moles1, air1_moles)
+		transfer_moles2 = 0
+	else if(!node1_concentration)
+		if(air2.temperature <= 0)
+			return	
+		transfer_moles2 = min(transfer_moles2, air2_moles)
+		transfer_moles1 = 0
+	else
+		if(air1.temperature <= 0 || air2.temperature <= 0)
+			return
+		if((transfer_moles2 <= 0) || (transfer_moles1 <= 0))
+			return
+		if((air1_moles < transfer_moles1) || (air2_moles < transfer_moles2))
+			var/ratio = 0
+			ratio = min(air1_moles / transfer_moles1, air2_moles / transfer_moles2)
+			transfer_moles1 *= ratio
+			transfer_moles2 *= ratio
 
 	//Actually transfer the gas
 
-	var/datum/gas_mixture/removed1 = air1.remove(transfer_moles1)
-	air3.merge(removed1)
-
-	var/datum/gas_mixture/removed2 = air2.remove(transfer_moles2)
-	air3.merge(removed2)
-
 	if(transfer_moles1)
+		var/datum/gas_mixture/removed1 = air1.remove(transfer_moles1)
+		air3.merge(removed1)
 		var/datum/pipeline/parent1 = parents[1]
 		parent1.update = TRUE
 
 	if(transfer_moles2)
+		var/datum/gas_mixture/removed2 = air2.remove(transfer_moles2)
+		air3.merge(removed2)
 		var/datum/pipeline/parent2 = parents[2]
 		parent2.update = TRUE
 
@@ -121,8 +128,8 @@
 	data["on"] = on
 	data["set_pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
-	data["node1_concentration"] = round(node1_concentration*100)
-	data["node2_concentration"] = round(node2_concentration*100)
+	data["node1_concentration"] = round(node1_concentration*100, 1)
+	data["node2_concentration"] = round(node2_concentration*100, 1)
 	return data
 
 /obj/machinery/atmospherics/components/trinary/mixer/ui_act(action, params)
@@ -150,18 +157,19 @@
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("node1")
 			var/value = text2num(params["concentration"])
-			node1_concentration = max(0, min(1, node1_concentration + value))
-			node2_concentration = max(0, min(1, node2_concentration - value))
+			adjust_node1_value(value)
 			investigate_log("was set to [node1_concentration] % on node 1 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("node2")
 			var/value = text2num(params["concentration"])
-			node2_concentration = max(0, min(1, node2_concentration + value))
-			node1_concentration = max(0, min(1, node1_concentration - value))
+			adjust_node1_value(-value)
 			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()
 
+/obj/machinery/atmospherics/components/trinary/mixer/proc/adjust_node1_value(delta)
+	node1_concentration = round(max(0, min(1, node1_concentration + delta)), 0.01)
+	node2_concentration = 1 - node1_concentration
 
 /obj/machinery/atmospherics/components/trinary/mixer/can_unwrench(mob/user)
 	. = ..()

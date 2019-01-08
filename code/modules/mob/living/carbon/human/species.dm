@@ -1579,7 +1579,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(H.on_fire)
 		//the fire tries to damage the exposed clothes and items
 		var/list/burning_items = list()
-		var/list/obscured = H.check_obscured_slots()
+		var/list/obscured = H.check_obscured_slots(TRUE)
 		//HEAD//
 
 		if(H.glasses && !(SLOT_GLASSES in obscured))

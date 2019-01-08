@@ -328,11 +328,10 @@
 		return
 
 	var/turf/T = get_turf(H)
-	var/datum/gas_mixture/air = T.return_air()
-	var/list/cached_gases = air.gases
-
-	ASSERT_GAS(/datum/gas/miasma, air)
-	cached_gases[/datum/gas/miasma][MOLES] += MIASMA_HYGIENE_MOLES
+	var/datum/gas_mixture/stank = new
+	ADD_GAS(/datum/gas/miasma, stank.gases)
+	stank.gases[/datum/gas/miasma][MOLES] = MIASMA_HYGIENE_MOLES
+	T.assume_air(stank)
 	T.air_update_turf()
 
 #undef MINOR_INSANITY_PEN

@@ -23,11 +23,10 @@ Captain
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 
+	mind_traits = list(TRAIT_DISK_VERIFIER)
+
 /datum/job/captain/get_access()
 	return get_all_accesses()
-
-/datum/job/captain/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
-	H.mind.add_trait(TRAIT_DISK_VERIFIER, JOB_TRAIT)
 
 /datum/job/captain/announce(mob/living/carbon/human/H)
 	..()

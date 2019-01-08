@@ -177,9 +177,9 @@
 	var/open_panel = 0
 	can_attach_mob = TRUE
 
-/obj/item/grenade/plastic/c4/New()
+/obj/item/grenade/plastic/c4/Initialize()
+	. = ..()
 	wires = new /datum/wires/explosive/c4(src)
-	..()
 
 /obj/item/grenade/plastic/c4/Destroy()
 	qdel(wires)
