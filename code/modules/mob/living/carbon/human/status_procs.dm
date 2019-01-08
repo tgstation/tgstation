@@ -51,3 +51,13 @@
 			grant_language(/datum/language/beachbum)
 		else
 			remove_language(/datum/language/beachbum)
+
+/mob/living/carbon/human/proc/adjust_hygiene(amount)
+	. = ..()
+	hygiene = CLAMP(hygiene+amount, 0, HYGIENE_LEVEL_CLEAN)
+	update_smell()
+
+/mob/living/carbon/human/proc/set_hygiene(amount)
+	. = ..()
+	hygiene	 = CLAMP(amount, 0, HYGIENE_LEVEL_CLEAN)
+	update_smell()

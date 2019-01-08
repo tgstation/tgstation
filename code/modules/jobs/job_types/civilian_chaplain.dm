@@ -22,6 +22,7 @@ Chaplain
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
+	. = ..()
 	if(H.mind)
 		H.mind.isholy = TRUE
 

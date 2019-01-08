@@ -297,9 +297,17 @@
 		new /obj/item/reagent_containers/pill/happiness(src)
 
 /obj/item/storage/pill_bottle/penacid
-	name = "bottle of pentetic acid"
+	name = "bottle of pentetic acid pills"
 	desc = "Contains pills to expunge radioation and toxins"
 
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/penacid(src)
+
+/obj/item/storage/pill_bottle/neurine
+	name = "bottle of neurine pills"
+	desc = "Contains pills to treat non-severe mental traumas."
+
+/obj/item/storage/pill_bottle/neurine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/neurine(src)

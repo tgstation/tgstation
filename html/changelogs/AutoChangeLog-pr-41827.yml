@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - tweak: "Satchels (chem bag, bio bag etc) now stack by name in addition to type."

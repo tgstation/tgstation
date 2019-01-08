@@ -348,7 +348,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			if(coin_records.Find(R) || is_hidden)
 				price_listed = "$[R.custom_premium_price ? R.custom_premium_price : extra_price]"
 			dat += "<li>"
-			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && iscarbon(user))))
+			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && isliving(user))))
 				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
 			else
 				dat += "<span class='linkOff'>Not Available</span> "

@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - refactor: "atom/var/container_type has been moved into datum/reagents/var/flags. There should
-be no visible changes to effects."
