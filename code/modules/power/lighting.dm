@@ -85,10 +85,6 @@
 		return
 
 /obj/structure/light_construct/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-
 	if(cell)
 		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
 		user.put_in_hands(cell)
@@ -97,13 +93,11 @@
 		add_fingerprint(user)
 
 /obj/structure/light_construct/attack_tk(mob/user)
-	if(!cell)
-		return
-
-	to_chat(user, "<span class='notice'>You telekinetically remove [cell].</span>")
-	cell.forceMove(drop_location())
-	cell.attack_tk(user)
-	cell = null
+	if(cell)
+		to_chat(user, "<span class='notice'>You telekinetically remove [cell].</span>")
+		cell.forceMove(drop_location())
+		cell.attack_tk(user)
+		cell = null
 
 /obj/structure/light_construct/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -116,17 +110,14 @@
 			return
 		if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
-			return
-		else
-			if(!user.temporarilyRemoveItemFromInventory(W))
-				return
+		else if(user.temporarilyRemoveItemFromInventory(W))
 			user.visible_message("<span class='notice'>[user] hooks up [W] to [src].</span>", \
 			"<span class='notice'>You add [W] to [src].</span>")
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			W.forceMove(src)
 			cell = W
 			add_fingerprint(user)
-			return
+		return
 	switch(stage)
 		if(1)
 			if(W.tool_behaviour == TOOL_WRENCH)
