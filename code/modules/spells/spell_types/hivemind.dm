@@ -643,18 +643,31 @@
 	range = -1
 	include_user = 1
 	wall_type = /obj/effect/forcefield/wizard/hive
+	var/wall_type_b = /obj/effect/forcefield/wizard/hive/invis
 
 /obj/effect/proc_holder/spell/targeted/forcewall/hive/cast(list/targets,mob/user = usr)
 	new wall_type(get_turf(user),user)
 	for(var/dir in GLOB.alldirs)
-		new wall_type(get_step(user, dir),user)
+		new wall_type_b(get_step(user, dir),user)
 
 /obj/effect/forcefield/wizard/hive
 	name = "Telekinetic Field"
 	desc = "A psychic barrier, usable by only the strongest of minds."
 	timeleft = 150
+	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_y = -32
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "hive_shield"
 
 /obj/effect/forcefield/wizard/hive/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
 		return TRUE
 	return  FALSE
+
+/obj/effect/forcefield/wizard/hive/invis
+	icon = null
+	icon_state = null
+	pixel_x = 0
+	pixel_y = 0
+	invisibility = INVISIBILITY_MAXIMUM
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
