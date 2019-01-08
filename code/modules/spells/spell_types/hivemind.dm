@@ -655,12 +655,14 @@
 
 /obj/effect/forcefield/wizard/hive
 	name = "Telekinetic Field"
-	desc = "A psychic barrier, usable by only the strongest of minds."
+	desc = "You think, therefore it is."
 	timeleft = 150
-	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_x = -32 //Centres the 96x96 sprite
 	pixel_y = -32
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "hive_shield"
+	layer = ABOVE_ALL_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/forcefield/wizard/hive/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
@@ -673,4 +675,3 @@
 	pixel_x = 0
 	pixel_y = 0
 	invisibility = INVISIBILITY_MAXIMUM
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
