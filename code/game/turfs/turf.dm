@@ -211,8 +211,8 @@
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
-	var/CanPassSelf = CanPass(mover, src)
-	if(CanPassSelf || CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+	var/canPassSelf = CanPass(mover, src)
+	if(canPassSelf || CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
 		for(var/i in contents)
 			if(QDELETED(mover))
 				return FALSE		//We were deleted, do not attempt to proceed with movement.
@@ -230,7 +230,7 @@
 						firstbump = thing
 	if(QDELETED(mover))					//Mover deleted from Cross/CanPass/Bump, do not proceed.
 		return FALSE
-	if(!CanPassSelf)	//Even if mover is unstoppable they need to bump us.
+	if(!canPassSelf)	//Even if mover is unstoppable they need to bump us.
 		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)
