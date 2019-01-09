@@ -1,4 +1,0 @@
-author: "Noch"
-delete-after: True
-changes: 
-  - bugfix: "the 2 hygiene quirks are now designated as mood_quirks, since they center around mood"
