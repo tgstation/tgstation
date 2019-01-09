@@ -92,10 +92,6 @@
 	name = "Nuka Cola"
 	list_reagents = list("nuka_cola" = 50)
 	
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/fernet_cola 
-	name = "Fernet Cola"
-	list_reagents = list("fernet_cola" = 50)
-
 /obj/item/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I
