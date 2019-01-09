@@ -1457,7 +1457,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Ancient Toolbox"
 	desc = "A iconic toolbox design notorious with Assistants everywhere, designed to bust skulls in. Tools and insulated gloves included."
 	item = /obj/item/storage/toolbox/mechanical/old/clean
-	cost = 4
+	cost = 2
 	restricted_roles = list("Assistant")
 	surplus = 0
 
