@@ -1,7 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - bugfix: "Donutstation: Fixed emergency maintenance access not applying to some airlocks. Fixed broken access requirements in the outer medical/science maintenance airlock."
-  - tweak: "Donutstation: The kitchen coldroom is now actually cold. Or a big walk-in oven, if you mess with the freezer settings."
-  - tweak: "Donutstation: Added more department and escape pod signs."
-  - tweak: "Donutstation: Added a departmental exofab to Atmospherics."
