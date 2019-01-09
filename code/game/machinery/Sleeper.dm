@@ -49,9 +49,12 @@
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon()
-	icon_state = initial(icon_state)
-	if(state_open)
-		icon_state += "-open"
+	if(state_open && (icon_state == "sleeper"))
+		animate(src, icon_state = "sleeper-anim", time = 1)
+		icon_state = "sleeper-open"
+	if(!state_open && (icon_state == "sleeper-open"))
+		animate(src, icon_state = "sleeper-anim", time = 1)
+		icon_state = "sleeper"
 
 /obj/machinery/sleeper/container_resist(mob/living/user)
 	visible_message("<span class='notice'>[occupant] emerges from [src]!</span>",

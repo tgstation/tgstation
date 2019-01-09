@@ -89,36 +89,41 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+
 	cut_overlays()
 
 	if(panel_open)
 		add_overlay("pod-panel")
 
-	if(state_open)
+	if(state_open && (icon_state != "pod-open"))
+		animate(src, icon_state = "pod-anim1", icon_state = "pod-anim2", time = 2)
 		icon_state = "pod-open"
 		return
+
+	if(!state_open && (icon_state == "pod-open"))
+		animate(src, icon_state = "pod-anim2", icon_state = "pod-anim1", time = 2)
 
 	if(occupant)
 		var/image/occupant_overlay
 
 		if(ismonkey(occupant)) // Monkey
-			occupant_overlay = image(CRYOMOBS, "monkey")
+			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
 		else if(isalienadult(occupant))
 			if(isalienroyal(occupant)) // Queen and prae
-				occupant_overlay = image(CRYOMOBS, "alienq")
+				occupant_overlay = mutable_appearance(CRYOMOBS, "alienq")
 			else if(isalienhunter(occupant)) // Hunter
-				occupant_overlay = image(CRYOMOBS, "alienh")
+				occupant_overlay = mutable_appearance(CRYOMOBS, "alienh")
 			else if(isaliensentinel(occupant)) // Sentinel
-				occupant_overlay = image(CRYOMOBS, "aliens")
+				occupant_overlay = mutable_appearance(CRYOMOBS, "aliens")
 			else // Drone or other
-				occupant_overlay = image(CRYOMOBS, "aliend")
+				occupant_overlay = mutable_appearance(CRYOMOBS, "aliend")
 
 		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
-			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 
 		else
-			occupant_overlay = image(CRYOMOBS, "generic")
+			occupant_overlay = mutable_appearance(CRYOMOBS, "generic")
 
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
@@ -247,14 +252,13 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
 	if(!state_open && !panel_open)
 		on = FALSE
-		..()
 	for(var/mob/M in contents) //only drop mobs
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
 			L.update_mobility()
 	occupant = null
-	update_icon()
+	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -388,6 +392,7 @@
 				on = FALSE
 			else if(!state_open)
 				on = TRUE
+			update_icon()
 			. = TRUE
 		if("door")
 			if(state_open)
@@ -405,7 +410,6 @@
 					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
-	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.
