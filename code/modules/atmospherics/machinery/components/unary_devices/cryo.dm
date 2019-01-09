@@ -107,23 +107,17 @@
 		var/image/occupant_overlay
 
 		if(ismonkey(occupant)) // Monkey
-			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
+			occupant_overlay = image(CRYOMOBS, "monkey")
 		else if(isalienadult(occupant))
 			if(isalienroyal(occupant)) // Queen and prae
-				occupant_overlay = mutable_appearance(CRYOMOBS, "alienq")
 			else if(isalienhunter(occupant)) // Hunter
-				occupant_overlay = mutable_appearance(CRYOMOBS, "alienh")
 			else if(isaliensentinel(occupant)) // Sentinel
-				occupant_overlay = mutable_appearance(CRYOMOBS, "aliens")
 			else // Drone or other
-				occupant_overlay = mutable_appearance(CRYOMOBS, "aliend")
 
 		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
-			occupant_overlay = mutable_appearance(occupant.icon, occupant.icon_state)
 			occupant_overlay.copy_overlays(occupant)
 
 		else
-			occupant_overlay = mutable_appearance(CRYOMOBS, "generic")
 
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
