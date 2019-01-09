@@ -1579,6 +1579,7 @@
 #include "code\modules\events\grid_check.dm"
 #include "code\modules\events\heart_attack.dm"
 #include "code\modules\events\high_priority_bounty.dm"
+#include "code\modules\events\hypnosis.dm"
 #include "code\modules\events\immovable_rod.dm"
 #include "code\modules\events\ion_storm.dm"
 #include "code\modules\events\major_dust.dm"
