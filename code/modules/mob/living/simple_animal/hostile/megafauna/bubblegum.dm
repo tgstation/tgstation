@@ -113,16 +113,15 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
-	if(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
-		return
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
-		if(B != src)
-			return INITIALIZE_HINT_QDEL //There can be only one
+	if(!istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination) && !istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual))
+		for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
+			if(B != src)
+				return INITIALIZE_HINT_QDEL //There can be only one
+		internal = new/obj/item/gps/internal/bubblegum(src)
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
-	internal = new/obj/item/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()

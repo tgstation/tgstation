@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\RandomZLevels\VR\mining_VR.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -2124,6 +2125,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\legion.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\megafauna.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\swarmer.dm"
+#include "code\modules\mob\living\simple_animal\hostile\megafauna\virtualreality.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\basilisk.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\curse_blob.dm"
 #include "code\modules\mob\living\simple_animal\hostile\mining_mobs\goldgrub.dm"

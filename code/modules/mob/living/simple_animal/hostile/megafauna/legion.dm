@@ -98,6 +98,8 @@ Difficulty: Medium
 	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
+	if(istype(src, /mob/living/simple_animal/hostile/megafauna/legion/virtual))
+		return ..()
 	if(health > 0)
 		return
 	if(size > 1)
