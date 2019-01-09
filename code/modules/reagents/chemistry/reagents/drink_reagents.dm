@@ -394,7 +394,7 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_add(mob/living/L)
 	..()
-	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(id, update=TRUE, priority=100, multiplicative_slowdown=-0.75, blacklisted_movetypes=(FLYING|FLOATING))
 
 /datum/reagent/consumable/nuka_cola/on_mob_delete(mob/living/L)
 	L.remove_movespeed_modifier(id)
