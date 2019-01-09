@@ -55939,11 +55939,23 @@
 	dir = 1
 	},
 /area/science/xenobiology)
-"ctE" = (
-/obj/machinery/chem_master/condimaster,
+"dtX" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	icon_state = "pipe11-2";
+	dir = 4
+	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
-"cXk" = (
+"dwg" = (
+/obj/structure/reagent_dispensers/cooking_oil,
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/area/crew_quarters/kitchen/coldroom)
+"esU" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/area/crew_quarters/kitchen/coldroom)
+"hGn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -55963,40 +55975,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"dkV" = (
-/obj/machinery/rnd/production/techfab/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"eoB" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/structure/closet/secure_closet/freezer/fridge,
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/crew_quarters/kitchen/coldroom)
-"eYx" = (
-/obj/machinery/atmospherics/pipe/manifold/dark/visible{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "pipe11-3";
-	dir = 9
-	},
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/crew_quarters/kitchen/coldroom)
-"eYW" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/crew_quarters/kitchen/coldroom)
-"gyx" = (
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/crew_quarters/kitchen/coldroom)
-"hIc" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	icon_state = "pipe11-2";
-	dir = 4
-	},
-/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
-/area/crew_quarters/kitchen/coldroom)
-"kmX" = (
+"jzE" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -56018,15 +55997,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"kny" = (
-/obj/machinery/atmospherics/pipe/manifold4w/dark/visible,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "pipe11-3";
-	dir = 6
-	},
+"lDQ" = (
+/obj/machinery/rnd/production/techfab/department/engineering,
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"lEx" = (
+/obj/machinery/chem_master/condimaster,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
-"liA" = (
+"lLE" = (
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
@@ -56041,13 +56020,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"oae" = (
+"nuq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/area/crew_quarters/kitchen/coldroom)
+"omI" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"oLg" = (
+"pBI" = (
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/area/crew_quarters/kitchen/coldroom)
+"qxZ" = (
 /obj/structure/sign/warning/pods{
 	pixel_y = 32
 	},
@@ -56055,14 +56041,15 @@
 	dir = 10
 	},
 /area/science/research)
-"qmS" = (
-/obj/structure/reagent_dispensers/cooking_oil,
+"qyl" = (
+/obj/machinery/atmospherics/pipe/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	icon_state = "pipe11-3";
+	dir = 6
+	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
-"rJC" = (
-/turf/closed/wall,
-/area/crew_quarters/kitchen/coldroom)
-"whW" = (
+"vMB" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -56087,6 +56074,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"xhI" = (
+/turf/closed/wall,
+/area/crew_quarters/kitchen/coldroom)
+"xyz" = (
+/obj/machinery/atmospherics/pipe/manifold/dark/visible{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	icon_state = "pipe11-3";
+	dir = 9
+	},
+/turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
+/area/crew_quarters/kitchen/coldroom)
 
 (1,1,1) = {"
 aaa
@@ -77787,7 +77787,7 @@ bTF
 bbS
 akB
 aeA
-oLg
+qxZ
 blD
 afO
 afO
@@ -85506,7 +85506,7 @@ axE
 ceu
 axE
 aHG
-liA
+lLE
 cex
 bnw
 bnw
@@ -86011,7 +86011,7 @@ btc
 aRp
 bgS
 axm
-cXk
+hGn
 bft
 axm
 bDS
@@ -87858,10 +87858,10 @@ bGU
 bfe
 bfe
 bHf
-rJC
-rJC
-rJC
-rJC
+xhI
+xhI
+xhI
+xhI
 bba
 bCg
 cer
@@ -88112,13 +88112,13 @@ bRM
 akl
 bcb
 bWp
-rJC
-rJC
-rJC
-rJC
+xhI
+xhI
+xhI
+xhI
 bhw
-qmS
-rJC
+dwg
+xhI
 bba
 bQR
 azH
@@ -88369,11 +88369,11 @@ aoj
 anJ
 aqf
 alF
-rJC
+xhI
 bgp
 bgu
 bhh
-kny
+qyl
 bij
 bry
 bwy
@@ -88626,13 +88626,13 @@ amU
 amU
 bcz
 bce
-rJC
-rJC
+xhI
+xhI
 bgx
-eYW
-eYx
+nuq
+xyz
 bim
-rJC
+xhI
 brS
 bYW
 aSh
@@ -88884,12 +88884,12 @@ bbM
 bcD
 bcI
 amU
-rJC
+xhI
 bgJ
 bhi
-hIc
+dtX
 bin
-rJC
+xhI
 bYV
 bCg
 aSh
@@ -89143,10 +89143,10 @@ bcL
 amU
 bgt
 bgx
-ctE
+lEx
 bgx
 bir
-rJC
+xhI
 bba
 bQT
 aSh
@@ -89398,11 +89398,11 @@ amU
 amU
 amU
 bOA
-rJC
+xhI
 bhe
-gyx
+pBI
 bgx
-gyx
+pBI
 brB
 bbe
 bQU
@@ -89655,12 +89655,12 @@ apw
 aqc
 bRy
 alF
-rJC
+xhI
 bhf
-eoB
+esU
 bid
 bhi
-rJC
+xhI
 bYV
 bQV
 aTn
@@ -89913,11 +89913,11 @@ acj
 acj
 acj
 acj
-rJC
-rJC
-rJC
-rJC
-rJC
+xhI
+xhI
+xhI
+xhI
+xhI
 bba
 bQX
 aSh
@@ -91966,7 +91966,7 @@ bps
 aYB
 brG
 acj
-dkV
+lDQ
 axP
 bnB
 bpq
@@ -93165,7 +93165,7 @@ abi
 ahG
 aiH
 aji
-oae
+omI
 afw
 aAh
 aPR
@@ -94783,7 +94783,7 @@ apF
 apT
 apT
 aad
-kmX
+jzE
 bDO
 bpd
 bpf
@@ -99376,7 +99376,7 @@ btm
 bte
 arA
 bHg
-whW
+vMB
 bHj
 arA
 bHq

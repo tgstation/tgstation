@@ -81,8 +81,12 @@
 		if(pod.occupant)
 			break
 
-		if(grow_clone_from_record(pod, R))
+		var/result = grow_clone_from_record(pod, R)
+		if(result & CLONING_SUCCESS)
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+		if(result & CLONING_DELETE_RECORD)
+			records -= R
+			
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	scanner = findscanner()
@@ -456,6 +460,7 @@
 		//Look for that player! They better be dead!
 		if(C)
 			var/obj/machinery/clonepod/pod = GetAvailablePod()
+			var/success = FALSE
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if(!LAZYLEN(pods))
 				temp = "<font class='bad'>No Clonepods detected.</font>"
@@ -469,13 +474,22 @@
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(grow_clone_from_record(pod, C))
-				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-				if(active_record == C)
-					active_record = null
-				menu = 1
-			else
+			else 
+				var/result = grow_clone_from_record(pod, C)
+				if(result & CLONING_SUCCESS)
+					temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+					if(active_record == C)
+						active_record = null
+					menu = 1
+					success = TRUE
+				if(result &	CLONING_DELETE_RECORD)
+					if(active_record == C)
+						active_record = null
+					menu = 1
+					records -= C
+					
+			if(!success)
 				temp = "[C.fields["name"]] => <font class='bad'>Initialisation failure.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
