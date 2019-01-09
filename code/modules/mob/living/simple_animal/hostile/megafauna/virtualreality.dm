@@ -1,3 +1,7 @@
+//					  //
+// -----Vr Stuff----- //
+//					  //
+
 /obj/machinery/vr_sleeper/miner
 	name = "mining virtual reality sleeper"
 	desc = "A virtual reality training simulator for mining expeditions."
@@ -5,16 +9,15 @@
 
 /datum/outfit/job/miner/vr_megafauna_fighter
 	name = "Megafauna Fighter"
-	suit = /obj/item/clothing/suit/hooded/cloak/drake
+	suit = /obj/item/clothing/suit/hooded/explorer
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = SLOT_S_STORE
 	backpack_contents = list(
 		/obj/item/kitchen/knife/combat/survival=1,
-		/obj/item/mining_voucher=1,
 		/obj/item/gun/energy/kinetic_accelerator=2,
-		/obj/item/organ/regenerative_core/legion=5)
+		/obj/item/organ/regenerative_core/legion=4)
 
 /datum/outfit/job/miner/vr_megafauna_fighter/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
@@ -26,7 +29,6 @@
 	var/obj/item/card/id/id_card = H.get_idcard(FALSE)
 	if(id_card)
 		id_card.mining_points = 50000
-	new /obj/item/clothing/suit/hooded/explorer(H.loc)
 
 /obj/machinery/vr_sleeper/miner/build_virtual_human(mob/living/carbon/human/H, location, var/datum/outfit/outfit, transfer = TRUE)
 	if(H)
@@ -49,6 +51,11 @@
 			SStgui.close_user_uis(H, src)
 			vr_human.ckey = H.ckey
 		vr_human.equipOutfit(/datum/outfit/job/miner/vr_megafauna_fighter)
+		var/turf/on = get_turf(vr_human)
+		for(var/obj/item/I in on.contents)
+			qdel(I) // clean up junk left over after other spawns unless it was moved
+		new /obj/item/clothing/suit/hooded/cloak/drake(vr_human.loc)
+		new /obj/item/mining_voucher(vr_human.loc)
 
 /area/awaymission/vr/miner
 	name = "VrMining"
@@ -57,6 +64,58 @@
 
 /obj/effect/landmark/vr_spawn/miner
 	vr_category = "mining"
+
+//										//
+// -----Virtual Megafauna Spawners----- //
+//										//
+
+/obj/structure/spawner/megafauna
+	name = "generic megafauna spawner"
+	desc = "Literally does nothing."
+	resistance_flags = INDESTRUCTIBLE
+	max_mobs = 1
+	icon = 'icons/mob/nest.dmi'
+	spawn_text = "appears onto"
+
+/obj/structure/spawner/megafauna/blood_drunk
+	name = "drunken beacon"
+	desc = "Creates holographic versions of a blood drunken miner."
+	icon_state = "blood_drunk"
+	mob_types = list(/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual)
+
+/obj/structure/spawner/megafauna/dragon
+	name = "flame beacon"
+	desc = "Creates holographic versions of a fire breathing drake."
+	icon_state = "dragon"
+	mob_types = list(/mob/living/simple_animal/hostile/megafauna/dragon/virtual)
+
+/obj/structure/spawner/megafauna/bubblegum
+	name = "bloody beacon"
+	desc = "Creates holographic versions of the king of the slaughter demons."
+	icon_state = "bubblegum"
+	mob_types = list(/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual)
+
+/obj/structure/spawner/megafauna/colossus
+	name = "radiant beacon"
+	desc = "Creates holographic versions of a godlike creature."
+	icon_state = "colossus"
+	mob_types = list(/mob/living/simple_animal/hostile/megafauna/colossus/virtual)
+
+/obj/structure/spawner/megafauna/hierophant
+	name = "beacon beacon"
+	desc = "Creates holographic versions of a destructive magical club."
+	icon_state = "hierophant"
+	mob_types = list(/mob/living/simple_animal/hostile/megafauna/hierophant/virtual)
+
+/obj/structure/spawner/megafauna/legion
+	name = "skull beacon"
+	desc = "Creates holographic versions of a gigantic skull demon guarding the necropolis."
+	icon_state = "legion"
+	mob_types = list(/mob/living/simple_animal/hostile/megafauna/legion/virtual)
+
+//							   //
+// -----Virtual Megafauna----- //
+//							   //
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual
 	name = "blood-drunk miner hologram"
