@@ -10594,7 +10594,7 @@
 "xL" = (
 /obj/structure/closet/cardboard/metal,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
@@ -39746,7 +39746,7 @@ sk
 sk
 sk
 xM
-yk
+xP
 ku
 aa
 aa
@@ -41280,7 +41280,7 @@ hl
 hh
 aa
 ku
-sp
+yk
 tn
 sk
 sk
@@ -41288,7 +41288,7 @@ sk
 sk
 sk
 xO
-xP
+sp
 ku
 aa
 aa
@@ -41538,13 +41538,13 @@ hh
 aa
 ku
 sk
+yk
+ui
+ui
+ui
+ui
+ui
 sp
-ui
-ui
-ui
-ui
-ui
-xP
 sk
 ku
 aa
@@ -63874,7 +63874,7 @@ iU
 iU
 iU
 iU
-jv
+jx
 iC
 jF
 iU
@@ -63890,7 +63890,7 @@ iC
 iK
 iU
 iU
-jv
+jx
 jG
 iu
 qv
@@ -65416,9 +65416,9 @@ iT
 iT
 iT
 iT
-jx
-iC
 jH
+iC
+jv
 iT
 iT
 iT
@@ -65432,7 +65432,7 @@ iC
 iL
 iT
 iT
-jx
+jH
 jG
 iu
 qw
