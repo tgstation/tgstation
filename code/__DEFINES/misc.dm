@@ -404,6 +404,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define BRAIN_DAMAGE_FILE "traumas.json"
 #define ION_FILE "ion_laws.json"
 #define PIRATE_NAMES_FILE "pirates.json"
+#define REDPILL_FILE "redpill.json"
 
 
 //Fullscreen overlay resolution in tiles.
@@ -454,3 +455,7 @@ GLOBAL_LIST_INIT(pda_styles, list(MONO, VT, ORBITRON, SHARE))
 #define VARSET_FROM_LIST_IF(L, V, C...) if(L && L[#V] && (C)) V = L[#V]
 #define VARSET_TO_LIST(L, V) if(L) L[#V] = V
 #define VARSET_TO_LIST_IF(L, V, C...) if(L && (C)) L[#V] = V
+
+#define DICE_NOT_RIGGED 1
+#define DICE_BASICALLY_RIGGED 2
+#define DICE_TOTALLY_RIGGED 3

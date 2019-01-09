@@ -58,3 +58,4 @@
 #define MOVESPEED_ID_JETPACK							"JETPACK"
 
 #define MOVESPEED_ID_SLAUGHTER                          "SLAUGHTER"
+#define MOVESPEED_ID_DIE_OF_FATE                        "DIE_OF_FATE"

@@ -352,7 +352,7 @@
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
-					linkedServer.pda_msgs -= locate(href_list["delete_logs"])
+					linkedServer.pda_msgs -= locate(href_list["delete_logs"]) in linkedServer.pda_msgs
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
 		//Delete the request console log.
 		if (href_list["delete_requests"])
@@ -361,7 +361,7 @@
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
-					linkedServer.rc_msgs -= locate(href_list["delete_requests"])
+					linkedServer.rc_msgs -= locate(href_list["delete_requests"]) in linkedServer.rc_msgs
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
 		//Create a custom message
 		if (href_list["msg"])

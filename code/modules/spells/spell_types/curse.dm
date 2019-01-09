@@ -25,7 +25,7 @@ GLOBAL_VAR_INIT(curse_of_madness_triggered, FALSE)
 		give_madness(H, message)
 
 /proc/give_madness(mob/living/carbon/human/H, message)
-	H.playsound_local(H,'sound/hallucinations/veryfar_noise.ogg',40,1)
+	H.playsound_local(H,'sound/magic/curse.ogg',40,1)
 	to_chat(H, "<span class='reallybig hypnophrase'>[message]</span>")
 	to_chat(H, "<span class='warning'>Your mind shatters!</span>")
 	switch(rand(1,10))
