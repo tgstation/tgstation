@@ -24505,7 +24505,6 @@
 	req_access_txt = "31"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bgv" = (
@@ -29355,17 +29354,16 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "brO" = (
-/obj/structure/table,
 /obj/machinery/requests_console{
 	department = "Cargo Bay";
 	departmentType = 2;
 	pixel_x = -30
 	},
-/obj/item/multitool,
 /obj/machinery/camera{
 	c_tag = "Cargo Office";
 	dir = 4
 	},
+/obj/machinery/rnd/production/techfab/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "brP" = (
@@ -30437,6 +30435,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/item/multitool,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "buF" = (
