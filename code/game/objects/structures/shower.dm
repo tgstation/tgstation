@@ -238,12 +238,6 @@
 		. = TRUE
 	else if(H.w_uniform && !(H.w_uniform.clothing_flags & SHOWEROKAY))
 		. = TRUE
-	else if(H.shoes && !(H.shoes.clothing_flags & SHOWEROKAY))
-		. = TRUE
-	else if(H.ears && !(H.ears.clothing_flags & SHOWEROKAY))
-		. = TRUE
-	else if(H.gloves && !(H.gloves.clothing_flags & SHOWEROKAY))
-		. = TRUE
 	else if(H.wear_mask && !(H.wear_mask.clothing_flags & SHOWEROKAY))
 		. = TRUE
 	else if(H.head && !(H.head.clothing_flags & SHOWEROKAY))
