@@ -88,7 +88,7 @@
 	return
 	
 /obj/item/storage/toolbox/mechanical/old/clean
-	name = "mechanical toolbox"
+	name = "toolbox"
 	desc = "A blue, old toolbox, it looks robust."
 	icon_state = "oldtoolboxclean"
 	item_state = "toolbox_blue"
