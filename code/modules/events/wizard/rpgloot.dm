@@ -65,15 +65,14 @@
 	else
 		var/quality = rpg_loot_datum.quality
 
-		if(can_backfire && (quality > 9 && prob((quality - 9)*10)))
+		if(can_backfire && quality > 9 && prob((quality - 9)*10))
 			T.visible_message("<span class='danger'>[target] <span class='inathneq_large'>violently glows blue</span> for a while, then evaporates.</span>")
 			target.burn()
 		else
 			T.visible_message("<span class='notice'>[target] <span class='inathneq_small'>glows blue</span> and seems vaguely \"better\"!</span>")
 			rpg_loot_datum.modify(upgrade_amount)
 
-	uses--
-	if(uses <= 0)
+	if(--uses <= 0)
 		qdel(src)
 
 /obj/item/upgradescroll/unlimited
