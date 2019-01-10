@@ -68,6 +68,7 @@
 #define TRAIT_SOOTHED_THROAT    "soothed-throat"
 #define TRAIT_LAW_ENFORCEMENT_METABOLISM "law-enforcement-metabolism"
 #define TRAIT_ALWAYS_CLEAN      "always-clean"
+#define TRAIT_BOOZE_SLIDER      "booze-slider"
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
@@ -105,6 +106,7 @@
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
 #define JOB_TRAIT "job"
 #define STATUS_EFFECT_TRAIT "status-effect"
+#define CLOTHING_TRAIT "clothing"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"
