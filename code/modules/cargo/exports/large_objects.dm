@@ -137,7 +137,7 @@
 	cost = 10 //Base cost of canister. You get more for nice gases inside.
 	unit_name = "Gas Canister"
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
-/datum/export/large/gas_canister/get_cost(obj/o)
+/datum/export/large/gas_canister/get_cost(obj/O)
 	var/obj/machinery/portable_atmospherics/canister/C = O
 	var/worth = 10
 	var/gases = C.air_contents.gases
