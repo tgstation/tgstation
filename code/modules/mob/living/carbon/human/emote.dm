@@ -53,7 +53,7 @@
 	only_forced_audio = TRUE
 	vary = TRUE
 
-/datum/emote/living/carbon/human/scream/get_sound(mob/user)
+/datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user

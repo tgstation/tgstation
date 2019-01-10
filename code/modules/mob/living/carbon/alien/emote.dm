@@ -12,7 +12,7 @@
 	message_alien = "hisses."
 	message_larva = "hisses softly."
 
-/datum/emote/living/alien/hiss/get_sound(mob/user)
+/datum/emote/living/alien/hiss/get_sound(mob/living/user)
 	if(isalienadult(user))
 		return "hiss"
 
@@ -24,6 +24,6 @@
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 
-/datum/emote/living/alien/roar/get_sound(mob/user)
+/datum/emote/living/alien/roar/get_sound(mob/living/user)
 	if(isalienadult(user))
 		return 'sound/voice/hiss5.ogg'

@@ -212,7 +212,7 @@
 		var/mob/living/carbon/C = user
 		return !C.silent
 
-/datum/emote/living/laugh/get_sound(mob/user)
+/datum/emote/living/laugh/get_sound(mob/living/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
