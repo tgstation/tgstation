@@ -56,6 +56,9 @@
 			qdel(I) // clean up junk left over after other spawns unless it was moved
 		new /obj/item/clothing/suit/hooded/cloak/drake(vr_human.loc)
 		new /obj/item/mining_voucher(vr_human.loc)
+		new /obj/item/warp_cube/red(vr_human.loc)
+		new /obj/item/clothing/suit/space/hostile_environment(vr_human.loc)
+		new /obj/item/clothing/head/helmet/space/hostile_environment(vr_human.loc)
 
 /area/awaymission/vr/miner
 	name = "VrMining"
@@ -73,6 +76,7 @@
 	name = "generic megafauna spawner"
 	desc = "Literally does nothing."
 	resistance_flags = INDESTRUCTIBLE
+	move_resist = INFINITY
 	max_mobs = 1
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "appears onto"
@@ -117,6 +121,8 @@
 // -----Virtual Megafauna----- //
 //							   //
 
+#define MEGAFAUNA_NEST_RANGE 20
+
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual
 	name = "blood-drunk miner hologram"
 	desc = "A holographic miner, eternally hunting."
@@ -128,6 +134,13 @@
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/Initialize()
 	. = ..()
 	qdel(internal)
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/Moved()
+	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
+		health = 0
+		death()
+		return
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual
 	name = "ash drake hologram"
@@ -144,6 +157,13 @@
 	. = ..()
 	qdel(internal)
 
+/mob/living/simple_animal/hostile/megafauna/dragon/virtual/Moved()
+	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
+		health = 0
+		death()
+		return
+	. = ..()
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual
 	name = "bubblegum hologram"
 	desc = "A holographic version of the king of the slaughter demons. You get the feeling that the real bubblegum is watching you."
@@ -156,6 +176,13 @@
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Initialize()
 	. = ..()
 	qdel(internal)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Moved()
+	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
+		health = 0
+		death()
+		return
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual
 	name = "colossus hologram"
@@ -170,6 +197,13 @@
 	. = ..()
 	qdel(internal)
 
+/mob/living/simple_animal/hostile/megafauna/colossus/virtual/Moved()
+	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
+		health = 0
+		death()
+		return
+	. = ..()
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual
 	name = "hierophant hologram"
 	desc = "A holographic club. It's said to wipe from existence those who fall to its rhythm."
@@ -182,6 +216,13 @@
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/Initialize()
 	. = ..()
 	qdel(internal)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/Moved()
+	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
+		health = 0
+		death()
+		return
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/spawn_crusher_loot()
 	return
@@ -197,6 +238,13 @@
 /mob/living/simple_animal/hostile/megafauna/legion/virtual/Initialize()
 	. = ..()
 	qdel(internal)
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Moved()
+	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
+		health = 0
+		death()
+		return
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual/death()
 	if(health > 0)
@@ -224,6 +272,8 @@
 		L.faction = faction.Copy()
 
 		L.GiveTarget(target)
+
+		L.nest = nest
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
