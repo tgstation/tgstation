@@ -135,17 +135,19 @@
 
 /datum/export/large/gas_canister
 	cost = 10 //Base cost of canister. You get more for nice gases inside.
-	unit_name = "Canister of gas"
+	unit_name = "Gas Canister"
 	export_types = list(/obj/machinery/portable_atmospherics/canister)
-/datum/export/large/canister/get_cost(obj/O)
+
+/datum/export/large/gas_canister/get_cost(obj/O, allowed_catergories = NONE, apply_elastic = FALSE)
 	var/obj/machinery/portable_atmospherics/canister/C = O
-	var/gas_worth = 0
+	var/worth = 10
 	var/gases = C.air_contents.gases
-	C.air_contents.assert_gases(/datum/gas/bz,/datum/gas/stimulum,/datum/gas/hypernoblium,/datum/gas/miasma,/datum/gas/tritium,/datum/gas/pluox)
-	gas_worth += gases[/datum/gas/bz][MOLES]*50
-	gas_worth += gases[/datum/gas/stimulum][MOLES]*100
-	gas_worth += gases[/datum/gas/hypernoblium][MOLES]*1000
-	gas_worth += gases[/datum/gas/miasma][MOLES]*40
-	gas_worth += gases[/datum/gas/tritium]*10
-	gas_worth += gases[/datum/gas/pluox]*100
-	return ..() + gas_worth
+	C.air_contents.assert_gases(/datum/gas/bz,/datum/gas/stimulum,/datum/gas/hypernoblium,/datum/gas/miasma,/datum/gas/tritium,/datum/gas/pluoxium)
+
+	worth += gases[/datum/gas/bz][MOLES]*50
+	worth += gases[/datum/gas/stimulum][MOLES]*100
+	worth += gases[/datum/gas/hypernoblium][MOLES]*1000
+	worth += gases[/datum/gas/miasma][MOLES]*40
+	worth += gases[/datum/gas/tritium][MOLES]*10
+	worth += gases[/datum/gas/pluoxium][MOLES]*100
+	return worth
