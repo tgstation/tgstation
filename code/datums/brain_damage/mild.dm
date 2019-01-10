@@ -223,7 +223,7 @@
 	lose_text = "<span class='notice'>Your throat stops itching.</span>"
 
 /datum/brain_trauma/mild/nervous_cough/on_life()
-	if(prob(12))
+	if(prob(12) && !owner.has_trait(TRAIT_SOOTHED_THROAT))
 		if(prob(5))
 			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
 			owner.Immobilize(20)

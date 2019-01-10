@@ -1,0 +1,4 @@
+author: "WJohnston"
+delete-after: True
+changes: 
+  - bugfix: "Fixes warning line corners being all wonky when shuttles rotate."

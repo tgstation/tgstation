@@ -569,11 +569,11 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/medical/glass{
 	name = "Escape Shuttle Infirmary";
-	req_access_txt = "2"
+	req_one_access_txt = "2;19"
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "bp" = (
@@ -1004,7 +1004,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/corner{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
@@ -1169,7 +1169,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/corner{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -26
@@ -1213,7 +1213,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/white/corner{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
@@ -1490,7 +1490,7 @@
 /area/shuttle/escape)
 "cW" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
@@ -1522,7 +1522,7 @@
 /area/shuttle/escape)
 "cZ" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/rack,
 /obj/item/tank/internals/oxygen/red,
@@ -1658,7 +1658,7 @@
 /area/shuttle/escape)
 "dj" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/space_heater,
@@ -2337,9 +2337,9 @@ aa
 aa
 ax
 aP
-aX
-aY
 bu
+aY
+aZ
 bD
 br
 bW
@@ -2405,7 +2405,7 @@ ap
 ay
 ax
 aR
-aZ
+aX
 aY
 bv
 bF
@@ -2520,7 +2520,7 @@ cA
 cj
 cL
 cQ
-cX
+cY
 dc
 dk
 bP
@@ -2588,9 +2588,9 @@ ci
 ci
 cM
 cS
-cY
-ar
 dl
+ar
+cX
 bP
 ax
 dF
