@@ -54,7 +54,6 @@
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
-	to_chat(world, "<span class='reallybig'>[user], [slot]</span>")
 	if(adjusted)
 		adjusted = NORMAL_STYLE
 		fitted = initial(fitted)

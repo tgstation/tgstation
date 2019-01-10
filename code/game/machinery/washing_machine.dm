@@ -101,6 +101,7 @@
 
 /obj/item/clothing/under/machine_wash(obj/machinery/washing_machine/WM)
 	freshly_laundered = TRUE
+	addtimer(VARSET_CALLBACK(src, freshly_laundered, FALSE), 5 MINUTES, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/clothing/under/color/machine_wash(obj/machinery/washing_machine/WM)
 	..()
