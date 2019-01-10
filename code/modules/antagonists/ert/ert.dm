@@ -11,7 +11,7 @@
 	var/role = "Security Officer"
 	var/list/name_source
 	show_in_antagpanel = FALSE
-	mind_traits = list()
+	mind_traits = null
 	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/ert/on_gain()
@@ -31,7 +31,7 @@
 	owner.current.fully_replace_character_name(owner.current.real_name,"[role] [pick(name_source)]")
 
 /datum/antagonist/ert/deathsquad
-	mind_traits = list(TRAIT_DISK_VERIFIER)
+	mind_traits = list(TRAIT_GRIM, TRAIT_DISK_VERIFIER)
 
 /datum/antagonist/ert/deathsquad/New()
 	. = ..()

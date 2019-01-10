@@ -61,15 +61,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 // Handles application of traits to the mind, such as being jaded, or special abilities
 /datum/antagonist/proc/apply_mind_traits()
-	if(mind_traits)
-		for(var/trait in mind_traits)
-			owner.add_trait(trait, "antagonist_[name]")
+	for(var/trait in mind_traits)
+		owner.add_trait(trait, "antagonist_[name]")
 
 // Handles removal of traits to the mind, such as being jaded, or special abilities
 /datum/antagonist/proc/remove_mind_traits()
-	if(mind_traits)
-		for(var/trait in mind_traits)
-			owner.remove_trait(trait, "antagonist_[name]")
+	for(var/trait in mind_traits)
+		owner.remove_trait(trait, "antagonist_[name]")
 
 //Assign default team and creates one for one of a kind team antagonists
 /datum/antagonist/proc/create_team(datum/team/team)

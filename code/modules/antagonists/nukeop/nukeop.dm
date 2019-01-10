@@ -8,7 +8,7 @@
 	var/send_to_spawnpoint = TRUE //Should the user be moved to default spawnpoint.
 	var/nukeop_outfit = /datum/outfit/syndicate
 	can_hijack = HIJACK_HIJACKER //Alternative way to wipe out the station.
-	mind_traits = list(TRAIT_DISK_VERIFIER)
+	mind_traits = list(TRAIT_DISK_VERIFIER, TRAIT_GRIM)
 
 /datum/antagonist/nukeop/proc/update_synd_icons_added(mob/living/M)
 	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
