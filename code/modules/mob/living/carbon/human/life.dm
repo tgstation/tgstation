@@ -330,18 +330,18 @@
 		set_hygiene(HYGIENE_LEVEL_CLEAN)
 		return
 
-	var/hygiene_loss = -HYGIENE_FACTOR
+	var/hygiene_loss = -HYGIENE_FACTOR * 0.25 //Small loss per life
 
 	//If you're covered in blood, you'll start smelling like shit faster.
 	var/obj/item/head = get_item_by_slot(SLOT_HEAD)
 	if(head)
 		IF_HAS_BLOOD_DNA(head)
-			hygiene_loss -= 2 * HYGIENE_FACTOR
+			hygiene_loss -= 1 * HYGIENE_FACTOR
 
 	var/obj/item/mask = get_item_by_slot(SLOT_HEAD)
 	if(mask)
 		IF_HAS_BLOOD_DNA(mask)
-			hygiene_loss -= 2 * HYGIENE_FACTOR
+			hygiene_loss -= 1 * HYGIENE_FACTOR
 
 	var/obj/item/uniform = get_item_by_slot(SLOT_W_UNIFORM)
 	if(uniform)
@@ -356,7 +356,7 @@
 	var/obj/item/feet = get_item_by_slot(SLOT_SHOES)
 	if(feet)
 		IF_HAS_BLOOD_DNA(feet)
-			hygiene_loss -= 2 * HYGIENE_FACTOR
+			hygiene_loss -= 0.5 * HYGIENE_FACTOR
 
 	adjust_hygiene(hygiene_loss)
 
