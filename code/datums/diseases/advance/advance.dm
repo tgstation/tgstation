@@ -89,6 +89,12 @@
 		for(var/datum/symptom/S in symptoms)
 			S.Activate(src)
 
+// Tell symptoms stage changed
+/datum/disease/advance/update_stage(new_stage, datum/disease/advance/D)
+	for(var/datum/symptom/S in symptoms)
+		S.change_stage(new_stage, D)
+	stage = new_stage
+
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
 
