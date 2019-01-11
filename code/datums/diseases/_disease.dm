@@ -65,16 +65,16 @@
 
 	if(!cure)
 		if(prob(stage_prob))
-			update_stage(min(stage + 1,max_stages), src)
+			update_stage(min(stage + 1,max_stages))
 	else
 		if(prob(cure_chance))
-			update_stage(max(stage - 1, 1), src)
+			update_stage(max(stage - 1, 1))
 
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
 			cure()
 
-/datum/disease/proc/update_stage(new_stage, datum/disease/A)
+/datum/disease/proc/update_stage(new_stage)
 	stage = new_stage
 
 /datum/disease/proc/has_cure()

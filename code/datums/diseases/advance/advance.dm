@@ -90,10 +90,10 @@
 			S.Activate(src)
 
 // Tell symptoms stage changed
-/datum/disease/advance/update_stage(new_stage, datum/disease/advance/D)
+/datum/disease/advance/update_stage(new_stage)
 	stage = new_stage
 	for(var/datum/symptom/S in symptoms)
-		S.change_stage(new_stage, D)
+		S.change_stage(new_stage, src)
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
