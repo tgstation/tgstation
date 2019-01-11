@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Dead bodies do not slowly have their hygiene decrease, as dead
-bodies just smell generally because of the decomposition."
