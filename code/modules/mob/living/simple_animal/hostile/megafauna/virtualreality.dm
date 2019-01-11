@@ -68,9 +68,9 @@
 /obj/effect/landmark/vr_spawn/miner
 	vr_category = "mining"
 
-//										//
-// -----Virtual Megafauna Spawners----- //
-//										//
+//														   //
+// -----Virtual Megafauna Spawners and Linked Portals----- //
+//														   //
 
 /obj/structure/spawner/megafauna
 	name = "generic megafauna spawner"
@@ -117,11 +117,38 @@
 	icon_state = "legion"
 	mob_types = list(/mob/living/simple_animal/hostile/megafauna/legion/virtual)
 
+/obj/effect/portal/permanant/megafauna_arena
+	name = "megafauna portal"
+	desc = "Leads to a place of unspeakable torment."
+	mech_sized = TRUE
+
+/obj/effect/portal/permanant/megafauna_arena/attackby(obj/item/W, mob/user, params)
+	if(ismegafauna(user))
+		return 0
+	. = ..()
+
+/obj/effect/portal/permanant/megafauna_arena/Crossed(atom/movable/AM, oldloc)
+	if(ismegafauna(AM))
+		return 0
+	. = ..()
+
+/obj/effect/portal/permanant/megafauna_arena/attack_hand(mob/user)
+	if(ismegafauna(user))
+		return 0
+	. = ..()
+
+/obj/effect/portal/permanant/megafauna_arena/teleport(atom/movable/M, force = FALSE)
+	if(ismegafauna(M))
+		return 0
+	. = ..()
+
 //							   //
 // -----Virtual Megafauna----- //
 //							   //
 
-#define MEGAFAUNA_NEST_RANGE 20
+#define MEGAFAUNA_NEST_RANGE 10
+
+#define MEGAFAUNA_SPAWN_DELAY 200 // 20 seconds
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual
 	name = "blood-drunk miner hologram"
@@ -135,16 +162,13 @@
 	. = ..()
 	qdel(internal)
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/Moved()
-	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
-		health = 0
-		death()
-		return
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/death()
+	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual
 	name = "ash drake hologram"
-	desc = "A holographic dragon, once weak but now fierce."
+	desc = "A holographic dragon, once weak, now fierce."
 	crusher_loot = null
 	loot = null
 	butcher_results = null
@@ -157,16 +181,13 @@
 	. = ..()
 	qdel(internal)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/virtual/Moved()
-	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
-		health = 0
-		death()
-		return
+/mob/living/simple_animal/hostile/megafauna/dragon/virtual/death()
+	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual
 	name = "bubblegum hologram"
-	desc = "A holographic version of the king of the slaughter demons. You get the feeling that the real bubblegum is watching you."
+	desc = "A holographic version of the king of the slaughter demons. You feel something oddly real staring back at you."
 	crusher_loot = null
 	loot = null
 	medal_type = null
@@ -177,12 +198,33 @@
 	. = ..()
 	qdel(internal)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Moved()
-	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
-		health = 0
-		death()
-		return
+/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/death()
+	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
 	. = ..()
+
+// need this otherwise bubbles can teleport out of his arena
+/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/hallucination_charge_around(var/times = 4, var/delay = 6, var/chargepast = 0, var/useoriginal = 1)
+	var/startingangle = rand(1, 360)
+	if(!target)
+		return
+	var/turf/chargeat = get_turf(target)
+	var/srcplaced = 0
+	for(var/i = 1 to times)
+		var/ang = (startingangle + 360/times * i)
+		if(!chargeat)
+			return
+		var/turf/place = locate(chargeat.x + cos(ang) * times, chargeat.y + sin(ang) * times, chargeat.z)
+		if(!place)
+			continue
+		if(!srcplaced && useoriginal && get_dist(nest.parent, place) <= MEGAFAUNA_NEST_RANGE)
+			forceMove(place)
+			srcplaced = 1
+			continue
+		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
+		B.forceMove(place)
+		INVOKE_ASYNC(B, .proc/charge, chargeat, delay, chargepast)
+	if(useoriginal)
+		charge(chargeat, delay, chargepast)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual
 	name = "colossus hologram"
@@ -197,11 +239,8 @@
 	. = ..()
 	qdel(internal)
 
-/mob/living/simple_animal/hostile/megafauna/colossus/virtual/Moved()
-	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
-		health = 0
-		death()
-		return
+/mob/living/simple_animal/hostile/megafauna/colossus/virtual/death()
+	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual
@@ -217,15 +256,12 @@
 	. = ..()
 	qdel(internal)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/Moved()
-	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
-		health = 0
-		death()
-		return
-	. = ..()
-
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/spawn_crusher_loot()
 	return
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/death()
+	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual
 	name = "Legion Hologram"
@@ -239,14 +275,8 @@
 	. = ..()
 	qdel(internal)
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Moved()
-	if(nest && get_dist(src, nest.parent) > MEGAFAUNA_NEST_RANGE)
-		health = 0
-		death()
-		return
-	. = ..()
-
 /mob/living/simple_animal/hostile/megafauna/legion/virtual/death()
+	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
 	if(health > 0)
 		return
 	if(size > 1)

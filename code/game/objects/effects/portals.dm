@@ -184,3 +184,19 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
+
+/obj/effect/portal/permanant
+	name = "permanant portal"
+	desc = "An unwavering portal that will never fade."
+	var/id // set id in map editor
+
+/obj/effect/portal/permanant/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
+	if(!id)
+		qdel(src)
+		return
+	_linked = null
+	for(var/obj/effect/portal/permanant/P in GLOB.portals)
+		if(P.id == id) // links portals with the same id, there should only be two perm portals with the same id
+			_linked = P
+			P.linked = src
+	. = ..()
