@@ -62,30 +62,6 @@
 			H.hivemembers -= M
 			H.calc_size()
 
-/proc/handle_ejection(mob/living/carbon/human/H, datum/antagonist/hivemind/hive)
-	var/user_warning = ""
-
-	if(!H || !hive || !hive.owner)
-		return
-
-	var/mob/living/carbon/human/H2 = hive.owner.current
-	if(!H2)
-		return
-
-	var/mob/living/real_H = get_real_hivehost(H)
-	var/mob/living/real_H2 = get_real_hivehost(H2)
-
-	if(is_real_hivehost(H))
-		real_H2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_H)
-		real_H.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-		to_chat(real_H, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
-	if(is_real_hivehost(H2))
-		real_H.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_H2)
-		real_H2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-		user_warning = " and we've managed to pinpoint their location"
-
-	to_chat(H2, "<span class='userdanger'>The enemy host has been ejected from our mind[user_warning]!</span>")
-
 /datum/game_mode/hivemind/pre_setup()
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
