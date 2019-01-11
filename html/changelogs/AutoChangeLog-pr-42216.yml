@@ -1,0 +1,5 @@
+author: "Floyd / Qustinnus"
+delete-after: True
+changes: 
+  - soundadd: "involuntary screaming for when you get hurt."
+  - code_imp: "reworks emote sound handling to not use fucking s u b t y p i n g"
