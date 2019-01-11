@@ -292,6 +292,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	icon_state = "magspear"
 	throwforce = 25 //kills regular carps in one hit
 	force = 10
+	throw_range = 0 //throwing these invalidates the speargun
 	attack_verb = list("stabbed", "ripped", "gored", "impaled")
 	embedding = list("embedded_pain_multiplier" = 8, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 15) //55 damage+embed on hit
 

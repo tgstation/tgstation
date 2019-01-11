@@ -1,0 +1,4 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Ghosts and camera mobs no longer feel if the shower is cold or too hot."

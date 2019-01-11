@@ -1,0 +1,14 @@
+author: "Joe Berry"
+delete-after: True
+changes: 
+  - rscadd: "Mass fire attack, sends fire out from the ash drake in all directions"
+  - rscadd: "Adds an enraged attack for ash drake, heals him as well as making him glow and go faster, spawning massive amounts of fire in all directions"
+  - rscdel: "Removes the old triple swoop with lava pools attack"
+  - tweak: "Lava pools can now spawn with the normal fire breath attack sometimes"
+  - tweak: "Lava pools now have changed delays for lesser amounts so they don't all just place around one area"
+  - tweak: "Increases default swoop delay for #41178"
+  - balance: "Teleporting out of the lava arena now has some actual consequences by enraging the ash drake"
+  - bugfix: "Makes lava arena a bit less laggy by not recalculating range_turfs every time"
+  - bugfix: "Fixes #41887 though this will not change the turfs to basalt temporarily to prevent moving through indestructible walls"
+  - bugfix: "Fire lines would not spawn if their range would place their final turf location outside of the map"
+  - bugfix: "The arena attack will no longer destroy indestructible open turfs"
