@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Wearing a jumpsuit that's been washed in a washing machine
+will give you a positive moodlet."
