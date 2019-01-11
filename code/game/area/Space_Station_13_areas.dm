@@ -367,6 +367,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Fitness Room"
 	icon_state = "fitness"
 
+/area/crew_quarters/fitness/locker_room
+	name = "Unisex Locker Room"
+	icon_state = "fitness"
+
 /area/crew_quarters/fitness/recreation
 	name = "Recreation Area"
 	icon_state = "fitness"

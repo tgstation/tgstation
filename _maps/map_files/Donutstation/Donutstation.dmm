@@ -32148,6 +32148,9 @@
 /obj/structure/cable/yellow{
 	icon_state = "2-4"
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bmI" = (
@@ -33578,6 +33581,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bpb" = (
@@ -34714,25 +34720,6 @@
 /obj/item/storage/crayons,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
-"bqW" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/light,
-/obj/machinery/airalarm{
-	dir = 1;
-	pixel_y = -22
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4;
-	icon_state = "intact"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness)
 "bqX" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -46710,7 +46697,7 @@
 "bMx" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
-/area/crew_quarters/fitness)
+/area/crew_quarters/fitness/locker_room)
 "bMy" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -49761,12 +49748,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
-"bRN" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/crew_quarters/fitness)
 "bRO" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "5;12"
@@ -49838,14 +49819,16 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bRX" = (
-/obj/structure/sign/poster/official/cleanliness{
-	pixel_y = 32
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/table,
+/obj/structure/bedsheetbin{
+	desc = "It looks rather cosy. The words 'towel bin' have been slapped on it with a handheld labeler.";
+	name = "linen bin (towel bin)"
+	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
+/area/crew_quarters/fitness/locker_room)
 "bRY" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -50734,6 +50717,9 @@
 "bTN" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/grille,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bTO" = (
@@ -52559,20 +52545,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"bYe" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4;
-	icon_state = "intact"
-	},
-/obj/effect/spawner/lootdrop/grille_or_trash,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "bYf" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -54064,15 +54036,6 @@
 /obj/structure/weightmachine/stacklifter,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
-"cbe" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/obj/machinery/door/airlock{
-	name = "Unisex Showers"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
 "cbf" = (
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
@@ -54080,17 +54043,21 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cbg" = (
+/obj/structure/mirror{
+	pixel_y = 32
+	},
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"cbh" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
-"cbh" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
+/area/crew_quarters/fitness/locker_room)
 "cbi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -54107,7 +54074,17 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/maintenance/port/fore)
-"cbj" = (
+"cbk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"cbl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -54115,35 +54092,15 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
-"cbk" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	icon_state = "intact";
-	dir = 9
-	},
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
-"cbl" = (
-/obj/item/soap,
-/obj/item/bikehorn/rubberducky,
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
-"cbm" = (
-/obj/machinery/shower{
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
+/area/crew_quarters/fitness/locker_room)
+"cbm" = (
+/obj/structure/closet/secure_closet/personal,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
 "cbn" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Excess Storage";
@@ -54171,11 +54128,8 @@
 /turf/open/floor/plating,
 /area/science/research)
 "cbs" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/fitness)
+/area/crew_quarters/fitness/locker_room)
 "cbt" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Two"
@@ -55939,6 +55893,16 @@
 	dir = 1
 	},
 /area/science/xenobiology)
+"cIZ" = (
+/turf/closed/wall,
+/area/crew_quarters/fitness/locker_room)
+"dns" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
 "dtX" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	icon_state = "pipe11-2";
@@ -55955,6 +55919,67 @@
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"ezL" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"eCj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4;
+	icon_state = "intact"
+	},
+/obj/item/soap,
+/obj/item/bikehorn/rubberducky,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"gst" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/crew_quarters/fitness/locker_room)
+"gGG" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	icon_state = "intact";
+	dir = 9
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"hnd" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4;
+	icon_state = "intact"
+	},
+/obj/machinery/door/airlock{
+	name = "Unisex Showers"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
 "hGn" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -55975,6 +56000,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"jro" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
 "jzE" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -55997,6 +56029,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"kLE" = (
+/obj/machinery/power/apc{
+	areastring = "/area/crew_quarters/fitness/locker_room";
+	dir = 4;
+	name = "Unisex Locker Room APC";
+	pixel_x = 24
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"ljF" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/curtain,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
 "lDQ" = (
 /obj/machinery/rnd/production/techfab/department/engineering,
 /turf/open/floor/plasteel,
@@ -56020,6 +56071,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"mjC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/shower{
+	pixel_y = 24
+	},
+/obj/structure/curtain,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
 "nuq" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
@@ -56049,6 +56110,70 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"qIb" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/door/airlock{
+	name = "Unisex Showers"
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"tQN" = (
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/curtain,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"tVl" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4;
+	icon_state = "intact"
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"uIo" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/shower{
+	pixel_y = 24
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/curtain,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"vxP" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4;
+	icon_state = "intact"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/machinery/light,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness)
 "vMB" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -56087,6 +56212,21 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"xOq" = (
+/obj/structure/closet/secure_closet/personal,
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/fitness/locker_room)
+"yma" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 
 (1,1,1) = {"
 aaa
@@ -79316,12 +79456,12 @@ bxL
 bLW
 bNQ
 bsE
-aMX
-aMX
-aMX
+ezL
+yma
+yma
 bTN
-aMX
-aMX
+yma
+yma
 bpa
 bmH
 bLh
@@ -79571,9 +79711,9 @@ adO
 adO
 adO
 adO
-bml
+bQb
 bBR
-acp
+boW
 acp
 acp
 acp
@@ -79828,11 +79968,11 @@ aaq
 aaq
 aaq
 adO
-bml
+bQl
 bBR
+kLE
 acp
 anq
-acw
 acw
 adk
 bBT
@@ -80085,10 +80225,10 @@ aaq
 aaq
 aaq
 adO
-bml
-bBR
+gst
+cbi
+cIZ
 acp
-acw
 acw
 acw
 adl
@@ -80342,10 +80482,10 @@ aaq
 aaq
 aaq
 adO
-bQb
-bBR
+uIo
+tVl
+ljF
 acp
-acw
 bdq
 acw
 acp
@@ -80599,12 +80739,12 @@ aaq
 aaq
 aaq
 adO
-bQl
-bBR
+mjC
+eCj
+ljF
 acp
-bcm
 bef
-acw
+bcm
 adk
 adH
 aCX
@@ -80856,10 +80996,10 @@ aaq
 aaq
 aaq
 adO
-bQt
-bYe
+mjC
+tVl
+ljF
 acp
-acw
 acw
 acw
 adl
@@ -81113,10 +81253,10 @@ abr
 afD
 adO
 adO
-bml
-bBR
+mjC
+tVl
+tQN
 acp
-acw
 acw
 acw
 acp
@@ -81369,11 +81509,11 @@ aei
 aei
 aei
 bkX
-adO
-bRN
-cbi
+cIZ
+gst
+hnd
+cIZ
 acp
-acw
 acw
 acw
 amW
@@ -81628,8 +81768,8 @@ bqY
 bxV
 bMx
 bRX
-cbj
-acp
+tVl
+xOq
 acp
 acp
 acp
@@ -81882,8 +82022,8 @@ auy
 auy
 bkU
 brg
-bBS
-cbe
+aVI
+cIZ
 cbg
 cbk
 cbm
@@ -82140,10 +82280,10 @@ asT
 blk
 brh
 bqU
-adO
+cIZ
 cbs
 cbl
-cbm
+dns
 aeA
 bTH
 bru
@@ -82396,11 +82536,11 @@ buW
 asT
 blk
 bri
-bqW
-adO
+bBS
+qIb
 cbh
-cbh
-cbh
+gGG
+jro
 acy
 acy
 acy
@@ -82653,11 +82793,11 @@ asT
 asT
 blk
 bri
-aVI
-adO
-adO
-adO
-adO
+vxP
+cIZ
+cIZ
+cIZ
+cIZ
 acy
 bVN
 bVR

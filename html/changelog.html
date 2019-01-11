@@ -55,6 +55,62 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">11 January 2019</h2>
+			<h3 class="author">Denton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Restricted the throw range of magspears to 0 tiles.</li>
+			</ul>
+			<h3 class="author">Floyd / Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="soundadd">involuntary screaming for when you get hurt.</li>
+				<li class="code_imp">reworks emote sound handling to not use fucking s u b t y p i n g</li>
+			</ul>
+			<h3 class="author">GranpaWalton updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">The cargo techfab has been moved to the cargo office on box station so miners can access it</li>
+			</ul>
+			<h3 class="author">Joe Berry updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Mass fire attack, sends fire out from the ash drake in all directions</li>
+				<li class="rscadd">Adds an enraged attack for ash drake, heals him as well as making him glow and go faster, spawning massive amounts of fire in all directions</li>
+				<li class="rscdel">Removes the old triple swoop with lava pools attack</li>
+				<li class="tweak">Lava pools can now spawn with the normal fire breath attack sometimes</li>
+				<li class="tweak">Lava pools now have changed delays for lesser amounts so they don't all just place around one area</li>
+				<li class="tweak">Increases default swoop delay for #41178</li>
+				<li class="balance">Teleporting out of the lava arena now has some actual consequences by enraging the ash drake</li>
+				<li class="bugfix">Makes lava arena a bit less laggy by not recalculating range_turfs every time</li>
+				<li class="bugfix">Fixes #41887 though this will not change the turfs to basalt temporarily to prevent moving through indestructible walls</li>
+				<li class="bugfix">Fire lines would not spawn if their range would place their final turf location outside of the map</li>
+				<li class="bugfix">The arena attack will no longer destroy indestructible open turfs</li>
+			</ul>
+			<h3 class="author">Kierany9 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="imageadd">Added a new sprite for Telekinetic Field</li>
+			</ul>
+			<h3 class="author">MMMiracles updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">Donutstation's dorm showers has received an upgrade to be more in line with updated hygiene standards.</li>
+				<li class="tweak">The experimentor room has been slightly compressed to deal with this upgrade.</li>
+			</ul>
+			<h3 class="author">MrDoomBringer updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">People in supplypods in closets/mechs/etc will no longer get yeeted into nullspace</li>
+			</ul>
+			<h3 class="author">WJohnston updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixes warning line corners being all wonky when shuttles rotate.</li>
+			</ul>
+			<h3 class="author">coiax updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Wearing a jumpsuit that's been washed in a washing machine will give you a positive moodlet.</li>
+				<li class="tweak">Robust Gold cigarettes now taste faintly of expensive metal.</li>
+				<li class="tweak">Uplift Smooth's menthol effect now actually prevents you from coughing. Uplift Smooth now taste of "smoke and mint", rather than "mint and a hint of smoke".</li>
+				<li class="bugfix">Fixed slaughter demons not getting a speed boost when exiting a pool of blood. Fixed slaughter demon giblets not being visible.</li>
+				<li class="tweak">Dead bodies do not slowly have their hygiene decrease, as dead bodies just smell generally because of the decomposition.</li>
+				<li class="bugfix">Ghosts and camera mobs no longer feel if the shower is cold or too hot.</li>
+				<li class="tweak">The creep trauma/antagonist is no longer gained via brain damage.</li>
+			</ul>
+
 			<h2 class="date">09 January 2019</h2>
 			<h3 class="author">Arachnidnexus/actioninja updated:</h3>
 			<ul class="changes bgimages16">
@@ -1359,59 +1415,6 @@
 			<h3 class="author">XDTM updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="bugfix">Cargo can now order cargo again</li>
-			</ul>
-
-			<h2 class="date">08 November 2018</h2>
-			<h3 class="author">CRTXBacon updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Moves the clown mask south-facing sprite down one pixel, putting it on level with its other directional sprites. Henk.</li>
-			</ul>
-			<h3 class="author">MrDoomBringer updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">You will no longer attempt to use an explosive lance to craft an explosive lance</li>
-			</ul>
-			<h3 class="author">MrDoombringer updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">you can now rocket jump with rocketlaunchers! Just aim at the ground and fire!</li>
-			</ul>
-			<h3 class="author">ShizCalev updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="imageadd">Updated the robotics control console interface a bit. Borgs are now grouped by their slaved AI.</li>
-				<li class="bugfix">Fixed the robotics control console showing the cultist conversion button on borgs which are already converted.</li>
-				<li class="bugfix">Flying / floating humans will no longer get stuck laying down if they have no legs.</li>
-				<li class="bugfix">Alien larva will no longer get stuck laying down after ventcrawling.</li>
-				<li class="bugfix">Turrets will now correctly target silicon mobs when check anomalies is disabled.</li>
-				<li class="bugfix">Fixed prying open a door with a jaws of life not checking if you're still holding them.</li>
-				<li class="bugfix">Fixed Xenos being able to force a door open even if they picked up another object during the action.</li>
-				<li class="bugfix">Posibrains will no longer become unusable if a mob suicides in them.</li>
-				<li class="bugfix">Suiciding is now even MORE permanent... again.</li>
-			</ul>
-			<h3 class="author">Skoglol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="code_imp">New helper proc for alt-click turf listing, bypasses any interaction overrides.</li>
-				<li class="code_imp">Ghosts and revenants now use the new proc.</li>
-				<li class="bugfix">Ghosts can no longer toggleopen sleepers, adjust skateboard speed or close laptops</li>
-				<li class="bugfix">Revenant can now alt-click turf to list contents.</li>
-				<li class="tweak">Revenant now slightly less nosy, use shift click to examine.</li>
-				<li class="tweak">Alt-clicking the same turf again no longer closes the turf listing tab.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">You can now pay for cargo orders from your account with the cargo requests console. Credits will be detracted from the requester's account instead of the cargo budget. A 10% handling fee on top of the order will be paid to the cargo department budget.</li>
-				<li class="rscadd">Cargo employees must still accept the order for it to be delivered.</li>
-				<li class="rscadd">The delivery will arrive in a locked crate that can only be opened by an id with the paying bank account.</li>
-			</ul>
-			<h3 class="author">bobbahbrown updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">RCDs are now more environmentally friendly and can now recycle rods and floor tiles without having to reduce them to sheets first.</li>
-			</ul>
-			<h3 class="author">nicbn updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">On BoxStation, there's a vacant commissary where detective office used to be. Detective office is now located where Law Office was, and Law Office has been moved to the adjacent Vacant Office B.</li>
-			</ul>
-			<h3 class="author">subject217 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Disabler beams now deal 40 stamina damage, so they should be a bit more consistent in knocking people down in 3 hits.</li>
 			</ul>
 		</div>
 

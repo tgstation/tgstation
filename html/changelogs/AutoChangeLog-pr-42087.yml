@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "People in supplypods in closets/mechs/etc will no longer get yeeted into nullspace"
