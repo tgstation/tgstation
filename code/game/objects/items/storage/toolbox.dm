@@ -97,7 +97,7 @@
 	throwforce = 22
 
 /obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
-	power = 0
+	var/power = 0
 	for (var/obj/item/stack/telecrystal/TC in GetAllContents())
 		power += TC.amount
 	force = 19 + power
