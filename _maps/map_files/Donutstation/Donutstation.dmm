@@ -19861,8 +19861,8 @@
 /area/quartermaster/storage)
 "aQq" = (
 /obj/structure/rack,
-/obj/item/flashlight/glowstick/random,
-/obj/item/flashlight/glowstick/random,
+/obj/effect/spawner/lootdrop/glowstick,
+/obj/effect/spawner/lootdrop/glowstick,
 /obj/item/crowbar,
 /obj/item/flashlight,
 /obj/item/coin/silver,
