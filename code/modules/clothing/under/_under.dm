@@ -28,13 +28,23 @@
 		if(accessory_overlay)
 			. += accessory_overlay
 
+/obj/item/clothing/under/attack_hand(mob/user)
+	if(attached_accessory && ispath(attached_accessory.pocket_storage_component_path))
+		attached_accessory.attack_hand(user)
+		return
+	else
+		. = ..()
+
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	if((has_sensor == BROKEN_SENSORS) && istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = I
 		C.use(1)
 		has_sensor = HAS_SENSORS
 		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
-		return 1
+		return TRUE
+	if(attached_accessory && ispath(attached_accessory.pocket_storage_component_path))
+		attached_accessory.attackby(I, user)
+		return TRUE
 	if(!attach_accessory(I, user))
 		return ..()
 
