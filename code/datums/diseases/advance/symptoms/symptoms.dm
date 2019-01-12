@@ -60,7 +60,7 @@
 		next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10)
 		return TRUE
 
-/datum/symptom/proc/change_stage(new_stage, datum/disease/advance/A)
+/datum/symptom/proc/on_stage_change(new_stage, datum/disease/advance/A)
 	if(neutered)
 		return FALSE
 	return TRUE

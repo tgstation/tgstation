@@ -93,7 +93,7 @@
 /datum/disease/advance/update_stage(new_stage)
 	stage = new_stage
 	for(var/datum/symptom/S in symptoms)
-		S.change_stage(new_stage, src)
+		S.on_stage_change(new_stage, src)
 
 // Compares type then ID.
 /datum/disease/advance/IsSame(datum/disease/advance/D)
