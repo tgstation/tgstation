@@ -53,6 +53,7 @@ Difficulty: Hard
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = 0
 	var/enrage_till = null
+	var/true_spawn = 1 // so hallucinations and virtual versions can spawn
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -113,7 +114,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
-	if(!istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination) && !istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual))
+	if(true_spawn)
 		for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
 			if(B != src)
 				return INITIALIZE_HINT_QDEL //There can be only one
@@ -432,6 +433,7 @@ Difficulty: Hard
 	score_type = null
 	deathmessage = "Explodes into a pool of blood!"
 	deathsound = 'sound/effects/splat.ogg'
+	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
 	..()

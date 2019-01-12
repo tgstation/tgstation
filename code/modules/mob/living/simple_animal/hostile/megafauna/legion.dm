@@ -49,6 +49,7 @@ Difficulty: Medium
 	elimination = 1
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
+	var/virtual = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()
@@ -60,7 +61,7 @@ Difficulty: Medium
 		wander = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(GLOB.necropolis_gate)
+	if(GLOB.necropolis_gate && !virtual)
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 
@@ -98,7 +99,7 @@ Difficulty: Medium
 	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
-	if(istype(src, /mob/living/simple_animal/hostile/megafauna/legion/virtual))
+	if(virtual)
 		return ..()
 	if(health > 0)
 		return

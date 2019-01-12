@@ -146,7 +146,7 @@
 // -----Virtual Megafauna----- //
 //							   //
 
-#define MEGAFAUNA_NEST_RANGE 10
+#define MEGAFAUNA_NEST_RANGE 10 // range of open space from the megafauna spawner
 
 #define MEGAFAUNA_SPAWN_DELAY 200 // 20 seconds
 
@@ -193,6 +193,7 @@
 	medal_type = null
 	score_type = null
 	del_on_death = 1
+	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Initialize()
 	. = ..()
@@ -270,6 +271,7 @@
 	score_type = null
 	loot = null
 	del_on_death = 1
+	virtual = 1
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual/Initialize()
 	. = ..()
