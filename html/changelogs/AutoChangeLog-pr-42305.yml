@@ -1,0 +1,4 @@
+author: "nicbn"
+delete-after: True
+changes: 
+  - bugfix: "Vacant comissary disposals in BoxStation are no longer directly linked to the recycler room outlet."
