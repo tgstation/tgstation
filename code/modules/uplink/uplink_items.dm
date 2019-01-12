@@ -903,7 +903,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/support/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-			for hit-and-run style attacks. Features an incendiary carbine, flash bang launcher, teleporter, ion thrusters and a Tesla energy array." 
+			for hit-and-run style attacks. Features an incendiary carbine, flash bang launcher, teleporter, ion thrusters and a Tesla energy array."
 	item = /obj/mecha/combat/gygax/dark/loaded
 	cost = 80
 
@@ -1018,9 +1018,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
-			your stolen goods. Comes with a crowbar and a floor tile inside. Properly hidden satchels have been \
-			known to survive intact even beyond the current shift. "
-	item = /obj/item/storage/backpack/satchel/flat
+			your stolen goods. Comes with a crowbar, a floor tile and some contraband inside."
+	item = /obj/item/storage/backpack/satchel/flat/with_tools
 	cost = 2
 	surplus = 30
 
@@ -1168,9 +1167,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	if(!U)
 		return
 	U.failsafe_code = U.generate_code()
-	to_chat(user, "The new failsafe code for this uplink is now : [U.failsafe_code].")
+	var/code = "[islist(U.failsafe_code) ? english_list(U.failsafe_code) : U.failsafe_code]"
+	to_chat(user, "<span class='warning'>The new failsafe code for this uplink is now : [code].</span>")
 	if(user.mind)
-		user.mind.store_memory("Failsafe code for [U.parent] : [U.failsafe_code]")
+		user.mind.store_memory("Failsafe code for [U.parent] : [code]")
 	return U.parent //For log icon
 
 /datum/uplink_item/device_tools/toolbox
@@ -1186,7 +1186,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/aiModule/syndicate
 	cost = 9
-	
+
 /datum/uplink_item/device_tools/hypnotic_flash
 	name = "Hypnotic Flash"
 	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
@@ -1618,6 +1618,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
 	surplus = 0
+
+/datum/uplink_item/badass/combatglovesplus
+	name = "Combat Gloves Plus"
+	desc = "A pair of gloves that are fireproof and shock resistant, however unlike the regular Combat Gloves this one uses nanotechnology \
+			to learn the abilities of krav maga to the wearer."
+	item = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	cost = 5
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/badass/costumes/obvious_chameleon
 	name = "Broken Chameleon Kit"

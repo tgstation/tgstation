@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Players with the Spiritual quirk now spawn with a pack of candles
+and a box of matches, for better communion with their chosen power, and
+get a mood boost while near a holy person (generally the chaplain)."
