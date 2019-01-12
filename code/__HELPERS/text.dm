@@ -678,6 +678,32 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	tosend["data"] = finalized
 	WRITE_FILE(log, json_encode(tosend))
 
+/proc/unintelligize(message)
+	if(message)
+		var/prefix=copytext(message,1,2)
+		if(prefix == ";")
+			message = copytext(message,2)
+		else if(prefix in list(":","#"))
+			prefix += copytext(message,2,3)
+			message = copytext(message,3)
+		else
+			prefix=""
+
+		var/list/words = splittext(message," ")
+		var/list/rearranged = list()
+		for(var/i=1;i<=words.len;i++)
+			var/cword = pick(words)
+			words.Remove(cword)
+			var/suffix = copytext(cword,length(cword)-1,length(cword))
+			while(length(cword)>0 && suffix in list(".",",",";","!",":","?"))
+				cword  = copytext(cword,1              ,length(cword)-1)
+				suffix = copytext(cword,length(cword)-1,length(cword)  )
+			if(length(cword))
+				rearranged += cword
+		message ="[prefix][jointext(rearranged," ")]"
+
+	return message
+
 //Used for applying byonds text macros to strings that are loaded at runtime
 /proc/apply_text_macros(string)
 	var/next_backslash = findtext(string, "\\")

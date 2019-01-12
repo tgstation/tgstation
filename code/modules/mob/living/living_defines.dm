@@ -92,6 +92,7 @@
 	var/druggy = 0
 
 	//Speech
+	var/unintelligible = 0
 	var/stuttering = 0
 	var/slurring = 0
 	var/cultslurring = 0

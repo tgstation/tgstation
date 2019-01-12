@@ -323,6 +323,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return null
 
 /mob/living/proc/treat_message(message)
+	if(unintelligible)
+		message = unintelligize(message)
+
 	if(derpspeech)
 		message = derpspeech(message, stuttering)
 
