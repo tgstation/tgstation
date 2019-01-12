@@ -575,6 +575,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if (istype(W, /obj/item/melee/roastingstick))
 		return ..()
 	if(istype(W, /obj/item/scalpel/supermatter))
+		var/obj/item/scalpel/supermatter/scalpel = W
 		to_chat(user, "<span class='notice'>You carefully begin to scrape \the [src] with \the [W]...</span>")
 		if(W.use_tool(src, user, 60, volume=100))
 			if (scalpel.usesLeft)
