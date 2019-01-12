@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - code_imp: "Randomly coloured gloves and randomly coloured glowsticks now have
+slightly different typepaths, but otherwise function the same."
