@@ -105612,6 +105612,7 @@
 	pixel_x = -26
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/head/welding,
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "dww" = (
@@ -109147,43 +109148,20 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dCr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/science/robotics/lab)
-"dCs" = (
-/obj/effect/decal/cleanable/oil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
-"dCt" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
+"dCs" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dCu" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dCv" = (
@@ -109858,9 +109836,6 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dDC" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -109870,31 +109845,14 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dDD" = (
 /obj/effect/landmark/start/roboticist,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/science/robotics/lab)
-"dDE" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -110575,24 +110533,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
-"dEJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/science/robotics/lab)
 "dEK" = (
 /obj/item/robot_suit,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dEL" = (
@@ -111372,8 +111316,9 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dGb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dGc" = (
@@ -126643,6 +126588,9 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/nuke_storage)
+"huP" = (
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
 "huX" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -127516,6 +127464,13 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/science/storage)
+"osg" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
 "ovg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -165605,7 +165560,7 @@ dzH
 dAL
 dCr
 dDB
-dEJ
+dEM
 dGa
 dHw
 dIN
@@ -166117,10 +166072,10 @@ dwz
 dyd
 dzH
 dAM
-dCt
+dEM
 dDD
-dEL
-dGc
+dEM
+osg
 dHy
 dIP
 dyg
@@ -166375,8 +166330,8 @@ dyf
 dzJ
 dAN
 dCu
-dDE
-dEM
+dEL
+huP
 dGc
 dHz
 dIQ
