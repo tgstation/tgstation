@@ -1193,7 +1193,7 @@
 	mob_pickup(user)
 	return TRUE
 
-./mob/living/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num)
+/mob/living/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num)
 	. = ..()
 		//Process icon
 	if(vfx && audiolocation)
