@@ -127,10 +127,8 @@
 		if(W.use_tool(src, user, 20, amount=2))
 			to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
 			newmirror = new /obj/structure/mirror(loc)
-			if(pixel_x)
-				newmirror.pixel_x = pixel_x
-			else
-				newmirror.pixel_y = pixel_y
+			newmirror.pixel_x = pixel_x
+			newmirror.pixel_y = pixel_y
 			newmirror.setDir(dir)
 			transfer_fingerprints_to(newmirror)
 			qdel(src)
