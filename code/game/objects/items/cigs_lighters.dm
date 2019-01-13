@@ -64,6 +64,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb = list("flicked")
 		STOP_PROCESSING(SSobj, src)
 
+/obj/item/match/extinguish()
+	matchburnout()
+
 /obj/item/match/dropped(mob/user)
 	matchburnout()
 	. = ..()
@@ -199,6 +202,24 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		M.update_inv_wear_mask()
 		M.update_inv_hands()
 
+/obj/item/clothing/mask/cigarette/extinguish()
+	if(!lit)
+		return
+	name = copytext(name,5,length(name)+1)
+	attack_verb = null
+	hitsound = null
+	damtype = BRUTE
+	force = 0
+	icon_state = icon_off
+	item_state = icon_off
+	STOP_PROCESSING(SSobj, src)
+	ENABLE_BITFIELD(reagents.flags, NO_REACT)
+	lit = FALSE
+	if(ismob(loc))
+		var/mob/living/M = loc
+		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
+		M.update_inv_wear_mask()
+		M.update_inv_hands()
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
 	if(reagents.total_volume)
@@ -559,6 +580,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
 
+/obj/item/lighter/extinguish()
+	set_lit(FALSE)
+
 /obj/item/lighter/attack_self(mob/living/user)
 	if(user.is_holding(src))
 		if(!lit)
@@ -736,27 +760,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(O.is_drainable())
-		if(reagents.total_volume < chem_volume)
-			if(O.reagents.total_volume > 0)
-				O.reagents.trans_to(src,25, transfered_by = user)
-				to_chat(user, "<span class='notice'>You add the contents of [O] to [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>[O] is empty!</span>")
-		else
-			to_chat(user, "<span class='warning'>[src] can't hold anymore reagents!</span>")
-
 	if(O.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!screw)
-			screw = 1
+			screw = TRUE
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
-			if(super)
+			ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			if(obj_flags & EMAGGED)
+				add_overlay("vapeopen_high")
+			else if(super)
 				add_overlay("vapeopen_med")
 			else
 				add_overlay("vapeopen_low")
 		else
-			screw = 0
+			screw = FALSE
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
+			DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 			cut_overlays()
 
 	if(O.tool_behaviour == TOOL_MULTITOOL)
@@ -774,6 +792,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 		if(screw && (obj_flags & EMAGGED))
 			to_chat(user, "<span class='notice'>[src] can't be modified!</span>")
+		else
+			..()
 
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
