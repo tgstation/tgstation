@@ -273,7 +273,7 @@
 			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
-					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
+					"<span class='notice'>You attempt to unbuckle yourself... (This will take some time, and you need to stay still.)</span>")
 		if(do_after(src, buckle_cd, 0, target = src))
 			if(!buckled)
 				return
