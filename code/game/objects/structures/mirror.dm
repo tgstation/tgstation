@@ -1,4 +1,7 @@
 //wip wip wup
+
+// mirrors in general
+
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -92,6 +95,47 @@
 		if(BURN)
 			playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
+// mirror frames
+
+/obj/item/wallframe/mirror
+	name = "mirror frame"
+	desc = "Really frames your face."
+	icon = 'icons/obj/wallframe.dmi'
+	icon_state = "mirror"
+	pixel_shift = 32
+	inverse = TRUE
+	result_path = /obj/structure/mirror_construct
+
+/obj/structure/mirror_construct
+	name = "mounted mirror frame"
+	desc = "A mirror without the mirror. Ideal for the offices of clowns, nonhumans, and other unattractive crew members."
+	icon = 'icons/obj/wallframe.dmi'
+	icon_state = "mirror"
+	anchored = TRUE
+	layer = WALL_OBJ_LAYER
+	max_integrity = 200
+	var/obj/structure/newmirror = null
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
+
+/obj/structure/mirror_construct/attackby(obj/item/W, mob/user, params)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/stack/sheet/glass))
+		if(!W.tool_start_check(user, amount=2))
+			return
+		playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You start to add glass to the mirror frame...</span>")
+		if(W.use_tool(src, user, 20, amount=2))
+			to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
+			newmirror = new /obj/structure/mirror(loc)
+			if(pixel_x)
+				newmirror.pixel_x = pixel_x
+			else
+				newmirror.pixel_y = pixel_y
+			newmirror.setDir(dir)
+			transfer_fingerprints_to(newmirror)
+			qdel(src)
+
+// magic mirrors
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
