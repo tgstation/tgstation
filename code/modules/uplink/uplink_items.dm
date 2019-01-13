@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		U.MakePurchase(user, I)
 
 /datum/uplink_item/bundles_TC/telecrystal
-	name = "Raw Telecrystal"
+	name = "1 Raw Telecrystal"
 	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
 	item = /obj/item/stack/telecrystal
 	cost = 1
