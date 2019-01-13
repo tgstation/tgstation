@@ -70,6 +70,10 @@ Difficulty: Medium
 	. = ..()
 	internal = new/obj/item/gps/internal/dragon(src)
 
+/mob/living/simple_animal/hostile/megafauna/dragon/death()
+	qdel(internal) // so drake corpses don't have a gps signal
+	. = ..()
+
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)
 		return
