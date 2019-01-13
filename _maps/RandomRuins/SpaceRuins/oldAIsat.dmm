@@ -678,7 +678,7 @@
 /area/tcommsat/oldaisat)
 "cm" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
@@ -742,7 +742,7 @@
 /obj/machinery/light/small,
 /obj/item/paper,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel/airless,
 /area/tcommsat/oldaisat)
@@ -2543,7 +2543,7 @@ ag
 cK
 cI
 cI
-cU
+cJ
 cV
 ag
 ag
@@ -2598,7 +2598,7 @@ az
 az
 ag
 cE
-cH
+cU
 cI
 cI
 cI
@@ -2716,7 +2716,7 @@ az
 az
 ag
 cG
-cJ
+cH
 cI
 cI
 cI

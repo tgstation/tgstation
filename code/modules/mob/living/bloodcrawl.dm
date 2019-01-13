@@ -148,8 +148,7 @@
 		newcolor = rgb(43, 186, 0)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
-	spawn(30)
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	addtimer(CALLBACK(src, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)
