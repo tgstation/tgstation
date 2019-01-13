@@ -81,6 +81,10 @@
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "appears onto"
 
+/obj/structure/spawner/megafauna/proc/cleanup_arena()
+	for(var/obj/effect/decal/B in urange(10, src, 1))
+		qdel(B) // go away blood and garbage shit
+
 /obj/structure/spawner/megafauna/blood_drunk
 	name = "drunken beacon"
 	desc = "Creates holographic versions of a blood drunken miner."
@@ -146,17 +150,14 @@
 // -----Virtual Megafauna----- //
 //							   //
 
-#define MEGAFAUNA_NEST_RANGE 10 // range of open space from the megafauna spawner
-
 #define MEGAFAUNA_SPAWN_DELAY 200 // 20 seconds
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual
 	name = "blood-drunk miner hologram"
 	desc = "A holographic miner, eternally hunting."
-	crusher_loot = null
-	loot = null
+	crusher_loot = list()
+	loot = list()
 	medal_type = null
-	del_on_death = 1
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/Initialize()
 	. = ..()
@@ -164,18 +165,17 @@
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/death()
 	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
+	var/obj/structure/spawner/megafauna/P = nest.parent
+	P.cleanup_arena()
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual
 	name = "ash drake hologram"
 	desc = "A holographic dragon, once weak, now fierce."
-	crusher_loot = null
-	loot = null
-	butcher_results = null
-	guaranteed_butcher_results = null
+	crusher_loot = list()
+	loot = list()
 	medal_type = null
 	score_type = null
-	del_on_death = 1
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual/Initialize()
 	. = ..()
@@ -183,16 +183,18 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual/death()
 	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
+	var/obj/structure/spawner/megafauna/P = nest.parent
+	P.cleanup_arena()
 	. = ..()
+	qdel(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual
 	name = "bubblegum hologram"
 	desc = "A holographic version of the king of the slaughter demons. You feel something oddly real staring back at you."
-	crusher_loot = null
-	loot = null
+	crusher_loot = list()
+	loot = list()
 	medal_type = null
 	score_type = null
-	del_on_death = 1
 	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Initialize()
@@ -201,6 +203,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/death()
 	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
+	var/obj/structure/spawner/megafauna/P = nest.parent
+	P.cleanup_arena()
 	. = ..()
 
 // need this otherwise bubbles can teleport out of his arena
@@ -217,7 +221,7 @@
 		var/turf/place = locate(chargeat.x + cos(ang) * times, chargeat.y + sin(ang) * times, chargeat.z)
 		if(!place)
 			continue
-		if(!srcplaced && useoriginal && get_dist(nest.parent, place) <= MEGAFAUNA_NEST_RANGE)
+		if(!srcplaced && useoriginal && get_dist(nest.parent, place) <= 10)
 			forceMove(place)
 			srcplaced = 1
 			continue
@@ -232,9 +236,8 @@
 	desc = "A holographic god. One of the strongest creatures that has ever lived."
 	medal_type = null
 	score_type = null
-	crusher_loot = null
-	loot = null
-	del_on_death = 1
+	crusher_loot = list()
+	loot = list()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual/Initialize()
 	. = ..()
@@ -242,16 +245,17 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual/death()
 	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
+	var/obj/structure/spawner/megafauna/P = nest.parent
+	P.cleanup_arena()
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual
 	name = "hierophant hologram"
 	desc = "A holographic club. It's said to wipe from existence those who fall to its rhythm."
-	loot = null
-	crusher_loot = null
+	loot = list()
+	crusher_loot = list()
 	medal_type = null
 	score_type = null
-	del_on_death = 1
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/Initialize()
 	. = ..()
@@ -262,6 +266,8 @@
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/death()
 	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
+	var/obj/structure/spawner/megafauna/P = nest.parent
+	P.cleanup_arena()
 	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual
@@ -269,8 +275,7 @@
 	desc = "One of many... holograms."
 	medal_type = null
 	score_type = null
-	loot = null
-	del_on_death = 1
+	loot = list()
 	virtual = 1
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual/Initialize()
@@ -309,4 +314,6 @@
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else
+		var/obj/structure/spawner/megafauna/P = nest.parent
+		P.cleanup_arena()
 		..()
