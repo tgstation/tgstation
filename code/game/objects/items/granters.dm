@@ -4,7 +4,8 @@
 /obj/item/book/granter
 	due_date = 0 // Game time in deciseconds
 	unique = 1   // 0  Normal book, 1  Should not be treated as normal book, unable to be copied, unable to be modified
-	var/list/remarks = list() //things to read about while learning.
+	var/list/remarks = list("All the pages are blank.", "All of the pages are empty.", "All of the pages have error messages.", "All of the pages just have terrible ASCII art.") //things to read about while learning.
+	var/topic = "uninitalized variables"
 	var/pages_to_mastery = 3 //Essentially controls how long a mob must keep the book in his hand to actually successfully learn
 	var/reading = FALSE //sanity
 	var/oneuse = TRUE //default this is true, but admins can var this to 0 if we wanna all have a pass around of the rod form book
@@ -18,91 +19,90 @@
 	return FALSE
 
 /obj/item/book/granter/proc/recoil(mob/user) //nothing so some books can just return
+	return
 
 /obj/item/book/granter/proc/onlearned(mob/user)
-	used = TRUE
+	return
+
+/obj/item/book/granter/proc/can_learn_check(mob/user)
+	. = TRUE
 
 /obj/item/book/granter/attack_self(mob/user)
 	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
-		return FALSE
-	if(!user.can_read(src))
-		return FALSE
-	return TRUE
+		return
+	if(!user.can_read(src) || !can_learn_check(user))
+		return
+
+	if(used == TRUE && oneuse == TRUE)
+		recoil(user)
+		return
+
+	to_chat(user, "<span class='notice'>You start reading about [topic]...</span>")
+	reading = TRUE
+
+	for(var/i=1, i<=pages_to_mastery, i++)
+		if(!turn_page(user))
+			to_chat(user, "<span class='notice'>You stop reading...</span>")
+			reading = FALSE
+			return FALSE
+
+	if(do_after(user, 50, user))
+		to_chat(user, "<span class='notice'>You feel like you've got a good handle on [topic]!</span>")
+		onlearned(user)
+
+	reading = FALSE
 
 ///ACTION BUTTONS///
 
 /obj/item/book/granter/action
 	var/granted_action
-	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name action buttons toggle this or that without it fucking up the granter, also caps
 
-/obj/item/book/granter/action/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
-	if(!granted_action)
-		return
+/obj/item/book/granter/action/can_learn_check(mob/user)
+	. = TRUE
 	var/datum/action/G = new granted_action
 	for(var/datum/action/A in user.actions)
 		if(A.type == G.type)
-			to_chat(user, "<span class='notice'>You already know all about [actionname].</span>")
-			qdel(G)
-			return
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about [actionname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(G)
-				return
-		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've got a good handle on [actionname]!</span>")
-			G.Grant(user)
-		reading = FALSE
+			to_chat(user, "<span class='notice'>You already know all about [topic].</span>")
+			. = FALSE
+	qdel(G)
 
-/obj/item/book/granter/action/origami
-	granted_action = /datum/action/innate/origami
+/obj/item/book/granter/action/onlearned(mob/user)
+	var/datum/action/G = new granted_action
+	G.Grant(user)
+
+/obj/item/book/granter/trait
+	var/trait
+
+/obj/item/book/granter/trait/can_learn_check(mob/user)
+	. = TRUE
+	if(user.has_trait(trait, GRANTER_BOOK_TRAIT))
+		to_chat(user, "<span class='notice'>You already know all about [topic].</span>")
+		. = FALSE
+
+/obj/item/book/granter/trait/onlearned(mob/user)
+	if(user.mind)
+		user.mind.add_trait(trait, GRANTER_BOOK_TRAIT)
+	else
+		user.add_trait(trait, GRANTER_BOOK_TRAIT)
+
+/obj/item/book/granter/trait/origami
 	name = "The Art of Origami"
 	desc = "A meticulously in-depth manual explaining the art of paper folding."
+	topic = "origami"
 	icon_state = "origamibook"
-	actionname = "origami"
 	oneuse = TRUE
 	remarks = list("Dead-stick stability...", "Symmetry seems to play a rather large factor...", "Accounting for crosswinds... really?", "Drag coefficients of various paper types...", "Thrust to weight ratios?", "Positive dihedral angle?", "Center of gravity forward of the center of lift...")
-
-/datum/action/innate/origami
-	name = "Origami Folding"
-	desc = "Toggles your ability to fold and catch robust paper airplanes."
-	button_icon_state = "origami_off"
-	check_flags = NONE
-
-/datum/action/innate/origami/Activate()
-	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
-	button_icon_state = "origami_on"
-	active = TRUE
-	UpdateButtonIcon()
-
-/datum/action/innate/origami/Deactivate()
-	to_chat(owner, "<span class='notice'>You will no longer fold origami planes.</span>")
-	button_icon_state = "origami_off"
-	active = FALSE
-	UpdateButtonIcon()
+	trait = TRAIT_ORIGAMI_MASTERY
 
 ///SPELLS///
 
 /obj/item/book/granter/spell
+	topic = "casting conjure bugs"
 	var/spell
-	var/spellname = "conjure bugs"
 
-/obj/item/book/granter/spell/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
-	if(!spell)
-		return
+/obj/item/book/granter/spell/can_learn_check(mob/user)
+	. = TRUE
 	var/obj/effect/proc_holder/spell/S = new spell
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
 		if(knownspell.type == S.type)
@@ -111,36 +111,23 @@
 					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-			return FALSE
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about casting [spellname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(S)
-				return FALSE
-		if(do_after(user,50, user))
-			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
-			user.mind.AddSpell(S)
-			user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
-			onlearned(user)
-		reading = FALSE
+			. = FALSE
+	qdel(S)
+
+/obj/item/book/granter/spell/onlearned(mob/user)
+	var/obj/effect/proc_holder/spell/S = new spell
+	user.mind.AddSpell(S)
+	user.log_message("learned the spell [S]", LOG_ATTACK, color="orange")
+
+	if(oneuse)
+		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
 
 /obj/item/book/granter/spell/recoil(mob/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
-/obj/item/book/granter/spell/onlearned(mob/user)
-	..()
-	if(oneuse)
-		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
-
 /obj/item/book/granter/spell/fireball
 	spell = /obj/effect/proc_holder/spell/aimed/fireball
-	spellname = "fireball"
+	topic = "casting fireball"
 	icon_state ="bookfireball"
 	desc = "This book feels warm to the touch."
 	remarks = list("Aim...AIM, FOOL!", "Just catching them on fire won't do...", "Accounting for crosswinds... really?", "I think I just burned my hand...", "Why the dumb stance? It's just a flick of the hand...", "OMEE... ONI... Ugh...", "What's the difference between a fireball and a pyroblast...")
@@ -152,15 +139,15 @@
 
 /obj/item/book/granter/spell/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
-	spellname = "sacred flame"
+	topic = "casting sacred flame"
 	icon_state ="booksacredflame"
 	desc = "Become one with the flames that burn within... and invite others to do so as well."
 	remarks = list("Well, it's one way to stop an attacker...", "I'm gonna need some good gear to stop myself from burning to death...", "Keep a fire extinguisher handy, got it...", "I think I just burned my hand...", "Apply flame directly to chest for proper ignition...", "No pain, no gain...", "One with the flame...")
 
 /obj/item/book/granter/spell/smoke
 	spell = /obj/effect/proc_holder/spell/targeted/smoke
-	spellname = "smoke"
-	icon_state ="booksmoke"
+	topic = "smoke"
+	icon_state = "booksmoke"
 	desc = "This book is overflowing with the dank arts."
 	remarks = list("Smoke Bomb! Heh...", "Smoke bomb would do just fine too...", "Wait, there's a machine that does the same thing in chemistry?", "This book smells awful...", "Why all these weed jokes? Just tell me how to cast it...", "Wind will ruin the whole spell, good thing we're in space... Right?", "So this is how the spider clan does it...")
 
@@ -177,7 +164,7 @@
 
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
-	spellname = "blind"
+	topic = "casting blind"
 	icon_state ="bookblind"
 	desc = "This book looks blurry, no matter how you look at it."
 	remarks = list("Well I can't learn anything if I can't read the damn thing!", "Why would you use a dark font on a dark background...", "Ah, I can't see an Oh, I'm fine...", "I can't see my hand...!", "I'm manually blinking, damn you book...", "I can't read this page, but somehow I feel like I learned something from it...", "Hey, who turned off the lights?")
@@ -189,16 +176,16 @@
 
 /obj/item/book/granter/spell/mindswap
 	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
-	spellname = "mindswap"
+	topic = "casting mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
 	var/mob/stored_swap //Used in used book recoils to store an identity for mindswaps
 	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
 
 /obj/item/book/granter/spell/mindswap/onlearned()
-	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
-	icon_state = "book[spellname]"
-	name = "spellbook of [spellname]" //Note, desc doesn't change by design
+	topic = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
+	icon_state = "book[topic]"
+	name = "spellbook of [topic]" //Note, desc doesn't change by design
 	..()
 
 /obj/item/book/granter/spell/mindswap/recoil(mob/user)
@@ -223,7 +210,7 @@
 
 /obj/item/book/granter/spell/forcewall
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall
-	spellname = "forcewall"
+	topic = "casting forcewall"
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
 	remarks = list("I can go through the wall! Neat.", "Why are there so many mime references...?", "This would cause much grief in a hallway...", "This is some surprisingly strong magic to create a wall nobody can pass through...", "Why the dumb stance? It's just a flick of the hand...", "Why are the pages so hard to turn, is this even paper?", "I can't mo Oh, i'm fine...")
@@ -236,7 +223,7 @@
 
 /obj/item/book/granter/spell/knock
 	spell = /obj/effect/proc_holder/spell/aoe_turf/knock
-	spellname = "knock"
+	topic = "casting knock"
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
 	remarks = list("Open Sesame!", "So THAT'S the magic password!", "Slow down, book. I still haven't finished this page...", "The book won't stop moving!", "I think this is hurting the spine of the book...", "I can't get to the next page, it's stuck t- I'm good, it just turned to the next page on it's own.", "Yeah, staff of doors does the same thing. Go figure...")
@@ -248,7 +235,7 @@
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
-	spellname = "barnyard"
+	topic = "casting barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
 	remarks = list("Moooooooo!","Moo!","Moooo!", "NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!", "Oink!", "Squeeeeeeee!", "Oink Oink!", "Ree!!", "Reee!!", "REEE!!", "REEEEE!!")
@@ -269,7 +256,7 @@
 
 /obj/item/book/granter/spell/charge
 	spell = /obj/effect/proc_holder/spell/targeted/charge
-	spellname = "charge"
+	topic = "casting charge"
 	icon_state ="bookcharge"
 	desc = "This book is made of 100% postconsumer wizard."
 	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
@@ -281,7 +268,7 @@
 
 /obj/item/book/granter/spell/summonitem
 	spell = /obj/effect/proc_holder/spell/targeted/summonitem
-	spellname = "instant summons"
+	topic = "casting instant summons"
 	icon_state ="booksummons"
 	desc = "This book is bright and garish, very hard to miss."
 	remarks = list("I can't look away from the book!", "The words seem to pop around the page...", "I just need to focus on one item...", "Make sure to have a good grip on it when casting...", "Slow down, book. I still haven't finished this page...", "Sounds pretty great with some other magical artifacts...", "Magicians must love this one.")
@@ -305,41 +292,28 @@
 
 /obj/item/book/granter/martial
 	var/martial
-	var/martialname = "bug jitsu"
+	topic = "bug jitsu"
 	var/greet = "You feel like you have mastered the art in breaking code. Nice work, jackass."
 
-/obj/item/book/granter/martial/attack_self(mob/user)
-	. = ..()
-	if(!.)
-		return
-	if(!martial)
-		return
+/obj/item/book/granter/martial/can_learn_check(mob/user)
+	. = TRUE
 	var/datum/martial_art/MA = new martial
 	if(user.mind.has_martialart(MA.id))
-		to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
-		return
-	if(used == TRUE && oneuse == TRUE)
-		recoil(user)
-	else
-		to_chat(user, "<span class='notice'>You start reading about [martialname]...</span>")
-		reading = TRUE
-		for(var/i=1, i<=pages_to_mastery, i++)
-			if(!turn_page(user))
-				to_chat(user, "<span class='notice'>You stop reading...</span>")
-				reading = FALSE
-				qdel(MA)
-				return
-		if(do_after(user,50, user))
-			to_chat(user, "[greet]")
-			MA.teach(user)
-			user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
-			onlearned(user)
-		reading = FALSE
+		to_chat(user,"<span class='warning'>You already know [topic]!</span>")
+		. = FALSE
+	qdel(MA)
+
+/obj/item/book/granter/martial/onlearned(mob/user)
+	var/datum/martial_art/MA = new martial
+
+	to_chat(user, "[greet]")
+	MA.teach(user)
+	user.log_message("learned the martial art [topic] ([MA])", LOG_ATTACK, color="orange")
 
 /obj/item/book/granter/martial/cqc
 	martial = /datum/martial_art/cqc
 	name = "old manual"
-	martialname = "close quarters combat"
+	topic = "close quarters combat"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
 	greet = "<span class='boldannounce'>You've mastered the basics of CQC.</span>"
 	icon_state = "cqcmanual"
@@ -361,7 +335,7 @@
 /obj/item/book/granter/martial/carp
 	martial = /datum/martial_art/the_sleeping_carp
 	name = "mysterious scroll"
-	martialname = "sleeping carp"
+	topic = "sleeping carp"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
 	greet = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
 	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
@@ -379,7 +353,7 @@
 /obj/item/book/granter/martial/plasma_fist
 	martial = /datum/martial_art/plasma_fist
 	name = "frayed scroll"
-	martialname = "plasma fist"
+	topic = "plasma fist"
 	desc = "An aged and frayed scrap of paper written in shifting runes. There are hand-drawn illustrations of pugilism."
 	greet = "<span class='boldannounce'>You have learned the ancient martial art of Plasma Fist. Your combos are extremely hard to pull off, but include some of the most deadly moves ever seen including \
 	the plasma fist, which when pulled off will make someone violently explode.</span>"

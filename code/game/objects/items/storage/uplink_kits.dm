@@ -144,9 +144,9 @@
 	desc = "A box full of a number of rather masterfully engineered paper planes and a manual on \"The Art of Origami\"."
 
 /obj/item/storage/box/syndie_kit/origami_bundle/PopulateContents()
-	new /obj/item/book/granter/action/origami(src)
+	new /obj/item/book/granter/trait/origami(src)
 	for(var/i in 1 to 5)
-		new /obj/item/paper(src)
+		new /obj/item/paperplane/syndicate(src)
 
 /obj/item/storage/box/syndie_kit/imp_freedom
 	name = "freedom implant box"

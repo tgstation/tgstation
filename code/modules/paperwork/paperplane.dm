@@ -99,10 +99,9 @@
 /obj/item/paperplane/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
-		if(C.can_catch_item(TRUE))
-			var/datum/action/innate/origami/origami_action = locate() in C.actions
-			if(origami_action?.active) //if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
-				C.throw_mode_on()
+		if(C.can_catch_item(TRUE) && C.has_trait(TRAIT_ORIGAMI_MASTERY))
+			//if they're a master of origami and have the ability turned on, force throwmode on so they'll automatically catch the plane.
+			C.throw_mode_on()
 
 	if(..() || !ishuman(hit_atom))//if the plane is caught or it hits a nonhuman
 		return
@@ -126,9 +125,8 @@
 	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/paperplane/plane_type = /obj/item/paperplane
-	//Origami Master
-	var/datum/action/innate/origami/origami_action = locate() in user.actions
-	if(origami_action?.active)
+
+	if(user.has_trait(TRAIT_ORIGAMI_MASTERY))
 		plane_type = /obj/item/paperplane/syndicate
 
 	I = new plane_type(user, src)
