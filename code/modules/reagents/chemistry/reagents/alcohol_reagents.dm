@@ -658,7 +658,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "irishcream"
 	description = "Whiskey-imbued cream, what else would you expect from the Irish?"
 	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 70
+	boozepwr = 50
 	quality = DRINK_NICE
 	taste_description = "creamy alcohol"
 	glass_icon_state = "irishcreamglass"
