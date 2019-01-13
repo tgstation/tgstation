@@ -59,6 +59,15 @@
 		new /obj/item/warp_cube/red(vr_human.loc)
 		new /obj/item/clothing/suit/space/hostile_environment(vr_human.loc)
 		new /obj/item/clothing/head/helmet/space/hostile_environment(vr_human.loc)
+		new /obj/item/crusher_trophy/vortex_talisman(vr_human.loc)
+		new /obj/item/crusher_trophy/demon_claws(vr_human.loc)
+		new /obj/item/crusher_trophy/tail_spike(vr_human.loc)
+		new /obj/item/crusher_trophy/miner_eye(vr_human.loc)
+		new /obj/item/crusher_trophy/legion_skull(vr_human.loc)
+		new /obj/item/crusher_trophy/goliath_tentacle(vr_human.loc)
+		new /obj/item/crusher_trophy/blaster_tubes/magma_wing(vr_human.loc)
+		new /obj/item/crusher_trophy/watcher_wing(vr_human.loc)
+		new /obj/item/crusher_trophy/blaster_tubes(vr_human.loc)
 
 /area/awaymission/vr/miner
 	name = "VrMining"
@@ -157,7 +166,6 @@
 	desc = "A holographic miner, eternally hunting."
 	crusher_loot = list()
 	loot = list()
-	medal_type = null
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/Initialize()
 	. = ..()
@@ -169,13 +177,14 @@
 	P.cleanup_arena()
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
+	return
+
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual
 	name = "ash drake hologram"
 	desc = "A holographic dragon, once weak, now fierce."
 	crusher_loot = list()
 	loot = list()
-	medal_type = null
-	score_type = null
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual/Initialize()
 	. = ..()
@@ -188,13 +197,14 @@
 	. = ..()
 	qdel(src)
 
+/mob/living/simple_animal/hostile/megafauna/dragon/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
+	return
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual
 	name = "bubblegum hologram"
 	desc = "A holographic version of the king of the slaughter demons. You feel something oddly real staring back at you."
 	crusher_loot = list()
 	loot = list()
-	medal_type = null
-	score_type = null
 	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Initialize()
@@ -231,11 +241,12 @@
 	if(useoriginal)
 		charge(chargeat, delay, chargepast)
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
+	return
+
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual
 	name = "colossus hologram"
 	desc = "A holographic god. One of the strongest creatures that has ever lived."
-	medal_type = null
-	score_type = null
 	crusher_loot = list()
 	loot = list()
 
@@ -249,13 +260,14 @@
 	P.cleanup_arena()
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/colossus/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
+	return
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual
 	name = "hierophant hologram"
 	desc = "A holographic club. It's said to wipe from existence those who fall to its rhythm."
 	loot = list()
 	crusher_loot = list()
-	medal_type = null
-	score_type = null
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/Initialize()
 	. = ..()
@@ -270,11 +282,12 @@
 	P.cleanup_arena()
 	. = ..()
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
+	return
+
 /mob/living/simple_animal/hostile/megafauna/legion/virtual
 	name = "Legion Hologram"
 	desc = "One of many... holograms."
-	medal_type = null
-	score_type = null
 	loot = list()
 	virtual = 1
 
@@ -317,3 +330,6 @@
 		var/obj/structure/spawner/megafauna/P = nest.parent
 		P.cleanup_arena()
 		..()
+
+/mob/living/simple_animal/hostile/megafauna/legion/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
+	return
