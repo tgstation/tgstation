@@ -91,7 +91,7 @@
 
 // Tell symptoms stage changed
 /datum/disease/advance/update_stage(new_stage)
-	stage = new_stage
+	..()
 	for(var/datum/symptom/S in symptoms)
 		S.on_stage_change(new_stage, src)
 
