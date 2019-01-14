@@ -1,10 +1,11 @@
 /datum/brain_trauma/special/creep
 	name = "Erotomania"
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
-	scan_desc = "severe erotomaniac delusions"
+	scan_desc = "erotomaniac delusions"
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
 	lose_text = "<span class='warning'>You no longer feel so attached.</span>"
 	can_gain = TRUE
+	random_gain = FALSE
 	resilience = TRAUMA_RESILIENCE_SURGERY
 	var/mob/living/obsession
 	var/datum/objective/spendtime/attachedcreepobj
