@@ -95,10 +95,10 @@
 	name = "Healing Chest"
 	desc = "Contains an assortment of healing items."
 	respawn_loot = list(
-		/obj/item/reagent_containers/hypospray/medipen/survival=2,
-		/obj/item/storage/firstaid/brute=2,
-		/obj/item/hivelordstabilizer=5,
-		/obj/item/organ/regenerative_core/legion=5)
+		/obj/item/reagent_containers/hypospray/medipen/survival=1,
+		/obj/item/storage/firstaid/brute=1,
+		/obj/item/hivelordstabilizer=3,
+		/obj/item/organ/regenerative_core/legion=3)
 
 /obj/structure/closet/crate/necropolis/vr_mining_gear/food
 	name = "Food Chest"
