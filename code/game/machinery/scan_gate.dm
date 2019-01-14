@@ -5,6 +5,7 @@
 #define SCANGATE_GUNS 			"Guns"
 #define SCANGATE_WANTED			"Wanted"
 #define SCANGATE_SPECIES		"Species"
+#define SCANGATE_HYGIENE		"Hygiene"
 
 
 /obj/machinery/scanner_gate
@@ -115,6 +116,11 @@
 				if(istype(I, /obj/item/gun))
 					beep = TRUE
 					break
+		if(SCANGATE_HYGIENE)
+			if(iscarbon(M))
+				var/mob/living/carbon/human/H = M
+				if(H.hygiene <= HYGIENE_LEVEL_DIRTY) //Pungent indeed
+					beep = TRUE
 	if(reverse)
 		beep = !beep
 	if(beep)
@@ -161,7 +167,8 @@
 																								SCANGATE_DISEASE,
 																								SCANGATE_GUNS,
 																								SCANGATE_WANTED,
-																								SCANGATE_SPECIES)
+																								SCANGATE_SPECIES,
+																								SCANGATE_HYGIENE)
 			if(new_mode)
 				scangate_mode = new_mode
 			. = TRUE
@@ -224,3 +231,4 @@
 #undef SCANGATE_GUNS
 #undef SCANGATE_WANTED
 #undef SCANGATE_SPECIES
+#undef SCANGATE_HYGIENE
