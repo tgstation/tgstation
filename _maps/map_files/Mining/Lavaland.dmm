@@ -76,10 +76,6 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
-"ao" = (
-/obj/machinery/computer/shuttle/labor/one_way,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp)
 "ap" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -277,12 +273,6 @@
 	},
 /turf/closed/wall,
 /area/mine/laborcamp)
-"aV" = (
-/obj/machinery/computer/mech_bay_power_console,
-/turf/open/floor/plasteel/purple/corner{
-	dir = 4
-	},
-/area/mine/eva)
 "aW" = (
 /obj/machinery/conveyor{
 	dir = 2;
@@ -358,9 +348,9 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer/shuttle/labor/one_way,
 /turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
+/area/mine/laborcamp)
 "bi" = (
 /obj/structure/gulag_beacon,
 /turf/open/floor/plasteel,
@@ -460,13 +450,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
-"bw" = (
-/obj/machinery/computer/security{
-	name = "Labor Camp Monitoring";
-	network = list("labor")
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "bx" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -763,10 +746,6 @@
 "ch" = (
 /turf/open/floor/plating,
 /area/mine/laborcamp)
-"ci" = (
-/obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "cj" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -798,6 +777,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"cn" = (
+/turf/open/floor/plasteel/purple/corner{
+	dir = 4
+	},
+/area/mine/production)
 "co" = (
 /obj/machinery/power/apc{
 	dir = 2;
@@ -820,15 +804,11 @@
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
 "cr" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	name = "Station Intercom (General)";
-	pixel_x = -28
+/obj/machinery/computer/mech_bay_power_console,
+/turf/open/floor/plasteel/purple/corner{
+	dir = 4
 	},
-/turf/open/floor/plasteel/brown{
-	dir = 8
-	},
-/area/mine/production)
+/area/mine/eva)
 "cs" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel/purple/corner{
@@ -850,22 +830,20 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cw" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Mining Station Starboard Wing APC";
-	pixel_x = -27;
-	pixel_y = 2
+/obj/machinery/computer/secure_data,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"cx" = (
+/obj/machinery/computer/security{
+	name = "Labor Camp Monitoring";
+	network = list("labor")
 	},
-/obj/structure/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/purple/side{
-	dir = 8
-	},
-/area/mine/production)
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"cy" = (
+/obj/machinery/computer/prisoner,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "cz" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -905,10 +883,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"cF" = (
+/turf/open/floor/plasteel/brown{
+	dir = 4
+	},
+/area/mine/production)
 "cG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"cH" = (
+/turf/open/floor/plasteel/purple/corner{
+	dir = 8
+	},
+/area/mine/production)
 "cI" = (
 /turf/open/floor/plasteel/purple/side{
 	dir = 4
@@ -933,6 +921,20 @@
 "cM" = (
 /turf/closed/wall,
 /area/mine/living_quarters)
+"cN" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall,
+/area/mine/living_quarters)
+"cO" = (
+/obj/item/radio/intercom{
+	dir = 8;
+	name = "Station Intercom (General)";
+	pixel_x = -28
+	},
+/turf/open/floor/plasteel/brown{
+	dir = 8
+	},
+/area/mine/production)
 "cP" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 30
@@ -981,6 +983,23 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/mine/living_quarters)
+"cX" = (
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Mining Station Starboard Wing APC";
+	pixel_x = -27;
+	pixel_y = 2
+	},
+/obj/structure/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/purple/side{
+	dir = 8
+	},
+/area/mine/production)
 "cY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -1398,6 +1417,11 @@
 "dZ" = (
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"ea" = (
+/turf/open/floor/plasteel/purple/corner{
+	dir = 4
+	},
+/area/mine/living_quarters)
 "eb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable{
@@ -1551,6 +1575,15 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"ev" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "ew" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1688,6 +1721,10 @@
 /obj/machinery/light,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"eN" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/mine/living_quarters)
 "eO" = (
 /obj/machinery/light/small,
 /turf/open/floor/plasteel/purple/corner{
@@ -1780,7 +1817,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/mine/production)
@@ -1864,6 +1901,9 @@
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
 "fk" = (
+/turf/open/floor/plasteel/bar,
+/area/mine/living_quarters)
+"fl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/bar,
 /area/mine/living_quarters)
@@ -3201,65 +3241,6 @@
 	},
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
-"ot" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"pa" = (
-/turf/open/floor/plasteel/bar,
-/area/mine/living_quarters)
-"rG" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp/security)
-"rJ" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/living_quarters)
-"wq" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall,
-/area/mine/living_quarters)
-"zV" = (
-/turf/open/floor/plasteel/purple/corner{
-	dir = 4
-	},
-/area/mine/production)
-"AN" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/eva)
-"EG" = (
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Fz" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/r_wall,
-/area/mine/maintenance)
-"GY" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/open/lava/smooth/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Jh" = (
-/turf/open/floor/plasteel/purple/corner{
-	dir = 4
-	},
-/area/mine/living_quarters)
-"OT" = (
-/turf/open/floor/plasteel/purple/corner{
-	dir = 8
-	},
-/area/mine/production)
-"QL" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp)
 "Uq" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -3272,11 +3253,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"VD" = (
-/turf/open/floor/plasteel/brown{
-	dir = 4
-	},
-/area/mine/production)
 "Wp" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -3288,6 +3264,14 @@
 	width = 7
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"Wt" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/laborcamp/security)
+"Wz" = (
+/obj/effect/mapping_helpers/planet_z,
+/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "WA" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3340,10 +3324,26 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"Zo" = (
+"WF" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/laborcamp)
+"WH" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/eva)
+"WI" = (
 /obj/effect/baseturf_helper/lava_land/surface,
 /turf/closed/wall,
 /area/mine/production)
+"WJ" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall/r_wall,
+/area/mine/maintenance)
+"WK" = (
+/obj/effect/baseturf_helper/lava_land/surface,
+/turf/closed/wall,
+/area/mine/living_quarters)
 
 (1,1,1) = {"
 aa
@@ -3600,7 +3600,7 @@ aj
 aj
 aj
 aj
-GY
+Wz
 "}
 (2,1,1) = {"
 aa
@@ -8187,7 +8187,7 @@ aP
 aq
 aZ
 aq
-ao
+bh
 aq
 aJ
 aq
@@ -8445,7 +8445,7 @@ aq
 WB
 aq
 bi
-QL
+WF
 WC
 aq
 bZ
@@ -8706,7 +8706,7 @@ az
 az
 aq
 ca
-rG
+Wt
 ca
 aj
 aj
@@ -8963,7 +8963,7 @@ az
 az
 aq
 cb
-bh
+cw
 cG
 aj
 aj
@@ -9220,7 +9220,7 @@ az
 by
 bL
 cc
-bw
+cx
 cG
 aj
 aj
@@ -9477,7 +9477,7 @@ az
 bz
 aq
 cd
-ci
+cy
 cG
 aj
 aj
@@ -11026,7 +11026,7 @@ cQ
 dh
 dx
 cQ
-Jh
+ea
 ep
 ek
 cM
@@ -11796,7 +11796,7 @@ ai
 cQ
 dk
 dA
-Fz
+WJ
 ed
 er
 eM
@@ -12568,7 +12568,7 @@ cR
 dm
 dC
 dQ
-Jh
+ea
 er
 dZ
 cM
@@ -12828,7 +12828,7 @@ dR
 ef
 es
 dZ
-rJ
+WK
 fg
 cM
 cM
@@ -13341,14 +13341,14 @@ cM
 cM
 eg
 et
-ot
-ot
+eN
+eN
 fi
-ot
-ot
+eN
+eN
 fi
 fN
-ot
+eN
 fi
 fp
 cR
@@ -13848,18 +13848,18 @@ aD
 aD
 aj
 aj
-wq
+cN
 cT
 cV
 dG
 cM
-Jh
+ea
 er
 eM
 cM
 fj
-pa
-pa
+fk
+fk
 fI
 cM
 ab
@@ -14114,10 +14114,10 @@ ei
 eu
 ek
 dQ
-pa
-pa
+fk
+fk
 fC
-pa
+fk
 cM
 ab
 aj
@@ -14368,10 +14368,10 @@ dq
 dI
 cM
 ej
-EG
+ev
 eK
 eR
-fk
+fl
 fu
 fD
 fJ
@@ -14628,8 +14628,8 @@ dZ
 er
 eL
 dQ
-pa
-pa
+fk
+fk
 fE
 fK
 cM
@@ -14886,9 +14886,9 @@ er
 dZ
 cM
 fm
-pa
+fk
 fF
-pa
+fk
 cM
 ai
 aj
@@ -18222,7 +18222,7 @@ bq
 bq
 bq
 br
-OT
+cH
 eB
 cD
 br
@@ -18473,9 +18473,9 @@ bC
 bP
 cl
 bP
-OT
-cr
-cw
+cH
+cO
+cX
 ck
 dJ
 dT
@@ -18985,11 +18985,11 @@ ab
 br
 bE
 bR
-zV
-VD
+cn
+cF
 cI
 cP
-zV
+cn
 bP
 bP
 bP
@@ -19250,9 +19250,9 @@ cZ
 ds
 dK
 dU
-VD
+cF
 eE
-zV
+cn
 eV
 br
 ab
@@ -19763,7 +19763,7 @@ bq
 da
 du
 dL
-OT
+cH
 ck
 eG
 cD
@@ -20014,16 +20014,16 @@ bt
 bH
 bV
 cq
-AN
+WH
 bq
-Zo
+WI
 db
 bP
 bP
 bP
 bP
 eH
-VD
+cF
 eW
 bq
 ab
@@ -20270,7 +20270,7 @@ bp
 bu
 bI
 bW
-aV
+cr
 bf
 ad
 bq
