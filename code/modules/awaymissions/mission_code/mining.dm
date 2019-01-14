@@ -2,80 +2,119 @@
 // -----Vr Stuff----- //
 //					  //
 
-/obj/machinery/vr_sleeper/miner
-	name = "mining virtual reality sleeper"
-	desc = "A virtual reality training simulator for mining expeditions."
-	vr_category = "mining"
-
-/datum/outfit/job/miner/vr_megafauna_fighter
-	name = "Megafauna Fighter"
-	suit = /obj/item/clothing/suit/hooded/explorer
-	mask = /obj/item/clothing/mask/gas/explorer
-	glasses = /obj/item/clothing/glasses/meson
-	suit_store = /obj/item/tank/internals/oxygen
-	internals_slot = SLOT_S_STORE
-	backpack_contents = list(
-		/obj/item/kitchen/knife/combat/survival=1,
-		/obj/item/gun/energy/kinetic_accelerator=2,
-		/obj/item/organ/regenerative_core/legion=4)
-
-/datum/outfit/job/miner/vr_megafauna_fighter/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	if(istype(H.wear_suit, /obj/item/clothing/suit/hooded))
-		var/obj/item/clothing/suit/hooded/S = H.wear_suit
-		S.ToggleHood()
-	var/obj/item/card/id/id_card = H.get_idcard(FALSE)
-	if(id_card)
-		id_card.mining_points = 50000
-
-/obj/machinery/vr_sleeper/miner/build_virtual_human(mob/living/carbon/human/H, location, var/datum/outfit/outfit, transfer = TRUE)
-	if(H)
-		cleanup_vr_human()
-		vr_human = new /mob/living/carbon/human/virtual_reality(location)
-		vr_human.mind_initialize()
-		vr_human.vr_sleeper = src
-		vr_human.real_mind = H.mind
-		H.dna.transfer_identity(vr_human)
-		vr_human.name = H.name
-		vr_human.real_name = H.real_name
-		vr_human.socks = H.socks
-		vr_human.undershirt = H.undershirt
-		vr_human.underwear = H.underwear
-		vr_human.updateappearance(TRUE, TRUE, TRUE)
-		if(outfit)
-			var/datum/outfit/O = new outfit()
-			O.equip(vr_human)
-		if(transfer && H.mind)
-			SStgui.close_user_uis(H, src)
-			vr_human.ckey = H.ckey
-		vr_human.equipOutfit(/datum/outfit/job/miner/vr_megafauna_fighter)
-		var/turf/on = get_turf(vr_human)
-		for(var/obj/item/I in on.contents)
-			qdel(I) // clean up junk left over after other spawns unless it was moved
-		new /obj/item/clothing/suit/hooded/cloak/drake(vr_human.loc)
-		new /obj/item/mining_voucher(vr_human.loc)
-		new /obj/item/warp_cube/red(vr_human.loc)
-		new /obj/item/clothing/suit/space/hostile_environment(vr_human.loc)
-		new /obj/item/clothing/head/helmet/space/hostile_environment(vr_human.loc)
-		new /obj/item/crusher_trophy/vortex_talisman(vr_human.loc)
-		new /obj/item/crusher_trophy/demon_claws(vr_human.loc)
-		new /obj/item/crusher_trophy/tail_spike(vr_human.loc)
-		new /obj/item/crusher_trophy/miner_eye(vr_human.loc)
-		new /obj/item/crusher_trophy/legion_skull(vr_human.loc)
-		new /obj/item/crusher_trophy/goliath_tentacle(vr_human.loc)
-		new /obj/item/crusher_trophy/blaster_tubes/magma_wing(vr_human.loc)
-		new /obj/item/crusher_trophy/watcher_wing(vr_human.loc)
-		new /obj/item/crusher_trophy/blaster_tubes(vr_human.loc)
-
 /area/awaymission/vr/miner
 	name = "VrMining"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
+/datum/outfit/job/miner/equipped/vr
+	name = "Virtual Reality Miner"
+	suit = /obj/item/clothing/suit/hooded/explorer
+	mask = /obj/item/clothing/mask/gas/explorer
+	glasses = /obj/item/clothing/glasses/hud/health
+	suit_store = /obj/item/tank/internals/oxygen
+	internals_slot = SLOT_S_STORE
+	backpack_contents = list(
+		/obj/item/gun/energy/kinetic_accelerator=2)
+
 /obj/effect/landmark/vr_spawn/miner
-	vr_category = "mining"
+	vr_outfit = /datum/outfit/job/miner/equipped/vr
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear
+	name = "armory chest"
+	desc = "Has some sick nasty respawning gear."
+	icon_state = "necrocrate"
+	resistance_flags = INDESTRUCTIBLE
+	anchored = TRUE
+	move_resist=INFINITY
+	var/respawn_loot = list() // put types and count in here
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/dump_contents() // respawn loot on the chest
+	var/atom/L = drop_location()
+	for(var/type in respawn_loot)
+		var/count = respawn_loot[type]
+		if(!isnum(count))//Default to 1
+			count = 1
+		for(var/i = 1 to count)
+			new type(L)
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/take_contents() // delete loot on the chest
+	var/atom/L = drop_location()
+	for(var/atom/movable/AM in L)
+		if(AM == src || isliving(AM))
+			continue
+		qdel(AM)
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/armor
+	name = "Armor Chest"
+	desc = "Contains an assortment of lavaland armors."
+	respawn_loot = list(
+		/obj/item/clothing/suit/hooded/cloak/drake=1,
+		/obj/item/clothing/suit/space/hostile_environment=1,
+		/obj/item/clothing/head/helmet/space/hostile_environment=1,
+		/obj/item/clothing/suit/space/hardsuit/cult=1,
+		/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker=1,
+		/obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor=1,
+		/obj/item/stack/sheet/animalhide/goliath_hide=6)
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/accelerator
+	name = "Kinetic Accelerator Chest"
+	desc = "Contains an assortment of kinetic accelerator equipment."
+	respawn_loot = list(
+		/obj/item/gun/energy/kinetic_accelerator=1,
+		/obj/item/borg/upgrade/modkit/lifesteal=1,
+		/obj/item/borg/upgrade/modkit/aoe/mobs=1,
+		/obj/item/borg/upgrade/modkit/tracer=1,
+		/obj/item/borg/upgrade/modkit/tracer/adjustable=1,
+		/obj/item/borg/upgrade/modkit/chassis_mod=1,
+		/obj/item/borg/upgrade/modkit/chassis_mod/orange=1,
+		/obj/item/borg/upgrade/modkit/range=3,
+		/obj/item/borg/upgrade/modkit/damage=3,
+		/obj/item/borg/upgrade/modkit/cooldown=3,
+		/obj/item/borg/upgrade/modkit/aoe/turfs/andmobs=1,
+		/obj/item/borg/upgrade/modkit/cooldown/repeater=1,
+		/obj/item/borg/upgrade/modkit/resonator_blasts=1,
+		/obj/item/borg/upgrade/modkit/bounty=1)
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/crusher
+	name = "Kinetic Crusher Chest"
+	desc = "Contains an assortment of kinetic crusher equipment."
+	respawn_loot = list(
+		/obj/item/twohanded/required/kinetic_crusher=1,
+		/obj/item/crusher_trophy/vortex_talisman=1,
+		/obj/item/crusher_trophy/demon_claws=1,
+		/obj/item/crusher_trophy/tail_spike=1,
+		/obj/item/crusher_trophy/miner_eye=1,
+		/obj/item/crusher_trophy/legion_skull=1,
+		/obj/item/crusher_trophy/goliath_tentacle=1,
+		/obj/item/crusher_trophy/blaster_tubes/magma_wing=1,
+		/obj/item/crusher_trophy/watcher_wing=1,
+		/obj/item/crusher_trophy/blaster_tubes=1)
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/healing
+	name = "Healing Chest"
+	desc = "Contains an assortment of healing items."
+	respawn_loot = list(
+		/obj/item/reagent_containers/hypospray/medipen/survival=2,
+		/obj/item/storage/firstaid/brute=2,
+		/obj/item/hivelordstabilizer=5,
+		/obj/item/organ/regenerative_core/legion=5)
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/food
+	name = "Food Chest"
+	desc = "Fresh from the virtual cafeteria."
+	respawn_loot = list(
+		/obj/item/reagent_containers/food/snacks/donkpocket/warm=5)
+
+/obj/structure/closet/crate/necropolis/vr_mining_gear/misc
+	name = "Miscellaneous Chest"
+	desc = "Contains an assortment of random lavaland items."
+	respawn_loot = list(
+		/obj/item/warp_cube/red=1,
+		/obj/item/reagent_containers/glass/bottle/potion/flight=1,
+		/obj/item/organ/heart/cursed/wizard=1,
+		/obj/item/immortality_talisman=1,
+		/obj/item/book/granter/spell/summonitem=1)
 
 //														   //
 // -----Virtual Megafauna Spawners and Linked Portals----- //
@@ -130,27 +169,27 @@
 	icon_state = "legion"
 	mob_types = list(/mob/living/simple_animal/hostile/megafauna/legion/virtual)
 
-/obj/effect/portal/permanant/megafauna_arena
+/obj/effect/portal/permanent/megafauna_arena
 	name = "megafauna portal"
 	desc = "Leads to a place of unspeakable torment."
 	mech_sized = TRUE
 
-/obj/effect/portal/permanant/megafauna_arena/attackby(obj/item/W, mob/user, params)
+/obj/effect/portal/permanent/megafauna_arena/attackby(obj/item/W, mob/user, params)
 	if(ismegafauna(user))
 		return 0
 	. = ..()
 
-/obj/effect/portal/permanant/megafauna_arena/Crossed(atom/movable/AM, oldloc)
+/obj/effect/portal/permanent/megafauna_arena/Crossed(atom/movable/AM, oldloc)
 	if(ismegafauna(AM))
 		return 0
 	. = ..()
 
-/obj/effect/portal/permanant/megafauna_arena/attack_hand(mob/user)
+/obj/effect/portal/permanent/megafauna_arena/attack_hand(mob/user)
 	if(ismegafauna(user))
 		return 0
 	. = ..()
 
-/obj/effect/portal/permanant/megafauna_arena/teleport(atom/movable/M, force = FALSE)
+/obj/effect/portal/permanent/megafauna_arena/teleport(atom/movable/M, force = FALSE)
 	if(ismegafauna(M))
 		return 0
 	. = ..()

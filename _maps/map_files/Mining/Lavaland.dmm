@@ -3805,7 +3805,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 8
 	},
-/obj/machinery/vr_sleeper/miner,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "zu" = (
@@ -3914,10 +3913,6 @@
 /area/mine/living_quarters)
 "HO" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply,
-/turf/open/floor/plasteel,
-/area/mine/living_quarters)
-"Iv" = (
-/obj/machinery/vr_sleeper/miner,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "IG" = (
@@ -11616,9 +11611,9 @@ cQ
 dg
 dg
 cQ
-Iv
+dZ
 yR
-Iv
+dZ
 cM
 fa
 fo
