@@ -266,19 +266,19 @@
 
 /obj/item/storage/pill_bottle/lsd
 	name = "suspicious pill bottle"
-	desc = "There is a badly drawn thing with the shape of a mushroom."
+	desc = "There is a crude drawing which could be either a mushroom, or a deformed moon."
 
 /obj/item/storage/pill_bottle/lsd/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/lsd(src)
 
-/obj/item/storage/pill_bottle/smugglers_run
+/obj/item/storage/pill_bottle/aranesp
 	name = "suspicious pill bottle"
 	desc = "The label has 'fuck disablers' hastily scrawled in black marker."
 
-/obj/item/storage/pill_bottle/smugglers_run/PopulateContents()
+/obj/item/storage/pill_bottle/aranesp/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/smugglers_run(src)
+		new /obj/item/reagent_containers/pill/aranesp(src)
 
 /obj/item/storage/pill_bottle/psicodine
 	name = "bottle of psicodine pills"

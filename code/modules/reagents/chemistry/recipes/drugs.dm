@@ -35,10 +35,10 @@
 	required_reagents = list("bad_food" = 1, "saltpetre" = 1, "nutriment" = 1, "cleaner" = 1, "enzyme" = 1, "tea" = 1, "mercury" = 1)
 	required_temp = 374
 
-/datum/chemical_reaction/smugglers_run
-	name = "smugglers_run"
-	id = "smugglers_run"
-	results = list("smugglers_run" = 3)
+/datum/chemical_reaction/aranesp
+	name = "aranesp"
+	id = "aranesp"
+	results = list("aranesp" = 3)
 	required_reagents = list("epinephrine" = 1, "atropine" = 1, "morphine" = 1)
 
 /datum/chemical_reaction/happiness

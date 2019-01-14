@@ -145,7 +145,7 @@
 		/datum/reagent/toxin/heparin,\
 		/datum/reagent/medicine/pen_acid,\
 		/datum/reagent/medicine/atropine,\
-		/datum/reagent/drug/smugglers_run,\
+		/datum/reagent/drug/aranesp,\
 		/datum/reagent/drug/krokodil,\
 		/datum/reagent/drug/methamphetamine,\
 		/datum/reagent/teslium,\

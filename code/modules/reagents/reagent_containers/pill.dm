@@ -217,10 +217,10 @@
 	icon_state = "pill14"
 
 
-/obj/item/reagent_containers/pill/smugglers_run
-	name = "smuggler's run pill"
-	desc = "These pills are the chemical rebuke to disabler shots; amazingly taken by smugglers on the run."
-	list_reagents = list("smugglers_run" = 10)
+/obj/item/reagent_containers/pill/aranesp
+	name = "smooth pill"
+	desc = "This blue pill is feels slightly moist."
+	list_reagents = list("aranesp" = 10)
 	icon_state = "pill3"
 
 /obj/item/reagent_containers/pill/happiness
