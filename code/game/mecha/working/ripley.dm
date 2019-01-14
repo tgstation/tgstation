@@ -142,8 +142,8 @@
 /obj/mecha/working/ripley/Topic(href, href_list)
 	..()
 	if(href_list["drop_from_cargo"])
-		var/obj/O = locate(href_list["drop_from_cargo"])
-		if(O && O in src.cargo)
+		var/obj/O = locate(href_list["drop_from_cargo"]) in cargo
+		if(O)
 			occupant_message("<span class='notice'>You unload [O].</span>")
 			O.forceMove(drop_location())
 			cargo -= O

@@ -74,15 +74,17 @@
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
-	light_color = LIGHT_COLOR_GREEN
 	icon_state = "greenglow"
-
-/obj/effect/decal/cleanable/greenglow/Initialize(mapload)
-	. = ..()
-	set_light(1)
+	light_power = 3
+	light_range = 2
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
+
+/obj/effect/decal/cleanable/greenglow/filled/Initialize()
+	. = ..()
+	reagents.add_reagent(pick("uranium", "radium"), 5)
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
