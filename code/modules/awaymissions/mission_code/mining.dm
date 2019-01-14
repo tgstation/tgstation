@@ -68,13 +68,13 @@
 		/obj/item/borg/upgrade/modkit/tracer/adjustable=1,
 		/obj/item/borg/upgrade/modkit/chassis_mod=1,
 		/obj/item/borg/upgrade/modkit/chassis_mod/orange=1,
-		/obj/item/borg/upgrade/modkit/range=3,
-		/obj/item/borg/upgrade/modkit/damage=3,
-		/obj/item/borg/upgrade/modkit/cooldown=3,
 		/obj/item/borg/upgrade/modkit/aoe/turfs/andmobs=1,
 		/obj/item/borg/upgrade/modkit/cooldown/repeater=1,
 		/obj/item/borg/upgrade/modkit/resonator_blasts=1,
-		/obj/item/borg/upgrade/modkit/bounty=1)
+		/obj/item/borg/upgrade/modkit/bounty=1,
+		/obj/item/borg/upgrade/modkit/range=3,
+		/obj/item/borg/upgrade/modkit/damage=3,
+		/obj/item/borg/upgrade/modkit/cooldown=3)
 
 /obj/structure/closet/crate/necropolis/vr_mining_gear/crusher
 	name = "Kinetic Crusher Chest"
