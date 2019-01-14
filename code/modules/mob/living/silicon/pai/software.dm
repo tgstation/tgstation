@@ -214,7 +214,7 @@
 					if(silent)
 						return alert("Communications circuits remain uninitialized.")
 
-					var/target = locate(href_list["target"])
+					var/target = locate(href_list["target"]) in GLOB.PDAs
 					pda.create_message(src, target)
 
 		// Accessing medical records

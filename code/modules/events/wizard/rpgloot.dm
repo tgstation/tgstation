@@ -18,9 +18,12 @@
 			var/obj/item/storage/S = I
 			GET_COMPONENT_FROM(STR, /datum/component/storage, S)
 			if(prob(upgrade_scroll_chance) && S.contents.len < STR.max_items && !S.invisibility)
-				var/obj/item/upgradescroll/scroll = new
+				var/obj/item/upgradescroll/scroll = new(get_turf(S))
 				SEND_SIGNAL(S, COMSIG_TRY_STORAGE_INSERT, scroll, null, TRUE, TRUE)
 				upgrade_scroll_chance = max(0,upgrade_scroll_chance-100)
+				if(isturf(scroll.loc))
+					qdel(scroll)
+
 			upgrade_scroll_chance += 25
 
 	GLOB.rpg_loot_items = TRUE
@@ -34,7 +37,7 @@
 
 	var/upgrade_amount = 1
 	var/can_backfire = TRUE
-	var/one_use = TRUE
+	var/uses = 1
 
 /obj/item/upgradescroll/afterattack(obj/item/target, mob/user , proximity)
 	. = ..()
@@ -42,25 +45,40 @@
 		return
 
 	var/datum/rpg_loot/rpg_loot_datum = target.rpg_loot
+	var/turf/T = get_turf(target)
+
 	if(!istype(rpg_loot_datum))
+		var/original_name = "[target]"
 		target.rpg_loot = rpg_loot_datum = new /datum/rpg_loot(target)
 
-	var/quality = rpg_loot_datum.quality
+		var/span
+		var/effect_description
+		if(target.rpg_loot.quality >= 0)
+			span = "<span class='notice'>"
+			effect_description = "<span class='heavy_brass'>shimmering golden shield</span>"
+		else
+			span = "<span class='danger'>"
+			effect_description = "<span class='umbra_emphasis'>mottled black glow</span>"
 
-	if(can_backfire && (quality > 9 && prob((quality - 9)*10)))
-		to_chat(user, "<span class='danger'>[target] violently glows blue for a while, then evaporates.</span>")
-		target.burn()
+		T.visible_message("[span][original_name] is covered by a [effect_description] and then transforms into [target]!</span>")
+
 	else
-		to_chat(user, "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>")
-		rpg_loot_datum.modify(upgrade_amount)
+		var/quality = rpg_loot_datum.quality
 
-	if(one_use)
+		if(can_backfire && quality > 9 && prob((quality - 9)*10))
+			T.visible_message("<span class='danger'>[target] <span class='inathneq_large'>violently glows blue</span> for a while, then evaporates.</span>")
+			target.burn()
+		else
+			T.visible_message("<span class='notice'>[target] <span class='inathneq_small'>glows blue</span> and seems vaguely \"better\"!</span>")
+			rpg_loot_datum.modify(upgrade_amount)
+
+	if(--uses <= 0)
 		qdel(src)
 
 /obj/item/upgradescroll/unlimited
 	name = "unlimited foolproof item fortification scroll"
 	desc = "Somehow, this piece of paper can be applied to items to make them \"better\". This scroll is made from the tongues of dead paper wizards, and can be used an unlimited number of times, with no drawbacks."
-	one_use = FALSE
+	uses = INFINITY
 	can_backfire = FALSE
 
 /datum/rpg_loot

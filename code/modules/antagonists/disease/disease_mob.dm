@@ -367,7 +367,7 @@ the new instance inside the host to be updated to the template's stats.
 		set_following(L)
 
 	if(href_list["buy_ability"])
-		var/datum/disease_ability/A = locate(href_list["buy_ability"])
+		var/datum/disease_ability/A = locate(href_list["buy_ability"]) in unpurchased_abilities
 		if(!istype(A))
 			return
 		if(A.CanBuy(src))
@@ -375,7 +375,7 @@ the new instance inside the host to be updated to the template's stats.
 		adaptation_menu()
 
 	if(href_list["refund_ability"])
-		var/datum/disease_ability/A = locate(href_list["refund_ability"])
+		var/datum/disease_ability/A = locate(href_list["refund_ability"]) in purchased_abilities
 		if(!istype(A))
 			return
 		if(A.CanRefund(src))
@@ -383,7 +383,7 @@ the new instance inside the host to be updated to the template's stats.
 		adaptation_menu()
 
 	if(href_list["examine_ability"])
-		var/datum/disease_ability/A = locate(href_list["examine_ability"])
+		var/datum/disease_ability/A = locate(href_list["examine_ability"]) in GLOB.disease_ability_singletons
 		if(!istype(A))
 			return
 		examining_ability = A

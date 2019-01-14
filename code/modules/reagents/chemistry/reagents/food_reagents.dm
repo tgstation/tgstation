@@ -410,7 +410,7 @@
 	taste_description = "childhood whimsy"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
-	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
+	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()

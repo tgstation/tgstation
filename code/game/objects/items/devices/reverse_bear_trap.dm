@@ -96,7 +96,7 @@
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, SLOT_HEAD)
 	arm()
-	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/beep.ogg')
+	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/beep.ogg', notify_volume = 75)
 
 /obj/item/reverse_bear_trap/proc/snap()
 	reset()
