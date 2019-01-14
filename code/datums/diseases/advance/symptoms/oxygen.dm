@@ -64,4 +64,5 @@ Bonus
 /datum/symptom/oxygen/End(datum/disease/advance/A)
 	if(!..())
 		return
-	A.affected_mob.remove_trait(TRAIT_NOBREATH, DISEASE_TRAIT)
+	if(A.stage >= 4)
+		A.affected_mob.remove_trait(TRAIT_NOBREATH, DISEASE_TRAIT)
