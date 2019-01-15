@@ -36,6 +36,8 @@
 
 #define STATUS_EFFECT_GOOD_MUSIC /datum/status_effect/good_music
 
+#define STATUS_EFFECT_LEGION_CORE /datum/status_effect/legion_core
+
 /////////////
 // DEBUFFS //
 /////////////

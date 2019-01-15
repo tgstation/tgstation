@@ -492,6 +492,16 @@
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
 
+/mob/living/proc/remove_CC()
+	SetStun(0, FALSE)
+	SetKnockdown(0, FALSE)
+	SetImmobilized(0, FALSE)
+	SetParalyzed(0, FALSE)
+	SetSleeping(0, FALSE)
+	setStaminaLoss(0)
+	bodytemperature = BODYTEMP_NORMAL
+	update_mobility()
+	
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
 	restore_blood()
@@ -499,17 +509,10 @@
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
 	setBrainLoss(0)
-	setStaminaLoss(0, 0)
 	SetUnconscious(0, FALSE)
 	set_disgust(0)
-	SetStun(0, FALSE)
-	SetKnockdown(0, FALSE)
-	SetImmobilized(0, FALSE)
-	SetParalyzed(0, FALSE)
-	SetSleeping(0, FALSE)
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
-	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
 	set_eye_damage(0)
@@ -521,10 +524,10 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
-	update_mobility()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
+	remove_CC()
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
