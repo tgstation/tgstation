@@ -1843,7 +1843,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/blank_paper
 	name = "Blank Paper"
 	id = "blank_paper"
-	description = "A bubbling glass of blank paper, just looking at it makes you feel fresh."
+	description = "A bubbling glass of blank paper. Just looking at it makes you feel fresh."
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#DCDCDC" // rgb: 220, 220, 220
 	boozepwr = 20
