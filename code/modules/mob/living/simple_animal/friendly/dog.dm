@@ -267,7 +267,7 @@
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "pet_doggie", /datum/mood_event/pet_doggie, initial(src.name))
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
