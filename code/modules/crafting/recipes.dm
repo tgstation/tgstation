@@ -607,8 +607,8 @@
 /datum/crafting_recipe/wheelchair
 	name = "Wheelchair"
 	result = /obj/vehicle/ridden/wheelchair
-	reqs = list(/obj/item/stack/sheet/plasteel = 4,
-				/obj/item/stack/rods = 6)
+	reqs = list(/obj/item/stack/sheet/plasteel = 2,
+				/obj/item/stack/rods = 8)
 	time = 100
 	category = CAT_MISC
 
