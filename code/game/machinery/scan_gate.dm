@@ -6,7 +6,7 @@
 #define SCANGATE_WANTED			"Wanted"
 #define SCANGATE_SPECIES		"Species"
 #define SCANGATE_HYGIENE		"Hygiene"
-
+#define SCANGATE_NUTRITION		"Nutrition"
 
 /obj/machinery/scanner_gate
 	name = "scanner gate"
@@ -25,6 +25,7 @@
 	var/nanite_cloud = 0
 	var/datum/species/detect_species = /datum/species/human
 	var/reverse = FALSE //If true, signals if the scan returns false
+	var/detect_nutrition = NUTRITION_LEVEL_FAT
 
 /obj/machinery/scanner_gate/Initialize()
 	. = ..()
@@ -121,6 +122,14 @@
 				var/mob/living/carbon/human/H = M
 				if(H.hygiene <= HYGIENE_LEVEL_DIRTY) //Pungent indeed
 					beep = TRUE
+		if(SCANGATE_NUTRITION)
+			if(iscarbon(M))
+				var/mob/living/carbon/human/H = M
+				if(H.nutrition <= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_STARVING)
+					beep = TRUE
+				if(H.nutrition >= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_FAT)
+					beep = TRUE
+
 	if(reverse)
 		beep = !beep
 	if(beep)
@@ -154,6 +163,7 @@
 	data["nanite_cloud"] = nanite_cloud
 	data["disease_threshold"] = disease_threshold
 	data["target_species"] = initial(detect_species.name)
+	data["target_nutrition"] = detect_nutrition
 	return data
 
 /obj/machinery/scanner_gate/ui_act(action, params)
@@ -168,7 +178,8 @@
 																								SCANGATE_GUNS,
 																								SCANGATE_WANTED,
 																								SCANGATE_SPECIES,
-																								SCANGATE_HYGIENE)
+																								SCANGATE_HYGIENE,
+																								SCANGATE_NUTRITION)
 			if(new_mode)
 				scangate_mode = new_mode
 			. = TRUE
@@ -223,6 +234,16 @@
 					if("Zombie")
 						detect_species = /datum/species/zombie
 			. = TRUE
+		if("set_target_nutrition")
+			var/new_nutrition = input("Set target nutrition level","Scan Mode") as null|anything in list("Starving",
+																											"Obese")
+			if(new_nutrition)
+				switch(new_nutrition)
+					if("Starving")
+						detect_nutrition = NUTRITION_LEVEL_STARVING
+					if("Obese")
+						detect_nutrition = NUTRITION_LEVEL_FAT
+			. = TRUE
 
 #undef SCANGATE_NONE
 #undef SCANGATE_MINDSHIELD
@@ -232,3 +253,4 @@
 #undef SCANGATE_WANTED
 #undef SCANGATE_SPECIES
 #undef SCANGATE_HYGIENE
+#undef SCANGATE_NUTRITION
