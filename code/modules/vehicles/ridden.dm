@@ -5,7 +5,7 @@
 	buckle_lying = FALSE
 	default_driver_move = FALSE
 	var/legs_required = 2
-	var/arms_requires = 0	//why not?
+	var/arms_required = 0	//why not?
 
 /obj/vehicle/ridden/Initialize()
 	. = ..()

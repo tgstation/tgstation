@@ -7,7 +7,7 @@
 	max_integrity = 100
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 30)
 	legs_required = 0
-	arms_requires = 0
+	arms_required = 1
 	canmove = TRUE
 	density = FALSE
 	var/icon_overlay = "wheelchair_overlay"
@@ -19,7 +19,7 @@
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
+	D.vehicle_move_delay = 2.5
 	D.set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(NORTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -40,20 +40,12 @@
 	user = null
 	. = ..()
 
-/obj/vehicle/ridden/wheelchair/driver_move(mob/user, direction)
-	var/mob/living/carbon/human/H = user
-	if(istype(H))
-		if(!H.get_num_arms() && canmove)
-			to_chat(H, "<span class='warning'>You can't move the wheels without arms!</span>")
-			canmove = FALSE
-			addtimer(CALLBACK(src, .proc/stopmove), 20)
-			return FALSE
-		else
-			var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-			if(H.get_num_arms())
-				D.vehicle_move_delay = (movedelay/H.get_num_arms())
-			else
-				D.vehicle_move_delay = movedelay
+/obj/vehicle/ridden/wheelchair/buckle_mob(mob/living/H, force = 0, check_loc = 1)
+	if(!istype(H))
+		return 0
+	if(H.get_num_legs() < 2 && H.get_num_arms() <= 0)
+		to_chat(H, "<span class='warning'>Your limbless body can't ride the [src].</span>")
+		return 0
 	. = ..()
 
 /obj/vehicle/ridden/wheelchair/Move(mob/user)
