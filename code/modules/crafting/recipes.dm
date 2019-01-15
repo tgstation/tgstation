@@ -604,6 +604,13 @@
 				  /obj/item/assembly/igniter = 1)
 	category = CAT_MISC
 
+/datum/crafting_recipe/wheelchair
+	name = "Wheelchair"
+	result = /obj/vehicle/ridden/wheelchair
+	reqs = list(/obj/item/stack/sheet/plasteel = 4,
+				/obj/item/stack/rods = 6)
+	time = 100
+	category = CAT_MISC
 
 /datum/crafting_recipe/rcl
 	name = "Makeshift Rapid Cable Layer"
