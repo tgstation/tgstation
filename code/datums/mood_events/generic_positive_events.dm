@@ -23,10 +23,13 @@
 	mood_change = 3
 	timeout = 3000
 
-/datum/mood_event/pet_corgi
-	description = "<span class='nicegreen'>Corgis are adorable! I can't stop petting them!</span>\n"
+/datum/mood_event/pet_doggie
+	description = "<span class='nicegreen'>Dogs are adorable! I can't stop petting them!</span>\n"
 	mood_change = 3
 	timeout = 3000
+
+/datum/mood_event/pet_doggie/add_effects(name)//initial name of the animal, not a pet name
+	description = "<span class='nicegreen'>[name]s are adorable! I can't stop petting them!</span>\n"
 
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
