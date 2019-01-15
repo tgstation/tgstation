@@ -7,11 +7,7 @@
 	max_integrity = 100
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 30)
 	legs_required = 0
-<<<<<<< HEAD
-	arms_required = 1
-=======
-	arms_required = 1
->>>>>>> ab43a03a21128f0ec5b9005898ecf5e32a4c6f40
+	arms_required = 0
 	canmove = TRUE
 	density = FALSE
 	var/icon_overlay = "wheelchair_overlay"
