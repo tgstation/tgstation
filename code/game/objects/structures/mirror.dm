@@ -63,11 +63,22 @@
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
 
-/obj/structure/mirror/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
-		if(!disassembled)
-			new /obj/item/shard( src.loc )
+/obj/structure/mirror/crowbar_act(mob/user, obj/item/I)
+	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	user.visible_message("[user] begins to remove the glass from [src].", "<span class='notice'>You begin to take the glass off [src]...</span>")
+	if(I.use_tool(src, user, 50))
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+		user.visible_message("[user] removes the glass from [src].", "<span class='notice'>You remove the glass from [src].</span>")
+	if (broken)
+		new /obj/item/shard(user.loc)
+	else
+		new /obj/item/stack/sheet/glass(user.loc)
+	var/obj/structure/newframe = new /obj/structure/mirror_construct(drop_location())
+	newframe.pixel_x = pixel_x
+	newframe.pixel_y = pixel_y
+	transfer_fingerprints_to(newframe)
 	qdel(src)
+	return TRUE
 
 /obj/structure/mirror/welder_act(mob/living/user, obj/item/I)
 	if(user.a_intent == INTENT_HARM)
@@ -99,7 +110,7 @@
 
 /obj/item/wallframe/mirror
 	name = "mirror frame"
-	desc = "Really frames your face."
+	desc = "Mount it on a wall and add glass."
 	icon = 'icons/obj/wallframe.dmi'
 	icon_state = "mirror"
 	pixel_shift = 32
@@ -114,10 +125,9 @@
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
 	max_integrity = 200
-	var/obj/structure/newmirror = null
 	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)
 
-/obj/structure/mirror_construct/attackby(obj/item/W, mob/user, params)
+/obj/structure/mirror_construct/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stack/sheet/glass))
 		if(!W.tool_start_check(user, amount=2))
@@ -126,12 +136,28 @@
 		to_chat(user, "<span class='notice'>You start to add glass to the mirror frame...</span>")
 		if(W.use_tool(src, user, 20, amount=2))
 			to_chat(user, "<span class='notice'>You put in the glass panel.</span>")
-			newmirror = new /obj/structure/mirror(loc)
+			var/obj/structure/newmirror = new /obj/structure/mirror(drop_location())
 			newmirror.pixel_x = pixel_x
 			newmirror.pixel_y = pixel_y
 			newmirror.setDir(dir)
 			transfer_fingerprints_to(newmirror)
 			qdel(src)
+
+/obj/structure/mirror_construct/screwdriver_act(mob/living/user, obj/item/I)
+	to_chat(user, "<span class='notice'>You start unscrewing the frame...</span>")
+	if(I.use_tool(src, user, 20, volume=50))
+		to_chat(user, "<span class='notice'>You unscrew the frame from the wall.</span>")
+		var/obj/item/newframe = new /obj/item/wallframe/mirror(drop_location())
+		transfer_fingerprints_to(newframe)
+		qdel(src)
+		return
+
+
+/obj/structure/mirror_construct/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		if(!disassembled)
+			new /obj/item/stack/sheet/metal(loc, 3)
+	qdel(src)
 
 // magic mirrors
 
