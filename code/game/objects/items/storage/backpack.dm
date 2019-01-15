@@ -297,6 +297,10 @@
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
 
+/obj/item/storage/backpack/satchel/flat/Initialize()
+	. = ..()
+	add_trait(TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
+
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)

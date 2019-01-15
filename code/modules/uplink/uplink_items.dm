@@ -1142,7 +1142,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "This satchel is thin enough to be hidden in the gap between plating and tiling; great for stashing \
 			your stolen goods. Comes with a crowbar, a floor tile and some contraband inside."
 	item = /obj/item/storage/backpack/satchel/flat/with_tools
-	cost = 2
+	cost = 1
 	surplus = 30
 
 //Space Suits and Hardsuits
