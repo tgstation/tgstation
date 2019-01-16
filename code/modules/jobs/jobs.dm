@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(station_positions, list(
 	"Chaplain",
 	"Clown",
 	"Mime",
-	"Assistant"
+	"Assistant",
 	"AI",
 	"Cyborg",
 	ROLE_PAI))
