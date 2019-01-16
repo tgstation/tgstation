@@ -555,13 +555,13 @@
 	owner.confused = max(0, owner.confused - 1)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
-/datum/status_effect/legion_core
-	id = "Legion Core"
+/datum/status_effect/regenerative_core
+	id = "Regenerative Core"
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
 
-/datum/status_effect/legion_core/on_apply()
-	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "legion_core")
+/datum/status_effect/regenerative_core/on_apply()
+	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
 	owner.remove_CC()	
