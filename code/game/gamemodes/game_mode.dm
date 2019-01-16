@@ -110,7 +110,7 @@
 
 	for(var/client/C in GLOB.admins)
 		var/datum/admins/D = C.holder
-		if(!D || D.deadmined || !C.mob)
+		if(D?.deadmined != FALSE || !length(C.mob?mind.?antag_datums))
 			continue
 		if(!C.mob.mind)
 			continue
