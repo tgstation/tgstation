@@ -335,7 +335,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "grappa"
 	description = "A fine Italian brandy, for when regular wine just isn't alcoholic enough for you."
 	color = "#F8EBF1"
-	boozepwr = 45
+	boozepwr = 60
 	taste_description = "classy bitter sweetness"
 	glass_icon_state = "grappa"
 	glass_name = "glass of grappa"
@@ -658,7 +658,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "irishcream"
 	description = "Whiskey-imbued cream, what else would you expect from the Irish?"
 	color = "#664300" // rgb: 102, 67, 0
-	boozepwr = 70
+	boozepwr = 50
 	quality = DRINK_NICE
 	taste_description = "creamy alcohol"
 	glass_icon_state = "irishcreamglass"
@@ -954,7 +954,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "red_mead"
 	description = "The true Viking drink! Even though it has a strange red color."
 	color = "#C73C00" // rgb: 199, 60, 0
-	boozepwr = 51 //Red drinks are stronger
+	boozepwr = 31 //Red drinks are stronger
 	quality = DRINK_GOOD
 	taste_description = "sweet and salty alcohol"
 	glass_icon_state = "red_meadglass"
@@ -967,7 +967,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "A Viking drink, though a cheap one."
 	color = "#664300" // rgb: 102, 67, 0
 	nutriment_factor = 1 * REAGENTS_METABOLISM
-	boozepwr = 50
+	boozepwr = 30
 	quality = DRINK_NICE
 	taste_description = "sweet, sweet alcohol"
 	glass_icon_state = "meadglass"
