@@ -36,6 +36,7 @@
 	plantname = "Red Onion Sprouts"
 	weed_chance = 1
 	product = /obj/item/reagent_containers/food/snacks/grown/onion/red
+	genes = list(/datum/plant_gene/trait/smoke)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "tearjuice" = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/onion/red
