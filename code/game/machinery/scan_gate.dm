@@ -25,6 +25,7 @@
 	var/nanite_cloud = 0
 	var/datum/species/detect_species = /datum/species/human
 	var/reverse = FALSE //If true, signals if the scan returns false
+	var/detect_hygiene = HYGIENE_LEVEL_DIRTY
 	var/detect_nutrition = NUTRITION_LEVEL_FAT
 
 /obj/machinery/scanner_gate/Initialize()
@@ -120,7 +121,9 @@
 		if(SCANGATE_HYGIENE)
 			if(iscarbon(M))
 				var/mob/living/carbon/human/H = M
-				if(H.hygiene <= HYGIENE_LEVEL_DIRTY) //Pungent indeed
+				if(H.hygiene >= detect_hygiene && detect_hygiene == HYGIENE_LEVEL_CLEAN)
+					beep = TRUE
+				if(H.hygiene <= detect_hygiene && detect_hygiene == HYGIENE_LEVEL_DIRTY)
 					beep = TRUE
 		if(SCANGATE_NUTRITION)
 			if(iscarbon(M))
@@ -163,6 +166,7 @@
 	data["nanite_cloud"] = nanite_cloud
 	data["disease_threshold"] = disease_threshold
 	data["target_species"] = initial(detect_species.name)
+	data["target_hygiene"] = detect_hygiene
 	data["target_nutrition"] = detect_nutrition
 	return data
 
@@ -233,6 +237,16 @@
 						detect_species = /datum/species/golem
 					if("Zombie")
 						detect_species = /datum/species/zombie
+			. = TRUE
+		if("set_target_hygiene")
+			var/new_hygiene = input("Set target hygiene level","Scan Mode") as null|anything in list("Clean",
+																									"Filthy")
+			if(new_hygiene)
+				switch(new_hygiene)
+					if("Clean")
+						detect_hygiene = HYGIENE_LEVEL_CLEAN
+					if("Filthy")
+						detect_hygiene = HYGIENE_LEVEL_DIRTY
 			. = TRUE
 		if("set_target_nutrition")
 			var/new_nutrition = input("Set target nutrition level","Scan Mode") as null|anything in list("Starving",
