@@ -15,10 +15,10 @@ var/admin_weight = 5 // admins are more likely to join a server with less admins
 var/player_substr = "players=" // search for this substring to locate # of players
 var/admin_substr  = "admins=" // search for this to locate # of admins
 
-world
+/world
 	name = "TGstation Redirector"
 
-world/New()
+/world/New()
 	..()
 	gen_configs()
 
@@ -29,7 +29,7 @@ world/New()
 
 	var/link = ""
 
-mob/Login()
+/mob/Login()
 	..()
 
 	var/list/weights = list()
@@ -60,7 +60,7 @@ mob/Login()
 
 	src << link(serverlink)
 
-proc/extract(var/data, var/type = PLAYERS)
+/proc/extract(var/data, var/type = PLAYERS)
 
 	var/nextpos = 0
 

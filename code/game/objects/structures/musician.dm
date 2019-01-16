@@ -336,8 +336,8 @@
 /obj/structure/piano/unanchored
 	anchored = FALSE
 
-/obj/structure/piano/New()
-	..()
+/obj/structure/piano/Initialize()
+	. = ..()
 	song = new("piano", src)
 
 	if(prob(50) && icon_state == initial(icon_state))

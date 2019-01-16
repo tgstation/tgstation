@@ -645,6 +645,11 @@
 	name = "health doll"
 	screen_loc = ui_healthdoll
 
+/obj/screen/healthdoll/Click()
+	if (ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.check_self_for_injuries()
+
 /obj/screen/mood
 	name = "mood"
 	icon_state = "mood5"

@@ -190,8 +190,17 @@
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
-	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
+	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
 	scan_reagents = TRUE
+
+/obj/item/clothing/glasses/sunglasses/reagent/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user) && slot == SLOT_GLASSES)
+		user.add_trait(TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
+
+/obj/item/clothing/glasses/sunglasses/reagent/dropped(mob/user)
+	. = ..()
+	user.remove_trait(TRAIT_BOOZE_SLIDER, CLOTHING_TRAIT)
 
 /obj/item/clothing/glasses/sunglasses/garb
 	name = "black gar glasses"
@@ -327,8 +336,8 @@
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/thermal/syndi/New()
-	..()
+/obj/item/clothing/glasses/thermal/syndi/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
