@@ -119,14 +119,14 @@
 					beep = TRUE
 					break
 		if(SCANGATE_HYGIENE)
-			if(iscarbon(M))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.hygiene >= detect_hygiene && detect_hygiene == HYGIENE_LEVEL_CLEAN)
 					beep = TRUE
 				if(H.hygiene <= detect_hygiene && detect_hygiene == HYGIENE_LEVEL_DIRTY)
 					beep = TRUE
 		if(SCANGATE_NUTRITION)
-			if(iscarbon(M))
+			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.nutrition <= detect_nutrition && detect_nutrition == NUTRITION_LEVEL_STARVING)
 					beep = TRUE
