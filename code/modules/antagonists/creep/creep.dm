@@ -175,8 +175,9 @@
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!H.mind)
 			continue
-		if(!H.mind.assigned_role || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep)) //the jealousy target has to have a job, and not be the obsession or creep.
+		if(!H.mind.assigned_role in GLOB.station_positions || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep)) //the jealousy target has to have a job, and not be the obsession or creep.
 			continue
+		all_coworkers += H
 		//this won't be called often thankfully.
 		if(H.mind.assigned_role in GLOB.security_positions)
 			their_chosen_department = "security"
@@ -197,8 +198,7 @@
 	if(viable_coworkers.len > 0)//find someone in the same department
 		target = pick(viable_coworkers)
 	else if(all_coworkers.len > 0)//find someone who works on the station
-	else
-		return//there is nobody but you and the obsession
+		target = pick(all_coworkers)
 	return oldmind
 
 /datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks
