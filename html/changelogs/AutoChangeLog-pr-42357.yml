@@ -1,0 +1,4 @@
+author: "bandit"
+delete-after: True
+changes: 
+  - tweak: "Clicking the health doll lets you examine yourself for injuries."

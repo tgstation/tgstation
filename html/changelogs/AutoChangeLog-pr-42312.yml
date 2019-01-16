@@ -1,6 +1,0 @@
-author: "floyd / qustinnus"
-delete-after: True
-changes: 
-  - tweak: "Hygiene now lowers slower when you are clean, and dirtiness rates for some clothing items have been nerfed."
-  - tweak: "some more clothes are okay to shower with now."
-  - tweak: "only 20% as much miasma is produced by low hygiene"

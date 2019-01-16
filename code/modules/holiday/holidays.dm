@@ -73,7 +73,7 @@
 	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/new_year/getStationPrefix()
-	return pick("Party","New","Hangover","Resolution")
+	return pick("Party","New","Hangover","Resolution", "Auld")
 
 /datum/holiday/groundhog
 	name = "Groundhog Day"
@@ -113,6 +113,8 @@
 			Fact = " SS13 can now rent a car!"
 		if(30)
 			Fact = " SS13 can now go home and be a family man!"
+		if(35)
+			Fact = " SS13 can now run for President of the United States!"
 		if(40)
 			Fact = " SS13 can now suffer a midlife crisis!"
 		if(50)
@@ -144,10 +146,14 @@
 	begin_day = 14
 	begin_month = MARCH
 
+/datum/holiday/pi/getStationPrefix()
+	return pick("Sine","Cosine","Tangent","Secant", "Cosecant", "Cotangent")
+
 /datum/holiday/no_this_is_patrick
 	name = "St. Patrick's Day"
 	begin_day = 17
 	begin_month = MARCH
+	drone_hat = /obj/item/clothing/head/soft/green
 
 /datum/holiday/no_this_is_patrick/getStationPrefix()
 	return pick("Blarney","Green","Leprechaun","Booze")
@@ -167,6 +173,15 @@
 	for(var/mob/dead/new_player/P in GLOB.mob_list)
 		if(P.client)
 			P.client.playtitlemusic()
+
+/datum/holiday/spess
+	name = "Cosmonautics Day"
+	begin_day = 12
+	begin_month = APRIL
+	drone_hat = /obj/item/clothing/head/syndicatefake
+
+/datum/holiday/spess/greet()
+	return "On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space!"
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
@@ -208,6 +223,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
+	drone_hat = /obj/item/clothing/mask/rat/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -238,12 +254,24 @@
 	begin_month = JULY
 
 /datum/holiday/USA/getStationPrefix()
-	return pick("Independant","American","Burger","Bald Eagle","Star-Spangled")
+	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
 
 /datum/holiday/writer
 	name = "Writer's Day"
 	begin_day = 8
 	begin_month = JULY
+
+/datum/holiday/france
+	name = "Bastille Day"
+	begin_day = 14
+	begin_month = JULY
+	drone_hat = /obj/item/clothing/head/beret
+
+/datum/holiday/france/getStationPrefix()
+	return pick("Francais","Fromage", "Zut", "Merde")
+
+/datum/holiday/france/greet()
+	return "Do you hear the people sing?"
 
 /datum/holiday/friendship
 	name = "Friendship Day"
@@ -337,6 +365,9 @@
 	name = "Vegan Day"
 	begin_day = 1
 	begin_month = NOVEMBER
+
+/datum/holiday/vegan/getStationPrefix()
+	return pick("Tofu", "Tempeh", "Seitan", "Tofurkey")
 
 /datum/holiday/october_revolution
 	name = "October Revolution"
