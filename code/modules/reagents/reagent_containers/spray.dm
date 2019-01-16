@@ -320,3 +320,12 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
 	list_reagents = list("plantbgone" = 100)
+
+/obj/item/reagent_containers/spray/colorful
+	name = "colorful bottle"
+	desc = "Can you paint with all the colours of the wind?"
+	list_reagents = list("colorful_reagent" = 250)
+
+/obj/item/reagent_containers/spray/colorful/Initialize()
+	. = ..()
+	AddComponent(/datum/component/kaleidoscope/colorful_reagent)

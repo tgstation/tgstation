@@ -1259,84 +1259,100 @@
 //For colouring in /proc/mix_color_from_reagents
 
 
-/datum/reagent/colorful_reagent/crayonpowder
+/datum/reagent/crayonpowder
 	name = "Crayon Powder"
 	id = "crayon powder"
 	var/colorname = "none"
 	description = "A powder made by grinding down crayons, good for colouring chemical reagents."
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 207, 54, 0
+	var/true_colour // if non-null, used instead of var/color for colouring things
 	taste_description = "the back of class"
 
-/datum/reagent/colorful_reagent/crayonpowder/New()
+/datum/reagent/crayonpowder/New()
 	description = "\an [colorname] powder made by grinding down crayons, good for colouring chemical reagents."
 
+/datum/reagent/crayonpowder/proc/paint(atom/A)
+	if(A)
+		var/chosen = color
+		if(true_colour)
+			chosen = true_colour
+		A.add_atom_colour(chosen, WASHABLE_COLOUR_PRIORITY)
 
-/datum/reagent/colorful_reagent/crayonpowder/red
+/datum/reagent/crayonpowder/on_mob_life(mob/living/carbon/M)
+	paint(M)
+	..()
+
+/datum/reagent/crayonpowder/reaction_mob(mob/living/M, reac_volume)
+	paint(M)
+	..()
+
+/datum/reagent/crayonpowder/reaction_obj(obj/O, reac_volume)
+	paint(O)
+	..()
+
+/datum/reagent/crayonpowder/reaction_turf(turf/T, reac_volume)
+	paint(T)
+	..()
+
+
+/datum/reagent/crayonpowder/red
 	name = "Red Crayon Powder"
 	id = "redcrayonpowder"
 	colorname = "red"
 	color = "#DA0000" // red
-	random_color_list = list("#DA0000")
 
-/datum/reagent/colorful_reagent/crayonpowder/orange
+/datum/reagent/crayonpowder/orange
 	name = "Orange Crayon Powder"
 	id = "orangecrayonpowder"
 	colorname = "orange"
 	color = "#FF9300" // orange
-	random_color_list = list("#FF9300")
 
-/datum/reagent/colorful_reagent/crayonpowder/yellow
+/datum/reagent/crayonpowder/yellow
 	name = "Yellow Crayon Powder"
 	id = "yellowcrayonpowder"
 	colorname = "yellow"
 	color = "#FFF200" // yellow
-	random_color_list = list("#FFF200")
 
-/datum/reagent/colorful_reagent/crayonpowder/green
+/datum/reagent/crayonpowder/green
 	name = "Green Crayon Powder"
 	id = "greencrayonpowder"
 	colorname = "green"
 	color = "#A8E61D" // green
-	random_color_list = list("#A8E61D")
 
-/datum/reagent/colorful_reagent/crayonpowder/blue
+/datum/reagent/crayonpowder/blue
 	name = "Blue Crayon Powder"
 	id = "bluecrayonpowder"
 	colorname = "blue"
 	color = "#00B7EF" // blue
-	random_color_list = list("#00B7EF")
 
-/datum/reagent/colorful_reagent/crayonpowder/purple
+/datum/reagent/crayonpowder/purple
 	name = "Purple Crayon Powder"
 	id = "purplecrayonpowder"
 	colorname = "purple"
 	color = "#DA00FF" // purple
-	random_color_list = list("#DA00FF")
 
-/datum/reagent/colorful_reagent/crayonpowder/invisible
+/datum/reagent/crayonpowder/invisible
 	name = "Invisible Crayon Powder"
 	id = "invisiblecrayonpowder"
 	colorname = "invisible"
 	color = "#FFFFFF00" // white + no alpha
-	random_color_list = list(null)	//because using the powder color turns things invisible
 
-/datum/reagent/colorful_reagent/crayonpowder/black
+/datum/reagent/crayonpowder/invisible/paint()
+	return // Otherwise, it turns atoms invisible.
+
+/datum/reagent/crayonpowder/black
 	name = "Black Crayon Powder"
 	id = "blackcrayonpowder"
 	colorname = "black"
 	color = "#1C1C1C" // not quite black
-	random_color_list = list("#404040")
+	true_colour = "#404040"
 
-/datum/reagent/colorful_reagent/crayonpowder/white
+/datum/reagent/crayonpowder/white
 	name = "White Crayon Powder"
 	id = "whitecrayonpowder"
 	colorname = "white"
 	color = "#FFFFFF" // white
-	random_color_list = list("#FFFFFF") //doesn't actually change appearance at all
-
-
-
 
 //////////////////////////////////Hydroponics stuff///////////////////////////////
 
@@ -1466,26 +1482,27 @@
 	description = "Thoroughly sample the rainbow."
 	reagent_state = LIQUID
 	color = "#C8A5DC"
-	var/list/random_color_list = list("#00aedb","#a200ff","#f47835","#d41243","#d11141","#00b159","#00aedb","#f37735","#ffc425","#008744","#0057e7","#d62d20","#ffa700")
 	taste_description = "rainbows"
+	// See code/datums/components/kaleidoscope.dm for the list of colours this applies.
 
 
 /datum/reagent/colorful_reagent/on_mob_life(mob/living/carbon/M)
-	M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+	M.AddComponent(/datum/component/kaleidoscope/colorful_reagent)
 	..()
 
+/datum/reagent/colorful_reagent/on_mob_delete(mob/living/carbon/M)
+	qdel(M.GetComponent(/datum/component/kaleidoscope/colorful_reagent))
+
 /datum/reagent/colorful_reagent/reaction_mob(mob/living/M, reac_volume)
-	M.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+	M.AddComponent(/datum/component/kaleidoscope/colorful_reagent/once)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_obj(obj/O, reac_volume)
-	if(O)
-		O.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+	O.AddComponent(/datum/component/kaleidoscope/colorful_reagent/once)
 	..()
 
 /datum/reagent/colorful_reagent/reaction_turf(turf/T, reac_volume)
-	if(T)
-		T.add_atom_colour(pick(random_color_list), WASHABLE_COLOUR_PRIORITY)
+	T.AddComponent(/datum/component/kaleidoscope/colorful_reagent/once)
 	..()
 
 /datum/reagent/hair_dye

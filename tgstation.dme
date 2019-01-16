@@ -347,6 +347,7 @@
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\jousting.dm"
+#include "code\datums\components\kaleidoscope.dm"
 #include "code\datums\components\knockoff.dm"
 #include "code\datums\components\lockon_aiming.dm"
 #include "code\datums\components\magnetic_catch.dm"
