@@ -64,21 +64,15 @@
 	name = "Speech Impediment"
 	desc = "Patient is unable to form coherent sentences."
 	scan_desc = "communication disorder"
-	gain_text = "" //mutation will handle the text
-	lose_text = ""
+	gain_text = "<span class='danger'>You can't seem to form any coherent thoughts!</span>"
+	lose_text = "<span class='danger'>Your mind feels more clear.</span>"
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
-	owner.dna.add_mutation(UNINTELLIGIBLE)
-	..()
-
-//no fiddling with genetics to get out of this one
-/datum/brain_trauma/mild/speech_impediment/on_life()
-	if(!(owner.dna.check_mutation(UNINTELLIGIBLE)))
-		on_gain()
+	owner.add_trait(TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
-	owner.dna.remove_mutation(UNINTELLIGIBLE)
+	owner.remove_trait(TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
 	..()
 
 /datum/brain_trauma/mild/concussion

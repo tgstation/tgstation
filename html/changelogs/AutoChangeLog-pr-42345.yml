@@ -1,0 +1,5 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - tweak: "Fixed vent placement in Delta's Robo"
+  - tweak: "Added a second welding helmet in Robo of Meta and the Mech Bay of Delta, to match the two that Robotics gets on Box, Pubby, and Donut."
