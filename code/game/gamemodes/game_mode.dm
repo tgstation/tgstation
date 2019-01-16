@@ -107,9 +107,18 @@
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
-	gamemode_ready = TRUE
-	return 1
 
+	for(var/client/C in GLOB.admins)
+		var/datum/admins/D = C.holder
+		if(!D || D.deadmined || !C.mob)
+			continue
+		if(!C.mob.mind)
+			continue
+		if(!length(C.mob.mind.antag_datums))
+			continue
+		D.deactivate()	
+	gamemode_ready = TRUE
+	return TRUE
 
 ///Handles late-join antag assignments
 /datum/game_mode/proc/make_antag_chance(mob/living/carbon/human/character)
