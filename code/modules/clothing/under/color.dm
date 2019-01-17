@@ -22,11 +22,7 @@
 	resistance_flags = NONE
 
 /obj/item/clothing/under/color/black/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/under/color/black/ghost/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"

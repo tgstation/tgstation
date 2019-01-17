@@ -238,11 +238,8 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
+	item_flags = NODROP
 	dog_fashion = null
-
-/obj/item/clothing/head/sombrero/shamebrero/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"

@@ -237,10 +237,7 @@
 	desc = "Forced to live on your shameful acting as a fake Mexican, you and your poncho have grown inseparable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
-
-/obj/item/clothing/suit/poncho/ponchoshame/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
+	item_flags = NODROP
 
 /obj/item/clothing/suit/whitedress
 	name = "white dress"

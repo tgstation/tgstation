@@ -790,6 +790,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if(has_trait(TRAIT_NODROP))
+	if (item_flags & NODROP)
 		return
 	return ..()

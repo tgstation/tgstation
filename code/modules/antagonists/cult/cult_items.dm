@@ -64,12 +64,8 @@
 /obj/item/melee/cultblade/ghost
 	name = "eldritch sword"
 	force = 19 //can't break normal airlocks
-	item_flags = NEEDS_PERMIT | DROPDEL
+	item_flags = NEEDS_PERMIT | NODROP | DROPDEL
 	flags_1 = NONE
-
-/obj/item/melee/cultblade/ghost/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/melee/cultblade/pickup(mob/living/user)
 	..()
@@ -306,11 +302,7 @@
 	item_state = "cult_hoodalt"
 
 /obj/item/clothing/head/culthood/alt/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/head/culthood/alt/ghost/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	item_flags = NODROP | DROPDEL
 
 /obj/item/clothing/suit/cultrobes/alt
 	name = "cultist robes"
@@ -319,11 +311,7 @@
 	item_state = "cultrobesalt"
 
 /obj/item/clothing/suit/cultrobes/alt/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/suit/cultrobes/alt/ghost/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
+	item_flags = NODROP | DROPDEL
 
 
 /obj/item/clothing/head/magus
@@ -801,7 +789,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "disintegrate"
 	item_state = null
-	item_flags = ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | NODROP | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
 	throw_range = 0
@@ -809,10 +797,6 @@
 	var/charging = FALSE
 	var/firing = FALSE
 	var/angle
-
-/obj/item/blood_beam/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CULT_TRAIT)
 
 
 /obj/item/blood_beam/afterattack(atom/A, mob/living/user, flag, params)

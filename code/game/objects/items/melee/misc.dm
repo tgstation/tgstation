@@ -91,7 +91,8 @@
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!</span>")
 	var/i = 0
-	add_trait(TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+	var/originally_nodropped = item_flags & NODROP
+	item_flags |= NODROP
 	if(iscarbon(user))
 		var/mob/living/carbon/Cuser = user
 		var/obj/item/bodypart/holding_bodypart = Cuser.get_holding_bodypart_of_item(src)
@@ -116,7 +117,7 @@
 		for(bodypart in limbs_to_dismember)
 			i++
 			addtimer(CALLBACK(src, .proc/suicide_dismember, user, bodypart), speedbase * i)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), (5 SECONDS) * i)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user, originally_nodropped), (5 SECONDS) * i)
 	return MANUAL_SUICIDE
 
 /obj/item/melee/sabre/proc/suicide_dismember(mob/living/user, obj/item/bodypart/affecting)
@@ -129,7 +130,8 @@
 	if(!QDELETED(user))
 		user.adjustBruteLoss(200)
 		user.death(FALSE)
-	remove_trait(TRAIT_NODROP, SABRE_SUICIDE_TRAIT)
+	if(!originally_nodropped)
+		item_flags &= ~NODROP
 
 /obj/item/melee/classic_baton
 	name = "police baton"

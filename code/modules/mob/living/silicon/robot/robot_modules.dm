@@ -120,7 +120,7 @@
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
-	I.add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	I.item_flags |= NODROP
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I

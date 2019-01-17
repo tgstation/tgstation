@@ -9,10 +9,7 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-
-/obj/item/clothing/glasses/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	item_flags = NODROP
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
@@ -24,10 +21,7 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
-
-/obj/item/clothing/under/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	item_flags = NODROP
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
@@ -39,11 +33,8 @@
 
 /obj/item/clothing/suit/changeling
 	name = "flesh"
+	item_flags = NODROP
 	allowed = list(/obj/item/changeling)
-
-/obj/item/clothing/suit/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
@@ -55,10 +46,7 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
-
-/obj/item/clothing/head/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	item_flags = NODROP
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
@@ -70,10 +58,7 @@
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-
-/obj/item/clothing/shoes/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	item_flags = NODROP
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
@@ -85,10 +70,7 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-
-/obj/item/clothing/gloves/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	item_flags = NODROP
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
@@ -100,10 +82,7 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-
-/obj/item/clothing/mask/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	item_flags = NODROP
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
@@ -115,12 +94,9 @@
 
 /obj/item/changeling
 	name = "flesh"
+	item_flags = NODROP
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
-
-/obj/item/changeling/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user)

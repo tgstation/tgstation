@@ -65,7 +65,7 @@
 			if(!isitem(A))
 				continue
 			var/obj/item/I = A
-			if(!(I.has_trait(TRAIT_NODROP)))
+			if(!(I.item_flags & NODROP))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 				return

@@ -165,13 +165,10 @@ Contains:
 	item_color = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
+	item_flags = NODROP
 	brightness_on = 7
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-
-/obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team commander hardsuit"
@@ -278,10 +275,7 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-
-/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+	item_flags = NODROP
 
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"

@@ -101,11 +101,9 @@
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
+	item_flags = NODROP
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
-/obj/item/clothing/head/beret/highlander/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/head/beret/durathread
 	name = "durathread beret"

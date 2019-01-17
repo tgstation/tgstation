@@ -504,7 +504,7 @@
 	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.add_trait(TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
+		I.item_flags |= NODROP
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill

@@ -10,6 +10,15 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESUITSTORAGE
 
+/obj/item/clothing/head/cloakhood
+	name = "cloak hood"
+	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "golhood"
+	desc = "A hood for a cloak."
+	body_parts_covered = HEAD
+	item_flags = NODROP
+	flags_inv = HIDEHAIR|HIDEEARS
+
 /obj/item/clothing/neck/cloak/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(OXYLOSS)
