@@ -922,3 +922,30 @@
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")
+
+/datum/design/circuit
+	name = "Blue Circuit Tile"
+	id = "circuit"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/stack/tile/circuit
+	category = list("initial", "Misc")
+	maxstack = 50
+
+/datum/design/circuitgreen
+	name = "Green Circuit Tile"
+	id = "circuitgreen"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/stack/tile/circuit/green
+	category = list("initial", "Misc")
+	maxstack = 50
+
+/datum/design/circuitred
+	name = "Red Circuit Tile"
+	id = "circuitred"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
+	build_path = /obj/item/stack/tile/circuit/red
+	category = list("initial", "Misc")
+	maxstack = 50
