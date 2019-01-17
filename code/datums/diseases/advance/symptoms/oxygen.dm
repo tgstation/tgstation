@@ -53,13 +53,14 @@ Bonus
 
 /datum/symptom/oxygen/on_stage_change(new_stage, datum/disease/advance/A)
 	if(!..())
-		return
+		return FALSE
 	var/mob/living/carbon/M = A.affected_mob
 	switch(A.stage)
 		if(3)
 			M.remove_trait(TRAIT_NOBREATH, DISEASE_TRAIT)
 		if(4)
 			M.add_trait(TRAIT_NOBREATH, DISEASE_TRAIT)
+	return TRUE
 
 /datum/symptom/oxygen/End(datum/disease/advance/A)
 	if(!..())
