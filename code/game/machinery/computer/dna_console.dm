@@ -910,7 +910,7 @@
 				return GET_SEQUENCE(mutation)
 	for(var/datum/mutation/human/A in stored_mutations)
 		if(A.type == mutation)
-			return GET_SEQUENCE(A)
+			return GET_SEQUENCE(mutation)
 
 /obj/machinery/computer/scan_consolenew/proc/discover(mutation)
 	if(stored_research && !(mutation in stored_research.discovered_mutations))
