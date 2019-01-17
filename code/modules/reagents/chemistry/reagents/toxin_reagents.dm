@@ -1001,6 +1001,7 @@
 	description = "As Potash enters the bloodstream it builds up as Potassium Chloride."
 	toxpwr = 0
 	metabolization_rate = 0
+	can_synth = FALSE
 
 /datum/reagent/toxin/injectedpotash/on_mob_life(mob/living/carbon/M)
 	// for the amount of injected potash we have, we remove that much potash and gain that much potassium chloride
