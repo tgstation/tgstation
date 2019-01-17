@@ -214,13 +214,12 @@
 			"}
 			break_counter++
 		output += "</div></div>"
-		//standard deparments all have identical handling
+		//standard departments all have identical handling
 		var/list/job_lists = list("Security" = GLOB.security_positions,
 							"Engineering" = GLOB.engineering_positions,
 							"Medical" = GLOB.medical_positions,
 							"Science" = GLOB.science_positions,
-							"Supply" = GLOB.supply_positions,
-							"Silicon" = GLOB.nonhuman_positions) //another cheat for simplicity
+							"Supply" = GLOB.supply_positions)
 		for(var/department in job_lists)
 			//the first element is the department head so they need the same javascript call as above
 			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
@@ -238,8 +237,23 @@
 				"}
 				break_counter++
 			output += "</div></div>"
+		//departments/groups that don't have command staff would throw a javascript error since there's no corresponding reference for toggle_head()
+		var/list/headless_job_lists = list("Silicon" = GLOB.nonhuman_positions,
+										"Abstract" = list("Appearance", "Emote", "OOC"))
+		for(var/department in headless_job_lists)
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
+			break_counter = 0
+			for(var/job in headless_job_lists[department])
+				if(break_counter % 3 == 0)
+					output += "<br>"
+				output += {"<label class='inputlabel checkbox'>[job]
+							<input type='checkbox' name='[job]' class='[department]' value='1'>
+							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
+				"}
+				break_counter++
+			output += "</div></div>"
 		var/list/long_job_lists = list("Civilian" = GLOB.civilian_positions,
-									"Ghost and Other Roles" = list("Appearance", ROLE_BRAINWASHED, ROLE_DEATHSQUAD, ROLE_DRONE, "Emote", ROLE_LAVALAND, ROLE_MIND_TRANSFER, "OOC", ROLE_POSIBRAIN, ROLE_SENTIENCE),
+									"Ghost and Other Roles" = list(ROLE_BRAINWASHED, ROLE_DEATHSQUAD, ROLE_DRONE, ROLE_LAVALAND, ROLE_MIND_TRANSFER, ROLE_POSIBRAIN, ROLE_SENTIENCE),
 									"Antagonist Positions" = list(ROLE_ABDUCTOR, ROLE_ALIEN, ROLE_BLOB,
 									ROLE_BROTHER, ROLE_CHANGELING, ROLE_CULTIST,
 									ROLE_DEVIL, ROLE_INTERNAL_AFFAIRS, ROLE_MALF,
@@ -359,7 +373,7 @@
 				if(href_list[href_list.len] == "roleban_delimiter")
 					error_state += "Role ban was selected but no roles to ban were selected."
 				else
-					href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Civilian", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
+					href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Abstract", "Civilian", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
 					var/delimiter_pos = href_list.Find("roleban_delimiter")
 					href_list.Cut(1, delimiter_pos+1)//remove every list element before and including roleban_delimiter so we have a list of only the roles to ban
 					for(var/key in href_list) //flatten into a list of only unique keys
@@ -473,7 +487,8 @@
 	if(C)
 		build_ban_cache(C)
 		to_chat(C, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
-		qdel(C)
+		if(roles_to_ban[1] == "Server")
+			qdel(C)
 	if(roles_to_ban[1] == "Server" && AH)
 		AH.Resolve()
 	for(var/client/i in GLOB.clients - C)

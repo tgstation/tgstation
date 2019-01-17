@@ -28,7 +28,7 @@
 	..()
 	if(world.time < next_use)
 		to_chat(user, "<span class='warning'>Time left to recharge: [DisplayTimeText(next_use - world.time)]</span>")
-	to_chat(user, "<span class='notice'>Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)] seconds.</span>")
+	to_chat(user, "<span class='notice'>Alt-click to customize the duration. Current duration: [DisplayTimeText(duration)].</span>")
 	to_chat(user, "<span class='notice'>Can be used again to interrupt the effect early. The recharge time is the same as the time spent in desync.</span>")
 
 /obj/item/desynchronizer/AltClick(mob/living/user)
