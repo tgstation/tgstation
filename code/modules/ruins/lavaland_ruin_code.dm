@@ -65,6 +65,7 @@
 		/obj/item/stack/sheet/mineral/abductor	    = /datum/species/golem/alloy,
 		/obj/item/stack/sheet/mineral/wood	        = /datum/species/golem/wood,
 		/obj/item/stack/sheet/bluespace_crystal	    = /datum/species/golem/bluespace,
+		/obj/item/stack/telecrystal				    = /datum/species/golem/telecrystal,
 		/obj/item/stack/sheet/runed_metal	        = /datum/species/golem/runic,
 		/obj/item/stack/medical/gauze	            = /datum/species/golem/cloth,
 		/obj/item/stack/sheet/cloth	                = /datum/species/golem/cloth,

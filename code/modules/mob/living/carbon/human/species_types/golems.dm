@@ -23,6 +23,7 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
+	var/cost_to_build = 10
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
 	var/random_eligible = TRUE //If false, the golem subtype can't be made through golem mutation toxin
 
@@ -807,3 +808,46 @@
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.ventcrawler = initial(C.ventcrawler)
+
+/datum/species/golem/telecrystal
+	name = "Telecrystal Golem"
+	id = "telecrystal golem"
+	fixed_mut_color = "f00"
+	meat = /obj/item/stack/telecrystal
+	cost_to_build = 20 //all 20 telecrystals
+	info_text = "As a <span class='danger'>Telecrystal Golem</span>, you are immortal, but your powers must be \"purchased\". You can be crushed, stabbed, shot, electrocuted, poisoned, frozen, burned, it does not matter: you will not die. The reverberations of your form cause you to only be able to speak one line for minutes at a time."
+	var/time_crit = 0
+	var/revive_timer = 300 //deciseconds. when the golem has been in crit for this long, they gets healed back up to 20 health.
+	var/crystals_consumed = 0
+	var/awakened = FALSE
+
+/datum/species/golem/telecrystal/random_name(gender,unique,lastname)
+	return "[syndicate_name()] Golem"
+
+/datum/species/golem/telecrystal/spec_life(mob/living/carbon/human/H)
+	..()
+	if(awakened)
+		if(H.health <= 0)
+			if(time_crit >= revive_timer)
+				//revive
+				H.visible_message("<span class='danger'>[H] lurches to [H.p_their()] feet!</span>")
+			else
+				time_crit += 20
+		else
+			time_crit = 0
+			H.adjustBruteLoss(-2)
+			H.adjustFireLoss(-2)
+			H.adjustToxLoss(-2)
+			H.adjustOxyLoss(-2)
+			H.adjustStaminaLoss(-2)
+
+/datum/species/golem/telecrystal/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	to_chat(C, "<span class='danger'>You must consume 10 more crystals in your hand to unlock your powers. Until then, you are a normal golem with a speech impediment.</span>")
+	C.add_trait(TRAIT_NODEATH, "telecrystal_golem")
+	C.add_trait(TRAIT_NOCRITDAMAGE, "telecrystal_golem")
+
+/datum/species/golem/telecrystal/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.remove_trait(TRAIT_NODEATH, "telecrystal_golem")
+	C.remove_trait(TRAIT_NOCRITDAMAGE, "telecrystal_golem")
