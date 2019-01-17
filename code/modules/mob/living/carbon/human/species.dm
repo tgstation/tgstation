@@ -1363,7 +1363,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(get_dist(user, H) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(H)
 					if(ishuman(user))
-						var/mob/living/carbon/human/dirtyboy
+						var/mob/living/carbon/human/dirtyboy = user
 						dirtyboy.adjust_hygiene(-10)
 
 		switch(hit_area)
