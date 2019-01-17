@@ -11,23 +11,23 @@
 	var/oneuse = TRUE //default this is true, but admins can var this to 0 if we wanna all have a pass around of the rod form book
 	var/used = FALSE //only really matters if oneuse but it might be nice to know if someone's used it for admin investigations perhaps
 
-/obj/item/book/granter/proc/turn_page(mob/user)
+/obj/item/book/granter/proc/turn_page(mob/living/user)
 	playsound(user, pick('sound/effects/pageturn1.ogg','sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg'), 30, 1)
 	if(do_after(user,50, user))
 		to_chat(user, "<span class='notice'>[pick(remarks)]</span>")
 		return TRUE
 	return FALSE
 
-/obj/item/book/granter/proc/recoil(mob/user) //nothing so some books can just return
+/obj/item/book/granter/proc/recoil(mob/living/user) //nothing so some books can just return
 	return
 
-/obj/item/book/granter/proc/onlearned(mob/user)
+/obj/item/book/granter/proc/onlearned(mob/living/user)
 	return
 
-/obj/item/book/granter/proc/can_learn_check(mob/user)
+/obj/item/book/granter/proc/can_learn_check(mob/living/user)
 	. = TRUE
 
-/obj/item/book/granter/attack_self(mob/user)
+/obj/item/book/granter/attack_self(mob/living/user)
 	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
 		return
@@ -58,7 +58,7 @@
 /obj/item/book/granter/action
 	var/granted_action
 
-/obj/item/book/granter/action/can_learn_check(mob/user)
+/obj/item/book/granter/action/can_learn_check(mob/living/user)
 	. = TRUE
 	var/datum/action/G = new granted_action
 	for(var/datum/action/A in user.actions)
@@ -67,20 +67,20 @@
 			. = FALSE
 	qdel(G)
 
-/obj/item/book/granter/action/onlearned(mob/user)
+/obj/item/book/granter/action/onlearned(mob/living/user)
 	var/datum/action/G = new granted_action
 	G.Grant(user)
 
 /obj/item/book/granter/trait
 	var/trait
 
-/obj/item/book/granter/trait/can_learn_check(mob/user)
+/obj/item/book/granter/trait/can_learn_check(mob/living/user)
 	. = TRUE
 	if(user.has_trait(trait, GRANTER_BOOK_TRAIT))
 		to_chat(user, "<span class='notice'>You already know all about [topic].</span>")
 		. = FALSE
 
-/obj/item/book/granter/trait/onlearned(mob/user)
+/obj/item/book/granter/trait/onlearned(mob/living/user)
 	if(user.mind)
 		user.mind.add_trait(trait, GRANTER_BOOK_TRAIT)
 	else
@@ -101,7 +101,7 @@
 	topic = "casting conjure bugs"
 	var/spell
 
-/obj/item/book/granter/spell/can_learn_check(mob/user)
+/obj/item/book/granter/spell/can_learn_check(mob/living/user)
 	. = TRUE
 	var/obj/effect/proc_holder/spell/S = new spell
 	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
@@ -114,7 +114,7 @@
 			. = FALSE
 	qdel(S)
 
-/obj/item/book/granter/spell/onlearned(mob/user)
+/obj/item/book/granter/spell/onlearned(mob/living/user)
 	var/obj/effect/proc_holder/spell/S = new spell
 	user.mind.AddSpell(S)
 	user.log_message("learned the spell [S]", LOG_ATTACK, color="orange")
@@ -122,7 +122,7 @@
 	if(oneuse)
 		user.visible_message("<span class='caution'>[src] glows dark for a second!</span>")
 
-/obj/item/book/granter/spell/recoil(mob/user)
+/obj/item/book/granter/spell/recoil(mob/living/user)
 	user.visible_message("<span class='warning'>[src] glows in a black light!</span>")
 
 /obj/item/book/granter/spell/fireball
@@ -132,7 +132,7 @@
 	desc = "This book feels warm to the touch."
 	remarks = list("Aim...AIM, FOOL!", "Just catching them on fire won't do...", "Accounting for crosswinds... really?", "I think I just burned my hand...", "Why the dumb stance? It's just a flick of the hand...", "OMEE... ONI... Ugh...", "What's the difference between a fireball and a pyroblast...")
 
-/obj/item/book/granter/spell/fireball/recoil(mob/user)
+/obj/item/book/granter/spell/fireball/recoil(mob/living/user)
 	..()
 	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
 	qdel(src)
@@ -154,7 +154,7 @@
 /obj/item/book/granter/spell/smoke/lesser //Chaplain smoke book
 	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
 
-/obj/item/book/granter/spell/smoke/recoil(mob/user)
+/obj/item/book/granter/spell/smoke/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
 	if(user.nutrition)
@@ -169,7 +169,7 @@
 	desc = "This book looks blurry, no matter how you look at it."
 	remarks = list("Well I can't learn anything if I can't read the damn thing!", "Why would you use a dark font on a dark background...", "Ah, I can't see an Oh, I'm fine...", "I can't see my hand...!", "I'm manually blinking, damn you book...", "I can't read this page, but somehow I feel like I learned something from it...", "Hey, who turned off the lights?")
 
-/obj/item/book/granter/spell/blind/recoil(mob/user)
+/obj/item/book/granter/spell/blind/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You go blind!</span>")
 	user.blind_eyes(10)
@@ -188,7 +188,7 @@
 	name = "spellbook of [topic]" //Note, desc doesn't change by design
 	..()
 
-/obj/item/book/granter/spell/mindswap/recoil(mob/user)
+/obj/item/book/granter/spell/mindswap/recoil(mob/living/user)
 	..()
 	if(stored_swap in GLOB.dead_mob_list)
 		stored_swap = null
@@ -261,7 +261,7 @@
 	desc = "This book is made of 100% postconsumer wizard."
 	remarks = list("I feel ALIVE!", "I CAN TASTE THE MANA!", "What a RUSH!", "I'm FLYING through these pages!", "THIS GENIUS IS MAKING IT!", "This book is ACTION PAcKED!", "HE'S DONE IT", "LETS GOOOOOOOOOOOO")
 
-/obj/item/book/granter/spell/charge/recoil(mob/user)
+/obj/item/book/granter/spell/charge/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>[src] suddenly feels very warm!</span>")
 	empulse(src, 1, 1)
@@ -273,7 +273,7 @@
 	desc = "This book is bright and garish, very hard to miss."
 	remarks = list("I can't look away from the book!", "The words seem to pop around the page...", "I just need to focus on one item...", "Make sure to have a good grip on it when casting...", "Slow down, book. I still haven't finished this page...", "Sounds pretty great with some other magical artifacts...", "Magicians must love this one.")
 
-/obj/item/book/granter/spell/summonitem/recoil(mob/user)
+/obj/item/book/granter/spell/summonitem/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>[src] suddenly vanishes!</span>")
 	qdel(src)
@@ -295,7 +295,7 @@
 	topic = "bug jitsu"
 	var/greet = "You feel like you have mastered the art in breaking code. Nice work, jackass."
 
-/obj/item/book/granter/martial/can_learn_check(mob/user)
+/obj/item/book/granter/martial/can_learn_check(mob/living/user)
 	. = TRUE
 	var/datum/martial_art/MA = new martial
 	if(user.mind.has_martialart(MA.id))
@@ -303,10 +303,10 @@
 		. = FALSE
 	qdel(MA)
 
-/obj/item/book/granter/martial/onlearned(mob/user)
+/obj/item/book/granter/martial/onlearned(mob/living/user)
 	var/datum/martial_art/MA = new martial
 
-	to_chat(user, "[greet]")
+	to_chat(user, greet)
 	MA.teach(user)
 	user.log_message("learned the martial art [topic] ([MA])", LOG_ATTACK, color="orange")
 
