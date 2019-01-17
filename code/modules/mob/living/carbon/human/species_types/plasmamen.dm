@@ -5,7 +5,7 @@
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,NOTRANSSTING)
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER, TRAIT_CALCIUM_HEALER)
 	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman

@@ -140,14 +140,18 @@
 	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
-
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.dna.species.grab_sound)
+				sound_to_play = H.dna.species.grab_sound 	
+		playsound(src.loc, sound_to_play, 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state

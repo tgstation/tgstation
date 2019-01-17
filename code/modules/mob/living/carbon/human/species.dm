@@ -47,6 +47,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/inert_mutation 	= DWARFISM //special mutation that can be found in the genepool. Dont leave empty or changing species will be a headache
 	var/deathsound //used to set the mobs deathsound on species change
+	var/list/special_step_sounds //Sounds to override barefeet walkng
+	var/grab_sound //Special sound for grabbing
 
 	// species-only traits. Can be found in DNA.dm
 	var/list/species_traits = list()
@@ -1219,6 +1221,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey
+		user.dna.species.spec_unarmedattacked(user, target)
 
 		if(user.limb_destroyer)
 			target.dismembering_strike(user, affecting.body_zone)
@@ -1231,6 +1234,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forcesay(GLOB.hit_appends)
 		else if(!(target.mobility_flags & MOBILITY_STAND))
 			target.forcesay(GLOB.hit_appends)
+
+/datum/species/proc/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	if(target.check_block())

@@ -92,8 +92,11 @@
 					TRUE,
 					GLOB.footstep[T.footstep][3] + e)
 			
-			if(!H.shoes && !feetCover) //are we NOT wearing shoes?
-				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
-					GLOB.barefootstep[T.barefootstep][2] * v,
-					TRUE,
-					GLOB.barefootstep[T.barefootstep][3] + e)
+			if((!H.shoes && !feetCover) || !(H.mobility_flags & MOBILITY_STAND)) //are we NOT wearing shoes or are we lying/crawling (using hands to move around)?
+				if(H.dna.species.special_step_sounds)
+					playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
+				else
+					playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
+						GLOB.barefootstep[T.barefootstep][2] * v,
+						TRUE,
+						GLOB.barefootstep[T.barefootstep][3] + e)
