@@ -1024,8 +1024,7 @@
 
 /datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	var/obj/item/clothing/head/ushanka/USSR = new()
-	C.equip_to_slot_or_del(USSR, SLOT_HEAD)
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
 	C.revive(full_heal = 1)
 
 	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
