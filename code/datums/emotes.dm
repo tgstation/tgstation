@@ -20,7 +20,12 @@
 	var/list/mob_type_blacklist_typecache //Types that are NOT allowed to use that emote
 	var/list/mob_type_ignore_stat_typecache
 	var/stat_allowed = CONSCIOUS
+	var/sound //Sound to play when emote is called
+	var/vary = FALSE	//used for the honk borg emote
+	var/only_forced_audio = FALSE //can only code call this event instead of the player.
+
 	var/static/list/emote_list = list()
+
 
 /datum/emote/New()
 	if(key_third_person)
@@ -59,19 +64,24 @@
 	user.log_message(msg, LOG_EMOTE)
 	msg = "<b>[user]</b> " + msg
 
-	SEND_SIGNAL(user, COMSIG_MOB_EMOTE, src, params, type_override, intentional)
-	var/list/vlist = viewers(get_turf(user), null)
+	var/tmp_sound = get_sound(user)
+	if(tmp_sound && (!only_forced_audio || !intentional))
+		playsound(user, tmp_sound, 50, vary)
 
 	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
-		if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in vlist))
+		var/T = get_turf(user)
+		if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 			M.show_message(msg)
 
 	if(emote_type == EMOTE_AUDIBLE)
 		user.audible_message(msg)
 	else
 		user.visible_message(msg)
+
+/datum/emote/proc/get_sound(mob/living/user)
+	return sound //by default just return this var.
 
 /datum/emote/proc/replace_pronoun(mob/user, message)
 	if(findtext(message, "their"))
@@ -140,13 +150,3 @@
 		var/mob/living/L = user
 		if(L.has_trait(TRAIT_EMOTEMUTE))
 			return FALSE
-
-/datum/emote/sound
-	var/sound //Sound to play when emote is called
-	var/vary = FALSE	//used for the honk borg emote
-	mob_type_allowed_typecache = list(/mob/living/brain, /mob/living/silicon)
-
-/datum/emote/sound/run_emote(mob/user, params)
-	. = ..()
-	if(.)
-		playsound(user.loc, sound, 50, vary)

@@ -7697,13 +7697,16 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aqW" = (
-/obj/machinery/light_switch{
-	pixel_x = -20
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light_switch{
+	pixel_x = -27
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "aqY" = (
@@ -22378,6 +22381,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "baY" = (
@@ -22713,8 +22719,8 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/disposalpipe/junction/flip{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
@@ -22744,7 +22750,7 @@
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 6
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -23010,9 +23016,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bcH" = (
@@ -23023,9 +23026,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "bcI" = (
@@ -24060,9 +24060,11 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bfj" = (
-/obj/structure/disposalpipe/trunk,
 /obj/structure/disposaloutlet{
 	dir = 4
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
@@ -24534,15 +24536,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bgB" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/closed/wall,
-/area/quartermaster/sorting)
-"bgC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
+/obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/quartermaster/sorting)
 "bgD" = (
@@ -37742,7 +37736,7 @@
 	name = "Commissary Door Lock";
 	normaldoorcontrol = 1;
 	pixel_x = -26;
-	pixel_y = 6;
+	pixel_y = -8;
 	specialfunctions = 4
 	},
 /obj/machinery/disposal/bin,
@@ -56096,22 +56090,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/science/explab)
-"jxK" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	id = "commissaryshutter";
-	name = "Vacant Commissary Shutter"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/vacant_room/commissary)
 "jyF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -56758,6 +56736,23 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"nXi" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	id = "commissaryshutter";
+	name = "Vacant Commissary Shutter"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel,
+/area/vacant_room/commissary)
 "nXP" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
@@ -56821,6 +56816,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/nanite)
+"oPj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/vacant_room/commissary)
 "oUq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
@@ -56977,6 +56978,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/wood,
 /area/lawoffice)
+"pVb" = (
+/obj/structure/disposalpipe/junction/yjunction{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/quartermaster/sorting)
 "pWN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -57168,6 +57175,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"rPX" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/maintenance/port)
 "rYJ" = (
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/turf_decal/bot{
@@ -57284,6 +57295,9 @@
 /area/maintenance/starboard/aft)
 "sST" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port)
 "sSW" = (
@@ -79986,8 +80000,8 @@ aPK
 cCl
 aYh
 elq
-dfx
 cCm
+aSg
 aSg
 aPz
 bdW
@@ -80245,9 +80259,9 @@ cCj
 soQ
 sST
 bbU
-aSg
-aPz
-aZK
+dfx
+rPX
+pVb
 bgB
 bhX
 bgv
@@ -80500,12 +80514,12 @@ aPK
 tav
 yeu
 tav
-tav
+oPj
 oXE
 tav
 tav
 bfj
-bgC
+aZK
 bia
 aZK
 bjs
@@ -81014,7 +81028,7 @@ aVa
 tav
 aWE
 aYZ
-aYZ
+bbT
 bcG
 kRN
 tav
@@ -81528,8 +81542,8 @@ aUw
 tav
 hqp
 avr
-aYZ
 bbT
+aYZ
 kRN
 tav
 aZH
@@ -81785,8 +81799,8 @@ aSr
 tav
 aYZ
 gES
-aYZ
 bbT
+aYZ
 eAi
 tav
 beA
@@ -82042,8 +82056,8 @@ aWD
 tav
 aYj
 tav
-jxK
 baU
+nXi
 bcV
 bcV
 bfn

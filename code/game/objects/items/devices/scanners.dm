@@ -60,7 +60,7 @@ NANITE SCANNER
 		if(O.level != 1)
 			continue
 
-		if(O.invisibility == INVISIBILITY_MAXIMUM)
+		if(O.invisibility == INVISIBILITY_MAXIMUM || O.has_trait(TRAIT_T_RAY_VISIBLE))
 			var/image/I = new(loc = get_turf(O))
 			var/mutable_appearance/MA = new(O)
 			MA.alpha = 128

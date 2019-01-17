@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Restricted the throw range of magspears to 0 tiles."
