@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - rscadd: "Most objects can now be colored using a spray can"
-  - spellcheck: "Added visible message to spraying objects and windows"

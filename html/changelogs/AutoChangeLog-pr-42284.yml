@@ -1,5 +1,0 @@
-author: "Menshin"
-delete-after: True
-changes: 
-  - tweak: "tgui'ed P.A.C.M.A.N generators interface"
-  - bugfix: "fixed some bugs related to these generators"

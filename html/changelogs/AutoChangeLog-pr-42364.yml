@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Scanner gates can now check for hygiene levels (dirty or clean) and nutrition levels (starving or obese)."
