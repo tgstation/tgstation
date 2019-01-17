@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "Pubbystation: Fixed various minor map bugs (two unconnected Medbay disposals bins, engineering cameras without EMP protection, unpowered air injector outside the tcommsat, unconnected AI sat vent)."
