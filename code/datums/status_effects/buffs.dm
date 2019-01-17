@@ -574,5 +574,5 @@
 	owner.remove_CC()	
 	return TRUE
 
-/datum/status_effect/legion_core/on_remove()
+/datum/status_effect/regenerative_core/on_remove()
 	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
