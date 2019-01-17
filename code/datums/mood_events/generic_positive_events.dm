@@ -29,8 +29,7 @@
 	timeout = 3000
 
 /datum/mood_event/pet_animal/add_effects(name)
-	var/propername = capitalize(name)//if capitalize did nothing, then it already was capitalized and thus proper
-	description = "<span class='nicegreen'>[name][findtextEx(propername, name) ? " is" : "s are"] adorable! I can't stop petting them!</span>\n"
+	description = "<span class='nicegreen'>\The [name] is adorable! I can't stop petting \him!</span>\n"
 
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
