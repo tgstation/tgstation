@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - bugfix: "The cameras right outside of Donutstation's singularity containment have been EMP-proofed and will no longer alert silicons 24/7."
