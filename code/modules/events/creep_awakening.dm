@@ -13,10 +13,9 @@
 			continue
 		if(H.stat == DEAD)
 			continue
-		if(!H.mind.assigned_role || !H.mind.assigned_role in GLOB.station_positions || H.mind.assigned_role in GLOB.nonhuman_positions) //only station jobs sans nonhuman roles, prevents ashwalkers falling in love with crewmembers they never met
+		if(!H.mind.assigned_role || !(H.mind.assigned_role in GLOB.station_positions) || H.mind.assigned_role in GLOB.nonhuman_positions) //only station jobs sans nonhuman roles, prevents ashwalkers falling in love with crewmembers they never met
 			continue
-		var/alreadycreepy = H.mind.has_antag_datum(/datum/antagonist/creep)
-		if(alreadycreepy)
+		if(H.mind.has_antag_datum(/datum/antagonist/creep))
 			continue
 		if(!H.getorgan(/obj/item/organ/brain))
 			continue
