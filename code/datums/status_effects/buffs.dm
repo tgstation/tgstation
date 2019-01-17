@@ -555,10 +555,17 @@
 	owner.confused = max(0, owner.confused - 1)
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
 
+/obj/screen/alert/status_effect/regenerative_core
+	name = "Reinforcing Tendrils"
+	desc = "You can move faster than your broken body could normally handle!"
+	icon_state = "regenerative_core"
+	name = "Regenerative Core Tendrils"
+
 /datum/status_effect/regenerative_core
 	id = "Regenerative Core"
 	duration = 1 MINUTES
 	status_type = STATUS_EFFECT_REPLACE
+	alert_type = /obj/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
 	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
@@ -568,4 +575,4 @@
 	return TRUE
 
 /datum/status_effect/legion_core/on_remove()
-	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "legion_core")
+	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
