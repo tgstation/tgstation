@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Smuggler's satchels can now be found with t-ray scanners, as
+intended."
+  - balance: "Smuggler's satchels now cost 1 TC, down from 2 TC."

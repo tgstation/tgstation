@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	id = "co2"
 	specific_heat = 30
 	name = "Carbon Dioxide"
-	fusion_power = 3
+	fusion_power = 1.25
 	rarity = 700
 
 /datum/gas/plasma
@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	gas_overlay = "nitryl"
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
-	fusion_power = 15
+	fusion_power = 16
 	rarity = 100
 
 /datum/gas/tritium

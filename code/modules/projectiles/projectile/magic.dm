@@ -50,7 +50,7 @@
 	icon_state = "bluespace"
 	damage = 0
 	damage_type = OXY
-	nodamage = 1
+	nodamage = TRUE
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
@@ -72,6 +72,32 @@
 				var/datum/effect_system/smoke_spread/smoke = new
 				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
+
+/obj/item/projectile/magic/safety
+	name = "bolt of safety"
+	icon_state = "bluespace"
+	damage = 0
+	damage_type = OXY
+	nodamage = TRUE
+
+/obj/item/projectile/magic/safety/on_hit(atom/target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
+			return
+	if(isturf(target))
+		return
+
+	var/turf/origin_turf = get_turf(target)
+	var/turf/destination_turf = find_safe_turf()
+
+	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
+		for(var/t in list(origin_turf, destination_turf))
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(0, t)
+			smoke.start()
 
 /obj/item/projectile/magic/door
 	name = "bolt of door creation"

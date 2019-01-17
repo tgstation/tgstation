@@ -75,4 +75,12 @@
 	icon_state = "beaniestripedgreen"
 	item_color = "beaniestripedgreen"
 
+/obj/item/clothing/head/beanie/durathread
+	name = "durathread beanie"
+	desc = "A beanie made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "beaniedurathread"
+	item_color = null
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 15, "energy" = 5, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 5)
+
+
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet

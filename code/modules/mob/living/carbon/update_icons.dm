@@ -92,8 +92,6 @@
 
 	apply_overlay(FIRE_LAYER)
 
-
-
 /mob/living/carbon/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
 

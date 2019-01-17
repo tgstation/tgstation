@@ -18,7 +18,7 @@
 	var/obj/item/disk/data/diskette //Incompatible format to genetics machine
 	//select which parts of the diskette to load
 	var/include_se = FALSE //mutations
-	var/include_ui = FALSE //appearance 
+	var/include_ui = FALSE //appearance
 	var/include_ue = FALSE //blood type, UE, and name
 
 	var/loading = FALSE // Nice loading text
@@ -81,8 +81,12 @@
 		if(pod.occupant)
 			break
 
-		if(grow_clone_from_record(pod, R))
+		var/result = grow_clone_from_record(pod, R)
+		if(result & CLONING_SUCCESS)
 			temp = "[R.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+		if(result & CLONING_DELETE_RECORD)
+			records -= R
+			
 
 /obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
 	scanner = findscanner()
@@ -265,8 +269,8 @@
 					if(diskette.fields["SE"])
 						L += "Structural Enzymes"
 					dat += english_list(L, "Empty", " + ", " + ")
-					var/obj/item/card/id/C = user.get_idcard(TRUE)
 					var/can_load = FALSE
+					var/obj/item/card/id/C = user.get_idcard(TRUE)
 					if(C)
 						if(check_access(C))
 							can_load = TRUE
@@ -299,14 +303,10 @@
 		if(4)
 			if (!active_record)
 				menu = 2
-			var/obj/item/card/id/C = user.get_idcard(TRUE)
-			if(C)
-				if(check_access(C))
-					dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Please confirm.</a></b><br>"
-					dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
-				else
-					src.temp = "<font class='bad'>Access Denied.</font>"
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				ui_interact(user)
+				return
+			dat += "<b><a href='byond://?src=[REF(src)];del_rec=1'>Please confirm.</a></b><br>"
+			dat += "<b><a href='byond://?src=[REF(src)];menu=3'>Cancel</a></b>"
 
 	var/datum/browser/popup = new(user, "cloning", "Cloning System Control")
 	popup.set_content(dat)
@@ -354,7 +354,7 @@
 
 		spawn(20)
 			scan_occupant(scanner.occupant)
-
+				
 			loading = FALSE
 			updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
@@ -381,9 +381,22 @@
 		if ((!active_record) || (menu < 3))
 			return
 		if (menu == 3) //If we are viewing a record, confirm deletion
-			temp = "Delete record?"
-			menu = 4
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+			var/has_access = FALSE
+			if(ishuman(usr))
+				var/mob/living/carbon/human/user = usr
+				var/obj/item/card/id/C = user.get_idcard(TRUE)
+				if(C)
+					if(check_access(C))
+						has_access = TRUE
+			if(has_access)
+				temp = "Delete record?"
+				menu = 4
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
+			else
+				temp = "Access Denied"
+				menu = 2 
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				
 
 		else if (menu == 4)
 			temp = "[active_record.fields["name"]] => Record deleted."
@@ -447,6 +460,7 @@
 		//Look for that player! They better be dead!
 		if(C)
 			var/obj/machinery/clonepod/pod = GetAvailablePod()
+			var/success = FALSE
 			//Can't clone without someone to clone.  Or a pod.  Or if the pod is busy. Or full of gibs.
 			if(!LAZYLEN(pods))
 				temp = "<font class='bad'>No Clonepods detected.</font>"
@@ -460,13 +474,22 @@
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else if(grow_clone_from_record(pod, C))
-				temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-				if(active_record == C)
-					active_record = null
-				menu = 1
-			else
+			else 
+				var/result = grow_clone_from_record(pod, C)
+				if(result & CLONING_SUCCESS)
+					temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
+					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+					if(active_record == C)
+						active_record = null
+					menu = 1
+					success = TRUE
+				if(result &	CLONING_DELETE_RECORD)
+					if(active_record == C)
+						active_record = null
+					menu = 1
+					records -= C
+					
+			if(!success)
 				temp = "[C.fields["name"]] => <font class='bad'>Initialisation failure.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
@@ -486,14 +509,17 @@
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account
+
+	// Do not use unless you know what they are.
+	var/mob/living/carbon/C = mob_occupant
+	var/mob/living/brain/B = mob_occupant
+
 	if(ishuman(mob_occupant))
-		var/mob/living/carbon/C = mob_occupant
 		dna = C.has_dna()
 		var/obj/item/card/id/I = C.get_idcard(TRUE)
 		if(I)
 			has_bank_account = I.registered_account
 	if(isbrain(mob_occupant))
-		var/mob/living/brain/B = mob_occupant
 		dna = B.stored_dna
 
 	if(!istype(dna))
