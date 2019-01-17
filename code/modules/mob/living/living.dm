@@ -500,7 +500,6 @@
 	SetSleeping(0, FALSE)
 	setStaminaLoss(0)
 	SetUnconscious(0, FALSE)
-	bodytemperature = BODYTEMP_NORMAL
 	if(should_update_mobility)
 		update_mobility()
 	
@@ -515,6 +514,7 @@
 	set_disgust(0)
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
+	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
 	set_eye_damage(0)
