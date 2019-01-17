@@ -1,0 +1,8 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - bugfix: "Anti-drop implants can no longer be used to drop objects that they
+were not responsible for sticking to a person's hand."
+  - bugfix: "Backfiring with a Barnyard spellbook will now play a spooky horse sound."
+  - refactor: "Refactors the way that \"NODROP\" items work to a new system,
+there should be no change in functionality."
