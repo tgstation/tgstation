@@ -98,3 +98,7 @@
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
 	timeout = 1800
+
+/datum/mood_event/religiously_comforted
+	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>"
+	mood_change = 3

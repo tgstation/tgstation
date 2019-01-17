@@ -185,16 +185,12 @@
 /obj/item/clothing/gloves/color/white/redcoat
 	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
 
-/obj/item/clothing/gloves/color/random
+/obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
+	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "random_gloves"
-	item_state = "wgloves"
-	item_color = "mime"
-
-/obj/item/clothing/gloves/color/random/Initialize()
-	..()
-	var/list/gloves = list(
+	loot = list(
 		/obj/item/clothing/gloves/color/orange = 1,
 		/obj/item/clothing/gloves/color/red = 1,
 		/obj/item/clothing/gloves/color/blue = 1,
@@ -205,11 +201,3 @@
 		/obj/item/clothing/gloves/color/brown = 1,
 		/obj/item/clothing/gloves/color/white = 1,
 		/obj/item/clothing/gloves/color/rainbow = 1)
-
-	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.equip_to_slot_or_del(new selected(H), SLOT_GLOVES)
-	else
-		new selected(loc)
-	return INITIALIZE_HINT_QDEL

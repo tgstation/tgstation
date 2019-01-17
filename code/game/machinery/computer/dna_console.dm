@@ -761,7 +761,7 @@
 						var/datum/mutation/human/HM = new A.type()
 						diskette.mutations += HM
 						HM.copy_mutation(A)
-						to_chat(usr, "<span class='notice'>Succesfully written [A.name] to [diskette.name].</span>")
+						to_chat(usr, "<span class='notice'>Successfully wrote [A.name] to [diskette.name].</span>")
 		if("deletediskmut")
 			if(diskette && !diskette.read_only)
 				if(num && (LAZYLEN(diskette.mutations) >= num))
@@ -775,7 +775,7 @@
 					var/datum/mutation/human/HM = new A.type()
 					HM.copy_mutation(A)
 					stored_mutations += HM
-					to_chat(usr,"<span class='notice'>Succesfully written [A.name] to storage.")
+					to_chat(usr,"<span class='notice'>Successfully wrote [A.name] to storage.")
 		if("combine")
 			if(num && (LAZYLEN(stored_mutations) >= num))
 				if(LAZYLEN(stored_mutations) < max_storage)

@@ -78,10 +78,8 @@
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target)
 	. = FALSE
-	if(target.CanPass(src, get_turf(src)) && thrownby && thrownby.actions)
-		for(var/datum/action/innate/drink_fling/D in thrownby.actions)
-			if(D.active)
-				return TRUE
+	if(target.CanPass(src, get_turf(src)) && thrownby && thrownby.has_trait(TRAIT_BOOZE_SLIDER))
+		. = TRUE
 
 /obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE)
 	if(!reagents || !reagents.total_volume || !spillable)

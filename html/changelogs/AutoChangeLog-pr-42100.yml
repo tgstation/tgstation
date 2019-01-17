@@ -1,7 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Curse of Madness can now be triggered by a wizard's Summon Events,
-at the same chance as Summon Guns or Summon Magic."
-  - admin: "When an admin triggers Curse of Madness manually, they can
-specify their own dark truth to horrify the station with."

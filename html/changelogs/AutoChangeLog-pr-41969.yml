@@ -1,5 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - rscadd: "alt click to eject beakers from chem masters + chem dispensers + grinders + chem heaters"
-  - rscadd: "hit chem master + chem dispenser + chem heaters with a beaker and if its loaded with another it swaps em"

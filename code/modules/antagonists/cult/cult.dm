@@ -158,14 +158,21 @@
 	. = ..()
 	.["Dagger"] = CALLBACK(src,.proc/admin_give_dagger)
 	.["Dagger and Metal"] = CALLBACK(src,.proc/admin_give_metal)
+	.["Remove Dagger and Metal"] = CALLBACK(src, .proc/admin_take_all)
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
-	if(!equip_cultist(FALSE))
+	if(!equip_cultist(metal=FALSE))
 		to_chat(admin, "<span class='danger'>Spawning dagger failed!</span>")
 
 /datum/antagonist/cult/proc/admin_give_metal(mob/admin)
-	if (!equip_cultist(TRUE))
+	if (!equip_cultist(metal=TRUE))
 		to_chat(admin, "<span class='danger'>Spawning runed metal failed!</span>")
+
+/datum/antagonist/cult/proc/admin_take_all(mob/admin)
+	var/mob/living/current = owner.current
+	for(var/o in current.GetAllContents())
+		if(istype(o, /obj/item/melee/cultblade/dagger) || istype(o, /obj/item/stack/sheet/runed_metal))
+			qdel(o)
 
 /datum/antagonist/cult/master
 	ignore_implant = TRUE

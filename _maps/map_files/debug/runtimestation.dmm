@@ -1083,7 +1083,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -1615,12 +1615,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
-"eI" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/storage/primary)
 "eJ" = (
 /obj/docking_port/stationary{
 	dir = 4;
@@ -1641,7 +1635,7 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -2064,7 +2058,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -2588,6 +2582,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"nq" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "ny" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/syndicate,
@@ -6323,7 +6323,7 @@ gG
 ii
 dy
 dm
-dK
+dM
 cN
 Tt
 vm
@@ -7324,18 +7324,18 @@ cD
 bE
 bE
 cN
+dK
+do
+dz
+EG
+gy
+dz
+dz
+gy
+EG
+dz
+do
 cZ
-do
-dz
-EG
-gy
-dz
-dz
-gy
-EG
-dz
-do
-dM
 cN
 Tt
 Rb
@@ -7605,13 +7605,13 @@ dC
 dC
 dC
 dC
-eI
 eW
+nq
 dC
 dC
 dC
 dC
-eI
+eW
 vv
 fO
 fO
