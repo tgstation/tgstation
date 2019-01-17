@@ -1,0 +1,4 @@
+author: "Vile Beggar"
+delete-after: True
+changes: 
+  - rscadd: "You can now create circuit floor tiles with the autolathe."
