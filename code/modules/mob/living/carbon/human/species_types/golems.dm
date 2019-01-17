@@ -1,3 +1,4 @@
+
 /datum/species/golem
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
@@ -23,7 +24,6 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
-	var/cost_to_build = 10
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
 	var/random_eligible = TRUE //If false, the golem subtype can't be made through golem mutation toxin
 
@@ -902,7 +902,7 @@
 			H.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 			H.soundbang_act(2, 0, 100, 1)
 			H.jitteriness += 7
-		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))	
+		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))
 		switch(distance)
 			if(0 to 1)
 				M.show_message("<span class='narsiesmall'>GONG!</span>", 2)
@@ -923,7 +923,7 @@
 
 
 /datum/species/golem/cardboard //Faster but weaker, can also make new shells on its own
-	name = "Cardboard Golem" 
+	name = "Cardboard Golem"
 	id = "cardboard golem"
 	prefix = "Cardboard"
 	special_names = list("Box")
@@ -1052,4 +1052,3 @@
 		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
-
