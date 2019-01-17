@@ -295,7 +295,7 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "dK" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/closet/crate/secure/gear{
 	req_access_txt = "150"
@@ -359,7 +359,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "dM" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/closet/crate,
 /obj/item/storage/box/donkpockets{
@@ -484,7 +484,7 @@
 /area/ruin/unpowered/syndicate_lava_base/chemistry)
 "ea" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/closet/crate/secure/weapon{
 	req_access_txt = "150"
@@ -667,7 +667,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1157,7 +1157,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eX" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 4
+	dir = 1
 	},
 /obj/structure/closet/crate/internals,
 /obj/item/tank/internals/oxygen/yellow,
@@ -1173,7 +1173,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "eY" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 8
+	dir = 4
 	},
 /obj/structure/closet/crate,
 /obj/item/storage/box/donkpockets{
@@ -1438,7 +1438,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "fs" = (
 /obj/effect/turf_decal/box/white/corners{
-	dir = 1
+	dir = 8
 	},
 /obj/structure/closet/crate,
 /obj/item/storage/box/stockparts/deluxe,
@@ -2085,7 +2085,7 @@
 /area/ruin/unpowered/syndicate_lava_base/cargo)
 "gS" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -3242,7 +3242,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "ja" = (
 /obj/effect/turf_decal/stripes/red/corner{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/button/door{
 	id = "syndie_lavaland_vault";
@@ -3295,7 +3295,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "je" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating{
@@ -5396,7 +5396,7 @@
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "no" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -5779,7 +5779,7 @@
 /area/ruin/unpowered/syndicate_lava_base/arrivals)
 "nQ" = (
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{

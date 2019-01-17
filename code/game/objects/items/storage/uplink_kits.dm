@@ -1,7 +1,7 @@
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/PopulateContents()
-	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1)))
+	switch (pickweight(list("bloodyspai" = 3, "stealth" = 2, "bond" = 2, "screwed" = 2, "sabotage" = 3, "guns" = 2, "murder" = 2, "implant" = 1, "hacker" = 3, "darklord" = 1, "sniper" = 1, "metaops" = 1, "ninja" = 1, "white_whale_holy_grail" = 2)))
 		if("bloodyspai") // 27 tc now this is more right
 			new /obj/item/clothing/under/chameleon(src) // 2 tc since it's not the full set
 			new /obj/item/clothing/mask/chameleon(src) // Goes with above
@@ -126,6 +126,13 @@
 			new /obj/item/card/id/syndicate(src) // 2 tc
 			new /obj/item/chameleon(src) // 7 tc
 
+		if("white_whale_holy_grail") //Unique items that don't appear anywhere else
+			new /obj/item/pneumatic_cannon/speargun(src)
+			new /obj/item/storage/backpack/magspear_quiver(src)
+			new /obj/item/clothing/suit/space/hardsuit/carp(src)
+			new /obj/item/clothing/mask/gas/carp(src)
+			new /obj/item/grenade/spawnergrenade/spesscarp(src)
+
 /obj/item/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
@@ -206,9 +213,14 @@
 	STR.can_hold = typecacheof(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
 /obj/item/storage/box/syndie_kit/space/PopulateContents()
-	new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
-	new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
-
+	if(prob(50))
+		new /obj/item/clothing/suit/space/syndicate/black/red(src) // Black and red is so in right now
+		new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
+		
+	else
+		new /obj/item/clothing/head/helmet/space/syndicate(src)
+		new /obj/item/clothing/suit/space/syndicate(src)
+		
 /obj/item/storage/box/syndie_kit/emp
 	name = "EMP kit"
 

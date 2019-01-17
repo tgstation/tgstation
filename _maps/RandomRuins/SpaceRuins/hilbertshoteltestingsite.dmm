@@ -207,7 +207,9 @@
 	},
 /area/ruin/unpowered/no_grav)
 "X" = (
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/plasteel/stairs/left{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

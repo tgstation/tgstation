@@ -5,7 +5,6 @@
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
-	container_type = DRAINABLE | AMOUNT_VISIBLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
@@ -24,7 +23,7 @@
 		return ..()
 
 /obj/structure/reagent_dispensers/Initialize()
-	create_reagents(tank_volume)
+	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
 	reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
 

@@ -57,6 +57,15 @@
 	mood_change = 15
 	hidden = TRUE
 
+/datum/mood_event/creeping
+	description = "<span class='greentext'>I'm so close to my obsession and I never want this to end.</span>\n" //creeps get it when they are around their obsession
+	mood_change = 18
+	timeout = 30
+	hidden = TRUE
+
+/datum/mood_event/creeping/add_effects(name)
+	description = "<span class='greentext'>I'm so close to [name] and I NEVER want this to end.</span>\n"
+
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
 	mood_change = 3
@@ -89,3 +98,7 @@
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
 	timeout = 1800
+
+/datum/mood_event/religiously_comforted
+	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>"
+	mood_change = 3

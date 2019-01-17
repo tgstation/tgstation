@@ -1,0 +1,5 @@
+author: "GranpaWalton"
+delete-after: True
+changes: 
+  - balance: "CO2 fusion power has been lowered from 3 to 1.25"
+  - balance: "nitryl fusion power has been raised from 15 to 16"

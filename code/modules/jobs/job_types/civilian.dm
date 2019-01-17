@@ -21,6 +21,7 @@ Clown
 
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
+	. = ..()
 	H.apply_pref_name("clown", M.client)
 
 /datum/outfit/job/clown
@@ -177,6 +178,7 @@ Lawyer
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CIV
+	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
 
 
 /datum/outfit/job/lawyer

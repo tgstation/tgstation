@@ -1,0 +1,4 @@
+author: "coiax, loser"
+delete-after: True
+changes: 
+  - bugfix: "Taking mutadone while having the communication disorder brain trauma will no longer spam your chat with messages."

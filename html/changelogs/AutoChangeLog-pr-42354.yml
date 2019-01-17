@@ -1,0 +1,5 @@
+author: "Tortellini Tony"
+delete-after: True
+changes: 
+  - rscadd: "Cigarettes and lighters can now be extinguished."
+  - bugfix: "E-cigs will continue to display their setting after being emagged."

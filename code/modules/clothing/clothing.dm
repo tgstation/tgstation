@@ -36,6 +36,7 @@
 	// THESE OVERRIDE THE HIDEHAIR FLAGS
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
+	
 
 /obj/item/clothing/Initialize()
 	. = ..()
@@ -55,7 +56,7 @@
 			add_fingerprint(usr)
 
 /obj/item/reagent_containers/food/snacks/clothing
-	name = "oops"
+	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
 	list_reagents = list("nutriment" = 1)
 	tastes = list("dust" = 1, "lint" = 1)

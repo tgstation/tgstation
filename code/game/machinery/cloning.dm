@@ -139,32 +139,32 @@
 //Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
 	if(panel_open)
-		return FALSE
+		return NONE
 	if(mess || attempting)
-		return FALSE
+		return NONE
 	clonemind = locate(mindref) in SSticker.minds
 	if(!istype(clonemind))	//not a mind
-		return FALSE
+		return NONE
 	if(clonemind.last_death != last_death) //The soul has advanced, the record has not.
-		return FALSE
+		return NONE
 	if(!QDELETED(clonemind.current))
 		if(clonemind.current.stat != DEAD)	//mind is associated with a non-dead body
-			return FALSE
+			return NONE
 		if(clonemind.current.suiciding) // Mind is associated with a body that is suiciding.
-			return FALSE
+			return NONE
 	if(!clonemind.active)
 		// get_ghost() will fail if they're unable to reenter their body
 		var/mob/dead/observer/G = clonemind.get_ghost()
 		if(!G)
-			return FALSE
+			return NONE
 		if(G.suiciding) // The ghost came from a body that is suiciding.
-			return FALSE
+			return NONE
 	if(clonemind.damnation_type) //Can't clone the damned.
 		INVOKE_ASYNC(src, .proc/horrifyingsound)
 		mess = TRUE
 		icon_state = "pod_g"
 		update_icon()
-		return FALSE
+		return NONE
 	current_insurance = insurance
 	attempting = TRUE //One at a time!!
 	countdown.start()
@@ -180,8 +180,6 @@
 		H.easy_randmut(POSITIVE)
 	if(efficiency < 3)
 		if(prob(50))
-			H.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_BASIC)
-		if(prob(50))
 			var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 			if(ismob(M))
 				H = M
@@ -196,11 +194,11 @@
 	icon_state = "pod_1"
 	//Get the clone body ready
 	maim_clone(H)
-	H.add_trait(TRAIT_STABLEHEART, "cloning")
-	H.add_trait(TRAIT_EMOTEMUTE, "cloning")
-	H.add_trait(TRAIT_MUTE, "cloning")
-	H.add_trait(TRAIT_NOBREATH, "cloning")
-	H.add_trait(TRAIT_NOCRITDAMAGE, "cloning")
+	H.add_trait(TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_MUTE, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_NOBREATH, CLONING_POD_TRAIT)
+	H.add_trait(TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	H.Unconscious(80)
 
 	clonemind.transfer_to(H)
@@ -224,7 +222,7 @@
 
 		H.set_suicide(FALSE)
 	attempting = FALSE
-	return TRUE
+	return CLONING_SUCCESS
 
 //Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
@@ -278,9 +276,6 @@
 				else if(isbodypart(I))
 					var/obj/item/bodypart/BP = I
 					BP.attach_limb(mob_occupant)
-
-			//Premature clones may have brain damage.
-			mob_occupant.adjustBrainLoss(-((speed_coeff / 2) * dmg_mult))
 
 			use_power(7500) //This might need tweaking.
 
@@ -387,16 +382,19 @@
 	if(!mob_occupant)
 		return
 	current_insurance = null
-	mob_occupant.remove_trait(TRAIT_STABLEHEART, "cloning")
-	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_MUTE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, "cloning")
-	mob_occupant.remove_trait(TRAIT_NOBREATH, "cloning")
+	mob_occupant.remove_trait(TRAIT_STABLEHEART, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_EMOTEMUTE, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_MUTE, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
+	mob_occupant.remove_trait(TRAIT_NOBREATH, CLONING_POD_TRAIT)
+
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()
 		to_chat(occupant, "<span class='notice'><b>There is a bright flash!</b><br><i>You feel like a new being.</i></span>")
 		mob_occupant.flash_act()
+
+	mob_occupant.adjustBrainLoss(mob_occupant.getCloneLoss())
 
 	occupant.forceMove(T)
 	icon_state = "pod_0"
@@ -472,10 +470,9 @@
 		unattached_flesh.Cut()
 
 	H.setCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
-	H.setBrainLoss(CLONE_INITIAL_DAMAGE)
-	// In addition to being cellularly damaged and having barely any
-
-	// brain function, they also have no limbs or internal organs.
+	// In addition to being cellularly damaged, they also have no limbs or internal organs.
+	// Applying brainloss is done when the clone leaves the pod, so application of traumas can happen
+	// based on the level of damage sustained.
 
 	if(!H.has_trait(TRAIT_NODISMEMBER))
 		var/static/list/zones = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
