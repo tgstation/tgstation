@@ -304,6 +304,14 @@
 	name = "\improper DNA injector (Anti-Void)"
 	remove_mutations = list(VOID)
 
+/obj/item/dnainjector/olfaction
+	name = "\improper DNA injector (Olfaction)"
+	add_mutations = list(OLFACTION)
+
+/obj/item/dnainjector/antiolfaction
+	name = "\improper DNA injector (Anti-Olfaction)"
+	remove_mutations = list(OLFACTION)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 
