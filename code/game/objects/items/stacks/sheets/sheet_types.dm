@@ -32,6 +32,12 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		new/datum/stack_recipe("lime comfy chair", /obj/structure/chair/comfy/lime, 2, one_per_turf = TRUE, on_floor = TRUE), \
 		new/datum/stack_recipe("teal comfy chair", /obj/structure/chair/comfy/teal, 2, one_per_turf = TRUE, on_floor = TRUE), \
 		)), \
+	new/datum/stack_recipe_list("sofas", list(
+		new /datum/stack_recipe("sofa (middle)", /obj/structure/chair/sofa, 1, one_per_turf = TRUE, on_floor = TRUE),
+		new /datum/stack_recipe("sofa (left)", /obj/structure/chair/sofa/left, 1, one_per_turf = TRUE, on_floor = TRUE),
+		new /datum/stack_recipe("sofa (right)", /obj/structure/chair/sofa/right, 1, one_per_turf = TRUE, on_floor = TRUE),
+		new /datum/stack_recipe("sofa (corner)", /obj/structure/chair/sofa/corner, 1, one_per_turf = TRUE, on_floor = TRUE)
+		)),
 	null, \
 	new/datum/stack_recipe("rack parts", /obj/item/rack_parts), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
@@ -269,6 +275,10 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	singular_name = "durathread roll"
 	icon_state = "sheet-durathread"
 	merge_type = /obj/item/stack/sheet/cloth/durathread
+
+/obj/item/stack/sheet/cloth/durathread/Initialize(mapload, new_amount, merge = TRUE)
+	. = ..()
+	recipes = null //ree override
 
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cloth_recipes

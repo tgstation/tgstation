@@ -165,10 +165,13 @@ Contains:
 	item_color = "ert_commander"
 	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
-	item_flags = NODROP
 	brightness_on = 7
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+
+/obj/item/clothing/head/helmet/space/hardsuit/ert/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/ert
 	name = "emergency response team commander hardsuit"
@@ -275,8 +278,10 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
-	item_flags = NODROP
 
+/obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, LOCKED_HELMET_TRAIT)
 
 /obj/item/clothing/suit/space/hardsuit/carp
 	name = "carp space suit"
@@ -285,9 +290,18 @@ Contains:
 	item_state = "space_suit_syndicate"
 	slowdown = 0	//Space carp magic, never stop believing
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75) //As whimpy whimpy whoo
-	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/automatic/speargun)	//I'm giving you a hint here
+	allowed = list(/obj/item/tank/internals, /obj/item/pneumatic_cannon/speargun)	//I'm giving you a hint here
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/carp
 
+/obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		user.faction |= "carp"
+
+/obj/item/clothing/head/helmet/space/hardsuit/carp/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		user.faction -= "carp"
 
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response team helmet"

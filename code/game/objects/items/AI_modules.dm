@@ -336,8 +336,8 @@ AI MODULES
 /obj/item/aiModule/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
 
-/obj/item/aiModule/core/full/New()
-	..()
+/obj/item/aiModule/core/full/Initialize()
+	. = ..()
 	if(!law_id)
 		return
 	var/datum/ai_laws/D = new

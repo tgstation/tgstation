@@ -22,6 +22,20 @@
 /proc/is_hivehost(mob/living/M)
 	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/hivemind)
 
+/proc/is_real_hivehost(mob/living/M) //This proc ignores mind controlled vessels
+	if(!M || !M.mind)
+		return FALSE
+	var/datum/antagonist/hivemind/hive = M.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(!hive)
+		return FALSE
+	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in M.mind.spell_list
+	if(the_spell && the_spell.active)
+		if(the_spell.original_body == M)
+			return TRUE
+	else
+		return TRUE
+	return FALSE
+
 /proc/is_hivemember(mob/living/M)
 	if(!M)
 		return FALSE

@@ -1,12 +1,13 @@
-/obj/effect/proc_holder/changeling/biodegrade
+/datum/action/changeling/biodegrade
 	name = "Biodegrade"
-	desc = "Dissolves restraints or other objects preventing free movement."
+	desc = "Dissolves restraints or other objects preventing free movement. Costs 30 chemicals."
 	helptext = "This is obvious to nearby people, and can destroy standard restraints and closets."
+	button_icon_state = "biodegrade"
 	chemical_cost = 30 //High cost to prevent spam
 	dna_cost = 2
 	req_human = 1
 
-/obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
+/datum/action/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
 	if(!user.restrained() && isopenturf(user.loc))
 		to_chat(user, "<span class='warning'>We are already free!</span>")
@@ -52,19 +53,19 @@
 	..()
 	return used
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
+/datum/action/changeling/biodegrade/proc/dissolve_handcuffs(mob/living/carbon/human/user, obj/O)
 	if(O && user.handcuffed == O)
 		user.visible_message("<span class='warning'>[O] dissolve[O.gender==PLURAL?"":"s"] into a puddle of sizzling goop.</span>")
 		new /obj/effect/decal/cleanable/greenglow(O.drop_location())
 		qdel(O)
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/S)
+/datum/action/changeling/biodegrade/proc/dissolve_straightjacket(mob/living/carbon/human/user, obj/S)
 	if(S && user.wear_suit == S)
 		user.visible_message("<span class='warning'>[S] dissolves into a puddle of sizzling goop.</span>")
 		new /obj/effect/decal/cleanable/greenglow(S.drop_location())
 		qdel(S)
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user, obj/structure/closet/C)
+/datum/action/changeling/biodegrade/proc/open_closet(mob/living/carbon/human/user, obj/structure/closet/C)
 	if(C && user.loc == C)
 		C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
 		new /obj/effect/decal/cleanable/greenglow(C.drop_location())
@@ -74,7 +75,7 @@
 		C.open()
 		to_chat(user, "<span class='warning'>We open the container restraining us!</span>")
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/structure/spider/cocoon/C)
+/datum/action/changeling/biodegrade/proc/dissolve_cocoon(mob/living/carbon/human/user, obj/structure/spider/cocoon/C)
 	if(C && user.loc == C)
 		new /obj/effect/decal/cleanable/greenglow(C.drop_location())
 		qdel(C) //The cocoon's destroy will move the changeling outside of it without interference

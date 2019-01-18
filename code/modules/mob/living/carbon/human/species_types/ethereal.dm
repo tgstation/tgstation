@@ -7,7 +7,7 @@
 	attack_sound = 'sound/weapons/etherealhit.ogg'
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
-	exotic_bloodtype = "LE" //Liquid Electricity. fuck you think of something better gamer
+	exotic_blood = "liquidelectricity" //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
@@ -126,7 +126,7 @@
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 3)
 		if(ETHEREAL_CHARGE_NONE to ETHEREAL_CHARGE_LOWPOWER)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 2)
-			apply_damage(0.5, BRUTE)
+			apply_damage(0.5, BRUTE, null, null, H)
 			brutemod = 1.75
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 1)

@@ -42,9 +42,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.randmutb()
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.randmutg()
+			M.easy_randmut(POSITIVE)
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -921,7 +921,7 @@
 
 /datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
 	M.adjustStaminaLoss(15, 0)
-	if(M.dna.species.type == /datum/species/skeleton || M.dna.species.type == /datum/species/plasmaman)
+	if(M.has_trait(TRAIT_CALCIUM_HEALER))
 		M.adjustBruteLoss(0.5, 0)
 	if(prob(20))
 		switch(rand(1, 3))

@@ -65,19 +65,21 @@
 	sleep(20)
 	playsound(src, "rustle", 50, 1, -5)
 	qdel(user)
-	return
 
 /obj/item/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
 	explosion(src.loc,(dist),(dist*2),(dist*4))
-	return
 
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
-	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
+	desc = "Space Santa uses this to deliver presents to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
 	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/backpack/santabag/Initialize()
+	. = ..()
+	regenerate_presents()
 
 /obj/item/storage/backpack/santabag/ComponentInitialize()
 	. = ..()
@@ -88,6 +90,22 @@
 /obj/item/storage/backpack/santabag/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] places [src] over [user.p_their()] head and pulls it tight! It looks like [user.p_they()] [user.p_are()]n't in the Christmas spirit...</span>")
 	return (OXYLOSS)
+
+/obj/item/storage/backpack/santabag/proc/regenerate_presents()
+	addtimer(CALLBACK(src, .proc/regenerate_presents), rand(30 SECONDS, 60 SECONDS))
+
+	var/mob/M = get(loc, /mob)
+	if(!istype(M))
+		return
+	if(M.has_trait(TRAIT_CANNOT_OPEN_PRESENTS))
+		GET_COMPONENT(STR, /datum/component/storage)
+		var/turf/floor = get_turf(src)
+		var/obj/item/I = new /obj/item/a_gift/anything(floor)
+		if(STR.can_be_inserted(I, stop_messages=TRUE))
+			STR.handle_item_insertion(I, prevent_warning=TRUE)
+		else
+			qdel(I)
+
 
 /obj/item/storage/backpack/cultpack
 	name = "trophy rack"
@@ -278,11 +296,10 @@
 	icon_state = "satchel-flat"
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
-	component_type = /datum/component/storage/concrete/secret_satchel
 
 /obj/item/storage/backpack/satchel/flat/Initialize()
 	. = ..()
-	SSpersistence.new_secret_satchels += src
+	add_trait(TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
 
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
@@ -292,7 +309,7 @@
 
 /obj/item/storage/backpack/satchel/flat/hide(intact)
 	if(intact)
-		invisibility = INVISIBILITY_MAXIMUM
+		invisibility = INVISIBILITY_OBSERVER
 		anchored = TRUE //otherwise you can start pulling, cover it, and drag around an invisible backpack.
 		icon_state = "[initial(icon_state)]2"
 	else
@@ -301,33 +318,21 @@
 		icon_state = initial(icon_state)
 
 /obj/item/storage/backpack/satchel/flat/PopulateContents()
+	var/datum/supply_pack/costumes_toys/randomised/contraband/C = new
+	for(var/i in 1 to 2)
+		var/ctype = pick(C.contains)
+		new ctype(src)
+
+	qdel(C)
+
+/obj/item/storage/backpack/satchel/flat/with_tools/PopulateContents()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/crowbar(src)
 
-/obj/item/storage/backpack/satchel/flat/Destroy()
-	SSpersistence.new_secret_satchels -= src
-	return ..()
-
-/obj/item/storage/backpack/satchel/flat/secret
-	var/list/reward_one_of_these = list() //Intended for map editing
-	var/list/reward_all_of_these = list() //use paths!
-	var/revealed = FALSE
-
-/obj/item/storage/backpack/satchel/flat/secret/Initialize()
-	. = ..()
-
-	if(isfloorturf(loc) && !isplatingturf(loc))
-		hide(1)
-
-/obj/item/storage/backpack/satchel/flat/secret/hide(intact)
 	..()
-	if(!intact && !revealed)
-		if(reward_one_of_these.len > 0)
-			var/reward = pick(reward_one_of_these)
-			new reward(src)
-		for(var/R in reward_all_of_these)
-			new R(src)
-		revealed = TRUE
+
+/obj/item/storage/backpack/satchel/flat/empty/PopulateContents()
+	return
 
 /obj/item/storage/backpack/duffelbag
 	name = "duffel bag"

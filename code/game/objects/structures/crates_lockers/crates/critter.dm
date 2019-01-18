@@ -10,8 +10,8 @@
 	delivery_icon = "deliverybox"
 	var/obj/item/tank/internals/emergency_oxygen/tank
 
-/obj/structure/closet/crate/critter/New()
-	..()
+/obj/structure/closet/crate/critter/Initialize()
+	. = ..()
 	tank = new
 
 /obj/structure/closet/crate/critter/Destroy()

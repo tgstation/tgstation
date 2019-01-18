@@ -333,7 +333,7 @@
 		return
 	switch(action)
 		if("make")
-			var/datum/crafting_recipe/TR = locate(params["recipe"])
+			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
 			ui_interact(usr) //explicit call to show the busy display
 			var/fail_msg = construct_item(usr, TR)

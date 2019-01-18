@@ -301,8 +301,8 @@
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/obj/item/restraints/legcuffs/beartrap/energy/New()
-	..()
+/obj/item/restraints/legcuffs/beartrap/energy/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/restraints/legcuffs/beartrap/energy/proc/dissipate()
@@ -312,7 +312,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
-	. = ..()
+	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 20 // Cyborgs shouldn't have a strong restraint

@@ -7,6 +7,8 @@
 #define PAYCHECK_HARD 100
 #define PAYCHECK_COMMAND 200
 
+#define PAYCHECK_WELFARE 20 //NEETbucks
+
 #define ACCOUNT_CIV "CIV"
 #define ACCOUNT_CIV_NAME "Civil Budget"
 #define ACCOUNT_ENG "ENG"

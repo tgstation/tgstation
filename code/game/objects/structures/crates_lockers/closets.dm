@@ -168,10 +168,8 @@
 	else if(istype(AM, /obj/structure/closet))
 		return
 	else if(isobj(AM))
-		if (istype(AM, /obj/item))
-			var/obj/item/I = AM
-			if (I.item_flags & NODROP)
-				return
+		if(AM.has_trait(TRAIT_NODROP))
+			return
 		else if(!allow_objects && !istype(AM, /obj/effect/dummy/chameleon))
 			return
 		if(!allow_dense && AM.density)

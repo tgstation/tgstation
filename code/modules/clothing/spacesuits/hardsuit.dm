@@ -135,7 +135,7 @@
 			to_chat(user, "<span class='warning'>You cannot remove the jetpack from [src] while wearing it.</span>")
 			return
 
-		jetpack.turn_off()
+		jetpack.turn_off(user)
 		jetpack.forceMove(drop_location())
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
@@ -423,7 +423,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, FALSE)
+	AddComponent(/datum/component/anti_magic, TRUE, FALSE, _blocks_self = FALSE)
 
 
 	//Medical hardsuit
@@ -722,7 +722,7 @@
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	item_color = "ert_medical"
-	item_flags = NODROP //Dont want people changing into the other teams gear
+	// Adding TRAIT_NODROP is done when the CTF spawner equips people
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/shielded/ctf
 	armor = list("melee" = 0, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 95, "acid" = 95)
 	slowdown = 0

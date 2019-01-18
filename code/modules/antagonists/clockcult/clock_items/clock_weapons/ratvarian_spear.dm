@@ -35,7 +35,7 @@
 
 /obj/item/clockwork/weapon/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	. = ..()
-	if(!QDELETED(target) && target.stat != DEAD && !target.anti_magic_check() && !is_servant_of_ratvar(target)) //we do bonus damage on attacks unless they're a servant, have a null rod, or are dead
+	if(!QDELETED(target) && target.stat != DEAD && !target.anti_magic_check(major = FALSE) && !is_servant_of_ratvar(target)) //we do bonus damage on attacks unless they're a servant, have a null rod, or are dead
 		var/bonus_damage = bonus_burn //normally a total of 20 damage, 30 with ratvar
 		if(issilicon(target))
 			target.visible_message("<span class='warning'>[target] shudders violently at [src]'s touch!</span>", "<span class='userdanger'>ERROR: Temperature rising!</span>")

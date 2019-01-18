@@ -2,8 +2,8 @@
 	name = "Phobia"
 	desc = "Patient is unreasonably afraid of something."
 	scan_desc = "phobia"
-	gain_text = ""
-	lose_text = ""
+	gain_text = "<span class='warning'>You start finding default values very unnerving...</span>"
+	lose_text = "<span class='notice'>You no longer feel afraid of default values.</span>"
 	var/phobia_type
 	var/next_check = 0
 	var/next_scare = 0
@@ -14,8 +14,10 @@
 	var/list/trigger_turfs
 	var/list/trigger_species
 
-/datum/brain_trauma/mild/phobia/New(specific_type)
-	phobia_type = specific_type
+/datum/brain_trauma/mild/phobia/New(new_phobia_type)
+	if(new_phobia_type)
+		phobia_type = new_phobia_type
+
 	if(!phobia_type)
 		phobia_type = pick(SStraumas.phobia_types)
 
@@ -126,3 +128,77 @@
 			owner.confused += 10
 			owner.Jitter(10)
 			owner.stuttering += 10
+
+// Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
+
+/datum/brain_trauma/mild/phobia/spiders
+	phobia_type = "spiders"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/space
+	phobia_type = "space"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/security
+	phobia_type = "security"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/clowns
+	phobia_type = "clowns"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/greytide
+	phobia_type = "greytide"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/lizards
+	phobia_type = "lizards"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/skeletons
+	phobia_type = "skeletons"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/snakes
+	phobia_type = "snakes"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/robots
+	phobia_type = "robots"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/doctors
+	phobia_type = "doctors"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/authority
+	phobia_type = "authority"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/supernatural
+	phobia_type = "the supernatural"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/aliens
+	phobia_type = "aliens"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/strangers
+	phobia_type = "strangers"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/birds
+	phobia_type = "birds"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/falling
+	phobia_type = "falling"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/anime
+	phobia_type = "anime"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/conspiracies
+	phobia_type = "conspiracies"
+	random_gain = FALSE

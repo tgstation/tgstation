@@ -55,10 +55,15 @@
 	var/paycheck = PAYCHECK_MINIMAL
 	var/paycheck_department = ACCOUNT_CIV
 
+	var/list/mind_traits // Traits added to the mind of the mob assigned this job
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
 	//do actions on H but send messages to M as the key may not have been transferred_yet
+	if(mind_traits)
+		for(var/t in mind_traits)
+			H.mind.add_trait(t, JOB_TRAIT)
 
 /datum/job/proc/announce(mob/living/carbon/human/H)
 	if(head_announce)
@@ -158,11 +163,11 @@
 	belt = /obj/item/pda
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
+	box = /obj/item/storage/box/survival
 
 	var/backpack = /obj/item/storage/backpack
 	var/satchel  = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
-	var/box = /obj/item/storage/box/survival
 
 	var/pda_slot = SLOT_BELT
 
@@ -182,12 +187,6 @@
 			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
-
-	if(box)
-		if(!backpack_contents)
-			backpack_contents = list()
-		backpack_contents.Insert(1, box) // Box always takes a first slot in backpack
-		backpack_contents[box] = 1
 
 /datum/outfit/job/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)

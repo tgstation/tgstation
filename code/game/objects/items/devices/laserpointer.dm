@@ -28,14 +28,14 @@
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
 
-/obj/item/laser_pointer/New()
-	..()
+/obj/item/laser_pointer/Initialize()
+	. = ..()
 	diode = new(src)
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
 
-/obj/item/laser_pointer/upgraded/New()
-	..()
+/obj/item/laser_pointer/upgraded/Initialize()
+	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
 /obj/item/laser_pointer/attackby(obj/item/W, mob/user, params)

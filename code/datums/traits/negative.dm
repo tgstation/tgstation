@@ -159,8 +159,11 @@
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a precious family [heirloom.name] [where], passed down from generation to generation. Keep it safe!</span>")
-	var/list/family_name = splittext(quirk_holder.real_name, " ")
-	heirloom.name = "\improper [family_name[family_name.len]] family [heirloom.name]"
+
+	var/list/names = splittext(quirk_holder.real_name, " ")
+	var/family_name = names[names.len]
+
+	heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
 /datum/quirk/family_heirloom/on_process()
 	if(heirloom in quirk_holder.GetAllContents())
@@ -184,6 +187,32 @@
 	gain_text = "<span class='danger'>You feel sleepy.</span>"
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
+
+/datum/quirk/hypersensitive
+	name = "Hypersensitive"
+	desc = "For better or worse, everything seems to affect your mood more than it should."
+	value = -1
+	gain_text = "<span class='danger'>You seem to make a big deal out of everything.</span>"
+	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
+
+/datum/quirk/hypersensitive/add()
+	GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+	if(mood)
+		mood.mood_modifier += 0.5
+
+/datum/quirk/hypersensitive/remove()
+	if(quirk_holder)
+		GET_COMPONENT_FROM(mood, /datum/component/mood, quirk_holder)
+		if(mood)
+			mood.mood_modifier -= 0.5
+
+/datum/quirk/light_drinker
+	name = "Light Drinker"
+	desc = "You just can't handle your drinks and get drunk very quickly."
+	value = -1
+	mob_trait = TRAIT_LIGHT_DRINKER
+	gain_text = "<span class='notice'>Just the thought of drinking alcohol makes your head spin.</span>"
+	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"

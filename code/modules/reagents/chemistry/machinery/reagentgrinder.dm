@@ -53,8 +53,27 @@
 
 /obj/machinery/reagentgrinder/examine(mob/user)
 	..()
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Grinding reagents at <b>[speed*100]%</b>.<span>")
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		return
+
+	if(operating)
+		to_chat(user, "<span class='warning'>\The [src] is operating.</span>")
+		return
+
+	if(beaker || length(holdingitems))
+		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		if(beaker)
+			to_chat(user, "<span class='notice'>- \A [beaker].</span>")
+		for(var/i in holdingitems)
+			var/obj/item/O = i
+			to_chat(user, "<span class='notice'>- \A [O.name].</span>")
+
+	if(!(stat & (NOPOWER|BROKEN)))
+		to_chat(user, "<span class='notice'>The status display reads:</span>")
+		to_chat(user, "<span class='notice'>- Grinding reagents at <b>[speed*100]%</b>.<span>")
+		for(var/datum/reagent/R in beaker.reagents.reagent_list)
+			to_chat(user, "<span class='notice'>- [R.volume] units of [R.name].</span>")
 
 /obj/machinery/reagentgrinder/handle_atom_del(atom/A)
 	. = ..()
@@ -76,6 +95,18 @@
 	else
 		icon_state = "juicer0"
 
+/obj/machinery/reagentgrinder/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
 	//You can only screw open empty grinder
 	if(!beaker && !length(holdingitems) && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -91,15 +122,14 @@
 		return TRUE
 
 	if (istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		if (!beaker)
-			if(!user.transferItemToLoc(I, src))
-				to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
-				return TRUE
-			to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
-			beaker = I
-			update_icon()
-		else
-			to_chat(user, "<span class='warning'>There's already a container inside [src].</span>")
+		var/obj/item/reagent_containers/B = I
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(B, src))
+			return
+		replace_beaker(user, B)
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
+		update_icon()
 		return TRUE //no afterattack
 
 	if(holdingitems.len >= limit)
@@ -182,32 +212,13 @@
 		if("examine")
 			examine(user)
 
-/obj/machinery/reagentgrinder/examine(mob/user)
-	. = ..()
-	if(!beaker && !length(holdingitems))
-		return
-	to_chat(user, "It contains:")
-	for(var/i in holdingitems)
-		var/obj/item/O = i
-		to_chat(user, "\A [O.name]")
-	if(beaker)
-		to_chat(user, "\A [beaker]")
-		if(!(stat & (NOPOWER|BROKEN)))
-			to_chat(user, "The screen reads:")
-			for(var/datum/reagent/R in beaker.reagents.reagent_list)
-				to_chat(user, "[R.volume] units of [R.name]")
-
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
 	for(var/i in holdingitems)
 		var/obj/item/O = i
 		O.forceMove(drop_location())
 		holdingitems -= O
 	if(beaker)
-		beaker.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(beaker)
-		beaker = null
-		update_icon()
+		replace_beaker(user)
 
 /obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
 	holdingitems -= O

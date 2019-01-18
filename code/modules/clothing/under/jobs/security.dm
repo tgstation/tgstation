@@ -142,6 +142,7 @@
  */
 
 /obj/item/clothing/under/rank/security/blueshirt
+	name = "blue shirt and tie"
 	desc = "I'm a little busy right now, Calhoun."
 	icon_state = "blueshift"
 	item_state = "blueshift"
