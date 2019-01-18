@@ -175,7 +175,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!H.mind)
 			continue
-		if(!(H.mind.assigned_role in GLOB.station_positions) || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep)) //the jealousy target has to have a job, and not be the obsession or creep.
+		if(!(H.mind.assigned_role in SSjob.name_occupations) || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep)) //the jealousy target has to have a job, and not be the obsession or creep.
 			continue
 		all_coworkers += H
 		//this won't be called often thankfully.
