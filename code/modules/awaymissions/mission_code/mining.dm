@@ -1,7 +1,5 @@
 #define MEGAFAUNA_NEST_RANGE 10
 
-#define MEGAFAUNA_SPAWN_DELAY 200 // 20 seconds
-
 //					  //
 // -----Vr Stuff----- //
 //					  //
@@ -124,6 +122,27 @@
 // -----Virtual Megafauna Spawners ---- //
 //										//
 
+/datum/component/spawner/megafauna
+	var/spawn_wait_time = 150 // time to next spawn when the megafauna dies, 15 seconds
+	var/initial_spawned = FALSE // so we don't clear the arena and open the door on the initial spawn
+
+/datum/component/spawner/megafauna/try_spawn_mob()
+	STOP_PROCESSING(SSprocessing, src)
+	if(spawned_mobs.len < max_mobs && initial_spawned)
+		var/obj/structure/spawner/megafauna/MS = parent
+		MS.cleanup_arena()
+		spawn_delay = world.time + spawn_wait_time
+		var/turf/check = get_ranged_target_turf(get_turf(MS), SOUTH, MEGAFAUNA_NEST_RANGE + 1)
+		if(istype(check, /turf/closed/indestructible/fakedoor))
+			check.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface)
+			sleep(spawn_wait_time)
+			check.ChangeTurf(/turf/closed/indestructible/fakedoor)
+		else
+			sleep(spawn_wait_time)
+	. = ..()
+	initial_spawned = TRUE
+	START_PROCESSING(SSprocessing, src)
+
 /obj/structure/spawner/megafauna
 	name = "generic megafauna spawner"
 	desc = "Literally does nothing."
@@ -133,9 +152,10 @@
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "appears onto"
 	density = FALSE
+	spawner_type = /datum/component/spawner/megafauna
 
 /obj/structure/spawner/megafauna/proc/cleanup_arena()
-	for(var/obj/effect/decal/B in urange(MEGAFAUNA_NEST_RANGE, src, 1))
+	for(var/obj/effect/decal/B in urange(MEGAFAUNA_NEST_RANGE, src))
 		qdel(B) // go away blood and garbage shit
 
 /obj/structure/spawner/megafauna/blood_drunk

@@ -73,10 +73,6 @@
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type, score_type, crusher_kill)
 				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
-		if(virtual)
-			nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
-			var/obj/structure/spawner/megafauna/P = nest.parent
-			P.cleanup_arena()
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
