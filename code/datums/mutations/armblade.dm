@@ -28,7 +28,7 @@
 	include_user = 1
 	action_icon_state = "armblade"
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
-	var/obj/item/melee/arm_blade/blade
+	var/obj/item/melee/arm_blade/genetic/blade
 
 /obj/effect/proc_holder/spell/targeted/syndiblade/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/human/H in targets)
@@ -41,7 +41,7 @@
 /obj/effect/proc_holder/spell/targeted/syndiblade/proc/grow_blade(mob/living/carbon/human/H)
 	if(!ishuman(H) || blade)
 		return
-	blade = new /obj/item/melee/arm_blade(H,1)
+	blade = new (H,1)
 	if(H.can_put_in_hand(blade, H.active_hand_index))
 		H.put_in_active_hand(blade)
 		playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
@@ -52,3 +52,6 @@
 	QDEL_NULL(blade)
 	H.update_inv_hands()
 	playsound(H, 'sound/effects/blobattack.ogg', 30, 1)
+
+/obj/item/melee/arm_blade/genetic
+	force = 20
