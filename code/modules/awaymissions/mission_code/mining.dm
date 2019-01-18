@@ -183,12 +183,17 @@
 	desc = "This will teleport you back to your previously used portal. One use only."
 	clothes_req = FALSE
 	action_icon_state = "blink"
-	var/turf/recall_turf
+	var/list/recall_portals = list()
 
 /obj/effect/proc_holder/spell/portal_recall/Click(mob/user = usr)
+	if(!recall_portals.len)
+		user.mind.RemoveSpell(src) // remove spell if no portals left
+	var/turf/recall_turf = get_turf(recall_portals[recall_portals.len])
 	if(recall_turf)
 		do_teleport(user, recall_turf, 0, no_effects = FALSE, channel = TELEPORT_CHANNEL_BLUESPACE)
-		user.mind.RemoveSpell(src)
+		recall_portals -= recall_portals[recall_portals.len]
+		if(!recall_portals.len)
+			user.mind.RemoveSpell(src) // remove spell if no portals left
 
 /obj/effect/portal/permanent/one_way/recall
 	name = "recall portal"
@@ -199,17 +204,23 @@
 /obj/effect/portal/permanent/one_way/recall/Crossed(atom/movable/AM, oldloc)
 	if(ismob(AM))
 		var/mob/user = AM
-		if(locate(/obj/effect/proc_holder/spell/portal_recall) in user.mind.spell_list)
-			return ..(AM, oldloc, force_stop = 1) // don't teleport if they have a recall spell already or are using a recall spell
+		var/check = locate(/obj/effect/proc_holder/spell/portal_recall) in user.mind.spell_list
+		if(check)
+			var/obj/effect/proc_holder/spell/portal_recall/mob_recall = check
+			for(var/obj/effect/portal/permanent/one_way/recall/P in mob_recall.recall_portals)
+				if(src == P)
+					return ..(AM, oldloc, force_stop = 1) // don't teleport if they have a recall spell with this portal already (or have just teleported onto it)
 	return ..()
 
 /obj/effect/portal/permanent/one_way/recall/teleport(atom/movable/M, force = FALSE)
 	. = ..()
 	if(ismob(M))
 		var/mob/user = M
-		var/obj/effect/proc_holder/spell/portal_recall/personal_recall = new
-		personal_recall.recall_turf = get_turf(src)
-		user.mind.AddSpell(personal_recall)
+		var/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in user.mind.spell_list
+		var/obj/effect/proc_holder/spell/portal_recall/personal_recall = findspell ? findspell : new
+		personal_recall.recall_portals += src
+		if(!findspell)
+			user.mind.AddSpell(personal_recall)
 
 //							   //
 // -----Virtual Megafauna----- //
