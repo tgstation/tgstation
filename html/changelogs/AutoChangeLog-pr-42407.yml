@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - bugfix: "Objects and items can now be inserted into closets, like before."
-  - bugfix: "Fixes a bug which prevented carbons from throwing items."
