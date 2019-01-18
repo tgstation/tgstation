@@ -222,6 +222,7 @@
 
 /datum/mutation/human/fire/on_life()
 	owner.adjust_hygiene(-3)
-
+	if(prob(5))
+		owner.adjust_fire_stacks(-2)
 
 
