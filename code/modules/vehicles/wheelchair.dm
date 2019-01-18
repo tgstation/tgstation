@@ -37,7 +37,7 @@
 		unbuckle_mob(H)
 	..()
 
-/obj/vehicle/ridden/wheelchair/driver_move(mob/user, direction)
+/obj/vehicle/ridden/wheelchair/driver_move(mob/living/user, direction)
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
 		if(!H.get_num_arms() && canmove)
@@ -53,12 +53,12 @@
 /obj/vehicle/ridden/wheelchair/Move(mob/user)
 	. = ..()
 	overlays = null
-	playsound(loc, pick(drive_sounds), 75, 1)
+	playsound(src, pick(drive_sounds), 75, 1)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
 
 
-/obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/user)
+/obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
 	handle_rotation_overlayed()
 
@@ -102,20 +102,18 @@
 
 
 /obj/vehicle/ridden/wheelchair/proc/stopmove()
-	if(!canmove)	//To stop to_chat spam
 		canmove = TRUE
 
-/obj/vehicle/ridden/wheelchair/proc/can_be_rotated(mob/user)
+/obj/vehicle/ridden/wheelchair/proc/can_be_rotated(mob/living/user)
 	return TRUE
 
-/obj/vehicle/ridden/wheelchair/proc/can_user_rotate(mob/user)
+/obj/vehicle/ridden/wheelchair/proc/can_user_rotate(mob/living/user)
 	var/mob/living/L = user
 
 	if(istype(L))
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return FALSE
-		else
 			return TRUE
-	else if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
+	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE
 	return FALSE
