@@ -20,11 +20,12 @@
 		break
 
 /datum/round_event/brain_trauma/proc/traumatize(mob/living/carbon/human/H)
-	var/resistance = pickweight(list(
-		TRAUMA_RESILIENCE_BASIC = 50,
-		TRAUMA_RESILIENCE_SURGERY = 30,
-		TRAUMA_RESILIENCE_LOBOTOMY = 15,
-		TRAUMA_RESILIENCE_MAGIC = 5))
+	var/resistance = pick(
+		50;TRAUMA_RESILIENCE_BASIC,
+		30;TRAUMA_RESILIENCE_SURGERY,
+		15;TRAUMA_RESILIENCE_LOBOTOMY,
+		5;TRAUMA_RESILIENCE_MAGIC)
+
 	var/trauma_type = pickweight(list(
 		BRAIN_TRAUMA_MILD = 60,
 		BRAIN_TRAUMA_SEVERE = 30,

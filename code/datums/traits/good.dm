@@ -117,11 +117,27 @@
 
 /datum/quirk/spiritual
 	name = "Spiritual"
-	desc = "You're in tune with the gods, and your prayers may be more likely to be heard. Or not."
+	desc = "You hold a spiritual belief, whether in God, nature or the arcane rules of the universe. You gain comfort from the presence of holy people, and believe that your prayers are more special than others."
 	value = 1
 	mob_trait = TRAIT_SPIRITUAL
-	gain_text = "<span class='notice'>You feel a little more faithful to the gods today.</span>"
-	lose_text = "<span class='danger'>You feel less faithful in the gods.</span>"
+	gain_text = "<span class='notice'>You have faith in a higher power.</span>"
+	lose_text = "<span class='danger'>You lose faith!</span>"
+
+/datum/quirk/spiritual/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.equip_to_slot_or_del(new /obj/item/storage/fancy/candle_box(H), SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/box/matches(H), SLOT_IN_BACKPACK)
+
+/datum/quirk/spiritual/on_process()
+	var/comforted = FALSE
+	for(var/mob/living/L in oview(5, quirk_holder))
+		if(L.mind && L.mind.isholy && L.stat == CONSCIOUS)
+			comforted = TRUE
+			break
+	if(comforted)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "religious_comfort", /datum/mood_event/religiously_comforted)
+	else
+		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "religious_comfort")
 
 /datum/quirk/tagger
 	name = "Tagger"
@@ -153,6 +169,7 @@
 	mob_trait = TRAIT_NEET
 	gain_text = "<span class='notice'>You feel useless to society.</span>"
 	lose_text = "<span class='danger'>You no longer feel useless to society.</span>"
+	mood_quirk = TRUE
 
 /datum/quirk/neet/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder

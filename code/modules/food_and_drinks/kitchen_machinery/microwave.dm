@@ -1,7 +1,3 @@
-#define MICROWAVE_NORMAL 0
-#define MICROWAVE_MUCK 1
-#define MICROWAVE_PRE 2
-
 //Microwaving doesn't use recipes, instead it calls the microwave_act of the objects. For food, this creates something based on the food's cooked_type
 
 /obj/machinery/microwave
@@ -26,18 +22,26 @@
 	var/max_n_of_items = 10
 	var/efficiency = 0
 	var/datum/looping_sound/microwave/soundloop
-	var/list/ingredients
+	var/list/ingredients = list() // may only contain /atom/movables
+
+	var/static/radial_examine = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_examine")
+	var/static/radial_eject = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_eject")
+	var/static/radial_use = image(icon = 'icons/mob/radial.dmi', icon_state = "radial_use")
+
+	// we show the button even if the proc will not work
+	var/static/list/radial_options = list("eject" = radial_eject, "use" = radial_use)
+	var/static/list/ai_radial_options = list("eject" = radial_eject, "use" = radial_use, "examine" = radial_examine)
 
 /obj/machinery/microwave/Initialize()
 	. = ..()
 	wires = new /datum/wires/microwave(src)
-	ingredients = list()
 	create_reagents(100)
 	soundloop = new(list(src), FALSE)
 
 /obj/machinery/microwave/Destroy()
-	QDEL_NULL(wires)
-	ingredients.Cut()
+	eject()
+	if(wires)
+		QDEL_NULL(wires)
 	. = ..()
 
 /obj/machinery/microwave/RefreshParts()
@@ -52,8 +56,36 @@
 	. = ..()
 	if(!operating)
 		to_chat(user, "<span class='notice'>Alt-click [src] to turn it on.</span>")
-	if(in_range(user, src) || isobserver(user))
-		to_chat(user, "<span class='notice'>The status display reads: Capacity: <b>[max_n_of_items]</b> items.<br>Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>")
+
+	if(!in_range(user, src) && !issilicon(user) && !isobserver(user))
+		to_chat(user, "<span class='warning'>You're too far away to examine [src]'s contents and display!</span>")
+		return
+	if(operating)
+		to_chat(user, "<span class='notice'>\The [src] is operating.</span>")
+		return
+
+	if(length(ingredients))
+		if(issilicon(user))
+			to_chat(user, "<span class='notice'>\The [src] camera shows:</span>")
+		else
+			to_chat(user, "<span class='notice'>\The [src] contains:</span>")
+		var/list/items_counts = new
+		for(var/i in ingredients)
+			if(istype(i, /obj/item/stack))
+				var/obj/item/stack/S = i
+				items_counts[S.name] += S.amount
+			else
+				var/atom/movable/AM = i
+				items_counts[AM.name]++
+		for(var/O in items_counts)
+			to_chat(user, "<span class='notice'>- [items_counts[O]]x [O].</span>")
+	else
+		to_chat(user, "<span class='notice'>\The [src] is empty.</span>")
+
+	if(!(stat & (NOPOWER|BROKEN)))
+		to_chat(user, "<span class='notice'>The status display reads:</span>")
+		to_chat(user, "<span class='notice'>- Capacity: <b>[max_n_of_items]</b> items.<span>")
+		to_chat(user, "<span class='notice'>- Cook time reduced by <b>[(efficiency - 1) * 25]%</b>.<span>")
 
 /obj/machinery/microwave/update_icon()
 	if(broken)
@@ -76,7 +108,7 @@
 		return
 
 	if(dirty < 100)
-		if(default_deconstruction_screwdriver(user, "", "", O) || default_unfasten_wrench(user, O))
+		if(default_deconstruction_screwdriver(user, icon_state, icon_state, O) || default_unfasten_wrench(user, O))
 			update_icon()
 			return
 
@@ -100,7 +132,6 @@
 		else
 			to_chat(user, "<span class='warning'>It's broken!</span>")
 			return TRUE
-		updateUsrDialog()
 		return
 
 	if(istype(O, /obj/item/reagent_containers/spray))
@@ -111,7 +142,6 @@
 			user.visible_message("[user] has cleaned \the [src].", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()
-			updateUsrDialog()
 		else
 			to_chat(user, "<span class='warning'>You need more space cleaner!</span>")
 		return TRUE
@@ -141,7 +171,6 @@
 				ingredients += S
 		if(loaded)
 			to_chat(user, "<span class='notice'>You insert [loaded] items into \the [src].</span>")
-		updateUsrDialog()
 		return
 
 	if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O, /obj/item/storage) && user.a_intent == INTENT_HELP)
@@ -149,16 +178,14 @@
 			to_chat(user, "<span class='warning'>\The [src] is full, you can't put anything in!</span>")
 			return TRUE
 		if(!user.transferItemToLoc(O, src))
-			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand, you cannot put it in \the [src]!</span>")
+			to_chat(user, "<span class='warning'>\The [O] is stuck to your hand!</span>")
 			return FALSE
 
 		ingredients += O
-		user.visible_message("[user] has added \the [O] to \the [src].", "<span class='notice'>You add \the [O] to \the [src].</span>")
-		updateUsrDialog()
+		user.visible_message("[user] has added \a [O] to \the [src].", "<span class='notice'>You add [O] to \the [src].</span>")
 		return
 
 	..()
-	updateUsrDialog()
 
 /obj/machinery/microwave/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -166,58 +193,41 @@
 
 /obj/machinery/microwave/ui_interact(mob/user)
 	. = ..()
-	if(panel_open || !anchored)
+
+	if(operating || panel_open || !anchored || !user.canUseTopic(src))
 		return
-	var/dat = "<div class='statusDisplay'>"
-	if(broken > 0)
-		dat += "ERROR: 09734014-A2379-D18746 --Bad memory<BR>Contact your operator or use command line to rebase memory ///git checkout {HEAD} -a commit pull --rebase push {*NEW HEAD*}</div>" // Thats how all the git fiddling looks to me
-	else if(operating)
-		dat += "Microwaving in progress!<BR>Please wait...!</div>"
-	else if(dirty == 100)
-		dat += "ERROR: >> 0 --Response input zero<BR>Contact your operator of the device manufacturer support.</div>"
-	else
-		var/list/items_counts = new
-		for (var/obj/O in ingredients)
-			if(istype(O, /obj/item/stack/))
-				var/obj/item/stack/S = O
-				items_counts[O.name] += S.amount
-			else
-				items_counts[O.name]++
+	if(isAI(user) && (stat & NOPOWER))
+		return
 
-		for (var/O in items_counts)
-			var/N = items_counts[O]
-			dat += "[capitalize(O)]: [N]<BR>"
-
-		if (items_counts.len==0)
-			dat += "The microwave is empty.</div>"
+	if(!length(ingredients))
+		if(isAI(user))
+			examine(user)
 		else
-			dat = "<h3>Ingredients:</h3>[dat]</div>"
-		dat += "<A href='?src=[REF(src)];action=cook'>Turn on</A>"
-		dat += "<A href='?src=[REF(src)];action=dispose'>Eject ingredients</A><BR>"
-
-	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/microwave/Topic(href, href_list)
-	if(..())
+			to_chat(user, "<span class='warning'>\The [src] is empty.</span>")
 		return
-	if(panel_open)
+
+	var/choice = show_radial_menu(user, src, isAI(user) ? ai_radial_options : radial_options, require_near = !issilicon(user))
+
+	// post choice verification
+	if(operating || panel_open || !anchored || !user.canUseTopic(src))
 		return
+	if(isAI(user) && (stat & NOPOWER))
+		return
+
 	usr.set_machine(src)
-	if(!operating)
-		switch(href_list["action"])
-			if("cook")
-				cook()
-			if("dispose")
-				dispose()
-	updateUsrDialog()
+	switch(choice)
+		if("eject")
+			eject()
+		if("use")
+			cook()
+		if("examine")
+			examine(user)
 
-/obj/machinery/microwave/proc/dispose()
-	for(var/obj/O in ingredients)
-		O.forceMove(drop_location())
-	to_chat(usr, "<span class='notice'>You dispose of \the [src] contents.</span>")
-	updateUsrDialog()
+/obj/machinery/microwave/proc/eject()
+	for(var/i in ingredients)
+		var/atom/movable/AM = i
+		AM.forceMove(drop_location())
+	ingredients.Cut()
 
 /obj/machinery/microwave/proc/cook()
 	if(stat & (NOPOWER|BROKEN))
@@ -249,13 +259,16 @@
 	set_light(1.5)
 	soundloop.start()
 	update_icon()
-	updateUsrDialog()
 
 /obj/machinery/microwave/proc/spark()
 	visible_message("<span class='warning'>Sparks fly around [src]!</span>")
 	var/datum/effect_system/spark_spread/s = new
 	s.set_up(2, 1, src)
 	s.start()
+
+#define MICROWAVE_NORMAL 0
+#define MICROWAVE_MUCK 1
+#define MICROWAVE_PRE 2
 
 /obj/machinery/microwave/proc/start()
 	turn_on()
@@ -337,4 +350,7 @@
 	set_light(0)
 	soundloop.stop()
 	update_icon()
-	updateUsrDialog()
+
+#undef MICROWAVE_NORMAL
+#undef MICROWAVE_MUCK
+#undef MICROWAVE_PRE

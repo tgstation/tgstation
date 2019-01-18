@@ -95,6 +95,7 @@
 	mob_trait = TRAIT_NEAT
 	gain_text = "<span class='notice'>You feel like you have to stay clean.</span>"
 	lose_text = "<span class='danger'>You no longer feel the need to always be clean.</span>"
+	mood_quirk = TRUE
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"

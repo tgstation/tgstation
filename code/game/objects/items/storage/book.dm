@@ -69,17 +69,16 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "
 	if(href_list["seticon"] && SSreligion && !SSreligion.bible_icon_state)
 		var/iconi = text2num(href_list["seticon"])
 		var/biblename = GLOB.biblenames[iconi]
-		var/obj/item/storage/book/bible/B = locate(href_list["src"])
-		B.icon_state = GLOB.biblestates[iconi]
-		B.item_state = GLOB.bibleitemstates[iconi]
+		icon_state = GLOB.biblestates[iconi]
+		item_state = GLOB.bibleitemstates[iconi]
 
-		if(B.icon_state == "honk1" || B.icon_state == "honk2")
+		if(icon_state == "honk1" || icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
 			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
 
-		SSreligion.bible_icon_state = B.icon_state
-		SSreligion.bible_item_state = B.item_state
+		SSreligion.bible_icon_state = icon_state
+		SSreligion.bible_item_state = item_state
 
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
@@ -174,6 +173,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
+		if(istype(A, /obj/item/storage/book/bible) && !istype(A, /obj/item/storage/book/bible/syndicate))
+			to_chat(user, "<span class='notice'>You purify [A], conforming it to your belief.</span>")
+			var/obj/item/storage/book/bible/B = A
+			B.name = name
+			B.icon_state = icon_state
+			B.item_state = item_state
 	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
 		var/obj/item/twohanded/required/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
