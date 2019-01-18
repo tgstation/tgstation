@@ -212,5 +212,16 @@
 	owner.physiology.burn_mod *= 2
 
 
+/datum/mutation/human/smelly
+	name = "Smelly"
+	desc = "The user just has some really bad body odor."
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='warning'>You feel gross.</span>"
+	text_lose_indication = "<span class'notice'>You feel cleaner.</span>"
+	difficulty = 10
+
+/datum/mutation/human/fire/on_life()
+	owner.adjust_hygiene(-3)
+
 
 
