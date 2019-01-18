@@ -14,3 +14,7 @@
 /datum/generecipe/hulk
 	required = "/datum/mutation/human/strong; /datum/mutation/human/radioactive"
 	result = HULK
+
+/datum/generecipe/fire
+	required = "/datum/mutation/human/smelly; /datum/mutation/human/fire"
+	result = FIRESWEAT
