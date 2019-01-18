@@ -82,3 +82,58 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
+
+/obj/item/clothing/head/hardhat/weldhat/
+	name = "welding hard hat"
+	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight and welding shield."
+	icon_state = "hardhat0_white"
+	item_state = "hardhat0_white"
+	item_color = "white"
+	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/toggle)
+	flash_protect = 2
+	tint = 2
+	flags_inv = HIDEEYES
+	flags_cover = HEADCOVERSEYES
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
+	visor_flags_inv = HIDEEYES 
+	visor_flags_cover = HEADCOVERSEYES
+	
+
+/obj/item/clothing/head/hardhat/weldhat/attack_self(mob/user)
+	toggle_helmet_light2()
+
+/obj/item/clothing/head/hardhat/weldhat/AltClick(mob/user)
+	toggle_welding_screen2()
+
+/obj/item/clothing/head/hardhat/weldhat/ui_action_click(mob/user, action)
+	if(istype(action, /datum/action/item_action/toggle_helmet_light))
+		toggle_helmet_light2(user)
+	else
+		toggle_welding_screen2(user)
+
+/obj/item/clothing/head/hardhat/weldhat/proc/toggle_helmet_light2(mob/user)
+	on = !on	
+	if(on)
+		turn_on(user)
+	else
+		turn_off(user)
+	update_icon(user)
+
+/obj/item/clothing/head/hardhat/weldhat/proc/toggle_welding_screen2(mob/user)
+	weldingvisortoggle(user)
+	update_icon(user)
+
+/obj/item/clothing/head/hardhat/weldhat/update_icon(mob/user)
+	..()
+	cut_overlays()
+	icon_state = "hardhat[on]_[item_color]"
+	item_state = "hardhat[on]_[item_color]"
+	if(up)
+		add_overlay("weldvisor")
+	user.update_inv_head()
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.head_update(src, forced = 1)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
