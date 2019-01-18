@@ -13,7 +13,7 @@
 			continue
 		if(H.stat == DEAD)
 			continue
-		if(!H.mind.assigned_role || !(H.mind.assigned_role in SSjob.name_occupations) || H.mind.assigned_role in GLOB.nonhuman_positions) //only station jobs sans nonhuman roles, prevents ashwalkers falling in love with crewmembers they never met
+		if(!SSjob.GetJob(H.mind.assigned_role) || H.mind.assigned_role in GLOB.nonhuman_positions) //only station jobs sans nonhuman roles, prevents ashwalkers falling in love with crewmembers they never met
 			continue
 		if(H.mind.has_antag_datum(/datum/antagonist/creep))
 			continue
