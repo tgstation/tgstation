@@ -1,0 +1,5 @@
+author: "floyd / qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "fixes some hygiene runtimes"
+  - tweak: "hygiene sprite is a bit more transparent"
