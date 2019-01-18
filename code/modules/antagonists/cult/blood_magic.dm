@@ -763,7 +763,7 @@
 		switch(choice)
 			if("Blood Spear (150)")
 				if(uses < 150)
-					to_chat(user, "<span class='cultitalic'>You need 200 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 150 charges to perform this rite.</span>")
 				else
 					uses -= 150
 					var/turf/T = get_turf(user)
@@ -779,7 +779,7 @@
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
 			if("Blood Bolt Barrage (300)")
 				if(uses < 300)
-					to_chat(user, "<span class='cultitalic'>You need 400 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 300 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood()
 					uses -= 300
@@ -791,7 +791,7 @@
 						qdel(rite)
 			if("Blood Beam (500)")
 				if(uses < 500)
-					to_chat(user, "<span class='cultitalic'>You need 600 charges to perform this rite.</span>")
+					to_chat(user, "<span class='cultitalic'>You need 500 charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
 					uses -= 500
