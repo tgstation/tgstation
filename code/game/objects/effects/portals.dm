@@ -49,7 +49,9 @@
 		user.forceMove(get_turf(src))
 		return TRUE
 
-/obj/effect/portal/Crossed(atom/movable/AM, oldloc)
+/obj/effect/portal/Crossed(atom/movable/AM, oldloc, force_stop = 0)
+	if(force_stop)
+		return ..()
 	if(isobserver(AM))
 		return ..()
 	if(linked && (get_turf(oldloc) == get_turf(linked)))
@@ -188,15 +190,50 @@
 /obj/effect/portal/permanent
 	name = "permanent portal"
 	desc = "An unwavering portal that will never fade."
-	var/id // set id in map editor
+	var/id // var edit or set id in map editor
+	hardlinked = FALSE // dont qdel my portal nerd
 
 /obj/effect/portal/permanent/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
-	if(!id)
-		qdel(src)
-		return
-	_linked = null
-	for(var/obj/effect/portal/permanent/P in GLOB.portals)
-		if(P.id == id) // links portals with the same id, there should only be two perm portals with the same id
-			_linked = P
-			P.linked = src
 	. = ..()
+	set_linked()
+
+/obj/effect/portal/permanent/proc/get_linked()
+	if(!id)
+		return
+	for(var/obj/effect/portal/permanent/P in GLOB.portals - src)
+		if(P.id && P.id == id) // gets portals with the same id, there should only be two permanent portals with the same id
+			return P
+
+/obj/effect/portal/permanent/proc/set_linked()
+	var/obj/effect/portal/permanent/other = get_linked()
+	if(!other)
+		return
+	other.linked = src
+	linked = other
+
+/obj/effect/portal/permanent/teleport(atom/movable/M, force = FALSE)
+	if(!linked) // try to search for a new one if something was var edited etc
+		set_linked()
+	. = ..()
+
+/obj/effect/portal/permanent/one_way // doesn't have a return portal
+	name = "one-way portal"
+	desc = "You get the feeling that this might not be the safest thing you've ever done."
+	var/keep // if this is a portal that should be kept
+
+/obj/effect/portal/permanent/one_way/set_linked()
+	var/obj/effect/portal/permanent/one_way/other = get_linked()
+	if(!other)
+		return
+	hard_target = get_turf(other)
+	other.hard_target = get_turf(src)
+	if(!other.keep)
+		qdel(other)
+	if(!keep)
+		qdel(src)
+
+/obj/effect/portal/permanent/one_way/keep // because its nice to be able to tell which is which on the map
+	keep = TRUE
+
+/obj/effect/portal/permanent/one_way/destroy
+	keep = FALSE

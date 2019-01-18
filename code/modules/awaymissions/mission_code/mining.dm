@@ -1,3 +1,7 @@
+#define MEGAFAUNA_NEST_RANGE 10
+
+#define MEGAFAUNA_SPAWN_DELAY 200 // 20 seconds
+
 //					  //
 // -----Vr Stuff----- //
 //					  //
@@ -116,9 +120,9 @@
 		/obj/item/immortality_talisman=1,
 		/obj/item/book/granter/spell/summonitem=1)
 
-//														   //
-// -----Virtual Megafauna Spawners and Linked Portals----- //
-//														   //
+//										//
+// -----Virtual Megafauna Spawners ---- //
+//										//
 
 /obj/structure/spawner/megafauna
 	name = "generic megafauna spawner"
@@ -128,9 +132,10 @@
 	max_mobs = 1
 	icon = 'icons/mob/nest.dmi'
 	spawn_text = "appears onto"
+	density = FALSE
 
 /obj/structure/spawner/megafauna/proc/cleanup_arena()
-	for(var/obj/effect/decal/B in urange(10, src, 1))
+	for(var/obj/effect/decal/B in urange(MEGAFAUNA_NEST_RANGE, src, 1))
 		qdel(B) // go away blood and garbage shit
 
 /obj/structure/spawner/megafauna/blood_drunk
@@ -169,52 +174,57 @@
 	icon_state = "legion"
 	mob_types = list(/mob/living/simple_animal/hostile/megafauna/legion/virtual)
 
-/obj/effect/portal/permanent/megafauna_arena
-	name = "megafauna portal"
-	desc = "Leads to a place of unspeakable torment."
+//							 //
+// ----- Recall Portals ---- //
+//							 //
+
+/obj/effect/proc_holder/spell/portal_recall
+	name = "Portal Recall"
+	desc = "This will teleport you back to your previously used portal. One use only."
+	clothes_req = FALSE
+	action_icon_state = "blink"
+	var/turf/recall_turf
+
+/obj/effect/proc_holder/spell/portal_recall/Click(mob/user = usr)
+	if(recall_turf)
+		do_teleport(user, recall_turf, 0, no_effects = FALSE, channel = TELEPORT_CHANNEL_BLUESPACE)
+		user.mind.RemoveSpell(src)
+
+/obj/effect/portal/permanent/one_way/recall
+	name = "recall portal"
+	desc = "Gives you a one time ability to return to this portal once you have entered."
 	mech_sized = TRUE
+	keep = TRUE
 
-/obj/effect/portal/permanent/megafauna_arena/attackby(obj/item/W, mob/user, params)
-	if(ismegafauna(user))
-		return 0
-	. = ..()
+/obj/effect/portal/permanent/one_way/recall/Crossed(atom/movable/AM, oldloc)
+	if(ismob(AM))
+		var/mob/user = AM
+		if(locate(/obj/effect/proc_holder/spell/portal_recall) in user.mind.spell_list)
+			return ..(AM, oldloc, force_stop = 1) // don't teleport if they have a recall spell already or are using a recall spell
+	return ..()
 
-/obj/effect/portal/permanent/megafauna_arena/Crossed(atom/movable/AM, oldloc)
-	if(ismegafauna(AM))
-		return 0
+/obj/effect/portal/permanent/one_way/recall/teleport(atom/movable/M, force = FALSE)
 	. = ..()
-
-/obj/effect/portal/permanent/megafauna_arena/attack_hand(mob/user)
-	if(ismegafauna(user))
-		return 0
-	. = ..()
-
-/obj/effect/portal/permanent/megafauna_arena/teleport(atom/movable/M, force = FALSE)
-	if(ismegafauna(M))
-		return 0
-	. = ..()
+	if(ismob(M))
+		var/mob/user = M
+		var/obj/effect/proc_holder/spell/portal_recall/personal_recall = new
+		personal_recall.recall_turf = get_turf(src)
+		user.mind.AddSpell(personal_recall)
 
 //							   //
 // -----Virtual Megafauna----- //
 //							   //
-
-#define MEGAFAUNA_SPAWN_DELAY 200 // 20 seconds
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual
 	name = "blood-drunk miner hologram"
 	desc = "A holographic miner, eternally hunting."
 	crusher_loot = list()
 	loot = list()
+	virtual = 1
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/Initialize()
 	. = ..()
 	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/death()
-	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
-	var/obj/structure/spawner/megafauna/P = nest.parent
-	P.cleanup_arena()
-	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
 	return
@@ -224,17 +234,12 @@
 	desc = "A holographic dragon, once weak, now fierce."
 	crusher_loot = list()
 	loot = list()
+	virtual = 1
+	del_on_death = 1
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual/Initialize()
 	. = ..()
 	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/virtual/death()
-	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
-	var/obj/structure/spawner/megafauna/P = nest.parent
-	P.cleanup_arena()
-	. = ..()
-	qdel(src)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
 	return
@@ -244,17 +249,12 @@
 	desc = "A holographic version of the king of the slaughter demons. You feel something oddly real staring back at you."
 	crusher_loot = list()
 	loot = list()
+	virtual = 1
 	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Initialize()
 	. = ..()
 	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/death()
-	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
-	var/obj/structure/spawner/megafauna/P = nest.parent
-	P.cleanup_arena()
-	. = ..()
 
 // need this otherwise bubbles can teleport out of his arena
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/hallucination_charge_around(var/times = 4, var/delay = 6, var/chargepast = 0, var/useoriginal = 1)
@@ -270,7 +270,7 @@
 		var/turf/place = locate(chargeat.x + cos(ang) * times, chargeat.y + sin(ang) * times, chargeat.z)
 		if(!place)
 			continue
-		if(!srcplaced && useoriginal && get_dist(nest.parent, place) <= 10)
+		if(!srcplaced && useoriginal && get_dist(nest.parent, place) <= MEGAFAUNA_NEST_RANGE)
 			forceMove(place)
 			srcplaced = 1
 			continue
@@ -288,16 +288,11 @@
 	desc = "A holographic god. One of the strongest creatures that has ever lived."
 	crusher_loot = list()
 	loot = list()
+	virtual = 1
 
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual/Initialize()
 	. = ..()
 	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/virtual/death()
-	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
-	var/obj/structure/spawner/megafauna/P = nest.parent
-	P.cleanup_arena()
-	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
 	return
@@ -307,6 +302,7 @@
 	desc = "A holographic club. It's said to wipe from existence those who fall to its rhythm."
 	loot = list()
 	crusher_loot = list()
+	virtual = 1
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/Initialize()
 	. = ..()
@@ -314,12 +310,6 @@
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/spawn_crusher_loot()
 	return
-
-/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/death()
-	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
-	var/obj/structure/spawner/megafauna/P = nest.parent
-	P.cleanup_arena()
-	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
 	return
@@ -335,7 +325,6 @@
 	qdel(internal)
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual/death()
-	nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
 	if(health > 0)
 		return
 	if(size > 1)
@@ -363,6 +352,10 @@
 		L.GiveTarget(target)
 
 		L.nest = nest
+
+		nest.spawned_mobs += L
+
+		L.virtual = 1
 
 		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
 	else

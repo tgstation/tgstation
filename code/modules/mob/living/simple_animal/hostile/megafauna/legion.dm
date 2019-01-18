@@ -49,7 +49,6 @@ Difficulty: Medium
 	elimination = 1
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
-	var/virtual = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()
@@ -99,8 +98,6 @@ Difficulty: Medium
 	charging = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/death()
-	if(virtual)
-		return ..()
 	if(health > 0)
 		return
 	if(size > 1)
@@ -139,6 +136,8 @@ Difficulty: Medium
 			elimination = 0
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
+		if(virtual)
+			loot = null
 		..()
 
 /obj/item/gps/internal/legion

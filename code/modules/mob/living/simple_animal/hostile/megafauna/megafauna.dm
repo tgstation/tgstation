@@ -34,6 +34,7 @@
 	var/anger_modifier = 0
 	var/obj/item/gps/internal
 	var/recovery_time = 0
+	var/virtual = 0 // for virtual megafauna
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
@@ -42,6 +43,16 @@
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
 	. = ..()
+
+/mob/living/simple_animal/hostile/megafauna/Moved()
+	if(virtual && get_dist(nest.parent, src) > MEGAFAUNA_NEST_RANGE)
+		var/turf/closest = get_turf(nest.parent)
+		for(var/i = 1 to MEGAFAUNA_NEST_RANGE)
+			closest = get_step(closest, get_dir(closest, src))
+		forceMove(closest) // someone teleported out probably and the megafauna kept chasing them
+		target = null
+		return
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
 	return TRUE
@@ -62,6 +73,10 @@
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
 				grant_achievement(medal_type, score_type, crusher_kill)
 				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
+		if(virtual)
+			nest.spawn_delay = world.time + MEGAFAUNA_SPAWN_DELAY
+			var/obj/structure/spawner/megafauna/P = nest.parent
+			P.cleanup_arena()
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
