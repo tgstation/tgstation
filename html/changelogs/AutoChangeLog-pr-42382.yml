@@ -1,5 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - tweak: "Observers are able to see family heirloom messages when examining
-objects."
