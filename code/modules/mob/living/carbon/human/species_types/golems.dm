@@ -508,7 +508,6 @@
 	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
 	special_names = null
-	mutanttongue = /obj/item/organ/tongue/bone
 
 	var/last_honk = 0
 	var/honkooldown = 0
@@ -961,6 +960,7 @@
 	toxic_food = null
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	mutanttongue = /obj/item/organ/tongue/bone
 	sexes = FALSE
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH,TRAIT_CALCIUM_HEALER)
