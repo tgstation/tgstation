@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 //if you add anything that isn't covered by the typepaths below, add it to summon_magic_objective_types
 GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/spell/fireball,
+	/obj/item/book/granter/spell/rot,
 	/obj/item/book/granter/spell/smoke,
 	/obj/item/book/granter/spell/blind,
 	/obj/item/book/granter/spell/mindswap,

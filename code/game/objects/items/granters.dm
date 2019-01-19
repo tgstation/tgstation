@@ -150,6 +150,13 @@
 	explosion(user.loc, 1, 0, 2, 3, FALSE, FALSE, 2)
 	qdel(src)
 
+/obj/item/book/granter/spell/rot
+	spell = /obj/effect/proc_holder/spell/aimed/rotten_invocation
+	spellname = "rotten invocation"
+	icon_state ="bookrot"
+	desc = "This book smells..."
+	remarks = list("Gross...", "By god, why are the pages slimy?", "Accounting for crosswinds... really?", "I'm going to have to wash my hands after this.", "I'm gonna be sick...", "So my spellrot turns their spells into spellrot, which can turn my spells...", "Spellrot? Seems pretty niche.")
+
 /obj/item/book/granter/spell/sacredflame
 	spell = /obj/effect/proc_holder/spell/targeted/sacred_flame
 	spellname = "sacred flame"

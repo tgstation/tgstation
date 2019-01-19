@@ -445,6 +445,48 @@
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
 	icon_welded = "welded"
 
+/obj/item/projectile/magic/rot
+	name = "bolt of rot"
+	icon_state = "rot"
+	nodamage = TRUE
+	flag = "magic"
+
+/obj/item/projectile/magic/rot/on_hit(target)
+	//bolt of rot does a couple things:
+	//dumps miasma wherever it hits
+	//fucks hygiene pretty hard
+	//the big thing: if it hits people, turns their spells into harmless (but annoying) rot spells that also spread rot spells.
+	var/turf/T = get_turf(src.loc)
+	if(T)
+		var/datum/gas_mixture/stank = new
+		ADD_GAS(/datum/gas/miasma, stank.gases)
+		stank.gases[/datum/gas/miasma][MOLES] = 100
+		T.assume_air(stank)
+		T.air_update_turf()
+	//mob effects
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			qdel(src)
+			return
+		if(M.mind.spell_list.len)
+			var/spells_to_rot = 0 //how many rot spells to add.
+			for(var/obj/effect/proc_holder/spell/spell in M.mind.spell_list)
+				spells_to_rot++
+				M.mind.RemoveSpell(spell)
+			if(spells_to_rot > 0)
+				to_chat(M, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
+			var/list/rot_spells = list("aimed")//todo:add more
+			for(var/adding_rot in 1 to spells_to_rot)
+				switch(pick(rot_spells))
+					if("aimed")
+						M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/rotten_invocation(null))
+		if(ishuman(M))
+			var/mob/living/carbon/human/nurglevictim = M
+			nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN
+
+
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"

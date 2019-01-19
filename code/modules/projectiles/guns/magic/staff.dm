@@ -105,4 +105,12 @@
 	max_charges = 6
 	recharge_rate = 4
 
-
+/obj/item/gun/magic/staff/rot
+	name = "staff of rot"
+	desc = "An artefact sealed away by the academy because of its spell rotting powers."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/rot
+	icon_state = "staffofrot"
+	item_state = "staffofrot"//reminder to do this
+	max_charges = 6
+	recharge_rate = 4

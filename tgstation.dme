@@ -2595,6 +2595,7 @@
 #include "code\modules\spells\spell_types\projectile.dm"
 #include "code\modules\spells\spell_types\rightandwrong.dm"
 #include "code\modules\spells\spell_types\rod_form.dm"
+#include "code\modules\spells\spell_types\rot_spells.dm"
 #include "code\modules\spells\spell_types\santa.dm"
 #include "code\modules\spells\spell_types\shadow_walk.dm"
 #include "code\modules\spells\spell_types\shapeshift.dm"

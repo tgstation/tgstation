@@ -47,3 +47,6 @@
 
 /obj/item/ammo_casing/magic/locker
 	projectile_type = /obj/item/projectile/magic/locker
+
+/obj/item/ammo_casing/magic/rot
+	projectile_type = /obj/item/projectile/magic/rot
