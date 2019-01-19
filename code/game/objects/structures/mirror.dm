@@ -72,7 +72,7 @@
 	if (broken)
 		new /obj/item/shard(user.drop_location())
 	else
-		new /obj/item/stack/sheet/glass(user.loc)
+		new /obj/item/stack/sheet/glass(user.drop_location())
 	var/obj/structure/newframe = new /obj/structure/mirror_construct(drop_location())
 	newframe.pixel_x = pixel_x
 	newframe.pixel_y = pixel_y
