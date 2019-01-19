@@ -858,7 +858,7 @@
 			H.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 			H.soundbang_act(2, 0, 100, 1)
 			H.jitteriness += 7
-		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))	
+		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))
 		switch(distance)
 			if(0 to 1)
 				M.show_message("<span class='narsiesmall'>GONG!</span>", 2)
@@ -879,7 +879,7 @@
 
 
 /datum/species/golem/cardboard //Faster but weaker, can also make new shells on its own
-	name = "Cardboard Golem" 
+	name = "Cardboard Golem"
 	id = "cardboard golem"
 	prefix = "Cardboard"
 	special_names = list("Box")
@@ -952,6 +952,7 @@
 /datum/species/golem/bone
 	name = "Bone Golem"
 	id = "bone golem"
+	say_mod = "rattles"
 	prefix = "Bone"
 	limbs_id = "b_golem"
 	special_names = list("Head", "Broth", "Fracture")
