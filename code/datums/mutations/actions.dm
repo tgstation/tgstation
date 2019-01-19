@@ -18,29 +18,25 @@
 	text_lose_indication = "<span class='notice'>Your sense of smell goes back to normal.</span>"
 	power = /obj/effect/proc_holder/spell/targeted/olfaction
 	instability = 30
-	var/reek = 0
+	var/reek = 200
 
 /datum/mutation/human/olfaction/on_life()
 	var/hygiene_now = owner.hygiene
-	if(reek == 0)
-		reek = hygiene_now
-		return
 
 	if(hygiene_now < 100 && prob(5))
-		owner.adjustOxyLoss(rand(3,5))
+		owner.adjust_disgust(rand(3,5))
 	if(hygiene_now < HYGIENE_LEVEL_DIRTY && prob(50))
-		to_chat(owner,"<span class='userdanger'>Your nose refuses to breathe! You need to get clean!</span>")
-		owner.adjustOxyLoss(7)
+		to_chat(owner,"<span class='danger'>You get a whiff of your stench and feel sick!</span>")
+		owner.adjust_disgust(rand(5,10))
 
 	if(hygiene_now < HYGIENE_LEVEL_NORMAL && reek >= HYGIENE_LEVEL_NORMAL)
-		to_chat(owner,"<span class='warning'>Your inhumanly strong nose picks up a bad odor. Maybe you should shower soon.</span>")
+		to_chat(owner,"<span class='warning'>Your inhumanly strong nose picks up a faint odor. Maybe you should shower soon.</span>")
 	if(hygiene_now < 150 && reek >= 150)
-		to_chat(owner,"<span class='warning'>This is getting bad. Your odor is getting intolerable, what with you having a super-nose and all.</span>")
+		to_chat(owner,"<span class='warning'>Your odor is getting bad, what with you having a super-nose and all.</span>")
 	if(hygiene_now < 100 && reek >= 100)
-		to_chat(owner,"<span class='danger'>Your odor begins to make you gag. You silently curse your godly nose.</span>")
+		to_chat(owner,"<span class='danger'>Your odor begins to make you gag. You silently curse your godly nose. You should really get clean!</span>")
 	if(hygiene_now < HYGIENE_LEVEL_DIRTY && reek >= HYGIENE_LEVEL_DIRTY)
-		to_chat(owner,"<span class='danger'>Your horrible stench causes your nostrils to slam shut as your survival instincts involuntarily kick in.</span>")
-		to_chat(owner,"<span class='userdanger'>You can't breathe!</span>")
+		to_chat(owner,"<span class='danger'>Your super-nose is fed up with your stench. You could really use a shower.</span>")
 	reek = hygiene_now
 
 /obj/effect/proc_holder/spell/targeted/olfaction
