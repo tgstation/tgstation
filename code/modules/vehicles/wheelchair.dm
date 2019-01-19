@@ -46,7 +46,7 @@
 
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
-	overlays = null
+	cut_overlays()
 	playsound(src, 'sound/effects/roll.ogg', 75, 1)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
@@ -58,7 +58,7 @@
 
 /obj/vehicle/ridden/wheelchair/post_unbuckle_mob()
 	. = ..()
-	overlays = null
+	cut_overlays()
 
 /obj/vehicle/ridden/wheelchair/setDir(newdir)
 	..()
@@ -85,8 +85,8 @@
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
 	overlays = null
-	var/image/O = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
-	overlays += O
+	var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
+	add_overlay(V)
 
 
 /obj/vehicle/ridden/wheelchair/proc/stopmove()
