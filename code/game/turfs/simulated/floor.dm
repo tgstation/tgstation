@@ -280,7 +280,7 @@
 			G.anchored = TRUE
 			return TRUE
 		if(RCD_MACHINE)
-			if(locate(/obj/structure/frame/machine in src) || locate(/obj/machinery in src) || locate(/obj/structure/frame/machine in src))
+			if(locate(/obj/structure/frame/machine) in src)
 				return FALSE
 			var/obj/structure/frame/machine/M = new(src)
 			M.state = 2
@@ -288,7 +288,7 @@
 			M.anchored = TRUE
 			return TRUE
 		if(RCD_COMPUTER)
-			if(locate(/obj/structure/frame/machine in src) || locate(/obj/machinery in src) || locate(/obj/structure/frame/machine in src))
+			if(locate(/obj/structure/frame/computer) in src)
 				return FALSE
 			var/obj/structure/frame/computer/C = new(src)
 			C.anchored = TRUE
