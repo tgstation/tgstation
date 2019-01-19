@@ -70,7 +70,7 @@
 		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 		user.visible_message("[user] removes the glass from [src].", "<span class='notice'>You remove the glass from [src].</span>")
 	if (broken)
-		new /obj/item/shard(user.loc)
+		new /obj/item/shard(user.drop_location())
 	else
 		new /obj/item/stack/sheet/glass(user.loc)
 	var/obj/structure/newframe = new /obj/structure/mirror_construct(drop_location())
