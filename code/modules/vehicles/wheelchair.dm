@@ -7,13 +7,8 @@
 	max_integrity = 100
 	armor = list("melee" = 10, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 30)	//Wheelchairs aren't super tough yo
 	legs_required = 0	//You'll probably be using this if you don't have legs
-	arms_requires = 0	//We'll be doing our own checks
 	canmove = TRUE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
-	var/icon_overlay = "wheelchair_overlay"
-	var/list/drive_sounds = list('sound/effects/roll.ogg')
-	var/mob/living/carbon/human/H
-	var/mob/living/user
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -28,10 +23,9 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate),CALLBACK(src, .proc/can_be_rotated),null)
 
-/obj/vehicle/ridden/wheelchair/Destroy()
-	if(obj_integrity <= 0)
-		new /obj/item/stack/rods(drop_location(), 1)
-		new /obj/item/stack/sheet/metal(drop_location(), 1)
+/obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
+	new /obj/item/stack/rods(drop_location(), 1)
+	new /obj/item/stack/sheet/metal(drop_location(), 1)
 	if(has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
 		unbuckle_mob(H)
@@ -50,10 +44,10 @@
 			D.vehicle_move_delay = 10/H.get_num_arms()
 	..()
 
-/obj/vehicle/ridden/wheelchair/Move(mob/user)
+/obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	overlays = null
-	playsound(src, pick(drive_sounds), 75, 1)
+	playsound(src, 'sound/effects/roll.ogg', 75, 1)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
 
@@ -70,12 +64,6 @@
 	..()
 	handle_rotation(newdir)
 
-/obj/vehicle/ridden/wheelchair/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wrench))
-		return	//Should stop the wheelchair getting attacked if unwrenching is interrupted
-	else
-		..()
-
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I)	//Attackby should stop it attacking the wheelchair after moving away during decon
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
@@ -86,7 +74,7 @@
 			var/mob/living/carbon/H = buckled_mobs[1]
 			unbuckle_mob(H)
 		qdel(src)
-		return TRUE
+	return TRUE
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation(direction)
 	if(has_buckled_mobs())
@@ -97,7 +85,7 @@
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
 	overlays = null
-	var/image/O = image(icon = icon, icon_state = icon_overlay, layer = FLY_LAYER, dir = src.dir)
+	var/image/O = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
 	overlays += O
 
 
