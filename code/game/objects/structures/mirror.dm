@@ -156,7 +156,7 @@
 /obj/structure/mirror_construct/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!disassembled)
-			new /obj/item/stack/sheet/metal(loc, 3)
+			new /obj/item/stack/sheet/metal(drop_location(), 3)
 	qdel(src)
 
 // magic mirrors
