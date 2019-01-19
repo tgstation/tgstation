@@ -78,6 +78,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
 	var/underline_flag = TRUE //flag for underline
+	
+	var/recovery_mode = TRUE //Recovery mode allows imprinting name and job title into a blank ID card, if the data is already stored.
 
 /obj/item/pda/suicide_act(mob/living/carbon/user)
 	var/deathMessage = msg_input(user)
@@ -215,7 +217,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
 				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
-				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
+				if(!owner || !ownjob)
+					dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A>")
+				else if(recovery_mode)
+					dat += text("<br><a href='?src=[REF(src)];choice=RecoverAccess'>[id ? "Recover Access into blank ID card" : ""]</A>")
+				dat += text("<br><br>")
 
 				dat += "[station_time_timestamp()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
 				dat += "[time2text(world.realtime, "MMM DD")] [GLOB.year_integer+540]"
@@ -419,10 +425,38 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if ("Authenticate")//Checks for ID
 				id_check(U)
 			if("UpdateInfo")
-				ownjob = id.assignment
-				if(istype(id, /obj/item/card/id/syndicate))
+				if(!ownjob)
+					ownjob = id.assignment
+				if(!owner && istype(id, /obj/item/card/id/syndicate))
 					owner = id.registered_name
 				update_label()
+			if("RecoverAccess")
+				if(!id)
+					to_chat(U, "<span class='notice'>The [src] beeps: \"ID slot empty.\"</span>")
+					return
+				if(id.registered_name || id.assignment)
+					to_chat(U, "<span class='notice'>The [src] beeps: \"Unable to overwrite existing data.\"</span>")
+					return
+				id.registered_name = owner
+				id.assignment = ownjob
+				var/datum/job/jobdatum
+				for(var/jobtype in typesof(/datum/job))
+					var/datum/job/J = new jobtype
+//					if(ckey(J.title) == ckey(t1))
+					if(ckey(J.title) == ownjob)
+						jobdatum = J
+						break
+				if(!jobdatum)
+					to_chat(usr, "<span class='error'>The [src] beeps: \"Error in recovery process. Not all access has been restored. Please see your administrator.\"</span>")
+					return
+//				if(modify.registered_account)
+//					modify.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
+//					if(modify.registered_account.welfare)
+//						modify.registered_account.add_neetbux()
+
+				id.access = jobdatum.get_access()
+				
+
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
 					U.put_in_hands(cartridge)
@@ -769,7 +803,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(istype(C))
 				I = C
 
-	if(I && I.registered_name)
+//	if(I && I.registered_name)
+	if(I)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
 		var/obj/old_id = id
@@ -795,9 +830,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	else if(istype(C, /obj/item/card/id))
 		var/obj/item/card/id/idcard = C
-		if(!idcard.registered_name)
-			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
-			return
+//		if(!idcard.registered_name)
+//			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
+//			return
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
