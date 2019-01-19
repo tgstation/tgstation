@@ -102,7 +102,7 @@
 	item_color = "purpleclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	
+
 /obj/item/clothing/under/rank/orangeclown
 	name = "orange clown suit"
 	desc = "<i>'ORANGE HONK!'</i>"
@@ -111,7 +111,7 @@
 	item_color = "orangeclown"
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
-	
+
 /obj/item/clothing/under/rank/rainbowclown
 	name = "rainbow clown suit"
 	desc = "<i>'R A I N B O W HONK!'</i>"

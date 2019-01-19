@@ -2,15 +2,21 @@
 "aa" = (
 /turf/template_noop,
 /area/template_noop)
-"ac" = (
-/obj/machinery/porta_turret/syndicate{
+"ab" = (
+/obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 9
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/bridge)
+"ac" = (
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/bridge)
 "ad" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/bridge)
+/obj/machinery/porta_turret/syndicate/shuttle{
+	dir = 10
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/hallway)
 "ae" = (
 /obj/structure/window/plastitanium,
 /obj/machinery/door/poddoor/shutters{
@@ -21,11 +27,8 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/bridge)
 "af" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/bridge)
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/hallway)
 "ag" = (
 /obj/machinery/computer/med_data/syndie,
 /obj/effect/turf_decal/bot_white,
@@ -144,7 +147,7 @@
 /area/shuttle/syndicate/bridge)
 "au" = (
 /obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/bridge)
 "av" = (
 /obj/machinery/door/airlock/hatch{
@@ -164,14 +167,14 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/bridge)
 "aw" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 10
+/obj/machinery/porta_turret/syndicate/shuttle{
+	dir = 9
 	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/hallway)
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/eva)
 "ax" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/hallway)
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/eva)
 "ay" = (
 /obj/structure/table/reinforced,
 /obj/item/stack/cable_coil/white,
@@ -222,11 +225,8 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/hallway)
 "aB" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 6
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/hallway)
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/airlock)
 "aC" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -265,14 +265,17 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/hallway)
 "aF" = (
-/obj/machinery/porta_turret/syndicate{
+/obj/machinery/porta_turret/syndicate/shuttle{
+	dir = 5
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/armory)
+"aG" = (
+/obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 9
 	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/eva)
-"aG" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/eva)
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/medical)
 "aH" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4;
@@ -314,14 +317,11 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/hallway)
 "aJ" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/airlock)
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/medical)
 "aK" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 5
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/armory)
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/syndicate/medical)
 "aL" = (
 /obj/machinery/suit_storage_unit/syndicate,
 /obj/effect/turf_decal/stripes/line{
@@ -508,7 +508,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	layer = 4
 	},
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/airlock)
 "be" = (
 /obj/machinery/suit_storage_unit/syndicate,
@@ -516,11 +516,6 @@
 	dir = 6
 	},
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate/eva)
-"bf" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel/dark,
 /area/shuttle/syndicate/eva)
 "bg" = (
 /obj/structure/grille,
@@ -543,31 +538,28 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/airlock)
 "bj" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 9
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/medical)
+/turf/closed/wall/r_wall/syndicate/nodiagonal,
+/area/shuttle/syndicate/armory)
 "bk" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/medical)
-"bl" = (
 /obj/machinery/status_display/ai,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/medical)
 "bm" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/syndicate/medical)
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/armory)
 "bn" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/obj/machinery/status_display/evac,
+/turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/armory)
 "bo" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/armory)
-"bp" = (
-/obj/machinery/status_display/evac,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/armory)
+/obj/machinery/nuclearbomb/syndicate{
+	anchored = 1
+	},
+/obj/machinery/door/window{
+	dir = 1
+	},
+/turf/open/floor/circuit/red,
+/area/shuttle/syndicate/hallway)
 "bq" = (
 /obj/machinery/sleeper/syndie{
 	dir = 4
@@ -1043,13 +1035,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate/hallway)
-"cm" = (
-/obj/machinery/nuclearbomb/syndicate,
-/obj/machinery/door/window{
-	dir = 1
-	},
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate/hallway)
 "cn" = (
 /obj/machinery/light{
 	dir = 4
@@ -1168,18 +1153,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/medical)
-"cC" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 6
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/medical)
-"cD" = (
-/obj/machinery/porta_turret/syndicate{
-	dir = 10
-	},
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate/armory)
 "cE" = (
 /obj/structure/shuttle/engine/propulsion/left,
 /obj/effect/turf_decal/stripes/line,
@@ -1195,6 +1168,35 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/syndicate/armory)
+"dp" = (
+/obj/machinery/porta_turret/syndicate/shuttle{
+	dir = 10
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/armory)
+"pd" = (
+/obj/machinery/porta_turret/syndicate/shuttle{
+	dir = 5
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/bridge)
+"vv" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/syndicate/eva)
+"In" = (
+/obj/machinery/porta_turret/syndicate/shuttle{
+	dir = 6
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/hallway)
+"MJ" = (
+/obj/machinery/porta_turret/syndicate/shuttle{
+	dir = 6
+	},
+/turf/closed/wall/r_wall/syndicate,
+/area/shuttle/syndicate/medical)
 
 (1,1,1) = {"
 aa
@@ -1210,16 +1212,16 @@ aa
 aa
 aa
 aa
-bj
-bk
-bk
-bk
-bk
-bk
-bk
-bk
-bk
-bk
+aG
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
+aJ
 "}
 (2,1,1) = {"
 aa
@@ -1229,13 +1231,13 @@ aa
 aa
 aa
 aa
-aF
-aG
-aG
-aG
-aG
-aG
-bk
+aw
+ax
+ax
+ax
+ax
+ax
+aJ
 bq
 bC
 bq
@@ -1254,13 +1256,13 @@ aa
 aa
 aa
 aa
-aG
+ax
 aL
 aR
 aR
 aR
 be
-bk
+aJ
 br
 bD
 bH
@@ -1279,13 +1281,13 @@ aa
 aa
 aa
 aa
-aG
+ax
 aM
 aM
 aM
 aM
 aM
-bl
+bk
 bs
 bD
 bI
@@ -1297,51 +1299,51 @@ cu
 cB
 "}
 (5,1,1) = {"
+ab
 ac
-ad
-ad
-ad
-ad
+ac
+ac
+ac
 aa
 aa
-aG
+ax
 aM
 aM
 aM
 aM
 aM
-bk
+aJ
 bt
 bD
 bJ
 bT
 cb
-bm
-bk
-bk
-cC
+aK
+aJ
+aJ
+MJ
 "}
 (6,1,1) = {"
-ad
+ac
 ag
 an
 at
+ac
 ad
-aw
 aa
-aG
+ax
 aN
 aS
 aU
 aZ
-bf
-bk
+vv
+aJ
 bu
 bD
 bJ
 bT
 cc
-bk
+aJ
 aa
 aa
 aa
@@ -1351,24 +1353,24 @@ ae
 ah
 ao
 at
-ad
+ac
+af
+af
 ax
 ax
-aG
-aG
-aG
-aG
+ax
+ax
 ba
 bg
-bm
+aK
 bv
 bv
 bK
 bv
-bk
-bk
-ax
-ax
+aJ
+aJ
+af
+af
 aa
 "}
 (8,1,1) = {"
@@ -1416,7 +1418,7 @@ aD
 bL
 bU
 az
-cm
+bo
 cr
 cw
 aa
@@ -1426,7 +1428,7 @@ ae
 ak
 ap
 at
-ad
+ac
 aA
 aE
 aI
@@ -1451,75 +1453,75 @@ ae
 al
 ar
 at
-ad
-ax
-ax
-ax
-ax
-aJ
-aJ
+ac
+af
+af
+af
+af
+aB
+aB
 bb
 bh
-bn
+bj
 bw
 bw
 bM
 bw
-bo
-bo
-ax
-ax
+bm
+bm
+af
+af
 aa
 "}
 (12,1,1) = {"
-ad
+ac
 am
 as
 at
-ad
-aB
+ac
+In
 aa
-aJ
+aB
 aO
 aO
 aX
 bc
 aO
-bo
+bm
 bx
 bG
 bN
 bV
 ce
-bo
+bm
 aa
 aa
 aa
 "}
 (13,1,1) = {"
-af
-ad
-ad
-ad
-ad
+pd
+ac
+ac
+ac
+ac
 aa
 aa
-aJ
+aB
 aP
 aP
 aP
 aP
 aP
-bo
+bm
 by
 bG
 bN
 bV
 cf
-bn
-bo
-bo
-cD
+bj
+bm
+bm
+dp
 "}
 (14,1,1) = {"
 aa
@@ -1529,13 +1531,13 @@ aa
 aa
 aa
 aa
-aJ
+aB
 aP
 aP
 aP
 aP
 aP
-bp
+bn
 bz
 bG
 bO
@@ -1554,13 +1556,13 @@ aa
 aa
 aa
 aa
-aJ
+aB
 aQ
 aT
 aT
 aT
 bi
-bo
+bm
 bA
 bG
 bP
@@ -1579,13 +1581,13 @@ aa
 aa
 aa
 aa
-aK
-aJ
-aJ
+aF
+aB
+aB
 aY
 bd
-aJ
-bo
+aB
+bm
 bB
 bG
 bQ
@@ -1610,14 +1612,14 @@ aa
 aa
 aa
 aa
-aK
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-bo
+aF
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+bm
+bm
 "}

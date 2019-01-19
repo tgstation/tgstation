@@ -42,17 +42,17 @@
 		var/obj/item/clothing/C
 		if(!H.w_uniform || H.dropItemToGround(H.w_uniform))
 			C = new /obj/item/clothing/under/rank/clown(H)
-			C.item_flags |= NODROP //mwahaha
+			C.add_trait(TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 			H.equip_to_slot_or_del(C, SLOT_W_UNIFORM)
 
 		if(!H.shoes || H.dropItemToGround(H.shoes))
 			C = new /obj/item/clothing/shoes/clown_shoes(H)
-			C.item_flags |= NODROP
+			C.add_trait(TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 			H.equip_to_slot_or_del(C, SLOT_SHOES)
 
 		if(!H.wear_mask || H.dropItemToGround(H.wear_mask))
 			C = new /obj/item/clothing/mask/gas/clown_hat(H)
-			C.item_flags |= NODROP
+			C.add_trait(TRAIT_NODROP, CLOWN_NUKE_TRAIT)
 			H.equip_to_slot_or_del(C, SLOT_WEAR_MASK)
 
 		H.dna.add_mutation(CLOWNMUT)

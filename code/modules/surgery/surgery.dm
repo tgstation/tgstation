@@ -16,6 +16,7 @@
 	var/success_multiplier = 0								//Step success propability multiplier
 	var/requires_real_bodypart = 0							//Some surgeries don't work on limbs that don't really exist
 	var/lying_required = TRUE								//Does the vicitm needs to be lying down.
+	var/self_operable = FALSE								//Can the surgery be performed on yourself.
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()

@@ -199,6 +199,33 @@
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier("bloodchilled")
 
+/obj/screen/alert/status_effect/bloodchill
+	name = "Bloodchilled"
+	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
+	icon_state = "bloodchill"
+
+/datum/status_effect/bonechill
+	id = "bonechill"
+	duration = 60
+	alert_type = /obj/screen/alert/status_effect/bonechill
+
+/datum/status_effect/bonechill/on_apply()
+	owner.add_movespeed_modifier("bonechilled", TRUE, 100, NONE, override = TRUE, multiplicative_slowdown = 3)
+	return ..()
+
+/datum/status_effect/bonechill/tick()
+	if(prob(50))
+		owner.adjustFireLoss(1)
+		owner.Jitter(3)
+
+/datum/status_effect/bonechill/on_remove()
+	owner.remove_movespeed_modifier("bonechilled")
+
+/obj/screen/alert/status_effect/bonechill
+	name = "Bonechilled"
+	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"
+	icon_state = "bloodchill"
+
 /datum/status_effect/rebreathing
 	id = "rebreathing"
 	duration = -1

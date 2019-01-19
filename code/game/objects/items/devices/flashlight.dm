@@ -262,9 +262,9 @@
 	light_color = LIGHT_COLOR_FLARE
 	grind_results = list("sulfur" = 15)
 
-/obj/item/flashlight/flare/New()
+/obj/item/flashlight/flare/Initialize()
+	. = ..()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
-	..()
 
 /obj/item/flashlight/flare/process()
 	open_flame(heat)
@@ -518,16 +518,14 @@
 	name = "pink glowstick"
 	color = LIGHT_COLOR_PINK
 
-/obj/item/flashlight/glowstick/random
+/obj/effect/spawner/lootdrop/glowstick
 	name = "random colored glowstick"
+	icon = 'icons/obj/lighting.dmi'
 	icon_state = "random_glowstick"
-	color = null
 
-/obj/item/flashlight/glowstick/random/Initialize()
-	..()
-	var/T = pick(typesof(/obj/item/flashlight/glowstick) - /obj/item/flashlight/glowstick/random)
-	new T(loc)
-	return INITIALIZE_HINT_QDEL
+/obj/effect/spawner/lootdrop/glowstick/Initialize()
+	loot = typesof(/obj/item/flashlight/glowstick)
+	. = ..()
 
 /obj/item/flashlight/spotlight //invisible lighting source
 	name = "disco light"

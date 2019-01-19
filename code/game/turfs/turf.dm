@@ -204,50 +204,54 @@
 	stack_trace("Non movable passed to turf CanPass : [mover]")
 	return FALSE
 
+//There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover, atom/oldloc)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
 	// By default byond will call Bump() on the first dense object in contents
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
-	var/unstoppable = (mover.movement_type & UNSTOPPABLE)
 	var/atom/firstbump
-	if(!CanPass(mover, src))
-		firstbump = src
-	else
+	var/canPassSelf = CanPass(mover, src)
+	if(canPassSelf || CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
 		for(var/i in contents)
+			if(QDELETED(mover))
+				return FALSE		//We were deleted, do not attempt to proceed with movement.
 			if(i == mover || i == mover.loc) // Multi tile objects and moving out of other objects
 				continue
-			if(QDELETED(mover))
-				break
 			var/atom/movable/thing = i
 			if(!thing.Cross(mover))
-				if(unstoppable)
-					thing?.Bump(mover)
+				if(QDELETED(mover))		//Mover deleted from Cross/CanPass, do not proceed.
+					return FALSE
+				if(CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
+					mover.Bump(thing)
 					continue
 				else
 					if(!firstbump || ((thing.layer > firstbump.layer || thing.flags_1 & ON_BORDER_1) && !(firstbump.flags_1 & ON_BORDER_1)))
 						firstbump = thing
+	if(QDELETED(mover))					//Mover deleted from Cross/CanPass/Bump, do not proceed.
+		return FALSE
+	if(!canPassSelf)	//Even if mover is unstoppable they need to bump us.
+		firstbump = src
 	if(firstbump)
-		mover?.Bump(firstbump)
-		return unstoppable
+		mover.Bump(firstbump)
+		return CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE)
 	return TRUE
 
 /turf/Exit(atom/movable/mover, atom/newloc)
 	. = ..()
-	if(!.)
+	if(!. || QDELETED(mover))
 		return FALSE
-	var/unstoppable = (mover.movement_type & UNSTOPPABLE)
 	for(var/i in contents)
-		if(QDELETED(mover))
-			break
 		if(i == mover)
 			continue
 		var/atom/movable/thing = i
 		if(!thing.Uncross(mover, newloc))
 			if(thing.flags_1 & ON_BORDER_1)
-				mover?.Bump(thing)
-			if(!unstoppable)
+				mover.Bump(thing)
+			if(!CHECK_BITFIELD(mover.movement_type, UNSTOPPABLE))
 				return FALSE
+		if(QDELETED(mover))
+			return FALSE		//We were deleted.
 
 /turf/Entered(atom/movable/AM)
 	..()
@@ -550,3 +554,7 @@
 //Should return new turf
 /turf/proc/Melt()
 	return ScrapeAway()
+
+/turf/bullet_act(obj/item/projectile/P)
+	. = ..()
+	return BULLET_ACT_TURF

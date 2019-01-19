@@ -651,10 +651,10 @@
 
 		return
 
-	if(istype(target, /obj/structure/window))
+	if(isobj(target))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(color_hex2num(paint_color) < 255)
+			if(color_hex2num(paint_color) < 255 && istype(target, /obj/structure/window))
 				target.set_opacity(255)
 			else
 				target.set_opacity(initial(target.opacity))
@@ -665,6 +665,7 @@
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		user.visible_message("[user] coats [target] with spray paint!", "<span class='notice'>You coat [target] with spray paint.</span>")
 		return
 
 	. = ..()

@@ -647,6 +647,7 @@
 	has_cover = 0
 	scan_range = 9
 	req_access = list(ACCESS_SYNDICATE)
+	mode = TURRET_LETHAL
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
@@ -660,8 +661,14 @@
 	. = ..()
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
+/obj/machinery/porta_turret/syndicate/setup()
+	return
+
+/obj/machinery/porta_turret/syndicate/assess_perp(mob/living/carbon/human/perp)
+	return 10 //Syndicate turrets shoot everything not in their faction
+
 /obj/machinery/porta_turret/syndicate/energy
-	icon_state = "standard_stun"
+	icon_state = "standard_lethal"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
@@ -670,7 +677,7 @@
 	desc = "An energy blaster auto-turret."
 
 /obj/machinery/porta_turret/syndicate/energy/heavy
-	icon_state = "standard_stun"
+	icon_state = "standard_lethal"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
 	stun_projectile_sound = 'sound/weapons/taser.ogg'
@@ -678,18 +685,35 @@
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 	desc = "An energy blaster auto-turret."
 
+/obj/machinery/porta_turret/syndicate/energy/raven
+	stun_projectile =  /obj/item/projectile/beam/laser
+	stun_projectile_sound = 'sound/weapons/laser.ogg'
+	faction = list("neutral","silicon","turret")
 
-/obj/machinery/porta_turret/syndicate/setup()
-	return
-
-/obj/machinery/porta_turret/syndicate/assess_perp(mob/living/carbon/human/perp)
-	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
 	integrity_failure = 20
 	max_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/syndicate_turret
 	lethal_projectile = /obj/item/projectile/bullet/syndicate_turret
+
+/obj/machinery/porta_turret/syndicate/shuttle
+	scan_range = 9
+	shot_delay = 3
+	stun_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile = /obj/item/projectile/bullet/p50/penetrator/shuttle
+	lethal_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot_smg.ogg'
+	armor = list("melee" = 50, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 80, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
+
+/obj/machinery/porta_turret/syndicate/shuttle/target(atom/movable/target)
+	if(target)
+		setDir(get_dir(base, target))//even if you can't shoot, follow the target
+		shootAt(target)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 5)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 10)
+		addtimer(CALLBACK(src, .proc/shootAt, target), 15)
+		return TRUE
 
 /obj/machinery/porta_turret/ai
 	faction = list("silicon")
