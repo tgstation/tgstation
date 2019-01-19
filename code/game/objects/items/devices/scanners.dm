@@ -7,6 +7,7 @@ HEALTH ANALYZER
 GAS ANALYZER
 SLIME SCANNER
 NANITE SCANNER
+GENE SCANNER
 
 */
 /obj/item/t_scanner
@@ -191,6 +192,8 @@ NANITE SCANNER
 			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
+		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
+
 	if (M.radiation)
 		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")
 		if(advanced)
@@ -254,6 +257,8 @@ NANITE SCANNER
 		var/ldamage = H.return_liver_damage()
 		if(ldamage > 10)
 			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "Severe" : "Minor"] liver damage detected.</span>")
+		if(advanced && H.has_dna())
+			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)

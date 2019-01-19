@@ -422,13 +422,14 @@
 	var/discovered = FALSE
 	var/active = FALSE
 	var/scrambled = FALSE
+	var/instability
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
+	var/datum/mutation/human/HM = get_valid_mutation(mutation)
 
 	if(viable_occupant)
-		var/datum/mutation/human/HM = viable_occupant.dna.get_mutation(mutation)
-		if(HM)
-			if(HM.scrambled)
-				scrambled = TRUE
+		var/datum/mutation/human/M = viable_occupant.dna.get_mutation(mutation)
+		if(M)
+			scrambled = M.scrambled
 			active = TRUE
 	var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(mutation)
 	alias = A.alias
@@ -438,10 +439,10 @@
 		mut_name = A.name
 		mut_desc = A.desc
 		discovered = TRUE
+		instability = A.instability
 	var/extra
 	if(viable_occupant && !(storage_slot || viable_occupant.dna.mutation_in_sequence(mutation)))
 		extra = TRUE
-
 	if(discovered && !scrambled)
 		var/mutcolor
 		switch(A.quality)
@@ -451,12 +452,14 @@
 				mutcolor = "average"
 			if(NEGATIVE)
 				mutcolor = "bad"
+		if(HM)
+			instability *= GET_MUTATION_STABILIZER(HM)
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><span class='[mutcolor]'><b>[mut_name]</b></span><small> ([alias])</small><br>"
+		temp_html += "<div class='statusDisplay'><div class='statusLine'>Instability : [round(instability)]</span><br>"
 	else
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
 	if(active && !storage_slot)
-		var/datum/mutation/human/HM = get_valid_mutation(mutation)
 		if(HM && HM.can_chromosome && (HM in viable_occupant.dna.mutations))
 			var/i = viable_occupant.dna.mutations.Find(HM)
 			var/chromosome_name = "<a href='?src=[REF(src)];task=applychromosome;path=[mutation];num=[i];'>----</a>"
