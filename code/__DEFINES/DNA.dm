@@ -35,6 +35,7 @@
 #define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
 #define FIRESWEAT	/datum/mutation/human/fire
+#define ANTENNA		/datum/mutation/human/antenna
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
