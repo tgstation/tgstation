@@ -212,8 +212,9 @@
 		thing.update_slot_icon()
 	UpdateButtonIcon()
 
-/datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
-	target.name = initial(picked_item.name)
+/datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item, obj/item/target = target)
+	if(!istype(target, /obj/item/card/id) && !istype(target, /obj/item/pda))
+		target.name = initial(picked_item.name)
 	target.desc = initial(picked_item.desc)
 	target.icon_state = initial(picked_item.icon_state)
 	if(isitem(target))
@@ -224,6 +225,19 @@
 			var/obj/item/clothing/CL = I
 			var/obj/item/clothing/PCL = picked_item
 			CL.flags_cover = initial(PCL.flags_cover)
+	if(istype(target, /obj/item/clothing/suit/space/hardsuit/infiltration))
+		var/obj/item/clothing/suit/space/hardsuit/infiltration/I = target
+		var/obj/item/clothing/suit/space/hardsuit/HS = new picked_item
+		var/obj/item/clothing/head/helmet/space/hardsuit/HH = new HS.helmettype
+		update_item(HS.helmettype, I.head_piece)
+		I.head_piece.basestate = initial(HH.basestate)
+		I.head_piece.item_color = initial(HH.item_color)
+		I.head_piece.icon_state = "[I.head_piece.basestate][I.head_piece.on]-[I.head_piece.item_color]"
+		var/mob/living/M = owner
+		if(istype(M))
+			M.update_inv_head()
+		qdel(HS)
+		qdel(HH)
 	target.icon = initial(picked_item.icon)
 
 /datum/action/item_action/chameleon/change/Trigger()

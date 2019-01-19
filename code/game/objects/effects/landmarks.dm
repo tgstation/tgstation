@@ -205,6 +205,27 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	primary_ai = FALSE
 	latejoin_active = FALSE
 
+
+/obj/effect/landmark/start/infiltrator
+	name = "infiltrator"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "snukeop_spawn"
+
+/obj/effect/landmark/start/infiltrator/Initialize()
+	..()
+	GLOB.infiltrator_start += loc
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/landmark/start/infiltrator_objective
+	name = "infiltrator objective items"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "random_loot"
+
+/obj/effect/landmark/start/infiltrator_objective/Initialize()
+	..()
+	GLOB.infiltrator_objective_items += loc
+	return INITIALIZE_HINT_QDEL
+
 //Department Security spawns
 
 /obj/effect/landmark/start/depsec
@@ -303,7 +324,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.xeno_spawn += loc
 	return INITIALIZE_HINT_QDEL
 
-//objects with the stationloving component (nuke disk) respawn here. 
+//objects with the stationloving component (nuke disk) respawn here.
 //also blobs that have their spawn forcemoved (running out of time when picking their spawn spot), santa and respawning devils
 /obj/effect/landmark/blobstart
 	name = "blobstart"

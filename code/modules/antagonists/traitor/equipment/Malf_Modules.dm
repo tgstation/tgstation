@@ -211,6 +211,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /datum/AI_Module/proc/upgrade(mob/living/silicon/AI/AI) //Apply upgrades!
 	return
 
+/datum/AI_Module/proc/can_be_bought(mob/living/silicon/ai/AI)
+	return TRUE
+
 /datum/AI_Module/large //Big, powerful stuff that can only be used once.
 /datum/AI_Module/small //Weak, usually localized stuff with multiple uses.
 
@@ -224,6 +227,10 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/nuke_station
 	unlock_text = "<span class='notice'>You slowly, carefully, establish a connection with the on-station self-destruct. You can now activate it at any time.</span>"
+
+
+/datum/AI_Module/large/nuke_station/can_be_bought(mob/living/silicon/ai/AI)
+	return ..() && (AI.mind && !AI.mind.has_antag_datum(/datum/antagonist/hijacked_ai))
 
 /datum/action/innate/ai/nuke_station
 	name = "Doomsday Device"

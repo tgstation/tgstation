@@ -21,3 +21,6 @@
 
 /obj/item/implant/uplink/precharged
 	starting_tc = 10
+
+/obj/item/implant/uplink/infiltrator
+	starting_tc = 30

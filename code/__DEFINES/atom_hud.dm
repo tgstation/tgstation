@@ -59,6 +59,7 @@
 #define ANTAG_HUD_BROTHER		23
 #define ANTAG_HUD_HIVE			24
 #define ANTAG_HUD_CREEP			25
+#define ANTAG_HUD_INFILTRATOR	26
 
 // Notification action types
 #define NOTIFY_JUMP "jump"

@@ -2,6 +2,7 @@
 #define POWER_RESTORATION_START 1
 #define POWER_RESTORATION_SEARCH_APC 2
 #define POWER_RESTORATION_APC_FOUND 3
+#define HIJACK_TIME 2400
 
 /mob/living/silicon/ai/Life()
 	if (stat == DEAD)
@@ -12,6 +13,16 @@
 		update_gravity(mob_has_gravity())
 
 		handle_status_effects()
+
+		if(hijacking)
+			if(prob(5))
+				to_chat(src, "<span class='danger'>Warning! Exploitation detected at /dev/ttyS0!</span>")
+			if(world.time >= hijack_start+HIJACK_TIME && mind)
+				mind.add_antag_datum(/datum/antagonist/hijacked_ai)
+				message_admins("[ADMIN_LOOKUPFLW(src)] has been hijacked!")
+				icon_state = "ai-notmalf"
+				QDEL_NULL(hijacking)
+				cut_overlays()
 
 		if(malfhack && malfhack.aidisabled)
 			deltimer(malfhacking)
@@ -179,3 +190,5 @@
 #undef POWER_RESTORATION_START
 #undef POWER_RESTORATION_SEARCH_APC
 #undef POWER_RESTORATION_APC_FOUND
+
+#undef HIJACK_TIME

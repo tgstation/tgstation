@@ -48,3 +48,7 @@ GLOBAL_LIST_EMPTY(sortedAreas)
 GLOBAL_LIST_EMPTY(areas_by_type)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
+
+
+GLOBAL_LIST_EMPTY(infiltrator_start)
+GLOBAL_LIST_EMPTY(infiltrator_objective_items)

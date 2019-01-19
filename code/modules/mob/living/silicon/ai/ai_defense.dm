@@ -53,3 +53,16 @@
 
 /mob/living/silicon/ai/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
+
+
+/mob/living/silicon/ai/attack_hand(mob/user)
+	if(hijacking)
+		user.visible_message("<span class='danger'>[user] attempts to disconnect the circuit board from [src].</span>", "<span class='notice'>There appears to be something connected to [src]'s ports! You attempt to disconnect it...</span>")
+		if (do_after(user, 250, target = src))
+			hijacking.forceMove(loc)
+			hijacking = null
+			hijack_start = 0
+		else
+			to_chat(user, "<span class='notice'>You fail to remove the device.</span>")
+		return
+	return ..()

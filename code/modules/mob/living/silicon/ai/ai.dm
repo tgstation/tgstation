@@ -93,6 +93,10 @@
 	var/max_multicams = 6
 	var/display_icon_override
 
+	var/obj/item/ai_hijack_device/hijacking
+	var/mutable_appearance/hijack_overlay
+	var/hijack_start = 0
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -1004,3 +1008,15 @@
 	. = ..()
 	if(.)
 		end_multicam()
+
+/mob/living/silicon/ai/proc/update_icon()
+	cut_overlays()
+	if(hijacking)
+		if(!hijack_overlay)
+			hijack_overlay = mutable_appearance('icons/obj/module.dmi', "ai_hijack_overlay")
+			hijack_overlay.layer = layer+0.1
+			hijack_overlay.pixel_x = 8
+		add_overlay(hijack_overlay)
+		icon_state = "ai-static"
+	else if(!hijacking && hijack_overlay)
+		QDEL_NULL(hijack_overlay)

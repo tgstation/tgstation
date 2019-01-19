@@ -197,3 +197,13 @@
 
 /area/shuttle/caravan/freighter3
 	name = "Tiny Freighter"
+
+/area/shuttle/stealthcruiser
+	name = "Syndicate Infiltration Cruiser"
+	blob_allowed = FALSE
+
+/area/shuttle/stealthcruiser/poweralert(state, obj/source)
+	return
+
+/area/shuttle/stealthcruiser/atmosalert(danger_level, obj/source)
+	return

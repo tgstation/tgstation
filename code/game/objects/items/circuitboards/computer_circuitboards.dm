@@ -390,3 +390,11 @@
 /obj/item/circuitboard/computer/nanite_cloud_controller
 	name = "Nanite Cloud Control (Computer Board)"
 	build_path = /obj/machinery/computer/nanite_cloud_controller
+
+/obj/item/circuitboard/computer/syndicate_shuttle/infiltrator
+	name = "Infiltrator Shuttle (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle/syndicate/cutter
+
+/obj/item/circuitboard/computer/infiltrator_camera
+	name = "Infiltrator Camera Console (Computer Board)"
+	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/cutter

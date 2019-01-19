@@ -539,3 +539,9 @@
 	var/pressure = environment.return_pressure()
 	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
 		. = TRUE
+
+/proc/get_area_by_type(N)
+	for(var/area/A in world)
+		if(A.type == N)
+			return A
+	return FALSE

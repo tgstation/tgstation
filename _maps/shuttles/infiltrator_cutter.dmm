@@ -1,0 +1,1361 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"ab" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+/obj/machinery/door/airlock/external{
+	id_tag = "syndicatecutter_bolt_port";
+	req_access_txt = "150"
+	},
+/obj/docking_port/mobile{
+	callTime = 150;
+	dir = 2;
+	dwidth = 14;
+	height = 13;
+	id = "syndicatecutter";
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
+	name = "Syndicate Cutter";
+	port_direction = 8;
+	preferred_direction = 4;
+	width = 22
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ac" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 9
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"ad" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"ae" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/sign/warning/vacuum{
+	pixel_x = -32
+	},
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"af" = (
+/obj/structure/grille,
+/obj/structure/window/plastitanium,
+/obj/machinery/door/poddoor{
+	id = "syndicatecutter_bridge"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ag" = (
+/obj/machinery/atmospherics/components/unary/tank/air,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ah" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/infiltrator,
+/turf/open/floor/pod/light,
+/area/shuttle/stealthcruiser)
+"ai" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/machinery/door/airlock/external{
+	id_tag = "syndicatecutter_bolt_port";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aj" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 5
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"ak" = (
+/obj/structure/shuttle/engine/propulsion/burst/left{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"al" = (
+/obj/structure/shuttle/engine/heater{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"am" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/mop,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"an" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/machinery/meter,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ao" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Engineering";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"ap" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark/corner,
+/area/shuttle/stealthcruiser)
+"aq" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/defibrillator_mount/loaded{
+	pixel_y = 28
+	},
+/turf/open/floor/plasteel/dark/side,
+/area/shuttle/stealthcruiser)
+"ar" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution/stand_clear/white,
+/turf/open/floor/plasteel/dark/side,
+/area/shuttle/stealthcruiser)
+"as" = (
+/obj/machinery/button/door{
+	id = "syndicatecutter_bolt_port";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -4;
+	pixel_y = 25;
+	req_access_txt = "150";
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark/side,
+/area/shuttle/stealthcruiser)
+"at" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark/side,
+/area/shuttle/stealthcruiser)
+"au" = (
+/obj/structure/sign/departments/medbay/alt,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"av" = (
+/obj/structure/closet/syndicate/personal,
+/turf/open/floor/plasteel/dark/side{
+	dir = 5
+	},
+/area/shuttle/stealthcruiser)
+"aw" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/closet/syndicate/personal,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"ay" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"az" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aA" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aB" = (
+/obj/structure/sign/departments/engineering,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"aC" = (
+/obj/structure/table,
+/obj/item/circular_saw,
+/obj/item/scalpel{
+	pixel_y = 12
+	},
+/obj/item/cautery{
+	pixel_x = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark/side{
+	dir = 4
+	},
+/area/shuttle/stealthcruiser)
+"aD" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aG" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark/side{
+	dir = 4
+	},
+/area/shuttle/stealthcruiser)
+"aI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aJ" = (
+/obj/structure/table/reinforced,
+/obj/item/ammo_box/magazine/m10mm{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m10mm,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aK" = (
+/obj/structure/shuttle/engine/propulsion/burst/right{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/stealthcruiser)
+"aL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/space_heater,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aM" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"aN" = (
+/obj/structure/table,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/shuttle/stealthcruiser)
+"aO" = (
+/obj/structure/table/optable,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/shuttle/stealthcruiser)
+"aP" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/firstaid/fire,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/stealthcruiser)
+"aQ" = (
+/obj/machinery/sleeper{
+	dir = 1
+	},
+/obj/effect/turf_decal/delivery,
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -24;
+	req_access = null;
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel,
+/area/shuttle/stealthcruiser)
+"aR" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/freezer/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel,
+/area/shuttle/stealthcruiser)
+"aS" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26
+	},
+/turf/open/floor/plasteel/dark/side{
+	dir = 6
+	},
+/area/shuttle/stealthcruiser)
+"aT" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aU" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/crowbar/red,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aV" = (
+/obj/machinery/computer/crew/syndie{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aW" = (
+/obj/structure/table,
+/obj/item/storage/fancy/donut_box,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aX" = (
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/folder/red,
+/obj/machinery/airalarm{
+	pixel_y = 23;
+	req_access = 150
+	},
+/obj/item/pen,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aY" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/weldingtool,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"aZ" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/cutter{
+	x_offset = 3;
+	y_offset = -6
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"ba" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "Syndicate Cutter APC";
+	pixel_x = -24;
+	req_access = 150
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 24;
+	req_access = 150
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bb" = (
+/obj/machinery/status_display,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"bc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bd" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"be" = (
+/obj/structure/rack,
+/obj/item/aicard,
+/obj/item/multitool,
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bf" = (
+/obj/machinery/light/small{
+	brightness = 3;
+	dir = 8
+	},
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bg" = (
+/obj/structure/chair/office/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bi" = (
+/obj/structure/chair/office/dark{
+	dir = 4
+	},
+/obj/machinery/turretid{
+	icon_state = "control_kill";
+	lethal = 1;
+	locked = 1;
+	pixel_y = -30;
+	req_access = 150
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bj" = (
+/obj/machinery/computer/shuttle/syndicate/cutter{
+	icon_state = "computer";
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bk" = (
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bl" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bm" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/box/handcuffs,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"bn" = (
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/airalarm{
+	pixel_y = 23;
+	req_access = 150
+	},
+/obj/machinery/recharger,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"bo" = (
+/obj/structure/tank_dispenser/oxygen,
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_y = 24
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"bp" = (
+/obj/structure/table,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/machinery/door/window/southleft{
+	name = "Weapon Storage";
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/grenade/plastic/c4{
+	pixel_x = -3
+	},
+/obj/item/grenade/plastic/c4{
+	pixel_x = 5
+	},
+/obj/item/grenade/plastic/c4{
+	pixel_x = 13
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"bq" = (
+/obj/structure/table,
+/obj/machinery/door/window/southleft{
+	base_state = "right";
+	icon_state = "right";
+	name = "Weapon Storage";
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/grenade/flashbang{
+	pixel_x = -11
+	},
+/obj/item/grenade/flashbang{
+	pixel_x = -3
+	},
+/obj/item/grenade/flashbang{
+	pixel_x = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"br" = (
+/obj/structure/chair{
+	dir = 4;
+	name = "tactical chair"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -24;
+	req_access = list(150)
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bs" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bt" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bu" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/hatch{
+	name = "Cockpit";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bw" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"by" = (
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	id = "syndicatecutter_bridge";
+	name = "Bridge Blast Door Control";
+	pixel_x = -16;
+	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bz" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-2"
+	},
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/item/storage/toolbox/syndicate,
+/obj/item/flashlight{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 20
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bA" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/structure/closet/crate/secure/weapon,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/melee/baton/loaded{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/melee/baton/loaded,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bC" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	name = "Equipment Room";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bD" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bE" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bF" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bG" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman{
+	anchored = 1
+	},
+/obj/item/wrench,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bK" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/effect/turf_decal/caution/stand_clear/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bL" = (
+/obj/machinery/button/door{
+	id = "syndicatecutter_bolt_starboard";
+	name = "External Bolt Control";
+	normaldoorcontrol = 1;
+	pixel_x = -4;
+	pixel_y = -25;
+	req_access_txt = "150";
+	specialfunctions = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bM" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bN" = (
+/obj/structure/sign/warning/securearea,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/stealthcruiser)
+"bO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/med_data/syndie{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bP" = (
+/obj/machinery/light/small,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/secure_data/syndie{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/shuttle/stealthcruiser)
+"bQ" = (
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/obj/item/stack/cable_coil/yellow,
+/obj/item/stock_parts/cell/high,
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bR" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 2
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external{
+	id_tag = "syndicatecutter_bolt_starboard";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bS" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 6
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"bT" = (
+/obj/machinery/porta_turret/syndicate{
+	dir = 10
+	},
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/stealthcruiser)
+"bU" = (
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/external{
+	id_tag = "syndicatecutter_bolt_starboard";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plating,
+/area/shuttle/stealthcruiser)
+"bW" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+bW
+bW
+bW
+ak
+ay
+aK
+bW
+ak
+ay
+aK
+bW
+bW
+bW
+"}
+(2,1,1) = {"
+bW
+bW
+aa
+al
+al
+al
+ad
+al
+al
+al
+aa
+bW
+bW
+"}
+(3,1,1) = {"
+bW
+ac
+ad
+am
+az
+aL
+ad
+bk
+bz
+bG
+ad
+bT
+bW
+"}
+(4,1,1) = {"
+bW
+ad
+ag
+an
+aA
+aM
+ba
+bl
+aA
+bH
+bQ
+ad
+bW
+"}
+(5,1,1) = {"
+bW
+ad
+ad
+ao
+aB
+ad
+ad
+ad
+aB
+ao
+ad
+ad
+bW
+"}
+(6,1,1) = {"
+bW
+ad
+ah
+ap
+aC
+aN
+bb
+bm
+bA
+bI
+ah
+ad
+bW
+"}
+(7,1,1) = {"
+aa
+ad
+ad
+aq
+aD
+aO
+ad
+bn
+aD
+bJ
+ad
+ad
+aa
+"}
+(8,1,1) = {"
+ab
+ae
+ai
+ar
+aE
+aP
+ad
+bo
+bh
+bK
+bR
+ae
+bU
+"}
+(9,1,1) = {"
+aa
+ad
+ad
+as
+aD
+aQ
+ad
+bp
+aD
+bL
+ad
+ad
+aa
+"}
+(10,1,1) = {"
+bW
+af
+ah
+at
+aF
+aR
+bb
+bq
+bB
+bM
+ah
+af
+bW
+"}
+(11,1,1) = {"
+bW
+aa
+ad
+au
+aG
+ad
+ad
+ad
+bC
+bN
+ad
+aa
+bW
+"}
+(12,1,1) = {"
+bW
+bW
+ad
+av
+aH
+aS
+bc
+br
+bD
+bO
+ad
+bW
+bW
+"}
+(13,1,1) = {"
+bW
+bW
+ad
+aw
+aI
+aT
+bd
+bs
+bE
+bP
+ad
+bW
+bW
+"}
+(14,1,1) = {"
+bW
+bW
+aj
+bb
+aJ
+aU
+be
+bt
+bF
+bb
+bS
+bW
+bW
+"}
+(15,1,1) = {"
+bW
+bW
+bW
+aa
+ad
+ad
+ad
+bu
+ad
+aa
+bW
+bW
+bW
+"}
+(16,1,1) = {"
+bW
+bW
+bW
+bW
+ad
+aV
+bf
+bv
+ad
+bW
+bW
+bW
+bW
+"}
+(17,1,1) = {"
+bW
+bW
+bW
+bW
+ad
+aW
+bg
+bv
+ad
+bW
+bW
+bW
+bW
+"}
+(18,1,1) = {"
+bW
+bW
+bW
+bW
+ad
+aX
+bh
+bw
+ad
+bW
+bW
+bW
+bW
+"}
+(19,1,1) = {"
+bW
+bW
+bW
+bW
+ad
+aY
+aD
+bx
+ad
+bW
+bW
+bW
+bW
+"}
+(20,1,1) = {"
+bW
+bW
+bW
+bW
+af
+aZ
+bi
+by
+af
+bW
+bW
+bW
+bW
+"}
+(21,1,1) = {"
+bW
+bW
+bW
+bW
+af
+af
+bj
+af
+af
+bW
+bW
+bW
+bW
+"}
+(22,1,1) = {"
+bW
+bW
+bW
+bW
+bW
+af
+af
+af
+bW
+bW
+bW
+bW
+bW
+"}
