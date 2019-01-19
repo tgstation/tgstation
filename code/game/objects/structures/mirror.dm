@@ -63,7 +63,7 @@
 			desc = "Oh no, seven years of bad luck!"
 		broken = TRUE
 
-/obj/structure/mirror/crowbar_act(mob/user, obj/item/I)
+/obj/structure/mirror/crowbar_act(mob/living/user, obj/item/I)
 	playsound(src, 'sound/machines/click.ogg', 50, 1)
 	user.visible_message("[user] begins to remove the glass from [src].", "<span class='notice'>You begin to take the glass off [src]...</span>")
 	if(I.use_tool(src, user, 50))
