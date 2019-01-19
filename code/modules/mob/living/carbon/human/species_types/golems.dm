@@ -508,6 +508,7 @@
 	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
 	special_names = null
+	mutanttongue = /obj/item/organ/tongue/bone
 
 	var/last_honk = 0
 	var/honkooldown = 0
