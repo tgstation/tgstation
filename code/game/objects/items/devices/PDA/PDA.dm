@@ -439,13 +439,17 @@ GLOBAL_LIST_EMPTY(PDAs)
 					return
 				id.registered_name = owner
 				id.assignment = ownjob
+				id.name = "[id.registered_name]'s ID Card ([id.assignment])"
 				var/datum/job/jobdatum
 				for(var/jobtype in typesof(/datum/job))
 					var/datum/job/J = new jobtype
 //					if(ckey(J.title) == ckey(t1))
+					to_chat(U, "<span class='notice'>DEBUG -- Does [ckey(J.title)] equal [ownjob]? FYI J equals [J].</span>")
 					if(ckey(J.title) == ownjob)
 						jobdatum = J
 						break
+						to_chat(U, "<span class='notice'>DEBUG -- Yes, breaking...</span>")
+					to_chat(U, "<span class='notice'>DEBUG -- No</span>")
 				if(!jobdatum)
 					to_chat(usr, "<span class='error'>The [src] beeps: \"Error in recovery process. Not all access has been restored. Please see your administrator.\"</span>")
 					return
