@@ -14,42 +14,34 @@
 	desc = "Your sense of smell is comparable to that of a canine."
 	quality = POSITIVE
 	difficulty = 12
-	locked = TRUE
 	text_gain_indication = "<span class='notice'>Smells begin to make more sense...</span>"
 	text_lose_indication = "<span class='notice'>Your sense of smell goes back to normal.</span>"
 	power = /obj/effect/proc_holder/spell/targeted/olfaction
 	instability = 30
 	var/reek = 0
 
-/*following code doesnt really work since you cant keep vars
-(in this case, var/reek) on the mutation datum*/
-
 /datum/mutation/human/olfaction/on_life()
 	var/hygiene_now = owner.hygiene
-	if(!reek)
+	if(reek == 0)
 		reek = hygiene_now
 		return
 
 	if(hygiene_now < 100 && prob(5))
 		owner.adjustOxyLoss(rand(3,5))
 	if(hygiene_now < HYGIENE_LEVEL_DIRTY && prob(50))
+		to_chat(owner,"<span class='userdanger'>Your nose refuses to breathe! You need to get clean!</span>")
 		owner.adjustOxyLoss(7)
 
 	if(hygiene_now < HYGIENE_LEVEL_NORMAL && reek >= HYGIENE_LEVEL_NORMAL)
-		to_chat(usr,"<span class='warning'>Your inhumanly strong nose picks up a bad odor. Maybe you should shower soon.</span>")
-		reek = hygiene_now
+		to_chat(owner,"<span class='warning'>Your inhumanly strong nose picks up a bad odor. Maybe you should shower soon.</span>")
 	if(hygiene_now < 150 && reek >= 150)
-		to_chat(usr,"<span class='warning'>This is getting bad. Your odor is getting intolerable.</span>")
-		reek = hygiene_now
+		to_chat(owner,"<span class='warning'>This is getting bad. Your odor is getting intolerable, what with you having a super-nose and all.</span>")
 	if(hygiene_now < 100 && reek >= 100)
-		to_chat(usr,"<span class='warning'>Your odor begins to make you gag. You silently curse your god-like nose.</span>")
-		reek = hygiene_now
+		to_chat(owner,"<span class='danger'>Your odor begins to make you gag. You silently curse your godly nose.</span>")
 	if(hygiene_now < HYGIENE_LEVEL_DIRTY && reek >= HYGIENE_LEVEL_DIRTY)
-		to_chat(usr,"<span class='warning'>Your horrible stench causes your nostrils to slam shut as your survival instincts involuntarily kick in.</span>")
-		to_chat(usr,"<span class='userdanger'>You can't breathe!</span>")
-		reek = hygiene_now
-
-/*see comment above*/
+		to_chat(owner,"<span class='danger'>Your horrible stench causes your nostrils to slam shut as your survival instincts involuntarily kick in.</span>")
+		to_chat(owner,"<span class='userdanger'>You can't breathe!</span>")
+	reek = hygiene_now
 
 /obj/effect/proc_holder/spell/targeted/olfaction
 	name = "Remember the Scent"
