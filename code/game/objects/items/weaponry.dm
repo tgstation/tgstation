@@ -478,7 +478,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	add_fingerprint(user)
 	user.visible_message("[user] rubs some dust off [src].", \
 						 "<span class='notice'>You take in [src], rubbing some dust off its surface.</span>")
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
 
 
 /obj/item/tailclub
