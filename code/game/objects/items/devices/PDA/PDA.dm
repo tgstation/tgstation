@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/underline_flag = TRUE //flag for underline
 	
-	var/recovery_mode = TRUE //Recovery mode allows imprinting name and job title into a blank ID card, if the data is already stored.
+	var/recovery_mode = FALSE //Recovery mode allows imprinting name and job title into a blank ID card, if the data is already stored.
 
 /obj/item/pda/suicide_act(mob/living/carbon/user)
 	var/deathMessage = msg_input(user)
@@ -432,26 +432,23 @@ GLOBAL_LIST_EMPTY(PDAs)
 				update_label()
 			if("RecoverAccess")
 				if(!id)
-					to_chat(U, "<span class='notice'>The [src] beeps: \"ID slot empty.\"</span>")
+					to_chat(U, "<span class='notice'>The [src] beeps, \"ID slot empty.\"</span>")
 					return
 				if(id.registered_name || id.assignment)
-					to_chat(U, "<span class='notice'>The [src] beeps: \"Unable to overwrite existing data.\"</span>")
+					to_chat(U, "<span class='notice'>The [src] beeps, \"Unable to overwrite existing data.\"</span>")
 					return
 				id.registered_name = owner
 				id.assignment = ownjob
 				id.name = "[id.registered_name]'s ID Card ([id.assignment])"
 				var/datum/job/jobdatum
+				var/ownjob_nospaces = replacetext("[ownjob]", " ", "")
 				for(var/jobtype in typesof(/datum/job))
 					var/datum/job/J = new jobtype
-//					if(ckey(J.title) == ckey(t1))
-					to_chat(U, "<span class='notice'>DEBUG -- Does [ckey(J.title)] equal [ownjob]? FYI J equals [J].</span>")
-					if(ckey(J.title) == ownjob)
+					if(cmptext(ckey(J.title), ownjob_nospaces)) //case-insensitive compare
 						jobdatum = J
 						break
-						to_chat(U, "<span class='notice'>DEBUG -- Yes, breaking...</span>")
-					to_chat(U, "<span class='notice'>DEBUG -- No</span>")
 				if(!jobdatum)
-					to_chat(usr, "<span class='error'>The [src] beeps: \"Error in recovery process. Not all access has been restored. Please see your administrator.\"</span>")
+					to_chat(usr, "<span class='error'>The [src] beeps, \"Error in recovery process. Access has not been restored. Please see your administrator.\"</span>")
 					return
 //				if(modify.registered_account)
 //					modify.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
@@ -459,6 +456,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 //						modify.registered_account.add_neetbux()
 
 				id.access = jobdatum.get_access()
+				to_chat(usr, "<span class='error'>The [src] beeps, \"Recovery complete. Access has been restored from backup. Recovery mode is now disabled.\"</span>")
+				recovery_mode = FALSE
 				
 
 			if("Eject")//Ejects the cart, only done from hub.
@@ -1047,6 +1046,37 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!P.owner || P.toff || P.hidden)
 			continue
 		. += P
+
+/*/obj/item/pda/set_recovery()
+//proc/set_recovery()
+	if (!ownjob || !owner) //Blank PDAs, that have not been uploaded to, need not apply.
+		return
+	if (ownjob == "Captain") //Captain IDs do not get wiped, so their PDA should not need recovery mode set.
+		return
+	
+	recovery_mode = TRUE
+	
+	if (!silent)
+		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+		
+	var/mob/living/L = null
+	//Searching for owner, as stolen from above code
+	if(loc && isliving(loc))
+		L = loc
+	//Maybe they are a pAI!
+	else
+		L = get(src, /mob/living/silicon)
+
+	if(L && L.stat != UNCONSCIOUS)
+//		var/hrefstart
+//		var/hrefend
+		if (isAI(L))
+//			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
+//			hrefend = "</a>"
+			to_chat(L, "Emergency ID purge has been activated. PDA recovery mode has been unlocked where available.")
+		else to_chat(L, "Emergency ID purge has been activated. Recovery mode is available.")
+*/	
+	
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL
