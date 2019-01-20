@@ -25,7 +25,6 @@
 #define NOBLIUM_FORMATION_ENERGY			2e9 	//1 Mole of Noblium takes the planck energy to condense.
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
-#define FUSION_TEMPERATURE_THRESHOLD		1000 	//Temperature required to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				250 	//Mole count required (tritium/plasma) to start a fusion reaction
 #define FUSION_RELEASE_ENERGY_SUPER			3e9 	//Amount of energy released in the fusion process, super tier
 #define FUSION_RELEASE_ENERGY_HIGH			1e9 	//Amount of energy released in the fusion process, high tier
@@ -63,3 +62,11 @@
 #define FUSION_PARTICLE_FACTOR_HIGH			3
 #define FUSION_PARTICLE_FACTOR_MID			2
 #define FUSION_PARTICLE_FACTOR_LOW			1
+//Plasma fusion properties
+#define FUSION_TRITIUM_CONVERSION_COEFFICIENT 0.000001
+#define INSTABILITY_GAS_POWER_FACTOR 		  0.01
+#define FUSION_TRITIUM_MOLES_USED  			  1
+#define PLASMA_BINDING_ENERGY  				  30000000
+#define CARBON_BINDING_ENERGY  				  1000000
+#define TORUS_SIZE_FACTOR  					  0.05
+#define FUSION_TEMPERATURE_THRESHOLD		  10000

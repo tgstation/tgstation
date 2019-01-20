@@ -213,9 +213,73 @@
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again)
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
-//5 reworks
+//6 reworks
+
+/datum/gas_reaction/fusion
+	exclude = FALSE
+	priority = 2
+	name = "Plasmic Fusion"
+	id = "fusion"
+
+/datum/gas_reaction/fusion/init_reqs()
+	min_requirements = list(
+		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
+		/datum/gas/tritium = FUSION_TRITIUM_MOLES_USED,
+		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
+		/datum/gas/carbon_dioxide = FUSION_MOLE_THRESHOLD)
+
+/datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_gases = air.gases
+	var/turf/open/location
+	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
+		var/datum/pipeline/fusion_pipenet = holder
+		location = get_turf(pick(fusion_pipenet.members))
+	else
+		location = get_turf(holder)
+
+	var/old_heat_capacity = air.heat_capacity()
+	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
+	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
+	var/initial_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES]
+
+	var/gas_power = 0
+	for (var/gas_id in cached_gases)
+		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
+	var/instability = gas_power*INSTABILITY_GAS_POWER_FACTOR //Instability effects how chaotic the behavior of the reaction is
+	var/toroidal_size = air.volume
+
+	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
+	cached_gases[/datum/gas/plasma][MOLES] = MODULUS(cached_gases[/datum/gas/plasma][MOLES] + instability*sin(initial_carbon*((2*PI)/toroidal_size)), toroidal_size)
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] = MODULUS(cached_gases[/datum/gas/plasma][MOLES] + cached_gases[/datum/gas/carbon_dioxide][MOLES] , toroidal_size)
+	var/delta_plasma = cached_gases[/datum/gas/plasma][MOLES] - initial_plasma
+	var/delta_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES] - initial_carbon
+	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
+	reaction_energy += delta_carbon*CARBON_BINDING_ENERGY
+
+	if(air.thermal_energy() + reaction_energy < 0) //No using energy that doesn't exist.
+		cached_gases[/datum/gas/plasma][MOLES] = initial_plasma
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] = initial_carbon
+		return NO_REACTION
+	cached_gases[/datum/gas/tritium][MOLES] -= FUSION_TRITIUM_MOLES_USED
+	//The decay of the tritium produces waste gases, different ones depending on whether the reaction is endo or exothermic
+	if(reaction_energy > 0)
+		air.assert_gases(/datum/gas/oxygen,/datum/gas/nitrous_oxide)
+		cached_gases[/datum/gas/oxygen][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += (reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+	else
+		air.assert_gases(/datum/gas/bz,/datum/gas/nitryl)
+		cached_gases[/datum/gas/bz][MOLES] += FUSION_TRITIUM_MOLES_USED
+		cached_gases[/datum/gas/nitryl][MOLES] += (reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+
+
+	if(reaction_energy)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
+		return REACTING
+/*
 
 /datum/gas_reaction/fusion
 	exclude = FALSE
@@ -320,7 +384,7 @@
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 		return REACTING
-
+*/
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
 	priority = 3
 	name = "Nitryl formation"
