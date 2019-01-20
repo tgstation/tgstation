@@ -31,16 +31,15 @@
 /obj/item/melee/touch_attack/shock/afterattack(atom/target, mob/living/carbon/user, proximity)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.has_trait(TRAIT_SHOCKIMMUNE))
+		if(C.electrocute_act(15, src, 1, FALSE, FALSE, FALSE, FALSE, FALSE))//doesnt stun. never let this stun
+			C.dropItemToGround(C.get_active_held_item())
+			C.dropItemToGround(C.get_inactive_held_item())
+			C.confused += 15
+			C.visible_message("<span class='danger'>[user] electrocutes [target]!</span>","<span class='userdanger'>[user] electrocutes you!</span>")
+			return ..()
+		else
 			user.visible_message("<span class='warning'>[user] fails to electrocute [target]!</span>")
 			return ..()
-		C.confused += 15
-		C.Jitter(75)
-		C.electrocute_act(15, src, 1, FALSE, FALSE, FALSE, FALSE, FALSE)//doesnt stun. never let this stun
-		C.dropItemToGround(C.get_active_held_item())
-		C.dropItemToGround(C.get_inactive_held_item())
-		C.visible_message("<span class='danger'>[user] electrocutes [target]!</span>","<span class='userdanger'>[user] electrocutes you!</span>")
-		return ..()
 	else if(isliving(target))
 		var/mob/living/L = target
 		L.electrocute_act(15, src, 1, FALSE, FALSE, FALSE, FALSE)
