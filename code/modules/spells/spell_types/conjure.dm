@@ -80,9 +80,10 @@
 	school = "conjuration"
 	charge_max = 150
 	cooldown_min = 10
+	var/delete_old = TRUE //TRUE to delete the last summoned object if it's still there, FALSE for infinite item stream weeeee
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
-	if (item && !QDELETED(item))
+	if (delete_old && item && !QDELETED(item))
 		qdel(item)
 		item = null
 	else

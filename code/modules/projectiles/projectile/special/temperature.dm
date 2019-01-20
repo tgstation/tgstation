@@ -16,3 +16,14 @@
 /obj/item/projectile/temp/hot
 	name = "heat beam"
 	temperature = 400
+
+/obj/item/projectile/temp/cryo
+	name = "cryo beam"
+	range = 3
+
+/obj/item/projectile/temp/cryo/on_range()
+	var/turf/T = get_turf(src)
+	if(istype(T, /turf/open))
+		var/turf/open/O = T
+		O.freon_gas_act()
+	return ..()
