@@ -668,6 +668,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/magazine/m12g/stun
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/shotgun/scatter
+	name = "12g Scatter Laser shot Slugs"
+	desc = "An alternative 8-round Scatter Laser Shot magazine for use in the Bulldog shotgun."
+	item = /obj/item/ammo_box/magazine/m12g/scatter
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
