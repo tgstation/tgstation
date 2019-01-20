@@ -67,9 +67,16 @@
 
 		//Some of target's recent speech, so the changeling can attempt to imitate them better.
 		//Recent as opposed to all because rounds tend to have a LOT of text.
-		var/list/recent_speech = list()
 
-		var/list/say_log = target.logging[LOG_SAY]
+		var/list/recent_speech = list()
+		var/list/say_log = list()
+		var/log_source = target.logging
+		for(var/log_type in log_source)
+			var/nlog_type = text2num(log_type)
+			if(nlog_type & LOG_SAY)
+				var/list/reversed = log_source[log_type]
+				if(islist(reversed))
+					say_log = reverseRange(reversed.Copy())
 
 		if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
 			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
