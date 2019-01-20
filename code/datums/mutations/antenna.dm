@@ -33,7 +33,7 @@
 /datum/mutation/human/antenna/New()
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -MUTATIONS_LAYER+1))
+		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
 
 /datum/mutation/human/antenna/get_visual_indicator()
 	return visual_indicators[type][1]
@@ -55,9 +55,13 @@
 	charge_max = 50
 	range = 7
 	clothes_req = FALSE
+	action_icon_state = "mindread"
 
 /obj/effect/proc_holder/spell/targeted/mindread/cast(list/targets, mob/living/carbon/human/user = usr)
 	for(var/mob/living/M in targets)
+		if(istype(usr.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat) || istype(M.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
+			to_chat(usr, "<span class='warning'>As you reach out with your mind, you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled.</span>")
+			return
 		if(M.stat == DEAD)
 			to_chat(user, "<span class='boldnotice'>[M] is dead!</span>")
 			return
@@ -86,7 +90,7 @@
 					to_chat(user, "<span class='notice'>[recent_speech[spoken_memory]]</span>")
 			if(iscarbon(M))
 				var/mob/living/carbon/human/H = M
-				to_chat(user, "<span class='boldnotice'>You find that they currently intend to [H.a_intent] someone...</span>")
+				to_chat(user, "<span class='boldnotice'>You find that their intent is to [H.a_intent]...</span>")
 				var/datum/dna/the_dna = H.has_dna()
 				if(the_dna)
 					to_chat(user, "<span class='boldnotice'>You uncover that their true identity is [the_dna.real_name].</span>")
@@ -96,7 +100,7 @@
 /datum/mutation/human/mindreader/New()
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -MUTATIONS_LAYER+1))
+		visual_indicators[type] = list(mutable_appearance('icons/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
 
 /datum/mutation/human/mindreader/get_visual_indicator()
 	return visual_indicators[type][1]
