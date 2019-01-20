@@ -334,8 +334,8 @@
 		holder.add_reagent("sugar", 1)
 		holder.remove_reagent("salglu_solution", 0.5)
 	if(prob(33))
-		M.adjustBruteLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
-		M.adjustFireLoss(0.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
+		M.adjustBruteLoss(1*REM, FALSE, FALSE, BODYPART_ORGANIC)
+		M.adjustFireLoss(1*REM, FALSE, FALSE, BODYPART_ORGANIC)
 		. = TRUE
 	..()
 
