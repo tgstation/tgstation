@@ -36,6 +36,8 @@
 #define STRONG    	/datum/mutation/human/strong
 #define FIRESWEAT	/datum/mutation/human/fire
 #define ANTENNA		/datum/mutation/human/antenna
+#define PARANOIA	/datum/mutation/human/paranoia
+#define MINDREAD	/datum/mutation/human/mindreader
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
