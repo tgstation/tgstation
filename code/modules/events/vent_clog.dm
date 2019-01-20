@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/vent_clog
 	weight = 10
 	max_occurrences = 3
-	min_players = 25
+	min_players = 10
 
 /datum/round_event/vent_clog
 	announceWhen	= 1
@@ -54,9 +54,9 @@
 	name = "Clogged Vents: Threatening"
 	typepath = /datum/round_event/vent_clog/threatening
 	weight = 4
-	min_players = 35
+	min_players = 25
 	max_occurrences = 1
-	earliest_start = 35 MINUTES
+	earliest_start = 30 MINUTES
 
 /datum/round_event/vent_clog/threatening
 	randomProbability = 10
@@ -66,9 +66,9 @@
 	name = "Clogged Vents: Catastrophic"
 	typepath = /datum/round_event/vent_clog/catastrophic
 	weight = 2
-	min_players = 45
+	min_players = 35
 	max_occurrences = 1
-	earliest_start = 45 MINUTES
+	earliest_start = 40 MINUTES
 
 /datum/round_event/vent_clog/catastrophic
 	randomProbability = 30
