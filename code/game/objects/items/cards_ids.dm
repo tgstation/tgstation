@@ -6,6 +6,7 @@
  *		FINGERPRINT CARD
  */
 
+GLOBAL_LIST_EMPTY(card_id)
 
 
 /*
@@ -37,6 +38,7 @@
 	var/detail_color = COLOR_ASSEMBLY_ORANGE
 
 /obj/item/card/data/Initialize()
+//	GLOB.card_id += src
 	.=..()
 	update_icon()
 
@@ -122,6 +124,7 @@
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
+	GLOB.card_id += src
 	if(mapload && access_txt)
 		access = text2access(access_txt)
 
