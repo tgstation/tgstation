@@ -141,5 +141,13 @@
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
 		}\
+		if(A.alternate_appearances){\
+			for(var/I in A.alternate_appearances){\
+				var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
+				if(AA.transfer_overlays){\
+					AA.copy_overlays(A, TRUE);\
+				}\
+			}\
+		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}
