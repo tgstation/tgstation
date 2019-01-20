@@ -1,7 +1,7 @@
 /obj/item/shield
 	name = "shield"
 	block_chance = 50
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 
 /obj/item/shield/riot
 	name = "riot shield"
@@ -10,7 +10,7 @@
 	icon_state = "riot"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	force = 10
 	throwforce = 5
 	throw_speed = 2
@@ -38,12 +38,17 @@
 	return ..()
 
 /obj/item/shield/riot/roman
-	name = "roman shield"
+	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
 	item_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+
+/obj/item/shield/riot/roman/fake
+	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
+	block_chance = 0
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"
@@ -60,16 +65,24 @@
 	name = "energy combat shield"
 	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "eshield0" // eshield1 for expanded
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
+	attack_verb = list("shoved", "bashed")
+	throw_range = 5
 	force = 3
 	throwforce = 3
 	throw_speed = 3
-	throw_range = 5
-	w_class = WEIGHT_CLASS_TINY
-	attack_verb = list("shoved", "bashed")
+	var/base_icon_state = "eshield" // [base_icon_state]1 for expanded, [base_icon_state]0 for contracted
+	var/on_force = 10
+	var/on_throwforce = 8
+	var/on_throw_speed = 2
 	var/active = 0
+	var/clumsy_check = TRUE
+
+/obj/item/shield/energy/Initialize()
+	. = ..()
+	icon_state = "[base_icon_state]0"
 
 /obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
@@ -78,23 +91,23 @@
 	return (active)
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(clumsy_check && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	active = !active
-	icon_state = "eshield[active]"
+	icon_state = "[base_icon_state][active]"
 
 	if(active)
-		force = 10
-		throwforce = 8
-		throw_speed = 2
+		force = on_force
+		throwforce = on_throwforce
+		throw_speed = on_throw_speed
 		w_class = WEIGHT_CLASS_BULKY
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
-		force = 3
-		throwforce = 3
-		throw_speed = 3
+		force = initial(force)
+		throwforce = initial(throwforce)
+		throw_speed = initial(throw_speed)
 		w_class = WEIGHT_CLASS_TINY
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
@@ -130,7 +143,7 @@
 		throwforce = 5
 		throw_speed = 2
 		w_class = WEIGHT_CLASS_BULKY
-		slot_flags = SLOT_BACK
+		slot_flags = ITEM_SLOT_BACK
 		to_chat(user, "<span class='notice'>You extend \the [src].</span>")
 	else
 		force = 3

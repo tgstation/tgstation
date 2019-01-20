@@ -24,20 +24,11 @@
 	stat = DEAD
 	cut_overlays()
 
-	update_canmove()
-
 	if(SSticker.mode)
 		SSticker.mode.check_win()
 
 	return ..(gibbed)
 
 /mob/living/simple_animal/slime/gib()
-	death(1)
+	death(TRUE)
 	qdel(src)
-
-
-/mob/living/simple_animal/slime/Destroy()
-	for(var/obj/machinery/computer/camera_advanced/xenobio/X in GLOB.machines)
-		if(src in X.stored_slimes)
-			X.stored_slimes -= src
-	return ..()

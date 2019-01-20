@@ -9,25 +9,26 @@
 	var/base_state = "left"
 	max_integrity = 150 //If you change this, consider changing ../door/window/brigdoor/ max_integrity at the bottom of this .dm file
 	integrity_failure = 0
-	armor = list(melee = 20, bullet = 50, laser = 50, energy = 50, bomb = 10, bio = 100, rad = 100, fire = 70, acid = 100)
+	armor = list("melee" = 20, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 70, "acid" = 100)
 	visible = FALSE
 	flags_1 = ON_BORDER_1
 	opacity = 0
 	CanAtmosPass = ATMOS_PASS_PROC
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	var/obj/item/electronics/airlock/electronics = null
 	var/reinf = 0
 	var/shards = 2
 	var/rods = 2
-	var/cable = 2
+	var/cable = 1
 	var/list/debris = list()
 
 /obj/machinery/door/window/Initialize(mapload, set_dir)
 	. = ..()
 	if(set_dir)
 		setDir(set_dir)
-	if(src.req_access && src.req_access.len)
-		src.icon_state = "[src.icon_state]"
-		src.base_state = src.icon_state
+	if(req_access && req_access.len)
+		icon_state = "[icon_state]"
+		base_state = icon_state
 	for(var/i in 1 to shards)
 		debris += new /obj/item/shard(src)
 	if(rods)
@@ -35,10 +36,13 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
+/obj/machinery/door/window/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/ntnet_interface)
+
 /obj/machinery/door/window/Destroy()
 	density = FALSE
-	for(var/I in debris)
-		qdel(I)
+	QDEL_LIST(debris)
 	if(obj_integrity == 0)
 		playsound(src, "shatter", 70, 1)
 	electronics = null
@@ -48,23 +52,23 @@
 	if(density)
 		icon_state = base_state
 	else
-		icon_state = "[src.base_state]open"
+		icon_state = "[base_state]open"
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
-	if(src.check_access(null))
+	if(check_access(null))
 		sleep(50)
 	else //secure doors close faster
 		sleep(20)
 	close()
 
-/obj/machinery/door/window/CollidedWith(atom/movable/AM)
-	if( operating || !src.density )
+/obj/machinery/door/window/Bumped(atom/movable/AM)
+	if( operating || !density )
 		return
 	if (!( ismob(AM) ))
 		if(ismecha(AM))
 			var/obj/mecha/mecha = AM
-			if(mecha.occupant && src.allowed(mecha.occupant))
+			if(mecha.occupant && allowed(mecha.occupant))
 				open_and_close()
 			else
 				do_animate("deny")
@@ -77,10 +81,10 @@
 	bumpopen(M)
 
 /obj/machinery/door/window/bumpopen(mob/user)
-	if( operating || !src.density )
+	if( operating || !density )
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
+	add_fingerprint(user)
+	if(!requiresID())
 		user = null
 
 	if(allowed(user))
@@ -125,8 +129,8 @@
 	else
 		return 1
 
-/obj/machinery/door/window/open(forced=0)
-	if (src.operating == 1) //doors can still open when emag-disabled
+/obj/machinery/door/window/open(forced=FALSE)
+	if (operating) //doors can still open when emag-disabled
 		return 0
 	if(!forced)
 		if(!hasPower())
@@ -134,15 +138,14 @@
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return 0
-	if(!src.operating) //in case of emag
+	if(!operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state ="[src.base_state]open"
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, 1)
+	icon_state ="[base_state]open"
 	sleep(10)
 
 	density = FALSE
-//	src.sd_set_opacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 
@@ -150,8 +153,8 @@
 		operating = FALSE
 	return 1
 
-/obj/machinery/door/window/close(forced=0)
-	if (src.operating)
+/obj/machinery/door/window/close(forced=FALSE)
+	if (operating)
 		return 0
 	if(!forced)
 		if(!hasPower())
@@ -161,8 +164,8 @@
 			return 0
 	operating = TRUE
 	do_animate("closing")
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = src.base_state
+	playsound(src, 'sound/machines/windowdoor.ogg', 100, 1)
+	icon_state = base_state
 
 	density = TRUE
 	air_update_turf(1)
@@ -175,9 +178,9 @@
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/glasshit.ogg', 90, 1)
+			playsound(src, 'sound/effects/glasshit.ogg', 90, 1)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src, 'sound/items/welder.ogg', 100, 1)
 
 
 /obj/machinery/door/window/deconstruct(disassembled = TRUE)
@@ -201,15 +204,11 @@
 		take_damage(round(exposed_volume / 200), BURN, 0, 0)
 	..()
 
-
-/obj/machinery/door/window/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !(obj_flags & EMAGGED))
 		obj_flags |= EMAGGED
 		operating = TRUE
-		flick("[src.base_state]spark", src)
+		flick("[base_state]spark", src)
 		playsound(src, "sparks", 75, 1)
 		sleep(6)
 		operating = FALSE
@@ -223,22 +222,22 @@
 
 	add_fingerprint(user)
 	if(!(flags_1&NODECONSTRUCT_1))
-		if(istype(I, /obj/item/screwdriver))
+		if(I.tool_behaviour == TOOL_SCREWDRIVER)
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
 			I.play_tool_sound(src)
 			panel_open = !panel_open
-			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
+			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [name].</span>")
 			return
 
-		if(istype(I, /obj/item/crowbar))
+		if(I.tool_behaviour == TOOL_CROWBAR)
 			if(panel_open && !density && !operating)
-				user.visible_message("[user] removes the electronics from the [src.name].", \
-									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
+				user.visible_message("[user] removes the electronics from the [name].", \
+									 "<span class='notice'>You start to remove electronics from the [name]...</span>")
 				if(I.use_tool(src, user, 40, volume=50))
-					if(panel_open && !density && !operating && src.loc)
-						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
+					if(panel_open && !density && !operating && loc)
+						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(loc)
 						switch(base_state)
 							if("left")
 								WA.facing = "l"
@@ -250,12 +249,12 @@
 							if("rightsecure")
 								WA.facing = "r"
 								WA.secure = TRUE
-						WA.anchored = TRUE
+						WA.setAnchored(TRUE)
 						WA.state= "02"
-						WA.setDir(src.dir)
-						WA.ini_dir = src.dir
+						WA.setDir(dir)
+						WA.ini_dir = dir
 						WA.update_icon()
-						WA.created_name = src.name
+						WA.created_name = name
 
 						if(obj_flags & EMAGGED)
 							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
@@ -266,12 +265,12 @@
 
 						var/obj/item/electronics/airlock/ae
 						if(!electronics)
-							ae = new/obj/item/electronics/airlock( src.loc )
+							ae = new/obj/item/electronics/airlock(drop_location())
 							if(req_one_access)
 								ae.one_access = 1
-								ae.accesses = src.req_one_access
+								ae.accesses = req_one_access
 							else
-								ae.accesses = src.req_access
+								ae.accesses = req_access
 						else
 							ae = electronics
 							electronics = null
@@ -280,6 +279,9 @@
 						qdel(src)
 				return
 	return ..()
+
+/obj/machinery/door/window/interact(mob/user)		//for sillycones
+	try_to_activate_door(user)
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)
 	if(!hasPower())
@@ -293,12 +295,41 @@
 /obj/machinery/door/window/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("[src.base_state]opening", src)
+			flick("[base_state]opening", src)
 		if("closing")
-			flick("[src.base_state]closing", src)
+			flick("[base_state]closing", src)
 		if("deny")
-			flick("[src.base_state]deny", src)
+			flick("[base_state]deny", src)
 
+/obj/machinery/door/window/check_access_ntnet(datum/netdata/data)
+	return !requiresID() || ..()
+
+/obj/machinery/door/window/ntnet_receive(datum/netdata/data)
+	// Check if the airlock is powered.
+	if(!hasPower())
+		return
+
+	// Check packet access level.
+	if(!check_access_ntnet(data))
+		return
+
+	// Handle received packet.
+	var/command = lowertext(data.data["data"])
+	var/command_value = lowertext(data.data["data_secondary"])
+	switch(command)
+		if("open")
+			if(command_value == "on" && !density)
+				return
+
+			if(command_value == "off" && density)
+				return
+
+			if(density)
+				INVOKE_ASYNC(src, .proc/open)
+			else
+				INVOKE_ASYNC(src, .proc/close)
+		if("touch")
+			INVOKE_ASYNC(src, .proc/open_and_close)
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

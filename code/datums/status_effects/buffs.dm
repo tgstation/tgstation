@@ -70,11 +70,13 @@
 	return ..()
 
 /datum/status_effect/vanguard_shield/on_apply()
-	owner.log_message("gained Vanguard stun immunity", INDIVIDUAL_ATTACK_LOG)
+	owner.log_message("gained Vanguard stun immunity", LOG_ATTACK)
 	owner.add_stun_absorption("vanguard", INFINITY, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
 	owner.SetStun(0, FALSE)
-	owner.SetKnockdown(0)
+	owner.SetKnockdown(0, FALSE)
+	owner.SetParalyzed(0, FALSE)
+	owner.SetImmobilized(0)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
@@ -96,7 +98,7 @@
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
 		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
-			owner.Knockdown(stuns_blocked)
+			owner.Paralyze(stuns_blocked)
 			message_to_owner = "<span class='boldwarning'>The weight of the Vanguard's protection crashes down upon you!</span>"
 			if(stuns_blocked >= 300)
 				message_to_owner += "\n<span class='userdanger'>You faint from the exertion!</span>"
@@ -105,7 +107,7 @@
 		else
 			stuns_blocked = 0 //so logging is correct in cases where there were stuns blocked but we didn't stun for other reasons
 		owner.visible_message("<span class='warning'>[owner]'s glowing aura fades!</span>", message_to_owner)
-		owner.log_message("lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]", INDIVIDUAL_ATTACK_LOG)
+		owner.log_message("lost Vanguard stun immunity[stuns_blocked ? "and was stunned for [stuns_blocked]":""]", LOG_ATTACK)
 
 
 /datum/status_effect/inathneqs_endowment
@@ -120,7 +122,7 @@
 	alerttooltipstyle = "clockcult"
 
 /datum/status_effect/inathneqs_endowment/on_apply()
-	owner.log_message("gained Inath-neq's invulnerability", INDIVIDUAL_ATTACK_LOG)
+	owner.log_message("gained Inath-neq's invulnerability", LOG_ATTACK)
 	owner.visible_message("<span class='warning'>[owner] shines with azure light!</span>", "<span class='notice'>You feel Inath-neq's power flow through you! You're invincible!</span>")
 	var/oldcolor = owner.color
 	owner.color = "#1E8CE1"
@@ -133,7 +135,7 @@
 	return ..()
 
 /datum/status_effect/inathneqs_endowment/on_remove()
-	owner.log_message("lost Inath-neq's invulnerability", INDIVIDUAL_ATTACK_LOG)
+	owner.log_message("lost Inath-neq's invulnerability", LOG_ATTACK)
 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
 	owner.status_flags &= ~GODMODE
 	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
@@ -185,7 +187,7 @@
 	..()
 
 /datum/status_effect/his_grace/on_apply()
-	owner.log_message("gained His Grace's stun immunity", INDIVIDUAL_ATTACK_LOG)
+	owner.log_message("gained His Grace's stun immunity", LOG_ATTACK)
 	owner.add_stun_absorption("hisgrace", INFINITY, 3, null, "His Grace protects you from the stun!")
 	return ..()
 
@@ -209,7 +211,7 @@
 	owner.adjustCloneLoss(-grace_heal)
 
 /datum/status_effect/his_grace/on_remove()
-	owner.log_message("lost His Grace's stun immunity", INDIVIDUAL_ATTACK_LOG)
+	owner.log_message("lost His Grace's stun immunity", LOG_ATTACK)
 	if(islist(owner.stun_absorption) && owner.stun_absorption["hisgrace"])
 		owner.stun_absorption -= "hisgrace"
 
@@ -224,9 +226,9 @@
 	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
-	owner.revive(full_heal = 1, admin_revive = 1)
+	owner.revive(full_heal = TRUE, admin_revive = TRUE)
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>You have regenerated.</span>")
-	owner.update_canmove()
+	owner.update_mobility()
 
 /obj/screen/alert/status_effect/wish_granters_gift
 	name = "Wish Granter's Immortality"
@@ -242,7 +244,7 @@
 
 /datum/status_effect/cult_master/proc/deathrattle()
 	if(!QDELETED(GLOB.cult_narsie))
-		return //if nar-sie is alive, don't even worry about it
+		return //if Nar'Sie is alive, don't even worry about it
 	var/area/A = get_area(owner)
 	for(var/datum/mind/B in SSticker.mode.cult)
 		if(isliving(B.current))
@@ -304,7 +306,7 @@
 		last_oxyloss = owner.getOxyLoss()
 		last_cloneloss = owner.getCloneLoss()
 		last_staminaloss = owner.getStaminaLoss()
-		owner.log_message("gained blood-drunk stun immunity", INDIVIDUAL_ATTACK_LOG)
+		owner.log_message("gained blood-drunk stun immunity", LOG_ATTACK)
 		owner.add_stun_absorption("blooddrunk", INFINITY, 4)
 		owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1)
 
@@ -380,7 +382,7 @@
 	owner.cloneloss *= 0.1
 	owner.staminaloss *= 0.1
 	owner.updatehealth()
-	owner.log_message("lost blood-drunk stun immunity", INDIVIDUAL_ATTACK_LOG)
+	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
 		owner.stun_absorption -= "blooddrunk"
 
@@ -450,3 +452,105 @@
 /datum/status_effect/exercised/Destroy()
 	. = ..()
 	STOP_PROCESSING(SSprocessing, src)
+
+//Hippocratic Oath: Applied when the Rod of Asclepius is activated.
+/datum/status_effect/hippocraticOath
+	id = "Hippocratic Oath"
+	status_type = STATUS_EFFECT_UNIQUE
+	duration = -1
+	tick_interval = 25
+	examine_text = "<span class='notice'>They seem to have an aura of healing and helpfulness about them.</span>"
+	alert_type = null
+	var/hand
+	var/deathTick = 0
+
+/datum/status_effect/hippocraticOath/on_apply()
+	//Makes the user passive, it's in their oath not to harm!
+	owner.add_trait(TRAIT_PACIFISM, "hippocraticOath")
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	H.add_hud_to(owner)
+	return ..()
+
+/datum/status_effect/hippocraticOath/on_remove()
+	owner.remove_trait(TRAIT_PACIFISM, "hippocraticOath")
+	var/datum/atom_hud/H = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+	H.remove_hud_from(owner)
+
+/datum/status_effect/hippocraticOath/tick()
+	if(owner.stat == DEAD)
+		if(deathTick < 4)
+			deathTick += 1
+		else
+			owner.visible_message("[owner]'s soul is absorbed into the rod, relieving the previous snake of its duty.")
+			var/mob/living/simple_animal/hostile/retaliate/poison/snake/healSnake = new(owner.loc)
+			var/list/chems = list("bicaridine", "salbutamol", "kelotane", "antitoxin")
+			healSnake.poison_type = pick(chems)
+			healSnake.name = "Asclepius's Snake"
+			healSnake.real_name = "Asclepius's Snake"
+			healSnake.desc = "A mystical snake previously trapped upon the Rod of Asclepius, now freed of its burden. Unlike the average snake, its bites contain chemicals with minor healing properties."
+			new /obj/effect/decal/cleanable/ash(owner.loc)
+			new /obj/item/rod_of_asclepius(owner.loc)
+			qdel(owner)
+	else
+		if(iscarbon(owner))
+			var/mob/living/carbon/itemUser = owner
+			var/obj/item/heldItem = itemUser.get_item_for_held_index(hand)
+			if(heldItem == null || heldItem.type != /obj/item/rod_of_asclepius) //Checks to make sure the rod is still in their hand
+				var/obj/item/rod_of_asclepius/newRod = new(itemUser.loc)
+				newRod.activated()
+				if(!itemUser.has_hand_for_held_index(hand))
+					//If user does not have the corresponding hand anymore, give them one and return the rod to their hand
+					if(((hand % 2) == 0))
+						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_R_ARM, FALSE, FALSE)
+						L.attach_limb(itemUser)
+						itemUser.put_in_hand(newRod, hand, forced = TRUE)
+					else
+						var/obj/item/bodypart/L = itemUser.newBodyPart(BODY_ZONE_L_ARM, FALSE, FALSE)
+						L.attach_limb(itemUser)
+						itemUser.put_in_hand(newRod, hand, forced = TRUE)
+					to_chat(itemUser, "<span class='notice'>Your arm suddenly grows back with the Rod of Asclepius still attached!</span>")
+				else
+					//Otherwise get rid of whatever else is in their hand and return the rod to said hand
+					itemUser.put_in_hand(newRod, hand, forced = TRUE)
+					to_chat(itemUser, "<span class='notice'>The Rod of Asclepius suddenly grows back out of your arm!</span>")
+			//Because a servant of medicines stops at nothing to help others, lets keep them on their toes and give them an additional boost.
+			if(itemUser.health < itemUser.maxHealth)
+				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
+			itemUser.adjustBruteLoss(-1.5)
+			itemUser.adjustFireLoss(-1.5)
+			itemUser.adjustToxLoss(-1.5, forced = TRUE) //Because Slime People are people too
+			itemUser.adjustOxyLoss(-1.5)
+			itemUser.adjustStaminaLoss(-1.5)
+			itemUser.adjustBrainLoss(-1.5)
+			itemUser.adjustCloneLoss(-0.5) //Becasue apparently clone damage is the bastion of all health
+		//Heal all those around you, unbiased
+		for(var/mob/living/L in view(7, owner))
+			if(L.health < L.maxHealth)
+				new /obj/effect/temp_visual/heal(get_turf(L), "#375637")
+			if(iscarbon(L))
+				L.adjustBruteLoss(-3.5)
+				L.adjustFireLoss(-3.5)
+				L.adjustToxLoss(-3.5, forced = TRUE) //Because Slime People are people too
+				L.adjustOxyLoss(-3.5)
+				L.adjustStaminaLoss(-3.5)
+				L.adjustBrainLoss(-3.5)
+				L.adjustCloneLoss(-1) //Becasue apparently clone damage is the bastion of all health
+			else if(issilicon(L))
+				L.adjustBruteLoss(-3.5)
+				L.adjustFireLoss(-3.5)
+			else if(isanimal(L))
+				var/mob/living/simple_animal/SM = L
+				SM.adjustHealth(-3.5, forced = TRUE)
+
+/datum/status_effect/good_music
+	id = "Good Music"
+	alert_type = null
+	duration = 6 SECONDS
+	tick_interval = 1 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/good_music/tick()
+	owner.dizziness = max(0, owner.dizziness - 2)
+	owner.jitteriness = max(0, owner.jitteriness - 2)
+	owner.confused = max(0, owner.confused - 1)
+	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)

@@ -3,7 +3,8 @@
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
 // The dirs are connected turfs in the same space
-// break_if_found is a typecache of turf types to return false if found
+// break_if_found is a typecache of turf/area types to return false if found
+// Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
 /proc/detect_room(turf/origin, list/break_if_found)
 	if(origin.blocks_air)
 		return list(origin)
@@ -13,8 +14,6 @@
 	var/list/found_turfs = list(origin)
 	while(found_turfs.len)
 		var/turf/sourceT = found_turfs[1]
-		if(break_if_found[sourceT.type])
-			return FALSE
 		found_turfs.Cut(1, 2)
 		var/dir_flags = checked_turfs[sourceT]
 		for(var/dir in GLOB.alldirs)
@@ -27,17 +26,26 @@
 			checked_turfs[checkT] |= turn(dir, 180)
 			.[sourceT] |= dir
 			.[checkT] |= turn(dir, 180)
+			if(break_if_found[checkT.type] || break_if_found[checkT.loc.type])
+				return FALSE
 			var/static/list/cardinal_cache = list("[NORTH]"=TRUE, "[EAST]"=TRUE, "[SOUTH]"=TRUE, "[WEST]"=TRUE)
 			if(!cardinal_cache["[dir]"] || checkT.blocks_air || !CANATMOSPASS(sourceT, checkT))
 				continue
 			found_turfs += checkT // Since checkT is connected, add it to the list to be processed
 
 /proc/create_area(mob/creator)
-	var/static/blacklisted_turfs = typecacheof(/turf/open/space)
-	var/static/blacklisted_areas = typecacheof(/area/space)
-	var/list/turfs = detect_room(get_turf(creator), blacklisted_turfs)
+	// Passed into the above proc as list/break_if_found
+	var/static/area_or_turf_fail_types = typecacheof(list(
+		/turf/open/space,
+		/area/shuttle,
+		))
+	// Ignore these areas and dont let people expand them. They can expand into them though
+	var/static/blacklisted_areas = typecacheof(list(
+		/area/space,
+		))
+	var/list/turfs = detect_room(get_turf(creator), area_or_turf_fail_types)
 	if(!turfs)
-		to_chat(creator, "<span class='warning'>The new area must be completely airtight.</span>")
+		to_chat(creator, "<span class='warning'>The new area must be completely airtight and not a part of a shuttle.</span>")
 		return
 	if(turfs.len > BP_MAX_ROOM_SIZE)
 		to_chat(creator, "<span class='warning'>The room you're in is too big. It is [((turfs.len / BP_MAX_ROOM_SIZE)-1)*100]% larger than allowed.</span>")
@@ -78,15 +86,12 @@
 		newA.contents += thing
 		thing.change_area(old_area, newA)
 
-	var/list/related_areas = oldA.related
-	for(var/i in 1 to related_areas.len)
-		var/area/place = related_areas[i]
-		var/list/firedoors = place.firedoors
-		if(!LAZYLEN(firedoors))
-			continue
-		for(var/k in 1 to firedoors.len)
-			var/obj/machinery/door/firedoor/FD = firedoors[k]
-			FD.CalculateAffectingAreas()
+	newA.reg_in_areas_in_z()
+
+	var/list/firedoors = oldA.firedoors
+	for(var/door in firedoors)
+		var/obj/machinery/door/firedoor/FD = door
+		FD.CalculateAffectingAreas()
 
 	to_chat(creator, "<span class='notice'>You have created a new area, named [newA.name]. It is now weather proof, and constructing an APC will allow it to be powered.</span>")
 	return TRUE

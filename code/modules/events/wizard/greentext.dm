@@ -3,7 +3,7 @@
 	weight = 4
 	typepath = /datum/round_event/wizard/greentext
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/greentext/start()
 
@@ -28,16 +28,20 @@
 	var/mob/living/last_holder
 	var/mob/living/new_holder
 	var/list/color_altered_mobs = list()
+	var/datum/callback/roundend_callback
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/quiet = FALSE
 
-/obj/item/greentext/New()
-	..()
+/obj/item/greentext/Initialize(mapload)
+	. = ..()
 	GLOB.poi_list |= src
+	roundend_callback = CALLBACK(src,.proc/check_winner)
+	SSticker.OnRoundend(roundend_callback)
 
 /obj/item/greentext/equipped(mob/living/user as mob)
 	to_chat(user, "<font color='green'>So long as you leave this place with greentext in hand you know will be happy...</font>")
-	if(user.mind && user.mind.objectives.len > 0)
+	var/list/other_objectives = user.mind.get_all_objectives()
+	if(user.mind && other_objectives.len > 0)
 		to_chat(user, "<span class='warning'>... so long as you still perform your other objectives that is!</span>")
 	new_holder = user
 	if(!last_holder)
@@ -57,20 +61,19 @@
 	STOP_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/greentext/process()
-	if(new_holder && is_centcom_level(new_holder.z))//you're winner!
+/obj/item/greentext/proc/check_winner()
+	if(!new_holder)
+		return
+
+	if(is_centcom_level(new_holder.z))//you're winner!
 		to_chat(new_holder, "<font color='green'>At last it feels like victory is assured!</font>")
-		new_holder.mind.special_role = "winner"
-		var/datum/objective/O = new /datum/objective("Succeed")
-		O.completed = 1 //YES!
-		O.owner = new_holder.mind
-		new_holder.mind.objectives += O
-		new_holder.mind.add_antag_datum(/datum/antagonist/auto_custom)
-		new_holder.log_message("<font color='green'>Won with greentext!!!</font>", INDIVIDUAL_ATTACK_LOG)
+		new_holder.mind.add_antag_datum(/datum/antagonist/greentext)
+		new_holder.log_message("won with greentext!!!", LOG_ATTACK, color="green")
 		color_altered_mobs -= new_holder
 		resistance_flags |= ON_FIRE
 		qdel(src)
 
+/obj/item/greentext/process()
 	if(last_holder && last_holder != new_holder) //Somehow it was swiped without ever getting dropped
 		to_chat(last_holder, "<span class='warning'>A sudden wave of failure washes over you...</span>")
 		last_holder.add_atom_colour("#FF0000", ADMIN_COLOUR_PRIORITY)
@@ -80,7 +83,7 @@
 	if(!(resistance_flags & ON_FIRE) && !force)
 		return QDEL_HINT_LETMELIVE
 
-	. = ..()
+	SSticker.round_end_events -= roundend_callback
 	GLOB.poi_list.Remove(src)
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
@@ -93,6 +96,7 @@
 		// can't skip the mob check as it also does the decolouring
 		if(!quiet)
 			to_chat(M, message)
+	. = ..()
 
 /obj/item/greentext/quiet
 	quiet = TRUE

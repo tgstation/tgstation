@@ -22,7 +22,7 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
-	else if(istype(I, /obj/item/weldingtool))
+	else if(I.tool_behaviour == TOOL_WELDER)
 		if(!I.tool_start_check(user, amount=0))
 			return
 		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
@@ -47,9 +47,8 @@
 	can_buckle = 1
 	max_integrity = 250
 
-
 /obj/structure/kitchenspike/attack_paw(mob/user)
-	return src.attack_hand(usr)
+	return attack_hand(user)
 
 /obj/structure/kitchenspike/crowbar_act(mob/living/user, obj/item/I)
 	if(has_buckled_mobs())
@@ -61,6 +60,7 @@
 		deconstruct(TRUE)
 	return TRUE
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(VIABLE_MOB_CHECK(user.pulling) && user.a_intent == INTENT_GRAB && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
@@ -132,7 +132,7 @@
 	src.visible_message(text("<span class='danger'>[M] falls free of [src]!</span>"))
 	unbuckle_mob(M,force=1)
 	M.emote("scream")
-	M.AdjustKnockdown(20)
+	M.AdjustParalyzed(20)
 
 /obj/structure/kitchenspike/Destroy()
 	if(has_buckled_mobs())

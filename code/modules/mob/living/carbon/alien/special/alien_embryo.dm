@@ -56,7 +56,7 @@
 
 	if(stage == 5 && prob(50))
 		for(var/datum/surgery/S in owner.surgeries)
-			if(S.location == "chest" && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
+			if(S.location == BODY_ZONE_CHEST && istype(S.get_surgery_step(), /datum/surgery_step/manipulate_organs))
 				AttemptGrow(0)
 				return
 		AttemptGrow()
@@ -88,7 +88,7 @@
 	var/mob/living/carbon/alien/larva/new_xeno = new(xeno_loc)
 	new_xeno.key = ghost.key
 	SEND_SOUND(new_xeno, sound('sound/voice/hiss5.ogg',0,0,0,100))	//To get the player's attention
-	new_xeno.canmove = 0 //so we don't move during the bursting animation
+	new_xeno.mobility_flags = NONE //so we don't move during the bursting animation
 	new_xeno.notransform = 1
 	new_xeno.invisibility = INVISIBILITY_MAXIMUM
 
@@ -98,7 +98,7 @@
 		return
 
 	if(new_xeno)
-		new_xeno.canmove = 1
+		new_xeno.mobility_flags = MOBILITY_FLAGS_DEFAULT
 		new_xeno.notransform = 0
 		new_xeno.invisibility = 0
 

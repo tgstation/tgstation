@@ -1,4 +1,4 @@
-// Ensure the frequency is within bounds of what it should be sending/recieving at
+// Ensure the frequency is within bounds of what it should be sending/receiving at
 /proc/sanitize_frequency(frequency, free = FALSE)
 	. = round(frequency)
 	if(free)

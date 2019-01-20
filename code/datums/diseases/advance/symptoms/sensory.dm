@@ -54,12 +54,11 @@
 		M.adjustBrainLoss(-3)
 		if(trauma_heal_mild && iscarbon(M))
 			var/mob/living/carbon/C = M
-			if(prob(30) && C.has_trauma_type(BRAIN_TRAUMA_SPECIAL))
-				C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
-			if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
-				C.cure_trauma_type(BRAIN_TRAUMA_MILD)
-			if(trauma_heal_severe && prob(10) && C.has_trauma_type(BRAIN_TRAUMA_SEVERE))
-				C.cure_trauma_type(BRAIN_TRAUMA_SEVERE)
+			if(prob(10))
+				if(trauma_heal_severe)
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
+				else
+					C.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 
 
 

@@ -29,7 +29,7 @@
 	descname = "Trap, Stunning"
 	name = "Sigil of Transgression"
 	desc = "Wards a tile with a sigil, which will briefly stun the next non-Servant to cross it and apply Belligerent to them."
-	invocations = list("Divinity, smite...", "...those who tresspass here!")
+	invocations = list("Divinity, smite...", "...those who trespass here!")
 	channel_time = 50
 	power_cost = 50
 	whispered = TRUE
@@ -184,6 +184,7 @@
 	important = TRUE
 	quickbind = TRUE
 	quickbind_desc = "Returns you to Reebe."
+	var/client_color
 
 /datum/clockwork_scripture/abscond/check_special_requirements()
 	if(is_reebe(invoker.z))
@@ -192,16 +193,13 @@
 	return TRUE
 
 /datum/clockwork_scripture/abscond/recital()
+	client_color = invoker.client.color
 	animate(invoker.client, color = "#AF0AAF", time = 50)
 	. = ..()
 
 /datum/clockwork_scripture/abscond/scripture_effects()
 	var/take_pulling = invoker.pulling && isliving(invoker.pulling) && get_clockwork_power(ABSCOND_ABDUCTION_COST)
-	var/turf/T
-	if(GLOB.ark_of_the_clockwork_justiciar)
-		T = get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH)
-	else
-		T = get_turf(pick(GLOB.servant_spawns))
+	var/turf/T = GLOB.ark_of_the_clockwork_justiciar ? get_step(GLOB.ark_of_the_clockwork_justiciar, SOUTH) : get_turf(pick(GLOB.servant_spawns))
 	invoker.visible_message("<span class='warning'>[invoker] flickers and phases out of existence!</span>", \
 	"<span class='bold sevtug_small'>You feel a dizzying sense of vertigo as you're yanked back to Reebe!</span>")
 	T.visible_message("<span class='warning'>[invoker] flickers and phases into existence!</span>")
@@ -214,11 +212,11 @@
 		invoker.pulling.forceMove(T)
 	invoker.forceMove(T)
 	if(invoker.client)
-		animate(invoker.client, color = initial(invoker.client.color), time = 25)
+		animate(invoker.client, color = client_color, time = 25)
 
 /datum/clockwork_scripture/abscond/scripture_fail()
 	if(invoker && invoker.client)
-		animate(invoker.client, color = initial(invoker.client.color), time = 10)
+		animate(invoker.client, color = client_color, time = 10)
 
 
 //Replicant: Creates a new clockwork slab.

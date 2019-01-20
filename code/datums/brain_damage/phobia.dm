@@ -2,8 +2,8 @@
 	name = "Phobia"
 	desc = "Patient is unreasonably afraid of something."
 	scan_desc = "phobia"
-	gain_text = ""
-	lose_text = ""
+	gain_text = "<span class='warning'>You start finding default values very unnerving...</span>"
+	lose_text = "<span class='notice'>You no longer feel afraid of default values.</span>"
 	var/phobia_type
 	var/next_check = 0
 	var/next_scare = 0
@@ -14,8 +14,10 @@
 	var/list/trigger_turfs
 	var/list/trigger_species
 
-/datum/brain_trauma/mild/phobia/New(mob/living/carbon/C, _permanent, specific_type)
-	phobia_type = specific_type
+/datum/brain_trauma/mild/phobia/New(new_phobia_type)
+	if(new_phobia_type)
+		phobia_type = new_phobia_type
+
 	if(!phobia_type)
 		phobia_type = pick(SStraumas.phobia_types)
 
@@ -31,7 +33,9 @@
 
 /datum/brain_trauma/mild/phobia/on_life()
 	..()
-	if(owner.eye_blind)
+	if(owner.has_trait(TRAIT_FEARLESS))
+		return
+	if(is_blind(owner))
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 50
@@ -68,23 +72,34 @@
 							return
 
 /datum/brain_trauma/mild/phobia/on_hear(message, speaker, message_language, raw_message, radio_freq)
-	if(owner.has_trait(TRAIT_DEAF) || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+	if(!owner.can_hear() || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+		return message
+	if(owner.has_trait(TRAIT_FEARLESS))
 		return message
 	for(var/word in trigger_words)
-		if(findtext(message, word))
+		var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
+
+		if(findtext(raw_message, reg))
 			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
+			message = reg.Replace(message, "<span class='phobia'>$1</span>")
 			break
 	return message
 
 /datum/brain_trauma/mild/phobia/on_say(message)
+	if(owner.has_trait(TRAIT_FEARLESS))
+		return message
 	for(var/word in trigger_words)
-		if(findtext(message, word))
-			to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"[word]\"!</span>")
+		var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
+
+		if(findtext(message, reg))
+			to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"<span class='phobia'>[word]</span>\"!</span>")
 			return ""
 	return message
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120
+	if(owner.stat == DEAD)
+		return
 	var/message = pick("spooks you to the bone", "shakes you up", "terrifies you", "sends you into a panic", "sends chills down your spine")
 	if(reason)
 		to_chat(owner, "<span class='userdanger'>Seeing [reason] [message]!</span>")
@@ -101,7 +116,7 @@
 		if(2)
 			owner.emote("scream")
 			owner.Jitter(5)
-			owner.say("AAAAH!!")
+			owner.say("AAAAH!!", forced = "phobia")
 			if(reason)
 				owner.pointed(reason)
 		if(3)
@@ -113,3 +128,77 @@
 			owner.confused += 10
 			owner.Jitter(10)
 			owner.stuttering += 10
+
+// Defined phobia types for badminry, not included in the RNG trauma pool to avoid diluting.
+
+/datum/brain_trauma/mild/phobia/spiders
+	phobia_type = "spiders"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/space
+	phobia_type = "space"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/security
+	phobia_type = "security"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/clowns
+	phobia_type = "clowns"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/greytide
+	phobia_type = "greytide"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/lizards
+	phobia_type = "lizards"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/skeletons
+	phobia_type = "skeletons"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/snakes
+	phobia_type = "snakes"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/robots
+	phobia_type = "robots"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/doctors
+	phobia_type = "doctors"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/authority
+	phobia_type = "authority"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/supernatural
+	phobia_type = "the supernatural"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/aliens
+	phobia_type = "aliens"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/strangers
+	phobia_type = "strangers"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/birds
+	phobia_type = "birds"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/falling
+	phobia_type = "falling"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/anime
+	phobia_type = "anime"
+	random_gain = FALSE
+
+/datum/brain_trauma/mild/phobia/conspiracies
+	phobia_type = "conspiracies"
+	random_gain = FALSE

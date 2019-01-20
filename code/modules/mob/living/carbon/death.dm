@@ -9,6 +9,11 @@
 		emote("deathgasp")
 
 	. = ..()
+	
+	for(var/T in get_traumas())
+		var/datum/brain_trauma/BT = T
+		BT.on_death()
+	
 	if(SSticker.mode)
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
@@ -35,7 +40,7 @@
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
 				var/org_zone = check_zone(O.zone) //both groin and chest organs.
-				if(org_zone == "chest")
+				if(org_zone == BODY_ZONE_CHEST)
 					O.Remove(src)
 					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)

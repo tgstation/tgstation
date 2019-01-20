@@ -6,14 +6,16 @@ Assistant
 	flag = ASSISTANT
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = -1
-	spawn_positions = -1
+	total_positions = 5
+	spawn_positions = 5
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"
 	access = list()			//See /datum/job/assistant/get_access()
 	minimal_access = list()	//See /datum/job/assistant/get_access()
 	outfit = /datum/outfit/job/assistant
-
+	antag_rep = 7
+	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
+	paycheck_department = ACCOUNT_CIV
 
 /datum/job/assistant/get_access()
 	if(CONFIG_GET(flag/assistants_have_maint_access) || !CONFIG_GET(flag/jobs_have_minimal_access)) //Config has assistant maint access set
@@ -21,15 +23,6 @@ Assistant
 		. |= list(ACCESS_MAINT_TUNNELS)
 	else
 		return ..()
-
-/datum/job/assistant/config_check()
-	var/ac = CONFIG_GET(number/assistant_cap)
-	if(ac != 0)
-		total_positions = ac
-		spawn_positions = ac
-		return 1
-	return 0
-
 
 /datum/outfit/job/assistant
 	name = "Assistant"

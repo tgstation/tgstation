@@ -25,6 +25,7 @@
 	var/can_readapt = changeling.canrespec
 	var/genetic_points_remaining = changeling.geneticpoints
 	var/absorbed_dna_count = changeling.absorbedcount
+	var/true_absorbs = changeling.trueabsorbs
 
 	data["can_readapt"] = can_readapt
 	data["genetic_points_remaining"] = genetic_points_remaining
@@ -33,7 +34,7 @@
 	var/list/abilities = list()
 
 	for(var/path in changeling.all_powers)
-		var/obj/effect/proc_holder/changeling/ability = path
+		var/datum/action/changeling/ability = path
 
 		var/dna_cost = initial(ability.dna_cost)
 		if(dna_cost <= 0)
@@ -45,8 +46,9 @@
 		AL["helptext"] = initial(ability.helptext)
 		AL["owned"] = changeling.has_sting(ability)
 		var/req_dna = initial(ability.req_dna)
+		var/req_absorbs = initial(ability.req_absorbs)
 		AL["dna_cost"] = dna_cost
-		AL["can_purchase"] = ((req_dna <= absorbed_dna_count) && (dna_cost <= genetic_points_remaining))
+		AL["can_purchase"] = ((req_absorbs <= true_absorbs) && (req_dna <= absorbed_dna_count) && (dna_cost <= genetic_points_remaining))
 
 		abilities += list(AL)
 
@@ -70,7 +72,7 @@
 	name = "Cellular Emporium"
 	icon_icon = 'icons/obj/drinks.dmi'
 	button_icon_state = "changelingsting"
-	background_icon_state = "bg_alien"
+	background_icon_state = "bg_changeling"
 	var/datum/cellular_emporium/cellular_emporium
 
 /datum/action/innate/cellular_emporium/New(our_target)

@@ -6,6 +6,7 @@
 	icon_living = "skeleton"
 	icon_dead = "skeleton"
 	gender = NEUTER
+	mob_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
 	turns_per_move = 5
 	speak_emote = list("rattles")
 	emote_see = list("rattles")
@@ -32,6 +33,8 @@
 	deathmessage = "collapses into a pile of bones!"
 	del_on_death = 1
 	loot = list(/obj/effect/decal/remains/human)
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/skeleton/eskimo
 	name = "undead eskimo"
@@ -71,8 +74,8 @@
 	melee_damage_upper = 30
 	deathmessage = "collapses into a pile of bones, its gear clanging as it hits the ground!"
 	loot = list(/obj/effect/decal/remains/human,
-				/obj/item/clothing/suit/armor/riot/knight/templar,
-				/obj/item/clothing/head/helmet/knight/templar,
+				/obj/item/clothing/suit/armor/riot/chaplain,
+				/obj/item/clothing/head/helmet/chaplain,
 				/obj/item/claymore/weak{name = "holy sword"})
 
 /mob/living/simple_animal/hostile/skeleton/ice
@@ -99,7 +102,7 @@
 	light_color = LIGHT_COLOR_PURPLE
 	attacktext = "slashes"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
-	deathmessage = "collapses into a pile of bones, their suit dissovling among the plasma!"
+	deathmessage = "collapses into a pile of bones, their suit dissolving among the plasma!"
 	loot = list(/obj/effect/decal/remains/plasma)
 
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer

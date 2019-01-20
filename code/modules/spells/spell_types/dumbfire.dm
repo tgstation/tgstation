@@ -24,6 +24,9 @@
 	var/proj_step_delay = 1 //lower = faster
 	var/list/ignore_factions = list() //Faction types that will be ignored
 
+	var/check_antimagic = TRUE
+	var/check_holy = FALSE
+
 /obj/effect/proc_holder/spell/dumbfire/choose_targets(mob/user = usr)
 
 	var/turf/T = get_turf(user)
@@ -74,7 +77,7 @@
 			break
 
 		var/mob/living/L = locate(/mob/living) in range(projectile, proj_trigger_range) - user
-		if(L && L.stat != DEAD)
+		if(L && L.stat != DEAD && L.anti_magic_check(check_antimagic, check_holy))
 			if(!ignore_factions.len)
 				projectile.cast(L.loc,user=user)
 				break

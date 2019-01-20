@@ -6,7 +6,6 @@
 	icon_state = "processor1"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 50
@@ -22,26 +21,10 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
-/obj/machinery/processor/process()
+/obj/machinery/processor/examine(mob/user)
 	..()
-	if(processing)
-		return
-	var/mob/living/simple_animal/slime/picked_slime
-	for(var/mob/living/simple_animal/slime/slime in range(1,src))
-		if(slime.loc == src)
-			continue
-		if(istype(slime, /mob/living/simple_animal/slime))
-			if(slime.stat)
-				picked_slime = slime
-				break
-	if(!picked_slime)
-		return
-	var/datum/food_processor_process/P = select_recipe(picked_slime)
-	if (!P)
-		return
-
-	src.visible_message("[picked_slime] is sucked into [src].")
-	picked_slime.forceMove(src)
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Outputting <b>[rating_amount]</b> item(s) at <b>[rating_speed*100]%</b> speed.<span>")
 
 /obj/machinery/processor/proc/process_food(datum/food_processor_process/recipe, atom/movable/what)
 	if (recipe.output && loc && !QDELETED(src))
@@ -53,22 +36,6 @@
 	else
 		qdel(what)
 
-
-/obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
-	var/mob/living/simple_animal/slime/S = what
-	if (istype(S))
-		var/C = S.cores
-		if(S.stat != DEAD)
-			S.forceMove(drop_location())
-			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
-			return
-		for(var/i in 1 to (C+rating_amount-1))
-			var/atom/movable/item = new S.coretype(drop_location())
-			adjust_item_drop_location(item)
-			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
-	..()
-
-
 /obj/machinery/processor/proc/select_recipe(X)
 	for (var/type in subtypesof(/datum/food_processor_process) - /datum/food_processor_process/mob)
 		var/datum/food_processor_process/recipe = new type()
@@ -77,13 +44,10 @@
 		return recipe
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user, params)
-	if(src.processing)
+	if(processing)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
-		return 1
+		return TRUE
 	if(default_deconstruction_screwdriver(user, "processor", "processor1", O))
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_pry_open(O))
@@ -101,8 +65,8 @@
 		for(var/obj/item/reagent_containers/food/snacks/S in T.contents)
 			var/datum/food_processor_process/P = select_recipe(S)
 			if(P)
-				T.remove_from_storage(S, src)
-				loaded++
+				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+					loaded++
 
 		if(loaded)
 			to_chat(user, "<span class='notice'>You insert [loaded] items into [src].</span>")
@@ -121,13 +85,11 @@
 		else
 			return ..()
 
-/obj/machinery/processor/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(src.processing)
+/obj/machinery/processor/interact(mob/user)
+	if(processing)
 		to_chat(user, "<span class='warning'>[src] is in the process of processing!</span>")
-		return 1
-	if(user.a_intent == INTENT_GRAB && user.pulling && select_recipe(user.pulling))
+		return TRUE
+	if(user.a_intent == INTENT_GRAB && ismob(user.pulling) && select_recipe(user.pulling))
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
@@ -136,9 +98,9 @@
 		pushed_mob.forceMove(src)
 		user.stop_pulling()
 		return
-	if(src.contents.len == 0)
+	if(contents.len == 0)
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
-		return 1
+		return TRUE
 	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
@@ -149,7 +111,7 @@
 	for(var/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor hasnt got a suitable recipe. How did it get in there? Please report it immediatly!!!")
+			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How did it get in there? Please report it immediately!!!")
 			continue
 		total_time += P.time
 	var/offset = prob(50) ? -2 : 2
@@ -158,30 +120,31 @@
 	for(var/atom/movable/O in src.contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
-			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?")
+			log_admin("DEBUG: [O] in processor doesn't have a suitable recipe. How do you put it in?")
 			continue
 		process_food(P, O)
 	pixel_x = initial(pixel_x) //return to its spot after shaking
 	processing = FALSE
-	src.visible_message("\The [src] finishes processing.")
+	visible_message("\The [src] finishes processing.")
 
 /obj/machinery/processor/verb/eject()
 	set category = "Object"
 	set name = "Eject Contents"
 	set src in oview(1)
-
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.stat || usr.restrained())
 		return
-	src.empty()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(!(L.mobility_flags & MOBILITY_UI))
+			return
+	empty()
 	add_fingerprint(usr)
-	return
 
 /obj/machinery/processor/proc/empty()
 	for (var/obj/O in src)
 		O.forceMove(drop_location())
 	for (var/mob/M in src)
 		M.forceMove(drop_location())
-	return
 
 /obj/machinery/processor/slime
 	name = "slime processor"
@@ -205,3 +168,37 @@
 	AM.pixel_x = -8 + ((ii%3)*8)
 	AM.pixel_y = -8 + (round(ii/3)*8)
 	return i
+
+/obj/machinery/processor/slime/process()
+	if(processing)
+		return
+	var/mob/living/simple_animal/slime/picked_slime
+	for(var/mob/living/simple_animal/slime/slime in range(1,src))
+		if(slime.loc == src)
+			continue
+		if(istype(slime, /mob/living/simple_animal/slime))
+			if(slime.stat)
+				picked_slime = slime
+				break
+	if(!picked_slime)
+		return
+	var/datum/food_processor_process/P = select_recipe(picked_slime)
+	if (!P)
+		return
+
+	visible_message("[picked_slime] is sucked into [src].")
+	picked_slime.forceMove(src)
+
+/obj/machinery/processor/slime/process_food(datum/food_processor_process/recipe, atom/movable/what)
+	var/mob/living/simple_animal/slime/S = what
+	if (istype(S))
+		var/C = S.cores
+		if(S.stat != DEAD)
+			S.forceMove(drop_location())
+			S.visible_message("<span class='notice'>[C] crawls free of the processor!</span>")
+			return
+		for(var/i in 1 to (C+rating_amount-1))
+			var/atom/movable/item = new S.coretype(drop_location())
+			adjust_item_drop_location(item)
+			SSblackbox.record_feedback("tally", "slime_core_harvested", 1, S.colour)
+	..()

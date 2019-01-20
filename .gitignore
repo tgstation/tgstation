@@ -2,6 +2,7 @@
 
 #Ignore everything in datafolder and subdirectories
 /data/**/*
+/tmp/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
@@ -13,7 +14,6 @@
 *.lk
 *.int
 *.backup
-*.int
 ### https://raw.github.com/github/gitignore/cc542de017c606138a87ee4880e5f06b3a306def/Global/Linux.gitignore
 
 *~
@@ -127,6 +127,9 @@ celerybeat-schedule
 venv/
 ENV/
 
+# IntelliJ IDEA / PyCharm (with plugin)
+.idea
+
 # Spyder project settings
 .spyderproject
 
@@ -192,7 +195,13 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
-tools/MapAtmosFixer/MapAtmosFixer/obj/x86/Debug/MapAtmosFixer.csproj.CoreCompileInputs.cache
+!/.vscode/extensions.json
+tools/MapAtmosFixer/MapAtmosFixer/obj/*
+tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
 #GitHub Atom
 .atom-build.json
+
+#extra map stuff
+/_maps/**/backup/
+/_maps/templates.dm

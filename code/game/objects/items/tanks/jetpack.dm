@@ -14,14 +14,15 @@
 	var/full_speed = TRUE // If the jetpack will have a speedboost in space/nograv or not
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
-/obj/item/tank/jetpack/New()
-	..()
-	if(gas_type)
-		air_contents.assert_gas(gas_type)
-		air_contents.gases[gas_type][MOLES] = (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C)
-
+/obj/item/tank/jetpack/Initialize()
+	. = ..()
 	ion_trail = new
 	ion_trail.set_up(src)
+
+/obj/item/tank/jetpack/populate_gas()
+	if(gas_type)
+		air_contents.assert_gas(gas_type)
+		air_contents.gases[gas_type][MOLES] = ((6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/tank/jetpack/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_jetpack))
@@ -39,43 +40,51 @@
 		return
 
 	if(!on)
-		turn_on()
+		turn_on(user)
 		to_chat(user, "<span class='notice'>You turn the jetpack on.</span>")
 	else
-		turn_off()
+		turn_off(user)
 		to_chat(user, "<span class='notice'>You turn the jetpack off.</span>")
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
 
-/obj/item/tank/jetpack/proc/turn_on()
+/obj/item/tank/jetpack/proc/turn_on(mob/user)
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	if(full_speed)
+		user.add_movespeed_modifier(MOVESPEED_ID_JETPACK, priority=100, multiplicative_slowdown=-2, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
 
-/obj/item/tank/jetpack/proc/turn_off()
+/obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
 	stabilizers = FALSE
 	icon_state = initial(icon_state)
 	ion_trail.stop()
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	user.remove_movespeed_modifier(MOVESPEED_ID_JETPACK)
+
+/obj/item/tank/jetpack/proc/move_react(mob/user)
+	allow_thrust(0.01, user)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
 	if(!on)
 		return
 	if((num < 0.005 || air_contents.total_moles() < num))
-		turn_off()
+		turn_off(user)
 		return
 
 	var/datum/gas_mixture/removed = air_contents.remove(num)
 	if(removed.total_moles() < 0.005)
-		turn_off()
+		turn_off(user)
 		return
 
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
 
-	return 1
+	return TRUE
 
 /obj/item/tank/jetpack/suicide_act(mob/user)
 	if (istype(user, /mob/living/carbon/human/))
@@ -85,6 +94,36 @@
 		return (OXYLOSS)
 	else
 		..()
+
+/obj/item/tank/jetpack/improvised
+	name = "improvised jetpack"
+	desc = "A jetpack made from two air tanks, a fire extinguisher and some atmospherics equipment. It doesn't look like it can hold much."
+	icon_state = "jetpack-improvised"
+	item_state = "jetpack-sec"
+	volume = 20 //normal jetpacks have 70 volume
+	gas_type = null //it starts empty
+	full_speed = FALSE //moves at hardsuit jetpack speeds
+
+/obj/item/tank/jetpack/improvised/allow_thrust(num, mob/living/user)
+	if(!on)
+		return
+	if((num < 0.005 || air_contents.total_moles() < num))
+		turn_off(user)
+		return
+	if(rand(0,250) == 0)
+		to_chat(user, "<span class='notice'>You feel your jetpack's engines cut out.</span>")
+		turn_off(user)
+		return
+
+	var/datum/gas_mixture/removed = air_contents.remove(num)
+	if(removed.total_moles() < 0.005)
+		turn_off(user)
+		return
+
+	var/turf/T = get_turf(user)
+	T.assume_air(removed)
+
+	return TRUE
 
 /obj/item/tank/jetpack/void
 	name = "void jetpack (oxygen)"
@@ -122,6 +161,8 @@
 	icon_state = "jetpack-sec"
 	item_state = "jetpack-sec"
 
+
+
 /obj/item/tank/jetpack/carbondioxide
 	name = "jetpack (carbon dioxide)"
 	desc = "A tank of compressed carbon dioxide for use as propulsion in zero-gravity areas. Painted black to indicate that it should not be used as a source for internals."
@@ -144,9 +185,10 @@
 	full_speed = FALSE
 	var/datum/gas_mixture/temp_air_contents
 	var/obj/item/tank/internals/tank = null
+	var/mob/living/carbon/human/cur_user
 
-/obj/item/tank/jetpack/suit/New()
-	..()
+/obj/item/tank/jetpack/suit/Initialize()
+	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	temp_air_contents = air_contents
 
@@ -164,28 +206,30 @@
 		return
 	..()
 
-/obj/item/tank/jetpack/suit/turn_on()
-	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
+/obj/item/tank/jetpack/suit/turn_on(mob/user)
+	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc) || loc.loc != user)
 		return
-	var/mob/living/carbon/human/H = loc.loc
+	var/mob/living/carbon/human/H = user
 	tank = H.s_store
 	air_contents = tank.air_contents
 	START_PROCESSING(SSobj, src)
+	cur_user = user
 	..()
 
-/obj/item/tank/jetpack/suit/turn_off()
+/obj/item/tank/jetpack/suit/turn_off(mob/user)
 	tank = null
 	air_contents = temp_air_contents
 	STOP_PROCESSING(SSobj, src)
+	cur_user = null
 	..()
 
 /obj/item/tank/jetpack/suit/process()
 	if(!istype(loc, /obj/item/clothing/suit/space/hardsuit) || !ishuman(loc.loc))
-		turn_off()
+		turn_off(cur_user)
 		return
 	var/mob/living/carbon/human/H = loc.loc
 	if(!tank || tank != H.s_store)
-		turn_off()
+		turn_off(cur_user)
 		return
 	..()
 

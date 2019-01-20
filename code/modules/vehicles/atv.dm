@@ -9,7 +9,7 @@
 /obj/vehicle/ridden/atv/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 1
+	D.vehicle_move_delay = 1.5
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
@@ -32,7 +32,6 @@
 /obj/machinery/porta_turret/syndicate/vehicle_turret
 	name = "mounted turret"
 	scan_range = 7
-	emp_vunerable = 1
 	density = FALSE
 
 /obj/vehicle/ridden/atv/turret/Initialize()

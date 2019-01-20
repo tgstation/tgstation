@@ -20,20 +20,62 @@
 	var/override = 0
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		override += HM.on_attack_hand(src, A, proximity)
+		override += HM.on_attack_hand(A, proximity)
 
 	if(override)
 		return
 
-	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
+	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A)
 	A.attack_hand(src)
-	SendSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY, src)
 
+//Return TRUE to cancel other attack hand effects that respect it.
 /atom/proc/attack_hand(mob/user)
-	return
+	. = FALSE
+	if(!(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_ATTACK_HAND))
+		add_fingerprint(user)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
+		. = TRUE
+	if(interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND)
+		. = _try_interact(user)
+
+//Return a non FALSE value to cancel whatever called this from propagating, if it respects it.
+/atom/proc/_try_interact(mob/user)
+	if(IsAdminGhost(user))		//admin abuse
+		return interact(user)
+	if(can_interact(user))
+		return interact(user)
+	return FALSE
+
+/atom/proc/can_interact(mob/user)
+	if(!user.can_interact_with(src))
+		return FALSE
+	if((interaction_flags_atom & INTERACT_ATOM_REQUIRES_DEXTERITY) && !user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return FALSE
+	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED) && user.incapacitated((interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED), !(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB)))
+		return FALSE
+	return TRUE
+
+/atom/ui_status(mob/user)
+	. = ..()
+	if(!can_interact(user))
+		. = min(., UI_UPDATE)
+
+/atom/movable/can_interact(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(!anchored && (interaction_flags_atom & INTERACT_ATOM_REQUIRES_ANCHORED))
+		return FALSE
 
 /atom/proc/interact(mob/user)
-	return
+	if(interaction_flags_atom & INTERACT_ATOM_NO_FINGERPRINT_INTERACT)
+		add_hiddenprint(user)
+	else
+		add_fingerprint(user)
+	if(interaction_flags_atom & INTERACT_ATOM_UI_INTERACT)
+		return ui_interact(user)
+	return FALSE
 
 /*
 /mob/living/carbon/human/RestrainedClickOn(var/atom/A) ---carbons will handle this
@@ -44,16 +86,18 @@
 	return 0
 
 /mob/living/carbon/human/RangedAttack(atom/A, mouseparams)
+	. = ..()
 	if(gloves)
 		var/obj/item/clothing/gloves/G = gloves
 		if(istype(G) && G.Touch(A,0)) // for magic gloves
 			return
 
 	for(var/datum/mutation/human/HM in dna.mutations)
-		HM.on_ranged_attack(src, A, mouseparams)
+		HM.on_ranged_attack(A, mouseparams)
 
 	if(isturf(A) && get_dist(src,A) <= 1)
 		src.Move_Pulled(A)
+		return
 
 /*
 	Animals & All Unspecified
@@ -72,8 +116,11 @@
 */
 /mob/living/carbon/monkey/UnarmedAttack(atom/A)
 	A.attack_paw(src)
+
 /atom/proc/attack_paw(mob/user)
-	return
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_PAW, user) & COMPONENT_NO_ATTACK_HAND)
+		return TRUE
+	return FALSE
 
 /*
 	Monkey RestrainedClickOn() was apparently the
@@ -91,7 +138,7 @@
 		return
 	var/mob/living/carbon/ML = A
 	if(istype(ML))
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
+		var/dam_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/affecting = null
 		if(ishuman(ML))
 			var/mob/living/carbon/human/H = ML
@@ -103,7 +150,7 @@
 							"<span class='userdanger'>[name] bites [ML]!</span>")
 			if(armor >= 2)
 				return
-			for(var/thing in viruses)
+			for(var/thing in diseases)
 				var/datum/disease/D = thing
 				ML.ForceContractDisease(D)
 		else
@@ -115,9 +162,11 @@
 */
 /mob/living/carbon/alien/UnarmedAttack(atom/A)
 	A.attack_alien(src)
+
 /atom/proc/attack_alien(mob/living/carbon/alien/user)
 	attack_paw(user)
 	return
+
 /mob/living/carbon/alien/RestrainedClickOn(atom/A)
 	return
 
@@ -194,7 +243,7 @@
 
 /mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
 	target = A
-	if(dextrous && !is_type_in_typecache(A, environment_target_typecache) && !ismob(A))
+	if(dextrous && !ismob(A))
 		..()
 	else
 		AttackingTarget()

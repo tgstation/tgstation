@@ -27,6 +27,8 @@
 	bitesize_mod = 2
 	foodtype = VEGETABLES
 	grind_results = list("soymilk" = 0)
+	tastes = list("soy" = 1)
+	wine_power = 20
 
 // Koibean
 /obj/item/seeds/soya/koi
@@ -49,3 +51,5 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	tastes = list("koi" = 1)
+	wine_power = 40

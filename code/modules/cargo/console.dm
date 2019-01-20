@@ -5,9 +5,9 @@
 	circuit = /obj/item/circuitboard/computer/cargo
 	var/requestonly = FALSE
 	var/contraband = FALSE
-	var/safety_warning = "For safety reasons the automated supply shuttle \
-		cannot transport live organisms, classified nuclear weaponry or \
-		homing beacons."
+	var/safety_warning = "For safety reasons, the automated supply shuttle \
+		cannot transport live organisms, human remains, classified nuclear weaponry \
+		or homing beacons."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 
 	light_color = "#E2853D"//orange
@@ -27,6 +27,13 @@
 		obj_flags |= EMAGGED
 	else
 		obj_flags &= ~EMAGGED
+
+/obj/machinery/computer/cargo/proc/get_export_categories()
+	var/cat = EXPORT_CARGO
+	if(contraband)
+		cat |= EXPORT_CONTRABAND
+	if(obj_flags & EMAGGED)
+		cat |= EXPORT_EMAG
 
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -53,7 +60,9 @@
 	var/list/data = list()
 	data["requestonly"] = requestonly
 	data["location"] = SSshuttle.supply.getStatusText()
-	data["points"] = SSshuttle.points
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(D)
+		data["points"] = D.account_balance
 	data["away"] = SSshuttle.supply.getDockedId() == "supply_away"
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
@@ -77,7 +86,8 @@
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
 			"cost" = P.cost,
-			"id" = pack
+			"id" = pack,
+			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
 	data["cart"] = list()
@@ -85,7 +95,9 @@
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
 			"cost" = SO.pack.cost,
-			"id" = SO.id
+			"id" = SO.id,
+			"orderer" = SO.orderer,
+			"paid" = !isnull(SO.paying_account) //paid by requester
 		))
 
 	data["requests"] = list()
@@ -114,13 +126,9 @@
 				say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
-				if (obj_flags & EMAGGED)
-					SSshuttle.supply.obj_flags |= EMAGGED
-				else
-					SSshuttle.supply.obj_flags = (SSshuttle.supply.obj_flags & ~EMAGGED)
-				SSshuttle.supply.contraband = contraband
+				SSshuttle.supply.export_categories = get_export_categories()
 				SSshuttle.moveShuttle("supply", "supply_away", TRUE)
-				say("The supply shuttle has departed.")
+				say("The supply shuttle is departing.")
 				investigate_log("[key_name(usr)] sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				investigate_log("[key_name(usr)] called the supply shuttle.", INVESTIGATE_CARGO)
@@ -143,6 +151,7 @@
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])
+			var/self_paid = text2num(params["self_paid"])
 			var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 			if(!istype(pack))
 				return
@@ -155,24 +164,38 @@
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				name = H.get_authentification_name()
-				rank = H.get_assignment()
+				rank = H.get_assignment(hand_first = TRUE)
 			else if(issilicon(usr))
 				name = usr.real_name
 				rank = "Silicon"
 
+			var/datum/bank_account/account
+			if(self_paid && ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
+				if(!istype(id_card))
+					say("No ID card detected.")
+					return
+				account = id_card.registered_account
+				if(!istype(account))
+					say("Invalid bank account.")
+					return
+
 			var/reason = ""
-			if(requestonly)
+			if(requestonly && !self_paid)
 				reason = stripped_input("Reason:", name, "")
 				if(isnull(reason) || ..())
 					return
 
 			var/turf/T = get_turf(src)
-			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason)
+			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
 			SO.generateRequisition(T)
-			if(requestonly)
+			if(requestonly && !self_paid)
 				SSshuttle.requestlist += SO
 			else
 				SSshuttle.shoppinglist += SO
+				if(self_paid)
+					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])

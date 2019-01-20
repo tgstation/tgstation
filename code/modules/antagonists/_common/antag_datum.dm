@@ -10,10 +10,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/list/typecache_datum_blacklist = list()	//List of datums this type can't coexist with
 	var/delete_on_mind_deletion = TRUE
 	var/job_rank
-	var/replace_banned = TRUE //Should replace jobbaned player with ghosts if granted.
+	var/replace_banned = TRUE //Should replace jobbanned player with ghosts if granted.
 	var/list/objectives = list()
 	var/antag_memory = ""//These will be removed with antag datum
-	
+	var/antag_moodlet //typepath of moodlet that the mob will gain with their status
+	var/can_hijack = HIJACK_NEUTRAL //If these antags are alone on shuttle hijack happens.
+
 	//Antag panel properties
 	var/show_in_antagpanel = TRUE	//This will hide adding this antag type in antag panel, use only for internal subtypes that shouldn't be added directly but still show if possessed by mind
 	var/antagpanel_category = "Uncategorized"	//Antagpanel will display these together, REQUIRED
@@ -67,27 +69,29 @@ GLOBAL_LIST_EMPTY(antagonists)
 		if(!silent)
 			greet()
 		apply_innate_effects()
+		give_antag_moodies()
 		if(is_banned(owner.current) && replace_banned)
 			replace_banned_player()
 
 /datum/antagonist/proc/is_banned(mob/M)
 	if(!M)
 		return FALSE
-	. = (jobban_isbanned(M, ROLE_SYNDICATE) || (job_rank && jobban_isbanned(M,job_rank)))
+	. = (is_banned_from(M.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(M))
 
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [name]?", "[name]", null, job_rank, 50, owner.current)
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner.current)]) to replace a jobbaned player.")
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(owner)]) to replace a jobbanned player.")
 		owner.current.ghostize(0)
 		owner.current.key = C.key
 
 /datum/antagonist/proc/on_removal()
 	remove_innate_effects()
+	clear_antag_moodies()
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(!silent && owner.current)
@@ -103,6 +107,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/farewell()
 	return
 
+/datum/antagonist/proc/give_antag_moodies()
+	if(!antag_moodlet)
+		return
+	SEND_SIGNAL(owner.current, COMSIG_ADD_MOOD_EVENT, "antag_moodlet", antag_moodlet)
+
+/datum/antagonist/proc/clear_antag_moodies()
+	if(!antag_moodlet)
+		return
+	SEND_SIGNAL(owner.current, COMSIG_CLEAR_MOOD_EVENT, "antag_moodlet")
+
 //Returns the team antagonist belongs to if any.
 /datum/antagonist/proc/get_team()
 	return
@@ -117,14 +131,14 @@ GLOBAL_LIST_EMPTY(antagonists)
 	report += printplayer(owner)
 
 	var/objectives_complete = TRUE
-	if(owner.objectives.len)
-		report += printobjectives(owner)
-		for(var/datum/objective/objective in owner.objectives)
+	if(objectives.len)
+		report += printobjectives(objectives)
+		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
 
-	if(owner.objectives.len == 0 || objectives_complete)
+	if(objectives.len == 0 || objectives_complete)
 		report += "<span class='greentext big'>The [name] was successful!</span>"
 	else
 		report += "<span class='redtext big'>The [name] has failed!</span>"
@@ -144,16 +158,16 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //Called when using admin tools to give antag status
 /datum/antagonist/proc/admin_add(datum/mind/new_owner,mob/admin)
-	message_admins("[key_name_admin(admin)] made [new_owner.current] into [name].")
-	log_admin("[key_name(admin)] made [new_owner.current] into [name].")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	new_owner.add_antag_datum(src)
 
 //Called when removing antagonist using admin tools
 /datum/antagonist/proc/admin_remove(mob/user)
 	if(!user)
 		return
-	message_admins("[key_name_admin(user)] has removed [name] antagonist status from [owner.current].")
-	log_admin("[key_name(user)] has removed [name] antagonist status from [owner.current].")
+	message_admins("[key_name_admin(user)] has removed [name] antagonist status from [key_name_admin(owner)].")
+	log_admin("[key_name(user)] has removed [name] antagonist status from [key_name(owner)].")
 	on_removal()
 
 //gamemode/proc/is_mode_antag(antagonist/A) => TRUE/FALSE
@@ -183,7 +197,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		edit_memory(usr)
 		owner.traitor_panel()
 		return
-	
+
 	//Some commands might delete/modify this datum clearing or changing owner
 	var/datum/mind/persistent_owner = owner
 
@@ -201,29 +215,17 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	antag_memory = new_memo
 
-//This datum will autofill the name with special_role
-//Used as placeholder for minor antagonists, please create proper datums for these
-/datum/antagonist/auto_custom
-	show_in_antagpanel = FALSE
-	antagpanel_category = "Other"
-	show_name_in_check_antagonists = TRUE
-
-/datum/antagonist/auto_custom/on_gain()
-	..()
-	name = owner.special_role
-	//Add all objectives not already owned by other datums to this one.
-	var/list/already_registered_objectives = list()
-	for(var/datum/antagonist/A in owner.antag_datums)
-		if(A == src)
-			continue
-		else
-			already_registered_objectives |= A.objectives
-	objectives = owner.objectives - already_registered_objectives
-
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
 	antagpanel_category = "Custom"
 	show_name_in_check_antagonists = TRUE //They're all different
+	var/datum/team/custom_team
+
+datum/antagonist/custom/create_team(datum/team/team)
+	custom_team = team
+
+/datum/antagonist/custom/get_team()
+	return custom_team
 
 /datum/antagonist/custom/admin_add(datum/mind/new_owner,mob/admin)
 	var/custom_name = stripped_input(admin, "Custom antagonist name:", "Custom antag", "Antagonist")

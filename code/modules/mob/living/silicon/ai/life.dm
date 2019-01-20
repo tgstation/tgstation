@@ -19,7 +19,7 @@
 			// messenging the client
 			malfhacked(malfhack)
 
-		if(!eyeobj || QDELETED(eyeobj) || !eyeobj.loc)
+		if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 			view_core()
 
 		if(machine)
@@ -50,7 +50,7 @@
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
 	switch(requires_power)
-		if(POWER_REQ_NONE)
+		if(NONE)
 			return FALSE
 		if(POWER_REQ_ALL)
 			return !T || !A || ((!A.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
@@ -96,6 +96,7 @@
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
 	to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
+	end_multicam()
 	sleep(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
@@ -121,11 +122,10 @@
 		T = get_turf(src)
 		AIarea = get_area(src)
 		if(AIarea)
-			for(var/area/A in AIarea.related)
-				for (var/obj/machinery/power/apc/APC in A)
-					if (!(APC.stat & BROKEN))
-						theAPC = APC
-						break
+			for (var/obj/machinery/power/apc/APC in AIarea)
+				if (!(APC.stat & BROKEN))
+					theAPC = APC
+					break
 		if (!theAPC)
 			switch(PRP)
 				if(1)

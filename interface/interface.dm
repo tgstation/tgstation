@@ -84,8 +84,9 @@ Admin:
 \tF3 = asay
 \tF5 = Aghost (admin-ghost)
 \tF6 = player-panel
-\tF7 = admin-pm
+\tF7 = Buildmode
 \tF8 = Invisimin
+\tCtrl+F8 = Stealthmin
 </font>"}
 
 	mob.hotkey_help()
@@ -123,8 +124,8 @@ Hotkey-Mode: (hotkey-mode must be on)
 \t<B></B>h = stop pulling
 \tx = swap-hand
 \tz = activate held object (or y)
-\tShift+e = Put held item into belt or take out most recent item added to belt.
-\tShift+b = Put held item into backpack or take out most recent item added to backpack.
+\tShift+e = Put held item into belt(or belt slot) or take out most recent item added.
+\tShift+b = Put held item into backpack(or back slot) or take out most recent item added.
 \tf = cycle-intents-left
 \tg = cycle-intents-right
 \t1 = help-intent
@@ -220,10 +221,3 @@ Any-Mode: (hotkey doesn't need to be on)
 
 	to_chat(src, hotkey_mode)
 	to_chat(src, other)
-
-// Needed to circumvent a bug where .winset does not work when used on the window.on-size event in skins.
-// Used by /datum/html_interface/nanotrasen (code/modules/html_interface/nanotrasen/nanotrasen.dm)
-/client/verb/_swinset(var/x as text)
-	set name = ".swinset"
-	set hidden = 1
-	winset(src, null, x)

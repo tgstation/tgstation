@@ -36,6 +36,10 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
+	#ifdef TESTING
+	/client/proc/see_dirty_varedits,
+	#endif
+	/client/proc/cmd_admin_test_atmos_controllers,
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/disable_communication,
@@ -47,6 +51,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/show_line_profiling,
 	/client/proc/create_mapping_job_icons,
 	/client/proc/debug_z_levels,
+	/client/proc/place_ruin
 ))
 
 /obj/effect/debugging/mapfix_marker
@@ -82,7 +87,22 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
 
+#ifdef TESTING
+GLOBAL_LIST_EMPTY(dirty_vars)
 
+/client/proc/see_dirty_varedits()
+	set category = "Mapping"
+	set name = "Dirty Varedits"
+
+	var/list/dat = list()
+	dat += "<h3>Abandon all hope ye who enter here</h3><br><br>"
+	for(var/thing in GLOB.dirty_vars)
+		dat += "[thing]<br>"
+		CHECK_TICK
+	var/datum/browser/popup = new(usr, "dirty_vars", "Dirty Varedits", 900, 750)
+	popup.set_content(dat.Join())
+	popup.open()
+#endif
 
 /client/proc/sec_camera_report()
 	set category = "Mapping"
@@ -104,11 +124,11 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		for(var/obj/machinery/camera/C2 in CL)
 			if(C1 != C2)
 				if(C1.c_tag == C2.c_tag)
-					output += "<li><font color='red'>c_tag match for cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) and [ADMIN_COORDJMP(C2)] ([C2.loc.loc]) - c_tag is [C1.c_tag]</font></li>"
+					output += "<li><font color='red'>c_tag match for cameras at [ADMIN_VERBOSEJMP(C1)] and [ADMIN_VERBOSEJMP(C2)] - c_tag is [C1.c_tag]</font></li>"
 				if(C1.loc == C2.loc && C1.dir == C2.dir && C1.pixel_x == C2.pixel_x && C1.pixel_y == C2.pixel_y)
-					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
+					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
 				if(C1.loc == C2.loc)
-					output += "<li>Overlapping cameras at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
+					output += "<li>Overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
 		var/turf/T = get_step(C1,turn(C1.dir,180))
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille) in T))
@@ -118,7 +138,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 						window_check = 1
 						break
 				if(!window_check)
-					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_COORDJMP(C1)] ([C1.loc.loc]) Network: [json_encode(C1.network)]</font></li>"
+					output += "<li><font color='red'>Camera not connected to wall at [ADMIN_VERBOSEJMP(C1)] Network: [json_encode(C1.network)]</font></li>"
 
 	output += "</ul>"
 	usr << browse(output,"window=airreport;size=1000x500")
@@ -135,7 +155,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		qdel(M)
 
 	if(intercom_range_display_status)
-		for(var/obj/item/device/radio/intercom/I in world)
+		for(var/obj/item/radio/intercom/I in world)
 			for(var/turf/T in orange(7,I))
 				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
 				if (!(F in view(7,I.loc)))
@@ -152,7 +172,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	for(var/t in GLOB.active_turfs_startlist)
 		var/turf/T = t
-		dat += "[ADMIN_COORDJMP(T)]\n"
+		dat += "[ADMIN_VERBOSEJMP(T)]\n"
 		dat += "<br>"
 
 	usr << browse(dat, "window=at_list")
@@ -263,9 +283,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 
 	GLOB.say_disabled = !GLOB.say_disabled
 	if(GLOB.say_disabled)
-		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
+		message_admins("[key] used 'Disable all communication verbs', killing all communication methods.")
 	else
-		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+		message_admins("[key] used 'Disable all communication verbs', restoring all communication methods.")
 
 //This generates the icon states for job starting location landmarks.
 /client/proc/create_mapping_job_icons()

@@ -4,6 +4,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old"
 	density = TRUE
+	move_resist = INFINITY
 	opacity = 0
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -15,17 +16,15 @@
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(1)
 
-/obj/structure/emergency_shield/Destroy()
-	density = FALSE
-	air_update_turf(1)
-	return ..()
-
 /obj/structure/emergency_shield/Move()
 	var/turf/T = loc
 	. = ..()
 	move_update_air(T)
 
 /obj/structure/emergency_shield/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			qdel(src)
@@ -95,6 +94,7 @@
 /obj/machinery/shieldgen/proc/shields_up()
 	active = TRUE
 	update_icon()
+	move_resist = INFINITY
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
@@ -103,6 +103,7 @@
 
 /obj/machinery/shieldgen/proc/shields_down()
 	active = FALSE
+	move_resist = initial(move_resist)
 	update_icon()
 	QDEL_LIST(deployed_shields)
 
@@ -119,8 +120,11 @@
 			locked = pick(0,1)
 			update_icon()
 
-/obj/machinery/shieldgen/attack_hand(mob/user)
-	if(locked)
+/obj/machinery/shieldgen/interact(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(locked && !issilicon(user))
 		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
 		return
 	if(panel_open)
@@ -143,7 +147,7 @@
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		W.play_tool_sound(src, 100)
 		panel_open = !panel_open
 		if(panel_open)
@@ -165,21 +169,21 @@
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/wrench))
+	else if(W.tool_behaviour == TOOL_WRENCH)
 		if(locked)
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
 		if(!anchored && !isinspace())
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
-			anchored = TRUE
+			setAnchored(TRUE)
 		else if(anchored)
 			W.play_tool_sound(src, 100)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
 				shields_down()
-			anchored = FALSE
+			setAnchored(FALSE)
 
 	else if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))
@@ -341,7 +345,7 @@
 	return ..()
 
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		default_unfasten_wrench(user, W, 0)
 
 	else if(W.GetID())
@@ -357,7 +361,10 @@
 		add_fingerprint(user)
 		return ..()
 
-/obj/machinery/shieldwallgen/attack_hand(mob/user)
+/obj/machinery/shieldwallgen/interact(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!anchored)
 		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
 		return
@@ -397,7 +404,6 @@
 	desc = "An energy shield."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldwall"
-	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	light_range = 3
@@ -420,9 +426,6 @@
 	gen_primary = null
 	gen_secondary = null
 	return ..()
-
-/obj/machinery/shieldwall/attack_hand(mob/user)
-	return
 
 /obj/machinery/shieldwall/process()
 	if(needs_power)

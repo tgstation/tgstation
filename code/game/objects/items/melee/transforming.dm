@@ -1,4 +1,5 @@
-/obj/item/melee/transforming //TODO: make transforming energy weapons a subtype of this
+/obj/item/melee/transforming
+	sharpness = IS_SHARP
 	var/active = FALSE
 	var/force_on = 30 //force when active
 	var/faction_bonus_force = 0 //Bonus force dealt against certain factions
@@ -8,10 +9,10 @@
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/list/attack_verb_off = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_SMALL
-	sharpness = IS_SHARP
 	var/bonus_active = FALSE //If the faction damage bonus is active
 	var/list/nemesis_factions //Any mob with a faction that exists in this list will take bonus damage/effects
 	var/w_class_on = WEIGHT_CLASS_BULKY
+	var/clumsy_check = TRUE
 
 /obj/item/melee/transforming/Initialize()
 	. = ..()
@@ -21,6 +22,8 @@
 	else
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
+	if(is_sharp())
+		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound, !active)
 
 /obj/item/melee/transforming/attack_self(mob/living/carbon/user)
 	if(transform_weapon(user))
@@ -59,6 +62,13 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
+	if(is_sharp())
+		var/datum/component/butchering/BT = LoadComponent(/datum/component/butchering)
+		BT.butchering_enabled = TRUE
+	else
+		GET_COMPONENT(BT, /datum/component/butchering)
+		if(BT)
+			BT.butchering_enabled = FALSE
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE
@@ -72,6 +82,6 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
+	if(clumsy_check && user.has_trait(TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)

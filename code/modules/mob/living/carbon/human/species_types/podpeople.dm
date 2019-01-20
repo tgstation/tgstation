@@ -3,7 +3,8 @@
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR)
+	species_traits = list(MUTCOLORS,EYECOLOR)
+	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -30,11 +31,11 @@
 	if(isturf(H.loc)) //else, there's considered to be no light
 		var/turf/T = H.loc
 		light_amount = min(1,T.get_lumcount()) - 0.5
-		H.nutrition += light_amount * 10
-		if(H.nutrition > NUTRITION_LEVEL_FULL)
-			H.nutrition = NUTRITION_LEVEL_FULL
+		H.adjust_nutrition(light_amount * 10)
+		if(H.nutrition > NUTRITION_LEVEL_ALMOST_FULL)
+			H.set_nutrition(NUTRITION_LEVEL_ALMOST_FULL)
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(1,1)
+			H.heal_overall_damage(1,1, 0, BODYPART_ORGANIC)
 			H.adjustToxLoss(-1)
 			H.adjustOxyLoss(-1)
 
@@ -52,15 +53,15 @@
 		if(/obj/item/projectile/energy/floramut)
 			if(prob(15))
 				H.rad_act(rand(30,80))
-				H.Knockdown(100)
+				H.Paralyze(100)
 				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
-					H.randmutb()
+					H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 				else
-					H.randmutg()
+					H.easy_randmut(POSITIVE)
 				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))
 				H.show_message("<span class='userdanger'>The radiation beam singes you!</span>")
 		if(/obj/item/projectile/energy/florayield)
-			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
+			H.set_nutrition(min(H.nutrition+30, NUTRITION_LEVEL_FULL))

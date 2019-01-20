@@ -9,17 +9,23 @@
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""
 	var/bitesize_mod = 0
-	var/splat_type = /obj/effect/decal/cleanable/plant_smudge
+	var/splat_type = /obj/effect/decal/cleanable/food/plant_smudge
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
 	dried_type = -1
 	// Saves us from having to define each stupid grown's dried_type as itself.
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	resistance_flags = FLAMMABLE
 	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
+	var/can_distill = TRUE //If FALSE, this object cannot be distilled into an alcohol.
+	var/distill_reagent //If NULL and this object can be distilled, it uses a generic fruit_wine reagent and adjusts its variables.
+	var/wine_flavor //If NULL, this is automatically set to the fruit's flavor. Determines the flavor of the wine if distill_reagent is NULL.
+	var/wine_power = 10 //Determines the boozepwr of the wine if distill_reagent is NULL.
 
 /obj/item/reagent_containers/food/snacks/grown/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-	tastes = list("[name]" = 1) // apples taste of apple, silly.
+	if(!tastes)
+		tastes = list("[name]" = 1)
+
 	if(new_seed)
 		seed = new_seed.Copy()
 	else if(ispath(seed))
@@ -58,7 +64,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user, params)
 	..()
-	if (istype(O, /obj/item/device/plant_analyzer))
+	if (istype(O, /obj/item/plant_analyzer))
 		var/msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.\n"
 		if(seed)
 			msg += seed.get_analyzer_text()
@@ -85,7 +91,7 @@
 		squash(user)
 	..()
 
-/obj/item/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		if(seed)
 			for(var/datum/plant_gene/trait/T in seed.genes)
@@ -95,7 +101,8 @@
 
 /obj/item/reagent_containers/food/snacks/grown/proc/squash(atom/target)
 	var/turf/T = get_turf(target)
-	if(ispath(splat_type, /obj/effect/decal/cleanable/plant_smudge))
+	forceMove(T)
+	if(ispath(splat_type, /obj/effect/decal/cleanable/food/plant_smudge))
 		if(filling_color)
 			var/obj/O = new splat_type(T)
 			O.color = filling_color
@@ -123,13 +130,6 @@
 			for(var/datum/plant_gene/trait/T in seed.genes)
 				T.on_consume(src, usr)
 	..()
-
-/obj/item/reagent_containers/food/snacks/grown/Crossed(atom/movable/AM)
-	if(seed)
-		for(var/datum/plant_gene/trait/T in seed.genes)
-			T.on_cross(src, AM)
-	..()
-
 
 /obj/item/reagent_containers/food/snacks/grown/generate_trash(atom/location)
 	if(trash && ispath(trash, /obj/item/grown))

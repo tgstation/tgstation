@@ -24,7 +24,7 @@
 		if(stored_pulling)
 			stored_pulling.setDir(get_dir(stored_pulling.loc, newloc))
 			stored_pulling.forceMove(src)
-			H.start_pulling(stored_pulling, TRUE)
+			H.start_pulling(stored_pulling, supress_message = TRUE)
 
 /turf/closed/wall/mineral/cult/ratvar_act()
 	. = ..()
@@ -158,6 +158,7 @@
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
+	bullet_sizzle = TRUE
 
 /turf/closed/wall/rust
 	name = "rusted wall"
@@ -170,3 +171,12 @@
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
+
+/turf/closed/wall/mineral/bronze
+	name = "clockwork wall"
+	desc = "A huge chunk of bronze, decorated like gears and cogs."
+	icon = 'icons/turf/walls/clockwork_wall.dmi'
+	icon_state = "clockwork_wall"
+	sheet_type = /obj/item/stack/tile/bronze
+	sheet_amount = 2
+	girder_type = /obj/structure/girder/bronze

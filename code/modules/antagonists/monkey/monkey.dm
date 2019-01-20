@@ -40,11 +40,10 @@
 	owner.special_role = null
 	SSticker.mode.ape_infectees -= owner
 
-	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.viruses
+	var/datum/disease/transformation/jungle_fever/D =  locate() in owner.current.diseases
 	if(D)
-		D.remove_virus()
 		qdel(D)
-	
+
 	. = ..()
 
 /datum/antagonist/monkey/create_team(datum/team/monkey/new_team)
@@ -64,7 +63,6 @@
 
 /datum/antagonist/monkey/proc/forge_objectives()
 	objectives |= monkey_team.objectives
-	owner.objectives |= objectives
 
 /datum/antagonist/monkey/admin_remove(mob/admin)
 	var/mob/living/carbon/monkey/M = owner.current
@@ -99,8 +97,8 @@
 			else
 				return
 	new_owner.add_antag_datum(src)
-	log_admin("[key_name(admin)] made [key_name(new_owner.current)] a monkey leader!")
-	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner.current)] a monkey leader!")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] a monkey leader!")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] a monkey leader!")
 
 /datum/antagonist/monkey/leader/on_gain()
 	. = ..()

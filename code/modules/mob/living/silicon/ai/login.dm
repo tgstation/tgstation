@@ -1,12 +1,12 @@
 /mob/living/silicon/ai/Login()
 	..()
-	for(var/obj/effect/rune/rune in world)
-		var/image/blood = image(loc = rune)
-		blood.override = 1
-		client.images += blood
-
 	if(stat != DEAD)
-		for(var/obj/machinery/ai_status_display/O in GLOB.ai_status_displays) //change status
+		for(var/each in GLOB.ai_status_displays) //change status
+			var/obj/machinery/status_display/ai/O = each
 			O.mode = 1
 			O.emotion = "Neutral"
+			O.update()
+	set_eyeobj_visible(TRUE)
+	if(multicam_on)
+		end_multicam()
 	view_core()

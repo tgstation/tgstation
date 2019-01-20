@@ -3,8 +3,8 @@
 	name = "under"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
-	slot_flags = SLOT_ICLOTHING
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	slot_flags = ITEM_SLOT_ICLOTHING
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
@@ -15,6 +15,8 @@
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
+	var/freshly_laundered = FALSE
+	var/dodgy_colours = FALSE
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -44,12 +46,11 @@
 	if(has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
 
-/obj/item/clothing/under/New()
+/obj/item/clothing/under/Initialize()
+	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
-	adjusted = NORMAL_STYLE
-	..()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -65,7 +66,11 @@
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(attached_accessory && slot != slot_hands && ishuman(user))
+	if(slot == SLOT_W_UNIFORM && freshly_laundered)
+		freshly_laundered = FALSE
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
+
+	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		if(attached_accessory.above_suit)
@@ -90,6 +95,9 @@
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return
 		else
+
+			if(!A.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
+				return
 			if(user && !user.temporarilyRemoveItemFromInventory(I))
 				return
 			if(!A.attach(src, user))
@@ -134,6 +142,10 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
+	if(dodgy_colours)
+		to_chat(user, "The colours are a bit dodgy.")
+	if(freshly_laundered)
+		to_chat(user, "It looks fresh and clean.")
 	if(can_adjust)
 		if(adjusted == ALT_STYLE)
 			to_chat(user, "Alt-click on [src] to wear it normally.")

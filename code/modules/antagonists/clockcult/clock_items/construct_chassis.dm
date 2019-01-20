@@ -15,7 +15,7 @@
 	. = ..()
 	var/area/A = get_area(src)
 	if(A && construct_type)
-		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', source = src, action = NOTIFY_ATTACK, flashwindow = FALSE)
+		notify_ghosts("A [construct_name] chassis has been created in [A.name]!", 'sound/magic/clockwork/fellowship_armory.ogg', notify_volume = 75, source = src, action = NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_CONSTRUCT)
 	GLOB.poi_list += src
 	LAZYADD(GLOB.mob_spawners[name], src)
 
@@ -30,12 +30,14 @@
 	..()
 	clockwork_desc = initial(clockwork_desc)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clockwork/construct_chassis/attack_hand(mob/living/user)
 	if(w_class >= WEIGHT_CLASS_HUGE)
 		to_chat(user, "<span class='warning'>[src] is too cumbersome to carry! Drag it around instead!</span>")
 		return
 	. = ..()
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/item/clockwork/construct_chassis/attack_ghost(mob/user)
 	if(!SSticker.mode)
 		to_chat(user, "<span class='danger'>You cannot use that before the game has started.</span>")
@@ -113,4 +115,4 @@
 			S.no_cost = TRUE
 		if(seasonal_hat && seasonal_hat != "none")
 			var/obj/item/hat = new seasonal_hat(construct)
-			construct.equip_to_slot_or_del(hat, slot_head)
+			construct.equip_to_slot_or_del(hat, SLOT_HEAD)

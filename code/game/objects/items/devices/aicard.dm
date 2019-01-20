@@ -1,4 +1,4 @@
-/obj/item/device/aicard
+/obj/item/aicard
 	name = "intelliCard"
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
@@ -7,49 +7,61 @@
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
-	flags_1 = NOBLUDGEON_1
+	slot_flags = ITEM_SLOT_BELT
+	item_flags = NOBLUDGEON
 	var/flush = FALSE
 	var/mob/living/silicon/ai/AI
 
-/obj/item/device/aicard/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is trying to upload themselves into [src]! That's not going to work out well!</span>")
+/obj/item/aicard/aitater
+	name = "intelliTater"
+	desc = "A stylish upgrade (?) to the intelliCard."
+	icon_state = "aitater"
+
+/obj/item/aicard/aispook
+	name = "intelliLantern"
+	desc = "A spoOoOoky upgrade to the intelliCard."
+	icon_state = "aispook"
+
+/obj/item/aicard/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!</span>")
 	return BRUTELOSS
 
-/obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
-	..()
+/obj/item/aicard/afterattack(atom/target, mob/user, proximity)
+	. = ..()
 	if(!proximity || !target)
 		return
 	if(AI) //AI is on the card, implies user wants to upload it.
+		log_combat(user, AI, "uploaded", src, "to [target].")
 		target.transfer_ai(AI_TRANS_FROM_CARD, user, AI, src)
-		add_logs(user, AI, "carded", src)
 	else //No AI on the card, therefore the user wants to download one.
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
+		if(AI)
+			log_combat(user, AI, "carded", src)
 	update_icon() //Whatever happened, update the card's state (icon, name) to match.
 
-/obj/item/device/aicard/update_icon()
+/obj/item/aicard/update_icon()
 	cut_overlays()
 	if(AI)
-		name = "[initial(name)]- [AI.name]"
+		name = "[initial(name)] - [AI.name]"
 		if(AI.stat == DEAD)
-			icon_state = "aicard-404"
+			icon_state = "[initial(icon_state)]-404"
 		else
-			icon_state = "aicard-full"
+			icon_state = "[initial(icon_state)]-full"
 		if(!AI.control_disabled)
-			add_overlay("aicard-on")
+			add_overlay("[initial(icon_state)]-on")
 		AI.cancel_camera()
 	else
 		name = initial(name)
 		icon_state = initial(icon_state)
 
-/obj/item/device/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+/obj/item/aicard/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)
 		ui.open()
 
-/obj/item/device/aicard/ui_data()
+/obj/item/aicard/ui_data()
 	var/list/data = list()
 	if(AI)
 		data["name"] = AI.name
@@ -62,7 +74,7 @@
 	data["wiping"] = flush
 	return data
 
-/obj/item/device/aicard/ui_act(action,params)
+/obj/item/aicard/ui_act(action,params)
 	if(..())
 		return
 	switch(action)

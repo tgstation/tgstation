@@ -14,15 +14,17 @@
 	ventcrawler = VENTCRAWLER_NONE
 	density = TRUE
 	pass_flags =  0
-	var/ascended = FALSE
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
 	spacewalk = TRUE
 	mob_size = MOB_SIZE_LARGE
-	var/mob/living/oldform
-	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
+	held_items = list(null, null)
 	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
 					 /obj/item/bodypart/r_arm/devil, /obj/item/bodypart/r_leg/devil, /obj/item/bodypart/l_leg/devil)
+	hud_type = /datum/hud/devil
+	var/ascended = FALSE
+	var/mob/living/oldform
+	var/list/devil_overlays[DEVIL_TOTAL_LAYERS]
 
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
@@ -66,7 +68,7 @@
 
 	//Left hand items
 	for(var/obj/item/I in held_items)
-		if(!(I.flags_1 & ABSTRACT_1))
+		if(!(I.item_flags & ABSTRACT))
 			msg += "It is holding [I.get_examine_string(user)] in its [get_held_index_name(get_held_index_of_item(I))].\n"
 
 	//Braindead
@@ -89,13 +91,15 @@
 /mob/living/carbon/true_devil/resist_buckle()
 	if(buckled)
 		buckled.user_unbuckle_mob(src,src)
-		visible_message("<span class='warning'>[src] easily breaks out of their handcuffs!</span>", \
+		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
-/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
 	if(incapacitated())
+		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	if(be_close && !in_range(M, src))
+		to_chat(src, "<span class='warning'>You are too far away!</span>")
 		return FALSE
 	return TRUE
 
@@ -138,17 +142,14 @@
 		return 0
 	return ..()
 
+//ATTACK GHOST IGNORING PARENT RETURN VALUE
 /mob/living/carbon/true_devil/attack_ghost(mob/dead/observer/user as mob)
 	if(ascended || user.mind.soulOwner == src.mind)
 		var/mob/living/simple_animal/imp/S = new(get_turf(loc))
 		S.key = user.key
-		S.mind.assigned_role = "Imp"
-		S.mind.special_role = "Imp"
-		var/datum/objective/newobjective = new
-		newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
-		S.mind.objectives += newobjective
+		var/datum/antagonist/imp/A = new()
+		S.mind.add_antag_datum(A)
 		to_chat(S, S.playstyle_string)
-		to_chat(S, "<B>Objective #[1]</B>: [newobjective.explanation_text]")
 	else
 		return ..()
 
@@ -159,7 +160,8 @@
 	//They're immune to fire.
 
 /mob/living/carbon/true_devil/attack_hand(mob/living/carbon/human/M)
-	if(..())
+	. = ..()
+	if(.)
 		switch(M.a_intent)
 			if ("harm")
 				var/damage = rand(1, 5)
@@ -167,14 +169,14 @@
 				visible_message("<span class='danger'>[M] has punched [src]!</span>", \
 						"<span class='userdanger'>[M] has punched [src]!</span>")
 				adjustBruteLoss(damage)
-				add_logs(M, src, "attacked")
+				log_combat(M, src, "attacked")
 				updatehealth()
 			if ("disarm")
-				if (!lying && !ascended) //No stealing the arch devil's pitchfork.
+				if (!(mobility_flags & MOBILITY_STAND) && !ascended) //No stealing the arch devil's pitchfork.
 					if (prob(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-						add_logs(M, src, "pushed")
+						log_combat(M, src, "pushed")
 						visible_message("<span class='danger'>[M] has pushed down [src]!</span>", \
 							"<span class='userdanger'>[M] has pushed down [src]!</span>")
 					else
@@ -191,7 +193,7 @@
 	// devils do not need to breathe
 
 /mob/living/carbon/true_devil/is_literate()
-	return 1
+	return TRUE
 
 /mob/living/carbon/true_devil/ex_act(severity, ex_target)
 	if(!ascended)

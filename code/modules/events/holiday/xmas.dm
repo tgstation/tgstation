@@ -19,7 +19,7 @@
 			"What do you get from eating tree decorations?\n\n<i>Tinsilitis!</i>",
 			"What do snowmen wear on their heads?\n\n<i>Ice caps!</i>",
 			"Why is Christmas just like life on ss13?\n\n<i>You do all the work and the fat guy gets all the credit.</i>",
-			"Why doesn�t Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
+			"Why doesn't Santa have any children?\n\n<i>Because he only comes down the chimney.</i>")
 		new /obj/item/clothing/head/festive(target.loc)
 		user.update_icons()
 		cracked = 1
@@ -37,34 +37,38 @@
 	icon_state = "xmashat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	flags_inv = 0
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
-/obj/effect/landmark/xmastree
+/obj/effect/spawner/xmastree
 	name = "christmas tree spawner"
+	icon = 'icons/effects/landmarks_static.dmi'
+	icon_state = "x2"
 	layer = FLY_LAYER
+
 	var/festive_tree = /obj/structure/flora/tree/pine/xmas
 	var/christmas_tree = /obj/structure/flora/tree/pine/xmas/presents
 
-/obj/effect/landmark/xmastree/Initialize(mapload)
+/obj/effect/spawner/xmastree/Initialize()
 	..()
 	if((CHRISTMAS in SSevents.holidays) && christmas_tree)
 		new christmas_tree(get_turf(src))
 	else if((FESTIVE_SEASON in SSevents.holidays) && festive_tree)
 		new festive_tree(get_turf(src))
+
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/landmark/xmastree/rdrod
+/obj/effect/spawner/xmastree/rdrod
 	name = "festivus pole spawner"
 	festive_tree = /obj/structure/festivus
 	christmas_tree = null
 
 /datum/round_event_control/santa
-	name = "Santa is coming to town! (Christmas)"
+	name = "Vist by Santa"
 	holidayID = CHRISTMAS
 	typepath = /datum/round_event/santa
 	weight = 20
 	max_occurrences = 1
-	earliest_start = 20000
+	earliest_start = 30 MINUTES
 
 /datum/round_event/santa
 	var/mob/living/carbon/human/santa //who is our santa?
@@ -75,21 +79,10 @@
 /datum/round_event/santa/start()
 	var/list/candidates = pollGhostCandidates("Santa is coming to town! Do you want to be Santa?", poll_time=150)
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
+		var/mob/dead/observer/C = pick(candidates)
 		santa = new /mob/living/carbon/human(pick(GLOB.blobstart))
 		santa.key = C.key
 
-		santa.equipOutfit(/datum/outfit/santa)
-		santa.update_icons()
+		var/datum/antagonist/santa/A = new
+		santa.mind.add_antag_datum(A)
 
-		var/datum/objective/santa_objective = new()
-		santa_objective.explanation_text = "Bring joy and presents to the station!"
-		santa_objective.completed = 1 //lets cut our santas some slack.
-		santa_objective.owner = santa.mind
-		santa.mind.objectives += santa_objective
-		santa.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/presents)
-		var/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/telespell = new(santa)
-		telespell.clothes_req = 0 //santa robes aren't actually magical.
-		santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
-
-		to_chat(santa, "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You can conjure more presents using a spell, and there are several presents in your bag.</span>")

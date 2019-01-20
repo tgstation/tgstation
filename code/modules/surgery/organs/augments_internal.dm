@@ -1,4 +1,3 @@
-#define STUN_SET_AMOUNT 40
 
 /obj/item/organ/cyberimp
 	name = "cybernetic implant"
@@ -26,16 +25,16 @@
 	desc = "Injectors of extra sub-routines for the brain."
 	icon_state = "brain_implant"
 	implant_overlay = "brain_implant_overlay"
-	zone = "head"
+	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/brain/emp_act(severity)
-	if(!owner)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	var/stun_amount = 200/severity
 	owner.Stun(stun_amount)
 	to_chat(owner, "<span class='warning'>Your body seizes up!</span>")
-	return stun_amount
 
 
 /obj/item/organ/cyberimp/brain/anti_drop
@@ -51,8 +50,7 @@
 	active = !active
 	if(active)
 		for(var/obj/item/I in owner.held_items)
-			if(!(I.flags_1 & NODROP_1))
-				stored_items += I
+			stored_items += I
 
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)
@@ -62,7 +60,7 @@
 		else
 			for(var/obj/item/I in stored_items)
 				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
-				I.flags_1 |= NODROP_1
+				I.add_trait(TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
 
 	else
 		release_items()
@@ -70,13 +68,13 @@
 
 
 /obj/item/organ/cyberimp/brain/anti_drop/emp_act(severity)
-	if(!owner)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
 		return
 	var/range = severity ? 10 : 5
 	var/atom/A
 	if(active)
 		release_items()
-	..()
 	for(var/obj/item/I in stored_items)
 		A = pick(oview(range))
 		I.throw_at(A, range, 2)
@@ -86,7 +84,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		I.flags_1 &= ~NODROP_1
+		I.remove_trait(TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
 	stored_items = list()
 
 
@@ -95,37 +93,67 @@
 		ui_action_click()
 	..()
 
-
 /obj/item/organ/cyberimp/brain/anti_stun
 	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
+	var/datum/component/redirect/listener
+	var/datum/callback/CB
+	var/stun_cap_amount = 40
+	var/working = FALSE
 
-/obj/item/organ/cyberimp/brain/anti_stun/on_life()
-	..()
-	if(crit_fail)
+/obj/item/organ/cyberimp/brain/anti_stun/Initialize()
+	. = ..()
+	initialize_callback()
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/initialize_callback()
+	if(CB)
 		return
+	CB = CALLBACK(src, .proc/on_signal)
 
-	if(owner.AmountStun() > STUN_SET_AMOUNT)
-		owner.SetStun(STUN_SET_AMOUNT)
-	if(owner.AmountKnockdown() > STUN_SET_AMOUNT)
-		owner.SetKnockdown(STUN_SET_AMOUNT)
+/obj/item/organ/cyberimp/brain/anti_stun/Remove()
+	. = ..()
+	QDEL_NULL(listener)
+
+/obj/item/organ/cyberimp/brain/anti_stun/Insert()
+	. = ..()
+	if(listener)
+		qdel(listener)
+	listener = owner.AddComponent(/datum/component/redirect, list(
+	COMSIG_LIVING_STATUS_STUN = CB,
+	COMSIG_LIVING_STATUS_KNOCKDOWN = CB,
+	COMSIG_LIVING_STATUS_IMMOBILIZE = CB,
+	COMSIG_LIVING_STATUS_PARALYZE = CB
+	))
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
+	if(crit_fail || working)
+		return
+	working = TRUE
+	if(owner.AmountStun() > stun_cap_amount)
+		owner.SetStun(stun_cap_amount)
+	if(owner.AmountKnockdown() > stun_cap_amount)
+		owner.SetKnockdown(stun_cap_amount)
+	if(owner.AmountImmobilized() > stun_cap_amount)
+		owner.SetImmobilized(stun_cap_amount)
+	if(owner.AmountParalyzed() > stun_cap_amount)
+		owner.SetParalyzed(stun_cap_amount)
+	working = FALSE
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
-	if(crit_fail)
+	. = ..()
+	if(crit_fail || . & EMP_PROTECT_SELF)
 		return
 	crit_fail = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
-	..()
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	crit_fail = FALSE
 
-
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth
-	zone = "mouth"
+	zone = BODY_ZONE_PRECISE_MOUTH
 
 /obj/item/organ/cyberimp/mouth/breathing_tube
 	name = "breathing tube implant"
@@ -135,11 +163,12 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
 	if(prob(60/severity))
 		to_chat(owner, "<span class='warning'>Your breathing tube suddenly closes!</span>")
 		owner.losebreath += 2
-
-
 
 //BOX O' IMPLANTS
 
@@ -148,10 +177,10 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 	var/list/boxed = list(
-		/obj/item/device/autosurgeon/thermal_eyes,
-		/obj/item/device/autosurgeon/xray_eyes,
-		/obj/item/device/autosurgeon/anti_stun,
-		/obj/item/device/autosurgeon/reviver)
+		/obj/item/autosurgeon/thermal_eyes,
+		/obj/item/autosurgeon/xray_eyes,
+		/obj/item/autosurgeon/anti_stun,
+		/obj/item/autosurgeon/reviver)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

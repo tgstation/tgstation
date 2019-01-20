@@ -6,6 +6,9 @@
 	var/amt_unconscious = 0
 	var/amt_stun = 0
 
+	var/inflict_status
+	var/list/status_params = list()
+
 	//set to negatives for healing
 	var/amt_dam_fire = 0
 	var/amt_dam_brute = 0
@@ -19,10 +22,14 @@
 
 	var/summon_type = null //this will put an obj at the target's location
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
+	var/check_anti_magic = TRUE
+	var/check_holy = FALSE
 
+/obj/effect/proc_holder/spell/targeted/inflict_handler/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
 		playsound(target,sound, 50,1)
+		if(target.anti_magic_check(check_anti_magic, check_holy))
+			return
 		switch(destroys)
 			if("gib")
 				target.gib()
@@ -37,7 +44,7 @@
 		target.adjustToxLoss(amt_dam_tox)
 		target.adjustOxyLoss(amt_dam_oxy)
 		//disabling
-		target.Knockdown(amt_knockdown)
+		target.Paralyze(amt_knockdown)
 		target.Unconscious(amt_unconscious)
 		target.Stun(amt_stun)
 
@@ -46,3 +53,8 @@
 		//summoning
 		if(summon_type)
 			new summon_type(target.loc, target)
+
+		if(inflict_status)
+			var/list/stat_args = status_params.Copy()
+			stat_args.Insert(1,inflict_status)
+			target.apply_status_effect(arglist(stat_args))

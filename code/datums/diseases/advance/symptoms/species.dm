@@ -12,7 +12,7 @@
 	if(!..())
 		return
 	A.process_dead = TRUE
-	A.infectable_hosts |= SPECIES_UNDEAD
+	A.infectable_biotypes |= MOB_UNDEAD
 
 /datum/symptom/inorganic_adaptation
 	name = "Inorganic Biology"
@@ -27,4 +27,4 @@
 /datum/symptom/inorganic_adaptation/Start(datum/disease/advance/A)
 	if(!..())
 		return
-	A.infectable_hosts |= SPECIES_INORGANIC
+	A.infectable_biotypes |= MOB_INORGANIC

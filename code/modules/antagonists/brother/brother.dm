@@ -4,6 +4,8 @@
 	job_rank = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
 	var/datum/team/brother_team/team
+	antag_moodlet = /datum/mood_event/focused
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
@@ -18,14 +20,12 @@
 /datum/antagonist/brother/on_gain()
 	SSticker.mode.brothers += owner
 	objectives += team.objectives
-	owner.objectives += objectives
 	owner.special_role = special_role
 	finalize_brother()
 	return ..()
 
 /datum/antagonist/brother/on_removal()
 	SSticker.mode.brothers -= owner
-	owner.objectives -= objectives
 	if(owner.current)
 		to_chat(owner.current,"<span class='userdanger'>You are no longer the [special_role]!</span>")
 	owner.special_role = null
@@ -48,7 +48,7 @@
 		else if(i != brothers.len)
 			brother_text += ", "
 	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role] of [brother_text].</font></B>")
-	to_chat(owner.current, "The Syndicate only accepts those that have proven themself. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
+	to_chat(owner.current, "The Syndicate only accepts those that have proven themselves. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
 	owner.announce_objectives()
 	give_meeting_area()
 
@@ -75,8 +75,8 @@
 	new_owner.add_antag_datum(/datum/antagonist/brother,T)
 	bro.add_antag_datum(/datum/antagonist/brother, T)
 	T.update_name()
-	message_admins("[key_name_admin(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
-	log_admin("[key_name(admin)] made [new_owner.current] and [bro.current] into blood brothers.")
+	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] and [key_name_admin(bro)] into blood brothers.")
+	log_admin("[key_name(admin)] made [key_name(new_owner)] and [key_name(bro)] into blood brothers.")
 
 /datum/team/brother_team
 	name = "brotherhood"
@@ -124,7 +124,7 @@
 /datum/team/brother_team/proc/add_objective(datum/objective/O, needs_target = FALSE)
 	O.team = src
 	if(needs_target)
-		O.find_target()
+		O.find_target(dupe_search_range = list(src))
 	O.update_explanation_text()
 	objectives += O
 

@@ -9,15 +9,22 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
+	var/datum/component/storage/detached_pockets
+	var/attachment_slot = CHEST
+
+/obj/item/clothing/accessory/proc/can_attach_accessory(obj/item/clothing/U, mob/user)
+	if(!attachment_slot || (U && U.body_parts_covered & attachment_slot))
+		return TRUE
+	if(user)
+		to_chat(user, "<span class='warning'>There doesn't seem to be anywhere to put [src]...</span>")
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-	if(pockets) // Attach storage to jumpsuit
-		if(U.pockets) // storage items conflict
+	GET_COMPONENT(storage, /datum/component/storage)
+	if(storage)
+		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
-
-		pockets.forceMove(U)
-		U.pockets = pockets
-
+		U.TakeComponent(storage)
+		detached_pockets = storage
 	U.attached_accessory = src
 	forceMove(U)
 	layer = FLOAT_LAYER
@@ -28,10 +35,10 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	if (islist(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
+	if (islist(U.armor) || isnull(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
 		U.armor = getArmor(arglist(U.armor))	// we have to check that the armor list has been transformed into a datum before we try to call a proc on it
 																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
-	if (islist(armor))
+	if (islist(armor) || isnull(armor))
 		armor = getArmor(arglist(armor))
 
 	U.armor = U.armor.attachArmor(armor)
@@ -41,11 +48,9 @@
 
 	return TRUE
 
-
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
-	if(pockets && pockets == U.pockets)
-		pockets.forceMove(src)
-		U.pockets = null
+	if(detached_pockets && detached_pockets.parent == U)
+		TakeComponent(detached_pockets)
 
 	U.armor = U.armor.detachArmor(armor)
 
@@ -87,6 +92,7 @@
 	item_state = "waistcoat"
 	item_color = "waistcoat"
 	minimize_when_attached = FALSE
+	attachment_slot = null
 
 /obj/item/clothing/accessory/maidapron
 	name = "maid apron"
@@ -95,6 +101,7 @@
 	item_state = "maidapron"
 	item_color = "maidapron"
 	minimize_when_attached = FALSE
+	attachment_slot = null
 
 //////////
 //Medals//
@@ -141,8 +148,9 @@
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
+							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
-							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
+							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
 
 		else
 			to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
@@ -207,7 +215,7 @@
 	icon_state = "plasma"
 	item_color = "plasma"
 	medaltype = "medal-plasma"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = -10, "acid" = 0) //It's made of plasma. Of course it's flammable.
 	materials = list(MAT_PLASMA=1000)
 
 /obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -231,6 +239,7 @@
 	desc = "An fancy red armband!"
 	icon_state = "redband"
 	item_color = "redband"
+	attachment_slot = null
 
 /obj/item/clothing/accessory/armband/deputy
 	name = "security deputy armband"
@@ -282,6 +291,11 @@
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
 
+/obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
+	if(prob(1))
+		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
+	user.visible_message("[user] shows [user.p_their()] attorney's badge.", "<span class='notice'>You show your attorney's badge.</span>")
+
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L)
@@ -300,14 +314,18 @@
 	desc = "Can protect your clothing from ink stains, but you'll look like a nerd if you're using one."
 	icon_state = "pocketprotector"
 	item_color = "pocketprotector"
-	pockets = /obj/item/storage/internal/pocket/pocketprotector
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/pocketprotector
 
-/obj/item/clothing/accessory/pocketprotector/full
-	pockets = /obj/item/storage/internal/pocket/pocketprotector/full
+/obj/item/clothing/accessory/pocketprotector/full/Initialize()
+	. = ..()
+	new /obj/item/pen/red(src)
+	new /obj/item/pen(src)
+	new /obj/item/pen/blue(src)
 
-/obj/item/clothing/accessory/pocketprotector/cosmetology
-	pockets = /obj/item/storage/internal/pocket/pocketprotector/cosmetology
-
+/obj/item/clothing/accessory/pocketprotector/cosmetology/Initialize()
+	. = ..()
+	for(var/i in 1 to 3)
+		new /obj/item/lipstick/random(src)
 
 ////////////////
 //OONGA BOONGA//
@@ -318,8 +336,8 @@
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
 	item_color = "talisman"
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
-
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	attachment_slot = null
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
@@ -327,4 +345,5 @@
 	icon_state = "skull"
 	item_color = "skull"
 	above_suit = TRUE
-	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
+	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	attachment_slot = GROIN

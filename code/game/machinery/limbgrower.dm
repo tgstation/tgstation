@@ -10,8 +10,6 @@
 	icon = 'icons/obj/machines/limbgrower.dmi'
 	icon_state = "limbgrower_idleoff"
 	density = TRUE
-	container_type = OPENCONTAINER
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -28,16 +26,19 @@
 	var/list/categories = list(
 							"human",
 							"lizard",
+							"fly",
+							"moth",
 							"plasmaman",
-							"special"
+							"other"
 							)
 
 /obj/machinery/limbgrower/Initialize()
-	create_reagents(100)
+	create_reagents(100, OPENCONTAINER)
 	stored_research = new /datum/techweb/specialized/autounlocking/limbgrower
 	. = ..()
 
-/obj/machinery/limbgrower/interact(mob/user)
+/obj/machinery/limbgrower/ui_interact(mob/user)
+	. = ..()
 	if(!is_operational())
 		return
 
@@ -67,9 +68,6 @@
 
 	if(default_deconstruction_screwdriver(user, "limbgrower_panelopen", "limbgrower_idleoff", O))
 		updateUsrDialog()
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(panel_open && default_deconstruction_crowbar(O))
@@ -136,16 +134,16 @@
 	//i need to create a body part manually using a set icon (otherwise it doesnt appear)
 	var/obj/item/bodypart/limb
 	limb = new buildpath(loc)
-	if(selected_category=="human" || selected_category=="lizard") // Doing this because plasmamen have their limbs in a different icon file
+	if(selected_category=="human" || selected_category=="lizard") //Species with greyscale parts should be included here
 		limb.icon = 'icons/mob/human_parts_greyscale.dmi'
+		limb.should_draw_greyscale = TRUE
 	else
 		limb.icon = 'icons/mob/human_parts.dmi'
 	// Set this limb up using the specias name and body zone
 	limb.icon_state = "[selected_category]_[limb.body_zone]"
-	limb.name = "Synthetic [selected_category] [parse_zone(limb.body_zone)]"
-	limb.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]"
+	limb.name = "\improper synthetic [selected_category] [parse_zone(limb.body_zone)]"
+	limb.desc = "A synthetic [selected_category] limb that will morph on its first use in surgery. This one is for the [parse_zone(limb.body_zone)]."
 	limb.species_id = selected_category
-	limb.should_draw_greyscale = TRUE
 	limb.update_icon_dropped()
 
 /obj/machinery/limbgrower/RefreshParts()
@@ -158,6 +156,11 @@
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 
+/obj/machinery/limbgrower/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Storing up to <b>[reagents.maximum_volume]u</b> of synthflesh.<br>Synthflesh consumption at <b>[prod_coeff*100]%</b>.<span>")
+
 /obj/machinery/limbgrower/proc/main_win(mob/user)
 	var/dat = "<div class='statusDisplay'><h3>Limb Grower Menu:</h3><br>"
 	dat += "<A href='?src=[REF(src)];menu=[LIMBGROWER_CHEMICAL_MENU]'>Chemical Storage</A>"
@@ -165,9 +168,6 @@
 	dat += "<table style='width:100%' align='center'><tr>"
 
 	for(var/C in categories)
-		if(C=="special" && !(obj_flags & EMAGGED))	//Only want to show special when console is emagged
-			continue
-
 		dat += "<td><A href='?src=[REF(src)];category=[C];menu=[LIMBGROWER_CATEGORY_MENU]'>[C]</A></td>"
 		dat += "</tr><tr>"
 		//one category per line
@@ -181,7 +181,7 @@
 	dat += materials_printout()
 
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category))
 			continue
 		if(disabled || !can_build(D))
@@ -222,8 +222,9 @@
 /obj/machinery/limbgrower/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	for(var/datum/design/D in SSresearch.techweb_designs)
-		if((D.build_type & LIMBGROWER) && ("special" in D.category))
+	for(var/id in SSresearch.techweb_designs)
+		var/datum/design/D = SSresearch.techweb_design_by_id(id)
+		if((D.build_type & LIMBGROWER) && ("emagged" in D.category))
 			stored_research.add_design(D)
 	to_chat(user, "<span class='warning'>A warning flashes onto the screen, stating that safety overrides have been deactivated!</span>")
 	obj_flags |= EMAGGED

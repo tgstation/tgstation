@@ -16,7 +16,7 @@
 	throw_range = 1
 	throw_speed = 1
 	pressure_resistance = 0
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = HEAD
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
@@ -64,9 +64,7 @@
 
 /obj/item/paper/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to fold it.</span>")
-
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/paper)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 	assets.send(user)
 
 	if(in_range(user, src) || isobserver(user))
@@ -244,7 +242,8 @@
 
 /obj/item/paper/Topic(href, href_list)
 	..()
-	if(usr.stat || usr.restrained())
+	var/literate = usr.is_literate()
+	if(!usr.canUseTopic(src, BE_CLOSE, literate))
 		return
 
 	if(href_list["help"])
@@ -253,7 +252,7 @@
 	if(href_list["write"])
 		var/id = href_list["write"]
 		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
-		if(!t)
+		if(!t || !usr.canUseTopic(src, BE_CLOSE, literate))
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
@@ -299,7 +298,10 @@
 		if(!in_range(src, user))
 			return
 
-		stamps += "<img src=large_[P.icon_state].png>"
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+		if (isnull(stamps))
+			stamps = sheet.css_tag()
+		stamps += sheet.icon_tag(P.icon_state)
 		var/mutable_appearance/stampoverlay = mutable_appearance('icons/obj/bureaucracy.dmi', "paper_[P.icon_state]")
 		stampoverlay.pixel_x = rand(-2, 2)
 		stampoverlay.pixel_y = rand(-3, 2)
@@ -311,7 +313,7 @@
 
 	if(P.is_hot())
 		if(user.has_trait(TRAIT_CLUMSY) && prob(10))
-			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
+			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)
 			user.adjust_fire_stacks(1)

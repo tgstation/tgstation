@@ -4,7 +4,6 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 500
@@ -22,14 +21,22 @@
 	add_overlay("grjam")
 
 /obj/machinery/gibber/RefreshParts()
-	var/gib_time = 40
+	gibtime = 40
+	meat_produced = 0
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		meat_produced += B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		gib_time -= 5 * M.rating
-		gibtime = gib_time
+		gibtime -= 5 * M.rating
 		if(M.rating >= 2)
 			ignore_clothing = TRUE
+
+/obj/machinery/gibber/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Outputting <b>[meat_produced]</b> meat slab(s) after <b>[gibtime*0.1]</b> seconds of processing.<span>")
+		for(var/obj/item/stock_parts/manipulator/M in component_parts)
+			if(M.rating >= 2)
+				to_chat(user, "<span class='notice'>Gibber has been upgraded to process inorganic materials.<span>")
 
 /obj/machinery/gibber/update_icon()
 	cut_overlays()
@@ -45,7 +52,7 @@
 		add_overlay("gridle")
 
 /obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/gibber/container_resist(mob/living/user)
 	go_out()
@@ -54,6 +61,9 @@
 	go_out()
 
 /obj/machinery/gibber/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(operating)
@@ -76,7 +86,7 @@
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!(I.flags_1 & NODROP_1))
+				if(!I.has_trait(TRAIT_NODROP))
 					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 					return
 
@@ -95,9 +105,6 @@
 
 /obj/machinery/gibber/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
-		return
-
-	else if(exchange_parts(user, P))
 		return
 
 	else if(default_pry_open(P))
@@ -185,7 +192,7 @@
 	if(typeofskin)
 		skin = new typeofskin
 
-	add_logs(user, occupant, "gibbed")
+	log_combat(user, occupant, "gibbed")
 	mob_occupant.death(1)
 	mob_occupant.ghostize()
 	qdel(src.occupant)
@@ -214,29 +221,13 @@
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
-	var/turf/input_plate
+	var/input_dir = NORTH
 
-/obj/machinery/gibber/autogibber/Initialize()
-	. = ..()
-	for(var/i in GLOB.cardinals)
-		var/obj/machinery/mineral/input/input_obj = locate() in get_step(loc, i)
-		if(input_obj)
-			if(isturf(input_obj.loc))
-				input_plate = input_obj.loc
-				qdel(input_obj)
-				break
-
-	if(!input_plate)
-		CRASH("Didn't find an input plate.")
-		return
-
-/obj/machinery/gibber/autogibber/CollidedWith(atom/movable/AM)
-	if(!input_plate)
-		return
-
+/obj/machinery/gibber/autogibber/Bumped(atom/movable/AM)
+	var/atom/input = get_step(src, input_dir)
 	if(ismob(AM))
 		var/mob/M = AM
 
-		if(M.loc == input_plate)
+		if(M.loc == input)
 			M.forceMove(src)
 			M.gib()

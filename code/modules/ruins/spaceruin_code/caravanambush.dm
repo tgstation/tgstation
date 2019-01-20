@@ -53,13 +53,20 @@
 	shuttleId = "caravantrade1"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;caravantrade1_custom;caravantrade1_ambush"
 
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Initialize()
+	. = ..()
+	GLOB.jam_on_wardec += src
+
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Destroy()
+	GLOB.jam_on_wardec -= src
+	return ..()
+
 /obj/machinery/computer/camera_advanced/shuttle_docker/caravan/trade1
 	name = "Small Freighter Navigation Computer"
 	desc = "Used to designate a precise transit location for the Small Freighter."
 	shuttleId = "caravantrade1"
 	lock_override = NONE
 	shuttlePortId = "caravantrade1_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "caravantrade1_ambush" = 1)
 	view_range = 14
 	x_offset = -5
@@ -84,7 +91,6 @@
 	shuttleId = "caravanpirate"
 	lock_override = NONE
 	shuttlePortId = "caravanpirate_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravanpirate_ambush" = 1)
 	view_range = 14
 	x_offset = 3
@@ -109,7 +115,6 @@
 	shuttleId = "caravansyndicate1"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate1_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 7
 	x_offset = 2
@@ -134,7 +139,6 @@
 	shuttleId = "caravansyndicate2"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate2_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 7
 	x_offset = 0
@@ -159,7 +163,6 @@
 	shuttleId = "caravansyndicate3"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate3_custom"
-	shuttlePortName = "Custom Location"
 	jumpto_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1)
 	view_range = 10
 	x_offset = -1

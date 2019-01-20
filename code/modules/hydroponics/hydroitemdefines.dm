@@ -1,5 +1,5 @@
 // Plant analyzer
-/obj/item/device/plant_analyzer
+/obj/item/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth."
 	icon = 'icons/obj/device.dmi'
@@ -8,7 +8,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 // *************************************
@@ -24,10 +24,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-
-/obj/item/reagent_containers/spray/weedspray/Initialize()
-	. = ..()
-	reagents.add_reagent("weedkiller", 100)
+	list_reagents = list("weedkiller" = 100)
 
 /obj/item/reagent_containers/spray/weedspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -42,10 +39,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
-
-/obj/item/reagent_containers/spray/pestspray/Initialize()
-	. = ..()
-	reagents.add_reagent("pestkiller", 100)
+	list_reagents = list("pestkiller" = 100)
 
 /obj/item/reagent_containers/spray/pestspray/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -90,6 +84,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
+/obj/item/hatchet/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 70, 100)
+
 /obj/item/hatchet/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is chopping at [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -108,22 +106,26 @@
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	armour_penetration = 20
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	var/swiping = FALSE
+
+/obj/item/scythe/Initialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 90, 105)
 
 /obj/item/scythe/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is beheading [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		var/obj/item/bodypart/BP = C.get_bodypart("head")
+		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
 			playsound(src,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
 	return (BRUTELOSS)
 
-/obj/item/scythe/pre_attackby(atom/A, mob/living/user, params)
+/obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
 	if(swiping || !istype(A, /obj/structure/spacevine) || get_turf(A) == get_turf(user))
 		return ..()
 	else
@@ -145,71 +147,45 @@
 
 /obj/item/reagent_containers/glass/bottle/nutrient
 	name = "bottle of nutrient"
-	icon = 'icons/obj/chemical.dmi'
 	volume = 50
-	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/Initialize()
 	. = ..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
 	desc = "Contains a fertilizer that causes mild mutations with each harvest."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/ez/Initialize()
-	. = ..()
-	reagents.add_reagent("eznutriment", 50)
+	list_reagents = list("eznutriment" = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/l4z/Initialize()
-	. = ..()
-	reagents.add_reagent("left4zednutriment", 50)
+	list_reagents = list("left4zednutriment" = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
 	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/nutrient/rh/Initialize()
-	. = ..()
-	reagents.add_reagent("robustharvestnutriment", 50)
+	list_reagents = list("robustharvestnutriment" = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/empty
 	name = "bottle"
-	icon = 'icons/obj/chemical.dmi'
 
 /obj/item/reagent_containers/glass/bottle/killer
-	name = "bottle"
-	icon = 'icons/obj/chemical.dmi'
 	volume = 50
-	w_class = WEIGHT_CLASS_TINY
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,5,10,15,25,50)
 
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/killer/weedkiller/Initialize()
-	. = ..()
-	reagents.add_reagent("weedkiller", 50)
+	list_reagents = list("weedkiller" = 50)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
-	icon = 'icons/obj/chemical.dmi'
-
-/obj/item/reagent_containers/glass/bottle/killer/pestkiller/Initialize()
-	. = ..()
-	reagents.add_reagent("pestkiller", 50)
+	list_reagents = list("pestkiller" = 50)

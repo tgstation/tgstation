@@ -1,21 +1,20 @@
-GLOBAL_VAR_INIT(total_runtimes, 0)
+GLOBAL_VAR_INIT(total_runtimes, GLOB.total_runtimes || 0)
 GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
-#ifdef DEBUG
+#ifdef USE_CUSTOM_ERROR_HANDLER
+#define ERROR_USEFUL_LEN 2
+
 /world/Error(exception/E, datum/e_src)
+	GLOB.total_runtimes++
+
 	if(!istype(E)) //Something threw an unusual exception
-		log_world("\[[time_stamp()]] Uncaught exception: [E]")
+		log_world("uncaught runtime error: [E]")
 		return ..()
-	
+
 	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
 	if(copytext(E.name,1,32) == "Maximum recursion level reached")
-		var/list/split = splittext(E.desc, "\n")
-		for (var/i in 1 to split.len)
-			if (split[i] != "")
-				split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
-		E.desc = jointext(split, "\n")
 		//log to world while intentionally triggering the byond bug.
-		log_world("\[[time2text(world.timeofday,"hh:mm:ss")]\]runtime error: [E.name]\n[E.desc]")
+		log_world("runtime error: [E.name]\n[E.desc]")
 		//if we got to here without silently ending, the byond bug has been fixed.
 		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
@@ -31,8 +30,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 
 	if(!error_last_seen) // A runtime is occurring too early in start-up initialization
 		return ..()
-
-	GLOB.total_runtimes++
 
 	var/erroruid = "[E.file][E.line]"
 	var/last_seen = error_last_seen[erroruid]
@@ -54,7 +51,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/configured_error_cooldown
 	var/configured_error_limit
 	var/configured_error_silence_time
-	if(config)
+	if(config && config.entries)
 		configured_error_cooldown = CONFIG_GET(number/error_cooldown)
 		configured_error_limit = CONFIG_GET(number/error_limit)
 		configured_error_silence_time = CONFIG_GET(number/error_silence_time)
@@ -88,8 +85,8 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	var/list/usrinfo = null
 	var/locinfo
 	if(istype(usr))
-		usrinfo = list("  usr: [datum_info_line(usr)]")
-		locinfo = atom_loc_line(usr)
+		usrinfo = list("  usr: [key_name(usr)]")
+		locinfo = loc_name(usr)
 		if(locinfo)
 			usrinfo += "  usr.loc: [locinfo]"
 	// The proceeding mess will almost definitely break if error messages are ever changed
@@ -127,20 +124,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		GLOB.current_test.Fail("[main_line]\n[desclines.Join("\n")]")
 #endif
 
-/* This logs the runtime in the old format */
 
-	E.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][E.name]"
-
-	//Original
-	//
-	var/list/split = splittext(E.desc, "\n")
-	for (var/i in 1 to split.len)
-		if (split[i] != "")
-			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
-	E.desc = jointext(split, "\n")
-	world.log = GLOB.world_runtime_log
-	..(E)
-
-	world.log = null
-
+	// This writes the regular format (unwrapping newlines and inserting timestamps as needed).
+	log_runtime("runtime error: [E.name]\n[E.desc]")
 #endif

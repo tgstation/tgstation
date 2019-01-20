@@ -57,13 +57,16 @@
 "o" = (
 /obj/effect/forcefield/arena_shuttle_entrance,
 /obj/docking_port/mobile/emergency{
-	name = "The Arena";
-	timid = 1
+	name = "The Arena"
 	},
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "p" = (
 /obj/structure/healingfountain,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+"z" = (
+/obj/effect/landmark/shuttle_arena_safe,
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 
@@ -310,16 +313,16 @@ h
 h
 j
 j
+z
 j
 j
-j
-j
+z
 j
 h
+z
 j
 j
-j
-j
+z
 j
 j
 j
@@ -466,16 +469,16 @@ h
 h
 j
 j
+z
 j
 j
+z
 j
 j
-j
-j
-j
+z
 j
 h
-j
+z
 j
 j
 j

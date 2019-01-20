@@ -7,14 +7,16 @@ Passive gate is similar to the regular pump except:
 */
 
 /obj/machinery/atmospherics/components/binary/passive_gate
-	icon_state = "passgate_map"
+	icon_state = "passgate_map-2"
 
 	name = "passive gate"
 	desc = "A one-way air valve that does not require power."
 
 	can_unwrench = TRUE
+	shift_underlay_only = FALSE
 
-	var/on = FALSE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/frequency = 0
@@ -29,12 +31,10 @@ Passive gate is similar to the regular pump except:
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon_nopipes()
-	if(!on)
-		icon_state = "passgate_off"
-		cut_overlays()
-		return
-
-	add_overlay(getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', "passgate_on"))
+	cut_overlays()
+	icon_state = "passgate_off"
+	if(on)
+		add_overlay(getpipeimage(icon, "passgate_on"))
 
 /obj/machinery/atmospherics/components/binary/passive_gate/process_atmos()
 	..()
@@ -165,3 +165,12 @@ Passive gate is similar to the regular pump except:
 	if(. && on)
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
+
+
+/obj/machinery/atmospherics/components/binary/passive_gate/layer1
+	piping_layer = 1
+	icon_state = "passgate_map-1"
+
+/obj/machinery/atmospherics/components/binary/passive_gate/layer3
+	piping_layer = 3
+	icon_state = "passgate_map-3"

@@ -98,8 +98,10 @@
 	icon_state = "reality"
 	pixel_x = -96
 	pixel_y = -96
-	grav_pull = 6
+	dissipate = 0
+	move_self = 0
 	consume_range = 3
+	grav_pull = 4
 	current_size = STAGE_FOUR
 	allowed_size = STAGE_FOUR
 
@@ -107,11 +109,34 @@
 	move()
 	eat()
 	return
+
+/obj/singularity/wizard/attack_tk(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		GET_COMPONENT_FROM(insaneinthemembrane, /datum/component/mood, C)
+		if(insaneinthemembrane.sanity < 15)
+			return //they've already seen it and are about to die, or are just too insane to care
+		to_chat(C, "<span class='userdanger'>OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!</span>")
+		insaneinthemembrane.sanity = 0
+		for(var/lore in typesof(/datum/brain_trauma/severe))
+			C.gain_trauma(lore)
+		addtimer(CALLBACK(src, /obj/singularity/wizard.proc/deranged, C), 100)
+
+/obj/singularity/wizard/proc/deranged(mob/living/carbon/C)
+	if(!C || C.stat == DEAD)
+		return
+	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.spew_organ(3, 2)
+	C.death()
+
+/obj/singularity/wizard/mapped/admin_investigate_setup()
+	return
+
 /////////////////////////////////////////Scrying///////////////////
 
 /obj/item/scrying
 	name = "scrying orb"
-	desc = "An incandescent orb of otherworldly energy, staring into it gives you vision beyond mortal means."
+	desc = "An incandescent orb of otherworldly energy, merely holding it gives you vision and hearing beyond mortal means, and staring into it lets you see the entire universe."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state ="bluespace"
 	throw_speed = 3
@@ -121,24 +146,44 @@
 	force = 15
 	hitsound = 'sound/items/welder2.ogg'
 
-	var/xray_granted = FALSE
+	var/mob/current_owner
 
-/obj/item/scrying/equipped(mob/user)
-	if(!xray_granted && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!(H.dna.check_mutation(XRAY)))
-			H.dna.add_mutation(XRAY)
-			xray_granted = TRUE
+/obj/item/scrying/Initialize(mapload)
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/scrying/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
+/obj/item/scrying/process()
+	var/mob/holder = get(loc, /mob)
+	if(current_owner && current_owner != holder)
+
+		to_chat(current_owner, "<span class='notice'>Your otherworldly vision fades...</span>")
+
+		current_owner.remove_trait(TRAIT_SIXTHSENSE, SCRYING_ORB)
+		current_owner.remove_trait(TRAIT_XRAY_VISION, SCRYING_ORB)
+		current_owner.update_sight()
+
+		current_owner = null
+
+	if(!current_owner)
+		current_owner = holder
+
+		to_chat(current_owner, "<span class='notice'>You can see...everything!</span>")
+
+		current_owner.add_trait(TRAIT_SIXTHSENSE, SCRYING_ORB)
+		current_owner.add_trait(TRAIT_XRAY_VISION, SCRYING_ORB)
+		current_owner.update_sight()
+
 /obj/item/scrying/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You can see...everything!</span>")
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 
 /////////////////////////////////////////Necromantic Stone///////////////////
 
-/obj/item/device/necromantic_stone
+/obj/item/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
@@ -150,10 +195,10 @@
 	var/list/spooky_scaries = list()
 	var/unlimited = 0
 
-/obj/item/device/necromantic_stone/unlimited
+/obj/item/necromantic_stone/unlimited
 	unlimited = 1
 
-/obj/item/device/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
 		return ..()
 
@@ -163,6 +208,11 @@
 	if(M.stat != DEAD)
 		to_chat(user, "<span class='warning'>This artifact can only affect the dead!</span>")
 		return
+
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
+		if(ghost.mind && ghost.mind.current == M && ghost.client)  //the dead mobs list can contain clientless mobs
+			ghost.reenter_corpse()
+			break
 
 	if(!M.mind || !M.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
@@ -177,13 +227,13 @@
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
 	to_chat(M, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(M, "<span class='userdanger'>[user.p_they(TRUE)] [user.p_are()] your master now, assist them even if it costs you your new life!</span>")
+	to_chat(M, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
 
 	equip_roman_skeleton(M)
 
 	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
 
-/obj/item/device/necromantic_stone/proc/check_spooky()
+/obj/item/necromantic_stone/proc/check_spooky()
 	if(unlimited) //no point, the list isn't used.
 		return
 
@@ -199,17 +249,17 @@
 	listclearnulls(spooky_scaries)
 
 //Funny gimmick, skeletons always seem to wear roman/ancient armour
-/obj/item/device/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
+/obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)
 
-	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionaire)
-	H.equip_to_slot_or_del(new hat(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), slot_shoes)
+	var/hat = pick(/obj/item/clothing/head/helmet/roman, /obj/item/clothing/head/helmet/roman/legionnaire)
+	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
 	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
 	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
 
 
 /obj/item/voodoo
@@ -232,11 +282,11 @@
 	if(target && cooldown < world.time)
 		if(I.is_hot())
 			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
-			target.bodytemperature += 50
+			target.adjust_bodytemperature(50)
 			GiveHint(target)
 		else if(is_pointed(I))
 			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
-			target.Knockdown(40)
+			target.Paralyze(40)
 			GiveHint(target)
 		else if(istype(I, /obj/item/bikehorn))
 			to_chat(target, "<span class='userdanger'>HONK</span>")
@@ -263,7 +313,7 @@
 		target = input(user, "Select your victim!", "Voodoo") as null|anything in possible
 		return
 
-	if(user.zone_selected == "chest")
+	if(user.zone_selected == BODY_ZONE_CHEST)
 		if(voodoo_link)
 			target = null
 			voodoo_link.forceMove(drop_location())
@@ -274,24 +324,24 @@
 
 	if(target && cooldown < world.time)
 		switch(user.zone_selected)
-			if("mouth")
+			if(BODY_ZONE_PRECISE_MOUTH)
 				var/wgw =  sanitize(input(user, "What would you like the victim to say", "Voodoo", null)  as text)
-				target.say(wgw)
-				log_game("[user][user.key] made [target][target.key] say [wgw] with a voodoo doll.")
-			if("eyes")
+				target.say(wgw, forced = "voodoo doll")
+				log_game("[key_name(user)] made [key_name(target)] say [wgw] with a voodoo doll.")
+			if(BODY_ZONE_PRECISE_EYES)
 				user.set_machine(src)
 				user.reset_perspective(target)
 				spawn(100)
 					user.reset_perspective(null)
 					user.unset_machine()
-			if("r_leg","l_leg")
+			if(BODY_ZONE_R_LEG,BODY_ZONE_L_LEG)
 				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
 				var/turf/T = get_step(target,pick(GLOB.cardinals))
 				target.Move(T)
-			if("r_arm","l_arm")
+			if(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM)
 				target.click_random_mob()
 				GiveHint(target)
-			if("head")
+			if(BODY_ZONE_HEAD)
 				to_chat(user, "<span class='notice'>You smack the doll's head with your hand.</span>")
 				target.Dizzy(10)
 				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
@@ -318,7 +368,7 @@
 		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
 
 /obj/item/voodoo/suicide_act(mob/living/carbon/user)
-    user.visible_message("<span class='suicide'>[user] links the voodoo doll to themself and sits on it, infinitely crushing themself! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+    user.visible_message("<span class='suicide'>[user] links the voodoo doll to [user.p_them()]self and sits on it, infinitely crushing [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
     user.gib()
     return(BRUTELOSS)
 
@@ -352,6 +402,11 @@
 		return TRUE
 	return FALSE
 
+/obj/item/warpwhistle/proc/end_effect(mob/living/carbon/user)
+	user.invisibility = initial(user.invisibility)
+	user.status_flags &= ~GODMODE
+	user.update_mobility()
+
 /obj/item/warpwhistle/attack_self(mob/living/carbon/user)
 	if(!istype(user) || on_cooldown)
 		return
@@ -359,7 +414,7 @@
 	last_user = user
 	var/turf/T = get_turf(user)
 	playsound(T,'sound/magic/warpwhistle.ogg', 200, 1)
-	user.canmove = 0
+	user.mobility_flags &= ~MOBILITY_MOVE
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
 	if(interrupted(user))
@@ -368,32 +423,29 @@
 	user.status_flags |= GODMODE
 	sleep(20)
 	if(interrupted(user))
+		end_effect(user)
 		return
 	var/breakout = 0
 	while(breakout < 50)
 		var/turf/potential_T = find_safe_turf()
 		if(T.z != potential_T.z || abs(get_dist_euclidian(potential_T,T)) > 50 - breakout)
-			user.forceMove(potential_T)
-			user.canmove = 0
+			do_teleport(user, potential_T, channel = TELEPORT_CHANNEL_MAGIC)
+			user.mobility_flags &= ~MOBILITY_MOVE
 			T = potential_T
 			break
 		breakout += 1
 	new /obj/effect/temp_visual/tornado(T)
 	sleep(20)
+	end_effect(user)
 	if(interrupted(user))
 		return
-	user.invisibility = initial(user.invisibility)
-	user.status_flags &= ~GODMODE
-	user.canmove = 1
 	on_cooldown = 2
 	sleep(40)
 	on_cooldown = 0
 
 /obj/item/warpwhistle/Destroy()
 	if(on_cooldown == 1 && last_user) //Flute got dunked somewhere in the teleport
-		last_user.invisibility = initial(last_user.invisibility)
-		last_user.status_flags &= ~GODMODE
-		last_user.canmove = 1
+		end_effect(last_user)
 	return ..()
 
 /obj/effect/temp_visual/tornado

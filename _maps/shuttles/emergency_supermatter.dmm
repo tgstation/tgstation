@@ -21,14 +21,14 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ah" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "ai" = (
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aj" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -40,7 +40,7 @@
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "am" = (
-/obj/structure/reflector/single/anchored{
+/obj/structure/reflector/single/mapping{
 	dir = 6
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -49,12 +49,11 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "an" = (
-/obj/structure/reflector/box/anchored,
+/obj/structure/reflector/box/mapping,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "ao" = (
-/obj/structure/reflector/single{
-	anchored = 1;
+/obj/structure/reflector/single/mapping{
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -68,12 +67,8 @@
 	},
 /turf/open/floor/noslip,
 /area/shuttle/escape)
-"aq" = (
-/obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/escape)
 "ar" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/yellow,
@@ -94,16 +89,13 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "av" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "aw" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"ax" = (
-/turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/escape)
 "aA" = (
 /obj/machinery/door/airlock/titanium{
@@ -112,14 +104,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aB" = (
-/obj/machinery/power/supermatter_shard/hugbox{
-	anchored = 1;
-	base_icon_state = "darkmatter";
-	explosion_power = 20;
-	gasefficency = 0.15;
-	icon_state = "darkmatter";
-	name = "anchored supermatter crystal"
-	},
+/obj/machinery/power/supermatter_crystal/shard/hugbox/fakecrystal,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aD" = (
@@ -141,8 +126,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Hyperfractal Gigashuttle";
-	timid = 1
+	name = "Hyperfractal Gigashuttle"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
@@ -153,7 +137,6 @@
 "aL" = (
 /obj/machinery/door/airlock/external{
 	name = "Emergency Launch Catwalk";
-	req_access = null;
 	req_access_txt = "10;13"
 	},
 /turf/open/floor/plating,
@@ -162,27 +145,25 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aN" = (
-/obj/structure/reflector/single/anchored{
+/obj/structure/reflector/single/mapping{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aO" = (
-/obj/structure/reflector/double/anchored{
+/obj/structure/reflector/double/mapping{
 	dir = 6
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aP" = (
-/obj/structure/reflector/double{
-	anchored = 1;
+/obj/structure/reflector/double/mapping{
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aQ" = (
-/obj/structure/reflector/single{
-	anchored = 1;
+/obj/structure/reflector/single/mapping{
 	dir = 10
 	},
 /turf/open/floor/plating/airless,
@@ -212,10 +193,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aV" = (
-/obj/machinery/power/supermatter_shard/hugbox{
-	anchored = 1;
-	name = "anchored supermatter shard"
-	},
+/obj/machinery/power/supermatter_crystal/shard/hugbox,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aW" = (
@@ -249,7 +227,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "bb" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -325,6 +303,36 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"hD" = (
+/obj/structure/lattice/catwalk,
+/turf/open/space,
+/area/shuttle/escape)
+"pb" = (
+/obj/structure/closet/radiation{
+	anchored = 1
+	},
+/obj/item/clothing/glasses/meson/engine,
+/obj/machinery/status_display/evac{
+	pixel_x = 32
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"Bi" = (
+/obj/structure/closet/radiation{
+	anchored = 1
+	},
+/obj/item/clothing/glasses/meson/engine,
+/obj/machinery/status_display/evac{
+	pixel_x = -32
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
+"UA" = (
+/obj/machinery/status_display/evac{
+	pixel_y = -32
+	},
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -351,17 +359,17 @@ aa
 aa
 "}
 (2,1,1) = {"
-ae
+aw
 ae
 ad
 ac
-aq
+ae
 ad
-ax
+aw
 ai
 aD
-ai
-aq
+UA
+ae
 aa
 aa
 aN
@@ -369,7 +377,7 @@ aM
 aR
 aU
 aX
-at
+aM
 ba
 bc
 be
@@ -379,7 +387,7 @@ ac
 ag
 ag
 bi
-ag
+Bi
 ag
 ag
 ai
@@ -388,12 +396,12 @@ ai
 ad
 aa
 aa
-at
+aM
 aa
 aS
 aV
 aY
-at
+aM
 ba
 bc
 be
@@ -412,13 +420,13 @@ ar
 aI
 aw
 aa
-at
+aM
 aa
 aT
 aW
 aZ
 aa
-aM
+hD
 aa
 aa
 "}
@@ -435,11 +443,11 @@ as
 as
 bk
 ad
-at
+aM
 aO
 aa
 aa
-aM
+hD
 aa
 aa
 aR
@@ -461,11 +469,11 @@ at
 aL
 aM
 aM
-aM
-aM
-aM
-aM
-aM
+hD
+hD
+hD
+hD
+hD
 bb
 bd
 aY
@@ -483,11 +491,11 @@ au
 au
 bl
 ad
-at
+aM
 aP
 aa
 aa
-aM
+hD
 aa
 aa
 aT
@@ -508,13 +516,13 @@ av
 aI
 aw
 aa
-at
+aM
 aa
 aR
 aU
 aX
 aa
-aM
+hD
 aa
 aa
 "}
@@ -523,7 +531,7 @@ ac
 ag
 ag
 bj
-ag
+pb
 ag
 ag
 ai
@@ -532,28 +540,28 @@ ai
 ad
 aa
 aa
-at
+aM
 aa
 aS
 aV
 aY
-at
+aM
 ba
 bc
 be
 "}
 (10,1,1) = {"
-ae
+aw
 ae
 ad
 ac
-aq
+ae
 ad
-ax
+aw
 ai
 aE
-ai
-aq
+UA
+ae
 aa
 aa
 aQ
@@ -561,7 +569,7 @@ aM
 aT
 aW
 aZ
-at
+aM
 ba
 bc
 be

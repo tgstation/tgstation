@@ -4,7 +4,7 @@
 	icon_state = "blank_blob"
 	desc = "A huge, pulsating yellow mass."
 	max_integrity = 400
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 75, acid = 90)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 75, "acid" = 90)
 	explosion_block = 6
 	point_return = -1
 	health_regen = 0 //we regen in Life() instead of when pulsed
@@ -78,3 +78,11 @@
 			B.change_to(/obj/structure/blob/shield/core, overmind)
 	..()
 
+/obj/structure/blob/core/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/stationloving, FALSE, TRUE)
+
+/obj/structure/blob/core/onTransitZ(old_z, new_z)
+	if(overmind && is_station_level(new_z))
+		overmind.forceMove(get_turf(src))
+	return ..()

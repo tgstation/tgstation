@@ -3,13 +3,16 @@
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	species_traits = list(SPECIES_ROBOTIC,NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
+	species_traits = list(NOTRANSSTING) //all of these + whatever we inherit from the real species
+	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
+	inherent_biotypes = list(MOB_ROBOTIC, MOB_HUMANOID)
 	dangerous_existence = 1
 	blacklisted = 1
 	meat = null
 	damage_overlay_type = "synth"
 	limbs_id = "synth"
-	var/list/initial_species_traits = list(SPECIES_ROBOTIC,NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER,NO_DNA_COPY) //for getting these values back for assume_disguise()
+	var/list/initial_species_traits = list(NOTRANSSTING) //for getting these values back for assume_disguise()
+	var/list/initial_inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 
@@ -41,8 +44,9 @@
 		say_mod = S.say_mod
 		sexes = S.sexes
 		species_traits = initial_species_traits.Copy()
+		inherent_traits = initial_inherent_traits.Copy()
 		species_traits |= S.species_traits
-		species_traits -= list(SPECIES_ORGANIC, SPECIES_INORGANIC, SPECIES_UNDEAD)
+		inherent_traits |= S.inherent_traits
 		attack_verb = S.attack_verb
 		attack_sound = S.attack_sound
 		miss_sound = S.miss_sound
@@ -61,6 +65,7 @@
 		name = initial(name)
 		say_mod = initial(say_mod)
 		species_traits = initial_species_traits.Copy()
+		inherent_traits = initial_inherent_traits.Copy()
 		attack_verb = initial(attack_verb)
 		attack_sound = initial(attack_sound)
 		miss_sound = initial(miss_sound)

@@ -9,13 +9,13 @@
 	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will feel quite unwell."
-	severity = VIRUS_SEVERITY_MINOR
+	severity = DISEASE_SEVERITY_MINOR
 
 /datum/disease/flu/stage_act()
 	..()
 	switch(stage)
 		if(2)
-			if(affected_mob.lying && prob(20))
+			if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(20))
 				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				stage--
 				return
@@ -34,7 +34,7 @@
 					affected_mob.updatehealth()
 
 		if(3)
-			if(affected_mob.lying && prob(15))
+			if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(15))
 				to_chat(affected_mob, "<span class='notice'>You feel better.</span>")
 				stage--
 				return

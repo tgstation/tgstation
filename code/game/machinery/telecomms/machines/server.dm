@@ -10,7 +10,6 @@
 	icon_state = "comm_server"
 	desc = "A machine used to store data and network statistics."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 15
 	circuit = /obj/item/circuitboard/machine/telecomms/server
@@ -37,6 +36,7 @@
 	log.parameters["name"] = signal.data["name"]
 	log.parameters["job"] = signal.data["job"]
 	log.parameters["message"] = signal.data["message"]
+	log.parameters["language"] = signal.language
 
 	// If the signal is still compressed, make the log entry gibberish
 	var/compression = signal.data["compression"]

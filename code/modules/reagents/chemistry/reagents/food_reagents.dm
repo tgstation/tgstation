@@ -13,11 +13,29 @@
 	taste_description = "generic food"
 	taste_mult = 4
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
+	var/quality = 0	//affects mood, typically higher for mixed drinks with more complex recipes
 
-/datum/reagent/consumable/on_mob_life(mob/living/M)
+/datum/reagent/consumable/on_mob_life(mob/living/carbon/M)
 	current_cycle++
-	M.nutrition += nutriment_factor
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!H.has_trait(TRAIT_NOHUNGER))
+			H.adjust_nutrition(nutriment_factor)
 	holder.remove_reagent(src.id, metabolization_rate)
+
+/datum/reagent/consumable/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == INGEST)
+		if (quality && !M.has_trait(TRAIT_AGEUSIA))
+			switch(quality)
+				if (DRINK_NICE)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_nice)
+				if (DRINK_GOOD)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_good)
+				if (DRINK_VERYGOOD)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_verygood)
+				if (DRINK_FANTASTIC)
+					SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "quality_drink", /datum/mood_event/quality_fantastic)
+	return ..()
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -30,7 +48,7 @@
 	var/brute_heal = 1
 	var/burn_heal = 0
 
-/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
 		M.heal_bodypart_damage(brute_heal,burn_heal, 0)
 		. = 1
@@ -78,7 +96,7 @@
 	brute_heal = 1
 	burn_heal = 1
 
-/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/vitamin/on_mob_life(mob/living/carbon/M)
 	if(M.satiety < 600)
 		M.satiety += 30
 	. = ..()
@@ -121,10 +139,10 @@
 	return TRUE
 
 /datum/reagent/consumable/cooking_oil/reaction_turf(turf/open/T, reac_volume)
-	if(!istype(T))
+	if(!istype(T) || isgroundlessturf(T))
 		return
 	if(reac_volume >= 5)
-		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume * 1.5)
+		T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume * 1.5 SECONDS)
 		T.name = "deep-fried [initial(T.name)]"
 		T.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 
@@ -183,26 +201,28 @@
 	taste_description = "hot peppers"
 	taste_mult = 1.5
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/carbon/M)
+	var/heating = 0
 	switch(current_cycle)
 		if(1 to 15)
-			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("cryostylane"))
 				holder.remove_reagent("cryostylane", 5)
 			if(isslime(M))
-				M.bodytemperature += rand(5,20)
+				heating = rand(5,20)
 		if(15 to 25)
-			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(10,20)
+				heating = rand(10,20)
 		if(25 to 35)
-			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 15 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(15,20)
+				heating = rand(15,20)
 		if(35 to INFINITY)
-			M.bodytemperature += 20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			heating = 20 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(isslime(M))
-				M.bodytemperature += rand(20,25)
+				heating = rand(20,25)
+	M.adjust_bodytemperature(heating)
 	..()
 
 /datum/reagent/consumable/frostoil
@@ -212,32 +232,32 @@
 	color = "#8BA6E9" // rgb: 139, 166, 233
 	taste_description = "mint"
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
-	if(M.bodytemperature > 50)
-		switch(current_cycle)
-			if(1 to 15)
-				M.bodytemperature -= 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-				if(holder.has_reagent("capsaicin"))
-					holder.remove_reagent("capsaicin", 5)
-				if(isslime(M))
-					M.bodytemperature -= rand(5,20)
-			if(15 to 25)
-				M.bodytemperature -= 20 * TEMPERATURE_DAMAGE_COEFFICIENT
-				if(isslime(M))
-					M.bodytemperature -= rand(10,20)
-			if(25 to 35)
-				M.bodytemperature -= 30 * TEMPERATURE_DAMAGE_COEFFICIENT
-				if(prob(1))
-					M.emote("shiver")
-				if(isslime(M))
-					M.bodytemperature -= rand(15,20)
-			if(35 to INFINITY)
-				M.bodytemperature -= 40 * TEMPERATURE_DAMAGE_COEFFICIENT
-				if(prob(5))
-					M.emote("shiver")
-				if(isslime(M))
-					M.bodytemperature -= rand(20,25)
-		M.bodytemperature = max(50, M.bodytemperature)
+/datum/reagent/consumable/frostoil/on_mob_life(mob/living/carbon/M)
+	var/cooling = 0
+	switch(current_cycle)
+		if(1 to 15)
+			cooling = -10 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(holder.has_reagent("capsaicin"))
+				holder.remove_reagent("capsaicin", 5)
+			if(isslime(M))
+				cooling = -rand(5,20)
+		if(15 to 25)
+			cooling = -20 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(isslime(M))
+				cooling = -rand(10,20)
+		if(25 to 35)
+			cooling = -30 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(prob(1))
+				M.emote("shiver")
+			if(isslime(M))
+				cooling = -rand(15,20)
+		if(35 to INFINITY)
+			cooling = -40 * TEMPERATURE_DAMAGE_COEFFICIENT
+			if(prob(5))
+				M.emote("shiver")
+			if(isslime(M))
+				cooling = -rand(20,25)
+	M.adjust_bodytemperature(cooling, 50)
 	..()
 
 /datum/reagent/consumable/frostoil/reaction_turf(turf/T, reac_volume)
@@ -247,7 +267,7 @@
 	if(reac_volume >= 1) // Make Freezy Foam and anti-fire grenades!
 		if(isopenturf(T))
 			var/turf/open/OT = T
-			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=10, wet_time_to_add=reac_volume) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
+			OT.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
 			OT.air.temperature -= MOLES_CELLSTANDARD*100*reac_volume/OT.air.heat_capacity() // reduces environment temperature by 5K per unit.
 
 /datum/reagent/consumable/condensedcapsaicin
@@ -264,33 +284,8 @@
 	var/mob/living/carbon/victim = M
 	if(method == TOUCH || method == VAPOR)
 		//check for protection
-		var/mouth_covered = 0
-		var/eyes_covered = 0
-		var/obj/item/safe_thing = null
-
-		//monkeys and humans can have masks
-		if( victim.wear_mask )
-			if ( victim.wear_mask.flags_cover & MASKCOVERSEYES )
-				eyes_covered = 1
-				safe_thing = victim.wear_mask
-			if ( victim.wear_mask.flags_cover & MASKCOVERSMOUTH )
-				mouth_covered = 1
-				safe_thing = victim.wear_mask
-
-		//only humans can have helmets and glasses
-		if(ishuman(victim))
-			var/mob/living/carbon/human/H = victim
-			if( H.head )
-				if ( H.head.flags_cover & MASKCOVERSEYES )
-					eyes_covered = 1
-					safe_thing = H.head
-				if ( H.head.flags_cover & MASKCOVERSMOUTH )
-					mouth_covered = 1
-					safe_thing = H.head
-			if(H.glasses)
-				eyes_covered = 1
-				if ( !safe_thing )
-					safe_thing = H.glasses
+		var/mouth_covered = victim.is_mouth_covered()
+		var/eyes_covered = victim.is_eyes_covered()
 
 		//actually handle the pepperspray effects
 		if ( eyes_covered && mouth_covered )
@@ -302,7 +297,7 @@
 			victim.blind_eyes(2)
 			victim.confused = max(M.confused, 3)
 			victim.damageoverlaytemp = 60
-			victim.Knockdown(60)
+			victim.Paralyze(60)
 			return
 		else if ( eyes_covered ) // Eye cover is better than mouth cover
 			victim.blur_eyes(3)
@@ -315,10 +310,10 @@
 			victim.blind_eyes(3)
 			victim.confused = max(M.confused, 6)
 			victim.damageoverlaytemp = 75
-			victim.Knockdown(100)
+			victim.Paralyze(100)
 		victim.update_damage_hud()
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 	..()
@@ -342,7 +337,7 @@
 		return
 	if(reac_volume < 1)
 		return
-	new/obj/effect/decal/cleanable/salt(T)
+	new/obj/effect/decal/cleanable/food/salt(T)
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -372,12 +367,11 @@
 	glass_name = "glass of chocolate"
 	glass_desc = "Tasty."
 
-/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
-/datum/reagent/mushroomhallucinogen
+/datum/reagent/drug/mushroomhallucinogen
 	name = "Mushroom Hallucinogen"
 	id = "mushroomhallucinogen"
 	description = "A strong hallucinogenic drug derived from certain species of mushroom."
@@ -385,7 +379,7 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	taste_description = "mushroom"
 
-/datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/M)
+/datum/reagent/mushroomhallucinogen/on_mob_life(mob/living/carbon/M)
 	if(!M.slurring)
 		M.slurring = 1
 	switch(current_cycle)
@@ -415,8 +409,8 @@
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_description = "childhood whimsy"
 
-/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
-	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
+/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/M)
+	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
@@ -432,12 +426,12 @@
 /datum/reagent/consumable/cornoil/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T))
 		return
-	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10, wet_time_to_add = reac_volume*2)
+	T.MakeSlippery(TURF_WET_LUBE, min_wet_time = 10 SECONDS, wet_time_to_add = reac_volume*2 SECONDS)
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot)
 		var/datum/gas_mixture/lowertemp = T.remove_air(T.air.total_moles())
 		lowertemp.temperature = max( min(lowertemp.temperature-2000,lowertemp.temperature / 2) ,0)
-		lowertemp.react()
+		lowertemp.react(src)
 		T.assume_air(lowertemp)
 		qdel(hotspot)
 
@@ -464,9 +458,8 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310.15 is the normal bodytemp.
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -477,8 +470,8 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles on fire"
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
-	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT)
 	..()
 
 /datum/reagent/consumable/flour
@@ -491,8 +484,10 @@
 
 /datum/reagent/consumable/flour/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
-		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/flour(T)
-		reagentdecal.reagents.add_reagent("flour", reac_volume)
+		var/obj/effect/decal/cleanable/food/flour/reagentdecal = new(T)
+		reagentdecal = locate() in T //Might have merged with flour already there.
+		if(reagentdecal)
+			reagentdecal.reagents.add_reagent("flour", reac_volume)
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -549,20 +544,20 @@
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 	taste_description = "sweet slime"
 
-/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/M)
+/datum/reagent/consumable/corn_syrup/on_mob_life(mob/living/carbon/M)
 	holder.add_reagent("sugar", 3)
 	..()
 
 /datum/reagent/consumable/honey
 	name = "honey"
 	id = "honey"
-	description = "Sweet sweet honey, decays into sugar and has natural healing properties."
+	description = "Sweet sweet honey that decays into sugar. Has antibacterial and natural healing properties."
 	color = "#d3a308"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 	metabolization_rate = 1 * REAGENTS_METABOLISM
 	taste_description = "sweetness"
 
-/datum/reagent/consumable/honey/on_mob_life(mob/living/M)
+/datum/reagent/consumable/honey/on_mob_life(mob/living/carbon/M)
 	M.reagents.add_reagent("sugar",3)
 	if(prob(55))
 		M.adjustBruteLoss(-1*REM, 0)
@@ -570,6 +565,14 @@
 		M.adjustOxyLoss(-1*REM, 0)
 		M.adjustToxLoss(-1*REM, 0)
 	..()
+
+/datum/reagent/consumable/honey/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+  if(iscarbon(M) && (method in list(TOUCH, VAPOR, PATCH)))
+    var/mob/living/carbon/C = M
+    for(var/s in C.surgeries)
+      var/datum/surgery/S = s
+      S.success_multiplier = max(0.6, S.success_multiplier) // +60% success probability on each step, compared to bacchus' blessing's ~46%
+  ..()
 
 /datum/reagent/consumable/mayonnaise
 	name = "Mayonnaise"
@@ -607,7 +610,7 @@
 			M.blur_eyes(5)
 	..()
 
-/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/M)
+/datum/reagent/consumable/tearjuice/on_mob_life(mob/living/carbon/M)
 	..()
 	if(M.eye_blurry)	//Don't worsen vision if it was otherwise fine
 		M.blur_eyes(4)
@@ -615,6 +618,19 @@
 			to_chat(M, "<span class = 'warning'>Your eyes sting!</span>")
 			M.blind_eyes(2)
 
+
+/datum/reagent/consumable/nutriment/stabilized
+	name = "Stabilized Nutriment"
+	id = "stabilizednutriment"
+	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
+	reagent_state = SOLID
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	color = "#664330" // rgb: 102, 67, 48
+
+/datum/reagent/consumable/nutriment/stabilized/on_mob_life(mob/living/carbon/M)
+	if(M.nutrition > NUTRITION_LEVEL_FULL - 25)
+		M.adjust_nutrition(-3*nutriment_factor)
+	..()
 
 ////Lavaland Flora Reagents////
 
@@ -626,7 +642,7 @@
 	color = "#1d043d"
 	taste_description = "bitter mushroom"
 
-/datum/reagent/consumable/entpoly/on_mob_life(mob/living/M)
+/datum/reagent/consumable/entpoly/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
 		M.Unconscious(40, 0)
 		. = 1
@@ -660,9 +676,36 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	taste_description = "fruity mushroom"
 
-/datum/reagent/consumable/vitfro/on_mob_life(mob/living/M)
+/datum/reagent/consumable/vitfro/on_mob_life(mob/living/carbon/M)
 	if(prob(80))
 		M.adjustBruteLoss(-1*REM, 0)
 		M.adjustFireLoss(-1*REM, 0)
 		. = TRUE
 	..()
+
+/datum/reagent/consumable/clownstears
+	name = "Clown's Tears"
+	id = "clownstears"
+	description = "The sorrow and melancholy of a thousand bereaved clowns, forever denied their Honkmechs."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#eef442" // rgb: 238, 244, 66
+	taste_description = "mournful honking"
+
+
+/datum/reagent/consumable/liquidelectricity
+	name = "Liquid Electricity"
+	id = "liquidelectricity"
+	description = "The blood of Ethereals, and the stuff that keeps them going. Great for them, horrid for anyone else."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#97ee63"
+	taste_description = "pure electrictiy"
+
+/datum/reagent/consumable/liquidelectricity/on_mob_life(mob/living/carbon/M)
+	if(isethereal(M))
+		var/mob/living/carbon/human/H = M
+		var/datum/species/ethereal/E = H.dna?.species
+		E.adjust_charge(5*REM)
+	else if(prob(25)) //scp13 optimization
+		M.electrocute_act(rand(10,15), "Liquid Electricity in their body", 1) //lmao at the newbs who eat energy bars
+		playsound(M, "sparks", 50, 1)
+	return ..()

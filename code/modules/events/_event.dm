@@ -1,26 +1,26 @@
 //this datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
-	var/name					//The human-readable name of the event
-	var/typepath				//The typepath of the event datum /datum/round_event
+	var/name						//The human-readable name of the event
+	var/typepath					//The typepath of the event datum /datum/round_event
 
-	var/weight = 10				//The weight this event has in the random-selection process.
-								//Higher weights are more likely to be picked.
-								//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
-								//0 here does NOT disable the event, it just makes it extremely unlikely
+	var/weight = 10					//The weight this event has in the random-selection process.
+									//Higher weights are more likely to be picked.
+									//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
+									//0 here does NOT disable the event, it just makes it extremely unlikely
 
-	var/earliest_start = 12000	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
-	var/min_players = 0			//The minimum amount of alive, non-AFK human players on server required to start the event.
+	var/earliest_start = 20 MINUTES	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
+	var/min_players = 0				//The minimum amount of alive, non-AFK human players on server required to start the event.
 
-	var/occurrences = 0			//How many times this event has occured
-	var/max_occurrences = 20	//The maximum number of times this event can occur (naturally), it can still be forced.
-								//By setting this to 0 you can effectively disable an event.
+	var/occurrences = 0				//How many times this event has occured
+	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.
+									//By setting this to 0 you can effectively disable an event.
 
-	var/holidayID = ""			//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
-								//anything with a (non-null) holidayID which does not match holiday, cannot run.
-	var/wizardevent = 0
-
-	var/alertadmins = 1			//should we let the admins know this event is firing
-								//should be disabled on events that fire a lot
+	var/holidayID = ""				//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
+									//anything with a (non-null) holidayID which does not match holiday, cannot run.
+	var/wizardevent = FALSE
+	var/random = FALSE				//If the event has occured randomly, or if it was forced by an admin or in-game occurance
+	var/alert_observers = TRUE		//should we let the ghosts and admins know this event is firing
+									//should be disabled on events that fire a lot
 
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
@@ -33,7 +33,7 @@
 		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 
 /datum/round_event_control/wizard
-	wizardevent = 1
+	wizardevent = TRUE
 
 // Checks if the event can be spawned. Used by event controller and "false alarm" event.
 // Admin-created events override this.
@@ -59,7 +59,7 @@
 		return EVENT_CANT_RUN
 
 	triggering = TRUE
-	if (alertadmins)
+	if (alert_observers)
 		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
 		sleep(100)
 		var/gamemode = SSticker.mode.config_tag
@@ -84,7 +84,7 @@
 		log_admin_private("[key_name(usr)] cancelled event [name].")
 		SSblackbox.record_feedback("tally", "event_admin_cancelled", 1, typepath)
 
-/datum/round_event_control/proc/runEvent(random)
+/datum/round_event_control/proc/runEvent()
 	var/datum/round_event/E = new typepath()
 	E.current_players = get_active_player_count(alive_check = 1, afk_check = 1, human_check = 1)
 	E.control = src
@@ -93,10 +93,9 @@
 
 	testing("[time2text(world.time, "hh:mm:ss")] [E.type]")
 	if(random)
-		if(alertadmins)
-			deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been randomly triggered!</span>") //STOP ASSUMING IT'S BADMINS!
 		log_game("Random Event triggering: [name] ([typepath])")
-
+	if (alert_observers)
+		deadchat_broadcast("<span class='deadsay'><b>[name]</b> has just been[random ? " randomly" : ""] triggered!</span>") //STOP ASSUMING IT'S BADMINS!
 	return E
 
 //Special admins setup
@@ -129,6 +128,15 @@
 //Allows you to start before announcing or vice versa.
 //Only called once.
 /datum/round_event/proc/start()
+	return
+
+//Called after something followable has been spawned by an event
+//Provides ghosts a follow link to an atom if possible
+//Only called once.
+/datum/round_event/proc/announce_to_ghosts(atom/atom_of_interest)
+	if(control.alert_observers)
+		if (atom_of_interest)
+			notify_ghosts("[control.name] has an object of interest: [atom_of_interest]!", source=atom_of_interest, action=NOTIFY_ORBIT, header="Something's Interesting!")
 	return
 
 //Called when the tick is equal to the announceWhen variable.

@@ -13,12 +13,12 @@
 	w_class = WEIGHT_CLASS_TINY
 	var/mode = WAND_OPEN
 	var/region_access = 1 //See access.dm
-	var/obj/item/card/id/ID
+	var/list/access_list
 
-/obj/item/door_remote/New()
-	..()
-	ID = new /obj/item/card/id
-	ID.access = get_region_accesses(region_access)
+/obj/item/door_remote/Initialize()
+	. = ..()
+	access_list = get_region_accesses(region_access)
+	AddComponent(/datum/component/ntnet_interface)
 
 /obj/item/door_remote/attack_self(mob/user)
 	switch(mode)
@@ -30,35 +30,31 @@
 			mode = WAND_OPEN
 	to_chat(user, "Now in mode: [mode].")
 
-/obj/item/door_remote/afterattack(obj/machinery/door/airlock/D, mob/user)
-	if(!istype(D))
+// Airlock remote works by sending NTNet packets to whatever it's pointed at.
+/obj/item/door_remote/afterattack(atom/A, mob/user)
+	. = ..()
+	GET_COMPONENT_FROM(target_interface, /datum/component/ntnet_interface, A)
+
+	if(!target_interface)
 		return
-	if(!(D.hasPower()))
-		to_chat(user, "<span class='danger'>[D] has no power!</span>")
-		return
-	if(!D.requiresID())
-		to_chat(user, "<span class='danger'>[D]'s ID scan is disabled!</span>")
-		return
-	if(D.check_access(ID) && D.canAIControl(user))
-		switch(mode)
-			if(WAND_OPEN)
-				if(D.density)
-					D.open()
-				else
-					D.close()
-			if(WAND_BOLT)
-				if(D.locked)
-					D.unbolt()
-				else
-					D.bolt()
-			if(WAND_EMERGENCY)
-				if(D.emergency)
-					D.emergency = FALSE
-				else
-					D.emergency = TRUE
-				D.update_icon()
-	else
-		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")
+
+	// Generate a control packet.
+	var/datum/netdata/data = new
+	data.recipient_ids = list(target_interface.hardware_id)
+
+	switch(mode)
+		if(WAND_OPEN)
+			data.data["data"] = "open"
+		if(WAND_BOLT)
+			data.data["data"] = "bolt"
+		if(WAND_EMERGENCY)
+			data.data["data"] = "emergency"
+
+	data.data["data_secondary"] = "toggle"
+	data.passkey = access_list
+
+	ntnet_send(data)
+
 
 /obj/item/door_remote/omni
 	name = "omni door remote"
@@ -88,6 +84,7 @@
 
 /obj/item/door_remote/quartermaster
 	name = "supply door remote"
+	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	icon_state = "gangtool-green"
 	region_access = 6
 
@@ -97,7 +94,7 @@
 	region_access = 3
 
 /obj/item/door_remote/civillian
-	name = "civillian door remote"
+	name = "civilian door remote"
 	icon_state = "gangtool-white"
 	region_access = 1
 

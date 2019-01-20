@@ -4,6 +4,12 @@
 	//- floor_tile is now a path, and not a tile obj
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
+	baseturfs = /turf/open/floor/plating
+
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
@@ -16,11 +22,15 @@
 	var/list/broken_states
 	var/list/burnt_states
 
+	tiled_dirt = TRUE
+
 /turf/open/floor/Initialize(mapload)
+
 	if (!broken_states)
-		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
-	if (!burnt_states)
-		burnt_states = list()
+		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
+	else
+		broken_states = typelist("broken_states", broken_states)
+	burnt_states = typelist("burnt_states", burnt_states)
 	if(!broken && broken_states && (icon_state in broken_states))
 		broken = TRUE
 	if(!burnt && burnt_states && (icon_state in burnt_states))
@@ -44,7 +54,7 @@
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
-	if(mapload)
+	if(mapload && prob(33))
 		MakeDirty()
 
 /turf/open/floor/ex_act(severity, target)
@@ -54,26 +64,31 @@
 		return
 	if(target == src)
 		ScrapeAway()
+		return
 	if(target != null)
 		severity = 3
 
 	switch(severity)
 		if(1)
-			ScrapeAway()
+			ScrapeAway(2)
 		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
-					src.ReplaceWithLattice()
+					if(!length(baseturfs) || !ispath(baseturfs[baseturfs.len-1], /turf/open/floor))
+						ScrapeAway()
+						ReplaceWithLattice()
+					else
+						ScrapeAway(2)
 					if(prob(33))
 						new /obj/item/stack/sheet/metal(src)
 				if(2)
-					ScrapeAway()
+					ScrapeAway(2)
 				if(3)
 					if(prob(80))
-						src.break_tile_to_plating()
+						ScrapeAway()
 					else
-						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+						break_tile()
+					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33))
 						new /obj/item/stack/sheet/metal(src)
 		if(3)
@@ -94,13 +109,15 @@
 	return 1
 
 /turf/open/floor/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/proc/gets_drilled()
 	return
 
 /turf/open/floor/proc/break_tile_to_plating()
 	var/turf/open/floor/plating/T = make_plating()
+	if(!istype(T))
+		return
 	T.break_tile()
 
 /turf/open/floor/proc/break_tile()
@@ -119,7 +136,7 @@
 	burnt = 1
 
 /turf/open/floor/proc/make_plating()
-	return ChangeTurf(/turf/open/floor/plating)
+	return ScrapeAway()
 
 /turf/open/floor/ChangeTurf(path, new_baseturf, flags)
 	if(!isfloorturf(src))
@@ -139,11 +156,12 @@
 		return 1
 	if(..())
 		return 1
-	if(intact && istype(C, /obj/item/crowbar))
-		return pry_tile(C, user)
 	if(intact && istype(C, /obj/item/stack/tile))
 		try_replace_tile(C, user, params)
 	return 0
+
+/turf/open/floor/crowbar_act(mob/living/user, obj/item/I)
+	return intact ? pry_tile(I, user) : FALSE
 
 /turf/open/floor/proc/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)

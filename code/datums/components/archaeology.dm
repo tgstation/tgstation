@@ -1,17 +1,23 @@
 /datum/component/archaeology
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/list/archdrops
+	var/list/archdrops = list(/obj/item/bikehorn = list(ARCH_PROB = 100, ARCH_MAXDROP = 1)) // honk~
 	var/prob2drop
 	var/dug
 	var/datum/callback/callback
 
-/datum/component/archaeology/Initialize(_prob2drop, list/_archdrops = list(), datum/callback/_callback)
-	prob2drop = CLAMP(_prob2drop, 0, 100)
+/datum/component/archaeology/Initialize(list/_archdrops = list(), datum/callback/_callback)
 	archdrops = _archdrops
+	for(var/i in archdrops)
+		if(isnull(archdrops[i][ARCH_MAXDROP]))
+			archdrops[i][ARCH_MAXDROP] = 1
+			stack_trace("ARCHAEOLOGY WARNING: [parent] contained a null max_drop value in [i].")
+		if(isnull(archdrops[i][ARCH_PROB]))
+			archdrops[i][ARCH_PROB] = 100
+			stack_trace("ARCHAEOLOGY WARNING: [parent] contained a null probability value in [i].")
 	callback = _callback
-	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/Dig)
-	RegisterSignal(COMSIG_ATOM_EX_ACT, .proc/BombDig)
-	RegisterSignal(COMSIG_ATOM_SING_PULL, .proc/SingDig)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/Dig)
+	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/BombDig)
+	RegisterSignal(parent, COMSIG_ATOM_SING_PULL, .proc/SingDig)
 
 /datum/component/archaeology/InheritComponent(datum/component/archaeology/A, i_am_original)
 	var/list/other_archdrops = A.archdrops
@@ -19,28 +25,22 @@
 	for(var/I in other_archdrops)
 		_archdrops[I] += other_archdrops[I]
 
-/datum/component/archaeology/proc/Dig(obj/item/W, mob/living/user)
+/datum/component/archaeology/proc/Dig(datum/source, obj/item/I, mob/living/user)
 	if(dug)
 		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
 		return
-		
-	var/digging_speed
-	if (istype(W, /obj/item/shovel))
-		var/obj/item/shovel/S = W
-		digging_speed = S.digspeed
-	else if (istype(W, /obj/item/pickaxe))
-		var/obj/item/pickaxe/P = W
-		digging_speed = P.digspeed
-	
-	if (digging_speed && isturf(user.loc))
-		to_chat(user, "<span class='notice'>You start digging...</span>")
-		playsound(parent, 'sound/effects/shovel_dig.ogg', 50, 1)
 
-		if(do_after(user, digging_speed, target = parent))
+	if(!isturf(user.loc))
+		return
+
+	if(I.tool_behaviour == TOOL_SHOVEL || I.tool_behaviour == TOOL_MINING)
+		to_chat(user, "<span class='notice'>You start digging...</span>")
+
+		if(I.use_tool(parent, user, 40, volume=50))
 			to_chat(user, "<span class='notice'>You dig a hole.</span>")
 			gets_dug()
 			dug = TRUE
-			SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 			return COMPONENT_NO_AFTERATTACK
 
 /datum/component/archaeology/proc/gets_dug()
@@ -49,9 +49,9 @@
 	else
 		var/turf/open/OT = get_turf(parent)
 		for(var/thing in archdrops)
-			var/maxtodrop = archdrops[thing]
+			var/maxtodrop = archdrops[thing][ARCH_MAXDROP]
 			for(var/i in 1 to maxtodrop)
-				if(prob(prob2drop)) // can't win them all!
+				if(prob(archdrops[thing][ARCH_PROB])) // can't win them all!
 					new thing(OT)
 
 		if(isopenturf(OT))
@@ -72,7 +72,7 @@
 	if(callback)
 		callback.Invoke()
 
-/datum/component/archaeology/proc/SingDig(S, current_size)
+/datum/component/archaeology/proc/SingDig(datum/source, S, current_size)
 	switch(current_size)
 		if(STAGE_THREE)
 			if(prob(30))
@@ -84,7 +84,7 @@
 			if(current_size >= STAGE_FIVE && prob(70))
 				gets_dug()
 
-/datum/component/archaeology/proc/BombDig(severity, target)
+/datum/component/archaeology/proc/BombDig(datum/source, severity, target)
 	switch(severity)
 		if(3)
 			return

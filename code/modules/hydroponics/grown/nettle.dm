@@ -4,7 +4,7 @@
 	icon_state = "seed-nettle"
 	species = "nettle"
 	plantname = "Nettles"
-	product = /obj/item/grown/nettle/basic
+	product = /obj/item/reagent_containers/food/snacks/grown/nettle
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	yield = 4
@@ -19,7 +19,7 @@
 	icon_state = "seed-deathnettle"
 	species = "deathnettle"
 	plantname = "Death Nettles"
-	product = /obj/item/grown/nettle/death
+	product = /obj/item/reagent_containers/food/snacks/grown/nettle/death
 	endurance = 25
 	maturation = 8
 	yield = 2
@@ -28,7 +28,8 @@
 	reagents_add = list("facid" = 0.5, "sacid" = 0.5)
 	rarity = 20
 
-/obj/item/grown/nettle //abstract type
+/obj/item/reagent_containers/food/snacks/grown/nettle // "snack"
+	seed = /obj/item/seeds/nettle
 	name = "nettle"
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -43,24 +44,20 @@
 	throw_speed = 1
 	throw_range = 3
 	attack_verb = list("stung")
-	grind_results = list("sacid" = 0)
 
-/obj/item/grown/nettle/suicide_act(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/nettle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is eating some of [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|TOXLOSS)
 
-/obj/item/grown/nettle/pickup(mob/living/user)
+/obj/item/reagent_containers/food/snacks/grown/nettle/pickup(mob/living/user)
 	..()
 	if(!iscarbon(user))
 		return FALSE
 	var/mob/living/carbon/C = user
 	if(C.gloves)
 		return FALSE
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		if(H.dna && H.dna.species)
-			if(PIERCEIMMUNE in H.dna.species.species_traits)
-				return FALSE
+	if(C.has_trait(TRAIT_PIERCEIMMUNE))
+		return FALSE
 	var/hit_zone = (C.held_index_to_dir(C.active_hand_index) == "l" ? "l_":"r_") + "arm"
 	var/obj/item/bodypart/affecting = C.get_bodypart(hit_zone)
 	if(affecting)
@@ -69,7 +66,8 @@
 	to_chat(C, "<span class='userdanger'>The nettle burns your bare hand!</span>")
 	return TRUE
 
-/obj/item/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
+/obj/item/reagent_containers/food/snacks/grown/nettle/afterattack(atom/A as mob|obj, mob/user,proximity)
+	. = ..()
 	if(!proximity)
 		return
 	if(force > 0)
@@ -78,41 +76,40 @@
 		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
 
-/obj/item/grown/nettle/basic
+/obj/item/reagent_containers/food/snacks/grown/nettle/basic
 	seed = /obj/item/seeds/nettle
 
-/obj/item/grown/nettle/basic/add_juice()
+/obj/item/reagent_containers/food/snacks/grown/nettle/basic/add_juice()
 	..()
 	force = round((5 + seed.potency / 5), 1)
 
-/obj/item/grown/nettle/death
+/obj/item/reagent_containers/food/snacks/grown/nettle/death
 	seed = /obj/item/seeds/nettle/death
 	name = "deathnettle"
 	desc = "The <span class='danger'>glowing</span> nettle incites <span class='boldannounce'>rage</span> in you just from looking at it!"
 	icon_state = "deathnettle"
 	force = 30
 	throwforce = 15
-	grind_results = list("facid" = 1, "sacid" = 1)
 
-/obj/item/grown/nettle/death/add_juice()
+/obj/item/reagent_containers/food/snacks/grown/nettle/death/add_juice()
 	..()
 	force = round((5 + seed.potency / 2.5), 1)
 
-/obj/item/grown/nettle/death/pickup(mob/living/carbon/user)
+/obj/item/reagent_containers/food/snacks/grown/nettle/death/pickup(mob/living/carbon/user)
 	if(..())
 		if(prob(50))
-			user.Knockdown(100)
+			user.Paralyze(100)
 			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
 
-/obj/item/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
+/obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
 		return
 	if(isliving(M))
 		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>")
-		add_logs(user, M, "attacked", src)
+		log_combat(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)
 		if(prob(20))
 			M.Unconscious(force / 0.3)
-			M.Knockdown(force / 0.75)
+			M.Paralyze(force / 0.75)
 		M.drop_all_held_items()

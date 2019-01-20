@@ -7,11 +7,9 @@
 	icon = 'icons/obj/machines/defib_mount.dmi'
 	icon_state = "defibrillator_mount"
 	density = FALSE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 1
 	power_channel = EQUIP
-	speed_process = TRUE //GAS GAS GAS
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_HEADS, ACCESS_SECURITY) //used to control clamps
 	var/obj/item/defibrillator/defib //this mount's defibrillator
 	var/clamps_locked = FALSE //if true, and a defib is loaded, it can't be removed without unlocking the clamps
@@ -35,15 +33,10 @@
 			to_chat(user, "<span class='notice'>Its locking clamps can be [clamps_locked ? "dis" : ""]engaged by swiping an ID with access.</span>")
 
 /obj/machinery/defibrillator_mount/process()
-	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge)
-		use_power(20)
-		defib.cell.give(18) //90% efficiency, slightly better than the cell charger's 87.5%
-	if(defib && defib.paddles && isliving(defib.paddles.loc))
-		var/mob/living/L = defib.paddles.loc
-		if(!L.Adjacent(src))
-			to_chat(L, "<span class='warning'>[defib]'s paddles overextend and come out of your hands!</span>")
-			L.dropItemToGround(defib.paddles)
-	update_icon()
+	if(defib && defib.cell && defib.cell.charge < defib.cell.maxcharge && is_operational())
+		use_power(200)
+		defib.cell.give(180) //90% efficiency, slightly better than the cell charger's 87.5%
+		update_icon()
 
 /obj/machinery/defibrillator_mount/update_icon()
 	cut_overlays()
@@ -66,17 +59,17 @@
 	if(!defib)
 		to_chat(user, "<span class='warning'>There's no defibrillator unit loaded!</span>")
 		return
-	if(defib.on)
+	if(defib.paddles.loc != defib)
 		to_chat(user, "<span class='warning'>[defib.paddles.loc == user ? "You are already" : "Someone else is"] holding [defib]'s paddles!</span>")
 		return
-	defib.attack_hand(user)
+	user.put_in_hands(defib.paddles)
 
 /obj/machinery/defibrillator_mount/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/defibrillator))
 		if(defib)
 			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
-		if(I.flags_1 & NODROP_1 || !user.transferItemToLoc(I, src))
+		if(I.has_trait(TRAIT_NODROP) || !user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
@@ -84,6 +77,9 @@
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		defib = I
 		update_icon()
+		return
+	else if(I == defib.paddles)
+		defib.paddles.snap_back()
 		return
 	var/obj/item/card/id = I.GetID()
 	if(id)

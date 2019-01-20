@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/uses_left = 3
 	var/can_use_indoors
 	var/safe_for_living_creatures = 1
+	var/max_force_fulton = MOVE_FORCE_STRONG
 
 /obj/item/extraction_pack/examine()
 	. = ..()
@@ -38,6 +39,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		to_chat(user, "You link the extraction pack to the beacon system.")
 
 /obj/item/extraction_pack/afterattack(atom/movable/A, mob/living/carbon/human/user, flag, params)
+	. = ..()
 	if(!beacon)
 		to_chat(user, "[src] is not linked to a beacon, and cannot be used.")
 		return
@@ -56,15 +58,14 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
-		if(A.anchored)
+		if(A.anchored || (A.move_resist > max_force_fulton))
 			return
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(do_after(user,50,target=A))
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
 			if(loc == user && istype(user.back, /obj/item/storage/backpack))
 				var/obj/item/storage/backpack/B = user.back
-				if(B.can_be_inserted(src,stop_messages = 1))
-					B.handle_item_insertion(src)
+				SEND_SIGNAL(B, COMSIG_TRY_STORAGE_INSERT, src, user, FALSE, FALSE)
 			uses_left--
 			if(uses_left <= 0)
 				user.transferItemToLoc(src, A, TRUE)
@@ -73,7 +74,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/mutable_appearance/balloon3
 			if(isliving(A))
 				var/mob/living/M = A
-				M.Knockdown(320) // Keep them from moving during the duration of the extraction
+				M.Paralyze(320) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
 			else
 				A.anchored = TRUE

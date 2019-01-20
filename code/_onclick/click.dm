@@ -20,6 +20,14 @@
 /mob/proc/changeNext_move(num)
 	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
 
+/mob/living/changeNext_move(num)
+	var/mod = next_move_modifier
+	var/adj = next_move_adjust
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		mod *= S.nextmove_modifier()
+		adj += S.nextmove_adjust()
+	next_move = world.time + ((num + adj)*mod)
 
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -31,16 +39,16 @@
 	Note that this proc can be overridden, and is in the case of screen objects.
 */
 /atom/Click(location,control,params)
-	if(initialized)
-		SendSignal(COMSIG_CLICK, location, control, params)
+	if(flags_1 & INITIALIZED_1)
+		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 
 /atom/DblClick(location,control,params)
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		usr.DblClickOn(src,params)
 
 /atom/MouseWheel(delta_x,delta_y,location,control,params)
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		usr.MouseWheelOn(src, delta_x, delta_y, params)
 
 /*
@@ -49,7 +57,7 @@
 
 	After that, mostly just check your state, check whether you're holding an item,
 	check whether you're adjacent to the target, then pass off the click to whoever
-	is recieving it.
+	is receiving it.
 	The most common are:
 	* mob/UnarmedAttack(atom,adjacent) - used here only when adjacent, with no item in hand; in the case of humans, checks gloves
 	* atom/attackby(item,user) - used only when adjacent
@@ -61,9 +69,14 @@
 		return
 	next_click = world.time + 1
 
-	if(client && client.click_intercept)
-		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
-			return
+	if(check_click_intercept(params,A))
+		return
+
+	if(notransform)
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return
 
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["middle"])
@@ -118,7 +131,7 @@
 
 	//These are always reachable.
 	//User itself, current loc, and user inventory
-	if(DirectAccess(A))
+	if(A in DirectAccess())
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else
@@ -163,50 +176,43 @@
 			return TRUE
 	return FALSE
 
-/atom/movable/proc/CanReach(atom/target,obj/item/tool,view_only = FALSE)
-	if(isturf(target) || isturf(target.loc) || DirectAccess(target)) //Directly accessible atoms
-		if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
-			return TRUE
-	else
-		//Things inside storage insde another storage
-		//Eg Contents of a box in a backpack
-		var/atom/outer_storage = get_atom_on_turf(target)
-		if(outer_storage == target) //whatever that is we don't want infinite loop.
-			return FALSE
-		if(outer_storage && CanReach(outer_storage,tool) && outer_storage.CanReachStorage(target,src,view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH))
-			return TRUE
+/atom/movable/proc/CanReach(atom/ultimate_target, obj/item/tool, view_only = FALSE)
+	// A backwards depth-limited breadth-first-search to see if the target is
+	// logically "in" anything adjacent to us.
+	var/list/direct_access = DirectAccess()
+	var/depth = 1 + (view_only ? STORAGE_VIEW_DEPTH : INVENTORY_DEPTH)
+
+	var/list/closed = list()
+	var/list/checking = list(ultimate_target)
+	while (checking.len && depth > 0)
+		var/list/next = list()
+		--depth
+
+		for(var/atom/target in checking)  // will filter out nulls
+			if(closed[target] || isarea(target))  // avoid infinity situations
+				continue
+			closed[target] = TRUE
+			if(isturf(target) || isturf(target.loc) || (target in direct_access)) //Directly accessible atoms
+				if(Adjacent(target) || (tool && CheckToolReach(src, target, tool.reach))) //Adjacent or reaching attacks
+					return TRUE
+
+			if (!target.loc)
+				continue
+
+			if(!(SEND_SIGNAL(target.loc, COMSIG_ATOM_CANREACH, next) & COMPONENT_BLOCK_REACH))
+				next += target.loc
+
+		checking = next
 	return FALSE
 
-//Can [target] in this container be reached by [user], can't be more than [depth] levels deep
-/atom/proc/CanReachStorage(atom/target,user,depth)
-	return FALSE
-
-/obj/item/storage/CanReachStorage(atom/target,user,depth)
-	while(target && depth > 0)
-		target = target.loc
-		depth--
-		if(target == src)
-			return TRUE
-	return FALSE
-
-/atom/movable/proc/DirectAccess(atom/target)
-	if(target == src)
-		return TRUE
-	if(target == loc)
-		return TRUE
+/atom/movable/proc/DirectAccess()
+	return list(src, loc)
 
 /mob/DirectAccess(atom/target)
-	if(..())
-		return TRUE
-	if(target in contents) //This could probably use moving down and restricting to inventory only
-		return TRUE
-	return FALSE
+	return ..() + contents
 
 /mob/living/DirectAccess(atom/target)
-	if(..()) //Lightweight checks first
-		return TRUE
-	if(target in GetAllContents())
-		return TRUE
+	return ..() + GetAllContents()
 
 /atom/proc/AllowClick()
 	return FALSE
@@ -265,6 +271,7 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
 /*
 	Restrained ClickOn
 
@@ -308,7 +315,7 @@
 	A.ShiftClick(src)
 	return
 /atom/proc/ShiftClick(mob/user)
-	SendSignal(COMSIG_CLICK_SHIFT, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_SHIFT, user)
 	if(user.client && user.client.eye == user || user.client.eye == user.loc)
 		user.examinate(src)
 	return
@@ -323,7 +330,7 @@
 	return
 
 /atom/proc/CtrlClick(mob/user)
-	SendSignal(COMSIG_CLICK_CTRL, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL, user)
 	var/mob/living/ML = user
 	if(istype(ML))
 		ML.pulled(src)
@@ -355,14 +362,18 @@
 	..()
 
 /atom/proc/AltClick(mob/user)
-	SendSignal(COMSIG_CLICK_ALT, user)
+	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
-		if(user.listed_turf == T)
-			user.listed_turf = null
-		else
-			user.listed_turf = T
-			user.client.statpanel = T.name
+		user.listed_turf = T
+		user.client.statpanel = T.name
+
+// Use this instead of /mob/proc/AltClickOn(atom/A) where you only want turf content listing without additional atom alt-click interaction
+/atom/proc/AltClickNoInteract(mob/user, atom/A)
+	var/turf/T = get_turf(A)
+	if(T && user.TurfAdjacent(T))
+		user.listed_turf = T
+		user.client.statpanel = T.name
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)
@@ -380,7 +391,7 @@
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
-	SendSignal(COMSIG_CLICK_CTRL_SHIFT)
+	SEND_SIGNAL(src, COMSIG_CLICK_CTRL_SHIFT)
 	return
 
 /*
@@ -449,7 +460,7 @@
 	screen_loc = "CENTER"
 
 #define MAX_SAFE_BYOND_ICON_SCALE_TILES (MAX_SAFE_BYOND_ICON_SCALE_PX / world.icon_size)
-#define MAX_SAFE_BYOND_ICON_SCALE_PX 33 * 32			//Not using world.icon_size on purpose.
+#define MAX_SAFE_BYOND_ICON_SCALE_PX (33 * 32)			//Not using world.icon_size on purpose.
 
 /obj/screen/click_catcher/proc/UpdateGreed(view_size_x = 15, view_size_y = 15)
 	var/icon/newicon = icon('icons/mob/screen_gen.dmi', "catcher")
@@ -472,7 +483,7 @@
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else
-		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr), usr.client)
 		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
@@ -492,3 +503,16 @@
 		else
 			view = 1
 		add_view_range(view)
+
+/mob/proc/check_click_intercept(params,A)
+	//Client level intercept
+	if(client && client.click_intercept)
+		if(call(client.click_intercept, "InterceptClickOn")(src, params, A))
+			return TRUE
+
+	//Mob level intercept
+	if(click_intercept)
+		if(call(click_intercept, "InterceptClickOn")(src, params, A))
+			return TRUE
+
+	return FALSE

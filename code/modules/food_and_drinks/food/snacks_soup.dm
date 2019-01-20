@@ -10,7 +10,7 @@
 
 /obj/item/reagent_containers/food/snacks/soup/Initialize()
 	. = ..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = pick("slurp","sip","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/soup/wish
 	name = "wish soup"
@@ -70,8 +70,8 @@
 	name = "clown's tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	bonus_reagents = list("nutriment" = 1, "banana" = 5, "vitamin" = 8)
-	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 5, "vitamin" = 8)
+	bonus_reagents = list("nutriment" = 1, "banana" = 5, "vitamin" = 8, "clownstears" = 10)
+	list_reagents = list("nutriment" = 4, "banana" = 5, "water" = 5, "vitamin" = 8, "clownstears" = 10)
 	tastes = list("a bad joke" = 1)
 	foodtype = FRUIT | SUGAR
 

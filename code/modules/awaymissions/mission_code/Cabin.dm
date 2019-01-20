@@ -28,12 +28,10 @@
 	..()
 	toggleFirepit()
 
-/obj/structure/firepit/attack_hand(mob/living/user)
+/obj/structure/firepit/interact(mob/living/user)
 	if(active)
-		active = 0
+		active = FALSE
 		toggleFirepit()
-	else
-		..()
 
 /obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
 	if(!active)
@@ -48,6 +46,7 @@
 		W.fire_act()
 
 /obj/structure/firepit/proc/toggleFirepit()
+	active = !active
 	if(active)
 		set_light(8)
 		icon_state = "firepit-active"

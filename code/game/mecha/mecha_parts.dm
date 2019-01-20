@@ -9,26 +9,32 @@
 	w_class = WEIGHT_CLASS_GIGANTIC
 	flags_1 = CONDUCT_1
 
-/obj/item/mecha_parts/chassis
-	name="Mecha Chassis"
-	icon_state = "backbone"
-	var/datum/construction/construct
+/obj/item/mecha_parts/proc/try_attach_part(mob/user, obj/mecha/M) //For attaching parts to a finished mech
+	if(!user.transferItemToLoc(src, M))
+		to_chat(user, "<span class='warning'>\The [src] is stuck to your hand, you cannot put it in \the [M]!</span>")
+		return FALSE
+	user.visible_message("[user] attaches [src] to [M].", "<span class='notice'>You attach [src] to [M].</span>")
+	return TRUE
 
-/obj/item/mecha_parts/chassis/attackby(obj/item/W, mob/user, params)
-	if(!construct || !construct.action(W, user))
-		return ..()
-
-/obj/item/mecha_parts/chassis/attack_hand()
+/obj/item/mecha_parts/part/try_attach_part(mob/user, obj/mecha/M)
 	return
+
+/obj/item/mecha_parts/chassis
+	name = "Mecha Chassis"
+	icon_state = "backbone"
+	interaction_flags_item = NONE			//Don't pick us up!!
+	var/construct_type
+
+/obj/item/mecha_parts/chassis/Initialize()
+	. = ..()
+	if(construct_type)
+		AddComponent(construct_type)
 
 /////////// Ripley
 
 /obj/item/mecha_parts/chassis/ripley
 	name = "\improper Ripley chassis"
-
-/obj/item/mecha_parts/chassis/ripley/Initialize()
-	. = ..()
-	construct = new /datum/construction/mecha/ripley_chassis(src)
+	construct_type = /datum/component/construction/unordered/mecha_chassis/ripley
 
 /obj/item/mecha_parts/part/ripley_torso
 	name = "\improper Ripley torso"
@@ -59,10 +65,7 @@
 
 /obj/item/mecha_parts/chassis/odysseus
 	name = "\improper Odysseus chassis"
-
-/obj/item/mecha_parts/chassis/odysseus/Initialize()
-	. = ..()
-	construct = new /datum/construction/mecha/odysseus_chassis(src)
+	construct_type = /datum/component/construction/unordered/mecha_chassis/odysseus
 
 /obj/item/mecha_parts/part/odysseus_head
 	name = "\improper Odysseus head"
@@ -98,10 +101,7 @@
 
 /obj/item/mecha_parts/chassis/gygax
 	name = "\improper Gygax chassis"
-
-/obj/item/mecha_parts/chassis/gygax/Initialize()
-	. = ..()
-	construct = new /datum/construction/mecha/gygax_chassis(src)
+	construct_type = /datum/component/construction/unordered/mecha_chassis/gygax
 
 /obj/item/mecha_parts/part/gygax_torso
 	name = "\improper Gygax torso"
@@ -144,10 +144,7 @@
 
 /obj/item/mecha_parts/chassis/durand
 	name = "\improper Durand chassis"
-
-/obj/item/mecha_parts/chassis/durand/Initialize()
-	. = ..()
-	construct = new /datum/construction/mecha/durand_chassis(src)
+	construct_type = /datum/component/construction/unordered/mecha_chassis/durand
 
 /obj/item/mecha_parts/part/durand_torso
 	name = "\improper Durand torso"
@@ -171,12 +168,12 @@
 
 /obj/item/mecha_parts/part/durand_left_leg
 	name = "\improper Durand left leg"
-	desc = "A Durand left leg. Built particlarly sturdy to support the Durand's heavy weight and defensive needs."
+	desc = "A Durand left leg. Built particularly sturdy to support the Durand's heavy weight and defensive needs."
 	icon_state = "durand_l_leg"
 
 /obj/item/mecha_parts/part/durand_right_leg
 	name = "\improper Durand right leg"
-	desc = "A Durand right leg. Built particlarly sturdy to support the Durand's heavy weight and defensive needs."
+	desc = "A Durand right leg. Built particularly sturdy to support the Durand's heavy weight and defensive needs."
 	icon_state = "durand_r_leg"
 
 /obj/item/mecha_parts/part/durand_armor
@@ -188,21 +185,15 @@
 ////////// Firefighter
 
 /obj/item/mecha_parts/chassis/firefighter
-	name = "Firefighter chassis"
-
-/obj/item/mecha_parts/chassis/firefighter/Initialize()
-	. = ..()
-	construct = new /datum/construction/mecha/firefighter_chassis(src)
+	name = "\improper Firefighter chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/firefighter
 
 
 ////////// HONK
 
 /obj/item/mecha_parts/chassis/honker
 	name = "\improper H.O.N.K chassis"
-
-/obj/item/mecha_parts/chassis/honker/Initialize()
-	. = ..()
-	construct = new /datum/construction/mecha/honker_chassis(src)
+	construct_type = /datum/component/construction/unordered/mecha_chassis/honker
 
 /obj/item/mecha_parts/part/honker_torso
 	name = "\improper H.O.N.K torso"
@@ -239,10 +230,7 @@
 
 /obj/item/mecha_parts/chassis/phazon
 	name = "\improper Phazon chassis"
-
-/obj/item/mecha_parts/chassis/phazon/Initialize()
-	. = ..()
-	construct = new /datum/construction/mecha/phazon_chassis(src)
+	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"

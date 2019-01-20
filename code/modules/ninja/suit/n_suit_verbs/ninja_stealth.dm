@@ -11,13 +11,13 @@ Contents:
 	var/mob/living/carbon/human/U = affecting
 	if(!U)
 		return
-	if(s_active)
+	if(stealth)
 		cancel_stealth()
 	else
 		if(cell.charge <= 0)
 			to_chat(U, "<span class='warning'>You don't have enough power to enable Stealth!</span>")
 			return
-		s_active=!s_active
+		stealth = !stealth
 		animate(U, alpha = 50,time = 15)
 		U.visible_message("<span class='warning'>[U.name] vanishes into thin air!</span>", \
 						"<span class='notice'>You are now mostly invisible to normal detection.</span>")
@@ -27,8 +27,8 @@ Contents:
 	var/mob/living/carbon/human/U = affecting
 	if(!U)
 		return 0
-	if(s_active)
-		s_active=!s_active
+	if(stealth)
+		stealth = !stealth
 		animate(U, alpha = 255, time = 15)
 		U.visible_message("<span class='warning'>[U.name] appears from thin air!</span>", \
 						"<span class='notice'>You are now visible.</span>")

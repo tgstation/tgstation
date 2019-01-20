@@ -22,7 +22,7 @@
 		var/mob/living/M = target
 		if(!M.anchored && M != summoner && !hasmatchingsummoner(M))
 			new /obj/effect/temp_visual/guardian/phase/out(get_turf(M))
-			do_teleport(M, M, 10)
+			do_teleport(M, M, 10, channel = TELEPORT_CHANNEL_BLUESPACE)
 			for(var/mob/living/L in range(1, M))
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
@@ -81,13 +81,14 @@
 		else
 			to_chat(user, "<span class='holoparasite'>[src] glows with a strange <font color=\"[spawner.namedatum.colour]\">light</font>, and you don't touch it.</span>")
 
-/obj/guardian_bomb/Collide(atom/A)
+/obj/guardian_bomb/Bump(atom/A)
 	detonate(A)
 	..()
 
 /obj/guardian_bomb/attackby(mob/living/user)
 	detonate(user)
 
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/guardian_bomb/attack_hand(mob/living/user)
 	detonate(user)
 

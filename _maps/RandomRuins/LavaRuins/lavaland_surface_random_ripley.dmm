@@ -3,13 +3,15 @@
 /turf/template_noop,
 /area/lavaland/surface/outdoors)
 "b" = (
-/turf/closed/mineral/volcanic,
+/turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "c" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "d" = (
-/obj/mecha/working/ripley/mining,
+/obj/mecha/working/ripley/mining{
+	ruin_mecha = 1
+	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "e" = (

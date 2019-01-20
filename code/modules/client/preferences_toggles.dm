@@ -116,7 +116,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost, togglemidroundantag)()
 	return C.prefs.toggles & MIDROUND_ANTAG
 
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletitlemusic)()
-	set name = "Hear/Silence LobbyMusic"
+	set name = "Hear/Silence Lobby Music"
 	set category = "Preferences"
 	set desc = "Hear Music In Lobby"
 	usr.client.prefs.toggles ^= SOUND_LOBBY
@@ -146,7 +146,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglemidis)()
 		usr.stop_sound_channel(CHANNEL_ADMIN)
 		var/client/C = usr.client
 		if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-			C.chatOutput.sendMusic(" ")
+			C.chatOutput.stopMusic()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Hearing Midis", "[usr.client.prefs.toggles & SOUND_MIDI ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /datum/verbs/menu/Settings/Sound/togglemidis/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_MIDI
@@ -213,21 +213,6 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_announcement_sound)()
 	return C.prefs.toggles & SOUND_ANNOUNCEMENTS
 
 
-TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
-	set name = "Hear/Silence Prayer Sounds"
-	set category = "Preferences"
-	set desc = "Hear Prayer Sounds"
-	usr.client.prefs.toggles ^= SOUND_PRAYERS
-	usr.client.prefs.save_preferences()
-	if(usr.client.prefs.toggles & SOUND_PRAYERS)
-		to_chat(usr, "You will now hear prayer sounds.")
-	else
-		to_chat(usr, "You will no longer prayer sounds.")
-	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Prayer Sounds", "[usr.client.prefs.toggles & SOUND_PRAYERS ? "Enabled" : "Disabled"]"))
-/datum/verbs/menu/Settings/Sound/toggleprayersounds/Get_checked(client/C)
-	return C.prefs.toggles & SOUND_PRAYERS
-
-
 /datum/verbs/menu/Settings/Sound/verb/stop_client_sounds()
 	set name = "Stop Sounds"
 	set category = "Preferences"
@@ -235,7 +220,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleprayersounds)()
 	SEND_SOUND(usr, sound(null))
 	var/client/C = usr.client
 	if(C && C.chatOutput && !C.chatOutput.broken && C.chatOutput.loaded)
-		C.chatOutput.sendMusic(" ")
+		C.chatOutput.stopMusic()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -367,7 +352,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 //Admin Preferences
 /client/proc/toggleadminhelpsound()
 	set name = "Hear/Silence Adminhelps"
-	set category = "Preferences"
+	set category = "Prefs - Admin"
 	set desc = "Toggle hearing a notification when admin PMs are received"
 	if(!holder)
 		return
@@ -378,7 +363,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleannouncelogin()
 	set name = "Do/Don't Announce Login"
-	set category = "Preferences"
+	set category = "Prefs - Admin"
 	set desc = "Toggle if you want an announcement to admins when you login during a round"
 	if(!holder)
 		return
@@ -389,7 +374,7 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggle_hear_radio()
 	set name = "Show/Hide Radio Chatter"
-	set category = "Preferences"
+	set category = "Prefs - Admin"
 	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
 	if(!holder)
 		return
@@ -400,8 +385,10 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/deadchat()
 	set name = "Show/Hide Deadchat"
-	set category = "Preferences"
+	set category = "Prefs - Admin"
 	set desc ="Toggles seeing deadchat"
+	if(!holder)
+		return
 	prefs.chat_toggles ^= CHAT_DEAD
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat.")
@@ -409,9 +396,50 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 /client/proc/toggleprayers()
 	set name = "Show/Hide Prayers"
-	set category = "Preferences"
+	set category = "Prefs - Admin"
 	set desc = "Toggles seeing prayers"
+	if(!holder)
+		return
 	prefs.chat_toggles ^= CHAT_PRAYER
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Prayer Visibility", "[prefs.chat_toggles & CHAT_PRAYER ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/toggle_prayer_sound()
+	set name = "Hear/Silence Prayer Sounds"
+	set category = "Prefs - Admin"
+	set desc = "Hear Prayer Sounds"
+	if(!holder)
+		return
+	prefs.toggles ^= SOUND_PRAYERS
+	prefs.save_preferences()
+	to_chat(usr, "You will [(prefs.toggles & SOUND_PRAYERS) ? "now" : "no longer"] hear a sound when prayers arrive.")
+	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle Prayer Sounds", "[usr.client.prefs.toggles & SOUND_PRAYERS ? "Enabled" : "Disabled"]"))
+
+/client/proc/colorasay()
+	set name = "Set Admin Say Color"
+	set category = "Prefs - Admin"
+	set desc = "Set the color of your ASAY messages"
+	if(!holder)
+		return
+	if(!CONFIG_GET(flag/allow_admin_asaycolor))
+		to_chat(src, "Custom Asay color is currently disabled by the server.")
+		return
+	var/new_asaycolor = input(src, "Please select your ASAY color.", "ASAY color", prefs.asaycolor) as color|null
+	if(new_asaycolor)
+		prefs.asaycolor = sanitize_ooccolor(new_asaycolor)
+		prefs.save_preferences()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Set ASAY Color")
+	return
+
+/client/proc/resetasaycolor()
+	set name = "Reset your Admin Say Color"
+	set desc = "Returns your ASAY Color to default"
+	set category = "Prefs - Admin"
+	if(!holder)
+		return
+	if(!CONFIG_GET(flag/allow_admin_asaycolor))
+		to_chat(src, "Custom Asay color is currently disabled by the server.")
+		return
+	prefs.asaycolor = initial(prefs.asaycolor)
+	prefs.save_preferences()

@@ -91,7 +91,7 @@
 	[get_footer()]
 	"}
 
-/datum/browser/proc/open(use_onclose = 1)
+/datum/browser/proc/open(use_onclose = TRUE)
 	if(isnull(window_id))	//null check because this can potentially nuke goonchat
 		WARNING("Browser [title] tried to open with a null ID")
 		to_chat(user, "<span class='userdanger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
@@ -223,25 +223,27 @@
 /datum/browser/modal/listpicker
 	var/valueslist = list()
 
-/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,inputtype="checkbox")
+/datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,inputtype="checkbox", width, height, slidecolor)
 	if (!User)
 		return
 
 	var/output =  {"<form><input type="hidden" name="src" value="[REF(src)]"><ul class="sparse">"}
-
 	if (inputtype == "checkbox" || inputtype == "radio")
 		for (var/i in values)
+			var/div_slider = slidecolor
+			if(!i["allowed_edit"])
+				div_slider = "locked"
 			output += {"<li>
-	        				<label class="switch">
-	        					<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""]>
-	      							<div class="slider"></div>
-	      								<span>[i["name"]]</span>
-	    						</label>
-	    					</li>"}
+						<label class="switch">
+							<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""][i["allowed_edit"] ? "" : " onclick='return false' onkeydown='return false'"]>
+								<div class="slider [div_slider ? "[div_slider]" : ""]"></div>
+									<span>[i["name"]]</span>
+						</label>
+						</li>"}
 	else
 		for (var/i in values)
 			output += {"<li><input id="name="[i["name"]]"" style="width: 50px" type="[type]" name="[i["name"]]" value="[i["value"]]">
-      <label for="[i["name"]]">[i["name"]]</label></li>"}
+			<label for="[i["name"]]">[i["name"]]</label></li>"}
 	output += {"</ul><div style="text-align:center">
 		<button type="submit" name="button" value="1" style="font-size:large;float:[( Button2 ? "left" : "right" )]">[Button1]</button>"}
 
@@ -252,7 +254,7 @@
 		output += {"<button type="submit" name="button" value="3" style="font-size:large;float:right">[Button3]</button>"}
 
 	output += {"</form></div>"}
-	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, 350, 350, src, StealFocus, Timeout)
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, width, height, src, StealFocus, Timeout)
 	set_content(output)
 
 /datum/browser/modal/listpicker/Topic(href,href_list)
@@ -272,30 +274,32 @@
 	opentime = 0
 	close()
 
-/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox")
+/proc/presentpicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/values, inputtype = "checkbox", width, height, slidecolor)
 	if (!istype(User))
 		if (istype(User, /client/))
 			var/client/C = User
 			User = C.mob
 		else
 			return
-	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, inputtype)
+	var/datum/browser/modal/listpicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, values, inputtype, width, height, slidecolor)
 	A.open()
 	A.wait()
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
-/proc/input_bitfield(var/mob/User, title, bitfield, current_value)
+/proc/input_bitfield(var/mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
 	if (!User || !(bitfield in GLOB.bitfields))
 		return
 	var/list/pickerlist = list()
 	for (var/i in GLOB.bitfields[bitfield])
+		var/can_edit = 1
+		if(!isnull(allowed_edit_list) && !(allowed_edit_list & GLOB.bitfields[bitfield][i]))
+			can_edit = 0
 		if (current_value & GLOB.bitfields[bitfield][i])
-			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i))
+			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
 		else
-			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i))
-	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist)
-
+			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
+	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button
 			return
@@ -304,6 +308,108 @@
 			. |= GLOB.bitfields[bitfield][flag]
 	else
 		return
+
+/datum/browser/modal/preflikepicker
+	var/settings = list()
+	var/icon/preview_icon = null
+	var/datum/callback/preview_update
+
+/datum/browser/modal/preflikepicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/settings,inputtype="checkbox", width = 600, height, slidecolor)
+	if (!User)
+		return
+	src.settings = settings
+
+	..(User, ckey("[User]-[Message]-[Title]-[world.time]-[rand(1,10000)]"), Title, width, height, src, StealFocus, Timeout)
+	set_content(ShowChoices(User))
+
+/datum/browser/modal/preflikepicker/proc/ShowChoices(mob/user)
+	if (settings["preview_callback"])
+		var/datum/callback/callback = settings["preview_callback"]
+		preview_icon = callback.Invoke(settings)
+		if (preview_icon)
+			user << browse_rsc(preview_icon, "previewicon.png")
+	var/dat = ""
+
+	for (var/name in settings["mainsettings"])
+		var/setting = settings["mainsettings"][name]
+		if (setting["type"] == "datum")
+			if (setting["subtypesonly"])
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;subtypesonly=1;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+			else
+				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+		else
+			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
+
+	if (preview_icon)
+		dat += "<td valign='center'>"
+
+		dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
+
+		dat += "</td>"
+
+	dat += "</tr></table>"
+
+	dat += "<hr><center><a href='?src=[REF(src)];button=1'>Ok</a> "
+
+	dat += "</center>"
+
+	return dat
+
+/datum/browser/modal/preflikepicker/Topic(href,href_list)
+	if (href_list["close"] || !user || !user.client)
+		opentime = 0
+		return
+	if (href_list["task"] == "input")
+		var/setting = href_list["setting"]
+		switch (href_list["type"])
+			if ("datum")
+				var/oldval = settings["mainsettings"][setting]["value"]
+				if (href_list["subtypesonly"])
+					settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(subtypesof(text2path(href_list["path"]))))
+				else
+					settings["mainsettings"][setting]["value"] = pick_closest_path(null, make_types_fancy(typesof(text2path(href_list["path"]))))
+				if (isnull(settings["mainsettings"][setting]["value"]))
+					settings["mainsettings"][setting]["value"] = oldval
+			if ("string")
+				settings["mainsettings"][setting]["value"] = stripped_input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"])
+			if ("number")
+				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]") as num
+			if ("color")
+				settings["mainsettings"][setting]["value"] = input(user, "Enter new value for [settings["mainsettings"][setting]["desc"]]", "Enter new value for [settings["mainsettings"][setting]["desc"]]", settings["mainsettings"][setting]["value"]) as color
+			if ("boolean")
+				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("Yes","No")
+			if ("ckey")
+				settings["mainsettings"][setting]["value"] = input(user, "[settings["mainsettings"][setting]["desc"]]?") in list("none") + GLOB.directory
+		if (settings["mainsettings"][setting]["callback"])
+			var/datum/callback/callback = settings["mainsettings"][setting]["callback"]
+			settings = callback.Invoke(settings)
+	if (href_list["button"])
+		var/button = text2num(href_list["button"])
+		if (button <= 3 && button >= 1)
+			selectedbutton = button
+	if (selectedbutton != 1)
+		set_content(ShowChoices(user))
+		open()
+		return
+	for (var/item in href_list)
+		switch(item)
+			if ("close", "button", "src")
+				continue
+	opentime = 0
+	close()
+
+/proc/presentpreflikepicker(var/mob/User,Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1,Timeout = 6000,list/settings, width, height, slidecolor)
+	if (!istype(User))
+		if (istype(User, /client/))
+			var/client/C = User
+			User = C.mob
+		else
+			return
+	var/datum/browser/modal/preflikepicker/A = new(User, Message, Title, Button1, Button2, Button3, StealFocus,Timeout, settings, width, height, slidecolor)
+	A.open()
+	A.wait()
+	if (A.selectedbutton)
+		return list("button" = A.selectedbutton, "settings" = A.settings)
 
 // This will allow you to show an icon in the browse window
 // This is added to mob so that it can be used without a reference to the browser object
@@ -357,4 +463,3 @@
 	// so just reset the user mob's machine var
 	if(src && src.mob)
 		src.mob.unset_machine()
-	return

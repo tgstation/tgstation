@@ -5,18 +5,19 @@
 	item_state = "baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("beaten")
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 80, acid = 80)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	var/stunforce = 140
 	var/status = 0
-	var/obj/item/stock_parts/cell/high/cell
+	var/obj/item/stock_parts/cell/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
+	var/preload_cell_type //if not empty the baton starts with this type of cell
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -27,18 +28,21 @@
 
 /obj/item/melee/baton/Initialize()
 	. = ..()
+	if(preload_cell_type)
+		if(!ispath(preload_cell_type,/obj/item/stock_parts/cell))
+			log_world("### MAP WARNING, [src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
+		else
+			cell = new preload_cell_type(src)
 	update_icon()
 
-/obj/item/melee/baton/throw_impact(atom/hit_atom)
+/obj/item/melee/baton/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	//Only mob/living types have stun handling
 	if(status && prob(throw_hit_chance) && iscarbon(hit_atom))
 		baton_stun(hit_atom)
 
-/obj/item/melee/baton/loaded/Initialize() //this one starts with a cell pre-installed.
-	cell = new(src)
-	update_icon()
-	. = ..()
+/obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
+	preload_cell_type = /obj/item/stock_parts/cell/high
 
 /obj/item/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(cell)
@@ -82,7 +86,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(cell)
 			cell.update_icon()
 			cell.forceMove(get_turf(src))
@@ -109,9 +113,9 @@
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	if(status && user.has_trait(TRAIT_CLUMSY) && prob(50))
-		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
+		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stunforce*3)
+		user.Paralyze(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -153,14 +157,15 @@
 		if(!deductcharge(hitcost))
 			return 0
 
-	L.Knockdown(stunforce)
-	L.apply_effect(STUTTER, stunforce)
+	L.Paralyze(stunforce)
+	L.apply_effect(EFFECT_STUTTER, stunforce)
+	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
 		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
 								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
-		add_logs(user, L, "stunned")
+		log_combat(user, L, "stunned")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
 
@@ -172,8 +177,9 @@
 	return 1
 
 /obj/item/melee/baton/emp_act(severity)
-	deductcharge(1000 / severity)
-	..()
+	. = ..()
+	if (!(. & EMP_PROTECT_SELF))
+		deductcharge(1000 / severity)
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod
@@ -189,8 +195,8 @@
 	stunforce = 100
 	hitcost = 2000
 	throw_hit_chance = 10
-	slot_flags = SLOT_BACK
-	var/obj/item/device/assembly/igniter/sparkler = 0
+	slot_flags = ITEM_SLOT_BACK
+	var/obj/item/assembly/igniter/sparkler = 0
 
 /obj/item/melee/baton/cattleprod/Initialize()
 	. = ..()

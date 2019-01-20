@@ -12,6 +12,11 @@
 </script>
 
 <ui-display>
+	{{#if data.emagged}}
+		<ui-notice>
+			<span>Safety restraints disabled.</span>
+		</ui-notice>
+	{{/if}}
 	{{#if data.vr_avatar}}
 		<ui-display title='Virtual Avatar'>
 			<ui-section label='Name'>

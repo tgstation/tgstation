@@ -11,7 +11,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
 	max_integrity = 30
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 70)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
 	var/pulse_timestamp = 0 //we got pulsed when?
 	var/heal_timestamp = 0 //we got healed when?
@@ -21,14 +21,15 @@
 	var/mob/camera/blob/overmind
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
-	overmind = owner_overmind
-	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-		overmind.blobs_legit += src
+	. = ..()
+	if(owner_overmind)
+		overmind = owner_overmind
+		var/area/Ablob = get_area(src)
+		if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
+			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
-	.= ..()
 	if(atmosblock)
 		air_update_turf(1)
 	ConsumeTile()
@@ -203,6 +204,9 @@
 	return null
 
 /obj/structure/blob/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(severity > 0)
 		if(overmind)
 			overmind.blob_reagent_datum.emp_reaction(src, severity)
@@ -226,12 +230,15 @@
 	return 15
 
 /obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/analyzer))
+	if(I.tool_behaviour == TOOL_ANALYZER)
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
-		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
-		chemeffectreport(user)
+		if(overmind)
+			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+			chemeffectreport(user)
+		else
+			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
 		typereport(user)
 	else
 		return ..()
@@ -307,11 +314,14 @@
 	var/datum/atom_hud/hud_to_check = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || hud_to_check.hudusers[user])
 		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
-		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+		if(overmind)
+			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
+		else
+			to_chat(user, "<b>Core neutralized. Critical mass no longer attainable.</b>")
 		chemeffectreport(user)
 		typereport(user)
 	else
-		if(isobserver(user))
+		if(isobserver(user) && overmind)
 			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")
 		to_chat(user, "It seems to be made of [get_chem_name()].")
 
@@ -321,7 +331,7 @@
 /obj/structure/blob/proc/get_chem_name()
 	if(overmind)
 		return overmind.blob_reagent_datum.name
-	return "an unknown variant"
+	return "some kind of organic tissue"
 
 /obj/structure/blob/normal
 	name = "normal blob"
@@ -344,8 +354,13 @@
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."
 		brute_resist = 0.5
-	else
+	else if (overmind)
 		icon_state = "blob"
 		name = "blob"
 		desc = "A thick wall of writhing tendrils."
+		brute_resist = 0.25
+	else
+		icon_state = "blob"
+		name = "dead blob"
+		desc = "A thick wall of lifeless tendrils."
 		brute_resist = 0.25

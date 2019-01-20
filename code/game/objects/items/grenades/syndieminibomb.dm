@@ -13,7 +13,7 @@
 
 /obj/item/grenade/syndieminibomb/concussion
 	name = "HE Grenade"
-	desc = "A compact shrapnel grenade meant to devestate nearby organisms and cause some damage in the process. Pull pin and throw opposite direction."
+	desc = "A compact shrapnel grenade meant to devastate nearby organisms and cause some damage in the process. Pull pin and throw opposite direction."
 	icon_state = "concussion"
 
 /obj/item/grenade/syndieminibomb/concussion/prime()
@@ -43,9 +43,8 @@
 	for(var/turf/T in view(freeze_range,loc))
 		if(isfloorturf(T))
 			var/turf/open/floor/F = T
-			F.wet = TURF_WET_PERMAFROST
-			addtimer(CALLBACK(F, /turf/open/floor.proc/MakeDry, TURF_WET_PERMAFROST), rand(3000, 3100))
+			F.MakeSlippery(TURF_WET_PERMAFROST, 6 MINUTES)
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
-				L.bodytemperature -= 230
+				L.adjust_bodytemperature(-230)
 	qdel(src)

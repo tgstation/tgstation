@@ -1,7 +1,5 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging
-	icon = 'icons/obj/atmospherics/pipes/heat.dmi'
 	level = 2
-	var/initialize_directions_he
 	var/minimum_temperature_difference = 20
 	var/thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 	color = "#404040"
@@ -9,21 +7,17 @@
 	var/icon_temperature = T20C //stop small changes in temperature causing icon refresh
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/New()
-	..()
+/obj/machinery/atmospherics/pipe/heat_exchanging/Initialize()
+	. = ..()
 	add_atom_colour("#404040", FIXED_COLOUR_PRIORITY)
 
-/obj/machinery/atmospherics/pipe/heat_exchanging/can_be_node(obj/machinery/atmospherics/pipe/heat_exchanging/target)
-	if(!istype(target))
-		return 0
-	if(target.initialize_directions_he & get_dir(target,src))
-		return 1
+/obj/machinery/atmospherics/pipe/heat_exchanging/isConnectable(obj/machinery/atmospherics/pipe/heat_exchanging/target, given_layer, HE_type_check = TRUE)
+	if(istype(target, /obj/machinery/atmospherics/pipe/heat_exchanging) != HE_type_check)
+		return FALSE
+	. = ..()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/hide()
 	return
-
-/obj/machinery/atmospherics/pipe/heat_exchanging/GetInitDirections()
-	return ..() | initialize_directions_he
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/process_atmos()
 	var/environment_temperature = 0
@@ -56,8 +50,6 @@
 			L.bodytemperature = avg_temp
 		pipe_air.temperature = avg_temp
 
-
-
 /obj/machinery/atmospherics/pipe/heat_exchanging/process()
 	if(!parent)
 		return //machines subsystem fires before atmos is initialized so this prevents race condition runtimes
@@ -87,4 +79,4 @@
 		if(pipe_air.temperature > heat_limit + 1)
 			for(var/m in buckled_mobs)
 				var/mob/living/buckled_mob = m
-				buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, "chest")
+				buckled_mob.apply_damage(4 * log(pipe_air.temperature - heat_limit), BURN, BODY_ZONE_CHEST)

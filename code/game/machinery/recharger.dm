@@ -3,11 +3,11 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	desc = "A charging dock for energy based weaponry."
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 250
 	circuit = /obj/item/circuitboard/machine/recharger
+	pass_flags = PASSTABLE
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
 
@@ -15,18 +15,33 @@
 		/obj/item/gun/energy,
 		/obj/item/melee/baton,
 		/obj/item/ammo_box/magazine/recharge,
-		/obj/item/device/modular_computer))
+		/obj/item/modular_computer))
 
 /obj/machinery/recharger/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
+/obj/machinery/recharger/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.<span>")
+
+/obj/machinery/recharger/proc/setCharging(new_charging)
+	charging = new_charging
+	if (new_charging)
+		START_PROCESSING(SSmachines, src)
+		use_power = ACTIVE_POWER_USE
+		update_icon(scan = TRUE)
+	else
+		use_power = IDLE_POWER_USE
+		update_icon()
+
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
-	if(istype(G, /obj/item/wrench))
+	if(G.tool_behaviour == TOOL_WRENCH)
 		if(charging)
 			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 			return
-		anchored = !anchored
+		setAnchored(!anchored)
 		power_change()
 		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
 		G.play_tool_sound(src)
@@ -53,9 +68,8 @@
 
 			if(!user.transferItemToLoc(G, src))
 				return 1
-			charging = G
-			use_power = ACTIVE_POWER_USE
-			update_icon(scan = TRUE)
+			setCharging(G)
+
 		else
 			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
 		return 1
@@ -64,16 +78,15 @@
 		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
 			return
 
-		if(panel_open && istype(G, /obj/item/crowbar))
+		if(panel_open && G.tool_behaviour == TOOL_CROWBAR)
 			default_deconstruction_crowbar(G)
 			return
 
-		if(exchange_parts(user, G))
-			return
 	return ..()
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	if(issilicon(user))
+	. = ..()
+	if(.)
 		return
 
 	add_fingerprint(user)
@@ -81,24 +94,17 @@
 		charging.update_icon()
 		charging.forceMove(drop_location())
 		user.put_in_hands(charging)
-		charging = null
-		use_power = IDLE_POWER_USE
-		update_icon()
-
-/obj/machinery/recharger/attack_paw(mob/user)
-	return attack_hand(user)
+		setCharging(null)
 
 /obj/machinery/recharger/attack_tk(mob/user)
 	if(charging)
 		charging.update_icon()
 		charging.forceMove(drop_location())
-		charging = null
-		use_power = IDLE_POWER_USE
-		update_icon()
+		setCharging(null)
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
-		return
+		return PROCESS_KILL
 
 	var/using_power = 0
 	if(charging)
@@ -118,12 +124,17 @@
 				using_power = 1
 			update_icon(using_power)
 			return
+	else
+		return PROCESS_KILL
 
 /obj/machinery/recharger/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/recharger/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_CONTENTS)
+		return
 	if(!(stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/gun/energy))
 			var/obj/item/gun/energy/E = charging
@@ -134,7 +145,6 @@
 			var/obj/item/melee/baton/B = charging
 			if(B.cell)
 				B.cell.charge = 0
-	..()
 
 
 /obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.

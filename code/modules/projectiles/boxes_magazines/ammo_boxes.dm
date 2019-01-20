@@ -13,6 +13,22 @@
 	ammo_type = /obj/item/ammo_casing/c38
 	max_ammo = 6
 	multiple_sprites = 1
+	materials = list(MAT_METAL = 20000)
+
+/obj/item/ammo_box/c38/trac
+	name = "speed loader (.38 TRAC)"
+	desc = "Designed to quickly reload revolvers. TRAC bullets embed a tracking implant within the target's body."
+	ammo_type = /obj/item/ammo_casing/c38/trac
+
+/obj/item/ammo_box/c38/hotshot
+	name = "speed loader (.38 Hot Shot)"
+	desc = "Designed to quickly reload revolvers. Hot Shot bullets contain an incendiary payload."
+	ammo_type = /obj/item/ammo_casing/c38/hotshot
+
+/obj/item/ammo_box/c38/iceblox
+	name = "speed loader (.38 Iceblox)"
+	desc = "Designed to quickly reload revolvers. Iceblox bullets contain a cryogenic payload."
+	ammo_type = /obj/item/ammo_casing/c38/iceblox
 
 /obj/item/ammo_box/c9mm
 	name = "ammo box (9mm)"
@@ -59,7 +75,9 @@
 	icon_state = "foambox"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart
 	max_ammo = 40
+	materials = list(MAT_METAL = 500)
 
 /obj/item/ammo_box/foambox/riot
 	icon_state = "foambox_riot"
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/riot
+	materials = list(MAT_METAL = 50000)

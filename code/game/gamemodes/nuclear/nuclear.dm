@@ -1,6 +1,7 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
+	report_type = "nuclear"
 	false_report_weight = 10
 	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
@@ -19,27 +20,34 @@
 
 	var/datum/team/nuclear/nuke_team
 
+	var/operative_antag_datum_type = /datum/antagonist/nukeop
+	var/leader_antag_datum_type = /datum/antagonist/nukeop/leader
+
 /datum/game_mode/nuclear/pre_setup()
 	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
-	for(var/i = 0, i < n_agents, ++i)
-		var/datum/mind/new_op = pick_n_take(antag_candidates)
-		pre_nukeops += new_op
-		new_op.assigned_role = "Nuclear Operative"
-		new_op.special_role = "Nuclear Operative"
-		log_game("[new_op.key] (ckey) has been selected as a nuclear operative")
-	return TRUE
+	if(n_agents >= required_enemies)
+		for(var/i = 0, i < n_agents, ++i)
+			var/datum/mind/new_op = pick_n_take(antag_candidates)
+			pre_nukeops += new_op
+			new_op.assigned_role = "Nuclear Operative"
+			new_op.special_role = "Nuclear Operative"
+			log_game("[key_name(new_op)] has been selected as a nuclear operative")
+		return TRUE
+	else
+		setup_error = "Not enough nuke op candidates"
+		return FALSE
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/game_mode/nuclear/post_setup()
 	//Assign leader
 	var/datum/mind/leader_mind = pre_nukeops[1]
-	var/datum/antagonist/nukeop/L = leader_mind.add_antag_datum(/datum/antagonist/nukeop/leader)
+	var/datum/antagonist/nukeop/L = leader_mind.add_antag_datum(leader_antag_datum_type)
 	nuke_team = L.nuke_team
 	//Assign the remaining operatives
 	for(var/i = 2 to pre_nukeops.len)
 		var/datum/mind/nuke_mind = pre_nukeops[i]
-		nuke_mind.add_antag_datum(/datum/antagonist/nukeop,nuke_team)
+		nuke_mind.add_antag_datum(operative_antag_datum_type)
 	return ..()
 
 /datum/game_mode/nuclear/OnNukeExplosion(off_station)
@@ -51,23 +59,13 @@
 		return TRUE
 	return ..()
 
-/datum/game_mode/proc/are_operatives_dead()
-	for(var/datum/mind/operative_mind in get_antag_minds(/datum/antagonist/nukeop))
-		if(ishuman(operative_mind.current) && (operative_mind.current.stat != DEAD))
-			return FALSE
-	return TRUE
-
-/datum/game_mode/nuclear/check_finished() //to be called by SSticker
-	if(replacementmode && round_converted == 2)
-		return replacementmode.check_finished()
-	if((SSshuttle.emergency.mode == SHUTTLE_ENDGAME) || station_was_nuked)
-		return TRUE
+/datum/game_mode/nuclear/check_finished()
+	//Keep the round going if ops are dead but bomb is ticking.
 	if(nuke_team.operatives_dead())
-		var/obj/machinery/nuclearbomb/N
-		pass(N)	//suppress unused warning
-		if(N.bomb_set) //snaaaaaaaaaake! It's not over yet!
-			return FALSE	//its a static var btw
-	..()
+		for(var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
+			if(N.proper_bomb && (N.timing || N.exploding))
+				return FALSE
+	return ..()
 
 /datum/game_mode/nuclear/set_round_result()
 	..()
@@ -118,8 +116,8 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/storage/backpack
-	ears = /obj/item/device/radio/headset/syndicate/alt
+	back = /obj/item/storage/backpack/fireproof
+	ears = /obj/item/radio/headset/syndicate/alt
 	l_pocket = /obj/item/pinpointer/nuke/syndicate
 	id = /obj/item/card/id/syndicate
 	belt = /obj/item/gun/ballistic/automatic/pistol
@@ -128,27 +126,29 @@
 
 	var/tc = 25
 	var/command_radio = FALSE
+	var/uplink_type = /obj/item/uplink/nuclear
 
 
 /datum/outfit/syndicate/leader
 	name = "Syndicate Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
-	r_hand = /obj/item/device/nuclear_challenge
+	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
+	r_hand = /obj/item/nuclear_challenge
 	command_radio = TRUE
 
 /datum/outfit/syndicate/no_crystals
 	tc = 0
 
 /datum/outfit/syndicate/post_equip(mob/living/carbon/human/H)
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_SYNDICATE)
 	R.freqlock = TRUE
 	if(command_radio)
 		R.command = TRUE
 
 	if(tc)
-		var/obj/item/device/radio/uplink/nuclear/U = new(H, H.key, tc)
-		H.equip_to_slot_or_del(U, slot_in_backpack)
+		var/obj/item/U = new uplink_type(H, H.key, tc)
+		H.equip_to_slot_or_del(U, SLOT_IN_BACKPACK)
 
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(H)
 	W.implant(H)
@@ -164,7 +164,7 @@
 	mask = /obj/item/clothing/mask/gas/syndicate
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
-	internals_slot = slot_r_store
+	internals_slot = SLOT_R_STORE
 	belt = /obj/item/storage/belt/military
 	r_hand = /obj/item/gun/ballistic/automatic/shotgun/bulldog
 	backpack_contents = list(/obj/item/storage/box/syndie=1,\

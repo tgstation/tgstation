@@ -29,7 +29,8 @@ SUBSYSTEM_DEF(air)
 	var/list/obj/machinery/atmos_machinery = list()
 	var/list/pipe_init_dirs_cache = list()
 
-
+	//atmos singletons
+	var/list/gas_reactions = list()
 
 	//Special functions lists
 	var/list/turf/active_super_conductivity = list()
@@ -68,7 +69,7 @@ SUBSYSTEM_DEF(air)
 	setup_atmos_machinery()
 	setup_pipenets()
 	gas_reactions = init_gas_reactions()
-	..()
+	return ..()
 
 
 /datum/controller/subsystem/air/fire(resumed = 0)
@@ -165,7 +166,6 @@ SUBSYSTEM_DEF(air)
 		currentrun.len--
 		if(!M || (M.process_atmos(seconds) == PROCESS_KILL))
 			atmos_machinery.Remove(M)
-		M.SendSignal(COMSIG_MACHINE_PROCESS_ATMOS)
 		if(MC_TICK_CHECK)
 			return
 
@@ -263,7 +263,7 @@ SUBSYSTEM_DEF(air)
 			currentrun |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else if(T.initialized)
+	else if(T.flags_1 & INITIALIZED_1)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
 	else if(map_loading)
@@ -288,9 +288,12 @@ SUBSYSTEM_DEF(air)
 	var/list/active_turfs = src.active_turfs
 	var/times_fired = ++src.times_fired
 
+	// Clear active turfs - faster than removing every single turf in the world
+	// one-by-one, and Initalize_Atmos only ever adds `src` back in.
+	active_turfs.Cut()
+
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
-		active_turfs -= T
 		if (T.blocks_air)
 			continue
 		T.Initalize_Atmos(times_fired)
@@ -393,5 +396,5 @@ SUBSYSTEM_DEF(air)
 #undef SSAIR_ACTIVETURFS
 #undef SSAIR_EXCITEDGROUPS
 #undef SSAIR_HIGHPRESSURE
-#undef SSAIR_HOTSPOT
+#undef SSAIR_HOTSPOTS
 #undef SSAIR_SUPERCONDUCTIVITY

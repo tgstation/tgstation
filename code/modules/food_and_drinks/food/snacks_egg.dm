@@ -31,10 +31,10 @@
 	var/color = mix_color_from_reagents(reagents.reagent_list)
 	add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-/obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		var/turf/T = get_turf(hit_atom)
-		new/obj/effect/decal/cleanable/egg_smudge(T)
+		new/obj/effect/decal/cleanable/food/egg_smudge(T)
 		reagents.reaction(hit_atom, TOUCH)
 		qdel(src)
 
@@ -125,7 +125,7 @@
 			to_chat(user, "<span class='warning'>You already have omelette on your fork!</span>")
 		else
 			F.icon_state = "forkloaded"
-			user.visible_message("[user] takes a piece of omelette with their fork!", \
+			user.visible_message("[user] takes a piece of omelette with [user.p_their()] fork!", \
 				"<span class='notice'>You take a piece of omelette with your fork.</span>")
 
 			var/datum/reagent/R = pick(reagents.reagent_list)

@@ -7,7 +7,7 @@
 /area/shuttle/escape/luxury)
 "ac" = (
 /obj/machinery/door/airlock/external,
-/turf/open/floor/plating{
+/turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
 /area/shuttle/escape/luxury)
@@ -24,7 +24,6 @@
 	dwidth = 5;
 	height = 14;
 	name = "Luxury emergency shuttle";
-	timid = 1;
 	width = 25
 	},
 /obj/machinery/door/airlock/gold,
@@ -34,22 +33,20 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "af" = (
-/turf/open/floor/plating{
+/turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
 /area/shuttle/escape/luxury)
 "ag" = (
-/turf/open/floor/plating{
-	icon_state = "wood"
-	},
+/turf/open/floor/wood,
 /area/shuttle/escape/luxury)
 "ah" = (
-/turf/open/floor/plating{
+/turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
 /area/shuttle/escape/luxury)
 "ai" = (
-/turf/open/floor/plating{
+/turf/open/floor/wood{
 	icon_state = "wood-broken5"
 	},
 /area/shuttle/escape/luxury)
@@ -69,19 +66,19 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape/luxury)
 "am" = (
-/turf/open/floor/plating{
+/turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
 /area/shuttle/escape/luxury)
 "an" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating{
+/turf/open/floor/wood{
 	icon_state = "wood-broken2"
 	},
 /area/shuttle/escape/luxury)
 "ao" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating{
+/turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
 /area/shuttle/escape/luxury)
@@ -131,7 +128,7 @@
 /area/shuttle/escape/luxury)
 "ax" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/meatballspaghetti,
+/obj/item/reagent_containers/food/snacks/spaghetti/meatballspaghetti,
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "ay" = (
@@ -141,7 +138,7 @@
 /area/shuttle/escape/luxury)
 "az" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/pastatomato,
+/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato,
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "aA" = (
@@ -181,7 +178,7 @@
 /area/shuttle/escape/luxury)
 "aH" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/chowmein,
+/obj/item/reagent_containers/food/snacks/spaghetti/chowmein,
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "aI" = (
@@ -242,7 +239,7 @@
 /area/shuttle/escape/luxury)
 "aT" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/copypasta,
+/obj/item/reagent_containers/food/snacks/spaghetti/copypasta,
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "aU" = (
@@ -252,7 +249,7 @@
 /area/shuttle/escape/luxury)
 "aV" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/food/snacks/boiledspaghetti,
+/obj/item/reagent_containers/food/snacks/spaghetti/boiledspaghetti,
 /turf/open/floor/carpet,
 /area/shuttle/escape/luxury)
 "aW" = (

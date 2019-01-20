@@ -1,7 +1,7 @@
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying
 	if(stat != DEAD)
-		death(1)
+		death(TRUE)
 
 	if(!prev_lying)
 		gib_animation()
@@ -18,7 +18,7 @@
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(drop_location(), null, get_static_viruses())
+	new /obj/effect/gibspawner/generic(drop_location(), src, get_static_viruses())
 
 /mob/living/proc/spill_organs()
 	return
@@ -26,11 +26,14 @@
 /mob/living/proc/spread_bodyparts()
 	return
 
-/mob/living/dust(just_ash = FALSE)
-	death(1)
+/mob/living/dust(just_ash, drop_items, force)
+	death(TRUE)
+
+	if(drop_items)
+		unequip_everything()
 
 	if(buckled)
-		buckled.unbuckle_mob(src,force=1)
+		buckled.unbuckle_mob(src, force = TRUE)
 
 	dust_animation()
 	spawn_dust(just_ash)
@@ -47,11 +50,11 @@
 	stat = DEAD
 	unset_machine()
 	timeofdeath = world.time
-	tod = worldtime2text()
+	tod = station_time_timestamp()
 	var/turf/T = get_turf(src)
 	for(var/obj/item/I in contents)
 		I.on_mob_death(src, gibbed)
-	if(mind && mind.name && mind.active && (!(T.flags_1 & NO_DEATHRATTLE_1)))
+	if(mind && mind.name && mind.active && !istype(T.loc, /area/ctf))
 		var/rendered = "<span class='deadsay'><b>[mind.name]</b> has died at <b>[get_area_name(T)]</b>.</span>"
 		deadchat_broadcast(rendered, follow_target = src, turf_target = T, message_type=DEADCHAT_DEATHRATTLE)
 	if(mind)
@@ -68,9 +71,14 @@
 	update_action_buttons_icon()
 	update_damage_hud()
 	update_health_hud()
-	update_canmove()
+	update_mobility()
 	med_hud_set_health()
 	med_hud_set_status()
+	if(!gibbed && !QDELETED(src))
+		addtimer(CALLBACK(src, .proc/med_hud_set_status), (DEFIB_TIME_LIMIT * 10) + 1)
+	stop_pulling()
+
+	. = ..()
 
 	if (client)
 		client.move_delay = initial(client.move_delay)

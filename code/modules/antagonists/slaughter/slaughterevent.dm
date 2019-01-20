@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/ghost_role/slaughter
 	weight = 1 //Very rare
 	max_occurrences = 1
-	earliest_start = 36000 //1 hour
+	earliest_start = 1 HOURS
 	min_players = 20
 
 
@@ -31,7 +31,7 @@
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter((pick(spawn_locs)))
+	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter((pick(spawn_locs)))
 	var/mob/living/simple_animal/slaughter/S = new (holder)
 	S.holder = holder
 	player_mind.transfer_to(S)
@@ -41,7 +41,7 @@
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. Blood Crawl near a blood pool to manifest.</B>")
 	SEND_SOUND(S, 'sound/magic/demon_dies.ogg')
-	message_admins("[key_name_admin(S)] has been made into a slaughter demon by an event.")
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a slaughter demon by an event.")
 	log_game("[key_name(S)] was spawned as a slaughter demon by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

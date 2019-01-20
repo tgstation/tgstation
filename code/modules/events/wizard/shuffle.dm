@@ -6,7 +6,7 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/shuffleloc
 	max_occurrences = 5
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shuffleloc/start()
 	var/list/moblocs = list()
@@ -27,7 +27,7 @@
 	for(var/mob/living/carbon/human/H in mobs)
 		if(!moblocs)
 			break //locs aren't always unique, so this may come into play
-		do_teleport(H, moblocs[moblocs.len])
+		do_teleport(H, moblocs[moblocs.len], channel = TELEPORT_CHANNEL_MAGIC)
 		moblocs.len -= 1
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
@@ -42,7 +42,7 @@
 	weight = 4
 	typepath = /datum/round_event/wizard/shufflenames
 	max_occurrences = 5
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shufflenames/start()
 	var/list/mobnames = list()
@@ -76,7 +76,7 @@
 	weight = 1
 	typepath = /datum/round_event/wizard/shuffleminds
 	max_occurrences = 3
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/shuffleminds/start()
 	var/list/mobs	 = list()

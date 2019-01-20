@@ -1,8 +1,10 @@
+#define PILL_STYLE_COUNT 22 //Update this if you add more pill icons or you die
+#define RANDOM_PILL_STYLE 22 //Dont change this one though
+
 /obj/machinery/chem_master
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	density = TRUE
-	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
@@ -14,13 +16,13 @@
 	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = FALSE
+	var/chosenPillStyle = 1
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
 
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
-	add_overlay("waitlight")
 	. = ..()
 
 /obj/machinery/chem_master/Destroy()
@@ -54,74 +56,72 @@
 		bottle = null
 
 /obj/machinery/chem_master/update_icon()
+	cut_overlays()
+	if (stat & BROKEN)
+		add_overlay("waitlight")
 	if(beaker)
 		icon_state = "mixer1"
 	else
 		icon_state = "mixer0"
 
-/obj/machinery/chem_master/proc/eject_beaker(mob/user)
-	if(beaker)
-		beaker.forceMove(drop_location())
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(beaker)
-		else
-			adjust_item_drop_location(beaker)
-		beaker = null
-		update_icon()
-
 /obj/machinery/chem_master/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
-
-/obj/machinery/chem_master/power_change()
-	if(powered())
-		stat &= ~NOPOWER
-	else
-		stat |= NOPOWER
 
 /obj/machinery/chem_master/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
 		return
 
-	else if(exchange_parts(user, I))
-		return
 	else if(default_deconstruction_crowbar(I))
 		return
 
 	if(default_unfasten_wrench(user, I))
 		return
-
-	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
-		. = 1 // no afterattack
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
+		. = TRUE // no afterattack
 		if(panel_open)
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>")
 			return
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
+		var/obj/item/reagent_containers/B = I
+		. = TRUE //no afterattack
+		if(!user.transferItemToLoc(B, src))
 			return
-		if(!user.transferItemToLoc(I, src))
-			return
-
-		beaker = I
-		to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
-		src.updateUsrDialog()
+		replace_beaker(user, B)
+		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_icon()
-
 	else if(!condi && istype(I, /obj/item/storage/pill_bottle))
 		if(bottle)
 			to_chat(user, "<span class='warning'>A pill bottle is already loaded into [src]!</span>")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
-
 		bottle = I
 		to_chat(user, "<span class='notice'>You add [I] into the dispenser slot.</span>")
-		src.updateUsrDialog()
+		updateUsrDialog()
 	else
 		return ..()
 
+/obj/machinery/chem_master/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
+
+/obj/machinery/chem_master/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
+
 /obj/machinery/chem_master/on_deconstruction()
-	eject_beaker()
+	replace_beaker()
 	if(bottle)
 		bottle.forceMove(drop_location())
 		adjust_item_drop_location(bottle)
@@ -132,6 +132,9 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pills)
+		assets.send(user)
+
 		ui = new(user, src, ui_key, "chem_master", name, 500, 550, master_ui, state)
 		ui.open()
 
@@ -145,12 +148,12 @@
 	data["condi"] = condi
 	data["screen"] = screen
 	data["analyzeVars"] = analyzeVars
-
+	data["chosenPillStyle"] = chosenPillStyle
 	data["isPillBottleLoaded"] = bottle ? 1 : 0
 	if(bottle)
+		GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
 		data["pillBotContent"] = bottle.contents.len
-		data["pillBotMaxContent"] = bottle.storage_slots
-
+		data["pillBotMaxContent"] = STRB.max_items
 
 	var/beakerContents[0]
 	if(beaker)
@@ -163,8 +166,12 @@
 		for(var/datum/reagent/N in reagents.reagent_list)
 			bufferContents.Add(list(list("name" = N.name, "id" = N.id, "volume" = N.volume))) // ^
 		data["bufferContents"] = bufferContents
-
-
+	var/list/pillStyles = list()
+	for (var/x in 1 to PILL_STYLE_COUNT)
+		var/list/SL = list()
+		SL["id"] = x
+		pillStyles += list(SL)
+	data["pillStyles"] = pillStyles
 	return data
 
 /obj/machinery/chem_master/ui_act(action, params)
@@ -172,7 +179,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject_beaker(usr)
+			replace_beaker(usr)
 			. = TRUE
 
 		if("ejectp")
@@ -223,29 +230,45 @@
 						return
 					vol_each = min(reagents.total_volume / amount, 50)
 				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/pill/P
+				var/target_loc = drop_location()
+				var/drop_threshold = INFINITY
+				if(bottle)
+					GET_COMPONENT_FROM(STRB, /datum/component/storage, bottle)
+					if(STRB)
+						drop_threshold = STRB.max_items - bottle.contents.len
 
 				for(var/i = 0; i < amount; i++)
-					if(bottle && bottle.contents.len < bottle.storage_slots)
-						P = new/obj/item/reagent_containers/pill(bottle)
+					if(i < drop_threshold)
+						P = new(target_loc)
 					else
-						P = new/obj/item/reagent_containers/pill(drop_location())
+						P = new(drop_location())
 					P.name = trim("[name] pill")
+					if(chosenPillStyle == RANDOM_PILL_STYLE)
+						P.icon_state ="pill[rand(1,21)]"
+					else
+						P.icon_state = "pill[chosenPillStyle]"
+					if(P.icon_state == "pill4")
+						P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
 					adjust_item_drop_location(P)
-					reagents.trans_to(P,vol_each)
+					reagents.trans_to(P,vol_each, transfered_by = usr)
 			else
 				var/name = stripped_input(usr, "Name:", "Name your pack!", reagents.get_master_reagent_name(), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/pack/P = new/obj/item/reagent_containers/food/condiment/pack(drop_location())
 
 				P.originalname = name
 				P.name = trim("[name] pack")
 				P.desc = "A small condiment pack. The label says it contains [name]."
-				reagents.trans_to(P,10)
+				reagents.trans_to(P,10, transfered_by = usr)
 			. = TRUE
+
+		if("pillStyle")
+			var/id = text2num(params["id"])
+			chosenPillStyle = id
 
 		if("createPatch")
 			var/many = params["many"]
@@ -259,7 +282,7 @@
 					return
 				vol_each = min(reagents.total_volume / amount, 40)
 			var/name = stripped_input(usr,"Name:","Name your patch!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
-			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+			if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 				return
 			var/obj/item/reagent_containers/pill/P
 
@@ -267,7 +290,7 @@
 				P = new/obj/item/reagent_containers/pill/patch(drop_location())
 				P.name = trim("[name] patch")
 				adjust_item_drop_location(P)
-				reagents.trans_to(P,vol_each)
+				reagents.trans_to(P,vol_each, transfered_by = usr)
 			. = TRUE
 
 		if("createBottle")
@@ -277,12 +300,12 @@
 
 			if(condi)
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 				var/obj/item/reagent_containers/food/condiment/P = new(drop_location())
 				P.originalname = name
 				P.name = trim("[name] bottle")
-				reagents.trans_to(P, P.volume)
+				reagents.trans_to(P, P.volume, transfered_by = usr)
 			else
 				var/amount_full = 0
 				var/vol_part = min(reagents.total_volume, 30)
@@ -290,7 +313,7 @@
 					amount_full = round(reagents.total_volume / 30)
 					vol_part = reagents.total_volume % 30
 				var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
-				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE))
+				if(!name || !reagents.total_volume || !src || QDELETED(src) || !usr.canUseTopic(src, !issilicon(usr)))
 					return
 
 				var/obj/item/reagent_containers/glass/bottle/P
@@ -298,13 +321,13 @@
 					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, 30)
+					reagents.trans_to(P, 30, transfered_by = usr)
 
 				if(vol_part)
 					P = new/obj/item/reagent_containers/glass/bottle(drop_location())
 					P.name = trim("[name] bottle")
 					adjust_item_drop_location(P)
-					reagents.trans_to(P, vol_part)
+					reagents.trans_to(P, vol_part, transfered_by = usr)
 			. = TRUE
 
 		if("analyze")
@@ -358,15 +381,7 @@
 	else
 		var/md5 = md5(AM.name)
 		for (var/i in 1 to 32)
-			#if DM_VERSION >= 513
-			#warning 512 is definitely stable now, remove the old code
-			#endif
-
-			#if DM_VERSION >= 512
 			. += hex2num(md5[i])
-			#else
-			. += hex2num(copytext(md5,i,i+1))
-			#endif
 		. = . % 9
 		AM.pixel_x = ((.%3)*6)
 		AM.pixel_y = -8 + (round( . / 3)*8)
@@ -375,3 +390,6 @@
 	name = "CondiMaster 3000"
 	desc = "Used to create condiments and other cooking supplies."
 	condi = TRUE
+
+#undef PILL_STYLE_COUNT
+#undef RANDOM_PILL_STYLE

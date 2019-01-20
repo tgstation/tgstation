@@ -4,7 +4,6 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "dispenser"
 	density = TRUE
-	anchored = TRUE
 	var/list/gland_types
 	var/list/gland_colors
 	var/list/amounts
@@ -24,7 +23,8 @@
 		amounts[i] = rand(1,5)
 
 /obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!isabductor(user))
 		return

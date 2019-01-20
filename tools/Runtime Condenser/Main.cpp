@@ -8,7 +8,7 @@
  * 1) Copy and paste your list of runtimes from Dream Daemon into input.exe
  * 2) Run RuntimeCondenser.exe
  * 3) Open output.txt for a condensed report of the runtimes
- * 
+ *
  * How to compile:
  * Requires visual c++ compiler 2012 or any linux compiler with c++11 support.
  * Windows:
@@ -104,7 +104,7 @@ inline string * readline(FILE * f) {
 			pos = i+1;
 			return s;
 		}
-		
+
 	}
 	string * s = new string(&buf[pos], size-pos);
 	pos = 0;
@@ -122,6 +122,8 @@ inline void forward_progress(FILE * inputFile) {
 	if (nextLine->length() >= 10) {
 		if ((*nextLine)[0] == '[' && (*nextLine)[3] == ':' && (*nextLine)[6] == ':' && (*nextLine)[9] == ']')
 			nextLine->erase(0, 10);
+		else if (nextLine->length() >= 26 && ((*nextLine)[0] == '[' && (*nextLine)[5] == '-' && (*nextLine)[14] == ':' && (*nextLine)[20] == '.' && (*nextLine)[24] == ']'))
+			nextLine->erase(0, 26);
 	}
 }
 //deallocates to, copys from to to.
@@ -152,14 +154,14 @@ bool readFromFile(bool isstdin) {
 		fseek(inputFile, 0, SEEK_SET);
 		nextupdate = clock();
 	}
-	
+
 	if (feof(inputFile))
 		return false; //empty file
 	do {
 		//Update our lines
 		forward_progress(inputFile);
 		//progress bar
-		
+
 		if (!isstdin && clock() >= nextupdate) {
 			int dProgress = (int)(((long double)ftell(inputFile) / (long double)fileLength) * 100.0L);
 			printprogressbar(dProgress);
@@ -179,7 +181,7 @@ bool readFromFile(bool isstdin) {
 			}
 			//we assign this to the right container in a moment.
 			unordered_map<string,runtime> * storage_container;
-			
+
 			//runtime is actually an infinite loop
 			if (safe_substr(currentLine, 15, 23) == "Infinite loop suspected" || safe_substr(currentLine, 15, 31) == "Maximum recursion level reached") {
 				//use our infinite loop container.
@@ -193,18 +195,18 @@ bool readFromFile(bool isstdin) {
 				storage_container = &storedRuntime;
 				totalRuntimes++;
 			}
-			
+
 			string key = *currentLine;
 			bool procfound = false; //so other things don't have to bother checking for this again.
 			if (safe_substr(nextLine, 0, 10) == "proc name:") {
 				key += *nextLine;
 				procfound = true;
 			}
-			
+
 			//(get the address of a runtime from (a pointer to a container of runtimes)) to then store in a pointer to a runtime.
 			//(and who said pointers were hard.)
 			runtime* R = &((*storage_container)[key]);
-			
+
 			//new
 			if (R->text != *currentLine) {
 				R->text = *currentLine;
@@ -232,22 +234,22 @@ bool readFromFile(bool isstdin) {
 						forward_progress(inputFile);
 					}
 				}
-			
+
 			} else { //existed already
 				R->count++;
 				if (procfound)
 					forward_progress(inputFile);
 			}
-			
+
 		} else if (safe_substr(currentLine, 0, 7) == "Path : ") {
 			string deltype = safe_substr(currentLine, 7);
 			if (deltype.substr(deltype.size()-1,1) == " ") //some times they have a single trailing space.
 				deltype = deltype.substr(0, deltype.size()-1);
-			
+
 			unsigned int failures = strtoul(safe_substr(nextLine, 11).c_str(), NULL, 10);
 			if (failures <= 0)
 				continue;
-			
+
 			totalHardDels += failures;
 			harddel* D = &storedHardDel[deltype];
 			if (D->type != deltype) {
@@ -278,14 +280,14 @@ bool writeToFile(bool usestdio) {
 	ofstream * outputFile;
 	if (!usestdio)
 		output = outputFile = new ofstream("Output.txt", ios::trunc);
-	
-	
+
+
 	if(usestdio || outputFile->is_open()) {
 		*output << "Note: The source file, src and usr are all from the FIRST of the identical runtimes. Everything else is cropped.\n\n";
 		if(storedInfiniteLoop.size() > 0)
 			*output << "Total unique infinite loops: " << storedInfiniteLoop.size() << endl;
 
-		if(totalInfiniteLoops > 0) 
+		if(totalInfiniteLoops > 0)
 			*output << "Total infinite loops: " << totalInfiniteLoops << endl << endl;
 
 		*output << "Total unique runtimes: " << storedRuntime.size() << endl;
@@ -308,17 +310,17 @@ bool writeToFile(bool usestdio) {
 			*output << "** Infinite loops **";
 			for (int i=0; i < infiniteLoops.size(); i++) {
 				runtime* R = &infiniteLoops[i];
-				*output << endl << endl << "The following infinite loop has occurred " << R->count << " time(s).\n"; 
+				*output << endl << endl << "The following infinite loop has occurred " << R->count << " time(s).\n";
 				*output << R->text << endl;
-				if(R->proc.length()) 
+				if(R->proc.length())
 					*output << R->proc << endl;
-				if(R->source.length()) 
+				if(R->source.length())
 					*output << R->source << endl;
-				if(R->usr.length()) 
+				if(R->usr.length())
 					*output << R->usr << endl;
-				if(R->src.length()) 
+				if(R->src.length())
 					*output << R->src << endl;
-				if(R->loc.length()) 
+				if(R->loc.length())
 					*output << R->loc << endl;
 			}
 			*output << endl << endl; //For spacing
@@ -335,21 +337,21 @@ bool writeToFile(bool usestdio) {
 		sort(runtimes.begin(), runtimes.end(), runtimeComp);
 		for (int i=0; i < runtimes.size(); i++) {
 			runtime* R = &runtimes[i];
-			*output << endl << endl << "The following runtime has occurred " << R->count << " time(s).\n"; 
+			*output << endl << endl << "The following runtime has occurred " << R->count << " time(s).\n";
 			*output << R->text << endl;
-			if(R->proc.length()) 
+			if(R->proc.length())
 				*output << R->proc << endl;
-			if(R->source.length()) 
+			if(R->source.length())
 				*output << R->source << endl;
-			if(R->usr.length()) 
+			if(R->usr.length())
 				*output << R->usr << endl;
-			if(R->src.length()) 
+			if(R->src.length())
 				*output << R->src << endl;
-			if(R->loc.length()) 
+			if(R->loc.length())
 				*output << R->loc << endl;
 		}
 		*output << endl << endl; //For spacing
-		
+
 		//and finally, hard deletes
 		if(totalHardDels > 0) {
 			*output << endl << "** Hard deletions **";
@@ -380,7 +382,7 @@ int main(int argc, const char * argv[]) {
 	bool usestdio = false;
 	if (argc >= 2 && !strcmp(argv[1], "-s"))
 		usestdio = true;
-	
+
 	char exit; //Used to stop the program from immediately exiting
 	cerr << "Reading input.\n";
 	if(readFromFile(usestdio)) {

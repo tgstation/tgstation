@@ -4,7 +4,6 @@
 	name = "exosuit fabricator"
 	desc = "Nothing is being built."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	active_power_usage = 5000
@@ -37,7 +36,7 @@
 /obj/machinery/mecha_part_fabricator/Initialize()
     var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
      list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
-        FALSE, list(/obj/item/stack, /obj/item/stack/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+        TRUE, /obj/item/stack, CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
     materials.precise_insertion = TRUE
     stored_research = new
     return ..()
@@ -63,17 +62,11 @@
 		T += Ml.rating
 	time_coeff = round(initial(time_coeff) - (initial(time_coeff)*(T))/5,0.01)
 
-
-/obj/machinery/mecha_part_fabricator/check_access(obj/item/card/id/I)
-	if(istype(I, /obj/item/device/pda))
-		var/obj/item/device/pda/pda = I
-		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
-		return FALSE
-	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
-			return FALSE
-	return TRUE
+/obj/machinery/mecha_part_fabricator/examine(mob/user)
+	..()
+	GET_COMPONENT(materials, /datum/component/material_container)
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[component_coeff*100]%</b>.<br>Build time reduced by <b>[100-time_coeff*100]%</b>.<span>")
 
 /obj/machinery/mecha_part_fabricator/emag_act()
 	if(obj_flags & EMAGGED)
@@ -92,7 +85,7 @@
 /obj/machinery/mecha_part_fabricator/proc/output_parts_list(set_name)
 	var/output = ""
 	for(var/v in stored_research.researched_designs)
-		var/datum/design/D = stored_research.researched_designs[v]
+		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(D.build_type & MECHFAB)
 			if(!(set_name in D.category))
 				continue
@@ -173,7 +166,7 @@
 /obj/machinery/mecha_part_fabricator/proc/add_part_set_to_queue(set_name)
 	if(set_name in part_sets)
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(set_name in D.category)
 					add_to_queue(D)
@@ -258,14 +251,9 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff, roundto)
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
-	if(!(..()))
-		return interact(user)
-
-/obj/machinery/mecha_part_fabricator/interact(mob/user as mob)
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user as mob)
+	. = ..()
 	var/dat, left_part
-	if (..())
-		return
 	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
@@ -336,7 +324,7 @@
 	if(href_list["part"])
 		var/T = afilter.getStr("part")
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					if(!processing_queue)
@@ -347,7 +335,7 @@
 	if(href_list["add_to_queue"])
 		var/T = afilter.getStr("add_to_queue")
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					add_to_queue(D)
@@ -385,7 +373,7 @@
 	if(href_list["part_desc"])
 		var/T = afilter.getStr("part_desc")
 		for(var/v in stored_research.researched_designs)
-			var/datum/design/D = stored_research.researched_designs[v]
+			var/datum/design/D = SSresearch.techweb_design_by_id(v)
 			if(D.build_type & MECHFAB)
 				if(D.id == T)
 					var/obj/part = D.build_path
@@ -415,9 +403,6 @@
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
-		return TRUE
-
-	if(exchange_parts(user, W))
 		return TRUE
 
 	if(default_deconstruction_crowbar(W))

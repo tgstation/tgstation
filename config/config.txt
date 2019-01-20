@@ -3,6 +3,7 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
+$include antag_rep.txt
 
 # You can use the @ character at the beginning of a config option to lock it from being edited in-game
 # Example usage:
@@ -35,8 +36,18 @@ ROUND_END_COUNTDOWN 90
 ## This flag is automatically enabled if SQL_ENABLED isn't
 ADMIN_LEGACY_SYSTEM
 
-## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
-BAN_LEGACY_SYSTEM
+##Uncomment this to stop any admins loaded by the legacy system from having their rank edited by the permissions panel
+#PROTECT_LEGACY_ADMINS
+
+##Uncomment this to stop any ranks loaded by the legacy system from having their flags edited by the permissions panel
+#PROTECT_LEGACY_RANKS
+
+##Uncomment this to have admin ranks only loaded from the legacy admin_ranks.txt
+##If enabled, each time admins are loaded ranks the database will be updated with the current ranks and their flags
+#LOAD_LEGACY_RANKS_ONLY
+
+## Comment this out to stop locally connected clients from being given the almost full access !localhost! admin rank
+ENABLE_LOCALHOST_RANK
 
 ## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
@@ -56,12 +67,11 @@ BAN_LEGACY_SYSTEM
 ## Leave this commented out to use the values defined in the job datums. Values in the datums are stored as minutes.
 #USE_EXP_RESTRICTIONS_HEADS_HOURS 3
 ## Unhash this to change head jobs' playtime requirements so that they're based on department playtime, rather than crew playtime.
-#USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT 
+#USE_EXP_RESTRICTIONS_HEADS_DEPARTMENT
 ## Unhash this to enable playtime requirements for certain non-head jobs, like Engineer and Scientist.
 #USE_EXP_RESTRICTIONS_OTHER
 ## Allows admins to bypass job playtime requirements.
 #USE_EXP_RESTRICTIONS_ADMIN_BYPASS
-
 
 ## log OOC channel
 LOG_OOC
@@ -96,6 +106,9 @@ LOG_ATTACK
 ## log pda messages
 LOG_PDA
 
+## log telecomms messages
+LOG_TELECOMMS
+
 ## log prayers
 LOG_PRAYER
 
@@ -105,12 +118,24 @@ LOG_LAW
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
+## log job divide debugging information
+#LOG_JOB_DEBUG
+
 ## log all world.Topic() calls
 # LOG_WORLD_TOPIC
 
 ## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
 ## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
 # LOG_TWITTER
+
+## Enable logging pictures
+# LOG_PICTURES
+
+## log mecha actions
+# LOG_MECHA
+
+##Log camera pictures - Must have picture logging enabled
+PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
 # INACTIVITY_PERIOD 300
@@ -124,11 +149,11 @@ LOG_MANIFEST
 ## Comment this out to stop admins being able to choose their personal ooccolor
 ALLOW_ADMIN_OOCCOLOR
 
+## Comment this out to stop admins being able to choose their personal asay color
+ALLOW_ADMIN_ASAYCOLOR
+
 ## Job slot open/close by identification consoles delay in seconds
 ID_CONSOLE_JOBSLOT_DELAY 30
-
-## If metadata is supported
-ALLOW_METADATA
 
 ## allow players to initiate a restart vote
 #ALLOW_VOTE_RESTART
@@ -207,9 +232,20 @@ CHECK_RANDOMIZER
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
 
+## Round specific stats address
+## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
+## This will take priority over the game logs address during reboot.
+## Example: https://atlantaned.space/statbus/round.php?round=
+# ROUNDSTATSURL
+
+## Game Logs address
+## Incase you don't have a fancy parsing system, but still want players to be able to find where you keep your server's logs.
+## Example: https://tgstation13.org/parsed-logs/basil/data/logs/
+# GAMELOGURL
+
 ## Github repo id
 ##This can be found by going to https://api.github.com/users/<user name here>/repos
-##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization 
+##Or https://api.github.com/orgs/<org name here>/repos if the repo owner is an organization
 # GITHUBREPOID 3234987
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
@@ -230,7 +266,7 @@ CHECK_RANDOMIZER
 ## Uncomment this to forbid admins from possessing the singularity.
 #FORBID_SINGULO_POSSESSION
 
-## Uncomment to show a popup 'reply to' window to every non-admin that recieves an adminPM.
+## Uncomment to show a popup 'reply to' window to every non-admin that receives an adminPM.
 ## The intention is to make adminPMs more visible. (although I fnd popups annoying so this defaults to off)
 #POPUP_ADMIN_PM
 
@@ -340,10 +376,6 @@ AUTOADMIN_RANK Game Master
 ## Uncomment to automatically give that admin rank to all players
 #AUTOADMIN
 
-## GENERATE_MINIMAPS
-## Generating minimaps(For crew monitor) is slow and bogs down testing, so its disabled by default and must be enabled by uncommenting this config if you are running a production server.
-#GENERATE_MINIMAPS
-
 ## CLIENT VERSION CONTROL
 ## This allows you to configure the minimum required client version, as well as a warning version, and message for both.
 ## These trigger for any version below (non-inclusive) the given version, so 510 triggers on 509 or lower.
@@ -364,6 +396,17 @@ SECOND_TOPIC_LIMIT 10
 
 MINUTE_TOPIC_LIMIT 100
 
+
+## CLICK RATE LIMITING
+## Same as above, but applies to clicking on objects in the game window.
+## This should be a higher then the interface limit to allow for the spam clickly nature of most battles.
+## Admins are exempt from these limits.
+## Hitting the minute limit notifies admins.
+## Set to 0 to disable.
+SECOND_CLICK_LIMIT 15
+
+MINUTE_CLICK_LIMIT 400
+
 ##Error handling related options
 ## The "cooldown" time for each occurence of a unique error
 #ERROR_COOLDOWN 600
@@ -374,8 +417,16 @@ MINUTE_TOPIC_LIMIT 100
 ##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
-## Send a message to IRC when starting a new game
-#IRC_ANNOUNCE_NEW_GAME
+
+## Chat Announce Options
+## Various messages to be sent to game chats
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+
+## Send a message with the station name starting a new game
+#CHAT_ANNOUNCE_NEW_GAME
+
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
@@ -387,7 +438,7 @@ DEBUG_ADMIN_HREFS
 ##	Setting this to 0 will prevent the Master Controller from ticking
 BASE_MC_TICK_RATE 1
 
-##High population MC tick rate 
+##High population MC tick rate
 ##	Byond rounds timer values UP, but the tick rate is modified with heuristics during lag spites so setting this to something like 2
 ##	will make it run every 2 byond ticks, but will also double the effect of anti-lag heuristics. You can instead set it to something like
 ##	1.1 to make it run every 2 byond ticks, but only increase the effect of anti-lag heuristics by 10%. or 1.5 for 50%.

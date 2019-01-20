@@ -16,7 +16,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	var/empty = 0
+	var/empty = FALSE
 
 /obj/item/storage/firstaid/regular
 	icon_state = "firstaid"
@@ -29,29 +29,26 @@
 /obj/item/storage/firstaid/regular/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	var/static/items_inside = list(
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/bruise_pack = 2,
+		/obj/item/stack/medical/ointment = 2,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/healthanalyzer = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
 	icon_state = "firstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
-
 /obj/item/storage/firstaid/ancient/PopulateContents()
 	if(empty)
 		return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+	var/static/items_inside = list(
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/stack/medical/bruise_pack = 3,
+		/obj/item/stack/medical/ointment= 3)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
@@ -70,12 +67,12 @@
 /obj/item/storage/firstaid/fire/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/pill/oxandrolone(src)
-	new /obj/item/reagent_containers/pill/oxandrolone(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/pill/patch/silver_sulf = 3,
+		/obj/item/reagent_containers/pill/oxandrolone = 2,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/healthanalyzer = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/toxin
 	name = "toxin treatment kit"
@@ -94,11 +91,11 @@
 /obj/item/storage/firstaid/toxin/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/syringe/charcoal(src)
-	for(var/i in 1 to 2)
-		new /obj/item/storage/pill_bottle/charcoal(src)
-	new /obj/item/device/healthanalyzer(src)
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/syringe/charcoal = 4,
+		/obj/item/storage/pill_bottle/charcoal = 2,
+		/obj/item/healthanalyzer = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/o2
 	name = "oxygen deprivation treatment kit"
@@ -113,11 +110,11 @@
 /obj/item/storage/firstaid/o2/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/salbutamol(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/reagent_containers/hypospray/medipen(src)
-	new /obj/item/device/healthanalyzer(src)
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/pill/salbutamol = 4,
+		/obj/item/reagent_containers/hypospray/medipen = 2,
+		/obj/item/healthanalyzer = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/brute
 	name = "brute trauma treatment kit"
@@ -132,17 +129,38 @@
 /obj/item/storage/firstaid/brute/PopulateContents()
 	if(empty)
 		return
-	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/patch/styptic(src)
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/device/healthanalyzer(src)
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/pill/patch/styptic = 4,
+		/obj/item/stack/medical/gauze = 2,
+		/obj/item/healthanalyzer = 1)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/firstaid/advanced
+	name = "advanced first aid kit"
+	desc = "An advanced kit to help deal with advanced wounds."
+	icon_state = "radfirstaid"
+	item_state = "firstaid-rad"
+	custom_premium_price = 600
+
+/obj/item/storage/firstaid/advanced/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/storage/pill_bottle/penacid = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
 	icon_state = "bezerk"
-	max_w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/firstaid/tactical/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/storage/firstaid/tactical/PopulateContents()
 	if(empty)
@@ -151,14 +169,15 @@
 	new /obj/item/defibrillator/compact/combat/loaded(src)
 	new /obj/item/reagent_containers/hypospray/combat(src)
 	new /obj/item/reagent_containers/pill/patch/styptic(src)
+	new /obj/item/reagent_containers/pill/patch/styptic(src)
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
-	new /obj/item/reagent_containers/syringe/lethal/choral(src)
+	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	new /obj/item/clothing/glasses/hud/health/night(src)
-
 
 /*
  * Pill Bottles
  */
+
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
@@ -168,24 +187,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	can_hold = list(/obj/item/reagent_containers/pill, /obj/item/dice)
-	allow_quick_gather = 1
-	use_to_pickup = 1
 
-/obj/item/storage/pill_bottle/MouseDrop(obj/over_object) //Quick pillbottle fix. -Agouri
-
-	if(ishuman(usr) || ismonkey(usr)) //Can monkeys even place items in the pocket slots? Leaving this in just in case~
-		var/mob/M = usr
-		if(!istype(over_object, /obj/screen) || !Adjacent(M))
-			return ..()
-		if(!M.incapacitated() && istype(over_object, /obj/screen/inventory/hand))
-			var/obj/screen/inventory/hand/H = over_object
-			if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
-				add_fingerprint(usr)
-		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
-			if(usr.s_active)
-				usr.s_active.close(usr)
-			src.show_to(usr)
+/obj/item/storage/pill_bottle/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.allow_quick_gather = TRUE
+	STR.click_gather = TRUE
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/pill, /obj/item/dice))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -239,3 +247,85 @@
 	new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/patch/styptic(src)
+
+/obj/item/storage/pill_bottle/zoom
+	name = "suspicious pill bottle"
+	desc = "The label is pretty old and almost unreadable, you recognize some chemical compounds."
+
+/obj/item/storage/pill_bottle/zoom/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/zoom(src)
+
+/obj/item/storage/pill_bottle/happy
+	name = "suspicious pill bottle"
+	desc = "There is a smiley on the top."
+
+/obj/item/storage/pill_bottle/happy/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happy(src)
+
+/obj/item/storage/pill_bottle/lsd
+	name = "suspicious pill bottle"
+	desc = "There is a crude drawing which could be either a mushroom, or a deformed moon."
+
+/obj/item/storage/pill_bottle/lsd/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/lsd(src)
+
+/obj/item/storage/pill_bottle/aranesp
+	name = "suspicious pill bottle"
+	desc = "The label has 'fuck disablers' hastily scrawled in black marker."
+
+/obj/item/storage/pill_bottle/aranesp/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/aranesp(src)
+
+/obj/item/storage/pill_bottle/psicodine
+	name = "bottle of psicodine pills"
+	desc = "Contains pills used to treat mental distress and traumas."
+
+/obj/item/storage/pill_bottle/psicodine/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/psicodine(src)
+
+/obj/item/storage/pill_bottle/happiness
+	name = "happiness pill bottle"
+	desc = "The label is long gone, in its place an 'H' written with a marker."
+
+/obj/item/storage/pill_bottle/happiness/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happiness(src)
+
+/obj/item/storage/pill_bottle/penacid
+	name = "bottle of pentetic acid pills"
+	desc = "Contains pills to expunge radioation and toxins"
+
+/obj/item/storage/pill_bottle/penacid/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/penacid(src)
+
+
+/obj/item/storage/pill_bottle/neurine
+	name = "bottle of neurine pills"
+	desc = "Contains pills to treat non-severe mental traumas."
+
+/obj/item/storage/pill_bottle/neurine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/neurine(src)
+
+/obj/item/storage/pill_bottle/floorpill
+	name = "bottle of floorpills"
+	desc = "An old pill bottle. It smells musty."
+
+/obj/item/storage/pill_bottle/floorpill/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/pill/P = locate() in src
+	name = "bottle of [P.name]s"
+
+/obj/item/storage/pill_bottle/floorpill/PopulateContents()
+	for(var/i in 1 to rand(1,7))
+		new /obj/item/reagent_containers/pill/floorpill(src)
+
+/obj/item/storage/pill_bottle/floorpill/full/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/floorpill(src)

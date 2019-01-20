@@ -6,7 +6,7 @@
 	explosion_block = 3
 	heat_proof = TRUE
 	max_integrity = 600
-	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	damage_deflection = 70
 	var/password = "Swordfish"
@@ -23,12 +23,13 @@
 		flags_1 |= HEAR_1
 
 /obj/machinery/door/password/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(!density || !voice_activated || radio_freq)
 		return
 	if(findtext(raw_message,password))
 		open()
 
-/obj/machinery/door/password/CollidedWith(atom/movable/AM)
+/obj/machinery/door/password/Bumped(atom/movable/AM)
 	return !density && ..()
 
 /obj/machinery/door/password/try_to_activate_door(mob/user)

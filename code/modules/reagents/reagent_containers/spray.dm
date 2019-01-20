@@ -6,9 +6,9 @@
 	item_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	flags_1 = NOBLUDGEON_1
-	container_type = OPENCONTAINER
-	slot_flags = SLOT_BELT
+	item_flags = NOBLUDGEON
+	reagent_flags = OPENCONTAINER
+	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
@@ -24,6 +24,7 @@
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100)
 
 /obj/item/reagent_containers/spray/afterattack(atom/A, mob/user)
+	. = ..()
 	if(istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart) || istype(A, /obj/machinery/hydroponics))
 		return
 
@@ -36,12 +37,12 @@
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 			return
 
-		var/trans = A.reagents.trans_to(src, 50) //transfer 50u , using the spray's transfer amount would take too long to refill
+		var/trans = A.reagents.trans_to(src, 50, transfered_by = user) //transfer 50u , using the spray's transfer amount would take too long to refill
 		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [A].</span>")
 		return
 
 	if(reagents.total_volume < amount_per_transfer_from_this)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, "<span class='warning'>Not enough left!</span>")
 		return
 
 	spray(A)
@@ -50,16 +51,15 @@
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
-	var/area/area = get_area(src)
 	if(reagents.has_reagent("sacid"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [area] ([T.x], [T.y], [T.z]).")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired sulphuric acid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired sulphuric acid from \a [src] at [AREACOORD(T)].")
 	if(reagents.has_reagent("facid"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired Fluacid from \a [src] at [area] [COORD(T)].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Fluacid from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired Fluacid from \a [src] at [AREACOORD(T)].")
 	if(reagents.has_reagent("lube"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [area] [ADMIN_COORDJMP(T)].")
-		log_game("[key_name(user)] fired Space lube from \a [src] at [area] [COORD(T)].")
+		message_admins("[ADMIN_LOOKUPFLW(user)] fired Space lube from \a [src] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(user)] fired Space lube from \a [src] at [AREACOORD(T)].")
 	return
 
 
@@ -92,9 +92,9 @@
 				break
 
 			if(stream_mode)
-				if(ismob(T))
-					var/mob/M = T
-					if(!M.lying || !range_left)
+				if(isliving(T))
+					var/mob/living/M = T
+					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
 				else if(!range_left)
@@ -143,15 +143,33 @@
 		reagents.reaction(usr.loc)
 		src.reagents.clear_reagents()
 
+/obj/item/reagent_containers/spray/on_reagent_change(changetype)
+	var/total_reagent_weight
+	var/amount_of_reagents
+	for (var/datum/reagent/R in reagents.reagent_list)
+		total_reagent_weight = total_reagent_weight + R.reagent_weight
+		amount_of_reagents++
+
+	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
+		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
+		spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+	else
+		spray_range = initial(spray_range)
+	if(stream_mode == 0)
+		current_range = spray_range
+
 //space cleaner
 /obj/item/reagent_containers/spray/cleaner
 	name = "space cleaner"
 	desc = "BLAM!-brand non-foaming space cleaner!"
-	list_reagents = list("cleaner" = 250)
+	volume = 100
+	list_reagents = list("cleaner" = 100)
+	amount_per_transfer_from_this = 2
+	stream_amount = 5
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(do_mob(user,user,30))	
+	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
 			src.spray(user)
@@ -171,19 +189,6 @@
 	list_reagents = list("spraytan" = 50)
 
 
-/obj/item/reagent_containers/spray/medical
-	name = "medical spray"
-	icon = 'icons/obj/chemical.dmi'
-	icon_state = "medspray"
-	volume = 100
-
-
-/obj/item/reagent_containers/spray/medical/sterilizer
-	name = "sterilizer spray"
-	desc = "Spray bottle loaded with non-toxic sterilizer. Useful in preparation for surgery."
-	list_reagents = list("sterilizine" = 100)
-
-
 //pepperspray
 /obj/item/reagent_containers/spray/pepper
 	name = "pepperspray"
@@ -198,6 +203,9 @@
 	amount_per_transfer_from_this = 5
 	list_reagents = list("condensedcapsaicin" = 40)
 
+/obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
+	list_reagents = null
+
 /obj/item/reagent_containers/spray/pepper/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins huffing \the [src]! It looks like [user.p_theyre()] getting a dirty high!</span>")
 	return OXYLOSS
@@ -206,7 +214,7 @@
 /obj/item/reagent_containers/spray/pepper/afterattack(atom/A as mob|obj, mob/user)
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 //water flower
 /obj/item/reagent_containers/spray/waterflower
@@ -223,7 +231,7 @@
 	return
 
 /obj/item/reagent_containers/spray/waterflower/cyborg
-	container_type = NONE
+	reagent_flags = NONE
 	volume = 100
 	list_reagents = list("water" = 100)
 	var/generate_amount = 5
@@ -284,7 +292,7 @@
 	// Make it so the bioterror spray doesn't spray yourself when you click your inventory items
 	if (A.loc == user)
 		return
-	..()
+	. = ..()
 
 /obj/item/reagent_containers/spray/chemsprayer/spray(atom/A)
 	var/direction = get_dir(src, A)

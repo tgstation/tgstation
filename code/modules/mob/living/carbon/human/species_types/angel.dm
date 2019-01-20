@@ -2,11 +2,11 @@
 	name = "Angel"
 	id = "angel"
 	default_color = "FFFFFF"
-	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
-	no_equip = list(slot_back)
+	no_equip = list(SLOT_BACK)
 	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
@@ -15,22 +15,28 @@
 
 /datum/species/angel/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
-	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "Angel") && ("wings" in H.dna.species.mutant_bodyparts)))
+	if(H.dna && H.dna.species && (H.dna.features["wings"] != "Angel"))
+		if(!("wings" in H.dna.species.mutant_bodyparts))
+			H.dna.species.mutant_bodyparts |= "wings"
 		H.dna.features["wings"] = "Angel"
 		H.update_body()
 	if(ishuman(H) && !fly)
 		fly = new
 		fly.Grant(H)
+	H.add_trait(TRAIT_HOLY, SPECIES_TRAIT)
 
 /datum/species/angel/on_species_loss(mob/living/carbon/human/H)
 	if(fly)
 		fly.Remove(H)
 	if(H.movement_type & FLYING)
-		H.movement_type &= ~FLYING
+		H.setMovetype(H.movement_type & ~FLYING)
 	ToggleFlight(H,0)
-	if(H.dna && H.dna.species &&((H.dna.features["wings"] != "None") && ("wings" in H.dna.species.mutant_bodyparts)))
+	if(H.dna && H.dna.species && (H.dna.features["wings"] == "Angel"))
+		if("wings" in H.dna.species.mutant_bodyparts)
+			H.dna.species.mutant_bodyparts -= "wings"
 		H.dna.features["wings"] = "None"
 		H.update_body()
+	H.remove_trait(TRAIT_HOLY, SPECIES_TRAIT)
 	..()
 
 /datum/species/angel/spec_life(mob/living/carbon/human/H)
@@ -46,7 +52,7 @@
 		return 0
 
 /datum/species/angel/proc/CanFly(mob/living/carbon/human/H)
-	if(H.stat || H.IsStun() || H.IsKnockdown())
+	if(H.stat || !(H.mobility_flags & MOBILITY_STAND))
 		return 0
 	if(H.wear_suit && ((H.wear_suit.flags_inv & HIDEJUMPSUIT) && (!H.wear_suit.species_exception || !is_type_in_list(src, H.wear_suit.species_exception))))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
 		to_chat(H, "Your suit blocks your wings from extending!")
@@ -74,13 +80,12 @@
 	if(A.CanFly(H))
 		if(H.movement_type & FLYING)
 			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
-			A.ToggleFlight(H,0)
-			H.update_canmove()
+			A.ToggleFlight(H,FALSE)
+			H.update_mobility()
 		else
 			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
-			H.resting = 0
-			A.ToggleFlight(H,1)
-			H.update_canmove()
+			A.ToggleFlight(H,TRUE)
+			H.set_resting(FALSE, FALSE)
 
 /datum/species/angel/proc/flyslip(mob/living/carbon/human/H)
 	var/obj/buckled_obj
@@ -126,14 +131,14 @@
 	if(flight && CanFly(H))
 		stunmod = 2
 		speedmod = -0.35
-		H.movement_type |= FLYING
+		H.setMovetype(H.movement_type | FLYING)
 		override_float = TRUE
 		H.pass_flags |= PASSTABLE
 		H.OpenWings()
 	else
 		stunmod = 1
 		speedmod = 0
-		H.movement_type &= ~FLYING
+		H.setMovetype(H.movement_type & ~FLYING)
 		override_float = FALSE
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()

@@ -3,7 +3,7 @@ For the main html chat area
 *********************************/
 
 //Precaching a bunch of shit
-GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
+GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of icons for the browser output
 
 //On client, created on login
 /datum/chatOutput
@@ -46,8 +46,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(!owner)
 		return
 
-	var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/goonchat)
-	stuff.register()
+	var/datum/asset/stuff = get_asset_datum(/datum/asset/group/goonchat)
 	stuff.send(owner)
 
 	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
@@ -98,7 +97,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 
 	for(var/message in messageQueue)
-		to_chat(owner, message)
+		// whitespace has already been handled by the original to_chat
+		to_chat(owner, message, handle_whitespace=FALSE)
 
 	messageQueue = null
 	sendClientData()
@@ -106,18 +106,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	//do not convert to to_chat()
 	SEND_TEXT(owner, "<span class=\"userdanger\">Failed to load fancy chat, reverting to old chat. Certain features won't work.</span>")
 
-	pingLoop()
-
 /datum/chatOutput/proc/showChat()
 	winset(owner, "output", "is-visible=false")
 	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
-
-/datum/chatOutput/proc/pingLoop()
-	set waitfor = FALSE
-
-	while (owner)
-		ehjax_send(data = owner.is_afk(29) ? "softPang" : "pang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
-		sleep(30)
 
 /datum/chatOutput/proc/ehjax_send(client/C = owner, window = "browseroutput", data)
 	if(islist(data))
@@ -125,10 +116,15 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	C << output("[data]", "[window]:ehjaxCallback")
 
 /datum/chatOutput/proc/sendMusic(music, pitch)
+	if(!findtext(music, GLOB.is_http_protocol))
+		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
 	if(pitch)
 		music_data["musicRate"] = pitch
 	ehjax_send(data = music_data)
+
+/datum/chatOutput/proc/stopMusic()
+	ehjax_send(data = "stopMusic")
 
 /datum/chatOutput/proc/setMusicVolume(volume = "")
 	if(volume)
@@ -179,65 +175,68 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 //Global chat procs
-
-/proc/to_chat(target, message)
+/proc/to_chat(target, message, handle_whitespace=TRUE)
 	if(!target)
 		return
 
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
+	if (istype(target, /savefile))
 		CRASH("Invalid message! [message]")
 
 	if(!istext(message))
+		if (istype(message, /image) || istype(message, /sound))
+			CRASH("Invalid message! [message]")
 		return
 
 	if(target == world)
 		target = GLOB.clients
 
-	var/list/targets
-	if(!islist(target))
-		targets = list(target)
-	else
-		targets = target
-		if(!targets.len)
-			return
 	var/original_message = message
 	//Some macros remain in the string even after parsing and fuck up the eventual output
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
-	message = replacetext(message, "\n", "<br>")
-	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
+	if(handle_whitespace)
+		message = replacetext(message, "\n", "<br>")
+		message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
-	for(var/I in targets)
-		//Grab us a client if possible
-		var/client/C = grab_client(I)
+	if(islist(target))
+		// Do the double-encoding outside the loop to save nanoseconds
+		var/twiceEncoded = url_encode(url_encode(message))
+		for(var/I in target)
+			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
+
+			if (!C)
+				continue
+
+			//Send it to the old style output window.
+			SEND_TEXT(C, original_message)
+
+			if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+				continue
+
+			if(!C.chatOutput.loaded)
+				//Client still loading, put their messages in a queue
+				C.chatOutput.messageQueue += message
+				continue
+
+			C << output(twiceEncoded, "browseroutput:output")
+	else
+		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
 
 		if (!C)
-			continue
+			return
 
 		//Send it to the old style output window.
 		SEND_TEXT(C, original_message)
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
-			continue
+			return
 
 		if(!C.chatOutput.loaded)
 			//Client still loading, put their messages in a queue
 			C.chatOutput.messageQueue += message
-			continue
+			return
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 		C << output(url_encode(url_encode(message)), "browseroutput:output")
-
-/proc/grab_client(target)
-	if(istype(target, /client))
-		return target
-	else if(ismob(target))
-		var/mob/M = target
-		if(M.client)
-			return M.client
-	else if(istype(target, /datum/mind))
-		var/datum/mind/M = target
-		if(M.current && M.current.client)
-			return M.current.client

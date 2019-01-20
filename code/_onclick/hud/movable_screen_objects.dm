@@ -12,6 +12,8 @@
 	var/snap2grid = FALSE
 	var/moved = FALSE
 	var/locked = FALSE
+	var/x_off = -16
+	var/y_off = -16
 
 //Snap Screen Object
 //Tied to the grid, snaps to the nearest turf
@@ -42,8 +44,8 @@
 		screen_loc = "[screen_loc_X[1]],[screen_loc_Y[1]]"
 
 	else //Normalise Pixel Values (So the object drops at the center of the mouse, not 16 pixels off)
-		var/pix_X = text2num(screen_loc_X[2]) - 16
-		var/pix_Y = text2num(screen_loc_Y[2]) - 16
+		var/pix_X = text2num(screen_loc_X[2]) + x_off
+		var/pix_Y = text2num(screen_loc_Y[2]) + y_off
 		screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"
 
 	moved = screen_loc

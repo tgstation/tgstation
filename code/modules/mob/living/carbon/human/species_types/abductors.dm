@@ -3,12 +3,9 @@
 	id = "abductor"
 	say_mod = "gibbers"
 	sexes = FALSE
-	species_traits = list(SPECIES_ORGANIC,NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS,NOHUNGER,NOEYES)
+	species_traits = list(NOBLOOD,NOEYES)
+	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_NOGUNS,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutanttongue = /obj/item/organ/tongue/abductor
-	var/scientist = FALSE // vars to not pollute spieces list with castes
-
-/datum/species/abductor/copy_properties_from(datum/species/abductor/old_species)
-	scientist = old_species.scientist
 
 /datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

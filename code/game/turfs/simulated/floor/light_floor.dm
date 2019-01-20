@@ -10,6 +10,7 @@
 	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
 	var/currentcolor = 1
 	var/can_modify_colour = TRUE
+	tiled_dirt = FALSE
 
 
 /turf/open/floor/light/examine(mob/user)
@@ -52,6 +53,9 @@
 	return ..()
 
 /turf/open/floor/light/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!can_modify_colour)
 		return
 	if(!on)
@@ -63,10 +67,9 @@
 	if(currentcolor > coloredlights.len)
 		on = FALSE
 	update_icon()
-	..()  //I am not sure what the parent procs have for attack_hand, best to check later.
 
 /turf/open/floor/light/attack_ai(mob/user)
-	attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/light/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -78,7 +81,7 @@
 			update_icon()
 			to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 		else
-			to_chat(user, "<span class='notice'>The lightbulb seems fine, no need to replace it.</span>")
+			to_chat(user, "<span class='notice'>The light bulb seems fine, no need to replace it.</span>")
 
 
 //Cycles through all of the colours

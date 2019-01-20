@@ -29,8 +29,8 @@
 	return cell
 
 /obj/item/inducer/emp_act(severity)
-	..()
-	if(cell)
+	. = ..()
+	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 
 /obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user)
@@ -61,7 +61,7 @@
 
 
 /obj/item/inducer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		W.play_tool_sound(src)
 		if(!opened)
 			to_chat(user, "<span class='notice'>You unscrew the battery compartment.</span>")
@@ -102,12 +102,11 @@
 	else
 		recharging = TRUE
 	var/obj/item/stock_parts/cell/C = A.get_cell()
-	var/obj/item/gun/energy/E
 	var/obj/O
 	var/coefficient = 1
 	if(istype(A, /obj/item/gun/energy))
-		coefficient = 0.075 // 14 loops to recharge an egun from 0-1000
-		E = A
+		to_chat(user,"Error unable to interface with device")
+		return FALSE
 	if(istype(A, /obj))
 		O = A
 	if(C)
@@ -118,8 +117,6 @@
 			return TRUE
 		user.visible_message("[user] starts recharging [A] with [src].","<span class='notice'>You start recharging [A] with [src].</span>")
 		while(C.charge < C.maxcharge)
-			if(E)
-				E.semicd = TRUE  // Prevents someone from firing continuously while recharging the gun.
 			if(do_after(user, 10, target = user) && cell.charge)
 				done_any = TRUE
 				induce(C, coefficient)
@@ -128,8 +125,6 @@
 					O.update_icon()
 			else
 				break
-		if(E)
-			E.reset_semicd() //We're done charging, so we'll let someone fire it now.
 		if(done_any) // Only show a message if we succeeded at least once
 			user.visible_message("[user] recharged [A]!","<span class='notice'>You recharged [A]!</span>")
 		recharging = FALSE
@@ -186,5 +181,3 @@
 /obj/item/inducer/sci/Initialize()
 	. = ..()
 	update_icon()
-
-

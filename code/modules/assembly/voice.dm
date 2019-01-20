@@ -1,14 +1,19 @@
-/obj/item/device/assembly/voice
+#define INCLUSIVE_MODE 1
+#define EXCLUSIVE_MODE 2
+#define RECOGNIZER_MODE 3
+#define VOICE_SENSOR_MODE 4
+
+/obj/item/assembly/voice
 	name = "voice analyzer"
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
 	flags_1 = HEAR_1
-	attachable = 1
+	attachable = TRUE
 	verb_say = "beeps"
 	verb_ask = "beeps"
 	verb_exclaim = "beeps"
-	var/listening = 0
+	var/listening = FALSE
 	var/recorded = "" //the activation message
 	var/mode = 1
 	var/static/list/modes = list("inclusive",
@@ -16,11 +21,12 @@
 								 "recognizer",
 								 "voice sensor")
 
-/obj/item/device/assembly/voice/examine(mob/user)
+/obj/item/assembly/voice/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Use a multitool to swap between \"inclusive\", \"exclusive\", \"recognizer\", and \"voice sensor\" mode.</span>")
 
-/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/assembly/voice/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(speaker == src)
 		return
 
@@ -30,62 +36,66 @@
 		if(check_activation(speaker, raw_message))
 			addtimer(CALLBACK(src, .proc/pulse, 0), 10)
 
-/obj/item/device/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message, datum/language/message_language)
+/obj/item/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message, datum/language/message_language)
 	switch(mode)
-		if(1)
+		if(INCLUSIVE_MODE)
 			recorded = raw_message
-			listening = 0
+			listening = FALSE
 			say("Activation message is '[recorded]'.", message_language)
-		if(2)
+		if(EXCLUSIVE_MODE)
 			recorded = raw_message
-			listening = 0
+			listening = FALSE
 			say("Activation message is '[recorded]'.", message_language)
-		if(3)
+		if(RECOGNIZER_MODE)
 			recorded = speaker.GetVoice()
-			listening = 0
+			listening = FALSE
 			say("Your voice pattern is saved.", message_language)
-		if(4)
+		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
 				addtimer(CALLBACK(src, .proc/pulse, 0), 10)
 
-/obj/item/device/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
-	. = 0
+/obj/item/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
+	. = FALSE
 	switch(mode)
-		if(1)
+		if(INCLUSIVE_MODE)
 			if(findtext(raw_message, recorded))
-				. = 1
-		if(2)
+				. = TRUE
+		if(EXCLUSIVE_MODE)
 			if(raw_message == recorded)
-				. = 1
-		if(3)
+				. = TRUE
+		if(RECOGNIZER_MODE)
 			if(speaker.GetVoice() == recorded)
-				. = 1
-		if(4)
+				. = TRUE
+		if(VOICE_SENSOR_MODE)
 			if(length(raw_message))
-				. = 1
+				. = TRUE
 
-/obj/item/device/assembly/voice/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		mode %= modes.len
-		mode++
-		to_chat(user, "You set [src] into a [modes[mode]] mode.")
-		listening = 0
-		recorded = ""
-	else
-		return ..()
+/obj/item/assembly/voice/multitool_act(mob/living/user, obj/item/I)
+	mode %= modes.len
+	mode++
+	to_chat(user, "<span class='notice'>You set [src] into [modes[mode]] mode.</span>")
+	listening = FALSE
+	recorded = ""
+	return TRUE
 
-/obj/item/device/assembly/voice/activate()
-	if(secured)
-		if(!holder)
-			listening = !listening
-			say("[listening ? "Now" : "No longer"] recording input.")
+/obj/item/assembly/voice/activate()
+	if(!secured || holder)
+		return FALSE
+	listening = !listening
+	say("[listening ? "Now" : "No longer"] recording input.")
+	return TRUE
 
-/obj/item/device/assembly/voice/attack_self(mob/user)
+/obj/item/assembly/voice/attack_self(mob/user)
 	if(!user)
-		return 0
+		return FALSE
 	activate()
-	return 1
+	return TRUE
 
-/obj/item/device/assembly/voice/toggle_secure()
+/obj/item/assembly/voice/toggle_secure()
 	. = ..()
-	listening = 0
+	listening = FALSE
+
+#undef INCLUSIVE_MODE
+#undef EXCLUSIVE_MODE
+#undef RECOGNIZER_MODE
+#undef VOICE_SENSOR_MODE

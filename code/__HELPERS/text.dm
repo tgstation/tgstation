@@ -15,8 +15,7 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(t)
-	var/sqltext = SSdbcore.Quote("[t]");
-	return copytext(sqltext, 2, lentext(sqltext));//Quote() adds quotes around input, we already do that
+	return SSdbcore.Quote("[t]")
 
 /proc/format_table_name(table as text)
 	return CONFIG_GET(string/feedback_tableprefix) + table
@@ -598,33 +597,29 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return
 
 	//Regular expressions are, as usual, absolute magic
-	var/regex/is_website = new("http|www.|\[a-z0-9_-]+.(com|org|net|mil|edu)+", "i")
-	var/regex/is_email = new("\[a-z0-9_-]+@\[a-z0-9_-]+.\[a-z0-9_-]+", "i")
-	var/regex/alphanumeric = new("\[a-z0-9]+", "i")
-	var/regex/punctuation = new("\[.!?]+", "i")
 	var/regex/all_invalid_symbols = new("\[^ -~]+")
 
 	var/list/accepted = list()
 	for(var/string in proposed)
-		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols) || !findtext(string,alphanumeric))
+		if(findtext(string,GLOB.is_website) || findtext(string,GLOB.is_email) || findtext(string,all_invalid_symbols) || !findtext(string,GLOB.is_alphanumeric))
 			continue
 		var/buffer = ""
 		var/early_culling = TRUE
 		for(var/pos = 1, pos <= lentext(string), pos++)
 			var/let = copytext(string, pos, (pos + 1) % lentext(string))
-			if(early_culling && !findtext(let,alphanumeric))
+			if(early_culling && !findtext(let,GLOB.is_alphanumeric))
 				continue
 			early_culling = FALSE
 			buffer += let
-		if(!findtext(buffer,alphanumeric))
+		if(!findtext(buffer,GLOB.is_alphanumeric))
 			continue
 		var/punctbuffer = ""
 		var/cutoff = lentext(buffer)
 		for(var/pos = lentext(buffer), pos >= 0, pos--)
 			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
-			if(findtext(let,alphanumeric))
+			if(findtext(let,GLOB.is_alphanumeric))
 				break
-			if(findtext(let,punctuation))
+			if(findtext(let,GLOB.is_punctuation))
 				punctbuffer = let + punctbuffer //Note this isn't the same thing as using +=
 				cutoff = pos
 		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats. It's not perfect but it helps.
@@ -652,7 +647,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 				else
 					punctbuffer = "" //Grammer nazis be damned
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
-		if(!findtext(buffer,alphanumeric))
+		if(!findtext(buffer,GLOB.is_alphanumeric))
 			continue
 		if(!buffer || lentext(buffer) > 280 || lentext(buffer) <= cullshort || buffer in accepted)
 			continue
@@ -702,7 +697,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/macro = lowertext(copytext(string, next_backslash + 1, next_space))
 	var/rest = next_backslash > leng ? "" : copytext(string, next_space + 1)
 
-	//See http://www.byond.com/docs/ref/info.html#/DM/text/macros
+	//See https://secure.byond.com/docs/ref/info.html#/DM/text/macros
 	switch(macro)
 		//prefixes/agnostic
 		if("the")
@@ -738,3 +733,63 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	. = base
 	if(rest)
 		. += .(rest)
+
+//Replacement for the \th macro when you want the whole word output as text (first instead of 1st)
+/proc/thtotext(number)
+	if(!isnum(number))
+		return
+	switch(number)
+		if(1)
+			return "first"
+		if(2)
+			return "second"
+		if(3)
+			return "third"
+		if(4)
+			return "fourth"
+		if(5)
+			return "fifth"
+		if(6)
+			return "sixth"
+		if(7)
+			return "seventh"
+		if(8)
+			return "eighth"
+		if(9)
+			return "ninth"
+		if(10)
+			return "tenth"
+		if(11)
+			return "eleventh"
+		if(12)
+			return "twelfth"
+		else
+			return "[number]\th"
+
+
+/proc/random_capital_letter()
+	return uppertext(pick(GLOB.alphabet))
+
+/proc/unintelligize(message)
+	var/prefix=copytext(message,1,2)
+	if(prefix == ";")
+		message = copytext(message,2)
+	else if(prefix in list(":","#"))
+		prefix += copytext(message,2,3)
+		message = copytext(message,3)
+	else
+		prefix=""
+
+	var/list/words = splittext(message," ")
+	var/list/rearranged = list()
+	for(var/i=1;i<=words.len;i++)
+		var/cword = pick(words)
+		words.Remove(cword)
+		var/suffix = copytext(cword,length(cword)-1,length(cword))
+		while(length(cword)>0 && suffix in list(".",",",";","!",":","?"))
+			cword  = copytext(cword,1              ,length(cword)-1)
+			suffix = copytext(cword,length(cword)-1,length(cword)  )
+		if(length(cword))
+			rearranged += cword
+	message = "[prefix][jointext(rearranged," ")]"
+	. = message

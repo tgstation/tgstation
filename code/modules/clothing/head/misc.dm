@@ -6,7 +6,7 @@
 	desc = "It's good to be emperor."
 	item_state = "that"
 	flags_inv = 0
-	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 50, acid = 50)
+	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 80
 
 /obj/item/clothing/head/powdered_wig
@@ -129,6 +129,24 @@
 	item_state = "pirate"
 	dog_fashion = /datum/dog_fashion/head/pirate
 
+/obj/item/clothing/head/pirate
+	var/datum/language/piratespeak/L = new
+
+/obj/item/clothing/head/pirate/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == SLOT_HEAD)
+		user.grant_language(/datum/language/piratespeak/)
+		to_chat(user, "You suddenly know how to speak like a pirate!")
+
+/obj/item/clothing/head/pirate/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(SLOT_HEAD) == src)
+		user.remove_language(/datum/language/piratespeak/)
+		to_chat(user, "You can no longer speak like a pirate.")
+
 /obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
@@ -185,16 +203,15 @@
 	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
-	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	pockets = /obj/item/storage/internal/pocket/small
+	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
 		return 0
 	var/mob/living/carbon/human/H = user
-	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like they're trying to be nice to girls.</span>")
-	user.say("M'lady.")
+	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to be nice to girls.</span>")
+	user.say("M'lady.", forced = "fedora suicide")
 	sleep(10)
 	H.facial_hair_style = "Neckbeard"
 	return(BRUTELOSS)
@@ -221,8 +238,11 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	flags_1 = NODROP_1
 	dog_fashion = null
+
+/obj/item/clothing/head/sombrero/shamebrero/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -237,6 +257,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
 	resistance_flags = NONE
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -279,7 +300,7 @@
 	name = "crown"
 	desc = "A crown fit for a king, a petty king maybe."
 	icon_state = "crown"
-	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
+	armor = list("melee" = 15, "bullet" = 0, "laser" = 0,"energy" = 15, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	dynamic_hair_suffix = ""
 
@@ -305,8 +326,8 @@
 	icon_state = "drfreeze_hat"
 	flags_inv = HIDEHAIR
 
-/obj/item/clothing/head/pharoah
-	name = "pharoah hat"
+/obj/item/clothing/head/pharaoh
+	name = "pharaoh hat"
 	desc = "Walk like an Egyptian."
 	icon_state = "pharoah_hat"
 	icon_state = "pharoah_hat"
@@ -318,7 +339,31 @@
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/nemes
-	name = "headress of Nemes"
+	name = "headdress of Nemes"
 	desc = "Lavish space tomb not included."
 	icon_state = "nemes_headdress"
 	icon_state = "nemes_headdress"
+
+/obj/item/clothing/head/frenchberet
+	name = "french beret"
+	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
+	icon_state = "beretblack"
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/frenchberet/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		M = " [M]"
+		var/list/french_words = strings("french_replacement.json", "french")
+
+		for(var/key in french_words)
+			var/value = french_words[key]
+			if(islist(value))
+				value = pick(value)
+
+			M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+			M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+			M = replacetextEx(M, " [key]", " [value]")
+
+		if(prob(3))
+			M += pick(" Honh honh honh!"," Honh!"," Zut Alors!")
+	return trim(M)

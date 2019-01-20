@@ -1,7 +1,7 @@
 /datum/surgery/organ_manipulation
 	name = "organ manipulation"
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
-	possible_locs = list("chest", "head")
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_real_bodypart = 1
 	steps = list(
 		/datum/surgery_step/incise,
@@ -15,7 +15,7 @@
 		)
 
 /datum/surgery/organ_manipulation/soft
-	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
+	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -27,8 +27,8 @@
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
-	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
-	species = list(/mob/living/carbon/alien/humanoid)
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
+	target_mobtypes = list(/mob/living/carbon/alien/humanoid)
 	steps = list(
 		/datum/surgery_step/saw,
 		/datum/surgery_step/incise,
@@ -40,8 +40,10 @@
 
 /datum/surgery/organ_manipulation/mechanic
 	name = "prosthesis organ manipulation"
-	possible_locs = list("chest", "head")
+	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_bodypart_type = BODYPART_ROBOTIC
+	lying_required = FALSE
+	self_operable = TRUE
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -53,7 +55,7 @@
 		)
 
 /datum/surgery/organ_manipulation/mechanic/soft
-	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
+	possible_locs = list(BODY_ZONE_PRECISE_GROIN, BODY_ZONE_PRECISE_EYES, BODY_ZONE_PRECISE_MOUTH, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,
@@ -141,7 +143,7 @@
 		if(I && I.owner == target)
 			user.visible_message("[user] successfully extracts [I] from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
-			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
+			log_combat(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
 			I.forceMove(get_turf(target))
 		else

@@ -8,10 +8,11 @@
 	invocation_emote_self = "<span class='notice'>You form a wall in front of yourself.</span>"
 	summon_lifespan = 300
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	range = 0
 	cast_sound = null
-	human_req = 1
+	human_req = TRUE
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
@@ -32,11 +33,12 @@
 	desc = "Make or break a vow of silence."
 	school = "mime"
 	panel = "Mime"
-	clothes_req = 0
-	human_req = 1
+	clothes_req = FALSE
+	human_req = TRUE
+	antimagic_allowed = TRUE
 	charge_max = 3000
 	range = -1
-	include_user = 1
+	include_user = TRUE
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
@@ -58,7 +60,9 @@
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)
 			to_chat(H, "<span class='notice'>You make a vow of silence.</span>")
+			SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "vow")
 		else
+			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "vow", /datum/mood_event/broken_vow)
 			to_chat(H, "<span class='notice'>You break your vow of silence.</span>")
 
 // These spells can only be gotten from the "Guide for Advanced Mimery series" for Mime Traitors.
@@ -66,14 +70,17 @@
 /obj/effect/proc_holder/spell/targeted/forcewall/mime
 	name = "Invisible Blockade"
 	desc = "Form an invisible three tile wide blockade."
+	school = "mime"
+	panel = "Mime"
 	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
 	charge_max = 600
 	sound =  null
-	clothes_req = 0
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	range = -1
-	include_user = 1
+	include_user = TRUE
 
 	action_icon_state = "mime"
 	action_background_icon_state = "bg_mime"
@@ -94,7 +101,8 @@
 	school = "mime"
 	panel = "Mime"
 	charge_max = 300
-	clothes_req = 0
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
 	invocation_type = "emote"
 	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
 	range = 20
@@ -125,16 +133,32 @@
 	..()
 
 
-/obj/item/spellbook/oneuse/mimery_blockade
+/obj/item/book/granter/spell/mimery_blockade
 	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
-	spellname = ""
+	spellname = "Invisible Blockade"
 	name = "Guide to Advanced Mimery Vol 1"
 	desc = "The pages don't make any sound when turned."
 	icon_state ="bookmime"
+	remarks = list("...")
 
-/obj/item/spellbook/oneuse/mimery_guns
+/obj/item/book/granter/spell/mimery_blockade/attack_self(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
+
+/obj/item/book/granter/spell/mimery_guns
 	spell = /obj/effect/proc_holder/spell/aimed/finger_guns
-	spellname = ""
+	spellname = "Finger Guns"
 	name = "Guide to Advanced Mimery Vol 2"
 	desc = "There aren't any words written..."
 	icon_state ="bookmime"
+	remarks = list("...")
+
+/obj/item/book/granter/spell/mimery_guns/attack_self(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)

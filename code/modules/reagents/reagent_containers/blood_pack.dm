@@ -5,12 +5,13 @@
 	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
+	var/unique_blood = null
 	var/labelled = 0
 
 /obj/item/reagent_containers/blood/Initialize()
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		reagents.add_reagent(unique_blood ? unique_blood : "blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()
 
 /obj/item/reagent_containers/blood/on_reagent_change(changetype)
@@ -69,18 +70,22 @@
 /obj/item/reagent_containers/blood/lizard
 	blood_type = "L"
 
+/obj/item/reagent_containers/blood/ethereal
+	blood_type = "LE"
+	unique_blood = "liquidelectricity"
+
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
 
 /obj/item/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/pen) || istype(I, /obj/item/toy/crayon))
-
+		if(!user.is_literate())
+			to_chat(user, "<span class='notice'>You scribble illegibly on the label of [src]!</span>")
+			return
 		var/t = stripped_input(user, "What would you like to label the blood pack?", name, null, 53)
-		if(!user.canUseTopic(src))
+		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(user.get_active_held_item() != I)
-			return
-		if(loc != user)
 			return
 		if(t)
 			labelled = 1

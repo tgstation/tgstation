@@ -13,14 +13,14 @@
 	name = "mineral floor"
 	icon_state = ""
 	var/list/icons
-
+	tiled_dirt = FALSE
 
 
 /turf/open/floor/mineral/Initialize()
-	broken_states = list("[initial(icon_state)]_dam")
+	if(!broken_states)
+		broken_states = list("[initial(icon_state)]_dam")
 	. = ..()
-	if (!icons)
-		icons = list()
+	icons = typelist("icons", icons)
 
 
 /turf/open/floor/mineral/update_icon()
@@ -42,10 +42,10 @@
 	if(exposed_temperature > 300)
 		PlasmaBurn(exposed_temperature)
 
-/turf/open/floor/mineral/plasma/attackby(obj/item/W as obj, mob/user as mob, params)
+/turf/open/floor/mineral/plasma/attackby(obj/item/W, mob/user, params)
 	if(W.is_hot() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
-		log_game("Plasma flooring was ignited by [key_name(user)] in [COORD(src)]")
+		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
+		log_game("Plasma flooring was ignited by [key_name(user)] in [AREACOORD(src)]")
 		ignite(W.is_hot())
 		return
 	..()
@@ -77,48 +77,57 @@
 
 //TITANIUM (shuttle)
 
-/turf/open/floor/mineral/titanium/blue
-	icon_state = "shuttlefloor"
-	icons = list("shuttlefloor","shuttlefloor_dam")
-
-/turf/open/floor/mineral/titanium/blue/airless
-	initial_gas_mix = "TEMP=2.7"
-
-/turf/open/floor/mineral/titanium/yellow
-	icon_state = "shuttlefloor2"
-	icons = list("shuttlefloor2","shuttlefloor2_dam")
-
-/turf/open/floor/mineral/titanium/yellow/airless
-	initial_gas_mix = "TEMP=2.7"
-
 /turf/open/floor/mineral/titanium
 	name = "shuttle floor"
-	icon_state = "shuttlefloor3"
+	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
-	icons = list("shuttlefloor3","shuttlefloor3_dam")
+	broken_states = list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
 
 /turf/open/floor/mineral/titanium/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/yellow
+	icon_state = "titanium_yellow"
+
+/turf/open/floor/mineral/titanium/yellow/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/blue
+	icon_state = "titanium_blue"
+
+/turf/open/floor/mineral/titanium/blue/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/titanium/white
+	icon_state = "titanium_white"
+
+/turf/open/floor/mineral/titanium/white/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/mineral/titanium/purple
-	icon_state = "shuttlefloor5"
-	icons = list("shuttlefloor5","shuttlefloor5_dam")
+	icon_state = "titanium_purple"
 
 /turf/open/floor/mineral/titanium/purple/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium
 	name = "shuttle floor"
-	icon_state = "shuttlefloor4"
+	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
-	icons = list("shuttlefloor4","shuttlefloor4_dam")
+	broken_states = list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
 
 /turf/open/floor/mineral/plastitanium/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/mineral/plastitanium/brig
-	name = "Brig floor"
+/turf/open/floor/mineral/plastitanium/red
+	icon_state = "plastitanium_red"
+
+/turf/open/floor/mineral/plastitanium/red/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/plastitanium/red/brig
+	name = "brig floor"
 
 //BANANIUM
 
@@ -133,7 +142,7 @@
 	.=..()
 	if(!.)
 		if(istype(L))
-			squeek()
+			squeak()
 
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, params)
 	.=..()
@@ -155,13 +164,13 @@
 		playsound(src, 'sound/items/bikehorn.ogg', 50, 1)
 		spam_flag = world.time + 20
 
-/turf/open/floor/mineral/bananium/proc/squeek()
+/turf/open/floor/mineral/bananium/proc/squeak()
 	if(spam_flag < world.time)
 		playsound(src, "clownstep", 50, 1)
 		spam_flag = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 //DIAMOND
 
@@ -174,6 +183,7 @@
 //URANIUM
 
 /turf/open/floor/mineral/uranium
+	article = "a"
 	name = "uranium floor"
 	icon_state = "uranium"
 	floor_tile = /obj/item/stack/tile/mineral/uranium
@@ -219,6 +229,7 @@
 	icon_state = "alienpod1"
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
+	baseturfs = /turf/open/floor/plating/abductor2
 
 /turf/open/floor/mineral/abductor/Initialize()
 	. = ..()
@@ -229,6 +240,3 @@
 
 /turf/open/floor/mineral/abductor/burn_tile()
 	return //unburnable
-
-/turf/open/floor/mineral/abductor/make_plating()
-	return ChangeTurf(/turf/open/floor/plating/abductor2)

@@ -13,7 +13,8 @@
 	var/automatic_charge_overlays = TRUE	//Do we handle overlays with base update_icon()?
 	var/charge_sections = 4
 	ammo_x_offset = 2
-	var/shaded_charge = 0 //if this gun uses a stateful charge bar for more detail
+	var/shaded_charge = FALSE //if this gun uses a stateful charge bar for more detail
+	var/old_ratio = 0 // stores the gun's previous ammo "ratio" to see if it needs an updated icon
 	var/selfcharge = 0
 	var/charge_tick = 0
 	var/charge_delay = 4
@@ -21,10 +22,12 @@
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
 
 /obj/item/gun/energy/emp_act(severity)
-	cell.use(round(cell.charge / severity))
-	chambered = null //we empty the chamber
-	recharge_newshot() //and try to charge a new shot
-	update_icon()
+	. = ..()
+	if(!(. & EMP_PROTECT_CONTENTS))
+		cell.use(round(cell.charge / severity))
+		chambered = null //we empty the chamber
+		recharge_newshot() //and try to charge a new shot
+		update_icon()
 
 /obj/item/gun/energy/get_cell()
 	return cell
@@ -38,7 +41,7 @@
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
 	update_ammo_types()
-	recharge_newshot(1)
+	recharge_newshot(TRUE)
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_icon()
@@ -59,16 +62,14 @@
 	return ..()
 
 /obj/item/gun/energy/process()
-	if(selfcharge)
+	if(selfcharge && cell && cell.percent() < 100)
 		charge_tick++
 		if(charge_tick < charge_delay)
 			return
 		charge_tick = 0
-		if(!cell)
-			return
 		cell.give(100)
 		if(!chambered) //if empty chamber we try to charge a new shot
-			recharge_newshot(1)
+			recharge_newshot(TRUE)
 		update_icon()
 
 /obj/item/gun/energy/attack_self(mob/living/user as mob)
@@ -78,7 +79,7 @@
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	return cell.charge >= shot.e_cost
+	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
 	if (!ammo_type || !cell)
@@ -124,15 +125,21 @@
 	if (shot.select_name)
 		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	chambered = null
-	recharge_newshot(1)
-	update_icon()
+	recharge_newshot(TRUE)
+	update_icon(TRUE)
 	return
 
-/obj/item/gun/energy/update_icon()
+/obj/item/gun/energy/update_icon(force_update)
+	if(QDELETED(src))
+		return
 	..()
 	if(!automatic_charge_overlays)
 		return
-	var/ratio = CEILING((cell.charge / cell.maxcharge) * charge_sections, 1)
+	var/ratio = CEILING(CLAMP(cell.charge / cell.maxcharge, 0, 1) * charge_sections, 1)
+	if(ratio == old_ratio && !force_update)
+		return
+	old_ratio = ratio
+	cut_overlays()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	var/iconState = "[icon_state]_charge"
 	var/itemState = null
@@ -158,11 +165,8 @@
 		itemState += "[ratio]"
 		item_state = itemState
 
-/obj/item/gun/energy/ui_action_click()
-	toggle_gunlight()
-
-/obj/item/gun/energy/suicide_act(mob/user)
-	if (can_shoot() && can_trigger_gun(user))
+/obj/item/gun/energy/suicide_act(mob/living/user)
+	if (istype(user) && can_shoot() && can_trigger_gun(user) && user.get_bodypart(BODY_ZONE_HEAD))
 		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		sleep(25)
 		if(user.is_holding(src))
@@ -176,8 +180,8 @@
 			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brains out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
-		playsound(src, "gun_dry_fire", 30, 1)
+		user.visible_message("<span class='suicide'>[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
+		playsound(src, dry_fire_sound, 30, TRUE)
 		return (OXYLOSS)
 
 
@@ -201,13 +205,13 @@
 		if(!BB)
 			. = ""
 		else if(BB.nodamage || !BB.damage || BB.damage_type == STAMINA)
-			user.visible_message("<span class='danger'>[user] tries to light their [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but it doesn't do anything. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, 1)
 			playsound(user, BB.hitsound, 50, 1)
 			cell.use(E.e_cost)
 			. = ""
 		else if(BB.damage_type != BURN)
-			user.visible_message("<span class='danger'>[user] tries to light their [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
+			user.visible_message("<span class='danger'>[user] tries to light [user.p_their()] [A.name] with [src], but only succeeds in utterly destroying it. Dumbass.</span>")
 			playsound(user, E.fire_sound, 50, 1)
 			playsound(user, BB.hitsound, 50, 1)
 			cell.use(E.e_cost)

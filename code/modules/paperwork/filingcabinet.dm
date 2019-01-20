@@ -54,7 +54,7 @@
 		sleep(5)
 		icon_state = initial(icon_state)
 		updateUsrDialog()
-	else if(istype(P, /obj/item/wrench))
+	else if(P.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You begin to [anchored ? "unwrench" : "wrench"] [src].</span>")
 		if(P.use_tool(src, user, 20, volume=50))
 			to_chat(user, "<span class='notice'>You successfully [anchored ? "unwrench" : "wrench"] [src].</span>")
@@ -65,12 +65,12 @@
 		return ..()
 
 
-/obj/structure/filingcabinet/attack_hand(mob/user)
+/obj/structure/filingcabinet/ui_interact(mob/user)
+	. = ..()
 	if(contents.len <= 0)
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
 
-	user.set_machine(src)
 	var/dat = "<center><table>"
 	var/i
 	for(i=contents.len, i>=1, i--)
@@ -97,11 +97,13 @@
 	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
 
 /obj/structure/filingcabinet/Topic(href, href_list)
+	if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
+		return
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
 
-		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
-		if(istype(P) && P.loc == src && in_range(src, usr))
+		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
+		if(istype(P) && in_range(src, usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
 			icon_state = "[initial(icon_state)]-open"
@@ -136,7 +138,8 @@
 
 /obj/structure/filingcabinet/security/attack_hand()
 	populate()
-	..()
+	. = ..()
+
 /obj/structure/filingcabinet/security/attack_tk()
 	populate()
 	..()
@@ -165,9 +168,12 @@
 			P.name = "paper - '[G.fields["name"]]'"
 			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
 						//before the records have been generated, so we do this inside the loop.
+
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/filingcabinet/medical/attack_hand()
 	populate()
-	..()
+	. = ..()
+
 /obj/structure/filingcabinet/medical/attack_tk()
 	populate()
 	..()
@@ -205,14 +211,14 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
 	new /obj/item/paper/contract/employment(src, employee)
 
-/obj/structure/filingcabinet/employment/attack_hand(mob/user)
+/obj/structure/filingcabinet/employment/interact(mob/user)
 	if(!cooldown)
 		if(virgin)
 			fillCurrent()
 			virgin = 0
 		cooldown = 1
-		..()
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
 		to_chat(user, "<span class='warning'>[src] is jammed, give it a few seconds.</span>")
+	..()

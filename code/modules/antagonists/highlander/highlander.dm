@@ -3,22 +3,15 @@
 	var/obj/item/claymore/highlander/sword
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
+	can_hijack = HIJACK_HIJACKER
 
 /datum/antagonist/highlander/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/carbon/human/H = owner.current || mob_override
-	if(!istype(H))
-		return
-	H.dna.species.species_traits |= NOGUNS //nice try jackass
+	var/mob/living/L = owner.current || mob_override
+	L.add_trait(TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/carbon/human/H = owner.current || mob_override
-	if(!istype(H))
-		return
-	H.dna.species.species_traits &= ~NOGUNS
-
-/datum/antagonist/highlander/on_removal()
-	owner.objectives -= objectives
-	. = ..()
+	var/mob/living/L = owner.current || mob_override
+	L.remove_trait(TRAIT_NOGUNS, "highlander")
 
 /datum/antagonist/highlander/proc/forge_objectives()
 	var/datum/objective/steal/steal_objective = new
@@ -30,8 +23,6 @@
 	hijack_objective.explanation_text = "Escape on the shuttle alone. Ensure that nobody else makes it out."
 	hijack_objective.owner = owner
 	objectives += hijack_objective
-
-	owner.objectives |= objectives
 
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
@@ -50,15 +41,15 @@
 	if(!istype(H))
 		return
 
-	for(var/obj/item/I in H.get_equipped_items())
+	for(var/obj/item/I in H.get_equipped_items(TRUE))
 		qdel(I)
 	for(var/obj/item/I in H.held_items)
 		qdel(I)
-	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_ears)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/kilt/highlander(H), SLOT_W_UNIFORM)
+	H.equip_to_slot_or_del(new /obj/item/radio/headset/heads/captain(H), SLOT_EARS)
+	H.equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(H), SLOT_HEAD)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(H), SLOT_SHOES)
+	H.equip_to_slot_or_del(new /obj/item/pinpointer/nuke(H), SLOT_L_STORE)
 	for(var/obj/item/pinpointer/nuke/P in H)
 		P.attack_self(H)
 	var/obj/item/card/id/W = new(H)
@@ -67,16 +58,16 @@
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-	W.flags_1 |= NODROP_1
+	W.add_trait(TRAIT_NODROP, HIGHLANDER)
 	W.update_label(H.real_name)
-	H.equip_to_slot_or_del(W, slot_wear_id)
+	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 
 	sword = new(H)
 	if(!GLOB.highlander)
-		sword.admin_spawned = TRUE //To prevent announcing
+		sword.flags_1 |= ADMIN_SPAWNED_1 //To prevent announcing
 	sword.pickup(H) //For the stun shielding
 	H.put_in_hands(sword)
-	
+
 
 	var/obj/item/bloodcrawl/antiwelder = new(H)
 	antiwelder.name = "compulsion of honor"

@@ -8,7 +8,7 @@
 	icon = 'icons/turf/shuttle.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	max_integrity = 500
-	armor = list(melee = 100, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70) //default + ignores melee
+	armor = list("melee" = 100, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70) //default + ignores melee
 
 /obj/structure/shuttle/engine
 	name = "engine"
@@ -26,7 +26,7 @@
 		return FAILED_UNFASTEN
 	return ..()
 
-/obj/structure/shuttle/engine/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+/obj/structure/shuttle/engine/default_unfasten_wrench(mob/user, obj/item/I, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(anchored)
@@ -34,42 +34,40 @@
 		else
 			state = ENGINE_UNWRENCHED
 
-/obj/structure/shuttle/engine/attackby(obj/item/I, mob/user, params)
-	add_fingerprint(user)
-	if(default_unfasten_wrench(user, I))
-		return
-	else if(istype(I, /obj/item/weldingtool))
-		switch(state)
-			if(ENGINE_UNWRENCHED)
-				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
-			if(EM_SECURED)
-				if(!I.tool_start_check(user, amount=0))
-					return
+/obj/structure/shuttle/engine/wrench_act(mob/living/user, obj/item/I)
+	default_unfasten_wrench(user, I)
+	return TRUE
 
-				user.visible_message("[user.name] starts to weld the [name] to the floor.", \
-					"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
-					"<span class='italics'>You hear welding.</span>")
+/obj/structure/shuttle/engine/welder_act(mob/living/user, obj/item/I)
+	switch(state)
+		if(ENGINE_UNWRENCHED)
+			to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
+		if(ENGINE_WRENCHED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
 
-				if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
-					state = ENGINE_WELDED
-					to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
-					alter_engine_power(engine_power)
+			user.visible_message("[user.name] starts to weld the [name] to the floor.", \
+				"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
 
-			if(EM_WELDED)
-				if(!I.tool_start_check(user, amount=0))
-					return
+			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+				state = ENGINE_WELDED
+				to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
+				alter_engine_power(engine_power)
 
-				user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
-					"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
-					"<span class='italics'>You hear welding.</span>")
+		if(ENGINE_WELDED)
+			if(!I.tool_start_check(user, amount=0))
+				return TRUE
 
-				if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
-					state = ENGINE_WRENCHED
-					to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
-					alter_engine_power(-engine_power)
-		return
-	else
-		return ..()
+			user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
+				"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
+				"<span class='italics'>You hear welding.</span>")
+
+			if(I.use_tool(src, user, ENGINE_WELDTIME, volume=50))
+				state = ENGINE_WRENCHED
+				to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+				alter_engine_power(-engine_power)
+	return TRUE
 
 /obj/structure/shuttle/engine/Destroy()
 	if(state == ENGINE_WELDED)
@@ -151,3 +149,8 @@
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = 0
+
+#undef ENGINE_UNWRENCHED
+#undef ENGINE_WRENCHED
+#undef ENGINE_WELDED
+#undef ENGINE_WELDTIME

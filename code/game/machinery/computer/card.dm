@@ -133,11 +133,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			return -1
 	return 0
 
-/obj/machinery/computer/card/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/card/ui_interact(mob/user)
+	. = ..()
 
-	user.set_machine(src)
 	var/dat
 	if(!SSticker)
 		return
@@ -346,12 +344,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
-
 
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
+
+	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational())
+		usr.unset_machine()
+		usr << browse(null, "window=id_com")
+		return
+
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
@@ -426,10 +428,16 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						var/datum/job/J = new jobtype
 						if(ckey(J.title) == ckey(t1))
 							jobdatum = J
+							updateUsrDialog()
 							break
 					if(!jobdatum)
 						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
+						updateUsrDialog()
 						return
+					if(modify.registered_account)
+						modify.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
+						if(modify.registered_account.welfare)
+							modify.registered_account.add_neetbux()
 
 					modify.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
@@ -451,6 +459,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 					else
 						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
+						updateUsrDialog()
 						return
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
@@ -466,8 +475,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
+					updateUsrDialog()
 					return 0
 				if(can_open_job(j) != 1)
+					updateUsrDialog()
 					return 0
 				if(opened_positions[edit_job_target] >= 0)
 					GLOB.time_last_changed_position = world.time / 10
@@ -481,8 +492,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/edit_job_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(edit_job_target)
 				if(!j)
+					updateUsrDialog()
 					return 0
 				if(can_close_job(j) != 1)
+					updateUsrDialog()
 					return 0
 				//Allow instant closing without cooldown if a position has been opened before
 				if(opened_positions[edit_job_target] <= 0)
@@ -497,6 +510,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/priority_target = href_list["job"]
 				var/datum/job/j = SSjob.GetJob(priority_target)
 				if(!j)
+					updateUsrDialog()
 					return 0
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
@@ -504,6 +518,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					priority = FALSE
 				else if(j.total_positions <= j.current_positions)
 					to_chat(usr, "<span class='notice'>[j.title] has had all positions filled. Open up more slots before prioritizing it.</span>")
+					updateUsrDialog()
 					return
 				else
 					SSjob.prioritized_jobs += j
@@ -525,14 +540,14 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	if (modify)
 		modify.update_label()
 	updateUsrDialog()
-	return
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(user.canUseTopic(src))
-		if(scan)
-			eject_id_scan(user)
-		if(modify)
-			eject_id_modify(user)
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+		return
+	if(scan)
+		eject_id_scan(user)
+	if(modify)
+		eject_id_modify(user)
 
 /obj/machinery/computer/card/proc/eject_id_scan(mob/user)
 	if(scan)

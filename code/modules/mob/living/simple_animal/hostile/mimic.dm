@@ -12,6 +12,7 @@
 	maxHealth = 250
 	health = 250
 	gender = NEUTER
+	mob_biotypes = list(MOB_INORGANIC)
 
 	harm_intent_damage = 5
 	melee_damage_lower = 8
@@ -68,7 +69,7 @@
 		icon_state = initial(icon_state)
 		if(prob(15) && iscarbon(target))
 			var/mob/living/carbon/C = target
-			C.Knockdown(40)
+			C.Paralyze(40)
 			C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 					"<span class='userdanger'>\The [src] knocks you down!</span>")
 
@@ -101,15 +102,19 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/mob.dmi', "googly_eyes")
+	var/overlay_googly_eyes = TRUE
+	var/idledamage = TRUE
 	gold_core_spawnable = NO_SPAWN
 
-/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0)
+/mob/living/simple_animal/hostile/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = 0, no_googlies = FALSE)
 	. = ..()
+	if (no_googlies)
+		overlay_googly_eyes = FALSE
 	CopyObject(copy, creator, destroy_original)
 
 /mob/living/simple_animal/hostile/mimic/copy/Life()
 	..()
-	if(!target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
+	if(idledamage && !target && !ckey) //Objects eventually revert to normal if no one is around to terrorize
 		adjustBruteLoss(1)
 	for(var/mob/living/M in contents) //a fix for animated statues from the flesh to stone spell
 		death()
@@ -143,7 +148,8 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		icon_state = O.icon_state
 		icon_living = icon_state
 		copy_overlays(O)
-		add_overlay(googly_eyes)
+		if (overlay_googly_eyes)
+			add_overlay(googly_eyes)
 		if(isstructure(O) || ismachinery(O))
 			health = (anchored * 50) + 50
 			destroy_objects = 1
@@ -173,7 +179,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	. = ..()
 	if(knockdown_people && . && prob(15) && iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.Knockdown(40)
+		C.Paralyze(40)
 		C.visible_message("<span class='danger'>\The [src] knocks down \the [C]!</span>", \
 				"<span class='userdanger'>\The [src] knocks you down!</span>")
 

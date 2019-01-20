@@ -13,13 +13,13 @@
 	name = "budget insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
-	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
+	siemens_coefficient = 1			//Set to a default of 1, gets overridden in Initialize()
 	permeability_coefficient = 0.05
-	item_color="yellow"
+	item_color = "yellow"
 	resistance_flags = NONE
 
-/obj/item/clothing/gloves/color/fyellow/New()
-	..()
+/obj/item/clothing/gloves/color/fyellow/Initialize()
+	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
 /obj/item/clothing/gloves/color/fyellow/old
@@ -50,7 +50,7 @@
 	item_color = "chief"		//Exists for washing machines. Is not different from black gloves in any way.
 
 /obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/wirecutters))
+	if(I.tool_behaviour == TOOL_WIRECUTTER)
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
 			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
 			I.play_tool_sound(src)
@@ -154,7 +154,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	strip_delay = 60
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 70, acid = 50)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 50)
 
 /obj/item/clothing/gloves/color/latex
 	name = "latex gloves"
@@ -163,7 +163,7 @@
 	item_state = "lgloves"
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
-	item_color="white"
+	item_color="mime"
 	transfer_prints = TRUE
 	resistance_flags = NONE
 
@@ -180,21 +180,17 @@
 	desc = "These look pretty fancy."
 	icon_state = "white"
 	item_state = "wgloves"
-	item_color="mime"
+	item_color="white"
 
 /obj/item/clothing/gloves/color/white/redcoat
 	item_color = "redcoat"		//Exists for washing machines. Is not different from white gloves in any way.
 
-/obj/item/clothing/gloves/color/random
+/obj/effect/spawner/lootdrop/gloves
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
+	icon = 'icons/obj/clothing/gloves.dmi'
 	icon_state = "random_gloves"
-	item_state = "wgloves"
-	item_color = "mime"
-
-/obj/item/clothing/gloves/color/random/Initialize()
-	..()
-	var/list/gloves = list(
+	loot = list(
 		/obj/item/clothing/gloves/color/orange = 1,
 		/obj/item/clothing/gloves/color/red = 1,
 		/obj/item/clothing/gloves/color/blue = 1,
@@ -205,11 +201,3 @@
 		/obj/item/clothing/gloves/color/brown = 1,
 		/obj/item/clothing/gloves/color/white = 1,
 		/obj/item/clothing/gloves/color/rainbow = 1)
-
-	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.equip_to_slot_or_del(new selected(H), slot_gloves)
-	else
-		new selected(loc)
-	return INITIALIZE_HINT_QDEL

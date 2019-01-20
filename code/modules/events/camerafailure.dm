@@ -3,7 +3,7 @@
 	typepath = /datum/round_event/camera_failure
 	weight = 100
 	max_occurrences = 20
-	alertadmins = 0
+	alert_observers = FALSE
 
 /datum/round_event/camera_failure
 	fakeable = FALSE
@@ -15,7 +15,7 @@
 		var/obj/machinery/camera/C = pick_n_take(cameras)
 		if (!C)
 			break
-		if (!("SS13" in C.network))
+		if (!("ss13" in C.network))
 			continue
 		if(C.status)
 			C.toggle_cam(null, 0)

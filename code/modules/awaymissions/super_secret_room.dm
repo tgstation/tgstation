@@ -5,6 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "speaking_tile"
 	layer = 5
+	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
 	var/list/shenanigans = list()
@@ -16,8 +17,6 @@
 		return
 	var/list/json = json_decode(file2text(json_file))
 	shenanigans = json["phrases"]
-
-#define TIMEWASTE_MEDAL "Overextended The Joke"
 
 /obj/structure/speaking_tile/interact(mob/user)
 	if(!isliving(user) || speaking)
@@ -81,16 +80,36 @@
 		if(1000)
 			SpeakPeace(list("The ends exists somewhere beyond meaningful milestones.", "There will be no more messages until then.", "You disgust me."))
 		if(5643)
-			UnlockMedal(TIMEWASTE_MEDAL,user.client)
+			SSmedals.UnlockMedal(MEDAL_TIMEWASTE, user.client)
 			var/obj/item/reagent_containers/food/drinks/trophy/gold_cup/never_ends = new(get_turf(user))
 			never_ends.name = "Overextending The Joke: First Place"
 			never_ends.desc = "And so we are left alone with our regrets."
 		else
 			y += 2
-
 	speaking = FALSE
 	times_spoken_to++
-#undef TIMEWASTE_MEDAL
+
+/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, params)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_paw(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_hulk(mob/user, does_attack_animation = 0)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_larva(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_ai(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_slime(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_animal(mob/user)
+	return interact(user)
+
 /obj/structure/speaking_tile/proc/SpeakPeace(list/statements)
 	for(var/i in 1 to statements.len)
 		say("<span class='deadsay'>[statements[i]]</span>")
@@ -105,10 +124,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_GLASS = 500)
 
-/obj/item/rupee/New()
+/obj/item/rupee/Initialize()
+	. = ..()
 	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	..()
 
 /obj/item/rupee/Crossed(mob/M)
 	if(!istype(M))

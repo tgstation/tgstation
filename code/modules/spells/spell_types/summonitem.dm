@@ -3,13 +3,13 @@
 	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
 	school = "transmutation"
 	charge_max = 100
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "GAR YOK"
 	invocation_type = "whisper"
 	range = -1
 	level_max = 0 //cannot be improved
 	cooldown_min = 100
-	include_user = 1
+	include_user = TRUE
 
 	var/obj/marked_item
 
@@ -22,10 +22,10 @@
 
 		if(!marked_item) //linking item to the spell
 			message = "<span class='notice'>"
-			for(var/obj/item in hand_items)
-				if(item.flags_1 & ABSTRACT_1)
+			for(var/obj/item/item in hand_items)
+				if(item.item_flags & ABSTRACT)
 					continue
-				if(item.flags_1 & NODROP_1)
+				if(item.has_trait(TRAIT_NODROP))
 					message += "Though it feels redundant, "
 				marked_item = 		item
 				message += "You mark [item] for recall.</span>"
@@ -57,10 +57,14 @@
 					var/obj/item/organ/organ = item_to_retrieve
 					if(organ.owner)
 						// If this code ever runs I will be happy
-						add_logs(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
+						log_combat(L, organ.owner, "magically removed [organ.name] from", addition="INTENT: [uppertext(L.a_intent)]")
 						organ.Remove(organ.owner)
 			else
 				while(!isturf(item_to_retrieve.loc) && infinite_recursion < 10) //if it's in something you get the whole thing.
+					if(isitem(item_to_retrieve.loc))
+						var/obj/item/I = item_to_retrieve.loc
+						if(I.item_flags & ABSTRACT) //Being able to summon abstract things because your item happened to get placed there is a no-no
+							break
 					if(ismob(item_to_retrieve.loc)) //If its on someone, properly drop it
 						var/mob/M = item_to_retrieve.loc
 
@@ -83,6 +87,7 @@
 									to_chat(C, "<span class='warning'>The [item_to_retrieve] that was embedded in your [L] has mysteriously vanished. How fortunate!</span>")
 									if(!C.has_embedded_objects())
 										C.clear_alert("embeddedobject")
+										SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 									break
 
 					else
@@ -101,7 +106,7 @@
 			if(item_to_retrieve.loc)
 				item_to_retrieve.loc.visible_message("<span class='warning'>The [item_to_retrieve.name] suddenly disappears!</span>")
 			if(!L.put_in_hands(item_to_retrieve))
-				item_to_retrieve.forceMove(L.loc)
+				item_to_retrieve.forceMove(L.drop_location())
 				item_to_retrieve.loc.visible_message("<span class='caution'>The [item_to_retrieve.name] suddenly appears!</span>")
 				playsound(get_turf(L), 'sound/magic/summonitems_generic.ogg', 50, 1)
 			else

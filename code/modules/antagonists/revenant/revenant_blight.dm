@@ -2,7 +2,7 @@
 	name = "Unnatural Wasting"
 	max_stages = 5
 	stage_prob = 10
-	spread_flags = VIRUS_SPREAD_NON_CONTAGIOUS
+	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	cure_text = "Holy water or extensive rest."
 	spread_text = "A burst of unholy energy"
 	cures = list("holywater")
@@ -11,7 +11,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CURABLE
 	permeability_mod = 1
-	severity = VIRUS_SEVERITY_HARMFUL
+	severity = DISEASE_SEVERITY_HARMFUL
 	var/stagedamage = 0 //Highest stage reached.
 	var/finalstage = 0 //Because we're spawning off the cure in the final stage, we need to check if we've done the final stage's effects.
 
@@ -26,7 +26,7 @@
 
 /datum/disease/revblight/stage_act()
 	if(!finalstage)
-		if(affected_mob.lying && prob(stage*6))
+		if(!(affected_mob.mobility_flags & MOBILITY_STAND) && prob(stage*6))
 			cure()
 			return
 		if(prob(stage*3))

@@ -8,8 +8,8 @@
 	anchored = FALSE
 	health = 25
 	maxHealth = 25
-	radio_key = /obj/item/device/encryptionkey/headset_service
-	radio_channel = "Service" //Service
+	radio_key = /obj/item/encryptionkey/headset_service
+	radio_channel = RADIO_CHANNEL_SERVICE //Service
 	bot_type = CLEAN_BOT
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
@@ -21,6 +21,7 @@
 	var/blood = 1
 	var/trash = 0
 	var/pests = 0
+	var/drawn = 0
 
 	var/list/target_types
 	var/obj/effect/decal/cleanable/target
@@ -63,7 +64,7 @@
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
@@ -86,7 +87,7 @@
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if(C.stat != DEAD && C.lying)
+		if(C.stat != DEAD && !(C.mobility_flags & MOBILITY_STAND))
 			return C
 	else if(is_type_in_typecache(A, target_types))
 		return A
@@ -145,6 +146,17 @@
 			mode = BOT_IDLE
 			return
 
+		if(loc == get_turf(target))
+			if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
+				UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
+				if(QDELETED(target)) //We done here.
+					target = null
+					mode = BOT_IDLE
+					return
+			else
+				shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
+			path = list()
+
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
 			path = get_path_to(src, target.loc, /turf/proc/Distance_cardinal, 0, 30, id=access_card)
@@ -159,13 +171,6 @@
 			mode = BOT_IDLE
 			return
 
-	if(target && loc == target.loc)
-		if(!(check_bot(target) && prob(50)))	//Target is not defined at the parent. 50% chance to still try and clean so we dont get stuck on the last blood drop.
-			UnarmedAttack(target)	//Rather than check at every step of the way, let's check before we do an action, so we can rescan before the other bot.
-		else
-			shuffle = TRUE	//Shuffle the list the next time we scan so we dont both go the same way.
-		path = list()
-
 	oldloc = loc
 
 /mob/living/simple_animal/bot/cleanbot/proc/get_targets()
@@ -173,16 +178,15 @@
 		/obj/effect/decal/cleanable/oil,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/robot_debris,
-		/obj/effect/decal/cleanable/crayon,
 		/obj/effect/decal/cleanable/molten_object,
-		/obj/effect/decal/cleanable/tomato_smudge,
-		/obj/effect/decal/cleanable/egg_smudge,
-		/obj/effect/decal/cleanable/pie_smudge,
-		/obj/effect/decal/cleanable/flour,
+		/obj/effect/decal/cleanable/food/tomato_smudge,
+		/obj/effect/decal/cleanable/food/egg_smudge,
+		/obj/effect/decal/cleanable/food/pie_smudge,
+		/obj/effect/decal/cleanable/food/flour,
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/dirt,
-		/obj/effect/decal/cleanable/deadcockroach,
+		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/remains
 		)
 
@@ -194,6 +198,9 @@
 	if(pests)
 		target_types += /mob/living/simple_animal/cockroach
 		target_types += /mob/living/simple_animal/mouse
+
+	if(drawn)
+		target_types += /obj/effect/decal/cleanable/crayon
 
 	if(trash)
 		target_types += /obj/item/trash
@@ -247,7 +254,7 @@
 			if(prob(75))
 				var/turf/open/T = loc
 				if(istype(T))
-					T.MakeSlippery(TURF_WET_WATER, min_wet_time = 20, wet_time_to_add = 15)
+					T.MakeSlippery(TURF_WET_WATER, min_wet_time = 20 SECONDS, wet_time_to_add = 15 SECONDS)
 			else
 				visible_message("<span class='danger'>[src] whirs and bubbles violently, before releasing a plume of froth!</span>")
 				new /obj/effect/particle_effect/foam(loc)
@@ -262,7 +269,7 @@
 
 	new /obj/item/reagent_containers/glass/bucket(Tsec)
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
@@ -285,6 +292,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 	if(!locked || issilicon(user)|| IsAdminGhost(user))
 		dat += "<BR>Clean Blood: <A href='?src=[REF(src)];operation=blood'>[blood ? "Yes" : "No"]</A>"
 		dat += "<BR>Clean Trash: <A href='?src=[REF(src)];operation=trash'>[trash ? "Yes" : "No"]</A>"
+		dat += "<BR>Clean Graffiti: <A href='?src=[REF(src)];operation=drawn'>[drawn ? "Yes" : "No"]</A>"
 		dat += "<BR>Exterminate Pests: <A href='?src=[REF(src)];operation=pests'>[pests ? "Yes" : "No"]</A>"
 		dat += "<BR><BR>Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A>"
 	return dat
@@ -300,5 +308,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 				pests = !pests
 			if("trash")
 				trash = !trash
+			if("drawn")
+				drawn = !drawn
 		get_targets()
 		update_controls()

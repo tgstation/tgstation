@@ -1,5 +1,5 @@
 //Cleaning tool strength
-#define CLEAN_VERY_WEAK 	1 // What are you scrubbing the ground with a toothpick?
+// 1 is also a valid cleaning strength but completely unused so left undefined
 #define CLEAN_WEAK 			2
 #define CLEAN_MEDIUM		3 // Acceptable tools
 #define CLEAN_STRONG		4 // Industrial strength

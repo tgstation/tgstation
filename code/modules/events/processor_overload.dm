@@ -27,14 +27,13 @@
 
 
 /datum/round_event/processor_overload/start()
-	for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
-		if(istype(T, /obj/machinery/telecomms/processor))
-			var/obj/machinery/telecomms/processor/P = T
-			if(prob(10))
-				// Damage the surrounding area to indicate that it popped
-				explosion(get_turf(P), 0, 0, 2)
-				// Only a level 1 explosion actually damages the machine
-				// at all
-				P.ex_act(EXPLODE_DEVASTATE)
-			else
-				P.emp_act(EMP_HEAVY)
+	for(var/obj/machinery/telecomms/processor/P in GLOB.telecomms_list)
+		if(prob(10))
+			announce_to_ghosts(P)
+			// Damage the surrounding area to indicate that it popped
+			explosion(get_turf(P), 0, 0, 2)
+			// Only a level 1 explosion actually damages the machine
+			// at all
+			P.ex_act(EXPLODE_DEVASTATE)
+		else
+			P.emp_act(EMP_HEAVY)

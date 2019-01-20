@@ -10,8 +10,8 @@
 	maxHealth = 25
 	spacewalk = TRUE
 
-	radio_key = /obj/item/device/encryptionkey/headset_eng
-	radio_channel = "Engineering"
+	radio_key = /obj/item/encryptionkey/headset_eng
+	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FLOOR_BOT
 	model = "Floorbot"
 	bot_core = /obj/machinery/bot_core/floorbot
@@ -19,7 +19,7 @@
 	window_name = "Automatic Station Floor Repairer v1.1"
 	path_image_color = "#FFA500"
 
-	var/process_type //Determines what to do when process_scan() recieves a target. See process_scan() for details.
+	var/process_type //Determines what to do when process_scan() receives a target. See process_scan() for details.
 	var/targetdirection
 	var/replacetiles = 0
 	var/placetiles = 0
@@ -164,12 +164,7 @@
 	update_controls()
 
 /mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
-	var/atom/Tsec = drop_location()
-
-	while(specialtiles > initial(tiletype.max_amount))
-		new tiletype(Tsec,initial(tiletype.max_amount))
-		specialtiles -= initial(tiletype.max_amount)
-	new tiletype(Tsec,specialtiles)
+	new tiletype(drop_location(), specialtiles)
 	specialtiles = 0
 	tiletype = null
 
@@ -224,24 +219,7 @@
 				bot_patrol()
 
 	if(target)
-		if(path.len == 0)
-			if(!isturf(target))
-				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
-			else
-				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
-
-			if(!bot_move(target))
-				add_to_ignore(target)
-				target = null
-				mode = BOT_IDLE
-				return
-		else if( !bot_move(target) )
-			target = null
-			mode = BOT_IDLE
-			return
-
-		if(loc == target || loc == target.loc)
+		if(loc == target || loc == get_turf(target))
 			if(check_bot(target))	//Target is not defined at the parent
 				shuffle = TRUE
 				if(prob(50))	//50% chance to still try to repair so we dont end up with 2 floorbots failing to fix the last breach
@@ -262,6 +240,24 @@
 					target = null
 			path = list()
 			return
+		if(path.len == 0)
+			if(!isturf(target))
+				var/turf/TL = get_turf(target)
+				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+			else
+				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
+
+			if(!bot_move(target))
+				add_to_ignore(target)
+				target = null
+				mode = BOT_IDLE
+				return
+		else if( !bot_move(target) )
+			target = null
+			mode = BOT_IDLE
+			return
+
+
 
 	oldloc = loc
 
@@ -338,7 +334,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.ChangeTurf(/turf/open/floor/plasteel)
+				F.PlaceOnTop(/turf/open/floor/plasteel)
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
@@ -349,7 +345,7 @@
 			if(mode == BOT_REPAIRING && F && src.loc == F)
 				F.broken = 0
 				F.burnt = 0
-				F.ChangeTurf(initial(tiletype.turf_type))
+				F.PlaceOnTop(initial(tiletype.turf_type))
 				specialtiles -= 1
 				if(specialtiles == 0)
 					speak("Requesting refill of custom floortiles to continue replacing.")
@@ -369,7 +365,7 @@
 
 	drop_part(toolbox, Tsec)
 
-	new /obj/item/device/assembly/prox_sensor(Tsec)
+	new /obj/item/assembly/prox_sensor(Tsec)
 
 	if(specialtiles && tiletype != null)
 		empty_tiles()
@@ -377,8 +373,7 @@
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
 
-	var/obj/item/stack/tile/plasteel/T = new (Tsec)
-	T.amount = 1
+	new /obj/item/stack/tile/plasteel(Tsec, 1)
 
 	do_sparks(3, TRUE, src)
 	..()

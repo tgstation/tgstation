@@ -6,8 +6,21 @@
 #define RETURN_PRECISE_POSITION(A) new /datum/position(A)
 #define RETURN_PRECISE_POINT(A) new /datum/point(A)
 
-#define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) {new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED)}
-#define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) {new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT)}
+#define RETURN_POINT_VECTOR(ATOM, ANGLE, SPEED) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED))
+#define RETURN_POINT_VECTOR_INCREMENT(ATOM, ANGLE, SPEED, AMT) (new /datum/point/vector(ATOM, null, null, null, null, ANGLE, SPEED, AMT))
+
+/proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
+	var/datum/point/P = new
+	P.x = a.x + (b.x - a.x) / 2
+	P.y = a.y + (b.y - a.y) / 2
+	P.z = a.z
+	return P
+
+/proc/pixel_length_between_points(datum/point/a, datum/point/b)
+	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
+
+/proc/angle_between_points(datum/point/a, datum/point/b)
+	return ATAN2((b.y - a.y), (b.x - a.x))
 
 /datum/position			//For positions with map x/y/z and pixel x/y so you don't have to return lists. Could use addition/subtraction in the future I guess.
 	var/x = 0
@@ -52,19 +65,6 @@
 
 /datum/position/proc/return_point()
 	return new /datum/point(src)
-
-/proc/point_midpoint_points(datum/point/a, datum/point/b)	//Obviously will not support multiZ calculations! Same for the two below.
-	var/datum/point/P = new
-	P.x = a.x + (b.x - a.x) / 2
-	P.y = a.y + (b.y - a.y) / 2
-	P.z = a.z
-	return P
-
-/proc/pixel_length_between_points(datum/point/a, datum/point/b)
-	return sqrt(((b.x - a.x) ** 2) + ((b.y - a.y) ** 2))
-
-/proc/angle_between_points(datum/point/a, datum/point/b)
-	return ATAN2((b.y - a.y), (b.x - a.x))
 
 /datum/point		//A precise point on the map in absolute pixel locations based on world.icon_size. Pixels are FROM THE EDGE OF THE MAP!
 	var/x = 0
@@ -129,34 +129,6 @@
 /datum/point/proc/return_py()
 	return MODULUS(y, world.icon_size) - 16 - 1
 
-/datum/point/proc/mapcheck()
-	. = FALSE
-	var/maxx = world.icon_size * world.maxx
-	var/maxy = world.icon_size * world.maxy
-	var/move_zx = 0
-	var/move_zy = 0
-	if(x < 0)
-		x += maxx
-		move_zx -= 1
-	if(y < 0)
-		y += maxy
-		move_zy -= 1
-	if(x > maxx)
-		x -= maxx
-		move_zx += 1
-	if(y > maxy)
-		y -= maxy
-		move_zy += 1
-	var/datum/space_level/S = SSmapping.get_level(z)
-	if(move_zx != 0)
-		var/datum/space_level/L = S.neigbours["[move_zx < 0? WEST : EAST]"]
-		z = L.z_value
-		. = TRUE
-	if(move_zy != 0)
-		var/datum/space_level/L = S.neigbours["[move_zy < 0? SOUTH : NORTH]"]
-		z = L.z_value
-		. = TRUE
-
 /datum/point/vector
 	var/speed = 32				//pixels per iteration
 	var/iteration = 0
@@ -214,10 +186,8 @@
 
 /datum/point/vector/proc/increment(multiplier = 1)
 	iteration++
-	x += mpx * 1
-	y += mpy * 1
-	if(mapcheck())
-		on_z_change()
+	x += mpx * (multiplier)
+	y += mpy * (multiplier)
 
 /datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
 	var/datum/point/vector/v = copy_to()

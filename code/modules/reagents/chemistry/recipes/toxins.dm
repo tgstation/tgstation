@@ -6,10 +6,10 @@
 	required_reagents = list("ethanol" = 1, "oxygen" = 1, "silver" = 1)
 	required_temp = 420
 
-/datum/chemical_reaction/neurotoxin2
-	name = "neurotoxin2"
-	id = "neurotoxin2"
-	results = list("neurotoxin2" = 1)
+/datum/chemical_reaction/fentanyl
+	name = "fentanyl"
+	id = "fentanyl"
+	results = list("fentanyl" = 1)
 	required_reagents = list("space_drugs" = 1)
 	required_temp = 674
 
@@ -64,7 +64,7 @@
 	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
 
 /datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
-	name = "Mute toxin"
+	name = "Mute Toxin"
 	id = "mutetoxin"
 	results = list("mutetoxin" = 2)
 	required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
@@ -74,6 +74,12 @@
 	id = "zombiepowder"
 	results = list("zombiepowder" = 2)
 	required_reagents = list("carpotoxin" = 5, "morphine" = 5, "copper" = 5)
+
+/datum/chemical_reaction/ghoulpowder
+	name = "Ghoul Powder"
+	id = "ghoulpowder"
+	results = list("ghoulpowder" = 2)
+	required_reagents = list("zombiepowder" = 1, "epinephrine" = 1)
 
 /datum/chemical_reaction/mindbreaker
 	name = "Mindbreaker Toxin"
@@ -92,7 +98,7 @@
 	name = "Rotatium"
 	id = "Rotatium"
 	results = list("rotatium" = 3)
-	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "neurotoxin2" = 1)
+	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "fentanyl" = 1)
 	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
 
 /datum/chemical_reaction/skewium
@@ -107,3 +113,16 @@
 	id = "anacea"
 	results = list("anacea" = 3)
 	required_reagents = list("haloperidol" = 1, "impedrezene" = 1, "radium" = 1)
+
+/datum/chemical_reaction/mimesbane
+	name = "Mime's Bane"
+	id = "mimesbane"
+	results = list("mimesbane" = 3)
+	required_reagents = list("radium" = 1, "mutetoxin" = 1, "nothing" = 1)
+
+/datum/chemical_reaction/bonehurtingjuice
+	name = "Bone Hurting Juice"
+	id = "bonehurtingjuice"
+	results = list("bonehurtingjuice" = 5)
+	required_reagents = list("mutagen" = 1, "itching_powder" = 3, "milk" = 1)
+	mix_message = "<span class='danger'>The mixture suddenly becomes clear and looks a lot like water. You feel a strong urge to drink it.</span>"

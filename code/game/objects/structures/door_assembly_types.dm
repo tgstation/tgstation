@@ -161,6 +161,12 @@
 	airlock_type = /obj/machinery/door/airlock/centcom
 	noglass = TRUE
 
+/obj/structure/door_assembly/door_assembly_grunge
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
+	airlock_type = /obj/machinery/door/airlock/grunge
+	noglass = TRUE
+
 /obj/structure/door_assembly/door_assembly_gold
 	name = "gold airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/gold.dmi'

@@ -9,13 +9,13 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will burn to death for being a heretic."
-	severity = VIRUS_SEVERITY_DANGEROUS
+	severity = DISEASE_SEVERITY_DANGEROUS
 
 /datum/disease/fluspanish/stage_act()
 	..()
 	switch(stage)
 		if(2)
-			affected_mob.bodytemperature += 10
+			affected_mob.adjust_bodytemperature(10)
 			if(prob(5))
 				affected_mob.emote("sneeze")
 			if(prob(5))
@@ -25,7 +25,7 @@
 				affected_mob.take_bodypart_damage(0,5)
 
 		if(3)
-			affected_mob.bodytemperature += 20
+			affected_mob.adjust_bodytemperature(20)
 			if(prob(5))
 				affected_mob.emote("sneeze")
 			if(prob(5))

@@ -18,8 +18,10 @@
 	return
 
 /obj/machinery/computer/launchpad/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		var/obj/item/device/multitool/M = W
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(!multitool_check_buffer(user, W))
+			return
+		var/obj/item/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/launchpad))
 			if(LAZYLEN(launchpads) < maximum_pads)
 				launchpads |= M.buffer
@@ -29,14 +31,6 @@
 				to_chat(user, "<span class='warning'>[src] cannot handle any more connections!</span>")
 	else
 		return ..()
-
-/obj/machinery/computer/launchpad/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/launchpad/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
 
 /obj/machinery/computer/launchpad/proc/pad_exists(number)
 	var/obj/machinery/launchpad/pad = launchpads[number]
@@ -48,7 +42,8 @@
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	return pad
 
-/obj/machinery/computer/launchpad/interact(mob/user)
+/obj/machinery/computer/launchpad/ui_interact(mob/user)
+	. = ..()
 	var/list/t = list()
 	if(!LAZYLEN(launchpads))
 		obj_flags &= ~IN_USE     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
@@ -135,7 +130,7 @@
 		pad.x_offset = 0
 
 	if(href_list["change_name"])
-		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15) as text|null
+		var/new_name = stripped_input(usr, "What do you wish to name the launchpad?", "Launchpad", pad.display_name, 15)
 		if(!new_name)
 			return
 		pad.display_name = new_name

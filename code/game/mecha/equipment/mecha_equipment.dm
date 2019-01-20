@@ -11,9 +11,10 @@
 	var/equip_ready = 1 //whether the equipment is ready for use. (or deactivated/activated for static stuff)
 	var/energy_drain = 0
 	var/obj/mecha/chassis = null
-	var/range = MELEE //bitflags
+	var/range = MELEE //bitFflags
 	var/salvageable = 1
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
+	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
@@ -35,14 +36,23 @@
 			chassis.selected = null
 		src.update_chassis_page()
 		chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
-		chassis.log_append_to_last("[src] is destroyed.",1)
+		log_message("[src] is destroyed.", LOG_MECHA)
 		SEND_SOUND(chassis.occupant, sound(istype(src, /obj/item/mecha_parts/mecha_equipment/weapon) ? 'sound/mecha/weapdestr.ogg' : 'sound/mecha/critdestr.ogg', volume=50))
 		chassis = null
 	return ..()
 
+/obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/mecha/M)
+	if(can_attach(M))
+		if(!user.temporarilyRemoveItemFromInventory(src))
+			return FALSE
+		attach(M)
+		user.visible_message("[user] attaches [src] to [M].", "<span class='notice'>You attach [src] to [M].</span>")
+		return TRUE
+	to_chat(user, "<span class='warning'>You are unable to attach [src] to [M]!</span>")
+	return FALSE
+
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
-	if(chassis)
-		log_message("Critical failure",1)
+	log_message("Critical failure", LOG_MECHA, color="red")
 
 /obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
 	if(!chassis)
@@ -93,9 +103,16 @@
 	chassis.use_power(energy_drain)
 	. = do_after(chassis.occupant, equip_cooldown, target=target)
 	set_ready_state(1)
-	if(!chassis || 	chassis.loc != C || src != chassis.selected)
+	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
 		return 0
 
+/obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, delay)
+	if(!chassis)
+		return
+	var/C = chassis.loc
+	. = do_after(chassis.occupant, delay, target=target)
+	if(!chassis || 	chassis.loc != C || src != chassis.selected || !(get_dir(chassis, target)&chassis.dir))
+		return 0
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(M.equipment.len<M.max_equip)
@@ -105,10 +122,10 @@
 	M.equipment += src
 	chassis = M
 	forceMove(M)
-	M.log_message("[src] initialized.")
+	log_message("[src] initialized.", LOG_MECHA)
 	if(!M.selected && selectable)
 		M.selected = src
-	src.update_chassis_page()
+	update_chassis_page()
 	return
 
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto=null)
@@ -118,7 +135,7 @@
 		if(chassis.selected == src)
 			chassis.selected = null
 		update_chassis_page()
-		chassis.log_message("[src] removed from equipment.")
+		log_message("[src] removed from equipment.", LOG_MECHA)
 		chassis = null
 		set_ready_state(1)
 	return
@@ -139,10 +156,11 @@
 		chassis.occupant_message("[icon2html(src, chassis.occupant)] [message]")
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/log_message(message)
+/obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)
-		chassis.log_message("<i>[src]:</i> [message]")
-	return
+		chassis.log_message("ATTACHMENT: [src] [message]", message_type, color)
+	else
+		..()
 
 
 //Used for reloading weapons/tools etc. that use some form of resource

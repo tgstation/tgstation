@@ -13,7 +13,6 @@
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	netspeed = 40
@@ -36,7 +35,7 @@
 		signal.data["slow"] += rand(1, 5) // slow the signal down only slightly
 
 	// Try sending it!
-	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster, /obj/machinery/telecomms/bus)
+	var/list/try_send = list(signal.server_type, /obj/machinery/telecomms/hub, /obj/machinery/telecomms/broadcaster)
 
 	var/i = 0
 	for(var/send in try_send)

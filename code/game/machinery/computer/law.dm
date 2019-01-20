@@ -26,7 +26,7 @@
 		return ..()
 
 /obj/machinery/computer/upload/proc/can_upload_to(mob/living/silicon/S)
-	if(S.stat == DEAD || S.syndicate)
+	if(S.stat == DEAD)
 		return 0
 	return 1
 
@@ -35,10 +35,7 @@
 	desc = "Used to upload laws to the AI."
 	circuit = /obj/item/circuitboard/computer/aiupload
 
-/obj/machinery/computer/upload/ai/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/upload/ai/interact(mob/user)
 	src.current = select_active_ai(user)
 
 	if (!src.current)
@@ -59,10 +56,7 @@
 	desc = "Used to upload laws to Cyborgs."
 	circuit = /obj/item/circuitboard/computer/borgupload
 
-/obj/machinery/computer/upload/borg/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/upload/borg/interact(mob/user)
 	src.current = select_active_free_borg(user)
 
 	if(!src.current)

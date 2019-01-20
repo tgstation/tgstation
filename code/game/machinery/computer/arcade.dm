@@ -1,3 +1,52 @@
+GLOBAL_LIST_INIT(arcade_prize_pool, list(
+		/obj/item/storage/box/snappops = 2,
+		/obj/item/toy/talking/AI = 2,
+		/obj/item/toy/talking/codex_gigas = 2,
+		/obj/item/clothing/under/syndicate/tacticool = 2,
+		/obj/item/toy/sword = 2,
+		/obj/item/toy/gun = 2,
+		/obj/item/gun/ballistic/shotgun/toy/crossbow = 2,
+		/obj/item/storage/box/fakesyndiesuit = 2,
+		/obj/item/storage/crayons = 2,
+		/obj/item/toy/spinningtoy = 2,
+		/obj/item/toy/prize/ripley = 1,
+		/obj/item/toy/prize/fireripley = 1,
+		/obj/item/toy/prize/deathripley = 1,
+		/obj/item/toy/prize/gygax = 1,
+		/obj/item/toy/prize/durand = 1,
+		/obj/item/toy/prize/honk = 1,
+		/obj/item/toy/prize/marauder = 1,
+		/obj/item/toy/prize/seraph = 1,
+		/obj/item/toy/prize/mauler = 1,
+		/obj/item/toy/prize/odysseus = 1,
+		/obj/item/toy/prize/phazon = 1,
+		/obj/item/toy/prize/reticence = 1,
+		/obj/item/toy/cards/deck = 2,
+		/obj/item/toy/nuke = 2,
+		/obj/item/toy/minimeteor = 2,
+		/obj/item/toy/redbutton = 2,
+		/obj/item/toy/talking/owl = 2,
+		/obj/item/toy/talking/griffin = 2,
+		/obj/item/coin/antagtoken = 2,
+		/obj/item/stack/tile/fakespace/loaded = 2,
+		/obj/item/stack/tile/fakepit/loaded = 2,
+		/obj/item/toy/toy_xeno = 2,
+		/obj/item/storage/box/actionfigure = 1,
+		/obj/item/restraints/handcuffs/fake = 2,
+		/obj/item/grenade/chem_grenade/glitter/pink = 1,
+		/obj/item/grenade/chem_grenade/glitter/blue = 1,
+		/obj/item/grenade/chem_grenade/glitter/white = 1,
+		/obj/item/toy/eightball = 2,
+		/obj/item/toy/windupToolbox = 2,
+		/obj/item/toy/clockwork_watch = 2,
+		/obj/item/toy/toy_dagger = 2,
+		/obj/item/extendohand/acme = 1,
+		/obj/item/hot_potato/harmless/toy = 1,
+		/obj/item/card/emagfake = 1,
+		/obj/item/clothing/shoes/wheelys = 2,
+		/obj/item/clothing/shoes/kindleKicks = 2,
+		/obj/item/storage/belt/military/snack = 2))
+
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
@@ -5,52 +54,7 @@
 	icon_keyboard = null
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
-	var/list/prizes = list(
-		/obj/item/storage/box/snappops					= 2,
-		/obj/item/toy/talking/AI								= 2,
-		/obj/item/toy/talking/codex_gigas						= 2,
-		/obj/item/clothing/under/syndicate/tacticool			= 2,
-		/obj/item/toy/sword										= 2,
-		/obj/item/toy/gun										= 2,
-		/obj/item/gun/ballistic/shotgun/toy/crossbow	= 2,
-		/obj/item/storage/box/fakesyndiesuit				= 2,
-		/obj/item/storage/crayons						= 2,
-		/obj/item/toy/spinningtoy								= 2,
-		/obj/item/toy/prize/ripley								= 1,
-		/obj/item/toy/prize/fireripley							= 1,
-		/obj/item/toy/prize/deathripley							= 1,
-		/obj/item/toy/prize/gygax								= 1,
-		/obj/item/toy/prize/durand								= 1,
-		/obj/item/toy/prize/honk								= 1,
-		/obj/item/toy/prize/marauder							= 1,
-		/obj/item/toy/prize/seraph								= 1,
-		/obj/item/toy/prize/mauler								= 1,
-		/obj/item/toy/prize/odysseus							= 1,
-		/obj/item/toy/prize/phazon								= 1,
-		/obj/item/toy/prize/reticence							= 1,
-		/obj/item/toy/cards/deck								= 2,
-		/obj/item/toy/nuke										= 2,
-		/obj/item/toy/minimeteor								= 2,
-		/obj/item/toy/redbutton									= 2,
-		/obj/item/toy/talking/owl								= 2,
-		/obj/item/toy/talking/griffin							= 2,
-		/obj/item/coin/antagtoken						= 2,
-		/obj/item/stack/tile/fakespace/loaded					= 2,
-		/obj/item/stack/tile/fakepit/loaded						= 2,
-		/obj/item/toy/toy_xeno									= 2,
-		/obj/item/storage/box/actionfigure				= 1,
-		/obj/item/restraints/handcuffs/fake              = 2,
-		/obj/item/grenade/chem_grenade/glitter/pink		= 1,
-		/obj/item/grenade/chem_grenade/glitter/blue		= 1,
-		/obj/item/grenade/chem_grenade/glitter/white		= 1,
-		/obj/item/toy/eightball									= 2,
-		/obj/item/toy/windupToolbox								= 2,
-		/obj/item/toy/clockwork_watch							= 2,
-		/obj/item/toy/toy_dagger								= 2,
-		/obj/item/extendohand/acme								= 1,
-		/obj/item/hot_potato/harmless/toy						= 1,
-		/obj/item/card/emagfake									= 1)
-
+	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -67,27 +71,32 @@
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-#define PULSE_MEDAL "Jackpot"
-
-/obj/machinery/computer/arcade/proc/prizevend()
+/obj/machinery/computer/arcade/proc/prizevend(mob/user)
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
 	if(prob(0.0001)) //1 in a million
 		new /obj/item/gun/energy/pulse/prize(src)
-		UnlockMedal(PULSE_MEDAL,usr.client)
+		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
 
 	if(!contents.len)
-		var/prizeselect = pickweight(prizes)
+		var/prizeselect
+		if(prize_override)
+			prizeselect = pickweight(prize_override)
+		else
+			prizeselect = pickweight(GLOB.arcade_prize_pool)
 		new prizeselect(src)
 
-	var/atom/movable/prize = pick(contents)
-	visible_message("<span class='notice'>[src] dispenses [prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
+	var/atom/movable/the_prize = pick(contents)
+	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
-	prize.forceMove(get_turf(src))
-#undef PULSE_MEDAL
+	the_prize.forceMove(get_turf(src))
 
 /obj/machinery/computer/arcade/emp_act(severity)
-	..(severity)
+	. = ..()
+	var/override = FALSE
+	if(prize_override)
+		override = TRUE
 
-	if(stat & (NOPOWER|BROKEN))
+	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 
 	var/empprize = null
@@ -98,7 +107,10 @@
 		if(2)
 			num_of_prizes = rand(0,2)
 	for(var/i = num_of_prizes; i > 0; i--)
-		empprize = pickweight(prizes)
+		if(override)
+			empprize = pickweight(prize_override)
+		else
+			empprize = pickweight(GLOB.arcade_prize_pool)
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
@@ -111,7 +123,7 @@
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
-	var/enemy_name = "Space Villian"
+	var/enemy_name = "Space Villain"
 	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
 	var/player_mp = 10
@@ -134,10 +146,8 @@
 	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/battle/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/arcade/battle/ui_interact(mob/user)
+	. = ..()
 	var/dat = "<a href='byond://?src=[REF(src)];close=1'>Close</a>"
 	dat += "<center><h4>[enemy_name]</h4></center>"
 
@@ -152,7 +162,7 @@
 		dat += "<a href='byond://?src=[REF(src)];charge=1'>Recharge Power</a>"
 
 	dat += "</b></center>"
-	var/datum/browser/popup = new(user, "arcade", "Space Villian 2000")
+	var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
@@ -173,7 +183,7 @@
 
 			sleep(10)
 			enemy_hp -= attackamt
-			arcade_action()
+			arcade_action(usr)
 
 		else if (href_list["heal"])
 			blocked = TRUE
@@ -189,7 +199,7 @@
 			player_hp += healamt
 			blocked = TRUE
 			updateUsrDialog()
-			arcade_action()
+			arcade_action(usr)
 
 		else if (href_list["charge"])
 			blocked = TRUE
@@ -202,7 +212,7 @@
 
 			updateUsrDialog()
 			sleep(10)
-			arcade_action()
+			arcade_action(usr)
 
 	if (href_list["close"])
 		usr.unset_machine()
@@ -225,7 +235,7 @@
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/arcade/battle/proc/arcade_action()
+/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user)
 	if ((enemy_mp <= 0) || (enemy_hp <= 0))
 		if(!gameover)
 			gameover = TRUE
@@ -235,12 +245,12 @@
 			if(obj_flags & EMAGGED)
 				new /obj/effect/spawner/newbomb/timer/syndicate(loc)
 				new /obj/item/clothing/head/collectable/petehat(loc)
-				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
 				obj_flags &= ~EMAGGED
 			else
-				prizevend()
+				prizevend(user)
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 
@@ -293,6 +303,7 @@
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
+	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
 	temp = "If you die in the game, you die for real!"
 	player_hp = 30
 	player_mp = 10
@@ -366,6 +377,15 @@
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
+/obj/machinery/computer/arcade/orion_trail/kobayashi
+	name = "Kobayashi Maru control computer"
+	desc = "A test for cadets"
+	icon = 'icons/obj/machines/particle_accelerator.dmi'
+	icon_state = "control_boxp"
+	events = list("Raiders" = 3, "Interstellar Flux" = 1, "Illness" = 3, "Breakdown" = 2, "Malfunction" = 2, "Collision" = 1, "Spaceport" = 2)
+	prize_override = list(/obj/item/paper/fluff/holodeck/trek_diploma = 1)
+	settlers = list("Kirk","Worf","Gene")
+
 /obj/machinery/computer/arcade/orion_trail/Reset()
 	// Sets up the main trail
 	stops = list("Pluto","Asteroid Belt","Proxima Centauri","Dead Space","Rigel Prime","Tau Ceti Beta","Black Hole","Space Outpost Beta-9","Orion Prime")
@@ -404,13 +424,11 @@
 	spaceport_freebie = 0
 	last_spaceport_action = ""
 
-/obj/machinery/computer/arcade/orion_trail/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user)
+	. = ..()
 	if(fuel <= 0 || food <=0 || settlers.len == 0)
 		gameStatus = ORION_STATUS_GAMEOVER
 		event = null
-	user.set_machine(src)
 	var/dat = ""
 	if(gameStatus == ORION_STATUS_GAMEOVER)
 		dat = "<center><h1>Game Over</h1></center>"
@@ -421,7 +439,7 @@
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
 				if(obj_flags & EMAGGED)
-					user.nutrition = 0 //yeah you pretty hongry
+					user.set_nutrition(0) //yeah you pretty hongry
 					to_chat(user, "<span class='userdanger'>Your body instantly contracts to that of one who has not eaten in months. Agonizing cramps seize you as you fall to the floor.</span>")
 			if(fuel <= 0)
 				dat += "<br>You ran out of fuel, and drift, slowly, into a star."
@@ -482,7 +500,7 @@
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
 			if(turns >= ORION_TRAIL_WINTURN)
-				win()
+				win(usr)
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
@@ -510,9 +528,9 @@
 					if(ORION_TRAIL_ILLNESS)
 						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
-							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseous.</span>" )
+							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
 						if(severity == 2)
-							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseous and hunch over until it passes.</span>")
+							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseated and hunch over until it passes.</span>")
 							M.Stun(60)
 						if(severity >= 3) //you didn't pray hard enough
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
@@ -521,7 +539,7 @@
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75))
-							M.Knockdown(60)
+							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
 							playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
@@ -540,7 +558,7 @@
 								playsound(loc, 'sound/weapons/genhit.ogg', 100, 1)
 								var/turf/open/space/T
 								for(T in orange(1, src))
-									T.ChangeTurf(/turf/open/floor/plating/)
+									T.PlaceOnTop(/turf/open/floor/plating)
 						else
 							say("Something slams into the floor around [src] - luckily, it didn't get through!")
 							playsound(loc, 'sound/effects/bang.ogg', 50, 1)
@@ -618,7 +636,7 @@
 						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					addtimer(CALLBACK(src, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
-					QDEL_IN(src, 50)
+					QDEL_IN(S, 50)
 			else
 				event = null
 				turns += 1
@@ -705,7 +723,7 @@
 							say("WEEWOO! WEEWOO! Spaceport security en route!")
 							playsound(src, 'sound/items/weeoo1.ogg', 100, FALSE)
 							for(var/i, i<=3, i++)
-								var/mob/living/simple_animal/hostile/syndicate/ranged/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/orion(get_turf(src))
+								var/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion/O = new/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion(get_turf(src))
 								O.target = usr
 
 
@@ -1026,15 +1044,15 @@
 	return removed
 
 
-/obj/machinery/computer/arcade/orion_trail/proc/win()
+/obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
-		message_admins("[key_name_admin(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 		log_game("[key_name(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
 	else
-		prizevend()
+		prizevend(user)
 	obj_flags &= ~EMAGGED
 	name = "The Orion Trail"
 	desc = "Learn how our ancestors got to Orion, and have fun in the process!"
@@ -1048,7 +1066,7 @@
 	newgame()
 	obj_flags |= EMAGGED
 
-/mob/living/simple_animal/hostile/syndicate/ranged/orion
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/orion
 	name = "spaceport security"
 	desc = "Premier corporate security forces for all spaceports found along the Orion Trail."
 	faction = list("orion")
@@ -1076,8 +1094,7 @@
 	if(active)
 		return
 
-	message_admins("[key_name_admin(usr)] primed an explosive Orion ship for detonation.")
-	log_game("[key_name(usr)] primed an explosive Orion ship for detonation.")
+	log_bomber(usr, "primed an explosive", src, "for detonation")
 
 	to_chat(user, "<span class='warning'>You flip the switch on the underside of [src].</span>")
 	active = 1

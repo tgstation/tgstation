@@ -63,7 +63,7 @@ There are several things that need to be remembered:
 	..()
 
 /mob/living/carbon/human/update_fire()
-	..((fire_stacks > 3) ? "Standing" : "Generic_mob_burning")
+	..((fire_stacks > HUMAN_FIRE_STACK_ICON_NUM) ? "Standing" : "Generic_mob_burning")
 
 
 /* --------------------------------------- */
@@ -101,7 +101,7 @@ There are several things that need to be remembered:
 	remove_overlay(UNIFORM_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_w_uniform]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_W_UNIFORM]
 		inv.update_icon()
 
 	if(istype(w_uniform, /obj/item/clothing/under))
@@ -148,7 +148,7 @@ There are several things that need to be remembered:
 	remove_overlay(ID_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_id]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_ID]
 		inv.update_icon()
 
 	var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
@@ -172,17 +172,16 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 
-	if(client && hud_used && hud_used.inv_slots[slot_gloves])
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_gloves]
+	if(client && hud_used && hud_used.inv_slots[SLOT_GLOVES])
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_GLOVES]
 		inv.update_icon()
 
-	GET_COMPONENT(FR, /datum/component/forensics)
-	if(!gloves && FR && length(FR.blood_DNA))
+	if(!gloves && bloody_hands)
 		var/mutable_appearance/bloody_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands", -GLOVES_LAYER)
-		if(get_num_arms() < 2)
-			if(has_left_hand())
+		if(get_num_arms(FALSE) < 2)
+			if(has_left_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_left"
-			else if(has_right_hand())
+			else if(has_right_hand(FALSE))
 				bloody_overlay.icon_state = "bloodyhands_right"
 
 		overlays_standing[GLOVES_LAYER] = bloody_overlay
@@ -209,11 +208,11 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_glasses()
 	remove_overlay(GLASSES_LAYER)
 
-	if(!get_bodypart("head")) //decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 		return
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_glasses]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_GLASSES]
 		inv.update_icon()
 
 	if(glasses)
@@ -237,11 +236,11 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_ears()
 	remove_overlay(EARS_LAYER)
 
-	if(!get_bodypart("head")) //decapitated
+	if(!get_bodypart(BODY_ZONE_HEAD)) //decapitated
 		return
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_ears]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_EARS]
 		inv.update_icon()
 
 	if(ears)
@@ -263,11 +262,11 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_inv_shoes()
 	remove_overlay(SHOES_LAYER)
 
-	if(get_num_legs() <2)
+	if(get_num_legs(FALSE) <2)
 		return
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_shoes]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_SHOES]
 		inv.update_icon()
 
 	if(shoes)
@@ -290,7 +289,7 @@ There are several things that need to be remembered:
 	remove_overlay(SUIT_STORE_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_s_store]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_S_STORE]
 		inv.update_icon()
 
 	if(s_store)
@@ -302,7 +301,7 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = s_store.icon_state
 		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance('icons/mob/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
-		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_LAYER]
+		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_STORE_LAYER]
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
 			s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
@@ -326,7 +325,7 @@ There are several things that need to be remembered:
 	remove_overlay(BELT_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_belt]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_BELT]
 		inv.update_icon()
 
 	if(belt)
@@ -354,7 +353,7 @@ There are several things that need to be remembered:
 	remove_overlay(SUIT_LAYER)
 
 	if(client && hud_used)
-		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_wear_suit]
+		var/obj/screen/inventory/inv = hud_used.inv_slots[SLOT_WEAR_SUIT]
 		inv.update_icon()
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
@@ -380,10 +379,10 @@ There are several things that need to be remembered:
 	if(client && hud_used)
 		var/obj/screen/inventory/inv
 
-		inv = hud_used.inv_slots[slot_l_store]
+		inv = hud_used.inv_slots[SLOT_L_STORE]
 		inv.update_icon()
 
-		inv = hud_used.inv_slots[slot_r_store]
+		inv = hud_used.inv_slots[SLOT_R_STORE]
 		inv.update_icon()
 
 		if(l_store)
@@ -480,8 +479,13 @@ There are several things that need to be remembered:
 		client.screen += I
 	update_observer_view(I)
 
-
-
+//Update whether we smell
+/mob/living/carbon/human/proc/update_smell(var/smelly_icon = "generic_mob_smell")
+	remove_overlay(SMELL_LAYER)
+	if(hygiene <= HYGIENE_LEVEL_DIRTY)
+		var/mutable_appearance/new_smell_overlay = mutable_appearance('icons/mob/smelly.dmi', smelly_icon, -SMELL_LAYER)
+		overlays_standing[SMELL_LAYER] = new_smell_overlay
+ 	apply_overlay(SMELL_LAYER)
 
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
@@ -568,9 +572,7 @@ generate/load female uniform sprites matching all previously decided variables
 		if(4) //even = right hands
 			return list("x" = 0, "y" = 16)
 		else //No offsets or Unwritten number of hands
-			return list("x" = 0, "y" = 0)
-
-
+			return list("x" = 0, "y" = 0)//Handle held offsets
 
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
@@ -624,3 +626,51 @@ generate/load female uniform sprites matching all previously decided variables
 				if(!observers.len)
 					observers = null
 					break
+
+// Only renders the head of the human
+/mob/living/carbon/human/proc/update_body_parts_head_only()
+	if (!dna)
+		return
+
+	if (!dna.species)
+		return
+
+	var/obj/item/bodypart/HD = get_bodypart("head")
+
+	if (!istype(HD))
+		return
+
+	HD.update_limb()
+
+	add_overlay(HD.get_limb_icon())
+	update_damage_overlays()
+
+	if(HD && !(has_trait(TRAIT_HUSK)))
+		// lipstick
+		if(lip_style && (LIPS in dna.species.species_traits))
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[lip_style]", -BODY_LAYER)
+			lip_overlay.color = lip_color
+			if(OFFSET_FACE in dna.species.offset_features)
+				lip_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
+				lip_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
+			add_overlay(lip_overlay)
+
+		// eyes
+		if(!(NOEYES in dna.species.species_traits))
+			var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
+			var/mutable_appearance/eye_overlay
+			if(!has_eyes)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+			else
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+			if((EYECOLOR in dna.species.species_traits) && has_eyes)
+				eye_overlay.color = "#" + eye_color
+			if(OFFSET_FACE in dna.species.offset_features)
+				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
+				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
+			add_overlay(eye_overlay)
+
+	dna.species.handle_hair(src)
+
+	update_inv_head()
+	update_inv_wear_mask()

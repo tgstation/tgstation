@@ -1,6 +1,7 @@
 /datum/game_mode/traitor/changeling
 	name = "traitor+changeling"
 	config_tag = "traitorchan"
+	report_type = "traitorchan"
 	false_report_weight = 10
 	traitors_possible = 3 //hard limit on traitors if scaling is turned off
 	restricted_jobs = list("AI", "Cyborg")
@@ -46,7 +47,7 @@
 		for(var/j = 0, j < num_changelings, j++)
 			if(!possible_changelings.len)
 				break
-			var/datum/mind/changeling = pick(possible_changelings)
+			var/datum/mind/changeling = antag_pick(possible_changelings)
 			antag_candidates -= changeling
 			possible_changelings -= changeling
 			changeling.special_role = ROLE_CHANGELING
@@ -69,11 +70,13 @@
 		return
 	if(changelings.len <= (changelingcap - 2) || prob(100 / (csc * 4)))
 		if(ROLE_CHANGELING in character.client.prefs.be_special)
-			if(!jobban_isbanned(character, ROLE_CHANGELING) && !jobban_isbanned(character, ROLE_SYNDICATE))
+			if(!is_banned_from(character.ckey, list(ROLE_CHANGELING, ROLE_SYNDICATE)) && !QDELETED(character))
 				if(age_check(character.client))
 					if(!(character.job in restricted_jobs))
-						character.mind.make_Changling()
+						character.mind.make_Changeling()
 						changelings += character.mind
+	if(QDELETED(character))
+		return
 	..()
 
 /datum/game_mode/traitor/changeling/generate_report()

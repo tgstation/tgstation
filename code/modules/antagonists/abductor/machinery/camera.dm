@@ -1,7 +1,7 @@
 /obj/machinery/computer/camera_advanced/abductor
 	name = "Human Observation Console"
 	var/team_number = 0
-	networks = list("SS13","Abductor")
+	networks = list("ss13", "abductor")
 	var/datum/action/innate/teleport_in/tele_in_action = new
 	var/datum/action/innate/teleport_out/tele_out_action = new
 	var/datum/action/innate/teleport_self/tele_self_action = new
@@ -17,9 +17,10 @@
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
-	eyeobj.visible_icon = 1
-	eyeobj.icon = 'icons/obj/abductor.dmi'
-	eyeobj.icon_state = "camera_target"
+	eyeobj.visible_icon = TRUE
+	eyeobj.icon = 'icons/mob/cameramob.dmi'
+	eyeobj.icon_state = "abductor_camera"
+	eyeobj.invisibility = INVISIBILITY_OBSERVER
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	..()
@@ -55,13 +56,7 @@
 		actions += set_droppoint_action
 
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	var/datum/species/abductor/S = H.dna.species
-	return S.scientist
-
-/obj/machinery/computer/camera_advanced/abductor/attack_hand(mob/user)
-	if(!isabductor(user))
-		return
-	return ..()
+	return H.has_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
 
 /datum/action/innate/teleport_in
 	name = "Send To"

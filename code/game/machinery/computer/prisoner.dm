@@ -15,10 +15,8 @@
 
 	light_color = LIGHT_COLOR_RED
 
-/obj/machinery/computer/prisoner/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/prisoner/ui_interact(mob/user)
+	. = ..()
 	var/dat = ""
 	if(screen == 0)
 		dat += "<HR><A href='?src=[REF(src)];lock=1'>Unlock Console</A>"
@@ -138,7 +136,7 @@
 			if(I && istype(I) && I.imp_in)
 				var/mob/living/R = I.imp_in
 				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
-				log_talk(usr,"[key_name(usr)] sent an implant message to [R]/[R.ckey]: '[warning]'",LOGSAY)
+				log_directed_talk(usr, R, warning, LOG_SAY, "implant message")
 
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()

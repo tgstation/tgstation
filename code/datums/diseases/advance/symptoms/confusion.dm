@@ -6,7 +6,7 @@ Confusion
 	Little bit hidden.
 	Lowers resistance.
 	Decreases stage speed.
-	Not very transmittable.
+	Not very transmissibile.
 	Intense Level.
 
 Bonus

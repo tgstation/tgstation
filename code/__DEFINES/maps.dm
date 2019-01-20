@@ -1,46 +1,31 @@
 /*
-The /tg/ codebase currently requires you to have 11 z-levels of the same size dimensions.
-z-level order is important, the order you put them in inside the map config.dm will determine what z level number they are assigned ingame.
-Names of z-level do not matter, but order does greatly, for instances such as checking alive status of revheads on z1
+The /tg/ codebase allows mixing of hardcoded and dynamically-loaded z-levels.
+Z-levels can be reordered as desired and their properties are set by "traits".
+See map_config.dm for how a particular station's traits may be chosen.
+The list DEFAULT_MAP_TRAITS at the bottom of this file should correspond to
+the maps that are hardcoded, as set in _maps/_basemap.dm. SSmapping is
+responsible for loading every non-hardcoded z-level.
 
-current as of september 17, 2017
-z1 = station
-z2 = centcom
-z5 = mining
-z6 = city of cogs
-Everything else = randomized space
-Last space-z level = empty
+As of 2018-02-04, the typical z-levels for a single-level station are:
+1: CentCom
+2: Station
+3-4: Randomized space
+5: Mining
+6: City of Cogs
+7-11: Randomized space
+12: Empty space
+13: Transit space
+
+Multi-Z stations are supported and multi-Z mining and away missions would
+require only minor tweaks.
 */
 
-#define CROSSLINKED 2
-#define SELFLOOPING 1
-#define UNAFFECTED 0
-
-#define MAIN_STATION "Main Station"
-#define CENTCOM "CentCom"
-#define CITY_OF_COGS "City of Cogs"
-#define EMPTY_AREA_1 "Empty Area 1"
-#define EMPTY_AREA_2 "Empty Area 2"
-#define MINING_ASTEROID "Mining Asteroid"
-#define EMPTY_AREA_3 "Empty Area 3"
-#define EMPTY_AREA_4 "Empty Area 4"
-#define EMPTY_AREA_5 "Empty Area 5"
-#define EMPTY_AREA_6 "Empty Area 6"
-#define EMPTY_AREA_7 "Empty Area 7"
-#define EMPTY_AREA_8 "Empty Area 8"
-#define AWAY_MISSION "Away Mission"
-
-//for modifying jobs
+// helpers for modifying jobs, used in various job_changes.dm files
 #define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
 #define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
 #define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
-//zlevel defines, can be overridden for different maps in the appropriate _maps file.
-#define ZLEVEL_STATION_PRIMARY 2
-#define ZLEVEL_EMPTY_SPACE 12
-
 #define SPACERUIN_MAP_EDGE_PAD 15
-#define ZLEVEL_SPACE_RUIN_COUNT 5
 
 // traits
 // boolean - marks a level as having that property if present
@@ -48,35 +33,61 @@ Last space-z level = empty
 #define ZTRAIT_STATION "Station"
 #define ZTRAIT_MINING "Mining"
 #define ZTRAIT_REEBE "Reebe"
-#define ZTRAIT_TRANSIT "Transit"
+#define ZTRAIT_RESERVED "Transit/Reserved"
 #define ZTRAIT_AWAY "Away Mission"
 #define ZTRAIT_SPACE_RUINS "Space Ruins"
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
+
 // number - bombcap is multiplied by this before being applied to bombs
 #define ZTRAIT_BOMBCAP_MULTIPLIER "Bombcap Multiplier"
 
-// trait definitions
-#define DL_NAME "name"
-#define DL_LINKAGE "linkage"
-#define DL_TRAITS "traits"
+// number - default gravity if there's no gravity generators or area overrides present
+#define ZTRAIT_GRAVITY "Gravity"
 
-#define DECLARE_LEVEL(NAME, LINKAGE, TRAITS) list(DL_NAME = NAME, DL_LINKAGE = LINKAGE, DL_TRAITS = TRAITS)
-// corresponds to basemap.dm
+// numeric offsets - e.g. {"Down": -1} means that chasms will fall to z - 1 rather than oblivion
+#define ZTRAIT_UP "Up"
+#define ZTRAIT_DOWN "Down"
+
+// enum - how space transitions should affect this level
+#define ZTRAIT_LINKAGE "Linkage"
+    // UNAFFECTED if absent - no space transitions
+    #define UNAFFECTED null
+    // SELFLOOPING - space transitions always self-loop
+    #define SELFLOOPING "Self"
+    // CROSSLINKED - mixed in with the cross-linked space pool
+    #define CROSSLINKED "Cross"
+
+// string - type path of the z-level's baseturf (defaults to space)
+#define ZTRAIT_BASETURF "Baseturf"
+
+// default trait definitions, used by SSmapping
+#define ZTRAITS_CENTCOM list(ZTRAIT_CENTCOM = TRUE)
+#define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
+#define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+#define ZTRAITS_LAVALAND list(\
+    ZTRAIT_MINING = TRUE, \
+    ZTRAIT_LAVA_RUINS = TRUE, \
+    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
+    ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
+#define ZTRAITS_REEBE list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)
+
+#define DL_NAME "name"
+#define DL_TRAITS "traits"
+#define DECLARE_LEVEL(NAME, TRAITS) list(DL_NAME = NAME, DL_TRAITS = TRAITS)
+
+// must correspond to _basemap.dm for things to work correctly
 #define DEFAULT_MAP_TRAITS list(\
-    DECLARE_LEVEL("CentCom", SELFLOOPING, list(ZTRAIT_CENTCOM = TRUE)),\
-    DECLARE_LEVEL("Main Station", CROSSLINKED, list(ZTRAIT_STATION = TRUE)),\
-    DECLARE_LEVEL("Empty Area 1", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
-    DECLARE_LEVEL("Empty Area 2", CROSSLINKED, list(ZTRAIT_SPACE_RUINS = TRUE)),\
-    DECLARE_LEVEL("Lavaland", UNAFFECTED, list(ZTRAIT_MINING = TRUE, ZTRAIT_LAVA_RUINS = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 2)),\
-    DECLARE_LEVEL("Reebe", UNAFFECTED, list(ZTRAIT_REEBE = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 0.5)),\
+    DECLARE_LEVEL("CentCom", ZTRAITS_CENTCOM),\
 )
 
-//Camera lock flags
+// Camera lock flags
 #define CAMERA_LOCK_STATION 1
 #define CAMERA_LOCK_MINING 2
 #define CAMERA_LOCK_CENTCOM 4
 #define CAMERA_LOCK_REEBE 8
 
+//Reserved/Transit turf type
+#define RESERVED_TURF_TYPE /turf/open/space/basic			//What the turf is when not being used
 
 //Ruin Generation
 

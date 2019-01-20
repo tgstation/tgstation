@@ -15,8 +15,8 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/device/mining_scanner,
-/obj/item/device/flashlight/lantern,
+/obj/item/mining_scanner,
+/obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
@@ -28,8 +28,8 @@
 /obj/item/pickaxe,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
-/obj/item/device/mining_scanner,
-/obj/item/device/flashlight/lantern,
+/obj/item/mining_scanner,
+/obj/item/flashlight/lantern,
 /obj/item/card/id/mining,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
@@ -118,7 +118,7 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/book/manual/research_and_development{
+/obj/item/book/manual/wiki/research_and_development{
 	name = "Sacred Text of the Liberator";
 	pixel_x = -4;
 	pixel_y = 3
@@ -205,6 +205,14 @@
 /obj/machinery/light/small,
 /turf/open/floor/plating,
 /area/ruin/powered/golem_ship)
+"K" = (
+/obj/machinery/door/airlock/titanium,
+/obj/structure/fans/tiny,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/powered/golem_ship)
 "L" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -249,6 +257,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/ruin/powered/golem_ship)
+"Y" = (
+/obj/machinery/door/airlock/titanium,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 
 (1,1,1) = {"
@@ -565,8 +580,8 @@ b
 n
 l
 b
-j
-j
+Y
+Y
 b
 x
 D
@@ -601,8 +616,8 @@ b
 i
 i
 b
-H
-H
+K
+K
 b
 i
 i

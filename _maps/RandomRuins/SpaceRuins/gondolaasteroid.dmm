@@ -79,6 +79,16 @@
 /obj/machinery/door/airlock/survival_pod/glass{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/space/has_grav)
+"T" = (
+/obj/machinery/door/airlock/survival_pod/glass{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating/asteroid/airless,
 /area/ruin/space/has_grav)
 
@@ -783,7 +793,7 @@ c
 c
 u
 c
-u
+T
 "}
 (20,1,1) = {"
 a

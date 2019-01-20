@@ -16,6 +16,7 @@
 	var/obj/item/toy/plush/plush_child
 	var/obj/item/toy/plush/paternal_parent	//who initiated creation
 	var/obj/item/toy/plush/maternal_parent	//who owns, see love()
+	var/static/list/breeding_blacklist = typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp) // you cannot have sexual relations with this plush
 	var/list/scorned	= list()	//who the plush hates
 	var/list/scorned_by	= list()	//who hates the plush, to remove external references on Destroy()
 	var/heartbroken = FALSE
@@ -141,8 +142,8 @@
 		user.visible_message("<span class='warning'>[user] slides [grenade] into [src].</span>", \
 		"<span class='danger'>You slide [I] into [src].</span>")
 		grenade = I
-		var/turf/T = get_turf(user)
-		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [COORD(T)].")
+		var/turf/grenade_turf = get_turf(src)
+		log_game("[key_name(user)] added a grenade ([I.name]) to [src] at [AREACOORD(grenade_turf)].")
 		return
 	if(istype(I, /obj/item/toy/plush))
 		love(I, user)
@@ -203,8 +204,8 @@
 	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
 		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
 									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
-		plop(Kisser)
-		user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
+		if(plop(Kisser))
+			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
 							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
 
 	//then comes protection, or abstinence if we are catholic
@@ -271,7 +272,10 @@
 
 /obj/item/toy/plush/proc/plop(obj/item/toy/plush/Daddy)
 	if(partner != Daddy)
-		return	//we do not have bastards in our toyshop
+		return	FALSE //we do not have bastards in our toyshop
+
+	if(is_type_in_typecache(Daddy, breeding_blacklist))
+		return FALSE // some love is forbidden
 
 	if(prob(50))	//it has my eyes
 		plush_child = new type(get_turf(loc))
@@ -368,14 +372,14 @@
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
 /obj/item/toy/plush/bubbleplush
-	name = "bubblegum plushie"
+	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
-	attack_verb = list("rends")
+	attack_verb = list("rent")
 	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
 
 /obj/item/toy/plush/plushvar
-	name = "ratvar plushie"
+	name = "\improper Ratvar plushie"
 	desc = "An adorable plushie of the clockwork justiciar himself with new and improved spring arm action."
 	icon_state = "plushvar"
 	var/obj/item/toy/plush/narplush/clash_target
@@ -461,10 +465,11 @@
 		P.clashing = FALSE
 
 /obj/item/toy/plush/narplush
-	name = "nar'sie plushie"
-	desc = "A small stuffed doll of the elder god nar'sie. Who thought this was a good children's toy?"
+	name = "\improper Nar'Sie plushie"
+	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy?"
 	icon_state = "narplush"
 	var/clashing
+	var/is_invoker = TRUE
 	gender = FEMALE	//it's canon if the toy is
 
 /obj/item/toy/plush/narplush/Moved()
@@ -472,6 +477,10 @@
 	var/obj/item/toy/plush/plushvar/P = locate() in range(1, src)
 	if(P && istype(P.loc, /turf/open) && !P.clash_target && !clashing)
 		P.clash_of_the_plushies(src)
+
+/obj/item/toy/plush/narplush/hugbox
+	desc = "A small stuffed doll of the elder goddess Nar'Sie. Who thought this was a good children's toy? <b>It looks sad.</b>"
+	is_invoker = FALSE
 
 /obj/item/toy/plush/lizardplushie
 	name = "lizard plushie"
@@ -505,3 +514,13 @@
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
+
+/obj/item/toy/plush/awakenedplushie
+	name = "awakened plushie"
+	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
+	icon_state = "plushie_awake"
+	item_state = "plushie_awake"
+
+/obj/item/toy/plush/awakenedplushie/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/edit_complainer)

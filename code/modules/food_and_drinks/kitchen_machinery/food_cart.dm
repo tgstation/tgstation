@@ -15,13 +15,11 @@
 	var/portion = 10
 	var/selected_drink
 	var/list/stored_food = list()
-	container_type = OPENCONTAINER
 	var/obj/item/reagent_containers/mixer
 
 /obj/machinery/food_cart/Initialize()
 	. = ..()
-	create_reagents(LIQUID_CAPACIY)
-	reagents.set_reacting(FALSE)
+	create_reagents(LIQUID_CAPACIY, OPENCONTAINER | NO_REACT)
 	mixer = new /obj/item/reagent_containers(src, MIXER_CAPACITY)
 	mixer.name = "Mixer"
 
@@ -29,11 +27,8 @@
 	QDEL_NULL(mixer)
 	return ..()
 
-/obj/machinery/food_cart/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/food_cart/interact(mob/user)
+/obj/machinery/food_cart/ui_interact(mob/user)
+	. = ..()
 	var/dat
 	dat += "<br><b>STORED INGREDIENTS AND DRINKS</b><br><div class='statusDisplay'>"
 	dat += "Remaining glasses: [glasses]<br>"
@@ -65,6 +60,9 @@
 	return food_stored >= STORAGE_CAPACITY
 
 /obj/machinery/food_cart/attackby(obj/item/O, mob/user, params)
+	if(O.tool_behaviour == TOOL_WRENCH)
+		default_unfasten_wrench(user, O, 0)
+		return TRUE
 	if(istype(O, /obj/item/reagent_containers/food/drinks/drinkingglass))
 		var/obj/item/reagent_containers/food/drinks/drinkingglass/DG = O
 		if(!DG.reagents.total_volume) //glass is empty
@@ -95,11 +93,11 @@
 				to_chat(user, "<span class='warning'>[src] is at full capacity.</span>")
 				break
 			else
-				T.remove_from_storage(S, src)
-				if(stored_food[sanitize(S.name)])
-					stored_food[sanitize(S.name)]++
-				else
-					stored_food[sanitize(S.name)] = 1
+				if(SEND_SIGNAL(T, COMSIG_TRY_STORAGE_TAKE, S, src))
+					if(stored_food[sanitize(S.name)])
+						stored_food[sanitize(S.name)]++
+					else
+						stored_food[sanitize(S.name)] = 1
 	else if(O.is_drainable())
 		return
 	else

@@ -17,7 +17,7 @@
 	var/weather_overlay
 	var/weather_color = null
 
-	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the wather is over
+	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the weather is over
 	var/end_duration = 300 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
 	var/end_sound
 	var/end_overlay
@@ -28,6 +28,7 @@
 	var/impacted_z_levels // The list of z-levels that this weather is actively affecting
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
+	var/overlay_plane = BLACKNESS_PLANE
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
 	var/immunity_type = "storm" //Used by mobs to prevent them from being affected by the weather
 
@@ -36,6 +37,9 @@
 	// These are read by the weather subsystem and used to determine when and where to run the weather.
 	var/probability = 0 // Weight amongst other eligible weather. If zero, will never happen randomly.
 	var/target_trait = ZTRAIT_STATION // The z-level trait to affect when run randomly or when not overridden.
+
+	var/barometer_predictable = FALSE
+	var/next_hit_time = 0 //For barometers to know when the next storm will hit
 
 /datum/weather/New(z_levels)
 	..()
@@ -118,6 +122,7 @@
 	for(var/V in impacted_areas)
 		var/area/N = V
 		N.layer = overlay_layer
+		N.plane = overlay_plane
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.color = weather_color
 		switch(stage)
@@ -131,5 +136,6 @@
 				N.color = null
 				N.icon_state = ""
 				N.icon = 'icons/turf/areas.dmi'
-				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
+				N.layer = initial(N.layer)
+				N.plane = initial(N.plane)
 				N.set_opacity(FALSE)

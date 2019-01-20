@@ -95,8 +95,53 @@ if (typeof String.prototype.trim !== 'function') {
 	};
 }
 
+// Linkify the contents of a node, within its parent.
+function linkify(parent, insertBefore, text) {
+	var start = 0;
+	var match;
+	var regex = /(?:(?:https?:\/\/)|(?:www\.))(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;()]+/ig;
+	while ((match = regex.exec(text)) !== null) {
+		// add the unmatched text
+		parent.insertBefore(document.createTextNode(text.substring(start, match.index)), insertBefore);
+
+		var href = match[0];
+		if (!/^https?:\/\//i.test(match[0])) {
+			href = "http://" + match[0];
+		}
+
+		// add the link
+		var link = document.createElement("a");
+		link.href = href;
+		link.textContent = match[0];
+		parent.insertBefore(link, insertBefore);
+
+		start = regex.lastIndex;
+	}
+	if (start !== 0) {
+		// add the remaining text and remove the original text node
+		parent.insertBefore(document.createTextNode(text.substring(start)), insertBefore);
+		parent.removeChild(insertBefore);
+	}
+}
+
+// Recursively linkify the children of a given node.
+function linkify_node(node) {
+	var children = node.childNodes;
+	// work backwards to avoid the risk of looping forever on our own output
+	for (var i = children.length - 1; i >= 0; --i) {
+		var child = children[i];
+		if (child.nodeType == Node.TEXT_NODE) {
+			// text is to be linkified
+			linkify(node, child, child.textContent);
+		} else if (child.nodeName != "A" && child.nodeName != "a") {
+			// do not linkify existing links
+			linkify_node(child);
+		}
+	}
+}
+
 //Shit fucking piece of crap that doesn't work god fuckin damn it
-function linkify(text) {
+function linkify_fallback(text) {
 	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
 	return text.replace(rex, function ($0, $1) {
 		if(/^https?:\/\/.+/i.test($0)) {
@@ -113,7 +158,16 @@ function byondDecode(message) {
 	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
 	// Marvelous.
 	message = message.replace(/\+/g, "%20");
-	message = decoder(message);
+	try { 
+		// This is a workaround for the above not always working when BYOND's shitty url encoding breaks. (byond bug id:2399401)
+		if (decodeURIComponent) {
+			message = decodeURIComponent(message);
+		} else {
+			throw new Error("Easiest way to trigger the fallback")
+		}
+	} catch (err) {
+		message = unescape(message);
+	}
 	return message;
 }
 
@@ -198,7 +252,7 @@ function output(message, flag) {
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
 
-	message = byondDecode(message)
+	message = byondDecode(message).trim();
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -283,11 +337,6 @@ function output(message, flag) {
 		}
 	}
 
-	//Url stuff
-	if (message.length && flag != 'preventLink') {
-		message = linkify(message);
-	}
-
 	opts.messageCount++;
 
 	//Pop the top message off if history limit reached
@@ -296,27 +345,30 @@ function output(message, flag) {
 		opts.messageCount--; //I guess the count should only ever equal the limit
 	}
 
+	// Create the element - if combining is off, we use it, and if it's on, we
+	// might discard it bug need to check its text content. Some messages vary
+	// only in HTML markup, have the same text content, and should combine.
+	var entry = document.createElement('div');
+	entry.innerHTML = message;
+	var trimmed_message = entry.textContent || entry.innerText || "";
+
 	var handled = false;
-	var trimmed_message = message.trim()
-	var lastmessages = $messages.children('div.entry:last-child');
-	if (opts.messageCombining && lastmessages.length && $last_message)
-	{
-		if($last_message == trimmed_message)
-		{
-			if(lastmessages.children('span.r').length)
-			{
-				var current_value = parseInt(lastmessages.children('span.r').text())
-				lastmessages.children('span.r').text(current_value+1)
+	if (opts.messageCombining) {
+		var lastmessages = $messages.children('div.entry:last-child').last();
+		if (lastmessages.length && $last_message && $last_message == trimmed_message) {
+			var badge = lastmessages.children('.r').last();
+			if (badge.length) {
+				badge = badge.detach();
+				badge.text(parseInt(badge.text()) + 1);
+			} else {
+				badge = $('<span/>', {'class': 'r', 'text': 2});
 			}
-			else
-			{
-				lastmessages.append($('<span/>', { 'class': 'r', 'text': 2}));
-			}
-			var insertedBadge = $(lastmessages).find('.r');
-			insertedBadge.animate({
+			lastmessages.html(message);
+			lastmessages.append(badge);
+			badge.animate({
 				"font-size": "0.9em"
 			}, 100, function() {
-				insertedBadge.animate({
+				badge.animate({
 					"font-size": "0.7em"
 				}, 100);
 			});
@@ -325,10 +377,8 @@ function output(message, flag) {
 		}
 	}
 
-	if(!handled)
-	{
+	if (!handled) {
 		//Actually append the message
-		var entry = document.createElement('div');
 		entry.className = 'entry';
 
 		if (filteredOut) {
@@ -337,9 +387,22 @@ function output(message, flag) {
 		}
 
 		$last_message = trimmed_message;
-		entry.innerHTML = trimmed_message;
 		$messages[0].appendChild(entry);
 		$(entry).find("img.icon").error(iconError);
+
+		var to_linkify = $(entry).find(".linkify");
+		if (typeof Node === 'undefined') {
+			// Linkify fallback for old IE
+			for(var i = 0; i < to_linkify.length; ++i) {
+				to_linkify[i].innerHTML = linkify_fallback(to_linkify[i].innerHTML);
+			}
+		} else {
+			// Linkify for modern IE versions
+			for(var i = 0; i < to_linkify.length; ++i) {
+				linkify_node(to_linkify[i]);
+			}
+		}
+
 		//Actually do the snap
 		//Stuff we can do after the message shows can go here, in the interests of responsiveness
 		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
@@ -442,6 +505,8 @@ function ehjaxCallback(data) {
 	} else if (data == 'roundrestart') {
 		opts.restarting = true;
 		internalOutput('<div class="connectionClosed internal restarting">The connection has been closed because the server is restarting. Please wait while you automatically reconnect.</div>', 'internal');
+	} else if (data == 'stopMusic') {
+		$('#adminMusic').prop('src', '');
 	} else {
 		//Oh we're actually being sent data instead of an instruction
 		var dataJ;
@@ -890,23 +955,26 @@ $(function() {
 	});
 
 	$('#saveLog').click(function(e) {
+		// Requires IE 10+ to issue download commands. Just opening a popup
+		// window will cause Ctrl+S to save a blank page, ignoring innerHTML.
+		if (!window.Blob) {
+			output('<span class="big red">This function is only supported on IE 10+. Upgrade if possible.</span>', 'internal');
+			return;
+		}
+
 		$.ajax({
 			type: 'GET',
 			url: 'browserOutput.css',
 			success: function(styleData) {
-				var win;
+				var blob = new Blob(['<head><title>Chat Log</title><style>', styleData, '</style></head><body>', $messages.html(), '</body>']);
 
-				try {
-					win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=600, top=' + (screen.height/2 - 635/2) + ', left=' + (screen.width/2 - 780/2));
-				} catch (e) {
-					return;
-				}
+				var fname = 'SS13 Chat Log';
+				var date = new Date(), month = date.getMonth(), day = date.getDay(), hours = date.getHours(), mins = date.getMinutes(), secs = date.getSeconds();
+				fname += ' ' + date.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+				fname += ' ' + (hours < 10 ? '0' : '') + hours + (mins < 10 ? '0' : '') + mins + (secs < 10 ? '0' : '') + secs;
+				fname += '.html';
 
-				if (win) {
-					win.document.head.innerHTML = '<title>Chat Log</title>';
-					win.document.head.innerHTML += '<style>' + styleData + '</style>';
-					win.document.body.innerHTML = $messages.html();
-				}
+				window.navigator.msSaveBlob(blob, fname);
 			}
 		});
 	});

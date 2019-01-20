@@ -29,12 +29,12 @@
 #define BOT_NO_ROUTE		17	// no destination beacon found (or no route)
 
 //Bot types
-#define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
-#define MULE_BOT			2	// MULEbots
-#define FLOOR_BOT			4	// Floorbots
-#define CLEAN_BOT			8	// Cleanbots
-#define MED_BOT				16	// Medibots
-#define HONK_BOT			32	// Honkbots & ED-Honks
+#define SEC_BOT				(1<<0)	// Secutritrons (Beepsky) and ED-209s
+#define MULE_BOT			(1<<1)	// MULEbots
+#define FLOOR_BOT			(1<<2)	// Floorbots
+#define CLEAN_BOT			(1<<3)	// Cleanbots
+#define MED_BOT				(1<<4)	// Medibots
+#define HONK_BOT			(1<<5)	// Honkbots & ED-Honks
 
 //AI notification defines
 #define		NEW_BORG     1

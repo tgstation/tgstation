@@ -14,6 +14,13 @@
 #define APPRENTICE_HEALING "healing"
 
 
+//Blob
+#define BLOB_REROLL_TIME 2400 //blob gets a free reroll every X time
+#define BLOB_SPREAD_COST 4
+#define BLOB_ATTACK_REFUND 2 //blob refunds this much if it attacks and doesn't spread
+#define BLOB_REFLECTOR_COST 15
+
+
 //ERT Types
 #define ERT_BLUE "Blue"
 #define ERT_RED  "Red"
@@ -27,3 +34,11 @@
 #define ERT_LEADER "leader"
 #define DEATHSQUAD "ds"
 #define DEATHSQUAD_LEADER "ds_leader"
+
+//Shuttle hijacking
+#define HIJACK_NEUTRAL 0 //Does not stop hijacking but itself won't hijack
+#define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
+#define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
+
+//Overthrow time to update heads obj
+#define OBJECTIVE_UPDATING_TIME 300

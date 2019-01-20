@@ -15,6 +15,8 @@
 	var/duration = 140
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
+	var/check_anti_magic = FALSE
+	var/check_holy = FALSE
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE)	//Immune atoms assoc list atom = TRUE
 	. = ..()
@@ -27,6 +29,9 @@
 	for(var/mob/living/L in GLOB.player_list)
 		if(locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in L.mind.spell_list) //People who can stop time are immune to its effects
 			immune[L] = TRUE
+	for(var/mob/living/simple_animal/hostile/guardian/G in GLOB.parasites)
+		if(G.summoner && locate(/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop) in G.summoner.mind.spell_list) //It would only make sense that a person's stand would also be immune.
+			immune[G] = TRUE
 	if(start)
 		timestop()
 
@@ -38,10 +43,11 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, 1, -1)
-	chronofield = make_field(/datum/proximity_monitor/advanced/timestop, list("current_range" = freezerange, "host" = src, "immune" = immune))
+	chronofield = make_field(/datum/proximity_monitor/advanced/timestop, list("current_range" = freezerange, "host" = src, "immune" = immune, "check_anti_magic" = check_anti_magic, "check_holy" = check_holy))
 	QDEL_IN(src, duration)
 
 /obj/effect/timestop/wizard
+	check_anti_magic = TRUE
 	duration = 100
 
 /datum/proximity_monitor/advanced/timestop
@@ -53,6 +59,10 @@
 	var/list/mob/living/frozen_mobs = list()
 	var/list/obj/item/projectile/frozen_projectiles = list()
 	var/list/atom/movable/frozen_throws = list()
+	var/check_anti_magic = FALSE
+	var/check_holy = FALSE
+
+	var/static/list/global_frozen_atoms = list()
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
 	unfreeze_all()
@@ -62,7 +72,7 @@
 	freeze_atom(AM)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
-	if(immune[A] || !istype(A))
+	if(immune[A] || global_frozen_atoms[A] || !istype(A))
 		return FALSE
 	if(A.throwing)
 		freeze_throwing(A)
@@ -89,11 +99,13 @@
 	var/datum/thrownthing/T = AM.throwing
 	T.paused = TRUE
 	frozen_throws[AM] = T
+	global_frozen_atoms[AM] = TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_throw(atom/movable/AM)
 	var/datum/thrownthing/T = frozen_throws[AM]
 	T.paused = FALSE
 	frozen_throws -= AM
+	global_frozen_atoms -= AM
 
 /datum/proximity_monitor/advanced/timestop/process()
 	for(var/i in frozen_mobs)
@@ -112,15 +124,21 @@
 	escape_the_negative_zone(P)
 	frozen_projectiles -= P
 	P.paused = FALSE
+	global_frozen_atoms -= P
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_projectile(obj/item/projectile/P)
 	frozen_projectiles[P] = TRUE
 	P.paused = TRUE
+	global_frozen_atoms[P] = TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/L)
+	if(L.anti_magic_check(check_anti_magic, check_holy))
+		immune += L
+		return
 	L.Stun(20, 1, 1)
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
+	global_frozen_atoms[L] = TRUE
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
 		H.toggle_ai(AI_OFF)
@@ -131,6 +149,7 @@
 	L.AdjustStun(-20, 1, 1)
 	L.anchored = frozen_mobs[L]
 	frozen_mobs -= L
+	global_frozen_atoms -= L
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
 		H.toggle_ai(initial(H.AIStatus))

@@ -8,8 +8,7 @@
 //Making the station dirty, one tile at a time. Called by master controller's setup_objects
 
 /turf/open/floor/proc/MakeDirty()
-	if(prob(66))	//fastest possible exit 2/3 of the time
-		return
+	// We start with a 1/3 chance of having this proc called by Initialize()
 
 	if(!(flags_1 & CAN_BE_DIRTY_1))
 		return
@@ -28,8 +27,7 @@
 	var/static/list/high_dirt_areas = typecacheof(list(/area/science/test_area,
 														/area/mine/production,
 														/area/mine/living_quarters,
-														/area/mine/north_outpost,
-														/area/mine/west_outpost,
+														/area/vacant_room/office,
 														/area/ruin/space))
 	if(is_type_in_typecache(A, high_dirt_areas))
 		new /obj/effect/decal/cleanable/dirt(src)	//vanilla, but it works
@@ -40,12 +38,12 @@
 		return
 
 		//Construction zones. Blood, sweat, and oil.  Oh, and dirt.
-	var/static/list/engine_dirt_areas = typecacheof(list(/area/engine,			
+	var/static/list/engine_dirt_areas = typecacheof(list(/area/engine,
 														/area/crew_quarters/heads/chief,
-														/area/ruin/space/derelict/assembly_line,
 														/area/science/robotics,
 														/area/maintenance,
 														/area/construction,
+														/area/vacant_room/commissary,
 														/area/survivalpod))
 	if(is_type_in_typecache(A, engine_dirt_areas))
 		if(prob(3))
@@ -84,7 +82,6 @@
 
 		//Areas where gibs will be present. Robusting probably happened some time ago.
 	var/static/list/gib_covered_areas = typecacheof(list(/area/ai_monitored/turret_protected,
-														/area/prison,
 														/area/security,
 														/area/crew_quarters/heads/hos))
 	if(is_type_in_typecache(A, gib_covered_areas))
@@ -101,9 +98,9 @@
 	if(is_type_in_typecache(A, kitchen_dirt_areas))
 		if(prob(60))
 			if(prob(50))
-				new /obj/effect/decal/cleanable/egg_smudge(src)
+				new /obj/effect/decal/cleanable/food/egg_smudge(src)
 			else
-				new /obj/effect/decal/cleanable/flour(src)
+				new /obj/effect/decal/cleanable/food/flour(src)
 		return
 
 		//Medical areas. Mostly clean by space-OSHA standards, but has some blood and oil spread about.
@@ -125,9 +122,9 @@
 		//Science messes. Mostly green glowy stuff -WHICH YOU SHOULD NOT INJEST-.
 	var/static/list/science_dirt_areas = typecacheof(list(/area/science,
 														/area/crew_quarters/heads/hor))
-	if(is_type_in_typecache(A, medical_dirt_areas))
+	if(is_type_in_typecache(A, science_dirt_areas))
 		if(prob(20))
-			new /obj/effect/decal/cleanable/greenglow(src)	//this cleans itself up but it might startle you when you see it.
+			new /obj/effect/decal/cleanable/greenglow/filled(src)	//this cleans itself up but it might startle you when you see it.
 		return
 
 	return TRUE

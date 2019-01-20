@@ -13,6 +13,19 @@
 	bonus_reagents = list("vitamin" = 1)
 	foodtype = GRAIN | MEAT
 
+/obj/item/reagent_containers/food/snacks/burger/plain/Initialize()
+	. = ..()
+	if(prob(1))
+		new/obj/effect/particle_effect/smoke(get_turf(src))
+		playsound(src, 'sound/effects/smoke.ogg', 50, TRUE)
+		visible_message("<span class='warning'>Oh, ye gods! [src] is ruined! But what if...?</span>")
+		name = "steamed ham"
+		desc = pick("Ahh, Head of Personnel, welcome. I hope you're prepared for an unforgettable luncheon!",
+		"And you call these steamed hams despite the fact that they are obviously microwaved?",
+		"Aurora Station 13? At this time of shift, in this time of year, in this sector of space, localized entirely within your freezer?",
+		"You know, these hamburgers taste quite similar to the ones they have at the Maltese Falcon.")
+		tastes = list("fast food hamburger" = 1)
+
 /obj/item/reagent_containers/food/snacks/burger/human
 	var/subjectname = ""
 	var/subjectjob = null
@@ -176,7 +189,7 @@
 	color = "#DA00FFFF"
 	bonus_reagents = list("purplecrayonpowder" = 10, "vitamin" = 5)
 	foodtype = GRAIN | MEAT
-	
+
 /obj/item/reagent_containers/food/snacks/burger/black
 	name = "black burger"
 	desc = "This is overcooked."
@@ -184,7 +197,7 @@
 	color = "#1C1C1C"
 	bonus_reagents = list("blackcrayonpowder" = 10, "vitamin" = 5)
 	foodtype = GRAIN | MEAT
-	
+
 /obj/item/reagent_containers/food/snacks/burger/white
 	name = "white burger"
 	desc = "Delicous Titanium!"
@@ -268,3 +281,11 @@
 	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
 	tastes = list("bun" = 4, "bacon" = 2)
 	foodtype = GRAIN | MEAT
+
+/obj/item/reagent_containers/food/snacks/burger/empoweredburger
+	name = "empowered burger"
+	desc = "It's shockingly good, if you live off of electricity that is."
+	icon_state = "empoweredburger"
+	list_reagents = list("nutriment" = 8, "liquidelectricity" = 5)
+	tastes = list("bun" = 2, "pure electricity" = 4)
+	foodtype = GRAIN | TOXIC

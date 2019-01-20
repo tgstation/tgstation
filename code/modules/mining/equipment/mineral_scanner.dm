@@ -1,18 +1,19 @@
 /**********************Mining Scanners**********************/
-/obj/item/device/mining_scanner
+/obj/item/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
 	name = "manual mining scanner"
+	icon = 'icons/obj/device.dmi'
 	icon_state = "mining1"
 	item_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
 
-/obj/item/device/mining_scanner/attack_self(mob/user)
+/obj/item/mining_scanner/attack_self(mob/user)
 	if(!user.client)
 		return
 	if(current_cooldown <= world.time)
@@ -20,15 +21,15 @@
 		mineral_scan_pulse(get_turf(user))
 
 //Debug item to identify all ore spread quickly
-/obj/item/device/mining_scanner/admin
+/obj/item/mining_scanner/admin
 
-/obj/item/device/mining_scanner/admin/attack_self(mob/user)
+/obj/item/mining_scanner/admin/attack_self(mob/user)
 	for(var/turf/closed/mineral/M in world)
 		if(M.scan_state)
 			M.icon_state = M.scan_state
 	qdel(src)
 
-/obj/item/device/t_scanner/adv_mining_scanner
+/obj/item/t_scanner/adv_mining_scanner
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. This one has an extended range."
 	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
@@ -37,18 +38,22 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
 	var/range = 7
 
-/obj/item/device/t_scanner/adv_mining_scanner/lesser
+/obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize()
+	. = ..()
+	toggle_on()
+
+/obj/item/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
 	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
 	range = 4
 	cooldown = 50
 
-/obj/item/device/t_scanner/adv_mining_scanner/scan()
+/obj/item/t_scanner/adv_mining_scanner/scan()
 	if(current_cooldown <= world.time)
 		current_cooldown = world.time + cooldown
 		var/turf/t = get_turf(src)

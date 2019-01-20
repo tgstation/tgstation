@@ -1,6 +1,6 @@
 #Listing maps here will blacklist them from generating in lavaland.
 #Maps must be the full path to them
-#A list of maps valid to blacklist can be found at _maps\RandomRuins\LavaRuins\_maplisting.txt
+#A list of maps valid to blacklist can be found in _maps\RandomRuins\LavaRuins
 #SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
 
 ##BIODOMES

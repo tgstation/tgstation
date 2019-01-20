@@ -29,5 +29,6 @@
 	slices_num = 3
 	filling_color = "#F6CB0B"
 	w_class = WEIGHT_CLASS_NORMAL
-	foodtype = FRUIT
+	foodtype = FRUIT | PINEAPPLE
 	tastes = list("pineapple" = 1)
+	wine_power = 40

@@ -15,7 +15,7 @@
 	pin = null
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/update_icon()
 	..()
@@ -43,7 +43,7 @@
 				else
 					to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
 
-				playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
+				playsound(src, 'sound/weapons/autoguninsert.ogg', 60, TRUE)
 				chamber_round()
 				A.update_icon()
 				update_icon()
@@ -51,8 +51,11 @@
 			else
 				to_chat(user, "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>")
 
-/obj/item/gun/ballistic/automatic/ui_action_click()
-	burst_select()
+/obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
+		burst_select()
+	else
+		..()
 
 /obj/item/gun/ballistic/automatic/proc/burst_select()
 	var/mob/living/carbon/human/user = usr
@@ -91,22 +94,21 @@
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	fire_delay = 2
 	burst_size = 2
-	pin = /obj/item/device/firing_pin/implant/pindicate
+	pin = /obj/item/firing_pin/implant/pindicate
 	can_bayonet = TRUE
 	knife_x_offset = 26
 	knife_y_offset = 12
 
 /obj/item/gun/ballistic/automatic/c20r/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/c20r/Initialize()
 	. = ..()
 	update_icon()
 
 /obj/item/gun/ballistic/automatic/c20r/afterattack()
-	..()
+	. = ..()
 	empty_alarm()
-	return
 
 /obj/item/gun/ballistic/automatic/c20r/update_icon()
 	..()
@@ -148,7 +150,7 @@
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
-	pin = /obj/item/device/firing_pin/implant/pindicate
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/m90/Initialize()
 	. = ..()
@@ -156,7 +158,7 @@
 	update_icon()
 
 /obj/item/gun/ballistic/automatic/m90/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/m90/unrestricted/Initialize()
 	. = ..()
@@ -167,8 +169,8 @@
 	if(select == 2)
 		underbarrel.afterattack(target, user, flag, params)
 	else
-		..()
-		return
+		return ..()
+
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
@@ -243,15 +245,17 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	weapon_weight = WEAPON_MEDIUM
 	mag_type = /obj/item/ammo_box/magazine/m12g
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/weapons/shotgunshot.ogg'
+	vary_fire_sound = FALSE
+	fire_sound_volume = 90
 	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 0
-	pin = /obj/item/device/firing_pin/implant/pindicate
+	pin = /obj/item/firing_pin/implant/pindicate
 	actions_types = list()
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/Initialize()
 	. = ..()
@@ -264,7 +268,7 @@
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 
 /obj/item/gun/ballistic/automatic/shotgun/bulldog/afterattack()
-	..()
+	. = ..()
 	empty_alarm()
 	return
 
@@ -274,22 +278,23 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
-	desc = "A heavily modified 1.95x129mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
+	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6closed100"
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
-	mag_type = /obj/item/ammo_box/magazine/mm195x129
+	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	var/cover_open = FALSE
 	can_suppress = FALSE
 	burst_size = 3
 	fire_delay = 1
-	pin = /obj/item/device/firing_pin/implant/pindicate
+	spread = 7
+	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
@@ -317,10 +322,10 @@
 	if(cover_open)
 		to_chat(user, "<span class='warning'>[src]'s cover is open! Close it before firing!</span>")
 	else
-		..()
+		. = ..()
 		update_icon()
 
-
+//ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
 		..()
@@ -336,7 +341,6 @@
 		update_icon()
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
 		playsound(user, 'sound/weapons/magout.ogg', 60, 1)
-
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
@@ -364,7 +368,7 @@
 	zoomable = TRUE
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
 	zoom_out_amt = 13
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 
 
@@ -378,7 +382,7 @@
 /obj/item/gun/ballistic/automatic/sniper_rifle/syndicate
 	name = "syndicate sniper rifle"
 	desc = "An illegally modified .50 cal sniper rifle with suppression compatibility. Quickscoping still doesn't work."
-	pin = /obj/item/device/firing_pin/implant/pindicate
+	pin = /obj/item/firing_pin/implant/pindicate
 
 // Old Semi-Auto Rifle //
 
@@ -394,7 +398,7 @@
 	can_unsuppress = TRUE
 	can_suppress = TRUE
 	w_class = WEIGHT_CLASS_HUGE
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 
 /obj/item/gun/ballistic/automatic/surplus/update_icon()

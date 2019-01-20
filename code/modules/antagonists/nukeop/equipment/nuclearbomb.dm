@@ -1,21 +1,9 @@
-#define NUKESTATE_INTACT		5
-#define NUKESTATE_UNSCREWED		4
-#define NUKESTATE_PANEL_REMOVED		3
-#define NUKESTATE_WELDED		2
-#define NUKESTATE_CORE_EXPOSED	1
-#define NUKESTATE_CORE_REMOVED	0
-
-#define NUKE_OFF_LOCKED		0
-#define NUKE_OFF_UNLOCKED	1
-#define NUKE_ON_TIMING		2
-#define NUKE_ON_EXPLODING	3
-
-
 /obj/machinery/nuclearbomb
 	name = "nuclear fission explosive"
 	desc = "You probably shouldn't stick around to see if this is armed."
 	icon = 'icons/obj/machines/nuke.dmi'
 	icon_state = "nuclearbomb_base"
+	anchored = FALSE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -28,6 +16,7 @@
 	var/numeric_input = ""
 	var/timing = FALSE
 	var/exploding = FALSE
+	var/exploded = FALSE
 	var/detonation_timer = null
 	var/r_code = "ADMIN"
 	var/yes_code = FALSE
@@ -39,8 +28,8 @@
 	var/deconstruction_state = NUKESTATE_INTACT
 	var/lights = ""
 	var/interior = ""
+	var/proper_bomb = TRUE //Please
 	var/obj/effect/countdown/nuclearbomb/countdown
-	var/static/bomb_set
 
 /obj/machinery/nuclearbomb/Initialize()
 	. = ..()
@@ -59,9 +48,8 @@
 		set_safety()
 	GLOB.poi_list -= src
 	GLOB.nuke_list -= src
-	if(countdown)
-		qdel(countdown)
-	countdown = null
+	QDEL_NULL(countdown)
+	QDEL_NULL(core)
 	. = ..()
 
 /obj/machinery/nuclearbomb/examine(mob/user)
@@ -123,7 +111,7 @@
 				return
 
 		if(NUKESTATE_PANEL_REMOVED)
-			if(istype(I, /obj/item/weldingtool))
+			if(I.tool_behaviour == TOOL_WELDER)
 				if(!I.tool_start_check(user, amount=1))
 					return
 				to_chat(user, "<span class='notice'>You start cutting [src]'s inner plate...</span>")
@@ -239,15 +227,11 @@
 
 /obj/machinery/nuclearbomb/process()
 	if(timing && !exploding)
-		bomb_set = TRUE
 		if(detonation_timer < world.time)
 			explode()
 		else
 			var/volume = (get_time_left() <= 20 ? 30 : 5)
 			playsound(loc, 'sound/items/timer.ogg', volume, 0)
-
-/obj/machinery/nuclearbomb/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/nuclearbomb/ui_interact(mob/user, ui_key="main", datum/tgui/ui=null, force_open=0, datum/tgui/master_ui=null, datum/ui_state/state=GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -271,7 +255,7 @@
 			first_status = "Set"
 		else
 			first_status = "Auth S1."
-	var/second_status = safety ? "Safe" : "Engaged"
+	var/second_status = exploded ? "Warhead triggered, thanks for flying Nanotrasen" : (safety ? "Safe" : "Engaged")
 	data["status1"] = first_status
 	data["status2"] = second_status
 	data["anchored"] = anchored
@@ -348,21 +332,21 @@
 					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
 				. = TRUE
 		if("safety")
-			if(auth && yes_code)
+			if(auth && yes_code && !exploded)
 				set_safety()
 		if("anchor")
 			if(auth && yes_code)
 				set_anchor()
 		if("toggle_timer")
-			if(auth && yes_code && !safety)
+			if(auth && yes_code && !safety && !exploded)
 				set_active()
 
 
 /obj/machinery/nuclearbomb/proc/set_anchor()
-	if(!isinspace())
-		anchored = !anchored
-	else
+	if(isinspace() && !anchored)
 		to_chat(usr, "<span class='warning'>There is nothing to anchor to!</span>")
+	else
+		anchored = !anchored
 
 /obj/machinery/nuclearbomb/proc/set_safety()
 	safety = !safety
@@ -373,26 +357,23 @@
 				S.switch_mode_to(initial(S.mode))
 				S.alert = FALSE
 		timing = FALSE
-		bomb_set = TRUE
 		detonation_timer = null
 		countdown.stop()
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/set_active()
-	if(safety && !bomb_set)
+	if(safety)
 		to_chat(usr, "<span class='danger'>The safety is still on.</span>")
 		return
 	timing = !timing
 	if(timing)
 		previous_level = get_security_level()
-		bomb_set = TRUE
-		set_security_level("delta")
 		detonation_timer = world.time + (timer_set * 10)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
+		set_security_level("delta")
 	else
-		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
 		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
@@ -412,9 +393,9 @@
 		return
 	qdel(src)
 
-/obj/machinery/nuclearbomb/tesla_act(power, explosive)
+/obj/machinery/nuclearbomb/tesla_act(power, tesla_flags)
 	..()
-	if(explosive)
+	if(tesla_flags & TESLA_MACHINE_EXPLOSIVE)
 		qdel(src)//like the singulo, tesla deletes it. stops it from exploding over and over
 
 #define NUKERANGE 127
@@ -443,7 +424,10 @@
 	var/off_station = 0
 	var/turf/bomb_location = get_turf(src)
 	var/area/A = get_area(bomb_location)
-	if(bomb_location && is_station_level(bomb_location.z))
+	if(istype(A, /area/fabric_of_reality))
+		var/area/fabric_of_reality/fabric = A
+		new /obj/singularity(fabric.origin, 2000) // Stage five singulo back on the station, as a gift
+	else if(bomb_location && is_station_level(bomb_location.z))
 		if(istype(A, /area/space))
 			off_station = NUKE_NEAR_MISS
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
@@ -459,16 +443,89 @@
 
 	//Cinematic
 	SSticker.mode.OnNukeExplosion(off_station)
-	var/bombz = z
-	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
-	INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel,bombz)
+	really_actually_explode(off_station)
 	SSticker.roundend_check_paused = FALSE
+
+/obj/machinery/nuclearbomb/proc/really_actually_explode(off_station)
+	Cinematic(get_cinematic_type(off_station),world,CALLBACK(SSticker,/datum/controller/subsystem/ticker/proc/station_explosion_detonation,src))
+	var/area/A = get_area(src)
+	if(istype(A, /area/fabric_of_reality))
+		var/area/fabric_of_reality/fabric = A
+		var/turf/T = fabric.origin
+		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, T.z)
+	else
+		INVOKE_ASYNC(GLOBAL_PROC,.proc/KillEveryoneOnZLevel, z)
 
 /obj/machinery/nuclearbomb/proc/get_cinematic_type(off_station)
 	if(off_station < 2)
 		return CINEMATIC_SELFDESTRUCT
 	else
 		return CINEMATIC_SELFDESTRUCT_MISS
+
+/obj/machinery/nuclearbomb/beer
+	name = "Nanotrasen-brand nuclear fission explosive"
+	desc = "One of the more successful achievements of the Nanotrasen Corporate Warfare Division, their nuclear fission explosives are renowned for being cheap to produce and devastatingly effective. Signs explain that though this particular device has been decommissioned, every Nanotrasen station is equipped with an equivalent one, just in case. All Captains carefully guard the disk needed to detonate them - at least, the sign says they do. There seems to be a tap on the back."
+	proper_bomb = FALSE
+	var/obj/structure/reagent_dispensers/beerkeg/keg
+
+/obj/machinery/nuclearbomb/beer/Initialize()
+	. = ..()
+	keg = new(src)
+	QDEL_NULL(core)
+
+/obj/machinery/nuclearbomb/beer/examine(mob/user)
+	. = ..()
+	if(keg.reagents.total_volume)
+		to_chat(user, "<span class='notice'>It has [keg.reagents.total_volume] unit\s left.</span>")
+	else
+		to_chat(user, "<span class='danger'>It's empty.</span>")
+
+/obj/machinery/nuclearbomb/beer/attackby(obj/item/W, mob/user, params)
+	if(W.is_refillable())
+		W.afterattack(keg, user, TRUE) 	// redirect refillable containers to the keg, allowing them to be filled
+		return TRUE 										// pretend we handled the attack, too.
+	if(istype(W, /obj/item/nuke_core_container))
+		to_chat(user, "<span class='notice'>[src] has had its plutonium core removed as a part of being decommissioned.</span>")
+		return TRUE
+	return ..()
+
+/obj/machinery/nuclearbomb/beer/actually_explode()
+	var/turf/bomb_location = get_turf(src)
+	if(!bomb_location)
+		disarm()
+		return
+	if(is_station_level(bomb_location.z))
+		var/datum/round_event_control/E = locate(/datum/round_event_control/vent_clog/beer) in SSevents.control
+		if(E)
+			E.runEvent()
+		addtimer(CALLBACK(src, .proc/really_actually_explode), 110)
+	else
+		visible_message("<span class='notice'>[src] fizzes ominously.</span>")
+		addtimer(CALLBACK(src, .proc/fizzbuzz), 110)
+
+/obj/machinery/nuclearbomb/beer/proc/disarm()
+	detonation_timer = null
+	exploding = FALSE
+	exploded = TRUE
+	set_security_level(previous_level)
+	for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
+		S.switch_mode_to(initial(S.mode))
+		S.alert = FALSE
+	countdown.stop()
+	update_icon()
+
+/obj/machinery/nuclearbomb/beer/proc/fizzbuzz()
+	var/datum/reagents/R = new/datum/reagents(1000)
+	R.my_atom = src
+	R.add_reagent("beer", 100)
+
+	var/datum/effect_system/foam_spread/foam = new
+	foam.set_up(200, get_turf(src), R)
+	foam.start()
+	disarm()
+
+/obj/machinery/nuclearbomb/beer/really_actually_explode()
+	disarm()
 
 /proc/KillEveryoneOnZLevel(z)
 	if(!z)
@@ -513,31 +570,53 @@ This is here to make the tiles around the station mininuke change when it's arme
 	icon_state = "nucleardisk"
 	persistence_replacement = /obj/item/disk/nuclear/fake
 	max_integrity = 250
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 100, acid = 100)
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
+	var/turf/lastlocation
+	var/last_disk_move
 
 /obj/item/disk/nuclear/Initialize()
 	. = ..()
-	var/tell_the_admins
-	// Only tell the admins if a REAL nuke disk is relocated
-	if(fake)
-		tell_the_admins = FALSE
-	else
+	if(!fake)
 		GLOB.poi_list |= src
-		tell_the_admins = TRUE
+		last_disk_move = world.time
+		START_PROCESSING(SSobj, src)
 
-	set_stationloving(TRUE, inform_admins=tell_the_admins)
+/obj/item/disk/nuclear/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/stationloving, !fake)
+
+/obj/item/disk/nuclear/process()
+	if(fake)
+		STOP_PROCESSING(SSobj, src)
+		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
+	var/turf/newturf = get_turf(src)
+	if(newturf && lastlocation == newturf)
+		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))
+			var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+			if(istype(loneop))
+				loneop.weight += 1
+				if(loneop.weight % 5 == 0)
+					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
+				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+
+	else
+		lastlocation = newturf
+		last_disk_move = world.time
+		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+		if(istype(loneop) && prob(loneop.weight))
+			loneop.weight = max(loneop.weight - 1, 0)
+			if(loneop.weight % 5 == 0)
+				message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
+			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()
 	if(!fake)
 		return
 
-	var/ghost = isobserver(user)
-	var/captain = user.mind && user.mind.assigned_role == "Captain"
-	var/nukie = user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop)
-	if(ghost || captain || nukie)
+	if(isobserver(user) || user.has_trait(TRAIT_DISK_VERIFIER))
 		to_chat(user, "<span class='warning'>The serial numbers on [src] are incorrect.</span>")
 
 /obj/item/disk/nuclear/attackby(obj/item/I, mob/living/user, params)
@@ -576,3 +655,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/fake
 	fake = TRUE
+
+/obj/item/disk/nuclear/fake/obvious
+	name = "cheap plastic imitation of the nuclear authentication disk"
+	desc = "How anyone could mistake this for the real thing is beyond you."

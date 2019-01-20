@@ -1,13 +1,17 @@
 GLOBAL_LIST_EMPTY(admin_ranks)								//list of all admin_rank datums
 GLOBAL_PROTECT(admin_ranks)
 
+GLOBAL_LIST_EMPTY(protected_ranks)								//admin ranks loaded from txt
+GLOBAL_PROTECT(protected_ranks)
+
 /datum/admin_rank
 	var/name = "NoRank"
 	var/rights = R_DEFAULT
-	var/list/adds
-	var/list/subs
+	var/exclude_rights = 0
+	var/include_rights = 0
+	var/can_edit_rights = 0
 
-/datum/admin_rank/New(init_name, init_rights, list/init_adds, list/init_subs)
+/datum/admin_rank/New(init_name, init_rights, init_exclude_rights, init_edit_rights)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
@@ -17,19 +21,18 @@ GLOBAL_PROTECT(admin_ranks)
 			CRASH("Admin proc call creation of admin datum")
 		return
 	name = init_name
-	switch(name)
-		if("Removed",null,"")
-			QDEL_IN(src, 0)
-			throw EXCEPTION("invalid admin-rank name")
-			return
+	if(!name)
+		qdel(src)
+		throw EXCEPTION("Admin rank created without name.")
+		return
 	if(init_rights)
 		rights = init_rights
-	if(!init_adds)
-		init_adds = list()
-	if(!init_subs)
-		init_subs = list()
-	adds = init_adds
-	subs = init_subs
+	include_rights = rights
+	if(init_exclude_rights)
+		exclude_rights = init_exclude_rights
+		rights &= ~exclude_rights
+	if(init_edit_rights)
+		can_edit_rights = init_edit_rights
 
 /datum/admin_rank/Destroy()
 	if(IsAdminAdvancedProcCall())
@@ -42,215 +45,230 @@ GLOBAL_PROTECT(admin_ranks)
 /datum/admin_rank/vv_edit_var(var_name, var_value)
 	return FALSE
 
-#if DM_VERSION > 512
-#error remove the rejuv keyword from this proc
-#endif
-/proc/admin_keyword_to_flag(word, previous_rights=0)
-	var/flag = 0
-	switch(ckey(word))
-		if("buildmode","build")
-			flag = R_BUILDMODE
-		if("admin")
-			flag = R_ADMIN
-		if("ban")
-			flag = R_BAN
-		if("fun")
-			flag = R_FUN
-		if("server")
-			flag = R_SERVER
-		if("debug")
-			flag = R_DEBUG
-		if("permissions","rights")
-			flag = R_PERMISSIONS
-		if("possess")
-			flag = R_POSSESS
-		if("stealth")
-			flag = R_STEALTH
-		if("poll")
-			flag = R_POLL
-		if("varedit")
-			flag = R_VAREDIT
-		if("everything","host","all")
-			flag = ALL
-		if("sound","sounds")
-			flag = R_SOUNDS
-		if("spawn","create")
-			flag = R_SPAWN
-		if("autologin", "autoadmin")
-			flag = R_AUTOLOGIN
-		if("@","prev")
-			flag = previous_rights
-		if("rejuv","rejuvinate")
-			stack_trace("Legacy keyword rejuvinate used defaulting to R_ADMIN")
-			flag = R_ADMIN
-	return flag
-
-/proc/admin_keyword_to_path(word) //use this with verb keywords eg +/client/proc/blah
-	return text2path(copytext(word, 2, findtext(word, " ", 2, 0)))
-
 // Adds/removes rights to this admin_rank
-/datum/admin_rank/proc/process_keyword(word, previous_rights=0)
+/datum/admin_rank/proc/process_keyword(group, group_count, datum/admin_rank/previous_rank)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return
-	var/flag = admin_keyword_to_flag(word, previous_rights)
-	if(flag)
-		switch(text2ascii(word,1))
-			if(43)
-				rights |= flag	//+
-			if(45)
-				rights &= ~flag	//-
-	else
-		//isn't a keyword so maybe it's a verbpath?
-		var/path = admin_keyword_to_path(word)
-		if(path)
-			switch(text2ascii(word,1))
-				if(43)
-					if(!subs.Remove(path))
-						adds += path	//+
-				if(45)
-					if(!adds.Remove(path))
-						subs += path	//-
+	var/list/keywords = splittext(group, " ")
+	var/flag = 0
+	for(var/k in keywords)
+		switch(k)
+			if("BUILD")
+				flag = R_BUILD
+			if("ADMIN")
+				flag = R_ADMIN
+			if("BAN")
+				flag = R_BAN
+			if("FUN")
+				flag = R_FUN
+			if("SERVER")
+				flag = R_SERVER
+			if("DEBUG")
+				flag = R_DEBUG
+			if("PERMISSIONS")
+				flag = R_PERMISSIONS
+			if("POSSESS")
+				flag = R_POSSESS
+			if("STEALTH")
+				flag = R_STEALTH
+			if("POLL")
+				flag = R_POLL
+			if("VAREDIT")
+				flag = R_VAREDIT
+			if("EVERYTHING")
+				flag = R_EVERYTHING
+			if("SOUND")
+				flag = R_SOUND
+			if("SPAWN")
+				flag = R_SPAWN
+			if("AUTOADMIN")
+				flag = R_AUTOADMIN
+			if("DBRANKS")
+				flag = R_DBRANKS
+			if("@")
+				if(previous_rank)
+					switch(group_count)
+						if(1)
+							flag = previous_rank.include_rights
+						if(2)
+							flag = previous_rank.exclude_rights
+						if(3)
+							flag = previous_rank.can_edit_rights
+				else
+					continue
+		switch(group_count)
+			if(1)
+				rights |= flag
+				include_rights	|= flag
+			if(2)
+				rights &= ~flag
+				exclude_rights	|= flag
+			if(3)
+				can_edit_rights |= flag
 
+/proc/sync_ranks_with_db()
+	set waitfor = FALSE
 
-// Checks for (keyword-formatted) rights on this admin
-/datum/admins/proc/check_keyword(word)
-	var/flag = admin_keyword_to_flag(word)
-	if(flag)
-		return ((rank.rights & flag) == flag) //true only if right has everything in flag
-	else
-		var/path = admin_keyword_to_path(word)
-		for(var/i in owner.verbs) //this needs to be a foreach loop for some reason. in operator and verbs.Find() don't work
-			if(i == path)
-				return 1
-		return 0
+	if(IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		return
+
+	var/list/sql_ranks = list()
+	for(var/datum/admin_rank/R in GLOB.protected_ranks)
+		var/sql_rank = sanitizeSQL(R.name)
+		var/sql_flags = sanitizeSQL(R.include_rights)
+		var/sql_exclude_flags = sanitizeSQL(R.exclude_rights)
+		var/sql_can_edit_flags = sanitizeSQL(R.can_edit_rights)
+		sql_ranks += list(list("rank" = "'[sql_rank]'", "flags" = "[sql_flags]", "exclude_flags" = "[sql_exclude_flags]", "can_edit_flags" = "[sql_can_edit_flags]"))
+	SSdbcore.MassInsert(format_table_name("admin_ranks"), sql_ranks, duplicate_key = TRUE)
 
 //load our rank - > rights associations
-/proc/load_admin_ranks()
+/proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
 		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
 		return
 	GLOB.admin_ranks.Cut()
-
-	if(CONFIG_GET(flag/admin_legacy_system))
-		var/previous_rights = 0
-		//load text from file and process each line separately
-		for(var/line in world.file2list("[global.config.directory]/admin_ranks.txt"))
-			if(!line)
+	GLOB.protected_ranks.Cut()
+	//load text from file and process each entry
+	var/ranks_text = file2text("[global.config.directory]/admin_ranks.txt")
+	var/datum/admin_rank/previous_rank
+	var/regex/admin_ranks_regex = new(@"^Name\s*=\s*(.+?)\s*\n+Include\s*=\s*([\l @]*?)\s*\n+Exclude\s*=\s*([\l @]*?)\s*\n+Edit\s*=\s*([\l @]*?)\s*\n*$", "gm")
+	while(admin_ranks_regex.Find(ranks_text))
+		var/datum/admin_rank/R = new(admin_ranks_regex.group[1])
+		if(!R)
+			continue
+		var/count = 1
+		for(var/i in admin_ranks_regex.group - admin_ranks_regex.group[1])
+			if(i)
+				R.process_keyword(i, count, previous_rank)
+			count++
+		GLOB.admin_ranks += R
+		GLOB.protected_ranks += R
+		previous_rank = R
+	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
+		if(CONFIG_GET(flag/load_legacy_ranks_only))
+			if(!no_update)
+				sync_ranks_with_db()
+		else
+			var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
+			if(!query_load_admin_ranks.Execute())
+				message_admins("Error loading admin ranks from database. Loading from backup.")
+				log_sql("Error loading admin ranks from database. Loading from backup.")
+				dbfail = 1
+			else
+				while(query_load_admin_ranks.NextRow())
+					var/skip
+					var/rank_name = query_load_admin_ranks.item[1]
+					for(var/datum/admin_rank/R in GLOB.admin_ranks)
+						if(R.name == rank_name) //this rank was already loaded from txt override
+							skip = 1
+							break
+					if(!skip)
+						var/rank_flags = text2num(query_load_admin_ranks.item[2])
+						var/rank_exclude_flags = text2num(query_load_admin_ranks.item[3])
+						var/rank_can_edit_flags = text2num(query_load_admin_ranks.item[4])
+						var/datum/admin_rank/R = new(rank_name, rank_flags, rank_exclude_flags, rank_can_edit_flags)
+						if(!R)
+							continue
+						GLOB.admin_ranks += R
+			qdel(query_load_admin_ranks)
+	//load ranks from backup file
+	if(dbfail)
+		var/backup_file = file2text("data/admins_backup.json")
+		if(backup_file == null)
+			log_world("Unable to locate admins backup file.")
+			return FALSE
+		var/list/json = json_decode(backup_file)
+		for(var/J in json["ranks"])
+			var/skip
+			for(var/datum/admin_rank/R in GLOB.admin_ranks)
+				if(R.name == "[J]") //this rank was already loaded from txt override
+					skip = TRUE
+			if(skip)
 				continue
-			if(findtextEx(line,"#",1,2))
-				continue
-
-			var/next = findtext(line, "=")
-			var/datum/admin_rank/R = new(ckeyEx(copytext(line, 1, next)))
+			var/datum/admin_rank/R = new("[J]", json["ranks"]["[J]"]["include rights"], json["ranks"]["[J]"]["exclude rights"], json["ranks"]["[J]"]["can edit rights"])
 			if(!R)
 				continue
 			GLOB.admin_ranks += R
-
-			var/prev = findchar(line, "+-", next, 0)
-			while(prev)
-				next = findchar(line, "+-", prev + 1, 0)
-				R.process_keyword(copytext(line, prev, next), previous_rights)
-				prev = next
-
-			previous_rights = R.rights
-	else
-		if(!SSdbcore.Connect())
-			if(CONFIG_GET(flag/sql_enabled))
-				var/msg = "Failed to connect to database in load_admin_ranks(). Reverting to legacy system."
-				log_world(msg)
-				WRITE_FILE(GLOB.world_game_log, msg)
-			CONFIG_SET(flag/admin_legacy_system, TRUE)
-			load_admin_ranks()
-			return
-
-		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
-		if(!query_load_admin_ranks.Execute())
-			return
-		while(query_load_admin_ranks.NextRow())
-			var/rank_name = ckeyEx(query_load_admin_ranks.item[1])
-			var/flags = query_load_admin_ranks.item[2]
-			if(istext(flags))
-				flags = text2num(flags)
-			var/datum/admin_rank/R = new(rank_name, flags)
-			if(!R)
-				continue
-			GLOB.admin_ranks += R
-
+		return json
 	#ifdef TESTING
 	var/msg = "Permission Sets Built:\n"
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		msg += "\t[R.name]"
-		var/rights = rights2text(R.rights,"\n\t\t",R.adds,R.subs)
+		var/rights = rights2text(R.rights,"\n\t\t")
 		if(rights)
 			msg += "\t\t[rights]\n"
 	testing(msg)
 	#endif
 
-
-/proc/load_admins()
+/proc/load_admins(no_update)
+	var/dbfail
+	if(!CONFIG_GET(flag/admin_legacy_system) && !SSdbcore.Connect())
+		message_admins("Failed to connect to database while loading admins. Loading from backup.")
+		log_sql("Failed to connect to database while loading admins. Loading from backup.")
+		dbfail = 1
 	//clear the datums references
-
 	GLOB.admin_datums.Cut()
 	for(var/client/C in GLOB.admins)
 		C.remove_admin_verbs()
 		C.holder = null
 	GLOB.admins.Cut()
+	GLOB.protected_admins.Cut()
 	GLOB.deadmins.Cut()
-	load_admin_ranks()
+	var/list/backup_file_json = load_admin_ranks(dbfail, no_update)
+	dbfail = backup_file_json != null
 	//Clear profile access
 	for(var/A in world.GetConfig("admin"))
 		world.SetConfig("APP/admin", A, null)
-
 	var/list/rank_names = list()
 	for(var/datum/admin_rank/R in GLOB.admin_ranks)
 		rank_names[R.name] = R
-
-	if(CONFIG_GET(flag/admin_legacy_system))
-		//load text from file
-		var/list/lines = world.file2list("[global.config.directory]/admins.txt")
-
-		//process each line separately
-		for(var/line in lines)
-			if(!length(line))
-				continue
-			if(findtextEx(line, "#", 1, 2))
-				continue
-
-			var/list/entry = splittext(line, "=")
-			if(entry.len < 2)
-				continue
-
-			var/ckey = ckey(entry[1])
-			var/rank = ckeyEx(entry[2])
-			if(!ckey || !rank)
-				continue
-
-			new /datum/admins(rank_names[rank], ckey)
-
-	else
-		if(!SSdbcore.Connect())
-			log_world("Failed to connect to database in load_admins(). Reverting to legacy system.")
-			WRITE_FILE(GLOB.world_game_log, "Failed to connect to database in load_admins(). Reverting to legacy system.")
-			CONFIG_SET(flag/admin_legacy_system, TRUE)
-			load_admins()
-			return
-
-		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
+	//ckeys listed in admins.txt are always made admins before sql loading is attempted
+	var/admins_text = file2text("[global.config.directory]/admins.txt")
+	var/regex/admins_regex = new(@"^(?!#)(.+?)\s+=\s+(.+)", "gm")
+	while(admins_regex.Find(admins_text))
+		new /datum/admins(rank_names[admins_regex.group[2]], ckey(admins_regex.group[1]), FALSE, TRUE)
+	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
+		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")] ORDER BY rank")
 		if(!query_load_admins.Execute())
-			return
-		while(query_load_admins.NextRow())
-			var/ckey = ckey(query_load_admins.item[1])
-			var/rank = ckeyEx(query_load_admins.item[2])
-
-			if(rank_names[rank] == null)
-				WARNING("Admin rank ([rank]) does not exist.")
+			message_admins("Error loading admins from database. Loading from backup.")
+			log_sql("Error loading admins from database. Loading from backup.")
+			dbfail = 1
+		else
+			while(query_load_admins.NextRow())
+				var/admin_ckey = ckey(query_load_admins.item[1])
+				var/admin_rank = query_load_admins.item[2]
+				var/skip
+				if(rank_names[admin_rank] == null)
+					message_admins("[admin_ckey] loaded with invalid admin rank [admin_rank].")
+					skip = 1
+				if(GLOB.admin_datums[admin_ckey] || GLOB.deadmins[admin_ckey])
+					skip = 1
+				if(!skip)
+					new /datum/admins(rank_names[admin_rank], admin_ckey)
+		qdel(query_load_admins)
+	//load admins from backup file
+	if(dbfail)
+		if(!backup_file_json)
+			if(backup_file_json != null)
+				//already tried
+				return
+			var/backup_file = file2text("data/admins_backup.json")
+			if(backup_file == null)
+				log_world("Unable to locate admins backup file.")
+				return
+			backup_file_json = json_decode(backup_file)
+		for(var/J in backup_file_json["admins"])
+			var/skip
+			for(var/A in GLOB.admin_datums + GLOB.deadmins)
+				if(A == "[J]") //this admin was already loaded from txt override
+					skip = TRUE
+			if(skip)
 				continue
-
-			new /datum/admins(rank_names[rank], ckey)
-
+			new /datum/admins(rank_names[backup_file_json["admins"]["[J]"]], ckey("[J]"))
 	#ifdef TESTING
 	var/msg = "Admins Built:\n"
 	for(var/ckey in GLOB.admin_datums)
@@ -258,7 +276,7 @@ GLOBAL_PROTECT(admin_ranks)
 		msg += "\t[ckey] - [D.rank.name]\n"
 	testing(msg)
 	#endif
-
+	return dbfail
 
 #ifdef TESTING
 /client/verb/changerank(newrank in GLOB.admin_ranks)
@@ -277,149 +295,3 @@ GLOBAL_PROTECT(admin_ranks)
 	remove_admin_verbs()
 	holder.associate(src)
 #endif
-
-/datum/admins/proc/edit_rights_topic(list/href_list)
-	if(!check_rights(R_PERMISSIONS))
-		message_admins("[key_name_admin(usr)] attempted to edit the admin permissions without sufficient rights.")
-		log_admin("[key_name(usr)] attempted to edit the admin permissions without sufficient rights.")
-		return
-	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Edit blocked: Advanced ProcCall detected.</span>")
-		return
-
-	var/adm_ckey
-	var/task = href_list["editrights"]
-	switch(task)
-		if("add")
-			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
-			if(!new_ckey)
-				return
-			if(new_ckey in GLOB.admin_datums)
-				to_chat(usr, "<font color='red'>Error: Topic 'editrights': [new_ckey] is already an admin</font>")
-				return
-			adm_ckey = new_ckey
-			task = "rank"
-		else
-			adm_ckey = ckey(href_list["ckey"])
-			if(!adm_ckey)
-				to_chat(usr, "<font color='red'>Error: Topic 'editrights': No valid ckey</font>")
-				return
-
-	var/datum/admins/D = GLOB.admin_datums[adm_ckey]
-	if (!D)
-		D = GLOB.deadmins[adm_ckey]
-
-	switch(task)
-		if("remove")
-			if(alert("Are you sure you want to remove [adm_ckey]?","Message","Yes","Cancel") == "Yes")
-				if(!D)
-					return
-				if(!check_if_greater_rights_than_holder(D))
-					message_admins("[key_name_admin(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
-					log_admin("[key_name(usr)] attempted to remove [adm_ckey] from the admins list without sufficient rights.")
-					return
-				GLOB.admin_datums -= adm_ckey
-				GLOB.deadmins -= adm_ckey
-				D.disassociate()
-
-				updateranktodb(adm_ckey, "player")
-				message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
-				log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
-				log_admin_rank_modification(adm_ckey, "Removed")
-
-		if("rank")
-			var/datum/admin_rank/R
-
-			var/list/rank_names = list("*New Rank*")
-			for(R in GLOB.admin_ranks)
-				rank_names[R.name] = R
-
-			var/new_rank = input("Please select a rank", "New rank", null, null) as null|anything in rank_names
-
-			switch(new_rank)
-				if(null)
-					return
-				if("*New Rank*")
-					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
-					if(!new_rank)
-						return
-
-			if(D)
-				if(!check_if_greater_rights_than_holder(D))
-					message_admins("[key_name_admin(usr)] attempted to change the rank of [adm_ckey] to [new_rank] without sufficient rights.")
-					log_admin("[key_name(usr)] attempted to change the rank of [adm_ckey] to [new_rank] without sufficient rights.")
-					return
-
-			R = rank_names[new_rank]
-			if(!R)	//rank with that name doesn't exist yet - make it
-				if(D)
-					R = new(new_rank, D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
-				else
-					R = new(new_rank)							//blank new admin_rank
-				GLOB.admin_ranks += R
-
-			if(D)	//they were previously an admin
-				D.disassociate()	//existing admin needs to be disassociated
-				D.rank = R			//set the admin_rank as our rank
-				D.associate()
-			else
-				D = new(R, adm_ckey, TRUE)	//new admin
-
-			updateranktodb(adm_ckey, new_rank)
-			message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
-			log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
-			log_admin_rank_modification(adm_ckey, new_rank)
-
-		if("permissions")
-			if(!D)
-				return	//they're not an admin!
-
-			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
-			if(!keyword)
-				return
-
-			if(!check_keyword(keyword) || !check_if_greater_rights_than_holder(D))
-				message_admins("[key_name_admin(usr)] attempted to give [adm_ckey] the keyword [keyword] without sufficient rights.")
-				log_admin("[key_name(usr)] attempted to give [adm_ckey] the keyword [keyword] without sufficient rights.")
-				return
-
-			D.disassociate()
-
-			if(!findtext(D.rank.name, "([adm_ckey])"))	//not a modified subrank, need to duplicate the admin_rank datum to prevent modifying others too
-				D.rank = new("[D.rank.name]([adm_ckey])", D.rank.rights, D.rank.adds, D.rank.subs)	//duplicate our previous admin_rank but with a new name
-				//we don't add this clone to the admin_ranks list, as it is unique to that ckey
-			D.rank.process_keyword(keyword)
-
-			var/client/C = GLOB.directory[adm_ckey]	//find the client with the specified ckey (if they are logged in)
-			D.associate(C)						//link up with the client and add verbs
-
-			message_admins("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
-			log_admin("[key_name(usr)] added keyword [keyword] to permission of [adm_ckey]")
-			log_admin_permission_modification(adm_ckey, D.rank.rights)
-		if("activate") //forcefully readmin
-			if(!D || !D.deadmined)
-				return
-
-			D.activate()
-
-			message_admins("[key_name_admin(usr)] forcefully readmined [adm_ckey]")
-			log_admin("[key_name(usr)] forcefully readmined [adm_ckey]")
-		if("deactivate") //forcefully deadmin
-			if(!D || D.deadmined)
-				return
-
-			message_admins("[key_name_admin(usr)] forcefully deadmined [adm_ckey]")
-			log_admin("[key_name(usr)] forcefully deadmined [adm_ckey]")
-
-			D.deactivate() //after logs so the deadmined admin can see the message.
-
-	edit_admin_permissions()
-
-/datum/admins/proc/updateranktodb(ckey,newrank)
-	if(!SSdbcore.Connect())
-		return
-	var/sql_ckey = sanitizeSQL(ckey)
-	var/sql_admin_rank = sanitizeSQL(newrank)
-
-	var/datum/DBQuery/query_admin_rank_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastadminrank = '[sql_admin_rank]' WHERE ckey = '[sql_ckey]'")
-	query_admin_rank_update.Execute()

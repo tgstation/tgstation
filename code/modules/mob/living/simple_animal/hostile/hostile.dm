@@ -4,8 +4,16 @@
 	obj_damage = 40
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
 	var/atom/target
-	var/ranged = 0
-	var/rapid = 0
+	var/ranged = FALSE
+	var/rapid = 0 //How many shots per volley.
+	var/rapid_fire_delay = 2 //Time between rapid fire shots
+
+	var/dodging = FALSE
+	var/approaching_target = FALSE //We should dodge now
+	var/in_melee = FALSE	//We should sidestep now
+	var/dodge_prob = 30
+	var/sidestep_per_cycle = 1 //How many sidesteps per npcpool cycle when in melee
+
 	var/projectiletype	//set ONLY it and NULLIFY casingtype var, if we have ONLY projectile
 	var/projectilesound
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
@@ -14,16 +22,8 @@
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
-//typecache of things this mob will attack in DestroyPathToTarget() if it has environment_smash
-	var/list/environment_target_typecache = list(
-	/obj/machinery/door/window,
-	/obj/structure/window,
-	/obj/structure/closet,
-	/obj/structure/table,
-	/obj/structure/grille,
-	/obj/structure/girder,
-	/obj/structure/rack,
-	/obj/structure/barricade) //turned into a typecache in New()
+	var/rapid_melee = 1			 //Number of melee attacks between each npc pool tick. Spread evenly.
+	var/melee_queue_distance = 4 //If target is close enough start preparing to hit them if we have rapid_melee enabled
 
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
@@ -38,7 +38,6 @@
 	var/robust_searching = 0 //By default, mobs have a simple searching method, set this to 1 for the more scrutinous searching (stat_attack, stat_exclusive, etc), should be disabled on most mobs
 	var/vision_range = 9 //How big of an area to search for targets in, a vision of 9 attempts to find targets as soon as they walk into screen view
 	var/aggro_vision_range = 9 //If a mob is aggro, we search in this radius. Defaults to 9 to keep in line with original simple mob aggro radius
-	var/idle_vision_range = 9 //If a mob is just idling around, it's vision range is limited to this. Defaults to 9 to keep in line with original simple mob aggro radius
 	var/search_objects = 0 //If we want to consider objects when searching around, set this to 1. If you want to search for objects while also ignoring mobs until hurt, set it to 2. To completely ignore mobs, even when attacked, set it to 3
 	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
 	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
@@ -52,13 +51,11 @@
 	var/lose_patience_timer_id //id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timeout = 300 //30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 
-
 /mob/living/simple_animal/hostile/Initialize()
 	. = ..()
 
 	if(!targets_from)
 		targets_from = src
-	environment_target_typecache = typecacheof(environment_target_typecache)
 	wanted_objects = typecacheof(wanted_objects)
 
 
@@ -87,6 +84,34 @@
 			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
 				toggle_ai(AI_IDLE)			// otherwise we go idle
 	return 1
+
+/mob/living/simple_animal/hostile/handle_automated_movement()
+	. = ..()
+	if(dodging && target && in_melee && isturf(loc) && isturf(target.loc))
+		var/datum/cb = CALLBACK(src,.proc/sidestep)
+		if(sidestep_per_cycle > 1) //For more than one just spread them equally - this could changed to some sensible distribution later
+			var/sidestep_delay = SSnpcpool.wait / sidestep_per_cycle
+			for(var/i in 1 to sidestep_per_cycle)
+				addtimer(cb, (i - 1)*sidestep_delay)
+		else //Otherwise randomize it to make the players guessing.
+			addtimer(cb,rand(1,SSnpcpool.wait))
+
+/mob/living/simple_animal/hostile/proc/sidestep()
+	if(!target || !isturf(target.loc) || !isturf(loc) || stat == DEAD)
+		return
+	var/target_dir = get_dir(src,target)
+	
+	var/static/list/cardinal_sidestep_directions = list(-90,-45,0,45,90)
+	var/static/list/diagonal_sidestep_directions = list(-45,0,45)
+	var/chosen_dir = 0
+	if (target_dir & (target_dir - 1))
+		chosen_dir = pick(diagonal_sidestep_directions)
+	else
+		chosen_dir = pick(cardinal_sidestep_directions)
+	if(chosen_dir)
+		chosen_dir = turn(target_dir,chosen_dir)
+		Move(get_step(src,chosen_dir))
+		face_atom(target) //Looks better if they keep looking at you when dodging
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
@@ -201,7 +226,7 @@
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
-			if(P.faction in faction)
+			if(P.in_faction(src)) //Don't attack if the turret is in the same faction
 				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
 				return FALSE
@@ -228,7 +253,23 @@
 		Aggro()
 		return 1
 
-/mob/living/simple_animal/hostile/proc/MoveToTarget(var/list/possible_targets)//Step 5, handle movement between us and our target
+//What we do after closing in
+/mob/living/simple_animal/hostile/proc/MeleeAction(patience = TRUE)
+	if(rapid_melee > 1)
+		var/datum/callback/cb = CALLBACK(src, .proc/CheckAndAttack)
+		var/delay = SSnpcpool.wait / rapid_melee
+		for(var/i in 1 to rapid_melee)
+			addtimer(cb, (i - 1)*delay)
+	else
+		AttackingTarget()
+	if(patience)
+		GainPatience()
+
+/mob/living/simple_animal/hostile/proc/CheckAndAttack()
+	if(target && targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from) && !incapacitated())
+		AttackingTarget()
+
+/mob/living/simple_animal/hostile/proc/MoveToTarget(list/possible_targets)//Step 5, handle movement between us and our target
 	stop_automated_movement = 1
 	if(!target || !CanAttack(target))
 		LoseTarget()
@@ -254,8 +295,11 @@
 			Goto(target,move_to_delay,minimum_distance)
 		if(target)
 			if(targets_from && isturf(targets_from.loc) && target.Adjacent(targets_from)) //If they're next to us, attack
-				AttackingTarget()
-				GainPatience()
+				MeleeAction()
+			else 
+				if(rapid_melee > 1 && target_distance <= melee_queue_distance)
+					MeleeAction(FALSE)
+				in_melee = FALSE //If we're just preparing to strike do not enter sidestep mode
 			return 1
 		return 0
 	if(environment_smash)
@@ -273,6 +317,10 @@
 	return 0
 
 /mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
+	if(target == src.target)
+		approaching_target = TRUE
+	else
+		approaching_target = FALSE
 	walk_to(src, target, minimum_distance, delay)
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
@@ -289,6 +337,7 @@
 
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget()
+	in_melee = TRUE
 	return target.attack_animal(src)
 
 /mob/living/simple_animal/hostile/proc/Aggro()
@@ -300,11 +349,13 @@
 
 /mob/living/simple_animal/hostile/proc/LoseAggro()
 	stop_automated_movement = 0
-	vision_range = idle_vision_range
+	vision_range = initial(vision_range)
 	taunt_chance = initial(taunt_chance)
 
 /mob/living/simple_animal/hostile/proc/LoseTarget()
 	target = null
+	approaching_target = FALSE
+	in_melee = FALSE
 	walk(src, 0)
 	LoseAggro()
 
@@ -324,21 +375,25 @@
 			else
 				M.Goto(src,M.move_to_delay,M.minimum_distance)
 
-/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+/mob/living/simple_animal/hostile/proc/CheckFriendlyFire(atom/A)
 	if(check_friendly_fire)
 		for(var/turf/T in getline(src,A)) // Not 100% reliable but this is faster than simulating actual trajectory
 			for(var/mob/living/L in T)
 				if(L == src || L == A)
 					continue
 				if(faction_check_mob(L) && !attack_same)
-					return
+					return TRUE
+
+/mob/living/simple_animal/hostile/proc/OpenFire(atom/A)
+	if(CheckFriendlyFire(A))
+		return
 	visible_message("<span class='danger'><b>[src]</b> [ranged_message] at [A]!</span>")
 
-	if(rapid)
+
+	if(rapid > 1)
 		var/datum/callback/cb = CALLBACK(src, .proc/Shoot, A)
-		addtimer(cb, 1)
-		addtimer(cb, 4)
-		addtimer(cb, 6)
+		for(var/i in 1 to rapid)
+			addtimer(cb, (i - 1)*rapid_fire_delay)
 	else
 		Shoot(A)
 	ranged_cooldown = world.time + ranged_cooldown_time
@@ -371,15 +426,30 @@
 	return iswallturf(T) || ismineralturf(T)
 
 
+/mob/living/simple_animal/hostile/Move(atom/newloc, dir , step_x , step_y)
+	if(dodging && approaching_target && prob(dodge_prob) && moving_diagonally == 0 && isturf(loc) && isturf(newloc))
+		return dodge(newloc,dir)
+	else
+		return ..()
+
+/mob/living/simple_animal/hostile/proc/dodge(moving_to,move_direction)
+	//Assuming we move towards the target we want to swerve toward them to get closer
+	var/cdir = turn(move_direction,45)
+	var/ccdir = turn(move_direction,-45)
+	dodging = FALSE
+	. = Move(get_step(loc,pick(cdir,ccdir)))
+	if(!.)//Can't dodge there so we just carry on
+		. =  Move(moving_to,move_direction)
+	dodging = TRUE
+
 /mob/living/simple_animal/hostile/proc/DestroyObjectsInDirection(direction)
 	var/turf/T = get_step(targets_from, direction)
-	if(T.Adjacent(targets_from))
+	if(T && T.Adjacent(targets_from))
 		if(CanSmashTurfs(T))
 			T.attack_animal(src)
-		for(var/a in T)
-			var/atom/A = a
-			if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
-				A.attack_animal(src)
+		for(var/obj/O in T)
+			if(O.density && environment_smash >= ENVIRONMENT_SMASH_STRUCTURES && !O.IsObscured())
+				O.attack_animal(src)
 				return
 
 

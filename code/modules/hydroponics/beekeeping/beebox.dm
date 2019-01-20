@@ -18,8 +18,11 @@
 /mob/living/carbon/human/bee_friendly()
 	if(dna && dna.species && dna.species.id == "pod") //bees pollinate plants, duh.
 		return 1
-	if((wear_suit && (wear_suit.flags_1 & THICKMATERIAL_1)) && (head && (head.flags_1 & THICKMATERIAL_1)))
-		return 1
+	if (wear_suit && head && istype(wear_suit, /obj/item/clothing) && istype(head, /obj/item/clothing))
+		var/obj/item/clothing/CS = wear_suit
+		var/obj/item/clothing/CH = head
+		if (CS.clothing_flags & CH.clothing_flags & THICKMATERIAL)
+			return 1
 	return 0
 
 
@@ -153,7 +156,7 @@
 			to_chat(user, "<span class='warning'>There's no room for any more frames in the apiary!</span>")
 		return
 
-	if(istype(I, /obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		if(default_unfasten_wrench(user, I, time = 20))
 			return
 
@@ -192,8 +195,8 @@
 
 	..()
 
-
-/obj/structure/beebox/attack_hand(mob/user)
+/obj/structure/beebox/interact(mob/user)
+	. = ..()
 	if(!user.bee_friendly())
 		//Time to get stung!
 		var/bees = FALSE
@@ -260,3 +263,6 @@
 		if(HF.loc == src)
 			HF.forceMove(drop_location())
 	qdel(src)
+
+/obj/structure/beebox/unwrenched
+		anchored = FALSE

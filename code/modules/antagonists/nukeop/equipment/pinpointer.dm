@@ -52,7 +52,7 @@
 /obj/item/pinpointer/nuke/proc/switch_mode_to(new_mode)
 	if(isliving(loc))
 		var/mob/living/L = loc
-		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures its tracking algorithms.</span>")
+		to_chat(L, "<span class='userdanger'>Your [name] beeps as it reconfigures it's tracking algorithms.</span>")
 		playsound(L, 'sound/machines/triple_beep.ogg', 50, 1)
 	mode = new_mode
 	scan_for_target()
@@ -65,7 +65,16 @@
 /obj/item/pinpointer/syndicate_cyborg // Cyborg pinpointers just look for a random operative.
 	name = "cyborg syndicate pinpointer"
 	desc = "An integrated tracking device, jury-rigged to search for living Syndicate operatives."
-	flags_1 = NODROP_1
+	flags_1 = NONE
+
+/obj/item/pinpointer/syndicate_cyborg/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+/obj/item/pinpointer/syndicate_cyborg/cyborg_unequip(mob/user)
+	if(!active)
+		return
+	toggle_on()
 
 /obj/item/pinpointer/syndicate_cyborg/scan_for_target()
 	target = null
@@ -79,4 +88,3 @@
 	if(closest_operative)
 		target = closest_operative
 	..()
-

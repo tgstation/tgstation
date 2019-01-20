@@ -10,12 +10,13 @@
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	resistance_flags = FLAMMABLE
 	max_integrity = 40
 	var/active = 0
 	var/det_time = 50
 	var/display_timer = 1
+	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -32,8 +33,14 @@
 		qdel(src)
 
 /obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
-	if(user.has_trait(TRAIT_CLUMSY) && prob(50))
-		to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
+	var/clumsy = user.has_trait(TRAIT_CLUMSY)
+	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
+		if(prob(50))
+			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
+			preprime(user, 5, FALSE)
+			return FALSE
+	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
+		to_chat(user, "<span class='warning'>You pull the pin on [src]. Attached to it is a pink ribbon that says, \"<span class='clown'>HONK</span>\"</span>")
 		preprime(user, 5, FALSE)
 		return FALSE
 	return TRUE
@@ -43,7 +50,7 @@
 	..()
 	if(display_timer)
 		if(det_time > 1)
-			to_chat(user, "The timer is set to [det_time/10] second\s.")
+			to_chat(user, "The timer is set to [DisplayTimeText(det_time)].")
 		else
 			to_chat(user, "\The [src] is set for instant detonation.")
 
@@ -54,10 +61,7 @@
 			preprime(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
-	var/message = "[ADMIN_LOOKUPFLW(user)]) has primed \a [src] for detonation at [ADMIN_COORDJMP(T)]"
-	GLOB.bombers += message
-	message_admins(message)
-	log_game("[key_name(user)] has primed \a [src] for detonation at [get_area_name(T, TRUE)] [COORD(T)].")
+	log_bomber(user, "has primed a", src, "for detonation")
 
 /obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
@@ -68,7 +72,7 @@
 			var/mob/living/carbon/C = user
 			C.throw_mode_on()
 		if(msg)
-			to_chat(user, "<span class='warning'>You prime \the [src]! [det_time/10] seconds!</span>")
+			to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
 	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
@@ -83,27 +87,23 @@
 
 
 /obj/item/grenade/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		switch(det_time)
-			if ("1")
+			if (1)
 				det_time = 10
 				to_chat(user, "<span class='notice'>You set the [name] for 1 second detonation time.</span>")
-			if ("10")
+			if (10)
 				det_time = 30
 				to_chat(user, "<span class='notice'>You set the [name] for 3 second detonation time.</span>")
-			if ("30")
+			if (30)
 				det_time = 50
 				to_chat(user, "<span class='notice'>You set the [name] for 5 second detonation time.</span>")
-			if ("50")
+			if (50)
 				det_time = 1
 				to_chat(user, "<span class='notice'>You set the [name] for instant detonation.</span>")
 		add_fingerprint(user)
 	else
 		return ..()
-
-/obj/item/grenade/attack_hand()
-	walk(src, null, null)
-	..()
 
 /obj/item/grenade/attack_paw(mob/user)
 	return attack_hand(user)

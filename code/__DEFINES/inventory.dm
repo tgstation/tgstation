@@ -14,125 +14,110 @@
 #define STORAGE_VIEW_DEPTH	2
 
 //ITEM INVENTORY SLOT BITMASKS
-#define SLOT_OCLOTHING	1
-#define SLOT_ICLOTHING	2
-#define SLOT_GLOVES		4
-#define SLOT_EYES		8
-#define SLOT_EARS		16
-#define SLOT_MASK		32
-#define SLOT_HEAD		64
-#define SLOT_FEET		128
-#define SLOT_ID			256
-#define SLOT_BELT		512
-#define SLOT_BACK		1024
-#define SLOT_POCKET		2048 // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
-#define SLOT_DENYPOCKET	4096 // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
-#define SLOT_NECK		8192
+#define ITEM_SLOT_OCLOTHING		(1<<0)
+#define ITEM_SLOT_ICLOTHING		(1<<1)
+#define ITEM_SLOT_GLOVES		(1<<2)
+#define ITEM_SLOT_EYES			(1<<3)
+#define ITEM_SLOT_EARS			(1<<4)
+#define ITEM_SLOT_MASK			(1<<5)
+#define ITEM_SLOT_HEAD			(1<<6)
+#define ITEM_SLOT_FEET			(1<<7)
+#define ITEM_SLOT_ID			(1<<8)
+#define ITEM_SLOT_BELT			(1<<9)
+#define ITEM_SLOT_BACK			(1<<10)
+#define ITEM_SLOT_POCKET		(1<<11) // this is to allow items with a w_class of WEIGHT_CLASS_NORMAL or WEIGHT_CLASS_BULKY to fit in pockets.
+#define ITEM_SLOT_DENYPOCKET	(1<<12) // this is to deny items with a w_class of WEIGHT_CLASS_SMALL or WEIGHT_CLASS_TINY to fit in pockets.
+#define ITEM_SLOT_NECK			(1<<13)
 
 //SLOTS
-#define slot_back			1
-#define slot_wear_mask		2
-#define slot_handcuffed		3
-#define slot_hands			4 //wherever you provide a slot for hands you provide slot_hands
-								//slot_hands as a slot will pick ANY available hand
-#define slot_belt			5
-#define slot_wear_id		6
-#define slot_ears			7
-#define slot_glasses		8
-#define slot_gloves			9
-#define slot_neck			10
-#define slot_head			11
-#define slot_shoes			12
-#define slot_wear_suit		13
-#define slot_w_uniform		14
-#define slot_l_store		15
-#define slot_r_store		16
-#define slot_s_store		17
-#define slot_in_backpack	18
-#define slot_legcuffed		19
-#define slot_generic_dextrous_storage	20
+#define SLOT_BACK			1
+#define SLOT_WEAR_MASK		2
+#define SLOT_HANDCUFFED		3
+#define SLOT_HANDS			4 //wherever you provide a slot for hands you provide SLOT_HANDS
+								//SLOT_HANDS as a slot will pick ANY available hand
+#define SLOT_BELT			5
+#define SLOT_WEAR_ID		6
+#define SLOT_EARS			7
+#define SLOT_GLASSES		8
+#define SLOT_GLOVES			9
+#define SLOT_NECK			10
+#define SLOT_HEAD			11
+#define SLOT_SHOES			12
+#define SLOT_WEAR_SUIT		13
+#define SLOT_W_UNIFORM		14
+#define SLOT_L_STORE		15
+#define SLOT_R_STORE		16
+#define SLOT_S_STORE		17
+#define SLOT_IN_BACKPACK	18
+#define SLOT_LEGCUFFED		19
+#define SLOT_GENERC_DEXTROUS_STORAGE	20
 
-#define slots_amt			20 // Keep this up to date!
+#define SLOTS_AMT			20 // Keep this up to date!
 
 //I hate that this has to exist
 /proc/slotdefine2slotbit(slotdefine) //Keep this up to date with the value of SLOT BITMASKS and SLOTS (the two define sections above)
 	. = 0
 	switch(slotdefine)
-		if(slot_back)
-			. = SLOT_BACK
-		if(slot_wear_mask)
-			. = SLOT_MASK
-		if(slot_neck)
-			. = SLOT_NECK
-		if(slot_belt)
-			. = SLOT_BELT
-		if(slot_wear_id)
-			. = SLOT_ID
-		if(slot_ears)
-			. = SLOT_EARS
-		if(slot_glasses)
-			. = SLOT_EYES
-		if(slot_gloves)
-			. = SLOT_GLOVES
-		if(slot_head)
-			. = SLOT_HEAD
-		if(slot_shoes)
-			. = SLOT_FEET
-		if(slot_wear_suit)
-			. = SLOT_OCLOTHING
-		if(slot_w_uniform)
-			. = SLOT_ICLOTHING
-		if(slot_l_store, slot_r_store)
-			. = SLOT_POCKET
+		if(SLOT_BACK)
+			. = ITEM_SLOT_BACK
+		if(SLOT_WEAR_MASK)
+			. = ITEM_SLOT_MASK
+		if(SLOT_NECK)
+			. = ITEM_SLOT_NECK
+		if(SLOT_BELT)
+			. = ITEM_SLOT_BELT
+		if(SLOT_WEAR_ID)
+			. = ITEM_SLOT_ID
+		if(SLOT_EARS)
+			. = ITEM_SLOT_EARS
+		if(SLOT_GLASSES)
+			. = ITEM_SLOT_EYES
+		if(SLOT_GLOVES)
+			. = ITEM_SLOT_GLOVES
+		if(SLOT_HEAD)
+			. = ITEM_SLOT_HEAD
+		if(SLOT_SHOES)
+			. = ITEM_SLOT_FEET
+		if(SLOT_WEAR_SUIT)
+			. = ITEM_SLOT_OCLOTHING
+		if(SLOT_W_UNIFORM)
+			. = ITEM_SLOT_ICLOTHING
+		if(SLOT_L_STORE, SLOT_R_STORE)
+			. = ITEM_SLOT_POCKET
 
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
-#define HIDEGLOVES		1
-#define HIDESUITSTORAGE	2
-#define HIDEJUMPSUIT	4	//these first four are only used in exterior suits
-#define HIDESHOES		8
-#define HIDEMASK		16	//these last six are only used in masks and headgear.
-#define HIDEEARS		32	// (ears means headsets and such)
-#define HIDEEYES		64	// Whether eyes and glasses are hidden
-#define HIDEFACE		128	// Whether we appear as unknown.
-#define HIDEHAIR		256
-#define HIDEFACIALHAIR	512
-#define HIDENECK		1024
+//Make sure to update check_obscured_slots() if you add more.
+#define HIDEGLOVES		(1<<0)
+#define HIDESUITSTORAGE	(1<<1)
+#define HIDEJUMPSUIT	(1<<2)	//these first four are only used in exterior suits
+#define HIDESHOES		(1<<3)
+#define HIDEMASK		(1<<4)	//these last six are only used in masks and headgear.
+#define HIDEEARS		(1<<5)	// (ears means headsets and such)
+#define HIDEEYES		(1<<6)	// Whether eyes and glasses are hidden
+#define HIDEFACE		(1<<7)	// Whether we appear as unknown.
+#define HIDEHAIR		(1<<8)
+#define HIDEFACIALHAIR	(1<<9)
+#define HIDENECK		(1<<10)
 
 //bitflags for clothing coverage - also used for limbs
-#define HEAD		1
-#define CHEST		2
-#define GROIN		4
-#define LEG_LEFT	8
-#define LEG_RIGHT	16
-#define LEGS		24
-#define FOOT_LEFT	32
-#define FOOT_RIGHT	64
-#define FEET		96
-#define ARM_LEFT	128
-#define ARM_RIGHT	256
-#define ARMS		384
-#define HAND_LEFT	512
-#define HAND_RIGHT	1024
-#define HANDS		1536
-#define NECK		2048
-#define FULL_BODY	4095
-
-// bitflags for the percentual amount of protection a piece of clothing which covers the body part offers.
-// Used with human/proc/get_heat_protection() and human/proc/get_cold_protection()
-// The values here should add up to 1.
-// Hands and feet have 2.5%, arms and legs 7.5%, each of the torso parts has 15% and the head has 30%
-#define THERMAL_PROTECTION_HEAD			0.3
-#define THERMAL_PROTECTION_CHEST		0.15
-#define THERMAL_PROTECTION_GROIN		0.15
-#define THERMAL_PROTECTION_LEG_LEFT		0.075
-#define THERMAL_PROTECTION_LEG_RIGHT	0.075
-#define THERMAL_PROTECTION_FOOT_LEFT	0.025
-#define THERMAL_PROTECTION_FOOT_RIGHT	0.025
-#define THERMAL_PROTECTION_ARM_LEFT		0.075
-#define THERMAL_PROTECTION_ARM_RIGHT	0.075
-#define THERMAL_PROTECTION_HAND_LEFT	0.025
-#define THERMAL_PROTECTION_HAND_RIGHT	0.025
+#define HEAD		(1<<0)
+#define CHEST		(1<<1)
+#define GROIN		(1<<2)
+#define LEG_LEFT	(1<<3)
+#define LEG_RIGHT	(1<<4)
+#define LEGS		(LEG_LEFT | LEG_RIGHT)
+#define FOOT_LEFT	(1<<5)
+#define FOOT_RIGHT	(1<<6)
+#define FEET		(FOOT_LEFT | FOOT_RIGHT)
+#define ARM_LEFT	(1<<7)
+#define ARM_RIGHT	(1<<8)
+#define ARMS		(ARM_LEFT | ARM_RIGHT)
+#define HAND_LEFT	(1<<9)
+#define HAND_RIGHT	(1<<10)
+#define HANDS		(HAND_LEFT | HAND_RIGHT)
+#define NECK		(1<<11)
+#define FULL_BODY	(~0)
 
 //flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
@@ -153,11 +138,11 @@
 #define SQUISHED_DIGITIGRADE		2
 
 //flags for covering body parts
-#define GLASSESCOVERSEYES	1
-#define MASKCOVERSEYES		2		// get rid of some of the other retardation in these flags
-#define HEADCOVERSEYES		4		// feel free to realloc these numbers for other purposes
-#define MASKCOVERSMOUTH		8		// on other items, these are just for mask/head
-#define HEADCOVERSMOUTH		16
+#define GLASSESCOVERSEYES	(1<<0)
+#define MASKCOVERSEYES		(1<<1)		// get rid of some of the other retardation in these flags
+#define HEADCOVERSEYES		(1<<2)		// feel free to realloc these numbers for other purposes
+#define MASKCOVERSMOUTH		(1<<3)		// on other items, these are just for mask/head
+#define HEADCOVERSMOUTH		(1<<4)
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
@@ -167,7 +152,7 @@
 GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/gun,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -177,7 +162,7 @@ GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/melee/baton,
@@ -188,9 +173,9 @@ GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/detective_scanner,
-	/obj/item/device/flashlight,
-	/obj/item/device/taperecorder,
+	/obj/item/detective_scanner,
+	/obj/item/flashlight,
+	/obj/item/taperecorder,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/lighter,
@@ -205,7 +190,7 @@ GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
 	/obj/item/kitchen/knife/combat,
@@ -219,7 +204,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
-	/obj/item/device/flashlight,
+	/obj/item/flashlight,
 	/obj/item/storage/fancy/cigarettes,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,

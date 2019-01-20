@@ -27,7 +27,7 @@
 
 /obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
 	. = ..()
-	eatverb = pick("bite","chew","choke down","gnaw","swallow","chomp")
+	eatverb = pick("bite","chew","gnaw","swallow","chomp")
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
 	name = "imitation carp fillet"
@@ -64,6 +64,12 @@
 	filling_color = "#F0E68C"
 	tastes = list("tofu" = 1)
 	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/tofu/prison
+	name = "soggy tofu"
+	desc = "You refuse to eat this strange bean curd."
+	tastes = list("sour, rotten water" = 1)
+	foodtype = GROSS
 
 /obj/item/reagent_containers/food/snacks/spiderleg
 	name = "spider leg"
@@ -113,6 +119,7 @@
 	list_reagents = list("nutriment" = 6, "vitamin" = 1)
 	tastes = list("meat" = 1)
 	foodtype = MEAT
+	var/roasted = FALSE
 
 /obj/item/reagent_containers/food/snacks/sausage/Initialize()
 	. = ..()
@@ -182,13 +189,31 @@
 	filling_color = "#CD853F"
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtype = MEAT | SUGAR
+	var/faction
+	var/spawned_mob = /mob/living/carbon/monkey
 
 /obj/item/reagent_containers/food/snacks/monkeycube/proc/Expand()
-	visible_message("<span class='notice'>[src] expands!</span>")
 	var/mob/spammer = get_mob_by_key(fingerprintslast)
-	var/mob/living/carbon/monkey/bananas = new(drop_location())
-	bananas.log_message("Spawned via [src] at [COORD(src)], Last attached mob: [key_name(spammer)].", INDIVIDUAL_ATTACK_LOG) 
+	var/mob/living/bananas = new spawned_mob(drop_location(), TRUE, spammer)
+	if(faction)
+		bananas.faction = faction
+	if (!QDELETED(bananas))
+		visible_message("<span class='notice'>[src] expands!</span>")
+		bananas.log_message("Spawned via [src] at [AREACOORD(src)], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
+	else if (!spammer) // Visible message in case there are no fingerprints
+		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/monkeycube/syndicate
+	faction = list("neutral", ROLE_SYNDICATE)
+
+/obj/item/reagent_containers/food/snacks/monkeycube/gorilla
+	name = "gorilla cube"
+	desc = "A Waffle Co. brand gorilla cube. Now with extra molecules!"
+	bitesize = 20
+	list_reagents = list("nutriment" = 15)
+	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
+	spawned_mob = /mob/living/simple_animal/hostile/gorilla
 
 /obj/item/reagent_containers/food/snacks/enchiladas
 	name = "enchiladas"
@@ -214,7 +239,7 @@
 
 /obj/item/reagent_containers/food/snacks/stewedsoymeat/Initialize()
 	. = ..()
-	eatverb = pick("slurp","sip","suck","inhale","drink")
+	eatverb = pick("slurp","sip","inhale","drink")
 
 /obj/item/reagent_containers/food/snacks/boiledspiderleg
 	name = "boiled spider leg"

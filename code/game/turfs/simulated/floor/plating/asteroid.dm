@@ -1,20 +1,24 @@
 
-
-
 /**********************Asteroid**************************/
 
 /turf/open/floor/plating/asteroid //floor piece
+	gender = PLURAL
 	name = "asteroid sand"
 	baseturfs = /turf/open/floor/plating/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
 	icon_plating = "asteroid"
 	postdig_icon_change = TRUE
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
-	archdrops = list(/obj/item/stack/ore/glass = 5)
 	attachment_holes = FALSE
+	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
+	var/dug
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -23,48 +27,57 @@
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
 
-	if(LAZYLEN(archdrops))
-		AddComponent(/datum/component/archaeology, 100, archdrops)
+/turf/open/floor/plating/asteroid/proc/getDug()
+	new digResult(src, 5)
+	if(postdig_icon_change)
+		if(!postdig_icon)
+			icon_plating = "[environment_type]_dug"
+			icon_state = "[environment_type]_dug"
+	dug = TRUE
+
+/turf/open/floor/plating/asteroid/proc/can_dig(mob/user)
+	if(!dug)
+		return TRUE
+	if(user)
+		to_chat(user, "<span class='notice'>Looks like someone has dug here already.</span>")
+
+/turf/open/floor/plating/asteroid/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+	return
 
 /turf/open/floor/plating/asteroid/burn_tile()
 	return
 
-/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+/turf/open/floor/plating/asteroid/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
 
-/turf/open/floor/plating/asteroid/MakeDry(wet_setting = TURF_WET_WATER)
+/turf/open/floor/plating/asteroid/MakeDry()
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
-	if(..())
-		return TRUE
-	if(istype(W, /obj/item/storage/bag/ore))
-		var/obj/item/storage/bag/ore/S = W
-		if(S.collection_mode == 1)
-			for(var/obj/item/stack/ore/O in contents)
-				O.attackby(W,user)
+	. = ..()
+	if(!.)
+		if(W.tool_behaviour == TOOL_SHOVEL || W.tool_behaviour == TOOL_MINING)
+			if(!can_dig(user))
+				return TRUE
+
+			if(!isturf(user.loc))
 				return
 
-	if(istype(W, /obj/item/stack/tile))
-		var/obj/item/stack/tile/Z = W
-		if(!Z.use(1))
-			return
-		var/turf/open/floor/T = ChangeTurf(Z.turf_type)
-		if(istype(Z, /obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
-			var/obj/item/stack/tile/light/L = Z
-			var/turf/open/floor/light/F = T
-			F.state = L.state
-		playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
-		return
+			to_chat(user, "<span class='notice'>You start digging...</span>")
 
-
-/turf/open/floor/plating/asteroid/singularity_act()
-	if(is_planet_level(z))
-		return ..()
-	ScrapeAway()
+			if(W.use_tool(src, user, 40, volume=50))
+				if(!can_dig(user))
+					return TRUE
+				to_chat(user, "<span class='notice'>You dig a hole.</span>")
+				getDug()
+				SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+				return TRUE
+		else if(istype(W, /obj/item/storage/bag/ore))
+			for(var/obj/item/stack/ore/O in src)
+				SEND_SIGNAL(W, COMSIG_PARENT_ATTACKBY, O)
 
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
-	. = SendSignal(COMSIG_ATOM_EX_ACT, severity, target)
+	. = SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 	contents_explosion(severity, target)
 
 /turf/open/floor/plating/lavaland_baseturf
@@ -77,21 +90,22 @@
 	icon_state = "basalt"
 	icon_plating = "basalt"
 	environment_type = "basalt"
-	archdrops = list(/obj/item/stack/ore/glass/basalt = 5)
 	floor_variance = 15
+	digResult = /obj/item/stack/ore/glass/basalt
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
 	set_basalt_light(src)
-	GET_COMPONENT(arch, /datum/component/archaeology)
-	ASSERT(isnull(arch.callback))
-	arch.callback = CALLBACK(src, /atom/proc/set_light, 0)
+
+/turf/open/floor/plating/asteroid/getDug()
+	set_light(0)
+	return ..()
 
 /proc/set_basalt_light(turf/open/floor/B)
 	switch(B.icon_state)
@@ -111,7 +125,8 @@
 
 
 /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
+	baseturfs = /turf/open/floor/plating/asteroid/airless
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
 
@@ -135,9 +150,9 @@
 	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, \
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 2, \
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /obj/structure/spawner/lavaland/goliath = 3, \
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /obj/structure/spawner/lavaland = 2, \
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /obj/structure/spawner/lavaland/legion = 3, \
 		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
@@ -155,10 +170,9 @@
 	if (!flora_spawn_list)
 		flora_spawn_list = list(/obj/structure/flora/ash/leaf_shroom = 2 , /obj/structure/flora/ash/cap_shroom = 2 , /obj/structure/flora/ash/stem_shroom = 2 , /obj/structure/flora/ash/cacti = 1, /obj/structure/flora/ash/tall_shroom = 2)
 
+	. = ..()
 	if(!has_data)
 		produce_tunnel_from_data()
-	else
-		..()	//do not continue after changeturfing or we will do a double initialize
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
 	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.
@@ -208,6 +222,9 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
+				if(istype(tunnel.loc, /area/mine/explored) || (istype(tunnel.loc, /area/lavaland/surface/outdoors) && !istype(tunnel.loc, /area/lavaland/surface/outdoors/unexplored)))
+					sanity = 0
+					break
 				var/turf/open/floor/plating/asteroid/airless/cave/C = tunnel.ChangeTurf(data_having_type, null, CHANGETURF_IGNORE_AIR)
 				C.going_backwards = FALSE
 				C.produce_tunnel_from_data(rand(10, 15), dir)
@@ -226,7 +243,7 @@
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	for(var/S in RANGE_TURFS(1, src))
 		var/turf/NT = S
-		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || istype(NT.loc, /area/lavaland/surface/outdoors/explored))
+		if(!NT || isspaceturf(NT) || istype(NT.loc, /area/mine/explored) || (istype(NT.loc, /area/lavaland/surface/outdoors) && !istype(NT.loc, /area/lavaland/surface/outdoors/unexplored)))
 			sanity = 0
 			break
 	if(!sanity)
@@ -256,7 +273,7 @@
 				return //if there's a megafauna within standard view don't spawn anything at all
 			if(ispath(randumb, /mob/living/simple_animal/hostile/asteroid) || istype(H, /mob/living/simple_animal/hostile/asteroid))
 				return //if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			if((ispath(randumb, /mob/living/simple_animal/hostile/spawner/lavaland) || istype(H, /mob/living/simple_animal/hostile/spawner/lavaland)) && get_dist(src, H) <= 2)
+			if((ispath(randumb, /obj/structure/spawner/lavaland) || istype(H, /obj/structure/spawner/lavaland)) && get_dist(src, H) <= 2)
 				return //prevents tendrils spawning in each other's collapse range
 
 		new randumb(T)
@@ -278,19 +295,22 @@
 
 
 /turf/open/floor/plating/asteroid/snow
+	gender = PLURAL
 	name = "snow"
 	desc = "Looks cold."
 	icon = 'icons/turf/snow.dmi'
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE
-	archdrops = list(/obj/item/stack/sheet/mineral/snow = 5)
 	burnt_states = list("snow_dug")
+	bullet_sizzle = TRUE
+	bullet_bounce_sound = null
+	digResult = /obj/item/stack/sheet/mineral/snow
 
 /turf/open/floor/plating/asteroid/snow/burn_tile()
 	if(!burnt)
@@ -302,7 +322,7 @@
 	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/ice
-	name = "icey snow"
+	name = "icy snow"
 	desc = "Looks colder."
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
@@ -310,16 +330,20 @@
 	icon_state = "snow-ice"
 	icon_plating = "snow-ice"
 	environment_type = "snow_cavern"
+	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/asteroid/snow/ice/burn_tile()
 	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plating/asteroid/snow/temperatre
 	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
 
 /turf/open/floor/plating/asteroid/snow/atmosphere
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = FALSE

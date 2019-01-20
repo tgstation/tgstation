@@ -6,29 +6,34 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_NORMAL
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
-	storage_slots = 4
 	req_access = list(ACCESS_ARMORY)
-	var/locked = TRUE
 	var/broken = FALSE
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
 
+/obj/item/storage/lockbox/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 14
+	STR.max_items = 4
+	STR.locked = TRUE
 
 /obj/item/storage/lockbox/attackby(obj/item/W, mob/user, params)
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(W.GetID())
 		if(broken)
 			to_chat(user, "<span class='danger'>It appears to be broken.</span>")
 			return
 		if(allowed(user))
-			locked = !locked
+			SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, !locked)
+			locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 			if(locked)
 				icon_state = icon_locked
 				to_chat(user, "<span class='danger'>You lock the [src.name]!</span>")
-				close_all()
+				SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
 				return
 			else
 				icon_state = icon_closed
@@ -42,51 +47,25 @@
 	else
 		to_chat(user, "<span class='danger'>It's locked!</span>")
 
-/obj/item/storage/lockbox/MouseDrop(over_object, src_location, over_location)
-	if (locked)
-		src.add_fingerprint(usr)
-		to_chat(usr, "<span class='warning'>It's locked!</span>")
-		return 0
-	..()
-
 /obj/item/storage/lockbox/emag_act(mob/user)
 	if(!broken)
 		broken = TRUE
-		locked = FALSE
+		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
 			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return
 
-/obj/item/storage/lockbox/show_to(mob/user)
-	if(locked)
-		to_chat(user, "<span class='warning'>It's locked!</span>")
-	else
-		..()
-	return
-
-//Check the destination item type for contentto.
-/obj/item/storage/lockbox/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
-	if(locked)
-		to_chat(user, "<span class='warning'>It's locked!</span>")
-		return null
-	open = TRUE
-	return ..()
-
-/obj/item/storage/lockbox/can_be_inserted(obj/item/W, stop_messages = 0)
-	if(locked)
-		return 0
-	return ..()
-
-/obj/item/storage/lockbox/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
+/obj/item/storage/lockbox/Entered()
+	. = ..()
 	open = TRUE
 	update_icon()
-	return ..()
-/obj/item/storage/lockbox/remove_from_storage(obj/item/W, atom/new_location, burn = 0)
+
+/obj/item/storage/lockbox/Exited()
+	. = ..()
 	open = TRUE
 	update_icon()
-	return ..()
 
 /obj/item/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
@@ -96,7 +75,6 @@
 	for(var/i in 1 to 3)
 		new /obj/item/implantcase/mindshield(src)
 	new /obj/item/implanter/mindshield(src)
-
 
 /obj/item/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"
@@ -114,23 +92,28 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
-	max_w_class = WEIGHT_CLASS_SMALL
-	storage_slots = 10
-	max_combined_w_class = 20
 	req_access = list(ACCESS_CAPTAIN)
 	icon_locked = "medalbox+l"
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
-	can_hold = list(/obj/item/clothing/accessory/medal)
+
+/obj/item/storage/lockbox/medal/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.max_items = 10
+	STR.max_combined_w_class = 20
+	STR.can_hold = typecacheof(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	..()
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(!locked)
 		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
-		if(!locked)
+		if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
 			open = (open ? FALSE : TRUE)
 			update_icon()
 		..()
@@ -148,6 +131,7 @@
 
 /obj/item/storage/lockbox/medal/update_icon()
 	cut_overlays()
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
 		icon_state = "medalbox+l"
 		open = FALSE

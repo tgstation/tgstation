@@ -9,6 +9,8 @@
 	idle_power_usage = 100
 	active_power_usage = 1000
 
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT | INTERACT_ATOM_REQUIRES_ANCHORED
+
 	var/list/obj/machinery/am_shielding/linked_shielding
 	var/list/obj/machinery/am_shielding/linked_cores
 	var/obj/item/am_containment/fueljar
@@ -98,6 +100,9 @@
 
 
 /obj/machinery/power/am_control_unit/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	switch(severity)
 		if(1)
 			if(active)
@@ -107,9 +112,6 @@
 			if(active)
 				toggle_power()
 			stability -= rand(10,20)
-	..()
-	return 0
-
 
 /obj/machinery/power/am_control_unit/blob_act()
 	stability -= 20
@@ -157,7 +159,7 @@
 
 
 /obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		if(!anchored)
 			W.play_tool_sound(src, 75)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
@@ -206,10 +208,6 @@
 	if(damage >= 20)
 		stability -= damage/2
 		check_stability()
-
-/obj/machinery/power/am_control_unit/attack_hand(mob/user)
-	if(anchored)
-		interact(user)
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS))
@@ -283,13 +281,13 @@
 /obj/machinery/power/am_control_unit/proc/reset_stored_core_stability_delay()
 	stored_core_stability_delay = 0
 
-/obj/machinery/power/am_control_unit/interact(mob/user)
+/obj/machinery/power/am_control_unit/ui_interact(mob/user)
+	. = ..()
 	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
 		if(!isAI(user))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return
-	user.set_machine(src)
 
 	var/dat = ""
 	dat += "AntiMatter Control Panel<BR>"

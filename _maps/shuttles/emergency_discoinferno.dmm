@@ -11,7 +11,7 @@
 /area/shuttle/escape)
 "d" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "e" = (
@@ -103,8 +103,7 @@
 /area/shuttle/escape)
 "u" = (
 /obj/docking_port/mobile/emergency{
-	name = "Disco Inferno";
-	timid = 1
+	name = "Disco Inferno"
 	},
 /obj/machinery/door/airlock/gold{
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 20, "energy" = 20, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100);
@@ -114,7 +113,7 @@
 /turf/open/floor/mineral/plasma,
 /area/shuttle/escape)
 "v" = (
-/obj/machinery/disco/indestructible,
+/obj/machinery/jukebox/disco/indestructible,
 /turf/open/floor/light/colour_cycle,
 /area/shuttle/escape)
 "w" = (

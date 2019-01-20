@@ -1,6 +1,7 @@
-/obj/item/device/megaphone
+/obj/item/megaphone
 	name = "megaphone"
 	desc = "A device used to project your voice. Loudly."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "megaphone"
 	item_state = "radio"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -10,13 +11,13 @@
 	var/spamcheck = 0
 	var/list/voicespan = list(SPAN_COMMAND)
 
-/obj/item/device/megaphone/suicide_act(mob/living/carbon/user)
+/obj/item/megaphone/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is uttering [user.p_their()] last words into \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	spamcheck = 0//so they dont have to worry about recharging
-	user.say("AAAAAAAAAAAARGHHHHH")//he must have died while coding this
+	user.say("AAAAAAAAAAAARGHHHHH", forced="megaphone suicide")//he must have died while coding this
 	return OXYLOSS
 
-/obj/item/device/megaphone/get_held_item_speechspans(mob/living/carbon/user)
+/obj/item/megaphone/get_held_item_speechspans(mob/living/carbon/user)
 	if(spamcheck > world.time)
 		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 	else
@@ -24,26 +25,26 @@
 		spamcheck = world.time + 50
 		return voicespan
 
-/obj/item/device/megaphone/emag_act(mob/user)
+/obj/item/megaphone/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
 	obj_flags |= EMAGGED
 	voicespan = list(SPAN_REALLYBIG, "userdanger")
 
-/obj/item/device/megaphone/sec
+/obj/item/megaphone/sec
 	name = "security megaphone"
 	icon_state = "megaphone-sec"
 
-/obj/item/device/megaphone/command
+/obj/item/megaphone/command
 	name = "command megaphone"
 	icon_state = "megaphone-command"
 
-/obj/item/device/megaphone/cargo
+/obj/item/megaphone/cargo
 	name = "supply megaphone"
 	icon_state = "megaphone-cargo"
 
-/obj/item/device/megaphone/clown
+/obj/item/megaphone/clown
 	name = "clown's megaphone"
 	desc = "Something that should not exist."
 	icon_state = "megaphone-clown"

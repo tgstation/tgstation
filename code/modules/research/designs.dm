@@ -27,6 +27,7 @@ other types of metals and chemistry for reagents).
 */
 
 //DESIGNS ARE GLOBAL. DO NOT CREATE OR DESTROY THEM AT RUNTIME OUTSIDE OF INIT, JUST REFERENCE THEM TO WHATEVER YOU'RE DOING! //why are you yelling?
+//DO NOT REFERENCE OUTSIDE OF SSRESEARCH. USE THE PROCS IN SSRESEARCH TO OBTAIN A REFERENCE.
 
 /datum/design						//Datum for object designs, used in construction
 	var/name = "Name"					//Name of the created object.
@@ -44,15 +45,22 @@ other types of metals and chemistry for reagents).
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
 	var/departmental_flags = ALL			//bitflags for deplathes.
 	var/list/datum/techweb_node/unlocked_by = list()
+	var/research_icon					//Replaces the item icon in the research console
+	var/research_icon_state
 	var/icon_cache
 
+/datum/design/error_design
+	name = "ERROR"
+	desc = "This usually means something in the database has corrupted. If this doesn't go away automatically, inform Central Comamnd so their techs can fix this ASAP(tm)"
+
 /datum/design/Destroy()
-	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
+	SSresearch.techweb_designs -= id
 	return ..()
 
 /datum/design/proc/icon_html(client/user)
-	send_asset(user, "design_[id].png", FALSE)
-	return "<img class='icon' src=\"design_[id].png\">"
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	sheet.send(user)
+	return sheet.icon_tag(id)
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

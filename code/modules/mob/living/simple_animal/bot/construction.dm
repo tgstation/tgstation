@@ -100,7 +100,7 @@
 				build_step++
 
 		if(ASSEMBLY_FOURTH_STEP)
-			if(istype(W, /obj/item/weldingtool))
+			if(W.tool_behaviour == TOOL_WELDER)
 				if(W.use_tool(src, user, 0, volume=40))
 					name = "shielded frame assembly"
 					to_chat(user, "<span class='notice'>You weld the vest to [src].</span>")
@@ -181,7 +181,7 @@
 			build_step++
 
 		if(8)
-			if(istype(W, /obj/item/screwdriver))
+			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					name = "armed [name]"
@@ -234,8 +234,6 @@
 		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
 		return
 	if(T.use(10))
-		if(user.s_active)
-			user.s_active.close(user)
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
 		user.put_in_hands(B)
@@ -277,7 +275,7 @@
 	icon_state = "firstaid_arm"
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
-	var/healthanalyzer = /obj/item/device/healthanalyzer
+	var/healthanalyzer = /obj/item/healthanalyzer
 	var/firstaid = /obj/item/storage/firstaid
 
 /obj/item/bot_assembly/medbot/Initialize()
@@ -312,12 +310,11 @@
 	qdel(S)
 	qdel(src)
 
-
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(W, /obj/item/device/healthanalyzer))
+			if(istype(W, /obj/item/healthanalyzer))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				healthanalyzer = W.type
@@ -382,20 +379,22 @@
 	icon_state = "helmet_signaler"
 	item_state = "helmet"
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
+	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
+	var/toyswordamt = 0 //honk
 
 /obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
 	..()
 	var/atom/Tsec = drop_location()
 	switch(build_step)
 		if(ASSEMBLY_FIRST_STEP)
-			if(istype(I, /obj/item/weldingtool))
+			if(I.tool_behaviour == TOOL_WELDER)
 				if(I.use_tool(src, user, 0, volume=40))
 					add_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld a hole in [src]!</span>")
 					build_step++
 
-			else if(istype(I, /obj/item/screwdriver)) //deconstruct
-				new /obj/item/device/assembly/signaler(Tsec)
+			else if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
+				new /obj/item/assembly/signaler(Tsec)
 				new /obj/item/clothing/head/helmet/sec(Tsec)
 				to_chat(user, "<span class='notice'>You disconnect the signaler from the helmet.</span>")
 				qdel(src)
@@ -410,7 +409,7 @@
 				qdel(I)
 				build_step++
 
-			else if(istype(I, /obj/item/weldingtool)) //deconstruct
+			else if(I.tool_behaviour == TOOL_WELDER) //deconstruct
 				if(I.use_tool(src, user, 0, volume=40))
 					cut_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld the hole in [src] shut!</span>")
@@ -427,9 +426,9 @@
 				qdel(I)
 				build_step++
 
-			else if(istype(I, /obj/item/screwdriver)) //deconstruct
+			else if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
 				cut_overlay("hs_eye")
-				new /obj/item/device/assembly/prox_sensor(Tsec)
+				new /obj/item/assembly/prox_sensor(Tsec)
 				to_chat(user, "<span class='notice'>You detach the proximity sensor from [src].</span>")
 				build_step--
 
@@ -444,10 +443,65 @@
 				S.robot_arm = robot_arm
 				qdel(I)
 				qdel(src)
+			if(I.tool_behaviour == TOOL_WRENCH)
+				to_chat(user, "You adjust [src]'s arm slots to mount extra weapons")
+				build_step ++
+				return
+			if(istype(I, /obj/item/toy/sword))
+				if(toyswordamt < 3 && swordamt <= 0)
+					if(!user.temporarilyRemoveItemFromInventory(I))
+						return
+					created_name = "General Beepsky"
+					name = "helmet/signaler/prox sensor/robot arm/toy sword assembly"
+					icon_state = "grievous_assembly"
+					to_chat(user, "<span class='notice'>You superglue [I] onto one of [src]'s arm slots.</span>")
+					qdel(I)
+					toyswordamt ++
+				else
+					if(!can_finish_build(I, user))
+						return
+					to_chat(user, "<span class='notice'>You complete the Securitron!...Something seems a bit wrong with it..?</span>")
+					var/mob/living/simple_animal/bot/secbot/grievous/toy/S = new(Tsec)
+					S.name = created_name
+					S.robot_arm = robot_arm
+					qdel(I)
+					qdel(src)
 
-			else if(istype(I, /obj/item/screwdriver)) //deconstruct
+			else if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
 				cut_overlay("hs_arm")
 				var/obj/item/bodypart/dropped_arm = new robot_arm(Tsec)
 				robot_arm = null
 				to_chat(user, "<span class='notice'>You remove [dropped_arm] from [src].</span>")
 				build_step--
+				if(toyswordamt > 0 || toyswordamt)
+					icon_state = initial(icon_state)
+					to_chat(user, "<span class='notice'>The superglue binding [src]'s toy swords to its chassis snaps!</span>")
+					for(var/IS in 1 to toyswordamt)
+						new /obj/item/toy/sword(Tsec)
+
+		if(ASSEMBLY_FIFTH_STEP)
+			if(istype(I, /obj/item/melee/transforming/energy/sword/saber))
+				if(swordamt < 3)
+					if(!user.temporarilyRemoveItemFromInventory(I))
+						return
+					created_name = "General Beepsky"
+					name = "helmet/signaler/prox sensor/robot arm/energy sword assembly"
+					icon_state = "grievous_assembly"
+					to_chat(user, "<span class='notice'>You bolt [I] onto one of [src]'s arm slots.</span>")
+					qdel(I)
+					swordamt ++
+				else
+					if(!can_finish_build(I, user))
+						return
+					to_chat(user, "<span class='notice'>You complete the Securitron!...Something seems a bit wrong with it..?</span>")
+					var/mob/living/simple_animal/bot/secbot/grievous/S = new(Tsec)
+					S.name = created_name
+					S.robot_arm = robot_arm
+					qdel(I)
+					qdel(src)
+			else if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
+				build_step--
+				icon_state = initial(icon_state)
+				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
+				for(var/IS in 1 to swordamt)
+					new /obj/item/melee/transforming/energy/sword/saber(Tsec)

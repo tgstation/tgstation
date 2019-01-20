@@ -20,6 +20,7 @@
 	var/ghetto = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	var/datum/component/mobhook
 
 /obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil))
@@ -42,7 +43,7 @@
 			return
 		update_icon()
 		to_chat(user, "<span class='notice'>You add the cables to [src]. It now contains [loaded.amount].</span>")
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!loaded)
 			return
 		if(ghetto && prob(10)) //Is it a ghetto RCL? If so, give it a 10% chance to fall apart
@@ -84,7 +85,7 @@
 /obj/item/twohanded/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	active = FALSE
+	setActive(FALSE, null) // setactive(FALSE) removes mobhook
 	return ..()
 
 /obj/item/twohanded/rcl/update_icon()
@@ -115,18 +116,19 @@
 			QDEL_NULL(loaded)
 			loaded = null
 		unwield(user)
-		active = wielded
+		setActive(wielded, user)
 		return TRUE
 	return FALSE
 
 /obj/item/twohanded/rcl/dropped(mob/wearer)
 	..()
-	active = FALSE
+	if(mobhook)
+		setActive(FALSE, mobhook.parent)
 	last = null
 
 /obj/item/twohanded/rcl/attack_self(mob/user)
 	..()
-	active = wielded
+	setActive(wielded, user)
 	if(!active)
 		last = null
 	else if(!last)
@@ -135,9 +137,15 @@
 				last = C
 				break
 
-/obj/item/twohanded/rcl/on_mob_move(direct, mob/user)
-	if(active)
-		trigger(user)
+/obj/item/twohanded/rcl/proc/setActive(toggle, mob/user)
+	active = toggle
+	if (active && user)
+		if (mobhook && mobhook.parent != user)
+			QDEL_NULL(mobhook)
+		if (!mobhook)
+			mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
+	else
+		QDEL_NULL(mobhook)
 
 /obj/item/twohanded/rcl/proc/trigger(mob/user)
 	if(!isturf(user.loc))
@@ -148,7 +156,7 @@
 
 	if(prob(2) && ghetto) //Give ghetto RCLs a 2% chance to jam, requiring it to be reactviated manually.
 		to_chat(user, "<span class='warning'>[src]'s wires jam!</span>")
-		active = FALSE
+		setActive(FALSE, user)
 		return
 	else
 		if(last)

@@ -76,7 +76,6 @@ a.icon img, .linkOn.icon img
 	width: 18px;
 	height: 18px;
 }
-
 ul
 {
 	padding: 4px 0 0 10px;
@@ -337,12 +336,37 @@ div.notice
   transition: .4s;
 }
 
+.slider.red:before {
+  background-color: #d6858b;
+}
+
+.slider.locked:before {
+  content: url("padlock.png");
+  background-color: #b4b4b4;
+}
+
 input:checked + .slider {
   background-color: #40628a;
 }
 
+input:checked + .slider.red {
+  background-color: #a92621;
+}
+
+input:checked + .slider.locked {
+  background-color: #707070;
+}
+
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
+}
+
+input:focus + .slider.red {
+  box-shadow: 0 0 1px #f3212d;
+}
+
+input:focus + .slider.locked {
+  box-shadow: 0 0 1px #979797;
 }
 
 input:checked + .slider:before {
@@ -370,4 +394,18 @@ ul.sparse {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.severity {
+	margin:0px;
+	padding: 1px 8px 1px 8px;
+	border-radius: 25px;
+	border: 1px solid #161616;
+	background: #40628a;
+	color: #ffffff;
+}
+
+.severity img {
+    display: inline-block;
+    vertical-align: middle;
 }

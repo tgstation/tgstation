@@ -12,6 +12,7 @@
 	var/list/tube_dirs //list of directions this tube section can connect to.
 	var/exit_delay = 1
 	var/enter_delay = 0
+	var/const/time_to_unwrench = 2 SECONDS
 
 /obj/structure/transit_tube/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
@@ -36,20 +37,20 @@
 		deconstruct(FALSE)
 
 /obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench))
+	if(W.tool_behaviour == TOOL_WRENCH)
 		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
 				to_chat(user, "<span class='warning'>Remove the pod first!</span>")
 				return
-			user.visible_message("[user] starts to deattach \the [src].", "<span class='notice'>You start to deattach the [name]...</span>")
-			if(W.use_tool(src, user, 40, volume=50))
-				to_chat(user, "<span class='notice'>You deattach the [name].</span>")
+			user.visible_message("[user] starts to detach \the [src].", "<span class='notice'>You start to detach the [name]...</span>")
+			if(W.use_tool(src, user, time_to_unwrench, volume=50))
+				to_chat(user, "<span class='notice'>You detach the [name].</span>")
 				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
 				R.setDir(dir)
 				transfer_fingerprints_to(R)
 				R.add_fingerprint(user)
 				qdel(src)
-	else if(istype(W, /obj/item/crowbar))
+	else if(W.tool_behaviour == TOOL_CROWBAR)
 		for(var/obj/structure/transit_tube_pod/pod in src.loc)
 			pod.attackby(W, user)
 	else

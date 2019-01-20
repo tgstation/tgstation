@@ -7,6 +7,7 @@
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = AREA_LAYER
+	plane = BLACKNESS_PLANE //Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
@@ -17,24 +18,22 @@
 	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
 
-	var/eject = null
-
 	var/fire = null
 	var/atmos = TRUE
 	var/atmosalm = FALSE
 	var/poweralm = TRUE
-	var/party = null
 	var/lightswitch = TRUE
 
 	var/requires_power = TRUE
-	var/always_unpowered = FALSE	// This gets overriden to 1 for space in area/Initialize().
+	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+
+	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
 
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
-	var/music = null
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
@@ -42,13 +41,14 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = FALSE
+	var/has_gravity = 0
 	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	/// If false, loading multiple maps with this area type will create multiple instances.
+	var/unique = TRUE
 
 	var/no_air = null
-	var/list/related			// the other areas of the same type as this
 
 	var/parallax_movedir = 0
 
@@ -83,28 +83,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 // ===
 
-
-// Added to fix mech fabs 05/2013 ~Sayu
-// This is necessary due to lighting subareas.  If you were to go in assuming that things in
-// the same logical /area have the parent /area object... well, you would be mistaken.  If you
-// want to find machines, mobs, etc, in the same logical area, you will need to check all the
-// related areas.  This returns a master contents list to assist in that.
-/proc/area_contents(area/A)
-	if(!istype(A))
-		return null
-	var/list/contents = list()
-	for(var/area/LSA in A.related)
-		contents += LSA.contents
-	return contents
-
-
-
+/area/New()
+	// This interacts with the map loader, so it needs to be set immediately
+	// rather than waiting for atoms to initialize.
+	if (unique)
+		GLOB.areas_by_type[type] = src
+	return ..()
 
 /area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
 	uid = ++global_uid
-	related = list(src)
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
@@ -130,9 +119,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!IS_DYNAMIC_LIGHTING(src))
 		add_overlay(/obj/effect/fullbright)
 
+	reg_in_areas_in_z()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/area/LateInitialize()
+	power_change()		// all machines set to current power level, also updates icon
+
+/area/proc/reg_in_areas_in_z()
 	if(contents.len)
 		var/list/areas_in_z = SSmapping.areas_in_z
 		var/z
+		update_areasize()
 		for(var/i in 1 to contents.len)
 			var/atom/thing = contents[i]
 			if(!thing)
@@ -146,12 +144,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
 
-	return INITIALIZE_HINT_LATELOAD
-
-/area/LateInitialize()
-	power_change()		// all machines set to current power level, also updates icon
-
 /area/Destroy()
+	if(GLOB.areas_by_type[type] == src)
+		GLOB.areas_by_type[type] = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -189,11 +184,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/proc/atmosalert(danger_level, obj/source)
 	if(danger_level != atmosalm)
 		if (danger_level==2)
-			var/list/cameras = list()
-			for(var/area/RA in related)
-				for (var/item in RA.cameras)
-					var/obj/machinery/camera/C = item
-					cameras += C
 
 			for (var/item in GLOB.silicon_mobs)
 				var/mob/living/silicon/aiPlayer = item
@@ -248,18 +238,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(always_unpowered == 1) //no fire alarms in space/asteroid
 		return
 
-	var/list/cameras = list()
-
-	for(var/area/RA in related)
-		if (!( RA.fire ))
-			RA.set_fire_alarm_effect()
-			RA.ModifyFiredoors(FALSE)
-			for(var/item in RA.firealarms)
-				var/obj/machinery/firealarm/F = item
-				F.update_icon()
-		for (var/item in RA.cameras)
-			var/obj/machinery/camera/C = item
-			cameras += C
+	if (!fire)
+		set_fire_alarm_effect()
+		ModifyFiredoors(FALSE)
+		for(var/item in firealarms)
+			var/obj/machinery/firealarm/F = item
+			F.update_icon()
 
 	for (var/item in GLOB.alert_consoles)
 		var/obj/machinery/computer/station_alert/a = item
@@ -277,15 +261,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	START_PROCESSING(SSobj, src)
 
 /area/proc/firereset(obj/source)
-	for(var/area/RA in related)
-		if (RA.fire)
-			RA.fire = 0
-			RA.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-			RA.updateicon()
-			RA.ModifyFiredoors(TRUE)
-			for(var/item in RA.firealarms)
-				var/obj/machinery/firealarm/F = item
-				F.update_icon()
+	if (fire)
+		unset_fire_alarm_effects()
+		ModifyFiredoors(TRUE)
+		for(var/item in firealarms)
+			var/obj/machinery/firealarm/F = item
+			F.update_icon()
 
 	for (var/item in GLOB.silicon_mobs)
 		var/mob/living/silicon/aiPlayer = item
@@ -304,8 +285,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/process()
 	if(firedoors_last_closed_on + 100 < world.time)	//every 10 seconds
-		for(var/area/RA in related)
-			RA.ModifyFiredoors(FALSE)
+		ModifyFiredoors(FALSE)
 
 /area/proc/close_and_lock_door(obj/machinery/door/DOOR)
 	set waitfor = FALSE
@@ -314,20 +294,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		DOOR.lock()
 
 /area/proc/burglaralert(obj/trigger)
-	if(always_unpowered == 1) //no burglar alarms in space/asteroid
+	if(always_unpowered) //no burglar alarms in space/asteroid
 		return
 
-	var/list/cameras = list()
-
-	for(var/area/RA in related)
-		//Trigger alarm effect
-		RA.set_fire_alarm_effect()
-		//Lockdown airlocks
-		for(var/obj/machinery/door/DOOR in RA)
-			close_and_lock_door(DOOR)
-		for (var/item in RA.cameras)
-			var/obj/machinery/camera/C = item
-			cameras += C
+	//Trigger alarm effect
+	set_fire_alarm_effect()
+	//Lockdown airlocks
+	for(var/obj/machinery/door/DOOR in src)
+		close_and_lock_door(DOOR)
 
 	for (var/i in GLOB.silicon_mobs)
 		var/mob/living/silicon/SILICON = i
@@ -336,61 +310,32 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effect()
-	fire = 1
-	updateicon()
+	fire = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/alarm in firealarms)
+		var/obj/machinery/firealarm/F = alarm
+		F.update_fire_light(fire)
+	for(var/obj/machinery/light/L in src)
+		L.update()
 
-/area/proc/readyalert()
-	if(name == "Space")
-		return
-	if(!eject)
-		eject = 1
-		updateicon()
-
-/area/proc/readyreset()
-	if(eject)
-		eject = 0
-		updateicon()
-
-/area/proc/partyalert()
-	if(src.name == "Space") //no parties in space!!!
-		return
-	if (!( src.party ))
-		src.party = 1
-		src.updateicon()
-		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/area/proc/partyreset()
-	if (src.party)
-		src.party = 0
-		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.welded)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
+/area/proc/unset_fire_alarm_effects()
+	fire = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/alarm in firealarms)
+		var/obj/machinery/firealarm/F = alarm
+		F.update_fire_light(fire)
+	for(var/obj/machinery/light/L in src)
+		L.update()
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
-			icon_state = "blue"
-		else if(!fire && eject && !party)
-			icon_state = "red"
-		else if(party && !fire && !eject)
-			icon_state = "party"
-		else
-			icon_state = "blue-red"
-	else
-		var/weather_icon
-		for(var/V in SSweather.processing)
-			var/datum/weather/W = V
-			if(W.stage != END_STAGE && (src in W.impacted_areas))
-				W.update_areas()
-				weather_icon = TRUE
-		if(!weather_icon)
-			icon_state = null
+	var/weather_icon
+	for(var/V in SSweather.processing)
+		var/datum/weather/W = V
+		if(W.stage != END_STAGE && (src in W.impacted_areas))
+			W.update_areas()
+			weather_icon = TRUE
+	if(!weather_icon)
+		icon_state = null
 
 /area/space/updateicon()
 	icon_state = null
@@ -423,10 +368,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 // called when power status changes
 
 /area/proc/power_change()
-	for(var/area/RA in related)
-		for(var/obj/machinery/M in RA)	// for each machine in the area
-			M.power_change()				// reverify power status (to update icons etc.)
-		RA.updateicon()
+	for(var/obj/machinery/M in src)	// for each machine in the area
+		M.power_change()				// reverify power status (to update icons etc.)
+	updateicon()
 
 /area/proc/usage(chan)
 	var/used = 0
@@ -472,12 +416,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			used_environ += amount
 
 
-/area/Entered(A)
+/area/Entered(atom/movable/M)
 	set waitfor = FALSE
-	if(!isliving(A))
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
+	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
+	if(!isliving(M))
 		return
 
-	var/mob/living/L = A
+	var/mob/living/L = M
 	if(!L.ckey)
 		return
 
@@ -497,22 +443,44 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
+/area/Exited(atom/movable/M)
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
+	SEND_SIGNAL(M, COMSIG_EXIT_AREA, src) //The atom that exits the area
+
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
 
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))
 		T = get_turf(src)
-	var/area/A = get_area(T)
+
+	if(!T)
+		return 0
+
+	var/list/forced_gravity = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
+	if(!forced_gravity.len)
+		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(forced_gravity.len)
+		var/max_grav
+		for(var/i in forced_gravity)
+			max_grav = max(max_grav, i)
+		return max_grav
+
 	if(isspaceturf(T)) // Turf never has gravity
-		return FALSE
-	else if(A && A.has_gravity) // Areas which always has gravity
-		return TRUE
+		return 0
+
+	var/area/A = get_area(T)
+	if(A.has_gravity) // Areas which always has gravity
+		return A.has_gravity
 	else
 		// There's a gravity generator on our z level
-		if(T && GLOB.gravity_generators["[T.z]"] && length(GLOB.gravity_generators["[T.z]"]))
-			return TRUE
-	return FALSE
+		if(GLOB.gravity_generators["[T.z]"])
+			var/max_grav = 0
+			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
+				max_grav = max(G.setting,max_grav)
+			return max_grav
+	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 
 /area/proc/setup(a_name)
 	name = a_name
@@ -524,8 +492,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	blob_allowed = FALSE
 	addSorted()
 
+/area/proc/update_areasize()
+	if(outdoors)
+		return FALSE
+	areasize = 0
+	for(var/turf/open/T in contents)
+		areasize++
+
 /area/AllowDrop()
 	CRASH("Bad op: area/AllowDrop() called")
 
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
+
+// A hook so areas can modify the incoming args
+/area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)
+	return flags

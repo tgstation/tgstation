@@ -1,7 +1,7 @@
 /datum/surgery/lipoplasty
 	name = "lipoplasty"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/cut_fat, /datum/surgery_step/remove_fat, /datum/surgery_step/close)
-	possible_locs = list("chest")
+	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
 	if(target.has_trait(TRAIT_FAT))
@@ -35,7 +35,7 @@
 	user.visible_message("[user] extracts [target]'s fat!", "<span class='notice'>You extract [target]'s fat.</span>")
 	target.overeatduration = 0 //patient is unfatted
 	var/removednutriment = target.nutrition
-	target.nutrition = NUTRITION_LEVEL_WELL_FED
+	target.set_nutrition(NUTRITION_LEVEL_WELL_FED)
 	removednutriment -= 450 //whatever was removed goes into the meat
 	var/mob/living/carbon/human/H = target
 	var/typeofmeat = /obj/item/reagent_containers/food/snacks/meat/slab/human

@@ -68,7 +68,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "ar" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "as" = (
@@ -89,11 +89,6 @@
 "aw" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"ay" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
 /area/shuttle/transport)
 "az" = (
 /obj/effect/spawner/structure/window/shuttle,
@@ -137,12 +132,12 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aJ" = (
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aK" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aL" = (
@@ -165,7 +160,6 @@
 	height = 27;
 	id = "ferry";
 	name = "The Lighthouse";
-	timid = 1;
 	port_direction = 2;
 	width = 16
 	},
@@ -205,7 +199,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aW" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -264,10 +258,9 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bg" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/inverted{
 	dir = 10;
-	id = "garbage";
-	verted = -1
+	id = "garbage"
 	},
 /turf/open/floor/wood,
 /area/shuttle/transport)
@@ -633,11 +626,11 @@ aa
 aa
 aa
 aa
-ay
+az
 aI
 aE
 aW
-ay
+az
 aa
 aa
 aa
@@ -760,9 +753,9 @@ aa
 aa
 aa
 ad
-ay
+az
 aO
-ay
+az
 ad
 aa
 aa

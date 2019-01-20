@@ -199,6 +199,7 @@
 
 /datum/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
+	var/static/list/show_directions = list(SOUTH, WEST)
 	if(H.mind && (H.mind.assigned_role != H.mind.special_role))
 		var/assignment
 		if(H.mind.assigned_role)
@@ -212,11 +213,17 @@
 		var/id = num2hex(record_id_num++,6)
 		if(!C)
 			C = H.client
-		var/image = get_id_photo(H, C)
-		var/obj/item/photo/photo_front = new()
-		var/obj/item/photo/photo_side = new()
-		photo_front.photocreate(null, icon(image, dir = SOUTH))
-		photo_side.photocreate(null, icon(image, dir = WEST))
+		var/image = get_id_photo(H, C, show_directions)
+		var/datum/picture/pf = new
+		var/datum/picture/ps = new
+		pf.picture_name = "[H]"
+		ps.picture_name = "[H]"
+		pf.picture_desc = "This is [H]."
+		ps.picture_desc = "This is [H]."
+		pf.picture_image = icon(image, dir = SOUTH)
+		ps.picture_image = icon(image, dir = WEST)
+		var/obj/item/photo/photo_front = new(null, pf)
+		var/obj/item/photo/photo_side = new(null, ps)
 
 		//These records should ~really~ be merged or something
 		//General Record
@@ -270,7 +277,6 @@
 		L.fields["sex"]			= H.gender
 		L.fields["blood_type"]	= H.dna.blood_type
 		L.fields["b_dna"]		= H.dna.unique_enzymes
-		L.fields["enzymes"]		= H.dna.struc_enzymes
 		L.fields["identity"]	= H.dna.uni_identity
 		L.fields["species"]		= H.dna.species.type
 		L.fields["features"]	= H.dna.features
@@ -279,11 +285,11 @@
 		locked += L
 	return
 
-/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C)
+/datum/datacore/proc/get_id_photo(mob/living/carbon/human/H, client/C, show_directions = list(SOUTH))
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	var/datum/preferences/P
 	if(!C)
 		C = H.client
 	if(C)
 		P = C.prefs
-	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST)
+	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)

@@ -29,8 +29,8 @@
 
 	L[1] = L[L.len]
 	L.Cut(L.len)
-
-	Sink(1)
+	if(L.len)
+		Sink(1)
 
 //Get a node up to its right position in the heap
 /datum/Heap/proc/Swim(var/index)
@@ -73,3 +73,4 @@
 
 /datum/Heap/proc/List()
 	. = L.Copy()
+

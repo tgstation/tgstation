@@ -1,9 +1,9 @@
 /datum/species/dullahan
-	name = "dullahan"
+	name = "Dullahan"
 	id = "dullahan"
 	default_color = "FFFFFF"
-	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS,NOBREATH,NOHUNGER)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
+	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = TRUE
 	mutant_brain = /obj/item/organ/brain/dullahan
@@ -25,7 +25,7 @@
 /datum/species/dullahan/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	. = ..()
 	H.flags_1 &= ~HEAR_1
-	var/obj/item/bodypart/head/head = H.get_bodypart("head")
+	var/obj/item/bodypart/head/head = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head)
 		head.drop_limb()
 		head.flags_1 = HEAR_1
@@ -41,14 +41,14 @@
 		myhead = null
 		DR.owner = null
 		qdel(DR)
-	H.regenerate_limb("head",FALSE)
+	H.regenerate_limb(BODY_ZONE_HEAD,FALSE)
 	..()
 
 /datum/species/dullahan/spec_life(mob/living/carbon/human/H)
 	if(QDELETED(myhead))
 		myhead = null
 		H.gib()
-	var/obj/item/bodypart/head/head2 = H.get_bodypart("head")
+	var/obj/item/bodypart/head/head2 = H.get_bodypart(BODY_ZONE_HEAD)
 	if(head2)
 		myhead = null
 		H.gib()
@@ -122,6 +122,7 @@
 		qdel(src)
 
 /obj/item/dullahan_relay/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+	. = ..()
 	if(!QDELETED(owner))
 		message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 		to_chat(owner,message)

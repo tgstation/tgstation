@@ -58,7 +58,7 @@
 
 /obj/item/paper/fluff/awaymissions/academy/grade/failure
 	name = "Pyromancy Evaluation"
-	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutilage."
+	info = "Current Grade: F. Educator's Notes: No improvement shown despite multiple private lessons.  Suggest additional tutelage."
 
 
 /obj/singularity/academy
@@ -130,8 +130,8 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as Wizard Academy Defender?", ROLE_WIZARD, null, ROLE_WIZARD, 50, current_wizard)
 
 	if(LAZYLEN(candidates))
-		var/client/C = pick(candidates)
-		message_admins("[key_name_admin(C)] was spawned as Wizard Academy Defender")
+		var/mob/dead/observer/C = pick(candidates)
+		message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Wizard Academy Defender")
 		current_wizard.ghostize() // on the off chance braindead defender gets back in
 		current_wizard.key = C.key
 
@@ -163,27 +163,47 @@
 	backpack_contents = list(/obj/item/storage/box/survival = 1)
 
 /obj/item/dice/d20/fate
-	name = "Die of Fate"
+	name = "\improper Die of Fate"
 	desc = "A die with twenty sides. You can feel unearthly energies radiating from it. Using this might be VERY risky."
 	icon_state = "d20"
 	sides = 20
-	can_be_rigged = FALSE
-	var/reusable = 1
-	var/used = 0
+	microwave_riggable = FALSE
+	var/reusable = TRUE
+	var/used = FALSE
+
+/obj/item/dice/d20/fate/stealth
+	name = "d20"
+	desc = "A die with twenty sides. The preferred die to throw at the GM."
 
 /obj/item/dice/d20/fate/one_use
-	reusable = 0
+	reusable = FALSE
+
+/obj/item/dice/d20/fate/one_use/stealth
+	name = "d20"
+	desc = "A die with twenty sides. The preferred die to throw at the GM."
+
+/obj/item/dice/d20/fate/cursed
+	name = "cursed Die of Fate"
+	desc = "A die with twenty sides. You feel that rolling this is a REALLY bad idea."
+	color = "#00BB00"
+
+	rigged = DICE_TOTALLY_RIGGED
+	rigged_value = 1
 
 /obj/item/dice/d20/fate/diceroll(mob/user)
-	..()
+	. = ..()
 	if(!used)
 		if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
 			to_chat(user, "<span class='warning'>You feel the magic of the dice is restricted to ordinary humans!</span>")
 			return
-		if(rigged)
-			effect(user,rigged)
-		else
-			effect(user,result)
+
+		if(!reusable)
+			used = TRUE
+
+		var/turf/T = get_turf(src)
+		T.visible_message("<span class='userdanger'>[src] flares briefly.</span>")
+
+		addtimer(CALLBACK(src, .proc/effect, user, .), 1 SECONDS)
 
 /obj/item/dice/d20/fate/equipped(mob/user, slot)
 	if(!ishuman(user) || !user.mind || (user.mind in SSticker.mode.wizards))
@@ -192,36 +212,39 @@
 
 
 /obj/item/dice/d20/fate/proc/effect(var/mob/living/carbon/human/user,roll)
-	if(!reusable)
-		used = 1
-	visible_message("<span class='userdanger'>The die flare briefly.</span>")
+	var/turf/T = get_turf(src)
 	switch(roll)
 		if(1)
 			//Dust
+			T.visible_message("<span class='userdanger'>[user] turns to dust!</span>")
 			user.dust()
 		if(2)
 			//Death
+			T.visible_message("<span class='userdanger'>[user] suddenly dies!</span>")
 			user.death()
 		if(3)
 			//Swarm of creatures
+			T.visible_message("<span class='userdanger'>A swarm of creatures surround [user]!</span>")
 			for(var/direction in GLOB.alldirs)
-				var/turf/T = get_turf(src)
-				new /mob/living/simple_animal/hostile/netherworld(get_step(T,direction))
+				new /mob/living/simple_animal/hostile/netherworld(get_step(get_turf(user),direction))
 		if(4)
 			//Destroy Equipment
-			for (var/obj/item/I in user)
-				if (istype(I, /obj/item/implant))
+			T.visible_message("<span class='userdanger'>Everything [user] is holding and wearing disappears!</span>")
+			for(var/obj/item/I in user)
+				if(istype(I, /obj/item/implant))
 					continue
 				qdel(I)
 		if(5)
 			//Monkeying
+			T.visible_message("<span class='userdanger'>[user] transforms into a monkey!</span>")
 			user.monkeyize()
 		if(6)
 			//Cut speed
-			var/datum/species/S = user.dna.species
-			S.speedmod += 1
+			T.visible_message("<span class='userdanger'>[user] starts moving slower!</span>")
+			user.add_movespeed_modifier(MOVESPEED_ID_DIE_OF_FATE, update=TRUE, priority=100, multiplicative_slowdown=1)
 		if(7)
 			//Throw
+			T.visible_message("<span class='userdanger'>Unseen forces throw [user]!</span>")
 			user.Stun(60)
 			user.adjustBruteLoss(50)
 			var/throw_dir = pick(GLOB.cardinals)
@@ -229,51 +252,65 @@
 			user.throw_at(throw_target, 200, 4)
 		if(8)
 			//Fueltank Explosion
-			explosion(loc,-1,0,2, flame_range = 2)
+			T.visible_message("<span class='userdanger'>An explosion bursts into existence around [user]!</span>")
+			explosion(get_turf(user),-1,0,2, flame_range = 2)
 		if(9)
 			//Cold
-			var/datum/disease/D = new /datum/disease/cold
-			user.ForceContractDisease(D)
+			var/datum/disease/D = new /datum/disease/cold()
+			T.visible_message("<span class='userdanger'>[user] looks a little under the weather!</span>")
+			user.ForceContractDisease(D, FALSE, TRUE)
 		if(10)
 			//Nothing
-			visible_message("<span class='notice'>[src] roll perfectly.</span>")
+			T.visible_message("<span class='userdanger'>Nothing seems to happen.</span>")
 		if(11)
 			//Cookie
+			T.visible_message("<span class='userdanger'>A cookie appears out of thin air!</span>")
 			var/obj/item/reagent_containers/food/snacks/cookie/C = new(drop_location())
+			do_smoke(0, drop_location())
 			C.name = "Cookie of Fate"
 		if(12)
 			//Healing
+			T.visible_message("<span class='userdanger'>[user] looks very healthy!</span>")
 			user.revive(full_heal = 1, admin_revive = 1)
 		if(13)
 			//Mad Dosh
+			T.visible_message("<span class='userdanger'>Mad dosh shoots out of [src]!</span>")
 			var/turf/Start = get_turf(src)
 			for(var/direction in GLOB.alldirs)
-				var/turf/T = get_step(Start,direction)
+				var/turf/dirturf = get_step(Start,direction)
 				if(rand(0,1))
-					new /obj/item/stack/spacecash/c1000(T)
+					new /obj/item/stack/spacecash/c1000(dirturf)
 				else
-					var/obj/item/storage/bag/money/M = new(T)
+					var/obj/item/storage/bag/money/M = new(dirturf)
 					for(var/i in 1 to rand(5,50))
 						new /obj/item/coin/gold(M)
 		if(14)
 			//Free Gun
+			T.visible_message("<span class='userdanger'>An impressive gun appears!</span>")
+			do_smoke(0, drop_location())
 			new /obj/item/gun/ballistic/revolver/mateba(drop_location())
 		if(15)
 			//Random One-use spellbook
-			new /obj/item/spellbook/oneuse/random(drop_location())
+			T.visible_message("<span class='userdanger'>A magical looking book drops to the floor!</span>")
+			do_smoke(0, drop_location())
+			new /obj/item/book/granter/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
+			T.visible_message("<span class='userdanger'>A Dice Servant appears in a cloud of smoke!</span>")
 			var/mob/living/carbon/human/H = new(drop_location())
+			do_smoke(0, drop_location())
+
 			H.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
-			var/datum/objective/O = new("Serve [user.real_name].")
-			servant_mind.objectives += O
+			var/datum/antagonist/magic_servant/A = new
+			servant_mind.add_antag_datum(A)
+			A.setup_master(user)
 			servant_mind.transfer_to(H)
 
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [user.real_name] Servant?", ROLE_WIZARD, null, ROLE_WIZARD, 50, H)
 			if(LAZYLEN(candidates))
-				var/client/C = pick(candidates)
-				message_admins("[key_name_admin(C)] was spawned as Dice Servant")
+				var/mob/dead/observer/C = pick(candidates)
+				message_admins("[ADMIN_LOOKUPFLW(C)] was spawned as Dice Servant")
 				H.key = C.key
 
 			var/obj/effect/proc_holder/spell/targeted/summonmob/S = new
@@ -282,21 +319,24 @@
 
 		if(17)
 			//Tator Kit
+			T.visible_message("<span class='userdanger'>A suspicious box appears!</span>")
 			new /obj/item/storage/box/syndicate(drop_location())
+			do_smoke(0, drop_location())
 		if(18)
 			//Captain ID
+			T.visible_message("<span class='userdanger'>A golden identification card appears!</span>")
 			new /obj/item/card/id/captains_spare(drop_location())
+			do_smoke(0, drop_location())
 		if(19)
 			//Instrinct Resistance
-			to_chat(user, "<span class='notice'>You feel robust.</span>")
-			var/datum/species/S = user.dna.species
-			S.brutemod *= 0.5
-			S.burnmod *= 0.5
-			S.coldmod *= 0.5
+			T.visible_message("<span class='userdanger'>[user] looks very robust!</span>")
+			user.physiology.brute_mod *= 0.5
+			user.physiology.burn_mod *= 0.5
+
 		if(20)
 			//Free wizard!
+			T.visible_message("<span class='userdanger'>Magic flows out of [src] and into [user]!</span>")
 			user.mind.make_Wizard()
-
 
 /datum/outfit/butler
 	name = "Butler"

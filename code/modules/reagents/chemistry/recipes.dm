@@ -6,10 +6,9 @@
 	var/list/required_catalysts = new/list()
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
-	var/atom/required_container = null // the container required for the reaction to happen
+	var/required_container = null // the exact container path required for the reaction to happen
 	var/required_other = 0 // an integer required for the reaction to happen
 
-	var/secondary = 0 // set to nonzero if secondary reaction
 	var/mob_react = TRUE //Determines if a chemical reaction can occur inside a mob
 
 	var/required_temp = 0
@@ -25,7 +24,7 @@
 	if(holder && holder.my_atom)
 		var/atom/A = holder.my_atom
 		var/turf/T = get_turf(A)
-		var/message = "A [reaction_name] reaction has occurred in [get_area_name(T)] [ADMIN_COORDJMP(T)]"
+		var/message = "A [reaction_name] reaction has occurred in [ADMIN_VERBOSEJMP(T)]"
 		message += " (<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
 
 		var/mob/M = get(A, /mob)
@@ -35,6 +34,7 @@
 			message += " - Last Fingerprint: [(A.fingerprintslast ? A.fingerprintslast : "N/A")]"
 
 		message_admins(message, 0, 1)
+		log_game("[reaction_name] chemical mob spawn reaction occuring at [AREACOORD(T)] carried by [key_name(M)] with last fingerprint [A.fingerprintslast? A.fingerprintslast : "N/A"]")
 
 		playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 
@@ -50,7 +50,7 @@
 
 /datum/chemical_reaction/proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
-		if(istype(X, /obj/effect))
+		if(iseffect(X))
 			continue
 		if(!X.anchored)
 			var/distance = get_dist(X, T)

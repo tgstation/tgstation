@@ -27,7 +27,7 @@
 	if(update)
 		update = FALSE
 		reconcile_air()
-	update = air.react()
+	update = air.react(src)
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
 	var/volume = 0
@@ -43,12 +43,10 @@
 	if(!air)
 		air = new
 	var/list/possible_expansions = list(base)
-	while(possible_expansions.len>0)
+	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
-
 			var/list/result = borderline.pipeline_expansion(src)
-
-			if(result.len>0)
+			if(result && result.len)
 				for(var/obj/machinery/atmospherics/P in result)
 					if(istype(P, /obj/machinery/atmospherics/pipe))
 						var/obj/machinery/atmospherics/pipe/item = P
@@ -57,10 +55,10 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
-									pipenetwarnings -= 1
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)]")
+									pipenetwarnings--
 									if(pipenetwarnings == 0)
-										warning("build_pipeline(): further messages about pipenets will be supressed")
+										warning("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item
 							possible_expansions += item
 
@@ -105,6 +103,8 @@
 		addMachineryMember(A)
 
 /datum/pipeline/proc/merge(datum/pipeline/E)
+	if(E == src)
+		return
 	air.volume += E.air.volume
 	members.Add(E.members)
 	for(var/obj/machinery/atmospherics/pipe/S in E.members)
@@ -127,6 +127,9 @@
 
 /obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
 	var/datum/pipeline/P = returnPipenet(A)
+	if(!P)
+		CRASH("null.addMember() called by [type] on [COORD(src)]")
+		return
 	P.addMember(A, src)
 
 
@@ -216,13 +219,16 @@
 		if(!P)
 			continue
 		GL += P.return_air()
-		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
-			if(V.open)
-				PL |= V.parents[1]
-				PL |= V.parents[2]
-		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
-			if(C.connected_device)
-				GL += C.portableConnectorReturnAir()
+		for(var/atmosmch in P.other_atmosmch)
+			if (istype(atmosmch, /obj/machinery/atmospherics/components/binary/valve))
+				var/obj/machinery/atmospherics/components/binary/valve/V = atmosmch
+				if(V.on)
+					PL |= V.parents[1]
+					PL |= V.parents[2]
+			else if (istype(atmosmch, /obj/machinery/atmospherics/components/unary/portables_connector))
+				var/obj/machinery/atmospherics/components/unary/portables_connector/C = atmosmch
+				if(C.connected_device)
+					GL += C.portableConnectorReturnAir()
 
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0

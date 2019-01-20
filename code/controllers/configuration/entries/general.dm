@@ -13,10 +13,12 @@
 
 /datum/config_entry/number/lobby_countdown	// In between round countdown.
 	config_entry_value = 120
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/round_end_countdown	// Post round murder death kill countdown
 	config_entry_value = 25
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
@@ -36,6 +38,8 @@
 
 /datum/config_entry/flag/log_game	// log game events
 
+/datum/config_entry/flag/log_mecha	// log mech data
+
 /datum/config_entry/flag/log_vote	// log voting
 
 /datum/config_entry/flag/log_whisper	// log client whisper
@@ -49,13 +53,19 @@
 
 /datum/config_entry/flag/log_pda	// log pda messages
 
+/datum/config_entry/flag/log_telecomms	// log telecomms messages
+
 /datum/config_entry/flag/log_twitter	// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 
 /datum/config_entry/flag/log_world_topic	// log all world.Topic() calls
 
 /datum/config_entry/flag/log_manifest	// log crew manifest to seperate file
 
+/datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
+
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
+
+/datum/config_entry/flag/allow_admin_asaycolor //Allows admins with relevant permissions to have a personalized asay color
 
 /datum/config_entry/flag/allow_vote_restart	// allow votes to restart
 
@@ -63,10 +73,12 @@
 
 /datum/config_entry/number/vote_delay	// minimum time between voting sessions (deciseconds, 10 minute default)
 	config_entry_value = 6000
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/vote_period  // length of voting period (deciseconds, default 1 minute)
 	config_entry_value = 600
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/flag/default_no_vote	// vote does not default to nochange/norestart
@@ -79,6 +91,7 @@
 
 /datum/config_entry/number/fps
 	config_entry_value = 20
+	integer = FALSE
 	min_val = 1
 	max_val = 100   //byond will start crapping out at 50, so this is just ridic
 	var/sync_validate = FALSE
@@ -120,6 +133,18 @@
 /datum/config_entry/flag/admin_legacy_system	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/flag/protect_legacy_admins	//Stops any admins loaded by the legacy system from having their rank edited by the permissions panel
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/protect_legacy_ranks	//Stops any ranks loaded by the legacy system from having their flags edited by the permissions panel
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/enable_localhost_rank	//Gives the !localhost! rank to any client connecting from 127.0.0.1 or ::1
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/load_legacy_ranks_only	//Loads admin ranks only from legacy admin_ranks.txt, while enabled ranks are mirrored to the database
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/string/hostedby
 
 /datum/config_entry/flag/norespawn
@@ -127,9 +152,6 @@
 /datum/config_entry/flag/guest_jobban
 
 /datum/config_entry/flag/usewhitelist
-
-/datum/config_entry/flag/ban_legacy_system	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system.
-	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/use_age_restriction_for_jobs	//Do jobs use account age restrictions? --requires database
 
@@ -141,6 +163,7 @@
 
 /datum/config_entry/number/use_exp_restrictions_heads_hours
 	config_entry_value = 0
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/flag/use_exp_restrictions_heads_department
@@ -165,6 +188,10 @@
 /datum/config_entry/string/githuburl
 	config_entry_value = "https://www.github.com/tgstation/-tg-station"
 
+/datum/config_entry/string/roundstatsurl
+
+/datum/config_entry/string/gamelogurl
+
 /datum/config_entry/number/githubrepoid
 	config_entry_value = null
 	min_val = 0
@@ -173,10 +200,12 @@
 
 /datum/config_entry/number/id_console_jobslot_delay
 	config_entry_value = 30
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/inactivity_period	//time in ds until a player is considered inactive
 	config_entry_value = 3000
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/inactivity_period/ValidateAndSet(str_val)
@@ -186,6 +215,7 @@
 
 /datum/config_entry/number/afk_period	//time in ds until a player is considered inactive
 	config_entry_value = 3000
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/afk_period/ValidateAndSet(str_val)
@@ -282,10 +312,12 @@
 
 /datum/config_entry/number/ipintel_save_good
 	config_entry_value = 12
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/ipintel_save_bad
 	config_entry_value = 1
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/string/ipintel_domain
@@ -306,12 +338,9 @@
 
 /datum/config_entry/flag/allow_map_voting
 
-/datum/config_entry/flag/generate_minimaps
-
 /datum/config_entry/number/client_warn_version
 	config_entry_value = null
 	min_val = 500
-	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_warn_message
 	config_entry_value = "Your version of byond may have issues or be blocked from accessing this server in the future."
@@ -321,7 +350,6 @@
 /datum/config_entry/number/client_error_version
 	config_entry_value = null
 	min_val = 500
-	max_val = DM_VERSION - 1
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
@@ -334,8 +362,17 @@
 	config_entry_value = null
 	min_val = 0
 
+/datum/config_entry/number/minute_click_limit
+	config_entry_value = 400
+	min_val = 0
+
+/datum/config_entry/number/second_click_limit
+	config_entry_value = 15
+	min_val = 0
+
 /datum/config_entry/number/error_cooldown	// The "cooldown" time for each occurrence of a unique error
 	config_entry_value = 600
+	integer = FALSE
 	min_val = 0
 
 /datum/config_entry/number/error_limit	// How many occurrences before the next will silence them
@@ -343,11 +380,20 @@
 
 /datum/config_entry/number/error_silence_time	// How long a unique error will be silenced for
 	config_entry_value = 6000
+	integer = FALSE
 
 /datum/config_entry/number/error_msg_delay	// How long to wait between messaging admins about occurrences of a unique error
 	config_entry_value = 50
+	integer = FALSE
 
 /datum/config_entry/flag/irc_announce_new_game
+	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+
+/datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
+	return ""	//default broadcast
+
+/datum/config_entry/string/chat_announce_new_game
+	config_entry_value = null
 
 /datum/config_entry/flag/debug_admin_hrefs
 
@@ -386,3 +432,18 @@
 
 /datum/config_entry/string/default_view
 	config_entry_value = "15x15"
+
+/datum/config_entry/flag/log_pictures
+
+/datum/config_entry/flag/picture_logging_camera
+
+
+/datum/config_entry/flag/reopen_roundstart_suicide_roles
+
+/datum/config_entry/flag/reopen_roundstart_suicide_roles_command_positions
+
+/datum/config_entry/number/reopen_roundstart_suicide_roles_delay
+	min_val = 30
+
+/datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
+

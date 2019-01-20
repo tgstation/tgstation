@@ -6,6 +6,7 @@
 	icon_living = "clown"
 	icon_dead = "clown_dead"
 	icon_gib = "clown_gib"
+	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
 	turns_per_move = 5
 	response_help = "pokes"
 	response_disarm = "gently pushes aside"
@@ -31,6 +32,8 @@
 	minbodytemp = 270
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
+
+	do_footstep = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/clown/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)

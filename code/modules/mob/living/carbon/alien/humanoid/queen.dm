@@ -22,27 +22,7 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
-	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite()
-
-/datum/action/small_sprite
-	name = "Toggle Giant Sprite - Others will always see you as giant"
-	button_icon_state = "smallqueen"
-	background_icon_state = "bg_alien"
-	var/small = 0
-
-/datum/action/small_sprite/Trigger()
-	..()
-	if(!small)
-		var/image/I = image(icon = 'icons/mob/alien.dmi' , icon_state = "alienq", loc = owner)
-		I.override = 1
-		I.pixel_x -= owner.pixel_x
-		I.pixel_y -= owner.pixel_y
-		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallqueen", I)
-
-		small = 1
-	else
-		owner.remove_alt_appearance("smallqueen")
-		small = 0
+	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
 	//there should only be one queen
@@ -60,7 +40,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
 	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	smallsprite.Grant(src)
-	..()
+	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large/queen
@@ -69,10 +49,6 @@
 	internal_organs += new /obj/item/organ/alien/neurotoxin
 	internal_organs += new /obj/item/organ/alien/eggsac
 	..()
-
-/mob/living/carbon/alien/humanoid/royal/queen/movement_delay()
-	. = ..()
-	. += 3
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg
@@ -127,8 +103,12 @@
 	name = "\improper royal parasite"
 	desc = "Inject this into one of your grown children to promote her to a Praetorian!"
 	icon_state = "alien_medal"
-	flags_1 = ABSTRACT_1|NODROP_1|DROPDEL_1
+	item_flags = ABSTRACT | DROPDEL
 	icon = 'icons/mob/alien.dmi'
+
+/obj/item/queenpromote/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /obj/item/queenpromote/attack(mob/living/M, mob/living/carbon/alien/humanoid/user)
 	if(!isalienadult(M) || isalienroyal(M))

@@ -22,7 +22,7 @@
 		/obj/item/reagent_containers/food/snacks/egg)
 
 /obj/effect/spawner/bundle/costume/gladiator
-	name = "gladitator costume spawner"
+	name = "gladiator costume spawner"
 	items = list(
 		/obj/item/clothing/under/gladiator,
 		/obj/item/clothing/head/helmet/gladiator)
@@ -47,14 +47,14 @@
 	items = list(
 		/obj/item/clothing/under/schoolgirl,
 		/obj/item/clothing/head/kitty,
-		/obj/item/clothing/glasses/sunglasses/blindfold)
+		/obj/item/clothing/glasses/blindfold)
 
 /obj/effect/spawner/bundle/costume/maid
 	name = "maid costume spawner"
 	items = list(
 		/obj/item/clothing/under/skirt/black,
 		/obj/effect/spawner/lootdrop/minor/beret_or_rabbitears,
-		/obj/item/clothing/glasses/sunglasses/blindfold)
+		/obj/item/clothing/glasses/blindfold)
 
 
 /obj/effect/spawner/bundle/costume/butler

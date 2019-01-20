@@ -5,7 +5,7 @@
 	weight = 2
 	typepath = /datum/round_event/wizard/robelesscasting
 	max_occurrences = 1
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/robelesscasting/start()
 
@@ -27,7 +27,7 @@
 	weight = 3
 	typepath = /datum/round_event/wizard/improvedcasting
 	max_occurrences = 4 //because that'd be max level spells
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/wizard/improvedcasting/start()
 	for(var/i in GLOB.mob_living_list)

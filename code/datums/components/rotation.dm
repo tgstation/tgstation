@@ -1,15 +1,15 @@
-#define ROTATION_ALTCLICK 1
-#define ROTATION_WRENCH 2
-#define ROTATION_VERBS 4
-#define ROTATION_COUNTERCLOCKWISE 8
-#define ROTATION_CLOCKWISE 16
-#define ROTATION_FLIP 32
+#define ROTATION_ALTCLICK			(1<<0)
+#define ROTATION_WRENCH				(1<<1)
+#define ROTATION_VERBS				(1<<2)
+#define ROTATION_COUNTERCLOCKWISE	(1<<3)
+#define ROTATION_CLOCKWISE			(1<<4)
+#define ROTATION_FLIP				(1<<5)
 
 /datum/component/simple_rotation
 	var/datum/callback/can_user_rotate //Checks if user can rotate
 	var/datum/callback/can_be_rotated  //Check if object can be rotated at all
 	var/datum/callback/after_rotation     //Additional stuff to do after rotation
-	
+
 	var/rotation_flags = NONE
 	var/default_rotation_direction = ROTATION_CLOCKWISE
 
@@ -45,10 +45,10 @@
 		default_rotation_direction = ROTATION_CLOCKWISE
 
 	if(src.rotation_flags & ROTATION_ALTCLICK)
-		RegisterSignal(COMSIG_CLICK_ALT, .proc/HandRot)
-		RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
+		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
+		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 	if(src.rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/WrenchRot)
 
 	if(src.rotation_flags & ROTATION_VERBS)
 		var/atom/movable/AM = parent
@@ -59,19 +59,37 @@
 		if(src.rotation_flags & ROTATION_COUNTERCLOCKWISE)
 			AM.verbs += /atom/movable/proc/simple_rotate_counterclockwise
 
-/datum/component/simple_rotation/proc/ExamineMessage(mob/user)
+/datum/component/simple_rotation/proc/remove_verbs()
+	if(parent)
+		var/atom/movable/AM = parent
+		AM.verbs -= /atom/movable/proc/simple_rotate_flip
+		AM.verbs -= /atom/movable/proc/simple_rotate_clockwise
+		AM.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
+
+/datum/component/simple_rotation/Destroy()
+	remove_verbs()
+	QDEL_NULL(can_user_rotate)
+	QDEL_NULL(can_be_rotated)
+	QDEL_NULL(after_rotation)
+	. = ..()
+
+/datum/component/simple_rotation/RemoveComponent()
+	remove_verbs()
+	. = ..()
+
+/datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user)
 	if(rotation_flags & ROTATION_ALTCLICK)
 		to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
-/datum/component/simple_rotation/proc/HandRot(mob/user, rotation = default_rotation_direction)
+/datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
 	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
 		return
 	BaseRot(user, rotation)
 
-/datum/component/simple_rotation/proc/WrenchRot(obj/item/I, mob/living/user)
+/datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
 	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
 		return
-	if(istype(I,/obj/item/wrench))
+	if(I.tool_behaviour == TOOL_WRENCH)
 		BaseRot(user,default_rotation_direction)
 		return COMPONENT_NO_AFTERATTACK
 
@@ -90,7 +108,6 @@
 
 /datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
 	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERY))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE
 	return TRUE
 
@@ -107,7 +124,7 @@
 	set src in oview(1)
 	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_CLOCKWISE)
+		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
 
 /atom/movable/proc/simple_rotate_counterclockwise()
 	set name = "Rotate Counter-Clockwise"
@@ -115,7 +132,7 @@
 	set src in oview(1)
 	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_COUNTERCLOCKWISE)
+		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
 
 /atom/movable/proc/simple_rotate_flip()
 	set name = "Flip"
@@ -123,4 +140,4 @@
 	set src in oview(1)
 	GET_COMPONENT(rotcomp,/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(usr,ROTATION_FLIP)
+		rotcomp.HandRot(null,usr,ROTATION_FLIP)

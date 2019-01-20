@@ -11,11 +11,10 @@
 	icon_state = "blackbox"
 	name = "Blackbox Recorder"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
-	armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
+	armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70)
 
 
 // The message server itself.
@@ -25,7 +24,6 @@
 	name = "Messaging Server"
 	desc = "A machine that attempts to gather the secret knowledge of the universe."
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -116,7 +114,7 @@
 /datum/signal/subspace/pda/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
-	for (var/obj/item/device/pda/P in GLOB.PDAs)
+	for (var/obj/item/pda/P in GLOB.PDAs)
 		if ("[P.owner] ([P.ownjob])" in data["targets"])
 			P.receive_message(src)
 
@@ -126,7 +124,7 @@
 	var/sender = "Unspecified"
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
-	var/icon/photo  // attached photo
+	var/datum/picture/picture  // attached photo
 
 /datum/data_pda_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
@@ -136,17 +134,17 @@
 	if(param_message)
 		message = param_message
 	if(param_photo)
-		photo = param_photo
+		picture = param_photo
 
 /datum/data_pda_msg/Topic(href,href_list)
 	..()
 	if(href_list["photo"])
 		var/mob/M = usr
-		M << browse_rsc(photo, "pda_photo.png")
+		M << browse_rsc(picture.picture_image, "pda_photo.png")
 		M << browse("<html><head><title>PDA Photo</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='pda_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
-		+ "</body></html>", "window=pdaphoto;size=192x192")
+		+ "</body></html>", "window=pdaphoto;size=[picture.psize_x]x[picture.psize_y];can-close=true")
 		onclose(M, "pdaphoto")
 
 /datum/data_rc_msg

@@ -4,6 +4,7 @@ What are the archived variables for?
 	This prevents race conditions that arise based on the order of tile processing.
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
+#define MINIMUM_MOLE_COUNT		0.01
 #define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
@@ -27,6 +28,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/volume = CELL_VOLUME //liters
 	var/last_share = 0
 	var/list/reaction_results
+	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
+	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -67,7 +70,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(cached_gases[id][MOLES] <= 0 && cached_gases[id][ARCHIVE] <= 0)
+		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
 			cached_gases -= id
 
 	//PV = nRT
@@ -79,17 +82,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		var/gas_data = cached_gases[id]
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
-/datum/gas_mixture/turf/heat_capacity()
-	. = ..()
+/datum/gas_mixture/turf/heat_capacity(data = MOLES) // Same as above except vacuums return HEAT_CAPACITY_VACUUM
+	var/list/cached_gases = gases
+	. = 0
+	for(var/id in cached_gases)
+		var/gas_data = cached_gases[id]
+		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
-
-//prefer this in performance critical areas
-#define TOTAL_MOLES(cached_gases, out_var)\
-	out_var = 0;\
-	for(var/total_moles_id in cached_gases){\
-		out_var += cached_gases[total_moles_id][MOLES];\
-	}
 
 /datum/gas_mixture/proc/total_moles()
 	var/cached_gases = gases
@@ -147,9 +147,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 	//Returns: amount of gas exchanged (+ if sharer received)
-
-/datum/gas_mixture/proc/after_share(datum/gas_mixture/sharer)
-	//called on share's sharer to let it know it just got some gases
 
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
@@ -284,8 +281,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return 1
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	if(!sharer)
-		return 0
 
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
@@ -321,7 +316,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			if(delta > 0)
 				heat_capacity_self_to_sharer += gas_heat_capacity
 			else
-				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative. saves a proc call.
+				heat_capacity_sharer_to_self -= gas_heat_capacity //subtract here instead of adding the absolute value because we know that delta is negative.
 
 		gas[MOLES]			-= delta
 		sharergas[MOLES]	+= delta
@@ -347,21 +342,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	var/list/unique_gases = cached_gases ^ sharer_gases
-	if(unique_gases.len) //if all gases were present in both mixtures, we know that no gases are 0
+	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
 		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
 		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-	sharer.after_share(src, atmos_adjacent_turfs)
+	if (initial(sharer.gc_share))
+		sharer.garbage_collect()
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
 		var/their_moles
 		TOTAL_MOLES(sharer_gases,their_moles)
-		var/delta_pressure = temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)
-		return delta_pressure * R_IDEAL_GAS_EQUATION / volume
-
-/datum/gas_mixture/after_share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-	return
+		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
 
 /datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	//transfer of thermal energy (via conduction) between self and sharer
@@ -409,27 +400,32 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-/datum/gas_mixture/react(turf/open/dump_location)
+/datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
-
-	reaction_results = new
-
 	var/list/cached_gases = gases
+	if(!length(cached_gases))
+		return
+	var/list/reactions = list()
+	for(var/I in cached_gases)
+		reactions += SSair.gas_reactions[I]
+	if(!length(reactions))
+		return
+	reaction_results = new
 	var/temp = temperature
 	var/ener = THERMAL_ENERGY(src)
 
 	reaction_loop:
-		for(var/r in SSair.gas_reactions)
+		for(var/r in reactions)
 			var/datum/gas_reaction/reaction = r
 
-			var/list/min_reqs = reaction.min_requirements.Copy()
+			var/list/min_reqs = reaction.min_requirements
 			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
 			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
 				continue
-			min_reqs -= "TEMP"
-			min_reqs -= "ENER"
 
 			for(var/id in min_reqs)
+				if (id == "TEMP" || id == "ENER")
+					continue
 				if(!cached_gases[id] || cached_gases[id][MOLES] < min_reqs[id])
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
@@ -438,25 +434,22 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				PLEASE DO NOT REMOVE THIS CODE. the commenting is here only for a performance increase.
 				enabling these checks should be as easy as possible and the fact that they are disabled should be as clear as possible
 
-			var/list/max_reqs = reaction.max_requirements.Copy()
+			var/list/max_reqs = reaction.max_requirements
 			if((max_reqs["TEMP"] && temp > max_reqs["TEMP"]) \
 			|| (max_reqs["ENER"] && ener > max_reqs["ENER"]))
 				continue
-			max_reqs -= "TEMP"
-			max_reqs -= "ENER"
 			for(var/id in max_reqs)
+				if(id == "TEMP" || id == "ENER")
+					continue
 				if(cached_gases[id] && cached_gases[id][MOLES] > max_reqs[id])
 					continue reaction_loop
 			//at this point, all requirements for the reaction are satisfied. we can now react()
 			*/
-
-			. |= reaction.react(src, dump_location)
+			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
 	if(.)
 		garbage_collect()
-		if(temperature < TCMB) //just for safety
-			temperature = TCMB
 
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings

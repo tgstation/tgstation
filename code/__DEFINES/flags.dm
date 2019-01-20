@@ -1,102 +1,158 @@
 /*
 	These defines are specific to the atom/flags_1 bitmask
 */
-#define ALL ~0 //For convenience.
+#define ALL (~0) //For convenience.
 #define NONE 0
+
+//for convenience
+#define ENABLE_BITFIELD(variable, flag) (variable |= (flag))
+#define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
+#define CHECK_BITFIELD(variable, flag) (variable & (flag))
+#define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
+
+
+//check if all bitflags specified are present
+#define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) ((flagvar & (flags)) == flags)
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
 // for /datum/var/datum_flags
-#define DF_USE_TAG 1
-#define DF_VAR_EDITED 2
+#define DF_USE_TAG		(1<<0)
+#define DF_VAR_EDITED	(1<<1)
+#define DF_ISPROCESSING (1<<2)
 
 //FLAGS BITMASK
-#define STOPSPRESSUREDMAGE_1 1	//This flag is used on the flags_1 variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
-//To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
 
-#define NODROP_1			2		// This flag makes it so that an item literally cannot be removed at all, or at least that's how it should be. Only deleted.
-#define NOBLUDGEON_1		4		// when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
-#define MASKINTERNALS_1		8		// mask allows internals
-#define HEAR_1 				16		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
-#define CHECK_RICOCHET_1	32		// Projectiels will check ricochet on things impacted that have this.
-#define CONDUCT_1			64		// conducts electricity (metal etc.)
-#define ABSTRACT_1		   	128		// for all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way
-#define NODECONSTRUCT_1  	128		// For machines and structures that should not break into parts, eg, holodeck stuff
-#define OVERLAY_QUEUED_1	256		// atom queued to SSoverlay
-#define ON_BORDER_1			512		// item has priority to check when entering or leaving
-
-#define NOSLIP_1			1024 		//prevents from slipping on wet floors, in space etc
-#define _UNUSED_1		2048
-
-// BLOCK_GAS_SMOKE_EFFECT_1 only used in masks at the moment.
-#define BLOCK_GAS_SMOKE_EFFECT_1 4096	// blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY!
-#define THICKMATERIAL_1			8192	//prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag. Example: space suits, biosuit, bombsuits, thick suits that cover your body.
-#define DROPDEL_1				16384	// When dropped, it calls qdel on itself
-#define PREVENT_CLICK_UNDER_1	32768	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
-
-/* Secondary atom flags, for the flags_2 var, denoted with a _2 */
-
-#define SLOWS_WHILE_IN_HAND_2	1
-#define NO_EMP_WIRES_2			2
-#define HOLOGRAM_2				4
-#define FROZEN_2				8
-#define STATIONLOVING_2			16
-#define INFORM_ADMINS_ON_RELOCATE_2	32
-#define BANG_PROTECT_2			64
-
-// An item worn in the ear slot with HEALS_EARS will heal your ears each
-// Life() tick, even if normally your ears would be too damaged to heal.
-#define HEALS_EARS_2			128
-
-// A mob with OMNITONGUE has no restriction in the ability to speak
-// languages that they know. So even if they wouldn't normally be able to
-// through mob or tongue restrictions, this flag allows them to ignore
-// those restrictions.
-#define OMNITONGUE_2			256
-
-// TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
-#define TESLA_IGNORE_2			512
-
-// Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
-#define NO_MAT_REDEMPTION_2		1024
+#define HEAR_1						(1<<3)		// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
+#define CHECK_RICOCHET_1			(1<<4)		// Projectiels will check ricochet on things impacted that have this.
+#define CONDUCT_1					(1<<5)		// conducts electricity (metal etc.)
+#define NODECONSTRUCT_1				(1<<7)		// For machines and structures that should not break into parts, eg, holodeck stuff
+#define OVERLAY_QUEUED_1			(1<<8)		// atom queued to SSoverlay
+#define ON_BORDER_1					(1<<9)		// item has priority to check when entering or leaving
+#define PREVENT_CLICK_UNDER_1		(1<<11)	//Prevent clicking things below it on the same turf eg. doors/ fulltile windows
+#define HOLOGRAM_1					(1<<12)
+#define TESLA_IGNORE_1				(1<<13) // TESLA_IGNORE grants immunity from being targeted by tesla-style electricity
+#define INITIALIZED_1				(1<<14)  //Whether /atom/Initialize() has already run for the object
+#define ADMIN_SPAWNED_1			(1<<15) 	//was this spawned by an admin? used for stat tracking stuff.
 
 //turf-only flags
-#define NOJAUNT_1				1
-#define UNUSED_TRANSIT_TURF_1	2
-#define CAN_BE_DIRTY_1			4 // If a turf can be made dirty at roundstart. This is also used in areas.
-#define NO_DEATHRATTLE_1		16 // Do not notify deadchat about any deaths that occur on this turf.
-#define NO_RUINS_1				32 //Blocks ruins spawning on the turf
-#define NO_LAVA_GEN_1				64 //Blocks lava rivers being generated on the turf
-//#define CHECK_RICOCHET_1	32		//Same thing as atom flag.
+#define NOJAUNT_1					(1<<0)
+#define UNUSED_RESERVATION_TURF_1	(1<<1)
+#define CAN_BE_DIRTY_1				(1<<2) // If a turf can be made dirty at roundstart. This is also used in areas.
+#define NO_LAVA_GEN_1				(1<<6) //Blocks lava rivers being generated on the turf
+#define NO_RUINS_1					(1<<10) //Blocks ruins spawning on the turf
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
-#define PASSTABLE		1
-#define PASSGLASS		2
-#define PASSGRILLE		4
-#define PASSBLOB		8
-#define PASSMOB			16
-#define PASSCLOSEDTURF		32
-#define LETPASSTHROW	64
-
+#define PASSTABLE		(1<<0)
+#define PASSGLASS		(1<<1)
+#define PASSGRILLE		(1<<2)
+#define PASSBLOB		(1<<3)
+#define PASSMOB			(1<<4)
+#define PASSCLOSEDTURF	(1<<5)
+#define LETPASSTHROW	(1<<6)
 
 //Movement Types
-#define IMMOBILE 0
-#define GROUND 1
-#define FLYING 2
-
-// Flags for reagents
-#define REAGENT_NOREACT 1
+#define GROUND			(1<<0)
+#define FLYING			(1<<1)
+#define VENTCRAWLING	(1<<2)
+#define FLOATING		(1<<3)
+#define UNSTOPPABLE		(1<<4)			//When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
 
 //Fire and Acid stuff, for resistance_flags
-#define LAVA_PROOF 1
-#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
-#define FLAMMABLE 4
-#define ON_FIRE 8
-#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
-#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
-#define INDESTRUCTIBLE 64 //doesn't take damage
-#define FREEZE_PROOF 128 //can't be frozen
+#define LAVA_PROOF		(1<<0)
+#define FIRE_PROOF		(1<<1) //100% immune to fire damage (but not necessarily to lava or heat)
+#define FLAMMABLE		(1<<2)
+#define ON_FIRE			(1<<3)
+#define UNACIDABLE		(1<<4) //acid can't even appear on it, let alone melt it.
+#define ACID_PROOF		(1<<5) //acid stuck on it doesn't melt it.
+#define INDESTRUCTIBLE	(1<<6) //doesn't take damage
+#define FREEZE_PROOF	(1<<7) //can't be frozen
+
+/obj/item/proc/clothing_resistance_flag_examine_message(mob/user)
+	if(resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, "[src] seems extremely robust! It'll probably withstand anything that could happen to it!")
+		return
+	if(resistance_flags & LAVA_PROOF)
+		to_chat(user, "[src] is made of an extremely heat-resistant material, it'd probably be able to withstand lava!")
+	if(resistance_flags & (ACID_PROOF | UNACIDABLE))
+		to_chat(user, "[src] looks pretty robust! It'd probably be able to withstand acid!")
+	if(resistance_flags & FREEZE_PROOF)
+		to_chat(user, "[src] is made of cold-resistant materials.")
+	if(resistance_flags & FIRE_PROOF)
+		to_chat(user, "[src] is made of fire-retardant materials.")
+		return TRUE
+
+/obj/item/clothing/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of fire-retardant materials.")
+		return TRUE
+
+/obj/item/clothing/head/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == (HELMET_MAX_TEMP_PROTECT || SPACE_HELM_MAX_TEMP_PROTECT || FIRE_HELM_MAX_TEMP_PROTECT))
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
+/obj/item/clothing/gloves/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == GLOVES_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
+/obj/item/clothing/shoes/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == SHOES_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
+/obj/item/clothing/suit/clothing_resistance_flag_examine_message(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(max_heat_protection_temperature == SPACE_SUIT_MAX_TEMP_PROTECT)
+		to_chat(user, "[src] is made of thermally insulated materials and offers some protection to fire.")
+		return TRUE
+
+//tesla_zap
+#define TESLA_MACHINE_EXPLOSIVE		(1<<0)
+#define TESLA_ALLOW_DUPLICATES		(1<<1)
+#define TESLA_OBJ_DAMAGE			(1<<2)
+#define TESLA_MOB_DAMAGE			(1<<3)
+#define TESLA_MOB_STUN				(1<<4)
+
+#define TESLA_DEFAULT_FLAGS ALL
+#define TESLA_FUSION_FLAGS TESLA_OBJ_DAMAGE | TESLA_MOB_DAMAGE | TESLA_MOB_STUN
+
+//EMP protection
+#define EMP_PROTECT_SELF (1<<0)
+#define EMP_PROTECT_CONTENTS (1<<1)
+#define EMP_PROTECT_WIRES (1<<2)
+
+//Mob mobility var flags
+#define MOBILITY_MOVE			(1<<0)		//can move
+#define MOBILITY_STAND			(1<<1)		//can, and is, standing up
+#define MOBILITY_PICKUP			(1<<2)		//can pickup items
+#define MOBILITY_USE			(1<<3)		//can hold and use items
+#define MOBILITY_UI				(1<<4)		//can use interfaces like machinery
+#define MOBILITY_STORAGE		(1<<5)		//can use storage item
+#define MOBILITY_PULL			(1<<6)		//can pull things
+
+#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
+#define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
+
+// radiation
+#define RAD_PROTECT_CONTENTS (1<<0)
+#define RAD_NO_CONTAMINATE (1<<1)

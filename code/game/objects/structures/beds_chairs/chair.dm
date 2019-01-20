@@ -37,7 +37,6 @@
 
 	if(istype(L))
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
-			to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 			return FALSE
 		else
 			return TRUE
@@ -72,7 +71,7 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
+	if(W.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
 		W.play_tool_sound(src)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
@@ -149,13 +148,16 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 70
 	buildstackamount = 2
-	var/mutable_appearance/armrest
 	item_chair = null
+	var/mutable_appearance/armrest
 
 /obj/structure/chair/comfy/Initialize()
-	armrest = mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
+	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
 	return ..()
+
+/obj/structure/chair/comfy/proc/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "comfychair_armrest")
 
 /obj/structure/chair/comfy/Destroy()
 	QDEL_NULL(armrest)
@@ -189,6 +191,14 @@
 
 /obj/structure/chair/comfy/lime
 	color = rgb(255,251,0)
+
+/obj/structure/chair/comfy/shuttle
+	name = "shuttle seat"
+	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
+	icon_state = "shuttle_chair"
+
+/obj/structure/chair/comfy/shuttle/GetArmrest()
+	return mutable_appearance('icons/obj/chairs.dmi', "shuttle_chair_armrest")
 
 /obj/structure/chair/office
 	anchored = FALSE
@@ -226,10 +236,10 @@
 		if(!item_chair || !usr.can_hold_items() || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
 			return
 		if(!usr.canUseTopic(src, BE_CLOSE, ismonkey(usr)))
-			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
+		TransferComponents(C)
 		usr.put_in_hands(C)
 		qdel(src)
 
@@ -281,6 +291,7 @@
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
+	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)
 
@@ -293,6 +304,8 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
+	else if(materials[MAT_METAL])
+		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
 
@@ -305,7 +318,7 @@
 	return 0
 
 /obj/item/chair/afterattack(atom/target, mob/living/carbon/user, proximity)
-	..()
+	. = ..()
 	if(!proximity)
 		return
 	if(prob(break_chance))
@@ -313,7 +326,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Knockdown(20)
+				C.Paralyze(20)
 		smash(user)
 
 
@@ -385,7 +398,7 @@
 	turns = 0
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
-	if(!isprocessing)
+	if(!(datum_flags & DF_ISPROCESSING))
 		user.visible_message("<span class='notice'>[user] spins [src] around, and Ratvarian technology keeps it spinning FOREVER.</span>", \
 		"<span class='notice'>Automated spinny chairs. The pinnacle of Ratvarian technology.</span>")
 		START_PROCESSING(SSfastprocess, src)
@@ -393,3 +406,17 @@
 		user.visible_message("<span class='notice'>[user] stops [src]'s uncontrollable spinning.</span>", \
 		"<span class='notice'>You grab [src] and stop its wild spinning.</span>")
 		STOP_PROCESSING(SSfastprocess, src)
+
+/obj/structure/chair/bronze
+	name = "brass chair"
+	desc = "A spinny chair made of bronze. It has little cogs for wheels!"
+	anchored = FALSE
+	icon_state = "brass_chair"
+	buildstacktype = /obj/item/stack/tile/bronze
+	buildstackamount = 1
+	item_chair = null
+
+/obj/structure/chair/bronze/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/machines/clockcult/integration_cog_install.ogg', 50, TRUE)

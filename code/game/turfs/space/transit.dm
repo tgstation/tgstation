@@ -1,4 +1,5 @@
 /turf/open/space/transit
+	name = "\proper hyperspace"
 	icon_state = "black"
 	dir = SOUTH
 	baseturfs = /turf/open/space/transit
@@ -40,12 +41,10 @@
 	var/min = 1+TRANSITIONEDGE
 
 	var/list/possible_transtitons = list()
-	var/k = 1
-	var/list/config_list = SSmapping.config.transition_config
-	for(var/a in config_list)
-		if(config_list[a] == CROSSLINKED) // Only pick z-levels connected to station space
-			possible_transtitons += k
-		k++
+	for(var/A in SSmapping.z_list)
+		var/datum/space_level/D = A
+		if (D.linkage == CROSSLINKED)
+			possible_transtitons += D.z_value
 	var/_z = pick(possible_transtitons)
 
 	//now select coordinates for a border turf

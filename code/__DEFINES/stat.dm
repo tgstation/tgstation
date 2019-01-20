@@ -9,12 +9,11 @@
 #define DEAD		3
 
 // bitflags for machine stat variable
-#define BROKEN		1
-#define NOPOWER		2
-#define MAINT		4			// under maintaince
-#define EMPED		8		// temporary broken by EMP pulse
+#define BROKEN	(1<<0)
+#define NOPOWER	(1<<1)
+#define MAINT	(1<<2)		// under maintaince
+#define EMPED	(1<<3)		// temporary broken by EMP pulse
 
 //ai power requirement defines
-#define POWER_REQ_NONE 0
 #define POWER_REQ_ALL 1
 #define POWER_REQ_CLOCKCULT 2

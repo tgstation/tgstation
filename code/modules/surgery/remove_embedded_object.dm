@@ -1,7 +1,7 @@
 /datum/surgery/embedded_removal
 	name = "removal of embedded objects"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/remove_object)
-	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/remove_object)
+	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 
 
 /datum/surgery_step/remove_object
@@ -30,6 +30,7 @@
 				L.embedded_objects -= I
 			if(!H.has_embedded_objects())
 				H.clear_alert("embeddedobject")
+				SEND_SIGNAL(H, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 			if(objects > 0)
 				user.visible_message("[user] successfully removes [objects] objects from [H]'s [L]!", "<span class='notice'>You successfully remove [objects] objects from [H]'s [L.name].</span>")

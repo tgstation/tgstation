@@ -1,13 +1,21 @@
 
-//Harvest; activated ly clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/ClickOn(atom/A, params) //revenants can't interact with the world directly.
-	A.examine(src)
+	var/list/modifiers = params2list(params)
+	if(modifiers["shift"])
+		ShiftClickOn(A)
+		return
+	if(modifiers["alt"])
+		AltClickNoInteract(src, A)
+		return
+
 	if(ishuman(A))
 		if(A in drained_mobs)
 			to_chat(src, "<span class='revenwarning'>[A]'s soul is dead and empty.</span>" )
 		else if(in_range(src, A))
 			Harvest(A)
 
+
+//Harvest; activated by clicking the target, will try to drain their essence.
 /mob/living/simple_animal/revenant/proc/Harvest(mob/living/carbon/human/target)
 	if(!castcheck(0))
 		return
@@ -43,7 +51,7 @@
 					to_chat(src, "<span class='revenbignotice'>Ah, the perfect soul. [target] will yield massive amounts of essence to you.</span>")
 			if(do_after(src, rand(15, 25), 0, target)) //how about now
 				if(!target.stat)
-					to_chat(src, "<span class='revenwarning'>[target.p_they(TRUE)] [target.p_are()] now powerful enough to fight off your draining.</span>")
+					to_chat(src, "<span class='revenwarning'>[target.p_theyre(TRUE)] now powerful enough to fight off your draining.</span>")
 					to_chat(target, "<span class='boldannounce'>You feel something tugging across your body before subsiding.</span>")
 					draining = 0
 					essence_drained = 0
@@ -51,9 +59,17 @@
 				to_chat(src, "<span class='revenminor'>You begin siphoning essence from [target]'s soul.</span>")
 				if(target.stat != DEAD)
 					to_chat(target, "<span class='warning'>You feel a horribly unpleasant draining sensation as your grip on life weakens...</span>")
+				if(target.stat == SOFT_CRIT)
+					target.Stun(46)
 				reveal(46)
 				stun(46)
 				target.visible_message("<span class='warning'>[target] suddenly rises slightly into the air, [target.p_their()] skin turning an ashy gray.</span>")
+				if(target.anti_magic_check(FALSE, TRUE))
+					to_chat(src, "<span class='revenminor'>Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!</span>")
+					target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
+											   "<span class='revenwarning'>Violet lights, dancing in your vision, receding--</span>")
+					draining = FALSE
+					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life",time=INFINITY)
 				if(do_after(src, 46, 0, target)) //As one cannot prove the existance of ghosts, ghosts cannot prove the existance of the target they were draining.
 					change_essence_amount(essence_drained, FALSE, target)
@@ -70,13 +86,13 @@
 					drained_mobs.Add(target)
 					target.death(0)
 				else
-					to_chat(src, "<span class='revenwarning'>[target ? "[target] has":"They have"] been drawn out of your grasp. The link has been broken.</span>")
+					to_chat(src, "<span class='revenwarning'>[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken.</span>")
 					if(target) //Wait, target is WHERE NOW?
 						target.visible_message("<span class='warning'>[target] slumps onto the ground.</span>", \
 											   "<span class='revenwarning'>Violets lights, dancing in your vision, receding--</span>")
 				qdel(B)
 			else
-				to_chat(src, "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"their"] soul. The link has been broken.</span>")
+				to_chat(src, "<span class='revenwarning'>You are not close enough to siphon [target ? "[target]'s":"[target.p_their()]"] soul. The link has been broken.</span>")
 	draining = FALSE
 	essence_drained = 0
 
@@ -90,35 +106,15 @@
 	action_background_icon_state = "bg_revenant"
 
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
-/obj/effect/proc_holder/spell/targeted/revenant_transmit
-	name = "Transmit"
-	desc = "Telepathically transmits a message to the target."
+/obj/effect/proc_holder/spell/targeted/telepathy/revenant
+	name = "Revenant Transmit"
 	panel = "Revenant Abilities"
-	charge_max = 0
-	clothes_req = 0
-	range = 7
-	include_user = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_transmit"
 	action_background_icon_state = "bg_revenant"
-
-/obj/effect/proc_holder/spell/targeted/revenant_transmit/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
-	for(var/mob/living/M in targets)
-		var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
-		if(!msg)
-			charge_counter = charge_max
-			return
-		log_talk(user,"RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]",LOGSAY)
-		to_chat(user, "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>")
-		to_chat(M, "<span class='revenboldnotice'>You hear something behind you talking...</span> <span class='revennotice'>[msg]</span>")
-		for(var/ded in GLOB.dead_mob_list)
-			if(!isobserver(ded))
-				continue
-			var/follow_rev = FOLLOW_LINK(ded, user)
-			var/follow_whispee = FOLLOW_LINK(ded, M)
-			to_chat(ded, "[follow_rev] <span class='revenboldnotice'>[user] Revenant Transmit:</span> <span class='revennotice'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>")
-
-
+	notice = "revennotice"
+	boldnotice = "revenboldnotice"
+	holy_check = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
@@ -132,10 +128,10 @@
 	var/unlock_amount = 100 //How much essence it costs to unlock
 	var/cast_amount = 50 //How much essence it costs to use
 
-/obj/effect/proc_holder/spell/aoe_turf/revenant/New()
-	..()
+/obj/effect/proc_holder/spell/aoe_turf/revenant/Initialize()
+	. = ..()
 	if(locked)
-		name = "[initial(name)] ([unlock_amount]E)"
+		name = "[initial(name)] ([unlock_amount]SE)"
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
@@ -147,7 +143,7 @@
 	if(user.inhibited)
 		return FALSE
 	if(locked)
-		if(user.essence <= unlock_amount)
+		if(user.essence_excess <= unlock_amount)
 			return FALSE
 	if(user.essence <= cast_amount)
 		return FALSE
@@ -161,7 +157,7 @@
 			locked = FALSE
 		return TRUE
 	if(locked)
-		if(!user.castcheck(-unlock_amount))
+		if (!user.unlock(unlock_amount))
 			charge_counter = charge_max
 			return FALSE
 		name = "[initial(name)] ([cast_amount]E)"
@@ -187,6 +183,7 @@
 	charge_max = 200
 	range = 5
 	stun = 30
+	unlock_amount = 25
 	cast_amount = 40
 	var/shock_range = 2
 	var/shock_damage = 15
@@ -216,7 +213,8 @@
 		if(M == user)
 			continue
 		L.Beam(M,icon_state="purple_lightning",time=5)
-		M.electrocute_act(shock_damage, L, safety=1)
+		if(!M.anti_magic_check(FALSE, TRUE))
+			M.electrocute_act(shock_damage, L, safety=TRUE)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
 
@@ -228,7 +226,7 @@
 	range = 4
 	stun = 20
 	reveal = 40
-	unlock_amount = 75
+	unlock_amount = 10
 	cast_amount = 30
 	action_icon_state = "defile"
 
@@ -255,7 +253,7 @@
 	if(T.type == /turf/closed/wall/r_wall && prob(10))
 		new /obj/effect/temp_visual/revenant(T)
 		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
-	for(var/obj/effect/decal/cleanable/salt/salt in T)
+	for(var/obj/effect/decal/cleanable/food/salt/salt in T)
 		new /obj/effect/temp_visual/revenant(T)
 		qdel(salt)
 	for(var/obj/structure/closet/closet in T.contents)
@@ -279,10 +277,10 @@
 	charge_max = 200
 	range = 4
 	cast_amount = 60
-	unlock_amount = 200
+	unlock_amount = 125
 	action_icon_state = "malfunction"
 
-//A note to future coders: do not replace this with an EMP because it will wreck malf AIs and gang dominators and everyone will hate you.
+//A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
 		for(var/turf/T in targets)
@@ -298,11 +296,13 @@
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
+		if(human.anti_magic_check(FALSE, TRUE))
+			continue
 		to_chat(human, "<span class='revenwarning'>You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")].</span>")
 		new /obj/effect/temp_visual/revenant(human.loc)
 		human.emp_act(EMP_HEAVY)
 	for(var/obj/thing in T)
-		if(istype(thing, /obj/machinery/dominator) || istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on dominators, SMES and APCs, to prevent kekkery
+		if(istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes)) //Doesn't work on SMES and APCs, to prevent kekkery
 			continue
 		if(prob(20))
 			if(prob(50))
@@ -324,7 +324,7 @@
 	charge_max = 200
 	range = 3
 	cast_amount = 50
-	unlock_amount = 200
+	unlock_amount = 75
 	action_icon_state = "blight"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
@@ -336,6 +336,8 @@
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
+		if(mob.anti_magic_check(FALSE, TRUE))
+			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
 			if(ishuman(mob))
@@ -343,12 +345,12 @@
 				if(H.dna && H.dna.species)
 					H.dna.species.handle_hair(H,"#1d2953") //will be reset when blight is cured
 				var/blightfound = FALSE
-				for(var/datum/disease/revblight/blight in H.viruses)
+				for(var/datum/disease/revblight/blight in H.diseases)
 					blightfound = TRUE
 					if(blight.stage < 5)
 						blight.stage++
 				if(!blightfound)
-					H.AddDisease(new /datum/disease/revblight)
+					H.ForceContractDisease(new /datum/disease/revblight(), FALSE, TRUE)
 					to_chat(H, "<span class='revenminor'>You feel [pick("suddenly sick", "a surge of nausea", "like your skin is <i>wrong</i>")].</span>")
 			else
 				if(mob.reagents)

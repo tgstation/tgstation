@@ -72,7 +72,7 @@
 	var/update_count = 0
 	for(var/ui_key in open_uis[src_object_key])
 		for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
-			if(ui && ui.src_object && ui.user && ui.src_object.ui_host()) // Check the UI is valid.
+			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user)) // Check the UI is valid.
 				ui.process(force = 1) // Update the UI.
 				update_count++ // Count each UI we update.
 	return update_count
@@ -94,7 +94,7 @@
 	var/close_count = 0
 	for(var/ui_key in open_uis[src_object_key])
 		for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
-			if(ui && ui.src_object && ui.user && ui.src_object.ui_host()) // Check the UI is valid.
+			if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user)) // Check the UI is valid.
 				ui.close() // Close the UI.
 				close_count++ // Count each UI we close.
 	return close_count
@@ -111,7 +111,7 @@
 	for(var/src_object_key in open_uis)
 		for(var/ui_key in open_uis[src_object_key])
 			for(var/datum/tgui/ui in open_uis[src_object_key][ui_key])
-				if(ui && ui.src_object && ui.user && ui.src_object.ui_host()) // Check the UI is valid.
+				if(ui && ui.src_object && ui.user && ui.src_object.ui_host(ui.user)) // Check the UI is valid.
 					ui.close() // Close the UI.
 					close_count++ // Count each UI we close.
 	return close_count

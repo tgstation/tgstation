@@ -3,8 +3,8 @@
 	typepath = /datum/round_event/space_dust
 	weight = 200
 	max_occurrences = 1000
-	earliest_start = 0
-	alertadmins = 0
+	earliest_start = 0 MINUTES
+	alert_observers = FALSE
 
 /datum/round_event/space_dust
 	startWhen		= 1
@@ -19,7 +19,7 @@
 	typepath = /datum/round_event/sandstorm
 	weight = 0
 	max_occurrences = 0
-	earliest_start = 0
+	earliest_start = 0 MINUTES
 
 /datum/round_event/sandstorm
 	startWhen = 1

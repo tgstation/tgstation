@@ -1,26 +1,23 @@
 //Brain Traumas are the new actual brain damage. Brain damage itself acts as a way to acquire traumas: every time brain damage is dealt, there's a chance of receiving a trauma.
 //This chance gets higher the higher the mob's brainloss is. Removing traumas is a separate thing from removing brain damage: you can get restored to full brain operativity,
-//but keep the quirks, until repaired by mannitol (for mild/special ones) or brain surgery (for severe ones).
+// but keep the quirks, until repaired by neurine, surgery, lobotomy or magic; depending on the resilience
+// of the trauma.
+
 /datum/brain_trauma
 	var/name = "Brain Trauma"
 	var/desc = "A trauma caused by brain damage, which causes issues to the patient."
-	var/scan_desc = "a generic brain trauma" //description when detected by a health scanner
+	var/scan_desc = "generic brain trauma" //description when detected by a health scanner
 	var/mob/living/carbon/owner //the poor bastard
 	var/obj/item/organ/brain/brain //the poor bastard's brain
 	var/gain_text = "<span class='notice'>You feel traumatized.</span>"
 	var/lose_text = "<span class='notice'>You no longer feel traumatized.</span>"
-	var/can_gain = TRUE //can this be gained through random traumas?
-	var/permanent = FALSE //can this be cured?
-
-/datum/brain_trauma/New(obj/item/organ/brain/B, _permanent)
-	brain = B
-	owner = B.owner
-	permanent = _permanent
-	if(owner)
-		on_gain()
+	var/can_gain = TRUE
+	var/random_gain = TRUE //can this be gained through random traumas?
+	var/resilience = TRAUMA_RESILIENCE_BASIC //how hard is this to cure?
 
 /datum/brain_trauma/Destroy()
-	brain.traumas -= src
+	if(brain && brain.traumas)
+		brain.traumas -= src
 	if(owner)
 		on_lose()
 	brain = null
@@ -29,6 +26,10 @@
 
 //Called on life ticks
 /datum/brain_trauma/proc/on_life()
+	return
+
+//Called on death
+/datum/brain_trauma/proc/on_death()
 	return
 
 //Called when given to a mob
@@ -47,3 +48,7 @@
 //Called when speaking
 /datum/brain_trauma/proc/on_say(message)
 	return message
+
+//Called when hugging. expand into generally interacting, where future coders could switch the intent?
+/datum/brain_trauma/proc/on_hug(mob/living/hugger, mob/living/hugged)
+	return

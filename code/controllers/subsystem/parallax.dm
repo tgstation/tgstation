@@ -1,10 +1,17 @@
 SUBSYSTEM_DEF(parallax)
 	name = "Parallax"
 	wait = 2
-	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
+	flags = SS_POST_FIRE_TIMING | SS_BACKGROUND
 	priority = FIRE_PRIORITY_PARALLAX
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
+	var/planet_x_offset = 128
+	var/planet_y_offset = 128
+
+/datum/controller/subsystem/parallax/Initialize(timeofday)
+	. = ..()
+	planet_y_offset = rand(100, 160)
+	planet_x_offset = rand(100, 160)
 
 /datum/controller/subsystem/parallax/fire(resumed = 0)
 	if (!resumed)

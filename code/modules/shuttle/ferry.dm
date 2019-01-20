@@ -6,14 +6,20 @@
 	possible_destinations = "ferry_home;ferry_away"
 	req_access = list(ACCESS_CENT_GENERAL)
 
-	var/aiControlDisabled = 1
+	var/allow_silicons = FALSE
+	var/allow_emag = FALSE
 
-/obj/machinery/computer/shuttle/ferry/proc/canAIControl(mob/user)
-	return ((aiControlDisabled != 1));
+/obj/machinery/computer/shuttle/ferry/emag_act(mob/user)
+	if(!allow_emag)
+		to_chat(user, "<span class='warning'>[src]'s security firewall is far too powerful for you to bypass.</span>")
+		return FALSE
+	return ..()
 
-/obj/machinery/computer/shuttle/ferry/attack_ai(mob/user)
-	if(!src.canAIControl(user))
-		return
+/obj/machinery/computer/shuttle/ferry/attack_ai()
+	return allow_silicons ? ..() : FALSE
+
+/obj/machinery/computer/shuttle/ferry/attack_robot()
+	return allow_silicons ? ..() : FALSE
 
 /obj/machinery/computer/shuttle/ferry/request
 	name = "ferry console"
@@ -30,5 +36,5 @@
 		if(last_request && (last_request + cooldown > world.time))
 			return
 		last_request = world.time
-		to_chat(usr, "<span class='notice'>Your request has been recieved by CentCom.</span>")
+		to_chat(usr, "<span class='notice'>Your request has been received by CentCom.</span>")
 		to_chat(GLOB.admins, "<b>FERRY: <font color='blue'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to CentCom.</font>")

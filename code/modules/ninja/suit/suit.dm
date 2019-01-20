@@ -13,13 +13,13 @@ Contents:
 
 /obj/item/clothing/suit/space/space_ninja
 	name = "ninja suit"
-	desc = "A unique, vaccum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
+	desc = "A unique, vacuum-proof suit of nano-enhanced armor designed specifically for Spider Clan assassins."
 	icon_state = "s-ninja"
 	item_state = "s-ninja_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
 	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 100, acid = 100)
+	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
 	strip_delay = 12
 
 	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
@@ -45,13 +45,14 @@ Contents:
 	var/s_delay = 40//How fast the suit does certain things, lower is faster. Can be overridden in specific procs. Also determines adverse probability.
 	var/a_transfer = 20//How much radium is used per adrenaline boost.
 	var/a_maxamount = 7//Maximum number of adrenaline boosts.
+	var/s_maxamount = 20//Maximum number of smoke bombs.
 
 		//Support function variables.
-	var/s_active = 0//Stealth off.
+	var/stealth = FALSE//Stealth off.
 	var/s_busy = FALSE//Is the suit busy with a process? Like AI hacking. Used for safety functions.
 
 		//Ability function variables.
-	var/s_bombs = 10//Number of starting ninja smoke bombs.
+	var/s_bombs = 10//Number of smoke bombs.
 	var/a_boost = 3//Number of adrenaline boosters.
 
 
@@ -110,15 +111,15 @@ Contents:
 		to_chat(H, "<span class='userdanger'>ERROR</span>: 110223 UNABLE TO LOCATE HAND GEAR\nABORTING...")
 		return FALSE
 	affecting = H
-	flags_1 |= NODROP_1 //colons make me go all |=
+	add_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	slowdown = 0
 	n_hood = H.head
-	n_hood.flags_1 |= NODROP_1
+	n_hood.add_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes = H.shoes
-	n_shoes.flags_1 |= NODROP_1
+	n_shoes.add_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	n_shoes.slowdown--
 	n_gloves = H.gloves
-	n_gloves.flags_1 |= NODROP_1
+	n_gloves.add_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	return TRUE
 
 /obj/item/clothing/suit/space/space_ninja/proc/lockIcons(mob/living/carbon/human/H)
@@ -130,20 +131,20 @@ Contents:
 //This proc allows the suit to be taken off.
 /obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
 	affecting = null
-	flags_1 &= ~NODROP_1
+	remove_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	slowdown = 1
 	icon_state = "s-ninja"
 	if(n_hood)//Should be attached, might not be attached.
-		n_hood.flags_1 &= ~NODROP_1
+		n_hood.remove_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
 	if(n_shoes)
-		n_shoes.flags_1 &= ~NODROP_1
+		n_shoes.remove_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
 		n_shoes.slowdown++
 	if(n_gloves)
 		n_gloves.icon_state = "s-ninja"
 		n_gloves.item_state = "s-ninja"
-		n_gloves.flags_1 &= ~NODROP_1
-		n_gloves.candrain=0
-		n_gloves.draining=0
+		n_gloves.remove_trait(TRAIT_NODROP, NINJA_SUIT_TRAIT)
+		n_gloves.candrain = FALSE
+		n_gloves.draining = FALSE
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
@@ -151,7 +152,7 @@ Contents:
 	if(s_initialized)
 		if(user == affecting)
 			to_chat(user, "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.")
-			to_chat(user, "The CLOAK-tech device is <B>[s_active?"active":"inactive"]</B>.")
+			to_chat(user, "The CLOAK-tech device is <B>[stealth?"active":"inactive"]</B>.")
 			to_chat(user, "There are <B>[s_bombs]</B> smoke bomb\s remaining.")
 			to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
 

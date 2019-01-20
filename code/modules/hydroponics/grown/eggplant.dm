@@ -23,12 +23,15 @@
 	filling_color = "#800080"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	wine_power = 20
 
 // Egg-Plant
 /obj/item/seeds/eggplant/eggy
+	name = "pack of egg-plant seeds"
 	desc = "These seeds grow to produce berries that look a lot like eggs."
 	icon_state = "seed-eggy"
 	species = "eggy"
+	plantname = "Egg-Plants"
 	product = /obj/item/reagent_containers/food/snacks/grown/shell/eggy
 	lifespan = 75
 	production = 12
@@ -37,10 +40,11 @@
 
 /obj/item/reagent_containers/food/snacks/grown/shell/eggy
 	seed = /obj/item/seeds/eggplant/eggy
-	name = "Egg-plant"
+	name = "egg-plant"
 	desc = "There MUST be a chicken inside."
 	icon_state = "eggyplant"
 	trash = /obj/item/reagent_containers/food/snacks/egg
 	filling_color = "#F8F8FF"
 	bitesize_mod = 2
 	foodtype = MEAT
+	distill_reagent = "eggnog"

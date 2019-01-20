@@ -10,7 +10,7 @@
 				s_coold--//Checks for ability s_cooldown first.
 
 			cell.charge -= s_cost//s_cost is the default energy cost each ntick, usually 5.
-			if(s_active)//If stealth is active.
+			if(stealth)//If stealth is active.
 				cell.charge -= s_acost
 
 		else

@@ -14,22 +14,23 @@
 
 
 //bitflags for door switches.
-#define OPEN	1
-#define IDSCAN	2
-#define BOLTS	4
-#define SHOCK	8
-#define SAFE	16
+#define OPEN	(1<<0)
+#define IDSCAN	(1<<1)
+#define BOLTS	(1<<2)
+#define SHOCK	(1<<3)
+#define SAFE	(1<<4)
 
 //used in design to specify which machine can build it
-#define	IMPRINTER	1	//For circuits. Uses glass/chemicals.
-#define PROTOLATHE	2	//New stuff. Uses glass/metal/chemicals
-#define	AUTOLATHE	4	//Uses glass/metal only.
-#define CRAFTLATHE	8	//Uses fuck if I know. For use eventually.
-#define MECHFAB		16 //Remember, objects utilising this flag should have construction_time and construction_cost vars.
-#define BIOGENERATOR 32 //Uses biomass
-#define LIMBGROWER 64 //Uses synthetic flesh
-#define SMELTER 128 //uses various minerals
-//Note: More then one of these can be added to a design but imprinter and lathe designs are incompatable.
+#define IMPRINTER		(1<<0)	//For circuits. Uses glass/chemicals.
+#define PROTOLATHE		(1<<1)	//New stuff. Uses glass/metal/chemicals
+#define AUTOLATHE		(1<<2)	//Uses glass/metal only.
+#define CRAFTLATHE		(1<<3)	//Uses fuck if I know. For use eventually.
+#define MECHFAB			(1<<4) 	//Remember, objects utilising this flag should have construction_time and construction_cost vars.
+#define BIOGENERATOR	(1<<5) 	//Uses biomass
+#define LIMBGROWER		(1<<6) 	//Uses synthetic flesh
+#define SMELTER			(1<<7) 	//uses various minerals
+#define NANITE_COMPILER  (1<<8) //Prints nanite disks
+//Note: More than one of these can be added to a design but imprinter and lathe designs are incompatable.
 
 //Modular computer/NTNet defines
 
@@ -61,10 +62,10 @@
 #define MIN_NTNET_LOGS 10
 
 //Program bitflags
-#define PROGRAM_ALL 7
-#define PROGRAM_CONSOLE 1
-#define PROGRAM_LAPTOP 2
-#define PROGRAM_TABLET 4
+#define PROGRAM_ALL		(~0)
+#define PROGRAM_CONSOLE	(1<<0)
+#define PROGRAM_LAPTOP	(1<<1)
+#define PROGRAM_TABLET	(1<<2)
 //Program states
 #define PROGRAM_STATE_KILLED 0
 #define PROGRAM_STATE_BACKGROUND 1
@@ -85,5 +86,23 @@
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
 #define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
 
-//R&D Snowflakes
-#define RD_CONSOLE_LOCKED_SCREEN 0.2
+//Nuclear bomb stuff
+#define NUKESTATE_INTACT		5
+#define NUKESTATE_UNSCREWED		4
+#define NUKESTATE_PANEL_REMOVED		3
+#define NUKESTATE_WELDED		2
+#define NUKESTATE_CORE_EXPOSED	1
+#define NUKESTATE_CORE_REMOVED	0
+
+#define NUKE_OFF_LOCKED		0
+#define NUKE_OFF_UNLOCKED	1
+#define NUKE_ON_TIMING		2
+#define NUKE_ON_EXPLODING	3
+
+#define MACHINE_NOT_ELECTRIFIED 0
+#define MACHINE_ELECTRIFIED_PERMANENT -1
+#define MACHINE_DEFAULT_ELECTRIFY_TIME 30
+
+//cloning defines. These are flags.
+#define CLONING_SUCCESS (1<<0)
+#define CLONING_DELETE_RECORD (1<<1)

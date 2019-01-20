@@ -16,15 +16,19 @@ Clown
 
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
+	paycheck = PAYCHECK_MINIMAL
+	paycheck_department = ACCOUNT_SRV
+
 
 /datum/job/clown/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.rename_self("clown", M.client)
+	. = ..()
+	H.apply_pref_name("clown", M.client)
 
 /datum/outfit/job/clown
 	name = "Clown"
 	jobtype = /datum/job/clown
 
-	belt = /obj/item/device/pda/clown
+	belt = /obj/item/pda/clown
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
@@ -33,7 +37,7 @@ Clown
 		/obj/item/stamp/clown = 1,
 		/obj/item/reagent_containers/spray/waterflower = 1,
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/instrument/bikehorn = 1,
+		/obj/item/instrument/bikehorn = 1,
 		)
 
 	implants = list(/obj/item/implant/sad_trombone)
@@ -44,19 +48,14 @@ Clown
 
 	box = /obj/item/storage/box/hug/survival
 
-
-/datum/outfit/job/clown/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-
-	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names))
+	chameleon_extras = /obj/item/stamp/clown
 
 /datum/outfit/job/clown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
 	if(visualsOnly)
 		return
 
+	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	H.dna.add_mutation(CLOWNMUT)
 
 /*
@@ -77,19 +76,22 @@ Mime
 
 	access = list(ACCESS_THEATRE)
 	minimal_access = list(ACCESS_THEATRE)
+	paycheck = PAYCHECK_MINIMAL
+	paycheck_department = ACCOUNT_SRV
+
 
 /datum/job/mime/after_spawn(mob/living/carbon/human/H, mob/M)
-	H.rename_self("mime", M.client)
+	H.apply_pref_name("mime", M.client)
 
 /datum/outfit/job/mime
 	name = "Mime"
 	jobtype = /datum/job/mime
 
-	belt = /obj/item/device/pda/mime
+	belt = /obj/item/pda/mime
 	uniform = /obj/item/clothing/under/rank/mime
 	mask = /obj/item/clothing/mask/gas/mime
 	gloves = /obj/item/clothing/gloves/color/white
-	head = /obj/item/clothing/head/beret
+	head = /obj/item/clothing/head/frenchberet
 	suit = /obj/item/clothing/suit/suspenders
 	backpack_contents = list(/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
@@ -127,19 +129,22 @@ Curator
 
 	access = list(ACCESS_LIBRARY)
 	minimal_access = list(ACCESS_LIBRARY, ACCESS_CONSTRUCTION,ACCESS_MINING_STATION)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_CIV
+
 
 /datum/outfit/job/curator
 	name = "Curator"
 	jobtype = /datum/job/curator
 
-	belt = /obj/item/device/pda/curator
+	belt = /obj/item/pda/curator
 	uniform = /obj/item/clothing/under/rank/curator
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
-	l_pocket = /obj/item/device/laser_pointer
+	l_pocket = /obj/item/laser_pointer
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
-		/obj/item/melee/curator_whip = 1,
+		/obj/item/choice_beacon/hero = 1,
 		/obj/item/soapstone = 1,
 		/obj/item/barcodescanner = 1
 	)
@@ -152,7 +157,6 @@ Curator
 		return
 
 	H.grant_all_languages(omnitongue=TRUE)
-	H.gain_trauma(/datum/brain_trauma/mild/phobia, FALSE, "snakes") //why does it have to be snakes...
 /*
 Lawyer
 */
@@ -172,19 +176,25 @@ Lawyer
 
 	access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
 	minimal_access = list(ACCESS_LAWYER, ACCESS_COURT, ACCESS_SEC_DOORS)
+	paycheck = PAYCHECK_EASY
+	paycheck_department = ACCOUNT_CIV
+	mind_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM)
+
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"
 	jobtype = /datum/job/lawyer
 
-	belt = /obj/item/device/pda/lawyer
-	ears = /obj/item/device/radio/headset/headset_sec
+	belt = /obj/item/pda/lawyer
+	ears = /obj/item/radio/headset/headset_sec
 	uniform = /obj/item/clothing/under/lawyer/bluesuit
 	suit = /obj/item/clothing/suit/toggle/lawyer
 	shoes = /obj/item/clothing/shoes/laceup
 	l_hand = /obj/item/storage/briefcase/lawyer
-	l_pocket = /obj/item/device/laser_pointer
+	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+
+	chameleon_extras = /obj/item/stamp/law
 
 
 /datum/outfit/job/lawyer/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

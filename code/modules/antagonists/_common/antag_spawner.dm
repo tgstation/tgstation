@@ -58,12 +58,14 @@
 				return
 			var/list/candidates = pollCandidatesForMob("Do you want to play as a wizard's [href_list["school"]] apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 150, src)
 			if(LAZYLEN(candidates))
+				if(QDELETED(src))
+					return
 				if(used)
 					to_chat(H, "You already used this contract!")
 					return
 				used = TRUE
-				var/client/C = pick(candidates)
-				spawn_antag(C, get_turf(src), href_list["school"],H.mind)
+				var/mob/dead/observer/C = pick(candidates)
+				spawn_antag(C.client, get_turf(src), href_list["school"],H.mind)
 			else
 				to_chat(H, "Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later.")
 
@@ -73,7 +75,7 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
-	
+
 	var/datum/antagonist/wizard/apprentice/app = new()
 	app.master = user
 	app.school = kind
@@ -121,11 +123,11 @@
 	to_chat(user, "<span class='notice'>You activate [src] and wait for confirmation.</span>")
 	var/list/nuke_candidates = pollGhostCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
 	if(LAZYLEN(nuke_candidates))
-		if(!(check_usability(user)))
+		if(QDELETED(src) || !check_usability(user))
 			return
 		used = TRUE
-		var/client/C = pick(nuke_candidates)
-		spawn_antag(C, get_turf(src), "syndieborg", user.mind)
+		var/mob/dead/observer/G = pick(nuke_candidates)
+		spawn_antag(G.client, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
@@ -145,10 +147,30 @@
 		M.mind.add_antag_datum(new_op,creator_op.nuke_team)
 		M.mind.special_role = "Nuclear Operative"
 
+//////CLOWN OP
+/obj/item/antag_spawner/nuke_ops/clown
+	name = "clown operative teleporter"
+	desc = "A single-use teleporter designed to quickly reinforce clown operatives in the field."
+
+/obj/item/antag_spawner/nuke_ops/clown/spawn_antag(client/C, turf/T, kind, datum/mind/user)
+	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
+	C.prefs.copy_to(M)
+	M.key = C.key
+
+	var/datum/antagonist/nukeop/clownop/new_op = new /datum/antagonist/nukeop/clownop()
+	new_op.send_to_spawnpoint = FALSE
+	new_op.nukeop_outfit = /datum/outfit/syndicate/clownop/no_crystals
+
+	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop/clownop,TRUE)
+	if(creator_op)
+		M.mind.add_antag_datum(new_op, creator_op.nuke_team)
+		M.mind.special_role = "Clown Operative"
+
+
 //////SYNDICATE BORG
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg teleporter"
-	desc = "A single-use teleporter designed to quickly reinforce operatives in the field.."
+	desc = "A single-use teleporter designed to quickly reinforce operatives in the field."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 
@@ -160,6 +182,10 @@
 	name = "syndicate medical teleporter"
 	borg_to_spawn = "Medical"
 
+/obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
+	name = "syndicate saboteur teleporter"
+	borg_to_spawn = "Saboteur"
+
 /obj/item/antag_spawner/nuke_ops/borg_tele/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/silicon/robot/R
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
@@ -169,6 +195,8 @@
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
+		if("Saboteur")
+			R = new /mob/living/silicon/robot/modules/syndicate/saboteur(T)
 		else
 			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
@@ -180,14 +208,14 @@
 		brainopslastname = creator_op.nuke_team.syndicate_name
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
 
-	R.mmi.name = "Man-Machine Interface: [brainopsname]"
+	R.mmi.name = "[initial(R.mmi.name)]: [brainopsname]"
 	R.mmi.brain.name = "[brainopsname]'s brain"
 	R.mmi.brainmob.real_name = brainopsname
 	R.mmi.brainmob.name = brainopsname
 	R.real_name = R.name
 
 	R.key = C.key
-	
+
 	var/datum/antagonist/nukeop/new_borg = new()
 	new_borg.send_to_spawnpoint = FALSE
 	R.mind.add_antag_datum(new_borg,creator_op.nuke_team)
@@ -215,11 +243,11 @@
 		return
 	var/list/candidates = pollCandidatesForMob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, null, ROLE_ALIEN, 50, src)
 	if(LAZYLEN(candidates))
-		if(used)
+		if(used || QDELETED(src))
 			return
 		used = TRUE
-		var/client/C = pick(candidates)
-		spawn_antag(C, get_turf(src), initial(demon_type.name),user.mind)
+		var/mob/dead/observer/C = pick(candidates)
+		spawn_antag(C.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
@@ -229,7 +257,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
-	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
+	var/obj/effect/dummy/phased_mob/slaughter/holder = new /obj/effect/dummy/phased_mob/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
 	S.holder = holder
 	S.key = C.key

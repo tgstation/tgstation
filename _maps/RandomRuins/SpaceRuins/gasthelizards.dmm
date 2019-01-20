@@ -136,20 +136,26 @@
 	dir = 1;
 	layer = 2.9
 	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "blue"
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/gasthelizard)
 "q" = (
 /obj/machinery/door/window/brigdoor/northleft,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "blue"
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
 	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/ruin/space/has_grav/gasthelizard)
 "r" = (
 /turf/open/floor/plasteel/airless/dark,
@@ -352,9 +358,17 @@
 /area/ruin/space/has_grav/gasthelizard)
 "V" = (
 /obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/gasthelizard)
 "W" = (
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/gasthelizard)
+"Z" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/gasthelizard)
 
@@ -452,7 +466,7 @@ B
 B
 V
 W
-V
+Z
 "}
 (7,1,1) = {"
 b

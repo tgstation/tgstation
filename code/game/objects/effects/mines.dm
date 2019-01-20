@@ -48,7 +48,7 @@
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
-		victim.Knockdown(stun_time)
+		victim.Paralyze(stun_time)
 
 /obj/effect/mine/kickmine
 	name = "kick mine"
@@ -98,8 +98,8 @@
 	density = FALSE
 	var/duration = 0
 
-/obj/effect/mine/pickup/New()
-	..()
+/obj/effect/mine/pickup/Initialize()
+	. = ..()
 	animate(src, pixel_y = 4, time = 20, loop = -1)
 
 /obj/effect/mine/pickup/triggermine(mob/victim)
@@ -121,21 +121,23 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='reallybig redtext'>RIP AND TEAR</span>")
-	SEND_SOUND(victim, sound('sound/misc/e1m1.ogg'))
 	var/old_color = victim.client.color
-	var/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
-	var/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
+	var/static/list/red_splash = list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0)
+	var/static/list/pure_red = list(0,0,0,0,0,0,0,0,0,1,0,0)
 
 	spawn(0)
 		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
 	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
-	chainsaw.flags_1 |= NODROP_1
+	victim.log_message("entered a blood frenzy", LOG_ATTACK)
+
+	chainsaw.add_trait(TRAIT_NODROP, CHAINSAW_FRENZY_TRAIT)
 	victim.drop_all_held_items()
-	victim.put_in_hands(chainsaw)
+	victim.put_in_hands(chainsaw, forced = TRUE)
 	chainsaw.attack_self(victim)
 	chainsaw.wield(victim)
 	victim.reagents.add_reagent("adminordrazine",25)
+	to_chat(victim, "<span class='warning'>KILL, KILL, KILL! YOU HAVE NO ALLIES ANYMORE, KILL THEM ALL!</span>")
 
 	victim.client.color = pure_red
 	animate(victim.client,color = red_splash, time = 10, easing = SINE_EASING|EASE_OUT)
@@ -144,6 +146,7 @@
 	sleep(duration)
 	to_chat(victim, "<span class='notice'>Your bloodlust seeps back into the bog of your subconscious and you regain self control.</span>")
 	qdel(chainsaw)
+	victim.log_message("exited a blood frenzy", LOG_ATTACK)
 	qdel(src)
 
 /obj/effect/mine/pickup/healing
@@ -167,7 +170,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.add_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
+	victim.add_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
 	sleep(duration)
-	victim.remove_trait(TRAIT_GOTTAGOREALLYFAST, "yellow_orb")
+	victim.remove_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")

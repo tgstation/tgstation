@@ -5,16 +5,26 @@
 	icon_state = "gland"
 	status = ORGAN_ROBOTIC
 	beating = TRUE
+	var/true_name = "baseline placebo referencer"
 	var/cooldown_low = 300
 	var/cooldown_high = 300
 	var/next_activation = 0
 	var/uses // -1 For infinite
-	var/human_only = 0
-	var/active = 0
+	var/human_only = FALSE
+	var/active = FALSE
 
 	var/mind_control_uses = 1
 	var/mind_control_duration = 1800
 	var/active_mind_control = FALSE
+
+/obj/item/organ/heart/gland/Initialize()
+	. = ..()
+	icon_state = pick(list("health", "spider", "slime", "emp", "species", "egg", "vent", "mindshock", "viral"))
+
+/obj/item/organ/heart/gland/examine(mob/user)
+	. = ..()
+	if(user.has_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING) || isobserver(user))
+		to_chat(user, "<span class='notice'>It is \a [true_name].</span>")
 
 /obj/item/organ/heart/gland/proc/ownerCheck()
 	if(ishuman(owner))
@@ -95,6 +105,7 @@
 	return
 
 /obj/item/organ/heart/gland/heals
+	true_name = "coherency harmonizer"
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
@@ -105,10 +116,11 @@
 /obj/item/organ/heart/gland/heals/activate()
 	to_chat(owner, "<span class='notice'>You feel curiously revitalized.</span>")
 	owner.adjustToxLoss(-20, FALSE, TRUE)
-	owner.heal_bodypart_damage(20, 20, TRUE)
+	owner.heal_bodypart_damage(20, 20, 0, TRUE)
 	owner.adjustOxyLoss(-20)
 
 /obj/item/organ/heart/gland/slime
+	true_name = "gastric animation galvanizer"
 	cooldown_low = 600
 	cooldown_high = 1200
 	uses = -1
@@ -122,7 +134,7 @@
 	owner.grant_language(/datum/language/slime)
 
 /obj/item/organ/heart/gland/slime/activate()
-	to_chat(owner, "<span class='warning'>You feel nauseous!</span>")
+	to_chat(owner, "<span class='warning'>You feel nauseated!</span>")
 	owner.vomit(20)
 
 	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
@@ -130,6 +142,7 @@
 	Slime.Leader = owner
 
 /obj/item/organ/heart/gland/mindshock
+	true_name = "neural crosstalk uninhibitor"
 	cooldown_low = 400
 	cooldown_high = 700
 	uses = -1
@@ -153,9 +166,10 @@
 				H.confused += 15
 				H.adjustBrainLoss(10, 160)
 			if(3)
-				H.hallucination += 80
+				H.hallucination += 60
 
 /obj/item/organ/heart/gland/pop
+	true_name = "anthropmorphic translocator"
 	cooldown_low = 900
 	cooldown_high = 1800
 	uses = -1
@@ -171,6 +185,7 @@
 	owner.set_species(species)
 
 /obj/item/organ/heart/gland/ventcrawling
+	true_name = "pliant cartilage enabler"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -183,6 +198,7 @@
 	owner.ventcrawler = VENTCRAWLER_ALWAYS
 
 /obj/item/organ/heart/gland/viral
+	true_name = "contamination incubator"
 	cooldown_low = 1800
 	cooldown_high = 2400
 	uses = 1
@@ -194,15 +210,12 @@
 	to_chat(owner, "<span class='warning'>You feel sick.</span>")
 	var/datum/disease/advance/A = random_virus(pick(2,6),6)
 	A.carrier = TRUE
-	owner.viruses += A
-	A.affected_mob = owner
-	owner.med_hud_set_status()
+	owner.ForceContractDisease(A, FALSE, TRUE)
 
 /obj/item/organ/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
-	if(max_symptoms > SYMPTOM_LIMIT)
-		max_symptoms = SYMPTOM_LIMIT
-	var/datum/disease/advance/A = new(FALSE, null)
-	A.symptoms = list()
+	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)
+		max_symptoms = VIRUS_SYMPTOM_LIMIT
+	var/datum/disease/advance/A = new /datum/disease/advance()
 	var/list/datum/symptom/possible_symptoms = list()
 	for(var/symptom in subtypesof(/datum/symptom))
 		var/datum/symptom/S = symptom
@@ -219,7 +232,8 @@
 	A.Refresh() //just in case someone already made and named the same disease
 	return A
 
-/obj/item/organ/heart/gland/trauma //TODO : Replace with something more interesting
+/obj/item/organ/heart/gland/trauma
+	true_name = "white matter randomiser"
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = 5
@@ -230,14 +244,15 @@
 /obj/item/organ/heart/gland/trauma/activate()
 	to_chat(owner, "<span class='warning'>You feel a spike of pain in your head.</span>")
 	if(prob(33))
-		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, TRUE)
+		owner.gain_trauma_type(BRAIN_TRAUMA_SPECIAL, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 	else
 		if(prob(20))
-			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRUE)
+			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 		else
-			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, TRUE)
+			owner.gain_trauma_type(BRAIN_TRAUMA_MILD, rand(TRAUMA_RESILIENCE_BASIC, TRAUMA_RESILIENCE_LOBOTOMY))
 
 /obj/item/organ/heart/gland/spiderman
+	true_name = "araneae cloister accelerator"
 	cooldown_low = 450
 	cooldown_high = 900
 	uses = -1
@@ -252,6 +267,7 @@
 	S.directive = "Protect your nest inside [owner.real_name]."
 
 /obj/item/organ/heart/gland/egg
+	true_name = "roe/enzymatic synthesizer"
 	cooldown_low = 300
 	cooldown_high = 400
 	uses = -1
@@ -267,6 +283,7 @@
 	new /obj/item/reagent_containers/food/snacks/egg/gland(T)
 
 /obj/item/organ/heart/gland/electric
+	true_name = "electron accumulator/discharger"
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = -1
@@ -275,10 +292,10 @@
 
 /obj/item/organ/heart/gland/electric/Insert(mob/living/carbon/M, special = 0)
 	..()
-	owner.add_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.add_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 
 /obj/item/organ/heart/gland/electric/Remove(mob/living/carbon/M, special = 0)
-	owner.remove_trait(TRAIT_SHOCKIMMUNE, "abductor_gland")
+	owner.remove_trait(TRAIT_SHOCKIMMUNE, ORGAN_TRAIT)
 	..()
 
 /obj/item/organ/heart/gland/electric/activate()
@@ -288,10 +305,11 @@
 	addtimer(CALLBACK(src, .proc/zap), rand(30, 100))
 
 /obj/item/organ/heart/gland/electric/proc/zap()
-	tesla_zap(owner, 4, 8000, FALSE, TRUE)
+	tesla_zap(owner, 4, 8000, TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE | TESLA_MOB_STUN)
 	playsound(get_turf(owner), 'sound/magic/lightningshock.ogg', 50, 1)
 
 /obj/item/organ/heart/gland/chem
+	true_name = "intrinsic pharma-provider"
 	cooldown_low = 50
 	cooldown_high = 50
 	uses = -1
@@ -300,7 +318,7 @@
 	var/list/possible_reagents = list()
 
 /obj/item/organ/heart/gland/chem/Initialize()
-	..()
+	. = ..()
 	for(var/X in subtypesof(/datum/reagent/drug))
 		var/datum/reagent/R = X
 		possible_reagents += initial(R.id)
@@ -318,6 +336,7 @@
 	..()
 
 /obj/item/organ/heart/gland/plasma
+	true_name = "effluvium sanguine-synonym emitter"
 	cooldown_low = 1200
 	cooldown_high = 1800
 	uses = -1

@@ -6,26 +6,30 @@
 	w_class = WEIGHT_CLASS_SMALL
 	device_type = MC_AI
 
-	var/obj/item/device/aicard/stored_card = null
+	var/obj/item/aicard/stored_card = null
 	var/locked = FALSE
 
+/obj/item/computer_hardware/ai_slot/handle_atom_del(atom/A)
+	if(A == stored_card)
+		try_eject(0, null, TRUE)
+	. = ..()
 
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
 	..()
 	if(stored_card)
 		to_chat(user, "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it.")
 
-/obj/item/computer_hardware/ai_slot/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/ai_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
 
-/obj/item/computer_hardware/ai_slot/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/ai_slot/on_remove(obj/item/modular_computer/M, mob/living/user = null)
 	M.remove_verb(device_type)
 
 /obj/item/computer_hardware/ai_slot/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
 		return FALSE
 
-	if(!istype(I, /obj/item/device/aicard))
+	if(!istype(I, /obj/item/aicard))
 		return FALSE
 
 	if(stored_card)
@@ -50,19 +54,21 @@
 		return FALSE
 
 	if(stored_card)
-		stored_card.forceMove(get_turf(src))
+		to_chat(user, "<span class='notice'>You remove [stored_card] from [src].</span>")
 		locked = FALSE
-		stored_card.verb_pickup()
+		if(user)
+			user.put_in_hands(stored_card)
+		else
+			stored_card.forceMove(drop_location())
 		stored_card = null
 
-		to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 		return TRUE
 	return FALSE
 
 /obj/item/computer_hardware/ai_slot/attackby(obj/item/I, mob/living/user)
 	if(..())
 		return
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
 		try_eject(,user,1)
 		return

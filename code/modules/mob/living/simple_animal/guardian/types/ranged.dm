@@ -37,7 +37,6 @@
 			environment_smash = initial(environment_smash)
 			alpha = 255
 			range = initial(range)
-			incorporeal_move = FALSE
 			to_chat(src, "<span class='danger'><B>You switch to combat mode.</span></B>")
 			toggle = FALSE
 		else
@@ -48,7 +47,6 @@
 			environment_smash = ENVIRONMENT_SMASH_NONE
 			alpha = 45
 			range = 255
-			incorporeal_move = INCORPOREAL_MOVE_BASIC
 			to_chat(src, "<span class='danger'><B>You switch to scout mode.</span></B>")
 			toggle = TRUE
 	else
@@ -123,3 +121,13 @@
 
 /obj/effect/snare/singularity_pull()
 	return
+
+/mob/living/simple_animal/hostile/guardian/ranged/Manifest(forced)
+	if (toggle)
+		incorporeal_move = INCORPOREAL_MOVE_BASIC
+	. = ..()
+
+/mob/living/simple_animal/hostile/guardian/ranged/Recall(forced)
+	// To stop scout mode from moving when recalled
+	incorporeal_move = FALSE
+	. = ..()

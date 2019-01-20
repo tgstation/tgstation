@@ -4,7 +4,7 @@
 
 /mob/living/carbon/get_bodypart(zone)
 	if(!zone)
-		zone = "chest"
+		zone = BODY_ZONE_CHEST
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/L = X
 		if(L.body_zone == zone)
@@ -13,33 +13,35 @@
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(i)
 		var/obj/item/bodypart/L = hand_bodyparts[i]
-		if(L)
+		if(L && !L.disabled)
 			return L
 	return FALSE
 
 
 
 
-/mob/proc/has_left_hand()
+/mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE
 
-/mob/living/carbon/has_left_hand()
+/mob/living/carbon/has_left_hand(check_disabled = TRUE)
 	for(var/obj/item/bodypart/L in hand_bodyparts)
 		if(L.held_index % 2)
-			return TRUE
+			if(!check_disabled || !L.disabled)
+				return TRUE
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_left_hand()
 	return 1
 
 
-/mob/proc/has_right_hand()
+/mob/proc/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
-/mob/living/carbon/has_right_hand()
+/mob/living/carbon/has_right_hand(check_disabled = TRUE)
 	for(var/obj/item/bodypart/L in hand_bodyparts)
 		if(!(L.held_index % 2))
-			return TRUE
+			if(!check_disabled || !L.disabled)
+				return TRUE
 	return FALSE
 
 /mob/living/carbon/alien/larva/has_right_hand()
@@ -48,17 +50,19 @@
 
 
 //Limb numbers
-/mob/proc/get_num_arms()
+/mob/proc/get_num_arms(check_disabled = TRUE)
 	return 2
 
-/mob/living/carbon/get_num_arms()
+/mob/living/carbon/get_num_arms(check_disabled = TRUE)
 	. = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/affecting = X
 		if(affecting.body_part == ARM_RIGHT)
-			.++
+			if(!check_disabled || !affecting.disabled)
+				.++
 		if(affecting.body_part == ARM_LEFT)
-			.++
+			if(!check_disabled || !affecting.disabled)
+				.++
 
 
 //sometimes we want to ignore that we don't have the required amount of arms.
@@ -69,17 +73,19 @@
 	return 1 //so we can still handcuff larvas.
 
 
-/mob/proc/get_num_legs()
+/mob/proc/get_num_legs(check_disabled = TRUE)
 	return 2
 
-/mob/living/carbon/get_num_legs()
+/mob/living/carbon/get_num_legs(check_disabled = TRUE)
 	. = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/affecting = X
 		if(affecting.body_part == LEG_RIGHT)
-			.++
+			if(!check_disabled || !affecting.disabled)
+				.++
 		if(affecting.body_part == LEG_LEFT)
-			.++
+			if(!check_disabled || !affecting.disabled)
+				.++
 
 //sometimes we want to ignore that we don't have the required amount of legs.
 /mob/proc/get_leg_ignore()
@@ -89,7 +95,7 @@
 	return TRUE
 
 /mob/living/carbon/human/get_leg_ignore()
-	if((movement_type & FLYING) || floating)
+	if(movement_type & (FLYING | FLOATING))
 		return TRUE
 	return FALSE
 
@@ -97,18 +103,39 @@
 	return list()
 
 /mob/living/carbon/get_missing_limbs()
-	var/list/full = list("head", "chest", "r_arm", "l_arm", "r_leg", "l_leg")
+	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
 	return full
 
 /mob/living/carbon/alien/larva/get_missing_limbs()
-	var/list/full = list("head", "chest")
+	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
 	return full
+
+/mob/living/proc/get_disabled_limbs()
+	return list()
+
+/mob/living/carbon/get_disabled_limbs()
+	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/disabled = list()
+	for(var/zone in full)
+		var/obj/item/bodypart/affecting = get_bodypart(zone)
+		if(affecting && affecting.disabled)
+			disabled += zone
+	return disabled
+
+/mob/living/carbon/alien/larva/get_disabled_limbs()
+	var/list/full = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST)
+	var/list/disabled = list()
+	for(var/zone in full)
+		var/obj/item/bodypart/affecting = get_bodypart(zone)
+		if(affecting && affecting.disabled)
+			disabled += zone
+	return disabled
 
 //Remove all embedded objects from all limbs on the carbon mob
 /mob/living/carbon/proc/remove_all_embedded_objects()
@@ -121,6 +148,7 @@
 			I.forceMove(T)
 
 	clear_alert("embeddedobject")
+	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/proc/has_embedded_objects()
 	. = 0
@@ -134,17 +162,17 @@
 /mob/living/carbon/proc/newBodyPart(zone, robotic, fixed_icon)
 	var/obj/item/bodypart/L
 	switch(zone)
-		if("l_arm")
+		if(BODY_ZONE_L_ARM)
 			L = new /obj/item/bodypart/l_arm()
-		if("r_arm")
+		if(BODY_ZONE_R_ARM)
 			L = new /obj/item/bodypart/r_arm()
-		if("head")
+		if(BODY_ZONE_HEAD)
 			L = new /obj/item/bodypart/head()
-		if("l_leg")
+		if(BODY_ZONE_L_LEG)
 			L = new /obj/item/bodypart/l_leg()
-		if("r_leg")
+		if(BODY_ZONE_R_LEG)
 			L = new /obj/item/bodypart/r_leg()
-		if("chest")
+		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest()
 	if(L)
 		L.update_limb(fixed_icon, src)
@@ -155,17 +183,17 @@
 /mob/living/carbon/monkey/newBodyPart(zone, robotic, fixed_icon)
 	var/obj/item/bodypart/L
 	switch(zone)
-		if("l_arm")
+		if(BODY_ZONE_L_ARM)
 			L = new /obj/item/bodypart/l_arm/monkey()
-		if("r_arm")
+		if(BODY_ZONE_R_ARM)
 			L = new /obj/item/bodypart/r_arm/monkey()
-		if("head")
+		if(BODY_ZONE_HEAD)
 			L = new /obj/item/bodypart/head/monkey()
-		if("l_leg")
+		if(BODY_ZONE_L_LEG)
 			L = new /obj/item/bodypart/l_leg/monkey()
-		if("r_leg")
+		if(BODY_ZONE_R_LEG)
 			L = new /obj/item/bodypart/r_leg/monkey()
-		if("chest")
+		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest/monkey()
 	if(L)
 		L.update_limb(fixed_icon, src)
@@ -176,9 +204,9 @@
 /mob/living/carbon/alien/larva/newBodyPart(zone, robotic, fixed_icon)
 	var/obj/item/bodypart/L
 	switch(zone)
-		if("head")
+		if(BODY_ZONE_HEAD)
 			L = new /obj/item/bodypart/head/larva()
-		if("chest")
+		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest/larva()
 	if(L)
 		L.update_limb(fixed_icon, src)
@@ -189,17 +217,17 @@
 /mob/living/carbon/alien/humanoid/newBodyPart(zone, robotic, fixed_icon)
 	var/obj/item/bodypart/L
 	switch(zone)
-		if("l_arm")
+		if(BODY_ZONE_L_ARM)
 			L = new /obj/item/bodypart/l_arm/alien()
-		if("r_arm")
+		if(BODY_ZONE_R_ARM)
 			L = new /obj/item/bodypart/r_arm/alien()
-		if("head")
+		if(BODY_ZONE_HEAD)
 			L = new /obj/item/bodypart/head/alien()
-		if("l_leg")
+		if(BODY_ZONE_L_LEG)
 			L = new /obj/item/bodypart/l_leg/alien()
-		if("r_leg")
+		if(BODY_ZONE_R_LEG)
 			L = new /obj/item/bodypart/r_leg/alien()
-		if("chest")
+		if(BODY_ZONE_CHEST)
 			L = new /obj/item/bodypart/chest/alien()
 	if(L)
 		L.update_limb(fixed_icon, src)

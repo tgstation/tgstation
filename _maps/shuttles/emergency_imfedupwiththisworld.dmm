@@ -13,8 +13,7 @@
 	dwidth = 1;
 	height = 10;
 	name = "Oh Hi Mark";
-	width = 12;
-	timid = 1
+	width = 12
 	},
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/wood,
@@ -34,7 +33,7 @@
 /area/shuttle/escape)
 "g" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp,
+/obj/item/flashlight/lamp,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "h" = (
@@ -46,14 +45,24 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "j" = (
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "k" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/plasteel/bar,
+/obj/machinery/vending/boozeomat{
+	req_access = null
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "l" = (
 /obj/machinery/computer/security/wooden_tv,
@@ -77,7 +86,11 @@
 "p" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/shaker,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "q" = (
 /obj/structure/table/reinforced,
@@ -89,17 +102,29 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "s" = (
 /obj/machinery/door/window{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "t" = (
 /obj/structure/table/reinforced,
-/turf/open/floor/plasteel/bar,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/shuttle/escape)
 "u" = (
 /obj/machinery/light{
@@ -161,7 +186,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "E" = (
-/obj/machinery/status_display,
+/obj/machinery/status_display/evac,
 /turf/closed/wall/mineral/wood,
 /area/shuttle/escape)
 
