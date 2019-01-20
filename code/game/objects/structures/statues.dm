@@ -1,3 +1,7 @@
+#define BAD_ART 12.5
+#define GOOD_ART 25
+#define GREAT_ART 50
+
 /obj/structure/statue
 	name = "statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
@@ -7,6 +11,7 @@
 	anchored = FALSE
 	max_integrity = 100
 	var/oreAmount = 5
+	var/impressiveness = 15
 	var/material_drop_type = /obj/item/stack/sheet/metal
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
@@ -36,8 +41,20 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
-						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
+	user.visible_message("[user] rubs some dust off [src].", \
+						 "<span class='notice'>You take in [src], rubbing some dust off its surface.</span>")
+	if(!ishuman(user)) // only humans have the capacity to appreciate art
+		return
+	var/totalimpressiveness = (impressiveness *(obj_integrity/max_integrity))
+	if(totalimpressiveness >= GREAT_ART)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+	else if (totalimpressiveness >= GOOD_ART)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgood", /datum/mood_event/artgood)
+	else if (totalimpressiveness >= BAD_ART)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artok", /datum/mood_event/artok)
+	else
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artbad", /datum/mood_event/artbad)
+
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -56,6 +73,7 @@
 	max_integrity = 300
 	light_range = 2
 	material_drop_type = /obj/item/stack/sheet/mineral/uranium
+	impressiveness = 25 // radiation makes an impression
 	var/last_event = 0
 	var/active = null
 
@@ -99,6 +117,7 @@
 
 /obj/structure/statue/plasma
 	max_integrity = 200
+	impressiveness = 20
 	material_drop_type = /obj/item/stack/sheet/mineral/plasma
 	desc = "This statue is suitably made from plasma."
 
@@ -149,6 +168,7 @@
 
 /obj/structure/statue/gold
 	max_integrity = 300
+	impressiveness = 25
 	material_drop_type = /obj/item/stack/sheet/mineral/gold
 	desc = "This is a highly valuable statue made from gold."
 
@@ -176,6 +196,7 @@
 
 /obj/structure/statue/silver
 	max_integrity = 300
+	impressiveness = 25
 	material_drop_type = /obj/item/stack/sheet/mineral/silver
 	desc = "This is a valuable statue made from silver."
 
@@ -203,6 +224,7 @@
 
 /obj/structure/statue/diamond
 	max_integrity = 1000
+	impressiveness = 50
 	material_drop_type = /obj/item/stack/sheet/mineral/diamond
 	desc = "This is a very expensive diamond statue."
 
@@ -222,6 +244,7 @@
 
 /obj/structure/statue/bananium
 	max_integrity = 300
+	impressiveness = 50
 	material_drop_type = /obj/item/stack/sheet/mineral/bananium
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
@@ -257,6 +280,7 @@
 
 /obj/structure/statue/sandstone
 	max_integrity = 50
+	impressiveness = 15
 	material_drop_type = /obj/item/stack/sheet/mineral/sandstone
 
 /obj/structure/statue/sandstone/assistant

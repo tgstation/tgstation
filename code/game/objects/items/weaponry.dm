@@ -470,6 +470,17 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A bust of the famous Greek physician Hippocrates of Kos, often referred to as the father of western medicine."
 	icon_state = "hippocratic"
 
+/obj/item/statuebust/attack_self(mob/living/carbon/user)
+	. = ..()
+	if(.)
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	add_fingerprint(user)
+	user.visible_message("[user] rubs some dust off [src].", \
+						 "<span class='notice'>You take in [src], rubbing some dust off its surface.</span>")
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "artgreat", /datum/mood_event/artgreat)
+
+
 /obj/item/tailclub
 	name = "tail club"
 	desc = "For the beating to death of lizards with their own tails."

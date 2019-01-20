@@ -36,6 +36,21 @@
 	mood_change = 2
 	timeout = 2400
 
+/datum/mood_event/artok
+	description = "It's nice to see people are making art around here."
+	mood_change = 2
+	timeout = 2400
+
+/datum/mood_event/artgood
+	description = "What a thought-provoking piece of art. I'll remember that for a while."
+	mood_change = 3
+	timeout = 3000.
+
+/datum/mood_event/artgreat
+	description = "That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this."
+	mood_change = 4
+	timeout = 4000
+
 /datum/mood_event/perform_cpr
 	description = "<span class='nicegreen'>It feels good to save a life.</span>\n"
 	mood_change = 6
