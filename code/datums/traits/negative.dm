@@ -370,3 +370,65 @@
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
 
+/datum/quirk/smoker
+	name = "Smoker"
+	desc = "Sometimes you just really want a smoke. Probably not great for your lungs."
+	value = -1
+	gain_text = "<span class='danger'>You really could go for a smoke right about now.</span>"
+	lose_text = "<span class='notice'>You feel like you should quit smoking.</span>"
+	medical_record_text = "Patient is a current smoker."
+	var/preferred_type = pick(/obj/item/storage/fancy/cigarettes,
+		/obj/item/storage/fancy/cigarettes/dromedaryco,
+		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
+		/obj/item/storage/fancy/cigarettes/cigpack_robust,
+		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
+		/obj/item/storage/fancy/cigarettes/cigpack_carp,
+		/obj/item/storage/fancy/cigarettes/cigpack_syndicate)
+	var/whereLighter
+	var/whereCigs
+
+/datum/quirk/smoker/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.reagents.addiction_list.Add(/datum/reagent/drug/nicotine)
+	var/lighter = new /obj/item/lighter/greyscale(get_turf(quirk_holder))
+	var/cigs = new preferred_type(get_turf(quirk_holder))
+	var/list/slots = list(
+		"in your left pocket" = SLOT_L_STORE,
+		"in your right pocket" = SLOT_R_STORE,
+		"in your backpack" = SLOT_IN_BACKPACK
+	)
+	whereCigs = H.equip_in_one_of_slots(cigs, slots, FALSE) || "at your feet"
+	whereLighter = H.equip_in_one_of_slots(lighter, slots, FALSE) || "at your feet"
+
+/datum/quirk/smoker/post_add()
+	if(whereCigs == "in your backpack" || whereLighter = "in your backpack")
+		var/mob/living/carbon/human/H = quirk_holder
+		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
+
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a lighter in your [whereLighter] and a [preferred_type.name] [whereCigs]. Make sure you get your favorite brand when you need more.</span>")
+	
+/datum/quirk/smoker/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
+	if (is_type(I, /obj/item/clothing/mask/cigarette))
+		if(is_type(I, preferred_type.spawn_type))	
+			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
+			return
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
+	
+
+/datum/quirk/junkie
+	name = "Junkie"
+	desc = "You can't get enough of hard drugs."
+	value = -2
+	var/drug = pick()
+	gain_text = "<span class='danger'>You suddenly feel the craving for [drug.name].</span>"
+	lose_text = "<span class='notice'>You feel like you should kick your [drug.name] habit.</span>"
+	medical_record_text = "Patient has a history of hard drugs."
+
+/datum/quirk/junkie/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+
+/datum/quirk/junkie/on_process()
+	var/mob/living/carbon/human/H = quirk_holder
+	if (H.reagents.addiction_list)
