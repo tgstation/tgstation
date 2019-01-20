@@ -105,3 +105,54 @@
 	M.Stun(40)
 	M.petrify()
 	return ..()
+
+/obj/item/melee/touch_attack/rot
+	name = "\improper putrefying touch"
+	desc = "STOP! Good god man, you almost got the cheese touch."
+	catchphrase = "BLISTERS, FEVERS, WEEPING SORES"
+	on_use_sound = 'sound/magic/fleshtostone.ogg'//need sounds for this
+	icon_state = "disease"
+	item_state = "disease"
+
+/obj/item/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
+		return
+	if(!(user.mobility_flags & MOBILITY_USE))
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+		return
+	var/mob/living/M = target
+	if(M.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='warning'>The diseased hand touches you... Their hand is really gross and slimy, but otherwise you're fine.</span>")
+		..()
+		return
+	to_chat(M, "<span class='userdanger'>The diseased hand touches you...</span>")
+	if(M.mind.spell_list.len)
+		var/spells_to_rot = 0 //how many rot spells to add.
+		for(var/obj/effect/proc_holder/spell/spell in M.mind.spell_list)
+			spells_to_rot++
+			M.mind.RemoveSpell(spell)
+		if(spells_to_rot > 0)
+			to_chat(M, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
+		for(var/adding_rot in 1 to spells_to_rot)
+			switch(pick(list("aimed", "traps", "touch")))//todo:add more
+				if("aimed")
+					M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/canker(null))
+				if("traps")
+					M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap(null))
+				if("touch")
+					M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
+	if(ishuman(M))
+		to_chat(M, "<span class='userdanger'>Your skin rots and festers, becoming putrefied and leathery!</span>")
+		var/mob/living/carbon/human/nurglevictim = M
+		nurglevictim.adjust_hygiene(-200)//almost always makes you dirty
+		nurglevictim.adjust_disgust(100)//fully disgusts you
+		nurglevictim.set_species(/datum/species/krokodil_addict) //makes you look gross
+		//and you get a disease
+		var/datum/disease/advance/touch_disease = new /datum/disease/advance/random(2,3)
+		touch_disease.name = "Magic Rot"
+		nurglevictim.ForceContractDisease(touch_disease, TRUE, TRUE)
+	return ..()

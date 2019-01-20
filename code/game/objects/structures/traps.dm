@@ -128,6 +128,49 @@
 	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
+/obj/structure/trap/rot
+	name = "rot trap"
+	desc = "A trap that will spread death and decay. You'd better avoid it."
+	icon_state = "trap-rot"
+
+/obj/structure/trap/rot/trap_effect(mob/living/M)
+	to_chat(M, "<span class='danger'><B>The ground explodes into a cloud of rotting death!</B></span>")
+	M.adjustToxLoss(15)
+	var/turf/T = get_turf(src.loc)
+	if(T)
+		var/datum/effect_system/smoke_spread/bad/smoke = new
+		smoke.set_up(4, M.loc)
+		smoke.start()
+		playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
+		var/datum/gas_mixture/stank = new
+		ADD_GAS(/datum/gas/miasma, stank.gases)
+		stank.gases[/datum/gas/miasma][MOLES] = 300 //3x as potent as the bolt hitting
+		T.assume_air(stank)
+		T.air_update_turf()
+	//mob effects
+	if(ishuman(M))
+		var/mob/living/carbon/human/nurglevictim = M
+		nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN
+		nurglevictim.adjust_disgust(60)
+	if(!M.mind)
+		return //we've done all we can without a mind
+	if(M.mind.spell_list.len)
+		var/spells_to_rot = 0
+		for(var/obj/effect/proc_holder/spell/spell in M.mind.spell_list)
+			if(spell.rotten_spell)
+				continue// don't replace rotten spells with rotten spells
+			spells_to_rot++
+			M.mind.RemoveSpell(spell)
+		if(spells_to_rot > 0)
+			to_chat(M, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
+		for(var/adding_rot in 1 to spells_to_rot)
+			switch(pick(list("aimed", "traps", "touch")))//todo:add more
+				if("aimed")
+					M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/canker(null))
+				if("traps")
+					M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap(null))
+				if("touch")
+					M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
 
 /obj/structure/trap/ward
 	name = "divine ward"

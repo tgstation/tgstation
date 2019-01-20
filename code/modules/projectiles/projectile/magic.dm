@@ -447,14 +447,16 @@
 
 /obj/item/projectile/magic/rot
 	name = "bolt of rot"
-	icon_state = "rot"
+	icon_state = "septic"
 	nodamage = TRUE
 	flag = "magic"
 
 /obj/item/projectile/magic/rot/on_hit(target)
+	. = ..()
 	//bolt of rot does a couple things:
 	//dumps miasma wherever it hits
 	//fucks hygiene pretty hard
+	//makes the target feel disgusted
 	//the big thing: if it hits people, turns their spells into harmless (but annoying) rot spells that also spread rot spells.
 	var/turf/T = get_turf(src.loc)
 	if(T)
@@ -477,14 +479,18 @@
 				M.mind.RemoveSpell(spell)
 			if(spells_to_rot > 0)
 				to_chat(M, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
-			var/list/rot_spells = list("aimed")//todo:add more
 			for(var/adding_rot in 1 to spells_to_rot)
-				switch(pick(rot_spells))
+				switch(pick(list("aimed", "traps", "touch")))//todo:add more
 					if("aimed")
-						M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/rotten_invocation(null))
+						M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/canker(null))
+					if("traps")
+						M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap(null))
+					if("touch")
+						M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
 		if(ishuman(M))
 			var/mob/living/carbon/human/nurglevictim = M
 			nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN
+			nurglevictim.adjust_disgust(60)
 
 
 /obj/item/projectile/magic/aoe
