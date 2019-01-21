@@ -759,13 +759,13 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear", "Blood Bolt Barrage", "Blood Beam")
+		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
 		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
 			return
 		switch(choice)
-			if("Blood Spear")
+			if("Blood Spear (150)")
 				if(uses < BLOOD_SPEAR_COST)
 					to_chat(user, "<span class='cultitalic'>You need [BLOOD_SPEAR_COST] charges to perform this rite.</span>")
 				else
@@ -781,7 +781,7 @@
 					else
 						user.visible_message("<span class='warning'>A [rite.name] appears at [user]'s feet!</span>", \
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
-			if("Blood Bolt Barrage")
+			if("Blood Bolt Barrage (300)")
 				if(uses < BLOOD_BARRAGE_COST)
 					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BARRAGE_COST] charges to perform this rite.</span>")
 				else
@@ -793,7 +793,7 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
-			if("Blood Beam")
+			if("Blood Beam (500)")
 				if(uses < BLOOD_BEAM_COST)
 					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BEAM_COST] charges to perform this rite.</span>")
 				else
