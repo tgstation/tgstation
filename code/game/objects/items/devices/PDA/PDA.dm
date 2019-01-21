@@ -806,7 +806,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(istype(C))
 				I = C
 
-//	if(I && I.registered_name)
 	if(I)
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
@@ -833,9 +832,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	else if(istype(C, /obj/item/card/id))
 		var/obj/item/card/id/idcard = C
-//		if(!idcard.registered_name)
-//			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
-//			return
 		if(!owner)
 			owner = idcard.registered_name
 			ownjob = idcard.assignment
@@ -926,7 +922,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(user, "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" )
 
 /obj/item/pda/proc/set_recovery()
-//proc/set_recovery()
 	if (!ownjob || !owner) //Blank PDAs, that have not been uploaded to, need not apply.
 		return
 	if (ownjob == "Captain") //Captain IDs do not get wiped, so their PDA should not need recovery mode set.
@@ -946,11 +941,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-//		var/hrefstart
-//		var/hrefend
 		if (isAI(L))
-//			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
-//			hrefend = "</a>"
 			to_chat(L, "The messaging service beeps, \"Emergency door access purge has been activated. PDA recovery mode has been unlocked where available.\"")
 		else to_chat(L, "The [src] beeps, \"Emergency door access purge has been activated. Recovery mode is available.\"")
 
@@ -1074,10 +1065,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 		if(!P.owner || P.toff || P.hidden)
 			continue
 		. += P
-
-
-
-	
 
 #undef PDA_SCANNER_NONE
 #undef PDA_SCANNER_MEDICAL
