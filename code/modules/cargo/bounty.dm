@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(bounties_list)
 	var/list/low_priority_strict_type_list = list( /datum/bounty/item/alien_organs,
 													/datum/bounty/item/syndicate_documents,
 													/datum/bounty/item/adamantine,
-													/datum/bounty/item/trash,
+													/datum/bounty/item/tras,
 													/datum/bounty/more_bounties)
 
 	for(var/low_priority_bounty in low_priority_strict_type_list)
