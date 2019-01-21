@@ -190,6 +190,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 	dat += assets.css_tag()
+	
+	if (recovery_mode)
+		dat += "<b>///RECOVERY MODE ACTIVE///</b><br>"
 
 	dat += "<a href='byond://?src=[REF(src)];choice=Refresh'>[PDAIMG(refresh)]Refresh</a>"
 
@@ -216,7 +219,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
-				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
+				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")				
 				if(!owner || !ownjob)
 					dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A>")
 				else if(recovery_mode)
@@ -434,7 +437,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(!id)
 					to_chat(U, "<span class='notice'>The [src] beeps, \"ID slot empty.\"</span>")
 					return
-				if(id.registered_name || id.assignment)
+				if(id.assignment)
 					to_chat(U, "<span class='notice'>The [src] beeps, \"Unable to overwrite existing data.\"</span>")
 					return
 				id.registered_name = owner
@@ -449,16 +452,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 						break
 				if(!jobdatum)
 					to_chat(usr, "<span class='error'>The [src] beeps, \"Error in recovery process. Access has not been restored. Please see your administrator.\"</span>")
+					recovery_mode = FALSE
 					return
-//				if(modify.registered_account)
-//					modify.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
-//					if(modify.registered_account.welfare)
-//						modify.registered_account.add_neetbux()
-
 				id.access = jobdatum.get_access()
-				to_chat(usr, "<span class='error'>The [src] beeps, \"Recovery complete. Access has been restored from backup. Recovery mode is now disabled.\"</span>")
 				recovery_mode = FALSE
-				
+				if (!silent)
+					playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+				to_chat(usr, "<span class='error'>The [src] beeps, \"Recovery complete. Access has been restored from backup. Recovery mode is now disabled.\"</span>")
 
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
@@ -925,6 +925,34 @@ GLOBAL_LIST_EMPTY(PDAs)
 		notescanned = TRUE
 		to_chat(user, "<span class='notice'>Paper scanned. Saved to PDA's notekeeper.</span>" )
 
+/obj/item/pda/proc/set_recovery()
+//proc/set_recovery()
+	if (!ownjob || !owner) //Blank PDAs, that have not been uploaded to, need not apply.
+		return
+	if (ownjob == "Captain") //Captain IDs do not get wiped, so their PDA should not need recovery mode set.
+		return
+	
+	recovery_mode = TRUE
+	
+	if (!silent)
+		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
+		
+	var/mob/living/L = null
+	//Searching for owner, as stolen from above code
+	if(loc && isliving(loc))
+		L = loc
+	//Maybe they are a pAI!
+	else
+		L = get(src, /mob/living/silicon)
+
+	if(L && L.stat != UNCONSCIOUS)
+//		var/hrefstart
+//		var/hrefend
+		if (isAI(L))
+//			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
+//			hrefend = "</a>"
+			to_chat(L, "The messaging service beeps, \"Emergency door access purge has been activated. PDA recovery mode has been unlocked where available.\"")
+		else to_chat(L, "The [src] beeps, \"Emergency door access purge has been activated. Recovery mode is available.\"")
 
 /obj/item/pda/proc/explode() //This needs tuning.
 	if(!detonatable)
@@ -1047,35 +1075,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			continue
 		. += P
 
-/*/obj/item/pda/set_recovery()
-//proc/set_recovery()
-	if (!ownjob || !owner) //Blank PDAs, that have not been uploaded to, need not apply.
-		return
-	if (ownjob == "Captain") //Captain IDs do not get wiped, so their PDA should not need recovery mode set.
-		return
-	
-	recovery_mode = TRUE
-	
-	if (!silent)
-		playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
-		
-	var/mob/living/L = null
-	//Searching for owner, as stolen from above code
-	if(loc && isliving(loc))
-		L = loc
-	//Maybe they are a pAI!
-	else
-		L = get(src, /mob/living/silicon)
 
-	if(L && L.stat != UNCONSCIOUS)
-//		var/hrefstart
-//		var/hrefend
-		if (isAI(L))
-//			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
-//			hrefend = "</a>"
-			to_chat(L, "Emergency ID purge has been activated. PDA recovery mode has been unlocked where available.")
-		else to_chat(L, "Emergency ID purge has been activated. Recovery mode is available.")
-*/	
+
 	
 
 #undef PDA_SCANNER_NONE
