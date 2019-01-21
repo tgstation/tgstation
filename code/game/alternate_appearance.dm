@@ -51,7 +51,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(.)
 		LAZYREMOVE(A.alternate_appearances, appearance_key)
 
-/datum/atom_hud/alternate_appearance/proc/copy_overlays()
+/datum/atom_hud/alternate_appearance/proc/copy_overlays(atom/other, cut_old)
 	return
 
 //an alternate appearance that attaches a single image to a single atom
