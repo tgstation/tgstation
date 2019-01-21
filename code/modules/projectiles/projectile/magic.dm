@@ -447,7 +447,7 @@
 
 /obj/item/projectile/magic/rot
 	name = "bolt of rot"
-	icon_state = "septic"
+	icon_state = "canker"
 	nodamage = TRUE
 	flag = "magic"
 
@@ -457,7 +457,7 @@
 	//dumps miasma wherever it hits
 	//fucks hygiene pretty hard
 	//makes the target feel disgusted
-	//the big thing: if it hits people, turns their spells into harmless (but annoying) rot spells that also spread rot spells.
+	//rot_mind is called, see spell.dm for it's effects
 	var/turf/T = get_turf(src.loc)
 	if(T)
 		var/datum/gas_mixture/stank = new
@@ -472,21 +472,7 @@
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
 			return
-		if(M.mind.spell_list.len)
-			var/spells_to_rot = 0 //how many rot spells to add.
-			for(var/obj/effect/proc_holder/spell/spell in M.mind.spell_list)
-				spells_to_rot++
-				M.mind.RemoveSpell(spell)
-			if(spells_to_rot > 0)
-				to_chat(M, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
-			for(var/adding_rot in 1 to spells_to_rot)
-				switch(pick(list("aimed", "traps", "touch")))//todo:add more
-					if("aimed")
-						M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/canker(null))
-					if("traps")
-						M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap(null))
-					if("touch")
-						M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
+		M.rot_mind()
 		if(ishuman(M))
 			var/mob/living/carbon/human/nurglevictim = M
 			nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN

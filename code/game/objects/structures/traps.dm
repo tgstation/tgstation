@@ -154,23 +154,7 @@
 		nurglevictim.adjust_disgust(60)
 	if(!M.mind)
 		return //we've done all we can without a mind
-	if(M.mind.spell_list.len)
-		var/spells_to_rot = 0
-		for(var/obj/effect/proc_holder/spell/spell in M.mind.spell_list)
-			if(spell.rotten_spell)
-				continue// don't replace rotten spells with rotten spells
-			spells_to_rot++
-			M.mind.RemoveSpell(spell)
-		if(spells_to_rot > 0)
-			to_chat(M, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
-		for(var/adding_rot in 1 to spells_to_rot)
-			switch(pick(list("aimed", "traps", "touch")))//todo:add more
-				if("aimed")
-					M.mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/canker(null))
-				if("traps")
-					M.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap(null))
-				if("touch")
-					M.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
+	M.rot_mind()
 
 /obj/structure/trap/ward
 	name = "divine ward"
