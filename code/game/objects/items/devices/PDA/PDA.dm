@@ -440,6 +440,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 				if(id.assignment)
 					to_chat(U, "<span class='notice'>The [src] beeps, \"Unable to overwrite existing data.\"</span>")
 					return
+				if ((id.type != /obj/item/card/id) && (id.type != /obj/item/card/id/silver))
+					to_chat(U, "<span class='notice'>The [src] beeps, \"Unable to write to ID. Unknown error.\"</span>")
+					return
 				id.registered_name = owner
 				id.assignment = ownjob
 				id.name = "[id.registered_name]'s ID Card ([id.assignment])"
