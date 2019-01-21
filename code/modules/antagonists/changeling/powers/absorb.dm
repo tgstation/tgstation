@@ -59,11 +59,31 @@
 	if(user.nutrition < NUTRITION_LEVEL_WELL_FED)
 		user.set_nutrition(min((user.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
 
-	if(target.mind)//if the victim has got a mind
+	if(target.mind && user.mind)//if the victim and user have minds
 		// Absorb a lizard, speak Draconic.
 		user.copy_known_languages_from(target)
 
-		target.mind.show_memory(user, 0) //I can read your mind, kekeke. Output all their notes.
+		var/datum/mind/suckedbrain = target.mind
+		user.mind.memory += "<BR><b>We've absorbed [target]'s memories into our own...</b><BR>[suckedbrain.memory]<BR>"
+		if(LAZYLEN(suckedbrain.antag_datums))//this entire massive block is for antag memories and objectives
+			for(var/datum/antagonist/antag_types in suckedbrain.antag_datums)
+				var/list/all_objectives = list()
+				all_objectives |= antag_types.objectives
+				if(antag_types.antag_memory)
+					user.mind.memory += "[antag_types.antag_memory]<BR>"
+				if(LAZYLEN(all_objectives))
+					user.mind.memory += "<B>Objectives:</B>"
+					var/obj_count = 1
+					for(var/datum/objective/objective in all_objectives)
+						user.mind.memory += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
+						var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
+						if(other_owners.len)
+							user.mind.memory += "<ul>"
+							for(var/datum/mind/M in other_owners)
+								user.mind.memory += "<li>Conspirator: [M.name]</li>"
+							user.mind.memory += "</ul>"
+		user.mind.memory += "<b>That's all [target] had.</b><BR>"
+		user.memory() //I can read your mind, kekeke. Output all their notes.
 
 		//Some of target's recent speech, so the changeling can attempt to imitate them better.
 		//Recent as opposed to all because rounds tend to have a LOT of text.
@@ -77,7 +97,6 @@
 				var/list/reversed = log_source[log_type]
 				if(islist(reversed))
 					say_log = reverseRange(reversed.Copy())
-					break
 
 		if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
 			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
