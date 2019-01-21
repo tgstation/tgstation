@@ -56,7 +56,7 @@
 	weight = 4
 	min_players = 25
 	max_occurrences = 1
-	earliest_start = 30 MINUTES
+	earliest_start = 35 MINUTES
 
 /datum/round_event/vent_clog/threatening
 	randomProbability = 10
@@ -68,7 +68,7 @@
 	weight = 2
 	min_players = 35
 	max_occurrences = 1
-	earliest_start = 40 MINUTES
+	earliest_start = 45 MINUTES
 
 /datum/round_event/vent_clog/catastrophic
 	randomProbability = 30
