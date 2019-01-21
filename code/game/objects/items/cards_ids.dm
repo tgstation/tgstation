@@ -514,6 +514,10 @@ update_label("John Doe", "Clowny")
 	SSeconomy.dep_cards -= src
 	return ..()
 
+/obj/item/card/id/Destroy()
+	GLOB.card_id -= src
+	return
+
 /obj/item/card/id/departmental_budget/civ
 	department_ID = ACCOUNT_CIV
 	department_name = ACCOUNT_CIV_NAME
