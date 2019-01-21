@@ -421,6 +421,10 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	value = -2
+	var/drug_table = pick(/datum/reagent/drug/crank = /obj/item/reagent_containers/glass/bottle/crank,
+		/datum/reagent/drug/krokodil = /obj/item/reagent_containers/glass/bottle/krokodil,
+		/datum/reagent/drug/happiness = /obj/item/reagent_containers/glass/bottle/happiness,
+		/datum/reagent/medicine/morphine = /obj/item/reagent_containers/glass/bottle/morphine)
 	var/drug = pick(/datum/reagent/drug/crank,
 		/datum/reagent/drug/krokodil,
 		/datum/reagent/drug/happiness,
@@ -432,20 +436,22 @@
 /datum/quirk/junkie/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.reagents.addiction_list.Add(drug)
-	var/drug_bottle = new /obj/item
+	var/drug_bottle = new drug_table[drug](get_turf(quirk_holder))
+	var/sharp = new /obj/item/reagent_containers/syringe(get_turf(quirk_holder))
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
 		"in your backpack" = SLOT_IN_BACKPACK
 	)
-	where = H.equip_in_one_of_slots(drug_bottle, slots, FALSE) || "at your feet"
+	where_bottle = H.equip_in_one_of_slots(drug_bottle, slots, FALSE) || "at your feet"
+	where_sharp = H.equip_in_one_of_slots(sharp, slots, FALSE) || "at your feet"
 
 /datum/quirk/smoker/post_add()
-	if(where == "in your backpack")
+	if(where_bottle == "in your backpack" || where_sharp == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of [drug.name] in your [where]. Better hope you don't run out...</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of [drug.name] [where_bottle], and a needle [where_sharp]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
