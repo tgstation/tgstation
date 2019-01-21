@@ -77,6 +77,7 @@
 				var/list/reversed = log_source[log_type]
 				if(islist(reversed))
 					say_log = reverseRange(reversed.Copy())
+					break
 
 		if(LAZYLEN(say_log) > LING_ABSORB_RECENT_SPEECH)
 			recent_speech = say_log.Copy(say_log.len-LING_ABSORB_RECENT_SPEECH+1,0) //0 so len-LING_ARS+1 to end of list
