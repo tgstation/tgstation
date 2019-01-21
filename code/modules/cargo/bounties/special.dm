@@ -28,7 +28,7 @@
 
 /datum/bounty/item/trash
 	name = "Trash"
-	description = "Recently a group of janitors have run out of trash to clean up,without any trash Centcom wants to fire them to cut costs."
+	description = "Recently a group of janitors have run out of trash to clean up, without any trash Centcom wants to fire them to cut costs."
 	reward = 1000
 	required_count = 10
 	wanted_types = list(/obj/item/trash)
