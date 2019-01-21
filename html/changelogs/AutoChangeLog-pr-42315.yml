@@ -1,0 +1,5 @@
+author: "GranpaWalton"
+delete-after: True
+changes: 
+  - bugfix: "Oxyloss icon no-longer shows up when someone has the self respiration symptom"
+  - tweak: "The self respiration now makes you not contract diseases through the air and not breathe in smoke"
