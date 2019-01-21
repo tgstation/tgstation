@@ -570,7 +570,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 					I.name = "silver identification card"
 				else
 					I.name = "identification card"
-//				I.registered_name = ""
 				I.assignment = ""
 				I.access = ""
 			for (var/obj/item/pda/P in GLOB.PDAs)
