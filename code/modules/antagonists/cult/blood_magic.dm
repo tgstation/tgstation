@@ -549,7 +549,7 @@
 	. = ..()
 
 
-//Construction: Converts 50 metal to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to construct shell
+//Construction: Converts 50 metal to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Corrupting Aura"
 	desc = "Corrupts metal and plasteel into more sinister forms."
