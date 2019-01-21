@@ -219,8 +219,30 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 			dat += "</td></tr>"
 		dat += "</table>"
-	else if(mode == 4) //Access Panel
-		dat = "<tt><b>Access Panel:</b><br>Please use the following options with care.<br><br><a href='?src=[REF(src)];choice=accesspurge'>Purge Access from all IDs and activate PDA recovery mode</a><br><br><a href='?src=[REF(src)];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
+	else if(mode == 4)
+		//Door Access Panel
+		dat = "<a href='?src=[REF(src)];choice=return'>Return</a>"
+		dat += " || Confirm Identity: "
+		var/S
+		if(scan)
+			S = html_encode(scan.name)
+		else
+			S = "--------"
+		var/ID
+		if(scan && (ACCESS_CHANGE_IDS in scan.access) && !target_dept)
+			ID = 1
+		else
+			ID = 0
+		dat += "<a href='?src=[REF(src)];choice=scan'>[S]</a></br>"
+		dat += "<tt><b>Door Access Control Panel:</b><br>Please use the following options with care.<br><br>"
+		dat += "<table><tr><td style='width:25%'></td><td style='width:25%'></td></tr>"
+		dat += "<tr><td>Purge door access from all IDs, and activate PDA recovery mode.</td>"
+		if (ID)
+			dat += "<td><a href='?src=[REF(src)];choice=accesspurge'>Purge access</a></td></tr>"
+		else
+			dat += "<td>Purge access</td></tr>"
+		dat += "</table>"
+
 	else
 		var/header = ""
 
@@ -254,8 +276,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			header += "<div align='center'><br>"
 			header += "<a href='?src=[REF(src)];choice=modify'>Remove [target_name]</a> || "
 			header += "<a href='?src=[REF(src)];choice=scan'>Remove [scan_name]</a> <br> "
-			header += "<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
-			header += "<a href='?src=[REF(src)];choice=mode;mode_target=4'>Access Access Panel</a> || "
+			header += "<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a> <br> "
 			header += "<a href='?src=[REF(src)];choice=logout'>Log Out</a></div>"
 
 		header += "<hr>"
@@ -342,6 +363,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			body += "<a href='?src=[REF(src)];choice=mode;mode_target=1'>Access Crew Manifest</a>"
 			if(!target_dept)
 				body += "<br><hr><a href = '?src=[REF(src)];choice=mode;mode_target=2'>Job Management</a>"
+				body += "<br><hr><a href = '?src=[REF(src)];choice=mode;mode_target=4'>Door Access Control Panel</a>"
 
 		dat = "<tt>[header][body]<hr><br></tt>"
 	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
@@ -542,26 +564,21 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				printing = null
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		if ("accesspurge")
-			to_chat(world,"DEBUG -- access purge reached; card_id list is [GLOB.card_id.len] items long.")
 			for (var/obj/item/card/id/I in GLOB.card_id)
-				to_chat(world,"DEBUG -- ID [I.name] found.</span>")
-//				if (I.icon_state = "gold" || I.parent_type = "/obj/item/card/id/syndicate" || I.type = "/obj/item/card/id/syndicate" )
 				if ((I.type != /obj/item/card/id) && (I.type != /obj/item/card/id/silver)) //This skips any special map IDs, and also syndicate agent IDs.
-					to_chat(world,"DEBUG -- ID [I.type] was skipped======================.</span>")
-					return
-				to_chat(world,"DEBUG -- ID [I] is not a special ID and was purged.(type is [I.type])</span>")
+					continue
 				if (I.registered_name)
-					I.name = "[I.registered_name]'s ID Card (empty)"
+					I.name = "[I.registered_name]'s ID Card (blank)"
 				else if (I.type == /obj/item/card/id/silver)
 					I.name = "silver identification card"
 				else
 					I.name = "identification card"
-				I.registered_name = ""
+//				I.registered_name = ""
 				I.assignment = ""
 				I.access = ""
 			for (var/obj/item/pda/P in GLOB.PDAs)
-				//P.set_recovery()
-				P.recovery_mode = TRUE
+				P.set_recovery()
+				//P.recovery_mode = TRUE
 	if (modify)
 		modify.update_label()
 	updateUsrDialog()
