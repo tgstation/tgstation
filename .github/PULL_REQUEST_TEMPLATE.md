@@ -1,4 +1,7 @@
-[Changelogs]: # (Your PR should contain a detailed changelog of notable changes, titled and categorized appropriately. This includes, new features, sprites, sounds, balance changes, admin tools, map edits, removals, big refactors, config changes, hosting changes and important fixes. An example changelog has been provided below for you to edit. If you need additional help, read https://github.com/tgstation/tgstation/wiki/Changelogs)
+<!-- Write **BELOW** The Headers and **ABOVE** The comments else it may not be viewable -->
+<!-- You can view Contributing.MD for a detailed description of the pull request process. -->
+
+## Changelog
 
 :cl: optional name here
 add: Added new things
@@ -18,5 +21,10 @@ config: changed some config setting
 admin: messed with admin stuff
 server: something server ops should know
 /:cl:
+<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should represent how a player might be affected by the changes rather than a summary of the PR's contents. -->
+## About The Pull Request
 
-[why]: # (Please add a short description [two lines down] of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding.)
+<!-- Describe The Pull Request. Please be sure every change is documented or this can delay review and even discourage maintainers from merging your PR! -->
+## Why It's Good For The Game
+
+<!-- Please add a short description of why you think these changes would benefit the game. If you can't justify it in words, it might not be worth adding. -->
