@@ -377,17 +377,18 @@
 	gain_text = "<span class='danger'>You really could go for a smoke right about now.</span>"
 	lose_text = "<span class='notice'>You feel like you should quit smoking.</span>"
 	medical_record_text = "Patient is a current smoker."
-	var/preferred_type = pick(/obj/item/storage/fancy/cigarettes,
+	var/obj/item/storage/fancy/cigarettes/preferred_type
+	var/where_lighter
+	var/where_cigs
+
+/datum/quirk/smoker/on_spawn()
+	preferred_type = pick(/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/fancy/cigarettes/dromedaryco,
 		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
 		/obj/item/storage/fancy/cigarettes/cigpack_robust,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate)
-	var/whereLighter
-	var/whereCigs
-
-/datum/quirk/smoker/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.reagents.addiction_list.Add(/datum/reagent/drug/nicotine)
 	var/lighter = new /obj/item/lighter/greyscale(get_turf(quirk_holder))
@@ -397,21 +398,21 @@
 		"in your right pocket" = SLOT_R_STORE,
 		"in your backpack" = SLOT_IN_BACKPACK
 	)
-	whereCigs = H.equip_in_one_of_slots(cigs, slots, FALSE) || "at your feet"
-	whereLighter = H.equip_in_one_of_slots(lighter, slots, FALSE) || "at your feet"
+	where_cigs = H.equip_in_one_of_slots(cigs, slots, FALSE) || "at your feet"
+	where_lighter = H.equip_in_one_of_slots(lighter, slots, FALSE) || "at your feet"
 
 /datum/quirk/smoker/post_add()
-	if(whereCigs == "in your backpack" || whereLighter = "in your backpack")
+	if(where_cigs == "in your backpack" || where_lighter == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a lighter in your [whereLighter] and a [preferred_type.name] [whereCigs]. Make sure you get your favorite brand when you need more.</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a lighter in your [where_lighter] and a [preferred_type.name] [where_cigs]. Make sure you get your favorite brand when you need more.</span>")
 	
 /datum/quirk/smoker/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
-	if (is_type(I, /obj/item/clothing/mask/cigarette))
-		if(is_type(I, preferred_type.spawn_type))	
+	if (istype(I, /obj/item/clothing/mask/cigarette))
+		if(istype(I, preferred_type.spawn_type))	
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
@@ -421,22 +422,26 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	value = -2
-	var/drug_table = pick(/datum/reagent/drug/crank = /obj/item/reagent_containers/glass/bottle/crank,
+	var/drug_table = list(/datum/reagent/drug/crank = /obj/item/reagent_containers/glass/bottle/crank,
 		/datum/reagent/drug/krokodil = /obj/item/reagent_containers/glass/bottle/krokodil,
 		/datum/reagent/drug/happiness = /obj/item/reagent_containers/glass/bottle/happiness,
 		/datum/reagent/medicine/morphine = /obj/item/reagent_containers/glass/bottle/morphine)
-	var/drug = pick(/datum/reagent/drug/crank,
+	var/datum/reagent/R
+	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
+	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
+	medical_record_text = "Patient has a history of hard drugs."
+	var/where_bottle
+	var/where_sharp
+
+/datum/quirk/junkie/on_spawn()
+	R = pick(/datum/reagent/drug/crank,
 		/datum/reagent/drug/krokodil,
 		/datum/reagent/drug/happiness,
 		/datum/reagent/medicine/morphine)
-	gain_text = "<span class='danger'>You suddenly feel the craving for [drug.name].</span>"
-	lose_text = "<span class='notice'>You feel like you should kick your [drug.name] habit.</span>"
-	medical_record_text = "Patient has a history of hard drugs."
-
-/datum/quirk/junkie/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.reagents.addiction_list.Add(drug)
-	var/drug_bottle = new drug_table[drug](get_turf(quirk_holder))
+	H.reagents.addiction_list[R] = null
+	var/obj/item/reagent_containers/glass/G = drug_table[R]
+	var/drug_bottle = new G(get_turf(quirk_holder))
 	var/sharp = new /obj/item/reagent_containers/syringe(get_turf(quirk_holder))
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
@@ -446,13 +451,9 @@
 	where_bottle = H.equip_in_one_of_slots(drug_bottle, slots, FALSE) || "at your feet"
 	where_sharp = H.equip_in_one_of_slots(sharp, slots, FALSE) || "at your feet"
 
-/datum/quirk/smoker/post_add()
+/datum/quirk/junkie/post_add()
 	if(where_bottle == "in your backpack" || where_sharp == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of [drug.name] [where_bottle], and a needle [where_sharp]. Better hope you don't run out...</span>")
-
-/datum/quirk/junkie/on_process()
-	var/mob/living/carbon/human/H = quirk_holder
-	if (H.reagents.addiction_list)
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of [R.name] [where_bottle], and a needle [where_sharp]. Better hope you don't run out...</span>")
