@@ -73,6 +73,7 @@
 #define TRAIT_ALWAYS_CLEAN      "always-clean"
 #define TRAIT_BOOZE_SLIDER      "booze-slider"
 #define TRAIT_UNINTELLIGIBLE_SPEECH "unintelligible-speech"
+#define TRAIT_NOMUTATIONS	"nomutations"
 
 //non-mob traits
 #define TRAIT_PARALYSIS			"paralysis" //Used for limb-based paralysis, where replacing the limb will fix it
