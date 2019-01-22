@@ -123,7 +123,7 @@
 	if(!zooming || !check_user())
 		return
 	if iscarbon(current_user)
-		var/mob/living/carbon/human/H = current_user
+		var/mob/living/carbon/H = current_user
 		if (H.dna.check_mutation(XRAY))
 			to_chat(current_user, "<span class='warning'>Your eyes see right through the scope!</span>")
 			return
@@ -149,7 +149,7 @@
 	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
 	if iscarbon(user)
-		var/mob/living/carbon/human/H = user
+		var/mob/living/carbon/H = user
 		if (H.dna.check_mutation(XRAY))
 			return
 	user.client.change_view(CONFIG_GET(string/default_view))

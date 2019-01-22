@@ -843,7 +843,7 @@
 	else
 		user.TakeComponent(mobhook)
 	if iscarbon(user)
-		var/mob/living/carbon/human/H = user
+		var/mob/living/carbon/H = user
 		if (H.dna.check_mutation(XRAY))
 			to_chat(user, "<span class='warning'>Your eyes see right through the lenses!</span>")
 			return
@@ -875,7 +875,7 @@
 	item_state = "binoculars"
 	if(user && user.client)
 		if iscarbon(user)
-			var/mob/living/carbon/human/H = user
+			var/mob/living/carbon/H = user
 			if (H.dna.check_mutation(XRAY))
 				return
 		user.regenerate_icons()
