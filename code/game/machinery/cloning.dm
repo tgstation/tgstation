@@ -173,16 +173,17 @@
 
 	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
 
-	if(efficiency > 2)
-		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-		H.dna.remove_mutation_group(unclean_mutations)
-	if(efficiency > 5 && prob(20))
-		H.easy_randmut(POSITIVE)
-	if(efficiency < 3)
-		if(prob(50))
-			var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
-			if(ismob(M))
-				H = M
+	if(!H.has_trait(TRAIT_RADIMMUNE))
+		if(efficiency > 2)
+			var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
+			H.dna.remove_mutation_group(unclean_mutations)
+		if(efficiency > 5 && prob(20))
+			H.easy_randmut(POSITIVE)
+		if(efficiency < 3)
+			if(prob(50))
+				var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+				if(ismob(M))
+					H = M
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
