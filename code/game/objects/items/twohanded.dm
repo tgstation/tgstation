@@ -842,10 +842,11 @@
 		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
 	else
 		user.TakeComponent(mobhook)
-	var/mob/living/carbon/human/H = user
-	if(H.dna.check_mutation(XRAY))
-		to_chat(user, "<span class='warning'>Your eyes see right through the lenses!</span>")
-		return
+	if iscarbon(user)
+		var/mob/living/carbon/human/H = user
+		if (H.dna.check_mutation(XRAY))
+			to_chat(user, "<span class='warning'>Your eyes see right through the lenses!</span>")
+			return
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")
 	item_state = "binoculars_wielded"
 	user.regenerate_icons()
@@ -872,9 +873,11 @@
 	mobhook.RemoveComponent()
 	user.visible_message("[user] lowers [src].","You lower [src].")
 	item_state = "binoculars"
-	user.regenerate_icons()
-	var/mob/living/carbon/human/H = user
-	if((user && user.client) && !(H.dna.check_mutation(XRAY)))
+	if(user && user.client)
+		if iscarbon(user)
+			var/mob/living/carbon/human/H = user
+			if (H.dna.check_mutation(XRAY))
+				return
 		user.regenerate_icons()
 		var/client/C = user.client
 		C.change_view(CONFIG_GET(string/default_view))
