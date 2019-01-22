@@ -2,8 +2,7 @@
 <!-- You can view Contributing.MD for a detailed description of the pull request process. -->
 
 ## Changelog
-
-:cl: optional name here
+:cl:
 add: Added new things
 add: Added more things
 del: Removed old things
@@ -21,7 +20,9 @@ config: changed some config setting
 admin: messed with admin stuff
 server: something server ops should know
 /:cl:
-<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should represent how a player might be affected by the changes rather than a summary of the PR's contents. -->
+
+<!-- both :cl:'s are required for it to work! You can put your name beside the first :cl: if you want to overwrite your github username -->
+<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should generally represent how a player might be affected by the changes rather than a summary of the PR's contents. -->
 ## About The Pull Request
 
 <!-- Describe The Pull Request. Please be sure every change is documented or this can delay review and even discourage maintainers from merging your PR! -->
