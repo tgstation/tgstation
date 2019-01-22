@@ -1011,3 +1011,41 @@
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
 
+/datum/species/golem/soviet
+	name = "Soviet Golem"
+	id = "soviet golem"
+	prefix = "Comrade"
+	attack_verb = "nationalis"
+	limbs_id = "s_golem"
+	blacklisted = 1
+	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
+
+/datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
+	C.revive(full_heal = 1)
+
+	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+
+/datum/species/golem/soviet/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
+		C.RemoveSpell(spell)
+
+/datum/species/golem/soviet/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	..()
+	if(isgolem(target))
+		return
+	if(target.nutrition <= NUTRITION_LEVEL_STARVING)
+		target.set_species(/datum/species/golem/soviet)
+		return
+	target.adjust_nutrition(-40)
+
+/datum/species/golem/soviet/handle_speech(message, mob/living/carbon/human/H)
+	playsound(H, 'sound/misc/Cyka Blyat.ogg', 25, 0)
+	return "Cyka Blyat"
