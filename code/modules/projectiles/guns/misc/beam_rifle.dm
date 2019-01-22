@@ -122,6 +122,10 @@
 /obj/item/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
+	var/mob/living/carbon/human/H = current_user
+	if(H.dna.check_mutation(XRAY))
+		to_chat(current_user, "<span class='warning'>Your eyes see right through the scope!</span>")
+		return
 	current_user.client.change_view(world.view + zoom_target_view_increase)
 	zoom_current_view_increase = zoom_target_view_increase
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
@@ -143,6 +147,9 @@
 		return FALSE
 	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
+	var/mob/living/carbon/human/H = user
+	if(H.dna.check_mutation(XRAY))
+		return
 	user.client.change_view(CONFIG_GET(string/default_view))
 	zooming_angle = 0
 	current_zoom_x = 0
