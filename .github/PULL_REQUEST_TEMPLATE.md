@@ -21,7 +21,7 @@ admin: messed with admin stuff
 server: something server ops should know
 /:cl:
 
-<!-- both :cl:'s are required for it to work! You can put your name beside the first :cl: if you want to overwrite your github username -->
+<!-- Both :cl:'s are required for it to work! You can put your name beside the first :cl: if you want to overwrite your Github username -->
 <!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should generally represent how a player might be affected by the changes rather than a summary of the PR's contents. -->
 ## About The Pull Request
 
