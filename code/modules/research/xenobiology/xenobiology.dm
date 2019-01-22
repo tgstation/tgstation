@@ -848,10 +848,10 @@
 		var/obj/vehicle/V = C
 		var/datum/component/riding/R = V.GetComponent(/datum/component/riding)
 		if(R)
-			if(R.vehicle_move_delay <= 1.5 )
+			if(R.vehicle_move_delay <= 1 )
 				to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 				return ..()
-			R.vehicle_move_delay = 1.5
+			R.vehicle_move_delay = 1
 
 	to_chat(user, "<span class='notice'>You slather the red gunk over the [C], making it faster.</span>")
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
