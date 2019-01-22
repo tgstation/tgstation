@@ -7767,10 +7767,7 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ql" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 6
 	},
@@ -7909,9 +7906,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "qv" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 1
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -9138,9 +9134,8 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "sZ" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -9221,9 +9216,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "th" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 4
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 9

@@ -132,10 +132,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel/dark,
 /area/security/main)
 "aav" = (
@@ -10264,10 +10261,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/box/monkeycubes,
 /obj/item/storage/box/monkeycubes,
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
@@ -11448,10 +11442,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -11478,9 +11469,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 1
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -12642,9 +12632,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -12670,9 +12659,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 4
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /obj/machinery/airalarm{
 	dir = 1;
@@ -16376,9 +16364,8 @@
 /turf/open/floor/plasteel,
 /area/teleporter)
 "aIB" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 4
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
@@ -19760,10 +19747,7 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "aQw" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -20200,9 +20184,8 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /obj/structure/cable/white{
 	icon_state = "1-8"
@@ -20250,9 +20233,8 @@
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 4
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -21589,10 +21571,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aTV" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aTW" = (
@@ -22533,9 +22512,8 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "aVK" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -23397,10 +23375,7 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aXv" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 6
 	},
@@ -23497,9 +23472,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "aXF" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 1
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
 	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -24933,9 +24907,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bbh" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 8
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
 	},
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -25007,9 +24980,8 @@
 /turf/open/floor/engine,
 /area/engine/engineering)
 "bbp" = (
-/obj/effect/turf_decal/stripes/line{
-	icon_state = "warninglinecorner";
-	dir = 4
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
 	},
 /obj/structure/cable{
 	icon_state = "2-4"
