@@ -411,13 +411,13 @@
 	list_reagents = list("bromine" = 30)
 
 /obj/item/reagent_containers/glass/bottle/crank
-	name = "crank bottle"
+	name = "Crank bottle"
 	list_reagents = list("crank" = 30)
 
 /obj/item/reagent_containers/glass/bottle/krokodil
-	name = "krokodil bottle"
+	name = "Krokodil bottle"
 	list_reagents = list("krokodil" = 30)
 
 /obj/item/reagent_containers/glass/bottle/happiness
-	name = "happiness bottle"
+	name = "Happiness bottle"
 	list_reagents = list("happiness" = 30)
