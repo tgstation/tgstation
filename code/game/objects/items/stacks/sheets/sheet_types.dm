@@ -608,3 +608,9 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 20
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
+
+/obj/item/stack/sheet/capitalisium
+	name = "capitalisium sheet"
+	desc = "A source of raw capitalism, capable of bringing forth the prophesized Capitalist Golem."
+	icon_state = "sheet-capitalisium"
+	merge_type = /obj/item/stack/sheet/capitalisium

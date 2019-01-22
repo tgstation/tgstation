@@ -1011,3 +1011,42 @@
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
 
+/datum/species/golem/capitalist
+	name = "Capitalist Golem"
+	id = "capitalist golem"
+	prefix = "Capitalist"
+	attack_verb = "monopoliz"
+	limbs_id = "ca_golem"
+	blacklisted = 1
+	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr Moneybags", "Adam Smith")
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
+
+/datum/species/golem/capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), SLOT_HEAD)
+	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), SLOT_GLASSES)
+	C.revive(full_heal = 1)
+
+	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+
+/datum/species/golem/capitalist/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
+		C.RemoveSpell(spell)
+
+/datum/species/golem/capitalist/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	..()
+	if(isgolem(target))
+		return
+	if(target.nutrition >= NUTRITION_LEVEL_FAT)
+		target.set_species(/datum/species/golem/capitalist)
+		return
+	target.adjust_nutrition(40)
+
+/datum/species/golem/capitalist/handle_speech(message, mob/living/carbon/human/H)
+	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
+	return "Money!"
