@@ -95,13 +95,9 @@
 	if(panel_open)
 		add_overlay("pod-panel")
 
-	if(state_open && (icon_state != "pod-open"))
-		animate(src, icon_state = "pod-anim1", icon_state = "pod-anim2", time = 2)
+	if(state_open)
 		icon_state = "pod-open"
 		return
-
-	if(!state_open && (icon_state == "pod-open"))
-		animate(src, icon_state = "pod-anim2", icon_state = "pod-anim1", time = 2)
 
 	if(occupant)
 		var/image/occupant_overlay
@@ -258,10 +254,12 @@
 			var/mob/living/L = M
 			L.update_mobility()
 	occupant = null
+	flick("pod-open-anim", src)
 	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		flick("pod-close-anim", src)
 		..(user)
 		return occupant
 

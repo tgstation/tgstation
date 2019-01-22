@@ -49,11 +49,9 @@
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon()
-	if(state_open && (icon_state == "sleeper"))
-		animate(src, icon_state = "sleeper-anim", time = 1)
+	if(state_open)
 		icon_state = "sleeper-open"
-	if(!state_open && (icon_state == "sleeper-open"))
-		animate(src, icon_state = "sleeper-anim", time = 1)
+	else
 		icon_state = "sleeper"
 
 /obj/machinery/sleeper/container_resist(mob/living/user)
@@ -71,10 +69,12 @@
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
+		flick("sleeper-anim", src)
 		..()
 
 /obj/machinery/sleeper/close_machine(mob/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		flick("sleeper-anim", src)
 		..(user)
 		var/mob/living/mob_occupant = occupant
 		if(mob_occupant && mob_occupant.stat != DEAD)
