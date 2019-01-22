@@ -1,0 +1,8 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - balance: "legion cores no longer adminheal"
+  - balance: "legion cores now heal 25 brute, 25 burn"
+  - balance: "legion cores remove CC like stuns and body temperature changes on application"
+  - balance: "legion cores make you immune to damage slowdown for one minute"
+  - balance: "implanted legion cores are unaffected."
