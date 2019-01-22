@@ -380,10 +380,11 @@
 	var/obj/item/storage/fancy/cigarettes/preferred_type
 	var/where_lighter
 	var/where_cigs
+	var/obj/item/storage/fancy/cigarettes/cigs
 
 /datum/quirk/smoker/on_spawn()
 	preferred_type = pick(/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/fancy/cigarettes/dromedaryco,
+		/obj/item/storage/fancy/cigarettes/cigpack_midori,
 		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
 		/obj/item/storage/fancy/cigarettes/cigpack_robust,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
@@ -393,7 +394,7 @@
 	var/datum/reagent/nic = new /datum/reagent/drug/nicotine()
 	H.reagents.addiction_list.Add(nic)
 	var/lighter = new /obj/item/lighter/greyscale(get_turf(quirk_holder))
-	var/cigs = new preferred_type(get_turf(quirk_holder))
+	cigs = new preferred_type(get_turf(quirk_holder))
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
@@ -407,13 +408,13 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a lighter in your [where_lighter] and a [preferred_type.name] [where_cigs]. Make sure you get your favorite brand when you need more.</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a lighter in your [where_lighter] and a [cigs.name] [where_cigs]. Make sure you get your favorite brand when you need more.</span>")
 	
 /datum/quirk/smoker/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
-		if(istype(I, preferred_type.spawn_type))	
+		if(istype(I, cigs.spawn_type))	
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
