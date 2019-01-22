@@ -133,7 +133,7 @@
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	if(pickupTarget)
-		if(restrained() || blacklistItems[pickupTarget] || (pickupTarget.item_flags & NODROP))
+		if(restrained() || blacklistItems[pickupTarget] || pickupTarget.has_trait(TRAIT_NODROP))
 			pickupTarget = null
 		else
 			pickupTimer++
@@ -399,7 +399,7 @@
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && isliving(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	. = ..()
 
 /mob/living/carbon/monkey/hitby(atom/movable/AM, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	if(istype(AM, /obj/item))

@@ -1,4 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - bugfix: "Malfunctioning AIs can no longer abuse the confirmation popup to create extra (unstoppable) doomsdays."

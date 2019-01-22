@@ -69715,6 +69715,10 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/effect/turf_decal/delivery,
+/obj/item/clothing/head/welding{
+	pixel_x = -3;
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cFk" = (

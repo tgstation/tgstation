@@ -1840,6 +1840,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		. = TRUE
 	..()
 
+/datum/reagent/consumable/ethanol/blank_paper
+	name = "Blank Paper"
+	id = "blank_paper"
+	description = "A bubbling glass of blank paper. Just looking at it makes you feel fresh."
+	nutriment_factor = 1 * REAGENTS_METABOLISM
+	color = "#DCDCDC" // rgb: 220, 220, 220
+	boozepwr = 20
+	quality = DRINK_GOOD
+	taste_description = "bubbling possibility"
+	glass_icon_state = "blank_paper"
+	glass_name = "glass of blank paper"
+	glass_desc = "A fizzy cocktail for those looking to start fresh."
+
+/datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/M)
+	if(ishuman(M) && M.job == "Mime")
+		M.heal_bodypart_damage(1,1)
+		. = 1
+	return ..()
+
 /datum/reagent/consumable/ethanol/fruit_wine
 	name = "Fruit Wine"
 	id = "fruit_wine"

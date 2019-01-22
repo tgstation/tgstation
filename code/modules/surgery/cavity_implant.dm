@@ -29,7 +29,7 @@
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart(BODY_ZONE_CHEST)
 	if(tool)
-		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || (tool.item_flags & NODROP) || istype(tool, /obj/item/organ))
+		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || tool.has_trait(TRAIT_NODROP) || istype(tool, /obj/item/organ))
 			to_chat(user, "<span class='warning'>You can't seem to fit [tool] in [target]'s [target_zone]!</span>")
 			return 0
 		else

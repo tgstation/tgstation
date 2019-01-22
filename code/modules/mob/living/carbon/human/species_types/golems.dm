@@ -30,6 +30,7 @@
 	var/list/special_names = list("Tarkus")
 	var/human_surname_chance = 3
 	var/special_name_chance = 5
+	var/owner //dobby is a free golem
 
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
@@ -807,3 +808,244 @@
 /datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.ventcrawler = initial(C.ventcrawler)
+
+/datum/species/golem/bronze
+	name = "Bronze Golem"
+	id = "bronze golem"
+	prefix = "Bronze"
+	special_names = list("Bell")
+	fixed_mut_color = "cd7f32"
+	info_text = "As a <span class='danger'>Bronze Golem</span>, you are very resistant to loud noises, and make loud noises if something hard hits you, however this ability does hurt your hearing."
+	special_step_sounds = list('sound/machines/clockcult/integration_cog_install.ogg', 'sound/magic/clockwork/fellowship_armory.ogg' )
+	mutantears = /obj/item/organ/ears/bronze
+	var/last_gong_time = 0
+	var/gong_cooldown = 150
+
+/datum/species/golem/bronze/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
+	if(!(world.time > last_gong_time + gong_cooldown))
+		return 0
+	if(P.flag == "bullet" || P.flag == "bomb")
+		gong(H)
+		return 0
+
+/datum/species/golem/bronze/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_gong_time + gong_cooldown)
+		gong(H)
+
+/datum/species/golem/bronze/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+	..()
+	if(world.time > last_gong_time + gong_cooldown &&  M.a_intent != INTENT_HELP)
+		gong(H)
+
+/datum/species/golem/bronze/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_gong_time + gong_cooldown)
+		gong(H)
+
+/datum/species/golem/bronze/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
+	..()
+	if(world.time > last_gong_time + gong_cooldown)
+		gong(H)
+
+/datum/species/golem/bronze/proc/gong(mob/living/carbon/human/H)
+	last_gong_time = world.time
+	for(var/mob/living/M in get_hearers_in_view(7,H))
+		if(M.stat == DEAD)	//F
+			return
+		if(M == H)
+			H.show_message("<span class='narsiesmall'>You cringe with pain as your body rings around you!</span>", 2)
+			H.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
+			H.soundbang_act(2, 0, 100, 1)
+			H.jitteriness += 7
+		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))
+		switch(distance)
+			if(0 to 1)
+				M.show_message("<span class='narsiesmall'>GONG!</span>", 2)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
+				M.soundbang_act(1, 0, 30, 3)
+				M.confused += 10
+				M.jitteriness += 4
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
+			if(2 to 3)
+				M.show_message("<span class='cult'>GONG!</span>", 2)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 75, TRUE)
+				M.soundbang_act(1, 0, 15, 2)
+				M.jitteriness += 3
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "gonged", /datum/mood_event/loud_gong)
+			else
+				M.show_message("<span class='warning'>GONG!</span>", 2)
+				M.playsound_local(H, 'sound/effects/gong.ogg', 50, TRUE)
+
+
+/datum/species/golem/cardboard //Faster but weaker, can also make new shells on its own
+	name = "Cardboard Golem"
+	id = "cardboard golem"
+	prefix = "Cardboard"
+	special_names = list("Box")
+	info_text = "As a <span class='danger'>Cardboard Golem</span>, you aren't very strong, but you are a bit quicker and can easily create more brethren by using cardboard on yourself."
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	limbs_id = "c_golem" //special sprites
+	attack_verb = "whips"
+	attack_sound = 'sound/weapons/whip.ogg'
+	miss_sound = 'sound/weapons/etherealmiss.ogg'
+	fixed_mut_color = null
+	armor = 25
+	burnmod = 1.25
+	heatmod = 2
+	speedmod = 1.5
+	punchdamagelow = 4
+	punchstunthreshold = 7
+	punchdamagehigh = 8
+	var/last_creation
+	var/brother_creation_cooldown = 300
+
+/datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+	. = ..()
+	if(user != H || intent != INTENT_HELP)
+		return FALSE //forced reproduction is rape.
+	if(istype(I, /obj/item/stack/sheet/cardboard))
+		var/obj/item/stack/sheet/cardboard/C = I
+		if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
+			return
+		to_chat(H, "<span class='notice'>You attempt to create a new cardboard brother.</span>")
+		if(do_after(user, 30, target = user))
+			if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
+				return
+			if(!C.use(10))
+				to_chat(H, "<span class='warning'>You do not have enough cardboard!</span>")
+				return FALSE
+			to_chat(H, "<span class='notice'>You create a new cardboard golem shell.</span>")
+			create_brother(H.loc)
+
+/datum/species/golem/cardboard/proc/create_brother(var/location)
+	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+	last_creation = world.time
+
+/datum/species/golem/leather
+	name = "Leather Golem"
+	id = "leather golem"
+	special_names = list("Face", "Man")
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER, TRAIT_STRONG_GRABBER)
+	prefix = "Leather"
+	fixed_mut_color = "624a2e"
+	info_text = "As a <span class='danger'>Leather Golem</span>, you are flammable, but you can grab things with incredible ease, allowing all your grabs to start at a strong level."
+	grab_sound = 'sound/weapons/whipgrab.ogg'
+	attack_sound = 'sound/weapons/whip.ogg'
+
+/datum/species/golem/durathread
+	name = "Durathread Golem"
+	id = "durathread golem"
+	prefix = "Durathread"
+	limbs_id = "d_golem"
+	special_names = list("Boll","Weave")
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Durathread Golem</span>, your strikes will cause those your targets to start choking, but your woven body won't withstand fire as well."
+
+/datum/species/golem/durathread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	target.apply_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+
+/datum/species/golem/bone
+	name = "Bone Golem"
+	id = "bone golem"
+	say_mod = "rattles"
+	prefix = "Bone"
+	limbs_id = "b_golem"
+	special_names = list("Head", "Broth", "Fracture")
+	liked_food = GROSS | MEAT | RAW
+	toxic_food = null
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	mutanttongue = /obj/item/organ/tongue/bone
+	sexes = FALSE
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH,TRAIT_CALCIUM_HEALER)
+	info_text = "As a <span class='danger'>Bone Golem</span>, You have a powerful spell that lets you chill your enemies with fear, and milk heals you! Just make sure to watch our for bone-hurting juice."
+	var/datum/action/innate/bonechill/bonechill
+
+/datum/species/golem/bone/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(ishuman(C))
+		bonechill = new
+		bonechill.Grant(C)
+
+/datum/species/golem/bone/on_species_loss(mob/living/carbon/C)
+	if(bonechill)
+		bonechill.Remove(C)
+	..()
+
+/datum/action/innate/bonechill
+	name = "Bone Chill"
+	desc = "Rattle your bones and strike fear into your enemies!"
+	check_flags = AB_CHECK_CONSCIOUS
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "bonechill"
+	var/cooldown = 600
+	var/last_use
+	var/snas_chance = 3
+
+/datum/action/innate/bonechill/Activate()
+	if(world.time < last_use + cooldown)
+		to_chat("<span class='notice'>You aren't ready yet to rattle your bones again</span>")
+	owner.visible_message("<span class='warning'>[owner] rattles [owner.p_their()] bones harrowingly.</span>", "<span class='notice'>You rattle your bones</span>")
+	last_use = world.time
+	if(prob(snas_chance))
+		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES2.ogg', 100)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/mutable_appearance/badtime = mutable_appearance('icons/mob/human_parts.dmi', "b_golem_eyes", -FIRE_LAYER-0.5)
+			badtime.appearance_flags = RESET_COLOR
+			H.overlays_standing[FIRE_LAYER+0.5] = badtime
+			H.apply_overlay(FIRE_LAYER+0.5)
+			addtimer(CALLBACK(H, /mob/living/carbon/.proc/remove_overlay, FIRE_LAYER+0.5), 25)
+	else
+		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
+	for(var/mob/living/L in orange(7, get_turf(owner)))
+		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L))
+			return //Do not affect our brothers
+		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
+		L.apply_status_effect(/datum/status_effect/bonechill)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
+
+/datum/species/golem/soviet
+	name = "Soviet Golem"
+	id = "soviet golem"
+	prefix = "Comrade"
+	attack_verb = "nationalis"
+	limbs_id = "s_golem"
+	blacklisted = 1
+	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
+
+/datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
+	C.revive(full_heal = 1)
+
+	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+
+/datum/species/golem/soviet/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
+		C.RemoveSpell(spell)
+
+/datum/species/golem/soviet/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	..()
+	if(isgolem(target))
+		return
+	if(target.nutrition <= NUTRITION_LEVEL_STARVING)
+		target.set_species(/datum/species/golem/soviet)
+		return
+	target.adjust_nutrition(-40)
+
+/datum/species/golem/soviet/handle_speech(message, mob/living/carbon/human/H)
+	playsound(H, 'sound/misc/Cyka Blyat.ogg', 25, 0)
+	return "Cyka Blyat"

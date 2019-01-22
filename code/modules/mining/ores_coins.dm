@@ -244,12 +244,10 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
-	..()
+	. = ..()
 
 /obj/item/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
-
-
 
 /obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)

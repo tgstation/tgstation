@@ -210,7 +210,7 @@ Auto Patrol[]"},
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/ed209/handle_automated_action()
 	if(!..())
@@ -510,11 +510,11 @@ Auto Patrol[]"},
 			spawn(100)
 				disabled = 0
 				icon_state = "[lasercolor]ed2091"
-			return 1
+			return BULLET_ACT_HIT
 		else
-			..(Proj)
+			. = ..()
 	else
-		..(Proj)
+		. = ..()
 
 /mob/living/simple_animal/bot/ed209/bluetag
 	lasercolor = "b"
