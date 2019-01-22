@@ -390,7 +390,8 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_carp,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate)
 	var/mob/living/carbon/human/H = quirk_holder
-	H.reagents.addiction_list.Add(/datum/reagent/drug/nicotine)
+	var/datum/reagent/nic = new /datum/reagent/drug/nicotine()
+	H.reagents.addiction_list.Add(nic)
 	var/lighter = new /obj/item/lighter/greyscale(get_turf(quirk_holder))
 	var/cigs = new preferred_type(get_turf(quirk_holder))
 	var/list/slots = list(
@@ -422,11 +423,11 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	value = -2
-	var/drug_table = list(/datum/reagent/drug/crank = /obj/item/reagent_containers/glass/bottle/crank,
-		/datum/reagent/drug/krokodil = /obj/item/reagent_containers/glass/bottle/krokodil,
-		/datum/reagent/drug/happiness = /obj/item/reagent_containers/glass/bottle/happiness,
-		/datum/reagent/medicine/morphine = /obj/item/reagent_containers/glass/bottle/morphine)
-	var/datum/reagent/R
+	var/drug_table = list("crank" = /obj/item/reagent_containers/glass/bottle/crank,
+		"krokodil" = /obj/item/reagent_containers/glass/bottle/krokodil,
+		"happiness" = /obj/item/reagent_containers/glass/bottle/happiness,
+		"morphine" = /obj/item/reagent_containers/glass/bottle/morphine)
+	var/datum/reagent/Reag
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
 	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
@@ -434,13 +435,18 @@
 	var/where_sharp
 
 /datum/quirk/junkie/on_spawn()
-	R = pick(/datum/reagent/drug/crank,
-		/datum/reagent/drug/krokodil,
-		/datum/reagent/drug/happiness,
-		/datum/reagent/medicine/morphine)
+	var/reagent_id = pick("morphine",
+		"crank",
+		"happiness",
+		"krokodil")
+	WARNING(reagent_id)
+	var/datum/reagent/reagent_type = GLOB.chemical_reagents_list[reagent_id]
+	if (!reagent_type)
+		WARNING("oh god oh fuck")
+	Reag = new reagent_type.type(null)
 	var/mob/living/carbon/human/H = quirk_holder
-	H.reagents.addiction_list[R] = null
-	var/obj/item/reagent_containers/glass/G = drug_table[R]
+	H.reagents.addiction_list.Add(Reag)
+	var/obj/item/reagent_containers/glass/G = drug_table[reagent_id]
 	var/drug_bottle = new G(get_turf(quirk_holder))
 	var/sharp = new /obj/item/reagent_containers/syringe(get_turf(quirk_holder))
 	var/list/slots = list(
@@ -456,4 +462,4 @@
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of [R.name] [where_bottle], and a needle [where_sharp]. Better hope you don't run out...</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a bottle of [Reag.name] [where_bottle], and a needle [where_sharp]. Better hope you don't run out...</span>")
