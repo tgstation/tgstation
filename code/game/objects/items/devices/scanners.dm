@@ -673,7 +673,7 @@ NANITE SCANNER
 	var/list/discovered = list() //hit a dna console to update the scanners database
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
-	if (!M.has_trait(TRAIT_NOMUTATIONS) || !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+	if (!M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
 		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
 
 		add_fingerprint(user)
@@ -681,11 +681,11 @@ NANITE SCANNER
 		gene_scan(M, user, src)
 	else
 		to_chat(user, "<span class='warning'>[M] has no readable genetic sequence!</span>")
-		
+
 		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>")
 
 		add_fingerprint(user)
-		
+
 		return
 
 /obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
