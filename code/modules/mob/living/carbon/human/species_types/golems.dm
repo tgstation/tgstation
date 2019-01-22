@@ -1049,4 +1049,4 @@
 
 /datum/species/golem/capitalist/handle_speech(message, mob/living/carbon/human/H)
 	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
-	return "Money!"
+	return "Hello I like money!"
