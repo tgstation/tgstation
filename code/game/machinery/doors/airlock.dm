@@ -1114,6 +1114,7 @@
 	sleep(1)
 	set_opacity(0)
 	update_freelook_sight()
+	unbuckle_all_mobs()
 	sleep(4)
 	density = FALSE
 	air_update_turf(1)
@@ -1175,7 +1176,16 @@
 	delayed_close_requested = FALSE
 	if(safe)
 		CheckForMobs()
+	catchHair()
 	return TRUE
+
+/obj/machinery/door/airlock/proc/catchHair()
+	if(prob(10))
+		for(var/mob/living/carbon/human/H in orange(2, src))
+			if(H.hair_style == "Braid (Floorlength)")
+				to_chat(world, "<span class='warning'>Your hair gets caught in [src]</span>")
+				buckle_mob(H, TRUE, FALSE)
+
 
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)
