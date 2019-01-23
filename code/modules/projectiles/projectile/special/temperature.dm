@@ -23,7 +23,7 @@
 
 /obj/item/projectile/temp/cryo/on_range()
 	var/turf/T = get_turf(src)
-	if(istype(T, /turf/open))
+	if(isopenturf(T))
 		var/turf/open/O = T
 		O.freon_gas_act()
 	return ..()

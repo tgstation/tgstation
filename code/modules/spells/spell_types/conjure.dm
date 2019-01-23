@@ -84,8 +84,7 @@
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
 	if (delete_old && item && !QDELETED(item))
-		qdel(item)
-		item = null
+		QDEL_NULL(item)
 	else
 		for(var/mob/living/carbon/C in targets)
 			if(C.dropItemToGround(C.get_active_held_item()))
