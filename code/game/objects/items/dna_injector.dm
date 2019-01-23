@@ -336,6 +336,23 @@
 	name = "\improper DNA injector (Anti-Radioactive)"
 	remove_mutations = list(RADIOACTIVE)
 
+/obj/item/dnainjector/insulated
+	name = "\improper DNA injector (Insulated)"
+	add_mutations = list(INSULATED)
+
+/obj/item/dnainjector/antiinsulated
+	name = "\improper DNA injector (Anti-Insulated)"
+	remove_mutations = list(INSULATED)
+
+/obj/item/dnainjector/shock
+	name = "\improper DNA injector (Shock Touch)"
+	add_mutations = list(SHOCKTOUCH)
+
+/obj/item/dnainjector/antishock
+	name = "\improper DNA injector (Anti-Shock Touch)"
+	remove_mutations = list(SHOCKTOUCH)
+
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 

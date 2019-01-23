@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 14 // normally 16
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/bundles_TC/bundle
+/datum/uplink_item/bundles_TC/cyber_implants
 	name = "Cybernetic Implants Bundle"
 	desc = "A random selection of cybernetic implants. Guaranteed 5 high quality implants. Comes with an autosurgeon."
 	item = /obj/item/storage/box/cyber_implants

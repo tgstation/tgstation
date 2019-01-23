@@ -473,6 +473,7 @@
 #include "code\datums\mutations\sight.dm"
 #include "code\datums\mutations\speech.dm"
 #include "code\datums\mutations\telekinesis.dm"
+#include "code\datums\mutations\touch.dm"
 #include "code\datums\ruins\lavaland.dm"
 #include "code\datums\ruins\space.dm"
 #include "code\datums\status_effects\buffs.dm"
