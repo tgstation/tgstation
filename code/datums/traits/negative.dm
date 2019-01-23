@@ -416,14 +416,14 @@
 		"in your backpack" = SLOT_IN_BACKPACK
 	)
 	where_drug = H.equip_in_one_of_slots(drug_instance, slots, FALSE) || "at your feet"
-	announce()
+	announce_drugs()
 
 /datum/quirk/junkie/post_add()
 	if(where_drug == "in your backpack" || where_accessory == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
-/datum/quirk/junkie/proc/announce()
+/datum/quirk/junkie/proc/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] of [reagent_instance.name] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
@@ -461,7 +461,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_carp)
 	. = ..()	
 
-/datum/quirk/junkie/smoker/proc/announce()
+/datum/quirk/junkie/smoker/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
 	
 
