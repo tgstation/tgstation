@@ -38,6 +38,13 @@
 			qdel(src)
 	return ..()
 
+/obj/item/paperplane/Exited(atom/movable/AM, atom/newLoc)
+	. = ..()
+	if (AM == internalPaper)
+		internalPaper = null
+		if(!QDELETED(src))
+			qdel(src)
+
 /obj/item/paperplane/Destroy()
 	QDEL_NULL(internalPaper)
 	return ..()

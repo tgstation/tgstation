@@ -199,6 +199,7 @@
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "drain"
 	human_req = 1
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/hive_drain/cast(mob/living/carbon/human/user)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -395,6 +396,7 @@
 	invocation_type = "none"
 	clothes_req = 0
 	max_targets = 0
+	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "panic"
@@ -504,6 +506,7 @@
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "hack"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/hive_hack/cast(list/targets, mob/living/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -559,6 +562,7 @@
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "assim"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/hive_assim/cast(list/targets, mob/living/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -618,6 +622,7 @@
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "loyal"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/hive_loyal/cast(mob/living/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -645,6 +650,7 @@
 	action_icon_state = "forcewall"
 	range = -1
 	include_user = 1
+	antimagic_allowed = TRUE
 	wall_type = /obj/effect/forcefield/wizard/hive
 	var/wall_type_b = /obj/effect/forcefield/wizard/hive/invis
 

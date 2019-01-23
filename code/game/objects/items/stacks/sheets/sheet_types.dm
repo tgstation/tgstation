@@ -608,3 +608,9 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 20
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
+
+/obj/item/stack/sheet/stalinium
+	name = "stalinium sheet"
+	desc = "A source of raw socialism, capable of bringing forth the prophesized Soviet Golem."
+	icon_state = "sheet-stalinium"
+	merge_type = /obj/item/stack/sheet/stalinium

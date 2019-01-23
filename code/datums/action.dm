@@ -685,6 +685,7 @@
 /datum/action/small_sprite
 	name = "Toggle Giant Sprite"
 	desc = "Others will always see you as giant"
+	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "smallqueen"
 	background_icon_state = "bg_alien"
 	var/small = FALSE
@@ -706,7 +707,7 @@
 		I.override = TRUE
 		I.pixel_x -= owner.pixel_x
 		I.pixel_y -= owner.pixel_y
-		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallsprite", I)
+		owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic, "smallsprite", I, AA_TARGET_SEE_APPEARANCE | AA_MATCH_TARGET_OVERLAYS)
 		small = TRUE
 	else
 		owner.remove_alt_appearance("smallsprite")
