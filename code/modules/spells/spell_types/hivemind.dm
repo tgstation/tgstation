@@ -199,6 +199,7 @@
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "drain"
 	human_req = 1
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/hive_drain/cast(mob/living/carbon/human/user)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -403,6 +404,7 @@
 	invocation_type = "none"
 	clothes_req = 0
 	max_targets = 0
+	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "panic"
@@ -515,6 +517,7 @@
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "hack"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/hive_hack/cast(list/targets, mob/living/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -573,6 +576,7 @@
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "assim"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/hive_assim/cast(list/targets, mob/living/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -632,6 +636,7 @@
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "loyal"
+	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/hive_loyal/cast(mob/living/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -659,19 +664,34 @@
 	action_icon_state = "forcewall"
 	range = -1
 	include_user = 1
+	antimagic_allowed = TRUE
 	wall_type = /obj/effect/forcefield/wizard/hive
+	var/wall_type_b = /obj/effect/forcefield/wizard/hive/invis
 
 /obj/effect/proc_holder/spell/targeted/forcewall/hive/cast(list/targets,mob/user = usr)
 	new wall_type(get_turf(user),user)
 	for(var/dir in GLOB.alldirs)
-		new wall_type(get_step(user, dir),user)
+		new wall_type_b(get_step(user, dir),user)
 
 /obj/effect/forcefield/wizard/hive
 	name = "Telekinetic Field"
-	desc = "A psychic barrier, usable by only the strongest of minds."
+	desc = "You think, therefore it is."
 	timeleft = 150
+	pixel_x = -32 //Centres the 96x96 sprite
+	pixel_y = -32
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "hive_shield"
+	layer = ABOVE_ALL_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/forcefield/wizard/hive/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
 		return TRUE
 	return  FALSE
+
+/obj/effect/forcefield/wizard/hive/invis
+	icon = null
+	icon_state = null
+	pixel_x = 0
+	pixel_y = 0
+	invisibility = INVISIBILITY_MAXIMUM

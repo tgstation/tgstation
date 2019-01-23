@@ -54,7 +54,7 @@
 		icon_regular_floor = "floor"
 	else
 		icon_regular_floor = icon_state
-	if(mapload)
+	if(mapload && prob(33))
 		MakeDirty()
 
 /turf/open/floor/ex_act(severity, target)
@@ -237,6 +237,10 @@
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
 			return list("mode" = RCD_WINDOWGRILLE, "delay" = 10, "cost" = 4)
+		if(RCD_MACHINE)
+			return list("mode" = RCD_MACHINE, "delay" = 20, "cost" = 25)
+		if(RCD_COMPUTER)
+			return list("mode" = RCD_COMPUTER, "delay" = 20, "cost" = 25)
 	return FALSE
 
 /turf/open/floor/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
@@ -275,4 +279,20 @@
 			var/obj/structure/grille/G = new(src)
 			G.anchored = TRUE
 			return TRUE
+		if(RCD_MACHINE)
+			if(locate(/obj/structure/frame/machine) in src)
+				return FALSE
+			var/obj/structure/frame/machine/M = new(src)
+			M.state = 2
+			M.icon_state = "box_1"
+			M.anchored = TRUE
+			return TRUE
+		if(RCD_COMPUTER)
+			if(locate(/obj/structure/frame/computer) in src)
+				return FALSE
+			var/obj/structure/frame/computer/C = new(src)
+			C.anchored = TRUE
+			C.setDir(the_rcd.computer_dir)
+			return TRUE
+
 	return FALSE

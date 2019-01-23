@@ -114,7 +114,7 @@
 	mood_change = -4
 
 /datum/mood_event/healsbadman
-	description = "<span class='warning'>I feel a lot better, but wow that was disgusting.</span>\n" //when you read the latest felinid removal PR and realize you're really not that much of a degenerate
+	description = "<span class='warning'>I feel like I'm held together by flimsy string, and could fall apart at any moment!</span>\n"
 	mood_change = -4
 	timeout = 1200
 
@@ -136,6 +136,42 @@
 	description = "<span class='warning'>Medicine may be good for me but right now it stings like hell.</span>\n"
 	mood_change = -5
 	timeout = 600
+
+/datum/mood_event/spooked
+	description = "<span class='warning'>The rattling of those bones...It still haunts me.</span>\n"
+	mood_change = -4
+	timeout = 2400
+
+/datum/mood_event/loud_gong
+	description = "<span class='warning'>That loud gong noise really hurt my ears!</span>\n"
+	mood_change = -3
+	timeout = 1200
+
+/datum/mood_event/notcreeping
+	description = "<span class='warning'>I sure wish I was around my obsession...</span>\n"
+	mood_change = -6
+	timeout = 30
+	hidden = TRUE
+
+/datum/mood_event/notcreeping/add_effects(name)
+	description = "<span class='warning'>I sure wish I was around [name]...</span>\n"
+
+/datum/mood_event/notcreepingsevere//not hidden since it's so severe
+	description = "<span class='boldwarning'>OBSESSIONNNN WHERE ARE YOUUUUUUUUUUUUU?!</span>\n"
+	mood_change = -30
+	timeout = 30
+
+/datum/mood_event/notcreepingsevere/add_effects(name)
+	var/list/unstable = list(name)
+	for(var/i in 1 to rand(3,5))
+		unstable += copytext(name, -1)
+	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
+	description = "<span class='boldwarning'>[unhinged] WHERE ARE YOUUUUUUUUUUUUU?!</span>\n"
+
+/datum/mood_event/idiot_shower
+	description = "<span class='warning'>I showered with my clothes on, I'm a fucking idiot.</span>\n"
+	mood_change = -3
+	timeout = 900
 
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse

@@ -109,19 +109,21 @@ Difficulty: Medium
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth*0.5)
-			swoop_attack()
+			swoop_attack(lava_arena = TRUE)
 		else
 			lava_swoop()
 
 	else if(prob(10+anger_modifier) && !client)
 		if(health < maxHealth*0.5)
-			triple_swoop()
+			mass_fire()
 		else
 			fire_cone()
 	else
+		if(prob(50) && !client)
+			INVOKE_ASYNC(src, .proc/lava_pools, 10, 2)
 		fire_cone()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(var/amount)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_pools(var/amount, var/delay = 0.8)
 	if(!target)
 		return
 	target.visible_message("<span class='boldwarning'>Lava starts to pool up around you!</span>")
@@ -131,7 +133,7 @@ Difficulty: Medium
 		var/turf/T = pick(RANGE_TURFS(1, target))
 		new /obj/effect/temp_visual/lava_warning(T, 60) // longer reset time for the lava
 		amount--
-		sleep(0.8)
+		sleep(delay)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_swoop(var/amount = 30)
 	INVOKE_ASYNC(src, .proc/lava_pools, amount)
@@ -144,63 +146,97 @@ Difficulty: Medium
 		fire_cone()
 	SetRecoveryTime(40)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/triple_swoop()
-	lava_swoop(15)
-	lava_swoop(15)
-	lava_swoop(15)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/mass_fire(var/spiral_count = 12, var/range = 15, var/times = 3)
+	for(var/i = 1 to times)
+		SetRecoveryTime(50)
+		playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
+		var/increment = 360 / spiral_count
+		for(var/j = 1 to spiral_count)
+			var/list/turfs = line_target(j * increment + i * increment / 2, range, src)
+			INVOKE_ASYNC(src, .proc/fire_line, turfs)
+		sleep(25)
+	SetRecoveryTime(30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/lava_arena()
 	if(!target)
 		return
-	target.visible_message("<span class='boldwarning'>[src] encases you in an arena of lava!</span>")
+	target.visible_message("<span class='boldwarning'>[src] encases you in an arena of fire!</span>")
 	var/amount = 3
 	var/turf/center = get_turf(target)
 	var/list/walled = RANGE_TURFS(3, center) - RANGE_TURFS(2, center)
+	var/list/drakewalls = list()
 	for(var/turf/T in walled)
-		new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
+		drakewalls += new /obj/effect/temp_visual/drakewall(T) // no people with lava immunity can just run away from the attack for free
+	var/list/indestructible_turfs = list()
 	for(var/turf/T in RANGE_TURFS(2, center))
-		if(!(istype(T, /turf/closed/indestructible)))
+		if(istype(T, /turf/open/indestructible))
+			continue
+		if(!istype(T, /turf/closed/indestructible))
 			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface)
+		else
+			indestructible_turfs += T
 	sleep(10) // give them a bit of time to realize what attack is actually happening
+
+	var/list/turfs = RANGE_TURFS(2, center)
 	while(amount > 0)
-		var/list/turfs = RANGE_TURFS(2, center)
-		var/list/empty = list()
+		var/list/empty = indestructible_turfs.Copy() // can't place safe turfs on turfs that weren't changed to be open
+		var/any_attack = 0
 		for(var/turf/T in turfs)
 			for(var/mob/living/L in T.contents)
 				if(L.client)
 					empty += pick(((RANGE_TURFS(2, L) - RANGE_TURFS(1, L)) & turfs) - empty) // picks a turf within 2 of the creature not outside or in the shield
+					any_attack = 1
 			for(var/obj/mecha/M in T.contents)
 				empty += pick(((RANGE_TURFS(2, M) - RANGE_TURFS(1, M)) & turfs) - empty)
+				any_attack = 1
+		if(!any_attack)
+			for(var/obj/effect/temp_visual/drakewall/D in drakewalls)
+				qdel(D)
+			return 0 // nothing to attack in the arena time for enraged attack if we still have a target
 		for(var/turf/T in turfs)
 			if(!(T in empty))
 				new /obj/effect/temp_visual/lava_warning(T)
-			else
+			else if(!istype(T, /turf/closed/indestructible))
 				new /obj/effect/temp_visual/lava_safe(T)
 		amount--
 		sleep(24)
+	return 1 // attack finished completely
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone()
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/arena_escape_enrage() // you ran somehow / teleported away from my arena attack now i'm mad fucker
+	SetRecoveryTime(80)
+	visible_message("<span class='boldwarning'>[src] starts to glow vibrantly as its wounds close up!</span>")
+	adjustBruteLoss(-250) // yeah you're gonna pay for that, don't run nerd
+	add_atom_colour(rgb(255, 255, 0), TEMPORARY_COLOUR_PRIORITY)
+	move_to_delay = move_to_delay / 2
+	light_range = 10
+	sleep(10) // run.
+	mass_fire(20, 15, 3)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	move_to_delay = initial(move_to_delay)
+	light_range = initial(light_range)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_cone(var/atom/at = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
 	if(QDELETED(src) || stat == DEAD) // we dead no fire
 		return
 	var/range = 15
 	var/list/turfs = list()
-	turfs = line_target(-40, range)
+	turfs = line_target(-40, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-	turfs = line_target(0, range)
+	turfs = line_target(0, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-	turfs = line_target(40, range)
+	turfs = line_target(40, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(var/offset, var/range)
-	if(!target)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/line_target(var/offset, var/range, var/atom/at = target)
+	if(!at)
 		return
-	var/angle = ATAN2(target.x - src.x, target.y - src.y) + offset
+	var/angle = ATAN2(at.x - src.x, at.y - src.y) + offset
 	var/turf/T = get_turf(src)
 	for(var/i in 1 to range)
 		var/turf/check = locate(src.x + cos(angle) * i, src.y + sin(angle) * i, src.z)
 		if(!check)
-			return
+			break
 		T = check
 	return (getline(src, T) - get_turf(src))
 
@@ -226,7 +262,7 @@ Difficulty: Medium
 			M.take_damage(45, BRUTE, "melee", 1)
 		sleep(1.5)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = TRUE, atom/movable/manual_target, var/swoop_cooldown = 15)
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(lava_arena = FALSE, atom/movable/manual_target, var/swoop_cooldown = 30)
 	if(stat || swooping)
 		return
 	if(manual_target)
@@ -273,8 +309,10 @@ Difficulty: Medium
 
 	// Ash drake flies onto its target and rains fire down upon them
 	var/descentTime = 10;
+	var/lava_success = 1
 	if(lava_arena)
-		lava_arena()
+		lava_success = lava_arena()
+
 
 	//ensure swoop direction continuity.
 	if(negative)
@@ -314,15 +352,17 @@ Difficulty: Medium
 	sleep(1)
 	swooping &= ~SWOOP_DAMAGEABLE
 	SetRecoveryTime(swoop_cooldown)
+	if(!lava_success)
+		arena_escape_enrage()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
 	if(player_cooldown >= world.time)
-		to_chat(src, "<span class='warning'>You need to wait 20 seconds between swoop attacks!</span>")
+		to_chat(src, "<span class='warning'>You need to wait [(player_cooldown - world.time) / 10] seconds before swooping again!</span>")
 		return
-	swoop_attack(FALSE, A, 30)
-	lava_pools(10)
+	swoop_attack(FALSE, A)
+	lava_pools(10, 2) // less pools but longer delay before spawns
 	player_cooldown = world.time + 200 // needs seperate cooldown or cant use fire attacks
 
 /obj/item/gps/internal/dragon

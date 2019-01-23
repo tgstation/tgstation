@@ -13,8 +13,9 @@
 
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
 	return
+
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
-	return
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return
@@ -138,7 +139,11 @@
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	item_flags = NODROP | ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
+
+/obj/item/bloodcrawl/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 50, 1, -1)
@@ -148,8 +153,7 @@
 		newcolor = rgb(43, 186, 0)
 	add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
 	// but only for a few seconds
-	spawn(30)
-		remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, newcolor)
+	addtimer(CALLBACK(src, /atom/.proc/remove_atom_colour, TEMPORARY_COLOUR_PRIORITY, newcolor), 6 SECONDS)
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
 	if(src.notransform)

@@ -177,7 +177,11 @@
 	icon_state = "cultalt"
 
 /obj/item/clothing/shoes/cult/alt/ghost
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+
+/obj/item/clothing/shoes/cult/alt/ghost/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, CULT_TRAIT)
 
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"

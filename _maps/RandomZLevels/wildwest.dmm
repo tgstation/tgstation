@@ -1899,14 +1899,6 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/wildwest/gov)
-"gq" = (
-/obj/effect/decal/cleanable/blood/gibs/up,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
-"gr" = (
-/obj/effect/decal/cleanable/blood/gibs/down,
-/turf/open/floor/wood,
-/area/awaymission/wildwest/mines)
 "gs" = (
 /obj/structure/chair/comfy/beige{
 	dir = 4
@@ -40318,7 +40310,7 @@ aT
 bu
 bj
 gj
-gq
+bl
 bj
 bj
 bj
@@ -41089,7 +41081,7 @@ aT
 bu
 bj
 dP
-gr
+dP
 bj
 bj
 bj

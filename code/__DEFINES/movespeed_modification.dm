@@ -56,3 +56,6 @@
 
 #define MOVESPEED_ID_CYBER_THRUSTER						"CYBER_IMPLANT_THRUSTER"
 #define MOVESPEED_ID_JETPACK							"JETPACK"
+
+#define MOVESPEED_ID_SLAUGHTER                          "SLAUGHTER"
+#define MOVESPEED_ID_DIE_OF_FATE                        "DIE_OF_FATE"
