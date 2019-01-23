@@ -535,7 +535,7 @@
 				return
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
 			var/datum/mind/M = enemy.owner
-			if(!M || !M.current || M.current == user)
+			if(M?.current == user)
 				continue
 			if(enemy.hivemembers.Find(target))
 				var/mob/living/real_enemy = (M.current.get_real_hivehost())
