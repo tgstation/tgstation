@@ -391,7 +391,7 @@
 
 /datum/quirk/junkie/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	reagent_id = pick(drug_table)
+	reagent_id = pick(drug_list)
 	if (!reagent_type)
 		reagent_type = GLOB.chemical_reagents_list[reagent_id]
 	if (!drug_container_type)
@@ -410,7 +410,7 @@
 		"in your right pocket" = SLOT_R_STORE,
 		"in your backpack" = SLOT_IN_BACKPACK
 	)
-	where_drug = H.equip_in_one_of_slots(drug_container, slots, FALSE) || "at your feet"
+	where_drug = H.equip_in_one_of_slots(D, slots, FALSE) || "at your feet"
 	if (A)
 		where_accessory = H.equip_in_one_of_slots(A, slots, FALSE) || "at your feet"
 
@@ -418,7 +418,7 @@
 	if(where_drug == "in your backpack" || where_accessory == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
-	if (drug_name)
+	if (drug_container_type)
 		to_chat(quirk_holder, "<span class='boldnotice'>There is a [D.name] of [R.name] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
@@ -434,7 +434,6 @@
 	lose_text = "<span class='notice'>You feel like you should quit smoking.</span>"
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
-	accessory_name = "lighter"
 	accessory_type = /obj/item/lighter/greyscale
 
 /datum/quirk/junkie/smoker/on_spawn()
@@ -448,14 +447,16 @@
 
 /datum/quirk/junkie/smoker/post_add()
 	. = ..()
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a [cigs.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a [D.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
 	
 
-/datum/quirk/smoker/on_process()
+/datum/quirk/junkie/smoker/on_process()
 	. = ..()
+	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
-		if(istype(I, cigs.spawn_type))	
+		var/obj/item/storage/fancy/cigarettes/C = D
+		if(istype(I, C.spawn_type))	
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
