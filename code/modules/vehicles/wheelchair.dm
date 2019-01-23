@@ -31,6 +31,12 @@
 		unbuckle_mob(H)
 	..()
 
+/obj/vehicle/ridden/wheelchair/Destroy()
+	if(has_buckled_mobs())
+		var/mob/living/carbon/H = buckled_mobs[1]
+		unbuckle_mob(H)
+	..()
+
 /obj/vehicle/ridden/wheelchair/driver_move(mob/living/user, direction)
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
@@ -39,9 +45,8 @@
 			canmove = FALSE
 			addtimer(CALLBACK(src, .proc/stopmove), 20)
 			return FALSE
-		else
-			var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-			D.vehicle_move_delay = 10/H.get_num_arms()
+		var/datum/component/riding/D = GetComponent(/datum/component/riding)
+		D.vehicle_move_delay = 10/H.get_num_arms()
 	..()
 
 /obj/vehicle/ridden/wheelchair/Moved()
@@ -70,9 +75,6 @@
 		to_chat(user, "<span class='notice'>You detach the wheels and deconstruct the chair.</span>")
 		new /obj/item/stack/rods(drop_location(), 6)
 		new /obj/item/stack/sheet/metal(drop_location(), 4)
-		if(has_buckled_mobs())
-			var/mob/living/carbon/H = buckled_mobs[1]
-			unbuckle_mob(H)
 		qdel(src)
 	return TRUE
 
@@ -90,18 +92,16 @@
 
 
 /obj/vehicle/ridden/wheelchair/proc/stopmove()
-		canmove = TRUE
+	canmove = TRUE
 
 /obj/vehicle/ridden/wheelchair/proc/can_be_rotated(mob/living/user)
 	return TRUE
 
 /obj/vehicle/ridden/wheelchair/proc/can_user_rotate(mob/living/user)
 	var/mob/living/L = user
-
 	if(istype(L))
 		if(!user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 			return FALSE
-			return TRUE
 	if(isobserver(user) && CONFIG_GET(flag/ghost_interaction))
 		return TRUE
 	return FALSE
