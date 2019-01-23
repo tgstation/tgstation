@@ -284,7 +284,7 @@
 
 	QDEL_NULL(backseat)
 
-	if(original_body && original_body.mind)
+	if(original_body?.mind)
 		var/datum/antagonist/hivemind/hive = original_body.mind.has_antag_datum(/datum/antagonist/hivemind)
 		if(hive)
 			if((world.time-time_initialized) <= 300)
