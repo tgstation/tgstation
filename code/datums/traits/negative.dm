@@ -375,7 +375,7 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	value = -2
-	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "methamphetamine", "crank") //List of possible IDs
+	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "methamphetamine") //List of possible IDs
 	var/reagent_id //ID picked from list
 	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/R
@@ -394,6 +394,7 @@
 	reagent_id = pick(drug_list)
 	if (!reagent_type)
 		reagent_type = GLOB.chemical_reagents_list[reagent_id]
+	R = new reagent_type(null)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
 		D = new drug_container_type(get_turf(quirk_holder))
