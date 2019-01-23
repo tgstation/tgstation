@@ -35,7 +35,7 @@
 	if(has_buckled_mobs())
 		var/mob/living/carbon/H = buckled_mobs[1]
 		unbuckle_mob(H)
-	..()
+	return ..()
 
 /obj/vehicle/ridden/wheelchair/driver_move(mob/living/user, direction)
 	var/mob/living/carbon/human/H = user
@@ -43,7 +43,7 @@
 		if(!H.get_num_arms() && canmove)
 			to_chat(H, "<span class='warning'>You can't move the wheels without arms!</span>")
 			canmove = FALSE
-			addtimer(CALLBACK(src, .proc/stopmove), 20)
+			addtimer(VARSET_CALLBACK(src, canmove , TRUE), 20)
 			return FALSE
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
 		D.vehicle_move_delay = 10/H.get_num_arms()
@@ -86,13 +86,11 @@
 			buckled_mob.setDir(direction)
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
-	overlays = null
+	cut_overlays()
 	var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
 	add_overlay(V)
 
 
-/obj/vehicle/ridden/wheelchair/proc/stopmove()
-	canmove = TRUE
 
 /obj/vehicle/ridden/wheelchair/proc/can_be_rotated(mob/living/user)
 	return TRUE
