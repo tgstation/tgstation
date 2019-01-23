@@ -32,7 +32,7 @@
 	for(var/mob/living/carbon/C in GLOB.alive_mob_list)
 		if(C != owner)
 			var/datum/status_effect/hive_track/mark = C.has_status_effect(STATUS_EFFECT_HIVE_TRACKER)
-			if(mark && mark.tracked_by == owner)
+			if(mark?.tracked_by == owner)
 				trackable_targets_exist = TRUE
 				var/their_loc = get_turf(C)
 				var/distance = get_dist_euclidian(my_loc, their_loc)
