@@ -427,7 +427,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	if (!isemptylist(H.reagents.addiction_list) && prob(5)) //scp style optimization
 		for (var/datum/reagent/entry in H.reagents.addiction_list)
-			if(istype(entry, typeof(R)))
+			if(istype(entry, reagent_type))
 				H.reagents.addiction_list.Add(R)
 				break
 		to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [R.name] again...")
