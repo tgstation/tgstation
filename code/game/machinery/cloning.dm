@@ -179,11 +179,10 @@
 			H.dna.remove_mutation_group(unclean_mutations)
 		if(efficiency > 5 && prob(20))
 			H.easy_randmut(POSITIVE)
-		if(efficiency < 3)
-			if(prob(50))
-				var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
-				if(ismob(M))
-					H = M
+		if(efficiency < 3 && prob(50))
+			var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
+			if(ismob(M))
+				H = M
 
 	H.silent = 20 //Prevents an extreme edge case where clones could speak if they said something at exactly the right moment.
 	occupant = H
