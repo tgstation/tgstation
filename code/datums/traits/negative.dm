@@ -435,6 +435,7 @@
 					break
 		if(!in_list)
 			H.reagents.addiction_list.Add(R)
+			R.addiction_stage = 0
 			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [R.name] again...")
 		tick_counter = 0
 	else
