@@ -395,6 +395,7 @@
 	if (!reagent_type)
 		reagent_type = GLOB.chemical_reagents_list[reagent_id]
 	R = new reagent_type(null)
+	H.reagents.addiction_list.Add(R)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
 		D = new drug_container_type(get_turf(quirk_holder))
