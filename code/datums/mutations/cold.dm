@@ -1,6 +1,6 @@
 /datum/mutation/human/geladikinesis
 	name = "Geladikinetic Creation"
-	desc = "Allows the user to concentrated moisture and sub-zero forces into snow."
+	desc = "Allows the user to concentrate moisture and sub-zero forces into snow."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
 	instability = 10
@@ -21,7 +21,7 @@
 	desc = "Draws negative energy from the sub-zero void to freeze surrounding temperatures at subject's will."
 	quality = POSITIVE //upsides and downsides
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
-	instability = 25
+	instability = 20
 	difficulty = 12
 	power = /obj/effect/proc_holder/spell/aimed/cryo
 
