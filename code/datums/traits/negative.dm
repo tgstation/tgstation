@@ -375,7 +375,7 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	value = -2
-	var/drug_list = list("crank", "krokodil", "morphine", "happiness") //List of possible IDs
+	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "metha") //List of possible IDs
 	var/reagent_id //ID picked from list
 	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/R
@@ -397,6 +397,11 @@
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
 		D = new drug_container_type(get_turf(quirk_holder))
+		var/pill_state = "pill[rand(1,20)]"
+		for(var/i in 1 to 7)
+			var/obj/item/reagent_containers/pill/P = new /obj/item/reagent_containers/pill(D)
+			P.icon_state = pill_state
+			P.list_reagents = list(reagent_id = 1)
 	D = new drug_container_type(get_turf(quirk_holder))
 	if (accessory_type)
 		A = new accessory_type(get_turf(quirk_holder))
@@ -438,14 +443,16 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
 		/obj/item/storage/fancy/cigarettes/cigpack_robust,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-		/obj/item/storage/fancy/cigarettes/cigpack_carp,
-		/obj/item/storage/fancy/cigarettes/cigpack_syndicate)
+		/obj/item/storage/fancy/cigarettes/cigpack_carp)
 	. = ..()	
+
+/datum/quirk/junkie/smoker/post_add()
+	. = ..()
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a [cigs.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
 	
 
 /datum/quirk/smoker/on_process()
 	. = ..()
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a [cigs.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		if(istype(I, cigs.spawn_type))	
