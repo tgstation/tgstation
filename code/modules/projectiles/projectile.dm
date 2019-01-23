@@ -130,7 +130,7 @@
 		return BODY_ZONE_CHEST
 
 /obj/item/projectile/proc/prehit(atom/target)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
@@ -151,12 +151,12 @@
 
 		W.add_dent(WALL_DENT_SHOT, hitx, hity)
 
-		return 0
+		return BULLET_ACT_HIT
 
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
-		return 0
+		return BULLET_ACT_HIT
 
 	var/mob/living/L = target
 
@@ -615,6 +615,7 @@
 	. = ..()
 	if(.)
 		if(temporary_unstoppable_movement)
+			temporary_unstoppable_movement = FALSE
 			DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
 		if(fired && can_hit_target(original, permutated, TRUE))
 			Bump(original)
