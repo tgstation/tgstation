@@ -375,7 +375,7 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	value = -2
-	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "metha") //List of possible IDs
+	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "methamphetamine", "crank") //List of possible IDs
 	var/reagent_id //ID picked from list
 	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/R
@@ -401,7 +401,7 @@
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new /obj/item/reagent_containers/pill(D)
 			P.icon_state = pill_state
-			P.list_reagents = list(reagent_id = 1)
+			P.list_reagents = list(reagent_id = 0.5)
 	D = new drug_container_type(get_turf(quirk_holder))
 	if (accessory_type)
 		A = new accessory_type(get_turf(quirk_holder))
