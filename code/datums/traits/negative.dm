@@ -375,13 +375,13 @@
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
 	value = -2
+	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
+	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
+	medical_record_text = "Patient has a history of hard drugs."
 	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "methamphetamine") //List of possible IDs
 	var/reagent_id //ID picked from list
 	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/R
-	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
-	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
-	medical_record_text = "Patient has a history of hard drugs."
 	var/where_drug
 	var/obj/item/drug_container_type //If this is defined before pill generation will be skipped, this is the type of the pill bottle.
 	var/obj/item/D
@@ -428,11 +428,10 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	if (tick_counter == 60) //Halfassed optimization
 		var/in_list = FALSE
-		if (!isemptylist(H.reagents.addiction_list))
-			for (var/datum/reagent/entry in H.reagents.addiction_list)
-				if(istype(entry, reagent_type))
-					in_list = TRUE
-					break
+		for (var/datum/reagent/entry in H.reagents.addiction_list)
+			if(istype(entry, reagent_type))
+				in_list = TRUE
+				break
 		if(!in_list)
 			H.reagents.addiction_list += R
 			R.addiction_stage = 0
