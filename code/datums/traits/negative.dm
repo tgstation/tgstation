@@ -403,7 +403,7 @@
 		D = new drug_container_type(current_turf)
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
-			var/obj/item/reagent_containers/pill/P = new /obj/item/reagent_containers/pill(D)
+			var/obj/item/reagent_containers/pill/P = new(D)
 			P.icon_state = pill_state
 			P.list_reagents = list("[reagent_id]" = 0.5)
 	D = new drug_container_type(current_turf)
