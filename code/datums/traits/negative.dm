@@ -400,13 +400,14 @@
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
-		drug_instance = new drug_container_type(current_turf)
+	drug_instance = new drug_container_type(current_turf)
+	if (istype(drug_instance, /obj/item/storage/pill_bottle))
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
 			P.list_reagents = list("[reagent_id]" = 0.5)
-	drug_instance = new drug_container_type(current_turf)
+
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
 	var/list/slots = list(
