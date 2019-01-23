@@ -84,7 +84,7 @@
 		real_H2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		user_warning = " and we've managed to pinpoint their location"
 
-	to_chat(H2, "<span class='userdanger'>The enemy host has been ejected from our mind[user_warning]!</span>")
+	to_chat(H2, "<span class='userdanger'>[user_warning]!</span>")
 
 /datum/antagonist/hivemind/proc/destroy_hive()
 	hivemembers = list()
