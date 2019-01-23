@@ -381,13 +381,13 @@
 	var/drug_list = list("crank", "krokodil", "morphine", "happiness", "methamphetamine") //List of possible IDs
 	var/reagent_id //ID picked from list
 	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
-	var/datum/reagent/R
+	var/datum/reagent/reagent_instance
 	var/where_drug
 	var/obj/item/drug_container_type //If this is defined before pill generation will be skipped, this is the type of the pill bottle.
-	var/obj/item/D
+	var/obj/item/drug_instance
 	var/where_accessory
 	var/obj/item/accessory_type //If this is null, it won't be spawned.
-	var/obj/item/A
+	var/obj/item/accessory_instance
 	var/tick_counter = 0
 
 /datum/quirk/junkie/on_spawn()
@@ -395,48 +395,48 @@
 	reagent_id = pick(drug_list)
 	if (!reagent_type)
 		reagent_type = GLOB.chemical_reagents_list[reagent_id]
-	R = new reagent_type(null)
-	H.reagents.addiction_list.Add(R)
+	reagent_instance = new reagent_type(null)
+	H.reagents.addiction_list.Add(reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
-		D = new drug_container_type(current_turf)
+		drug_instance = new drug_container_type(current_turf)
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
-			var/obj/item/reagent_containers/pill/P = new(D)
+			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
 			P.list_reagents = list("[reagent_id]" = 0.5)
-	D = new drug_container_type(current_turf)
+	drug_instance = new drug_container_type(current_turf)
 	if (accessory_type)
-		A = new accessory_type(current_turf)
+		accessory_instance = new accessory_type(current_turf)
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
 		"in your backpack" = SLOT_IN_BACKPACK
 	)
-	where_drug = H.equip_in_one_of_slots(D, slots, FALSE) || "at your feet"
-	if (A)
-		where_accessory = H.equip_in_one_of_slots(A, slots, FALSE) || "at your feet"
+	where_drug = H.equip_in_one_of_slots(drug_instance, slots, FALSE) || "at your feet"
+	if (accessory_instance)
+		where_accessory = H.equip_in_one_of_slots(accessory_instance, slots, FALSE) || "at your feet"
 
 /datum/quirk/junkie/post_add()
 	if(where_drug == "in your backpack" || where_accessory == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 	if (!accessory_type)
-		to_chat(quirk_holder, "<span class='boldnotice'>There is a [D.name] of [R.name] [where_drug]. Better hope you don't run out...</span>")
+		to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] of [reagent_instance.name] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
-	if (tick_counter == 60) //Halfassed optimization
+	if (tick_counter == 60) //Halfassed optimization, increase this if there's slowdown due to this quirk
 		var/in_list = FALSE
 		for (var/datum/reagent/entry in H.reagents.addiction_list)
 			if(istype(entry, reagent_type))
 				in_list = TRUE
 				break
 		if(!in_list)
-			H.reagents.addiction_list += R
-			R.addiction_stage = 0
-			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [R.name] again...")
+			H.reagents.addiction_list += reagent_instance
+			reagent_instance.addiction_stage = 0
+			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...")
 		tick_counter = 0
 	else
 		tick_counter = tick_counter + 1
@@ -462,7 +462,7 @@
 
 /datum/quirk/junkie/smoker/post_add()
 	. = ..()
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a [D.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
 	
 
 /datum/quirk/junkie/smoker/on_process()
@@ -470,7 +470,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
-		var/obj/item/storage/fancy/cigarettes/C = D
+		var/obj/item/storage/fancy/cigarettes/C = drug_instance
 		if(istype(I, C.spawn_type))	
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
