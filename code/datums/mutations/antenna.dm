@@ -78,6 +78,7 @@
 					var/list/reversed = log_source[log_type]
 					if(islist(reversed))
 						say_log = reverseRange(reversed.Copy())
+						break
 			if(LAZYLEN(say_log))
 				for(var/spoken_memory in say_log)
 					if(recent_speech.len >= 3)//up to 3 random lines of speech, favoring more recent speech
