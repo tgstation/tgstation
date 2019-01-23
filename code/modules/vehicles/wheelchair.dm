@@ -26,9 +26,6 @@
 /obj/vehicle/ridden/wheelchair/obj_destruction(damage_flag)
 	new /obj/item/stack/rods(drop_location(), 1)
 	new /obj/item/stack/sheet/metal(drop_location(), 1)
-	if(has_buckled_mobs())
-		var/mob/living/carbon/H = buckled_mobs[1]
-		unbuckle_mob(H)
 	..()
 
 /obj/vehicle/ridden/wheelchair/Destroy()
