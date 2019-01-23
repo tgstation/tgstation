@@ -405,7 +405,7 @@
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new /obj/item/reagent_containers/pill(D)
 			P.icon_state = pill_state
-			P.list_reagents = list(reagent_id = 0.5)
+			P.list_reagents = list("[reagent_id]" = 0.5)
 	D = new drug_container_type(current_turf)
 	if (accessory_type)
 		A = new accessory_type(current_turf)
