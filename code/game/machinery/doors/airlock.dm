@@ -1183,7 +1183,7 @@
 	if(prob(10))
 		for(var/mob/living/carbon/human/H in orange(2, src))
 			if(H.hair_style == "Braid (Floorlength)")
-				to_chat(world, "<span class='warning'>Your hair gets caught in [src]</span>")
+				to_chat(H, "<span class='warning'>Your hair gets caught in [src]</span>")
 				buckle_mob(H, TRUE, FALSE)
 
 
