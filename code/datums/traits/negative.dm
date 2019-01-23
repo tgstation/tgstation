@@ -388,6 +388,7 @@
 	var/where_accessory
 	var/obj/item/accessory_type //If this is null, it won't be spawned.
 	var/obj/item/A
+	var/tick_counter = 0
 
 /datum/quirk/junkie/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -425,7 +426,6 @@
 
 /datum/quirk/junkie/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/tick_counter = 0
 	if (tick_counter == 60) //Halfassed optimization
 		var/in_list = FALSE
 		if (!isemptylist(H.reagents.addiction_list))
