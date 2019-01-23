@@ -420,17 +420,20 @@
 	if(where_drug == "in your backpack" || where_accessory == "in your backpack")
 		var/mob/living/carbon/human/H = quirk_holder
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
-	if (drug_container_type)
+	if (!accessory_type)
 		to_chat(quirk_holder, "<span class='boldnotice'>There is a [D.name] of [R.name] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
 	if (!isemptylist(H.reagents.addiction_list) && prob(5)) //scp style optimization
+		var/in_list = FALSE
 		for (var/datum/reagent/entry in H.reagents.addiction_list)
 			if(istype(entry, reagent_type))
-				H.reagents.addiction_list.Add(R)
+				in_list = TRUE
 				break
-		to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [R.name] again...")
+		if(!in_list)
+			H.reagents.addiction_list.Add(R)
+			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [R.name] again...")
 
 /datum/quirk/junkie/smoker
 	name = "Smoker"
