@@ -538,7 +538,7 @@
 			if(!M || !M.current || M.current == user)
 				continue
 			if(enemy.hivemembers.Find(target))
-				var/mob/living/real_enemy = (get_real_hivehost(M.current))
+				var/mob/living/real_enemy = (M.current.get_real_hivehost())
 				enemies += real_enemy
 				enemy.remove_from_hive(target)
 				real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, user)

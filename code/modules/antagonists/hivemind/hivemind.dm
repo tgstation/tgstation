@@ -72,8 +72,8 @@
 	if(!H2)
 		return
 
-	var/mob/living/real_H = get_real_hivehost(H)
-	var/mob/living/real_H2 = get_real_hivehost(H2)
+	var/mob/living/real_H = H.get_real_hivehost()
+	var/mob/living/real_H2 = H2.get_real_hivehost()
 
 	if(is_real_hivehost(H))
 		real_H2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_H)

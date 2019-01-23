@@ -44,7 +44,7 @@
 		if(is_hivemember(target))
 			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
 				if(hive.hivemembers.Find(target))
-					var/mob/living/carbon/C = get_real_hivehost(hive.owner.current)
+					var/mob/living/carbon/C = hive.owner.current.get_real_hivehost()
 					if(C)
 						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target)
 						target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, C)
