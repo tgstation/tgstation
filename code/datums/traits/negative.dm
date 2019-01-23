@@ -425,15 +425,20 @@
 
 /datum/quirk/junkie/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/in_list = FALSE
-	if (!isemptylist(H.reagents.addiction_list) && prob(5)) //scp style optimization
-		for (var/datum/reagent/entry in H.reagents.addiction_list)
-			if(istype(entry, reagent_type))
-				in_list = TRUE
-				break
-	if(!in_list)
-		H.reagents.addiction_list.Add(R)
-		to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [R.name] again...")
+	var/tick_counter = 0
+	if (tick_counter == 60) //Halfassed optimization
+		var/in_list = FALSE
+		if (!isemptylist(H.reagents.addiction_list))
+			for (var/datum/reagent/entry in H.reagents.addiction_list)
+				if(istype(entry, reagent_type))
+					in_list = TRUE
+					break
+		if(!in_list)
+			H.reagents.addiction_list.Add(R)
+			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [R.name] again...")
+		tick_counter = 0
+	else
+		tick_counter = tick_counter + 1
 
 /datum/quirk/junkie/smoker
 	name = "Smoker"
