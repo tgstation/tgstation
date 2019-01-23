@@ -383,7 +383,7 @@
 	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance
 	var/where_drug
-	var/obj/item/drug_container_type //If this is defined before pill generation will be skipped, this is the type of the pill bottle.
+	var/obj/item/drug_container_type //If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
 	var/obj/item/drug_instance
 	var/where_accessory
 	var/obj/item/accessory_type //If this is null, it won't be spawned.
@@ -395,7 +395,7 @@
 	reagent_id = pick(drug_list)
 	if (!reagent_type)
 		reagent_type = GLOB.chemical_reagents_list[reagent_id]
-	reagent_instance = new reagent_type(null)
+	reagent_instance = new reagent_type()
 	H.reagents.addiction_list.Add(reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
