@@ -36984,7 +36984,7 @@
 /obj/structure/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/camera/motion{
+/obj/machinery/camera/emp_proof/motion{
 	c_tag = "Engineering - External Engine Containment Northwest";
 	dir = 8;
 	network = list("Engine")
@@ -37891,7 +37891,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/camera/motion{
+/obj/machinery/camera/emp_proof/motion{
 	c_tag = "Engineering - External Engine Containment Northeast";
 	dir = 4;
 	network = list("Engine")
@@ -37903,7 +37903,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/camera/motion{
+/obj/machinery/camera/emp_proof/motion{
 	c_tag = "Engineering - External Engine Containment Southwest";
 	network = list("Engine")
 	},
@@ -37917,7 +37917,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/camera/motion{
+/obj/machinery/camera/emp_proof/motion{
 	c_tag = "Engineering - External Engine Containment Southeast";
 	network = list("Engine")
 	},

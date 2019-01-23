@@ -86,7 +86,7 @@
 
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!(I.item_flags & NODROP))
+				if(!I.has_trait(TRAIT_NODROP))
 					to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 					return
 
