@@ -1,0 +1,4 @@
+author: "Trilbyspaceclone"
+delete-after: True
+changes: 
+  - bugfix: "Fixed power tool drill fitting in boots and wallets"
