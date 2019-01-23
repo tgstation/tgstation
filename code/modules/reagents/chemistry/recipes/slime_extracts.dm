@@ -559,9 +559,9 @@
 	required_other = TRUE
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
+	sleep(50)
 	var/turf/T = get_turf(holder.my_atom)
-	var/list/M = list(get_mob_by_key(holder.my_atom.fingerprintslast))
-	new /obj/effect/timestop(T, null, null, M)
+	new /obj/effect/timestop(T, null, null, null)
 	..()
 
 /datum/chemical_reaction/slime/slimecamera
