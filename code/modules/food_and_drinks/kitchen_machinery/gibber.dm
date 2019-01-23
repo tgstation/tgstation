@@ -187,8 +187,8 @@
 		if(istype(newmeat))
 			newmeat.subjectname = sourcename
 			newmeat.reagents.add_reagent ("nutriment", sourcenutriment / meat_produced) // Thehehe. Fat guys go first
-			if(occupant & occupant.reagents && occupant_volume)
-				occupant.reagents.transfer_to(newmeat, occupant_volume / meat_produced)
+			if(occupant && occupant.reagents && occupant_volume)
+				occupant.reagents.trans_to(newmeat, occupant_volume / meat_produced, remove_blacklisted = TRUE)
 			if(sourcejob)
 				newmeat.subjectjob = sourcejob
 		allmeat[i] = newmeat
