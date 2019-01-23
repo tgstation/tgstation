@@ -440,7 +440,7 @@
 			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...")
 		tick_counter = 0
 	else
-		tick_counter = tick_counter + 1
+		++tick_counter
 
 /datum/quirk/junkie/smoker
 	name = "Smoker"
