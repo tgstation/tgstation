@@ -30,19 +30,20 @@
 	var/trackable_targets_exist = FALSE
 
 	for(var/mob/living/carbon/C in GLOB.alive_mob_list)
-		if(C != owner)
-			var/datum/status_effect/hive_track/mark = C.has_status_effect(STATUS_EFFECT_HIVE_TRACKER)
-			if(mark?.tracked_by == owner)
-				trackable_targets_exist = TRUE
-				var/their_loc = get_turf(C)
-				var/distance = get_dist_euclidian(my_loc, their_loc)
-				if (distance < HIVEMIND_RADAR_MAX_DISTANCE)
-					var/multiplier = 0.5
-					if(C.mind)
-						var/datum/antagonist/hivemind/hive = C.mind.has_antag_datum(/datum/antagonist/hivemind)
-						if(hive)
-							multiplier = hive.get_threat_multiplier()
-					targets[C] = ((HIVEMIND_RADAR_MAX_DISTANCE ** 2) - (distance ** 2)) * multiplier
+		if(C == owner)
+			continue
+		var/datum/status_effect/hive_track/mark = C.has_status_effect(STATUS_EFFECT_HIVE_TRACKER)
+		if(mark?.tracked_by == owner)
+			trackable_targets_exist = TRUE
+			var/their_loc = get_turf(C)
+			var/distance = get_dist_euclidian(my_loc, their_loc)
+			if (distance < HIVEMIND_RADAR_MAX_DISTANCE)
+				var/multiplier = 0.5
+				if(C.mind)
+					var/datum/antagonist/hivemind/hive = C.mind.has_antag_datum(/datum/antagonist/hivemind)
+					if(hive)
+						multiplier = hive.get_threat_multiplier()
+				targets[C] = ((HIVEMIND_RADAR_MAX_DISTANCE ** 2) - (distance ** 2)) * multiplier
 
 	if(targets.len)
 		scan_target = pickweight(targets) //Point at a 'random' target, biasing heavily towards closer ones.
@@ -55,10 +56,10 @@
 //"Trackable" status effect
 /datum/status_effect/hive_track
 	id = "hive_track"
-	var/mob/living/tracked_by
 	duration = 1200
 	status_type = STATUS_EFFECT_MULTIPLE
 	alert_type = null
+	var/mob/living/tracked_by
 
 /datum/status_effect/hive_track/on_creation(mob/living/new_owner, mob/living/hunter, set_duration)
 	. = ..()
