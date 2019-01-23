@@ -82,7 +82,7 @@
 	if(is_real_hivehost(H2))
 		real_H.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_H2)
 		real_H2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-		user_warning = " and we've managed to pinpoint their location"
+		user_warning += " and we've managed to pinpoint their location"
 
 	to_chat(H2, "<span class='userdanger'>[user_warning]!</span>")
 
