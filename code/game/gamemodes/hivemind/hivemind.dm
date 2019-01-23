@@ -36,7 +36,7 @@
 		return TRUE
 	return FALSE
 
-mob/living/proc/get_real_hivehost() //Returns src unless it's under mind control, then it returns the original body
+/mob/living/proc/get_real_hivehost() //Returns src unless it's under mind control, then it returns the original body
 	var/mob/living/M = src
 	if(!M)
 		return
