@@ -360,8 +360,8 @@
 			playsound(H, 'sound/effects/shovel_dig.ogg', 70, 1)
 			H.visible_message("<span class='danger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>", \
 			"<span class='userdanger'>The [P.name] sinks harmlessly in [H]'s sandy body!</span>")
-			return 2
-	return 0
+			return BULLET_ACT_BLOCK
+	return BULLET_ACT_HIT
 
 //Reflects lasers and resistant to burn damage, but very vulnerable to brute damage. Shatters on death.
 /datum/species/golem/glass
@@ -397,8 +397,8 @@
 				var/turf/target = get_turf(P.starting)
 				// redirect the projectile
 				P.preparePixelProjectile(locate(CLAMP(target.x + new_x, 1, world.maxx), CLAMP(target.y + new_y, 1, world.maxy), H.z), H)
-			return -1
-	return 0
+			return BULLET_ACT_FORCE_PIERCE
+	return BULLET_ACT_HIT
 
 //Teleports when hit or when it wants to
 /datum/species/golem/bluespace
@@ -823,10 +823,10 @@
 
 /datum/species/golem/bronze/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	if(!(world.time > last_gong_time + gong_cooldown))
-		return 0
+		return BULLET_ACT_HIT
 	if(P.flag == "bullet" || P.flag == "bomb")
 		gong(H)
-		return 0
+		return BULLET_ACT_HIT
 
 /datum/species/golem/bronze/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	..()
@@ -858,7 +858,7 @@
 			H.playsound_local(H, 'sound/effects/gong.ogg', 100, TRUE)
 			H.soundbang_act(2, 0, 100, 1)
 			H.jitteriness += 7
-		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))	
+		var/distance = max(0,get_dist(get_turf(H),get_turf(M)))
 		switch(distance)
 			if(0 to 1)
 				M.show_message("<span class='narsiesmall'>GONG!</span>", 2)
@@ -879,7 +879,7 @@
 
 
 /datum/species/golem/cardboard //Faster but weaker, can also make new shells on its own
-	name = "Cardboard Golem" 
+	name = "Cardboard Golem"
 	id = "cardboard golem"
 	prefix = "Cardboard"
 	special_names = list("Box")
@@ -952,6 +952,7 @@
 /datum/species/golem/bone
 	name = "Bone Golem"
 	id = "bone golem"
+	say_mod = "rattles"
 	prefix = "Bone"
 	limbs_id = "b_golem"
 	special_names = list("Head", "Broth", "Fracture")
@@ -959,6 +960,7 @@
 	toxic_food = null
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
+	mutanttongue = /obj/item/organ/tongue/bone
 	sexes = FALSE
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_FAKEDEATH,TRAIT_CALCIUM_HEALER)
@@ -1009,3 +1011,41 @@
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
 
+/datum/species/golem/soviet
+	name = "Soviet Golem"
+	id = "soviet golem"
+	prefix = "Comrade"
+	attack_verb = "nationalis"
+	limbs_id = "s_golem"
+	blacklisted = 1
+	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
+
+/datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
+	C.revive(full_heal = 1)
+
+	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+
+/datum/species/golem/soviet/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
+		C.RemoveSpell(spell)
+
+/datum/species/golem/soviet/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	..()
+	if(isgolem(target))
+		return
+	if(target.nutrition <= NUTRITION_LEVEL_STARVING)
+		target.set_species(/datum/species/golem/soviet)
+		return
+	target.adjust_nutrition(-40)
+
+/datum/species/golem/soviet/handle_speech(message, mob/living/carbon/human/H)
+	playsound(H, 'sound/misc/Cyka Blyat.ogg', 25, 0)
+	return "Cyka Blyat"

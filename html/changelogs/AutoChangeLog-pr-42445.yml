@@ -1,0 +1,4 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - bugfix: "Lings should be able to see some of their victim's last words when they absorb them."

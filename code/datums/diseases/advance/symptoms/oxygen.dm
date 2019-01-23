@@ -50,3 +50,20 @@ Bonus
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.")]</span>")
 	return
+
+/datum/symptom/oxygen/on_stage_change(new_stage, datum/disease/advance/A)
+	if(!..())
+		return FALSE
+	var/mob/living/carbon/M = A.affected_mob
+	switch(A.stage)
+		if(3)
+			M.remove_trait(TRAIT_NOBREATH, DISEASE_TRAIT)
+		if(4)
+			M.add_trait(TRAIT_NOBREATH, DISEASE_TRAIT)
+	return TRUE
+
+/datum/symptom/oxygen/End(datum/disease/advance/A)
+	if(!..())
+		return
+	if(A.stage >= 4)
+		A.affected_mob.remove_trait(TRAIT_NOBREATH, DISEASE_TRAIT)

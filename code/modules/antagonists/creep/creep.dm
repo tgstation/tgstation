@@ -56,8 +56,8 @@
 	if(family_heirloom)//oh, they have an heirloom? Well you know we have to steal that.
 		objectives_left += "heirloom"
 
-	if(obsessionmind.assigned_role && obsessionmind.assigned_role != "Captain" && !(obsessionmind.assigned_role in GLOB.nonhuman_positions))
-		objectives_left += "jealous"//while this will sometimes be a free objective during lowpop, this works fine most of the time and is less intensive
+	if(obsessionmind.assigned_role && obsessionmind.assigned_role != "Captain")
+		objectives_left += "jealous"//if they have no coworkers, jealousy will pick someone else on the station. this will never be a free objective, nice.
 
 	for(var/i in 1 to 3)
 		var/chosen_objective = pick(objectives_left)
@@ -175,8 +175,9 @@
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!H.mind)
 			continue
-		if(!H.mind.assigned_role || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep)) //the jealousy target has to have a job, and not be the obsession or creep.
-			continue
+		if(!SSjob.GetJob(H.mind.assigned_role) || H == oldmind.current || H.mind.has_antag_datum(/datum/antagonist/creep))
+			continue //the jealousy target has to have a job, and not be the obsession or creep.
+		all_coworkers += H.mind
 		//this won't be called often thankfully.
 		if(H.mind.assigned_role in GLOB.security_positions)
 			their_chosen_department = "security"
@@ -192,13 +193,12 @@
 			their_chosen_department = "civilian"
 		if(their_chosen_department != chosen_department)
 			continue
-		viable_coworkers += H
+		viable_coworkers += H.mind
 
 	if(viable_coworkers.len > 0)//find someone in the same department
 		target = pick(viable_coworkers)
 	else if(all_coworkers.len > 0)//find someone who works on the station
-	else
-		return//there is nobody but you and the obsession
+		target = pick(all_coworkers)
 	return oldmind
 
 /datum/objective/spendtime //spend some time around someone, handled by the creep trauma since that ticks

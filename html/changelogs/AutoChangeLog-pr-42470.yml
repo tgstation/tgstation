@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - bugfix: "It is no longer possible for folding paper into an airplane to appear to duplicate it."
