@@ -63,7 +63,7 @@
 	calc_size()
 
 /datum/antagonist/hivemind/proc/handle_ejection(mob/living/carbon/human/H)
-	var/user_warning = ""
+	var/user_warning = "The enemy host has been ejected from our mind"
 
 	if(!H || !owner)
 		return
