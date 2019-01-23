@@ -397,17 +397,18 @@
 		reagent_type = GLOB.chemical_reagents_list[reagent_id]
 	R = new reagent_type(null)
 	H.reagents.addiction_list.Add(R)
+	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
-		D = new drug_container_type(get_turf(quirk_holder))
+		D = new drug_container_type(current_turf)
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new /obj/item/reagent_containers/pill(D)
 			P.icon_state = pill_state
 			P.list_reagents = list(reagent_id = 0.5)
-	D = new drug_container_type(get_turf(quirk_holder))
+	D = new drug_container_type(current_turf)
 	if (accessory_type)
-		A = new accessory_type(get_turf(quirk_holder))
+		A = new accessory_type(current_turf)
 	var/list/slots = list(
 		"in your left pocket" = SLOT_L_STORE,
 		"in your right pocket" = SLOT_R_STORE,
