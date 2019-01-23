@@ -34,7 +34,7 @@
 
 /datum/component/storage/concrete/pockets/shoes/Initialize()
 	. = ..()
-	cant_hold = typecacheof(list(/obj/item/screwdriver/power))
+	cant_hold = typecacheof(list(/obj/item/screwdriver/power)) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
 	can_hold = typecacheof(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
@@ -45,7 +45,7 @@
 
 /datum/component/storage/concrete/pockets/shoes/clown/Initialize()
 	. = ..()
-	cant_hold = typecacheof(list(/obj/item/screwdriver/power))
+	cant_hold = typecacheof(list(/obj/item/screwdriver/power)) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
 	can_hold = typecacheof(list(
 		/obj/item/kitchen/knife, /obj/item/switchblade, /obj/item/pen,
 		/obj/item/scalpel, /obj/item/reagent_containers/syringe, /obj/item/dnainjector,
