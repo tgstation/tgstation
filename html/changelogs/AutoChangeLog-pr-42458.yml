@@ -1,5 +1,0 @@
-author: "Menshin"
-delete-after: True
-changes: 
-  - rscadd: "Xeno queens now transfer overlays on size change (meaning it will now display on fire, etc)"
-  - bugfix: "restored a missing Xeno queen icon"
