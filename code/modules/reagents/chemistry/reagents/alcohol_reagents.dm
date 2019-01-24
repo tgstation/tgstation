@@ -1168,7 +1168,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink from Mime Heaven."
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/M)
-		M.silent = max(M.silent, 3)
+	M.silent = max(M.silent, 3)
 	if(ishuman(M) && M.job == "Mime")
 		M.heal_bodypart_damage(1,1)
 		. = 1
