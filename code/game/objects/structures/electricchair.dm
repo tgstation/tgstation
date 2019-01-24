@@ -6,8 +6,8 @@
 	var/last_time = 1
 	item_chair = null
 
-/obj/structure/chair/e_chair/New()
-	..()
+/obj/structure/chair/e_chair/Initialize()
+	. = ..()
 	add_overlay(mutable_appearance('icons/obj/chairs.dmi', "echair_over", MOB_LAYER + 1))
 
 /obj/structure/chair/e_chair/attackby(obj/item/W, mob/user, params)

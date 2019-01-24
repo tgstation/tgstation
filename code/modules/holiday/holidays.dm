@@ -73,7 +73,7 @@
 	drone_hat = /obj/item/clothing/head/festive
 
 /datum/holiday/new_year/getStationPrefix()
-	return pick("Party","New","Hangover","Resolution")
+	return pick("Party","New","Hangover","Resolution", "Auld")
 
 /datum/holiday/groundhog
 	name = "Groundhog Day"
@@ -113,6 +113,8 @@
 			Fact = " SS13 can now rent a car!"
 		if(30)
 			Fact = " SS13 can now go home and be a family man!"
+		if(35)
+			Fact = " SS13 can now run for President of the United States!"
 		if(40)
 			Fact = " SS13 can now suffer a midlife crisis!"
 		if(50)
@@ -144,10 +146,14 @@
 	begin_day = 14
 	begin_month = MARCH
 
+/datum/holiday/pi/getStationPrefix()
+	return pick("Sine","Cosine","Tangent","Secant", "Cosecant", "Cotangent")
+
 /datum/holiday/no_this_is_patrick
 	name = "St. Patrick's Day"
 	begin_day = 17
 	begin_month = MARCH
+	drone_hat = /obj/item/clothing/head/soft/green
 
 /datum/holiday/no_this_is_patrick/getStationPrefix()
 	return pick("Blarney","Green","Leprechaun","Booze")
@@ -167,6 +173,15 @@
 	for(var/mob/dead/new_player/P in GLOB.mob_list)
 		if(P.client)
 			P.client.playtitlemusic()
+
+/datum/holiday/spess
+	name = "Cosmonautics Day"
+	begin_day = 12
+	begin_month = APRIL
+	drone_hat = /obj/item/clothing/head/syndicatefake
+
+/datum/holiday/spess/greet()
+	return "On this day over 600 years ago, Comrade Yuri Gagarin first ventured into space!"
 
 /datum/holiday/fourtwenty
 	name = "Four-Twenty"
@@ -208,6 +223,7 @@
 	name = "Bee Day"
 	begin_day = 20
 	begin_month = MAY
+	drone_hat = /obj/item/clothing/mask/rat/bee
 
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
@@ -238,12 +254,24 @@
 	begin_month = JULY
 
 /datum/holiday/USA/getStationPrefix()
-	return pick("Independant","American","Burger","Bald Eagle","Star-Spangled")
+	return pick("Independent","American","Burger","Bald Eagle","Star-Spangled", "Fireworks")
 
 /datum/holiday/writer
 	name = "Writer's Day"
 	begin_day = 8
 	begin_month = JULY
+
+/datum/holiday/france
+	name = "Bastille Day"
+	begin_day = 14
+	begin_month = JULY
+	drone_hat = /obj/item/clothing/head/beret
+
+/datum/holiday/france/getStationPrefix()
+	return pick("Francais","Fromage", "Zut", "Merde")
+
+/datum/holiday/france/greet()
+	return "Do you hear the people sing?"
 
 /datum/holiday/friendship
 	name = "Friendship Day"
@@ -337,6 +365,18 @@
 	name = "Vegan Day"
 	begin_day = 1
 	begin_month = NOVEMBER
+
+/datum/holiday/vegan/getStationPrefix()
+	return pick("Tofu", "Tempeh", "Seitan", "Tofurkey")
+
+/datum/holiday/october_revolution
+	name = "October Revolution"
+	begin_day = 6
+	begin_month = NOVEMBER
+	end_day = 7
+
+/datum/holiday/october_revolution/getStationPrefix()
+	return pick("Communist", "Soviet", "Bolshevik", "Socialist", "Red", "Workers'")
 
 /datum/holiday/kindness
 	name = "Kindness Day"
@@ -442,6 +482,14 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 		return TRUE
 	return FALSE
 
+/datum/holiday/lifeday
+	name = "Life Day"
+	begin_day = 17
+	begin_month = NOVEMBER
+
+/datum/holiday/lifeday/getStationPrefix()
+	return pick("Itchy", "Lumpy", "Malla", "Kazook") //he really pronounced it "Kazook", I wish I was making shit up
+
 /datum/holiday/doomsday
 	name = "Mayan Doomsday Anniversary"
 	begin_day = 21
@@ -460,10 +508,15 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/xmas/celebrate()
 	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
+	GLOB.maintenance_loot += list(
+		/obj/item/toy/xmas_cracker = 3,
+		/obj/item/clothing/head/santa = 1,
+		/obj/item/a_gift/anything = 1
+	)
 
 /datum/holiday/xmas/proc/roundstart_celebrate()
 	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
-		Monitor.icon_state = "entertainment_xmas"
+		Monitor.icon_state_on = "entertainment_xmas"
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
 		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))

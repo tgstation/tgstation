@@ -4,3 +4,5 @@ ambidet2.ogg is Night on the Docks, Piano by Kevin Macleod. It has been licensed
 	It has been cropped for use ingame, and also fades in.
 aurora_caelus.ogg is Music for Manatees, by Kevin Macleod. It has been licensed under CC-BY 3.0 license.
 	It has been cropped for use ingame, and also fades out.
+antag/assimilation.ogg is Alien Spaceship UFO Sound effect, by Daniel Simon (http://soundbible.com/2213-Alien-Spaceship-UFO.html). It has been licensed under CC-BY 3.0 license.
+	It has been cropped for use ingame, and also fades out

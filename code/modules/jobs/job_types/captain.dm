@@ -23,6 +23,8 @@ Captain
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SEC
 
+	mind_traits = list(TRAIT_DISK_VERIFIER)
+
 /datum/job/captain/get_access()
 	return get_all_accesses()
 

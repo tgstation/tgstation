@@ -7,7 +7,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	can_charge = 0
 	max_charges = 100 //100, 50, 50, 34 (max charge distribution by 25%ths)
-	var/variable_charges = 1
+	var/variable_charges = TRUE
 
 /obj/item/gun/magic/wand/Initialize()
 	if(prob(75) && variable_charges) //25% chance of listed max charges, 50% chance of 1/2 max charges, 25% chance of 1/3 max charges
@@ -73,6 +73,13 @@
 	user.adjustOxyLoss(500)
 	charges--
 
+/obj/item/gun/magic/wand/death/debug
+	desc = "In some obscure circles, this is known as the 'cloning tester's friend'."
+	max_charges = 500
+	variable_charges = FALSE
+	can_charge = TRUE
+	recharge_rate = 1
+
 
 /////////////////////////////////////
 //WAND OF HEALING
@@ -97,8 +104,11 @@
 	..()
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
-	name = "debug wand of healing"
+	desc = "Is it possible for something to be even more powerful than regular magic? This wand is."
 	max_charges = 500
+	variable_charges = FALSE
+	can_charge = TRUE
+	recharge_rate = 1
 
 /////////////////////////////////////
 //WAND OF POLYMORPH
@@ -128,7 +138,7 @@
 	fire_sound = 'sound/magic/wand_teleport.ogg'
 	icon_state = "telewand"
 	max_charges = 10 //10, 5, 5, 4
-	no_den_usage = 1
+	no_den_usage = TRUE
 
 /obj/item/gun/magic/wand/teleport/zap_self(mob/living/user)
 	if(do_teleport(user, user, 10, channel = TELEPORT_CHANNEL_MAGIC))
@@ -137,6 +147,34 @@
 		smoke.start()
 		charges--
 	..()
+
+/obj/item/gun/magic/wand/safety
+	name = "wand of safety"
+	desc = "This wand will use the lightest of bluespace currents to gently place the target somewhere safe."
+	ammo_type = /obj/item/ammo_casing/magic/safety
+	fire_sound = 'sound/magic/wand_teleport.ogg'
+	icon_state = "telewand"
+	max_charges = 10 //10, 5, 5, 4
+	no_den_usage = FALSE
+
+/obj/item/gun/magic/wand/safety/zap_self(mob/living/user)
+	var/turf/origin = get_turf(user)
+	var/turf/destination = find_safe_turf()
+
+	if(do_teleport(user, destination, channel=TELEPORT_CHANNEL_MAGIC))
+		for(var/t in list(origin, destination))
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(0, t)
+			smoke.start()
+	..()
+
+/obj/item/gun/magic/wand/safety/debug
+	desc = "This wand has 'find_safe_turf()' engraved into its blue wood. Perhaps it's a secret message?"
+	max_charges = 500
+	variable_charges = FALSE
+	can_charge = TRUE
+	recharge_rate = 1
+
 
 /////////////////////////////////////
 //WAND OF DOOR CREATION

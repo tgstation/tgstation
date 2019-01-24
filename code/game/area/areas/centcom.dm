@@ -29,6 +29,10 @@
 /area/centcom/holding
 	name = "Holding Facility"
 
+/area/centcom/supplypod/flyMeToTheMoon
+	name = "Supplypod Shipping lane"
+	icon_state = "supplypod_flight"
+
 /area/centcom/supplypod
 	name = "Supplypod Facility"
 	icon_state = "supplypod"
@@ -137,6 +141,7 @@
 	has_gravity = TRUE
 	noteleport = TRUE
 	blob_allowed = FALSE
+	var/turf/origin
 
 //CAPTURE THE FLAG
 

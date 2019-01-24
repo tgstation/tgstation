@@ -11,7 +11,7 @@ export BYOND_MINOR=${LIST[1]}
 unset LIST
 
 #rust_g git tag
-export RUST_G_VERSION=0.4.1
+export RUST_G_VERSION=0.4.2
 
 #bsql git tag
 export BSQL_VERSION=v1.4.0.0

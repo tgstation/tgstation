@@ -4,15 +4,11 @@ SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
 	init_order = INIT_ORDER_PERSISTENCE
 	flags = SS_NO_FIRE
-	var/list/satchel_blacklist 		= list() //this is a typecache
-	var/list/new_secret_satchels 	= list() //these are objects
-	var/list/old_secret_satchels 	= list()
 
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
 	var/list/saved_modes = list(1,2,3)
 	var/list/saved_trophies = list()
-	var/list/spawned_objects = list()
 	var/list/antag_rep = list()
 	var/list/antag_rep_change = list()
 	var/list/picture_logging_information = list()
@@ -20,7 +16,6 @@ SUBSYSTEM_DEF(persistence)
 	var/list/obj/item/storage/photo_album/photo_albums
 
 /datum/controller/subsystem/persistence/Initialize()
-	LoadSatchels()
 	LoadPoly()
 	LoadChiselMessages()
 	LoadTrophies()
@@ -29,60 +24,6 @@ SUBSYSTEM_DEF(persistence)
 	if(CONFIG_GET(flag/use_antag_rep))
 		LoadAntagReputation()
 	return ..()
-
-/datum/controller/subsystem/persistence/proc/LoadSatchels()
-	var/placed_satchel = 0
-	var/path
-	if(fexists("data/npc_saves/SecretSatchels.sav")) //legacy conversion. Will only ever run once.
-		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
-		for(var/map in secret_satchels)
-			var/json_file = file("data/npc_saves/SecretSatchels[map].json")
-			var/list/legacy_secret_satchels = splittext(secret_satchels[map],"#")
-			var/list/satchels = list()
-			for(var/i=1,i<=legacy_secret_satchels.len,i++)
-				var/satchel_string = legacy_secret_satchels[i]
-				var/list/chosen_satchel = splittext(satchel_string,"|")
-				if(chosen_satchel.len == 3)
-					var/list/data = list()
-					data["x"] = text2num(chosen_satchel[1])
-					data["y"] = text2num(chosen_satchel[2])
-					data["saved_obj"] = chosen_satchel[3]
-					satchels += list(data)
-			var/list/file_data = list()
-			file_data["data"] = satchels
-			WRITE_FILE(json_file, json_encode(file_data))
-		fdel("data/npc_saves/SecretSatchels.sav")
-
-	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
-	var/list/json = list()
-	if(fexists(json_file))
-		json = json_decode(file2text(json_file))
-
-	old_secret_satchels = json["data"]
-	var/obj/item/storage/backpack/satchel/flat/F
-	if(old_secret_satchels && old_secret_satchels.len >= 10) //guards against low drop pools assuring that one player cannot reliably find his own gear.
-		var/pos = rand(1, old_secret_satchels.len)
-		F = new()
-		F.x = old_secret_satchels[pos]["x"]
-		F.y = old_secret_satchels[pos]["y"]
-		F.z = SSmapping.station_start
-		path = text2path(old_secret_satchels[pos]["saved_obj"])
-		old_secret_satchels.Cut(pos, (pos+1) % old_secret_satchels.len)
-
-	if(F)
-		if(isfloorturf(F.loc) && !isplatingturf(F.loc))
-			F.hide(1)
-		if(ispath(path))
-			var/spawned_item = new path(F)
-			spawned_objects[spawned_item] = TRUE
-		placed_satchel++
-	var/free_satchels = 0
-	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,SSmapping.station_start), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,SSmapping.station_start)))) //Nontrivially expensive but it's roundstart only
-		if(isfloorturf(T) && !isplatingturf(T))
-			new /obj/item/storage/backpack/satchel/flat/secret(T)
-			free_satchels++
-			if((free_satchels + placed_satchel) == 10) //ten tiles, more than enough to kill anything that moves
-				break
 
 /datum/controller/subsystem/persistence/proc/LoadPoly()
 	for(var/mob/living/simple_animal/parrot/Poly/P in GLOB.alive_mob_list)
@@ -200,7 +141,6 @@ SUBSYSTEM_DEF(persistence)
 
 /datum/controller/subsystem/persistence/proc/CollectData()
 	CollectChiselMessages()
-	CollectSecretSatchels()
 	CollectTrophies()
 	CollectRoundtype()
 	SavePhotoPersistence()						//THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
@@ -275,35 +215,6 @@ SUBSYSTEM_DEF(persistence)
 	frame_json = json_encode(frame_json)
 
 	WRITE_FILE(frame_path, frame_json)
-
-/datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
-	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
-	var/list/satchels_to_add = list()
-	for(var/A in new_secret_satchels)
-		var/obj/item/storage/backpack/satchel/flat/F = A
-		if(QDELETED(F) || F.z != SSmapping.station_start || F.invisibility != INVISIBILITY_MAXIMUM)
-			continue
-		var/list/savable_obj = list()
-		for(var/obj/O in F)
-			if(is_type_in_typecache(O, satchel_blacklist) || (O.flags_1 & ADMIN_SPAWNED_1))
-				continue
-			if(O.persistence_replacement)
-				savable_obj += O.persistence_replacement
-			else
-				savable_obj += O.type
-		if(isemptylist(savable_obj))
-			continue
-		var/list/data = list()
-		data["x"] = F.x
-		data["y"] = F.y
-		data["saved_obj"] = pick(savable_obj)
-		satchels_to_add += list(data)
-
-	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
-	var/list/file_data = list()
-	fdel(json_file)
-	file_data["data"] = old_secret_satchels + satchels_to_add
-	WRITE_FILE(json_file, json_encode(file_data))
 
 /datum/controller/subsystem/persistence/proc/CollectChiselMessages()
 	var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")

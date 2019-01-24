@@ -4,6 +4,7 @@
 	id = "pod"
 	default_color = "59CE00"
 	species_traits = list(MUTCOLORS,EYECOLOR)
+	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -55,9 +56,9 @@
 				H.Paralyze(100)
 				H.visible_message("<span class='warning'>[H] writhes in pain as [H.p_their()] vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
 				if(prob(80))
-					H.randmutb()
+					H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 				else
-					H.randmutg()
+					H.easy_randmut(POSITIVE)
 				H.domutcheck()
 			else
 				H.adjustFireLoss(rand(5,15))

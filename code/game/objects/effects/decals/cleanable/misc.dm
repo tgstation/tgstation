@@ -74,15 +74,17 @@
 /obj/effect/decal/cleanable/greenglow
 	name = "glowing goo"
 	desc = "Jeez. I hope that's not for lunch."
-	light_color = LIGHT_COLOR_GREEN
 	icon_state = "greenglow"
-
-/obj/effect/decal/cleanable/greenglow/Initialize(mapload)
-	. = ..()
-	set_light(1)
+	light_power = 3
+	light_range = 2
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return
+
+/obj/effect/decal/cleanable/greenglow/filled/Initialize()
+	. = ..()
+	reagents.add_reagent(pick("uranium", "radium"), 5)
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
@@ -171,18 +173,19 @@
 	icon = 'icons/effects/atmospherics.dmi'
 	icon_state = "plasma_old"
 	gender = NEUTER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/decal/cleanable/glitter/pink
 	name = "pink glitter"
-	icon_state = "plasma_old"
+	icon_state = "plasma"
 
 /obj/effect/decal/cleanable/glitter/white
 	name = "white glitter"
-	icon_state = "nitrous_oxide_old"
+	icon_state = "nitrous_oxide"
 
 /obj/effect/decal/cleanable/glitter/blue
 	name = "blue glitter"
-	icon_state = "freon_old"
+	icon_state = "freon"
 
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"

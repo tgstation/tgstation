@@ -27,6 +27,11 @@
 		board.moved = TRUE
 	..()
 
+/obj/machinery/computer/shuttle/syndicate/allowed(mob/M)
+	if(issilicon(M) && !(ROLE_SYNDICATE in M.faction))
+		return FALSE
+	return ..()
+
 /obj/machinery/computer/shuttle/syndicate/drop_pod
 	name = "syndicate assault pod control"
 	desc = "Controls the drop pod's launch system."

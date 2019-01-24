@@ -101,7 +101,7 @@
 		if("l_leg")
 			subject = "your left leg"
 			paralysis_traits = list(TRAIT_PARALYSIS_L_LEG)
-		
+
 	gain_text = "<span class='warning'>You can't feel [subject] anymore!</span>"
 	lose_text = "<span class='notice'>You can feel [subject] again!</span>"
 
@@ -110,7 +110,7 @@
 	for(var/X in paralysis_traits)
 		owner.add_trait(X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
-	
+
 /datum/brain_trauma/severe/paralysis/on_lose()
 	..()
 	for(var/X in paralysis_traits)
@@ -143,7 +143,7 @@
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
-	scan_desc = "severe monophobia"
+	scan_desc = "monophobia"
 	gain_text = ""
 	lose_text = "<span class='notice'>You feel like you could be safe on your own.</span>"
 	var/stress = 0
@@ -162,7 +162,7 @@
 		if(stress > 10 && (prob(5)))
 			stress_reaction()
 	else
-		stress -= 4
+		stress = max(stress - 4, 0)
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
 	if(owner.has_trait(TRAIT_BLIND))
