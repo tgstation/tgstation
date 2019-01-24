@@ -394,7 +394,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	reagent_id = pick(drug_list)
 	if (!reagent_type)
-		reagent_type = GLOB.chemical_reagents_list[reagent_id]
+		reagent_type = GLOB.chemical_reagents_list[reagent_id].type
 	reagent_instance = new reagent_type()
 	H.reagents.addiction_list.Add(reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
