@@ -68,23 +68,23 @@
 				to_chat(user,"<span class='warning'>You decide against remembering any scents. Instead, you notice your own nose in your peripheral vision. This goes on to remind you of that one time you started breathing manually and couldn't stop. What an awful day that was.</span>")
 				return
 			tracking_target = old_target
-			on_the_trail()
+			on_the_trail(user)
 			return
 		to_chat(user,"<span class='notice'>You pick up the scent of [tracking_target]. The hunt begins.</span>")
-		on_the_trail()
+		on_the_trail(user)
 		return
 
 	if(!tracking_target)
 		to_chat(user,"<span class='warning'>You're not holding anything to smell, and you haven't smelled anything you can track. You smell your palm instead; it's kinda salty.</span>")
 		return
 
-	on_the_trail()
+	on_the_trail(user)
 
-/obj/effect/proc_holder/spell/targeted/olfaction/proc/on_the_trail()
+/obj/effect/proc_holder/spell/targeted/olfaction/proc/on_the_trail(mob/living/user)
 	if(!tracking_target)
 		to_chat(user,"<span class='warning'>You're not tracking a scent, but the game thought you were. Something's gone wrong! Report this as a bug.</span>")
 		return
-	if(tracking_target == usr)
+	if(tracking_target == user)
 		to_chat(user,"<span class='warning'>You smell out the trail to yourself. Yep, it's you.</span>")
 		return
 	if(usr.z < tracking_target.z)
