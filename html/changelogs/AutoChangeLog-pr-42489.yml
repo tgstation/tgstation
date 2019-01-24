@@ -1,5 +1,0 @@
-author: "Gousaid67"
-delete-after: True
-changes: 
-  - bugfix: "The genetic sequence analyzer now will no longer be able to scan husked corpses or species with TRAIT_RADIMMUNE, similar to its bigger brother the DNA scanner."
-  - tweak: "Cloning will no longer apply mutations to species with TRAIT_RADIMMUNE like golems and plasmamens, positive or negative."
