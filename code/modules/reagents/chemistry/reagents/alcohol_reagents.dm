@@ -1329,9 +1329,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/neurotoxin
 	name = "Neurotoxin"
 	id = "neurotoxin"
-	description = "A strong neurotoxin that puts the subject into a death-like state."
+	description = "A strong neurotoxin that causes severe brain damage. Why would you drink this?"
 	color = "#2E2E61" // rgb: 46, 46, 97
-	boozepwr = 0 //custom drunk effect
+	boozepwr = 90
 	quality = DRINK_VERYGOOD
 	taste_description = "a numbing sensation"
 	glass_icon_state = "neurotoxinglass"
@@ -1339,16 +1339,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink that is guaranteed to knock you silly."
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.Paralyze(60, 1, 0)
 	M.dizziness +=2
 	switch(current_cycle)
+		if(1 to 15)
+			M.adjustBrainLoss(1)
 		if(15 to 45)
 			if(!M.slurring)
 				M.slurring = 1
 			M.slurring += 3
+		    M.adjustBrainLoss(2)
 		if(45 to 55)
+			M.adjustBrainLoss(3)
 			if(prob(50))
 				M.confused = max(M.confused+3,0)
+			if(prob(5))
+				M.gain_trauma_type(BRAIN_TRAUMA_MILD)
 		if(55 to 200)
 			M.set_drugginess(55)
 		if(200 to INFINITY)
