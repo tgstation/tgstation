@@ -416,6 +416,8 @@
 		"in your backpack" = SLOT_IN_BACKPACK
 	)
 	where_drug = H.equip_in_one_of_slots(drug_instance, slots, FALSE) || "at your feet"
+	if (accessory_instance)
+		where_accessory = H.equip_in_one_of_slots(accessory_instance, slots, FALSE) || "at your feet"
 	announce_drugs()
 
 /datum/quirk/junkie/post_add()
