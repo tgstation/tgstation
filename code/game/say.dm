@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		spans |= SPAN_YELL
 
 	var/spanned = attach_spans(input, spans)
-	return "[say_mod(input, message_mode)], \"[spanned]\""
+	return "[say_mod(input, message_mode)], &ldquo;[spanned]&rdquo;"
 
 /atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
 	if(has_language(language))
