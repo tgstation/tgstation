@@ -154,7 +154,7 @@
 
 /datum/reagent/consumable/nothing/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job == "Mime")
-		M.silent = max(M.silent, 3)
+		M.silent = max(M.silent, 30)
 		M.heal_bodypart_damage(1,1, 0)
 		. = 1
 	..()
