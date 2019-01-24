@@ -225,6 +225,11 @@
 			return
 	return 0
 
+/obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if (sawn_off)
+		bonus_spread += 25
+	. = ..()
+
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
 	// this proc assumes that the suppressor is already inside src
 	suppressed = S
