@@ -69,7 +69,8 @@
 	 //for descriptions
 
 /datum/brain_trauma/severe/paralysis/New(specific_type)
-	paralysis_type = specific_type
+	if(specific_type)
+		paralysis_type = specific_type
 	if(!paralysis_type)
 		paralysis_type = pick("full","left","right","arms","legs","r_arm","l_arm","r_leg","l_leg")
 	var/subject
@@ -116,6 +117,11 @@
 	for(var/X in paralysis_traits)
 		owner.remove_trait(X, "trauma_paralysis")
 	owner.update_disabled_bodyparts()
+
+/datum/brain_trauma/severe/paralysis/paraplegic
+	random_gain = FALSE
+	paralysis_type = "legs"
+	resilience = TRAUMA_RESILIENCE_ABSOLUTE
 
 /datum/brain_trauma/severe/narcolepsy
 	name = "Narcolepsy"
