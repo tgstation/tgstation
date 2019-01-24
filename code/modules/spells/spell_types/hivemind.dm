@@ -248,14 +248,14 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
-	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it. Our ability to sense psionic energy is completely nullified while using this power."
-	charge_max = 600
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to thirty seconds. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it. Our ability to sense psionic energy is completely nullified while using this power."
+	charge_max = 900
 	action_icon_state = "force"
 	active  = FALSE
 	var/mob/living/carbon/human/original_body //The original hivemind host
 	var/mob/living/carbon/human/vessel
 	var/mob/living/passenger/backseat //Storage for the mind controlled vessel
-	var/power = 100
+	var/power = 300
 	var/time_initialized = 0
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/proc/release_control() //If the spell is active, force everybody into their original bodies if they exist, ghost them otherwise, delete the backseat
@@ -265,6 +265,7 @@
 	charge_counter = max((0.5-(world.time-time_initialized)/power)*charge_max, 0) //Partially refund the power based on how long it was used, up to a max of half the charge time
 
 	if(!QDELETED(vessel))
+		vessel.remove_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL)
 		vessel.clear_fullscreen("hive_mc")
 		if(vessel.mind)
 			if(QDELETED(original_body))
@@ -288,10 +289,7 @@
 	if(original_body?.mind)
 		var/datum/antagonist/hivemind/hive = original_body.mind.has_antag_datum(/datum/antagonist/hivemind)
 		if(hive)
-			if((world.time-time_initialized) <= 300)
-				hive.threat_level += 0.5
-			else
-				hive.threat_level += 1
+			hive.threat_level += 0.5
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/on_lose(mob/user)
 	release_control()
@@ -303,19 +301,6 @@
 		if(!hive)
 			to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 			return
-		switch(hive.hive_size)
-			if(10 to 14)
-				power = 100
-				charge_max = 600
-			if(15 to 19)
-				power = 300
-				charge_max = 900
-			if(20 to 24)
-				power = 600
-				charge_max = 1200
-			else
-				power = 1200
-				charge_max = 1200
 		original_body = user
 		vessel = targets[1]
 		to_chat(user, "<span class='notice'>We begin merging our mind with [vessel.name].</span>")
@@ -353,6 +338,7 @@
 			user.mind.transfer_to(vessel, 1)
 			backseat.blind_eyes(power)
 			vessel.overlay_fullscreen("hive_mc", /obj/screen/fullscreen/hive_mc)
+			L.add_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL, update=TRUE, priority=100, multiplicative_slowdown=1, blacklisted_movetypes=(FLYING|FLOATING))
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
