@@ -1,0 +1,4 @@
+author: "Jujumatic, port by Denton"
+delete-after: True
+changes: 
+  - rscadd: "Ported wheelchairs from Hippiestation. They're craftable with 4 sheets of metal and 6 rods. The less arms you have, the slower you move!"
