@@ -369,18 +369,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			against other attacks. Pair with an Energy Sword for a killer combination."
 	item = /obj/item/shield/energy
 	cost = 16
-<<<<<<< HEAD
-	surplus = 25
-	include_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/dangerous/bolt_action
-	name = "Surplus Rifle"
-	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
-	item = /obj/item/gun/ballistic/rifle/boltaction
-	cost = 2
-=======
 	surplus = 20
->>>>>>> 9172ec3d9b4f77969d09932c3da7b473e845d106
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/flamethrower
@@ -455,7 +444,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
 	desc = "A horribly outdated bolt action weapon. You've got to be desperate to use this."
-	item = /obj/item/gun/ballistic/shotgun/boltaction
+	item = /obj/item/gun/ballistic/rifle/boltaction
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
