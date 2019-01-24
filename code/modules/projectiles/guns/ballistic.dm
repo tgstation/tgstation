@@ -366,9 +366,10 @@
 		item_state = "gun"
 		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
+		recoil = 1
 		sawn_off = TRUE
 		update_icon()
-		return 1
+		return TRUE
 
 // Sawing guns related proc
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
