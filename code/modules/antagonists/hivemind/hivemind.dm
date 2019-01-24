@@ -20,11 +20,11 @@
 		//Tier 2
 		/obj/effect/proc_holder/spell/target_hive/hive_warp = 6,
 		/obj/effect/proc_holder/spell/targeted/hive_hack = 8,
-		/obj/effect/proc_holder/spell/target_hive/hive_control = 10,
-		/obj/effect/proc_holder/spell/targeted/induce_panic = 12,
+		/obj/effect/proc_holder/spell/targeted/induce_panic = 10,
+		/obj/effect/proc_holder/spell/targeted/hive_assim = 12,
 		//Tier 3
 		/obj/effect/proc_holder/spell/self/hive_loyal = 15,
-		/obj/effect/proc_holder/spell/targeted/hive_assim = 18,
+		/obj/effect/proc_holder/spell/target_hive/hive_control = 18,
 		/obj/effect/proc_holder/spell/targeted/forcewall/hive = 20,
 		/obj/effect/proc_holder/spell/target_hive/hive_attack = 25)
 
