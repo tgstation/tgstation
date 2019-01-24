@@ -150,7 +150,7 @@
 		nurglevictim.adjust_disgust(60)
 	if(!M.mind)
 		return //we've done all we can without a mind
-	M.rot_mind()
+	M.mind.rot_mind()
 
 /obj/structure/trap/ward
 	name = "divine ward"
