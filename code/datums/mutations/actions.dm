@@ -36,7 +36,7 @@
 	if(hygiene_now < 100 && reek >= 100)
 		to_chat(owner,"<span class='danger'>Your odor begins to make you gag. You silently curse your godly nose. You should really get clean!</span>")
 	if(hygiene_now < HYGIENE_LEVEL_DIRTY && reek >= HYGIENE_LEVEL_DIRTY)
-		to_chat(owner,"<span class='danger'>Your super-nose is fed up with your stench. You could really use a shower.</span>")
+		to_chat(owner,"<span class='userdanger'>Your super-nose is 100% fed up with your stench. You absolutely must get clean.</span>")
 	reek = hygiene_now
 
 /obj/effect/proc_holder/spell/targeted/olfaction
@@ -50,52 +50,52 @@
 	var/mob/living/carbon/tracking_target
 	var/list/mob/living/carbon/possible = list()
 
-/obj/effect/proc_holder/spell/targeted/olfaction/cast(list/targets,mob/user = usr)
-	var/atom/sniffed = usr.get_active_held_item()
+/obj/effect/proc_holder/spell/targeted/olfaction/cast(list/targets, mob/living/user = usr)
+	var/atom/sniffed = user.get_active_held_item()
 	if(sniffed)
 		var/old_target = tracking_target
 		possible = list()
 		var/list/prints = sniffed.return_fingerprints()
-		for(var/mob/living/carbon/C in GLOB.mob_list)
+		for(var/mob/living/carbon/C in GLOB.carbon_list)
 			if(prints[md5(C.dna.uni_identity)])
 				possible |= C
 		if(!length(possible))
-			to_chat(usr,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
+			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
 			return
 		tracking_target = input(user, "Choose a scent to remember.", "Scent Tracking") as null|anything in possible
 		if(!tracking_target)
 			if(!old_target)
-				to_chat(usr,"<span class='warning'>You decide against remembering any scents. Instead, you notice your own nose in your peripheral vision. This goes on to remind you of that one time you started breathing manually and couldn't stop. What an awful day that was.</span>")
+				to_chat(user,"<span class='warning'>You decide against remembering any scents. Instead, you notice your own nose in your peripheral vision. This goes on to remind you of that one time you started breathing manually and couldn't stop. What an awful day that was.</span>")
 				return
 			tracking_target = old_target
 			on_the_trail()
 			return
-		to_chat(usr,"<span class='notice'>You pick up the scent of [tracking_target]. The hunt begins.</span>")
+		to_chat(user,"<span class='notice'>You pick up the scent of [tracking_target]. The hunt begins.</span>")
 		on_the_trail()
 		return
 
 	if(!tracking_target)
-		to_chat(usr,"<span class='warning'>You're not holding anything to smell, and you haven't smelled anything you can track. You smell your palm instead; it's kinda salty.</span>")
+		to_chat(user,"<span class='warning'>You're not holding anything to smell, and you haven't smelled anything you can track. You smell your palm instead; it's kinda salty.</span>")
 		return
 
 	on_the_trail()
 
 /obj/effect/proc_holder/spell/targeted/olfaction/proc/on_the_trail()
 	if(!tracking_target)
-		to_chat(usr,"<span class='warning'>You're not tracking a scent, but the game thought you were. Something's gone wrong! Report this as a bug.</span>")
+		to_chat(user,"<span class='warning'>You're not tracking a scent, but the game thought you were. Something's gone wrong! Report this as a bug.</span>")
 		return
 	if(tracking_target == usr)
-		to_chat(usr,"<span class='warning'>You smell out the trail to yourself. Yep, it's you.</span>")
+		to_chat(user,"<span class='warning'>You smell out the trail to yourself. Yep, it's you.</span>")
 		return
 	if(usr.z < tracking_target.z)
-		to_chat(usr,"<span class='warning'>The trail leads... way up above you? Huh. They must be really, really far away.</span>")
+		to_chat(user,"<span class='warning'>The trail leads... way up above you? Huh. They must be really, really far away.</span>")
 		return
 	else if(usr.z > tracking_target.z)
-		to_chat(usr,"<span class='warning'>The trail leads... way down below you? Huh. They must be really, really far away.</span>")
+		to_chat(user,"<span class='warning'>The trail leads... way down below you? Huh. They must be really, really far away.</span>")
 		return
 	var/direction_text = "[dir2text(get_dir(usr, tracking_target))]"
 	if(direction_text)
-		to_chat(usr,"<span class='notice'>You consider [tracking_target]'s scent. The trail leads <b>[direction_text].</b></span>")
+		to_chat(user,"<span class='notice'>You consider [tracking_target]'s scent. The trail leads <b>[direction_text].</b></span>")
 
 /datum/mutation/human/firebreath
 	name = "Fire Breath"
