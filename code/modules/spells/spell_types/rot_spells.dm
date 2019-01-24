@@ -41,13 +41,9 @@
 /obj/effect/forcefield/rotwall/Initialize(mapload, mob/summoner)
 	. = ..()
 	wizard = summoner
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(src)
 	if(T)
-		var/datum/gas_mixture/stank = new
-		ADD_GAS(/datum/gas/miasma, stank.gases)
-		stank.gases[/datum/gas/miasma][MOLES] = 100 //300 moles in total
-		T.assume_air(stank)
-		T.air_update_turf()
+		T.atmos_spawn_air("miasma=100")
 
 /obj/effect/forcefield/rotwall/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
@@ -56,7 +52,8 @@
 		var/mob/M = mover
 		if(M.anti_magic_check(major = FALSE))
 			return TRUE
-		M.rot_mind()
+		if(M.mind)
+		M.mind.rot_mind()
 		if(ishuman(M))
 			var/mob/living/carbon/human/nurglevictim = M
 			nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN
@@ -69,7 +66,6 @@
 	name = "Rotten Invocation: Diseased Touch"
 	desc = "This spell charges your hand with vile energy that can be used to give diseases to a victim."
 	clothes_req = FALSE
-	action_background_icon_state = "bg_rotting"
 	hand_path = /obj/item/melee/touch_attack/rot
 	rotten_spell = TRUE
 
@@ -80,6 +76,7 @@
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "disease"
+	action_background_icon_state = "bg_rotting"
 
 /obj/effect/proc_holder/spell/targeted/genetic/ascendant_form
 	name = "Rotten Invocation: Ascendant Form"
@@ -110,11 +107,6 @@
 	else
 		..()
 
-/*
-/obj/effect/proc_holder/spell/corpulent_summon
-	name = "Rotten Invocation: Summon Corpulent Demon"
-	desc = "Summons a Corpulent Demon. You must attract him to the realm with bodies around you for him to feast."
-*/
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap
 	name = "Rotten Invocation: Patient Malaise"
 	desc = "Summon a number of rotten traps around you. They will damage and decay any enemies that step on them."

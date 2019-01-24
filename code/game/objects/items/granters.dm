@@ -157,7 +157,7 @@
 	desc = "This book smells..."
 	remarks = list("Gross...", "By god, why are the pages slimy?", "Accounting for crosswinds... really?", "I'm going to have to wash my hands after this.", "I'm gonna be sick...", "So my spellrot turns their spells into spellrot, which can turn my spells...", "Spellrot? Seems pretty niche.")
 
-/obj/item/book/granter/spell/rot/recoil(mob/user)
+/obj/item/book/granter/spell/rot/recoil(mob/living/user)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/nurglevictim = user

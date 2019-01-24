@@ -136,17 +136,13 @@
 /obj/structure/trap/rot/trap_effect(mob/living/M)
 	to_chat(M, "<span class='danger'><B>The ground explodes into a cloud of rotting death!</B></span>")
 	M.adjustToxLoss(15)
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(src)
 	if(T)
 		var/datum/effect_system/smoke_spread/bad/smoke = new
-		smoke.set_up(4, M.loc)
+		smoke.set_up(4, T)
 		smoke.start()
-		playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
-		var/datum/gas_mixture/stank = new
-		ADD_GAS(/datum/gas/miasma, stank.gases)
-		stank.gases[/datum/gas/miasma][MOLES] = 300 //3x as potent as the bolt hitting
-		T.assume_air(stank)
-		T.air_update_turf()
+		playsound(T, 'sound/effects/bamf.ogg', 50, 2)
+		T.atmos_spawn_air("miasma=300") //3x as potent as a bolt of rot
 	//mob effects
 	if(ishuman(M))
 		var/mob/living/carbon/human/nurglevictim = M

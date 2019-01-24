@@ -458,13 +458,9 @@
 	//fucks hygiene pretty hard
 	//makes the target feel disgusted
 	//rot_mind is called, see spell.dm for it's effects
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(src)
 	if(T)
-		var/datum/gas_mixture/stank = new
-		ADD_GAS(/datum/gas/miasma, stank.gases)
-		stank.gases[/datum/gas/miasma][MOLES] = 100
-		T.assume_air(stank)
-		T.air_update_turf()
+		T.atmos_spawn_air("miasma=100")
 	//mob effects
 	if(ismob(target))
 		var/mob/M = target
@@ -472,7 +468,8 @@
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
 			return
-		M.rot_mind()
+		if(M.mind)
+			M.mind.rot_mind()
 		if(ishuman(M))
 			var/mob/living/carbon/human/nurglevictim = M
 			nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN

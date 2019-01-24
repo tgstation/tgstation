@@ -689,28 +689,6 @@
 			mob_spell_list -= S
 			qdel(S)
 
-/mob/proc/rot_mind() //most rotten spells also swap the victims spells for more rot spells, this proc handles that.
-	if((!mind) || !mind.spell_list.len)
-		return
-	var/spells_to_rot = 0 //how many rot spells to add.
-	for(var/obj/effect/proc_holder/spell/spell in mind.spell_list)
-		spells_to_rot++
-		mind.RemoveSpell(spell)
-	if(spells_to_rot > 0)
-		to_chat(src, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
-	for(var/adding_rot in 1 to spells_to_rot)
-		switch(pick(list("aimed", "traps", "touch", "wall", "mutate")))
-			if("aimed")
-				mind.AddSpell(new /obj/effect/proc_holder/spell/aimed/canker(null))
-			if("traps")
-				mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap(null))
-			if("touch")
-				mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
-			if("wall")
-				mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
-			if("mutate")
-				mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/genetic/ascendant_form(null))
-
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
 	if(!magic && !holy)
 		return

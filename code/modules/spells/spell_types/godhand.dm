@@ -135,7 +135,8 @@
 		to_chat(M, "<span class='notice'>Their hand has no effect on your form.</span>")
 		..()
 		return
-	M.rot_mind()
+	if(M.mind)
+		M.mind.rot_mind()
 	if(ishuman(M))
 		to_chat(M, "<span class='userdanger'>Your skin rots and festers, becoming putrefied and leathery!</span>")
 		var/mob/living/carbon/human/nurglevictim = M
