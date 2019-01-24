@@ -13,8 +13,9 @@
 
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
 	return
+
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
-	return
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return

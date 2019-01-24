@@ -12,6 +12,7 @@
 #define TRAIT_MONKEYLIKE		"monkeylike" //sets IsAdvancedToolUser to FALSE
 #define TRAIT_PACIFISM			"pacifism"
 #define TRAIT_IGNORESLOWDOWN	"ignoreslow"
+#define TRAIT_IGNOREDAMAGESLOWDOWN "ignoredamageslowdown"
 #define TRAIT_DEATHCOMA			"deathcoma" //Causes death-like unconsciousness
 #define TRAIT_FAKEDEATH			"fakedeath" //Makes the owner appear as dead to most forms of medical examination
 #define TRAIT_DISFIGURED		"disfigured"
@@ -108,6 +109,7 @@
 #define OBESITY "obesity"
 #define MAGIC_TRAIT "magic"
 #define TRAUMA_TRAIT "trauma"
+#define DISEASE_TRAIT "disease"
 #define SPECIES_TRAIT "species"
 #define ORGAN_TRAIT "organ"
 #define ROUNDSTART_TRAIT "roundstart" //cannot be removed without admin intervention
