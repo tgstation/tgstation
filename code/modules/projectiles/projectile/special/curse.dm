@@ -30,7 +30,7 @@
 	if(target == original)
 		DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
 	else if(!isturf(target))
-		return FALSE
+		return BULLET_ACT_HIT
 	return ..()
 
 /obj/item/projectile/curse_hand/Destroy()

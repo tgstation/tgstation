@@ -105,7 +105,7 @@
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.item_flags & NODROP)
+		if(W.has_trait(TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
 		if(cell)
@@ -626,11 +626,12 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-			if(isethereal(H))
+			var/datum/species/ethereal/eth_species = H.dna?.species
+			if(istype(eth_species))
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				if(do_after(user, 50, target = src))
 					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
-					H.dna?.species.adjust_charge(5)
+					eth_species.adjust_charge(5)
 					return
 				return
 
