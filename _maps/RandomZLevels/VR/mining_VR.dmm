@@ -467,6 +467,100 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/awaymission/vr/miner)
+"ek" = (
+/obj/item/book/granter/spell/charge,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"eq" = (
+/obj/item/book/granter/spell/forcewall,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"jQ" = (
+/obj/item/gun/magic/staff/healing,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"kN" = (
+/obj/item/wisp_lantern,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"lJ" = (
+/obj/item/sord,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"nv" = (
+/obj/item/gun/energy/pulse/destroyer,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"pY" = (
+/obj/item/gun/magic/staff/honk,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"uE" = (
+/obj/item/book/granter/spell/fireball,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"xx" = (
+/obj/item/katana,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"Ag" = (
+/obj/structure/table/wood,
+/obj/item/book/granter/spell/mindswap,
+/turf/open/floor/clockwork/reebe{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"JW" = (
+/obj/item/gun/energy/kinetic_accelerator/crossbow,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"RR" = (
+/obj/item/gun/magic/staff/spellblade,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"RY" = (
+/obj/item/book/granter/spell/sacredflame,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"Uf" = (
+/obj/item/book/granter/spell/barnyard,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
+"Wh" = (
+/obj/structure/chair/sofa{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/skeleton/plasmaminer,
+/turf/open/floor/bronze{
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/awaymission/vr/miner)
 
 (1,1,1) = {"
 av
@@ -8365,7 +8459,7 @@ aX
 aX
 aX
 aX
-aS
+Uf
 aJ
 "}
 (101,1,1) = {"
@@ -8444,7 +8538,7 @@ aX
 aX
 aX
 aX
-aS
+uE
 aJ
 "}
 (102,1,1) = {"
@@ -8523,7 +8617,7 @@ aX
 aX
 aX
 aX
-aS
+RY
 aJ
 "}
 (103,1,1) = {"
@@ -8602,7 +8696,7 @@ aX
 aX
 aX
 aX
-aS
+nv
 aJ
 "}
 (104,1,1) = {"
@@ -8681,7 +8775,7 @@ aX
 aX
 aX
 aX
-aS
+kN
 aJ
 "}
 (105,1,1) = {"
@@ -8760,7 +8854,7 @@ aX
 aX
 aX
 aX
-aS
+pY
 aJ
 "}
 (106,1,1) = {"
@@ -8839,7 +8933,7 @@ aX
 aX
 aX
 aX
-aS
+RR
 aJ
 "}
 (107,1,1) = {"
@@ -8918,7 +9012,7 @@ aX
 aX
 aX
 aX
-aS
+jQ
 aJ
 "}
 (108,1,1) = {"
@@ -8997,7 +9091,7 @@ aX
 aX
 aX
 aX
-aS
+lJ
 aJ
 "}
 (109,1,1) = {"
@@ -9076,7 +9170,7 @@ aX
 aX
 aX
 aX
-aS
+JW
 aJ
 "}
 (110,1,1) = {"
@@ -9155,7 +9249,7 @@ aX
 aX
 aX
 aX
-aS
+eq
 aJ
 "}
 (111,1,1) = {"
@@ -9234,7 +9328,7 @@ aX
 aX
 aX
 aX
-aS
+ek
 aJ
 "}
 (112,1,1) = {"
@@ -9313,7 +9407,7 @@ aX
 aX
 aX
 aX
-aS
+xx
 aJ
 "}
 (113,1,1) = {"
@@ -9543,7 +9637,7 @@ aA
 aA
 aJ
 bq
-bx
+Ag
 bx
 bx
 aX
@@ -9622,7 +9716,7 @@ aA
 aA
 aJ
 bv
-by
+Wh
 by
 bA
 aS

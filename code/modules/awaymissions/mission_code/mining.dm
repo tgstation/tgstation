@@ -1,5 +1,3 @@
-#define MEGAFAUNA_NEST_RANGE 10
-
 //					  //
 // -----Vr Stuff----- //
 //					  //
@@ -125,6 +123,7 @@
 /datum/component/spawner/megafauna
 	var/spawn_wait_time = 150 // time to next spawn when the megafauna dies, 15 seconds
 	var/initial_spawned = FALSE // so we don't clear the arena and open the door on the initial spawn
+	var/nest_range = 10
 
 /datum/component/spawner/megafauna/try_spawn_mob()
 	STOP_PROCESSING(SSprocessing, src)
@@ -132,7 +131,7 @@
 		var/obj/structure/spawner/megafauna/MS = parent
 		MS.cleanup_arena()
 		spawn_delay = world.time + spawn_wait_time
-		var/turf/check = get_ranged_target_turf(get_turf(MS), SOUTH, MEGAFAUNA_NEST_RANGE + 1)
+		var/turf/check = get_ranged_target_turf(get_turf(MS), SOUTH, nest_range + 1)
 		if(istype(check, /turf/closed/indestructible/fakedoor))
 			check.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface)
 			sleep(spawn_wait_time)
@@ -153,9 +152,10 @@
 	spawn_text = "appears onto"
 	density = FALSE
 	spawner_type = /datum/component/spawner/megafauna
+	var/nest_range = 10
 
 /obj/structure/spawner/megafauna/proc/cleanup_arena()
-	for(var/obj/effect/decal/B in urange(MEGAFAUNA_NEST_RANGE, src))
+	for(var/obj/effect/decal/B in urange(nest_range, src))
 		qdel(B) // go away blood and garbage shit
 
 /obj/structure/spawner/megafauna/blood_drunk
@@ -251,148 +251,40 @@
 	desc = "A holographic miner, eternally hunting."
 	crusher_loot = list()
 	loot = list()
-	virtual = 1
-
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/Initialize()
-	. = ..()
-	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
-	return
+	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/dragon/virtual
 	name = "ash drake hologram"
 	desc = "A holographic dragon, once weak, now fierce."
+	del_on_death = 1 // goodbye corpse
 	crusher_loot = list()
 	loot = list()
-	virtual = 1
-	del_on_death = 1
-
-/mob/living/simple_animal/hostile/megafauna/dragon/virtual/Initialize()
-	. = ..()
-	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/dragon/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
-	return
+	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/virtual
 	name = "bubblegum hologram"
 	desc = "A holographic version of the king of the slaughter demons. You feel something oddly real staring back at you."
 	crusher_loot = list()
 	loot = list()
-	virtual = 1
 	true_spawn = 0
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/Initialize()
-	. = ..()
-	qdel(internal)
-
-// need this otherwise bubbles can teleport out of his arena
-/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/hallucination_charge_around(var/times = 4, var/delay = 6, var/chargepast = 0, var/useoriginal = 1)
-	var/startingangle = rand(1, 360)
-	if(!target)
-		return
-	var/turf/chargeat = get_turf(target)
-	var/srcplaced = 0
-	for(var/i = 1 to times)
-		var/ang = (startingangle + 360/times * i)
-		if(!chargeat)
-			return
-		var/turf/place = locate(chargeat.x + cos(ang) * times, chargeat.y + sin(ang) * times, chargeat.z)
-		if(!place)
-			continue
-		if(!srcplaced && useoriginal && get_dist(nest.parent, place) <= MEGAFAUNA_NEST_RANGE)
-			forceMove(place)
-			srcplaced = 1
-			continue
-		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
-		B.forceMove(place)
-		INVOKE_ASYNC(B, .proc/charge, chargeat, delay, chargepast)
-	if(useoriginal)
-		charge(chargeat, delay, chargepast)
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
-	return
 
 /mob/living/simple_animal/hostile/megafauna/colossus/virtual
 	name = "colossus hologram"
 	desc = "A holographic god. One of the strongest creatures that has ever lived."
 	crusher_loot = list()
 	loot = list()
-	virtual = 1
-
-/mob/living/simple_animal/hostile/megafauna/colossus/virtual/Initialize()
-	. = ..()
-	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/colossus/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
-	return
+	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/virtual
 	name = "hierophant hologram"
 	desc = "A holographic club. It's said to wipe from existence those who fall to its rhythm."
-	loot = list()
 	crusher_loot = list()
-	virtual = 1
-
-/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/Initialize()
-	. = ..()
-	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/spawn_crusher_loot()
-	return
-
-/mob/living/simple_animal/hostile/megafauna/hierophant/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
-	return
+	loot = list()
+	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/legion/virtual
 	name = "Legion Hologram"
 	desc = "One of many... holograms."
+	crusher_loot = list()
 	loot = list()
-	virtual = 1
-
-/mob/living/simple_animal/hostile/megafauna/legion/virtual/Initialize()
-	. = ..()
-	qdel(internal)
-
-/mob/living/simple_animal/hostile/megafauna/legion/virtual/death()
-	if(health > 0)
-		return
-	if(size > 1)
-		adjustHealth(-maxHealth) //heal ourself to full in prep for splitting
-		var/mob/living/simple_animal/hostile/megafauna/legion/virtual/L = new(loc)
-
-		L.maxHealth = round(maxHealth * 0.6,DAMAGE_PRECISION)
-		maxHealth = L.maxHealth
-
-		L.health = L.maxHealth
-		health = maxHealth
-
-		size--
-		L.size = size
-
-		L.resize = L.size * 0.2
-		transform = initial(transform)
-		resize = size * 0.2
-
-		L.update_transform()
-		update_transform()
-
-		L.faction = faction.Copy()
-
-		L.GiveTarget(target)
-
-		L.nest = nest
-
-		nest.spawned_mobs += L
-
-		L.virtual = 1
-
-		visible_message("<span class='boldannounce'>[src] splits in twain!</span>")
-	else
-		var/obj/structure/spawner/megafauna/P = nest.parent
-		P.cleanup_arena()
-		..()
-
-/mob/living/simple_animal/hostile/megafauna/legion/virtual/grant_achievement(medaltype, scoretype, crusher_kill)
-	return
+	true_spawn = 0

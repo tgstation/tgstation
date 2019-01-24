@@ -42,6 +42,7 @@ Difficulty: Very Hard
 	ranged = 1
 	pixel_x = -32
 	del_on_death = 1
+	internal_type = /obj/item/gps/internal/colossus
 	medal_type = BOSS_MEDAL_COLOSSUS
 	score_type = COLOSSUS_SCORE
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/colossus/crusher)
@@ -87,11 +88,6 @@ Difficulty: Very Hard
 		else
 			ranged_cooldown = world.time + 40
 			INVOKE_ASYNC(src, .proc/alternating_dir_shots)
-
-
-/mob/living/simple_animal/hostile/megafauna/colossus/Initialize()
-	. = ..()
-	internal = new/obj/item/gps/internal/colossus(src)
 
 /obj/effect/temp_visual/at_shield
 	name = "anti-toolbox field"
