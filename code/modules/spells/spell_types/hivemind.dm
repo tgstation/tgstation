@@ -338,7 +338,7 @@
 			user.mind.transfer_to(vessel, 1)
 			backseat.blind_eyes(power)
 			vessel.overlay_fullscreen("hive_mc", /obj/screen/fullscreen/hive_mc)
-			L.add_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL, update=TRUE, priority=100, multiplicative_slowdown=1, blacklisted_movetypes=(FLYING|FLOATING))
+			L.add_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL, update=TRUE, priority=100, multiplicative_slowdown=1.5, blacklisted_movetypes=(FLYING|FLOATING))
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
