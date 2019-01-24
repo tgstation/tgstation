@@ -106,7 +106,7 @@
 /obj/item/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = FALSE)
 	life -= 10
 	if(life > 0)
-		. = -1
+		. = BULLET_ACT_FORCE_PIERCE
 	..()
 
 /obj/item/projectile/beam/emitter

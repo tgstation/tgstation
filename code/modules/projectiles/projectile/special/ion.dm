@@ -10,11 +10,11 @@
 /obj/item/projectile/ion/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 1, 1)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/ion/weak
 
 /obj/item/projectile/ion/weak/on_hit(atom/target, blocked = FALSE)
 	..()
 	empulse(target, 0, 0)
-	return TRUE
+	return BULLET_ACT_HIT

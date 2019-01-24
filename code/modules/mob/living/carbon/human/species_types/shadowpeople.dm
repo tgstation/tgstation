@@ -64,8 +64,8 @@
 		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
 			H.visible_message("<span class='danger'>[H] dances in the shadows, evading [P]!</span>")
 			playsound(T, "bullet_miss", 75, 1)
-			return -1
-	return 0
+			return BULLET_ACT_FORCE_PIERCE
+	return BULLET_ACT_HIT
 
 /datum/species/shadow/nightmare/check_roundstart_eligible()
 	return FALSE

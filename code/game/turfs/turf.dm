@@ -557,4 +557,5 @@
 
 /turf/bullet_act(obj/item/projectile/P)
 	. = ..()
-	return BULLET_ACT_TURF
+	if(. != BULLET_ACT_FORCE_PIERCE)
+		. =  BULLET_ACT_TURF

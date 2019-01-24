@@ -1,4 +1,0 @@
-author: "no"
-delete-after: True
-changes: 
-  - bugfix: "Chilling Sepia extracts cannot be used infinitely and will be consumed upon use."
