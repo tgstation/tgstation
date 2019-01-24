@@ -122,7 +122,7 @@
 	name = "mime burger"
 	desc = "Its taste defies language."
 	icon_state = "mimeburger"
-	bonus_reagents = list("nutriment" = 4, "vitamin" = 6, "nothing" = 6, "mutetoxin" = 5)
+	bonus_reagents = list("nutriment" = 4, "vitamin" = 6, "nothing" = 6)
 	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/burger/brain
