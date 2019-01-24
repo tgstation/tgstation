@@ -69,7 +69,7 @@
 	if(current_skin)
 		icon_state = "[unique_reskin[current_skin]][sawn_off ? "_sawn" : ""]"
 	else
-		icon_state = "[initial(icon_state)][sawn_off ? "-sawn" : ""]"
+		icon_state = "[initial(icon_state)][sawn_off ? "_sawn" : ""]"
 	cut_overlays()
 	if (bolt_type == BOLT_TYPE_LOCKING)
 		add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
