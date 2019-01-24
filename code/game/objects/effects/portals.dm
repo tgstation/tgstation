@@ -149,7 +149,7 @@
 		return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M, force = FALSE)
-	if(!force && (M.has_trait(TRAIT_NO_TELEPORT) || !istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
+	if(!force && (!istype(M) || iseffect(M) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M)))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
