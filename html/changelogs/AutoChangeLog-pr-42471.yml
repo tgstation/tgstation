@@ -1,0 +1,4 @@
+author: "PKPenguin321"
+delete-after: True
+changes: 
+  - bugfix: "Lings will copy the notes of people they absorb (including PDA codes, antag objectives, and objective conspirators) properly."
