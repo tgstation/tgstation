@@ -1054,35 +1054,6 @@
 	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
 	return "Hello I like money!"
 
-/datum/species/golem/capitalist/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
-	..()
-	if(world.time > last_cash + cash_cooldown && M != H &&  M.a_intent != INTENT_HELP)
-		new/obj/item/stack/spacecash/c20(get_turf(H))
-		last_cash = world.time
-
-/datum/species/golem/capitalist/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
-	..()
-	if(world.time > last_cash + cash_cooldown && user != H)
-		new/obj/item/stack/spacecash/c20(get_turf(H))
-		last_cash = world.time
-
-/datum/species/golem/capitalist/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
-	..()
-	if(world.time > last_cash + cash_cooldown)
-		new/obj/item/stack/spacecash/c20(get_turf(H))
-		last_cash = world.time
-
-/datum/species/golem/capitalist/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
-	..()
-	var/obj/item/I
-	if(istype(AM, /obj/item))
-		I = AM
-		if(I.thrownby == H) //No throwing stuff at yourself to make cash
-			return 0
-		else
-			new/obj/item/stack/spacecash/c20(get_turf(H))
-			last_cash = world.time
-
 /datum/species/golem/soviet
 	name = "Soviet Golem"
 	id = "soviet golem"
