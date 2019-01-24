@@ -1347,7 +1347,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(!M.slurring)
 				M.slurring = 1
 			M.slurring += 3
-		    M.adjustBrainLoss(2)
+			M.adjustBrainLoss(2)
 		if(45 to 55)
 			M.adjustBrainLoss(3)
 			if(prob(50))
