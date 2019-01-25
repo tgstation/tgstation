@@ -265,6 +265,7 @@
 	charge_counter = max((0.5-(world.time-time_initialized)/power)*charge_max, 0) //Partially refund the power based on how long it was used, up to a max of half the charge time
 
 	if(!QDELETED(vessel))
+	 	vessel.remove_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL, update=TRUE)
 		vessel.clear_fullscreen("hive_mc")
 		if(vessel.mind)
 			if(QDELETED(original_body))
@@ -337,6 +338,7 @@
 			user.mind.transfer_to(vessel, 1)
 			backseat.blind_eyes(power)
 			vessel.overlay_fullscreen("hive_mc", /obj/screen/fullscreen/hive_mc)
+ 			vessel.add_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL, update=TRUE, priority=100, multiplicative_slowdown=0.75, blacklisted_movetypes=(FLYING|FLOATING))
 			active = TRUE
 			time_initialized = world.time
 			revert_cast()
