@@ -1052,7 +1052,7 @@
 
 /datum/species/golem/capitalist/handle_speech(message, mob/living/carbon/human/H)
 	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
-	return "Hello I like money!"
+	return "Hello, I like money!"
 
 /datum/species/golem/soviet
 	name = "Soviet Golem"
