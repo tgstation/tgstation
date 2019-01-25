@@ -541,7 +541,7 @@
 	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(dir != direction && !strafe)
+	else if(dir != direction && (!strafe || occupant.m_intent == "walk"))
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
