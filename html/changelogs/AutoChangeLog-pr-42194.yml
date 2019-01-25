@@ -1,0 +1,6 @@
+author: "as334"
+delete-after: True
+changes: 
+  - rscadd: "Tritium now needs to be an environment with a sizable thermal mass for full efficiency combustion."
+  - rscadd: "Advanced Gas reactions now produce research points."
+  - rscadd: "A gas canister with Pluoxium, Noblium, Stimulum, Miasma or BZ inside now produces points when sold via cargo."
