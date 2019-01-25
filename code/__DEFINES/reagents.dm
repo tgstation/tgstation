@@ -28,4 +28,4 @@
 #define ADD_REAGENT		2	// reagent added
 #define REM_REAGENT		3	// reagent removed (may still exist)
 
-#define MIMEDRINK_SILENCE_DURATION (3 SECONDS) //equal to about 50 seconds
+#define MIMEDRINK_SILENCE_DURATION (3 SECONDS) //ends up being ~60 seconds
