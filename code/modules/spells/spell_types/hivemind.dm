@@ -265,7 +265,7 @@
 	charge_counter = max((0.5-(world.time-time_initialized)/power)*charge_max, 0) //Partially refund the power based on how long it was used, up to a max of half the charge time
 
 	if(!QDELETED(vessel))
-	 	vessel.remove_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL, update=TRUE)
+	 	vessel.remove_movespeed_modifier(MOVESPEED_ID_MIND_CONTROL)
 		vessel.clear_fullscreen("hive_mc")
 		if(vessel.mind)
 			if(QDELETED(original_body))
