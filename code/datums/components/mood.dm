@@ -116,12 +116,37 @@
 
 /datum/component/mood/proc/update_mood_icon()
 	var/mob/living/owner = parent
-	if(owner.client && owner.hud_used)
+	if(!(owner.client || owner.hud_used))
+		return
+	screen_obj.cut_overlays()
+	//lets see if we have any special icons to show instead of the normal mood levels
+	var/list/conflicting_moodies = list()
+	var/highest_absolute_mood = 0
+	for(var/i in mood_events) //adds overlays and sees which special icons need to vie for which one gets the icon_state
+		var/datum/mood_event/event = mood_events[i]
+		if(!event.special_screen_obj)
+			continue
+		if(!event.special_screen_replace)
+			screen_obj.add_overlay(event.special_screen_obj)
+		else
+			conflicting_moodies += event
+			var/absmood = abs(event.mood_change)
+			if(absmood > highest_absolute_mood)
+				highest_absolute_mood = absmood
+
+	for(var/i in 1 to conflicting_moodies.len)
+	if(!conflicting_moodies.len) //no special icons- go to the normal icon states
 		if(sanity < 25)
 			screen_obj.icon_state = "mood_insane"
 		else
 			screen_obj.icon_state = "mood[mood_level]"
 		screen_obj_sanity.icon_state = "sanity[sanity_level]"
+		return
+
+	for(var/i in conflicting_moodies)
+		var/datum/mood_event/event = i
+		if(abs(event.mood_change) == highest_absolute_mood)
+			screen_obj.icon_state = "[event.special_screen_obj]"
 
 /datum/component/mood/process() //Called on SSmood process
 	var/mob/living/owner = parent
