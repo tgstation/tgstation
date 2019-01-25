@@ -28269,7 +28269,7 @@
 /obj/structure/table/wood,
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
-/obj/item/gun/ballistic/revolver/doublebarrel,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/structure/sink/kitchen{
 	pixel_y = 28
 	},
