@@ -1017,7 +1017,7 @@
 	prefix = "Capitalist"
 	attack_verb = "monopoliz"
 	limbs_id = "ca_golem"
-	blacklisted = 1
+	blacklisted = TRUE
 	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr Moneybags", "Adam Smith")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	fixed_mut_color = null
@@ -1052,7 +1052,7 @@
 
 /datum/species/golem/capitalist/handle_speech(message, mob/living/carbon/human/H)
 	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
-	return "Hello I like money!"
+	return "Hello, I like money!"
 
 /datum/species/golem/soviet
 	name = "Soviet Golem"
@@ -1060,7 +1060,7 @@
 	prefix = "Comrade"
 	attack_verb = "nationalis"
 	limbs_id = "s_golem"
-	blacklisted = 1
+	blacklisted = TRUE
 	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	fixed_mut_color = null
