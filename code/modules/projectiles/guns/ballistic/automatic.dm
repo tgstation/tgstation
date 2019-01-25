@@ -207,7 +207,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw
 	name = "\improper L6 SAW"
 	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
-	icon_state = "l6closed100"
+	icon_state = "l6"
 	item_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
@@ -230,13 +230,12 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	..()
-	if(!cover_open)
-		to_chat(user, "It seems like you could use an <b>empty hand</b> to open the dust cover.")
+	to_chat(user, "<b>ctrl + click</b> to [cover_open ? "close" : "open"] the dust cover.")
 	if(cover_open && magazine)
 		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/attack_self(mob/user)
+/obj/item/gun/ballistic/automatic/l6_saw/CtrlClick(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 	if(cover_open)
@@ -251,9 +250,10 @@
 	add_overlay("l6_door_[cover_open ? "open" : "closed"]")
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)
 	if(cover_open)
 		to_chat(user, "<span class='warning'>[src]'s cover is open! Close it before firing!</span>")
+		return
 	else
 		. = ..()
 		update_icon()
@@ -273,11 +273,11 @@
 		magazine = null
 		update_icon()
 		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
-		playsound(user, 'sound/weapons/magout.ogg', 60, 1)
+		playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
-		to_chat(user, "<span class='warning'>[src]'s cover is closed! You can't insert a new mag.</span>")
+		to_chat(user, "<span class='warning'>[src]'s dust cover prevents a magazine from being fit.</span>")
 		return
 	..()
 
