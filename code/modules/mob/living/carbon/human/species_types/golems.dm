@@ -1011,23 +1011,66 @@
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
 
+/datum/species/golem/capitalist
+	name = "Capitalist Golem"
+	id = "capitalist golem"
+	prefix = "Capitalist"
+	attack_verb = "monopoliz"
+	limbs_id = "ca_golem"
+	blacklisted = TRUE
+	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr Moneybags", "Adam Smith")
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
+
+	var/last_cash = 0
+	var/cash_cooldown = 100
+
+/datum/species/golem/capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), SLOT_HEAD)
+	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), SLOT_GLASSES)
+	C.revive(full_heal = TRUE)
+
+	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+
+/datum/species/golem/capitalist/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
+		C.RemoveSpell(spell)
+
+/datum/species/golem/capitalist/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	..()
+	if(isgolem(target))
+		return
+	if(target.nutrition >= NUTRITION_LEVEL_FAT)
+		target.set_species(/datum/species/golem/capitalist)
+		return
+	target.adjust_nutrition(40)
+
+/datum/species/golem/capitalist/handle_speech(message, mob/living/carbon/human/H)
+	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
+	return "Hello, I like money!"
+
 /datum/species/golem/soviet
 	name = "Soviet Golem"
 	id = "soviet golem"
 	prefix = "Comrade"
 	attack_verb = "nationalis"
 	limbs_id = "s_golem"
-	blacklisted = 1
+	blacklisted = TRUE
 	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
 
 /datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
-	C.revive(full_heal = 1)
+	C.revive(full_heal = TRUE)
 
 	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
