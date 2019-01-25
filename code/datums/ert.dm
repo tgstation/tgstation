@@ -53,3 +53,12 @@
 	rename_team = "Inquisition"
 	mission = "Destroy any traces of paranormal activity aboard the station."
 	polldesc = "a Nanotrasen paranormal response team"
+
+/datum/ert/janitor
+	roles =  /datum/antagonist/ert/janitor
+	leader_role = /datum/antagonist/ert/janitor
+	teamsize = 4
+	opendoors = FALSE
+	rename_team = "Sanitation Technicians"
+	mission = "Clean up the trash and leave no corner dirty."
+	polldesc = "a Nanotrasen sanitation response team"

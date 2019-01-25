@@ -390,6 +390,14 @@ update_label("John Doe", "Clowny")
 	access = get_all_accesses()+get_ert_access("med")-ACCESS_CHANGE_IDS
 	. = ..()
 
+/obj/item/card/id/ert/Janitor
+	registered_name = "Sanitation Response Officer"
+	assignment = "Sanitation Response Officer"
+
+/obj/item/card/id/ert/Janitor/Initialize()
+	access = get_all_accesses()
+	. = ..()
+
 /obj/item/card/id/ert/chaplain
 	registered_name = "Religious Response Officer"
 	assignment = "Religious Response Officer"

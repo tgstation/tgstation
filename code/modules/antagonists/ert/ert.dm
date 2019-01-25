@@ -66,6 +66,10 @@
 /datum/antagonist/ert/commander/red
 	outfit = /datum/outfit/ert/commander/alert
 
+/datum/antagonist/ert/janitor
+	role = "Sanitation Technician"
+	outfit = /datum/outfit/ert/janitor
+
 /datum/antagonist/ert/deathsquad
 	name = "Deathsquad Trooper"
 	outfit = /datum/outfit/death_commando
