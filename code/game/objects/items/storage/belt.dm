@@ -519,7 +519,6 @@
 		/obj/item/assembly/mousetrap
 		))
 
-/obj/item/storage/belt/janitor/full
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
 	new /obj/item/reagent_containers/spray/cleaner(src)
