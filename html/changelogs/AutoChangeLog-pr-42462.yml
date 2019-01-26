@@ -1,4 +1,0 @@
-author: "YoYoBatty"
-delete-after: True
-changes: 
-  - tweak: "Body part damage is now run through armor check in certain situations."

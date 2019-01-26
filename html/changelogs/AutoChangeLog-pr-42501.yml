@@ -1,6 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - balance: "perfluorodecalin no longer mutes"
-  - balance: "it also heals brute and burn 3x faster (a new rate of 0.25 of each a second)"
-  - balance: "it also causes toxin buildup over time"

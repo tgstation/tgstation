@@ -1,6 +1,0 @@
-author: "Razharas"
-delete-after: True
-changes: 
-  - rscadd: "Animation to cryo and sleepers opening/closing"
-  - tweak: "Changed a bit of internal handling of visuals of cryo, no more updating icon each time anything is clicked in the ui"
-  - imageadd: "Sprite for the cryo and sleeper animations"
