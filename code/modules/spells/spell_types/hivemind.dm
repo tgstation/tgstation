@@ -248,7 +248,7 @@
 
 /obj/effect/proc_holder/spell/target_hive/hive_control
 	name = "Mind Control"
-	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it."
+	desc = "We assume direct control of one of our vessels, leaving our current body for up to ten seconds, although a larger hive may be able to sustain it for up to two minutes. It can be cancelled at any time by casting it again. Powers can be used via our vessel, although if it dies, the entire hivemind will come down with it. Our ability to sense psionic energy is completely nullified while using this power."
 	charge_max = 600
 	action_icon_state = "force"
 	active  = FALSE
@@ -284,6 +284,14 @@
 	log_game("[key_name(vessel)] was released from Mind Control by [key_name(original_body)].")
 
 	QDEL_NULL(backseat)
+
+	if(original_body?.mind)
+		var/datum/antagonist/hivemind/hive = original_body.mind.has_antag_datum(/datum/antagonist/hivemind)
+		if(hive)
+			if((world.time-time_initialized) <= 300)
+				hive.threat_level += 0.5
+			else
+				hive.threat_level += 1
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/on_lose(mob/user)
 	release_control()
@@ -456,6 +464,9 @@
 			deadchat_broadcast("<span class='deadsay'><span class='name'>[target]</span> has suffered a mysterious heart attack!</span>", target)
 	else
 		to_chat(user, "<span class='warning'>We are unable to induce a heart attack!</span>")
+	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(hive)
+		hive.threat_level += 2
 
 /obj/effect/proc_holder/spell/target_hive/hive_warp
 	name = "Distortion Field"
@@ -516,7 +527,6 @@
 	var/mob/living/carbon/human/target = targets[1]
 	var/in_hive = hive.hivemembers.Find(target)
 	var/list/enemies = list()
-	var/enemy_names = ""
 
 	to_chat(user, "<span class='notice'>We begin probing [target.name]'s mind!</span>")
 	if(do_after(user,100,0,target))
@@ -528,22 +538,26 @@
 				return
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
 			var/datum/mind/M = enemy.owner
-			if(!M || M.current == user)
+			if(M?.current == user)
 				continue
 			if(enemy.hivemembers.Find(target))
-				var/hive_name = enemy.get_real_name()
-				if(hive_name)
-					enemies += hive_name
+				var/mob/living/real_enemy = (M.current.get_real_hivehost())
+				enemies += real_enemy
 				enemy.remove_from_hive(target)
-				to_chat(M.current, "<span class='userdanger'>We detect a surge of psionic energy from [target.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>")
+				real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, user)
+				if(is_real_hivehost(M.current)) //If they were using mind control, too bad
+					real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+					target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_enemy)
+					to_chat(real_enemy, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+
 			if(enemy.owner == target && is_real_hivehost(target))
 				user.Stun(70)
 				user.Jitter(14)
 				to_chat(user, "<span class='userdanger'>A sudden surge of psionic energy rushes into your mind, only a Hive host could have such power!!</span>")
 				return
 		if(enemies.len)
-			enemy_names = enemies.Join(". ")
-			to_chat(user, "<span class='userdanger'>In a moment of clarity, we see all. Another hive. Faces. Our nemesis. [enemy_names]. They are watching us. They know we are coming.</span>")
+			to_chat(user, "<span class='userdanger'>In a moment of clarity, we see all. Another hive. Faces. Our nemesis. They have heard our call. They know we are coming.</span>")
+			user.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		else
 			to_chat(user, "<span class='notice'>We peer into the inner depths of their mind and see nothing, no enemies lurk inside this mind.</span>")
 	else
