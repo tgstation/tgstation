@@ -54,7 +54,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	
 	//strip away everything but the proc name
-	var/list/proclist = splittext(proctype, "/")
+	var/list/proclist = splittext(procname, "/")
 	if (!length(proclist))
 		return
 	procname = proclist[proclist.len]
@@ -63,7 +63,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if ("verb" in proclist)
 		proctype = "verb"
 	
-	if(targetselected && !hascall(target,testname))
+	if(targetselected && !hascall(target, procname))
 		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no [proctype] named [procname].</font>")
 		return
 	else
