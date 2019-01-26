@@ -28,8 +28,8 @@
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/user)
 	if(!user || !istype(user))
-		message_admins("Warning! Ling revive user is invalid!")
-		log_game("Warning! Ling revive user is invalid!")
+		message_admins("Warning! Ling revive user is invalid! Check runtime logs!")
+		log_game("Warning! Ling revive user is invalid! Check runtime logs!")
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = TRUE)
 	var/list/missing = user.get_missing_limbs()
