@@ -131,7 +131,7 @@
 		/datum/reagent/medicine/leporazine,\
 		/datum/reagent/medicine/clonexadone,\
 		/datum/reagent/medicine/mine_salve,\
-		/datum/reagent/medicine/perfluorodecalin,\
+		/datum/reagent/toxin/perfluorodecalin,\
 		/datum/reagent/medicine/ephedrine,\
 		/datum/reagent/medicine/diphenhydramine,\
 		/datum/reagent/drug/space_drugs,\

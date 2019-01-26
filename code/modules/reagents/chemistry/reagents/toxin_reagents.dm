@@ -967,3 +967,18 @@
 				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
 				M.emote("sigh")
 	return ..()
+
+/datum/reagent/toxin/perfluorodecalin
+	name = "Perfluorodecalin"
+	id = "perfluorodecalin"
+	description = "Extremely rapidly restores oxygen deprivation, but deals toxin damage over time. Also heals small amounts of bruising and burns."
+	reagent_state = LIQUID
+	color = "#FF6464"
+	silent_toxin = TRUE
+
+/datum/reagent/toxin/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
+	M.adjustOxyLoss(-12*REM, 0)
+	M.adjustBruteLoss(-0.5*REM, 0)
+	M.adjustFireLoss(-0.5*REM, 0)
+	..()
+	return TRUE
