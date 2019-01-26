@@ -64,6 +64,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb = list("flicked")
 		STOP_PROCESSING(SSobj, src)
 
+/obj/item/match/extinguish()
+	matchburnout()
+
 /obj/item/match/dropped(mob/user)
 	matchburnout()
 	. = ..()
@@ -102,7 +105,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
-	container_type = INJECTABLE
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	grind_results = list()
@@ -125,8 +127,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/Initialize()
 	. = ..()
-	create_reagents(chem_volume)
-	reagents.set_reacting(FALSE) // so it doesn't react until you light it
+	create_reagents(chem_volume, INJECTABLE | NO_REACT)
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
@@ -186,7 +187,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	reagents.set_reacting(TRUE)
+	DISABLE_BITFIELD(reagents.flags, NO_REACT)
 	reagents.handle_reactions()
 	icon_state = icon_on
 	item_state = icon_on
@@ -201,6 +202,24 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		M.update_inv_wear_mask()
 		M.update_inv_hands()
 
+/obj/item/clothing/mask/cigarette/extinguish()
+	if(!lit)
+		return
+	name = copytext(name,5,length(name)+1)
+	attack_verb = null
+	hitsound = null
+	damtype = BRUTE
+	force = 0
+	icon_state = icon_off
+	item_state = icon_off
+	STOP_PROCESSING(SSobj, src)
+	ENABLE_BITFIELD(reagents.flags, NO_REACT)
+	lit = FALSE
+	if(ismob(loc))
+		var/mob/living/M = loc
+		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
+		M.update_inv_wear_mask()
+		M.update_inv_hands()
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
 	if(reagents.total_volume)
@@ -272,14 +291,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/uplift
 	desc = "An Uplift Smooth brand cigarette."
-	list_reagents = list("nicotine" = 7.5, "menthol" = 7.5)
+	list_reagents = list("nicotine" = 13, "menthol" = 5)
 
 /obj/item/clothing/mask/cigarette/robust
 	desc = "A Robust brand cigarette."
 
 /obj/item/clothing/mask/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
-	list_reagents = list("nicotine" = 15, "gold" = 1)
+	list_reagents = list("nicotine" = 15, "gold" = 3) // Just enough to taste a hint of expensive metal.
 
 /obj/item/clothing/mask/cigarette/carp
 	desc = "A Carp Classic brand cigarette."
@@ -311,10 +330,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 50
 	list_reagents = null
 
-/obj/item/clothing/mask/cigarette/rollie/New()
-	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+/obj/item/clothing/mask/cigarette/rollie/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 /obj/item/clothing/mask/cigarette/rollie/nicotine
 	list_reagents = list("nicotine" = 15)
@@ -334,10 +353,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A manky old roach, or for non-stoners, a used rollup."
 	icon_state = "roach"
 
-/obj/item/cigbutt/roach/New()
-	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+/obj/item/cigbutt/roach/Initialize()
+	. = ..()
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 
 ////////////
@@ -561,6 +580,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		STOP_PROCESSING(SSobj, src)
 	update_icon()
 
+/obj/item/lighter/extinguish()
+	set_lit(FALSE)
+
 /obj/item/lighter/attack_self(mob/living/user)
 	if(user.is_holding(src))
 		if(!lit)
@@ -729,8 +751,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/Initialize(mapload, param_color)
 	. = ..()
-	create_reagents(chem_volume)
-	reagents.set_reacting(FALSE) // so it doesn't react until you light it
+	create_reagents(chem_volume, NO_REACT)
 	reagents.add_reagent("nicotine", 50)
 	if(!icon_state)
 		if(!param_color)
@@ -739,27 +760,21 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(O.is_drainable())
-		if(reagents.total_volume < chem_volume)
-			if(O.reagents.total_volume > 0)
-				O.reagents.trans_to(src,25, transfered_by = user)
-				to_chat(user, "<span class='notice'>You add the contents of [O] to [src].</span>")
-			else
-				to_chat(user, "<span class='warning'>[O] is empty!</span>")
-		else
-			to_chat(user, "<span class='warning'>[src] can't hold anymore reagents!</span>")
-
 	if(O.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!screw)
-			screw = 1
+			screw = TRUE
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
-			if(super)
+			ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			if(obj_flags & EMAGGED)
+				add_overlay("vapeopen_high")
+			else if(super)
 				add_overlay("vapeopen_med")
 			else
 				add_overlay("vapeopen_low")
 		else
-			screw = 0
+			screw = FALSE
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
+			DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
 			cut_overlays()
 
 	if(O.tool_behaviour == TOOL_MULTITOOL)
@@ -777,6 +792,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 		if(screw && (obj_flags & EMAGGED))
 			to_chat(user, "<span class='notice'>[src] can't be modified!</span>")
+		else
+			..()
 
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
@@ -799,13 +816,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(reagents.total_volume > 0)
 		to_chat(user, "<span class='notice'>You empty [src] of all reagents.</span>")
 		reagents.clear_reagents()
-	return
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	if(slot == SLOT_WEAR_MASK)
 		if(!screw)
 			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
-			reagents.set_reacting(TRUE)
+			DISABLE_BITFIELD(reagents.flags, NO_REACT)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
@@ -813,7 +829,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	var/mob/living/carbon/C = user
 	if(C.get_item_by_slot(SLOT_WEAR_MASK) == src)
-		reagents.set_reacting(FALSE)
+		ENABLE_BITFIELD(reagents.flags, NO_REACT)
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error

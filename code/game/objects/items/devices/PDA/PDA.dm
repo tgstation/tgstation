@@ -522,7 +522,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					U << browse(null, "window=pda")
 					return
 			if("Message")
-				create_message(U, locate(href_list["target"]))
+				create_message(U, locate(href_list["target"]) in GLOB.PDAs)
 
 			if("MessageAll")
 				send_to_all(U)

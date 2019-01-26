@@ -5,7 +5,6 @@ Industrial extracts:
 /obj/item/slimecross/industrial
 	name = "industrial extract"
 	desc = "A gel-like, sturdy extract, fond of plasma and industry."
-	container_type = INJECTABLE | DRAWABLE
 	effect = "industrial"
 	icon_state = "industrial_still"
 	var/plasmarequired = 2 //Units of plasma required to be consumed to produce item.
@@ -22,7 +21,7 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, INJECTABLE | DRAWABLE)
 	START_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/industrial/Destroy()

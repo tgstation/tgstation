@@ -29,5 +29,12 @@ map deltastation
 	minplayers 50
 endmap
 
+map donutstation
+	minplayers 50
+endmap
+
 map runtimestation
+endmap
+
+map multiz_debug
 endmap

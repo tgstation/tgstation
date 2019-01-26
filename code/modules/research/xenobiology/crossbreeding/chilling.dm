@@ -7,11 +7,11 @@ Chilling extracts:
 	name = "chilling extract"
 	desc = "It's cold to the touch, as if frozen solid."
 	effect = "chilling"
-	container_type = INJECTABLE | DRAWABLE
 	icon_state = "chilling"
+
 /obj/item/slimecross/chilling/Initialize()
 	. = ..()
-	create_reagents(10)
+	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/chilling/attack_self(mob/user)
 	if(!reagents.has_reagent("plasma",10))
@@ -188,6 +188,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
 	user.visible_message("<span class='warning'>[src] shatters, freezing time itself!</span>")
 	new /obj/effect/timestop(get_turf(user), 2, 300, allies)
+	..()
 
 /obj/item/slimecross/chilling/cerulean
 	colour = "cerulean"

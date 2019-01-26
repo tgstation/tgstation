@@ -301,8 +301,8 @@
 	anchored = TRUE
 	state = AI_READY_CORE
 
-/obj/structure/AIcore/deactivated/New()
-	..()
+/obj/structure/AIcore/deactivated/Initialize()
+	. = ..()
 	circuit = new(src)
 
 

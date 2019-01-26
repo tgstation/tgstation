@@ -688,3 +688,9 @@
 	id = "branca_menta"
 	results = list("branca_menta" = 3)
 	required_reagents = list("fernet" = 1, "creme_de_menthe" = 1, "ice" = 1)
+
+/datum/chemical_reaction/blank_paper
+	name = "Blank Paper"
+	id = "blank_paper"
+	results = list("blank_paper" = 3)
+	required_reagents = list("silencer" = 1, "nothing" = 1, "nuka_cola" = 1)

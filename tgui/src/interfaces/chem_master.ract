@@ -50,14 +50,16 @@
 
 	{{#if !data.condi}}
 		<ui-display title='Pills, Bottles and Patches' >
+			{{#each data.pillStyles}}
+				<ui-button state='{{id==data.chosenPillStyle ? "selected" : null}}' action='pillStyle' params='{"id": "{{id}}"}'><img src='pill{{id}}'></ui-button>
+			{{/each}}
+			<br>
 			{{#if data.isPillBottleLoaded}}
 				<ui-button action='ejectp' state='{{data.isPillBottleLoaded ? null : "disabled"}}'>{{data.isPillBottleLoaded ? "Eject" : "No Pill bottle loaded"}}</ui-button>
 				<span class='content'>{{data.pillBotContent}}/{{data.pillBotMaxContent}}</span>
 			{{else}}
 				<span class='average'>No Pillbottle</span>
 			{{/if}}
-			
-			<br/>
 			<br/>
 			<ui-button action='createPill' params='{"many": 0}' state='{{data.bufferContents ? null : "disabled"}}' >Create Pill (max 50µ)</ui-button>
 			<br/>

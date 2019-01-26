@@ -11,6 +11,7 @@
 	item_flags = ABSTRACT
 	pass_flags = PASSTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	movement_type = FLYING
 	hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
 
@@ -82,7 +83,8 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb
 	var/projectile_type = /obj/item/projectile
 	var/range = 50 //This will de-increment every step. When 0, it will deletze the projectile.
-	var/decayedRange
+	var/decayedRange			//stores original range
+	var/reflect_range_decrease = 5			//amount of original range that falls off when reflecting, so it doesn't go forever
 	var/reflectable = NONE // Can it be reflected or not?
 		//Effects
 	var/stun = 0
@@ -97,10 +99,11 @@
 	var/drowsy = 0
 	var/stamina = 0
 	var/jitter = 0
-	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
+
+	var/temporary_unstoppable_movement = FALSE
 
 /obj/item/projectile/Initialize()
 	. = ..()
@@ -127,7 +130,7 @@
 		return BODY_ZONE_CHEST
 
 /obj/item/projectile/proc/prehit(atom/target)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = FALSE)
 	var/turf/target_loca = get_turf(target)
@@ -148,12 +151,12 @@
 
 		W.add_dent(WALL_DENT_SHOT, hitx, hity)
 
-		return 0
+		return BULLET_ACT_HIT
 
 	if(!isliving(target))
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
-		return 0
+		return BULLET_ACT_HIT
 
 	var/mob/living/L = target
 
@@ -216,23 +219,26 @@
 
 /obj/item/projectile/Bump(atom/A)
 	var/datum/point/pcache = trajectory.copy_to()
+	var/turf/T = get_turf(A)
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
 		if(A.handle_ricochet(src))
 			on_ricochet(A)
 			ignore_source_check = TRUE
-			range = initial(range)
+			decayedRange = max(0, decayedRange - reflect_range_decrease)
+			range = decayedRange
 			if(hitscan)
 				store_hitscan_collision(pcache)
 			return TRUE
 	if(firer && !ignore_source_check)
-		if(A == firer || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
+		var/mob/checking = firer
+		if((A == firer) || (((A in firer.buckled_mobs) || (istype(checking) && (A == checking.buckled))) && (A != original)) || (A == firer.loc && ismecha(A))) //cannot shoot yourself or your mech
 			trajectory_ignore_forcemove = TRUE
-			forceMove(get_turf(A))
+			forceMove(T)
 			trajectory_ignore_forcemove = FALSE
 			return FALSE
 
-	var/distance = get_dist(get_turf(A), starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
+	var/distance = get_dist(T, starting) // Get the distance between the turf shot from and the mob we hit and use that for the calculations.
 	def_zone = ran_zone(def_zone, max(100-(7*distance), 5)) //Lower accurancy/longer range tradeoff. 7 is a balanced number to use.
 
 	if(isturf(A) && hitsound_wall)
@@ -241,50 +247,66 @@
 			volume = 5
 		playsound(loc, hitsound_wall, volume, 1, -1)
 
-	var/turf/target_turf = get_turf(A)
+	return process_hit(T, select_target(T, A))
 
-	if(!prehit(A))
-		if(forcedodge)
-			trajectory_ignore_forcemove = TRUE
-			forceMove(target_turf)
-			trajectory_ignore_forcemove = FALSE
-		return FALSE
+#define QDEL_SELF 1			//Delete if we're not UNSTOPPABLE flagged non-temporarily
+#define DO_NOT_QDEL 2		//Pass through.
+#define FORCE_QDEL 3		//Force deletion.
 
-	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
-	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
-		trajectory_ignore_forcemove = TRUE
-		forceMove(target_turf)
-		trajectory_ignore_forcemove = FALSE
-		if(A)
-			permutated.Add(A)
-		return FALSE
-	else
-		var/atom/alt = select_target(A)
-		if(alt)
-			if(!prehit(alt))
-				return FALSE
-			alt.bullet_act(src, def_zone)
-	qdel(src)
-	return TRUE
+/obj/item/projectile/proc/process_hit(turf/T, atom/target, qdel_self, hit_something = FALSE)		//probably needs to be reworked entirely when pixel movement is done.
+	if(QDELETED(src) || !T || !target)		//We're done, nothing's left.
+		if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !CHECK_BITFIELD(movement_type, UNSTOPPABLE)))
+			qdel(src)
+		return hit_something
+	permutated |= target		//Make sure we're never hitting it again. If we ever run into weirdness with piercing projectiles needing to hit something multiple times.. well.. that's a to-do.
+	if(!prehit(target))
+		return process_hit(T, select_target(T), qdel_self, hit_something)		//Hit whatever else we can since that didn't work.
+	var/result = target.bullet_act(src, def_zone)
+	if(result == BULLET_ACT_FORCE_PIERCE)
+		if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
+			temporary_unstoppable_movement = TRUE
+			ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
+		return process_hit(T, select_target(T), qdel_self, TRUE)		//Hit whatever else we can since we're piercing through but we're still on the same tile.
+	else if(result == BULLET_ACT_TURF)									//We hit the turf but instead we're going to also hit something else on it.
+		return process_hit(T, select_target(T), QDEL_SELF, TRUE)
+	else		//Whether it hit or blocked, we're done!
+		qdel_self = QDEL_SELF
+		hit_something = TRUE
+	if((qdel_self == FORCE_QDEL) || ((qdel_self == QDEL_SELF) && !temporary_unstoppable_movement && !CHECK_BITFIELD(movement_type, UNSTOPPABLE)))
+		qdel(src)
+	return hit_something
 
-/obj/item/projectile/proc/select_target(atom/A)				//Selects another target from a wall if we hit a wall.
-	if(!A || !A.density || (A.flags_1 & ON_BORDER_1) || ismob(A) || A == original)	//if we hit a dense non-border obj or dense turf then we also hit one of the mobs or machines/structures on that tile.
-		return
-	var/turf/T = get_turf(A)
-	if(original in T)
+#undef QDEL_SELF
+#undef DO_NOT_QDEL
+#undef FORCE_QDEL
+
+/obj/item/projectile/proc/select_target(turf/T, atom/target)			//Select a target from a turf.
+	if((original in T) && can_hit_target(original, permutated, TRUE, TRUE))
 		return original
-	var/list/mob/living/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob) - A
+	if(target && can_hit_target(target, permutated, target == original, TRUE))
+		return target
+	var/list/mob/living/possible_mobs = typecache_filter_list(T, GLOB.typecache_mob)
 	var/list/mob/mobs = list()
 	for(var/mob/living/M in possible_mobs)
-		if(!(M.mobility_flags & MOBILITY_STAND))
+		if(!can_hit_target(M, permutated, M == original, TRUE))
 			continue
 		mobs += M
 	var/mob/M = safepick(mobs)
 	if(M)
 		return M.lowest_buckled_mob()
-	var/obj/O = safepick(typecache_filter_list(T, GLOB.typecache_machine_or_structure) - A)
+	var/list/obj/possible_objs = typecache_filter_list(T, GLOB.typecache_machine_or_structure)
+	var/list/obj/objs = list()
+	for(var/obj/O in possible_objs)
+		if(!can_hit_target(O, permutated, O == original, TRUE))
+			continue
+		objs += O
+	var/obj/O = safepick(objs)
 	if(O)
 		return O
+	//Nothing else is here that we can hit, hit the turf if we haven't.
+	if(!(T in permutated) && can_hit_target(T, permutated, T == original, TRUE))
+		return T
+	//Returns null if nothing at all was found.
 
 /obj/item/projectile/proc/check_ricochet()
 	if(prob(ricochet_chance))
@@ -311,7 +333,7 @@
 	var/turf/ending = return_predicted_turf_after_moves(moves, forced_angle)
 	return getline(current, ending)
 
-/obj/item/projectile/Process_Spacemove(var/movement_dir = 0)
+/obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return TRUE	//Bullets don't drift in space
 
 /obj/item/projectile/process()
@@ -475,8 +497,6 @@
 		else if(T != loc)
 			step_towards(src, T)
 			hitscan_last = loc
-		if(can_hit_target(original, permutated))
-			Bump(original)
 	if(!hitscanning && !forcemoved)
 		pixel_x = trajectory.return_px() - trajectory.mpx * trajectory_multiplier * SSprojectiles.global_iterations_per_move
 		pixel_y = trajectory.return_py() - trajectory.mpy * trajectory_multiplier * SSprojectiles.global_iterations_per_move
@@ -505,8 +525,25 @@
 		homing_offset_y = -homing_offset_y
 
 //Returns true if the target atom is on our current turf and above the right layer
-/obj/item/projectile/proc/can_hit_target(atom/target, var/list/passthrough)
-	return (target && ((target.layer >= PROJECTILE_HIT_THRESHHOLD_LAYER) || ismob(target)) && (loc == get_turf(target)) && (!(target in passthrough)))
+//If direct target is true it's the originally clicked target.
+/obj/item/projectile/proc/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
+	if(QDELETED(target))
+		return FALSE
+	if(!ignore_loc && (loc != target.loc))
+		return FALSE
+	if(target in passthrough)
+		return FALSE
+	if(target.density)		//This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
+		return TRUE
+	if(!isliving(target))
+		if(target.layer < PROJECTILE_HIT_THRESHHOLD_LAYER)
+			return FALSE
+	else
+		var/mob/living/L = target
+		if(!direct_target)
+			if(!CHECK_BITFIELD(L.mobility_flags, MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE) || !(L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
+				return FALSE
+	return TRUE
 
 //Spread is FORCED!
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, atom/source, params, spread = 0)
@@ -571,12 +608,17 @@
 	. = ..()
 	if(isliving(AM) && !(pass_flags & PASSMOB))
 		var/mob/living/L = AM
-		if(AM == original)		//specific aiming for
+		if(can_hit_target(L, permutated, (AM == original)))
 			Bump(AM)
-		if(AM.density)			//blocks projectiles
-			Bump(AM)
-		if((L.mobility_flags & MOBILITY_USE|MOBILITY_STAND|MOBILITY_MOVE) & (MOBILITY_USE|MOBILITY_MOVE))	//If they're either able to move or use items, while crawling, they're not stunned enough to avoid projectiles.
-			Bump(AM)
+
+/obj/item/projectile/Move(atom/newloc, dir = NONE)
+	. = ..()
+	if(.)
+		if(temporary_unstoppable_movement)
+			temporary_unstoppable_movement = FALSE
+			DISABLE_BITFIELD(movement_type, UNSTOPPABLE)
+		if(fired && can_hit_target(original, permutated, TRUE))
+			Bump(original)
 
 /obj/item/projectile/Destroy()
 	if(hitscan)

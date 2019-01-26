@@ -28,7 +28,6 @@ God bless America.
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
-	container_type = OPENCONTAINER
 	layer = BELOW_OBJ_LAYER
 	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
@@ -53,7 +52,7 @@ God bless America.
 
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
-	create_reagents(50)
+	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent("cooking_oil", 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
@@ -98,7 +97,7 @@ God bless America.
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || (I.item_flags & (ABSTRACT | NODROP | DROPDEL)))
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || I.has_trait(TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")

@@ -8,12 +8,11 @@ Charged extracts:
 	name = "charged extract"
 	desc = "It sparks with electric power."
 	effect = "charged"
-	container_type = INJECTABLE | DRAWABLE
 	icon_state = "charged"
 
 /obj/item/slimecross/charged/Initialize()
 	. = ..()
-	create_reagents(10)
+	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
 	if(!reagents.has_reagent("plasma",10))

@@ -30,9 +30,12 @@
 	var/combat_armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 50, "rad" = 50, "fire" = 90, "acid" = 90)
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/toggle_nodrop()
-	item_flags ^= NODROP
+	if(has_trait(TRAIT_NODROP, ABDUCTOR_VEST_TRAIT))
+		remove_trait(TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
+	else
+		add_trait(TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
 	if(ismob(loc))
-		to_chat(loc, "<span class='notice'>Your vest is now [item_flags & NODROP ? "locked" : "unlocked"].</span>")
+		to_chat(loc, "<span class='notice'>Your vest is now [has_trait(TRAIT_NODROP, ABDUCTOR_VEST_TRAIT) ? "locked" : "unlocked"].</span>")
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/flip_mode()
 	switch(mode)
@@ -134,22 +137,24 @@
 	lefthand_file = 'icons/mob/inhands/antag/abductor_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/abductor_righthand.dmi'
 
-/obj/item/abductor/proc/AbductorCheck(user)
-	if(isabductor(user))
+/obj/item/abductor/proc/AbductorCheck(mob/user)
+	if(user.has_trait(TRAIT_ABDUCTOR_TRAINING))
 		return TRUE
 	to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
 	return FALSE
 
-/obj/item/abductor/proc/ScientistCheck(user)
-	if(!AbductorCheck(user))
-		return FALSE
+/obj/item/abductor/proc/ScientistCheck(mob/user)
+	var/training = user.has_trait(TRAIT_ABDUCTOR_TRAINING)
+	var/sci_training = user.has_trait(TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
 
-	var/mob/living/carbon/human/H = user
-	var/datum/species/abductor/S = H.dna.species
-	if(S.scientist)
-		return TRUE
-	to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
-	return FALSE
+	if(training && !sci_training)
+		to_chat(user, "<span class='warning'>You're not trained to use this!</span>")
+		. = FALSE
+	else if(!training && !sci_training)
+		to_chat(user, "<span class='warning'>You can't figure how this works!</span>")
+		. = FALSE
+	else
+		. = TRUE
 
 /obj/item/abductor/gizmo
 	name = "science tool"
@@ -675,7 +680,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Abduct with style - spiky style. Prevents digital tracking."
 	icon_state = "alienhelmet"
 	item_state = "alienhelmet"
-	blockTracking = 1
+	blockTracking = TRUE
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 // Operating Table / Beds / Lockers

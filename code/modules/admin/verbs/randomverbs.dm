@@ -31,7 +31,7 @@
 	message_admins("[key_name_admin(src)] has started answering [ADMIN_LOOKUPFLW(M)]'s prayer.")
 	var/msg = input("Message:", text("Subtle PM to [M.key]")) as text|null
 
-	if (!msg)
+	if(!msg)
 		message_admins("[key_name_admin(src)] decided not to answer [ADMIN_LOOKUPFLW(M)]'s prayer")
 		return
 	if(usr)

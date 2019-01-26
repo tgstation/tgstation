@@ -276,6 +276,10 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	icon_state = "sheet-durathread"
 	merge_type = /obj/item/stack/sheet/cloth/durathread
 
+/obj/item/stack/sheet/cloth/durathread/Initialize(mapload, new_amount, merge = TRUE)
+	. = ..()
+	recipes = null //ree override
+
 /obj/item/stack/sheet/cloth/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.cloth_recipes
 	return ..()
@@ -604,3 +608,15 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	amount = 20
 /obj/item/stack/sheet/paperframes/fifty
 	amount = 50
+
+/obj/item/stack/sheet/capitalisium
+	name = "capitalisium sheet"
+	desc = "A source of raw capitalism, capable of bringing forth the prophesized Capitalist Golem."
+	icon_state = "sheet-capitalisium"
+	merge_type = /obj/item/stack/sheet/capitalisium
+
+/obj/item/stack/sheet/stalinium
+	name = "stalinium sheet"
+	desc = "A source of raw socialism, capable of bringing forth the prophesized Soviet Golem."
+	icon_state = "sheet-stalinium"
+	merge_type = /obj/item/stack/sheet/stalinium

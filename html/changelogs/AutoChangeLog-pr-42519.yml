@@ -1,0 +1,4 @@
+author: "Gousaid67"
+delete-after: True
+changes: 
+  - bugfix: "Spraycans are now able to spray walls again!"

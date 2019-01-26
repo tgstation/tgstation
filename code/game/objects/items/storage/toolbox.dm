@@ -86,6 +86,39 @@
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
+	
+/obj/item/storage/toolbox/mechanical/old/clean
+	name = "toolbox"
+	desc = "A old, blue toolbox, it looks robust."
+	icon_state = "oldtoolboxclean"
+	item_state = "toolbox_blue"
+	has_latches = FALSE
+	force = 19
+	throwforce = 22
+
+/obj/item/storage/toolbox/mechanical/old/clean/proc/calc_damage()
+	var/power = 0
+	for (var/obj/item/stack/telecrystal/TC in GetAllContents())
+		power += TC.amount
+	force = 19 + power
+	throwforce = 22 + power
+
+/obj/item/storage/toolbox/mechanical/old/clean/attack(mob/target, mob/living/user)
+	calc_damage()
+	..()
+
+/obj/item/storage/toolbox/mechanical/old/clean/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	calc_damage()
+	..()
+
+/obj/item/storage/toolbox/mechanical/old/clean/PopulateContents()
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/weldingtool(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
+	new /obj/item/multitool(src)
+	new /obj/item/clothing/gloves/color/yellow(src)
 
 /obj/item/storage/toolbox/electrical
 	name = "electrical toolbox"

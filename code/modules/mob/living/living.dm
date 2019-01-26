@@ -40,6 +40,15 @@
 	QDEL_LIST(diseases)
 	return ..()
 
+/mob/living/onZImpact(turf/T, levels)
+	ZImpactDamage(T, levels)
+	return ..()
+
+/mob/living/proc/ZImpactDamage(turf/T, levels)
+	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
+	adjustBruteLoss((levels * 5) ** 1.5)
+	Knockdown(levels * 50)
+
 /mob/living/proc/OpenCraftingMenu()
 	return
 
@@ -242,14 +251,21 @@
 	pulling = AM
 	AM.pulledby = src
 	if(!supress_message)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna.species.grab_sound)
+				sound_to_play = H.dna.species.grab_sound 
+			if(H.has_trait(TRAIT_STRONG_GRABBER))
+				sound_to_play = null
+		playsound(src.loc, sound_to_play, 50, 1, -1)
 	update_pull_hud_icon()
 
 	if(ismob(AM))
 		var/mob/M = AM
 
 		log_combat(src, M, "grabbed", addition="passive grab")
-		if(!supress_message)
+		if(!supress_message && !(iscarbon(AM) && has_trait(TRAIT_STRONG_GRABBER)))
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
@@ -268,6 +284,38 @@
 				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 					ContactContractDisease(D)
 
+			if(iscarbon(L))
+				var/mob/living/carbon/C = L
+				if(src.has_trait(TRAIT_STRONG_GRABBER))
+					C.grippedby(src)
+					
+		set_pull_offsets(M, state)
+
+/mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
+	var/offset = 0
+	switch(grab_state)
+		if(GRAB_PASSIVE)
+			offset = GRAB_PIXEL_SHIFT_PASSIVE
+		if(GRAB_AGGRESSIVE)
+			offset = GRAB_PIXEL_SHIFT_AGGRESSIVE
+		if(GRAB_NECK)
+			offset = GRAB_PIXEL_SHIFT_NECK
+		if(GRAB_KILL)
+			offset = GRAB_PIXEL_SHIFT_NECK
+	M.setDir(get_dir(M, src))
+	switch(M.dir)
+		if(NORTH)
+			animate(M, pixel_x = 0, pixel_y = offset, 3)
+		if(SOUTH)
+			animate(M, pixel_x = 0, pixel_y = -offset, 3)
+		if(EAST)
+			animate(M, pixel_x = offset, pixel_y = 0, 3)
+		if(WEST)
+			animate(M, pixel_x = -offset, pixel_y = 0, 3)
+
+/mob/living/proc/reset_pull_offsets(mob/living/M)
+	animate(M, pixel_x = 0, pixel_y = 0, 1)
+
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
 /mob/living/verb/pulled(atom/movable/AM as mob|obj in oview(1))
@@ -280,6 +328,8 @@
 		stop_pulling()
 
 /mob/living/stop_pulling()
+	if(ismob(pulling))
+		reset_pull_offsets(pulling)
 	..()
 	update_pull_hud_icon()
 
@@ -329,7 +379,6 @@
 /mob/living/proc/calculate_affecting_pressure(pressure)
 	return pressure
 
-
 /mob/living/proc/adjustBodyTemp(actual, desired, incrementboost)
 	var/temperature = actual
 	var/difference = abs(actual-desired)	//get difference
@@ -347,8 +396,6 @@
 		if(actual < desired)
 			temperature = desired
 	return temperature
-
-
 
 /mob/living/proc/getMaxHealth()
 	return maxHealth
@@ -457,6 +504,17 @@
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
 
+/mob/living/proc/remove_CC(should_update_mobility = TRUE)
+	SetStun(0, FALSE)
+	SetKnockdown(0, FALSE)
+	SetImmobilized(0, FALSE)
+	SetParalyzed(0, FALSE)
+	SetSleeping(0, FALSE)
+	setStaminaLoss(0)
+	SetUnconscious(0, FALSE)
+	if(should_update_mobility)
+		update_mobility()
+	
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
 	restore_blood()
@@ -464,14 +522,8 @@
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
 	setBrainLoss(0)
-	setStaminaLoss(0, 0)
-	SetUnconscious(0, FALSE)
+	remove_CC(FALSE)
 	set_disgust(0)
-	SetStun(0, FALSE)
-	SetKnockdown(0, FALSE)
-	SetImmobilized(0, FALSE)
-	SetParalyzed(0, FALSE)
-	SetSleeping(0, FALSE)
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
@@ -486,10 +538,10 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
-	update_mobility()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
+	update_mobility()
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -511,8 +563,12 @@
 	var/turf/T = loc
 	. = ..()
 
-	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)//separated from our puller and not in the middle of a diagonal move.
+	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1 && (pulledby != moving_from_pull))//separated from our puller and not in the middle of a diagonal move.
 		pulledby.stop_pulling()
+	else
+		if(isliving(pulledby))
+			var/mob/living/L = pulledby
+			L.set_pull_offsets(src, pulledby.grab_state)
 
 	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
@@ -689,7 +745,7 @@
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
-	if(what.item_flags & NODROP)
+	if(what.has_trait(TRAIT_NODROP))
 		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
@@ -715,7 +771,7 @@
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_held_item()
-	if(what && (what.item_flags & NODROP))
+	if(what && (what.has_trait(TRAIT_NODROP)))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
 	if(what)
@@ -902,7 +958,7 @@
 
 	apply_effect((amount*RAD_MOB_COEFFICIENT)/max(1, (radiation**2)*RAD_OVERDOSE_REDUCTION), EFFECT_IRRADIATE, blocked)
 
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE)
+/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
 	. = ..()
 	if(.)
 		return

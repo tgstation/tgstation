@@ -92,14 +92,15 @@
 	icon_state = "syndballoon"
 	anchored = TRUE
 
-/obj/effect/station_crash/New()
+/obj/effect/station_crash/Initialize()
+	..()
 	for(var/S in SSshuttle.stationary)
 		var/obj/docking_port/stationary/SM = S
 		if(SM.id == "emergency_home")
 			var/new_dir = turn(SM.dir, 180)
 			SM.forceMove(get_ranged_target_turf(SM, new_dir, rand(3,15)))
 			break
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 
 //Arena
