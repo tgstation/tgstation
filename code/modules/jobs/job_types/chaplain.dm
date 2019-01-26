@@ -1,7 +1,3 @@
-//Due to how large this one is it gets its own file
-/*
-Chaplain
-*/
 /datum/job/chaplain
 	title = "Chaplain"
 	flag = CHAPLAIN
@@ -19,6 +15,8 @@ Chaplain
 	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_CIV
+
+	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 
 
 /datum/job/chaplain/after_spawn(mob/living/H, mob/M)
