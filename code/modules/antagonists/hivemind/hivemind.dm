@@ -5,7 +5,7 @@
 	job_rank = ROLE_HIVE
 	antag_moodlet = /datum/mood_event/focused
 	var/special_role = ROLE_HIVE
-	var/list/hivemembers = list()
+	var/list/hivemembers = list() //This stores the brains of assimilated vessels
 	var/hive_size = 0
 	var/static/datum/objective/hivemind/assimilate_common/common_assimilation_obj //Make it static since we want a common target for all the antags
 
@@ -30,9 +30,16 @@
 /datum/antagonist/hivemind/proc/calc_size()
 	listclearnulls(hivemembers)
 	var/old_size = hive_size
-	hive_size = hivemembers.len
+	hive_size = get_carbon_members().len
 	if(hive_size != old_size)
 		check_powers()
+
+/datum/antagonist/hivemind/proc/get_carbon_members
+	var/list/carbon_members
+	for(var/organ/internal/brain/X in hivemembers)
+		if(!X.owner)
+			continue
+		carbon_members += X.owner
 
 /datum/antagonist/hivemind/proc/check_powers()
 	for(var/power in upgrade_tiers)
@@ -43,20 +50,8 @@
 			if(hive_size > 0)
 				to_chat(owner, "<span class='assimilator'>We have unlocked [the_spell.name].</span><span class='bold'> [the_spell.desc]</span>")
 
-/datum/antagonist/hivemind/proc/get_real_name() //Gets the real name of the host, even if they're temporarily in another one
-	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in owner.spell_list
-	var/datum/mind/M = owner
-	if(M)
-		var/mob/living/L = owner.current
-		if(L)
-			if(the_spell && the_spell.active)
-				if(the_spell.original_body)
-					return the_spell.original_body.real_name
-			return L.real_name
-	return ""
-
-/datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/human/H)
-	var/warning = "<span class='userdanger'>We detect a surge of psionic energy from [H.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>"
+/datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/C)
+	var/warning = "<span class='userdanger'>We detect a surge of psionic energy from [C.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>"
 	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
 	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
 		if(H.mind == enemy_hive.owner)
@@ -64,12 +59,16 @@
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, H, user_warning), rand(500,1300)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, owner, warning), eject_time) //As well as the host who just added them as soon as they're ejected
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_hivemember, H), eject_time)
-	hivemembers |= H
-	calc_size()
+	var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		hivemembers |= B
+		calc_size()
 
-/datum/antagonist/hivemind/proc/remove_from_hive(var/mob/living/carbon/human/H)
-	hivemembers -= H
-	calc_size()
+/datum/antagonist/hivemind/proc/remove_from_hive(var/mob/living/carbon/C)
+	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
+	if(B)
+		hivemembers -= B
+		calc_size()
 
 /datum/antagonist/hivemind/proc/destroy_hive()
 	hivemembers = list()

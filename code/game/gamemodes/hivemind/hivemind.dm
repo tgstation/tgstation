@@ -47,6 +47,7 @@
 /proc/remove_hivemember(mob/living/M) //Removes somebody from all hives as opposed to the antag proc remove_from_hive()
 	if(!M)
 		return
+	if(issilicon(M))
 	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
 		if(H.hivemembers.Find(M))
 			H.hivemembers -= M
@@ -60,7 +61,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	var/num_hosts = max( 1 , rand(0,1) + min(5, round(num_players() / 12) ) ) //1 host for every 12 players up to 60, with a 50% chance of an extra
+	var/num_hosts = max( 1 , rand(0,1) + min(8, round(num_players() / 8) ) ) //1 host for every 8 players up to 64, with a 50% chance of an extra
 
 	for(var/j = 0, j < num_hosts, j++)
 		if (!antag_candidates.len)
@@ -80,10 +81,6 @@
 
 
 /datum/game_mode/hivemind/post_setup()
-	if(hosts.len >= 4 && prob(35)) //Create the versus objective here since we want a common target for all the antags
-		var/datum/antagonist/hivemind/hive
-		hive.common_assimilation_obj = new /datum/objective/hivemind/assimilate_common
-		hive.common_assimilation_obj.find_target_by_role(role = ROLE_HIVE, role_type = TRUE, invert = TRUE)
 	for(var/datum/mind/i in hosts)
 		i.add_antag_datum(/datum/antagonist/hivemind)
 	return ..()
