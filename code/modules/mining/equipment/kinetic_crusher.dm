@@ -46,22 +46,20 @@
 		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
 
 /obj/item/twohanded/required/kinetic_crusher/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/crusher_trophy))
+	if(I.tool_behaviour == TOOL_CROWBAR)
+		if(LAZYLEN(trophies))
+			to_chat(user, "<span class='notice'>You remove [src]'s trophies.</span>")
+			I.play_tool_sound(src)
+			for(var/t in trophies)
+				var/obj/item/crusher_trophy/T = t
+				T.remove_from(src, user)
+		else
+			to_chat(user, "<span class='warning'>There are no trophies on [src].</span>")
+	else if(istype(I, /obj/item/crusher_trophy))
 		var/obj/item/crusher_trophy/T = I
 		T.add_to(src, user)
 	else
 		return ..()
-
-/obj/item/twohanded/required/kinetic_crusher/proc/crowbar_use(mob/living/user, obj/item/I)
-	if(LAZYLEN(trophies))
-		to_chat(user, "<span class='notice'>You remove [src]'s trophies.</span>")
-		I.play_tool_sound(src)
-		for(var/t in trophies)
-			var/obj/item/crusher_trophy/T = t
-			T.remove_from(src, user)
-	else
-		to_chat(user, "<span class='warning'>There are no trophies on [src].</span>")
-	return TRUE
 
 /obj/item/twohanded/required/kinetic_crusher/attack(mob/living/target, mob/living/carbon/user)
 	var/datum/status_effect/crusher_damage/C = target.has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
