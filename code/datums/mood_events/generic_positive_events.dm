@@ -67,6 +67,8 @@
 	mood_change = 18
 	timeout = 30
 	hidden = TRUE
+	special_screen_obj = "creep_inlove"
+	special_screen_replace = FALSE
 
 /datum/mood_event/creeping/add_effects(name)
 	description = "<span class='greentext'>I'm so close to [name] and I NEVER want this to end.</span>\n"
