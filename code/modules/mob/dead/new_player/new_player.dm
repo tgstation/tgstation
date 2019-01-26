@@ -365,6 +365,12 @@
 
 	SSticker.minds += character.mind
 
+	// For this round, you'll be pacifist anime girls.
+	for(var/d in SSround_modifiers.active_modifiers)
+		var/datum/round_modifier/D = d
+		D.on_player_spawn(character)
+
+
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
 		humanc = character	//Let's retypecast the var to be human,

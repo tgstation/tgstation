@@ -7,6 +7,9 @@
 /datum/round_modifier/trait/law_immutability/get_mob_list()
 	return GLOB.silicon_mobs
 
+/datum/round_modifier/trait/law_immutability/is_eligible()
+	return TRUE
+
 /datum/round_modifier/trait/law_immutability/announce_enabling()
 	priority_announce("All silicon law modification has been disabled by Central Command.")
 

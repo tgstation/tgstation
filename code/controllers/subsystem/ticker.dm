@@ -259,6 +259,7 @@ SUBSYSTEM_DEF(ticker)
 	create_characters() //Create player characters
 	collect_minds()
 	equip_characters()
+	apply_round_modifiers()
 
 	GLOB.data_core.manifest()
 
@@ -362,6 +363,16 @@ SUBSYSTEM_DEF(ticker)
 			if(N.new_character)
 				to_chat(N, "Captainship not forced on anyone.")
 			CHECK_TICK
+
+/datum/controller/subsystem/ticker/proc/apply_round_modifiers()
+	for(var/mob/dead/new_player/N in GLOB.player_list)
+		var/mob/living/L = N.new_character
+		if(!istype(L))
+			continue
+
+		for(var/d in SSround_modifiers.active_modifiers)
+			var/datum/round_modifier/D = d
+			D.on_player_spawn(L)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()

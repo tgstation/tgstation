@@ -1,5 +1,6 @@
 /datum/round_modifier/anime
 	name = "Anime Station"
+	desc = "All players will have anime-names, anime cat-organs and anime clothes."
 	permament = TRUE // No going back after this.
 
 /datum/round_modifier/anime/proc/make_anime(mob/living/M)

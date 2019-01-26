@@ -1,0 +1,7 @@
+<ui-display>
+  {{#each data.modifiers}}
+    <ui-section label='{{name}}'>
+      <ui-button action='toggle' params='{"name":"{{name}}"}' style='{{active ? "selected" : null}}'>{{active ? "Active" : "Inactive"}}</ui-button>
+    </ui-section>
+  {{/each}}
+</ui-display>

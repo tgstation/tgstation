@@ -1,5 +1,6 @@
 /datum/round_modifier
 	var/name = null
+	var/desc = null
 	var/permament = FALSE
 
 /datum/round_modifier/proc/on_apply()
@@ -17,8 +18,8 @@
 /datum/round_modifier/proc/on_player_spawn(mob/living/L)
 	return
 
-/datum/round_modifier/proc/on_tick()
-	return
+/datum/round_modifier/process()
+	return PROCESS_KILL
 
 // Specialised subtypes
 /datum/round_modifier/trait
@@ -61,5 +62,5 @@
 	for(var/mob/M in get_mob_list())
 		remove(M)
 
-/datum/round_modifier/trait/on_tick()
+/datum/round_modifier/trait/process()
 	on_apply()

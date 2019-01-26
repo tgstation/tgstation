@@ -72,7 +72,8 @@ GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 	/client/proc/resetasaycolor,
 	/client/proc/toggleadminhelpsound,
 	/client/proc/respawn_character,
-	/datum/admins/proc/open_borgopanel
+	/datum/admins/proc/open_borgopanel,
+	/client/proc/round_modifiers_panel
 	)
 GLOBAL_PROTECT(admin_verbs_ban)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
@@ -711,3 +712,13 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+/client/proc/round_modifiers_panel()
+	set name = "Round Modifiers"
+	set category = "Admin"
+	set desc = "Allows you to view and modify ways of changing aspects about the round."
+
+	if(!holder)
+		return
+
+	SSround_modifiers.ui_interact(mob)
