@@ -936,35 +936,57 @@
 			"key" = /obj/item/bikehorn
 		),
 
+		//6
+		list(
+			"key" = /obj/item/stock_parts/scanning_module,
+			"action" = ITEM_MOVE_INSIDE
+		),
+
 		//8
+		list(
+			"key" = /obj/item/bikehorn
+		),
+
+		//9
+		list(
+			"key" = /obj/item/stock_parts/capacitor,
+			"action" = ITEM_MOVE_INSIDE
+		),
+
+		//10
+		list(
+			"key" = /obj/item/bikehorn
+		),
+
+		//11
 		list(
 			"key" = /obj/item/stock_parts/cell,
 			"action" = ITEM_MOVE_INSIDE
 		),
 
-		//9
+		//12
 		list(
 			"key" = /obj/item/bikehorn
 		),
 
-		//10
+		//13
 		list(
 			"key" = /obj/item/clothing/mask/gas/clown_hat,
 			"action" = ITEM_DELETE
 		),
 
-		//11
+		//14
 		list(
 			"key" = /obj/item/bikehorn
 		),
 
-		//12
+		//15
 		list(
 			"key" = /obj/item/clothing/shoes/clown_shoes,
 			"action" = ITEM_DELETE
 		),
 
-		//13
+		//16
 		list(
 			"key" = /obj/item/bikehorn
 		),
@@ -997,8 +1019,12 @@
 		if(8)
 			user.visible_message("[user] installs [I] into [parent].", "<span class='notice'>You install [I] into [parent].</span>")
 		if(10)
-			user.visible_message("[user] puts [I] on [parent].", "<span class='notice'>You put [I] on [parent].</span>")
+			user.visible_message("[user] installs [I] into [parent].", "<span class='notice'>You install [I] into [parent].</span>")
 		if(12)
+			user.visible_message("[user] installs [I] into [parent].", "<span class='notice'>You install [I] into [parent].</span>")
+		if(14)
+			user.visible_message("[user] puts [I] on [parent].", "<span class='notice'>You put [I] on [parent].</span>")
+		if(16)
 			user.visible_message("[user] puts [I] on [parent].", "<span class='notice'>You put [I] on [parent].</span>")
 	return TRUE
 
