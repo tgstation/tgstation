@@ -49,13 +49,14 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_TITLE 21
-#define INIT_ORDER_GARBAGE			20
-#define INIT_ORDER_DBCORE			19
-#define INIT_ORDER_BLACKBOX			18
-#define INIT_ORDER_SERVER_MAINT		17
-#define INIT_ORDER_INPUT			16
-#define INIT_ORDER_VIS				15
+#define INIT_ORDER_TITLE            22
+#define INIT_ORDER_GARBAGE			21
+#define INIT_ORDER_DBCORE			20
+#define INIT_ORDER_BLACKBOX			19
+#define INIT_ORDER_SERVER_MAINT		18
+#define INIT_ORDER_INPUT			17
+#define INIT_ORDER_VIS				16
+#define INIT_ORDER_ROUND_MODIFIERS  15
 #define INIT_ORDER_RESEARCH			14
 #define INIT_ORDER_EVENTS			13
 #define INIT_ORDER_JOBS				12
