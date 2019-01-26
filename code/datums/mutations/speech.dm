@@ -219,18 +219,3 @@
 	..()
 	owner.grant_language(/datum/language/common)
 	owner.remove_language(/datum/language/beachbum)
-
-/datum/mutation/human/yelling
-	name = "Yelling"
-	desc = "A mutation that forces the host to constantly yell their sentences out."
-	quality = MINOR_NEGATIVE
-	locked = TRUE
-	text_gain_indication = "<span class='notice'>You feel really angry.</span>"
-	text_lose_indication = "<span class='notice'>You feel calmer.</span>"
-
-/datum/mutation/human/yelling/say_mod(message)
-	if(message)
-		message = "[uppertext(replacetext(message, ".", "!"))]!!"
-	return (message)
-
-
