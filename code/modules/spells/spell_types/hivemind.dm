@@ -21,15 +21,15 @@
 	var/list/targets = list()
 
 	if(target_external)
-		for(var/mob/living/carbon/human/H in view_or_range(range, user, selection_type))
+		for(var/mob/living/carbon/H in view_or_range(range, user, selection_type))
 			if(user == H)
 				continue
 			if(!can_target(H))
 				continue
-			if(!hive.hivemembers.Find(H))
+			if(!hive.get_carbon_members().Find(H))
 				possible_targets += H
 	else
-		possible_targets = hive.hivemembers.Copy()
+		possible_targets = hive.get_carbon_members().Copy()
 		if(range)
 			possible_targets &= view_or_range(range, user, selection_type)
 
@@ -52,7 +52,7 @@
 	var/ignore_mindshield = FALSE
 
 /obj/effect/proc_holder/spell/target_hive/hive_add/cast(list/targets, mob/living/user = usr)
-	var/mob/living/carbon/human/target = targets[1]
+	var/mob/living/carbon/target = targets[1]
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	var/success = FALSE
 
@@ -95,13 +95,13 @@
 	range = 7
 
 /obj/effect/proc_holder/spell/target_hive/hive_remove/cast(list/targets, mob/living/user = usr)
-	var/mob/living/carbon/human/target = targets[1]
+	var/mob/living/carbon/target = targets[1]
 
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
 	if(!hive)
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
-	hive.hivemembers -= target
+	hive.remove_from_hive(target)
 	hive.calc_size()
 	to_chat(user, "<span class='notice'>We remove [target.name] from the hive</span>")
 
@@ -206,13 +206,15 @@
 	if(!hive || !hive.hivemembers)
 		return
 	var/iterations = 0
-
+	var/list/carbon_members = hive.get_carbon_members()
+	if(!carbon_members.len)
+		return
 	if(!user.getBruteLoss() && !user.getFireLoss() && !user.getCloneLoss() && !user.getBrainLoss())
 		to_chat(user, "<span class='notice'>We cannot heal ourselves any more with this power!</span>")
 		revert_cast()
 	to_chat(user, "<span class='notice'>We begin siphoning power from our many vessels!</span>")
 	while(iterations < 7)
-		var/mob/living/carbon/human/target = pick(hive.hivemembers)
+		var/mob/living/carbon/target = pick(hive.carbon_members)
 		if(!do_after(user,15,0,user))
 			to_chat(user, "<span class='warning'>Our concentration has been broken!</span>")
 			break
