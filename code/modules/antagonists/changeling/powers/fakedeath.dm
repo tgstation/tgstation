@@ -13,8 +13,14 @@
 /datum/action/changeling/fakedeath/sting_action(mob/living/user)
 	..()
 	if(revive_ready)
-		revive(user)
+		INVOKE_ASYNC(.proc/revive, user)
 		revive_ready = FALSE
+		name = "Reviving Stasis"
+		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
+		button_icon_state = "fake_death"
+		UpdateButtonIcon()
+		chemical_cost = 15
+		to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 	else
 		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 		if(user.stat != DEAD)
@@ -45,13 +51,6 @@
 		user.emote("scream")
 		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
-	revive_ready = FALSE
-	name = "Reviving Stasis"
-	desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
-	button_icon_state = "fake_death"
-	UpdateButtonIcon()
-	chemical_cost = 15
-	to_chat(user, "<span class='notice'>We have revived ourselves.</span>")
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
 	if(user && user.mind)
