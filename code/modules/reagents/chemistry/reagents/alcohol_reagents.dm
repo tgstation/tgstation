@@ -1337,7 +1337,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
-	var/list/currentt
 
 /datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
@@ -1353,7 +1352,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		M.add_trait(pickt(), "neurotoxin")
 		M.adjustStaminaLoss(10)
 	if(current_cycle > 30)
-		M.adjustBrainLoss(4*REM, 150)
+		M.adjustBrainLoss(4*REM)
 	if(current_cycle > 50 && prob(15))
 		if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
 			M.set_heartattack(TRUE)
