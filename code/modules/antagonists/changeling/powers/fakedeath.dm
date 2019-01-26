@@ -14,6 +14,7 @@
 	..()
 	if(revive_ready)
 		revive(user)
+		revive_ready = FALSE
 	else
 		to_chat(user, "<span class='notice'>We begin our stasis, preparing energy to arise once more.</span>")
 		if(user.stat != DEAD)
@@ -26,6 +27,9 @@
 	return TRUE
 
 /datum/action/changeling/fakedeath/proc/revive(mob/living/user)
+	if(!user || !istype(user))
+		message_admins("Warning! Ling revive user is invalid!")
+		log_game("Warning! Ling revive user is invalid!")
 	user.cure_fakedeath("changeling")
 	user.revive(full_heal = TRUE)
 	var/list/missing = user.get_missing_limbs()
