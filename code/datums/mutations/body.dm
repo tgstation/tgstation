@@ -328,16 +328,11 @@
 	var/stun_cooldown = 0
 
 /datum/mutation/human/extrastun/on_life()
-	to_chat(world, "extrastun life")
 	if(!stun_cooldown)
-		to_chat(world, "not on cooldown! stun_cooldown = [stun_cooldown]")
-		to_chat(world, "knockdown returns: [owner.AmountKnockdown()]. stun returns: [owner.AmountStun()]")
 		if(owner.AmountKnockdown() || owner.AmountStun())
-			to_chat(world, "we're stunned!")
 			owner.SetKnockdown(owner.AmountKnockdown()*2)
 			owner.SetStun(owner.AmountStun()*2)
 			owner.visible_message("<span class='danger'>[owner] tries to stand up, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
 			stun_cooldown = 300
 	else if(stun_cooldown > 0)
-		to_chat(world, "on cooldown! stun_cooldown = [stun_cooldown]")
 		stun_cooldown--

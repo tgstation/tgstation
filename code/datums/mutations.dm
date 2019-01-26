@@ -48,19 +48,13 @@
 		return TRUE
 	if(limb_req && !H.get_bodypart(limb_req))
 		return TRUE
-	to_chat(world, "time to check for conflicts...")
 	for(var/M in H.dna.mutations)//check for conflicting powers
 		var/datum/mutation/human/mewtayshun = M
-		to_chat(world, "mutation [mewtayshun] found in [H]")
 		if(LAZYLEN(mewtayshun.conflicts))
-			to_chat(world, "[mewtayshun] has conflicts")
 			for(var/cons in mewtayshun.conflicts)
-				to_chat(world, "its gonna conflict with something")
 				var/datum/mutation/human/conflicter = cons
-				if(conflicter == src.type)//TODO: Fix this check. Code gets here but this check NEVER passes
-					to_chat(world, "conflicted")
+				if(conflicter == src.type)
 					return TRUE
-	to_chat(world, "CONFLICT LOOP EXITED")
 	owner = H
 	dna = H.dna
 	dna.mutations += src
