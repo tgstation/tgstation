@@ -534,9 +534,7 @@
 
 /datum/reagent/medicine/perfluorodecalin/on_mob_life(mob/living/carbon/human/M)
 	M.adjustOxyLoss(-12*REM, 0)
-	M.adjustToxLoss(1.0*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
-	M.adjustFireLoss(-0.5*REM, 0)
+	M.adjustToxLoss(0.3*REM, 0)
 	..()
 	return TRUE
 
