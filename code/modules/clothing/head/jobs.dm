@@ -151,7 +151,6 @@
 	icon_state = "wardendrill"
 	item_state= "wardendrill"
 	dog_fashion = null
-	var/datum/mutation/human/yelling
 
 /obj/item/clothing/head/warden/drill/equipped(mob/living/carbon/human/user, slot)
 	..()
