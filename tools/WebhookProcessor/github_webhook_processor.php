@@ -17,6 +17,7 @@
 define('S_LINK_EMBED', 1<<0);
 define('S_MENTIONS', 1<<1);
 define('S_MARKDOWN', 1<<2);
+define('S_HTML_COMMENTS', 1<<3);
 
 //CONFIGS ARE IN SECRET.PHP, THESE ARE JUST DEFAULTS!
 
@@ -172,7 +173,7 @@ function get_labels($payload){
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 	$existing_labels = json_decode(github_apisend($url), true);
 	$existing = array();
-	foreach($existing_labels as $label)
+	foreach((array) $existing_labels as $label)
 		$existing[] = $label['name'];
 	return $existing;
 }
@@ -456,7 +457,7 @@ function discord_announce($action, $payload) {
 		'embeds' => array(
 			array(
 				'title' => '__**'.discord_sanitize($payload['pull_request']['title'], S_MARKDOWN).'**__',
-				'description' => str_replace(array("\r\n", "\n"), array(' ', ' '), substr($payload['pull_request']['body'], 0, 320)),
+				'description' => discord_sanitize(str_replace(array("\r\n", "\n"), array(' ', ' '), substr($payload['pull_request']['body'], 0, 320)), S_HTML_COMMENTS),
 				'url' => $payload['pull_request']['html_url'],
 				'color' => $color,
 				'author' => array(
@@ -479,6 +480,9 @@ function discord_announce($action, $payload) {
 function discord_sanitize($text, $flags = S_MENTIONS|S_LINK_EMBED|S_MARKDOWN) { 
 	if ($flags & S_MARKDOWN)
 		$text = str_ireplace(array('\\', '*', '_', '~', '`'), (array('\\\\', '\\*', '\\_', '\\~', '\\`')), $text);
+	
+	if ($flags & S_HTML_COMMENTS)
+		$text = preg_replace('/<!--(.*)-->/Uis', '', $text);
 	
 	if ($flags & S_MENTIONS)
 		$text = str_ireplace(array('@everyone', '@here', '<@'), array('`@everyone`', '`@here`', '@<'), $text);
@@ -670,7 +674,7 @@ function checkchangelog($payload, $compile = true) {
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
-		if (substr($line,0,4) == ':cl:' || substr($line,0,1) == '🆑') {
+		if (substr($line,0,4) == ':cl:' || substr($line,0,1) == '??') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");
@@ -680,7 +684,7 @@ function checkchangelog($payload, $compile = true) {
 					$username = $tmp;
 			}
 			continue;
-		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
+		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/??' || substr($line,0,6) == '/ ??' ) {
 			$incltag = false;
 			$changelogbody = array_merge($changelogbody, $currentchangelogblock);
 			continue;
