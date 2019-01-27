@@ -510,7 +510,6 @@ Difficulty: Medium
 	move_force = MOVE_FORCE_NORMAL
 	move_resist = MOVE_FORCE_NORMAL
 	pull_force = MOVE_FORCE_NORMAL
-	var/regen_cooldown = 0
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/grant_achievement(medaltype,scoretype)
 	return	
@@ -564,18 +563,3 @@ Difficulty: Medium
 		return
 	tail_sweep()
 	player_cooldown = world.time + 150 // needs seperate cooldown or cant use fire attacks
-
-	
-#define REGENERATION_DELAY 60  // How long until the space dragon begins to self-heal
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(.)
-		regen_cooldown = world.time + REGENERATION_DELAY
-
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/Life()
-	. = ..()
-	if(regen_cooldown < world.time)
-		heal_overall_damage(4)
-		
-#undef REGENERATION_DELAY
