@@ -23187,7 +23187,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	icon_state = "pump_map";
 	name = "Port to Turbine"
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -23208,7 +23207,6 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
-	icon_state = "pump_map";
 	name = "Port to Filter"
 	},
 /obj/effect/turf_decal/tile/neutral{
