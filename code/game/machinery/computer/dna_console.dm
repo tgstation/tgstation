@@ -460,7 +460,7 @@
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
 	if(active && !storage_slot)
-		if(HM && HM.can_chromosome && (HM in viable_occupant.dna.mutations))
+		if(HM?.can_chromosome && (HM in viable_occupant.dna.mutations))
 			var/i = viable_occupant.dna.mutations.Find(HM)
 			var/chromosome_name = "<a href='?src=[REF(src)];task=applychromosome;path=[mutation];num=[i];'>----</a>"
 			if(HM.chromosome_name)
