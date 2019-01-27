@@ -541,7 +541,7 @@
 	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(dir != direction && (!strafe || occupant.m_intent == MOVE_INTENT_WALK))
+	else if(dir != direction && (!strafe || ("Alt" in occupant.client.keys_held)))
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)
