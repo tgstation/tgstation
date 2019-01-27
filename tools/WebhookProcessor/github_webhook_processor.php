@@ -140,8 +140,6 @@ function github_apisend($url, $method = 'GET', $content = NULL) {
 	apisend($url, $method, $content, 'token ' . $apiKey);
 }
 function discord_webhook_send($webhook, $content) {
-	echo "$webhook\r\n";
-	echo json_encode($content);
 	apisend($webhook, 'POST', $content);
 }
 function validate_user($payload) {
