@@ -492,3 +492,90 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
+	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
+	name = "space dragon"
+	maxHealth = 250
+	health = 250
+	desc = "A dangerously territorial creature that lives in space.  Does not take kindly to uninvited guests within its claim."
+	obj_damage = 80
+	melee_damage_upper = 35
+	melee_damage_lower = 35
+	speed = 0
+	mouse_opacity = MOUSE_OPACITY_ICON
+	color = rgb(75,0,130)
+	loot = list()
+	crusher_loot = list()
+	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	move_force = MOVE_FORCE_NORMAL
+	move_resist = MOVE_FORCE_NORMAL
+	pull_force = MOVE_FORCE_NORMAL
+	var/regen_cooldown = 0
+
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/grant_achievement(medaltype,scoretype)
+	return	
+	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/fire_stream(var/atom/at = target)
+	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
+	if(QDELETED(src) || stat == DEAD) // we dead no fire
+		return
+	var/range = 20
+	var/list/turfs = list()
+	turfs = line_target(0, range, at)
+	INVOKE_ASYNC(src, .proc/fire_line, turfs)
+	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/OpenFire()
+	if(swooping)
+		return
+	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
+	ranged_cooldown = world.time + ranged_cooldown_time
+
+	if(prob(15 + anger_modifier) && !client)
+		tail_sweep()
+
+	else if(prob(10+anger_modifier) && !client)
+		if(health < maxHealth*0.5)
+			tail_sweep()
+		else
+			fire_stream()
+	else
+		if(prob(50) && !client)
+			tail_sweep()
+		fire_stream()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/tail_sweep()
+	var/turf/dragon_turf = get_turf(src)
+	var/dir_to_target = get_dir(dragon_turf, get_turf(target))
+	var/static/list/tail_sweep_angles = list(0, -45, 45, 90, -90, 145, -145, 180)
+	visible_message("<span class='warning'>[src] sweeps their tail around them!</span>")
+	for(var/i in tail_sweep_angles)
+		var/turf/T = get_step(dragon_turf, turn(dir_to_target, i))
+		for(var/mob/living/carbon/L in T)
+			if(src.Adjacent(L) && L.density)
+				L.visible_message("<span class='warning'>[L] has been knocked down by [src]'s tail!</span>")
+				L.Paralyze(60)
+	src.spin(10, 1)
+	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/AltClickOn()
+	if(QDELETED(src) || stat == DEAD) // We're dead, don't do tail sweep.
+		return
+	if(player_cooldown >= world.time)
+		to_chat(src, "<span class='warning'>You need to wait [(player_cooldown - world.time) / 10] seconds before using your tail again!</span>")
+		return
+	tail_sweep()
+	player_cooldown = world.time + 150 // needs seperate cooldown or cant use fire attacks
+
+	
+#define REGENERATION_DELAY 60  // How long until the space dragon begins to self-heal
+
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(.)
+		regen_cooldown = world.time + REGENERATION_DELAY
+
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/Life()
+	. = ..()
+	if(regen_cooldown < world.time)
+		heal_overall_damage(4)
+		
+#undef REGENERATION_DELAY
