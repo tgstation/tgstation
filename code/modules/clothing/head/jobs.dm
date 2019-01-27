@@ -147,7 +147,7 @@
 
 /obj/item/clothing/head/warden/drill
 	name = "warden's drill hat"
-	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on it's side."
+	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on its side."
 	icon_state = "wardendrill"
 	item_state = "wardendrill"
 	dog_fashion = null
