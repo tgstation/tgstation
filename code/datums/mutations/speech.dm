@@ -230,5 +230,5 @@
 
 /datum/mutation/human/yelling/say_mod(message)
 	if(message)
-		message = "[uppertext(replacetext(message, ".", "!"))]!!"
+		message = "[uppertext(replacetext(message, ".", "!"))]!"
 	return (message)
