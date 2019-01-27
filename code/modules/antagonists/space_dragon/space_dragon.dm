@@ -16,19 +16,15 @@
 	
 /datum/antagonist/space_dragon/proc/forge_objectives()
 	var/current_heads = SSjob.get_all_heads()
+	var/datum/objective/assassinate/main_target = new()
+	main_target.owner = src
 	if(!current_heads)
-		var/datum/objective/assassinate/main_target = new()
-		main_target.owner = src
 		main_target.find_target()
-		main_target.explanation_text = "Prevent [main_target.target.name], the invaders' leader, from escaping alive."
-		objectives += main_target
 	else
 		var/datum/mind/selected = pick(current_heads)
-		var/datum/objective/assassinate/main_target = new()
-		main_target.owner = src
 		main_target.target = selected
-		main_target.explanation_text = "Prevent [main_target.target.name], the invaders' leader, from escaping alive."
-		objectives += main_target
+	main_target.explanation_text = "Prevent [main_target.target.name], the invaders' leader, from escaping alive."
+	objectives += main_target
 	
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
