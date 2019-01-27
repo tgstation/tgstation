@@ -25,6 +25,12 @@
 		"Aurora Station 13? At this time of shift, in this time of year, in this sector of space, localized entirely within your freezer?",
 		"You know, these hamburgers taste quite similar to the ones they have at the Maltese Falcon.")
 		tastes = list("fast food hamburger" = 1)
+		RegisterSignal(src, COMSIG_FOOD_EATEN, .proc/steamed_hams_eat)
+
+/obj/item/reagent_containers/food/snacks/burger/plain/proc/steamed_hams_eat(mob/living/carbon/human/M)
+	if(issimpson(M))
+		to_chat(M, "<span class='notice'>You eat the Steamed Hams and you are Simpson.</span>")
+		M.reagents.add_reagent("tricordrazine", 20)
 
 /obj/item/reagent_containers/food/snacks/burger/human
 	var/subjectname = ""

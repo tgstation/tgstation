@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(traumas)
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
 	phobia_types = list("spiders", "space", "security", "clowns", "greytide", "lizards",
 						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime")
+						"aliens", "strangers", "birds", "falling", "anime", "simpson")
 
 	phobia_words = list("spiders"   = strings(PHOBIA_FILE, "spiders"),
 						"space"     = strings(PHOBIA_FILE, "space"),
@@ -33,7 +33,8 @@ SUBSYSTEM_DEF(traumas)
 						"conspiracies" = strings(PHOBIA_FILE, "conspiracies"),
 						"birds" = strings(PHOBIA_FILE, "birds"),
 						"falling" = strings(PHOBIA_FILE, "falling"),
-						"anime" = strings(PHOBIA_FILE, "anime")
+						"anime" = strings(PHOBIA_FILE, "anime"),
+						"simpson" = strings(PHOBIA_FILE, "simpson"),
 					   )
 
 	phobia_mobs = list("spiders"  = typecacheof(list(/mob/living/simple_animal/hostile/poison/giant_spider)),
@@ -160,7 +161,8 @@ SUBSYSTEM_DEF(traumas)
 						  "the supernatural" = typecacheof(list(/datum/species/golem/clockwork, /datum/species/golem/runic)),
 						  "aliens" = typecacheof(list(/datum/species/abductor, /datum/species/jelly, /datum/species/pod,
 						  /datum/species/shadow)),
-						  "anime" = typecacheof(list(/datum/species/human/felinid))
+						  "anime" = typecacheof(list(/datum/species/human/felinid)),
+						  "simpson" = typecacheof(list(/datum/species/human/simpson))
 						 )
 
 	return ..()

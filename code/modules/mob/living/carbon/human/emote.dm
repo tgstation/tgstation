@@ -59,7 +59,9 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.mind?.miming)
 		return
-	if(ishumanbasic(H) || iscatperson(H))
+	if(issimpson(H))
+		return 'sound/voice/simpson/doh.ogg'
+	else if(ishumanbasic(H) || iscatperson(H))
 		if(user.gender == FEMALE)
 			return pick('sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg')
 		else
