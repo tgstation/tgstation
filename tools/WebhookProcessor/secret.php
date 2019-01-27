@@ -54,6 +54,6 @@ $require_changelogs = false;
 
 //Discord webhooks to announce PRs to. (Given as full urls)
 /*
-$discordWebHooks[] = "https://discordapp.com/api/webhooks/538933489920245771/xaoYtVuype-P1rb_uthQLkh_C4iVL3sjtIvFEp7rsfhbBs8tDsSJgE0a9MNWJaoSPBPK"
-$discordWebHooks[] = "https://discordapp.com/api/webhooks/538933686956064769/q0uDel7S6eutvRIyEwsuZo_ppzAoxqUNeU2PRChYVsYoJmmn2f2YYSDoMjy9FhhXKqpI"
+$discordWebHooks[] = "https://discordapp.com/api/webhooks/538933489920245771/xaoYtVuype-P1rb_uthQLkh_C4iVL3sjtIvFEp7rsfhbBs8tDsSJgE0a9MNWJaoSPBPK";
+$discordWebHooks[] = "https://discordapp.com/api/webhooks/538933686956064769/q0uDel7S6eutvRIyEwsuZo_ppzAoxqUNeU2PRChYVsYoJmmn2f2YYSDoMjy9FhhXKqpI";
 */
