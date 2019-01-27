@@ -32,7 +32,7 @@
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
 
 
-	var/can_chromosome = 1 //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
+	var/can_chromosome = CHROMOSOME_NONE //can we take chromosomes? 0: CHROMOSOME_NEVER never,  1:CHROMOSOME_NONE yeah, 2: CHROMOSOME_USED no, already have one
 	var/chromosome_name   //purely cosmetic
 	var/modified = FALSE  //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
 	var/mutadone_proof = FALSE

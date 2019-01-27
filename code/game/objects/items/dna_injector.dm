@@ -403,7 +403,7 @@
 				else
 					M.dna.add_mutation(HM, MUT_EXTRA)
 					name = "expended [name]"
-			else if(research)
+			else if(research && M.client)
 				filled = TRUE
 				name = "filled [name]"
 			else

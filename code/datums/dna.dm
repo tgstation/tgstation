@@ -65,7 +65,7 @@
 	if(istype(mutation, /datum/mutation/human))
 		var/datum/mutation/human/HM = mutation
 		mutation_type = HM.type
-	if(get_mutation(mutation))
+	if(get_mutation(mutation_type))
 		return
 	return force_give(new mutation_type (class, time, copymut = mutation))
 

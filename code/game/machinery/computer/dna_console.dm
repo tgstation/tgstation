@@ -77,7 +77,7 @@
 				var/c_typepath = generate_chromosome()
 				var/obj/item/chromosome/CM = new c_typepath (drop_location())
 				to_chat(user,"<span class='notice'>Recycled [I].</span>")
-				if(LAZYLEN(stored_chromosomes) < max_chromosomes)
+				if((LAZYLEN(stored_chromosomes) < max_chromosomes) && prob(60))
 					CM.forceMove(src)
 					stored_chromosomes += CM
 					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
@@ -455,7 +455,7 @@
 		if(HM)
 			instability *= GET_MUTATION_STABILIZER(HM)
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><span class='[mutcolor]'><b>[mut_name]</b></span><small> ([alias])</small><br>"
-		temp_html += "<div class='statusDisplay'><div class='statusLine'>Instability : [round(instability)]</span><br>"
+		temp_html += "<div class='statusLine'>Instability : [round(instability)]</span><br>"
 	else
 		temp_html += "<div class='statusDisplay'><div class='statusLine'><b>[alias]</b><br>"
 	temp_html += "<div class='statusLine'>[mut_desc]<br></div>"
