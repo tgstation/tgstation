@@ -605,7 +605,7 @@ $github_diff = null;
 
 function get_diff($payload) {
 	global $github_diff;
-	if ($github_diff === null) {
+	if ($github_diff === null && $payload['pull_request']['diff_url']) {
 		//go to the diff url
 		$url = $payload['pull_request']['diff_url'];
 		$github_diff = file_get_contents($url);
