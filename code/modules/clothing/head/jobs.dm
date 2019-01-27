@@ -156,7 +156,8 @@
 	..()
 	if(slot == SLOT_HEAD)
 		user.dna.add_mutation(YELLING)
-	else
+
+/obj/item/clothing/head/warden/drill/dropped(mob/living/carbon/human/user)
 		user.dna.remove_mutation(YELLING)
 
 /obj/item/clothing/head/beret/sec
