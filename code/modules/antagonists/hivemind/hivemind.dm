@@ -8,25 +8,34 @@
 	var/list/hivemembers = list() //This stores the brains of assimilated vessels
 	var/hive_size = 0
 	var/threat_level = 0 // Part of what determines how strong the radar is, on a scale of 0 to 10
-	var/static/datum/objective/hivemind/assimilate_common/common_assimilation_obj //Make it static since we want a common target for all the antags
+	var/track_bonus = 0 // Bonus time to your tracking abilities
+	var/size_mod = 0 // Bonus size for using reclaim
+	var/list/individual_track_bonus // Bonus time to tracking individual targets
+	var/unlocked_one_mind = FALSE
 
 	var/list/upgrade_tiers = list(
-		//Tier 1
+		//Tier 1 - Roundstart powers
 		/obj/effect/proc_holder/spell/target_hive/hive_add = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_remove = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_see = 0,
-		/obj/effect/proc_holder/spell/target_hive/hive_shock = 2,
-		/obj/effect/proc_holder/spell/self/hive_drain = 4,
-		//Tier 2
-		/obj/effect/proc_holder/spell/target_hive/hive_warp = 6,
-		/obj/effect/proc_holder/spell/targeted/hive_hack = 8,
-		/obj/effect/proc_holder/spell/target_hive/hive_control = 10,
-		/obj/effect/proc_holder/spell/targeted/induce_panic = 12,
-		//Tier 3
+		/obj/effect/proc_holder/spell/target_hive/hive_shock = 0,
+		/obj/effect/proc_holder/spell/target_hive/hive_warp = 0,
+		//Tier 2 - Tracking related powers
+		/obj/effect/proc_holder/spell/targeted/hive_scan = 5,
+		/obj/effect/proc_holder/spell/targeted/hive_reclaim = 5,
+		/obj/effect/proc_holder/spell/targeted/hive_hack = 5,
+		//Tier 3 - Combat related powers
+		/obj/effect/proc_holder/spell/self/hive_drain = 10,
+		/obj/effect/proc_holder/spell/targeted/induce_panic = 10,
+		/obj/effect/proc_holder/spell/targeted/forcewall/hive = 10,
+		//Tier 4 - Chaos-spreading powers
+		/obj/effect/proc_holder/spell/self/hive_wake = 15,
 		/obj/effect/proc_holder/spell/self/hive_loyal = 15,
-		/obj/effect/proc_holder/spell/targeted/hive_assim = 18,
-		/obj/effect/proc_holder/spell/targeted/forcewall/hive = 20,
-		/obj/effect/proc_holder/spell/target_hive/hive_attack = 25)
+		/obj/effect/proc_holder/spell/target_hive/hive_control = 15,
+		//Tier 5 - Deadly powers
+		/obj/effect/proc_holder/spell/targeted/induce_sleep = 20,
+		/obj/effect/proc_holder/spell/target_hive/hive_attack = 20
+
 
 /datum/antagonist/hivemind/proc/calc_size()
 	listclearnulls(hivemembers)
@@ -49,11 +58,30 @@
 /datum/antagonist/hivemind/proc/check_powers()
 	for(var/power in upgrade_tiers)
 		var/level = upgrade_tiers[power]
-		if(hive_size >= level && !(locate(power) in owner.spell_list))
+		if(hive_size+size_mod >= level && !(locate(power) in owner.spell_list))
 			var/obj/effect/proc_holder/spell/the_spell = new power(null)
 			owner.AddSpell(the_spell)
 			if(hive_size > 0)
 				to_chat(owner, "<span class='assimilator'>We have unlocked [the_spell.name].</span><span class='bold'> [the_spell.desc]</span>")
+
+	if(!unlocked_one_mind && hive_size >= 15)
+		var/lead = TRUE
+		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
+			if(enemy == src)
+				continue
+			if(enemy.hive_size <= hive_size + size_bonus - 20)
+				continue
+			lead = FALSE
+			break
+		if(lead)
+			owner.AddSpell(new/obj/effect/proc_holder/spell/self/one_mind)
+			to_chat(owner, "<big><span class='assimilator'>Our true power, the One Mind, is finally within reach.</span></big>")
+
+/datum/antagonist/hivemind/proc/add_track_bonus(/datum/antagonist/hivemind/enemy, var/bonus)
+	if(!locate(enemy) in individual_track_bonus)
+		individual_track_bonus[enemy] = bonus
+	else
+		individual_track_bonus[enemy] += bonus
 
 /datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/C)
 	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
@@ -127,8 +155,6 @@
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_HIVE]
 	hud.leave_hud(owner.current)
 	set_antag_hud(owner.current, null)
-
-
 
 /datum/antagonist/hivemind/on_removal()
 	//Remove all hive powers here

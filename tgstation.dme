@@ -1284,6 +1284,7 @@
 #include "code\modules\antagonists\greentext\greentext.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
 #include "code\modules\antagonists\hivemind\hivemind.dm"
+#include "code\modules\antagonists\hivemind\vessel.dm"
 #include "code\modules\antagonists\magic_servant\servant.dm"
 #include "code\modules\antagonists\monkey\monkey.dm"
 #include "code\modules\antagonists\morph\morph.dm"

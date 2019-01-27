@@ -6,7 +6,7 @@
 	false_report_weight = 5
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_jobs = list("Cyborg","AI")
-	required_players = 25
+	required_players = 24
 	required_enemies = 2
 	recommended_enemies = 3
 	reroll_friendly = 1
@@ -20,20 +20,18 @@
 	var/list/hosts = list()
 
 /proc/is_hivehost(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/hivemind)
-
-/proc/is_real_hivehost(mob/living/M) //This proc ignores mind controlled vessels
 	if(!M || !M.mind)
-		return FALSE
-	var/datum/antagonist/hivemind/hive = M.mind.has_antag_datum(/datum/antagonist/hivemind)
-	if(!hive)
-		return FALSE
-	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in M.mind.spell_list
-	if(the_spell && the_spell.active)
-		if(the_spell.original_body == M)
+		return
+	return M.mind.has_antag_datum(/datum/antagonist/hivemind)
+
+/mob/living/proc/is_real_hivehost() //This proc ignores mind controlled vessels
+	for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
+		var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in hive.owner.spell_list
+		if((!the_spell || !the_spell.active ) && src.mind == hive.owner)
 			return TRUE
-	else
-		return TRUE
+		if(the_spell.active)
+			if(the_spell.original_body == src)
+				return TRUE
 	return FALSE
 
 /mob/living/proc/get_real_hivehost() //Returns src unless it's under mind control, then it returns the original body
