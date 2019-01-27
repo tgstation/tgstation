@@ -1,16 +1,16 @@
-/datum/round_event_control/refugees
+/datum/round_event_control/fugitives
 	name = "Spawn Fugitives"
-	typepath = /datum/round_event/ghost_role/refugees
+	typepath = /datum/round_event/ghost_role/fugitives
 	max_occurrences = 1
 	min_players = 20
 	earliest_start = 30 MINUTES //deadchat sink, lets not even consider it early on.
 
-/datum/round_event/ghost_role/refugees
+/datum/round_event/ghost_role/fugitives
 	minimum_required = 1
 	role_name = "fugitive"
 	fakeable = FALSE
 
-/datum/round_event/ghost_role/refugees/spawn_role()
+/datum/round_event/ghost_role/fugitives/spawn_role()
 	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN) //hehe "alien"
 	if(candidates.len < 4)
 		return NOT_ENOUGH_PLAYERS
@@ -33,6 +33,8 @@
 		player_mind.assigned_role = "Fugitive"
 		player_mind.special_role = "Fugitive"
 		player_mind.add_antag_datum(/datum/antagonist/fugitive) //they are not antagonists, but will show up roundend to see how they fared (and their origin)
+		var/datum/antagonist/hivemind/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
+		fugitiveantag.greet(backstory)
 		//clothes - WIP
 		//outfit.uniform = /obj/item/clothing/under/rank/prisoner
 		//outfit.shoes = /obj/item/clothing/shoes/sneakers/orange
