@@ -342,7 +342,7 @@
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Paralyze(knockdown)
-		playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
