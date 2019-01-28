@@ -7529,7 +7529,6 @@
 "qj" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/post/cavern2)
 "qk" = (
 /obj/structure/closet/cabinet,
@@ -8673,10 +8672,6 @@
 	},
 /turf/open/floor/plasteel/dark/snowdin,
 /area/awaymission/snowdin/outside)
-"sT" = (
-/turf/open/floor/plating/snowed/smoothed,
-/turf/open/floor/plating/snowed,
-/area/awaymission/snowdin/outside)
 "sU" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/effect/turf_decal/stripes/white/line{
@@ -8931,11 +8926,6 @@
 "tL" = (
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/ice,
 /turf/open/floor/plating/asteroid/snow/ice,
-/area/awaymission/snowdin/cave/cavern)
-"tM" = (
-/obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tN" = (
 /turf/open/floor/plating/ice/smooth,
@@ -11560,7 +11550,6 @@
 /area/awaymission/snowdin/outside)
 "AD" = (
 /turf/open/floor/plating,
-/turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/outside)
 "AE" = (
 /obj/item/pen,
@@ -12226,10 +12215,6 @@
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
-"Cx" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
-/area/awaymission/snowdin/cave/cavern)
 "Cy" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -13694,13 +13679,11 @@
 	name = "mining conveyor"
 	},
 /turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "FO" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "FQ" = (
 /obj/effect/light_emitter{
@@ -13772,7 +13755,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/post/mining_dock)
 "FZ" = (
 /turf/closed/wall/ice,
@@ -15836,7 +15818,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Xu" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -15856,7 +15837,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "Yn" = (
 /obj/machinery/door/airlock/external/glass,
@@ -24399,7 +24379,7 @@ am
 af
 sx
 sJ
-sT
+dX
 te
 te
 te
@@ -24485,7 +24465,7 @@ af
 af
 af
 dX
-sT
+dX
 te
 te
 te
@@ -24656,7 +24636,7 @@ af
 am
 sx
 sK
-sT
+dX
 te
 te
 te
@@ -24742,7 +24722,7 @@ af
 af
 af
 dX
-sT
+dX
 te
 te
 te
@@ -24913,7 +24893,7 @@ ak
 af
 sx
 sJ
-sT
+dX
 te
 te
 te
@@ -24948,7 +24928,7 @@ dX
 dX
 dX
 dX
-sT
+dX
 te
 te
 te
@@ -24999,7 +24979,7 @@ dX
 dX
 dX
 dX
-sT
+dX
 te
 te
 te
@@ -25170,7 +25150,7 @@ af
 fq
 sx
 sK
-sT
+dX
 te
 te
 te
@@ -25256,7 +25236,7 @@ af
 af
 af
 dX
-sT
+dX
 te
 te
 te
@@ -25427,7 +25407,7 @@ af
 sf
 sx
 sJ
-sT
+dX
 te
 te
 te
@@ -25513,7 +25493,7 @@ af
 af
 af
 dX
-sT
+dX
 te
 te
 te
@@ -60148,8 +60128,8 @@ qi
 qi
 qi
 qi
-tM
-tM
+tP
+tP
 oZ
 oZ
 oZ
@@ -61284,7 +61264,7 @@ qi
 oZ
 oZ
 oZ
-Cx
+oZ
 qi
 oZ
 oZ
@@ -64367,7 +64347,7 @@ sY
 oZ
 oZ
 sY
-Cx
+oZ
 oZ
 oZ
 sY
@@ -64624,7 +64604,7 @@ oZ
 oY
 oZ
 oZ
-Cx
+oZ
 oZ
 oZ
 oZ
