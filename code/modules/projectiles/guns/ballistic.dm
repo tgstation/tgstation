@@ -257,7 +257,6 @@
 		if (bolt_type == BOLT_TYPE_LOCKING)
 			bolt_locked = TRUE
 			update_icon()
-	return
 
 /obj/item/gun/ballistic/afterattack()
 	empty_checks()
