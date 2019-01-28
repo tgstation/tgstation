@@ -219,7 +219,7 @@
 			to_chat(user, "<span class='notice'>You screw \the [S] onto \the [src].</span>")
 			install_suppressor(A)
 			return
-	return 0
+	return FALSE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if (sawn_off)
@@ -252,8 +252,8 @@
 	if (!chambered && !get_ammo())
 		if (!alarmed && empty_alarm)
 			playsound(src.loc, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
-			update_icon()
 			alarmed = TRUE
+			update_icon()
 		if (bolt_type == BOLT_TYPE_LOCKING)
 			bolt_locked = TRUE
 			update_icon()
