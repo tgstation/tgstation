@@ -13,7 +13,7 @@
 /datum/action/changeling/fakedeath/sting_action(mob/living/user)
 	..()
 	if(revive_ready)
-		INVOKE_ASYNC(.proc/revive, user)
+		INVOKE_ASYNC(src, .proc/revive, user)
 		revive_ready = FALSE
 		name = "Reviving Stasis"
 		desc = "We fall into a stasis, allowing us to regenerate and trick our enemies."
