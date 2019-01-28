@@ -54,13 +54,12 @@
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
+	update_icon()
 	if (!spawnwithmagazine)
-		update_icon()
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
 	chamber_round()
-	update_icon()
 
 /obj/item/gun/ballistic/update_icon()
 	if (QDELETED(src))
@@ -123,11 +122,11 @@
 			chambered.forceMove(src)
 	
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
-	if (bolt_type == BOLT_TYPE_NO_BOLT)
+	if (bolt_type == BOLT_TYPE_NO_BOLT) //If there's no bolt, nothing to rack
 		return
-	if (bolt_type == BOLT_TYPE_OPEN && chambered != null)
+	if (bolt_type == BOLT_TYPE_OPEN && chambered != null) //If it's an open bolt, there's no way to rack it once it's open
 		return
-	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+	playsound(src, rack_sound, rack_sound_voume, rack_sound_vary)
 	if (user)
 		to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
 	process_chamber(!chambered, FALSE)
