@@ -279,7 +279,7 @@
 		var/num_unloaded = 0
 		while (get_ammo() > 0)
 			var/obj/item/ammo_casing/CB
-			CB = magazine.get_round(0)
+			CB = magazine.get_round(FALSE)
 			chambered = null
 			CB.forceMove(drop_location())
 			CB.bounce_away(FALSE, NONE)
