@@ -24,9 +24,7 @@
 	chamber_round(1)
 
 /obj/item/gun/ballistic/revolver/AltClick(mob/user)
-	if (unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
-		reskin_obj(user)
-		return
+	..()
 	spin()
 
 /obj/item/gun/ballistic/revolver/verb/spin()
