@@ -271,7 +271,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
-	if(magazine && !internal_magazine)
+	if(!internal_magazine && magazine)
 		if(!magazine.ammo_count())
 			eject_magazine(user)
 			return
