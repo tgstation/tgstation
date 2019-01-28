@@ -227,7 +227,7 @@
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	if (sawn_off)
-		bonus_spread += 25
+		bonus_spread += SAWN_OFF_ACC_PENALTY
 	. = ..()
 
 /obj/item/gun/ballistic/proc/install_suppressor(obj/item/suppressor/S)
@@ -257,7 +257,7 @@
 		if (!alarmed && empty_alarm)
 			playsound(src.loc, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
 			update_icon()
-			alarmed = 1
+			alarmed = TRUE
 		if (bolt_type == BOLT_TYPE_LOCKING)
 			bolt_locked = TRUE
 			update_icon()
@@ -374,18 +374,18 @@
 		item_state = "gun"
 		slot_flags &= ~ITEM_SLOT_BACK	//you can't sling it on your back
 		slot_flags |= ITEM_SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
-		recoil = 1
+		recoil = SAWN_OFF_RECOIL
 		sawn_off = TRUE
 		update_icon()
 		return TRUE
 
 // Sawing guns related proc
 /obj/item/gun/ballistic/proc/blow_up(mob/user)
-	. = 0
+	. = FALSE
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
 		if(AC.BB)
 			process_fire(user, user, FALSE)
-			. = 1
+			. = TRUE
 
 
 /obj/item/suppressor
