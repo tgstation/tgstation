@@ -20,6 +20,7 @@
 	killchosen.owner = owner
 	var/datum/mind/selected = pick(current_heads)
 	killchosen.target = selected
+	killchosen.update_explanation_text()
 	objectives += killchosen
 	var/datum/objective/survive/survival = new
 	survival.owner = owner
