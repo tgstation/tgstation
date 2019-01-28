@@ -52,3 +52,6 @@
 //Called when hugging. expand into generally interacting, where future coders could switch the intent?
 /datum/brain_trauma/proc/on_hug(mob/living/hugger, mob/living/hugged)
 	return
+
+/datum/brain_trauma/proc/on_weapon_hit(mob/living/attacker, mob/living/attacked)
+	return
