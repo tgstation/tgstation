@@ -183,7 +183,7 @@
 	..()
 	if (.)
 		return
-	if (istype(A, /obj/item/ammo_box/magazine) && !internal_magazine)
+	if (!internal_magazine && istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
 			insert_magazine(user, AM)
