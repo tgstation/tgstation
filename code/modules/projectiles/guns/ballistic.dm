@@ -126,7 +126,7 @@
 		return
 	if (bolt_type == BOLT_TYPE_OPEN && chambered != null) //If it's an open bolt, there's no way to rack it once it's open
 		return
-	playsound(src, rack_sound, rack_sound_voume, rack_sound_vary)
+	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 	if (user)
 		to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
 	process_chamber(!chambered, FALSE)
