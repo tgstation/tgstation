@@ -194,3 +194,6 @@
 			A.UpdateButtonIcon()
 		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
 		return 1
+
+/obj/item/clothing/mask/gas/tiki_mask/yalp_elor
+	icon_state = "tiki_yalp" //you can remove this special tiki face if you want

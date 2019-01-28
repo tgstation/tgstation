@@ -11,42 +11,69 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN) //hehe "alien"
+	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
 	if(candidates.len < 4)
 		return NOT_ENOUGH_PLAYERS
 
-	var/backstory = pick(list("prisoner"))
+	var/backstory = pick(list("prisoner", "cultists"))
+
+	var/leader = pick_n_take(candidates)
+	var/list/members = list()
+	for(var/i in 1 to 3)
+		members += pick_n_take(candidates)
+	members += leader
 
 	var/turf/landing_turf = pick(GLOB.xeno_spawn)
 	if(!landing_turf)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	for(var/i in 1 to 4)
-		var/mob/dead/selected = pick(candidates)
-
+	for(var/i in members)
+		var/mob/dead/selected = i
 		var/datum/mind/player_mind = new /datum/mind(selected.key)
 		player_mind.active = TRUE
 
-		var/mob/living/carbon/human/S = new (landing_turf)
-		player_mind.transfer_to(S)
-		player_mind.assigned_role = "Fugitive"
-		player_mind.special_role = "Fugitive"
-		player_mind.add_antag_datum(/datum/antagonist/fugitive) //they are not antagonists, but will show up roundend to see how they fared (and their origin)
-		var/datum/antagonist/hivemind/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
-		fugitiveantag.greet(backstory)
-		//clothes - WIP
-		//outfit.uniform = /obj/item/clothing/under/rank/prisoner
-		//outfit.shoes = /obj/item/clothing/shoes/sneakers/orange
-		//outfit.back = /obj/item/storage/backpack
+		if(selected == leader)
+			switch(backstory)
+				if("cultist")
+					var/mob/camera/yalp_elor/yalp = new(landing_turf)
+					player_mind.transfer_to(yalp)
+					player_mind.assigned_role = "Yalp Elor"
+					player_mind.special_role = "Old God"
+					player_mind.add_antag_datum(/datum/antagonist/fugitive)
+					for(var/cult in members)
+						if(cult == leader)
+							continue
+						yalp.the_faithful += cult.mind //todo: find a way to switch this one to a mob or even better a team antag thing
+		else
+			var/mob/living/carbon/human/S = new(landing_turf)
+			player_mind.transfer_to(S)
+			player_mind.assigned_role = "Fugitive"
+			player_mind.special_role = "Fugitive"
+			player_mind.add_antag_datum(/datum/antagonist/fugitive) //they are not antagonists, but will show up roundend to see how they fared (and their origin)
+			var/datum/antagonist/fugitive/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
+			fugitiveantag.greet(backstory)
+
+			switch(backstory)
+				if("prisoner")
+					L.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
+					S.equipOutfit(/datum/outfit/prisoner)
+				if("cultist")
+					S.equipOutfit(/datum/outfit/yalp_cultist)
 		message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")
 		log_game("[key_name(S)] was spawned as a Fugitive by an event.")
 		spawned_mobs += S
 
 //after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
-	//code for the security team add timer proc
+	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
+	addtimer(CALLBACK(src, .proc/spawn_security), 6000) //10 minutes
 	return SUCCESSFUL_SPAWN
 
 
-//security team gets called in after 5 minutes of prep to find the refugees
+//security team gets called in after 10 minutes of prep to find the refugees
+/datum/round_event/ghost_role/fugitives/proc/spawn_security()
+	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
+	if(!candidates.len)
+		return
+	//wip
