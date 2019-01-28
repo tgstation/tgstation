@@ -12,7 +12,7 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/space_dragon/announce(fake)
-	priority_announce("An unidentified lifeform is about to come in collision with [station_name()], please stand-by.", "Lifesign Alert")
+	priority_announce("It appears a lifeform with magical traces is approaching [station_name()], please stand-by.", "Lifesign Alert")
 
 	
 /datum/round_event/ghost_role/space_dragon/spawn_role()
@@ -42,3 +42,4 @@
 	log_game("[key_name(S)] was spawned as a Space Dragon by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN
+
