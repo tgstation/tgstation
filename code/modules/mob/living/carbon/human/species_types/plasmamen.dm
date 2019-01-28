@@ -5,7 +5,7 @@
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
 	species_traits = list(NOBLOOD,NOTRANSSTING)
-	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_NOHUNGER,TRAIT_CALCIUM_HEALER,TRAIT_ALWAYS_CLEAN)
 	inherent_biotypes = list(MOB_INORGANIC, MOB_HUMANOID)
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
@@ -17,7 +17,6 @@
 	heatmod = 1.5
 	brutemod = 1.5
 	breathid = "tox"
-	speedmod = 1
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
 	disliked_food = FRUIT
