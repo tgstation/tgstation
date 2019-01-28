@@ -38,6 +38,7 @@
 #define INSULATED	/datum/mutation/human/insulated
 #define SHOCKTOUCH	/datum/mutation/human/shock
 #define OLFACTION	/datum/mutation/human/olfaction
+#define YELLING		/datum/mutation/human/yelling
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
