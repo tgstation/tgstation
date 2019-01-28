@@ -14,7 +14,7 @@
 	var/shield_integrity = 250
 	var/max_fields = 3
 	var/list/current_fields
-	var/field_distance_limit = 7
+	var/field_distance_limit = 2
 
 /obj/item/forcefield_projector/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
