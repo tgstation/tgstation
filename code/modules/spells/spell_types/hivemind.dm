@@ -170,7 +170,7 @@
 	clothes_req = 0
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
-	action_icon_state = "loyal"
+	action_icon_state = "scan"
 	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/hive_scan/cast(mob/living/user = usr)
@@ -527,7 +527,7 @@
 	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
-	action_icon_state = "panic"
+	action_icon_state = "sleep"
 
 /obj/effect/proc_holder/spell/targeted/induce_sleep/cast(list/targets, mob/living/user = usr)
 	if(!targets)
@@ -679,7 +679,7 @@
 	clothes_req = 0
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
-	action_icon_state = "assim"
+	action_icon_state = "reclaim"
 	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/targeted/hive_reclaim/cast(list/targets, mob/living/user = usr)
@@ -723,7 +723,7 @@
 	clothes_req = 0
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
-	action_icon_state = "loyal"
+	action_icon_state = "chaos"
 	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/hive_wake/cast(mob/living/user = usr)
@@ -832,7 +832,7 @@
 	clothes_req = 0
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
-	action_icon_state = "loyal"
+	action_icon_state = "assim"
 	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/one_mind/cast(mob/living/user = usr)
