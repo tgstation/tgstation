@@ -742,3 +742,23 @@
 			continue
 		spells_to_rot++
 		RemoveSpell(spell)
+
+	if(spells_to_rot < 1)
+		return
+
+	to_chat(src, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
+	var/list/all_rot_spells = list("aimed", "traps", "touch", "wall", "mutate")
+	for(var/adding_rot in 1 to spells_to_rot)
+		if(!all_rot_spells.len) //out of rotspells to give, the rest are just gone
+			break
+		switch(pick_n_take(all_rot_spells))
+			if("aimed")
+				AddSpell(new /obj/effect/proc_holder/spell/aimed/canker(null))
+			if("traps")
+				AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap(null))
+			if("touch")
+				AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
+			if("wall")
+				AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
+			if("mutate")
+				AddSpell(new /obj/effect/proc_holder/spell/targeted/genetic/ascendant_form(null))
