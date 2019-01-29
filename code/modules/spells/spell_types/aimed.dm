@@ -101,6 +101,7 @@
 	base_icon_state = "lightning"
 	sound = 'sound/magic/lightningbolt.ogg'
 	active = FALSE
+	rotten_spell = TRUE
 	projectile_var_overrides = list("tesla_range" = 15, "tesla_power" = 20000, "tesla_flags" = TESLA_MOB_DAMAGE)
 	active_msg = "You energize your hand with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
@@ -123,6 +124,7 @@
 	active_msg = "You prepare to cast your fireball spell!"
 	deactive_msg = "You extinguish your fireball... for now."
 	active = FALSE
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aimed/spell_cards
 	name = "Spell Cards"
@@ -144,6 +146,7 @@
 	var/projectile_location_spread_amount = 12
 	var/datum/component/lockon_aiming/lockon_component
 	ranged_clickcd_override = TRUE
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aimed/spell_cards/on_activation(mob/M)
 	QDEL_NULL(lockon_component)
