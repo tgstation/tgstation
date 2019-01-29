@@ -747,7 +747,7 @@
 		return
 
 	to_chat(src, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
-	var/list/all_rot_spells = list("aimed", "traps", "touch", "wall", "mutate")
+	var/list/all_rot_spells = list("aimed", "traps", "touch", "wall", "mutate", "projectile")
 	for(var/adding_rot in 1 to spells_to_rot)
 		if(!all_rot_spells.len) //out of rotspells to give, the rest are just gone
 			break
@@ -762,3 +762,5 @@
 				AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/rot(null))
 			if("mutate")
 				AddSpell(new /obj/effect/proc_holder/spell/targeted/genetic/ascendant_form(null))
+			if("projectile")
+				AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/forcevomit(null))
