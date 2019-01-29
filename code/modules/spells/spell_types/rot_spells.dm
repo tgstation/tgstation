@@ -18,6 +18,13 @@
 	action_icon_state = "rotten0"
 	action_background_icon_state = "bg_rotting"
 
+/obj/effect/proc_holder/spell/aimed/canker/cast(list/targets, mob/living/user)
+	..()
+	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	if(mop)
+		mop.boost_spell(user)
+	
+
 /obj/effect/proc_holder/spell/targeted/forcewall/rotwall
 	name = "Rotten Invocation: Wall of Pestilence"
 	desc = "Create a rotten barrier that only you can pass through without decaying."
@@ -27,6 +34,12 @@
 	action_icon_state = "rotwall"
 	action_background_icon_state = "bg_rotting"
 	wall_type = /obj/effect/forcefield/rotwall
+
+/obj/effect/proc_holder/spell/targeted/forcewall/rotwall/cast(list/targets,mob/user = usr)
+	..()
+	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	if(mop)
+		mop.boost_spell(user)
 
 /obj/effect/forcefield/rotwall
 	name = "Rotten Flesh"
@@ -101,6 +114,9 @@
 		to_chat(user, "<span class='notice'>Your form becomes that of a fly. Recast to gain powers!</span>")
 	else
 		..()
+	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	if(mop)
+		mop.boost_spell(user)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/rot_trap
 	name = "Rotten Invocation: Patient Malaise"
@@ -113,6 +129,9 @@
 
 	action_icon_state = "the_traps_malaise"
 	action_background_icon_state = "bg_rotting"
+	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	if(mop)
+		mop.boost_spell(user)
 
 /obj/effect/proc_holder/spell/targeted/projectile/forcevomit
 	name = "Nauseating emanation"
@@ -123,9 +142,9 @@
 	invocation_type = "shout"
 	range = 1
 	cooldown_min = 400
-	action_icon_state = "time"
 	clothes_req = FALSE
-	//rotten_spell = FALSE
+	action_icon = 'icons/obj/hand_of_god_structures.dmi'
+	action_icon_state = "trap-rot"
 
 	proj_icon_state = "forcevomit"
 	proj_name = "a smelly cloud"
@@ -139,8 +158,7 @@
 	proj_trail_lifespan = 7
 	proj_trail_icon_state = "forcevomit"
 
-	action_icon_state = "forcevomit"
-	sound = 'sound/magic/vomit_magic.ogg'
+	sound = 'sound/magic/magic_missile.ogg'
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/force_vomit
 
@@ -155,3 +173,58 @@
 	if(T)
 		T.atmos_spawn_air("miasma=100")
 	target.vomit(30)
+	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	if(mop)
+		mop.boost_spell(user)
+
+/obj/effect/proc_holder/spell/mark_of_putrescence
+	name = "Mark of putrescence"
+	desc = "While toggled on, summons slippery gibs near the caster and drains their spiritual energy on each cast. Careful, don't slip."
+	charge_max = 10
+	clothes_req = TRUE
+	invocation = "Wosh uress"
+	invocation_type = "whisper"
+	range = 1
+	cooldown_min = 400
+	action_icon_state = "time"
+	clothes_req = FALSE
+	action_icon = 'icons/obj/hand_of_god_structures.dmi'
+	action_icon_state = "trap-rot"
+	var/toggle = FALSE
+
+
+/obj/effect/proc_holder/spell/mark_of_putrescence/cast()
+	switch(toggle)
+		if(FALSE)
+			toggle = TRUE
+			to_chat(usr, "<span class='warning'>You start attuning yourself to the aetherial plane of filth.</span>")
+		if(TRUE)
+			toggle = FALSE
+			to_chat(usr, "<span class='warning'>You stop channeling the power of miasmatic aether.</span>")
+
+/obj/effect/proc_holder/spell/mark_of_putrescence/proc/boost_spell(mob/user = usr)
+	if(!toggle)
+		return
+
+	//10% chance of setting yourself a self-slip trap
+	var/turf/spawningturf
+	if(prob(10))
+		spawningturf = get_turf(get_step(user.loc,user.dir))
+	else
+		spawningturf = get_turf(src.loc)
+
+	//Spawn a nasty foam puddle
+	var/datum/reagents/R = new/datum/reagents(30)
+	R.my_atom = spawningturf
+	R.add_reagent("liquidgibs", 15)
+	R.add_reagent("vomit", 15)
+	var/datum/effect_system/foam_spread/foam = new()
+	foam.set_up(1, spawningturf, R)
+	foam.start()
+
+	//Add a bit of miasma
+	spawningturf.atmos_spawn_air("miasma=50")
+
+	//Get faster reload for spells
+	for(var/obj/effect/proc_holder/spell/s in usr.mind.spell_list)
+		s.charge_counter += 5
