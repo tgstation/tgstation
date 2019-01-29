@@ -445,6 +445,36 @@
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
 	icon_welded = "welded"
 
+/obj/item/projectile/magic/rot
+	name = "bolt of rot"
+	icon_state = "canker"
+	nodamage = TRUE
+	flag = "magic"
+
+/obj/item/projectile/magic/rot/on_hit(target)
+	. = ..()
+	//bolt of rot does a couple things:
+	//dumps miasma wherever it hits
+	//fucks hygiene pretty hard
+	//makes the target feel disgusted
+	//rot_mind is called, see spell.dm for it's effects
+	var/turf/T = get_turf(src)
+	if(T)
+		T.atmos_spawn_air("miasma=100")
+	//mob effects
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			qdel(src)
+			return
+		if(M.mind)
+			M.mind.rot_mind()
+		if(ishuman(M))
+			var/mob/living/carbon/human/nurglevictim = M
+			nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN
+			nurglevictim.adjust_disgust(60)
+
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
