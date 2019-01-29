@@ -12,6 +12,7 @@
 	include_user = TRUE
 	cooldown_min = 50 //12 deciseconds reduction per rank
 	var/wall_type = /obj/effect/forcefield/wizard
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/forcewall/cast(list/targets,mob/user = usr)
 	new wall_type(get_turf(user),user)
