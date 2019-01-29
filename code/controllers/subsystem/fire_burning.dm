@@ -30,8 +30,7 @@ SUBSYSTEM_DEF(fire_burning)
 		if((O.resistance_flags & ON_FIRE) && !(O.resistance_flags & FIRE_PROOF))
 			O.take_damage(20, BURN, "fire", 0)
 		else
-			O.resistance_flags &= ~ON_FIRE //in case we fireproof while burning
-			processing -= O
+			O.extinguish()
 
 		if (MC_TICK_CHECK)
 			return
