@@ -10,6 +10,7 @@
 	invocation = "CLANG!"
 	invocation_type = "shout"
 	action_icon_state = "immrod"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets,mob/user = usr)
 	for(var/mob/living/M in targets)
