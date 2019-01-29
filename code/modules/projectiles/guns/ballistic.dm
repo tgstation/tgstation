@@ -125,12 +125,14 @@
 	if (bolt_type == BOLT_TYPE_NO_BOLT) //If there's no bolt, nothing to rack
 		return
 	if (bolt_type == BOLT_TYPE_OPEN && chambered != null) //If it's an open bolt, there's no way to rack it once it's open
+		if (user)
+			to_chat("<span class='notice'>It's already chambered!</span>")
 		return
 	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 	if (user)
 		to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
 	process_chamber(!chambered, FALSE)
-	if (!chambered)
+	if (bolt_type == BOLT_TYPE_LOCKING && !chambered)
 		bolt_locked = TRUE
 	update_icon()
 
