@@ -289,7 +289,8 @@
 				if(!T.density)
 					if(prob(EFFECT_PROB_VERYHIGH))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
-						reagentdecal.reagents.add_reagent("radium", 7)
+						if(reagentdecal)
+							reagentdecal.reagents.add_reagent("radium", 7)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
