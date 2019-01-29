@@ -27,7 +27,7 @@
 		if("cultists" || "synth")
 			leader = pick_n_take(candidates)
 		if("waldo")
-			var/member_size = 0 //no leader, so it will be bumped to the one and only waldo
+			member_size = 0 //no leader, so it will be bumped to the one and only waldo
 	var/list/members = list()
 	var/list/spawned_mobs = list()
 	if(isnull(leader))
@@ -37,10 +37,10 @@
 		members += pick_n_take(candidates)
 
 	for(var/mob/dead/selected in members)
-		var/mob/living/carbon/human/S = gear_fugitive(selected)
+		var/mob/living/carbon/human/S = gear_fugitive(selected, landing_turf, backstory)
 		spawned_mobs += S
 	if(!isnull(leader))
-		gear_special(leader, spawned_members)
+		gear_fugitive_leader(leader, spawned_mobs, landing_turf, backstory)
 
 
 //after spawning
@@ -50,7 +50,7 @@
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
-/datum/round_event/ghost_role/fugitives/proc/gear_fugitive(var/mob/dead/selected) //spawns normal fugitive
+/datum/round_event/ghost_role/fugitives/proc/gear_fugitive(var/mob/dead/selected, var/turf/landing_turf, backstory) //spawns normal fugitive
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = TRUE
 	var/mob/living/carbon/human/S = new(landing_turf)
@@ -74,7 +74,9 @@
 	spawned_mobs += S
 	return S
 
-/datum/round_event/ghost_role/fugitives/proc/gear_special(var/mob/dead/leader, list/spawned_mobs) //spawns the leader of the fugitive group, if they have one.
+/datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(var/mob/dead/leader, list/spawned_mobs, var/turf/landing_turf, backstory) //spawns the leader of the fugitive group, if they have one.
+	var/datum/mind/player_mind = new /datum/mind(leader.key)
+	player_mind.active = TRUE
 	switch(backstory)
 		if("cultist")
 			var/mob/camera/yalp_elor/yalp = new(landing_turf)
@@ -87,6 +89,7 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_security()
+	//WE NEED TO MAKE A SHIP
 	var/list/hunter_choices = list()
 	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
 	if(candidates.len > 4)
@@ -99,3 +102,43 @@
 	for(var/i in 1 to 3)
 		members += pick_n_take(candidates)
 //wip
+	for(var/mob/dead/selected in members)
+		gear_hunter(selected)
+
+	if(!isnull(leader))
+		gear_hunter_leader(leader, spawned_mobs)
+
+/datum/round_event/ghost_role/fugitives/proc/gear_hunter(var/mob/dead/selected) //spawns normal hunter
+	var/datum/mind/player_mind = new /datum/mind(selected.key)
+	player_mind.active = TRUE
+	var/mob/living/carbon/human/S = new(landing_turf)
+	player_mind.transfer_to(S)
+	player_mind.assigned_role = "Fugitive Hunter"
+	player_mind.special_role = "Fugitive Hunter"
+	player_mind.add_antag_datum(/datum/antagonist/fugitive) //they are not antagonists, but will show up roundend to see how they fared (and their origin)
+	var/datum/antagonist/fugitive/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
+	fugitiveantag.greet(backstory)
+
+	switch(backstory)
+		if("prisoner")
+			S.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
+			S.equipOutfit(/datum/outfit/prisoner)
+		if("cultist")
+			S.equipOutfit(/datum/outfit/yalp_cultist)
+		if("waldo")
+			S.equipOutfit(/datum/outfit/waldo)
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")
+	log_game("[key_name(S)] was spawned as a Fugitive by an event.")
+	spawned_mobs += S
+	return S
+
+/datum/round_event/ghost_role/fugitives/proc/gear_hunter_leader(var/mob/dead/leader, list/spawned_mobs) //spawns the leader of the fugitive group, if they have one.
+	switch(backstory)
+		if("cultist")
+			var/mob/camera/yalp_elor/yalp = new(landing_turf)
+			player_mind.transfer_to(yalp)
+			player_mind.assigned_role = "Yalp Elor"
+			player_mind.special_role = "Old God"
+			player_mind.add_antag_datum(/datum/antagonist/fugitive)
+			for(var/mob/living/L in spawned_mobs)
+				yalp.the_faithful += L
