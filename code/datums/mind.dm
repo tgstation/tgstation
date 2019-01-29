@@ -738,5 +738,7 @@
 		return
 	var/spells_to_rot = 0 //how many rot spells to add.
 	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		if(spell.rotten_spell)
+			continue
 		spells_to_rot++
 		RemoveSpell(spell)
