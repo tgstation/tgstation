@@ -14,6 +14,7 @@
 	var/obj/marked_item
 
 	action_icon_state = "summons"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/summonitem/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
