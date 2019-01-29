@@ -33,7 +33,7 @@
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 
 /datum/component/anti_magic/proc/protect(datum/source, mob/user, _magic, _holy, major, self, list/protection_sources)
-	if(((_magic && magic) || (_holy && holy)) && (!self || !blocks_self))
+	if(((_magic && magic) || (_holy && holy)) && (!self || blocks_self))
 		protection_sources += parent
 		if(reaction)
 			reaction.Invoke(user, major)
