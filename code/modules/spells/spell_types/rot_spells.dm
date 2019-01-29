@@ -129,6 +129,9 @@
 
 	action_icon_state = "the_traps_malaise"
 	action_background_icon_state = "bg_rotting"
+
+/obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/post_summon(obj/structure/trap/T, mob/user)
+	.=..()
 	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
