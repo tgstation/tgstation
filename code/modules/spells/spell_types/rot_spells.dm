@@ -129,3 +129,27 @@
 /obj/effect/proc_holder/spell/aoe_turf/forcevomit/cast(list/targets,mob/user = usr)
 	for(var/mob/living/carbon/M in oview(min(3, spell_level), usr))
 		M.vomit()
+		M.mind.rot_mind()
+
+/obj/effect/proc_holder/spell/mark_of_putrescence
+	name = "Mark of putrescence"
+	desc = "While toggled on, summons slippery gibs near the caster and drains their spiritual energy on each cast. Careful, don't slip."
+	charge_max = 10
+	clothes_req = TRUE
+	invocation = "Wosh uress"
+	invocation_type = "whisper"
+	range = 1
+	cooldown_min = 400
+	action_icon_state = "time"
+	clothes_req = FALSE
+	var/toggle = FALSE
+
+
+/obj/effect/proc_holder/spell/mark_of_putrescence/cast()
+	switch(toggle)
+		if(FALSE)
+			toggle = TRUE
+			to_chat(usr, "<span class='warning'>You start attuning yourself to the aetherial plane of filth.</span>")
+		if(TRUE)
+			toggle = FALSE
+			to_chat(usr, "<span class='warning'>You stop channeling the power of miasmatic aether.</span>")
