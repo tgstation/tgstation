@@ -731,3 +731,12 @@
 	..()
 	mind.assigned_role = ROLE_PAI
 	mind.special_role = ""
+
+//ROT SPELLS
+/datum/mind/proc/rot_mind() //most rotten spells also swap the victims spells for more rot spells, this proc handles that.
+	if(!spell_list.len)
+		return
+	var/spells_to_rot = 0 //how many rot spells to add.
+	for(var/obj/effect/proc_holder/spell/spell in spell_list)
+		spells_to_rot++
+		RemoveSpell(spell)
