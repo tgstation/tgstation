@@ -497,7 +497,7 @@ Difficulty: Medium
 	name = "space dragon"
 	maxHealth = 250
 	health = 250
-	desc = "A dangerously territorial creature that lives in space.  Does not take kindly to uninvited guests within its claim."
+	desc = "A space carp turned dragon by vile magic.  Has the same ferocity of a space carp, but also a much more enabling body."
 	obj_damage = 80
 	melee_damage_upper = 35
 	melee_damage_lower = 35
