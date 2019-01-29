@@ -8,6 +8,7 @@
 	invisibility = INVISIBILITY_OBSERVER
 	call_life = TRUE
 	var/lastWarning = 0
+	var/given_acolytes = FALSE //so the life deletes yalp when it runs out of cultists
 	var/list/the_faithful = list() //list of the other fugitives
 
 /mob/camera/yalp_elor/CanPass(atom/movable/mover, turf/target)
@@ -51,13 +52,15 @@
 		return
 	src.log_talk(message, LOG_SAY, tag="fugitive god")
 	to_chat(src, "<span class='cultitalic'><b>Yalp Elor:</b> \"[capitalize(message)]\"</span>")
-	for(var/datum/mind/minds in the_faithful)
-		to_chat(minds.current, "<span class='cultitalic'><b>You feel words from Yalp Elor sink into your mind:</b> \"[capitalize(message)]\"</span>")
-
+	for(var/mob/living/L in the_faithful)
+		to_chat(src, "<span class='cultitalic'><b>Yalp Elor:</b> \"[capitalize(message)]\"</span>")
+//to_chat(minds.current, "<span class='cultitalic'><b>You feel words from Yalp Elor sink into your mind:</b> \"[capitalize(message)]\"</span>")
+//use this for the transmit
 /mob/camera/yalp_elor/Life()
 	..()
-	if(!the_faithful.len)
-		return //probably admin things?
+	if(!the_faithful.len && !given_acolytes)
+		return
+	given_acolytes = TRUE
 	var/safe = FALSE
 	for(var/datum/mind/minds in the_faithful)
 		if(minds.current && minds.current.stat != DEAD)
