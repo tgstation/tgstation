@@ -12,7 +12,7 @@
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
 	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
-	if(candidates.len < 4)
+	if(candidates.len < 4)//reminder to set this after the backstory or enable backstory choices with the amount of candidates
 		return NOT_ENOUGH_PLAYERS
 
 	var/turf/landing_turf = pick(GLOB.xeno_spawn)
@@ -47,6 +47,7 @@
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
 	addtimer(CALLBACK(src, .proc/spawn_security), 6000) //10 minutes
+	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
 /datum/round_event/ghost_role/fugitives/proc/gear_fugitive(var/mob/dead/selected) //spawns normal fugitive
@@ -86,7 +87,15 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_security()
+	var/list/hunter_choices = list()
 	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
-	if(!candidates.len)
-		return
-	//wip
+	if(candidates.len > 4)
+		hunter_choices += "police"
+	if(!hunter_choices.len)
+		return //not enough people to add any kind of team
+	var/hunter_team = pick(hunter_choices)
+	var/leader = pick_n_take(candidates)
+	var/list/members = list()
+	for(var/i in 1 to 3)
+		members += pick_n_take(candidates)
+//wip
