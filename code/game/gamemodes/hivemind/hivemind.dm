@@ -36,6 +36,17 @@
 		return TRUE
 	return FALSE
 
+/mob/living/proc/get_real_hivehost() //Returns src unless it's under mind control, then it returns the original body
+	var/mob/living/M = src
+	if(!M)
+		return
+	if(!is_hivehost(M) || is_real_hivehost(M))
+		return M
+	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in M.mind.spell_list
+	if(the_spell?.active)
+		return the_spell.original_body
+	return M
+
 /proc/is_hivemember(mob/living/M)
 	if(!M)
 		return FALSE

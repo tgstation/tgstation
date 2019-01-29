@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - rscadd: "Adds the cryokinesis and geladikinesis mutations"
-  - bugfix: "Snow walls no longer runtime everything"

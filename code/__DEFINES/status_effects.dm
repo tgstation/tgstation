@@ -99,6 +99,10 @@
 
 #define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //Displays you as being in love with someone else, and makes hearts appear around them.
 
+#define STATUS_EFFECT_HIVE_TRACKER /datum/status_effect/hive_track
+
+#define STATUS_EFFECT_HIVE_RADAR /datum/status_effect/agent_pinpointer/hivemind
+
 /////////////
 //  SLIME  //
 /////////////
