@@ -14,6 +14,7 @@
 	//should have format of list("emagged" = 1,"name" = "Wizard's Justicebot"), for example
 
 	var/cast_sound = 'sound/items/welder.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/cast(list/targets,mob/user = usr)
 	playsound(get_turf(user), cast_sound, 50,1)
