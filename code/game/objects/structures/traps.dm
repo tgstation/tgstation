@@ -160,6 +160,5 @@
 		var/mob/living/carbon/human/nurglevictim = M
 		nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN
 		nurglevictim.adjust_disgust(60)
-	if(!M.mind)
-		return //we've done all we can without a mind
-	M.mind.rot_mind()
+	if(M.mind)
+		M.mind.rot_mind()
