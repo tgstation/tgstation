@@ -116,5 +116,4 @@
 
 	action_icon_state = "the_traps_malaise"
 	action_background_icon_state = "bg_rotting"
-
-  rotten_spell = TRUE
+	rotten_spell = TRUE
