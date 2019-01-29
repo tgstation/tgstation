@@ -1,0 +1,4 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "adamantine armour no longer screws up clothing protection"

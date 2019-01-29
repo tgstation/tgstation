@@ -52,25 +52,22 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 	if(!procname)
 		return
-
-	//hascall() doesn't support proc paths (eg: /proc/gib(), it only supports "gib")
-	var/testname = procname
-	if(targetselected)
-		//Find one of the 3 possible ways they could have written /proc/PROCNAME
-		if(findtext(procname, "/proc/"))
-			testname = replacetext(procname, "/proc/", "")
-		else if(findtext(procname, "/proc"))
-			testname = replacetext(procname, "/proc", "")
-		else if(findtext(procname, "proc/"))
-			testname = replacetext(procname, "proc/", "")
-		//Clear out any parenthesis if they're a dummy
-		testname = replacetext(testname, "()", "")
-
-	if(targetselected && !hascall(target,testname))
-		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no proc named [procname].</font>")
+	
+	//strip away everything but the proc name
+	var/list/proclist = splittext(procname, "/")
+	if (!length(proclist))
+		return
+	procname = proclist[proclist.len]
+	
+	var/proctype = "proc"
+	if ("verb" in proclist)
+		proctype = "verb"
+	
+	if(targetselected && !hascall(target, procname))
+		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no [proctype] named [procname].</font>")
 		return
 	else
-		var/procpath = text2path(procname)
+		var/procpath = text2path("[proctype]/[procname]")
 		if (!procpath)
 			to_chat(usr, "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>")
 			return
