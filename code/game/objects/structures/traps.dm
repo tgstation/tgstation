@@ -139,3 +139,27 @@
 /obj/structure/trap/ward/Initialize()
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
+
+/obj/structure/trap/rot
+	name = "rot trap"
+	desc = "A trap that will spread death and decay. You'd better avoid it."
+	icon_state = "trap-rot"
+
+/obj/structure/trap/rot/trap_effect(mob/living/M)
+	to_chat(M, "<span class='danger'><B>The ground explodes into a cloud of rotting death!</B></span>")
+	M.adjustToxLoss(15)
+	var/turf/T = get_turf(src)
+	if(T)
+		var/datum/effect_system/smoke_spread/bad/smoke = new
+		smoke.set_up(4, T)
+		smoke.start()
+		playsound(T, 'sound/effects/bamf.ogg', 50, 2)
+		T.atmos_spawn_air("miasma=300") //3x as potent as a bolt of rot
+	//mob effects
+	if(ishuman(M))
+		var/mob/living/carbon/human/nurglevictim = M
+		nurglevictim.adjust_hygiene(-150)//this should make you dirty from HYGIENE_LEVEL_NORMAL, and barely alright from HYGIENE_LEVEL_CLEAN
+		nurglevictim.adjust_disgust(60)
+	if(!M.mind)
+		return //we've done all we can without a mind
+	M.mind.rot_mind()
