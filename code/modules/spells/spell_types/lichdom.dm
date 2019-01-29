@@ -19,6 +19,7 @@
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "skeleton"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/lichdom/cast(list/targets,mob/user = usr)
 	for(var/mob/M in targets)
