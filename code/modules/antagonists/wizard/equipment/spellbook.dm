@@ -328,6 +328,12 @@
 	item_path = /obj/item/gun/magic/staff/locker
 	category = "Defensive"
 
+/datum/spellbook_entry/item/staffrot
+	name = "Staff of Rot"
+	desc = "An ultimate in defending yourself against magic users as the bolts rot the spells in their mind to uselessness. Be warned though, they can use the spells you rotted to rot yours!"
+	item_path = /obj/item/gun/magic/staff/rot
+	category = "Defensive"
+
 /datum/spellbook_entry/item/scryingorb
 	name = "Scrying Orb"
 	desc = "An incandescent orb of crackling energy. Using it will allow you to release your ghost while alive, allowing you to spy upon the station and talk to the deceased. In addition, buying it will permanently grant you X-ray vision."
