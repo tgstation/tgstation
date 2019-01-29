@@ -114,7 +114,7 @@
 	action_icon_state = "the_traps_malaise"
 	action_background_icon_state = "bg_rotting"
 
-/obj/effect/proc_holder/spell/aoe_turf/forcevomit
+/obj/effect/proc_holder/spell/targeted/projectile/forcevomit
 	name = "Nauseating emanation"
 	desc = "This spell makes other people's head turn so much, they will feel like throwing up."
 	charge_max = 600
@@ -125,8 +125,33 @@
 	cooldown_min = 400
 	action_icon_state = "time"
 	clothes_req = FALSE
+	//rotten_spell = FALSE
 
-/obj/effect/proc_holder/spell/aoe_turf/forcevomit/cast(list/targets,mob/user = usr)
-	for(var/mob/living/carbon/M in oview(min(3, spell_level), usr))
-		M.vomit()
-		M.mind.rot_mind()
+	proj_icon_state = "forcevomit"
+	proj_name = "a smelly cloud"
+	proj_lingering = 1
+	proj_type = "/obj/effect/proc_holder/spell/targeted/inflict_handler/force_vomit"
+
+	proj_lifespan = 20
+	proj_step_delay = 4
+
+	proj_trail = TRUE
+	proj_trail_lifespan = 7
+	proj_trail_icon_state = "forcevomit"
+
+	action_icon_state = "forcevomit"
+	sound = 'sound/magic/vomit_magic.ogg'
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/force_vomit
+
+/obj/effect/proc_holder/spell/targeted/inflict_handler/force_vomit/cast(list/targets, mob/user = usr)
+	. = ..()
+	var/mob/living/carbon/human/target = targets[1]
+	if (!istype(target))
+		return
+	if (target.anti_magic_check())
+		return
+	var/turf/T = get_turf(src)
+	if(T)
+		T.atmos_spawn_air("miasma=100")
+	target.vomit(30)
