@@ -13,6 +13,7 @@
 	cooldown_min = 30
 	selection_type = "range"
 	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	rotten_spell = TRUE
 
 	action_icon_state = "barn"
 
