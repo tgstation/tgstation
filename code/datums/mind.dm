@@ -747,7 +747,7 @@
 		return
 
 	to_chat(src, "<span class='userdanger'>You feel the spells in your mind corrode and rot!</span>")
-	var/list/all_rot_spells = list("aimed", "traps", "touch", "wall", "mutate", "projectile", "passive"))
+	var/list/all_rot_spells = list("aimed", "traps", "touch", "wall", "mutate", "projectile", "passive")
 	for(var/adding_rot in 1 to spells_to_rot)
 		if(!all_rot_spells.len) //out of rotspells to give, the rest are just gone
 			break
