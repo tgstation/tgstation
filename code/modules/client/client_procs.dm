@@ -273,6 +273,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	var/cev = CONFIG_GET(number/client_error_version)
+	var/ceb = CONFIG_GET(number/client_error_build)
 	var/cwv = CONFIG_GET(number/client_warn_version)
 	if (byond_version < cev)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
@@ -280,6 +281,17 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		to_chat(src, "Your version: [byond_version]")
 		to_chat(src, "Required version: [cev] or later")
 		to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
+		if (connecting_admin)
+			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
+		else
+			qdel(src)
+			return 0
+	else if (byond_build < ceb) //Out of date client.
+		to_chat(src, "<span class='danger'><b>Your build of BYOND is too old:</b></span>")
+		to_chat(src, CONFIG_GET(string/client_error_message))
+		to_chat(src, "Your build: [byond_build]")
+		to_chat(src, "Required build: [ceb] or later")
+		to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest build of BYOND.")
 		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else

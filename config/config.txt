@@ -386,6 +386,8 @@ AUTOADMIN_RANK Game Master
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 511
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the MMB exploit.
+CLIENT_ERROR_BUILD 0
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
