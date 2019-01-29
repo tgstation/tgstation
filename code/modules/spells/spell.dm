@@ -14,6 +14,7 @@
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 	var/base_action = /datum/action/spell_action
+	var/rotten_spell = FALSE //if it will be turned rotten by rotspells
 
 /obj/effect/proc_holder/Initialize()
 	. = ..()
