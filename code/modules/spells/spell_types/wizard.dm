@@ -26,6 +26,7 @@
 
 	action_icon_state = "magicm"
 	sound = 'sound/magic/magic_missile.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/magic_missile
 	amt_knockdown = 60
@@ -49,6 +50,7 @@
 
 	action_icon_state = "mutate"
 	sound = 'sound/magic/mutate.ogg'
+	rotten_spell = TRUE
 
 
 /obj/effect/proc_holder/spell/targeted/smoke
@@ -68,6 +70,7 @@
 	smoke_amt = 4
 
 	action_icon_state = "smoke"
+	rotten_spell = TRUE
 
 
 /obj/effect/proc_holder/spell/targeted/smoke/lesser //Chaplain smoke book
@@ -101,6 +104,7 @@
 	emp_heavy = 6
 	emp_light = 10
 	sound = 'sound/magic/disable_tech.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
 	name = "Blink"
@@ -125,6 +129,7 @@
 	action_icon_state = "blink"
 	sound1 = 'sound/magic/blink.ogg'
 	sound2 = 'sound/magic/blink.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
 	name = "quickstep"
@@ -132,6 +137,7 @@
 	charge_max = 100
 	clothes_req = FALSE
 	clothes_req = TRUE
+	rotten_spell = FALSE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
@@ -150,6 +156,7 @@
 	smoke_amt = 2
 	sound1 = 'sound/magic/teleport_diss.ogg'
 	sound2 = 'sound/magic/teleport_app.ogg'
+	rotten_spell = FALSE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport/santa
 	name = "Santa Teleport"
@@ -157,6 +164,7 @@
 	invocation = "HO HO HO"
 	clothes_req = FALSE
 	say_destination = FALSE // Santa moves in mysterious ways
+	rotten_spell = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	name = "Stop Time"
@@ -171,6 +179,7 @@
 	action_icon_state = "time"
 
 	summon_type = list(/obj/effect/timestop/wizard)
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/carp
 	name = "Summon Carp"
@@ -185,6 +194,7 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/carp)
 	cast_sound = 'sound/magic/summon_karp.ogg'
+	rotten_spell = TRUE
 
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct
@@ -269,6 +279,7 @@
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	action_icon_state = "repulse"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 40)
 	var/list/thrownatoms = list()
@@ -341,6 +352,7 @@
 	selection_type = "view"
 	action_icon_state = "sacredflame"
 	sound = 'sound/magic/fireball.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
