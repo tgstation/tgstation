@@ -20,6 +20,7 @@
 	summon_amt = 5
 
 	action_icon_state = "the_traps"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/post_summon(obj/structure/trap/T, mob/user)
 	T.immune_minds += user.mind
