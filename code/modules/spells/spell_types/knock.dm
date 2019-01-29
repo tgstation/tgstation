@@ -11,6 +11,7 @@
 	cooldown_min = 20 //20 deciseconds reduction per rank
 
 	action_icon_state = "knock"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/knock/cast(list/targets,mob/user = usr)
 	SEND_SOUND(user, sound('sound/magic/knock.ogg'))
