@@ -107,3 +107,47 @@
 	M.Stun(40)
 	M.petrify()
 	return ..()
+
+
+/obj/item/melee/touch_attack/rot
+	name = "\improper putrefying touch"
+	desc = "STOP! Good god man, you almost got the cheese touch."
+	catchphrase = "DECAY IS INESCAPABLE, BUT ALSO GLORIOUS"
+	on_use_sound = 'sound/magic/fleshtostone.ogg'//need sounds for this
+	icon_state = "disease"
+	item_state = "disease"
+
+/obj/item/melee/touch_attack/rot/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
+		return
+	if(!(user.mobility_flags & MOBILITY_USE))
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+		return
+	var/mob/living/M = target
+	to_chat(M, "<span class='userdanger'>The diseased hand touches you...</span>")
+	if(M.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='warning'>Their hand is really gross and slimy, but otherwise you're fine.</span>")
+		..()
+		return
+	if(isflyperson(M))
+		to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='notice'>Their hand has no effect on your form.</span>")
+		..()
+		return
+	if(M.mind)
+		M.mind.rot_mind()
+	if(ishuman(M))
+		to_chat(M, "<span class='userdanger'>Your skin rots and festers, becoming putrefied and leathery!</span>")
+		var/mob/living/carbon/human/nurglevictim = M
+		nurglevictim.adjust_hygiene(-200)//almost always makes you dirty
+		nurglevictim.adjust_disgust(100)//fully disgusts you
+		nurglevictim.set_species(/datum/species/krokodil_addict) //makes you look gross
+		//and you get a disease
+		var/datum/disease/advance/touch_disease = new /datum/disease/advance/random(2,3)
+		touch_disease.name = "Magic Rot"
+		nurglevictim.ForceContractDisease(touch_disease, TRUE, TRUE)
+	return ..()
