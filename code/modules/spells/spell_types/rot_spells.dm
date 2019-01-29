@@ -14,7 +14,6 @@
 	active_msg = "You prepare to cast a bolt of rot!"
 	deactive_msg = "You rinse your Invocation... for now."
 	active = FALSE
-	rotten_spell = TRUE
 
 	action_icon_state = "rotten0"
 	action_background_icon_state = "bg_rotting"
@@ -28,7 +27,6 @@
 	action_icon_state = "rotwall"
 	action_background_icon_state = "bg_rotting"
 	wall_type = /obj/effect/forcefield/rotwall
-	rotten_spell = TRUE
 
 /obj/effect/forcefield/rotwall
 	name = "Rotten Flesh"
@@ -65,7 +63,6 @@
 	desc = "This spell charges your hand with vile energy that can be used to give diseases to a victim."
 	clothes_req = FALSE
 	hand_path = /obj/item/melee/touch_attack/rot
-	rotten_spell = TRUE
 
 	//catchphrase = "DECAY IS INESCAPABLE, BUT ALSO GLORIOUS"
 	school = "evocation"
@@ -116,4 +113,19 @@
 
 	action_icon_state = "the_traps_malaise"
 	action_background_icon_state = "bg_rotting"
-	rotten_spell = TRUE
+
+/obj/effect/proc_holder/spell/aoe_turf/forcevomit
+	name = "Nauseating emanation"
+	desc = "This spell makes other people's head turn so much, they will feel like throwing up."
+	charge_max = 600
+	clothes_req = TRUE
+	invocation = "SU'UR STROM EENG"
+	invocation_type = "shout"
+	range = 1
+	cooldown_min = 400
+	action_icon_state = "time"
+	clothes_req = FALSE
+
+/obj/effect/proc_holder/spell/aoe_turf/forcevomit/cast(list/targets,mob/user = usr)
+	for(var/mob/living/carbon/M in oview(min(3, spell_level), usr))
+		M.vomit()
