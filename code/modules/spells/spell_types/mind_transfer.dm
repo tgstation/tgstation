@@ -13,6 +13,7 @@
 	var/unconscious_amount_victim = 400 //how much the victim is stunned for after the spell
 
 	action_icon_state = "mindswap"
+	rotten_spell = TRUE
 
 /*
 Urist: I don't feel like figuring out how you store object spells so I'm leaving this for you to do.
