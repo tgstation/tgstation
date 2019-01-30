@@ -26,12 +26,13 @@
 
 /mob/living/proc/is_real_hivehost() //This proc ignores mind controlled vessels
 	for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
+		if(!hive.owner?.spell_list)
+			continue
 		var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in hive.owner.spell_list
-		if((!the_spell || !the_spell.active ) && src.mind == hive.owner)
+		if((!the_spell || !the_spell.active ) && mind == hive.owner)
 			return TRUE
-		if(the_spell.active)
-			if(the_spell.original_body == src)
-				return TRUE
+		if(the_spell?.active && the_spell.original_body == src)
+			return TRUE
 	return FALSE
 
 /mob/living/proc/get_real_hivehost() //Returns src unless it's under mind control, then it returns the original body
@@ -45,7 +46,10 @@
 		return the_spell.original_body
 	return M
 
-/proc/is_hivemember(mob/living/M)
+/proc/is_hivemember(mob/living/L)
+	if(!L)
+		return FALSE
+	var/datum/mind/M = L.mind
 	if(!M)
 		return FALSE
 	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
@@ -56,7 +60,6 @@
 /proc/remove_hivemember(mob/living/M) //Removes somebody from all hives as opposed to the antag proc remove_from_hive()
 	if(!M)
 		return
-	if(issilicon(M))
 	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
 		if(H.hivemembers.Find(M))
 			H.hivemembers -= M

@@ -5,13 +5,15 @@
 	job_rank = ROLE_HIVE
 	antag_moodlet = /datum/mood_event/focused
 	var/special_role = ROLE_HIVE
-	var/list/hivemembers = list() //This stores the brains of assimilated vessels
+	var/list/hivemembers = list()
 	var/hive_size = 0
 	var/threat_level = 0 // Part of what determines how strong the radar is, on a scale of 0 to 10
 	var/track_bonus = 0 // Bonus time to your tracking abilities
 	var/size_mod = 0 // Bonus size for using reclaim
 	var/list/individual_track_bonus // Bonus time to tracking individual targets
 	var/unlocked_one_mind = FALSE
+	var/active_one_mind = FALSE
+	var/mutable_appearance/glow
 
 	var/list/upgrade_tiers = list(
 		//Tier 1 - Roundstart powers
@@ -21,7 +23,7 @@
 		/obj/effect/proc_holder/spell/target_hive/hive_shock = 0,
 		/obj/effect/proc_holder/spell/target_hive/hive_warp = 0,
 		//Tier 2 - Tracking related powers
-		/obj/effect/proc_holder/spell/targeted/hive_scan = 5,
+		/obj/effect/proc_holder/spell/self/hive_scan = 5,
 		/obj/effect/proc_holder/spell/targeted/hive_reclaim = 5,
 		/obj/effect/proc_holder/spell/targeted/hive_hack = 5,
 		//Tier 3 - Combat related powers
@@ -35,25 +37,30 @@
 		//Tier 5 - Deadly powers
 		/obj/effect/proc_holder/spell/targeted/induce_sleep = 20,
 		/obj/effect/proc_holder/spell/target_hive/hive_attack = 20
+	)
 
 
 /datum/antagonist/hivemind/proc/calc_size()
 	listclearnulls(hivemembers)
-	var/old_size = hive_size
-	hive_size = get_carbon_members().len
-	if(hive_size != old_size)
+	var/temp = 0
+	for(var/datum/mind/M in hivemembers)
+		if(M.current && M.current.stat != DEAD)
+			temp++
+	if(hive_size != temp)
+		hive_size = temp
 		check_powers()
 
 /datum/antagonist/hivemind/proc/get_threat_multiplier()
 	calc_size()
-	return min(hive_size/50 + threat_level/20, 1)
+	return min((hive_size+size_mod*2)/50 + threat_level/20, 1)
 
 /datum/antagonist/hivemind/proc/get_carbon_members()
-	var/list/carbon_members
-	for(var/organ/internal/brain/X in hivemembers)
-		if(!X.owner)
+	var/list/carbon_members = list()
+	for(var/datum/mind/M in hivemembers)
+		if(!M.current || !iscarbon(M.current))
 			continue
-		carbon_members += X.owner
+		carbon_members += M.current
+	return carbon_members
 
 /datum/antagonist/hivemind/proc/check_powers()
 	for(var/power in upgrade_tiers)
@@ -69,41 +76,51 @@
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
 			if(enemy == src)
 				continue
-			if(enemy.hive_size <= hive_size + size_bonus - 20)
+			if(enemy.hive_size <= hive_size + size_mod - 20)
 				continue
 			lead = FALSE
 			break
 		if(lead)
+			unlocked_one_mind = TRUE
 			owner.AddSpell(new/obj/effect/proc_holder/spell/self/one_mind)
 			to_chat(owner, "<big><span class='assimilator'>Our true power, the One Mind, is finally within reach.</span></big>")
 
-/datum/antagonist/hivemind/proc/add_track_bonus(/datum/antagonist/hivemind/enemy, var/bonus)
+/datum/antagonist/hivemind/proc/add_track_bonus(datum/antagonist/hivemind/enemy, bonus)
 	if(!locate(enemy) in individual_track_bonus)
 		individual_track_bonus[enemy] = bonus
 	else
 		individual_track_bonus[enemy] += bonus
 
-/datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/C)
+/datum/antagonist/hivemind/proc/add_to_hive(mob/living/carbon/C)
+	if(!C)
+		return
 	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
 	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
-		if(is_real_hivehost(C))
+		if(C.is_real_hivehost())
 			var/eject_time = rand(1400,1600) //2.5 minutes +- 10 seconds
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, user_warning), rand(500,1300)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
 			addtimer(CALLBACK(src, .proc/handle_ejection, C), eject_time)
-	var/obj/item/organ/brain/B = H.getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		hivemembers |= B
+	var/datum/mind/M = C.mind
+	if(M)
+		hivemembers |= M
 		calc_size()
 
-/datum/antagonist/hivemind/proc/remove_from_hive(var/mob/living/carbon/C)
-	var/obj/item/organ/brain/B = C.getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		hivemembers -= B
+/datum/antagonist/hivemind/proc/is_carbon_member(mob/living/carbon/C)
+	if(!hivemembers || !C || !iscarbon(C))
+		return FALSE
+	var/datum/mind/M = C.mind
+	if(!M || !hivemembers.Find(M))
+		return FALSE
+	return TRUE
+
+/datum/antagonist/hivemind/proc/remove_from_hive(mob/living/carbon/C)
+	var/datum/mind/M = C.mind
+	if(M)
+		hivemembers -= M
 		calc_size()
 
 /datum/antagonist/hivemind/proc/handle_ejection(mob/living/carbon/C)
 	var/user_warning = "The enemy host has been ejected from our mind"
-
 	if(!C || !owner)
 		return
 	var/mob/living/carbon/C2 = owner.current
@@ -112,11 +129,11 @@
 
 	var/mob/living/real_C = C.get_real_hivehost()
 	var/mob/living/real_C2 = C2.get_real_hivehost()
-	if(is_real_hivehost(C))
+	if(C.is_real_hivehost())
 		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C)
 		real_C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-		to_chat(real_C, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
-	if(is_real_hivehost(C2))
+		to_chat(real_C, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+	if(C2.is_real_hivehost())
 		real_C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C2)
 		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		user_warning += " and we've managed to pinpoint their location"
@@ -129,8 +146,22 @@
 /datum/antagonist/hivemind/antag_panel_data()
 	return "Vessels Assimilated: [hive_size]"
 
-/datum/antagonist/hivemind/on_gain()
+/datum/antagonist/hivemind/proc/awaken()
+	if(!owner?.current)
+		return
+	var/mob/living/carbon/C = owner.current.get_real_hivehost()
+	if(!C)
+		return
+	active_one_mind = TRUE
+	owner.AddSpell(new/obj/effect/proc_holder/spell/self/hive_comms)
+	C.add_trait(TRAIT_STUNIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	C.add_trait(TRAIT_SLEEPIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	C.add_trait(TRAIT_VIRUSIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
+	C.add_trait(TRAIT_NOLIMBDISABLE, HIVEMIND_ONE_MIND_TRAIT)
+	C.add_trait(TRAIT_NOHUNGER, HIVEMIND_ONE_MIND_TRAIT)
+	C.add_trait(TRAIT_NODISMEMBER, HIVEMIND_ONE_MIND_TRAIT)
 
+/datum/antagonist/hivemind/on_gain()
 	owner.special_role = special_role
 	check_powers()
 	forge_objectives()
@@ -171,7 +202,7 @@
 		var/datum/objective/hivemind/hivesize/size_objective = new
 		size_objective.owner = owner
 		objectives += size_objective
-	else if(prob(70)
+	else if(prob(70))
 		var/datum/objective/hivemind/hiveescape/hive_escape_objective = new
 		hive_escape_objective.owner = owner
 		objectives += hive_escape_objective
