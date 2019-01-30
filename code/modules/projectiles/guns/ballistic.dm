@@ -30,7 +30,7 @@
 	var/mag_display = FALSE //Whether the sprite has a visible magazine or not
 	var/mag_display_ammo = FALSE //Whether the sprite has a visible ammo display or not
 	var/empty_indicator = FALSE //Whether the sprite has an indicator for being empty or not.
-	var/empty_alarm = FALSE //Whether the sprite alarms when empty or not.
+	var/empty_alarm = FALSE //Whether the gun alarms when empty or not.
 	var/special_mags = FALSE //Whether the gun supports multiple special mag types
 	var/alarmed = FALSE
 	//Four bolt types:
