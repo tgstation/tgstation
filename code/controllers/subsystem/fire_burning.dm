@@ -27,7 +27,8 @@ SUBSYSTEM_DEF(fire_burning)
 				return
 			continue
 
-		if((O.resistance_flags & ON_FIRE) && !(O.resistance_flags & FIRE_PROOF))
+
+		if(!(O.resistance_flags & FIRE_PROOF))
 			O.take_damage(20, BURN, "fire", 0)
 		else
 			O.extinguish()
