@@ -19,6 +19,9 @@ define('S_MENTIONS', 1<<1);
 define('S_MARKDOWN', 1<<2);
 define('S_HTML_COMMENTS', 1<<3);
 
+define('F_UNVALIDATED_USER', 1<<0);
+define('F_SECRET_PR', 1<<1);
+
 //CONFIGS ARE IN SECRET.PHP, THESE ARE JUST DEFAULTS!
 
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
@@ -41,13 +44,16 @@ $discordWebHooks = array();
 require_once 'secret.php';
 
 //CONFIG END
+function log_error($msg) {
+	echo htmlSpecialChars($msg);
+	file_put_contents('htwebhookerror.log', '['.date(DATE_ATOM).'] '.$msg.PHP_EOL, FILE_APPEND);
+}
 set_error_handler(function($severity, $message, $file, $line) {
 	throw new \ErrorException($message, 0, $severity, $file, $line);
 });
 set_exception_handler(function($e) {
 	header('HTTP/1.1 500 Internal Server Error');
-	echo "Error on line {$e->getLine()}: " . htmlSpecialChars($e->getMessage());
-	file_put_contents('htwebhookerror.log', '['.date(DATE_ATOM).'] '."Error on line {$e->getLine()}: " . $e->getMessage().PHP_EOL, FILE_APPEND);
+	log_error('Error on line ' . $e->getLine() . ': ' . $e->getMessage());
 	die();
 });
 $rawPost = NULL;
@@ -114,6 +120,7 @@ switch (strtolower($_SERVER['HTTP_X_GITHUB_EVENT'])) {
 		print_r($payload); # For debug only. Can be found in GitHub hook log.
 		die();
 }
+
 function apisend($url, $method = 'GET', $content = null, $authorization = null) {
 	if (is_array($content))
 		$content = json_encode($content);
@@ -125,7 +132,7 @@ function apisend($url, $method = 'GET', $content = null, $authorization = null) 
 	
 	$scontext = array('http' => array(
 		'method'		=> $method,
-		'header'		=> implode('\r\n', $headers),
+		'header'		=> implode("\r\n", $headers),
 		'ignore_errors' => true,
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
@@ -136,13 +143,16 @@ function apisend($url, $method = 'GET', $content = null, $authorization = null) 
 	return file_get_contents($url, false, stream_context_create($scontext));
 	
 }
+
 function github_apisend($url, $method = 'GET', $content = NULL) {
 	global $apiKey;
-	apisend($url, $method, $content, 'token ' . $apiKey);
+	return apisend($url, $method, $content, 'token ' . $apiKey);
 }
+
 function discord_webhook_send($webhook, $content) {
-	apisend($webhook, 'POST', $content);
+	return apisend($webhook, 'POST', $content);
 }
+
 function validate_user($payload) {
 	global $validation, $validation_count;
 	$query = array();
@@ -189,7 +199,6 @@ function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_labe
 
 function set_labels($payload, $labels, $remove) {
 	$existing = get_labels($payload);
-
 	$tags = array();
 
 	$tags = array_merge($labels, $existing);
@@ -216,7 +225,7 @@ function tag_pr($payload, $opened) {
 		sleep(10);
 		$payload['pull_request'] = json_decode(github_apisend($url), TRUE);
 	}
-
+	
 	$tags = array();
 	$title = $payload['pull_request']['title'];
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
@@ -417,23 +426,110 @@ function handle_pr($payload) {
 		default:
 			return;
 	} 
-	discord_announce($action, $payload);
+	
+	$pr_flags = 0;
 	if (strpos(strtolower($payload['pull_request']['title']), '[s]') !== false) {
-		echo "PR Announcement Halted; Secret tag detected.\n";
-		return;
+		$pr_flags |= F_SECRET_PR;
 	}
 	if (!$validated) {
-		echo "PR Announcement Halted; User not validated.\n";
-		return;
+		$pr_flags |= F_UNVALIDATED_USER;
 	}
-	game_announce($action, $payload);
+	discord_announce($action, $payload, $pr_flags);
+	game_announce($action, $payload, $pr_flags);
 	
 }
-function game_announce($action, $payload) {
-	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
-	sendtoallservers('?announce='.urlencode($msg), $payload);
+
+function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
+	foreach ($targets as $i=>$target) {
+		if (isset($target['exclude_events']) && in_array($action, array_map('strtolower', $target['exclude_events']))) {
+			unset($targets[$i]);
+			continue;
+		}
+		
+		if (isset($target['announce_secret']) && $target['announce_secret']) {
+			if (!($pr_flags & F_SECRET_PR) && $target['announce_secret'] === 'only') {
+				unset($targets[$i]);
+				continue;
+			}
+		} else if ($pr_flags & F_SECRET_PR) {
+			unset($targets[$i]);
+			continue;
+		}
+		
+		if (isset($target['announce_unvalidated']) && $target['announce_unvalidated']) {
+			if (!($pr_flags & F_UNVALIDATED_USER) && $target['announce_unvalidated'] === 'only') {
+				unset($targets[$i]);
+				continue;
+			}
+		} else if ($pr_flags & F_UNVALIDATED_USER) {
+			unset($targets[$i]);
+			continue;
+		}
+		
+		$wildcard = false;
+		if (isset($target['include_repos'])) {
+			foreach ($target['include_repos'] as $match_string) {
+				$owner_repo_pair = explode('/', strtolower($match_string));
+				if (count($org_repo_pair) != 2) {
+					log_error('Bad include repo: `'. $match_string.'`');
+					continue;
+				}
+				if (strtolower($owner) == $owner_repo_pair[0]) {
+					if (strtolower($repo) == $owner_repo_pair[1])
+						continue 2; //don't parse excludes when we have an exact include match
+					if ($owner_repo_pair[1] == '*') {
+						$wildcard = true;
+						continue; //do parse excludes when we have a wildcard match (but check the other entries for exact matches first)
+					}
+				}
+			}
+			if (!$wildcard) {
+				unset($targets[$i]);
+				continue;
+			}
+		}
+		
+		if (isset($target['exclude_repos']))
+			foreach ($target['exclude_repos'] as $match_string) {
+				$owner_repo_pair = explode('/', strtolower($match_string));
+				if (count($org_repo_pair) != 2) {
+					log_error('Bad exclude repo: `'. $match_string.'`');
+					continue;
+				}
+				if (strtolower($owner) == $owner_repo_pair[0]) {
+					if (strtolower($repo) == $owner_repo_pair[1]) {
+						unset($targets[$i]);
+						continue 2;
+					}
+					if ($owner_repo_pair[1] == '*') {
+						if ($wildcard)
+							log_error('Identical wildcard include and exclude: `'.$match_string.'`. Excluding.');
+						unset($targets[$i]);
+						continue 2;
+					}
+				}
+			}
+	}
+	return $targets;
 }
-function discord_announce($action, $payload) {
+
+function game_announce($action, $payload, $pr_flags) {
+	global $servers;
+	
+	$msg = '['.$payload['pull_request']['base']['repo']['full_name'].'] Pull Request '.$action.' by '.htmlSpecialChars($payload['sender']['login']).': <a href="'.$payload['pull_request']['html_url'].'">'.htmlSpecialChars('#'.$payload['pull_request']['number'].' '.$payload['pull_request']['user']['login'].' - '.$payload['pull_request']['title']).'</a>';
+
+	$game_servers = filter_announce_targets($servers, $payload['pull_request']['base']['repo']['owner']['login'], $payload['pull_request']['base']['repo']['name'], $action, $pr_flags);
+	
+	foreach ($game_servers as $serverid => $server) {
+		$server_message = $msg;
+		if (isset($server['comskey']))
+			$server_message .= '&key='.urlencode($server['comskey']);
+		game_server_send($server['address'], $server['port'], $server_message);
+	}
+
+}
+
+function discord_announce($action, $payload, $pr_flags) {
 	global $discordWebHooks;
 	$color;
 	switch ($action) {
@@ -450,11 +546,14 @@ function discord_announce($action, $payload) {
 		default:
 			return;
 	}
-	$content = array(
+	$data = array(
 		'username' => 'GitHub',
 		'avatar_url' => $payload['pull_request']['base']['user']['avatar_url'],
-		'content' => 'Pull Request #'.$payload['pull_request']['number'].' *'.$action.'* by '.discord_sanitize($payload['sender']['login'])."\n".discord_sanitize($payload['pull_request']['user']['login']).' - __**'.discord_sanitize($payload['pull_request']['title']).'**__'."\n".'<'.$payload['pull_request']['html_url'].'>',
-		'embeds' => array(
+	);
+	
+	$content = 'Pull Request #'.$payload['pull_request']['number'].' *'.$action.'* by '.discord_sanitize($payload['sender']['login'])."\n".discord_sanitize($payload['pull_request']['user']['login']).' - __**'.discord_sanitize($payload['pull_request']['title']).'**__'."\n".'<'.$payload['pull_request']['html_url'].'>';
+	
+	$embeds = array(
 			array(
 				'title' => '__**'.discord_sanitize($payload['pull_request']['title'], S_MARKDOWN).'**__',
 				'description' => discord_sanitize(str_replace(array("\r\n", "\n"), array(' ', ' '), substr($payload['pull_request']['body'], 0, 320)), S_HTML_COMMENTS),
@@ -470,10 +569,17 @@ function discord_announce($action, $payload) {
 					'icon_url' => $payload['pull_request']['base']['user']['avatar_url']
 				)
 			)
-		)
 	);
-	foreach ($discordWebHooks as $discordWebHook)
-		discord_webhook_send($discordWebHook, $content);
+	$discordWebHook_targets = filter_announce_targets($discordWebHooks, $payload['pull_request']['base']['repo']['owner']['login'], $payload['pull_request']['base']['repo']['name'], $action, $pr_flags);
+	foreach ($discordWebHook_targets as $discordWebHook) {
+		$sending_data = $data;
+		if (isset($discordWebHook['embed']) && $discordWebHook['embed']) {
+			$sending_data['embeds'] = $embeds;
+			if (!isset($discordWebHook['no_text']) || !$discordWebHook['no_text'])
+				$sending_data['content'] = $content;
+		}
+		discord_webhook_send($discordWebHook['url'], $sending_data);
+	}
 	
 }
 
@@ -853,22 +959,7 @@ function checkchangelog($payload, $compile = true) {
 	echo github_apisend($payload['pull_request']['base']['repo']['url'].'/contents'.$filename, 'PUT', $content);
 }
 
-function sendtoallservers($str, $payload = null) {
-	global $servers;
-	if (!empty($payload))
-		$str .= '&payload='.urlencode(json_encode($payload));
-	foreach ($servers as $serverid => $server) {
-		$msg = $str;
-		if (isset($server['comskey']))
-			$msg .= '&key='.urlencode($server['comskey']);
-		$rtn = export($server['address'], $server['port'], $msg);
-		echo "Server Number $serverid replied: $rtn\n";
-	}
-}
-
-
-
-function export($addr, $port, $str) {
+function game_server_send($addr, $port, $str) {
 	// All queries must begin with a question mark (ie "?players")
 	if($str{0} != '?') $str = ('?' . $str);
 	
