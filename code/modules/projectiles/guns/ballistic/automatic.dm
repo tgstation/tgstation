@@ -263,20 +263,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user)
-	if(loc != user)
-		..()
-		return	//let them pick it up
-	if(!cover_open || (cover_open && !magazine))
-		..()
-	else if(cover_open && magazine)
-		//drop the mag
-		magazine.update_icon()
-		magazine.forceMove(drop_location())
-		user.put_in_hands(magazine)
-		magazine = null
-		update_icon()
-		to_chat(user, "<span class='notice'>You remove the magazine from [src].</span>")
-		playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
+	if (!cover_open)
+		to_chat("<span class='warning'>[src]'s cover is closed! Open it before trying to remove the magazine!</span>")
+		return
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
