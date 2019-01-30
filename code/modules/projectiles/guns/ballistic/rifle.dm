@@ -8,6 +8,9 @@
     bolt_type = BOLT_TYPE_STANDARD
     semi_auto = FALSE
     internal_magazine = TRUE
+    fire_sound = "sound/weapons/rifleshot.ogg"
+    fire_sound_volume = 80
+    vary_fire_sound = FALSE
     rack_sound = "sound/weapons/mosinboltout.ogg"
     bolt_drop_sound = "sound/weapons/mosinboltin.ogg"
 
