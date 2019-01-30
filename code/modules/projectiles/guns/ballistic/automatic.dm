@@ -238,7 +238,7 @@
 		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/CtrlClick(mob/user)
+/obj/item/gun/ballistic/automatic/l6_saw/AltClick(mob/user)
 	cover_open = !cover_open
 	to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 	if(cover_open)
@@ -266,6 +266,7 @@
 	if (!cover_open)
 		to_chat("<span class='warning'>[src]'s cover is closed! Open it before trying to remove the magazine!</span>")
 		return
+	..()
 
 /obj/item/gun/ballistic/automatic/l6_saw/attackby(obj/item/A, mob/user, params)
 	if(!cover_open && istype(A, mag_type))
