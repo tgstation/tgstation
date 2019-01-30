@@ -549,9 +549,9 @@
 			continue
 		victims += target
 	for(var/mob/living/carbon/victim in victims)
-		victim.AdjustSleeping(max(80,480/victims.len))
+		victim.AdjustSleeping(max(80,240/(1+round(victims.len/3))))
 	for(var/mob/living/silicon/victim in victims)
-		victim.Unconscious(200)
+		victim.Unconscious(240)
 
 /obj/effect/proc_holder/spell/target_hive/hive_attack
 	name = "Medullary Failure"
