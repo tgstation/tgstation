@@ -738,7 +738,6 @@
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "chaos"
 	antimagic_allowed = TRUE
-	var/tumblr_numbr = 1
 
 /obj/effect/proc_holder/spell/self/hive_wake/cast(mob/living/user = usr)
 	var/datum/antagonist/hivemind/hive = user.mind.has_antag_datum(/datum/antagonist/hivemind)
@@ -758,14 +757,14 @@
 			continue
 		valid_targets += C
 
-	if(!valid_targets || valid_targets.len < tumblr_numbr)
+	if(!valid_targets || valid_targets.len < 4)
 		to_chat(user, "<span class='assimilator'>We lack the vessels to use this power.</span>")
 		revert_cast()
 		return
 
 	var/objective = stripped_input(user, "What objective do you want to give to your vessels?", "Objective")
 
-	for(var/i = 0, i < tumblr_numbr, i++)
+	for(var/i = 0, i < 4, i++)
 		var/mob/living/carbon/C = pick_n_take(valid_targets)
 		C.hive_awaken(objective)
 
