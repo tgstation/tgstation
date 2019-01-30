@@ -1,0 +1,4 @@
+author: "BuffEngineering"
+delete-after: True
+changes: 
+  - imageadd: "Pneumatic cannons will now have a tank visible all of the time"
