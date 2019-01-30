@@ -1,4 +1,0 @@
-author: "Zxaber"
-delete-after: True
-changes: 
-  - rscadd: "Mechas now ignore strafe mode and turn if the user is holding Alt."

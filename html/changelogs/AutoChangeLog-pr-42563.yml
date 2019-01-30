@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "geladkinesis snow tiles no longer freeze the station"
