@@ -1,0 +1,6 @@
+author: "py01"
+delete-after: True
+changes: 
+  - bugfix: "Twisted Construction no longer damages the caster if canceled or failed to cast"
+  - bugfix: "Twisted Construction's tool-tip now correctly specifies the amount of metal needed for a construct shell"
+  - refactor: "Blood rite and Twisted Construction code now uses defines instead of magic numbers"
