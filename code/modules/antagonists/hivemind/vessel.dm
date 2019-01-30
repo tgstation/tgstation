@@ -1,8 +1,6 @@
 /datum/team/hivemind
 	name = "One Mind"
 
-/datum/team/hivemind
-
 /datum/antagonist/hivevessel
 	name = "Awoken Vessel"
 	job_rank = ROLE_BRAINWASHED
@@ -10,7 +8,7 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
-	var/datum/team/one_mind
+	var/datum/team/hivemind/one_mind
 	var/mutable_appearance/glow
 
 /mob/living/proc/is_wokevessel()
@@ -24,14 +22,14 @@
 	if(!vessel)
 		vessel = new()
 	if(final_form)
-		vessel.objectives += list() //Reset objectives on re-awoken vessels
+		vessel.objectives = list() //Reset objectives on re-awoken vessels
 		if(ishuman(M.current))
 			vessel.glow = mutable_appearance('icons/effects/hivemind.dmi', "awoken", -BODY_BEHIND_LAYER)
 			M.current.add_overlay(vessel.glow)
 		M.AddSpell(new/obj/effect/proc_holder/spell/self/hive_comms)
 		vessel.one_mind = final_form
 		vessel.one_mind.add_member(M)
-		vessel.objectives |= one_mind.objectives
+		vessel.objectives |= vessel.one_mind.objectives
 	else
 		var/datum/objective/brainwashing/obj = new(objective)
 		vessel.objectives += obj

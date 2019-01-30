@@ -792,7 +792,7 @@
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE5</span>")
 		return
 	the_spell.ignore_mindshield = !active
-	to_chat(user, "<span class='notice'>We [active?"prepare to crush mindshielding technology!":"let our minds rest and cancel our crushing power.}"</span>")
+	to_chat(user, "<span class='notice'>We [active?"let our minds rest and cancel our crushing power.":"prepare to crush mindshielding technology!"]</span>")
 	active = !active
 
 /obj/effect/proc_holder/spell/targeted/forcewall/hive
@@ -860,9 +860,9 @@
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
 	var/mob/living/boss = user.get_real_hivehost()
-	var/datum/objective/objective = "Obey [boss.real_name], leader of the One Mind!"
+	var/datum/objective/objective = "Ensure the One Mind survives under the leadership of [boss.real_name]!"
 	var/datum/team/hivemind/one_mind_team = new /datum/team/hivemind(user.mind)
-	one_mind_team.add_objective(objective)
+	one_mind_team.objectives += objective
 	for(var/datum/antagonist/hivevessel/vessel in GLOB.antagonists)
 		var/mob/living/carbon/C = vessel.owner?.current
 		if(hive.is_carbon_member(C))
