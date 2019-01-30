@@ -23,7 +23,11 @@
 
 	var/mob/living/carbon/target = targets[1]
 
-	if(!(target.type in compatible_mobs))
+	var/compatible_check = FALSE
+	for(var/i in compatible_mobs)
+		if(target.type in typesof(compatible_mobs[i]))
+			compatible_check = TRUE
+	if(!compatible_check)
 		to_chat(user, "<span class='notice'>You are unable to curse [target]'s head!</span>")
 		return
 
