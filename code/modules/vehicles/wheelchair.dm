@@ -104,11 +104,6 @@
 /obj/vehicle/ridden/wheelchair/the_whip/driver_move(mob/living/user, direction)
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
-		if(!H.get_num_arms() && canmove)
-			to_chat(H, "<span class='warning'>You can't move the wheels without arms!</span>")
-			canmove = FALSE
-			addtimer(VARSET_CALLBACK(src, canmove , TRUE), 20)
-			return FALSE
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
 		D.vehicle_move_delay = max(10/H.get_num_arms(), 10/2)
 	..()
