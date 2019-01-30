@@ -102,9 +102,18 @@
 	if(!hive)
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
-	hive.remove_from_hive(target)
+	var/datum/mind/M = target.mind
+	if(!M)
+		revert_cast()
+		return
+	hive.remove_from_hive(M)
 	hive.calc_size()
 	to_chat(user, "<span class='notice'>We remove [target.name] from the hive</span>")
+	if(active_one_mind)
+		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
+		if(woke)
+			active_one_mind.remove_from_team(M)
+			M.remove_antag_datum(/datum/antagonist/hivevessel)
 
 /obj/effect/proc_holder/spell/target_hive/hive_see
 	name = "Hive Vision"
