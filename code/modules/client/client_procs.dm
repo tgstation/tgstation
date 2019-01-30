@@ -699,10 +699,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/ab = FALSE
 	var/list/L = params2list(params)
 
-	if(L["drag"]) //This should disable the Middle Mouse Button exploit.
-		var/dragged = L["drag"]
-		if(!L[dragged])
-			return
+	var/dragged = L["drag"]
+	if(dragged && !L[dragged])
+		return
 
 	if (object && object == middragatom && L["left"])
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
