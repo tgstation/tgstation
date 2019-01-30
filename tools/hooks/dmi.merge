@@ -1,2 +1,0 @@
-#!/bin/bash
-exec tools/hooks/python.sh -m merge_driver_dmi "$@"

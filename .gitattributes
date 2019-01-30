@@ -1,6 +1,0 @@
-# merger hooks, run tools/hooks/install.bat or install.sh to set up
-*.dmm merge=dmm
-*.dmi merge=dmi
-
-# force changelog merging to use union
-html/changelog.html merge=union
