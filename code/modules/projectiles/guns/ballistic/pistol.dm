@@ -12,6 +12,7 @@
 	fire_sound = "sound/weapons/gunshot.ogg"
 	vary_fire_sound = FALSE
 	fire_sound_volume = 80
+	rack_sound = "sound/weapons/pistolrack.ogg"
 	bolt_drop_sound = "sound/weapons/pistolslidedrop.ogg"
 	bolt_wording = "slide"
 

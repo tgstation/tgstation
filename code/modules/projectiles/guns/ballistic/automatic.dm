@@ -9,6 +9,7 @@
 	fire_sound = "sound/weapons/smgshot.ogg"
 	fire_sound_volume = 80
 	vary_fire_sound = FALSE
+	rack_sound = "sound/weapons/smgrack.ogg"
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -215,7 +216,6 @@
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
 	weapon_weight = WEAPON_HEAVY
-	fire_sound = 'sound/weapons/rifleshot.ogg'
 	var/cover_open = FALSE
 	can_suppress = FALSE
 	burst_size = 3
@@ -225,6 +225,8 @@
 	bolt_type = BOLT_TYPE_OPEN
 	mag_display = TRUE
 	mag_display_ammo = TRUE
+	fire_sound = 'sound/weapons/rifleshot.ogg'
+	rack_sound = 'sound/weapons/chunkyrack.ogg'
 
 /obj/item/gun/ballistic/automatic/l6_saw/unrestricted
 	pin = /obj/item/firing_pin

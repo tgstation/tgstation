@@ -12,6 +12,9 @@
 	var/rack_sound = "gun_slide_lock"
 	var/rack_sound_volume = 60
 	var/rack_sound_vary = TRUE
+	var/lock_back_sound = "sound/weapons/pistollock.ogg"
+	var/lock_back_sound_volume = 60
+	var/lock_back_sound_vary = TRUE
 	var/eject_sound = "gun_remove_empty_magazine"
 	var/eject_empty_sound = "gun_remove_full_magazine"
 	var/eject_sound_volume = 40
@@ -128,12 +131,14 @@
 		if (user)
 			to_chat("<span class='notice'>It's already chambered!</span>")
 		return
-	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 	if (user)
 		to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
 	process_chamber(!chambered, FALSE)
 	if (bolt_type == BOLT_TYPE_LOCKING && !chambered)
 		bolt_locked = TRUE
+		playsound(src, lock_back_sound, lock_back_sound_volume, lock_back_sound_vary)
+	else
+		playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
 	update_icon()
 
 /obj/item/gun/ballistic/proc/drop_bolt(mob/user = null)
