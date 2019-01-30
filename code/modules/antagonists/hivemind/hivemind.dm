@@ -12,7 +12,7 @@
 	var/size_mod = 0 // Bonus size for using reclaim
 	var/list/individual_track_bonus // Bonus time to tracking individual targets
 	var/unlocked_one_mind = FALSE
-	var/active_one_mind = FALSE
+	var/datum/team/hivemind/active_one_mind
 	var/mutable_appearance/glow
 
 	var/list/upgrade_tiers = list(
@@ -97,16 +97,18 @@
 /datum/antagonist/hivemind/proc/add_to_hive(mob/living/carbon/C)
 	if(!C)
 		return
-	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
-	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
-		if(C.is_real_hivehost())
-			var/eject_time = rand(1400,1600) //2.5 minutes +- 10 seconds
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, user_warning), rand(500,1300)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
-			addtimer(CALLBACK(src, .proc/handle_ejection, C), eject_time)
 	var/datum/mind/M = C.mind
 	if(M)
 		hivemembers |= M
 		calc_size()
+
+	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
+	if(C.is_real_hivehost())
+		var/eject_time = rand(1400,1600) //2.5 minutes +- 10 seconds
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, user_warning), rand(500,1300)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
+		addtimer(CALLBACK(src, .proc/handle_ejection, C), eject_time)
+	else if(active_one_mind)
+		C.hive_awaken(final_form=active_one_mind)
 
 /datum/antagonist/hivemind/proc/is_carbon_member(mob/living/carbon/C)
 	if(!hivemembers || !C || !iscarbon(C))

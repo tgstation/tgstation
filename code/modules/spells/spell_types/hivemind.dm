@@ -862,6 +862,7 @@
 	var/mob/living/boss = user.get_real_hivehost()
 	var/datum/objective/objective = "Ensure the One Mind survives under the leadership of [boss.real_name]!"
 	var/datum/team/hivemind/one_mind_team = new /datum/team/hivemind(user.mind)
+	hive.active_one_mind = one_mind_team
 	one_mind_team.objectives += objective
 	for(var/datum/antagonist/hivevessel/vessel in GLOB.antagonists)
 		var/mob/living/carbon/C = vessel.owner?.current
