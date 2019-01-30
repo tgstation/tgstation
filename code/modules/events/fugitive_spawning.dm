@@ -57,7 +57,7 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Fugitive"
 	player_mind.special_role = "Fugitive"
-	player_mind.add_antag_datum(/datum/antagonist/fugitive) //they are not antagonists, but will show up roundend to see how they fared (and their origin)
+	player_mind.add_antag_datum(/datum/antagonist/fugitive)
 	var/datum/antagonist/fugitive/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
 	fugitiveantag.greet(backstory)
 
@@ -115,30 +115,16 @@
 	player_mind.transfer_to(S)
 	player_mind.assigned_role = "Fugitive Hunter"
 	player_mind.special_role = "Fugitive Hunter"
-	player_mind.add_antag_datum(/datum/antagonist/fugitive) //they are not antagonists, but will show up roundend to see how they fared (and their origin)
-	var/datum/antagonist/fugitive/fugitiveantag = player_mind.has_antag_datum(/datum/antagonist/fugitive)
+	player_mind.add_antag_datum(/datum/antagonist/fugitive_hunter)
+	var/datum/antagonist/fugitive_hunter/hunterantag = player_mind.has_antag_datum(/datum/antagonist/fugitive_hunter)
 	fugitiveantag.greet(backstory)
 
 	switch(backstory)
-		if("prisoner")
-			S.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
-			S.equipOutfit(/datum/outfit/prisoner)
-		if("cultist")
-			S.equipOutfit(/datum/outfit/yalp_cultist)
-		if("waldo")
-			S.equipOutfit(/datum/outfit/waldo)
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive by an event.")
-	log_game("[key_name(S)] was spawned as a Fugitive by an event.")
+		if("police")
+			S.equipOutfit(/datum/outfit/spacepol)
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive Hunter by an event.")
+	log_game("[key_name(S)] was spawned as a Fugitive Hunter by an event.")
 	spawned_mobs += S
 	return S
 
 /datum/round_event/ghost_role/fugitives/proc/gear_hunter_leader(var/mob/dead/leader, list/spawned_mobs) //spawns the leader of the fugitive group, if they have one.
-	switch(backstory)
-		if("cultist")
-			var/mob/camera/yalp_elor/yalp = new(landing_turf)
-			player_mind.transfer_to(yalp)
-			player_mind.assigned_role = "Yalp Elor"
-			player_mind.special_role = "Old God"
-			player_mind.add_antag_datum(/datum/antagonist/fugitive)
-			for(var/mob/living/L in spawned_mobs)
-				yalp.the_faithful += L

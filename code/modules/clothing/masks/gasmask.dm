@@ -176,7 +176,6 @@
 
 
 /obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
-
 	var/mob/M = usr
 	var/list/options = list()
 	options["Original Tiki"] = "tiki_eyebrow"
@@ -196,4 +195,5 @@
 		return 1
 
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor
-	icon_state = "tiki_yalp" //you can remove this special tiki face if you want
+	icon_state = "tiki_yalp"
+	actions_types = list()

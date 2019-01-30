@@ -45,3 +45,17 @@
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		I.add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/datum/outfit/spacepol
+	name = "Spacepol Officer"
+	uniform = /obj/item/clothing/under/rank/security/spacepol
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
+	head = /obj/item/clothing/head/helmet/police
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/jackboots
+	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
+	glasses = /obj/item/clothing/glasses/sunglasses
+
+	l_pocket = /obj/item/ammo_box/magazine/m45
+	r_pocket = /obj/item/ammo_box/magazine/m45
