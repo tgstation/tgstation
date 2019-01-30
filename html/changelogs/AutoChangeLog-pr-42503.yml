@@ -1,0 +1,5 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "Adds the Paraplegic quirk for -3 points. You start with unhealable leg paralysis
+(persists through cloning), and have a wheelchair to move around the station."
