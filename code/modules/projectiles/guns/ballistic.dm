@@ -269,10 +269,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)
-	if(loc == user)
-		if(magazine && !internal_magazine)
-			eject_magazine(user)
-			return
+	if(!internal_magazine && loc == user && user.is_holding(src) && magazine)
+		eject_magazine(user)
+		return
 	return ..()
 
 /obj/item/gun/ballistic/attack_self(mob/living/user)
