@@ -109,10 +109,10 @@
 	hive.remove_from_hive(M)
 	hive.calc_size()
 	to_chat(user, "<span class='notice'>We remove [target.name] from the hive</span>")
-	if(active_one_mind)
+	if(hive.active_one_mind)
 		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
 		if(woke)
-			active_one_mind.remove_from_team(M)
+			hive.active_one_mind.remove_member(M)
 			M.remove_antag_datum(/datum/antagonist/hivevessel)
 
 /obj/effect/proc_holder/spell/target_hive/hive_see

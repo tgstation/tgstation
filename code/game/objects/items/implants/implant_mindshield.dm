@@ -57,7 +57,7 @@
 			remove_hivemember(target)
 
 		if(woke)
-			woke.one_mind_team.remove_from_team(target.mind)
+			woke.one_mind.remove_member(target.mind)
 			target.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)

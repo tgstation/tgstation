@@ -69,6 +69,8 @@
 /datum/antagonist/hivevessel/on_removal()
 	if(owner?.current && glow)
 		owner.current.cut_overlay(glow)
+	if(one_mind && owner)
+		one_mind.remove_member(owner)
 	..()
 
 /datum/antagonist/hivevessel/farewell()
