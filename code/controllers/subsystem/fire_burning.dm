@@ -28,10 +28,11 @@ SUBSYSTEM_DEF(fire_burning)
 			continue
 
 
-		if(!(O.resistance_flags & FIRE_PROOF))
-			O.take_damage(20, BURN, "fire", 0)
-		else
-			O.extinguish()
+		if(O.resistance_flags & ON_FIRE) //in case an object is extinguished while still in currentrun
+			if(!(O.resistance_flags & FIRE_PROOF))
+				O.take_damage(20, BURN, "fire", 0)
+			else
+				O.extinguish()
 
 		if (MC_TICK_CHECK)
 			return
