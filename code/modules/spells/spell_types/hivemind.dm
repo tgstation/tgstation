@@ -195,7 +195,7 @@
 
 
 /obj/effect/proc_holder/spell/self/hive_scan
-	name = "Psycholocation"
+	name = "Psychoreception"
 	desc = "We release a pulse to receive information on any enemies we have previously located via Network Invasion, as well as those currently tracking us."
 	panel = "Hivemind Abilities"
 	charge_max = 1800
