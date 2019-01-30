@@ -134,7 +134,7 @@
 	tac_reloads = TRUE
 
 
-/obj/item/gun/ballistic/automatic/shotgun/bulldog/unrestricted
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pin = /obj/item/firing_pin
 /////////////////////////////
 // DOUBLE BARRELED SHOTGUN //
