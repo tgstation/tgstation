@@ -1,5 +1,5 @@
 /datum/mutation/human/geladikinesis
-	name = "Geladikinetic Creation"
+	name = "Geladikinesis"
 	desc = "Allows the user to concentrate moisture and sub-zero forces into snow."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your hand feels cold.</span>"
