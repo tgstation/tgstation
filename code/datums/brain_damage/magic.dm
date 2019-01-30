@@ -113,3 +113,66 @@
 	desc = "It's coming closer..."
 	image_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	image_state = "curseblob"
+
+/datum/brain_trauma/magic/beepsky
+	name = "Stalking Phantom"
+	desc = "Patient is stalked by a phantom only they can see."
+	scan_desc = "extra-sensory paranoia"
+	gain_text = "<span class='warning'>You feel like something wants to kill you...</span>"
+	lose_text = "<span class='notice'>You no longer feel eyes on your back.</span>"
+	var/obj/effect/hallucination/simple/stalker_phantom/stalker
+
+/datum/brain_trauma/magic/beepsky/on_gain()
+	create_stalker()
+	..()
+
+/datum/brain_trauma/magic/beepsky/proc/create_stalker()
+	var/turf/stalker_source = locate(owner.x + pick(-12, 12), owner.y + pick(-12, 12), owner.z) //random corner
+	stalker = new(stalker_source, owner)
+	stalker.victim = owner
+
+
+/datum/brain_trauma/magic/beepsky/on_lose()
+	QDEL_NULL(stalker)
+	..()
+
+/datum/brain_trauma/magic/beepsky/on_life()
+	if(get_dist(owner, stalker) >= 10 && prob(20))
+		qdel(stalker)
+		create_stalker()
+	// Dead and unconscious people are not interesting to the psychic stalker.
+	if(owner.stat != CONSCIOUS)
+		return
+
+	// Not even nullspace will keep it at bay.
+	if(!stalker || !stalker.loc || stalker.z != owner.z)
+		qdel(stalker)
+		create_stalker()
+//	stalker.forceMove(get_step_towards(stalker, owner))
+	if(get_dist(owner, stalker) <= 1)
+		playsound(owner, 'sound/voice/beepsky/iamthelaw.ogg', 50)
+		playsound(owner, 'sound/weapons/egloves.ogg', 50)
+		owner.visible_message("<span class='warning'>[owner] is torn apart by invisible claws!</span>", "<span class='userdanger'>Ghostly claws tear your body apart!</span>")
+		owner.take_bodypart_damage(rand(20, 45))
+	if(get_dist(owner, stalker) <= 8)
+		playsound(owner, 'sound/voice/beepsky/criminal.ogg', 40)
+	..()
+
+/obj/effect/hallucination/simple/stalker_phantom
+	name = "???"
+	desc = "It's coming closer..."
+	image_icon = 'icons/mob/aibots.dmi'
+	image_state = "secbot1"
+	var/victim
+
+/obj/effect/hallucination/simple/stalker_phantom/New()
+	name = pick ( "beepsky", "johnson", "officer")
+	START_PROCESSING(SSobj,src)
+	..()
+
+/obj/effect/hallucination/simple/stalker_phantom/process()
+	forceMove(get_step_towards(src, victim))
+
+/obj/effect/hallucination/simple/stalker_phantom/Destroy()
+	STOP_PROCESSING(SSobj,src)
+	return ..()
