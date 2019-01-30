@@ -245,7 +245,7 @@
 	if(cover_open)
 		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
 	else
-		playsound(user, 'sound/weapons/sawclose.ogg', 60, 1)
+		playsound(user, 'sound/weapons/sawopen.ogg', 60, 1)
 	update_icon()
 
 
