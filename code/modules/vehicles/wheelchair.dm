@@ -43,7 +43,7 @@
 			addtimer(VARSET_CALLBACK(src, canmove , TRUE), 20)
 			return FALSE
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		D.vehicle_move_delay = min(10/H.get_num_arms(), 10/2)
+		D.vehicle_move_delay = 10 / min(H.get_num_arms(), 2)
 	..()
 
 /obj/vehicle/ridden/wheelchair/Moved()
@@ -105,5 +105,5 @@
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		D.vehicle_move_delay = max(10/H.get_num_arms(), 10/2)
+		D.vehicle_move_delay = 10 / H.get_num_arms()
 	..()
