@@ -523,13 +523,14 @@
 
 /obj/effect/proc_holder/spell/targeted/induce_sleep
 	name = "Circadian Shift"
-	desc = "We send out a controlled pulse of psionic energy, temporarily causing a deep sleep to anybody in sight, even in silicon-based lifeforms. The fewer people in sight, the more effective this power is."
+	desc = "We send out a controlled pulse of psionic energy, temporarily causing a deep sleep to anybody in sight, even in silicon-based lifeforms. The fewer people in sight, the more effective this power is. The weak mind of a vessels cannot handle this ability, using Mind Control and this at the same time would be most unwise."
 	panel = "Hivemind Abilities"
 	charge_max = 1200
 	range = 7
 	invocation_type = "none"
 	clothes_req = 0
 	max_targets = 0
+	include_user = 1 //Checks for real hivemind hosts during the cast, won't smack you unless using mind control
 	antimagic_allowed = TRUE
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
@@ -653,10 +654,10 @@
 				var/mob/living/real_enemy = (M.current.get_real_hivehost())
 				enemies += real_enemy
 				enemy.remove_from_hive(target)
-				real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, user)
+				real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, user, hive.get_track_bonus(enemy))
 				if(M.current.is_real_hivehost()) //If they were using mind control, too bad
 					real_enemy.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-					target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_enemy)
+					target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_enemy, enemy.get_track_bonus(hive))
 					to_chat(real_enemy, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
 
 			if(enemy.owner == M && target.is_real_hivehost())

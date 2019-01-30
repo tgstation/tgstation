@@ -41,13 +41,14 @@
 			qdel(src)
 			return FALSE
 
+		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
 		if(is_hivemember(target))
 			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
 				if(hive.hivemembers.Find(target))
 					var/mob/living/carbon/C = hive.owner.current.get_real_hivehost()
 					if(C)
-						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target)
-						target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, C)
+						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target, woke?TRACKER_AWAKENED_TIME:TRACKER_MINDSHIELD_TIME)
+						target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, C, TRACKER_DEFAULT_TIME)
 						if(C.mind) //If you were using mind control, too bad
 							C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 							to_chat(C, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
@@ -55,7 +56,6 @@
 			target.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 			remove_hivemember(target)
 
-		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
 		if(woke)
 			target.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 

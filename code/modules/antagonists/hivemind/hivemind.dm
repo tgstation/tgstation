@@ -91,6 +91,9 @@
 	else
 		individual_track_bonus[enemy] += bonus
 
+/datum/antagonist/hivemind/proc/get_track_bonus(datum/antagonist/hivemind/enemy)
+	return TRACKER_DEFAULT_TIME + track_bonus + individual_track_bonus[enemy]
+
 /datum/antagonist/hivemind/proc/add_to_hive(mob/living/carbon/C)
 	if(!C)
 		return
@@ -129,12 +132,14 @@
 
 	var/mob/living/real_C = C.get_real_hivehost()
 	var/mob/living/real_C2 = C2.get_real_hivehost()
-	if(C.is_real_hivehost())
-		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C)
+	var/datum/antagonist/hivemind/hive_C = C.mind.has_antag_datum(/datum/antagonist/hivemind)
+	var/datum/antagonist/hivemind/hive_C2 = C2.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(C != real_C) //Mind control check
+		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C, hive_C.get_track_bonus(hive_C2))
 		real_C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		to_chat(real_C, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
-	if(C2.is_real_hivehost())
-		real_C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C2)
+	if(C2 != real_C2)
+		real_C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C2, hive_C2.get_track_bonus(hive_C) )
 		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		user_warning += " and we've managed to pinpoint their location"
 	to_chat(C2, "<span class='userdanger'>[user_warning]!</span>")
