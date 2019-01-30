@@ -54,12 +54,12 @@
 
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
-	update_icon()
 	if (!spawnwithmagazine)
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
 	chamber_round()
+	update_icon()
 
 /obj/item/gun/ballistic/update_icon()
 	if (QDELETED(src))
