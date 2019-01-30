@@ -16,6 +16,9 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	mag_display = TRUE
 	tac_reloads = TRUE
+	fire_sound = "sound/weapons/smgshot.ogg"
+	fire_sound_volume = 80
+	fire_sound_vary = FALSE
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
