@@ -263,7 +263,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/automatic/l6_saw/attack_hand(mob/user)
-	if (loc != user.loc)
+	if (loc != user)
+		..()
+		return
 	if (!cover_open)
 		to_chat("<span class='warning'>[src]'s cover is closed! Open it before trying to remove the magazine!</span>")
 		return
