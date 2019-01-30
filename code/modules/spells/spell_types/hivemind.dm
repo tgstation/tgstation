@@ -468,7 +468,7 @@
 
 /obj/effect/proc_holder/spell/targeted/induce_panic
 	name = "Induce Panic"
-	desc = "We unleash a burst of psionic energy, inducing a debilitating fear in those around us and reducing their combat readiness. Can affect silicon-based life."
+	desc = "We unleash a burst of psionic energy, inducing a debilitating fear in those around us and reducing their combat readiness. We can also briefly affect silicon-based life with this burst."
 	panel = "Hivemind Abilities"
 	charge_max = 900
 	range = 7
@@ -488,10 +488,10 @@
 	for(var/mob/living/carbon/human/target in targets)
 		if(target.stat == DEAD)
 			continue
+		target.Jitter(14)
+		target.apply_damage(35 + rand(0,15), STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
 		if(target.is_real_hivehost())
 			continue
-		target.Jitter(14)
-		target.apply_damage(40 + rand(0,20), STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
 		if(prob(20))
 			var/text = pick(";HELP!","I'm losing control of the situation!!","Get me outta here!")
 			target.say(text, forced = "panic")
@@ -508,14 +508,14 @@
 				addtimer(CALLBACK(target, "click_random_mob"), 15)
 				addtimer(CALLBACK(target, "click_random_mob"), 20)
 				addtimer(CALLBACK(target, "Stun", 30), 25)
-				target.Dizzy(3)
+				target.Dizzy(6)
 			if(3)
 				to_chat(target, "<span class='userdanger'>You freeze up in fear!</span>")
 				target.Stun(70)
 			if(4)
 				to_chat(target, "<span class='userdanger'>You feel nauseous as dread washes over you!</span>")
 				target.Dizzy(15)
-				target.apply_damage(45, STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
+				target.apply_damage(30, STAMINA, target.get_bodypart(BODY_ZONE_HEAD))
 				target.hallucination += 45
 
 	for(var/mob/living/silicon/target in targets)
@@ -549,7 +549,7 @@
 			continue
 		victims += target
 	for(var/mob/living/carbon/victim in victims)
-		victim.AdjustSleeping(max(80,240/(1+round(victims.len/3))))
+		victim.Sleeping(max(80,240/(1+round(victims.len/3))))
 	for(var/mob/living/silicon/victim in victims)
 		victim.Unconscious(240)
 
