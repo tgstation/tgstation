@@ -6,6 +6,9 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
+	fire_sound = "sound/weapons/smgshot.ogg"
+	fire_sound_volume = 80
+	fire_sound_vary = FALSE
 
 /obj/item/gun/ballistic/automatic/proto
 	name = "\improper Nanotrasen Saber SMG"
@@ -16,9 +19,6 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	mag_display = TRUE
 	tac_reloads = TRUE
-	fire_sound = "sound/weapons/smgshot.ogg"
-	fire_sound_volume = 80
-	fire_sound_vary = FALSE
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
