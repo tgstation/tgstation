@@ -12,6 +12,8 @@
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
+	var/spin_delay = 10
+	var/recent_spin = 0
 
 /obj/item/gun/ballistic/revolver/chamber_round(spin = 1)
 	if(spin)
@@ -36,6 +38,10 @@
 
 	if(M.stat || !in_range(M,src))
 		return
+	
+	if (recent_spin > world.time)
+		return
+	recent_spin = world.time + spin_delay
 
 	if(do_spin())
 		playsound(usr, "revolver_spin", 30, FALSE)
