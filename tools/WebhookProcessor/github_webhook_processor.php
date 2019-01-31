@@ -577,6 +577,8 @@ function discord_announce($action, $payload, $pr_flags) {
 			$sending_data['embeds'] = $embeds;
 			if (!isset($discordWebHook['no_text']) || !$discordWebHook['no_text'])
 				$sending_data['content'] = $content;
+		} else {
+			$sending_data['content'] = $content;
 		}
 		discord_webhook_send($discordWebHook['url'], $sending_data);
 	}
