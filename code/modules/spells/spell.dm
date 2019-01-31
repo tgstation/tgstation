@@ -550,3 +550,30 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
 	user.adjustBruteLoss(-10)
 	user.adjustFireLoss(-10)
+
+
+//Passive spells: new addition, might be useful when someone wants to make some new spells like this
+/obj/effect/proc_holder/spell/passive
+	charge_max = 0
+	cooldown_min = 0
+	var/toggle = FALSE
+	var/on_message = ""
+	var/off_message = ""
+
+//Always skip charge
+/obj/effect/proc_holder/spell/passive/charge_check(skipcharge = 1,mob/user = usr)
+	return TRUE
+
+/obj/effect/proc_holder/spell/passive/choose_targets(mob/user = usr)
+	perform(null,user)
+
+/obj/effect/proc_holder/spell/passive/perform()
+	to_chat(world,"perform called")
+	switch(toggle)
+		if(FALSE)
+			toggle = TRUE
+			invocation(usr)
+			to_chat(usr, "<span class='warning'>[on_message]</span>")
+		if(TRUE)
+			toggle = FALSE
+			to_chat(usr, "<span class='warning'>[off_message]</span>")
