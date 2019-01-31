@@ -107,5 +107,5 @@
 	var/mob/living/carbon/human/H = user
 	if(istype(H))
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		D.vehicle_move_delay = 10 / H.get_num_arms()
+		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / H.get_num_arms()
 	..()
