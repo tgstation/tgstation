@@ -180,32 +180,22 @@
 	if(mop)
 		mop.boost_spell(user)
 
-/obj/effect/proc_holder/spell/mark_of_putrescence
+/obj/effect/proc_holder/spell/passive/mark_of_putrescence
 	name = "Mark of putrescence"
 	desc = "While toggled on, summons slippery gibs near the caster and drains their spiritual energy on each cast. Careful, don't slip."
-	charge_max = 10
 	clothes_req = TRUE
 	invocation = "Wosh uress"
 	invocation_type = "whisper"
-	range = 1
-	cooldown_min = 400
 	action_icon_state = "time"
 	clothes_req = FALSE
 	action_icon = 'icons/obj/hand_of_god_structures.dmi'
 	action_icon_state = "trap-rot"
-	var/toggle = FALSE
+	on_message = "You start attuning yourself to the aetherial plane of filth."
+	off_message = "You stop channeling the power of miasmatic aether."
 
 
-/obj/effect/proc_holder/spell/mark_of_putrescence/cast()
-	switch(toggle)
-		if(FALSE)
-			toggle = TRUE
-			to_chat(usr, "<span class='warning'>You start attuning yourself to the aetherial plane of filth.</span>")
-		if(TRUE)
-			toggle = FALSE
-			to_chat(usr, "<span class='warning'>You stop channeling the power of miasmatic aether.</span>")
-
-/obj/effect/proc_holder/spell/mark_of_putrescence/proc/boost_spell(mob/user = usr)
+/obj/effect/proc_holder/spell/passive/mark_of_putrescence/boost_spell(mob/user = usr)
+	to_chat(world,"cast called")
 	if(!toggle)
 		return
 
@@ -214,13 +204,13 @@
 	if(prob(10))
 		spawningturf = get_turf(get_step(user.loc,user.dir))
 	else
-		spawningturf = get_turf(src.loc)
+		spawningturf = get_turf(user.loc)
 
 	//Spawn a nasty foam puddle
-	var/datum/reagents/R = new/datum/reagents(30)
+	var/datum/reagents/R = new/datum/reagents(10)
 	R.my_atom = spawningturf
-	R.add_reagent("liquidgibs", 15)
-	R.add_reagent("vomit", 15)
+	R.add_reagent("liquidgibs", 5)
+	R.add_reagent("vomit", 5)
 	var/datum/effect_system/foam_spread/foam = new()
 	foam.set_up(1, spawningturf, R)
 	foam.start()
@@ -230,4 +220,4 @@
 
 	//Get faster reload for spells
 	for(var/obj/effect/proc_holder/spell/s in usr.mind.spell_list)
-		s.charge_counter += 5
+		s.charge_counter += 50
