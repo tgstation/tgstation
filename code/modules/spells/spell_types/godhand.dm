@@ -151,7 +151,7 @@
 		touch_disease.name = "Magic Rot"
 		nurglevictim.ForceContractDisease(touch_disease, TRUE, TRUE)
 	
-	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
 	return ..()
