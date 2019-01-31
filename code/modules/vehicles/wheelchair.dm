@@ -48,16 +48,6 @@
 		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / min(H.get_num_arms(), 2)
 	..()
 
-10 / 2 = 5
-
-10 / 1 = 10
-
-1.5 / 2 = 0.75
-
-1.5 / 1 = 1.5
-
-(<some constant> * CONFIG_GET(number/<whatever>))
-
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	cut_overlays()
