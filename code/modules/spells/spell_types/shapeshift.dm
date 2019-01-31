@@ -10,6 +10,7 @@
 	invocation = "RAC'WA NO!"
 	invocation_type = "shout"
 	action_icon_state = "shapeshift"
+	rotten_spell = TRUE
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
@@ -78,7 +79,8 @@
 	desc = "Take on the shape a lesser ash drake."
 	invocation = "RAAAAAAAAWR!"
 	convert_damage = FALSE
-	
+	rotten_spell = TRUE
+
 
 	shapeshift_type = /mob/living/simple_animal/hostile/megafauna/dragon/lesser
 
