@@ -48,7 +48,7 @@
 	icon_state = "chronogun"
 	item_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -58,6 +58,7 @@
 
 /obj/item/gun/energy/chrono_gun/Initialize()
 	. = ..()
+	add_trait(TRAIT_NODROP, CHRONO_GUN_TRAIT)
 	if(istype(loc, /obj/item/chrono_eraser))
 		TED = loc
 	else //admin must have spawned it
@@ -244,7 +245,7 @@
 		if(Pgun && istype(Pgun))
 			Pgun.field_connect(src)
 	else
-		return 0
+		return BULLET_ACT_HIT
 
 /obj/structure/chrono_field/assume_air()
 	return 0

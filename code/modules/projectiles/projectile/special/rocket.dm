@@ -6,7 +6,7 @@
 /obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 2)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/a84mm
 	name ="\improper HEDP rocket"
@@ -27,7 +27,7 @@
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
 		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/a84mm_he
 	name ="\improper HE rocket"
@@ -42,4 +42,4 @@
 		explosion(target, 0, 1, 2, 4)
 	else
 		explosion(target, 0, 0, 2, 4)
-	return TRUE
+	return BULLET_ACT_HIT

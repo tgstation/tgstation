@@ -70,7 +70,14 @@
 		/obj/item/stack/sheet/cloth	                = /datum/species/golem/cloth,
 		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
 		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic,
-		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork)
+		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork,
+		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
+		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
+		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
+		/obj/item/stack/sheet/bone					= /datum/species/golem/bone,
+		/obj/item/stack/sheet/cotton/durathread		= /datum/species/golem/durathread,
+		/obj/item/stack/sheet/capitalisium			= /datum/species/golem/capitalist,
+		/obj/item/stack/sheet/stalinium				= /datum/species/golem/soviet)
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/O = I

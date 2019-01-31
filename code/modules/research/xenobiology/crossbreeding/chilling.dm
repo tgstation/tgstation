@@ -188,6 +188,7 @@ Chilling extracts:
 /obj/item/slimecross/chilling/sepia/do_effect(mob/user)
 	user.visible_message("<span class='warning'>[src] shatters, freezing time itself!</span>")
 	new /obj/effect/timestop(get_turf(user), 2, 300, allies)
+	..()
 
 /obj/item/slimecross/chilling/cerulean
 	colour = "cerulean"

@@ -188,6 +188,25 @@
 	text_gain_indication = "<span class='notice'>You feel strong.</span>"
 	difficulty = 16
 
+/datum/mutation/human/insulated
+	name = "Insulated"
+	desc = "The affected person does not conduct electricity."
+	quality = POSITIVE
+	text_gain_indication = "<span class='notice'>Your fingertips go numb.</span>"
+	text_lose_indication = "<span class='notice'>Your fingertips regain feeling.</span>"
+	difficulty = 16
+	instability = 25
+
+/datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.add_trait(TRAIT_SHOCKIMMUNE, "genetics")
+
+/datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.remove_trait(TRAIT_SHOCKIMMUNE, "genetics")
+
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
 	desc = "The user's skin will randomly combust, but is generally alot more resilient to burning."
