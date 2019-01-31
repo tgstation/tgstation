@@ -445,3 +445,26 @@
 		M.emote(pick("twitch","laugh","frown"))
 	..()
 	. = 1
+/datum/reagent/drug/synthetic_cocaine
+	name = "Synthetic Cocaine"
+	id = "synthetic_cocaine"
+	description = "Reduces stun times and increases movement speed, as well as stopping movement slowdown from damage. Highly addictive."
+	reagent_state = LIQUID
+	color = "#E6FFFF"
+	addiction_threshold = 15
+	overdose_threshold = 20
+	
+/datum/reagent/drug/synthetic_cocaine/on_mob_add(mob/living/M)
+	M.AdjustStun(-20, FALSE)
+	M.AdjustKnockdown(-20, FALSE)
+	M.AdjustUnconscious(-30, FALSE)
+	M.AdjustParalyzed(-30, FALSE)
+	M.AdjustImmobilized(-30, FALSE)
+	M.adjustStaminaLoss(-2, 0)
+	
+	
+	
+	
+	
+	
+	
