@@ -89,7 +89,7 @@
 			new /obj/item/sbeacondrop/powersink(src)
 			new /obj/item/cartridge/virus/syndicate(src)
 			new /obj/item/storage/toolbox/syndicate(src) //To actually get to those places
-			new /obj/item/pizzabox/bomb
+			new /obj/item/pizzabox/bomb(src)
 
 		if("darklord") //20 tc + tk + summon item close enough for now
 			new /obj/item/twohanded/dualsaber(src)
@@ -139,7 +139,7 @@
 			new /obj/item/megaphone(src) // 0 tc (because how else are they to know you're mad?)
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?
-			new /obj/item/grenade/bioterrorfoam(src) // 5 tc
+			new /obj/item/grenade/chem_grenade/bioterrorfoam(src) // 5 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
 			new /obj/item/assembly/signaler(src) // 0 tc
