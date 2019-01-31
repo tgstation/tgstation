@@ -153,7 +153,7 @@
 		return
 	var/datum/objective/eldergod/summon_objective = locate() in antag.cult_team.objectives
 	var/area/place = get_area(owner)
-	if(place in summon_objective.summon_spots)
+	if(place in summon_objective?.summon_spots)
 		to_chat(owner, "<span class='danger'>The energy from the Nar-Sie ritual site is interfering with this spell!</span>")
 		return
 	for(var/i in 1 to 4)
