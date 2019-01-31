@@ -156,7 +156,7 @@
 	smoke_amt = 2
 	sound1 = 'sound/magic/teleport_diss.ogg'
 	sound2 = 'sound/magic/teleport_app.ogg'
-	rotten_spell = FALSE
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport/santa
 	name = "Santa Teleport"
@@ -228,6 +228,7 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/trigger/blind
 	name = "Blind"
@@ -244,6 +245,7 @@
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind","/obj/effect/proc_holder/spell/targeted/genetic/blind")
 
 	action_icon_state = "blind"
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
@@ -331,6 +333,7 @@
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 	anti_magic_check = FALSE
+	rotten_spell = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
@@ -370,6 +373,7 @@
 	clothes_req = TRUE
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
+	rotten_spell = TRUE
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket/cast(list/targets, mob/user = usr)
 	..()
