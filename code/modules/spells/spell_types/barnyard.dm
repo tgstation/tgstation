@@ -12,7 +12,7 @@
 	range = 7
 	cooldown_min = 30
 	selection_type = "range"
-	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	var/list/compatible_mobs_typecache = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 
 	action_icon_state = "barn"
 
@@ -23,11 +23,8 @@
 
 	var/mob/living/carbon/target = targets[1]
 
-	var/compatible_check = FALSE
-	for(var/i in compatible_mobs)
-		if(target.type in typesof(compatible_mobs[i]))
-			compatible_check = TRUE
-	if(!compatible_check)
+
+	if(!is_type_in_typecache(target, compatible_mobs_typecache))
 		to_chat(user, "<span class='notice'>You are unable to curse [target]'s head!</span>")
 		return
 
