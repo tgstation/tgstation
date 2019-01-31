@@ -174,7 +174,14 @@
 	if(T)
 		T.atmos_spawn_air("miasma=40")
 	target.vomit(30)
-	target.
+	var/datum/reagents/R = new/datum/reagents(15)
+	R.add_reagent("skewium", 3)
+	R.add_reagent("rotatium", 3)
+	R.add_reagent("ethanol", 9)
+	R.reaction(target, INJECT, 15)
+	if(target.reagents)
+		var/trans = R.trans_to(target, R.total_volume)
+
 	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
