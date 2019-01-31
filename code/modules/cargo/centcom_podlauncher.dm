@@ -569,9 +569,9 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		selector.moveToNullspace() //Otherwise, we move the selector to nullspace until it is needed again
 
 /datum/centcom_podlauncher/proc/clearBay() //Clear all objs and mobs from the selected bay
-	for (var/obj/O in bay.getAllContents())
+	for (var/obj/O in bay.GetAllContents())
 		qdel(O)
-	for (var/mob/M in bay.getAllContents())
+	for (var/mob/M in bay.GetAllContents())
 		qdel(M)
 
 /datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game
