@@ -43,8 +43,20 @@
 			addtimer(VARSET_CALLBACK(src, canmove , TRUE), 20)
 			return FALSE
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		D.vehicle_move_delay = 10 / min(H.get_num_arms(), 2)
+		//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
+		//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
+		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / min(H.get_num_arms(), 2)
 	..()
+
+10 / 2 = 5
+
+10 / 1 = 10
+
+1.5 / 2 = 0.75
+
+1.5 / 1 = 1.5
+
+(<some constant> * CONFIG_GET(number/<whatever>))
 
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
