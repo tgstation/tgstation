@@ -16,6 +16,8 @@
 
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "soultap"
+	rotten_spell = TRUE
+
 
 /obj/effect/proc_holder/spell/self/tap/cast(mob/living/user = usr)
 	if(!user.mind.hasSoul)
