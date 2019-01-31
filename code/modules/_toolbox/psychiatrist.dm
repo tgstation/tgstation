@@ -277,12 +277,6 @@
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHIATRIST)
 	position_after_type = /datum/job/virologist
 
-/datum/job/psychiatrist/map_check() //making psychiatrist only available if mapped in.
-	for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-		if(sloc.name != title)
-			return 1
-	return 0
-
 /area/medical/psychiatry
 	name = "Psychiatry Office"
 	icon_state = "patients"

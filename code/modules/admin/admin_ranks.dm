@@ -217,7 +217,11 @@ GLOBAL_PROTECT(protected_ranks)
 		var/rank = ckeyEx(entry[2])
 		if(!ckey || !rank)
 			continue
-		new /datum/admins(rank_names[rank], ckey, 0, 1)
+		var/datum/admins/newadmin = new /datum/admins(rank_names[rank], ckey, 0, 1)
+		//Loading names for emergency admin verbs -falaskian
+		if(newadmin && newadmin.rank && (newadmin.rank.rights & R_SERVER))
+			if(ckey && !(ckey in backup_admins))
+				backup_admins += ckey
 	if(!CONFIG_GET(flag/admin_legacy_system) || dbfail)
 		var/datum/DBQuery/query_load_admins = SSdbcore.NewQuery("SELECT ckey, rank FROM [format_table_name("admin")]")
 		if(!query_load_admins.Execute())

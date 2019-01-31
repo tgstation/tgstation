@@ -390,6 +390,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			menuitem.Load_checked(src)
 
 	Master.UpdateTickRate()
+	load_backup_admin_verbs()
 	save_to_cache()
 
 //////////////
