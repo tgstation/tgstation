@@ -578,5 +578,5 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			toggle = FALSE
 			to_chat(usr, "<span class='warning'>[off_message]</span>")
 
-/obj/effect/proc_holder/spell/passive/boost_spell(mob/user = usr)
+/obj/effect/proc_holder/spell/passive/proc/boost_spell(mob/user = usr)
 	return
