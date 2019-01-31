@@ -117,7 +117,8 @@
 	player_mind.special_role = "Fugitive Hunter"
 	player_mind.add_antag_datum(/datum/antagonist/fugitive_hunter)
 	var/datum/antagonist/fugitive_hunter/hunterantag = player_mind.has_antag_datum(/datum/antagonist/fugitive_hunter)
-	fugitiveantag.greet(backstory)
+	hunterantag.backstory = backstory
+	hunterantag.greet(backstory)
 
 	switch(backstory)
 		if("police")

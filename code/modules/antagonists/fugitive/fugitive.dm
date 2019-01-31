@@ -6,6 +6,7 @@
 	roundend_category = "Fugitive"
 	silent = TRUE //greet called by the event
 	var/datum/team/fugitive/fugitive_team
+	var/is_captured = FALSE
 
 /datum/antagonist/fugitive/greet(backstory)
 	to_chat(owner, "<span class='boldannounce'>You are the Fugitive!</span>")
@@ -33,7 +34,6 @@
 				fugitive_team = H.fugitive_team
 				return
 		fugitive_team = new /datum/team/fugitive
-		//might not even be needed, we'll see - fugitive_team.update_objectives()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
@@ -41,10 +41,6 @@
 
 /datum/antagonist/fugitive/get_team()
 	return fugitive_team
-
-/datum/team/fugitive/roundend_report()
-
-/datum/team/fugitive/roundend_report()
 
 /datum/team/fugitive/roundend_report() //shows the number of fugitives, but not if they won in case there is no security
 	if(!members.len)
