@@ -44,7 +44,7 @@
 		if(rune)
 			to_chat(owner, "<span class='cultitalic'>You cannot store more than [MAX_BLOODCHARGE] spells. <b>Pick a spell to remove.</b></span>")
 		else
-			to_chat(owner, "<span class='cultitalic'><b><u>You store more than [RUNELESS_MAX_BLOODCHARGE] spells without an empowering rune! Pick a spell to remove.</b></u></span>")
+			to_chat(owner, "<span class='cultitalic'><b><u>You cannot store more than [RUNELESS_MAX_BLOODCHARGE] spells without an empowering rune! Pick a spell to remove.</b></u></span>")
 		var/nullify_spell = input(owner, "Choose a spell to remove.", "Current Spells") as null|anything in spells
 		if(nullify_spell)
 			qdel(nullify_spell)
@@ -325,7 +325,7 @@
 
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
-	desc = "Empowers your hand to absorb blood, or heal a cultist on contact. Use the spell in-hand to cast advanced rites. Examine in-hand for more info."
+	desc = "Empowers your hand to absorb blood to be used for advanced rites, or heal a cultist on contact. Use the spell in-hand to cast advanced rites. Examine in-hand for more info."
 	invocation = "Fel'th Dol Ab'orod!"
 	button_icon_state = "manip"
 	charges = 5
@@ -651,7 +651,7 @@
 
 /obj/item/melee/blood_magic/manipulator
 	name = "Blood Rite Aura"
-	desc = "Absorbs blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Use in-hand to cats an advanced rite.</b>"
+	desc = "Absorbs blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Use in-hand to cast an advanced rite.</b>"
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
@@ -813,3 +813,4 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
+						
