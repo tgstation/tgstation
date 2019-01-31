@@ -20,7 +20,7 @@
 
 /obj/effect/proc_holder/spell/aimed/canker/cast(list/targets, mob/living/user)
 	..()
-	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
 	
@@ -37,7 +37,7 @@
 
 /obj/effect/proc_holder/spell/targeted/forcewall/rotwall/cast(list/targets,mob/user = usr)
 	..()
-	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
 
@@ -52,7 +52,7 @@
 	wizard = summoner
 	var/turf/T = get_turf(src)
 	if(T)
-		T.atmos_spawn_air("miasma=100")
+		T.atmos_spawn_air("miasma=40")
 
 /obj/effect/forcefield/rotwall/CanPass(atom/movable/mover, turf/target)
 	if(mover == wizard)
@@ -114,7 +114,7 @@
 		to_chat(user, "<span class='notice'>Your form becomes that of a fly. Recast to gain powers!</span>")
 	else
 		..()
-	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
 
@@ -132,7 +132,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps/post_summon(obj/structure/trap/T, mob/user)
 	.=..()
-	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
 
@@ -163,8 +163,6 @@
 
 	sound = 'sound/magic/magic_missile.ogg'
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/force_vomit
-
 /obj/effect/proc_holder/spell/targeted/inflict_handler/force_vomit/cast(list/targets, mob/user = usr)
 	. = ..()
 	var/mob/living/carbon/human/target = targets[1]
@@ -174,20 +172,20 @@
 		return
 	var/turf/T = get_turf(src)
 	if(T)
-		T.atmos_spawn_air("miasma=100")
+		T.atmos_spawn_air("miasma=40")
 	target.vomit(30)
-	var/obj/effect/proc_holder/spell/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/mark_of_putrescence) in user.mind.spell_list
+	target.
+	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
 		mop.boost_spell(user)
 
-/obj/effect/proc_holder/spell/passive/mark_of_putrescence
+/obj/effect/proc_holder/spell/passive/passive/mark_of_putrescence
 	name = "Mark of putrescence"
 	desc = "While toggled on, summons slippery gibs near the caster and drains their spiritual energy on each cast. Careful, don't slip."
 	clothes_req = TRUE
 	invocation = "Wosh uress"
 	invocation_type = "whisper"
 	action_icon_state = "time"
-	clothes_req = FALSE
 	action_icon = 'icons/obj/hand_of_god_structures.dmi'
 	action_icon_state = "trap-rot"
 	on_message = "You start attuning yourself to the aetherial plane of filth."
@@ -207,17 +205,17 @@
 		spawningturf = get_turf(user.loc)
 
 	//Spawn a nasty foam puddle
-	var/datum/reagents/R = new/datum/reagents(10)
+	var/datum/reagents/R = new/datum/reagents(50)
 	R.my_atom = spawningturf
-	R.add_reagent("liquidgibs", 5)
-	R.add_reagent("vomit", 5)
-	var/datum/effect_system/foam_spread/foam = new()
+	R.add_reagent("liquidgibs", 25)
+	R.add_reagent("vomit", 25)
+	var/datum/effect_system/foam_spread/foam = new(amount = 1)
 	foam.set_up(1, spawningturf, R)
 	foam.start()
 
 	//Add a bit of miasma
-	spawningturf.atmos_spawn_air("miasma=50")
+	spawningturf.atmos_spawn_air("miasma=40")
 
 	//Get faster reload for spells
 	for(var/obj/effect/proc_holder/spell/s in usr.mind.spell_list)
-		s.charge_counter += 50
+		s.charge_counter = min(s.charge_max,s.charge_counter+50)
