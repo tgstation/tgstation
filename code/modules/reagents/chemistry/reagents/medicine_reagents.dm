@@ -293,7 +293,37 @@
 
 
 /datum/reagent/medicine/styptic_powder/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-2*REM, 0)
+	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
+	M.setCloneLoss(0, 0)
+	M.setOxyLoss(0, 0)
+	M.radiation = 0
+	M.heal_bodypart_damage(5,5)
+	M.adjustToxLoss(-5, 0, TRUE)
+	M.hallucination = 0
+	M.setBrainLoss(0)
+	M.remove_all_traits()
+	M.set_blurriness(0)
+	M.set_blindness(0)
+	M.SetKnockdown(0, FALSE)
+	M.SetStun(0, FALSE)
+	M.SetUnconscious(0, FALSE)
+	M.SetParalyzed(0, FALSE)
+	M.SetImmobilized(0, FALSE)
+	M.silent = FALSE
+	M.dizziness = 0
+	M.disgust = 0
+	M.drowsyness = 0
+	M.stuttering = 0
+	M.slurring = 0
+	M.confused = 0
+	M.SetSleeping(0, 0)
+	M.jitteriness = 0
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/thing in M.diseases)
+		var/datum/disease/D = thing
+		if(D.severity == DISEASE_SEVERITY_POSITIVE)
+			continue
+		D.cure()
 	..()
 	. = 1
 
@@ -406,12 +436,39 @@
 	taste_description = "ash"
 
 /datum/reagent/medicine/charcoal/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-2*REM, 0)
-	. = 1
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.id,1)
+	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
+	M.setCloneLoss(0, 0)
+	M.setOxyLoss(0, 0)
+	M.radiation = 0
+	M.heal_bodypart_damage(5,5)
+	M.adjustToxLoss(-5, 0, TRUE)
+	M.hallucination = 0
+	M.setBrainLoss(0)
+	M.remove_all_traits()
+	M.set_blurriness(0)
+	M.set_blindness(0)
+	M.SetKnockdown(0, FALSE)
+	M.SetStun(0, FALSE)
+	M.SetUnconscious(0, FALSE)
+	M.SetParalyzed(0, FALSE)
+	M.SetImmobilized(0, FALSE)
+	M.silent = FALSE
+	M.dizziness = 0
+	M.disgust = 0
+	M.drowsyness = 0
+	M.stuttering = 0
+	M.slurring = 0
+	M.confused = 0
+	M.SetSleeping(0, 0)
+	M.jitteriness = 0
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/thing in M.diseases)
+		var/datum/disease/D = thing
+		if(D.severity == DISEASE_SEVERITY_POSITIVE)
+			continue
+		D.cure()
 	..()
+	. = 1
 
 /datum/reagent/medicine/omnizine
 	name = "Omnizine"
@@ -519,9 +576,37 @@
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/salbutamol/on_mob_life(mob/living/carbon/M)
-	M.adjustOxyLoss(-3*REM, 0)
-	if(M.losebreath >= 4)
-		M.losebreath -= 2
+	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
+	M.setCloneLoss(0, 0)
+	M.setOxyLoss(0, 0)
+	M.radiation = 0
+	M.heal_bodypart_damage(5,5)
+	M.adjustToxLoss(-5, 0, TRUE)
+	M.hallucination = 0
+	M.setBrainLoss(0)
+	M.remove_all_traits()
+	M.set_blurriness(0)
+	M.set_blindness(0)
+	M.SetKnockdown(0, FALSE)
+	M.SetStun(0, FALSE)
+	M.SetUnconscious(0, FALSE)
+	M.SetParalyzed(0, FALSE)
+	M.SetImmobilized(0, FALSE)
+	M.silent = FALSE
+	M.dizziness = 0
+	M.disgust = 0
+	M.drowsyness = 0
+	M.stuttering = 0
+	M.slurring = 0
+	M.confused = 0
+	M.SetSleeping(0, 0)
+	M.jitteriness = 0
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/thing in M.diseases)
+		var/datum/disease/D = thing
+		if(D.severity == DISEASE_SEVERITY_POSITIVE)
+			continue
+		D.cure()
 	..()
 	. = 1
 
@@ -754,21 +839,39 @@
 	overdose_threshold = 30
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
-	if(M.health < 0)
-		M.adjustToxLoss(-0.5*REM, 0)
-		M.adjustBruteLoss(-0.5*REM, 0)
-		M.adjustFireLoss(-0.5*REM, 0)
-	if(M.oxyloss > 35)
-		M.setOxyLoss(35, 0)
-	if(M.losebreath >= 4)
-		M.losebreath -= 2
-	if(M.losebreath < 0)
-		M.losebreath = 0
-	M.adjustStaminaLoss(-0.5*REM, 0)
-	. = 1
-	if(prob(20))
-		M.AdjustAllImmobility(-20, FALSE)
+	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
+	M.setCloneLoss(0, 0)
+	M.setOxyLoss(0, 0)
+	M.radiation = 0
+	M.heal_bodypart_damage(5,5)
+	M.adjustToxLoss(-5, 0, TRUE)
+	M.hallucination = 0
+	M.setBrainLoss(0)
+	M.remove_all_traits()
+	M.set_blurriness(0)
+	M.set_blindness(0)
+	M.SetKnockdown(0, FALSE)
+	M.SetStun(0, FALSE)
+	M.SetUnconscious(0, FALSE)
+	M.SetParalyzed(0, FALSE)
+	M.SetImmobilized(0, FALSE)
+	M.silent = FALSE
+	M.dizziness = 0
+	M.disgust = 0
+	M.drowsyness = 0
+	M.stuttering = 0
+	M.slurring = 0
+	M.confused = 0
+	M.SetSleeping(0, 0)
+	M.jitteriness = 0
+	M.cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
+	for(var/thing in M.diseases)
+		var/datum/disease/D = thing
+		if(D.severity == DISEASE_SEVERITY_POSITIVE)
+			continue
+		D.cure()
 	..()
+	. = 1
 
 /datum/reagent/medicine/epinephrine/overdose_process(mob/living/M)
 	if(prob(33))
