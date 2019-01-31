@@ -57,6 +57,9 @@
 
 /area/centcom/supplypod/loading/four
 	name = "Supplypod Loading Bay #4"
+
+/area/centcom/supplypod/loading/ert
+	name = "Response Team Drop Pod Loading Bay"
 //THUNDERDOME
 
 /area/tdome

@@ -10,6 +10,8 @@
     <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 2 ? "selected" : null}}' action='bay2'>Bay #2</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 3 ? "selected" : null}}' action='bay3'>Bay #3</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 4 ? "selected" : null}}' action='bay4'>Bay #4</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 5 ? "selected" : null}}' action='bay4' tooltip-side='left'
+    tooltip='This bay is located on the western edge of CentCom. It's the glass room directly west of where ERT spawn, and south of the CentCom ferry. Useful for launching ERT/Deathsquads/etc. onto the station via drop pods.'>ERT Bay</ui-button> </ui-section>
 </ui-display>
 
 <ui-display>
