@@ -382,6 +382,14 @@
 				/obj/item/stack/rods = 12)
 	category = CAT_MISC
 
+/datum/crafting_recipe/wheelchair
+	name = "Wheelchair"
+	result = /obj/vehicle/ridden/wheelchair
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+				/obj/item/stack/rods = 6)
+	time = 100
+	category = CAT_MISC
+
 /datum/crafting_recipe/mousetrap
 	name = "Mouse Trap"
 	result = /obj/item/assembly/mousetrap

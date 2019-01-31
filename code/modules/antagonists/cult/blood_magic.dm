@@ -176,7 +176,7 @@
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
-	desc = "<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>25 metal into a construct shell<br>Cyborgs directly into constructs<br>Cyborg shells into construct shells<br>Airlocks into runed airlocks (harm intent)"
+	desc = "<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Cyborgs directly into constructs<br>Cyborg shells into construct shells<br>Airlocks into runed airlocks (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
 	health_cost = 12
@@ -549,7 +549,7 @@
 	. = ..()
 
 
-//Construction: Creates a construct shell out of 50 metal sheets, or converts plasteel into runed metal
+//Construction: Converts 50 metal to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Corrupting Aura"
 	desc = "Corrupts metal and plasteel into more sinister forms."
@@ -561,13 +561,14 @@
 		var/turf/T = get_turf(target)
 		if(istype(target, /obj/item/stack/sheet/metal))
 			var/obj/item/stack/sheet/candidate = target
-			if(candidate.use(50))
+			if(candidate.use(METAL_TO_CONSTRUCT_SHELL_CONVERSION))
 				uses--
 				to_chat(user, "<span class='warning'>A dark cloud emanates from your hand and swirls around the metal, twisting it into a construct shell!</span>")
 				new /obj/structure/constructshell(T)
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 			else
-				to_chat(user, "<span class='warning'>You need 50 metal to produce a construct shell!</span>")
+				to_chat(user, "<span class='warning'>You need [METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal to produce a construct shell!</span>")
+				return
 		else if(istype(target, /obj/item/stack/sheet/plasteel))
 			var/obj/item/stack/sheet/plasteel/candidate = target
 			var/quantity = candidate.amount
@@ -600,6 +601,7 @@
 					qdel(candidate)
 				else
 					candidate.color = prev_color
+					return
 			else
 				uses--
 				to_chat(user, "<span class='warning'>A dark cloud emanates from you hand and swirls around [candidate] - twisting it into a construct shell!</span>")
@@ -613,6 +615,8 @@
 				uses--
 				user.visible_message("<span class='warning'>Black ribbons suddenly emanate from [user]'s hand and cling to the airlock - twisting and corrupting it!</span>")
 				SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
+			else
+				return
 		else
 			to_chat(user, "<span class='warning'>The spell will not work on [target]!</span>")
 			return
@@ -762,10 +766,10 @@
 			return
 		switch(choice)
 			if("Blood Spear (150)")
-				if(uses < 150)
-					to_chat(user, "<span class='cultitalic'>You need 150 charges to perform this rite.</span>")
+				if(uses < BLOOD_SPEAR_COST)
+					to_chat(user, "<span class='cultitalic'>You need [BLOOD_SPEAR_COST] charges to perform this rite.</span>")
 				else
-					uses -= 150
+					uses -= BLOOD_SPEAR_COST
 					var/turf/T = get_turf(user)
 					qdel(src)
 					var/datum/action/innate/cult/spear/S = new(user)
@@ -778,11 +782,11 @@
 						user.visible_message("<span class='warning'>A [rite.name] appears at [user]'s feet!</span>", \
 							 "<span class='cultitalic'>A [rite.name] materializes at your feet.</span>")
 			if("Blood Bolt Barrage (300)")
-				if(uses < 300)
-					to_chat(user, "<span class='cultitalic'>You need 300 charges to perform this rite.</span>")
+				if(uses < BLOOD_BARRAGE_COST)
+					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BARRAGE_COST] charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood()
-					uses -= 300
+					uses -= BLOOD_BARRAGE_COST
 					qdel(src)
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cult'><b>Your hands glow with power!</b></span>")
@@ -790,11 +794,11 @@
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
 			if("Blood Beam (500)")
-				if(uses < 500)
-					to_chat(user, "<span class='cultitalic'>You need 500 charges to perform this rite.</span>")
+				if(uses < BLOOD_BEAM_COST)
+					to_chat(user, "<span class='cultitalic'>You need [BLOOD_BEAM_COST] charges to perform this rite.</span>")
 				else
 					var/obj/rite = new /obj/item/blood_beam()
-					uses -= 500
+					uses -= BLOOD_BEAM_COST
 					qdel(src)
 					if(user.put_in_hands(rite))
 						to_chat(user, "<span class='cultlarge'><b>Your hands glow with POWER OVERWHELMING!!!</b></span>")

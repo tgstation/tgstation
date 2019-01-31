@@ -249,7 +249,6 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged4"
 	},
-/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "aT" = (
 /mob/living/simple_animal/hostile/syndicate/melee/sword,
@@ -258,9 +257,6 @@
 "aU" = (
 /turf/open/floor/plasteel{
 	icon_state = "damaged1"
-	},
-/turf/closed/wall/mineral/plastitanium{
-	dir = 4
 	},
 /area/awaymission/research/interior/engineering)
 "aV" = (
@@ -344,7 +340,6 @@
 /turf/open/floor/plasteel{
 	icon_state = "damaged5"
 	},
-/turf/closed/wall/mineral/plastitanium,
 /area/awaymission/research/interior/engineering)
 "bd" = (
 /turf/open/floor/plasteel{
