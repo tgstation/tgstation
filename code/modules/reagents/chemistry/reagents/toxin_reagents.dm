@@ -480,7 +480,7 @@
 /datum/reagent/toxin/fentanyl/on_mob_life(mob/living/carbon/M)
 	M.adjustBrainLoss(80*REM, 150)
 	M.adjustToxLoss(40*REM, 0)
-	if(current_cycle = 1)
+	if(current_cycle >= 1)
 		M.Sleeping(40, 0)
 	..()
 	return TRUE
