@@ -597,4 +597,4 @@
 	else
 		scantemp = "Subject successfully scanned."
 	records += R
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)
