@@ -1342,22 +1342,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
+	M.set_drugginess(50)
 	M.dizziness +=2
 	M.adjustBrainLoss(1*REM, 150)
 	if(prob(20))
 		M.adjustStaminaLoss(10)
 		M.drop_all_held_items()
-		to_chat(M, "<span class='notice'>You dont feel your hands!</span>")
+		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
 	if(current_cycle > 5 && prob(15))
 		M.add_trait(pickt(), "neurotoxin")
 		M.adjustStaminaLoss(10)
-	if(current_cycle > 30)
-		M.adjustBrainLoss(4*REM)
-	if(current_cycle > 50 && prob(15))
-		if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
-			M.set_heartattack(TRUE)
-			if(M.stat == CONSCIOUS)
-				M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!</span>")
+		if(current_cycle > 30)
+			M.adjustBrainLoss(2*REM)
+			if(current_cycle > 50 && prob(15))
+				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
+					M.set_heartattack(TRUE)
+					if(M.stat == CONSCIOUS)
+						M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!</span>")
 	. = 1
 	..()
 
@@ -1366,6 +1367,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.remove_trait(TRAIT_PARALYSIS_R_ARM, "neurotoxin")
 	M.remove_trait(TRAIT_PARALYSIS_R_LEG, "neurotoxin")
 	M.remove_trait(TRAIT_PARALYSIS_L_LEG, "neurotoxin")
+	M.adjustStaminaLoss(10)
 	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
