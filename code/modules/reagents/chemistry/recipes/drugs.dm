@@ -47,3 +47,10 @@
 	results = list("happiness" = 4)
 	required_reagents = list("nitrous_oxide" = 2, "epinephrine" = 1, "ethanol" = 1)
 	required_catalysts = list("plasma" = 5)
+	
+/datum/chemical_reaction/synthetic_cocaine
+	name = "Synthetic Cocaine"
+	id = "synthetic_cocaine"
+	results = list("synthetic_cocaine" = 4)
+	required_reagents = list("ephedrine" = 1, "ammonia" = 1, "welding_fuel" = 1, "nitrogen" = 1)
+	required_temp = 550
