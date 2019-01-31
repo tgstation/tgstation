@@ -205,16 +205,18 @@
 		spawningturf = get_turf(user.loc)
 
 	//Spawn a nasty foam puddle
-	var/datum/reagents/R = new/datum/reagents(50)
+	var/datum/reagents/R = new/datum/reagents(2)
 	R.my_atom = spawningturf
-	R.add_reagent("liquidgibs", 25)
-	R.add_reagent("vomit", 25)
-	var/datum/effect_system/foam_spread/foam = new(amount = 1)
-	foam.set_up(1, spawningturf, R)
-	foam.start()
+	R.add_reagent("liquidgibs", 1)
+	R.add_reagent("vomit", 1)
+	var/obj/effect/particle_effect/foam/F = new /obj/effect/particle_effect/foam(spawningturf)
+	var/foamcolor = mix_color_from_reagents(R)
+	R.copy_to(F, R.total_volume)
+	F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
+	F.amount = 0
 
 	//Add a bit of miasma
-	spawningturf.atmos_spawn_air("miasma=40")
+	spawningturf.atmos_spawn_air("miasma=30")
 
 	//Get faster reload for spells
 	for(var/obj/effect/proc_holder/spell/s in usr.mind.spell_list)
