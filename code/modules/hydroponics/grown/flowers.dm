@@ -141,7 +141,7 @@
 	icon_dead = "sunflower-dead"
 	product = /obj/item/reagent_containers/food/snacks/grown/moonflower
 	mutatelist = list()
-	reagents_add = list("moonshine" = 0.2, "ethanol" = 0.1 "vitamin" = 0.02, "nutriment" = 0.02)
+	reagents_add = list("moonshine" = 0.2, "ethanol" = 0.1, "vitamin" = 0.02, "nutriment" = 0.02)
 	rarity = 15
 
 /obj/item/reagent_containers/food/snacks/grown/moonflower
