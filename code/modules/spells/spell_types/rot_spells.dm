@@ -180,7 +180,7 @@
 	R.add_reagent("ethanol", 9)
 	R.reaction(target, INJECT, 15)
 	if(target.reagents)
-		var/trans = R.trans_to(target, R.total_volume)
+		R.trans_to(target, R.total_volume)
 
 	var/obj/effect/proc_holder/spell/passive/mark_of_putrescence/mop = locate(/obj/effect/proc_holder/spell/passive/mark_of_putrescence) in user.mind.spell_list
 	if(mop)
