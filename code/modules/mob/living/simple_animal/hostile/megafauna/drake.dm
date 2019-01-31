@@ -522,24 +522,15 @@ Difficulty: Medium
 	var/list/turfs = list()
 	turfs = line_target(0, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-	
+
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/OpenFire()
 	if(swooping)
 		return
-	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
-	if(prob(15 + anger_modifier) && !client)
-		tail_sweep()
-
-	else if(prob(10+anger_modifier) && !client)
-		if(health < maxHealth*0.5)
-			tail_sweep()
-		else
-			fire_stream()
+	if(prob(15) && !client)
+		tail_sweep()	
 	else
-		if(prob(50) && !client)
-			tail_sweep()
 		fire_stream()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/tail_sweep()
