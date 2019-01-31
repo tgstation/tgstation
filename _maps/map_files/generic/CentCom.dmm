@@ -6914,19 +6914,19 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "pC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "pD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "pE" = (
 /obj/machinery/plantgenes/seedvault,
 /obj/effect/turf_decal/tile/green{
@@ -7099,7 +7099,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "pU" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -7112,7 +7112,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "pV" = (
 /obj/machinery/light{
 	dir = 4
@@ -7128,7 +7128,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "pY" = (
 /obj/machinery/washing_machine,
 /turf/open/floor/plasteel/freezer{
@@ -7507,11 +7507,11 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "qG" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "qH" = (
 /obj/structure/urinal{
 	pixel_y = 28
@@ -7658,7 +7658,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/supplypod/loading/ert)
 "rc" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
