@@ -765,4 +765,4 @@
 			if("projectile")
 				AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/forcevomit(null))
 			if("passive")
-				AddSpell(new /obj/effect/proc_holder/spell/mark_of_putrescence(null))
+				AddSpell(new /obj/effect/proc_holder/spell/passive/mark_of_putrescence(null))
