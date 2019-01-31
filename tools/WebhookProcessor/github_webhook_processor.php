@@ -470,7 +470,7 @@ function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
 		if (isset($target['include_repos'])) {
 			foreach ($target['include_repos'] as $match_string) {
 				$owner_repo_pair = explode('/', strtolower($match_string));
-				if (count($org_repo_pair) != 2) {
+				if (count($owner_repo_pair) != 2) {
 					log_error('Bad include repo: `'. $match_string.'`');
 					continue;
 				}
@@ -492,7 +492,7 @@ function filter_announce_targets($targets, $owner, $repo, $action, $pr_flags) {
 		if (isset($target['exclude_repos']))
 			foreach ($target['exclude_repos'] as $match_string) {
 				$owner_repo_pair = explode('/', strtolower($match_string));
-				if (count($org_repo_pair) != 2) {
+				if (count($owner_repo_pair) != 2) {
 					log_error('Bad exclude repo: `'. $match_string.'`');
 					continue;
 				}
