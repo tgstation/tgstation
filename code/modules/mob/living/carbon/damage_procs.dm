@@ -231,10 +231,10 @@
 		return
 	var/brainloss = getBrainLoss()
 	if(brainloss > BRAIN_DAMAGE_MILD)
-		if(prob(amount + amount * (max(0, brainloss - BRAIN_DAMAGE_MILD) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
+		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
 	if(brainloss > BRAIN_DAMAGE_SEVERE)
-		if(prob(amount + amount * (max(0, brainloss - BRAIN_DAMAGE_SEVERE) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
+		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
 			if(prob(20))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else
