@@ -587,7 +587,7 @@ function discord_announce($action, $payload, $pr_flags) {
 
 function discord_sanitize($text, $flags = S_MENTIONS|S_LINK_EMBED|S_MARKDOWN) { 
 	if ($flags & S_MARKDOWN)
-		$text = str_ireplace(array('\\', '*', '_', '~', '`'), (array('\\\\', '\\*', '\\_', '\\~', '\\`')), $text);
+		$text = str_ireplace(array('\\', '*', '_', '~', '`', '|'), (array('\\\\', '\\*', '\\_', '\\~', '\\`', '\\|')), $text);
 	
 	if ($flags & S_HTML_COMMENTS)
 		$text = preg_replace('/<!--(.*)-->/Uis', '', $text);
