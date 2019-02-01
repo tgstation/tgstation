@@ -133,7 +133,7 @@
 		if(hand_magic)
 			qdel(hand_magic)
 			hand_magic = null
-			to_chat(owner, "<span class='warning'>You snuff out the spell, saving it for another time.</span>")
+			to_chat(owner, "<span class='warning'>You snuff out the spell, saving it for later.</span>")
 
 
 //Cult Blood Spells
@@ -651,7 +651,7 @@
 
 /obj/item/melee/blood_magic/manipulator
 	name = "Blood Rite Aura"
-	desc = "Absorbs blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Use in-hand to cast an advanced rite."
+	desc = "Absorbs blood from anything you touch. Touching cultists and constructs can heal them. Use in-hand to cast an advanced rite."
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
