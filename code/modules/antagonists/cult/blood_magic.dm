@@ -210,7 +210,7 @@
 
 /datum/action/innate/cult/blood_spell/horror
 	name = "Hallucinations"
-	desc = "Gives hallucinations to a ranged target. A silent and invisible spell."
+	desc = "Gives hallucinations to a target at range. A silent and invisible spell."
 	button_icon_state = "horror"
 	var/obj/effect/proc_holder/horror/PH
 	charges = 4
