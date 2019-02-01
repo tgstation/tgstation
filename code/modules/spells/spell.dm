@@ -570,13 +570,14 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/passive/perform()
 	to_chat(world,"perform called")
 	switch(toggle)
-		if(FALSE)
-			toggle = TRUE
-			invocation(usr)
-			to_chat(usr, "<span class='warning'>[on_message]</span>")
-		if(TRUE)
-			toggle = FALSE
-			to_chat(usr, "<span class='warning'>[off_message]</span>")
+	if(!toggle)
+		toggle = TRUE
+		invocation(usr)
+		to_chat(usr, "<span class='warning'>[on_message]</span>")
+		return
+
+	toggle = FALSE
+	to_chat(usr, "<span class='warning'>[off_message]</span>")
 
 /obj/effect/proc_holder/spell/passive/proc/boost_spell(mob/user = usr)
 	return
