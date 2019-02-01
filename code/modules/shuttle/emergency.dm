@@ -547,10 +547,15 @@
 	if(can_interact(usr))
 		return ..()
 
+/obj/item/storage/pod/AltClick(mob/user)
+	if(!can_interact(user))
+		return
+	..()
+
 /obj/item/storage/pod/can_interact(mob/user)
 	if(!..())
 		return FALSE
-	if(GLOB.security_level == SEC_LEVEL_RED || GLOB.security_level == SEC_LEVEL_DELTA || unlocked)
+	if(GLOB.security_level >= SEC_LEVEL_RED || unlocked)
 		return TRUE
 	to_chat(user, "The storage unit will only unlock during a Red or Delta security alert.")
 
