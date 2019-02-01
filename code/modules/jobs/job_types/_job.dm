@@ -57,6 +57,8 @@
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 
+	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
+
 //Only override this proc
 //H is usually a human unless an /equip override transformed it
 /datum/job/proc/after_spawn(mob/living/H, mob/M, latejoin = FALSE)
@@ -224,3 +226,10 @@
 	types += satchel
 	types += duffelbag
 	return types
+
+//Warden and regular officers add this result to their get_access()
+/datum/job/proc/check_config_for_sec_maint()
+	if(CONFIG_GET(flag/security_has_maint_access))
+		return list(ACCESS_MAINT_TUNNELS)
+	return list()
+
