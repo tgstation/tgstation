@@ -206,3 +206,12 @@
 	desc = "Get down, get down."
 	icon = 'icons/effects/coke.dmi'
 	icon_state = "coke"
+
+/obj/effect/decal/cleanable/coke/attack_hand(mob/living/M)
+	. = ..()
+	if(.)
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/M = user
+		M.add_reagents(synthetic_cocaine)
+		
