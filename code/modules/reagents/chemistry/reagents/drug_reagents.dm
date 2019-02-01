@@ -462,7 +462,12 @@
 	M.AdjustImmobilized(-30, FALSE)
 	M.adjustStaminaLoss(-2, 0)
 	
-	
+/datum/reagent/consumable/sodiumchloride/reaction_turf(turf/T, reac_volume) //Creates a few coke lines
+	if(!istype(T))
+		return
+	if(reac_volume < 1)
+		return
+	new/obj/effect/decal/cleanable/misc/coke(T)
 	
 	
 	
