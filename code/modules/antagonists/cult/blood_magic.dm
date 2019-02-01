@@ -153,7 +153,7 @@
 
 /datum/action/innate/cult/blood_spell/emp
 	name = "Electromagnetic Pulse"
-	desc = "Emits a large pulse of EMP."
+	desc = "Emits a large electromagnetic pulse."
 	button_icon_state = "emp"
 	health_cost = 10
 	invocation = "Ta'gh fara'qha fel d'amar det!"
@@ -210,7 +210,7 @@
 
 /datum/action/innate/cult/blood_spell/horror
 	name = "Hallucinations"
-	desc = "Gives hallucinations to a target. A silent and invisible spell."
+	desc = "Gives hallucinations to a ranged target. A silent and invisible spell."
 	button_icon_state = "horror"
 	var/obj/effect/proc_holder/horror/PH
 	charges = 4
