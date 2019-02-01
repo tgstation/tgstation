@@ -118,7 +118,7 @@
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 	synchronizer_coeff = 1
 
-/datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/tourettes/on_life()
 	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
 		owner.Stun(200)
 		switch(rand(1, 3))

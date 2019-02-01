@@ -137,7 +137,7 @@
 	return examine(user)
 
 //Start growing a human clone in the pod!
-/obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance)
+/obj/machinery/clonepod/proc/growclone(clonename, ui, mutation_index, mindref, last_death, datum/species/mrace, list/features, factions, list/quirks, datum/bank_account/insurance, list/traumas)
 	if(panel_open)
 		return NONE
 	if(mess || attempting)
@@ -173,13 +173,13 @@
 
 	H.hardset_dna(ui, mutation_index, H.real_name, null, mrace, features)
 
-	if(efficiency > 2)
-		var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
-		H.dna.remove_mutation_group(unclean_mutations)
-	if(efficiency > 5 && prob(20))
-		H.easy_randmut(POSITIVE)
-	if(efficiency < 3)
-		if(prob(50))
+	if(!H.has_trait(TRAIT_RADIMMUNE))//dont apply mutations if the species is Mutation proof.
+		if(efficiency > 2)
+			var/list/unclean_mutations = (GLOB.not_good_mutations|GLOB.bad_mutations)
+			H.dna.remove_mutation_group(unclean_mutations)
+		if(efficiency > 5 && prob(20))
+			H.easy_randmut(POSITIVE)
+		if(efficiency < 3 && prob(50))
 			var/mob/M = H.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 			if(ismob(M))
 				H = M
@@ -217,6 +217,12 @@
 		for(var/V in quirks)
 			var/datum/quirk/Q = new V(H)
 			Q.on_clone(quirks[V])
+
+		for(var/t in traumas)
+			var/datum/brain_trauma/BT = t
+			var/datum/brain_trauma/cloned_trauma = BT.on_clone()
+			if(cloned_trauma)
+				H.gain_trauma(cloned_trauma, BT.resilience)
 
 		H.set_cloned_appearance()
 
@@ -387,7 +393,6 @@
 	mob_occupant.remove_trait(TRAIT_MUTE, CLONING_POD_TRAIT)
 	mob_occupant.remove_trait(TRAIT_NOCRITDAMAGE, CLONING_POD_TRAIT)
 	mob_occupant.remove_trait(TRAIT_NOBREATH, CLONING_POD_TRAIT)
-
 
 	if(grab_ghost_when == CLONER_MATURE_CLONE)
 		mob_occupant.grab_ghost()

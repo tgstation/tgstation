@@ -677,11 +677,15 @@ GENE SCANNER
 	var/list/discovered = list() //hit a dna console to update the scanners database
 
 /obj/item/sequence_scanner/attack(mob/living/M, mob/living/carbon/human/user)
-	user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
-
 	add_fingerprint(user)
+	if (!M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA)) //no scanning if its a husk or DNA-less Species
+		user.visible_message("<span class='notice'>[user] has analyzed [M]'s genetic sequence.</span>")
+		
+		gene_scan(M, user, src)
+	else
 
-	gene_scan(M, user, src)
+		user.visible_message("<span class='notice'>[user] failed to analyse [M]'s genetic sequence.</span>", "<span class='warning'>[M] has no readable genetic sequence!</span>")
+		
 
 /obj/item/sequence_scanner/afterattack(obj/O, mob/user, proximity)
 	. = ..()
