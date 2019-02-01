@@ -445,6 +445,7 @@
 		M.emote(pick("twitch","laugh","frown"))
 	..()
 	. = 1
+	
 /datum/reagent/drug/synthetic_cocaine
 	name = "Synthetic Cocaine"
 	id = "synthetic_cocaine"
@@ -454,13 +455,20 @@
 	addiction_threshold = 15
 	overdose_threshold = 20
 	
-/datum/reagent/drug/synthetic_cocaine/on_mob_add(mob/living/M)
+/datum/reagent/drug/synthetic_cocaine/on_mob_life(mob/living/M)
+	var/high_message = pick("You feel like you can take on the world.", "You feel amazing.", "You feel like you can push it to the limit.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustStun(-20, FALSE)
 	M.AdjustKnockdown(-20, FALSE)
 	M.AdjustUnconscious(-30, FALSE)
 	M.AdjustParalyzed(-30, FALSE)
 	M.AdjustImmobilized(-30, FALSE)
-	M.adjustStaminaLoss(-2, 0)
+	
+	
+/datum/reagent/drug/bath_salts/on_mob_add(mob/living/M)
+
+/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/M)
 	
 /datum/reagent/drug/synthetic_cocaine/reaction_turf(turf/T, reac_volume) //Creates a few coke lines
 	if(!istype(T))
@@ -468,8 +476,15 @@
 	if(reac_volume < 1)
 		return
 	new/obj/effect/decal/cleanable/misc/coke(T)
+
+
+/datum/reagent/drug/synthetic_cocaine/addiction_act_stage1(mob/living/M)
 	
-	
+/datum/reagent/drug/synthetic_cocaine/addiction_act_stage2(mob/living/M)
+
+/datum/reagent/drug/synthetic_cocaine/addiction_act_stage3(mob/living/M)
+
+/datum/reagent/drug/synthetic_cocaine/addiction_act_stage4(mob/living/M)
 	
 	
 	
