@@ -33,7 +33,6 @@
 	suit = /obj/item/clothing/suit/suspenders
 	backpack_contents = list(/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
-	accessory = /obj/item/clothing/accessory/pocketprotector/cosmetology
 	backpack = /obj/item/storage/backpack/mime
 	satchel = /obj/item/storage/backpack/mime
 

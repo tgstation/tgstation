@@ -26534,8 +26534,7 @@
 	pixel_y = 24
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
@@ -59470,8 +59469,7 @@
 /area/science/xenobiology)
 "tfw" = (
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -60023,14 +60021,6 @@
 	dir = 1
 	},
 /area/hallway/secondary/exit/departure_lounge)
-"uMe" = (
-/obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
-	},
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/department/engine)
 "uMo" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/loading_area{
@@ -88545,7 +88535,7 @@ bPB
 bPB
 bPB
 uwX
-uMe
+wMM
 lTC
 bXd
 cif
@@ -88802,7 +88792,7 @@ bQZ
 bTm
 bPB
 bUG
-uMe
+wMM
 hzc
 bXe
 krU
