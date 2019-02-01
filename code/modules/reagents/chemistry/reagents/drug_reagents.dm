@@ -466,9 +466,9 @@
 	M.AdjustImmobilized(-30, FALSE)
 	
 	
-/datum/reagent/drug/bath_salts/on_mob_add(mob/living/M)
+/datum/reagent/drug/synthetic_cocaine/on_mob_add(mob/living/M)
 
-/datum/reagent/drug/bath_salts/on_mob_delete(mob/living/M)
+/datum/reagent/drug/synthetic_cocaine/on_mob_delete(mob/living/M)
 	
 /datum/reagent/drug/synthetic_cocaine/reaction_turf(turf/T, reac_volume) //Creates a few coke lines
 	if(!istype(T))
