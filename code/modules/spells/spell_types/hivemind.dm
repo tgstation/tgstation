@@ -517,7 +517,7 @@
 				addtimer(CALLBACK(target, "click_random_mob"), 15)
 				addtimer(CALLBACK(target, "click_random_mob"), 20)
 				addtimer(CALLBACK(target, "Stun", 30), 25)
-				target.Dizzy(6)
+				target.confused += 10
 			if(3)
 				to_chat(target, "<span class='userdanger'>You freeze up in fear!</span>")
 				target.Stun(70)

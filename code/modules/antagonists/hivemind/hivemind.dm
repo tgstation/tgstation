@@ -76,7 +76,7 @@
 		for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
 			if(enemy == src)
 				continue
-			if(enemy.hive_size <= hive_size + size_mod - 20)
+			if(!enemy.active_one_mind && enemy.hive_size <= hive_size + size_mod - 20)
 				continue
 			lead = FALSE
 			break
