@@ -317,7 +317,7 @@
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
 							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_addiction")
+							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_overdose")
 							cached_addictions.Remove(R)
 						else
 							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_overdose")
