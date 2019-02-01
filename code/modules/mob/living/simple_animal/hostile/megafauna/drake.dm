@@ -497,23 +497,34 @@ Difficulty: Medium
 	name = "space dragon"
 	maxHealth = 250
 	health = 250
+	faction = list("neutral")
 	desc = "A space carp turned dragon by vile magic.  Has the same ferocity of a space carp, but also a much more enabling body."
+	icon = 'icons/mob/spacedragon.dmi'
+	icon_state = "spacedragon"
+	icon_living = "spacedragon"
+	icon_dead = "spacedragon_dead"
 	obj_damage = 80
 	melee_damage_upper = 35
 	melee_damage_lower = 35
 	speed = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
-	color = rgb(75,0,130)
 	loot = list()
 	crusher_loot = list()
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 	move_force = MOVE_FORCE_NORMAL
 	move_resist = MOVE_FORCE_NORMAL
 	pull_force = MOVE_FORCE_NORMAL
+	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, life estinguished."
+	var/datum/action/small_sprite/carpsprite = new/datum/action/small_sprite/spacedragon()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/grant_achievement(medaltype,scoretype)
 	return	
 	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/Initialize()
+	carpsprite.Grant(src)
+	. = ..()
+	smallsprite.Remove(src)
+
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/fire_stream(var/atom/at = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
 	if(QDELETED(src) || stat == DEAD) // we dead no fire
@@ -522,7 +533,7 @@ Difficulty: Medium
 	var/list/turfs = list()
 	turfs = line_target(0, range, at)
 	INVOKE_ASYNC(src, .proc/fire_line, turfs)
-
+	
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/OpenFire()
 	if(swooping)
 		return
@@ -544,6 +555,7 @@ Difficulty: Medium
 			if(src.Adjacent(L) && L.density)
 				L.visible_message("<span class='warning'>[L] has been knocked down by [src]'s tail!</span>")
 				L.Paralyze(60)
+				playsound(get_turf(src),'sound/effects/hit_punch.ogg', 80, 1)
 	src.spin(10, 1)
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/AltClickOn()
