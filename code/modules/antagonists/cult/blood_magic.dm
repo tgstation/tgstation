@@ -176,7 +176,7 @@
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
-	desc = "Empowers your hand to corrupt certain metalic objects. Examine in hand for more information."	
+	desc = "Empowers your hand to corrupt certain metalic objects. <u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)"	
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
 	health_cost = 12
@@ -325,7 +325,7 @@
 
 /datum/action/innate/cult/blood_spell/manipulation
 	name = "Blood Rites"
-	desc = "Empowers your hand to absorb blood to be used for advanced rites, or heal a cultist on contact. Use the spell in-hand to cast advanced rites. Examine in-hand for more info."
+	desc = "Empowers your hand to absorb blood to be used for advanced rites, or heal a cultist on contact. Use the spell in-hand to cast advanced rites."
 	invocation = "Fel'th Dol Ab'orod!"
 	button_icon_state = "manip"
 	charges = 5
@@ -553,7 +553,7 @@
 //Construction: Converts 50 metal to a construct shell, plasteel to runed metal, airlock to brittle runed airlock, a borg to a construct, or borg shell to a construct shell
 /obj/item/melee/blood_magic/construction
 	name = "Twisting Aura"
-	desc = "Corrupts certain metalic objects on contact. Examine in-hand for more info."
+	desc = "Corrupts certain metalic objects on contact."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
 	
@@ -651,7 +651,7 @@
 
 /obj/item/melee/blood_magic/manipulator
 	name = "Blood Rite Aura"
-	desc = "Absorbs blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Use in-hand to cast an advanced rite.</b>"
+	desc = "Absorbs blood from anything you touch.<br>Touching cultists and constructs can heal them.<br><b>Use in-hand to cast an advanced rite."
 	color = "#7D1717"
 
 /obj/item/melee/blood_magic/manipulator/examine(mob/user)
@@ -767,7 +767,7 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear", "Blood Bolt Barrage", "Blood Beam")
+		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
 		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
 		if(!choice)
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
