@@ -468,9 +468,11 @@
 	
 /datum/reagent/drug/synthetic_cocaine/on_mob_add(mob/living/M)
 	M.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN)
+	..()
 	
 /datum/reagent/drug/synthetic_cocaine/on_mob_delete(mob/living/M)
 	M.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN)
+	..()
 	
 /datum/reagent/drug/synthetic_cocaine/reaction_turf(turf/T, reac_volume) //Creates a few coke lines
 	if(!istype(T))
@@ -478,8 +480,9 @@
 	if(reac_volume < 1)
 		return
 	new/obj/effect/decal/cleanable/misc/coke(T)
-
-
+	..()
+	
+		
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage1(mob/living/M)
 	
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage2(mob/living/M)
@@ -488,5 +491,5 @@
 
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage4(mob/living/M)
 	
-	
+
 	
