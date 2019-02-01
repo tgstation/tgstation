@@ -700,6 +700,10 @@
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	small_icon_state = "ash_whelp"
 
+/datum/action/small_sprite/spacedragon
+	small_icon = 'icons/mob/animal.dmi'
+	small_icon_state = "carp"
+
 /datum/action/small_sprite/Trigger()
 	..()
 	if(!small)
