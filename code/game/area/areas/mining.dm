@@ -1,5 +1,5 @@
 /**********************Mine areas**************************/
-
+#define testthing 2
 /area/mine
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
