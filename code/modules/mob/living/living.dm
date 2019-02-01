@@ -266,7 +266,7 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && has_trait(TRAIT_STRONG_GRABBER)))
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == BODY_ZONE_PRECISE_GROIN)? " by the pussy!":" passively!"]</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
