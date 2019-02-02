@@ -452,7 +452,7 @@
 	description = "Reduces stun times and increases movement speed, as well as stopping movement slowdown from damage. Highly addictive."
 	reagent_state = LIQUID
 	color = "#E6FFFF"
-	addiction_threshold = 15
+	addiction_threshold = 10
 	overdose_threshold = 20
 	
 /datum/reagent/drug/synthetic_cocaine/on_mob_life(mob/living/M)
@@ -464,7 +464,8 @@
 	M.AdjustUnconscious(-30, FALSE)
 	M.AdjustParalyzed(-30, FALSE)
 	M.AdjustImmobilized(-30, FALSE)
-	
+	..()
+	. = 1
 	
 /datum/reagent/drug/synthetic_cocaine/on_mob_add(mob/living/M)
 	M.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN)
@@ -481,7 +482,9 @@
 		return
 	new/obj/effect/decal/cleanable/misc/coke(T)
 	..()
-	
+
+/datum/reagent/drug/synthetic_cocaine/overdose_process(mob/living/M)
+	M.
 		
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage1(mob/living/M)
 	
