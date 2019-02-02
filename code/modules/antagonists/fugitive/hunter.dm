@@ -139,7 +139,7 @@
 			result += "<span class='redtext big'>Major Fugitive Victory</span>"
 			result += "<B>All of the fugitives survived and avoided capture!</B>"
 		else //get_result returned null when it shouldn't
-			result += "<span class='neutraltext big'>Bug Victory?</span>"
-			result += "<B>Eh, those pesky fugitives are more trouble than they're worth.</B>"
+			result += "<span class='neutraltext big'>Bugged Victory</span>"
+			result += "<B>Well, shit. Someone, anyone report this to github so I can see it. No duplicate reports!</B>"
 
 	return result.Join("<br>")
