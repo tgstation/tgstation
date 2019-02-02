@@ -484,8 +484,9 @@
 	..()
 
 /datum/reagent/drug/synthetic_cocaine/overdose_process(mob/living/M)
-	M.
-		
+	M.add_mutation(datum/mutation/human/epilepsy)
+	..()
+	. = 1
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage1(mob/living/M)
 	
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage2(mob/living/M)
