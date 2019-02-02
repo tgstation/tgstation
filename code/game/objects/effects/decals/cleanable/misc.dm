@@ -200,7 +200,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	
+
 /obj/effect/decal/cleanable/coke
 	name = "Synthetic Cocaine"
 	desc = "Get down, get down."
@@ -212,6 +212,8 @@
 	if(.)
 		return
 	if(ishuman(M))
-		var/mob/living/carbon/human/M = user
-		M.add_reagent(synthetic_cocaine, 20)
-		
+		M.reagents.add_reagent("synthetic_cocaine", 20)
+
+/obj/effect/decal/cleanable/coke/Initialize()
+	. = ..()
+	reagents.add_reagent("synthetic_cocaine", 20)
