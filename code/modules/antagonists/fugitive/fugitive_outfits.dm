@@ -4,6 +4,11 @@
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	r_pocket = /obj/item/kitchen/knife/carrotshiv
 
+/datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+	if(visualsOnly)
+		return
+	H.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
+
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"
 	uniform = /obj/item/clothing/under/rank/chaplain
@@ -45,6 +50,17 @@
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		I.add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/datum/outfit/synthetic
+	name = "Factory Error Synth"
+	uniform = /obj/item/clothing/under/color/white
+	ears = /obj/item/radio/headset
+
+/datum/outfit/synthetic/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/organ/eyes/robotic/glow/eyes = new()
+	eyes.Insert(src, drop_if_replaced = FALSE)
 
 /datum/outfit/spacepol
 	name = "Spacepol Officer"

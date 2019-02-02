@@ -67,7 +67,7 @@
 	var/safe = FALSE
 	for(var/mob/V in GLOB.player_list)
 		var/datum/antagonist/fugitive/fug = V.mind.has_antag_datum(/datum/antagonist/fugitive)
-		if(!fug || V == src) //very funny
+		if(!fug || V == src)
 			continue
 		if(!fug.is_captured) //doesn't matter if they are dead, they can still be revived so you get to live
 			safe = TRUE
