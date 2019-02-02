@@ -149,7 +149,7 @@
 		if(0 to 3)
 			F.exp_light = strength-1
 		if(4 to INFINITY)
-			F.exp_heavy = strength-4
+			F.exp_heavy = strength-3
 	F.exp_fire += strength
 
 /obj/item/projectile/magic/aoe/fireball/firebreath
