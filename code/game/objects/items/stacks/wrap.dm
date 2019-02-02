@@ -80,6 +80,9 @@
 			return
 		if(use(1))
 			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(I.loc))
+			P.item_state = "deliverypackage"
+			P.lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+			P.righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 			if(user.Adjacent(I))
 				P.add_fingerprint(user)
 				I.add_fingerprint(user)
