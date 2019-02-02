@@ -28,8 +28,8 @@
 
 /datum/brain_trauma/special/godwoken/on_lose()
 	owner.remove_trait(TRAIT_HOLY, TRAUMA_TRAIT)
-	..()			
-			
+	..()
+
 /datum/brain_trauma/special/godwoken/proc/speak(type, include_owner = FALSE)
 	var/message
 	switch(type)
@@ -142,7 +142,7 @@
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
 	name = "Chemical Violent Psychosis"
-	
+
 /datum/brain_trauma/special/tenacity
 	name = "Tenacity"
 	desc = "Patient is psychologically unaffected by pain and injuries, and can remain standing far longer than a normal person."
@@ -159,7 +159,7 @@
 	owner.remove_trait(TRAIT_NOSOFTCRIT, TRAUMA_TRAIT)
 	owner.remove_trait(TRAIT_NOHARDCRIT, TRAUMA_TRAIT)
 	..()
-	
+
 /datum/brain_trauma/special/death_whispers
 	name = "Functional Cerebral Necrosis"
 	desc = "Patient's brain is stuck in a functional near-death state, causing occasional moments of lucid hallucinations, which are often interpreted as the voices of the dead."
@@ -172,7 +172,7 @@
 	..()
 	if(!active && prob(2))
 		whispering()
-		
+
 /datum/brain_trauma/special/death_whispers/on_lose()
 	if(active)
 		cease_whispering()
@@ -182,8 +182,56 @@
 	owner.add_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/cease_whispering), rand(50, 300))
-	
+
 /datum/brain_trauma/special/death_whispers/proc/cease_whispering()
 	owner.remove_trait(TRAIT_SIXTHSENSE, TRAUMA_TRAIT)
 	active = FALSE
 
+/datum/brain_trauma/special/existential_crisis
+	name = "Existential Crisis"
+	desc = "Patient's hold on reality becomes faint, causing occasional bouts of non-existence."
+	scan_desc = "existential crisis"
+	gain_text = "<span class='notice'>You feel less real.</span>"
+	lose_text = "<span class='warning'>You feel more substantial again.</span>"
+	var/obj/effect/abstract/sync_holder/veil/veil
+	var/next_crisis = 0
+
+/datum/brain_trauma/special/existential_crisis/on_life()
+	..()
+	if(!veil && world.time > next_crisis && prob(3))
+		fade_out()
+
+/datum/brain_trauma/special/existential_crisis/on_lose()
+	if(veil)
+		fade_in()
+	..()
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_out()
+	if(veil)
+		return
+	var/duration = pick(50, 450)
+	veil = new(owner.drop_location())
+	to_chat(owner, "<span class='warning'>[pick("You stop thinking for a moment. Therefore you are not.",\
+												"To be or not to be...",\
+												"Why exist?",\
+												"You stop keeping it real.",\
+												"Your grip on existence slips.",\
+												"Do you even exist?",\
+												"You simply fade away.")]</span>")
+	owner.forceMove(veil)
+	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	for(var/thing in owner)
+		var/atom/movable/AM = thing
+		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
+	next_crisis = world.time + 600
+	addtimer(CALLBACK(src, .proc/fade_in), duration)
+
+/datum/brain_trauma/special/existential_crisis/proc/fade_in()
+	QDEL_NULL(veil)
+	to_chat(owner, "<span class='notice'>You fade back into reality.</span>")
+	next_crisis = world.time + 600
+
+//base sync holder is in desynchronizer.dm
+/obj/effect/abstract/sync_holder/veil
+	name = "non-existence"
+	desc = "Existence is just a state of mind."

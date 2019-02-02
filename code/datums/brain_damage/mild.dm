@@ -226,3 +226,39 @@
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 12)
 		owner.emote("cough")
 	..()
+
+/datum/brain_trauma/mild/mind_echo
+	name = "Mind Echo"
+	desc = "Patient's language neurons do not terminate properly, causing previous speech patterns to occasionally resurface spontaneously."
+	scan_desc = "looping neural pattern"
+	gain_text = "<span class='warning'>You feel a faint echo of your thoughts...</span>"
+	lose_text = "<span class='notice'>The faint echo fades away.</span>"
+	var/list/hear_dejavu = list()
+	var/list/speak_dejavu = list()
+
+/datum/brain_trauma/mild/mind_echo/on_hear(message, speaker, message_language, raw_message, radio_freq)
+	if(hear_dejavu.len >= 5)
+		if(prob(15))
+			var/deja_vu = pick_n_take(hear_dejavu)
+			var/new_message = replacetext(message, regex("\".+\"", "gi"),"\"[deja_vu]\"") //Quotes included to avoid cases where someone says part of their name
+			return new_message //Message replaced with one from the past
+	if(hear_dejavu.len >= 15)
+		if(prob(50))
+			popleft(hear_dejavu) //Remove the oldest
+			hear_dejavu += raw_message
+	else
+		hear_dejavu += raw_message
+	return message
+
+/datum/brain_trauma/mild/mind_echo/on_say(message)
+	if(speak_dejavu.len >= 5)
+		if(prob(15))
+			var/deja_vu = pick_n_take(speak_dejavu)
+			return deja_vu //Message replaced with one from the past
+	if(speak_dejavu.len >= 15)
+		if(prob(50))
+			popleft(speak_dejavu) //Remove the oldest
+			speak_dejavu += message
+	else
+		speak_dejavu += message
+	return message
