@@ -213,5 +213,5 @@
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/M = user
-		M.add_reagents(synthetic_cocaine)
+		M.add_reagent(synthetic_cocaine, 20)
 		
