@@ -28,8 +28,8 @@
 	mood_change = 3
 	timeout = 3000
 
-/datum/mood_event/pet_animal/add_effects(name)
-	description = "<span class='nicegreen'>\The [name] is adorable! I can't stop petting \him!</span>\n"
+/datum/mood_event/pet_animal/add_effects(name, gender)
+	description = "<span class='nicegreen'>\The [name] is adorable! I can't stop petting [gender]!</span>\n"
 
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
