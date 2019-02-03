@@ -80,7 +80,7 @@
 			new /obj/item/sbeacondrop/powersink(src)
 			new /obj/item/cartridge/virus/syndicate(src)
 			new /obj/item/storage/toolbox/syndicate(src) //To actually get to those places
-			new /obj/item/pizzabox/bomb
+			new /obj/item/pizzabox/bomb(src)
 
 		if("sniper") //This shit is unique so can't really balance it around tc, also no silencer because getting killed without ANY indicator on what killed you sucks
 			new /obj/item/gun/ballistic/automatic/sniper_rifle(src) // 12 tc
@@ -101,7 +101,7 @@
 			new /obj/item/card/emag(src) // 6 tc
 			
 /obj/item/storage/box/syndicate/bundle_B/PopulateContents()
-	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 2)))
+	switch (pickweight(list( "bond" = 2, "ninja" = 1, "darklord" = 1, "white_whale_holy_grail" = 2, "mad_scientist" = 2, "bee" = 2, "mr_freeze" = 2)))
 		if("bond") // 29 tc
 			new /obj/item/gun/ballistic/automatic/pistol(src)
 			new /obj/item/suppressor(src)
@@ -155,6 +155,20 @@
 			new /obj/item/storage/belt/fannypack/yellow(src) // 0 tc
 			new /obj/item/storage/box/syndie_kit/bee_grenades(src) // 15 tc
 			new /obj/item/reagent_containers/glass/bottle/beesease(src) // 10 tc?
+			
+		if("mr_freeze")
+			new /obj/item/clothing/glasses/cold(src)
+			new /obj/item/clothing/gloves/color/black(src)
+			new /obj/item/clothing/mask/chameleon(src)
+			new /obj/item/clothing/suit/hooded/wintercoat(src)
+			new /obj/item/clothing/shoes/winterboots(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/grenade/gluon(src)
+			new /obj/item/dnainjector/geladimut(src)
+			new /obj/item/dnainjector/cryomut(src)
+			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			
 /obj/item/storage/box/syndie_kit
 	name = "box"
