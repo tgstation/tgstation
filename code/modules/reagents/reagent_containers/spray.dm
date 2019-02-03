@@ -309,6 +309,23 @@
 /obj/item/reagent_containers/spray/chemsprayer/bioterror
 	list_reagents = list("sodium_thiopental" = 100, "coniine" = 100, "venom" = 100, "condensedcapsaicin" = 100, "initropidril" = 100, "polonium" = 100)
 
+
+/obj/item/reagent_containers/spray/chemsprayer/janitor
+	name = "janitor chem sprayer"
+	desc = "A utility used to spray large amounts of cleaning reagents in a given area. It regenerates space cleaner by itself but it's unable to be fueled by normal means."
+	icon_state = "chemsprayer_janitor"
+	item_state = "chemsprayer_janitor"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	reagent_flags = NONE
+	list_reagents = list("cleaner" = 1000)
+	volume = 1000
+	amount_per_transfer_from_this = 5
+	var/generate_amount = 50
+	var/generate_type = "cleaner"
+	var/last_generate = 0
+	var/generate_delay = 10	//deciseconds
+
 // Plant-B-Gone
 /obj/item/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
