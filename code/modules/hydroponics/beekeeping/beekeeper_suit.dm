@@ -13,3 +13,4 @@
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
 	clothing_flags = THICKMATERIAL
+	allowed = list(/obj/item/melee/flyswatter)
