@@ -8792,12 +8792,8 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
 "ta" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/turf/open/floor/plating,
-/area/centcom/ferry)
-"tb" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
 /obj/machinery/light/floor,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "tc" = (
@@ -53741,11 +53737,11 @@ Xy
 oe
 oU
 nU
-tb
 ta
+oe
 td
+oe
 ta
-tb
 mD
 aa
 aa
@@ -54003,7 +53999,7 @@ pT
 pT
 pT
 qF
-ta
+oe
 aa
 aa
 aa
@@ -54260,7 +54256,7 @@ pU
 pU
 pU
 qG
-ta
+oe
 aa
 aa
 aa
@@ -54517,7 +54513,7 @@ pX
 pX
 pX
 rb
-ta
+oe
 aa
 aa
 aa

@@ -1,22 +1,22 @@
 <ui-notice>
-    <span>To use this, simply spawn the atoms you want in one of the four Centcom Supplypod Bays. Items in the bay will then be launched inside your supplypod, one turf-full at a time! You can optionally use the following buttons to configure how the supplypod acts.</span>
+    <span>To use this, simply spawn the atoms you want in one of the five Centcom Supplypod Bays. Items in the bay will then be launched inside your supplypod, one turf-full at a time! You can optionally use the following buttons to configure how the supplypod acts.</span>
 </ui-notice>
 
 <ui-display title='Centcom Pod Customization (to be used against helen weinstein)'>
 </ui-display>
 <ui-display>
     <ui-section label='Which supplypod bay will you use?'></ui-section>
-    <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 1 ? "selected" : null}}' action='bay1'>Bay #1</ui-button> </ui-section>
-    <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 2 ? "selected" : null}}' action='bay2'>Bay #2</ui-button> </ui-section>
-    <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 3 ? "selected" : null}}' action='bay3'>Bay #3</ui-button> </ui-section>
-    <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 4 ? "selected" : null}}' action='bay4'>Bay #4</ui-button> </ui-section>
-    <ui-section label=' ' candystripe right> <ui-button style='{{data.bay == 5 ? "selected" : null}}' action='bay5' tooltip-side='left'
+    <ui-section label=' ' candystripe right> <ui-button style='{{data.bayNumber == 1 ? "selected" : null}}' action='bay1'>Bay #1</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right> <ui-button style='{{data.bayNumber == 2 ? "selected" : null}}' action='bay2'>Bay #2</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right> <ui-button style='{{data.bayNumber == 3 ? "selected" : null}}' action='bay3'>Bay #3</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right> <ui-button style='{{data.bayNumber == 4 ? "selected" : null}}' action='bay4'>Bay #4</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right> <ui-button style='{{data.bayNumber == 5 ? "selected" : null}}' action='bay5' tooltip-side='left'
     tooltip='This bay is located on the western edge of CentCom. Its the glass room directly west of where ERT spawn, and south of the CentCom ferry. Useful for launching ERT/Deathsquads/etc. onto the station via drop pods.'>ERT Bay</ui-button> </ui-section>
 </ui-display>
 
 <ui-display>
     <ui-section label='Teleport to'></ui-section>
-    <ui-section label=' ' candystripe right> <ui-button action='teleportCentcom'>Loading Bay</ui-button> </ui-section>
+    <ui-section label=' ' candystripe right> <ui-button action='teleportCentcom'>{{data.bay}}</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button state='{{data.oldArea ? null : "disabled"}}'action='teleportBack'>{{data.oldArea ? data.oldArea : "where you were"}}</ui-button> </ui-section>
 </ui-display>
 
@@ -144,7 +144,7 @@
 
 
 <ui-display>
-    <ui-section label='{{data.numObjects}} turfs in Bay #{{data.bay}}' candystripe right>
+    <ui-section label='{{data.numObjects}} turfs in {{data.bay}}' candystripe right>
         <ui-button action='refresh' tooltip-side='left'
         tooltip='Manually refreshes the possible things to launch in the pod bay.'>Refresh Pod Bay</ui-button>
         <ui-button style='{{data.giveLauncher ? "selected" : null}}' action='giveLauncher' tooltip-side='left'

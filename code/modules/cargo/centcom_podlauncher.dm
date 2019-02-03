@@ -61,7 +61,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 /datum/centcom_podlauncher/ui_data(mob/user) //Sends info about the pod to the UI.
 	var/list/data = list() //*****NOTE*****: Many of these comments are similarly described in supplypod.dm. If you change them here, please consider doing so in the supplypod code as well!
 	var/B = (istype(bay, /area/centcom/supplypod/loading/one)) ? 1 : (istype(bay, /area/centcom/supplypod/loading/two)) ? 2 : (istype(bay, /area/centcom/supplypod/loading/three)) ? 3 : (istype(bay, /area/centcom/supplypod/loading/four)) ? 4 : (istype(bay, /area/centcom/supplypod/loading/ert)) ? 5 : 0 //top ten THICCEST FUCKING TERNARY CONDITIONALS OF 2036
-	data["bay"] = B //Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
+	data["bay"] = bay //Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
+	data["bayNumber"] = B //Holds the bay as a number. Useful for comparisons in centcom_podlauncher.ract
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
 	data["launchClone"] = launchClone //Do we launch the actual items in the bay or just launch clones of them?
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
@@ -122,7 +123,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if("teleportCentcom") //Teleports the user to the centcom supply loading facility.
 			var/mob/M = holder.mob //We teleport whatever mob the client is attached to at the point of clicking
 			oldTurf = get_turf(M) //Used for the "teleportBack" action
-			var/area/A = locate(/area/centcom/supplypod/loading) in GLOB.sortedAreas
+			var/area/A = locate(bay) in GLOB.sortedAreas
 			var/list/turfs = list()
 			for(var/turf/T in A)
 				turfs.Add(T) //Fill a list with turfs in the area

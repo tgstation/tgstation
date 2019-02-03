@@ -47,19 +47,19 @@
 	icon_state = "supplypod_loading"
 
 /area/centcom/supplypod/loading/one
-	name = "Supplypod Loading Bay #1"
+	name = "Bay #1"
 
 /area/centcom/supplypod/loading/two
-	name = "Supplypod Loading Bay #2"
+	name = "Bay #2"
 
 /area/centcom/supplypod/loading/three
-	name = "Supplypod Loading Bay #3"
+	name = "Bay #3"
 
 /area/centcom/supplypod/loading/four
-	name = "Supplypod Loading Bay #4"
+	name = "Bay #4"
 
 /area/centcom/supplypod/loading/ert
-	name = "Response Team Drop Pod Loading Bay"
+	name = "ERT Bay"
 //THUNDERDOME
 
 /area/tdome
