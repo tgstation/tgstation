@@ -45,7 +45,6 @@
 
 
 /obj/machinery/rnd/experimentor/proc/SetTypeReactions()
-	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
 		if(istype(I, /obj/item/relic))
 			item_reactions["[I]"] = SCANTYPE_DISCOVER
@@ -54,15 +53,12 @@
 		if(ispath(I, /obj/item/stock_parts) || ispath(I, /obj/item/grenade/chem_grenade) || ispath(I, /obj/item/kitchen))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items += 15
-				valid_items += I
-				probWeight++
+				valid_items["[I]"] += 15
 
 		if(ispath(I, /obj/item/reagent_containers/food))
 			var/obj/item/tempCheck = I
 			if(initial(tempCheck.icon_state) != null) //check it's an actual usable item, in a hacky way
-				valid_items += rand(1,max(2,35-probWeight))
-				valid_items += I
+				valid_items["[I]"] += rand(1,4)
 
 		if(ispath(I, /obj/item/construction/rcd) || ispath(I, /obj/item/grenade) || ispath(I, /obj/item/device/aicard) || ispath(I, /obj/item/storage/backpack/holding) || ispath(I, /obj/item/slime_extract) || ispath(I, /obj/item/device/onetankbomb) || ispath(I, /obj/item/device/transfer_valve))
 			var/obj/item/tempCheck = I
@@ -228,19 +224,6 @@
 	smoke.set_up(0, where)
 	smoke.start()
 
-/obj/machinery/rnd/experimentor/proc/pickWeighted(list/from)
-	var/result = FALSE
-	var/counter = 1
-	while(!result)
-		var/probtocheck = from[counter]
-		if(prob(probtocheck))
-			result = TRUE
-			return from[counter+1]
-		if(counter + 2 < from.len)
-			counter = counter + 2
-		else
-			counter = 1
-
 /obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
 	icon_state = "h_lathe_wloop"
@@ -287,14 +270,14 @@
 			visible_message("<span class='warning'>[src] malfunctions, spewing toxic waste!</span>")
 			for(var/turf/T in oview(1, src))
 				if(!T.density)
-					if(prob(EFFECT_PROB_VERYHIGH))
+					if(prob(EFFECT_PROB_VERYHIGH) && !(locate(/obj/effect/decal/cleanable/greenglow) in T))
 						var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/greenglow(T)
 						if(reagentdecal)
 							reagentdecal.reagents.add_reagent("radium", 7)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			var/savedName = "[exp_on]"
 			ejectItem(TRUE)
-			var/newPath = pickWeighted(valid_items)
+			var/newPath = text2path(pickweight(valid_items))
 			loaded_item = new newPath(src)
 			visible_message("<span class='warning'>[src] malfunctions, transforming [savedName] into [loaded_item]!</span>")
 			investigate_log("Experimentor has transformed [savedName] into [loaded_item]", INVESTIGATE_EXPERIMENTOR)
