@@ -560,7 +560,7 @@
 	..()
 
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
-	if(prob(33) && iscarbon(M))
+	if(prob(20) && iscarbon(M))
 		var/obj/item/I = M.get_active_held_item()
 		if(I)
 			M.dropItemToGround(I)
