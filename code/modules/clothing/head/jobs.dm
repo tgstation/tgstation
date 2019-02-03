@@ -145,6 +145,21 @@
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/warden/drill
+	name = "warden's drill hat"
+	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on its side."
+	icon_state = "wardendrill"
+	item_state = "wardendrill"
+	dog_fashion = null
+
+/obj/item/clothing/head/warden/drill/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot == SLOT_HEAD)
+		user.dna.add_mutation(YELLING)
+
+/obj/item/clothing/head/warden/drill/dropped(mob/living/carbon/human/user)
+		user.dna.remove_mutation(YELLING)
+
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."

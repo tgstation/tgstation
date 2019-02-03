@@ -1,0 +1,4 @@
+author: "Nichlas0010"
+delete-after: True
+changes: 
+  - bugfix: "the Middle Mouse Button aimbot exploit should no longer be usable"

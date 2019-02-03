@@ -59,12 +59,16 @@
 	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
 	mood_change = 15
 	hidden = TRUE
+	special_screen_obj = "badass_sun"
+	special_screen_replace = FALSE
 
 /datum/mood_event/creeping
 	description = "<span class='greentext'>I'm so close to my obsession and I never want this to end.</span>\n" //creeps get it when they are around their obsession
 	mood_change = 18
 	timeout = 30
 	hidden = TRUE
+	special_screen_obj = "creep_inlove"
+	special_screen_replace = FALSE
 
 /datum/mood_event/creeping/add_effects(name)
 	description = "<span class='greentext'>I'm so close to [name] and I NEVER want this to end.</span>\n"
