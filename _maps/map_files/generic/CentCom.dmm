@@ -6902,13 +6902,20 @@
 	},
 /area/centcom/holding)
 "pz" = (
-/obj/machinery/status_display/evac,
-/turf/closed/indestructible/riveted,
-/area/centcom/supplypod)
+/turf/open/space/basic,
+/area/centcom/ferry)
 "pA" = (
-/obj/effect/spawner/structure/window/reinforced/indestructable,
-/turf/open/floor/plating,
-/area/centcom/supplypod)
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 2;
+	height = 13;
+	id = "ferry_away";
+	json_key = "ferry";
+	name = "CentCom Ferry Dock";
+	width = 5
+	},
+/turf/open/space,
+/area/centcom/ferry)
 "pB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -8269,7 +8276,7 @@
 	req_access_txt = "106"
 	},
 /turf/open/floor/plasteel,
-/area/centcom/supplypod)
+/area/centcom/ferry)
 "se" = (
 /obj/machinery/light{
 	dir = 8
@@ -8784,6 +8791,24 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/centcom/supplypod)
+"ta" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"tb" = (
+/obj/effect/spawner/structure/window/reinforced/indestructable,
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"tc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/centcom/ferry)
+"td" = (
+/obj/structure/sign/departments/drop,
+/turf/closed/indestructible/riveted,
+/area/centcom/ferry)
 "te" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/pizzaslice/mushroom,
@@ -10505,18 +10530,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/syndicate_mothership/control)
-"xb" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 13;
-	id = "ferry_away";
-	json_key = "ferry";
-	name = "CentCom Ferry Dock";
-	width = 5
-	},
-/turf/open/space,
-/area/space)
 "xc" = (
 /obj/machinery/door/airlock/external{
 	name = "Ferry Airlock"
@@ -51928,11 +51941,11 @@ aa
 aa
 aa
 aa
-Yn
-pA
-pA
-pA
-Yn
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -52185,11 +52198,11 @@ aa
 aa
 aa
 aa
-pA
-pB
-pT
-qF
-pA
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -52442,11 +52455,11 @@ aa
 aa
 aa
 aa
-pA
-pC
-pU
-qG
-pA
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -52696,14 +52709,14 @@ oe
 oe
 aa
 aa
-xb
 aa
 aa
-pA
-pC
-pU
-qG
-pA
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -52952,15 +52965,15 @@ to
 uj
 oe
 aa
-oe
-xc
-oe
-aa
-Yn
-pC
-pU
-qG
+pz
 pA
+pz
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -53208,16 +53221,16 @@ sr
 tp
 uk
 mD
-vA
+pz
 oe
-xd
+xc
 oe
-yn
-Yn
-pC
-pU
-qG
-pA
+pz
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -53465,16 +53478,16 @@ ss
 tq
 ul
 mD
-vB
+vA
 oe
-Xy
+xd
 oe
-oU
-pz
-pC
-pU
-qG
-pA
+yn
+mD
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -53722,18 +53735,18 @@ st
 tr
 um
 nT
-vC
-wr
-xe
-wr
-wx
-sd
-pD
-pX
-rb
-pA
-aa
-aa
+vB
+oe
+Xy
+oe
+oU
+nU
+tb
+ta
+td
+ta
+tb
+mD
 aa
 aa
 aa
@@ -53979,18 +53992,18 @@ su
 ts
 un
 nU
-vD
-ws
-xf
-ws
-yp
-Yn
-Yn
-pA
-pA
-Yn
-aa
-aa
+vC
+wr
+xe
+wr
+wx
+mD
+pB
+pT
+pT
+pT
+qF
+ta
 aa
 aa
 aa
@@ -54241,13 +54254,13 @@ ws
 xf
 ws
 yp
-oe
-aa
-aa
-aa
-aa
-aa
-aa
+sd
+pC
+pU
+pU
+pU
+qG
+ta
 aa
 aa
 aa
@@ -54499,12 +54512,12 @@ xg
 wt
 px
 mD
-aa
-aa
-aa
-aa
-aa
-aa
+pD
+pX
+pX
+pX
+rb
+ta
 aa
 aa
 aa
@@ -54756,11 +54769,11 @@ xh
 wu
 mD
 mD
-oe
+tc
 oe
 nU
 oe
-oe
+tc
 mD
 mD
 aa
