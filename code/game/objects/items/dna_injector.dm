@@ -328,6 +328,21 @@
 	name = "\improper DNA injector (Anti-Shock Touch)"
 	remove_mutations = list(SHOCKTOUCH)
 
+/obj/item/dnainjector/geladimut
+	name = "\improper DNA injector (Geladikinesis)
+	add_mutations = list(GELADIKINESIS)
+	
+/obj/item/dnainjector/antigeladi
+	name = "\improper DNA injector (Anti-Geladikinesis)
+	remove_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/cryomut
+	name = "\improper DNA injector (Cryokinesis)
+	add_mutations = list(CRYOKINESIS)
+
+/obj/item/dnainjector/anticryo
+	name = "\improper DNA injector (Anti-Cryokinesis)
+	remove_mutations = list(CRYOKINESIS)
 
 /obj/item/dnainjector/timed
 	var/duration = 600
