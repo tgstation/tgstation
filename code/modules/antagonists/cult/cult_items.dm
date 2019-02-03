@@ -756,7 +756,7 @@
 		spear.throw_at(owner, 10, 2, owner)
 
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood
 	name = "blood bolt barrage"
 	desc = "Blood for blood."
 	color = "#ff0000"
