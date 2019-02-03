@@ -376,6 +376,10 @@
 
 		if(issilicon(A))
 			var/mob/living/silicon/sillycone = A
+
+			if(ispAI(A))
+				continue
+
 			if(sillycone.stat || in_faction(sillycone))
 				continue
 
