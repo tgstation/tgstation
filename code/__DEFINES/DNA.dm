@@ -40,7 +40,7 @@
 #define OLFACTION	/datum/mutation/human/olfaction
 #define SHOUTING	/datum/mutation/human/shouting
 #define YELLING		/datum/mutation/human/yelling
-#define CANADIAN		/datum/mutation/human/canadian
+#define CANADIAN	/datum/mutation/human/canadian
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
