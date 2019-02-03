@@ -238,17 +238,19 @@
 		location = get_turf(pick(fusion_pipenet.members))
 	else
 		location = get_turf(holder)
-
+	if(!air.analyzer_results)
+		air.analyzer_results = new
+	var/list/cached_scan_results = air.analyzer_results
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES]
-
+	var/toroidal_size = air.volume //The size of the phase space hypertorus
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
-	var/instability = gas_power*INSTABILITY_GAS_POWER_FACTOR //Instability effects how chaotic the behavior of the reaction is
-	var/toroidal_size = air.volume
+	var/instability = MODULUS(gas_power*INSTABILITY_GAS_POWER_FACTOR,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
+	cached_scan_results[id] = instability//used for analyzer feedback
 
 	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
 	cached_gases[/datum/gas/plasma][MOLES] = MODULUS(cached_gases[/datum/gas/plasma][MOLES] + instability*sin(initial_carbon*((2*PI)/toroidal_size)), toroidal_size)
@@ -273,118 +275,18 @@
 		cached_gases[/datum/gas/bz][MOLES] += FUSION_TRITIUM_MOLES_USED
 		cached_gases[/datum/gas/nitryl][MOLES] += (reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 
-
+	if(location)
+		var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1 //Asymptopically approaches 1 as the energy of the reaction goes up.
+		if(prob(particle_chance))
+			location.fire_nuclear_particle()
+		var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + FUSION_RAD_MAX,0)
+		radiation_pulse(location,rad_power)
 	if(reaction_energy)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
 		return REACTING
-/*
 
-/datum/gas_reaction/fusion
-	exclude = FALSE
-	priority = 2
-	name = "Plasmic Fusion"
-	id = "fusion"
-
-//Since fusion isn't really intended to happen in successive chains, the requirements are very high
-/datum/gas_reaction/fusion/init_reqs()
-	min_requirements = list(
-		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
-		"ENER" = FUSION_ENERGY_THRESHOLD,
-		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
-		/datum/gas/tritium = FUSION_MOLE_THRESHOLD
-	)
-
-/datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	if(!air.analyzer_results)
-		air.analyzer_results = new
-	var/list/cached_scan_results = air.analyzer_results
-	var/turf/open/location
-	if (istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
-		var/datum/pipeline/fusion_pipenet = holder
-		location = get_turf(pick(fusion_pipenet.members))
-	else
-		location = get_turf(holder)
-
-	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_energy = 0
-
-	var/mediation = FUSION_MEDIATION_FACTOR*(air.heat_capacity()-(cached_gases[/datum/gas/plasma][MOLES]*cached_gases[/datum/gas/plasma][GAS_META][META_GAS_SPECIFIC_HEAT]))/(air.total_moles()-cached_gases[/datum/gas/plasma][MOLES]) //This is the average specific heat of the mixture,not including plasma.
-
-	var/gases_fused = air.total_moles() - cached_gases[/datum/gas/plasma][MOLES]
-	var/plasma_differential = (cached_gases[/datum/gas/plasma][MOLES] - gases_fused) / air.total_moles()
-	var/reaction_efficiency = FUSION_EFFICIENCY_BASE ** -((plasma_differential ** 2) / FUSION_EFFICIENCY_DIVISOR) //https://www.desmos.com/calculator/6jjx3vdrvx
-
-	var/gas_power = 0
-	for (var/gas_id in cached_gases)
-		gas_power += reaction_efficiency * (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
-
-	var/power_ratio = gas_power/mediation
-	cached_scan_results[id] = power_ratio //used for analyzer feedback
-
-	for (var/gas_id in cached_gases) //and now we fuse
-		cached_gases[gas_id][MOLES] = 0
-
-	var/radiation_power = (FUSION_RADIATION_FACTOR * power_ratio) / (power_ratio + FUSION_RADIATION_CONSTANT) //https://www.desmos.com/calculator/4i1f296phl
-	var/zap_power = ((FUSION_ZAP_POWER_ASYMPTOTE * power_ratio) / (power_ratio + FUSION_ZAP_POWER_CONSTANT)) + FUSION_ZAP_POWER_BASE //https://www.desmos.com/calculator/n0zkdpxnrr
-	var/do_explosion = FALSE
-	var/zap_range //these ones are set later
-	var/fusion_prepare_to_die_edition_rng
-
-	if (power_ratio > FUSION_SUPER_TIER_THRESHOLD) //power ratio 50+: SUPER TIER. The gases become so energized that they fuse into a ton of tritium, which is pretty nice! Until you consider the fact that everything just exploded, the canister is probably going to break and you're irradiated.
-		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_SUPER * (power_ratio / FUSION_ENERGY_DIVISOR_SUPER)
-		cached_gases[/datum/gas/tritium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_TRITIUM //60% of the gas is converted to energy, 40% to trit
-		fusion_prepare_to_die_edition_rng = 100 //Wait a minute..
-		do_explosion = TRUE
-		zap_range = FUSION_ZAP_RANGE_SUPER
-
-	else if (power_ratio > FUSION_HIGH_TIER_THRESHOLD) //power ratio 20-50; High tier. The reaction is so energized that it fuses into a small amount of stimulum, and some pluoxium. Very dangerous, but super cool and super useful.
-		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_HIGH * (power_ratio / FUSION_ENERGY_DIVISOR_HIGH)
-		air.assert_gases(/datum/gas/stimulum, /datum/gas/pluoxium)
-		cached_gases[/datum/gas/stimulum][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_STIM //40% of the gas is converted to energy, 60% to stim and pluox
-		cached_gases[/datum/gas/pluoxium][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_PLUOX
-		fusion_prepare_to_die_edition_rng = power_ratio //Now we're getting into dangerous territory
-		do_explosion = TRUE
-		zap_range = FUSION_ZAP_RANGE_HIGH
-
-	else if (power_ratio > FUSION_MID_TIER_THRESHOLD) //power_ratio 5 to 20; Mediation is overpowered, fusion reaction starts to break down.
-		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_MID * (power_ratio / FUSION_ENERGY_DIVISOR_MID)
-		air.assert_gases(/datum/gas/nitryl,/datum/gas/nitrous_oxide)
-		cached_gases[/datum/gas/nitryl][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_NITRYL //20% of the gas is converted to energy, 80% to nitryl and N2O
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_N2O
-		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_MID_TIER_RAD_PROB_FACTOR //Still unlikely, but don't stand next to the reaction unprotected
-		zap_range = FUSION_ZAP_RANGE_MID
-
-	else //power ratio 0 to 5; Gas power is overpowered. Fusion isn't nearly as powerful.
-		reaction_energy += gases_fused * FUSION_RELEASE_ENERGY_LOW * (power_ratio / FUSION_ENERGY_DIVISOR_LOW)
-		air.assert_gases(/datum/gas/bz, /datum/gas/carbon_dioxide)
-		cached_gases[/datum/gas/bz][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_BZ //10% of the gas is converted to energy, 90% to BZ and CO2
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] += gases_fused * FUSION_GAS_CREATION_FACTOR_CO2
-		fusion_prepare_to_die_edition_rng = power_ratio * FUSION_LOW_TIER_RAD_PROB_FACTOR //Low, but still something to look out for
-		zap_range = FUSION_ZAP_RANGE_LOW
-
-	//All the deadly consequences of fusion, consolidated for your viewing pleasure
-	if (location)
-		if(prob(fusion_prepare_to_die_edition_rng)) //Some.. permanent effects
-			if(do_explosion)
-				explosion(location, 0, 0, 5, power_ratio, TRUE, TRUE) //large shockwave, the actual radius is quite small - people will recognize that you're doing fusion
-			radiation_pulse(location, radiation_power) //You mean causing a super-tier fusion reaction in the halls is a bad idea?
-			playsound(location, 'sound/effects/supermatter.ogg', 100, 0)
-		else
-			playsound(location, 'sound/effects/phasein.ogg', 75, 0)
-		//These will always happen, so be prepared
-		tesla_zap(location, zap_range, zap_power, TESLA_FUSION_FLAGS) //larpers beware
-		location.fire_nuclear_particles(power_ratio) //see code/modules/projectile/energy/nuclear_particle.dm
-
-	if(reaction_energy > 0)
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
-		return REACTING
-*/
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.
 	priority = 3
 	name = "Nitryl formation"

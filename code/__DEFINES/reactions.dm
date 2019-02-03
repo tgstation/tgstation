@@ -26,47 +26,13 @@
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				250 	//Mole count required (tritium/plasma) to start a fusion reaction
-#define FUSION_RELEASE_ENERGY_SUPER			3e9 	//Amount of energy released in the fusion process, super tier
-#define FUSION_RELEASE_ENERGY_HIGH			1e9 	//Amount of energy released in the fusion process, high tier
-#define FUSION_RELEASE_ENERGY_MID			5e8 	//Amount of energy released in the fusion process, mid tier
-#define FUSION_RELEASE_ENERGY_LOW			1e8 	//Amount of energy released in the fusion process, low tier
-#define FUSION_MEDIATION_FACTOR				80 		//Arbitrary
-#define FUSION_SUPER_TIER_THRESHOLD			50 		//anything above this is super tier
-#define FUSION_HIGH_TIER_THRESHOLD			20 		//anything above this and below 50 is high tier
-#define FUSION_MID_TIER_THRESHOLD			5 		//anything above this and below 20 is mid tier - below this is low tier, but that doesnt need a define
-#define FUSION_ENERGY_DIVISOR_SUPER			25		//power_ratio is divided by this during energy calculations
-#define FUSION_ENERGY_DIVISOR_HIGH			20
-#define FUSION_ENERGY_DIVISOR_MID			10
-#define FUSION_ENERGY_DIVISOR_LOW			2
-#define FUSION_GAS_CREATION_FACTOR_TRITIUM	0.40 	//trit - one gas rather than two, so think about that when calculating stuff - 40% in total
-#define FUSION_GAS_CREATION_FACTOR_STIM		0.05	//stim percentage creation from high tier - 5%, 60% in total with pluox
-#define FUSION_GAS_CREATION_FACTOR_PLUOX    0.55	//pluox percentage creation from high tier - 55%, 60% in total with stim
-#define FUSION_GAS_CREATION_FACTOR_NITRYL	0.20 	//nitryl and N2O - 80% in total
-#define FUSION_GAS_CREATION_FACTOR_N2O		0.60 	//nitryl and N2O - 80% in total
-#define FUSION_GAS_CREATION_FACTOR_BZ		0.05 	//BZ - 5% - 90% in total with CO2
-#define FUSION_GAS_CREATION_FACTOR_CO2		0.85 	//CO2 - 85% - 90% in total with BZ
-#define FUSION_MID_TIER_RAD_PROB_FACTOR		2		//probability of radpulse is power ratio * this for whatever tier
-#define FUSION_LOW_TIER_RAD_PROB_FACTOR		5
-#define FUSION_EFFICIENCY_BASE				60		//used in the fusion efficiency calculations
-#define FUSION_EFFICIENCY_DIVISOR			0.6		//ditto
-#define FUSION_RADIATION_FACTOR				15000	//horizontal asymptote
-#define FUSION_RADIATION_CONSTANT			30		//equation is form of (ax) / (x + b), where a = radiation factor and b = radiation constant and x = power ratio (https://www.desmos.com/calculator/4i1f296phl)
-#define FUSION_ZAP_POWER_ASYMPTOTE			50000	//maximum value - not enough to instacrit but it'll still hurt like shit
-#define FUSION_ZAP_POWER_CONSTANT			75		//equation is of from [ax / (x + b)] + c, where a = zap power asymptote, b = zap power constant, c = zap power base and x = power ratio
-#define FUSION_ZAP_POWER_BASE				1000	//(https://www.desmos.com/calculator/vvbmhf4unm)
-#define FUSION_ZAP_RANGE_SUPER				9		//range of the tesla zaps that occur from fusion
-#define FUSION_ZAP_RANGE_HIGH				7
-#define FUSION_ZAP_RANGE_MID				5
-#define FUSION_ZAP_RANGE_LOW				3
-#define FUSION_PARTICLE_FACTOR_SUPER		4		//# of particles fired out is equal to rand(3,6) * this for whatever tier
-#define FUSION_PARTICLE_FACTOR_HIGH			3
-#define FUSION_PARTICLE_FACTOR_MID			2
-#define FUSION_PARTICLE_FACTOR_LOW			1
-//Plasma fusion properties
 #define FUSION_TRITIUM_CONVERSION_COEFFICIENT 0.000001
-#define INSTABILITY_GAS_POWER_FACTOR 		  0.01
-#define FUSION_TRITIUM_MOLES_USED  			  1
-#define PLASMA_BINDING_ENERGY  				  30000000
-#define CARBON_BINDING_ENERGY  				  1000000
-#define TORUS_SIZE_FACTOR  					  0.05
-#define FUSION_TEMPERATURE_THRESHOLD		  10000
+#define INSTABILITY_GAS_POWER_FACTOR 		0.01
+#define FUSION_TRITIUM_MOLES_USED  			1
+#define PLASMA_BINDING_ENERGY  				30000000
+#define CARBON_BINDING_ENERGY  				1000000
+#define TORUS_SIZE_FACTOR  					0.05
+#define FUSION_TEMPERATURE_THRESHOLD	    10000
+#define PARTICLE_CHANCE_CONSTANT 			-20000000
+#define FUSION_RAD_MAX						5000
+#define FUSION_RAD_COEFFICIENT				-10000
