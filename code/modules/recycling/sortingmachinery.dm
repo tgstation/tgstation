@@ -80,8 +80,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverypackage3"
 	item_state = "deliverypackage"
-	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	var/giftwrapped = 0
 	var/sortTag = 0
 
