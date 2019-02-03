@@ -26,7 +26,8 @@
 #define NOBLIUM_FORMATION_ENERGY			2e9 	//1 Mole of Noblium takes the planck energy to condense.
 //Research point amounts
 #define NOBLIUM_RESEARCH_AMOUNT				1000
-#define BZ_RESEARCH_AMOUNT					150
+#define BZ_RESEARCH_SCALE					4
+#define BZ_RESEARCH_MAX_AMOUNT				400
 #define MIASMA_RESEARCH_AMOUNT				160
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
