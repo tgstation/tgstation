@@ -1,4 +1,4 @@
-
+wd
 //Chef
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
@@ -146,19 +146,51 @@
 	dog_fashion = /datum/dog_fashion/head/warden
 
 /obj/item/clothing/head/warden/drill
-	name = "warden's drill hat"
-	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on its side."
+	name = "warden's campaign hat"
+	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "wardendrill"
 	item_state = "wardendrill"
 	dog_fashion = null
+	var/anger = 1
+
+/obj/item/clothing/head/warden/drill/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
+	if(..())
+		return TRUE
+	switch(anger)
+		if(1)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the middle position.</span>")
+			anger = 2
+		if(2)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the last position.</span>")
+			anger = 3
+		if(3)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the first position.</span>")
+			anger = 1
+		if(4)
+			to_chat(user, "<span class='danger'>You adjust voice circuit but nothing happens, probably because it's broken.</span>")
+	return TRUE
+
+/obj/item/clothing/head/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
+	if(anger != 4)
+		to_chat(user, "<span class='danger'>You broke the voice circuit!</span>")
+		anger = 4
+	return TRUE
 
 /obj/item/clothing/head/warden/drill/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot == SLOT_HEAD)
+	if(anger == 2 && slot == SLOT_HEAD)
+		user.dna.add_mutation(SHOUTING)
+	if(anger == 3 && slot == SLOT_HEAD)
 		user.dna.add_mutation(YELLING)
+	if(anger == 4 && slot == SLOT_HEAD)
+		user.dna.add_mutation(CANADIAN)
+	else
+		return
 
 /obj/item/clothing/head/warden/drill/dropped(mob/living/carbon/human/user)
-		user.dna.remove_mutation(YELLING)
+	user.dna.remove_mutation(YELLING)
+	user.dna.remove_mutation(SHOUTING)
+	user.dna.remove_mutation(CANADIAN)
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"

@@ -220,15 +220,70 @@
 	owner.grant_language(/datum/language/common)
 	owner.remove_language(/datum/language/beachbum)
 
+/datum/mutation/human/shouting
+	name = "Shouting"
+	desc = "A mutation that forces the host to constantly shout their sentences out."
+	quality = MINOR_NEGATIVE
+	locked = TRUE
+	text_gain_indication = "<span class='warning'>You feel angry.</span>"
+	text_lose_indication = "<span class='notice'>You feel calm.</span>"
+
+/datum/mutation/human/shouting/say_mod(message)
+	if(message)
+		message = "[uppertext(replacetext(message, ".", "!"))]!"
+	return (message)
+
 /datum/mutation/human/yelling
 	name = "Yelling"
 	desc = "A mutation that forces the host to constantly yell their sentences out."
 	quality = MINOR_NEGATIVE
 	locked = TRUE
-	text_gain_indication = "<span class='danger'>You feel really angry.</span>"
-	text_lose_indication = "<span class='notice'>You feel calmer.</span>"
+	text_gain_indication = "<span class='danger'>You feel REALLY angry.</span>"
+	text_lose_indication = "<span class='notice'>You feel calm.</span>"
 
 /datum/mutation/human/yelling/say_mod(message)
 	if(message)
-		message = "[uppertext(replacetext(message, ".", "!"))]!"
+		message = "[uppertext(replacetext(message, ".", "!"))]!!"
 	return (message)
+
+/datum/mutation/human/canadian
+	name = "Canadian"
+	desc = "Unknown"
+	quality = MINOR_NEGATIVE
+	text_gain_indication = "<span class='notice'>You feel polite.</span>"
+	text_lose_indication = "<span class='danger'>You feel american.</span>"
+
+/datum/mutation/human/canadian/say_mod(message)
+	if(message)
+		message = replacetext(message," toilet "," washroom ")
+		message = replacetext(message," toilets "," washroom ")
+		message = replacetext(message," bathroom "," washroom ")
+		message = replacetext(message," restroom "," washroom ")
+		message = replacetext(message," coffee "," double double ")
+		message = replacetext(message," backpack "," knapsack ")
+		message = replacetext(message," rucksack "," knapsack ")
+		message = replacetext(message," candy bar "," chocolate bar ")
+		message = replacetext(message," about "," aboot ")
+		message = replacetext(message," friend "," buddy ")
+		message = replacetext(message," pal "," buddy ")
+		message = replacetext(message," donut "," doughnut ")
+		message = replacetext(message," faucet "," tap ")
+		message = replacetext(message," give "," give'r ")
+		message = replacetext(message," bar "," booze can ")
+		message = replacetext(message," leave "," leave'r ")
+		message = replacetext(message," scruffle "," kerfuffle ")
+		message = replacetext(message," couch "," chesterfield ")
+		message = replacetext(message," sofa "," chesterfield ")
+		message = replacetext(message," kilometer "," klick ")
+		message = replacetext(message," kilometre "," klick ")
+		message = replacetext(message," alcohol "," mickey ")
+		message = replacetext(message," shoes "," runners ")
+		message = replacetext(message," cigarrete "," dart ")
+		message = replacetext(message," cig "," dart ")
+		message = replacetext(message," coin ",pick(" loonie "," toonie "))
+		message = replacetext(message," coins ",pick(" loonies "," toonies "))
+		message = replacetext(message," kitchen ",pick(" rotten ronnie's "," McShits "))
+		message = replacetext(message," underwear ",pick(" gitch "," gotch "))
+		if(prob(30))
+			message += pick(", eh?", ", EH?")
+	return trim(message)
