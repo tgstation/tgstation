@@ -34,7 +34,7 @@
 	else
 		return ..()
 
-/obj/machinery/computer/med_data/interact(mob/user)
+/obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()
 	var/dat
 	if(src.temp)

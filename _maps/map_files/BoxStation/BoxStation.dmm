@@ -4623,7 +4623,7 @@
 "bKU" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 4},/obj/machinery/light{dir = 8},/turf/open/floor/wood,/area/medical/psychiatry)
 "bKV" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable{icon_state = "2-4"},/turf/open/floor/wood,/area/medical/psychiatry)
 "bKW" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/wood,/area/medical/psychiatry)
-"bKX" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/door/airlock/medical{name = "Psychiatry"; req_access = "69"},/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/wood,/area/medical/psychiatry)
+"bKX" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/door/airlock/medical{name = "Psychiatry"; req_access = null; req_access_txt = "69"},/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/wood,/area/medical/psychiatry)
 "bKY" = (/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
 "bKZ" = (/obj/structure/disposalpipe/junction/flip{dir = 2},/obj/machinery/atmospherics/pipe/manifold4w/scrubbers,/obj/structure/cable{icon_state = "2-8"},/turf/open/floor/plasteel/white,/area/medical/medbay/central)
 "bLa" = (/obj/structure/disposalpipe/segment{dir = 9},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/turf/open/floor/plasteel/white,/area/medical/medbay/central)
