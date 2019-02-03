@@ -79,6 +79,7 @@
 	desc = "A brown paper delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverypackage3"
+	item_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sortTag = 0
 
