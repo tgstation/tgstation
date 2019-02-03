@@ -326,6 +326,23 @@
 	var/last_generate = 0
 	var/generate_delay = 10	//deciseconds
 
+/obj/item/reagent_containers/spray/chemsprayer/janitor/Initialize()
+	. = ..()
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/reagent_containers/spray/chemsprayer/janitor/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/item/reagent_containers/spray/chemsprayer/janitor/process()
+	if(world.time < last_generate + generate_delay)
+		return
+	last_generate = world.time
+	generate_reagents()
+
+/obj/item/reagent_containers/spray/chemsprayer/janitor/proc/generate_reagents()
+	reagents.add_reagent(generate_type, generate_amount)
+
 // Plant-B-Gone
 /obj/item/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
