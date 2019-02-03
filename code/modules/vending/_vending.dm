@@ -21,7 +21,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/product_path = null
 	var/amount = 0
 	var/max_amount = 0
-	var/display_color = "blue"
+	//var/display_color = "blue" //Icon instead of color change. Left this in for easy revert.
 	var/custom_price
 	var/custom_premium_price
 
@@ -166,6 +166,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				if (dump_amount >= 16)
 					return
 
+/obj/machinery/vending/proc/GetIconForProduct(datum/data/vending_product/P)
+	if(GLOB.vending_cache[P.product_path])
+		return GLOB.vending_cache[P.product_path]
+
+	var/product = new P.product_path()
+	GLOB.vending_cache[P.product_path] = icon2base64(getFlatIcon(product, no_anim = TRUE))
+	qdel(product)
+	return GLOB.vending_cache[P.product_path]
+
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, start_empty = FALSE)
 	for(var/typepath in productlist)
 		var/amount = productlist[typepath]
@@ -179,7 +188,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		R.display_color = pick("#ff8080","#80ff80","#8080ff")
+		//R.display_color = pick("#ff8080","#80ff80","#8080ff") - We're using icon instead of color, but this is here incase someone wants to easily revert the change.
 		R.custom_price = initial(temp.custom_price)
 		R.custom_premium_price = initial(temp.custom_premium_price)
 		recordlist += R
@@ -335,7 +344,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		var/list/display_records = product_records + coin_records
 		if(extended_inventory)
 			display_records = product_records + coin_records + hidden_records
-		dat += "<ul>"
+		dat += "<table>" //icon instead of color change starting point.
 		for (var/datum/data/vending_product/R in display_records)
 			var/price_listed = "$[default_price]"
 			var/is_hidden = hidden_records.Find(R)
@@ -347,15 +356,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 				price_listed = "FREE"
 			if(coin_records.Find(R) || is_hidden)
 				price_listed = "$[R.custom_premium_price ? R.custom_premium_price : extra_price]"
-			dat += "<li>"
+			dat += "<tr><td><img src='data:image/jpeg;base64,[GetIconForProduct(R)]'/></td>"
+			dat += "<td style=\"width: 100%\"><b>[sanitize(R.name)]  ([price_listed])</b></td>"
 			if(R.amount > 0 && ((C && C.registered_account && onstation) || (!onstation && isliving(user))))
-				dat += "<a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a> "
+				dat += "<td><b>[R.amount]&nbsp;</b></td><td><a href='byond://?src=[REF(src)];vend=[REF(R)]'>Vend</a></td>"
 			else
-				dat += "<span class='linkOff'>Not Available</span> "
-			dat += "<font color = '[R.display_color]'><b>[sanitize(R.name)] ([price_listed])</b>:</font>"
-			dat += " <b>[R.amount]</b>"
-			dat += "</li>"
-		dat += "</ul>"
+				dat += "<td><span class='linkOff'>Not&nbsp;Available</span></td>"
+			dat += "</tr>"
+		dat += "</table>" //icon instead of color change ending point.
 	dat += "</div>"
 	if(onstation && C && C.registered_account)
 		dat += "<b>Balance: $[account.account_balance]</b>"
