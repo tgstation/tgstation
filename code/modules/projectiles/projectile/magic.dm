@@ -244,7 +244,13 @@
 			if(prob(50))
 				new_mob = new /mob/living/carbon/human(M.loc)
 			else
-				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
+				var/chooseable_races = list()
+				for(var/speciestype in subtypesof(/datum/species))
+					var/datum/species/S = speciestype
+					if(initial(S.changesource_flags) & WABBAJACK)
+						chooseable_races += speciestype
+
+				var/hooman = pick(chooseable_races)
 				new_mob =new hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
