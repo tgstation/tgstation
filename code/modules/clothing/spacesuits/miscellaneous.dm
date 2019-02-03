@@ -8,7 +8,7 @@ Contains:
  - NASA Voidsuit
  - Father Christmas' magical clothes
  - Pirate's spacesuit
- - ERT hardsuit: command, sec, engi, med
+ - ERT hardsuit: command, sec, engi, med, janitor
  - EVA spacesuit
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
