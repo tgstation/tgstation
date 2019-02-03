@@ -4,7 +4,7 @@
 	report_type = "hivemind"
 	antag_flag = ROLE_HIVE
 	false_report_weight = 5
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	restricted_jobs = list("Cyborg","AI")
 	required_players = 25
 	required_enemies = 2
