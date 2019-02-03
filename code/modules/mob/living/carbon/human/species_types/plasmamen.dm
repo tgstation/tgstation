@@ -13,6 +13,7 @@
 	mutantstomach = /obj/item/organ/stomach/plasmaman
 	burnmod = 1.5
 	heatmod = 1.5
+	brutemod = 1.5
 	breathid = "tox"
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
