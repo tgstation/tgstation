@@ -21,15 +21,16 @@
 	strip_delay = 70
 	equip_delay_other = 70
 	resistance_flags = FIRE_PROOF
+	var/datum/martial_art/dropkick/style = new
 
-/obj/item/clothing/gloves/dropkicking/equipped(mob/user, slot)
+/obj/item/clothing/shoes/dropkicking/equipped(mob/user, slot)
 	if(!ishuman(user))
 		return
 	if(slot == SLOT_SHOES)
 		var/mob/living/carbon/human/H = user
 		style.teach(H,1)
 
-/obj/item/clothing/gloves/dropkicking/dropped(mob/user)
+/obj/item/clothing/shoes/dropkicking/dropped(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
