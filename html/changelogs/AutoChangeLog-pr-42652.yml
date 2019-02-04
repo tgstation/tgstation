@@ -1,0 +1,4 @@
+author: "Menshin"
+delete-after: True
+changes: 
+  - bugfix: "Plastic flaps won't become invisible on unscrew anymore"
