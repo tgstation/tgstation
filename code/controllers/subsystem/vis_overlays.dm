@@ -71,9 +71,7 @@ SUBSYSTEM_DEF(vis_overlays)
 		return
 	var/rotation = dir2angle(old_dir) - dir2angle(new_dir)
 	var/list/overlays_to_remove = list()
-	//the next loop is going to mess with thing.managed_vis_overlays, so iterate on a copy of it
-	var/list/managed_vis_overlays = thing.managed_vis_overlays
-	for(var/i in managed_vis_overlays)
+	for(var/i in thing.managed_vis_overlays)
 		var/obj/effect/overlay/vis/overlay = i
 		add_vis_overlay(thing, overlay.icon, overlay.icon_state, overlay.layer, overlay.plane, turn(overlay.dir, rotation), overlay.alpha, overlay.appearance_flags)
 		overlays_to_remove += overlay
