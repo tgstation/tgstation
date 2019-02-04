@@ -178,14 +178,18 @@ wd
 
 /obj/item/clothing/head/warden/drill/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(anger == 2 && slot == SLOT_HEAD)
-		user.dna.add_mutation(SHOUTING)
-	if(anger == 3 && slot == SLOT_HEAD)
-		user.dna.add_mutation(YELLING)
-	if(anger == 4 && slot == SLOT_HEAD)
-		user.dna.add_mutation(CANADIAN)
-	else
+	if(anger == 1) //baby angry doesn't get a speech mod, sorry!
 		return
+	else if(slot == SLOT_HEAD)
+		var/mutmod
+		switch(anger)
+			if(2)
+				mutmod = SHOUTING
+			if(3)
+				mutmod = YELLING
+			if(4)
+				mutmod = CANADIAN
+		user.dna.add_mutation(mutmod) 
 
 /obj/item/clothing/head/warden/drill/dropped(mob/living/carbon/human/user)
 	user.dna.remove_mutation(YELLING)
