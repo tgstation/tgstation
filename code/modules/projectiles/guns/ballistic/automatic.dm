@@ -268,7 +268,7 @@
 		..()
 		return
 	if (!cover_open)
-		to_chat("<span class='warning'>[src]'s cover is closed! Open it before trying to remove the magazine!</span>")
+		to_chat(user, "<span class='warning'>[src]'s cover is closed! Open it before trying to remove the magazine!</span>")
 		return
 	..()
 
