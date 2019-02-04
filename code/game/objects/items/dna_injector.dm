@@ -329,19 +329,19 @@
 	remove_mutations = list(SHOCKTOUCH)
 
 /obj/item/dnainjector/geladikinesis
-	name = "\improper DNA injector (Geladikinesis)
+	name = "\improper DNA injector (Geladikinesis)"
 	add_mutations = list(GELADIKINESIS)
 	
 /obj/item/dnainjector/antigeladikinesis
-	name = "\improper DNA injector (Anti-Geladikinesis)
+	name = "\improper DNA injector (Anti-Geladikinesis)"
 	remove_mutations = list(GELADIKINESIS)
 
 /obj/item/dnainjector/cryokinesis
-	name = "\improper DNA injector (Cryokinesis)
+	name = "\improper DNA injector (Cryokinesis)"
 	add_mutations = list(CRYOKINESIS)
 
 /obj/item/dnainjector/anticryokinesis
-	name = "\improper DNA injector (Anti-Cryokinesis)
+	name = "\improper DNA injector (Anti-Cryokinesis)"
 	remove_mutations = list(CRYOKINESIS)
 
 /obj/item/dnainjector/timed
