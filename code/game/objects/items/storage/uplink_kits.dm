@@ -168,7 +168,6 @@
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/dnainjector/geladikinesis(src)
 			new /obj/item/dnainjector/cryokinesis(src)
-			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			new /obj/item/gun/energy/temperature(src)
 			
 /obj/item/storage/box/syndie_kit
