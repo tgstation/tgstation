@@ -168,7 +168,7 @@
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/dnainjector/geladikinesis(src)
 			new /obj/item/dnainjector/cryokinesis(src)
-			new /obj/item/gun/energy/temperature(src)
+			new /obj/item/gun/energy/temperature/security(src)
 			
 /obj/item/storage/box/syndie_kit
 	name = "box"
