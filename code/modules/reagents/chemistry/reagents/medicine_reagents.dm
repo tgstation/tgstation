@@ -562,7 +562,7 @@
 /datum/reagent/medicine/ephedrine/on_mob_life(mob/living/carbon/M)
 	if(prob(20) && iscarbon(M))
 		var/obj/item/I = M.get_active_held_item()
-		if(I)
+		if(I && M.dropItemToGround(I))
 			M.dropItemToGround(I)
 			to_chat(M, "<span class ='notice'>Your hands spaz out and you drop what you were holding!</span>")
 			M.Jitter(10)
