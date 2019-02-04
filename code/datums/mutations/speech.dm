@@ -251,7 +251,7 @@
 	desc = "Unknown"
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='notice'>You feel polite.</span>"
-	text_lose_indication = "<span class='danger'>You feel american.</span>"
+	text_lose_indication = "<span class='danger'>You no longer feel polite.</span>"
 
 /datum/mutation/human/canadian/say_mod(message)
 	if(message)
