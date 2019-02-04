@@ -1,9 +1,0 @@
-author: "Floyd / Qustinnus"
-delete-after: True
-changes: 
-  - tweak: "Bonechill now actually chills you"
-  - tweak: "Bonechill lasts 2 seconds longer"
-  - tweak: "RESIST_COLD is checked before bonechill is applied"
-  - bugfix: "Changes makeshift vests' name to durathread vest"
-  - bugfix: "Cardboard golem can now reproduce himself."
-  - bugfix: "The durathread golem now needs cloth instead of strands"

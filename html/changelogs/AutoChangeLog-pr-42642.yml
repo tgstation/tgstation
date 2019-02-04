@@ -1,4 +1,0 @@
-author: "Menshin"
-delete-after: True
-changes: 
-  - bugfix: "syringes launched from the mecha syringe gun will now properly transfer reagents"

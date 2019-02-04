@@ -1,5 +1,0 @@
-author: "4dplanner"
-delete-after: True
-changes: 
-  - balance: "perfluorodecalin's side effects have been significantly reduced to 0.3 toxloss per tick"
-  - balance: "perfluorodecalin no longer heals brute/burn damage"
