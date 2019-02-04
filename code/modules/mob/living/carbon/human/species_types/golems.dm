@@ -14,13 +14,12 @@
 	punchstunthreshold = 11 //about 40% chance to stun
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
 	nojumpsuit = 1
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	sexes = 1
 	damage_overlay_type = ""
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	// To prevent golem subtypes from overwhelming the odds when random species
 	// changes, only the Random Golem type can be chosen
-	blacklisted = TRUE
-	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
@@ -46,8 +45,7 @@
 
 /datum/species/golem/random
 	name = "Random Golem"
-	blacklisted = FALSE
-	dangerous_existence = FALSE
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	var/static/list/random_golem_types
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -638,6 +636,7 @@
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	sexes = FALSE
 	speedmod = 0
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	damage_overlay_type = "synth"
 	prefix = "Clockwork"
 	special_names = list("Remnant", "Relic", "Scrap", "Vestige") //RIP Ratvar
@@ -673,8 +672,6 @@
 	no_equip = list()
 	nojumpsuit = FALSE
 	has_corpse = TRUE
-	blacklisted = TRUE
-	dangerous_existence = TRUE
 	random_eligible = FALSE
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem Servant</span><span class='bold alloy'>, you are faster than other types of golems.</span>" //warcult golems leave a corpse
 
@@ -1017,12 +1014,12 @@
 	prefix = "Capitalist"
 	attack_verb = "monopoliz"
 	limbs_id = "ca_golem"
-	blacklisted = TRUE
 	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr Moneybags", "Adam Smith")
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
+	changesource_flags = MIRROR_BADMIN
 
 	var/last_cash = 0
 	var/cash_cooldown = 100
@@ -1060,12 +1057,12 @@
 	prefix = "Comrade"
 	attack_verb = "nationalis"
 	limbs_id = "s_golem"
-	blacklisted = TRUE
 	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	fixed_mut_color = null
 	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
+	changesource_flags = MIRROR_BADMIN
 
 /datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

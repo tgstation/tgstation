@@ -376,7 +376,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("gun")
 			var/hits = 0
 			for(var/i in 1 to rand(3, 6))
-				target.playsound_local(source, get_sfx("gunshot"), 25)
+				target.playsound_local(source, "sound/weapons/gunshot.ogg", 25, TRUE)
 				if(prob(60))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/pierce.ogg', 25, 1), rand(5,10))
 					hits++
