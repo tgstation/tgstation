@@ -28,7 +28,7 @@
 	id = "nitroglycerin"
 	results = list("nitroglycerin" = 2)
 	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
-	strengthdiv = 2
+	strengthdiv = 4
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
@@ -41,7 +41,7 @@
 	id = "nitroglycerin_explosion"
 	required_reagents = list("nitroglycerin" = 1)
 	required_temp = 474
-	strengthdiv = 2
+	strengthdiv = 4
 
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
