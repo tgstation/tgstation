@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed fire alarms not updating icons properly after being emagged and hacked by Malf AI's."
