@@ -13,4 +13,4 @@
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
 	clothing_flags = THICKMATERIAL
-	allowed = list(/obj/item/melee/flyswatter)
+	allowed = list(/obj/item/melee/flyswatter, /obj/item/reagent_containers/spray/plantbgone, /obj/item/plant_analyzer, /obj/item/seeds, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/cultivator, /obj/item/reagent_containers/spray/pestspray, /obj/item/hatchet, /obj/item/storage/bag/plants)
