@@ -188,7 +188,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		if(!start_empty)
 			R.amount = amount
 		R.max_amount = amount
-		//R.display_color = pick("#ff8080","#80ff80","#8080ff") - We're using icon instead of color, but this is here incase someone wants to easily revert the change.
 		R.custom_price = initial(temp.custom_price)
 		R.custom_premium_price = initial(temp.custom_premium_price)
 		recordlist += R
