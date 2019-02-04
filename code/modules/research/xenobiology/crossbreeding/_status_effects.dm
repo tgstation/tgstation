@@ -206,7 +206,7 @@
 
 /datum/status_effect/bonechill
 	id = "bonechill"
-	duration = 60
+	duration = 80
 	alert_type = /obj/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
@@ -217,6 +217,7 @@
 	if(prob(50))
 		owner.adjustFireLoss(1)
 		owner.Jitter(3)
+		owner.adjust_bodytemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier("bonechilled")
