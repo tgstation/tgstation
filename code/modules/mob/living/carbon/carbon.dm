@@ -95,6 +95,9 @@
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	var/martial_return = mind.martial_art.throw_impact_act(hit_atom, throwingdatum)
+	if(martial_return)
+		return martial_return
 	var/hurt = TRUE
 	if(istype(throwingdatum, /datum/thrownthing))
 		var/datum/thrownthing/D = throwingdatum

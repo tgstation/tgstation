@@ -21,6 +21,9 @@
 /datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
+/datum/martial_art/proc/throw_impact_act(atom/hit_atom, datum/thrownthing/throwingdatum)
+	return//if you do not want this to continue on to throw_impact, then return anything not null (see dropkick for an example)
+
 /datum/martial_art/proc/can_use(mob/living/carbon/human/H)
 	return TRUE
 

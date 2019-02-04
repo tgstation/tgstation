@@ -7,7 +7,7 @@
 /datum/martial_art/dropkick/teach(mob/living/carbon/human/H,make_temporary=0)
 	if(..())
 		to_chat(H, "<span class = 'userdanger'>You know the arts of [name]!</span>")
-		to_chat(H, "<span class = 'danger'>You have lost the ability to fight normally, but have gained the powers of DROPKICK! Mouse over the button to see how it works.</span>")
+		to_chat(H, "<span class = 'danger'>You have gained the powers of DROPKICK! Mouse over the button to see how it works.</span>")
 		var/obj/effect/proc_holder/spell/aimed/dropkick/DK = new
 		H.AddSpell(DK)
 		dropkick = DK
@@ -17,6 +17,22 @@
 	if(dropkick)
 		H.RemoveSpell(dropkick)
 
+/datum/martial_art/dropkick/throw_impact_act(atom/hit_atom, datum/thrownthing/throwingdatum)
+	//
+	if(!dropkicking)
+		return//this will call the rest of throw_impact.
+	//owner.Paralyze(20)//you still always take longer to get up because it's a dropkick
+	if(iscarbon(hit_atom) && hit_atom != src)
+		var/mob/living/carbon/victim = hit_atom
+		if(victim.movement_type & FLYING)
+			return FALSE//this does not call the rest of throw_impact.
+		victim.take_bodypart_damage(60,check_armor = TRUE) //oww
+		victim.Paralyze(60)
+		//M.blur_eyes(20) //head damage causes blurry?
+		//owner.visible_message("<span class='danger'>[src] dropkicks [victim], sending him sprawling to the ground!</span>",\
+			"<span class='userdanger'>You violently dropkick [victim]!</span>")
+		playsound(src,'sound/weapons/punch1.ogg',50,1)
+	return TRUE
 
 /obj/effect/proc_holder/spell/aimed/dropkick//bet the coders of the past never thought their aimed spells would be used like THIS
 	name = "Dropkick"
@@ -36,6 +52,7 @@
 	var/turf/U = get_step(user, user.dir) // Get the tile infront of the move, based on their direction
 	if(!isturf(U) || !isturf(T) || !(user.mobility_flags & MOBILITY_STAND))
 		return FALSE
+	//user.mind.martial_art.dropkicking = TRUE FIX THIS
 	user.set_resting(TRUE, TRUE)
 	user.throw_at(target,4,5, spin = FALSE)
 	return TRUE
