@@ -166,8 +166,8 @@
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
 			new /obj/item/grenade/gluon(src)
-			new /obj/item/dnainjector/geladimut(src)
-			new /obj/item/dnainjector/cryomut(src)
+			new /obj/item/dnainjector/geladikinesis(src)
+			new /obj/item/dnainjector/cryokinesis(src)
 			new /obj/item/clothing/shoes/chameleon/noslip(src)
 			
 /obj/item/storage/box/syndie_kit
