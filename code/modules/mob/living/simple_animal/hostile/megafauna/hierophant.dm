@@ -76,7 +76,7 @@ Difficulty: Hard
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
 	var/list/stored_nearby = list() // stores people nearby the hierophant when it enters the death animation
-	var/hierophant_dying = 0 // if we're in the death animation and don't want to proc death repeatedly every time we take damage, do not set stat = dead or deathsounds and messages wont work
+	var/hierophant_dying = FALSE // if we're in the death animation and don't want to proc death repeatedly every time we take damage, do not set stat = dead or deathsounds and messages wont work
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
@@ -108,7 +108,7 @@ Difficulty: Hard
 	if(health > 0 || hierophant_dying)
 		return
 	else
-		hierophant_dying = 1
+		hierophant_dying = TRUE
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
