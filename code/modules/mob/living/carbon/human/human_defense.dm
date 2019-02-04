@@ -56,7 +56,7 @@
 						return 0
 					else
 						P.firer = src
-						P.setAngle(rand(1, 360))//SHING
+						P.setAngle(rand(0, 360))//SHING
 						return BULLET_ACT_FORCE_PIERCE
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
