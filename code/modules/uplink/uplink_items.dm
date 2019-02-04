@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Syndicate Bundles are specialized groups of items that arrive in a plain box. \
 			In bundle B, you will recieve items used by famous syndicate agents of the past. Collectively worth more than 20 telecrystals, the syndicate loves a good throwback."
 	item = /obj/item/storage/box/syndicate/bundle_B
-	cost = 18
+	cost = 20
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/bundles_TC/surplus
