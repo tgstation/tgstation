@@ -1478,8 +1478,7 @@
 	charge = 1e+006
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,

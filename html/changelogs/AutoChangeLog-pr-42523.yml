@@ -1,0 +1,5 @@
+author: "oranges"
+delete-after: True
+changes: 
+  - balance: "soviet and capitalistic golems no longer available from pride mirror"
+  - refactor: "changed how species manage their source behaviours"

@@ -4482,8 +4482,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -6169,8 +6168,7 @@
 "oE" = (
 /obj/structure/cable,
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/machinery/power/compressor{
 	comp_id = "syndie_lavaland_incineratorturbine";

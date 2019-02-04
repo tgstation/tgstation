@@ -38,6 +38,7 @@
 #define INSULATED	/datum/mutation/human/insulated
 #define SHOCKTOUCH	/datum/mutation/human/shock
 #define OLFACTION	/datum/mutation/human/olfaction
+#define YELLING		/datum/mutation/human/yelling
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
 

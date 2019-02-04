@@ -369,14 +369,14 @@
 	icon_state = "carpplush"
 	item_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	squeak_override = list('sound/weapons/bite.ogg'=1)
+	squeak_override = /datum/outputs/bite
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
 	attack_verb = list("rent")
-	squeak_override = list('sound/magic/demon_attack1.ogg'=1)
+	squeak_override = /datum/outputs/demonattack
 
 /obj/item/toy/plush/plushvar
 	name = "\improper Ratvar plushie"
@@ -459,7 +459,7 @@
 		say("NO! I will not be banished again...")
 		P.say(pick("Ha.", "Ra'sha fonn dest.", "You fool. To come here."))
 		playsound(src, 'sound/magic/clockwork/anima_fragment_death.ogg', 62, TRUE, frequency = 2)
-		playsound(P, 'sound/magic/demon_attack1.ogg', 50, TRUE, frequency = 2)
+		playsound(P, /datum/outputs/demonattack, 50, TRUE, frequency = 2)
 		explosion(src, 0, 0, 1)
 		qdel(src)
 		P.clashing = FALSE
@@ -488,7 +488,7 @@
 	icon_state = "plushie_lizard"
 	item_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
-	squeak_override = list('sound/weapons/slash.ogg' = 1)
+	squeak_override = /datum/outputs/slash
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -496,7 +496,7 @@
 	icon_state = "plushie_snake"
 	item_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
-	squeak_override = list('sound/weapons/bite.ogg' = 1)
+	squeak_override = /datum/outputs/bite
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -504,7 +504,7 @@
 	icon_state = "plushie_nuke"
 	item_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
-	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
+	squeak_override = /datum/outputs/punch
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
@@ -512,7 +512,7 @@
 	icon_state = "plushie_slime"
 	item_state = "plushie_slime"
 	attack_verb = list("blorbled", "slimed", "absorbed")
-	squeak_override = list('sound/effects/blobattack.ogg' = 1)
+	squeak_override = /datum/outputs/squelch
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
 /obj/item/toy/plush/awakenedplushie
