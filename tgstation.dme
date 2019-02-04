@@ -977,6 +977,7 @@
 #include "code\game\objects\structures\fireplace.dm"
 #include "code\game\objects\structures\flora.dm"
 #include "code\game\objects\structures\fluff.dm"
+#include "code\game\objects\structures\fugitive_role_spawners.dm"
 #include "code\game\objects\structures\ghost_role_spawners.dm"
 #include "code\game\objects\structures\girders.dm"
 #include "code\game\objects\structures\grille.dm"

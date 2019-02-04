@@ -93,7 +93,18 @@
 
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_security()
-	//WE NEED TO MAKE A SHIP
+
+	var/datum/map_template/shuttle/pirate/default/ship = new
+	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
+	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
+	var/z = SSmapping.empty_space.z_value
+	var/turf/T = locate(x,y,z)
+	if(!T)
+		CRASH("Fugitive Hunters (Created from fugitive event) found no turf to load in")
+
+if(!ship.load(T))
+	CRASH("Loading hunter ship failed!")
+
 	var/hunter_team = pick(hunter_choices)
 	//ship shit//
 	switch(backstory)
@@ -105,26 +116,9 @@
 	if(!isnull(leader))
 		gear_hunter_leader(leader, spawned_mobs)
 
-/datum/round_event/ghost_role/fugitives/proc/gear_hunter(var/mob/dead/selected) //spawns normal hunter
-	var/datum/mind/player_mind = new /datum/mind(selected.key)
-	player_mind.active = TRUE
-	var/mob/living/carbon/human/S = new(landing_turf)
-	player_mind.transfer_to(S)
-	player_mind.assigned_role = ""
-	player_mind.special_role = "Fugitive Hunter"
-	player_mind.add_antag_datum(/datum/antagonist/fugitive_hunter)
-	var/datum/antagonist/fugitive_hunter/hunterantag = player_mind.has_antag_datum(/datum/antagonist/fugitive_hunter)
-	hunterantag.backstory = backstory
-	hunterantag.greet(backstory)
-
 	switch(backstory)
-		if("police")
-			S.equipOutfit(/datum/outfit/spacepol)
 		if("russian")
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive Hunter by an event.")
 	log_game("[key_name(S)] was spawned as a Fugitive Hunter by an event.")
 	spawned_mobs += S
 	return S
-
-/datum/round_event/ghost_role/fugitives/proc/gear_hunter_leader(var/mob/dead/leader, list/spawned_mobs) //spawns the leader of the fugitive group, if they have one.
-	//do this

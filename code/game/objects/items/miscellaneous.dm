@@ -138,7 +138,7 @@
 		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
 
 /obj/item/choice_beacon/augments/spawn_option(obj/choice,mob/living/M)
-	var/obj/new_item = new choice(get_turf(M))
+	new choice(get_turf(M))
 	var/msg = "<span class=danger>Something warps to your feet!</span>"
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M

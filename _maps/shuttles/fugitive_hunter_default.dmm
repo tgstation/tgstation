@@ -1,150 +1,188 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
-"a" = (
-/turf/template_noop,
-/area/template_noop)
-"b" = (
+"bY" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"hB" = (
 /obj/structure/shuttle/engine/propulsion{
-	dir = 4
+	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"c" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/transport)
-"d" = (
+/area/shuttle/hunter)
+"hJ" = (
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /turf/open/floor/plating,
-/area/shuttle/transport)
-"e" = (
+/area/shuttle/hunter)
+"hU" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ku" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"lp" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"qH" = (
+/obj/machinery/button/door{
+	id = "Interpolship";
+	pixel_y = 26
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"rR" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"te" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"tL" = (
+/obj/effect/mob_spawn/human/fugitive/spacepol{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"An" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/shuttle/transport)
-"g" = (
-/turf/closed/wall/mineral/titanium/interior,
-/area/shuttle/transport)
-"h" = (
+/area/shuttle/hunter)
+"Kg" = (
+/obj/effect/mob_spawn/human/fugitive/spacepol{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
+"RA" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"j" = (
-/obj/structure/chair/comfy/shuttle,
+/area/shuttle/hunter)
+"RO" = (
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"k" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"l" = (
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"m" = (
-/obj/machinery/door/airlock/titanium,
-/obj/docking_port/mobile{
-	dir = 8;
-	dwidth = 2;
-	height = 12;
-	id = "ferry";
-	name = "ferry shuttle";
-	port_direction = 2;
-	width = 5
+/area/shuttle/hunter)
+"WY" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker{
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"p" = (
-/obj/structure/closet/crate,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
-"q" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/transport)
+/area/shuttle/hunter)
 
 (1,1,1) = {"
-a
-b
-k
-b
-a
+Pq
+ku
+te
+te
+te
+ku
+Pq
 "}
 (2,1,1) = {"
-b
-g
-l
-g
-b
+Pq
+ku
+qH
+RO
+RO
+ku
+Pq
 "}
 (3,1,1) = {"
-c
-h
-l
-p
-c
+Pq
+ku
+bY
+RO
+tL
+ku
+Pq
 "}
 (4,1,1) = {"
-c
-l
-l
-p
-c
+hB
+ku
+bY
+RO
+tL
+ku
+hB
 "}
 (5,1,1) = {"
-d
-j
-l
-q
-d
+Pq
+hJ
+bY
+RO
+tL
+hJ
+Pq
 "}
 (6,1,1) = {"
-c
-j
-l
-q
-c
+Pq
+ku
+bY
+RO
+tL
+ku
+Pq
 "}
 (7,1,1) = {"
-c
-j
-l
-q
-c
+Pq
+ku
+RA
+RO
+hU
+ku
+Pq
 "}
 (8,1,1) = {"
-c
-j
-l
-q
-c
+Pq
+ku
+lp
+RO
+hU
+ku
+Pq
 "}
 (9,1,1) = {"
-e
-j
-l
-q
-e
+Pq
+ku
+ku
+rR
+ku
+ku
+Pq
 "}
 (10,1,1) = {"
-c
-j
-l
-q
-c
+hB
+ku
+RO
+RO
+RO
+ku
+hB
 "}
 (11,1,1) = {"
-c
-j
-l
-q
-c
+Pq
+An
+RA
+WY
+Kg
+An
+Pq
 "}
 (12,1,1) = {"
-c
-d
-m
-d
-c
+Pq
+ku
+An
+An
+An
+ku
+Pq
 "}
