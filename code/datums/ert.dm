@@ -47,6 +47,14 @@
 /datum/ert/centcom_official/New()
 	mission = "Conduct a routine performance review of [station_name()] and its Captain."
 
+/datum/ert/dropkick
+	teamsize = 1
+	opendoors = FALSE
+	leader_role = /datum/antagonist/official/dropkick
+	roles = list(/datum/antagonist/official/dropkick)
+	rename_team = "Captain Dropkick"
+	polldesc = "Captain Dropkick"
+
 /datum/ert/inquisition
 	roles = list(/datum/antagonist/ert/chaplain/inquisitor, /datum/antagonist/ert/security/inquisitor, /datum/antagonist/ert/medic/inquisitor)
 	leader_role = /datum/antagonist/ert/commander/inquisitor

@@ -4,6 +4,7 @@
 	show_in_antagpanel = FALSE
 	var/datum/objective/mission
 	var/datum/team/ert/ert_team
+	var/official_outfit = /datum/outfit/centcom_official
 	can_hijack = HIJACK_PREVENT
 
 /datum/antagonist/official/greet()
@@ -17,7 +18,7 @@
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
-	H.equipOutfit(/datum/outfit/centcom_official)
+	H.equipOutfit(official_outfit)
 
 	if(CONFIG_GET(flag/enforce_human_authority))
 		H.set_species(/datum/species/human)
