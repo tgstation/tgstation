@@ -1,10 +1,10 @@
 /datum/antagonist/creep
-	name = "Creep"
+	name = "Obsessed"
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	job_rank = ROLE_CREEP
 	show_name_in_check_antagonists = TRUE
-	roundend_category = "creeps"
+	roundend_category = "obsessed"
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
 	var/datum/brain_trauma/special/creep/trauma
 
@@ -23,10 +23,11 @@
 
 /datum/antagonist/creep/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE)
-	to_chat(owner, "<span class='boldannounce'>You are the Creep!</span>")
-	to_chat(owner, "<B>They would call it an obsession. They would call you crazy, because they don't understand your unrequited love.<br>All you know is that you love [trauma.obsession]. And you. will. show them.</B>")
-	to_chat(owner, "<B>I will surely go insane if I don't spend enough time around [trauma.obsession], but when i'm near them too long it gets too difficult to speak properly, making me look like a CREEP!</B>")
-	to_chat(owner, "<span class='boldannounce'>The gods would like to remind you that this role, as with all other antags, does not allow you to break ANY server rules, especially Rule 8 (These rules being listed from the \"Rules\" button at the top right of your mind's screen). Feel free to murder and pillage just like any other antag, though.</span>")
+	to_chat(owner, "<span class='boldannounce'>You are the Obsessed!</span>")
+	to_chat(owner, "<B>These voices will can only be sated by the horrible acts of murder and general evils.</B>")
+	to_chat(owner, "<B>I don't know their connection, but the Voices compel me to stalk [trauma.obsession], to drive them crazy with paranoia.</B>")
+	to_chat(owner, "<B>They will try to tear my mind apart if I avoid these tasks. I must free myself from the foreign presence in my head controlling me.</B>")
+	to_chat(owner, "<span class='boldannounce'>You are NOT a roleplay antagonist. This does not let you tiptoe the lines of rule 8 like some kind of Creep. Control yourself.</span>")//ironic if you know the history of the antag
 	owner.announce_objectives()
 
 /datum/antagonist/creep/Destroy()

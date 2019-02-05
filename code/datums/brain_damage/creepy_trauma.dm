@@ -1,9 +1,9 @@
 /datum/brain_trauma/special/creep
-	name = "Erotomania"
+	name = "Psychotic Schizophrenia"
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
-	scan_desc = "erotomaniac delusions"
+	scan_desc = "psychotic schizophrenic delusions"
 	gain_text = "If you see this message, make a github issue report. The trauma initialized wrong."
-	lose_text = "<span class='warning'>You no longer feel so attached.</span>"
+	lose_text = "<span class='warning'>The voices in your head fall silent.</span>"
 	can_gain = TRUE
 	random_gain = FALSE
 	resilience = TRAUMA_RESILIENCE_SURGERY
@@ -24,8 +24,7 @@
 		if(!obsession)//we didn't find one
 			lose_text = ""
 			qdel(src)
-	gain_text = "<span class='warning'>You feel a strange attachment to [obsession].</span>"
-	owner.apply_status_effect(STATUS_EFFECT_INLOVE, obsession)
+	gain_text = "<span class='warning'>You hear a sickening, raspy voice in your head. It wants one small task of you...</span>"
 	owner.mind.add_antag_datum(/datum/antagonist/creep)
 	antagonist = owner.mind.has_antag_datum(/datum/antagonist/creep)
 	antagonist.trauma = src
@@ -63,7 +62,6 @@
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreeping, obsession.name)
 /datum/brain_trauma/special/creep/on_lose()
 	..()
-	owner.remove_status_effect(STATUS_EFFECT_INLOVE)
 	owner.mind.remove_antag_datum(/datum/antagonist/creep)
 
 /datum/brain_trauma/special/creep/on_say(message)

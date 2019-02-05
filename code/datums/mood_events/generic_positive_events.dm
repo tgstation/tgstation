@@ -63,15 +63,12 @@
 	special_screen_replace = FALSE
 
 /datum/mood_event/creeping
-	description = "<span class='greentext'>I'm so close to my obsession and I never want this to end.</span>\n" //creeps get it when they are around their obsession
+	description = "<span class='greentext'>The voices are happy! I feel free again!</span>\n" //creeps get it when they are around their obsession
 	mood_change = 18
 	timeout = 30
 	hidden = TRUE
 	special_screen_obj = "creep_inlove"
 	special_screen_replace = FALSE
-
-/datum/mood_event/creeping/add_effects(name)
-	description = "<span class='greentext'>I'm so close to [name] and I NEVER want this to end.</span>\n"
 
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
