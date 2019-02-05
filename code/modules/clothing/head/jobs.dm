@@ -176,25 +176,33 @@ wd
 		anger = 4
 	return TRUE
 
-/obj/item/clothing/head/warden/drill/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(anger == 1) //baby angry doesn't get a speech mod, sorry!
-		return
-	else if(slot == SLOT_HEAD)
-		var/mutmod
-		switch(anger)
-			if(2)
-				mutmod = SHOUTING
-			if(3)
-				mutmod = YELLING
-			if(4)
-				mutmod = CANADIAN
-		user.dna.add_mutation(mutmod) 
+/obj/item/clothing/head/warden/drill/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		if(anger == 1)
+			M = " [M]"
+			return trim(M)
+		if(anger == 2)
+			M = " [M]!"
+			return trim(M)
+		if(anger == 3)
+			M = " [M]!!"
+			return trim(M)
+		if(anger == 4)
+			M = " [M]"
+			var/list/canadian_words = strings("canadian_replacement.json", "canadian")
 
-/obj/item/clothing/head/warden/drill/dropped(mob/living/carbon/human/user)
-	user.dna.remove_mutation(YELLING)
-	user.dna.remove_mutation(SHOUTING)
-	user.dna.remove_mutation(CANADIAN)
+			for(var/key in canadian_words)
+				var/value = canadian_words[key]
+				if(islist(value))
+					value = pick(value)
+
+				M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+				M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+				M = replacetextEx(M, " [key]", " [value]")
+
+			if(prob(30))
+				M += pick(", eh?", ", EH?")
+		return trim(M)
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
