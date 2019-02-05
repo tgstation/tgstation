@@ -245,7 +245,10 @@
 	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES]
-	var/toroidal_size = air.volume //The size of the phase space hypertorus
+	var/scale_factor = (initial_plasma+initial_carbon)/(2*PI)
+	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
+	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
+	var/toroidal_size = (2*PI)+(2*arctan(air.volume/1000)) //The size of the phase space hypertorus
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
@@ -253,8 +256,10 @@
 	cached_scan_results[id] = instability//used for analyzer feedback
 
 	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
-	cached_gases[/datum/gas/plasma][MOLES] = MODULUS(cached_gases[/datum/gas/plasma][MOLES] + instability*sin(initial_carbon*((2*PI)/toroidal_size)), toroidal_size)
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] = MODULUS(cached_gases[/datum/gas/plasma][MOLES] + cached_gases[/datum/gas/carbon_dioxide][MOLES] , toroidal_size)
+	plasma = MODULUS(plasma + instability*sin(initial_carbon), toroidal_size)
+	carbon = MODULUS(plasma + carbon, toroidal_size)
+	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale factor + FUSION_MOLE_THRESHOLD
 	var/delta_plasma = cached_gases[/datum/gas/plasma][MOLES] - initial_plasma
 	var/delta_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES] - initial_carbon
 	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
