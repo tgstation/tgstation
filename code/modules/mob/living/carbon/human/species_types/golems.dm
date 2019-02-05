@@ -991,6 +991,7 @@
 /datum/action/innate/bonechill/Activate()
 	if(world.time < last_use + cooldown)
 		to_chat("<span class='notice'>You aren't ready yet to rattle your bones again</span>")
+		return
 	owner.visible_message("<span class='warning'>[owner] rattles [owner.p_their()] bones harrowingly.</span>", "<span class='notice'>You rattle your bones</span>")
 	last_use = world.time
 	if(prob(snas_chance))
