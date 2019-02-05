@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "some syndicate operatives simple mobs no longer have an invisible shield"
