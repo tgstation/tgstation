@@ -217,10 +217,11 @@ Charged extracts:
 		to_chat(user, "<span class='warning'>You have to be able to have a species to get your species changed.</span>")
 		return
 	var/list/allowed_species = list()
-	for(var/X in subtypesof(/datum/species))
-		var/datum/species/temp = X
-		if(!initial(temp.blacklisted))
-			allowed_species += X
+	for(var/stype in subtypesof(/datum/species))
+		var/datum/species/X = stype
+		if(initial(X.changesource_flags) & SLIME_EXTRACT)
+			allowed_species += stype
+
 	var/datum/species/changed = pick(allowed_species)
 	if(changed)
 		H.set_species(changed, icon_update = 1)
