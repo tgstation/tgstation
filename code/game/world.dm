@@ -140,10 +140,10 @@ GLOBAL_VAR_INIT(bypass_tgs_reboot, world.system_type == UNIX && world.byond_buil
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	//redirect to server tools if necessary
 
-	var/static/list/topic_handlers = TopicHandlers(/datum/world_topic)
+	var/static/list/topic_handlers = TopicHandlers(/datum/datum_topic/world_topic)
 
 	var/list/input = params2list(T)
-	var/datum/world_topic/handler
+	var/datum/datum_topic/world_topic/handler
 	for(var/I in topic_handlers)
 		if(I in input)
 			handler = topic_handlers[I]

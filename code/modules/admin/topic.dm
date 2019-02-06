@@ -13,22 +13,19 @@
 
 // BASE ADMINS_TOPIC
 
-/datum/admins_topic()
-	var/keyword
+/datum/datum_topic/admins_topic
 	var/log = TRUE
 	var/key_valid
 
-/datum/admins_topic/proc/TryRun(list/input)
-	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
-	if(require_comms_key && !key_valid)
-		return "Bad Key"
+/datum/datum_topic/admins_topic/proc/TryRun(list/input)
 	input -= "key"
 	. = Run(input)
 	if(islist(.))
 		. = list2params(.)
 
-/datum/admins_topic/proc/Run(list/input)
+/datum/datum_topic/admins_topic/proc/Run(list/input)
 	CRASH("Run() not implemented for [type]!")
+
 
 // ADMINS TOPIC()
 
@@ -42,32 +39,22 @@
 	if(!CheckAdminHref(href, href_list))
 		return
 
-	var/static/list/topic_handlers = TopicHandlers(datum/admins_topic)
+	var/static/list/topic_handlers = TopicHandlers(/datum/datum_topic/admins_topic)
 
 	var/list/input = params2list(href_list)
-	var/datum/admins_topic/handler
+	var/datum/datum_topic/admins_topic/handler
 	for(var/I in topic_handlers)
 		if(I in input)
+			log_world("it is working here")
 			handler = topic_handlers[I]
 			break
-
+	/*
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_admin))
-		log_topic("\"[T]\", from:[addr], master:[master], key:[key]")
-
+		log_admin("\"[usr]\", from:[addr], master:[master], key:[key]")
+	*///Need to work out if I need the above or not. Probably something similar though......
 	if(handler)
 		handler = new handler()
 		return handler.TryRun(input)
-
-	if(href_list["ahelp"])
-		if(!check_rights(R_ADMIN, TRUE))
-			return
-
-		var/ahelp_ref = href_list["ahelp"]
-		var/datum/admin_help/AH = locate(ahelp_ref)
-		if(AH)
-			AH.Action(href_list["ahelp_action"])
-		else
-			to_chat(usr, "Ticket [ahelp_ref] has been deleted!")
 
 	else if(href_list["ahelp_tickets"])
 		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
