@@ -18,7 +18,6 @@
 	var/key_valid
 
 /datum/datum_topic/admins_topic/proc/TryRun(list/input)
-	input -= "key"
 	. = Run(input)
 	if(islist(.))
 		. = list2params(.)
@@ -54,9 +53,6 @@
 	if(handler)
 		handler = new handler()
 		return handler.TryRun(input)
-
-	else if(href_list["ahelp_tickets"])
-		GLOB.ahelp_tickets.BrowseTickets(text2num(href_list["ahelp_tickets"]))
 
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
