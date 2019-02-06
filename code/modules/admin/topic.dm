@@ -11,6 +11,26 @@
 		return TRUE
 	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
 
+// BASE ADMINS_TOPIC
+
+/datum/admins_topic()
+	var/keyword
+	var/log = TRUE
+	var/key_valid
+
+/datum/admins_topic/proc/TryRun(list/input)
+	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
+	if(require_comms_key && !key_valid)
+		return "Bad Key"
+	input -= "key"
+	. = Run(input)
+	if(islist(.))
+		. = list2params(.)
+
+/datum/admins_topic/proc/Run(list/input)
+	CRASH("Run() not implemented for [type]!")
+
+// ADMINS TOPIC()
 
 /datum/admins/Topic(href,href_list)
 	..()
@@ -34,33 +54,9 @@
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_admin))
 		log_topic("\"[T]\", from:[addr], master:[master], key:[key]")
 
-	if(!handler)
-		return
-
-	handler = new handler()
-	return handler.TryRun(input)
-
-/datum/admins_topic()
-	var/keyword
-	var/log = TRUE
-	var/key_valid
-
-/datum/admins_topic/proc/TryRun(list/input)
-	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
-	if(require_comms_key && !key_valid)
-		return "Bad Key"
-	input -= "key"
-	. = Run(input)
-	if(islist(.))
-		. = list2params(.)
-
-/datum/admins_topic/proc/Run(list/input)
-	CRASH("Run() not implemented for [type]!")
-
-// TOPICS
-
-/datum/admins/Topic(href, href_list)
-	..()
+	if(handler)
+		handler = new handler()
+		return handler.TryRun(input)
 
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
