@@ -11,9 +11,9 @@
 		return TRUE
 	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
 
-/datum/admins/Topic(href, href_list)
-	..()
 
+/datum/admins/Topic(href,href_list)
+	..()
 	if(usr.client != src.owner || !check_rights(0))
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
@@ -21,6 +21,46 @@
 
 	if(!CheckAdminHref(href, href_list))
 		return
+
+	var/static/list/topic_handlers = TopicHandlers(datum/admins_topic)
+
+	var/list/input = params2list(href_list)
+	var/datum/admins_topic/handler
+	for(var/I in topic_handlers)
+		if(I in input)
+			handler = topic_handlers[I]
+			break
+
+	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_admin))
+		log_topic("\"[T]\", from:[addr], master:[master], key:[key]")
+
+	if(!handler)
+		return
+
+	handler = new handler()
+	return handler.TryRun(input)
+
+/datum/admins_topic()
+	var/keyword
+	var/log = TRUE
+	var/key_valid
+
+/datum/admins_topic/proc/TryRun(list/input)
+	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
+	if(require_comms_key && !key_valid)
+		return "Bad Key"
+	input -= "key"
+	. = Run(input)
+	if(islist(.))
+		. = list2params(.)
+
+/datum/admins_topic/proc/Run(list/input)
+	CRASH("Run() not implemented for [type]!")
+
+// TOPICS
+
+/datum/admins/Topic(href, href_list)
+	..()
 
 	if(href_list["ahelp"])
 		if(!check_rights(R_ADMIN, TRUE))
@@ -861,7 +901,7 @@
 
 		message_admins("<span class='danger'>Admin [key_name_admin(usr)] AIized [key_name_admin(H)]!</span>")
 		log_admin("[key_name(usr)] AIized [key_name(H)].")
-		H.AIize(TRUE, H.client)
+		H.AIize(H.client)
 
 	else if(href_list["makealien"])
 		if(!check_rights(R_SPAWN))

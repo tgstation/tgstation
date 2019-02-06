@@ -1,10 +1,10 @@
 // SETUP
 
-/proc/TopicHandlers()
+/proc/TopicHandlers(var/datum/A)
 	. = list()
-	var/list/all_handlers = subtypesof(/datum/world_topic)
+	var/list/all_handlers = subtypesof(A)
 	for(var/I in all_handlers)
-		var/datum/world_topic/WT = I
+		var/datum/WT = I //Modularity it gets subtypes of the datum fed to it already
 		var/keyword = initial(WT.keyword)
 		if(!keyword)
 			warning("[WT] has no keyword! Ignoring...")
