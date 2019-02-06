@@ -338,9 +338,6 @@
 	if(world.time < last_generate + generate_delay)
 		return
 	last_generate = world.time
-	generate_reagents()
-
-/obj/item/reagent_containers/spray/chemsprayer/janitor/proc/generate_reagents()
 	reagents.add_reagent(generate_type, generate_amount)
 
 // Plant-B-Gone
