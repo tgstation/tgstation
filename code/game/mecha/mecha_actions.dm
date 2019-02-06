@@ -128,7 +128,7 @@
 
 
 /datum/action/innate/mecha/strafe
-	name = "Toggle Strafing"
+	name = "Toggle Strafing. Disabled when Alt is held."
 	button_icon_state = "strafe"
 
 /datum/action/innate/mecha/strafe/Activate()

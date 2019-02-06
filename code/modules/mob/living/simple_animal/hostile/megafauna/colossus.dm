@@ -112,7 +112,7 @@ Difficulty: Very Hard
 
 		var/random_y = rand(0, 72)
 		AT.pixel_y += random_y
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/L)
 	if(ishuman(L))
@@ -390,7 +390,7 @@ Difficulty: Very Hard
 	..()
 
 /obj/machinery/anomalous_crystal/bullet_act(obj/item/projectile/P, def_zone)
-	..()
+	. = ..()
 	if(istype(P, /obj/item/projectile/magic))
 		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
 		return

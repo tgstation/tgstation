@@ -215,7 +215,7 @@
 		step_energy_drain = normal_step_energy_drain
 		qdel(SM)
 	if(CP)
-		armor = armor.modifyRating(energy = (CP.rating * 10)) //Each level of capacitor protects the mech against emp by 10%
+		armor = armor.modifyRating(energy = (CP.rating * 5)) //Each level of capacitor protects the mech against emp by 5%
 		qdel(CP)
 
 ////////////////////////
@@ -541,7 +541,7 @@
 	var/oldloc = loc
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		move_result = mechsteprand()
-	else if(dir != direction && !strafe)
+	else if(dir != direction && (!strafe || occupant.client.keys_held["Alt"]))
 		move_result = mechturn(direction)
 	else
 		move_result = mechstep(direction)

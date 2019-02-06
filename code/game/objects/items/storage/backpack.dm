@@ -297,6 +297,10 @@
 	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
 	level = 1
 
+/obj/item/storage/backpack/satchel/flat/Initialize()
+	. = ..()
+	add_trait(TRAIT_T_RAY_VISIBLE, TRAIT_GENERIC)
+
 /obj/item/storage/backpack/satchel/flat/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
@@ -513,7 +517,7 @@
 
 /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/gun/ballistic/automatic/shotgun/bulldog(src)
+	new /obj/item/gun/ballistic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/stun(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 

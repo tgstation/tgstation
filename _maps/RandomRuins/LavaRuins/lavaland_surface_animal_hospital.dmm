@@ -330,7 +330,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/ammo_casing/shotgun/dart,
 /obj/item/ammo_casing/shotgun/dart,
-/obj/item/gun/ballistic/revolver/doublebarrel{
+/obj/item/gun/ballistic/shotgun/doublebarrel{
 	desc = "For putting critters out to pasture."
 	},
 /obj/item/ammo_casing/shotgun/buckshot,

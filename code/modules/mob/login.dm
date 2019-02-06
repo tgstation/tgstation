@@ -16,7 +16,8 @@
 	next_move = 1
 
 	..()
-
+	if (client && key != client.key)
+		key = client.key
 	reset_perspective(loc)
 
 	if(loc)

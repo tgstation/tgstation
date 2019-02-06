@@ -267,8 +267,8 @@
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if((W.item_flags & NODROP) || (item_flags & NODROP))
-			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
+		if(W.has_trait(TRAIT_NODROP) || has_trait(TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [has_trait(TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [has_trait(TRAIT_NODROP) ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
@@ -986,7 +986,12 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
+	var/datum/outputs/output
 	var/cooldown = 0
+
+/obj/item/toy/nuke/Initialize()
+	. = ..()
+	output = SSoutputs.outputs[/datum/outputs/alarm]
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
@@ -994,7 +999,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/alarm.ogg', 100, 0)
+		playsound(src, output, 100, 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)

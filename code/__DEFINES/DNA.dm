@@ -30,11 +30,18 @@
 #define ELVIS		/datum/mutation/human/elvis
 #define RADIOACTIVE	/datum/mutation/human/radioactive
 #define GLOWY		/datum/mutation/human/glow
-#define TELEPATHY	/datum/mutation/human/telepath
+#define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
 #define FIRESWEAT	/datum/mutation/human/fire
+#define INSULATED	/datum/mutation/human/insulated
+#define SHOCKTOUCH	/datum/mutation/human/shock
+#define OLFACTION	/datum/mutation/human/olfaction
+#define YELLING		/datum/mutation/human/yelling
+#define GELADIKINESIS		/datum/mutation/human/geladikinesis
+#define CRYOKINESIS /datum/mutation/human/cryokinesis
+
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

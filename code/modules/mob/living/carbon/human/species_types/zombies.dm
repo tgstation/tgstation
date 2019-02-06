@@ -6,7 +6,6 @@
 	id = "zombie"
 	say_mod = "moans"
 	sexes = 0
-	blacklisted = 1
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	species_traits = list(NOBLOOD,NOZOMBIE,NOTRANSSTING)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH)
@@ -15,6 +14,7 @@
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 
 /datum/species/zombie/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -31,6 +31,7 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	var/heal_rate = 1
 	var/regen_cooldown = 0
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -88,5 +89,6 @@
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/tongue/zombie
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 #undef REGENERATION_DELAY

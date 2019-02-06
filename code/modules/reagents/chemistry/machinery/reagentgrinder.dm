@@ -128,7 +128,6 @@
 			return
 		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
-		updateUsrDialog()
 		update_icon()
 		return TRUE //no afterattack
 
