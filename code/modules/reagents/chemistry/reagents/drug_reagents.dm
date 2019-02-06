@@ -472,8 +472,9 @@
 	M.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN)
 	..()
 
-/datum/reagent/drug/synthetic_cocaine/on_mob_delete(mob/living/M)
+/datum/reagent/drug/synthetic_cocaine/on_mob_delete(mob/living/carbon/M)
 	M.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN)
+	M.dna.remove_mutation(EPILEPSY)
 	..()
 
 /datum/reagent/drug/synthetic_cocaine/reaction_turf(turf/T, reac_volume) //Creates a few coke lines
