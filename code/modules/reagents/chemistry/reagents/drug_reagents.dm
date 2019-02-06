@@ -483,7 +483,7 @@
 	new/obj/effect/decal/cleanable/coke(T)
 	..()
 
-/datum/reagent/drug/synthetic_cocaine/overdose_process(mob/living/M)
+/datum/reagent/drug/synthetic_cocaine/overdose_process(mob/living/carbon/M)
 	M.dna.add_mutation(EPILEPSY)
 	..()
 	. = 1
