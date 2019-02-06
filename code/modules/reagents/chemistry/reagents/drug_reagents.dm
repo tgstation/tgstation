@@ -464,6 +464,7 @@
 	M.AdjustUnconscious(-30, FALSE)
 	M.AdjustParalyzed(-30, FALSE)
 	M.AdjustImmobilized(-30, FALSE)
+	M.Jitter(5)
 	..()
 	. = 1
 
@@ -478,13 +479,15 @@
 /datum/reagent/drug/synthetic_cocaine/reaction_turf(turf/T, reac_volume) //Creates a few coke lines
 	if(!istype(T))
 		return
-	if(reac_volume < 1)
+	if(reac_volume < 20)
 		return
+	to_chat("<span class='notice'>You make some lines of cocaine on the ground.</span>")
 	new/obj/effect/decal/cleanable/coke(T)
 	..()
 
 /datum/reagent/drug/synthetic_cocaine/overdose_process(mob/living/carbon/M)
 	M.dna.add_mutation(EPILEPSY)
+	M.adjustBrainLoss(0.5)
 	..()
 	. = 1
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage1(mob/living/M)

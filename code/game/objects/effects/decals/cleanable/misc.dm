@@ -213,7 +213,8 @@
 		return
 	if(ishuman(M))
 		M.reagents.add_reagent("synthetic_cocaine", 20)
-
+		to_chat(M, "<span class='notice'>You snort the cocaine.</span>")
+		Destroy()
 /obj/effect/decal/cleanable/coke/Initialize()
 	. = ..()
 	reagents.add_reagent("synthetic_cocaine", 20)
