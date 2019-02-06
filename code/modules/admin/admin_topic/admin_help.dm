@@ -8,7 +8,6 @@
 	log = FALSE
 
 /datum/datum_topic/admins_topic/ahelp/Run(list/input)
-	log_world("it is hitting here")
 	if(!check_rights(R_ADMIN, TRUE))
 		return
 

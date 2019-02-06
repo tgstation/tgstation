@@ -38,14 +38,13 @@
 
 	if(!CheckAdminHref(href, href_list))
 		return
-
+	var/list/input = null
 	var/static/list/topic_handlers = TopicHandlers(/datum/datum_topic/admins_topic)
 
-	var/list/input = params2list(href_list)
+	input = href_list
 	var/datum/datum_topic/admins_topic/handler
 	for(var/I in topic_handlers)
 		if(I in input)
-			log_world("it is working here")
 			handler = topic_handlers[I]
 			break
 	/*
