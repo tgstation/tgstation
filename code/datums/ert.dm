@@ -61,4 +61,4 @@
 	opendoors = FALSE
 	rename_team = "Janitor"
 	mission = "Clean up EVERYTHING."
-	polldesc = "a Nanotrasen janitorial response team"
+	polldesc = "a Nanotrasen Janitorial Response Team"
