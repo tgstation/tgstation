@@ -479,9 +479,8 @@
 /datum/reagent/drug/synthetic_cocaine/reaction_turf(turf/T, reac_volume) //Creates a few coke lines
 	if(!istype(T))
 		return
-	if(reac_volume < 20)
+	if(reac_volume < 15)
 		return
-	to_chat("<span class='notice'>You make some lines of cocaine on the ground.</span>")
 	new/obj/effect/decal/cleanable/coke(T)
 	..()
 
@@ -491,12 +490,13 @@
 	..()
 	. = 1
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage1(mob/living/M)
-
+	..()
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage2(mob/living/M)
-
+	..()
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage3(mob/living/M)
-
+	..()
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage4(mob/living/M)
-
+	..()
+	. = 1
 
 
