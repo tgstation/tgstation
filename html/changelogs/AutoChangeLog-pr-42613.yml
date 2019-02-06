@@ -1,5 +1,0 @@
-author: "Joe Berry"
-delete-after: True
-changes: 
-  - bugfix: "Fixes various mobs death sounds and messages not functioning"
-  - bugfix: "Fixes hierophants death animation not working properly"

@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "PDA messages through the messaging server monitor will now correctly log the sender."

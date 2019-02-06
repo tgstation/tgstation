@@ -1,4 +1,0 @@
-author: "Kierany9"
-delete-after: True
-changes: 
-  - tweak: "Fixed some bad math in the chance to get a brain trauma, traumas should now be a little less common."
