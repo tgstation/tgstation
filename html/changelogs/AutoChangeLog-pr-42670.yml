@@ -1,0 +1,4 @@
+author: "granpawalton"
+delete-after: True
+changes: 
+  - bugfix: "Screwing a disk compartmentalizer no longer makes it look like a smartfridge"
