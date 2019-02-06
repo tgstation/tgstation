@@ -1,0 +1,4 @@
+author: "oranges"
+delete-after: True
+changes: 
+  - balance: "Mecha capacitor stock part now only does half as much damage resist for emps"
