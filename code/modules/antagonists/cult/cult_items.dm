@@ -436,8 +436,8 @@
 	flags_inv = HIDEJUMPSUIT
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list("melee" = -50, "bullet" = -50, "laser" = -50,"energy" = -50, "bomb" = -50, "bio" = -50, "rad" = -50, "fire" = 0, "acid" = 0)
-	slowdown = -1
+	armor = list("melee" = -45, "bullet" = -45, "laser" = -45,"energy" = -45, "bomb" = -45, "bio" = -45, "rad" = -45, "fire" = 0, "acid" = 0)
+	slowdown = -0.6
 	hoodtype = /obj/item/clothing/head/hooded/berserkerhood
 
 /obj/item/clothing/head/hooded/berserkerhood
@@ -756,7 +756,7 @@
 		spear.throw_at(owner, 10, 2, owner)
 
 
-/obj/item/gun/ballistic/shotgun/boltaction/enchanted/arcane_barrage/blood
+/obj/item/gun/ballistic/rifle/boltaction/enchanted/arcane_barrage/blood
 	name = "blood bolt barrage"
 	desc = "Blood for blood."
 	color = "#ff0000"

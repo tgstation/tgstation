@@ -14496,7 +14496,7 @@
 	pixel_y = 32
 	},
 /obj/item/storage/box/beanbag,
-/obj/item/gun/ballistic/revolver/doublebarrel,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/bar)
 "aET" = (

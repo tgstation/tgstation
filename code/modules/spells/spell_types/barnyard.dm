@@ -11,7 +11,8 @@
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 30
-	selection_type = "range"var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
+	selection_type = "range"
+  var/static/list/compatible_mobs_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/carbon/monkey))
 	rotten_spell = TRUE
 
 	action_icon_state = "barn"
