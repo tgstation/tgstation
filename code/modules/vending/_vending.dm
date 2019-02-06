@@ -21,7 +21,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	var/product_path = null
 	var/amount = 0
 	var/max_amount = 0
-	//var/display_color = "blue" //Icon instead of color change. Left this in for easy revert.
 	var/custom_price
 	var/custom_premium_price
 
@@ -343,7 +342,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		var/list/display_records = product_records + coin_records
 		if(extended_inventory)
 			display_records = product_records + coin_records + hidden_records
-		dat += "<table>" //icon instead of color change starting point.
+		dat += "<table>"
 		for (var/datum/data/vending_product/R in display_records)
 			var/price_listed = "$[default_price]"
 			var/is_hidden = hidden_records.Find(R)
@@ -362,7 +361,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 			else
 				dat += "<td align='right'><span class='linkOff'>Not&nbsp;Available</span></td>"
 			dat += "</tr>"
-		dat += "</table>" //icon instead of color change ending point.
+		dat += "</table>"
 	dat += "</div>"
 	if(onstation && C && C.registered_account)
 		dat += "<b>Balance: $[account.account_balance]</b>"
