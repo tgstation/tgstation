@@ -2,7 +2,7 @@
 	keyword= "makeAntag"
 	log = FALSE
 
-/datum/datum_topic/admins_topic/make_antag/TryRun(list/input,var/datum/admins/A)
+/datum/datum_topic/admins_topic/make_antag/Run(list/input,var/datum/admins/A)
     if(!check_rights(R_ADMIN))
         return
     if (!SSticker.mode)

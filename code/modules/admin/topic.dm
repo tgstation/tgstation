@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(admins_topic_datum)
 	var/log = TRUE
 	var/key_valid
 
-/datum/datum_topic/admins_topic/proc/TryRun(list/input,var/datum/admins/A)
+/datum/datum_topic/admins_topic/proc/Run(list/input,var/datum/admins/A)
 	. = Run(input,admin)
 	if(islist(.))
 		. = list2params(.)

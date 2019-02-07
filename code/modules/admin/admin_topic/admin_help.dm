@@ -6,7 +6,7 @@
 	keyword= "ahelp"
 	log = FALSE
 
-/datum/datum_topic/admins_topic/ahelp/TryRun(list/input,var/datum/admin/A)
+/datum/datum_topic/admins_topic/ahelp/Run(list/input,var/datum/admin/A)
 	if(!check_rights(R_ADMIN, TRUE))
 		return
 
@@ -21,5 +21,5 @@
 	keyword= "ahelp_tickets"
 	log = FALSE
 
-/datum/datum_topic/admins_topic/ahelp_tickets/TryRun(list/input,var/datum/admin/A)
+/datum/datum_topic/admins_topic/ahelp_tickets/Run(list/input,var/datum/admin/A)
 	GLOB.ahelp_tickets.BrowseTickets(text2num(input["ahelp_tickets"]))
