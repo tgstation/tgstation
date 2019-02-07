@@ -9,8 +9,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-#define BROKEN_SPARKS_MIN 30 SECONDS
-#define BROKEN_SPARKS_MAX 90 SECONDS
+#define BROKEN_SPARKS_MIN (30 SECONDS)
+#define BROKEN_SPARKS_MAX (90 SECONDS)
 
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
