@@ -24,10 +24,10 @@
 /datum/antagonist/creep/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/creepalert.ogg', 100, FALSE, pressure_affected = FALSE)
 	to_chat(owner, "<span class='boldannounce'>You are the Obsessed!</span>")
-	to_chat(owner, "<B>These voices will can only be sated by the horrible acts of murder and general evils.</B>")
-	to_chat(owner, "<B>I don't know their connection, but the Voices compel me to stalk [trauma.obsession], to drive them crazy with paranoia.</B>")
-	to_chat(owner, "<B>They will try to tear my mind apart if I avoid these tasks. I must free myself from the foreign presence in my head controlling me.</B>")
-	to_chat(owner, "<span class='boldannounce'>You are NOT a roleplay antagonist. This does not let you tiptoe the lines of rule 8 like some kind of Creep. Control yourself.</span>")//ironic if you know the history of the antag
+	to_chat(owner, "<B>These voices can only be sated by the horrible acts of murder and general evils.</B>")
+	to_chat(owner, "<B>You don't know their connection, but The Voices compel you to stalk [trauma.obsession], forcing them into a state of constant paranoia.</B>")
+	to_chat(owner, "<B>The Voices will retaliate if you fail to complete your tasks. You MUST free yourself from this foreign presence in your head controlling you.</B>")
+	to_chat(owner, "<span class='boldannounce'>This role does NOT enable you to otherwise surpass what's deemed creepy behavior per the rules.</span>")//ironic if you know the history of the antag
 	owner.announce_objectives()
 
 /datum/antagonist/creep/Destroy()
