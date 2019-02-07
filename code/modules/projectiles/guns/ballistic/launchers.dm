@@ -55,6 +55,7 @@
 	fire_delay = 0
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
+	bolt_type = BOLT_TYPE_NO_BOLT
 	magazine_wording = "rocket"
 
 /obj/item/gun/ballistic/rocketlauncher/handle_atom_del(atom/A)
