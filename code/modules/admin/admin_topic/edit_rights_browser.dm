@@ -3,7 +3,7 @@
 	log = FALSE
 
 /datum/datum_topic/admins_topic/editrightsbrowser/Run(list/input,var/datum/admins/A)
-	edit_admin_permissions(0)
+	A.edit_admin_permissions(0)
 
 
 /datum/datum_topic/admins_topic/editrights_browserlog
@@ -11,7 +11,7 @@
 	log = FALSE
 
 /datum/datum_topic/admins_topic/editrights_browserlog/Run(list/input,var/datum/admins/A)
-	edit_admin_permissions(1, input["editrightstarget"], input["editrightsoperation"], input["editrightspage"])
+	A.edit_admin_permissions(1, input["editrightstarget"], input["editrightsoperation"], input["editrightspage"])
 
 /datum/datum_topic/admins_topic/editrightsbrowsermanage
 	keyword= "editrightsbrowsermanage"
