@@ -173,6 +173,13 @@
 	mood_change = -3
 	timeout = 900
 
+/datum/mood_event/sapped
+	description = "<span class='boldwarning'>Some unexplainable sadness is consuming me...</span>\n"
+	mood_change = -15
+	timeout = 900
+
+/datum/mood_event/sapped
+
 //These are unused so far but I want to remember them to use them later
 /datum/mood_event/cloned_corpse
 	description = "<span class='boldwarning'>I recently saw my own corpse...</span>\n"
