@@ -1,8 +1,8 @@
 // SETUP
 
-/proc/TopicHandlers(var/datum)
+/proc/TopicHandlers(var/path_datum)
 	. = list()
-	var/list/all_handlers = subtypesof(datum)
+	var/list/all_handlers = subtypesof(path_datum)
 	for(var/I in all_handlers)
 		var/datum/datum_topic/WT = I //Modularity it gets subtypes of the datum fed to it already
 		var/keyword = initial(WT.keyword)
