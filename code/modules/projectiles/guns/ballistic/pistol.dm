@@ -17,6 +17,7 @@
 	bolt_wording = "slide"
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
+	bolt_locked = TRUE
 	spawnwithmagazine = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/suppressed/Initialize(mapload)
@@ -33,6 +34,7 @@
 	can_suppress = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
+	bolt_locked = TRUE
 	spawnwithmagazine = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle
