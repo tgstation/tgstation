@@ -245,27 +245,31 @@
 	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES]
-	var/scale_factor = (initial_plasma+initial_carbon)/(2*PI)
+	var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
 	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
-	var/toroidal_size = (2*PI)+(2*arctan(air.volume/1000)) //The size of the phase space hypertorus
+	var/toroidal_size = (2*PI) //The size of the phase space hypertorus
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
 	var/instability = MODULUS(gas_power*INSTABILITY_GAS_POWER_FACTOR,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
 	cached_scan_results[id] = instability//used for analyzer feedback
-
+	//to_chat(world,"LPI:[plasma] LCI:[carbon]")
 	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
-	plasma = MODULUS(plasma + instability*sin(initial_carbon), toroidal_size)
-	carbon = MODULUS(plasma + carbon, toroidal_size)
+	plasma = MODULUS(plasma - (instability*sin(TODEGREES(carbon))), toroidal_size)
+	carbon = MODULUS(carbon - plasma, toroidal_size)
+	//to_chat(world,"LPF:[plasma] LCF:[carbon]")
 	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD
-	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale factor + FUSION_MOLE_THRESHOLD
-	var/delta_plasma = cached_gases[/datum/gas/plasma][MOLES] - initial_plasma
-	var/delta_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES] - initial_carbon
-	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
-	reaction_energy += delta_carbon*CARBON_BINDING_ENERGY
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale_factor + FUSION_MOLE_THRESHOLD
+	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
+	var/delta_carbon = initial_carbon - cached_gases[/datum/gas/carbon_dioxide][MOLES]
 
-	if(air.thermal_energy() + reaction_energy < 0) //No using energy that doesn't exist.
+	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
+
+	//to_chat(world,"Fusion! IP:[initial_plasma] IC:[initial_carbon] Scale:[scale_factor] TS: [toroidal_size] Instbl:[instability] DP:[delta_plasma] DC:[delta_carbon] FP:[cached_gases[/datum/gas/plasma][MOLES]] FC:[cached_gases[/datum/gas/carbon_dioxide][MOLES]] RE:[reaction_energy]")
+
+
+	if((air.heat_capacity()*FUSION_TEMPERATURE_THRESHOLD*0.5) + reaction_energy < 0) //No using energy that doesn't exist.
 		cached_gases[/datum/gas/plasma][MOLES] = initial_plasma
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = initial_carbon
 		return NO_REACTION
@@ -280,13 +284,14 @@
 		cached_gases[/datum/gas/bz][MOLES] += FUSION_TRITIUM_MOLES_USED
 		cached_gases[/datum/gas/nitryl][MOLES] += (reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 
-	if(location)
-		var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
-		if(prob(particle_chance*100))
-			location.fire_nuclear_particle()
-		var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + FUSION_RAD_MAX,0)
-		radiation_pulse(location,rad_power)
 	if(reaction_energy)
+		if(location)
+			var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
+			if(prob(particle_chance*100))
+				location.fire_nuclear_particle()
+			var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + FUSION_RAD_MAX,0)
+			radiation_pulse(location,rad_power)
+
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
