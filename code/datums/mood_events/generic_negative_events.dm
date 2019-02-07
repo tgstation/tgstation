@@ -148,7 +148,7 @@
 	timeout = 1200
 
 /datum/mood_event/notcreeping
-	description = "<span class='warning'>The voices are annoying, contorting my thoughts into pain.</span>\n"
+	description = "<span class='warning'>The voices are not happy, and they painfully contort my thoughts into getting back on task.</span>\n"
 	mood_change = -6
 	timeout = 30
 	hidden = TRUE

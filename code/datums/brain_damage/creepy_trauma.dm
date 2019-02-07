@@ -1,4 +1,4 @@
-/datum/brain_trauma/special/creep
+/datum/brain_trauma/special/obsessed
 	name = "Psychotic Schizophrenia"
 	desc = "Patient has a subtype of delusional disorder, becoming irrationally attached to someone."
 	scan_desc = "psychotic schizophrenic delusions"
@@ -8,15 +8,15 @@
 	random_gain = FALSE
 	resilience = TRAUMA_RESILIENCE_SURGERY
 	var/mob/living/obsession
-	var/datum/objective/spendtime/attachedcreepobj
-	var/datum/antagonist/creep/antagonist
+	var/datum/objective/spendtime/attachedobsessedobj
+	var/datum/antagonist/obsessed/antagonist
 	var/viewing = FALSE //it's a lot better to store if the owner is watching the obsession than checking it twice between two procs
 
 	var/total_time_creeping = 0 //just for roundend fun
 	var/time_spent_away = 0
 	var/obsession_hug_count = 0
 
-/datum/brain_trauma/special/creep/on_gain()
+/datum/brain_trauma/special/obsessed/on_gain()
 
 	//setup, linking, etc//
 	if(!obsession)//admins didn't set one
@@ -25,15 +25,15 @@
 			lose_text = ""
 			qdel(src)
 	gain_text = "<span class='warning'>You hear a sickening, raspy voice in your head. It wants one small task of you...</span>"
-	owner.mind.add_antag_datum(/datum/antagonist/creep)
-	antagonist = owner.mind.has_antag_datum(/datum/antagonist/creep)
+	owner.mind.add_antag_datum(/datum/antagonist/obsessed)
+	antagonist = owner.mind.has_antag_datum(/datum/antagonist/obsessed)
 	antagonist.trauma = src
 	..()
 	//antag stuff//
 	antagonist.forge_objectives(obsession.mind)
 	antagonist.greet()
 
-/datum/brain_trauma/special/creep/on_life()
+/datum/brain_trauma/special/obsessed/on_life()
 	if(!obsession || obsession.stat == DEAD)
 		viewing = FALSE//important, makes sure you no longer stutter when happy if you murdered them while viewing
 		return
@@ -49,12 +49,12 @@
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/creeping, obsession.name)
 		total_time_creeping += 20
 		time_spent_away = 0
-		if(attachedcreepobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
-			attachedcreepobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
+		if(attachedobsessedobj)//if an objective needs to tick down, we can do that since traumas coexist with the antagonist datum
+			attachedobsessedobj.timer -= 20 //mob subsystem ticks every 2 seconds(?), remove 20 deciseconds from the timer. sure, that makes sense.
 	else
 		out_of_view()
 
-/datum/brain_trauma/special/creep/proc/out_of_view()
+/datum/brain_trauma/special/obsessed/proc/out_of_view()
 	time_spent_away += 20
 	if(time_spent_away > 1800) //3 minutes
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreepingsevere, obsession.name)
@@ -62,9 +62,9 @@
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreeping, obsession.name)
 /datum/brain_trauma/special/creep/on_lose()
 	..()
-	owner.mind.remove_antag_datum(/datum/antagonist/creep)
+	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
 
-/datum/brain_trauma/special/creep/on_say(message)
+/datum/brain_trauma/special/obsessed/on_say(message)
 	if(!viewing)
 		return message
 	var/choked_up
@@ -76,11 +76,11 @@
 		return ""
 	return message
 
-/datum/brain_trauma/special/creep/on_hug(mob/living/hugger, mob/living/hugged)
+/datum/brain_trauma/special/obsessed/on_hug(mob/living/hugger, mob/living/hugged)
 	if(hugged == obsession)
 		obsession_hug_count++
 
-/datum/brain_trauma/special/creep/proc/social_interaction()
+/datum/brain_trauma/special/obsessed/proc/social_interaction()
 	var/fail = FALSE //whether you can finish a sentence while doing it
 	owner.stuttering = max(3, owner.stuttering)
 	owner.blur_eyes(10)
@@ -104,7 +104,7 @@
 	return fail
 
 
-/datum/brain_trauma/special/creep/proc/find_obsession()
+/datum/brain_trauma/special/obsessed/proc/find_obsession()
 	var/chosen_victim
 	var/list/possible_targets = list()
 	var/list/viable_minds = list()
