@@ -55039,20 +55039,6 @@
 /obj/structure/reagent_dispensers/cooking_oil,
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
-"dQM" = (
-/obj/machinery/computer/rdconsole/production{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark/corner{
-	dir = 1
-	},
-/area/space)
 "esU" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -55113,17 +55099,6 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/fitness/locker_room)
-"hac" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -22
-	},
-/obj/machinery/rnd/production/circuit_imprinter,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel/checker,
-/area/space)
 "hnd" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -55176,21 +55151,6 @@
 	},
 /turf/open/floor/circuit/airless,
 /area/engine/engineering)
-"jjJ" = (
-/obj/machinery/light_switch{
-	pixel_x = -23
-	},
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/machinery/rnd/production/protolathe/department/engineering,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark/corner{
-	dir = 1
-	},
-/area/space)
 "jro" = (
 /obj/structure/closet/secure_closet/personal,
 /obj/machinery/light/small{
@@ -89534,9 +89494,9 @@ anB
 aau
 aaa
 aaa
-dQM
-jjJ
-hac
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
