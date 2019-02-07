@@ -58,6 +58,8 @@
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
 	if (!spawnwithmagazine)
+		bolt_locked = TRUE
+		update_icon()
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
