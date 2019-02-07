@@ -58,6 +58,7 @@
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
 	magazine_wording = "rocket"
+	empty_indicator = TRUE
 
 /obj/item/gun/ballistic/rocketlauncher/handle_atom_del(atom/A)
 	if(A == chambered)
