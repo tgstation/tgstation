@@ -1,3 +1,6 @@
+GLOBAL_LIST_EMPTY(admins_topic_datum)
+
+
 /datum/admins/proc/CheckAdminHref(href, href_list)
 	var/auth = href_list["admin_token"]
 	. = auth && (auth == href_token || auth == GLOB.href_token)
@@ -17,12 +20,12 @@
 	var/log = TRUE
 	var/key_valid
 
-/datum/datum_topic/admins_topic/proc/TryRun(list/input)
-	. = Run(input)
+/datum/datum_topic/admins_topic/proc/TryRun(list/input,var/datum/admins/A)
+	. = Run(input,admin)
 	if(islist(.))
 		. = list2params(.)
 
-/datum/datum_topic/admins_topic/proc/Run(list/input)
+/datum/datum_topic/admins_topic/proc/Run(list/input,var/datum/admins/A)
 	CRASH("Run() not implemented for [type]!")
 
 
@@ -42,6 +45,14 @@
 
 	input = href_list
 	var/datum/datum_topic/admins_topic/handler
+	
+	for(var/I in GLOB.admins_topic_datum)//For keyword from each topic
+		if(I in input)			//If its in input from admin user
+			handler = topic_handlers[I]
+			break
+	if(handler)
+		return handler.TryRun(input,src)
+		log_world("it worked!")
 	for(var/I in topic_handlers)//For keyword from each topic
 		if(I in input)			//If its in input from admin user
 			handler = topic_handlers[I]
@@ -52,12 +63,12 @@
 	*///Need to work out if I need the above or not. Probably something similar though......
 	if(handler)
 		handler = new handler()
-		return handler.TryRun(input)
+		GLOB.admins_topic_datum += handler
+		return handler.TryRun(input,src)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
 			return
-
 
 		switch(href_list["call_shuttle"])
 			if("1")

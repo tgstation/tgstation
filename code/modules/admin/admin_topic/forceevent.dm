@@ -2,10 +2,10 @@
 	keyword= "forceevent"
 	log = FALSE
 
-/datum/datum_topic/admins_topic/forceevent/Run(list/input)
+/datum/datum_topic/admins_topic/forceevent/TryRun(list/input,var/datum/admins/A)
     if(!check_rights(R_FUN))
         return
-    var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
+    var/datum/round_event_control/E = locate(input["forceevent"]) in SSevents.control
     if(E)
         E.admin_setup(usr)
         var/datum/round_event/event = E.runEvent()

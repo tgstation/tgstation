@@ -2,36 +2,36 @@
 	keyword= "makeAntag"
 	log = FALSE
 
-/datum/datum_topic/admins_topic/make_antag/Run(list/input)
+/datum/datum_topic/admins_topic/make_antag/TryRun(list/input,var/datum/admins/A)
     if(!check_rights(R_ADMIN))
         return
     if (!SSticker.mode)
         to_chat(usr, "<span class='danger'>Not until the round starts!</span>")
         return
-    switch(href_list["makeAntag"])
+    switch(input["makeAntag"])
         if("traitors")
-            if(src.makeTraitors())
+            if(A.makeTraitors())
                 message_admins("[key_name_admin(usr)] created traitors.")
                 log_admin("[key_name(usr)] created traitors.")
             else
                 message_admins("[key_name_admin(usr)] tried to create traitors. Unfortunately, there were no candidates available.")
                 log_admin("[key_name(usr)] failed to create traitors.")
         if("changelings")
-            if(src.makeChangelings())
+            if(A.makeChangelings())
                 message_admins("[key_name(usr)] created changelings.")
                 log_admin("[key_name(usr)] created changelings.")
             else
                 message_admins("[key_name_admin(usr)] tried to create changelings. Unfortunately, there were no candidates available.")
                 log_admin("[key_name(usr)] failed to create changelings.")
         if("revs")
-            if(src.makeRevs())
+            if(A.makeRevs())
                 message_admins("[key_name(usr)] started a revolution.")
                 log_admin("[key_name(usr)] started a revolution.")
             else
                 message_admins("[key_name_admin(usr)] tried to start a revolution. Unfortunately, there were no candidates available.")
                 log_admin("[key_name(usr)] failed to start a revolution.")
         if("cult")
-            if(src.makeCult())
+            if(A.makeCult())
                 message_admins("[key_name(usr)] started a cult.")
                 log_admin("[key_name(usr)] started a cult.")
             else
@@ -39,7 +39,7 @@
                 log_admin("[key_name(usr)] failed to start a cult.")
         if("wizard")
             message_admins("[key_name(usr)] is creating a wizard...")
-            if(src.makeWizard())
+            if(A.makeWizard())
                 message_admins("[key_name(usr)] created a wizard.")
                 log_admin("[key_name(usr)] created a wizard.")
             else
@@ -47,7 +47,7 @@
                 log_admin("[key_name(usr)] failed to create a wizard.")
         if("nukeops")
             message_admins("[key_name(usr)] is creating a nuke team...")
-            if(src.makeNukeTeam())
+            if(A.makeNukeTeam())
                 message_admins("[key_name(usr)] created a nuke team.")
                 log_admin("[key_name(usr)] created a nuke team.")
             else
@@ -56,14 +56,14 @@
         if("ninja")
             message_admins("[key_name(usr)] spawned a ninja.")
             log_admin("[key_name(usr)] spawned a ninja.")
-            src.makeSpaceNinja()
+            A.makeSpaceNinja()
         if("aliens")
             message_admins("[key_name(usr)] started an alien infestation.")
             log_admin("[key_name(usr)] started an alien infestation.")
-            src.makeAliens()
+            A.makeAliens()
         if("deathsquad")
             message_admins("[key_name(usr)] is creating a death squad...")
-            if(src.makeDeathsquad())
+            if(A.makeDeathsquad())
                 message_admins("[key_name(usr)] created a death squad.")
                 log_admin("[key_name(usr)] created a death squad.")
             else
@@ -78,7 +78,7 @@
             new/datum/round_event/ghost_role/blob(TRUE, strength)
         if("centcom")
             message_admins("[key_name(usr)] is creating a CentCom response team...")
-            if(src.makeEmergencyresponseteam())
+            if(A.makeEmergencyresponseteam())
                 message_admins("[key_name(usr)] created a CentCom response team.")
                 log_admin("[key_name(usr)] created a CentCom response team.")
             else
@@ -86,21 +86,21 @@
                 log_admin("[key_name(usr)] failed to create a CentCom response team.")
         if("abductors")
             message_admins("[key_name(usr)] is creating an abductor team...")
-            if(src.makeAbductorTeam())
+            if(A.makeAbductorTeam())
                 message_admins("[key_name(usr)] created an abductor team.")
                 log_admin("[key_name(usr)] created an abductor team.")
             else
                 message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
                 log_admin("[key_name(usr)] failed to create an abductor team.")
         if("clockcult")
-            if(src.makeClockCult())
+            if(A.makeClockCult())
                 message_admins("[key_name(usr)] started a clockwork cult.")
                 log_admin("[key_name(usr)] started a clockwork cult.")
             else
                 message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
                 log_admin("[key_name(usr)] failed to start a clockwork cult.")
         if("revenant")
-            if(src.makeRevenant())
+            if(A.makeRevenant())
                 message_admins("[key_name(usr)] created a revenant.")
                 log_admin("[key_name(usr)] created a revenant.")
             else
