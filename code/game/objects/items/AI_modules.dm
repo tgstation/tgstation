@@ -157,6 +157,9 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
 	if(!targName)
 		return
+	if(lentext(targName) > maxlawlength)
+		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
+		return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 	..()
@@ -182,6 +185,9 @@ AI MODULES
 /obj/item/aiModule/zeroth/oneHuman/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	if(!targName)
+		return
+	if(lentext(targName) > maxlawlength)
+		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
@@ -372,6 +378,9 @@ AI MODULES
 /obj/item/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
 	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject)
 	if(!targName)
+		return
+	if(lentext(targName) > maxlawlength)
+		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
