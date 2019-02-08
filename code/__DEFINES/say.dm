@@ -78,3 +78,4 @@
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80
+#define MAX_LAW_LEN				250 //maximum law length for freeform and hacked law boards
