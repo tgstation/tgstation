@@ -92,7 +92,7 @@
 			var/mob/living/L = user
 			if(!L.can_speak_vocal() || L.oxyloss >= 50)
 				return //stop the sound if oxyloss too high/cant speak
-		playsound(user, user.deathsound, 80, 1, 1)
+		playsound(user, user.deathsound, 200, TRUE, TRUE)
 
 /datum/emote/living/drool
 	key = "drool"

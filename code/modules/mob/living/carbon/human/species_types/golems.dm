@@ -895,20 +895,23 @@
 	punchdamagelow = 4
 	punchstunthreshold = 7
 	punchdamagehigh = 8
-	var/last_creation
+	var/last_creation = 0
 	var/brother_creation_cooldown = 300
 
 /datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	. = ..()
-	if(user != H || intent != INTENT_HELP)
+	if(user != H)
 		return FALSE //forced reproduction is rape.
 	if(istype(I, /obj/item/stack/sheet/cardboard))
 		var/obj/item/stack/sheet/cardboard/C = I
-		if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
+		if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork
 			return
+		if(C.amount < 10)
+			to_chat(H, "<span class='warning'>You do not have enough cardboard!</span>")
+			return FALSE
 		to_chat(H, "<span class='notice'>You attempt to create a new cardboard brother.</span>")
 		if(do_after(user, 30, target = user))
-			if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
+			if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork
 				return
 			if(!C.use(10))
 				to_chat(H, "<span class='warning'>You do not have enough cardboard!</span>")
@@ -988,6 +991,7 @@
 /datum/action/innate/bonechill/Activate()
 	if(world.time < last_use + cooldown)
 		to_chat("<span class='notice'>You aren't ready yet to rattle your bones again</span>")
+		return
 	owner.visible_message("<span class='warning'>[owner] rattles [owner.p_their()] bones harrowingly.</span>", "<span class='notice'>You rattle your bones</span>")
 	last_use = world.time
 	if(prob(snas_chance))
@@ -1002,8 +1006,9 @@
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
-		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L))
+		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L) || L.has_trait(TRAIT_RESISTCOLD))
 			return //Do not affect our brothers
+
 		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)

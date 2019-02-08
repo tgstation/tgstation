@@ -1,5 +1,0 @@
-author: "Basilman"
-delete-after: True
-changes: 
-  - refactor: "refactored how sounds are stored and played"
-  - rscadd: "Added sound rings and supporting text"

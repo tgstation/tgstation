@@ -1,5 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an exploit which allowed you to stack petting related mood buffs."
-  - bugfix: "Fixed petting moodlets showing an animal's pronouns as simply \"it\", instead of their actual pronoun."
