@@ -67,8 +67,6 @@
 	mood_change = 18
 	timeout = 30
 	hidden = TRUE
-	special_screen_obj = "creep_inlove"
-	special_screen_replace = FALSE
 
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
