@@ -368,6 +368,22 @@
 	name = "\improper DNA injector (Anti-Two Left Feet)"
 	remove_mutations = list(EXTRASTUN)
 
+/obj/item/dnainjector/geladikinesis
+	name = "\improper DNA injector (Geladikinesis)"
+	add_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/antigeladikinesis
+	name = "\improper DNA injector (Anti-Geladikinesis)"
+	remove_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/cryokinesis
+	name = "\improper DNA injector (Cryokinesis)"
+	add_mutations = list(CRYOKINESIS)
+
+/obj/item/dnainjector/anticryokinesis
+	name = "\improper DNA injector (Anti-Cryokinesis)"
+	remove_mutations = list(CRYOKINESIS)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 

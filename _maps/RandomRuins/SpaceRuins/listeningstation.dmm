@@ -1051,8 +1051,7 @@
 	dir = 1
 	},
 /obj/structure/cable{
-	icon_state = "0-2";
-	pixel_y = 1
+	icon_state = "0-2"
 	},
 /obj/structure/reagent_dispensers/fueltank,
 /obj/item/clothing/head/welding,

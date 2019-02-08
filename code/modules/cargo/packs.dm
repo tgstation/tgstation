@@ -1942,7 +1942,6 @@
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/gas/mime,
-					/obj/item/clothing/head/beret,
 					/obj/item/clothing/head/frenchberet,
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,
