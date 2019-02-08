@@ -53,7 +53,7 @@
 						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 					if(!mind.martial_art.reroute_deflection)
-						return 0
+						return BULLET_ACT_BLOCK
 					else
 						P.firer = src
 						P.setAngle(rand(0, 360))//SHING
