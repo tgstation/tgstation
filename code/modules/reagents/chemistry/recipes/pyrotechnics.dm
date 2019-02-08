@@ -28,7 +28,7 @@
 	id = "nitroglycerin"
 	results = list("nitroglycerin" = 2)
 	required_reagents = list("glycerol" = 1, "facid" = 1, "sacid" = 1)
-	strengthdiv = 2
+	strengthdiv = 4
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
 	if(holder.has_reagent("stabilizing_agent"))
@@ -41,14 +41,14 @@
 	id = "nitroglycerin_explosion"
 	required_reagents = list("nitroglycerin" = 1)
 	required_temp = 474
-	strengthdiv = 2
+	strengthdiv = 4
 
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	name = "Explosion"
 	id = "potassium_explosion"
 	required_reagents = list("water" = 1, "potassium" = 1)
-	strengthdiv = 10
+	strengthdiv = 20
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	name = "Holy Explosion"
@@ -58,7 +58,7 @@
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom/on_reaction(datum/reagents/holder, created_volume)
 	if(created_volume >= 150)
 		playsound(get_turf(holder.my_atom), 'sound/effects/pray.ogg', 80, 0, round(created_volume/48))
-		strengthdiv = 8
+		strengthdiv = 16
 		for(var/mob/living/simple_animal/revenant/R in get_hearers_in_view(7,get_turf(holder.my_atom)))
 			var/deity
 			if(SSreligion.deity)
@@ -90,7 +90,7 @@
 	id = "blackpowder_explosion"
 	required_reagents = list("blackpowder" = 1)
 	required_temp = 474
-	strengthdiv = 6
+	strengthdiv = 12
 	modifier = 1
 	mix_message = "<span class='boldannounce'>Sparks start flying around the black powder!</span>"
 
@@ -165,7 +165,7 @@
 	id = "methboom1"
 	required_temp = 380 //slightly above the meth mix time.
 	required_reagents = list("methamphetamine" = 1)
-	strengthdiv = 6
+	strengthdiv = 12
 	modifier = 1
 	mob_react = FALSE
 
@@ -421,7 +421,7 @@
 	name = "Teslium Destabilization"
 	id = "teslium_lightning"
 	required_reagents = list("teslium" = 1, "water" = 1)
-	strengthdiv = 100
+	strengthdiv = 200
 	modifier = -100
 	mix_message = "<span class='boldannounce'>The teslium starts to spark as electricity arcs away from it!</span>"
 	mix_sound = 'sound/machines/defib_zap.ogg'
@@ -454,7 +454,7 @@
 	name = "N2O explosion"
 	id = "n2o_explosion"
 	required_reagents = list("nitrous_oxide" = 1)
-	strengthdiv = 7
+	strengthdiv = 14
 	required_temp = 575
 	modifier = 1
 
