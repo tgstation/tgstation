@@ -519,6 +519,13 @@
 		/obj/item/assembly/mousetrap
 		))
 
+/obj/item/storage/belt/janitor/full/PopulateContents()
+	new /obj/item/lightreplacer(src)
+	new /obj/item/reagent_containers/spray/cleaner(src)
+	new /obj/item/soap/nanotrasen(src)
+	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/melee/flyswatter(src)
+
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
 	desc = "A bandolier for holding shotgun ammunition."

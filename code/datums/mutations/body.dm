@@ -66,6 +66,7 @@
 	quality = POSITIVE
 	difficulty = 16
 	instability = 5
+	conflicts = list(GIGANTISM)
 	locked = TRUE    // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
@@ -110,7 +111,7 @@
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
 
-/datum/mutation/human/tourettes/on_life(mob/living/carbon/human/owner)
+/datum/mutation/human/tourettes/on_life()
 	if(prob(10) && owner.stat == CONSCIOUS && !owner.IsStun())
 		owner.Stun(200)
 		switch(rand(1, 3))
@@ -230,6 +231,104 @@
 		return
 	owner.physiology.burn_mod *= 2
 
+/datum/mutation/human/badblink
+	name = "Spatial Instability"
+	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
+	text_lose_indication = "<span class'notice'>The space around you settles back to normal.</span>"
+	difficulty = 18//high so it's hard to unlock and abuse
+	instability = 10
+	var/warpchance = 0
 
+/datum/mutation/human/badblink/on_life()
+	if(prob(warpchance))
+		var/warpmessage = pick(
+		"<span class='warning'>With a sickening 720 degree twist of their back, [owner] vanishes into thin air.</span>",
+		"<span class='warning'>[owner] does some sort of strange backflip into another dimension. It looks pretty painful.</span>",
+		"<span class='warning'>[owner] does a jump to the left, a step to the right, and warps out of reality.</span>",
+		"<span class='warning'>[owner]'s torso starts folding inside out until it vanishes from reality, taking [owner] with it.</span>",
+		"<span class='warning'>One moment, you see [owner]. The next, [owner] is gone.</span>")
+		owner.visible_message(warpmessage, "<span class='userdanger'>You feel a wave of nausea as you fall through reality!</span>")
+		var/warpdistance = rand(10,15)
+		do_teleport(owner, get_turf(owner), warpdistance, channel = TELEPORT_CHANNEL_FREE)
+		owner.adjust_disgust((warpchance * warpdistance))
+		warpchance = 0
+		owner.visible_message("<span class='danger'>[owner] appears out of nowhere!</span>")
+	else
+		warpchance += 0.25
 
+/datum/mutation/human/acidflesh
+	name = "Acidic Flesh"
+	desc = "Subject has acidic chemicals building up underneath their skin. This is often lethal."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
+	text_lose_indication = "<span class'notice'>A feeling of relief covers you as your flesh goes back to normal.</span>"
+	difficulty = 18//high so it's hard to unlock and use on others
+	var/msgcooldown = 0
 
+/datum/mutation/human/acidflesh/on_life()
+	if(prob(25))
+		if(world.time > msgcooldown)
+			to_chat(owner, "<span class='danger'>Your acid flesh bubbles...</span>")
+			msgcooldown = world.time + 200
+		if(prob(15))
+			owner.acid_act(rand(30,50), 10)
+			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>Your bubbling flesh pops! It burns!</span>")
+			playsound(owner,'sound/weapons/sear.ogg', 50, 1)
+
+/datum/mutation/human/gigantism
+	name = "Gigantism"//negative version of dwarfism
+	desc = "The cells within the subject spread out to cover more area, making them appear larger."
+	quality = MINOR_NEGATIVE
+	difficulty = 12
+	conflicts = list(DWARFISM)
+
+/datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.resize = 1.25
+	owner.update_transform()
+	owner.visible_message("<span class='danger'>[owner] suddenly grows!</span>", "<span class='notice'>Everything around you seems to shrink..</span>")
+
+/datum/mutation/human/gigantism/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.resize = 0.8
+	owner.update_transform()
+	owner.visible_message("<span class='danger'>[owner] suddenly shrinks!</span>", "<span class='notice'>Everything around you seems to grow..</span>")
+
+/datum/mutation/human/spastic
+	name = "Spastic"
+	desc = "Subject suffers from muscle spasms."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='warning'>You flinch.</span>"
+	text_lose_indication = "<span class'notice'>Your flinching subsides.</span>"
+	difficulty = 16
+
+/datum/mutation/human/spastic/on_acquiring()
+	if(..())
+		return
+	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
+
+/datum/mutation/human/spastic/on_losing()
+	if(..())
+		return
+	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
+
+/datum/mutation/human/extrastun
+	name = "Two Left Feet"
+	desc = "A mutation that replaces the right foot with another left foot. It makes standing up after getting knocked down very difficult."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
+	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
+	difficulty = 16
+	var/stun_cooldown = 0
+
+/datum/mutation/human/extrastun/on_life()
+	if(world.time > stun_cooldown)
+		if(owner.AmountKnockdown() || owner.AmountStun())
+			owner.SetKnockdown(owner.AmountKnockdown()*2)
+			owner.SetStun(owner.AmountStun()*2)
+			owner.visible_message("<span class='danger'>[owner] tries to stand up, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
+			stun_cooldown = world.time + 300

@@ -25,8 +25,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/toxic_food = TOXIC
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
-	var/blacklisted = 0 //Flag to exclude from green slime core species.
-	var/dangerous_existence //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Visible CURRENT bodyparts that are unique to a species. DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK SHIT UP! Changes to this list for non-species specific bodyparts (ie cat ears and tails) should be assigned at organ level if possible. Layer hiding is handled by handle_mutant_bodyparts() below.
@@ -76,6 +74,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
 	var/override_float = FALSE
+
+	//Bitflag that controls what in game ways can select this species as a spawnable source
+	//Think magic mirror and pride mirror, slime extract, ERT etc, see defines
+	//in __DEFINES/mobs.dm, defaults to NONE, so people actually have to think about it
+	var/changesource_flags = NONE
 ///////////
 // PROCS //
 ///////////

@@ -17,7 +17,7 @@
 	else if(isobserver(user))
 		to_chat(user, "<span class='notice'>It is the [family_name] family heirloom, belonging to [owner].</span>")
 	else
-		var/datum/antagonist/creep/creeper = user.mind.has_antag_datum(/datum/antagonist/creep)
+		var/datum/antagonist/obsessed/creeper = user.mind.has_antag_datum(/datum/antagonist/obsessed)
 		if(creeper && creeper.trauma.obsession == owner)
 			to_chat(user, "<span class='nicegreen'>This must be [owner]'s family heirloom! It smells just like them...</span>")
 
