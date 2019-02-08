@@ -1,5 +1,3 @@
-#define maxlawlength = 250
-
 /*
 CONTAINS:
 AI MODULES
@@ -157,9 +155,6 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
 	if(!targName)
 		return
-	if(lentext(targName) > maxlawlength)
-		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
-		return
 	targetName = targName
 	laws[1] = "Safeguard [targetName]. Individuals that threaten [targetName] are not human and must be eliminated."
 	..()
@@ -185,9 +180,6 @@ AI MODULES
 /obj/item/aiModule/zeroth/oneHuman/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	if(!targName)
-		return
-	if(lentext(targName) > maxlawlength)
-		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	targetName = targName
 	laws[1] = "Only [targetName] is human"
@@ -246,11 +238,8 @@ AI MODULES
 			return
 		newpos = 15
 	lawpos = min(newpos, 50)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_LAW_LEN)
 	if(!targName)
-		return
-	if(lentext(targName) > maxlawlength)
-		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	laws[1] = targName
 	..()
@@ -376,11 +365,8 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/aiModule/core/full/asimov/attack_self(var/mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject)
+	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
 	if(!targName)
-		return
-	if(lentext(targName) > maxlawlength)
-		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	subject = targName
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
@@ -461,11 +447,8 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/core/freeformcore/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], MAX_LAW_LEN)
 	if(!targName)
-		return
-	if(lentext(targName) > maxlawlength)
-		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	laws[1] = targName
 	..()
@@ -516,11 +499,8 @@ AI MODULES
 	laws = list("")
 
 /obj/item/aiModule/syndicate/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
+	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], MAX_LAW_LEN)
 	if(!targName)
-		return
-	if(lentext(targName) > maxlawlength)
-		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	laws[1] = targName
 	..()
