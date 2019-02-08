@@ -177,7 +177,7 @@
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
 		var/turf/turf_check = get_turf(M)
-		if(istype(turf_check, /turf/open/space) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
+		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
 			continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
