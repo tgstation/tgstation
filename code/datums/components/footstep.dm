@@ -92,7 +92,7 @@
 					TRUE,
 					GLOB.footstep[T.footstep][3] + e)
 			
-			if((!H.shoes && !feetCover) || !(H.mobility_flags & MOBILITY_STAND)) //are we NOT wearing shoes or are we lying/crawling (using hands to move around)?
+			if(((!H.shoes && !feetCover) || !(H.mobility_flags & MOBILITY_STAND) && !(LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING) || (LM.stat != CONSCIOUS) || LM.incapacitated() || LM.IsStun() || LM.IsParalyzed()))) //are we NOT wearing shoes or are we lying/crawling (using hands to move around) and not immobilized/incapacitated?
 				if(H.dna.species.special_step_sounds)
 					playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
 				else
