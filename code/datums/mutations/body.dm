@@ -265,13 +265,16 @@
 	text_gain_indication = "<span class='userdanger'>A horrible burning sensation envelops you as your flesh turns to acid!</span>"
 	text_lose_indication = "<span class'notice'>A feeling of relief covers you as your flesh goes back to normal.</span>"
 	difficulty = 18//high so it's hard to unlock and use on others
+	var/msgcooldown = 0
 
 /datum/mutation/human/acidflesh/on_life()
 	if(prob(25))
-		to_chat(owner, "<span class='danger'>Your acid flesh bubbles...</span>")
+		if(world.time > msgcooldown)
+			to_chat(owner, "<span class='danger'>Your acid flesh bubbles...</span>")
+			msgcooldown = world.time + 200
 		if(prob(15))
 			owner.acid_act(rand(30,50), 10)
-			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>It burns!</span>")
+			owner.visible_message("<span class='warning'>[owner]'s skin bubbles and pops.</span>", "<span class='userdanger'>Your bubbling flesh pops! It burns!</span>")
 			playsound(owner,'sound/weapons/sear.ogg', 50, 1)
 
 /datum/mutation/human/gigantism
