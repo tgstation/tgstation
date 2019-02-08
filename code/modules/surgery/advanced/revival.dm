@@ -18,7 +18,7 @@
 		return FALSE
 	if(target.stat != DEAD)
 		return FALSE
-	if(target.suiciding || target.has_trait(TRAIT_NOCLONE) || target.hellbound)
+	if(target.suiciding || target.hellbound || target.has_trait(TRAIT_HUSK))
 		return FALSE
 	var/obj/item/organ/brain/B = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!B)

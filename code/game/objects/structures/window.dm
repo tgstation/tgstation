@@ -572,7 +572,7 @@
 
 /obj/structure/window/plastitanium
 	name = "plastitanium window"
-	desc = "An evil looking window of plasma and titanium."
+	desc = "A durable looking window made of an alloy of of plasma and titanium."
 	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
 	icon_state = "plastitanium_window"
 	dir = FULLTILE_WINDOW_DIR
@@ -697,6 +697,11 @@
 /obj/structure/window/paperframe/Initialize()
 	. = ..()
 	update_icon()
+
+/obj/structure/window/paperframe/examine(mob/user)
+	. = ..()
+	if(obj_integrity < max_integrity)
+		to_chat(user, "<span class='info'>It looks a bit damaged, you may be able to fix it with some <b>paper</b>.</span>")
 
 /obj/structure/window/paperframe/spawnDebris(location)
 	. = list(new /obj/item/stack/sheet/mineral/wood(location))

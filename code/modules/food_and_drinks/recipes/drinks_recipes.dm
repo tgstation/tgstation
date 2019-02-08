@@ -588,7 +588,7 @@
 	results = list("quintuple_sec" = 15)
 	required_reagents = list("quadruple_sec" = 5, "clownstears" = 5, "syndicatebomb" = 5)
 	mix_message = "Judgement is upon you."
-	mix_message = 'sound/items/airhorn2.ogg'
+	mix_sound = 'sound/items/airhorn2.ogg'
 
 /datum/chemical_reaction/bastion_bourbon
 	name = "Bastion Bourbon"
@@ -688,3 +688,9 @@
 	id = "branca_menta"
 	results = list("branca_menta" = 3)
 	required_reagents = list("fernet" = 1, "creme_de_menthe" = 1, "ice" = 1)
+
+/datum/chemical_reaction/blank_paper
+	name = "Blank Paper"
+	id = "blank_paper"
+	results = list("blank_paper" = 3)
+	required_reagents = list("silencer" = 1, "nothing" = 1, "nuka_cola" = 1)

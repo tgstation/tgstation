@@ -2,6 +2,7 @@
 /datum/crafting_recipe
 	var/name = "" //in-game display name
 	var/reqs[] = list() //type paths of items consumed associated with how many are needed
+	var/blacklist[] = list() //type paths of items explicitly not allowed as an ingredient
 	var/result //type path of item resulting from this craft
 	var/tools[] = list() //type paths of items needed but not consumed
 	var/time = 30 //time in deciseconds
@@ -9,7 +10,6 @@
 	var/chem_catalysts[] = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 	var/subcategory = CAT_NONE
-
 
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
@@ -38,6 +38,7 @@
 	result = /obj/item/twohanded/spear
 	reqs = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
+	blacklist = list(/obj/item/twohanded/spear/explosive)
 	parts = list(/obj/item/twohanded/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
@@ -302,7 +303,7 @@
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
-	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
+	result = /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
@@ -379,6 +380,14 @@
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
+	category = CAT_MISC
+
+/datum/crafting_recipe/wheelchair
+	name = "Wheelchair"
+	result = /obj/vehicle/ridden/wheelchair
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+				/obj/item/stack/rods = 6)
+	time = 100
 	category = CAT_MISC
 
 /datum/crafting_recipe/mousetrap
@@ -639,8 +648,20 @@
 	name = "intelliTater"
 	result = /obj/item/aicard/aitater
 	time = 30
+	tools = list(TOOL_WIRECUTTER)
 	reqs = list(/obj/item/aicard = 1,
-					/obj/item/reagent_containers/food/snacks/grown/potato = 1)
+					/obj/item/reagent_containers/food/snacks/grown/potato = 1,
+					/obj/item/stack/cable_coil = 5)
+	category = CAT_MISC
+
+/datum/crafting_recipe/aispook
+	name = "intelliLantern"
+	result = /obj/item/aicard/aispook
+	time = 30
+	tools = list(TOOL_WIRECUTTER)
+	reqs = list(/obj/item/aicard = 1,
+					/obj/item/reagent_containers/food/snacks/grown/pumpkin = 1,
+					/obj/item/stack/cable_coil = 5)
 	category = CAT_MISC
 
 /datum/crafting_recipe/ghettojetpack

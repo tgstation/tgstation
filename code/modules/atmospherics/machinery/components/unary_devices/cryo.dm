@@ -27,7 +27,7 @@
 
 	var/obj/item/radio/radio
 	var/radio_key = /obj/item/encryptionkey/headset_med
-	var/radio_channel = "Medical"
+	var/radio_channel = RADIO_CHANNEL_MEDICAL
 
 	var/running_anim = FALSE
 
@@ -62,6 +62,11 @@
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user) //this is leaving out everything but efficiency since they follow the same idea of "better beaker, better results"
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.<span>")
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
@@ -84,6 +89,7 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+
 	cut_overlays()
 
 	if(panel_open)
@@ -174,10 +180,11 @@
 		on = FALSE
 		update_icon()
 		playsound(src, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
-		radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
+		var/msg = "Patient fully restored."
 		if(autoeject) // Eject if configured.
-			radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
+			msg += " Auto ejecting patient now."
 			open_machine()
+		radio.talk_into(src, msg, radio_channel, get_spans(), get_default_language())
 		return
 
 	var/datum/gas_mixture/air1 = airs[1]
@@ -242,17 +249,18 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
 	if(!state_open && !panel_open)
 		on = FALSE
-		..()
 	for(var/mob/M in contents) //only drop mobs
 		M.forceMove(get_turf(src))
 		if(isliving(M))
 			var/mob/living/L = M
 			L.update_mobility()
 	occupant = null
-	update_icon()
+	flick("pod-open-anim", src)
+	..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
+		flick("pod-close-anim", src)
 		..(user)
 		return occupant
 
@@ -383,6 +391,7 @@
 				on = FALSE
 			else if(!state_open)
 				on = TRUE
+			update_icon()
 			. = TRUE
 		if("door")
 			if(state_open)
@@ -400,7 +409,6 @@
 					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
-	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.

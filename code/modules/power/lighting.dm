@@ -9,7 +9,8 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-
+#define BROKEN_SPARKS_MIN 15 SECONDS
+#define BROKEN_SPARKS_MAX 30 SECONDS
 
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
@@ -83,40 +84,55 @@
 		to_chat(user, "<span class='danger'>This casing doesn't support power cells for backup power.</span>")
 		return
 
+/obj/structure/light_construct/attack_hand(mob/user)
+	if(cell)
+		user.visible_message("[user] removes [cell] from [src]!","<span class='notice'>You remove [cell].</span>")
+		user.put_in_hands(cell)
+		cell.update_icon()
+		cell = null
+		add_fingerprint(user)
+
+/obj/structure/light_construct/attack_tk(mob/user)
+	if(cell)
+		to_chat(user, "<span class='notice'>You telekinetically remove [cell].</span>")
+		cell.forceMove(drop_location())
+		cell.attack_tk(user)
+		cell = null
+
 /obj/structure/light_construct/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/stock_parts/cell))
 		if(!cell_connectors)
 			to_chat(user, "<span class='warning'>This [name] can't support a power cell!</span>")
 			return
-		if(W.item_flags & NODROP)
+		if(W.has_trait(TRAIT_NODROP))
 			to_chat(user, "<span class='warning'>[W] is stuck to your hand!</span>")
 			return
-		user.dropItemToGround(W)
 		if(cell)
-			user.visible_message("<span class='notice'>[user] swaps [W] out for [src]'s cell.</span>", \
-			"<span class='notice'>You swap [src]'s power cells.</span>")
-			cell.forceMove(drop_location())
-			user.put_in_hands(cell)
-		else
+			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
+		else if(user.temporarilyRemoveItemFromInventory(W))
 			user.visible_message("<span class='notice'>[user] hooks up [W] to [src].</span>", \
 			"<span class='notice'>You add [W] to [src].</span>")
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		W.forceMove(src)
-		cell = W
-		add_fingerprint(user)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			W.forceMove(src)
+			cell = W
+			add_fingerprint(user)
 		return
 	switch(stage)
 		if(1)
 			if(W.tool_behaviour == TOOL_WRENCH)
-				to_chat(usr, "<span class='notice'>You begin deconstructing [src]...</span>")
-				if (W.use_tool(src, user, 30, volume=50))
-					new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
-					user.visible_message("[user.name] deconstructs [src].", \
-						"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-					playsound(src.loc, 'sound/items/deconstruct.ogg', 75, 1)
-					qdel(src)
-				return
+				if(cell)
+					to_chat(user, "<span class='warning'>You have to remove the cell first!</span>")
+					return
+				else
+					to_chat(user, "<span class='notice'>You begin deconstructing [src]...</span>")
+					if (W.use_tool(src, user, 30, volume=50))
+						new /obj/item/stack/sheet/metal(drop_location(), sheets_refunded)
+						user.visible_message("[user.name] deconstructs [src].", \
+							"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
+						playsound(src, 'sound/items/deconstruct.ogg', 75, 1)
+						qdel(src)
+					return
 
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
@@ -366,6 +382,14 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
+	broken_sparks(start_only=TRUE)
+
+/obj/machinery/light/proc/broken_sparks(start_only=FALSE)
+	if(status == LIGHT_BROKEN && has_power())
+		if(!start_only)
+			do_sparks(3, TRUE, src)
+		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
+		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process()
 	if (!cell)
@@ -602,6 +626,14 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
+			var/datum/species/ethereal/eth_species = H.dna?.species
+			if(istype(eth_species))
+				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
+				if(do_after(user, 50, target = src))
+					to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
+					eth_species.adjust_charge(5)
+					return
+				return
 
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
@@ -759,7 +791,7 @@
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
 
-/obj/item/light/throw_impact(atom/hit_atom)
+/obj/item/light/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //not caught by a mob
 		shatter()
 
@@ -780,7 +812,7 @@
 /obj/item/light/Initialize()
 	. = ..()
 	update()
-	
+
 /obj/item/light/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/caltrop, force)
@@ -791,7 +823,7 @@
 		if(L.has_trait(TRAIT_LIGHT_STEP))
 			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
 		else
-			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)	
+			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(status == LIGHT_BURNED || status == LIGHT_OK)
 			shatter()
 

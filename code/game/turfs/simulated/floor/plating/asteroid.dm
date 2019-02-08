@@ -10,6 +10,9 @@
 	icon_plating = "asteroid"
 	postdig_icon_change = TRUE
 	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	var/environment_type = "asteroid"
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
@@ -73,11 +76,6 @@
 			for(var/obj/item/stack/ore/O in src)
 				SEND_SIGNAL(W, COMSIG_PARENT_ATTACKBY, O)
 
-/turf/open/floor/plating/asteroid/singularity_act()
-	if(is_planet_level(z))
-		return ..()
-	ScrapeAway()
-
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
 	. = SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 	contents_explosion(severity, target)
@@ -99,7 +97,7 @@
 	baseturfs = /turf/open/lava/smooth
 
 /turf/open/floor/plating/asteroid/basalt/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
 	. = ..()
@@ -127,7 +125,7 @@
 
 
 /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 	baseturfs = /turf/open/floor/plating/asteroid/airless
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
@@ -152,9 +150,9 @@
 	has_data = TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/volcanic
-	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /mob/living/simple_animal/hostile/spawner/lavaland/goliath = 3, \
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /mob/living/simple_animal/hostile/spawner/lavaland = 2, \
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /mob/living/simple_animal/hostile/spawner/lavaland/legion = 3, \
+	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50, /obj/structure/spawner/lavaland/goliath = 3, \
+		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40, /obj/structure/spawner/lavaland = 2, \
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30, /obj/structure/spawner/lavaland/legion = 3, \
 		SPAWN_MEGAFAUNA = 6, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10)
 
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/volcanic/has_data
@@ -275,7 +273,7 @@
 				return //if there's a megafauna within standard view don't spawn anything at all
 			if(ispath(randumb, /mob/living/simple_animal/hostile/asteroid) || istype(H, /mob/living/simple_animal/hostile/asteroid))
 				return //if the random is a standard mob, avoid spawning if there's another one within 12 tiles
-			if((ispath(randumb, /mob/living/simple_animal/hostile/spawner/lavaland) || istype(H, /mob/living/simple_animal/hostile/spawner/lavaland)) && get_dist(src, H) <= 2)
+			if((ispath(randumb, /obj/structure/spawner/lavaland) || istype(H, /obj/structure/spawner/lavaland)) && get_dist(src, H) <= 2)
 				return //prevents tendrils spawning in each other's collapse range
 
 		new randumb(T)
@@ -304,7 +302,7 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow
 	icon_state = "snow"
 	icon_plating = "snow"
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	slowdown = 2
 	environment_type = "snow"
 	flags_1 = NONE
@@ -333,16 +331,19 @@
 	icon_plating = "snow-ice"
 	environment_type = "snow_cavern"
 	footstep = FOOTSTEP_FLOOR
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/floor/plating/asteroid/snow/ice/burn_tile()
 	return FALSE
 
 /turf/open/floor/plating/asteroid/snow/airless
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/plating/asteroid/snow/temperatre
 	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
 
 /turf/open/floor/plating/asteroid/snow/atmosphere
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 	planetary_atmos = FALSE

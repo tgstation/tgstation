@@ -15,7 +15,6 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
-	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
 	var/chem = "water"
@@ -44,7 +43,7 @@
 
 /obj/item/extinguisher/Initialize()
 	. = ..()
-	create_reagents(max_water)
+	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
 
@@ -106,7 +105,7 @@
 			safety = safety_save
 			return 1
 		var/obj/structure/reagent_dispensers/W = target //will it work?
-		var/transferred = W.reagents.trans_to(src, max_water)
+		var/transferred = W.reagents.trans_to(src, max_water, transfered_by = user)
 		if(transferred > 0)
 			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
@@ -170,8 +169,8 @@
 			var/datum/reagents/R = new/datum/reagents(5)
 			W.reagents = R
 			R.my_atom = W
-			reagents.trans_to(W,1)
-	
+			reagents.trans_to(W,1, transfered_by = user)
+
 		//Make em move dat ass, hun
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, water_particles), 2)
 
@@ -192,7 +191,7 @@
 		for(var/A in get_turf(W))
 			W.reagents.reaction(A)
 		if(W.loc == my_target)
-			break
+			particles -= W
 	if(repetition < power)
 		repetition++
 		addtimer(CALLBACK(src, /obj/item/extinguisher/proc/move_particles, particles, repetition), 2)

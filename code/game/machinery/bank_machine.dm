@@ -6,7 +6,7 @@
 	var/siphoning = FALSE
 	var/next_warning = 0
 	var/obj/item/radio/radio
-	var/radio_channel = "Common"
+	var/radio_channel = RADIO_CHANNEL_COMMON
 	var/minimum_time_between_warnings = 400
 	var/syphoning_credits = 0
 
@@ -50,7 +50,7 @@
 			say("Cargo budget depleted. Halting siphon.")
 			end_syphon()
 			return
-		
+
 		playsound(src, 'sound/items/poster_being_created.ogg', 100, 1)
 		syphoning_credits += 200
 		D.adjust_money(-200)
@@ -91,7 +91,7 @@
 	if(href_list["halt"])
 		say("Station credit withdrawal halted.")
 		end_syphon()
-		
+
 /obj/machinery/computer/bank_machine/proc/end_syphon()
 	siphoning = FALSE
 	new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot

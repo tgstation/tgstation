@@ -19,7 +19,7 @@
 	name = "tomato"
 	desc = "I say to-mah-to, you say tom-mae-to."
 	icon_state = "tomato"
-	splat_type = /obj/effect/decal/cleanable/tomato_smudge
+	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
 	filling_color = "#FF6347"
 	bitesize_mod = 2
 	foodtype = FRUIT

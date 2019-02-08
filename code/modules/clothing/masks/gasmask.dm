@@ -68,6 +68,7 @@
 	options["The Feminist"] = "sexyclown"
 	options["The Madman"] = "joker"
 	options["The Rainbow Color"] ="rainbow"
+	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
 
 	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
 

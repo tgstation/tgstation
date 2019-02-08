@@ -128,6 +128,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
+	report_type = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
 	false_report_weight = 10
 	required_players = 24

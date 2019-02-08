@@ -43,9 +43,9 @@
 	item_state = "balloon-empty"
 
 
-/obj/item/toy/balloon/New()
+/obj/item/toy/balloon/Initialize()
+	. = ..()
 	create_reagents(10)
-	..()
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -61,7 +61,7 @@
 		else if(reagents.total_volume >= 10)
 			to_chat(user, "<span class='warning'>[src] is full.</span>")
 		else
-			A.reagents.trans_to(src, 10)
+			A.reagents.trans_to(src, 10, transfered_by = user)
 			to_chat(user, "<span class='notice'>You fill the balloon with the contents of [A].</span>")
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_icon()
@@ -76,14 +76,14 @@
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, "<span class='notice'>You fill the balloon with the contents of [I].</span>")
-				I.reagents.trans_to(src, 10)
+				I.reagents.trans_to(src, 10, transfered_by = user)
 				update_icon()
 	else if(I.is_sharp())
 		balloon_burst()
 	else
 		return ..()
 
-/obj/item/toy/balloon/throw_impact(atom/hit_atom)
+/obj/item/toy/balloon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..()) //was it caught by a mob?
 		balloon_burst(hit_atom)
 
@@ -204,7 +204,7 @@
 	src.add_fingerprint(user)
 	if (src.bullets < 1)
 		user.show_message("<span class='warning'>*click*</span>", 2)
-		playsound(src, "gun_dry_fire", 30, 1)
+		playsound(src, 'sound/weapons/gun_dry_fire.ogg', 30, TRUE)
 		return
 	playsound(user, 'sound/weapons/gunshot.ogg', 100, 1)
 	src.bullets--
@@ -267,8 +267,8 @@
 // Copied from /obj/item/melee/transforming/energy/sword/attackby
 /obj/item/toy/sword/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/toy/sword))
-		if((W.item_flags & NODROP) || (item_flags & NODROP))
-			to_chat(user, "<span class='warning'>\the [item_flags & NODROP ? src : W] is stuck to your hand, you can't attach it to \the [item_flags & NODROP ? W : src]!</span>")
+		if(W.has_trait(TRAIT_NODROP) || has_trait(TRAIT_NODROP))
+			to_chat(user, "<span class='warning'>\the [has_trait(TRAIT_NODROP) ? src : W] is stuck to your hand, you can't attach it to \the [has_trait(TRAIT_NODROP) ? W : src]!</span>")
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
@@ -393,7 +393,7 @@
 /obj/item/toy/snappop/fire_act(exposed_temperature, exposed_volume)
 	pop_burst()
 
-/obj/item/toy/snappop/throw_impact(atom/hit_atom)
+/obj/item/toy/snappop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		pop_burst()
 
@@ -412,7 +412,7 @@
 /obj/effect/decal/cleanable/ash/snappop_phoenix
 	var/respawn_time = 300
 
-/obj/effect/decal/cleanable/ash/snappop_phoenix/New()
+/obj/effect/decal/cleanable/ash/snappop_phoenix/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/respawn), respawn_time)
 
@@ -649,10 +649,10 @@
 	var/obj/machinery/computer/holodeck/holo = null // Holodeck cards should not be infinite
 	var/list/cards = list()
 
-/obj/item/toy/cards/deck/New()
-	..()
+/obj/item/toy/cards/deck/Initialize()
+	. = ..()
 	icon_state = "deck_[deckstyle]_full"
-	for(var/i = 2; i <= 10; i++)
+	for(var/i in 2 to 10)
 		cards += "[i] of Hearts"
 		cards += "[i] of Spades"
 		cards += "[i] of Clubs"
@@ -986,7 +986,12 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
+	var/datum/outputs/output
 	var/cooldown = 0
+
+/obj/item/toy/nuke/Initialize()
+	. = ..()
+	output = SSoutputs.outputs[/datum/outputs/alarm]
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
@@ -994,7 +999,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, 'sound/machines/alarm.ogg', 100, 0)
+		playsound(src, output, 100, 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)
@@ -1014,7 +1019,7 @@
 	icon_state = "minimeteor"
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/toy/minimeteor/throw_impact(atom/hit_atom)
+/obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/meteorimpact.ogg', 40, 1)
 		for(var/mob/M in urange(10, src))
@@ -1062,7 +1067,7 @@
 	if(user.dropItemToGround(src))
 		throw_at(target, throw_range, throw_speed)
 
-/obj/item/toy/snowball/throw_impact(atom/hit_atom)
+/obj/item/toy/snowball/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		playsound(src, 'sound/effects/pop.ogg', 20, 1)
 		qdel(src)
@@ -1175,9 +1180,9 @@
 	var/toysay = "What the fuck did you do?"
 	var/toysound = 'sound/machines/click.ogg'
 
-/obj/item/toy/figure/New()
-    desc = "A \"Space Life\" brand [src]."
-    ..()
+/obj/item/toy/figure/Initialize()
+	. = ..()
+	desc = "A \"Space Life\" brand [src]."
 
 /obj/item/toy/figure/attack_self(mob/user as mob)
 	if(cooldown <= world.time)

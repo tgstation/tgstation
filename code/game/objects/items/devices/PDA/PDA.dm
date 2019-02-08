@@ -522,7 +522,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					U << browse(null, "window=pda")
 					return
 			if("Message")
-				create_message(U, locate(href_list["target"]))
+				create_message(U, locate(href_list["target"]) in GLOB.PDAs)
 
 			if("MessageAll")
 				send_to_all(U)
@@ -591,6 +591,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		id = null
 		update_icon()
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_id == src)
+				H.sec_hud_set_ID()
 
 /obj/item/pda/proc/msg_input(mob/living/U = usr)
 	var/t = stripped_input(U, "Please enter message", name)
@@ -770,6 +774,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 			return FALSE
 		var/obj/old_id = id
 		id = I
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_id == src)
+				H.sec_hud_set_ID()
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()

@@ -107,74 +107,27 @@
 	return 0
 
 /mob/living/carbon/regenerate_organs()
-	var/breathes = TRUE
-	var/blooded = TRUE
-	if(dna && dna.species)
-		if(has_trait(TRAIT_NOBREATH, SPECIES_TRAIT))
-			breathes = FALSE
-		if(NOBLOOD in dna.species.species_traits)
-			blooded = FALSE
-		var/has_liver = (!(NOLIVER in dna.species.species_traits))
-		var/has_stomach = (!(NOSTOMACH in dna.species.species_traits))
+	if(dna?.species)
+		dna.species.regenerate_organs(src)
+		return
 
-		if(has_liver && !getorganslot(ORGAN_SLOT_LIVER))
-			var/obj/item/organ/liver/LI
+	else
+		if(!getorganslot(ORGAN_SLOT_LUNGS))
+			var/obj/item/organ/lungs/L = new()
+			L.Insert(src)
 
-			if(dna.species.mutantliver)
-				LI = new dna.species.mutantliver()
-			else
-				LI = new()
-			LI.Insert(src)
+		if(!getorganslot(ORGAN_SLOT_HEART))
+			var/obj/item/organ/heart/H = new()
+			H.Insert(src)
 
-		if(has_stomach && !getorganslot(ORGAN_SLOT_STOMACH))
-			var/obj/item/organ/stomach/S
+		if(!getorganslot(ORGAN_SLOT_TONGUE))
+			var/obj/item/organ/tongue/T = new()
+			T.Insert(src)
 
-			if(dna.species.mutantstomach)
-				S = new dna.species.mutantstomach()
-			else
-				S = new()
-			S.Insert(src)
+		if(!getorganslot(ORGAN_SLOT_EYES))
+			var/obj/item/organ/eyes/E = new()
+			E.Insert(src)
 
-	if(breathes && !getorganslot(ORGAN_SLOT_LUNGS))
-		var/obj/item/organ/lungs/L = new()
-		L.Insert(src)
-
-	if(blooded && !getorganslot(ORGAN_SLOT_HEART))
-		var/obj/item/organ/heart/H = new()
-		H.Insert(src)
-
-	if(!getorganslot(ORGAN_SLOT_TONGUE))
-		var/obj/item/organ/tongue/T
-
-		if(dna && dna.species && dna.species.mutanttongue)
-			T = new dna.species.mutanttongue()
-		else
-			T = new()
-
-		// if they have no mutant tongues, give them a regular one
-		T.Insert(src)
-
-	if(!getorganslot(ORGAN_SLOT_EYES))
-		var/obj/item/organ/eyes/E
-
-		if(dna && dna.species && dna.species.mutanteyes)
-			E = new dna.species.mutanteyes()
-
-		else
-			E = new()
-		E.Insert(src)
-
-	if(!getorganslot(ORGAN_SLOT_EARS))
-		var/obj/item/organ/ears/ears
-		if(dna && dna.species && dna.species.mutantears)
-			ears = new dna.species.mutantears
-		else
-			ears = new
-
-		ears.Insert(src)
-
-	if(!getorganslot(ORGAN_SLOT_TAIL))
-		var/obj/item/organ/tail/tail
-		if(dna && dna.species && dna.species.mutanttail)
-			tail = new dna.species.mutanttail
-			tail.Insert(src)
+		if(!getorganslot(ORGAN_SLOT_EARS))
+			var/obj/item/organ/ears/ears = new()
+			ears.Insert(src)

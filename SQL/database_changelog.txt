@@ -2,11 +2,49 @@ Any time you make a change to the schema files, remember to increment the databa
 
 The latest database version is 4.7; The query to update the schema revision table is:
 
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (4, 7);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 0);
 or
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (4, 7);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 0);
 
 In any query remember to add a prefix to the table names if you use one.
+
+----------------------------------------------------
+
+Version 5.0, 28 October 2018, by Jordie0608
+Modified ban table to remove the need for the `bantype` column, a python script is used to migrate data to this new format.
+
+See the file 'ban_conversion_2018-10-28.py' for instructions on how to use the script.
+
+A new ban table can be created with the query:
+CREATE TABLE `ban` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `bantime` DATETIME NOT NULL,
+  `server_ip` INT(10) UNSIGNED NOT NULL,
+  `server_port` SMALLINT(5) UNSIGNED NOT NULL,
+  `round_id` INT(11) UNSIGNED NOT NULL,
+  `role` VARCHAR(32) NULL DEFAULT NULL,
+  `expiration_time` DATETIME NULL DEFAULT NULL,
+  `applies_to_admins` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
+  `reason` VARCHAR(2048) NOT NULL,
+  `ckey` VARCHAR(32) NULL DEFAULT NULL,
+  `ip` INT(10) UNSIGNED NULL DEFAULT NULL,
+  `computerid` VARCHAR(32) NULL DEFAULT NULL,
+  `a_ckey` VARCHAR(32) NOT NULL,
+  `a_ip` INT(10) UNSIGNED NOT NULL,
+  `a_computerid` VARCHAR(32) NOT NULL,
+  `who` VARCHAR(2048) NOT NULL,
+  `adminwho` VARCHAR(2048) NOT NULL,
+  `edits` TEXT NULL DEFAULT NULL,
+  `unbanned_datetime` DATETIME NULL DEFAULT NULL,
+  `unbanned_ckey` VARCHAR(32) NULL DEFAULT NULL,
+  `unbanned_ip` INT(10) UNSIGNED NULL DEFAULT NULL,
+  `unbanned_computerid` VARCHAR(32) NULL DEFAULT NULL,
+  `unbanned_round_id` INT(11) UNSIGNED NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_ban_isbanned` (`ckey`,`role`,`unbanned_datetime`,`expiration_time`),
+  KEY `idx_ban_isbanned_details` (`ckey`,`ip`,`computerid`,`role`,`unbanned_datetime`,`expiration_time`),
+  KEY `idx_ban_count` (`bantime`,`a_ckey`,`applies_to_admins`,`unbanned_datetime`,`expiration_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ----------------------------------------------------
 

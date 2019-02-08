@@ -143,8 +143,8 @@
 
 //Rod of Asclepius
 /obj/item/rod_of_asclepius
-	name = "Rod of Asclepius"
-	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding it's way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
+	name = "\improper Rod of Asclepius"
+	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
 	var/activated = FALSE
@@ -154,14 +154,14 @@
 	if(activated)
 		return
 	if(!iscarbon(user))
-		to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to it's dormant state, almost as if it finds you incapable of holding it's oath.</span>")
+		to_chat(user, "<span class='warning'>The snake carving seems to come alive, if only for a moment, before returning to its dormant state, almost as if it finds you incapable of holding its oath.</span>")
 		return
 	var/mob/living/carbon/itemUser = user
 	usedHand = itemUser.get_held_index_of_item(src)
 	if(itemUser.has_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH))
 		to_chat(user, "<span class='warning'>You can't possibly handle the responsibility of more than one rod!</span>")
 		return
-	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to it's previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
+	var/failText = "<span class='warning'>The snake seems unsatisfied with your incomplete oath and returns to its previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!</span>"
 	to_chat(itemUser, "<span class='notice'>The wooden snake that was carved into the rod seems to suddenly come alive and begins to slither down your arm! The compulsion to help others grows abnormally strong...</span>")
 	if(do_after(itemUser, 40, target = itemUser))
 		itemUser.say("I swear to fulfill, to the best of my ability and judgment, this covenant:", forced = "hippocratic oath")
@@ -189,7 +189,8 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+	add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -461,30 +462,45 @@
 	if(cooldown < world.time)
 		SSblackbox.record_feedback("amount", "immortality_talisman_uses", 1)
 		cooldown = world.time + 600
-		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a hole in [user.p_their()] place!</span>")
-		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
-		Z.name = "hole in reality"
-		Z.desc = "It's shaped an awful lot like [user.name]."
-		Z.setDir(user.dir)
-		user.forceMove(Z)
-		user.notransform = 1
-		user.status_flags |= GODMODE
-		addtimer(CALLBACK(src, .proc/return_to_reality, user, Z), 100)
+		new /obj/effect/immortality_talisman(get_turf(user), user)
 	else
 		to_chat(user, "<span class='warning'>[src] is not ready yet!</span>")
 
-/obj/item/immortality_talisman/proc/return_to_reality(mob/user, obj/effect/immortality_talisman/Z)
-	user.status_flags &= ~GODMODE
-	user.notransform = 0
-	user.forceMove(get_turf(Z))
-	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
-	Z.can_destroy = TRUE
-	qdel(Z)
-
 /obj/effect/immortality_talisman
+	name = "hole in reality"
+	desc = "It's shaped an awful lot like a person."
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
-	var/can_destroy = FALSE
+	var/vanish_description = "vanishes from reality"
+	var/can_destroy = TRUE
+
+/obj/effect/immortality_talisman/Initialize(mapload, mob/new_user)
+	. = ..()
+	if(new_user)
+		vanish(new_user)
+
+/obj/effect/immortality_talisman/proc/vanish(mob/user)
+	user.visible_message("<span class='danger'>[user] [vanish_description], leaving a hole in [user.p_their()] place!</span>")
+
+	desc = "It's shaped an awful lot like [user.name]."
+	setDir(user.dir)
+
+	user.forceMove(src)
+	user.notransform = TRUE
+	user.status_flags |= GODMODE
+
+	can_destroy = FALSE
+
+	addtimer(CALLBACK(src, .proc/unvanish, user), 10 SECONDS)
+
+/obj/effect/immortality_talisman/proc/unvanish(mob/user)
+	user.status_flags &= ~GODMODE
+	user.notransform = FALSE
+	user.forceMove(get_turf(src))
+
+	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
+	can_destroy = TRUE
+	qdel(src)
 
 /obj/effect/immortality_talisman/attackby()
 	return
@@ -501,6 +517,8 @@
 	else
 		. = ..()
 
+/obj/effect/immortality_talisman/void
+	vanish_description = "dragged into the void"
 
 //Shared Bag
 
@@ -543,6 +561,8 @@
 	w_class = 2
 
 /obj/item/book_of_babel/attack_self(mob/user)
+	if(!user.can_read(src))
+		return FALSE
 	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
 	user.grant_all_languages(omnitongue=TRUE)
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
@@ -643,7 +663,7 @@
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>It is [active ? "open, and will cleave enemies in a wide arc":"closed, and can be used for rapid consecutive attacks that cause beastly enemies to bleed"].<br>\
+	to_chat(user, "<span class='notice'>It is [active ? "open, will cleave enemies in a wide arc and deal additional damage to fauna":"closed, and can be used for rapid consecutive attacks that cause fauna to bleed"].<br>\
 	Both modes will build up existing bleed effects, doing a burst of high damage if the bleed is built up high enough.<br>\
 	Transforming it immediately after an attack causes the next attack to come out faster.</span>")
 
@@ -664,9 +684,9 @@
 /obj/item/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)
 		if(active)
-			to_chat(user, "<span class='notice'>You open [src]. It will now cleave enemies in a wide arc.</span>")
+			to_chat(user, "<span class='notice'>You open [src]. It will now cleave enemies in a wide arc and deal additional damage to fauna.</span>")
 		else
-			to_chat(user, "<span class='notice'>You close [src]. It will now attack rapidly and cause beastly enemies to bleed.</span>")
+			to_chat(user, "<span class='notice'>You close [src]. It will now attack rapidly and cause fauna to bleed.</span>")
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)

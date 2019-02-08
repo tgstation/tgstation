@@ -2,7 +2,7 @@
 	name = "pAI"
 	icon = 'icons/mob/pai.dmi'
 	icon_state = "repairbot"
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_ICON
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
@@ -12,7 +12,6 @@
 	maxHealth = 500
 	layer = BELOW_MOB_LAYER
 	can_be_held = TRUE
-
 	var/network = "ss13"
 	var/obj/machinery/camera/current = null
 
@@ -54,6 +53,8 @@
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
+	var/obj/item/instrument/recorder/internal_instrument
+
 	var/holoform = FALSE
 	var/canholo = TRUE
 	var/obj/item/card/id/access_card = null
@@ -83,6 +84,7 @@
 	return FALSE
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(internal_instrument)
 	if (loc != card)
 		card.forceMove(drop_location())
 	card.pai = null

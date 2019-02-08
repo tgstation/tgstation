@@ -13,6 +13,7 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 4
+	STR.cant_hold = typecacheof(list(/obj/item/screwdriver/power)) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
 	STR.can_hold = typecacheof(list(
 		/obj/item/stack/spacecash,
 		/obj/item/holochip,
@@ -50,6 +51,10 @@
 			front_id = I
 		LAZYINITLIST(combined_access)
 		combined_access |= I.access
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
 	update_icon()
 
 /obj/item/storage/wallet/Entered(atom/movable/AM)

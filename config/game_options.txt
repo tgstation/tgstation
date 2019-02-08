@@ -37,7 +37,7 @@ WALK_DELAY 4
 
 ## The variables below affect the movement of specific mob types. THIS AFFECTS ALL SUBTYPES OF THE TYPE YOU CHOOSE!
 ## Entries completely override all subtypes. Later entries have precedence over earlier entries.
-## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and 
+## This means if you put /mob 0 on the last entry, it will null out all changes, while if you put /mob as the first entry and
 ## /mob/living/carbon/human on the last entry, the last entry will override the first.
 ##MULTIPLICATIVE_MOVESPEED /mob/living/carbon/human 0
 ##MULTIPLICATIVE_MOVESPEED /mob/living/silicon/robot 0
@@ -53,6 +53,20 @@ MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
 
 ## If uncommented, this forces all players to use random names !and appearances!.
 #FORCE_RANDOM_NAMES
+
+## Unhash this to turn on automatic reopening of a player's job if they suicide at roundstart
+#REOPEN_ROUNDSTART_SUICIDE_ROLES
+
+## Unhash to enable reopening of command level positions
+#REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_POSITIONS
+
+## Define the delay for roles to be reopened after the round starts in seconds.
+## Has a minimum delay of 30 seconds, though it's suggested to keep over 1 min
+## If undefined, the delay defaults to 4 minutes.
+#REOPEN_ROUNDSTART_SUICIDE_ROLES_DELAY 240
+
+## Unhash to enable a printed command report for reopened roles listing what roles were reopened.
+#REOPEN_ROUNDSTART_SUICIDE_ROLES_COMMAND_REPORT
 
 
 ## ALERT LEVELS ###
@@ -112,6 +126,7 @@ CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 #CONTINUOUS MONKEY
+CONTINUOUS HIVEMIND
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
 
@@ -135,10 +150,10 @@ MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 #MIDROUND_ANTAG  MONKEY
 
-## Uncomment these for overrides of the minimum / maximum number of players in a round type. 
+## Uncomment these for overrides of the minimum / maximum number of players in a round type.
 ## If you set any of these occasionally check to see if you still need them as the modes
 ## will still be actively rebalanced around the SUGGESTED populations, not your overrides.
-## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to 
+## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to
 ## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
 
 #MIN_POP TRAITOR 0
@@ -309,6 +324,10 @@ SEC_START_BRIG
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
 
+## NEAR-DEATH EXPERIENCE ###
+## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
+NEAR_DEATH_EXPERIENCE
+
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
 #SILENT_AI
@@ -413,6 +432,7 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 
 ## Races that are better than humans in some ways, but worse in others
+ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES golem
 #ROUNDSTART_RACES adamantine
@@ -433,6 +453,10 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES agent
 
 ##-------------------------------------------------------------------------------------------
+
+## Roundstart no-reset races
+## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
+#ROUNDSTART_NO_HARD_CHECK felinid
 
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS

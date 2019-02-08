@@ -142,6 +142,11 @@ Possible to do for anyone motivated enough:
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
 
+/obj/machinery/holopad/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Current projection range: <b>[holo_range]</b> units.<span>")
+
 /obj/machinery/holopad/attackby(obj/item/P, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "holopad_open", "holopad0", P))
 		return
@@ -276,13 +281,13 @@ Possible to do for anyone motivated enough:
 				new /datum/holocall(usr, src, callnames[result])
 
 	else if(href_list["connectcall"])
-		var/datum/holocall/call_to_connect = locate(href_list["connectcall"])
+		var/datum/holocall/call_to_connect = locate(href_list["connectcall"]) in holo_calls
 		if(!QDELETED(call_to_connect))
 			call_to_connect.Answer(src)
 		temp = ""
 
 	else if(href_list["disconnectcall"])
-		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"])
+		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"]) in holo_calls
 		if(!QDELETED(call_to_disconnect))
 			call_to_disconnect.Disconnect(src)
 		temp = ""

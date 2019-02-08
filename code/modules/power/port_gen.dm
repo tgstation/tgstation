@@ -27,8 +27,13 @@
 	QDEL_NULL(soundloop)
 	return ..()
 
+/obj/machinery/power/port_gen/connect_to_network()
+	if(!anchored)
+		return FALSE
+	. = ..()
+
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
-	return 1
+	return TRUE
 
 /obj/machinery/power/port_gen/proc/UseFuel() //Placeholder for fuel use.
 	return
@@ -39,26 +44,38 @@
 /obj/machinery/power/port_gen/proc/handleInactive()
 	return
 
+/obj/machinery/power/port_gen/proc/TogglePower()
+	if(active)
+		active = FALSE
+		update_icon()
+		soundloop.stop()
+	else if(HasFuel() && !crit_fail)
+		active = TRUE
+		update_icon()
+		soundloop.start()
+
 /obj/machinery/power/port_gen/update_icon()
 	icon_state = "[base_icon]_[active]"
 
 /obj/machinery/power/port_gen/process()
-	if(active && HasFuel() && !crit_fail && anchored && powernet)
-		add_avail(power_gen * power_output)
+	if(active)
+		if(!HasFuel() || crit_fail || !anchored)
+			TogglePower()
+			return
+		if(powernet)
+			add_avail(power_gen * power_output)
 		UseFuel()
-		src.updateDialog()
-		soundloop.start()
-
 	else
-		active = 0
 		handleInactive()
-		update_icon()
-		soundloop.stop()
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
 	to_chat(user, "It is[!active?"n't":""] running.")
 
+
+/////////////////
+// P.A.C.M.A.N //
+/////////////////
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
 	circuit = /obj/item/circuitboard/machine/pacman
@@ -100,14 +117,18 @@
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [power_gen] per cycle.</span>")
+	to_chat(user, "<span class='notice'>The generator has [sheets] units of [sheet_name] fuel left, producing [DisplayPower(power_gen)] per cycle.</span>")
+	if(anchored)
+		to_chat(user, "<span class='notice'>It is anchored to the ground.</span>")
 	if(crit_fail)
 		to_chat(user, "<span class='danger'>The generator seems to have broken down.</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Fuel efficiency increased by <b>[(consumption*100)-100]%</b>.<span>")
 
 /obj/machinery/power/port_gen/pacman/HasFuel()
 	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
 	if(sheets)
@@ -149,7 +170,6 @@
 
 	if (current_heat > 0)
 		current_heat = max(current_heat - 2, 0)
-		src.updateDialog()
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
 	explosion(src.loc, 2, 5, 2, -1)
@@ -164,20 +184,17 @@
 		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
 		sheets += amount
 		addstack.use(amount)
-		updateUsrDialog()
 		return
 	else if(!active)
-
 		if(O.tool_behaviour == TOOL_WRENCH)
-
 			if(!anchored && !isinspace())
+				anchored = TRUE
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
-				anchored = TRUE
 			else if(anchored)
+				anchored = FALSE
 				disconnect_from_network()
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
-				anchored = FALSE
 
 			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			return
@@ -205,60 +222,52 @@
 /obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
 	interact(user)
 
-/obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
-	. = ..()
-	if (get_dist(src, user) > 1 )
-		if(!isAI(user))
-			user.unset_machine()
-			user << browse(null, "window=port_gen")
-			return
+/obj/machinery/power/port_gen/pacman/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "portable_generator", name, 450, 340, master_ui, state)
+		ui.open()
 
-	var/dat = text("<b>[name]</b><br>")
-	if (active)
-		dat += text("Generator: <A href='?src=[REF(src)];action=disable'>On</A><br>")
-	else
-		dat += text("Generator: <A href='?src=[REF(src)];action=enable'>Off</A><br>")
-	dat += text("[capitalize(sheet_name)]: [sheets] - <A href='?src=[REF(src)];action=eject'>Eject</A><br>")
-	var/stack_percent = round(sheet_left * 100, 1)
-	dat += text("Current stack: [stack_percent]% <br>")
-	dat += text("Power output: <A href='?src=[REF(src)];action=lower_power'>-</A> [DisplayPower(power_gen * power_output)] <A href='?src=[REF(src)];action=higher_power'>+</A><br>")
-	dat += text("Power current: [(powernet == null ? "Unconnected" : "[DisplayPower(avail())]")]<br>")
-	dat += text("Heat: [current_heat]<br>")
-	dat += "<br><A href='?src=[REF(src)];action=close'>Close</A>"
-	user << browse(dat, "window=port_gen")
-	onclose(user, "port_gen")
+/obj/machinery/power/port_gen/pacman/ui_data()
+	var/data = list()
 
-/obj/machinery/power/port_gen/pacman/Topic(href, href_list)
+	data["active"] = active
+	data["sheet_name"] = capitalize(sheet_name)
+	data["sheets"] = sheets
+	data["stack_percent"] = sheet_left * 100
+
+	data["anchored"] = anchored
+	data["connected"] = (powernet == null ? 0 : 1)
+	data["ready_to_boot"] = anchored && HasFuel()
+	data["power_generated"] = DisplayPower(power_gen)
+	data["power_output"] = DisplayPower(power_gen * power_output)
+	data["power_available"] = (powernet == null ? 0 : DisplayPower(avail()))
+	data["current_heat"] = current_heat
+	. =  data
+
+/obj/machinery/power/port_gen/pacman/ui_act(action, params)
 	if(..())
 		return
+	switch(action)
+		if("toggle_power")
+			TogglePower()
+			. = TRUE
 
-	src.add_fingerprint(usr)
-	if(href_list["action"])
-		if(href_list["action"] == "enable")
-			if(!active && HasFuel() && !crit_fail)
-				active = 1
-				src.updateUsrDialog()
-				update_icon()
-		if(href_list["action"] == "disable")
-			if (active)
-				active = 0
-				src.updateUsrDialog()
-				update_icon()
-		if(href_list["action"] == "eject")
+		if("eject")
 			if(!active)
 				DropFuel()
-				src.updateUsrDialog()
-		if(href_list["action"] == "lower_power")
+				. = TRUE
+
+		if("lower_power")
 			if (power_output > 1)
 				power_output--
-				src.updateUsrDialog()
-		if (href_list["action"] == "higher_power")
+				. = TRUE
+
+		if("higher_power")
 			if (power_output < 4 || (obj_flags & EMAGGED))
 				power_output++
-				src.updateUsrDialog()
-		if (href_list["action"] == "close")
-			usr << browse(null, "window=port_gen")
-			usr.unset_machine()
+				. = TRUE
 
 /obj/machinery/power/port_gen/pacman/super
 	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"

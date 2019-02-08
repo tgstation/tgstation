@@ -78,22 +78,10 @@
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
 	body += "<A href='?_src_=holder;[HrefToken()];boot2=[REF(M)]'>Kick</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];newban=[REF(M)]'>Ban</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];jobban2=[REF(M)]'>Jobban</A> | "
-	body += "<A href='?_src_=holder;[HrefToken()];appearanceban=[REF(M)]'>Identity Ban</A> | "
-	var/rm = REF(M)
-	if(jobban_isbanned(M, "OOC"))
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[rm]'><font color=red>OOCBan</font></A> | "
+	if(M.client)
+		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[M.key];newbanip=[M.client.address];newbancid=[M.client.computer_id]'>Ban</A> | "
 	else
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=OOC;jobban4=[rm]'>OOCBan</A> | "
-	if(QDELETED(M) || QDELETED(usr))
-		return
-	if(jobban_isbanned(M, "emote"))
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[rm]'><font color=red>EmoteBan</font></A> | "
-	else
-		body+= "<A href='?_src_=holder;[HrefToken()];jobban3=emote;jobban4=[rm]'>Emoteban</A> | "
-	if(QDELETED(M) || QDELETED(usr))
-		return
+		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[M.key]'>Ban</A> | "
 
 	body += "<A href='?_src_=holder;[HrefToken()];showmessageckey=[M.ckey]'>Notes | Messages | Watchlist</A> | "
 	if(M.client)
@@ -653,15 +641,40 @@
 	var/chosen = pick_closest_path(object)
 	if(!chosen)
 		return
+	var/turf/T = get_turf(usr)
+
 	if(ispath(chosen, /turf))
-		var/turf/T = get_turf(usr.loc)
 		T.ChangeTurf(chosen)
 	else
-		var/atom/A = new chosen(usr.loc)
+		var/atom/A = new chosen(T)
 		A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] spawned [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/podspawn_atom(object as text)
+	set category = "Debug"
+	set desc = "(atom path) Spawn an atom via supply drop"
+	set name = "Podspawn"
+
+	if(!check_rights(R_SPAWN))
+		return
+
+	var/chosen = pick_closest_path(object)
+	if(!chosen)
+		return
+	var/turf/T = get_turf(usr)
+
+	if(ispath(chosen, /turf))
+		T.ChangeTurf(chosen)
+	else
+		var/obj/structure/closet/supplypod/centcompod/pod = new()
+		var/atom/A = new chosen(pod)
+		A.flags_1 |= ADMIN_SPAWNED_1
+		new /obj/effect/DPtarget(T, pod)
+
+	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/spawn_cargo(object as text)
 	set category = "Debug"

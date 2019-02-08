@@ -108,6 +108,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+	update_icon()
 	if(user)
 		user.visible_message("<span class='warning'>Sparks fly out of [src]!</span>",
 							"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
@@ -118,37 +119,39 @@
 		alarm()
 	..()
 
-/obj/machinery/firealarm/proc/alarm()
-	if(!is_operational() && (last_alarm+FIREALARM_COOLDOWN < world.time))
+/obj/machinery/firealarm/proc/alarm(mob/user)
+	if(!is_operational() || (last_alarm+FIREALARM_COOLDOWN > world.time))
 		return
 	last_alarm = world.time
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	playsound(loc, 'goon/sound/machinery/FireAlarm.ogg', 75)
+	if(user)
+		log_game("[user] triggered a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/proc/reset()
+/obj/machinery/firealarm/proc/reset(mob/user)
 	if(!is_operational())
 		return
 	var/area/A = get_area(src)
 	A.firereset(src)
+	if(user)
+		log_game("[user] reset a fire alarm at [COORD(src)]")
 
 /obj/machinery/firealarm/attack_hand(mob/user)
 	if(buildstage != 2)
 		return ..()
+	add_fingerprint(user)
 	var/area/A = get_area(src)
 	if(A.fire)
-		reset()
+		reset(user)
 	else
-		alarm()
+		alarm(user)
 
-/obj/machinery/firealarm/attack_ai()
-	if(buildstage != 2)
-		return ..()
-	var/area/A = get_area(src)
-	if(A.fire)
-		reset()
-	else
-		alarm()
+/obj/machinery/firealarm/attack_ai(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/firealarm/attack_robot(mob/user)
+	return attack_hand(user)
 
 /obj/machinery/firealarm/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
@@ -185,13 +188,21 @@
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 					return
 
-				else if (W.tool_behaviour == TOOL_WIRECUTTER)
+				else if(W.tool_behaviour == TOOL_WIRECUTTER)
 					buildstage = 1
 					W.play_tool_sound(src)
 					new /obj/item/stack/cable_coil(user.loc, 5)
 					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
 					update_icon()
 					return
+
+				else if(W.force) //hit and turn it on
+					..()
+					var/area/A = get_area(src)
+					if(!A.fire)
+						alarm()
+					return
+
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
@@ -244,6 +255,7 @@
 					W.play_tool_sound(src)
 					qdel(src)
 					return
+
 	return ..()
 
 

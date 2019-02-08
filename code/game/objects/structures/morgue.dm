@@ -153,10 +153,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/beep_cooldown = 50
 	var/next_beep = 0
 
-/obj/structure/bodycontainer/morgue/New()
+/obj/structure/bodycontainer/morgue/Initialize()
+	. = ..()
 	connected = new/obj/structure/tray/m_tray(src)
 	connected.connected = src
-	..()
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	..()
@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 			for(var/mob/living/M in compiled)
 				var/mob/living/mob_occupant = get_mob_or_brainmob(M)
-				if(mob_occupant.client && !mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
+				if(mob_occupant.client && !mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_BADDNA)) && !mob_occupant.hellbound)
 					icon_state = "morgue4" // Cloneable
 					if(mob_occupant.stat == DEAD && beeper)
 						if(world.time > next_beep)
@@ -217,11 +217,13 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	return ..()
 
 /obj/structure/bodycontainer/crematorium/New()
-	connected = new/obj/structure/tray/c_tray(src)
-	connected.connected = src
-
 	GLOB.crematoriums.Add(src)
 	..()
+
+/obj/structure/bodycontainer/crematorium/Initialize()
+	. = ..()
+	connected = new /obj/structure/tray/c_tray(src)
+	connected.connected = src
 
 /obj/structure/bodycontainer/crematorium/update_icon()
 	if(!connected || connected.loc != src)
@@ -286,7 +288,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 
 /obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
 	var/list/icecreams = new()
-	for(var/mob/living/i_scream in GetAllContents())
+	for(var/i_scream in GetAllContents(/mob/living))
 		var/obj/item/reagent_containers/food/snacks/icecream/IC = new()
 		IC.set_cone_type("waffle")
 		IC.add_mob_flavor(i_scream)

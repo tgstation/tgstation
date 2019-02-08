@@ -238,6 +238,7 @@
 			if(M && stat != DEAD)
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "purrs!")
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD)
 				emote("me", 1, "hisses!")
@@ -257,7 +258,7 @@
 	response_harm = "takes a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses its false life and collapses!"
-	death_sound = "bodyfall"
+	deathsound = "bodyfall"
 
 /mob/living/simple_animal/pet/cat/cak/CheckParts(list/parts)
 	..()

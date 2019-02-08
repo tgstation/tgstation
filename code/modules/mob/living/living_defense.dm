@@ -40,7 +40,7 @@
 	return FALSE
 
 /mob/living/proc/on_hit(obj/item/projectile/P)
-	return
+	return BULLET_ACT_HIT
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
 	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
@@ -48,7 +48,7 @@
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return P.on_hit(src, armor)
+	return P.on_hit(src, armor)? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
 /mob/living/proc/check_projectile_dismemberment(obj/item/projectile/P, def_zone)
 	return 0
@@ -140,14 +140,18 @@
 	if(user.has_trait(TRAIT_PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
-
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
 	if(user.grab_state < GRAB_KILL)
 		user.changeNext_move(CLICK_CD_GRABBING)
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+		var/sound_to_play = 'sound/weapons/thudswoosh.ogg'
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.dna.species.grab_sound)
+				sound_to_play = H.dna.species.grab_sound 	
+		playsound(src.loc, sound_to_play, 50, 1, -1)
 
 		if(user.grab_state) //only the first upgrade is instantaneous
 			var/old_grab_state = user.grab_state
@@ -185,6 +189,7 @@
 				update_mobility() //we fall down
 				if(!buckled && !density)
 					Move(user.loc)
+		user.set_pull_offsets(src, grab_state)
 		return 1
 
 
@@ -238,7 +243,7 @@
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
-		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
+		if(M.is_muzzled() || M.is_mouth_covered(FALSE, TRUE))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return FALSE
 		M.do_attack_animation(src, ATTACK_EFFECT_BITE)
@@ -398,4 +403,4 @@
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()
-	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.
+	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure we restart the bouncing after the next movement.

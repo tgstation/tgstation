@@ -101,8 +101,18 @@
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
-	item_flags = NODROP
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
+
+/obj/item/clothing/head/beret/highlander/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, HIGHLANDER)
+
+/obj/item/clothing/head/beret/durathread
+	name = "durathread beret"
+	desc =  "A beret made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "beretdurathread"
+	item_color = null
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 15, "energy" = 5, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 5)
 
 //Security
 
@@ -134,6 +144,21 @@
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 60)
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
+
+/obj/item/clothing/head/warden/drill
+	name = "warden's drill hat"
+	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection. Has the letters 'FMJ' enscribed on its side."
+	icon_state = "wardendrill"
+	item_state = "wardendrill"
+	dog_fashion = null
+
+/obj/item/clothing/head/warden/drill/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot == SLOT_HEAD)
+		user.dna.add_mutation(YELLING)
+
+/obj/item/clothing/head/warden/drill/dropped(mob/living/carbon/human/user)
+		user.dna.remove_mutation(YELLING)
 
 /obj/item/clothing/head/beret/sec
 	name = "security beret"

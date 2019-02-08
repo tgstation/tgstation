@@ -76,6 +76,13 @@
 "an" = (
 /turf/closed/mineral/random/labormineral/volcanic,
 /area/lavaland/surface/outdoors)
+"ao" = (
+/obj/machinery/computer/shuttle/labor/one_way{
+	icon_state = "computer";
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp)
 "ap" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -273,6 +280,16 @@
 	},
 /turf/closed/wall,
 /area/mine/laborcamp)
+"aV" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 4
+	},
+/obj/machinery/computer/mech_bay_power_console{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "aW" = (
 /obj/machinery/conveyor{
 	dir = 2;
@@ -348,9 +365,12 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "bh" = (
-/obj/machinery/computer/shuttle/labor/one_way,
+/obj/machinery/computer/secure_data{
+	icon_state = "computer";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
-/area/mine/laborcamp)
+/area/mine/laborcamp/security)
 "bi" = (
 /obj/structure/gulag_beacon,
 /turf/open/floor/plasteel,
@@ -472,6 +492,13 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/mine/eva)
+"bw" = (
+/obj/machinery/computer/security/labor{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "bx" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -803,6 +830,13 @@
 "ch" = (
 /turf/open/floor/plating,
 /area/mine/laborcamp)
+"ci" = (
+/obj/machinery/computer/prisoner{
+	icon_state = "computer";
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
 "cj" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -866,13 +900,6 @@
 "cq" = (
 /turf/open/floor/mech_bay_recharge_floor,
 /area/mine/eva)
-"cr" = (
-/obj/machinery/computer/mech_bay_power_console,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
 "cs" = (
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/purple{
@@ -895,21 +922,6 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"cw" = (
-/obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cx" = (
-/obj/machinery/computer/security{
-	name = "Labor Camp Monitoring";
-	network = list("labor")
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"cy" = (
-/obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
 "cz" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -1659,7 +1671,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/mine/living_quarters)
+/area/mine/production)
 "em" = (
 /obj/machinery/light{
 	dir = 4
@@ -2061,7 +2073,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/mine/production)
@@ -4086,7 +4098,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel,
-/area/space)
+/area/mine/living_quarters)
 "Wp" = (
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
@@ -4098,14 +4110,6 @@
 	width = 7
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"Wt" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp/security)
-"Wz" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "WA" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -4158,26 +4162,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
-"WF" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/laborcamp)
-"WH" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/eva)
-"WI" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/production)
-"WJ" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall/r_wall,
-/area/mine/maintenance)
-"WK" = (
-/obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/wall,
-/area/mine/living_quarters)
 "WO" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -4458,7 +4442,7 @@ aj
 aj
 aj
 aj
-Wz
+aj
 "}
 (2,1,1) = {"
 aa
@@ -9045,7 +9029,7 @@ aP
 aq
 aZ
 aq
-bh
+ao
 aq
 aJ
 aq
@@ -9303,7 +9287,7 @@ aq
 WB
 aq
 bi
-WF
+aq
 WC
 aq
 bZ
@@ -9564,7 +9548,7 @@ az
 az
 aq
 ca
-Wt
+ca
 ca
 aj
 aj
@@ -9821,7 +9805,7 @@ az
 az
 aq
 cb
-cw
+bh
 cG
 aj
 aj
@@ -10078,7 +10062,7 @@ az
 by
 bL
 cc
-cx
+bw
 cG
 aj
 aj
@@ -10335,7 +10319,7 @@ az
 bz
 aq
 cd
-cy
+ci
 cG
 aj
 aj
@@ -12654,7 +12638,7 @@ ai
 cQ
 dk
 dA
-WJ
+cQ
 ed
 Kb
 eM
@@ -13686,7 +13670,7 @@ dR
 ef
 es
 vZ
-WK
+cM
 fg
 BD
 cM
@@ -19085,8 +19069,8 @@ eB
 cD
 br
 bq
-am
-am
+ab
+ab
 aj
 aj
 aj
@@ -20872,9 +20856,9 @@ bt
 bH
 bV
 cq
-WH
+bf
 bq
-WI
+bq
 db
 bP
 bP
@@ -21128,7 +21112,7 @@ bp
 bu
 bI
 bW
-cr
+aV
 bf
 ad
 bq
