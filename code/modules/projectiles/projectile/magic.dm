@@ -520,7 +520,57 @@
 			return BULLET_ACT_BLOCK
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
 
-//cooperation here
+/*
+/obj/item/projectile/magic/cooperation
+	name = "bolt of cooperation"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/cooperation/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check())
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		L.add_antag_datum(/datum/antagonist/cooperation)
+
+/datum/antagonist/cooperation
+	name = "Bolt of Cooperation"
+	show_in_antagpanel = FALSE
+	show_name_in_check_antagonists = TRUE
+
+/datum/antagonist/survivalist/greet()
+	to_chat(owner, "<B>You have been hit by the bolt of cooperation, you must now work with anyone else hit by the bolt of cooperation!</B>")
+	owner.announce_objectives()
+*/
+
+/obj/item/projectile/magic/law
+	name = "bolt of the law"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/law/on_hit(target)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(C.anti_magic_check())
+			C.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
+		C.update_handcuffed()
+
+/obj/item/projectile/magic/gib
+	name = "bolt of gibbing"//different name than the staff of gravitokinesis but much clearer coming out of the staff of chaos
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/gib/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		M.gib()
 
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
