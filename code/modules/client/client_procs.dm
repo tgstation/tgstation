@@ -443,7 +443,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
-	query_get_related_ip.Execute()
+	if!(query_get_related_ip.Execute())
+		qdel(query_get_related_ip)
+		return
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
