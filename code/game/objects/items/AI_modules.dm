@@ -1,3 +1,5 @@
+#define maxlawlength = 250
+
 /*
 CONTAINS:
 AI MODULES
@@ -241,7 +243,7 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
 	if(!targName)
 		return
-	if(lentext(targName) > 250)
+	if(lentext(targName) > maxlawlength)
 		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	laws[1] = targName
@@ -453,7 +455,7 @@ AI MODULES
 	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1])
 	if(!targName)
 		return
-	if(lentext(targName) > 250)
+	if(lentext(targName) > maxlawlength)
 		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	laws[1] = targName
@@ -507,6 +509,9 @@ AI MODULES
 /obj/item/aiModule/syndicate/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1])
 	if(!targName)
+		return
+	if(lentext(targName) > maxlawlength)
+		to_chat(user, "<span class='warning'>There isn't enough space on the board. Make a shorter law.</span>")
 		return
 	laws[1] = targName
 	..()
