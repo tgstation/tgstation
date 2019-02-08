@@ -1,3 +1,9 @@
+//defines the drill hat's yelling setting
+#define DRILL_DEFAULT	"default"
+#define DRILL_SHOUTING	"shouting"
+#define DRILL_YELLING	"yelling"
+#define DRILL_CANADIAN	"canadian"
+
 //Chef
 /obj/item/clothing/head/chefhat
 	name = "chef's hat"
@@ -150,43 +156,43 @@
 	icon_state = "wardendrill"
 	item_state = "wardendrill"
 	dog_fashion = null
-	var/anger = 1
+	var/mode = DRILL_DEFAULT
 
 /obj/item/clothing/head/warden/drill/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
 	if(..())
 		return TRUE
-	switch(anger)
-		if(1)
+	switch(mode)
+		if(DRILL_DEFAULT)
 			to_chat(user, "<span class='notice'>You set the voice circuit to the middle position.</span>")
-			anger = 2
-		if(2)
+			mode = DRILL_SHOUTING
+		if(DRILL_SHOUTING)
 			to_chat(user, "<span class='notice'>You set the voice circuit to the last position.</span>")
-			anger = 3
-		if(3)
+			mode = DRILL_YELLING
+		if(DRILL_YELLING)
 			to_chat(user, "<span class='notice'>You set the voice circuit to the first position.</span>")
-			anger = 1
-		if(4)
+			mode = DRILL_DEFAULT
+		if(DRILL_CANADIAN)
 			to_chat(user, "<span class='danger'>You adjust voice circuit but nothing happens, probably because it's broken.</span>")
 	return TRUE
 
 /obj/item/clothing/head/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
-	if(anger != 4)
+	if(MODE!= DRILL_CANADIAN)
 		to_chat(user, "<span class='danger'>You broke the voice circuit!</span>")
-		anger = 4
+		mode = DRILL_CANADIAN
 	return TRUE
 
 /obj/item/clothing/head/warden/drill/speechModification(M)
 	if(copytext(M, 1, 2) != "*")
-		if(anger == 1)
+		if(mode == DRILL_DEFAULT)
 			M = " [M]"
 			return trim(M)
-		if(anger == 2)
+		if(mode == DRILL_SHOUTING)
 			M = " [M]!"
 			return trim(M)
-		if(anger == 3)
+		if(mode ==  DRILL_YELLING)
 			M = " [M]!!"
 			return trim(M)
-		if(anger == 4)
+		if(mode == DRILL_CANADIAN)
 			M = " [M]"
 			var/list/canadian_words = strings("canadian_replacement.json", "canadian")
 
@@ -232,3 +238,8 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
+
+#undef DRILL_DEFAULT
+#undef DRILL_SHOUTING
+#undef DRILL_YELLING
+#undef DRILL_CANADIAN
