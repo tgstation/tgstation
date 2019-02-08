@@ -27,7 +27,7 @@
 	var/alias           //'Mutation #49', decided every round to get some form of distinction between undiscovered mutations
 	var/scrambled = FALSE //Wheter we can read it if it's active. To avoid cheesing with mutagen
 	var/class           //Decides player accesibility, sorta
-	var/conflicts = list()//any mutations that might conflict. put mutation typepath defines in here. make sure to enter it both ways (so that A conflicts with B, and B with A)
+	var/list/conflicts //any mutations that might conflict. put mutation typepath defines in here. make sure to enter it both ways (so that A conflicts with B, and B with A)
 	//MUT_NORMAL - A mutation that can be activated and deactived by completing a sequence
 	//MUT_EXTRA - A mutation that is in the mutations tab, and can be given and taken away through though the DNA console. Has a 0 before it's name in the mutation section of the dna console
 	//MUT_OTHER Cannot be interacted with by players through normal means. I.E. wizards mutate
@@ -53,7 +53,7 @@
 		if(LAZYLEN(mewtayshun.conflicts))
 			for(var/cons in mewtayshun.conflicts)
 				var/datum/mutation/human/conflicter = cons
-				if(conflicter == src.type)
+				if(conflicter == type)
 					return TRUE
 	owner = H
 	dna = H.dna

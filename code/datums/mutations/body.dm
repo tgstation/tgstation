@@ -233,7 +233,7 @@
 
 /datum/mutation/human/badblink
 	name = "Spatial Instability"
-	desc = "Subject has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
+	desc = "The victim of the mutation has a very weak link to spatial reality, and may be displaced. Often causes extreme nausea."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>The space around you twists sickeningly.</span>"
 	text_lose_indication = "<span class'notice'>The space around you settles back to normal.</span>"
@@ -305,9 +305,8 @@
 
 /datum/mutation/human/spastic/on_life()
 	if(prob(15))
-		var/arm_and_a_leg = rand(0,1)
 
-		if(arm_and_a_leg)
+		if(prob(50))
 			if(prob(34))
 				owner.a_intent_change(pick("help", "disarm", "grab", "harm"))
 			owner.click_random_mob()//when the catatonic monkeyman starts swinging
@@ -320,7 +319,7 @@
 
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"
-	desc = "Subject literally has two left feet, making standing up after getting knocked down very difficult."
+	desc = "A mutation that replaces the right foot with another left foot. It makes standing up after getting knocked down very difficult."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='warning'>Your right foot feels... left.</span>"
 	text_lose_indication = "<span class'notice'>Your right foot feels alright.</span>"
@@ -328,11 +327,9 @@
 	var/stun_cooldown = 0
 
 /datum/mutation/human/extrastun/on_life()
-	if(!stun_cooldown)
+	if(world.time > stun_cooldown)
 		if(owner.AmountKnockdown() || owner.AmountStun())
 			owner.SetKnockdown(owner.AmountKnockdown()*2)
 			owner.SetStun(owner.AmountStun()*2)
 			owner.visible_message("<span class='danger'>[owner] tries to stand up, but trips!</span>", "<span class='userdanger'>You trip over your own feet!</span>")
-			stun_cooldown = 300
-	else if(stun_cooldown > 0)
-		stun_cooldown--
+			stun_cooldown = world.time + 300
