@@ -54,6 +54,7 @@
 			for(var/cons in mewtayshun.conflicts)
 				var/datum/mutation/human/conflicter = cons
 				if(conflicter == type)
+					to_chat(H, "<span class='warning'>You feel your genes resisting something.</span>")
 					return TRUE
 	owner = H
 	dna = H.dna

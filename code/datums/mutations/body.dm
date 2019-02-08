@@ -303,19 +303,15 @@
 	text_lose_indication = "<span class'notice'>Your flinching subsides.</span>"
 	difficulty = 16
 
-/datum/mutation/human/spastic/on_life()
-	if(prob(15))
+/datum/mutation/human/spastic/on_acquiring()
+	if(..())
+		return
+	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
 
-		if(prob(50))
-			if(prob(34))
-				owner.a_intent_change(pick("help", "disarm", "grab", "harm"))
-			owner.click_random_mob()//when the catatonic monkeyman starts swinging
-			to_chat(owner, "<span class='danger'>Your arm spasms!</span>")
-
-		else
-			var/turf/T = get_step(owner,pick(GLOB.cardinals))
-			owner.Move(T)
-			to_chat(owner, "<span class='danger'>Your legs spasm!</span>")
+/datum/mutation/human/spastic/on_losing()
+	if(..())
+		return
+	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
 
 /datum/mutation/human/extrastun
 	name = "Two Left Feet"
