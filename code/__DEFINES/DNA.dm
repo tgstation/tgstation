@@ -12,6 +12,7 @@
 #define MUTATE		/datum/mutation/human/bad_dna
 #define COUGH		/datum/mutation/human/cough
 #define DWARFISM	/datum/mutation/human/dwarfism
+#define GIGANTISM	/datum/mutation/human/gigantism
 #define CLOWNMUT	/datum/mutation/human/clumsy
 #define TOURETTES	/datum/mutation/human/tourettes
 #define DEAFMUT		/datum/mutation/human/deaf
@@ -38,10 +39,13 @@
 #define INSULATED	/datum/mutation/human/insulated
 #define SHOCKTOUCH	/datum/mutation/human/shock
 #define OLFACTION	/datum/mutation/human/olfaction
+#define ACIDFLESH	/datum/mutation/human/acidflesh
+#define BADBLINK	/datum/mutation/human/badblink
+#define SPASTIC		/datum/mutation/human/spastic
+#define EXTRASTUN	/datum/mutation/human/extrastun
 #define YELLING		/datum/mutation/human/yelling
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
-
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"

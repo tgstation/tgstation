@@ -87,6 +87,8 @@
 
 #define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbolaPacify //Gives the user gondola traits while the gonbola is attached to them.
 
+#define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
+
 /////////////
 // NEUTRAL //
 /////////////
