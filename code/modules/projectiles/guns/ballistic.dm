@@ -308,7 +308,8 @@
 
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
-	to_chat(user, "It has [get_ammo()] round\s remaining.")
+	var/count_chambered = !((bolt_type == BOLT_TYPE_NO_BOLT) || (bolt_type == BOLT_TYPE_OPEN))
+	to_chat(user, "It has [get_ammo(count_chambered)] round\s remaining.")
 	if (!chambered)
 		to_chat(user, "It does not seem to have a round chambered.")
 	if (bolt_locked)
