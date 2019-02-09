@@ -456,7 +456,7 @@
 	overdose_threshold = 20
 
 /datum/reagent/drug/synthetic_cocaine/on_mob_life(mob/living/M)
-	var/high_message = pick("You feel like you can take on the world.", "You feel amazing.", "You feel like you can push it to the limit.")
+	var/high_message = pick("You feel like you can take on the world.", "You feel like you can walk along the razor's edge.", "You feel like you can push it to the limit.")
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	M.AdjustStun(-20, FALSE)
@@ -506,6 +506,7 @@
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage4(mob/living/M)
 	M.Jitter(20)
 	M.Dizzy(20)
+	M.adjustBrainLoss(10)
 	..()
 	. = 1
 
