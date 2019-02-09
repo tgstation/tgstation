@@ -58,6 +58,8 @@
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
 	if (!spawnwithmagazine)
+		bolt_locked = TRUE
+		update_icon()
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
@@ -200,6 +202,9 @@
 		return	
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
+			if (chambered && !chambered.BB)
+				chambered.forceMove(drop_location())
+				chambered = null
 			var/num_loaded = magazine.attackby(A, user, params, TRUE)
 			if (num_loaded)
 				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
@@ -306,7 +311,8 @@
 
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
-	to_chat(user, "It has [get_ammo()] round\s remaining.")
+	var/count_chambered = !((bolt_type == BOLT_TYPE_NO_BOLT) || (bolt_type == BOLT_TYPE_OPEN))
+	to_chat(user, "It has [get_ammo(count_chambered)] round\s remaining.")
 	if (!chambered)
 		to_chat(user, "It does not seem to have a round chambered.")
 	if (bolt_locked)
