@@ -1,0 +1,4 @@
+author: "the big gay"
+delete-after: True
+changes: 
+  - rscdel: "The old stamina damage dealing .45 ammo has been removed. This only affects the 1911 handgun."
