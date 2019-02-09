@@ -2,6 +2,10 @@
 	name = "shield"
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
+	var/transparent = FALSE	// makes beam projectiles pass through the shield
+
+/obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
+	return 1
 
 /obj/item/shield/riot
 	name = "riot shield"
@@ -19,7 +23,8 @@
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
-
+	transparent = TRUE
+	max_integrity = 75
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
@@ -30,7 +35,35 @@
 	else
 		return ..()
 
+/obj/item/shield/riot/examine(mob/user)
+	..()
+	var/healthpercent = (obj_integrity/max_integrity) * 100
+	switch(healthpercent)
+		if(50 to 99)
+			to_chat(user, "<span class='info'>It looks slightly damaged.</span>")
+		if(25 to 50)
+			to_chat(user, "<span class='info'>It appears heavily damaged.</span>")
+		if(0 to 25)
+			to_chat(user, "<span class='warning'>It's falling apart!</span>")
+
+/obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
+	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
+	var/turf/T = get_turf(src)
+	new /obj/item/shard(T)
+
+/obj/item/shield/riot/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
+	if (obj_integrity <= damage)
+		var/turf/T = get_turf(owner)
+		T.visible_message("<span class='warning'>[hitby] destroys [src]!</span>")
+		shatter(owner)
+		qdel(src)
+		return 0
+	take_damage(damage)
+	return ..()
+
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(transparent && (hitby.pass_flags & PASSGLASS))
+		return 0
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
 		final_block_chance += 30
 	if(attack_type == LEAP_ATTACK)
@@ -44,11 +77,19 @@
 	item_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	transparent = FALSE
+	materials = list(MAT_METAL=8500)
+	max_integrity = 65
 
 /obj/item/shield/riot/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
 	block_chance = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
+/obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
+	playsound(owner, 'sound/effects/grillehit.ogg', 100)
+	var/turf/T = get_turf(src)
+	new /obj/item/stack/sheet/metal(T)
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"
@@ -60,6 +101,12 @@
 	materials = list()
 	resistance_flags = FLAMMABLE
 	block_chance = 30
+	transparent = FALSE
+
+/obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
+	playsound(owner, 'sound/effects/bang.ogg', 50)
+	var/turf/T = get_turf(src)
+	new /obj/item/stack/sheet/mineral/wood(T)
 
 /obj/item/shield/energy
 	name = "energy combat shield"
