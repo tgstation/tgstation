@@ -104,7 +104,6 @@
 	burst_size = 2
 	bolt_type = BOLT_TYPE_OPEN
 	mag_display = TRUE
-	empty_indicator = TRUE
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
