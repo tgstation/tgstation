@@ -522,6 +522,7 @@ Difficulty: Medium
 	
 /mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/Initialize()
 	carpsprite.Grant(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon(src)
 	. = ..()
 	smallsprite.Remove(src)
 
@@ -538,31 +539,27 @@ Difficulty: Medium
 	if(swooping)
 		return
 	ranged_cooldown = world.time + ranged_cooldown_time
+	fire_stream()
 
-	if(prob(15) && !client)
-		tail_sweep()	
-	else
-		fire_stream()
+/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon
+	name = "Tail Sweep"
+	desc = "Throw back attackers with a sweep of your tail."
+	sound = 'sound/magic/tail_swing.ogg'
+	charge_max = 150
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	range = 1
+	cooldown_min = 150
+	invocation_type = "none"
+	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
+	action_icon = 'icons/mob/actions/actions_xeno.dmi'
+	action_icon_state = "tailsweep"
+	action_background_icon_state = "bg_alien"
+	anti_magic_check = FALSE
 
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/tail_sweep()
-	var/turf/dragon_turf = get_turf(src)
-	var/dir_to_target = get_dir(dragon_turf, get_turf(target))
-	var/static/list/tail_sweep_angles = list(0, -45, 45, 90, -90, 145, -145, 180)
-	visible_message("<span class='warning'>[src] sweeps their tail around them!</span>")
-	for(var/i in tail_sweep_angles)
-		var/turf/T = get_step(dragon_turf, turn(dir_to_target, i))
-		for(var/mob/living/carbon/L in T)
-			if(src.Adjacent(L) && L.density)
-				L.visible_message("<span class='warning'>[L] has been knocked down by [src]'s tail!</span>")
-				L.Paralyze(60)
-				playsound(get_turf(src),'sound/effects/hit_punch.ogg', 80, 1)
-	src.spin(10, 1)
-	
-/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/AltClickOn()
-	if(QDELETED(src) || stat == DEAD) // We're dead, don't do tail sweep.
-		return
-	if(player_cooldown >= world.time)
-		to_chat(src, "<span class='warning'>You need to wait [(player_cooldown - world.time) / 10] seconds before using your tail again!</span>")
-		return
-	tail_sweep()
-	player_cooldown = world.time + 150 // needs seperate cooldown or cant use fire attacks
+/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon/cast(list/targets,mob/user = usr)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		playsound(C.loc,'sound/effects/hit_punch.ogg', 80, 1, 1)
+		C.spin(6,1)
+	..(targets, user, 60)
