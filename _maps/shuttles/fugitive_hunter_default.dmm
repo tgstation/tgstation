@@ -43,21 +43,9 @@
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
-"tL" = (
-/obj/effect/mob_spawn/human/fugitive/spacepol{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/hunter)
 "An" = (
 /obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/shuttle/hunter)
-"Kg" = (
-/obj/effect/mob_spawn/human/fugitive/spacepol{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "Pq" = (
 /turf/template_noop,
@@ -101,7 +89,7 @@ Pq
 ku
 bY
 RO
-tL
+RO
 ku
 Pq
 "}
@@ -110,7 +98,7 @@ hB
 ku
 bY
 RO
-tL
+RO
 ku
 hB
 "}
@@ -119,16 +107,16 @@ Pq
 hJ
 bY
 RO
-tL
+RO
 hJ
 Pq
 "}
 (6,1,1) = {"
 Pq
 ku
-bY
 RO
-tL
+RO
+RO
 ku
 Pq
 "}
@@ -173,7 +161,7 @@ Pq
 An
 RA
 WY
-Kg
+RO
 An
 Pq
 "}

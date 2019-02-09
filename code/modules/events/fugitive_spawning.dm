@@ -4,6 +4,7 @@
 	max_occurrences = 1
 	min_players = 20
 	earliest_start = 30 MINUTES //deadchat sink, lets not even consider it early on.
+	gamemode_blacklist = list("nuclear")
 
 /datum/round_event/ghost_role/fugitives
 	minimum_required = 1
@@ -94,6 +95,8 @@
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_security()
 
+	var/hunter_team = pick("police", "russian")
+
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
@@ -101,24 +104,14 @@
 	var/turf/T = locate(x,y,z)
 	if(!T)
 		CRASH("Fugitive Hunters (Created from fugitive event) found no turf to load in")
-
-if(!ship.load(T))
-	CRASH("Loading hunter ship failed!")
-
-	var/hunter_team = pick(hunter_choices)
-	//ship shit//
-	switch(backstory)
-		if("police")
-//wip
-	for(var/mob/dead/selected in members)
-		gear_hunter(selected)
-
-	if(!isnull(leader))
-		gear_hunter_leader(leader, spawned_mobs)
-
-	switch(backstory)
-		if("russian")
-	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Fugitive Hunter by an event.")
-	log_game("[key_name(S)] was spawned as a Fugitive Hunter by an event.")
-	spawned_mobs += S
-	return S
+	if(!ship.load(T))
+		CRASH("Loading hunter ship failed!")
+	priority_announce("Unidentified armed ship detected near the station.")
+	var/list/spawner_spots = list()
+	for(var/turf/A in ship.get_affected_turfs(T))
+		for(var/obj/structure/chair/comfy/shuttle/chair in A) //every chair gets a spawner on it.
+			switch(backstory)
+				if("police")
+					new /obj/effect/mob_spawn/human/fugitive/spacepol(get_turf(chair))
+				if("russian")
+					new /obj/effect/mob_spawn/human/fugitive/russian(get_turf(chair))
