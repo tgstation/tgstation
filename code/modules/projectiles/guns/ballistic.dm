@@ -176,7 +176,7 @@
 		insert_magazine(user, tac_load, FALSE)
 		to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
 	user.put_in_hands(old_mag)
-	magazine.update_icon()
+	old_mag.update_icon()
 	if (!tac_load)
 		magazine = null
 	if (display_message)
