@@ -83,7 +83,7 @@
 		add_overlay("[icon_state]_empty")
 	if (magazine)
 		if (special_mags)
-			add_overlay("[icon_state]_mag_[magazine.icon_state]")
+			add_overlay("[icon_state]_mag_[initial(magazine.icon_state)]")
 			if (!magazine.ammo_count())
 				add_overlay("[icon_state]_mag_empty")
 		else
