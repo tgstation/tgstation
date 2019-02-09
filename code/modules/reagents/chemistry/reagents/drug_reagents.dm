@@ -491,12 +491,21 @@
 	..()
 	. = 1
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage1(mob/living/M)
+	M.Jitter(5)
+	M.adjustBrainLoss(10)
+	M.Dizzy(5)
 	..()
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage2(mob/living/M)
+	M.Jitter(10)
+	M.Dizzy(10)
 	..()
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage3(mob/living/M)
+	M.Jitter(15)
+	M.Dizzy(15)
 	..()
 /datum/reagent/drug/synthetic_cocaine/addiction_act_stage4(mob/living/M)
+	M.Jitter(20)
+	M.Dizzy(20)
 	..()
 	. = 1
 
