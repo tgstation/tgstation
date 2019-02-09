@@ -451,6 +451,127 @@
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
 	icon_welded = "welded"
 
+/obj/item/projectile/magic/flying
+	name = "bolt of flying"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/flying/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check() || if(L.movement_type & FLYING))
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		L.apply_status_effect(STATUS_EFFECT_FLYMAGIC)
+
+/obj/item/projectile/magic/grounding
+	name = "bolt of grounding"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/grounding/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check() || if(!(L.movement_type & FLYING)))
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		L.visible_message("<span class='danger'>[target] is violently ripped out of the air!</span>")
+		L.setMovetype(L.movement_type | FLYING) //will be used with staff of flying for combos often...
+		L.adjustBruteLoss(L.maxHealth/2)//...because the flymagic will throw them back in the air after getting grounded!
+		if(!L.health)
+			L.gib()
+
+/obj/item/projectile/magic/bounty
+	name = "bolt of bounty"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/bounty/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check())
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		L.apply_status_effect(STATUS_EFFECT_BOUNTY)
+
+/obj/item/projectile/magic/antimagic
+	name = "bolt of antimagic"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/antimagic/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check())
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		L.apply_status_effect(STATUS_EFFECT_ANTIMAGIC)
+
+/obj/item/projectile/magic/sapping
+	name = "bolt of sapping"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/sapping/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
+
+/*
+/obj/item/projectile/magic/cooperation
+	name = "bolt of cooperation"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/cooperation/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check())
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		L.add_antag_datum(/datum/antagonist/cooperation)
+
+/datum/antagonist/cooperation
+	name = "Bolt of Cooperation"
+	show_in_antagpanel = FALSE
+	show_name_in_check_antagonists = TRUE
+
+/datum/antagonist/survivalist/greet()
+	to_chat(owner, "<B>You have been hit by the bolt of cooperation, you must now work with anyone else hit by the bolt of cooperation!</B>")
+	owner.announce_objectives()
+*/
+
+/obj/item/projectile/magic/law
+	name = "bolt of the law"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/law/on_hit(target)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		if(C.anti_magic_check())
+			C.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
+		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
+		C.update_handcuffed()
+
+/obj/item/projectile/magic/gib
+	name = "bolt of gibbing"//different name than the staff of gravitokinesis but much clearer coming out of the staff of chaos
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/gib/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		M.gib()
+
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
