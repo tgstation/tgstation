@@ -234,7 +234,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	..()
-	to_chat(user, "<b>ctrl + click</b> to [cover_open ? "close" : "open"] the dust cover.")
+	to_chat(user, "<b>alt + click</b> to [cover_open ? "close" : "open"] the dust cover.")
 	if(cover_open && magazine)
 		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
 
