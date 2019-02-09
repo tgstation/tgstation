@@ -26,7 +26,7 @@ obj/item/gun/ballistic/rifle/rack(mob/user = null)
         bolt_locked = TRUE
         update_icon()
         return
-    drop_bolt()
+    drop_bolt(user)
 
 obj/item/gun/ballistic/rifle/can_shoot()
     if (bolt_locked)
