@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "spell_default"
 	clothes_req = 0
-	human_req = 1
+	human_req = 0
 	antimagic_allowed = TRUE
 	range = 0 //SNOWFLAKE, 0 is unlimited for target_external=0 spells
 	var/target_external = 0 //Whether or not we select targets inside or outside of the hive
@@ -198,7 +198,7 @@
 	action_icon = 'icons/mob/actions/actions_hive.dmi'
 	action_background_icon_state = "bg_hive"
 	action_icon_state = "drain"
-	human_req = 1
+	human_req = 0
 	antimagic_allowed = TRUE
 
 /obj/effect/proc_holder/spell/self/hive_drain/cast(mob/living/carbon/human/user)
