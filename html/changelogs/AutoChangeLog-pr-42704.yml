@@ -1,0 +1,5 @@
+author: "Nero1024"
+delete-after: True
+changes: 
+  - bugfix: "lying or otherwise incapacitated mobs shouldn't play footstep sounds anymore while moving or being moved"
+  - soundadd: "instead they'll play a crawling/dragging sound"
