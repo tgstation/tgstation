@@ -3,6 +3,9 @@
 /obj/effect/mob_spawn/human/fugitive
 	assignedrole = "Fugitive Hunter"
 	flavour_text = "" //the flavor text will be the backstory argument called on the antagonist's greet, see hunter.dm for details
+	roundstart = FALSE
+	death = FALSE
+	show_flavour = FALSE
 
 /obj/effect/mob_spawn/human/fugitive/special(mob/living/new_spawn)
 	var/datum/antagonist/fugitive_hunter/fughunter = new_spawn.mind.add_antag_datum(/datum/antagonist/fugitive_hunter)
@@ -16,6 +19,7 @@
 	outfit = /datum/outfit/spacepol
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+	density = TRUE
 
 /obj/effect/mob_spawn/human/fugitive/spacepol/Destroy()
 	var/obj/structure/fluff/empty_sleeper/S = new(drop_location())

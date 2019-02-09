@@ -8,6 +8,14 @@
 	var/datum/team/fugitive/fugitive_team
 	var/is_captured = FALSE
 
+/datum/antagonist/fugitive/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_fugitive_icons_added(M)
+
+/datum/antagonist/fugitive/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_fugitive_icons_removed(M)
+
 /datum/antagonist/fugitive/greet(backstory)
 	to_chat(owner, "<span class='boldannounce'>You are the Fugitive!</span>")
 	switch(backstory)
@@ -68,3 +76,13 @@
 		result += "<b>[printplayer(M)]</b>"
 
 	return result.Join("<br>")
+
+/datum/antagonist/fugitive/proc/update_fugitive_icons_added(var/mob/living/carbon/human/fugitive)
+	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
+	fughud.join_hud(fugitive)
+	set_antag_hud(fugitive, "fugitive")
+
+/datum/antagonist/fugitive/proc/update_fugitive_icons_removed(var/mob/living/carbon/human/fugitive)
+	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
+	fughud.leave_hud(fugitive)
+	set_antag_hud(fugitive, null)

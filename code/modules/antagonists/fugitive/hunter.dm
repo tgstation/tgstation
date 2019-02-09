@@ -6,11 +6,19 @@
 	silent = TRUE //greet called by the event as well
 	var/datum/team/fugitive_hunters/hunter_team
 
+/datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_fugitive_icons_added(M)
+
+/datum/antagonist/fugitive_hunter/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	update_fugitive_icons_removed(M)
+
 /datum/antagonist/fugitive_hunter/greet(backstory)
 	switch(backstory)
 		if("space cop")
 			to_chat(owner, "<span class='boldannounce'>Justice has arrived. I am a member of the Spacepol!</span>")
-			to_chat(owner, "<B>The criminals should be on the station, we have special huds to recognize them (they will most likely recognize us as well, mind you).</B>")
+			to_chat(owner, "<B>The criminals should be on the station, we have special huds implanted to recognize them.</B>")
 			to_chat(owner, "<B>As we have lost pretty much all power over these damned lawless megacorporations, it's a mystery if their security will cooperate with us.</B>")
 		if("russian")
 			to_chat(src, "<span class='danger'>Ay blyat. I am a space-russian smuggler! We were mid-flight when our cargo was beamed off our ship!</span>")
@@ -149,3 +157,15 @@
 			result += "<B>Well, shit. Someone, anyone report this to github so I can see it. No duplicate reports!</B>"
 
 	return result.Join("<br>")
+
+/datum/antagonist/fugitive_hunter/proc/update_fugitive_icons_added(var/mob/living/carbon/human/fugitive)
+	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
+	fughud.join_hud(fugitive)
+	//fughud.add_hud_to(fugitive) //can detect who the fugitives are, and see other hunters. fugitives don't get this
+	set_antag_hud(fugitive, "fugitive")
+
+/datum/antagonist/fugitive_hunter/proc/update_fugitive_icons_removed(var/mob/living/carbon/human/fugitive)
+	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
+	fughud.leave_hud(fugitive)
+	//fughud.remove_hud_from(fugitive)
+	set_antag_hud(fugitive, null)
