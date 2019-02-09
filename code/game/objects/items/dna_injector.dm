@@ -304,6 +304,86 @@
 	name = "\improper DNA injector (Anti-Void)"
 	remove_mutations = list(VOID)
 
+/obj/item/dnainjector/olfaction
+	name = "\improper DNA injector (Olfaction)"
+	add_mutations = list(OLFACTION)
+
+/obj/item/dnainjector/antiolfaction
+	name = "\improper DNA injector (Anti-Olfaction)"
+	remove_mutations = list(OLFACTION)
+
+/obj/item/dnainjector/insulated
+	name = "\improper DNA injector (Insulated)"
+	add_mutations = list(INSULATED)
+
+/obj/item/dnainjector/antiinsulated
+	name = "\improper DNA injector (Anti-Insulated)"
+	remove_mutations = list(INSULATED)
+
+/obj/item/dnainjector/shock
+	name = "\improper DNA injector (Shock Touch)"
+	add_mutations = list(SHOCKTOUCH)
+
+/obj/item/dnainjector/antishock
+	name = "\improper DNA injector (Anti-Shock Touch)"
+	remove_mutations = list(SHOCKTOUCH)
+
+/obj/item/dnainjector/spacialinstability
+	name = "\improper DNA injector (Spacial Instability)"
+	add_mutations = list(BADBLINK)
+
+/obj/item/dnainjector/antispacialinstability
+	name = "\improper DNA injector (Anti-Spacial Instability)"
+	remove_mutations = list(BADBLINK)
+
+/obj/item/dnainjector/acidflesh
+	name = "\improper DNA injector (Acid Flesh)"
+	add_mutations = list(ACIDFLESH)
+
+/obj/item/dnainjector/antiacidflesh
+	name = "\improper DNA injector (Acid Flesh)"
+	remove_mutations = list(ACIDFLESH)
+
+/obj/item/dnainjector/gigantism
+	name = "\improper DNA injector (Gigantism)"
+	add_mutations = list(GIGANTISM)
+
+/obj/item/dnainjector/antigigantism
+	name = "\improper DNA injector (Anti-Gigantism)"
+	remove_mutations = list(GIGANTISM)
+
+/obj/item/dnainjector/spastic
+	name = "\improper DNA injector (Spastic)"
+	add_mutations = list(SPASTIC)
+
+/obj/item/dnainjector/antispastic
+	name = "\improper DNA injector (Anti-Spastic)"
+	remove_mutations = list(SPASTIC)
+
+/obj/item/dnainjector/twoleftfeet
+	name = "\improper DNA injector (Two Left Feet)"
+	add_mutations = list(EXTRASTUN)
+
+/obj/item/dnainjector/antitwoleftfeet
+	name = "\improper DNA injector (Anti-Two Left Feet)"
+	remove_mutations = list(EXTRASTUN)
+
+/obj/item/dnainjector/geladikinesis
+	name = "\improper DNA injector (Geladikinesis)"
+	add_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/antigeladikinesis
+	name = "\improper DNA injector (Anti-Geladikinesis)"
+	remove_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/cryokinesis
+	name = "\improper DNA injector (Cryokinesis)"
+	add_mutations = list(CRYOKINESIS)
+
+/obj/item/dnainjector/anticryokinesis
+	name = "\improper DNA injector (Anti-Cryokinesis)"
+	remove_mutations = list(CRYOKINESIS)
+
 /obj/item/dnainjector/timed
 	var/duration = 600
 
