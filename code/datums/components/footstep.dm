@@ -18,7 +18,10 @@
 	var/mob/living/LM = parent
 	var/v = volume
 	var/e = e_range
-	if(!T.footstep || LM.buckled || !CHECK_MULTIPLE_BITFIELDS(LM.mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
+	if(!T.footstep || LM.buckled || LM.lying || !CHECK_MULTIPLE_BITFIELDS(LM.mobility_flags, MOBILITY_STAND | MOBILITY_MOVE) || LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING))
+		if (!T.footstep || LM.movement_type & (VENTCRAWLING | FLYING)) //don't play sounds if flying etc.
+			return
+		playsound(T, 'sound/effects/footstep/crawl1.ogg', 15 * v) //play crawling sound
 		return
 	
 	if(iscarbon(LM))
@@ -92,11 +95,11 @@
 					TRUE,
 					GLOB.footstep[T.footstep][3] + e)
 			
-			if(((!H.shoes && !feetCover) || !(H.mobility_flags & MOBILITY_STAND) && !(LM.throwing || LM.movement_type & (VENTCRAWLING | FLYING) || (LM.stat != CONSCIOUS) || LM.incapacitated() || LM.IsStun() || LM.IsParalyzed()))) //are we NOT wearing shoes or are we lying/crawling (using hands to move around) and not immobilized/incapacitated?
+			if((!H.shoes && !feetCover)) //are we NOT wearing shoes
 				if(H.dna.species.special_step_sounds)
 					playsound(T, pick(H.dna.species.special_step_sounds), 50, TRUE)
 				else
-					playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
-						GLOB.barefootstep[T.barefootstep][2] * v,
-						TRUE,
-						GLOB.barefootstep[T.barefootstep][3] + e)
+				playsound(T, pick(GLOB.barefootstep[T.barefootstep][1]),
+					GLOB.barefootstep[T.barefootstep][2] * v,
+					TRUE,
+					GLOB.barefootstep[T.barefootstep][3] + e)
