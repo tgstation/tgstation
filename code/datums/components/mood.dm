@@ -84,13 +84,14 @@
 /datum/component/mood/proc/update_mood() //Called whenever a mood event is added or removed
 	mood = 0
 	shown_mood = 0
-	for(var/i in mood_events)
-		var/datum/mood_event/event = mood_events[i]
-		mood += event.mood_change
-		if(!event.hidden)
-			shown_mood += event.mood_change
-		mood *= mood_modifier
-		shown_mood *= mood_modifier
+	if(mood_events.len)
+		for(var/i in mood_events)
+			var/datum/mood_event/event = mood_events[i]
+			mood += event.mood_change
+			if(!event.hidden)
+				shown_mood += event.mood_change
+			mood *= mood_modifier
+			shown_mood *= mood_modifier
 
 	switch(mood)
 		if(-INFINITY to MOOD_LEVEL_SAD4)
@@ -123,17 +124,18 @@
 	//lets see if we have any special icons to show instead of the normal mood levels
 	var/list/conflicting_moodies = list()
 	var/highest_absolute_mood = 0
-	for(var/i in mood_events) //adds overlays and sees which special icons need to vie for which one gets the icon_state
-		var/datum/mood_event/event = mood_events[i]
-		if(!event.special_screen_obj)
-			continue
-		if(!event.special_screen_replace)
-			screen_obj.add_overlay(event.special_screen_obj)
-		else
-			conflicting_moodies += event
-			var/absmood = abs(event.mood_change)
-			if(absmood > highest_absolute_mood)
-				highest_absolute_mood = absmood
+	if(mood_events.len)
+		for(var/i in mood_events) //adds overlays and sees which special icons need to vie for which one gets the icon_state
+			var/datum/mood_event/event = mood_events[i]
+			if(!event.special_screen_obj)
+				continue
+			if(!event.special_screen_replace)
+				screen_obj.add_overlay(event.special_screen_obj)
+			else
+				conflicting_moodies += event
+				var/absmood = abs(event.mood_change)
+				if(absmood > highest_absolute_mood)
+					highest_absolute_mood = absmood
 
 	if(!conflicting_moodies.len) //no special icons- go to the normal icon states
 		if(sanity < 25)
