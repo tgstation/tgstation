@@ -84,3 +84,21 @@
 /datum/status_effect/throat_soothed/on_remove()
 	. = ..()
 	owner.remove_trait(TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
+
+/datum/status_effect/bounty
+	id = "bounty"
+	status_type = STATUS_EFFECT_UNIQUE
+
+/*
+/datum/status_effect/bounty/on_apply()
+	if(!(L.movement_type & FLYING))
+		owner.visible_message("<span class='notice'>[owner] begins to magically fly!</span>")
+		owner.setMovetype(owner.movement_type & ~FLYING)
+		//glowing wings overlay
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	return ..()
+
+/datum/status_effect/bounty/tick()
+	if(!(L.movement_type & FLYING))
+		owner.setMovetype(owner.movement_type & ~FLYING)
+		owner.visible_message("<span class='danger'>[owner] is flung back into the air by the glowing wings!</span>")*/

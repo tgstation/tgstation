@@ -571,9 +571,30 @@
 	owner.add_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
-	owner.remove_CC()	
+	owner.remove_CC()
 	owner.bodytemperature = BODYTEMP_NORMAL
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
 	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
+
+/datum/status_effect/flymagic
+	id = "flymagic"
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/flymagic/on_apply()
+	if(!(owner.movement_type & FLYING))
+		owner.visible_message("<span class='notice'>[owner] begins to magically fly!</span>")
+		owner.setMovetype(owner.movement_type & ~FLYING)
+		//glowing wings overlay
+	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	return ..()
+
+/datum/status_effect/flymagic/tick()
+	if(!(owner.movement_type & FLYING))
+		owner.setMovetype(owner.movement_type & ~FLYING)
+		owner.visible_message("<span class='danger'>[owner] is flung back into the air by the glowing wings!</span>")
+
+/datum/status_effect/flymagic/on_remove()
+	owner.visible_message("<span class='warning'>[owner]'s glowing wings dissipates!</span>")

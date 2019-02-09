@@ -147,13 +147,6 @@
 
 
 //ADMIN ONLY FROM HERE ON OUT//
-/obj/item/gun/magic/staff/cooperation
-	name = "staff of cooperation"
-	desc = "An artefact that spits bolts of vigilant magic that can make the worst of enemies become friends."
-	fire_sound = 'sound/magic/staff_change.ogg'
-	ammo_type = /obj/item/ammo_casing/magic/cooperation
-	icon_state = "staffofchange"
-	item_state = "staffofchange"
 
 /obj/item/gun/magic/staff/law
 	name = "staff of the law"
