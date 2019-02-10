@@ -347,7 +347,6 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-
 /datum/design/mech_taser
 	name = "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
 	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
