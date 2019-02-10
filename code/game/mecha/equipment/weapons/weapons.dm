@@ -136,10 +136,31 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/mecha/working/M)
 	if(..()) //combat mech
-		return 1
+		return TRUE
 	else if(M.equipment.len < M.max_equip && istype(M))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carabine
+	equip_cooldown = 25
+	name = "Proto-Kinetic carabine"
+	desc = "An high pressure kinetic accelerator which shoots a burst of kinetic force in rapid succession."
+	icon_state = "mecha_scatter"
+	energy_drain = 60
+	projectile = /obj/item/projectile/kinetic/mech_carabine
+	fire_sound = 'sound/weapons/kenetic_accel.ogg'
+	harmful = TRUE
+	projectiles_per_shot = 3
+	variance = 6
+	randomspread = 1
+	projectile_delay = 3
+
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carabine/can_attach(obj/mecha/working/M)
+	if(..()) //combat mech
+		return TRUE
+	else if(M.equipment.len < M.max_equip && istype(M))
+		return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"

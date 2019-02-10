@@ -328,7 +328,7 @@
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_plasma_cutter
-	name = "Exosuit Module Design (217-D Heavy Plasma Cutter)"
+	name = "Exosuit Module (217-D Heavy Plasma Cutter)"
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
 	id = "mech_plasma_cutter"
 	build_type = MECHFAB
@@ -336,6 +336,17 @@
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1000, MAT_PLASMA = 2000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
+
+/datum/design/pka_carabine
+	name = "Exosuit Module (Proto-Kinetic carabine)"
+	desc = "An high pressure kinetic accelerator which shoots a burst of kinetic force in rapid succession."
+	id = "pka_carabine"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carabine
+	materials = list(MAT_METAL = 12000, MAT_GLASS = 3000, MAT_PLASMA = 4000)
+	construction_time = 100
+	category = list("Exosuit Equipment")
+
 
 /datum/design/mech_taser
 	name = "Exosuit Weapon (PBT \"Pacifier\" Mounted Taser)"
