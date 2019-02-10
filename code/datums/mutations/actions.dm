@@ -146,7 +146,7 @@
 		return
 	var/obj/item/projectile/magic/aoe/fireball/F = P
 	switch(strength)
-		if(0 to 3)
+		if(1 to 3)
 			F.exp_light = strength-1
 		if(4 to INFINITY)
 			F.exp_heavy = strength-3

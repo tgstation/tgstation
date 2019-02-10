@@ -286,11 +286,11 @@ Code:
 
 		if (433)
 			menu = "<h4>[PDAIMG(power)] Power Monitor </h4><BR>"
-			if(!powmonitor || !powmonitor.GET_MUTATION_POWERnet())
+			if(!powmonitor || !powmonitor.get_powernet())
 				menu += "<span class='danger'>No connection<BR></span>"
 			else
 				var/list/L = list()
-				var/datum/powernet/connected_powernet = powmonitor.GET_MUTATION_POWERnet()
+				var/datum/powernet/connected_powernet = powmonitor.get_powernet()
 				for(var/obj/machinery/power/terminal/term in connected_powernet.nodes)
 					if(istype(term.master, /obj/machinery/power/apc))
 						var/obj/machinery/power/apc/A = term.master
