@@ -337,12 +337,12 @@
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
-/datum/design/pka_carabine
-	name = "Exosuit Module (Proto-Kinetic carabine)"
+/datum/design/pka_carbine
+	name = "Exosuit Module (Proto-Kinetic carbine)"
 	desc = "An high pressure kinetic accelerator which shoots a burst of kinetic force in rapid succession."
-	id = "pka_carabine"
+	id = "pka_carbine"
 	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carabine
+	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carbine
 	materials = list(MAT_METAL = 12000, MAT_GLASS = 3000, MAT_PLASMA = 4000)
 	construction_time = 100
 	category = list("Exosuit Equipment")

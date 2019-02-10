@@ -582,5 +582,5 @@
 /obj/item/borg/upgrade/modkit/tracer/adjustable/attack_self(mob/user)
 	bolt_color = input(user,"","Choose Color",bolt_color) as color|null
 
-/obj/item/projectile/kinetic/mech_carabine
+/obj/item/projectile/kinetic/mech_carbine
 	range = 5

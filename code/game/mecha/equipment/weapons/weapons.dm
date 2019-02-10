@@ -141,13 +141,13 @@
 		return TRUE
 	return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carabine
-	equip_cooldown = 25
-	name = "Proto-Kinetic carabine"
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carbine
+	equip_cooldown = 30
+	name = "Proto-Kinetic carbine"
 	desc = "An high pressure kinetic accelerator which shoots a burst of kinetic force in rapid succession."
 	icon_state = "mecha_scatter"
 	energy_drain = 60
-	projectile = /obj/item/projectile/kinetic/mech_carabine
+	projectile = /obj/item/projectile/kinetic/mech_carbine
 	fire_sound = 'sound/weapons/kenetic_accel.ogg'
 	harmful = TRUE
 	projectiles_per_shot = 3
