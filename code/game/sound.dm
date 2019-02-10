@@ -20,16 +20,17 @@
 	for(var/P in listeners)
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			sound_or_datum(M, turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
+			sound_or_datum(M, turf_source, source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 	for(var/P in SSmobs.dead_players_by_zlevel[z])
 		var/mob/M = P
 		if(get_dist(M, turf_source) <= maxdistance)
-			sound_or_datum(M, turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected)
+			sound_or_datum(M, turf_source, source, input, vol, vary, frequency, falloff, channel, pressure_affected)
 
-/proc/sound_or_datum(mob/receiver, turf/turf_source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+/proc/sound_or_datum(mob/receiver, turf/turf_source, atom/source, input, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
 	if(istype(input, /datum/outputs))
+		var/last_played_time = source.datum_outputs[source.datum_outputs[1]]
 		var/datum/outputs/O = input
-		O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+		O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected, last_played_time)
 	else
 		var/sound/S = sound(get_sfx(input))
 		receiver.playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)

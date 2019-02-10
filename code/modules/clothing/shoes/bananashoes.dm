@@ -4,6 +4,7 @@
 	name = "mk-honk prototype shoes"
 	desc = "Lost prototype of advanced clown tech. Powered by bananium, these shoes leave a trail of chaos in their wake."
 	icon_state = "clown_prototype_off"
+	datum_outputs = list(/datum/outputs/bikehorn)
 	actions_types = list(/datum/action/item_action/toggle)
 	var/on = FALSE
 	var/always_noslip = FALSE
@@ -11,7 +12,7 @@
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE, /obj/item/stack)
-	AddComponent(/datum/component/squeak, /datum/outputs/bikehorn, 75)
+	AddComponent(/datum/component/squeak, datum_outputs[1], 75)
 	if(always_noslip)
 		clothing_flags |= NOSLIP
 

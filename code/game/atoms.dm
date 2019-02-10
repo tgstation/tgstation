@@ -39,6 +39,8 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
+	var/list/datum_outputs
+
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
 	if(GLOB.use_preloader && (src.type == GLOB._preloader.target_path))//in case the instanciated atom is creating other atoms in New()
@@ -74,15 +76,19 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	if (light_power && light_range)
+	if(light_power && light_range)
 		update_light()
 
-	if (opacity && isturf(loc))
+	if(opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
-	if (canSmoothWith)
+	if(canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
+
+	if(datum_outputs.len)
+		for(var/A in datum_outputs)
+			A = SSoutputs.outputs[A]
 
 	ComponentInitialize()
 

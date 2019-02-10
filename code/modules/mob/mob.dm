@@ -114,6 +114,7 @@
 	//Process text
 	if(text)
 		to_chat(src, "<span class='italics'>[text]</span>")
+
 	//to whoever sees this: icons are handled in living.dm
 
 
