@@ -82,6 +82,7 @@
 	var/airlock_material //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
+	var/department_owner = "Head of Personnel" //messaged job when an airlock access request is made
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -972,6 +973,37 @@
 		user.visible_message("<span class='notice'>[user] pins [C] to [src].</span>", "<span class='notice'>You pin [C] to [src].</span>")
 		note = C
 		update_icon()
+
+	else if(istype(I, /obj/item/pda) && !try_to_activate_door(user))//if a PDA that lacks access is used on the door...
+		var/obj/item/pda/askingPDA = I
+		if(world.time < askingPDA.door_request_cd)
+			to_chat(user, "<span class='warning'>The PDA screen displays, \"Last door request was too recent. Please try again.\"</span>")
+			return ..()
+		var/recipientPDA
+		var/HoP_PDA
+		var/list/obj/item/pda/finalPDA
+		for(var/headPDA in get_viewable_pdas())
+			var/obj/item/pda/foundHeadPDA = headPDA
+			if(foundHeadPDA.ownjob == department_owner)
+				recipientPDA = foundHeadPDA
+				break
+			if(foundHeadPDA.ownjob == "Head of Personnel")
+				HoP_PDA = foundHeadPDA
+		if(!recipientPDA && !HoP_PDA)
+			to_chat(user, "<span class='warning'>The PDA screen displays, \"Unable to locate airlock owner PDA. Is the PDA server down?\"</span>")
+			return ..()
+		else if(recipientPDA)
+			finalPDA += recipientPDA
+		else
+			finalPDA += HoP_PDA
+		var/wgw = askingPDA.msg_input(user, "Enter an access request message for the owner of this airlock:")
+		if(!wgw)//blank entry cancels
+			return ..()
+		//TODO wgw = "This is an automated airlock access request. Message: \"[wgw]\" Click here to open airlock (<--magic string that runs a proc to check access/open the airlock when clicked in the text chat)"
+		askingPDA.send_message(user, finalPDA, FALSE, wgw)
+		askingPDA.door_request_cd = world.time + 100//TODO or whatever the PDA cooldown is
+
+
 	else
 		return ..()
 

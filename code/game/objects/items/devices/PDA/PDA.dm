@@ -79,6 +79,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/underline_flag = TRUE //flag for underline
 
+	var/door_request_cd = 0//cooldown on sending door open requests
+
 /obj/item/pda/suicide_act(mob/living/carbon/user)
 	var/deathMessage = msg_input(user)
 	if (!deathMessage)
@@ -600,8 +602,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(H.wear_id == src)
 				H.sec_hud_set_ID()
 
-/obj/item/pda/proc/msg_input(mob/living/U = usr)
-	var/t = stripped_input(U, "Please enter message", name)
+/obj/item/pda/proc/msg_input(mob/living/U = usr, prompt = "Please enter message:")
+	var/t = stripped_input(U, prompt, name)
 	if (!t || toff)
 		return
 	if(!U.canUseTopic(src, BE_CLOSE))
@@ -610,8 +612,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone)
-	var/message = msg_input(user)
+/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone, prewritten)
+	var/message = prewritten
+	if(!message)
+		message = msg_input(user)
 	if(!message || !targets.len)
 		return
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))

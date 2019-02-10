@@ -2,6 +2,8 @@
 	Station Airlocks Regular
 */
 
+//TODO: set a department_owner job for each type (IE "Captain", "Chief Medical Officer")
+
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
