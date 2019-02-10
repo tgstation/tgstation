@@ -83,6 +83,7 @@
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 	var/department_owner = "Head of Personnel" //messaged job when an airlock access request is made
+	var/request_made = FALSE //if the airlock recently had a request on it to be opened
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -785,20 +786,27 @@
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
 	// Otherwise it will runtime with this kind of error: null.Topic()
-	if(!nowindow)
-		..()
-	if(!usr.canUseTopic(src) && !IsAdminGhost(usr))
-		return
-	add_fingerprint(usr)
+	if(href_list["remoteOpen"])
+		if(request_made && try_to_activate_door(usr))
+			request_made = FALSE
+		else
+			to_chat(usr, "<span class='warning'>Access denied.</span>")
 
-	if((in_range(src, usr) && isturf(loc)) && panel_open)
-		usr.set_machine(src)
-
-	add_fingerprint(usr)
-	if(!nowindow)
-		updateUsrDialog()
 	else
-		updateDialog()
+		if(!nowindow)
+			..()
+		if(!usr.canUseTopic(src) && !IsAdminGhost(usr))
+			return
+		add_fingerprint(usr)
+
+		if((in_range(src, usr) && isturf(loc)) && panel_open)
+			usr.set_machine(src)
+
+		add_fingerprint(usr)
+		if(!nowindow)
+			updateUsrDialog()
+		else
+			updateDialog()
 
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
@@ -974,8 +982,8 @@
 		note = C
 		update_icon()
 
-	else if(istype(I, /obj/item/pda) && !try_to_activate_door(user))//if a PDA that lacks access is used on the door...
-		var/obj/item/pda/askingPDA = I
+	else if(istype(C, /obj/item/pda) && !try_to_activate_door(user))//if a PDA that lacks access is used on the door...
+		var/obj/item/pda/askingPDA = C
 		if(world.time < askingPDA.door_request_cd)
 			to_chat(user, "<span class='warning'>The PDA screen displays, \"Last door request was too recent. Please try again.\"</span>")
 			return ..()
@@ -999,9 +1007,10 @@
 		var/wgw = askingPDA.msg_input(user, "Enter an access request message for the owner of this airlock:")
 		if(!wgw)//blank entry cancels
 			return ..()
-		//TODO wgw = "This is an automated airlock access request. Message: \"[wgw]\" Click here to open airlock (<--magic string that runs a proc to check access/open the airlock when clicked in the text chat)"
-		askingPDA.send_message(user, finalPDA, FALSE, wgw)
-		askingPDA.door_request_cd = world.time + 100//TODO or whatever the PDA cooldown is
+		wgw = "This is an automated airlock access request. Message: \"[wgw]\" <a href='?src=[REF(src)];remoteOpen=TRUE'>Click here to open airlock</a>"
+		if(askingPDA.send_message(user, finalPDA, FALSE, wgw))
+			askingPDA.door_request_cd = world.time + 100//TODO or whatever the PDA cooldown is
+			request_made = TRUE
 
 
 	else

@@ -612,7 +612,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone, prewritten)
+/obj/item/pda/proc/send_message(mob/living/user, list/obj/item/pda/targets, everyone, var/prewritten = null)
 	var/message = prewritten
 	if(!message)
 		message = msg_input(user)
