@@ -155,7 +155,7 @@
 	randomspread = 1
 	projectile_delay = 3
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carabine/can_attach(obj/mecha/working/M)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carbine/can_attach(obj/mecha/working/M)
 	if(..()) //combat mech
 		return TRUE
 	else if(M.equipment.len < M.max_equip && istype(M))
