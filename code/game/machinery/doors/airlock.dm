@@ -83,7 +83,6 @@
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 	var/department_owner = "Head of Personnel" //messaged job when an airlock access request is made
-	var/request_made = FALSE //if the airlock recently had a request on it to be opened
 
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
@@ -786,11 +785,39 @@
 /obj/machinery/door/airlock/Topic(href, href_list, var/nowindow = 0)
 	// If you add an if(..()) check you must first remove the var/nowindow parameter.
 	// Otherwise it will runtime with this kind of error: null.Topic()
-	if(href_list["remoteOpen"])
-		if(request_made && try_to_activate_door(usr))
-			request_made = FALSE
-		else
-			to_chat(usr, "<span class='warning'>Access denied.</span>")
+	to_chat(world, "In href")
+	if(href_list["doorRef"])
+		to_chat(world, "In href for opening the door")
+		if(text2num(href_list["timeSent"])+300 > world.time && href_list["doorRef"] == REF(src))//href security checks
+
+			to_chat(world, "Checks passed, creating NTNet packet")
+
+			GET_COMPONENT_FROM(target_interface, /datum/component/ntnet_interface, src)
+			if(!target_interface)
+				to_chat(world, "No NTNet interface found in [src], aborting")
+				return
+
+			var/datum/netdata/doorOpenPacket = new//send an NTNet packet to the door
+			doorOpenPacket.recipient_ids = list(target_interface.hardware_id)
+			doorOpenPacket.data["data"] = "open"//command to be sent to airlock (tell it to open)
+			doorOpenPacket.data["data_secondary"] = "toggle"
+			var/obj/item/pda/recieverPDA = locate(href_list["recieverRef"]) in get_viewable_pdas()
+			if(!recieverPDA || !usr.canUseTopic(recieverPDA, BE_CLOSE, FALSE, NO_TK) || !istype(recieverPDA, /obj/item/pda))
+				to_chat(world, "Security check failed")
+				return//more security checks
+			if(!recieverPDA.id)
+				to_chat(usr, "<span class='warning'>The PDA screen displays: \"Error: No ID inserted in PDA.\"</span>")
+				return
+			var/obj/item/card/id/slottedID = recieverPDA.id
+			doorOpenPacket.passkey = slottedID.access
+			ntnet_send(doorOpenPacket)
+			to_chat(usr, "<span class='notice'>The PDA screen displays: \"Door open query sent via NTNet.\"</span>")
+			to_chat(world, "Packet sent")
+			var/obj/item/pda/askerPDA = href_list["senderRef"]
+			askerPDA.door_request_cd = 0
+
+		else if(text2num(href_list["timeSent"])+300 < world.time)
+			to_chat(usr, "<span class='warning'>The PDA screen displays: \"This request has expired.\"</span>")
 
 	else
 		if(!nowindow)
@@ -989,7 +1016,7 @@
 			return ..()
 		var/recipientPDA
 		var/HoP_PDA
-		var/list/obj/item/pda/finalPDA
+		var/list/obj/item/pda/finalPDA = list()
 		for(var/headPDA in get_viewable_pdas())
 			var/obj/item/pda/foundHeadPDA = headPDA
 			if(foundHeadPDA.ownjob == department_owner)
@@ -998,7 +1025,7 @@
 			if(foundHeadPDA.ownjob == "Head of Personnel")
 				HoP_PDA = foundHeadPDA
 		if(!recipientPDA && !HoP_PDA)
-			to_chat(user, "<span class='warning'>The PDA screen displays, \"Unable to locate airlock owner PDA. Is the PDA server down?\"</span>")
+			to_chat(user, "<span class='warning'>The PDA screen displays, \"Door request error: Unable to locate airlock owner PDA. Is the PDA server down?\"</span>")
 			return ..()
 		else if(recipientPDA)
 			finalPDA += recipientPDA
@@ -1007,10 +1034,9 @@
 		var/wgw = askingPDA.msg_input(user, "Enter an access request message for the owner of this airlock:")
 		if(!wgw)//blank entry cancels
 			return ..()
-		wgw = "This is an automated airlock access request. Message: \"[wgw]\" <a href='?src=[REF(src)];remoteOpen=TRUE'>Click here to open airlock</a>"
-		if(askingPDA.send_message(user, finalPDA, FALSE, wgw))
-			askingPDA.door_request_cd = world.time + 100//TODO or whatever the PDA cooldown is
-			request_made = TRUE
+		wgw = "This is an automated airlock access request. Message: \"[wgw]\" <a href='?src=[REF(src)];doorRef=[REF(src)];senderRef=[REF(askingPDA)];recieverRef=[REF(finalPDA)];timeSent=[world.time]'>Click here to open [src].</a>"
+		askingPDA.send_message(user, finalPDA, FALSE, wgw)
+		askingPDA.door_request_cd = world.time + 300//30 seconds between requests, unless your request is approved, which resets the cooldown
 
 
 	else
