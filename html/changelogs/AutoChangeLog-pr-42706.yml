@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Honk Blaster 5000 will no longer knock you down in space if you aren't adjacent to it."

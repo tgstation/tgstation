@@ -1,7 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "fixed a bunch of missing sprites for various guns including the RPG, grenade launcher, and toy weapons"
-  - bugfix: "fixed sprite issues with no mag spawn weapons such as the 1911."
-  - bugfix: "fixed ammo counts on weapons such as the double barrel shotgun being incorrect"
-  - bugfix: "fixed issue with double barrel and revolver \"tac loading\" that prevented them from firing until it was properly reloaded"

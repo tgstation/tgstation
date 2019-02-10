@@ -1,6 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug that allowed you to teleport an ID in your possession to a PDA anywhere ingame."
-  - bugfix: "Fixed an exploit allowing you to steal ID's/pens from PDA's not in your possession."
-  - bugfix: "Fixed an exploit allowing you unlimited control of a PDA's interface even if it wasn't near you/in your possession."

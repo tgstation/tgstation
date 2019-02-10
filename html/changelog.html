@@ -55,6 +55,68 @@
 		
 		-->
 		<div class="commit sansserif">
+			<h2 class="date">10 February 2019</h2>
+			<h3 class="author">Ghommie updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Fixes ISINRANGE_EX using the wrong relational operator.</li>
+			</ul>
+			<h3 class="author">Nero1024 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">lying or otherwise incapacitated mobs shouldn't play footstep sounds anymore while moving or being moved</li>
+				<li class="soundadd">instead they'll play a crawling/dragging sound</li>
+			</ul>
+			<h3 class="author">PKPenguin321 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">New system in genetics: Conflicting mutations. Some mutations will not allow others to activate. Example - If you have mutation A, and it conflicts with B, then B will never activate until you get rid of mutation A (and visa versa). The only mutations to currently use this are Dwarfism and Gigantism. Speaking of which...</li>
+				<li class="rscadd">New minor negative mutation: Gigantism. Opposite of dwarfism, makes you larger.</li>
+				<li class="rscadd">New disability: Spastic. You will randomly take a step in a random direction, will randomly change intent, and will randomly try to click on somebody near you (which can hug them, punch them, use whatever is in your hand on them, etc).</li>
+				<li class="rscadd">New disability: Acid flesh. Pockets of acid bubble beneath your skin. They will occasionally pop, coating you with acid. This will melt clothes and deal damage to you.</li>
+				<li class="rscadd">New disability: Spatial Instability. You will randomly teleport, similar to a wizard's blink teleport. This is a very nauseating process, and will inevitably make you very sick if you don't rid yourself of it.</li>
+				<li class="rscadd">New disability: Two Left Feet. Your right foot becomes a second left foot. You take longer to get up from stuns.</li>
+			</ul>
+			<h3 class="author">ShizCalev updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Fixed a bug that allowed you to teleport an ID in your possession to a PDA anywhere ingame.</li>
+				<li class="bugfix">Fixed an exploit allowing you to steal ID's/pens from PDA's not in your possession.</li>
+				<li class="bugfix">Fixed an exploit allowing you unlimited control of a PDA's interface even if it wasn't near you/in your possession.</li>
+				<li class="bugfix">Honk Blaster 5000 will no longer knock you down in space if you aren't adjacent to it.</li>
+				<li class="bugfix">Fixed a runtime which caused microwaves/showers/ect to not play sounds.</li>
+				<li class="bugfix">Internal beakers for medbots now work.</li>
+			</ul>
+			<h3 class="author">TerraGS updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Adds toggleable light and blinking charge indicator to kinetic crusher</li>
+			</ul>
+			<h3 class="author">Vile Beggar updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">The drill hat is less annoying now. You can change the loudness setting of it by using a screwdriver on it. Use wirecutters on it for a surprise.</li>
+				<li class="tweak">Lights now spark less.</li>
+			</ul>
+			<h3 class="author">YoYoBatty updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="code_imp">Fixed an undeleted sql query.</li>
+			</ul>
+			<h3 class="author">actioninja updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">fixed a bunch of missing sprites for various guns including the RPG, grenade launcher, and toy weapons</li>
+				<li class="bugfix">fixed sprite issues with no mag spawn weapons such as the 1911.</li>
+				<li class="bugfix">fixed ammo counts on weapons such as the double barrel shotgun being incorrect</li>
+				<li class="bugfix">fixed issue with double barrel and revolver "tac loading" that prevented them from firing until it was properly reloaded</li>
+				<li class="bugfix">more gun fixes</li>
+			</ul>
+			<h3 class="author">gy1ta23 updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">updates clothesmate line</li>
+			</ul>
+			<h3 class="author">the big gay updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscdel">The old stamina damage dealing .45 ammo has been removed. This only affects the 1911 handgun.</li>
+			</ul>
+			<h3 class="author">tralezab updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="tweak">sleeping carp now deflects projectiles</li>
+			</ul>
+
 			<h2 class="date">07 February 2019</h2>
 			<h3 class="author">AndrewMontague, FlattestGuitar, nichlas0010, TheMythicGhost updated:</h3>
 			<ul class="changes bgimages16">
@@ -1209,137 +1271,6 @@
 			<ul class="changes bgimages16">
 				<li class="rscadd">Wizard has a new spell: Soul tap!</li>
 				<li class="tweak">lichdom requires a soul now, and it takes your soul.</li>
-			</ul>
-
-			<h2 class="date">09 December 2018</h2>
-			<h3 class="author">Denton updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Metastation's kitchen cold room is now really cold! Make sure to wear warm clothing.</li>
-				<li class="tweak">The kitchen clothing vendor now stocks two winter jackets by default.</li>
-				<li class="tweak">Goats are now fine with temperatures as low as 180°K. This is so that Pete doesn't freeze to death inside the cold room.</li>
-				<li class="code_imp">Added a kitchen area subtype for cold rooms and adjusted chef CQC to work inside it (no gameplay changes).</li>
-			</ul>
-			<h3 class="author">Floyd / Qustinnus updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Bloodbags for ethereal filled with liquid electricity</li>
-				<li class="bugfix">Ethereals cant clone lightbulbs anymore</li>
-				<li class="bugfix">Fixes runtime in Ethereal charge handling</li>
-			</ul>
-			<h3 class="author">HideAndSeekLOGIC updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added emergency oxygen tanks and extended capacity emergency tanks to the autolathe and protolathe</li>
-				<li class="rscadd">Added them to the Industrial Engineering tech node</li>
-				<li class="tweak">Only Cargo and Engineering can print extended capacities; the rest are available for everyone.</li>
-			</ul>
-			<h3 class="author">JJRcop updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">The chronosuit's teleport animation has been fixed, as has the gun.</li>
-			</ul>
-			<h3 class="author">MMMiracles updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Fixes signalers not working properly on paystands</li>
-			</ul>
-			<h3 class="author">MetroidLover updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">New Abductor uniforms</li>
-			</ul>
-			<h3 class="author">MrDoomBringer updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">The Centcom Pod Launcher has been reorganized, making it easier to navigate at the expense of compact-ness.</li>
-			</ul>
-			<h3 class="author">Nich updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Radials now have tooltips on hover</li>
-			</ul>
-			<h3 class="author">Skoglol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="tweak">Reorganized the syndicate uplinks. Items are now mostly alphabetical, some misplaced items moved to more fitting categories.</li>
-				<li class="tweak">Added a new category to the uplink: Grenades and Explosives.</li>
-				<li class="bugfix">Xenobio consoles that didn't connect to recycler in the xenobio lab should now do so.</li>
-				<li class="bugfix">Fixed gibber exploit.</li>
-			</ul>
-			<h3 class="author">Swindly updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Arm-mounted implants that contain more than one item use a radial menu instead of a list menu.</li>
-				<li class="bugfix">Fixed repair droids not damaging mechs when the mech has a short circuit.</li>
-			</ul>
-			<h3 class="author">Time-Green updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Goon genetics!</li>
-				<li class="rscadd">More mutations! Fire breath for lizards! Radioactive! Telepathy! Glowy! Strength, though its cosmetic and should be combined with radioactivity instead! Fiery sweat!</li>
-				<li class="rscadd">Adds void magnet mutation by @tralezab !</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Added the Vegetarian quirk, which costs 0 points and makes you dislike meat.</li>
-				<li class="bugfix">Projected forcefields can no longer be stacked onto the same tile.</li>
-				<li class="rscadd">Added two new surgery procedures, under the Experimental Surgery techweb node.</li>
-				<li class="rscadd">Ligament Hook makes it so you can attach limbs manually (like skeletons) but makes dismemberment more likely as well.</li>
-				<li class="rscadd">Ligament Reinforcement prevents dismemberment, but makes limbs easier to disable through damage.</li>
-				<li class="tweak">Golem limbs can now be disabled, although they are still undismemberable.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Heirlooms are no longer named "Cherry family bag of dice", but rather their heirloom status can be determined by the owner on examine.</li>
-				<li class="rscadd">Any talented Musician can now use any instrument to lift spirits, and ease burdens. They can now also use the space piano and minimog to grant people the Good Music buffs, just like a handheld instrument.</li>
-				<li class="bugfix">Fixes bug where Curse of Madness was not giving proper brain traumas.</li>
-				<li class="rscadd">Gibs will now rot if not cleaned, and produce small amounts of miasma, approximately equal to a quarter of a corpse.</li>
-			</ul>
-			<h3 class="author">imsxz updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">glitter now uses the updated atmos overlays</li>
-			</ul>
-			<h3 class="author">kevinz000 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Sofas have been added. Make 'em with metal, 1 sheet each.</li>
-			</ul>
-			<h3 class="author">monster860 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Teleports now go back to force-moving you instead of Move()</li>
-			</ul>
-			<h3 class="author">subject217 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="admin">Admin PMs are now multi-line text prompts, making it easier to write big admin PMs.</li>
-			</ul>
-
-			<h2 class="date">08 December 2018</h2>
-			<h3 class="author">Steelpoint updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">The Bartender of NTSS Boxstation was approved to receive a Hoochmaster.</li>
-			</ul>
-			<h3 class="author">XDTM updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Hypnosis now shows the proper alert instead of Curse of Normality.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">During the Christmas season, you can find Santa hats, christmas crackers and presents in maintenance.</li>
-			</ul>
-
-			<h2 class="date">07 December 2018</h2>
-			<h3 class="author">Blobby and Crossbowby updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">KAs no longer have increased reload time because of crossbows</li>
-				<li class="bugfix">The aiming beam will no longer spam chat when aimed at a reflector blob</li>
-			</ul>
-			<h3 class="author">Skoglol updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Progress bar should no longer appear below the hud.</li>
-				<li class="tweak">Bio bags can now hold droppers.</li>
-				<li class="tweak">Chemistry bags can now hold droppers, syringes and medical sprays.</li>
-			</ul>
-			<h3 class="author">Steelpoint updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">A new advanced first aid kit is now purchasable from any approved medical vendor. The kit contains an array of advanced healing items for more complex wounds and injuries.</li>
-			</ul>
-			<h3 class="author">coiax updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="rscadd">Adds the Physically Obstructive negative quirk. A person with this quirk can't swap places with other people when moving, akin to someone always being in non-help intent.</li>
-				<li class="rscadd">Cryo tubes will only ever send one message, even if they are auto ejecting.</li>
-			</ul>
-			<h3 class="author">subject217 updated:</h3>
-			<ul class="changes bgimages16">
-				<li class="bugfix">Plasma cutters will no longer accept infinite plasma, and will stop you when they are full.</li>
 			</ul>
 		</div>
 

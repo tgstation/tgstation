@@ -1,9 +1,0 @@
-author: "PKPenguin321"
-delete-after: True
-changes: 
-  - rscadd: "New system in genetics: Conflicting mutations. Some mutations will not allow others to activate. Example - If you have mutation A, and it conflicts with B, then B will never activate until you get rid of mutation A (and visa versa). The only mutations to currently use this are Dwarfism and Gigantism. Speaking of which..."
-  - rscadd: "New minor negative mutation: Gigantism. Opposite of dwarfism, makes you larger."
-  - rscadd: "New disability: Spastic. You will randomly take a step in a random direction, will randomly change intent, and will randomly try to click on somebody near you (which can hug them, punch them, use whatever is in your hand on them, etc)."
-  - rscadd: "New disability: Acid flesh. Pockets of acid bubble beneath your skin. They will occasionally pop, coating you with acid. This will melt clothes and deal damage to you."
-  - rscadd: "New disability: Spatial Instability. You will randomly teleport, similar to a wizard's blink teleport. This is a very nauseating process, and will inevitably make you very sick if you don't rid yourself of it."
-  - rscadd: "New disability: Two Left Feet. Your right foot becomes a second left foot. You take longer to get up from stuns."
