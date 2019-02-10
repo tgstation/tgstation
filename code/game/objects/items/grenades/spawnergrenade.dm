@@ -51,4 +51,4 @@
 /obj/item/grenade/spawnergrenade/gondola
 	name = "gondola delivery grenade"
 	spawner_type = /mob/living/simple_animal/pet/gondola
-	deliveryamt = 7
+	deliveryamt = 3
