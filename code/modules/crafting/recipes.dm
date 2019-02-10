@@ -105,6 +105,14 @@
 	category= CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
+/datum/crafting_recipe/gondolagrenade
+	name = "Gondola Delivery Grenade"
+	result = /obj/item/grenade/spawnergrenade/gondola
+	reqs = list(/obj/item/stack/sheet/animalhide/gondola = 3,
+				/obj/item/grenade/chem_grenade)
+	time = 60
+	category = CAT_MISC
+
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub
