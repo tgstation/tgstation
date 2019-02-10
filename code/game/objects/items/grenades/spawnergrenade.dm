@@ -41,3 +41,14 @@
 	icon_state = "holy_grenade"
 	spawner_type = /mob/living/simple_animal/hostile/poison/bees/toxin
 	deliveryamt = 10
+
+/obj/item/grenade/spawnergrenade/tarzan
+	name = "Into the Jungle"
+	desc = "For getting in touch with your wild side"
+	spawner_type = /mob/living/simple_animal/hostile/gorilla
+	deliveryamt = 3
+	
+/obj/item/grenade/spawnergrenade/gondola
+	name = "gondola delivery grenade"
+	spawner_type = /mob/living/simple_animal/pet/gondola
+	deliveryamt = 7
