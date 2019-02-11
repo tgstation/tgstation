@@ -26,12 +26,29 @@
 	transparent = TRUE
 	max_integrity = 75
 
+/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(transparent && (hitby.pass_flags & PASSGLASS))
+		return 0
+	if(attack_type == THROWN_PROJECTILE_ATTACK)
+		final_block_chance += 30
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance = 100
+	return ..()
+
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
+	else if(istype(W, /obj/item/stack/sheet/mineral/titanium))
+		if (obj_integrity >= max_integrity)
+			to_chat(user, "<span class='notice'>[src] is already in perfect condition.</span>")
+		else
+			var/obj/item/stack/sheet/mineral/titanium/T = W
+			T.use(1)
+			obj_integrity = max_integrity
+			to_chat(user, "<span class='notice'>You repair [src] with [T].</span>")
 	else
 		return ..()
 
@@ -59,15 +76,6 @@
 		qdel(src)
 		return 0
 	take_damage(damage)
-	return ..()
-
-/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(transparent && (hitby.pass_flags & PASSGLASS))
-		return 0
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
-	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
 	return ..()
 
 /obj/item/shield/riot/roman
@@ -102,11 +110,73 @@
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
+	max_integrity = 65
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
 	var/turf/T = get_turf(src)
 	new /obj/item/stack/sheet/mineral/wood(T)
+
+/obj/item/shield/riot/flash
+	name = "strobe shield"
+	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
+	icon_state = "flashshield"
+	item_state = "flashshield"
+	var/obj/item/assembly/flash/handheld/embedded_flash
+
+/obj/item/shield/riot/flash/Initialize()
+	. = ..()
+	embedded_flash = new(src)
+
+/obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
+	. =  embedded_flash.attack(M, user)
+	update_icon()
+
+/obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
+	. = embedded_flash.attack_self(user)
+	update_icon()
+
+/obj/item/shield/riot/flash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	. = ..()
+	if (. && !embedded_flash.crit_fail)
+		embedded_flash.activate()
+		update_icon()
+
+
+/obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/assembly/flash/handheld))
+		var/obj/item/assembly/flash/handheld/flash = W
+		if(flash.crit_fail)
+			to_chat(user, "No sense replacing it with a broken bulb.")
+			return
+		else
+			to_chat(user, "You begin to replace the bulb.")
+			if(do_after(user, 20, target = src))
+				if(flash.crit_fail || !flash || QDELETED(flash))
+					return
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+				qdel(embedded_flash)
+				embedded_flash = flash
+				flash.forceMove(src)
+				update_icon()
+				return
+	..()
+
+/obj/item/shield/riot/flash/emp_act(severity)
+	. = ..()
+	embedded_flash.emp_act(severity)
+	update_icon()
+
+/obj/item/shield/riot/flash/update_icon()
+	icon_state = "flashshield"
+	item_state = "flashshield"
+	if(!embedded_flash || embedded_flash.crit_fail)
+		icon_state = "riot"
+		item_state = "riot"
+
+/obj/item/shield/riot/flash/examine(mob/user)
+	..()
+	to_chat(user, "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>")
 
 /obj/item/shield/energy
 	name = "energy combat shield"

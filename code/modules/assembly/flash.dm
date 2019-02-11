@@ -249,79 +249,15 @@
 /obj/item/assembly/flash/armimplant/proc/cooldown()
 	overheat = FALSE
 
-/obj/item/assembly/flash/shield
-	name = "strobe shield"
-	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "flashshield"
-	item_state = "flashshield"
-	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	slot_flags = ITEM_SLOT_BACK
-	force = 10
-	throwforce = 5
-	throw_speed = 2
-	throw_range = 3
-	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	attack_verb = list("shoved", "bashed")
-	block_chance = 50
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-
-/obj/item/assembly/flash/shield/flash_recharge(interval=10)
-	if(times_used >= 4)
-		burn_out()
-		return FALSE
-	return TRUE
-
-/obj/item/assembly/flash/shield/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = W
-		if(flash.crit_fail)
-			to_chat(user, "No sense replacing it with a broken bulb.")
-			return
-		else
-			to_chat(user, "You begin to replace the bulb.")
-			if(do_after(user, 20, target = src))
-				if(flash.crit_fail || !flash || QDELETED(flash))
-					return
-				crit_fail = FALSE
-				times_used = 0
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				update_icon()
-				flash.crit_fail = TRUE
-				flash.update_icon()
-				return
-	..()
-
-/obj/item/assembly/flash/shield/update_icon(flash = FALSE)
-	icon_state = "flashshield"
-	item_state = "flashshield"
-
-	if(crit_fail)
-		icon_state = "riot"
-		item_state = "riot"
-	else if(flash)
-		icon_state = "flashshield_flash"
-		item_state = "flashshield_flash"
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
-
-	if(holder)
-		holder.update_icon()
-
-/obj/item/assembly/flash/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	activate()
-	return ..()
-	
 /obj/item/assembly/flash/hypnotic
 	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
 	flashing_overlay = "flash-hypno"
 	light_color = LIGHT_COLOR_PINK
 	cooldown = 20
-	
+
 /obj/item/assembly/flash/hypnotic/burn_out()
 	return
-	
+
 /obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, power = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
@@ -337,22 +273,22 @@
 			if(M.hypnosis_vulnerable())
 				hypnosis = TRUE
 			if(user)
-				user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>", "<span class='danger'>You hypno-flash [M]!</span>")	
-				
+				user.visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>", "<span class='danger'>You hypno-flash [M]!</span>")
+
 			if(!hypnosis)
 				to_chat(M, "<span class='notice'>The light makes you feel oddly relaxed...</span>")
 				M.confused += min(M.confused + 10, 20)
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.drowsyness += min(M.drowsyness + 10, 20)
-				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)			
+				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
 			else
-				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)				
-				
+				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
+
 		else if(user)
 			user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to hypno-flash [M]!</span>")
 		else
 			to_chat(M, "<span class='danger'>[src] fails to blind you!</span>")
-			
+
 	else if(M.flash_act())
 		to_chat(M, "<span class='notice'>Such a pretty light...</span>")
 		M.confused += min(M.confused + 4, 20)
