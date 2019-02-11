@@ -339,7 +339,7 @@
 
 /datum/design/pka_carbine
 	name = "Exosuit Module (Proto-Kinetic carbine)"
-	desc = "An high pressure kinetic accelerator which shoots a burst of kinetic force in rapid succession."
+	desc = "An high pressure kinetic accelerator which shoots bursts of kinetic force in rapid succession."
 	id = "pka_carbine"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/energy/pka_carbine
