@@ -248,7 +248,7 @@
 	var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
 	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
-	var/toroidal_size = (2*PI) //The size of the phase space hypertorus
+	var/toroidal_size = (2*PI)+TORADIANS(arctan((air.volume-TOROID_VOLUME_BREAKEVEN)/TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
@@ -259,12 +259,14 @@
 	plasma = MODULUS(plasma - (instability*sin(TODEGREES(carbon))), toroidal_size)
 	carbon = MODULUS(carbon - plasma, toroidal_size)
 	//to_chat(world,"LPF:[plasma] LCF:[carbon]")
+
 	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale_factor + FUSION_MOLE_THRESHOLD
 	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
-	var/delta_carbon = initial_carbon - cached_gases[/datum/gas/carbon_dioxide][MOLES]
 
 	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
+	if(instability < FUSION_INSTABILITY_ENDOTHERMALITY)
+		reaction_energy = max(reaction_energy,0) //Stable reactions don't end up endothermic.
 
 	//to_chat(world,"Fusion! IP:[initial_plasma] IC:[initial_carbon] Scale:[scale_factor] TS: [toroidal_size] Instbl:[instability] DP:[delta_plasma] DC:[delta_carbon] FP:[cached_gases[/datum/gas/plasma][MOLES]] FC:[cached_gases[/datum/gas/carbon_dioxide][MOLES]] RE:[reaction_energy]")
 
