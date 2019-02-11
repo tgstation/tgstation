@@ -75,6 +75,14 @@
 	build_path = /obj/item/reagent_containers/food/snacks/monkeycube
 	category = list("initial", "Food")
 
+/datum/design/mutagen
+	name = "Unstable Mutagen"
+	id = "unstable_mutagen"
+	build_type = BIOGENERATOR
+	materials = list(MAT_BIOMASS = 1000)
+	build_path = /obj/item/reagent_containers/glass/bottle/mutagen
+	category = list("initial","Botany Chemicals")
+
 /datum/design/ez_nut
 	name = "E-Z Nutrient"
 	id = "ez_nut"
