@@ -1,0 +1,18 @@
+author: "Joe Berry"
+delete-after: True
+changes: 
+  - rscadd: "VR Megafauna Arena Map, train against respawning megafauna without the fear of permanent death, comes randomly chosen in a selection of other vr maps in the normal vr sleeper"
+  - rscadd: "Permanent portals, indestructible portals that are paired up and linked forever"
+  - rscadd: "One way portals, portals that don't have a portal that leads back (mapping tool)"
+  - rscadd: "Recall portals, one way portals with a twist, you can use a spell given to you to go back to the old portal at any time"
+  - rscadd: "Megafauna arena portals, permanent portals that megafauna cannot travel through"
+  - rscadd: "Virtual Megafauna Spawners, spawn holographic megafauna on their person infinitely"
+  - rscadd: "Virtual versions of the megafauna, don't drop loot and are linked to their spawner"
+  - rscadd: "Infinite miner item chests, delete items on them when closed and respawn the same initial items when opened, used for vr mining equipment restocking"
+  - rscadd: "Boss rush mode for virtual megafauna arena, fight your way through all the megafauna one at a time"
+  - tweak: "Makes it easier for new bubblegum types to be created"
+  - bugfix: "Ash Drake Corpses no longer have an internal gps signal"
+  - imageadd: "Added icons for the megafauna spawners"
+  - code_imp: "Removes worthless and copy pasted code from the colossus file, like having a dead icon state of the ash drake and butcher results"
+  - refactor: "Makes it easier for new bubblegum types to be created without having to edit the initialization each time"
+  - config: "Adds VR Megafauna Arena Map to the away missions"
