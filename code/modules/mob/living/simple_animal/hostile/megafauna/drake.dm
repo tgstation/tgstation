@@ -492,3 +492,74 @@ Difficulty: Medium
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
 	return
+	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon
+	name = "space dragon"
+	maxHealth = 250
+	health = 250
+	faction = list("neutral")
+	desc = "A space carp turned dragon by vile magic.  Has the same ferocity of a space carp, but also a much more enabling body."
+	icon = 'icons/mob/spacedragon.dmi'
+	icon_state = "spacedragon"
+	icon_living = "spacedragon"
+	icon_dead = "spacedragon_dead"
+	obj_damage = 80
+	melee_damage_upper = 35
+	melee_damage_lower = 35
+	speed = 0
+	mouse_opacity = MOUSE_OPACITY_ICON
+	loot = list()
+	crusher_loot = list()
+	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	move_force = MOVE_FORCE_NORMAL
+	move_resist = MOVE_FORCE_NORMAL
+	pull_force = MOVE_FORCE_NORMAL
+	deathmessage = "screeches as its wings turn to dust and it collapses on the floor, life estinguished."
+	var/datum/action/small_sprite/carpsprite = new/datum/action/small_sprite/spacedragon()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/grant_achievement(medaltype,scoretype)
+	return	
+	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/Initialize()
+	carpsprite.Grant(src)
+	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon(src)
+	. = ..()
+	smallsprite.Remove(src)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/proc/fire_stream(var/atom/at = target)
+	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
+	if(QDELETED(src) || stat == DEAD) // we dead no fire
+		return
+	var/range = 20
+	var/list/turfs = list()
+	turfs = line_target(0, range, at)
+	INVOKE_ASYNC(src, .proc/fire_line, turfs)
+	
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/OpenFire()
+	if(swooping)
+		return
+	ranged_cooldown = world.time + ranged_cooldown_time
+	fire_stream()
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon
+	name = "Tail Sweep"
+	desc = "Throw back attackers with a sweep of your tail."
+	sound = 'sound/magic/tail_swing.ogg'
+	charge_max = 150
+	clothes_req = FALSE
+	antimagic_allowed = TRUE
+	range = 1
+	cooldown_min = 150
+	invocation_type = "none"
+	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
+	action_icon = 'icons/mob/actions/actions_xeno.dmi'
+	action_icon_state = "tailsweep"
+	action_background_icon_state = "bg_alien"
+	anti_magic_check = FALSE
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon/cast(list/targets,mob/user = usr)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		playsound(C.loc,'sound/effects/hit_punch.ogg', 80, 1, 1)
+		C.spin(6,1)
+	..(targets, user, 60)
