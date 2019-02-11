@@ -30,13 +30,13 @@ SUBSYSTEM_DEF(research)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 54.3)
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 27.1)
 	var/multiserver_calculation = FALSE
 	var/last_income
 	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
 
-	//Aiming for 1.5 hours to max R&D
-	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
+	//Aiming for 3 hours to max R&D
+	//[88nodes * 5000points/node] / [3hr * 90min/hr * 60s/min]
 	//Around 450000 points max???
 
 /datum/controller/subsystem/research/Initialize()
