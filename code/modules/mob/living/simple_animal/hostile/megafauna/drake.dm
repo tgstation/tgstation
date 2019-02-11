@@ -57,6 +57,7 @@ Difficulty: Medium
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/ashdrake = 10)
 	var/swooping = NONE
 	var/player_cooldown = 0
+	internal_type = /obj/item/gps/internal/dragon
 	medal_type = BOSS_MEDAL_DRAKE
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
@@ -68,7 +69,10 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	smallsprite.Grant(src)
 	. = ..()
-	internal = new/obj/item/gps/internal/dragon(src)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/death()
+	QDEL_NULL(internal) // so drake corpses don't have a gps signal
+	. = ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
 	if(severity == 3)
