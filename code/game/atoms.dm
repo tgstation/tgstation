@@ -86,7 +86,7 @@
 	if(canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	if(datum_outputs.len)
+	if(datum_outputs)
 		for(var/A in datum_outputs)
 			A = SSoutputs.outputs[A]
 
