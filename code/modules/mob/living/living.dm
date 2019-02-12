@@ -504,6 +504,17 @@
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
 
+/mob/living/proc/remove_CC(should_update_mobility = TRUE)
+	SetStun(0, FALSE)
+	SetKnockdown(0, FALSE)
+	SetImmobilized(0, FALSE)
+	SetParalyzed(0, FALSE)
+	SetSleeping(0, FALSE)
+	setStaminaLoss(0)
+	SetUnconscious(0, FALSE)
+	if(should_update_mobility)
+		update_mobility()
+	
 //proc used to completely heal a mob.
 /mob/living/proc/fully_heal(admin_revive = 0)
 	restore_blood()
@@ -511,14 +522,8 @@
 	setOxyLoss(0, 0)
 	setCloneLoss(0, 0)
 	setBrainLoss(0)
-	setStaminaLoss(0, 0)
-	SetUnconscious(0, FALSE)
+	remove_CC(FALSE)
 	set_disgust(0)
-	SetStun(0, FALSE)
-	SetKnockdown(0, FALSE)
-	SetImmobilized(0, FALSE)
-	SetParalyzed(0, FALSE)
-	SetSleeping(0, FALSE)
 	radiation = 0
 	set_nutrition(NUTRITION_LEVEL_FED + 50)
 	bodytemperature = BODYTEMP_NORMAL
@@ -533,10 +538,10 @@
 	ExtinguishMob()
 	fire_stacks = 0
 	confused = 0
-	update_mobility()
 	GET_COMPONENT(mood, /datum/component/mood)
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
+	update_mobility()
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
@@ -1204,6 +1209,22 @@
 		return FALSE
 	mob_pickup(user)
 	return TRUE
+
+/mob/living/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num)
+	. = ..()
+		//Process icon
+	if(vfx && audiolocation)
+		var/image/sound_icon = image(vfx)
+		sound_icon.loc = turf_source
+		if(vol && S)
+			sound_icon.alpha = sound_icon.alpha * (vol / 100)
+		client.images += sound_icon
+		addtimer(CALLBACK(src, .proc/remove_image, sound_icon), 7)
+
+/mob/living/proc/remove_image(sound_image)
+	if(sound_image && client)
+		client.images -= sound_image
+		qdel(sound_image)
 
 /mob/living/proc/get_static_viruses() //used when creating blood and other infective objects
 	if(!LAZYLEN(diseases))

@@ -7,6 +7,7 @@
 	var/special_role = ROLE_HIVE
 	var/list/hivemembers = list()
 	var/hive_size = 0
+	var/threat_level = 0 // Part of what determines how strong the radar is, on a scale of 0 to 10
 	var/static/datum/objective/hivemind/assimilate_common/common_assimilation_obj //Make it static since we want a common target for all the antags
 
 	var/list/upgrade_tiers = list(
@@ -34,6 +35,10 @@
 	if(hive_size != old_size)
 		check_powers()
 
+/datum/antagonist/hivemind/proc/get_threat_multiplier()
+	calc_size()
+	return min(hive_size/50 + threat_level/20, 1)
+
 /datum/antagonist/hivemind/proc/check_powers()
 	for(var/power in upgrade_tiers)
 		var/level = upgrade_tiers[power]
@@ -43,33 +48,43 @@
 			if(hive_size > 0)
 				to_chat(owner, "<span class='assimilator'>We have unlocked [the_spell.name].</span><span class='bold'> [the_spell.desc]</span>")
 
-/datum/antagonist/hivemind/proc/get_real_name() //Gets the real name of the host, even if they're temporarily in another one
-	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in owner.spell_list
-	var/datum/mind/M = owner
-	if(M)
-		var/mob/living/L = owner.current
-		if(L)
-			if(the_spell && the_spell.active)
-				if(the_spell.original_body)
-					return the_spell.original_body.real_name
-			return L.real_name
-	return ""
-
 /datum/antagonist/hivemind/proc/add_to_hive(var/mob/living/carbon/human/H)
-	var/warning = "<span class='userdanger'>We detect a surge of psionic energy from [H.real_name] before they disappear from the hive. An enemy host, or simply a stolen vessel?</span>"
 	var/user_warning = "<span class='userdanger'>We have detected an enemy hivemind using our physical form as a vessel and have begun ejecting their mind! They will be alerted of our disappearance once we succeed!</span>"
 	for(var/datum/antagonist/hivemind/enemy_hive in GLOB.antagonists)
-		if(H.mind == enemy_hive.owner)
+		if(is_real_hivehost(H))
 			var/eject_time = rand(1400,1600) //2.5 minutes +- 10 seconds
 			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, H, user_warning), rand(500,1300)) // If the host has assimilated an enemy hive host, alert the enemy before booting them from the hive after a short while
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, owner, warning), eject_time) //As well as the host who just added them as soon as they're ejected
-			addtimer(CALLBACK(GLOBAL_PROC, /proc/remove_hivemember, H), eject_time)
+			addtimer(CALLBACK(src, .proc/handle_ejection, H), eject_time)
 	hivemembers |= H
 	calc_size()
 
 /datum/antagonist/hivemind/proc/remove_from_hive(var/mob/living/carbon/human/H)
 	hivemembers -= H
 	calc_size()
+
+/datum/antagonist/hivemind/proc/handle_ejection(mob/living/carbon/human/H)
+	var/user_warning = "The enemy host has been ejected from our mind"
+
+	if(!H || !owner)
+		return
+
+	var/mob/living/carbon/human/H2 = owner.current
+	if(!H2)
+		return
+
+	var/mob/living/real_H = H.get_real_hivehost()
+	var/mob/living/real_H2 = H2.get_real_hivehost()
+
+	if(is_real_hivehost(H))
+		real_H2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_H)
+		real_H.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+		to_chat(real_H, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+	if(is_real_hivehost(H2))
+		real_H.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_H2)
+		real_H2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
+		user_warning += " and we've managed to pinpoint their location"
+
+	to_chat(H2, "<span class='userdanger'>[user_warning]!</span>")
 
 /datum/antagonist/hivemind/proc/destroy_hive()
 	hivemembers = list()

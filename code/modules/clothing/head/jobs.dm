@@ -1,3 +1,8 @@
+//defines the drill hat's yelling setting
+#define DRILL_DEFAULT	"default"
+#define DRILL_SHOUTING	"shouting"
+#define DRILL_YELLING	"yelling"
+#define DRILL_CANADIAN	"canadian"
 
 //Chef
 /obj/item/clothing/head/chefhat
@@ -145,6 +150,65 @@
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/warden/drill
+	name = "warden's campaign hat"
+	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
+	icon_state = "wardendrill"
+	item_state = "wardendrill"
+	dog_fashion = null
+	var/mode = DRILL_DEFAULT
+
+/obj/item/clothing/head/warden/drill/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
+	if(..())
+		return TRUE
+	switch(mode)
+		if(DRILL_DEFAULT)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the middle position.</span>")
+			mode = DRILL_SHOUTING
+		if(DRILL_SHOUTING)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the last position.</span>")
+			mode = DRILL_YELLING
+		if(DRILL_YELLING)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the first position.</span>")
+			mode = DRILL_DEFAULT
+		if(DRILL_CANADIAN)
+			to_chat(user, "<span class='danger'>You adjust voice circuit but nothing happens, probably because it's broken.</span>")
+	return TRUE
+
+/obj/item/clothing/head/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
+	if(mode != DRILL_CANADIAN)
+		to_chat(user, "<span class='danger'>You broke the voice circuit!</span>")
+		mode = DRILL_CANADIAN
+	return TRUE
+
+/obj/item/clothing/head/warden/drill/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		if(mode == DRILL_DEFAULT)
+			M = " [M]"
+			return trim(M)
+		if(mode == DRILL_SHOUTING)
+			M = " [M]!"
+			return trim(M)
+		if(mode ==  DRILL_YELLING)
+			M = " [M]!!"
+			return trim(M)
+		if(mode == DRILL_CANADIAN)
+			M = " [M]"
+			var/list/canadian_words = strings("canadian_replacement.json", "canadian")
+
+			for(var/key in canadian_words)
+				var/value = canadian_words[key]
+				if(islist(value))
+					value = pick(value)
+
+				M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+				M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+				M = replacetextEx(M, " [key]", " [value]")
+
+			if(prob(30))
+				M += pick(", eh?", ", EH?")
+		return trim(M)
+
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
 	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
@@ -174,3 +238,8 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
+
+#undef DRILL_DEFAULT
+#undef DRILL_SHOUTING
+#undef DRILL_YELLING
+#undef DRILL_CANADIAN
