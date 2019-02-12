@@ -466,6 +466,7 @@
 #include "code\datums\mood_events\needs_events.dm"
 #include "code\datums\mutations\_combined.dm"
 #include "code\datums\mutations\actions.dm"
+#include "code\datums\mutations\antenna.dm"
 #include "code\datums\mutations\body.dm"
 #include "code\datums\mutations\chameleon.dm"
 #include "code\datums\mutations\cold.dm"
