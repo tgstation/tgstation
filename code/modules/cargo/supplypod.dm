@@ -61,7 +61,13 @@
 
 /obj/structure/closet/supplypod/update_icon()
 	cut_overlays()
-	if (style != STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
+	if (style == STYLE_SEETHROUGH)
+		for (var/atom/movable/O in contents)
+			var/icon/I = getFlatIcon(O) //im so sorry
+			I.Shift(WEST, 16)
+			I.Shift(SOUTH, 5)
+			add_overlay(I)
+	else if (style != STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
 		if (opened)
 			add_overlay("[icon_state]_open")
 		else
@@ -154,11 +160,11 @@
 			return
 	opened = TRUE //This is to ensure we don't open something that has already been opened
 	if (openingSound)
-		playsound(get_turf(holder), openingSound, soundVolume, 0, 0)
+		playsound(get_turf(holder), openingSound, soundVolume, 0, 0) //Special admin sound to play
 	INVOKE_ASYNC(holder, .proc/setOpened) //Use the INVOKE_ASYNC proc to call setOpened() on whatever the holder may be, without giving the atom/movable base class a setOpened() proc definition
 	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
 		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
-	if (!effectQuiet) //If we aren't being quiet, play an open sound
+	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, 1, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
@@ -215,7 +221,13 @@
 	icon_state = ""
 
 /obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
-	if (pod.style != STYLE_INVISIBLE) //Check to ensure the pod isn't invisible
+	if (pod.style == STYLE_SEETHROUGH)
+		for (var/atom/movable/O in pod.contents)
+			var/icon/I = getFlatIcon(O) //im so sorry
+			I.Shift(WEST, 16)
+			I.Shift(SOUTH, 5)
+			add_overlay(I)
+	else if (pod.style != STYLE_INVISIBLE) //Check to ensure the pod isn't invisible
 		icon_state = "[pod.icon_state]_falling"
 		name = pod.name
 	. = ..()
