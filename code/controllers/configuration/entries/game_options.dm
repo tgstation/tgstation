@@ -307,7 +307,7 @@
 	splitter = ","
 
 /datum/config_entry/number/max_law_len
-	config_entry_value = 250
+	config_entry_value = 1024
 
 /datum/config_entry/number/overflow_cap
 	config_entry_value = -1
