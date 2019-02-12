@@ -53,6 +53,7 @@ Difficulty: Hard
 	blood_volume = BLOOD_VOLUME_MAXIMUM //BLEED FOR ME
 	var/charging = 0
 	var/enrage_till = null
+	internal_type = /obj/item/gps/internal/bubblegum
 	medal_type = BOSS_MEDAL_BUBBLEGUM
 	score_type = BUBBLEGUM_SCORE
 	deathmessage = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
@@ -113,16 +114,14 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Initialize()
 	. = ..()
-	if(istype(src, /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination))
-		return
-	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
-		if(B != src)
-			return INITIALIZE_HINT_QDEL //There can be only one
+	if(true_spawn)
+		for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_living_list)
+			if(B != src)
+				return INITIALIZE_HINT_QDEL //There can be only one
 	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
-	internal = new/obj/item/gps/internal/bubblegum(src)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
 	. = ..()
@@ -411,10 +410,11 @@ Difficulty: Hard
 		var/turf/place = locate(chargeat.x + cos(ang) * times, chargeat.y + sin(ang) * times, chargeat.z)
 		if(!place)
 			continue
-		if(!srcplaced && useoriginal)
-			forceMove(place)
-			srcplaced = 1
-			continue
+		if(!nest || nest && nest.parent && get_dist(nest.parent, place) <= nest_range)
+			if(!srcplaced && useoriginal)
+				forceMove(place)
+				srcplaced = 1
+				continue
 		var/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/B = new /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination(src.loc)
 		B.forceMove(place)
 		INVOKE_ASYNC(B, .proc/charge, chargeat, delay, chargepast)
@@ -433,6 +433,7 @@ Difficulty: Hard
 	score_type = null
 	deathmessage = "Explodes into a pool of blood!"
 	deathsound = 'sound/effects/splat.ogg'
+	true_spawn = 0
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Initialize()
 	..()
@@ -464,9 +465,6 @@ Difficulty: Hard
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/try_bloodattack()
-	return
-
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/grant_achievement(medaltype,scoretype)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/slaughterlings()

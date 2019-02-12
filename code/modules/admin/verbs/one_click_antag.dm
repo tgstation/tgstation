@@ -414,7 +414,7 @@
 				chosen_candidate.client.prefs.copy_to(ERTOperative)
 				ERTOperative.key = chosen_candidate.key
 
-				if(ertemplate.enforce_human || ERTOperative.dna.species.dangerous_existence) // Don't want any exploding plasmemes
+				if(ertemplate.enforce_human || !ERTOperative.dna.species.changesource_flags & ERT_SPAWN) // Don't want any exploding plasmemes
 					ERTOperative.set_species(/datum/species/human)
 
 				//Give antag datum

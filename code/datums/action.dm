@@ -178,7 +178,7 @@
 		// If set, use the custom icon that we set instead
 		// of the item appearence
 		..()
-	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
+	else if((target && current_button.appearance_cache != target.appearance) || force) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
 		var/old_layer = I.layer
 		var/old_plane = I.plane
@@ -243,6 +243,14 @@
 
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"
+
+/datum/action/item_action/toggle_welding_screen
+	name = "Toggle Welding Screen"
+
+/datum/action/item_action/toggle_welding_screen/Trigger()
+	var/obj/item/clothing/head/hardhat/weldhat/H = target
+	if(istype(H))
+		H.toggle_welding_screen(owner)
 
 /datum/action/item_action/toggle_headphones
 	name = "Toggle Headphones"
@@ -699,6 +707,10 @@
 /datum/action/small_sprite/drake
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	small_icon_state = "ash_whelp"
+
+/datum/action/small_sprite/spacedragon
+	small_icon = 'icons/mob/animal.dmi'
+	small_icon_state = "carp"
 
 /datum/action/small_sprite/Trigger()
 	..()

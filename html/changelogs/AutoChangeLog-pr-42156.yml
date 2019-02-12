@@ -1,9 +1,0 @@
-author: "Kierany9"
-delete-after: True
-changes: 
-  - rscadd: "Assimilation has received an update!"
-  - rscdel: "Mindshield Implants and other hivemind host identifying methods no longer reveal their name."
-  - rscadd: "Now, both parties will be able to sense the other's location for a short period of time, similar to a pinpointer."
-  - balance: "In the case of Network Invasion, the probing host still only gets information on the vessel they just lost and not the opposing host."
-  - balance: "As a hivemind host becomes stronger and starts going on the offensive, they become easier to sense, and their own sensing ability is diminished."
-  - balance: "In addition, using Mind Control renders you unable to sense others at all."

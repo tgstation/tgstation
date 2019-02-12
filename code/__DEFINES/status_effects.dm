@@ -37,7 +37,6 @@
 #define STATUS_EFFECT_GOOD_MUSIC /datum/status_effect/good_music
 
 #define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core
-#define STATUS_EFFECT_CREEP /datum/status_effect/creep //you feel fuckin great around your obsession
 
 /////////////
 // DEBUFFS //
@@ -86,6 +85,8 @@
 #define STATUS_EFFECT_ICHORIAL_STAIN /datum/status_effect/ichorial_stain //Prevents a servant from being revived by vitality matrices for one minute.
 
 #define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbolaPacify //Gives the user gondola traits while the gonbola is attached to them.
+
+#define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
 
 /////////////
 // NEUTRAL //

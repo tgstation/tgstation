@@ -84,5 +84,5 @@
 	singular_name = "snow tile"
 	desc = "A layer of snow."
 	icon_state = "tile_snow"
-	turf_type = /turf/open/floor/grass/snow
+	turf_type = /turf/open/floor/grass/snow/safe
 	mineralType = "snow"

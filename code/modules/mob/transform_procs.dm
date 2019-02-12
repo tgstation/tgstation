@@ -50,7 +50,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
-		O.dna.set_se(1, get_initialized_mutation(RACEMUT))
+		O.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
 
 	if(suiciding)
 		O.set_suicide(suiciding)
@@ -209,7 +209,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
-		O.dna.set_se(0, get_initialized_mutation(RACEMUT))
+		O.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
 		O.domutcheck()
 
 	if(suiciding)

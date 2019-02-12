@@ -14,13 +14,12 @@
 	punchstunthreshold = 11 //about 40% chance to stun
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
 	nojumpsuit = 1
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	sexes = 1
 	damage_overlay_type = ""
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/golem
 	// To prevent golem subtypes from overwhelming the odds when random species
 	// changes, only the Random Golem type can be chosen
-	blacklisted = TRUE
-	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
@@ -46,8 +45,7 @@
 
 /datum/species/golem/random
 	name = "Random Golem"
-	blacklisted = FALSE
-	dangerous_existence = FALSE
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	var/static/list/random_golem_types
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -638,6 +636,7 @@
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	sexes = FALSE
 	speedmod = 0
+	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	damage_overlay_type = "synth"
 	prefix = "Clockwork"
 	special_names = list("Remnant", "Relic", "Scrap", "Vestige") //RIP Ratvar
@@ -673,8 +672,6 @@
 	no_equip = list()
 	nojumpsuit = FALSE
 	has_corpse = TRUE
-	blacklisted = TRUE
-	dangerous_existence = TRUE
 	random_eligible = FALSE
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>Clockwork Golem Servant</span><span class='bold alloy'>, you are faster than other types of golems.</span>" //warcult golems leave a corpse
 
@@ -898,20 +895,23 @@
 	punchdamagelow = 4
 	punchstunthreshold = 7
 	punchdamagehigh = 8
-	var/last_creation
+	var/last_creation = 0
 	var/brother_creation_cooldown = 300
 
 /datum/species/golem/cardboard/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
 	. = ..()
-	if(user != H || intent != INTENT_HELP)
+	if(user != H)
 		return FALSE //forced reproduction is rape.
 	if(istype(I, /obj/item/stack/sheet/cardboard))
 		var/obj/item/stack/sheet/cardboard/C = I
-		if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
+		if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork
 			return
+		if(C.amount < 10)
+			to_chat(H, "<span class='warning'>You do not have enough cardboard!</span>")
+			return FALSE
 		to_chat(H, "<span class='notice'>You attempt to create a new cardboard brother.</span>")
 		if(do_after(user, 30, target = user))
-			if(last_creation + brother_creation_cooldown < world.time) //no cheesing dork
+			if(last_creation + brother_creation_cooldown > world.time) //no cheesing dork
 				return
 			if(!C.use(10))
 				to_chat(H, "<span class='warning'>You do not have enough cardboard!</span>")
@@ -991,6 +991,7 @@
 /datum/action/innate/bonechill/Activate()
 	if(world.time < last_use + cooldown)
 		to_chat("<span class='notice'>You aren't ready yet to rattle your bones again</span>")
+		return
 	owner.visible_message("<span class='warning'>[owner] rattles [owner.p_their()] bones harrowingly.</span>", "<span class='notice'>You rattle your bones</span>")
 	last_use = world.time
 	if(prob(snas_chance))
@@ -1005,11 +1006,55 @@
 	else
 		playsound(get_turf(owner),'sound/magic/RATTLEMEBONES.ogg', 100)
 	for(var/mob/living/L in orange(7, get_turf(owner)))
-		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L))
+		if((MOB_UNDEAD in L.mob_biotypes) || isgolem(L) || L.has_trait(TRAIT_RESISTCOLD))
 			return //Do not affect our brothers
+
 		to_chat(L, "<span class='cultlarge'>A spine-chilling sound chills you to the bone!</span>")
 		L.apply_status_effect(/datum/status_effect/bonechill)
 		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "spooked", /datum/mood_event/spooked)
+
+/datum/species/golem/capitalist
+	name = "Capitalist Golem"
+	id = "capitalist golem"
+	prefix = "Capitalist"
+	attack_verb = "monopoliz"
+	limbs_id = "ca_golem"
+	special_names = list("John D. Rockefeller","Rich Uncle Pennybags","Commodore Vanderbilt","Entrepreneur","Mr Moneybags", "Adam Smith")
+	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
+	fixed_mut_color = null
+	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	info_text = "As a <span class='danger'>Capitalist Golem</span>, your fist spreads the powerful industrializing light of capitalism."
+	changesource_flags = MIRROR_BADMIN
+
+	var/last_cash = 0
+	var/cash_cooldown = 100
+
+/datum/species/golem/capitalist/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.equip_to_slot_or_del(new /obj/item/clothing/head/that (), SLOT_HEAD)
+	C.equip_to_slot_or_del(new /obj/item/clothing/glasses/monocle (), SLOT_GLASSES)
+	C.revive(full_heal = TRUE)
+
+	SEND_SOUND(C, sound('sound/misc/capitialism.ogg'))
+	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())
+
+/datum/species/golem/capitalist/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/obj/effect/proc_holder/spell/aoe_turf/knock/spell in C.mob_spell_list)
+		C.RemoveSpell(spell)
+
+/datum/species/golem/capitalist/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	..()
+	if(isgolem(target))
+		return
+	if(target.nutrition >= NUTRITION_LEVEL_FAT)
+		target.set_species(/datum/species/golem/capitalist)
+		return
+	target.adjust_nutrition(40)
+
+/datum/species/golem/capitalist/handle_speech(message, mob/living/carbon/human/H)
+	playsound(H, 'sound/misc/mymoney.ogg', 25, 0)
+	return "Hello, I like money!"
 
 /datum/species/golem/soviet
 	name = "Soviet Golem"
@@ -1017,17 +1062,17 @@
 	prefix = "Comrade"
 	attack_verb = "nationalis"
 	limbs_id = "s_golem"
-	blacklisted = 1
 	special_names = list("Stalin","Lenin","Trotsky","Marx","Comrade") //comrade comrade
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NOEYES)
 	fixed_mut_color = null
-	inherent_traits = list(TRAIT_NOBREATH, TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOGUNS,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER)
 	info_text = "As a <span class='danger'>Soviet Golem</span>, your fist spreads the bright soviet light of communism."
+	changesource_flags = MIRROR_BADMIN
 
 /datum/species/golem/soviet/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	C.equip_to_slot_or_del(new /obj/item/clothing/head/ushanka (), SLOT_HEAD)
-	C.revive(full_heal = 1)
+	C.revive(full_heal = TRUE)
 
 	SEND_SOUND(C, sound('sound/misc/Russian_Anthem_chorus.ogg'))
 	C.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock ())

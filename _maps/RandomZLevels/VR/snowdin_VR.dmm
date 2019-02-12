@@ -2714,7 +2714,6 @@
 "gg" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/post/cavern2)
 "gh" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -2900,11 +2899,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
-"gx" = (
-/obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
-/area/awaymission/snowdin/cave/cavern)
 "gy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	piping_layer = 3;
@@ -6536,7 +6530,7 @@
 /turf/closed/wall,
 /area/awaymission/snowdin/post/secpost)
 "od" = (
-/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{
@@ -8569,10 +8563,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark/snowdin,
-/area/awaymission/snowdin/outside)
-"sT" = (
-/turf/open/floor/plating/snowed/smoothed,
-/turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/outside)
 "sU" = (
 /obj/effect/turf_decal/weather/snow,
@@ -11446,10 +11436,6 @@
 	},
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/outside)
-"AD" = (
-/turf/open/floor/plating,
-/turf/open/floor/plating/snowed,
-/area/awaymission/snowdin/outside)
 "AE" = (
 /obj/item/pen,
 /turf/open/floor/plating{
@@ -12105,10 +12091,6 @@
 	},
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/outside)
-"Cx" = (
-/turf/open/floor/plating/asteroid/snow/ice,
-/turf/open/floor/plating/snowed/cavern,
-/area/awaymission/snowdin/cave/cavern)
 "Cy" = (
 /obj/machinery/light/small{
 	brightness = 3;
@@ -24247,7 +24229,7 @@ am
 af
 sx
 sJ
-sT
+te
 te
 te
 te
@@ -24333,7 +24315,7 @@ af
 af
 af
 dX
-sT
+te
 te
 te
 te
@@ -24504,7 +24486,7 @@ af
 am
 sx
 sK
-sT
+te
 te
 te
 te
@@ -24590,7 +24572,7 @@ af
 af
 af
 dX
-sT
+te
 te
 te
 te
@@ -24761,11 +24743,11 @@ ak
 af
 sx
 sJ
-sT
 te
 te
 te
 te
+te
 dX
 dX
 dX
@@ -24796,7 +24778,7 @@ dX
 dX
 dX
 dX
-sT
+te
 te
 te
 te
@@ -24847,7 +24829,7 @@ dX
 dX
 dX
 dX
-sT
+te
 te
 te
 te
@@ -25018,7 +25000,7 @@ af
 fq
 sx
 sK
-sT
+te
 te
 te
 te
@@ -25104,7 +25086,7 @@ af
 af
 af
 dX
-sT
+te
 te
 te
 te
@@ -25275,7 +25257,7 @@ af
 sf
 sx
 sJ
-sT
+te
 te
 te
 te
@@ -25361,7 +25343,7 @@ af
 af
 af
 dX
-sT
+te
 te
 te
 te
@@ -26659,7 +26641,7 @@ zK
 oa
 te
 Au
-AD
+te
 yW
 af
 ag
@@ -59996,8 +59978,8 @@ qi
 qi
 qi
 qi
-gx
-gx
+tP
+tP
 oZ
 oZ
 oZ
@@ -61132,7 +61114,7 @@ qi
 oZ
 oZ
 oZ
-Cx
+oZ
 qi
 oZ
 oZ
@@ -64215,7 +64197,7 @@ sY
 oZ
 oZ
 sY
-Cx
+oZ
 oZ
 oZ
 sY
@@ -64472,7 +64454,7 @@ oZ
 oY
 oZ
 oZ
-Cx
+oZ
 oZ
 oZ
 oZ
