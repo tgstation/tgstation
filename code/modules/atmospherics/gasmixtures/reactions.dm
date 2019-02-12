@@ -271,7 +271,7 @@
 	//to_chat(world,"Fusion! IP:[initial_plasma] IC:[initial_carbon] Scale:[scale_factor] TS: [toroidal_size] Instbl:[instability] DP:[delta_plasma] DC:[delta_carbon] FP:[cached_gases[/datum/gas/plasma][MOLES]] FC:[cached_gases[/datum/gas/carbon_dioxide][MOLES]] RE:[reaction_energy]")
 
 
-	if((air.heat_capacity()*FUSION_TEMPERATURE_THRESHOLD*0.5) + reaction_energy < 0) //No using energy that doesn't exist.
+	if(air.thermal_energy() + reaction_energy < 0) //No using energy that doesn't exist.
 		cached_gases[/datum/gas/plasma][MOLES] = initial_plasma
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = initial_carbon
 		return NO_REACTION
