@@ -56,12 +56,13 @@ Difficulty: Hard
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/hierophant_club)
-	crusher_loot = list(/obj/item/hierophant_club)
+	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
 	wander = FALSE
+	internal_type = /obj/item/gps/internal/hierophant
 	medal_type = BOSS_MEDAL_HIEROPHANT
 	score_type = HIEROPHANT_SCORE
 	del_on_death = TRUE
-	death_sound = 'sound/magic/repulse.ogg'
+	deathsound = 'sound/magic/repulse.ogg'
 
 	var/burst_range = 3 //range on burst aoe
 	var/beam_range = 5 //range on cross blast beams
@@ -75,14 +76,12 @@ Difficulty: Hard
 	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
+	var/list/stored_nearby = list() // stores people nearby the hierophant when it enters the death animation
+	var/hierophant_dying = FALSE // if we're in the death animation and don't want to proc death repeatedly every time we take damage, do not set stat = dead or deathsounds and messages wont work
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
-	internal = new/obj/item/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
-
-/mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
-	new /obj/item/crusher_trophy/vortex_talisman(get_turf(spawned_beacon))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()
@@ -103,16 +102,17 @@ Difficulty: Hard
 				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\"</span>")
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
-	if(health > 0 || stat == DEAD)
+	if(health > 0 || hierophant_dying)
 		return
 	else
-		stat = DEAD
+		hierophant_dying = TRUE
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
-		burst_range = 10
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
-		burst(get_turf(src))
-		..()
+		for(var/mob/living/L in view(7,src))
+			stored_nearby += L // store the people to grant the achievements to once we die
+		hierophant_burst(null, get_turf(src), 10)
+		..(force_grant = stored_nearby)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	qdel(spawned_beacon)
@@ -423,7 +423,8 @@ Difficulty: Hard
 	for(var/t in RANGE_TURFS(1, T))
 		new /obj/effect/temp_visual/hierophant/blast(t, src, FALSE)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed = 0.5) //release a wave of blasts
+//expanding square
+/proc/hierophant_burst(mob/caster, turf/original, burst_range, spread_speed = 0.5)
 	playsound(original,'sound/machines/airlockopen.ogg', 200, 1)
 	var/last_dist = 0
 	for(var/t in spiral_range_turfs(burst_range, original))
@@ -434,7 +435,10 @@ Difficulty: Hard
 		if(dist > last_dist)
 			last_dist = dist
 			sleep(1 + min(burst_range - last_dist, 12) * spread_speed) //gets faster as it gets further out
-		new /obj/effect/temp_visual/hierophant/blast(T, src, FALSE)
+		new /obj/effect/temp_visual/hierophant/blast(T, caster, FALSE)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/proc/burst(turf/original, spread_speed)
+	hierophant_burst(src, original, burst_range, spread_speed)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AltClickOn(atom/A) //player control handler(don't give this to a player holy fuck)
 	if(!istype(A) || get_dist(A, src) <= 2)
@@ -641,7 +645,8 @@ Difficulty: Hard
 						H.Goto(get_turf(caster), H.move_to_delay, 3)
 		if(monster_damage_boost && (ismegafauna(L) || istype(L, /mob/living/simple_animal/hostile/asteroid)))
 			L.adjustBruteLoss(damage)
-		log_combat(caster, L, "struck with a [name]")
+		if(caster)
+			log_combat(caster, L, "struck with a [name]")
 	for(var/obj/mecha/M in T.contents - hit_things) //also damage mechs.
 		hit_things += M
 		if(M.occupant)

@@ -32,7 +32,7 @@
 	if(temp)
 		left_part = temp
 	else if(stat == DEAD)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>�Rr�R �a�� ��Rr����o�</font></b>"
+		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
@@ -214,7 +214,7 @@
 					if(silent)
 						return alert("Communications circuits remain uninitialized.")
 
-					var/target = locate(href_list["target"])
+					var/target = locate(href_list["target"]) in GLOB.PDAs
 					pda.create_message(src, target)
 
 		// Accessing medical records

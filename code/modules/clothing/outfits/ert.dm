@@ -261,3 +261,42 @@
 		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,
 		)
+
+/datum/outfit/ert/janitor
+	name = "ERT Janitor"
+
+	id = /obj/item/card/id/ert/Janitor
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
+	glasses = /obj/item/clothing/glasses/night
+	back = /obj/item/storage/backpack
+	belt = /obj/item/storage/belt/janitor/full
+	r_pocket = /obj/item/grenade/chem_grenade/cleaner
+	l_pocket = /obj/item/grenade/chem_grenade/cleaner
+	l_hand = /obj/item/storage/bag/trash/bluespace
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/storage/box/lights/mixed=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/clothing/mask/gas/sechailer=1,\
+		/obj/item/mop/advanced=1,\
+		/obj/item/reagent_containers/glass/bucket=1,\
+		/obj/item/grenade/clusterbuster/cleaner=1)
+
+/datum/outfit/ert/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/headset_service
+	R.recalculateChannels()
+
+/datum/outfit/ert/janitor/heavy
+	name = "ERT Janitor - Heavy Duty"
+	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/storage/box/lights/mixed=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/clothing/mask/gas/sechailer=1,\
+		/obj/item/grenade/clusterbuster/cleaner=3)
+

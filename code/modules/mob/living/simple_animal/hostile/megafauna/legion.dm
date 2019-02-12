@@ -39,6 +39,7 @@ Difficulty: Medium
 	ranged_cooldown_time = 20
 	var/size = 5
 	var/charging = 0
+	internal_type = /obj/item/gps/internal/legion
 	medal_type = BOSS_MEDAL_LEGION
 	score_type = LEGION_SCORE
 	pixel_y = -90
@@ -50,17 +51,13 @@ Difficulty: Medium
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
 
-/mob/living/simple_animal/hostile/megafauna/legion/Initialize()
-	. = ..()
-	internal = new/obj/item/gps/internal/legion(src)
-
 /mob/living/simple_animal/hostile/megafauna/legion/GiveTarget(new_target)
 	. = ..()
 	if(target)
 		wander = TRUE
 
 /mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(GLOB.necropolis_gate)
+	if(GLOB.necropolis_gate && true_spawn)
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 
@@ -136,6 +133,8 @@ Difficulty: Medium
 			elimination = 0
 		else if(prob(5))
 			loot = list(/obj/structure/closet/crate/necropolis/tendril)
+		if(!true_spawn)
+			loot = null
 		..()
 
 /obj/item/gps/internal/legion
@@ -195,7 +194,7 @@ Difficulty: Medium
 		A.name = "staff storm"
 		log_game("[user] ([key_name(user)]) has summoned [A] at [AREACOORD(user_turf)]")
 		if (is_special_character(user))
-			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [user] ([key_name_admin(user)], a non-antagonist")
+			message_admins("[A] has been summoned in [ADMIN_VERBOSEJMP(user_turf)] by [ADMIN_LOOKUPFLW(user)], a non-antagonist")
 		A.area_type = user_area.type
 		A.telegraph_duration = 100
 		A.end_duration = 100

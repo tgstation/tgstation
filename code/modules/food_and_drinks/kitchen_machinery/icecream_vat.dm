@@ -14,7 +14,6 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
-	container_type = OPENCONTAINER
 	max_integrity = 300
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA
@@ -65,8 +64,7 @@
 	. = ..()
 	while(product_types.len < 6)
 		product_types.Add(5)
-	create_reagents()
-	reagents.set_reacting(FALSE)
+	create_reagents(100, NO_REACT | OPENCONTAINER)
 	for(var/reagent in icecream_vat_reagents)
 		reagents.add_reagent(reagent, icecream_vat_reagents[reagent])
 
@@ -101,8 +99,6 @@
 				visible_message("[icon2html(src, viewers(src))] <span class='info'>[user] scoops delicious [flavour_name] ice cream into [I].</span>")
 				product_types[dispense_flavour] -= 1
 				I.add_ice_cream(flavour_name)
-			//	if(beaker)
-			//		beaker.reagents.trans_to(I, 10)
 				if(I.reagents.total_volume < 10)
 					I.reagents.add_reagent("sugar", 10 - I.reagents.total_volume)
 			else

@@ -129,6 +129,24 @@
 	item_state = "pirate"
 	dog_fashion = /datum/dog_fashion/head/pirate
 
+/obj/item/clothing/head/pirate
+	var/datum/language/piratespeak/L = new
+
+/obj/item/clothing/head/pirate/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == SLOT_HEAD)
+		user.grant_language(/datum/language/piratespeak/)
+		to_chat(user, "You suddenly know how to speak like a pirate!")
+
+/obj/item/clothing/head/pirate/dropped(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.get_item_by_slot(SLOT_HEAD) == src)
+		user.remove_language(/datum/language/piratespeak/)
+		to_chat(user, "You can no longer speak like a pirate.")
+
 /obj/item/clothing/head/pirate/captain
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
@@ -220,8 +238,11 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	item_flags = NODROP
 	dog_fashion = null
+
+/obj/item/clothing/head/sombrero/shamebrero/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, SHAMEBRERO_TRAIT)
 
 /obj/item/clothing/head/cone
 	desc = "This cone is trying to warn you of something!"
@@ -326,7 +347,7 @@
 /obj/item/clothing/head/frenchberet
 	name = "french beret"
 	desc = "A quality beret, infused with the aroma of chain-smoking, wine-swilling Parisians. You feel less inclined to engage military conflict, for some reason."
-	icon_state = "beretblack"
+	icon_state = "beret"
 	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/frenchberet/speechModification(M)

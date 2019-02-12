@@ -8,12 +8,11 @@ Charged extracts:
 	name = "charged extract"
 	desc = "It sparks with electric power."
 	effect = "charged"
-	container_type = INJECTABLE | DRAWABLE
 	icon_state = "charged"
 
 /obj/item/slimecross/charged/Initialize()
 	. = ..()
-	create_reagents(10)
+	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
 	if(!reagents.has_reagent("plasma",10))
@@ -218,10 +217,11 @@ Charged extracts:
 		to_chat(user, "<span class='warning'>You have to be able to have a species to get your species changed.</span>")
 		return
 	var/list/allowed_species = list()
-	for(var/X in subtypesof(/datum/species))
-		var/datum/species/temp = X
-		if(!initial(temp.blacklisted))
-			allowed_species += X
+	for(var/stype in subtypesof(/datum/species))
+		var/datum/species/X = stype
+		if(initial(X.changesource_flags) & SLIME_EXTRACT)
+			allowed_species += stype
+
 	var/datum/species/changed = pick(allowed_species)
 	if(changed)
 		H.set_species(changed, icon_update = 1)

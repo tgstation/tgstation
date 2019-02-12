@@ -202,7 +202,7 @@
 	desc = "A formal black suit and red tie, intended for the station's finest."
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
-	item_color = "black_suit"
+	item_color = "really_black_suit"
 
 /obj/item/clothing/under/suit_jacket/female
 	name = "executive suit"
@@ -392,7 +392,10 @@
 
 /obj/item/clothing/under/kilt/highlander
 	desc = "You're the only one worthy of this kilt."
-	item_flags = NODROP
+
+/obj/item/clothing/under/kilt/highlander/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, HIGHLANDER)
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -750,3 +753,12 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
+
+/obj/item/clothing/under/durathread
+	name = "durathread jumpsuit"
+	desc = "A jumpsuit made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "durathread"
+	item_state = "durathread"
+	item_color = "durathread"
+	can_adjust = FALSE
+	armor = list("melee" = 10, "laser" = 10, "fire" = 40, "acid" = 10, "bomb" = 5)

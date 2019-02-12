@@ -28,14 +28,14 @@
 /obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
 
-/obj/item/laser_pointer/New()
-	..()
+/obj/item/laser_pointer/Initialize()
+	. = ..()
 	diode = new(src)
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
 
-/obj/item/laser_pointer/upgraded/New()
-	..()
+/obj/item/laser_pointer/upgraded/Initialize()
+	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
 /obj/item/laser_pointer/attackby(obj/item/W, mob/user, params)
@@ -55,6 +55,14 @@
 			diode = null
 	else
 		return ..()
+
+/obj/item/laser_pointer/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		if(!diode)
+			to_chat(user, "<span class='notice'>The diode is missing.<span>")
+		else
+			to_chat(user, "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>")
 
 /obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
 	. = ..()

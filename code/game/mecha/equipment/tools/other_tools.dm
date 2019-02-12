@@ -17,7 +17,7 @@
 		return
 	var/turf/T = get_turf(target)
 	if(T)
-		do_teleport(chassis, T, 4)
+		do_teleport(chassis, T, 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 		return 1
 
 
@@ -84,9 +84,14 @@
 	switch(mode)
 		if(1)
 			if(!locked)
-				if(!istype(target) || target.anchored)
+				if(!istype(target) || target.anchored || target.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					occupant_message("Unable to lock on [target]")
 					return
+				if(ismob(target))
+					var/mob/M = target
+					if(M.mob_negates_gravity())
+						occupant_message("Unable to lock on [target]")
+						return
 				locked = target
 				occupant_message("Locked on [target]")
 				send_byjax(chassis.occupant,"exosuit.browser","[REF(src)]",src.get_equip_info())
@@ -110,8 +115,12 @@
 			else
 				atoms = orange(3, target)
 			for(var/atom/movable/A in atoms)
-				if(A.anchored)
+				if(A.anchored || A.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					continue
+				if(ismob(A))
+					var/mob/M = A
+					if(M.mob_negates_gravity())
+						continue
 				spawn(0)
 					var/iter = 5-get_dist(A,target)
 					for(var/i=0 to iter)
@@ -242,8 +251,8 @@
 				chassis.clearInternalDamage(int_dam_flag)
 				repaired = 1
 				break
-	if(health_boost<0 || chassis.obj_integrity < chassis.max_integrity)
-		chassis.obj_integrity += min(health_boost, chassis.max_integrity-chassis.obj_integrity)
+	if(h_boost<0 || chassis.obj_integrity < chassis.max_integrity)
+		chassis.obj_integrity += min(h_boost, chassis.max_integrity-chassis.obj_integrity)
 		repaired = 1
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
@@ -284,12 +293,12 @@
 	if(equip_ready) //disabled
 		return
 	var/area/A = get_area(chassis)
-	var/pow_chan = get_power_channel(A)
+	var/pow_chan = GET_MUTATION_POWER_channel(A)
 	if(pow_chan)
 		return 1000 //making magic
 
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(var/area/A)
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/GET_MUTATION_POWER_channel(var/area/A)
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)

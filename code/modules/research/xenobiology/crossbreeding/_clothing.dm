@@ -10,7 +10,7 @@ Slimecrossing Armor
 	desc = "A transparent mask, resembling a conventional breath mask, but made of bluish slime. Seems to lack any air supply tube, though."
 	icon_state = "slime"
 	item_state = "slime"
-	body_parts_covered = 0
+	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0
 	permeability_coefficient = 0.5
@@ -67,6 +67,8 @@ Slimecrossing Armor
 	button_icon_state = "prismcolor"
 
 /datum/action/item_action/change_prism_colour/Trigger()
+	if(!IsAvailable())
+		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
 	if(!new_color)
@@ -79,6 +81,8 @@ Slimecrossing Armor
 	button_icon_state = "lightprism"
 
 /datum/action/item_action/place_light_prism/Trigger()
+	if(!IsAvailable())
+		return
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
 	if(locate(/obj/structure/light_prism) in get_turf(owner))
 		to_chat(owner, "<span class='warning'>There isn't enough ambient energy to fabricate another light prism here.</span>")
@@ -96,6 +100,14 @@ Slimecrossing Armor
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "peaceflower"
 	item_state = "peaceflower"
+	slot_flags = ITEM_SLOT_HEAD
+	body_parts_covered = NONE
+	dynamic_hair_suffix = ""
+	force = 0
+	throwforce = 0
+	w_class = WEIGHT_CLASS_TINY
+	throw_speed = 1
+	throw_range = 3
 
 /obj/item/clothing/head/peaceflower/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
@@ -119,7 +131,7 @@ Slimecrossing Armor
 	desc = "A full suit of adamantine plate armor. Impressively resistant to damage, but weighs about as much as you do."
 	icon_state = "adamsuit"
 	item_state = "adamsuit"
-	flags_inv = list()
+	flags_inv = NONE
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	var/hit_reflect_chance = 40

@@ -5,6 +5,7 @@
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
 	see_invisible = SEE_INVISIBLE_LIVING
+	possible_a_intents = list(INTENT_HELP, INTENT_HARM) //for mechas
 
 /mob/living/brain/Initialize()
 	. = ..()
@@ -65,10 +66,9 @@
 
 /mob/living/brain/ClickOn(atom/A, params)
 	..()
-	if(istype(loc, /obj/item/mmi))
-		var/obj/item/mmi/MMI = loc
-		var/obj/mecha/M = MMI.mecha
-		if((src == MMI.brainmob) && istype(M))
+	if(container)
+		var/obj/mecha/M = container.mecha
+		if(istype(M))
 			return M.click_action(A,src,params)
 
 /mob/living/brain/forceMove(atom/destination)
@@ -83,3 +83,22 @@
 		doMove(destination)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")
+
+/mob/living/brain/update_mouse_pointer()
+	if (!client)
+		return
+	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	if(!container)
+		return
+	if (container.mecha)
+		var/obj/mecha/M = container.mecha
+		if(M.mouse_pointer)
+			client.mouse_pointer_icon = M.mouse_pointer
+	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
+		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
+
+/mob/living/brain/proc/get_traumas()
+	. = list()
+	if(istype(loc, /obj/item/organ/brain))
+		var/obj/item/organ/brain/B = loc
+		. = B.traumas

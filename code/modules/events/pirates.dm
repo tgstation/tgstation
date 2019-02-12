@@ -17,6 +17,7 @@
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat
 	var/payoff = 0
+	var/payoff_min = 20000
 	var/paid_off = FALSE
 	var/ship_name = "Space Privateers Association"
 	var/shuttle_spawned = FALSE
@@ -31,7 +32,7 @@
 	threat = new
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
-		payoff = round(D.account_balance * 0.80)
+		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
 	threat.title = "Business proposition"
 	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
 	threat.possible_answers = list("We'll pay.","No way.")
@@ -73,14 +74,16 @@
 
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
+
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/human/pirate/spawner in A)
 			if(candidates.len > 0)
 				var/mob/M = candidates[1]
 				spawner.create(M.ckey)
 				candidates -= M
+				announce_to_ghosts(M)
 			else
-				notify_ghosts("Space pirates are waking up!", source = spawner, action=NOTIFY_ATTACK, flashwindow = FALSE)
+				announce_to_ghosts(spawner)
 
 	priority_announce("Unidentified armed ship detected near the station.")
 

@@ -17,7 +17,7 @@
 	status_flags = (CANPUSH | CANSTUN)
 
 	radio_key = /obj/item/encryptionkey/headset_med
-	radio_channel = "Medical"
+	radio_channel = RADIO_CHANNEL_MEDICAL
 
 	bot_type = MED_BOT
 	model = "Medibot"
@@ -247,7 +247,7 @@
 			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
-		playsound(src, "sparks", 75, 1)
+		playsound(src, "sparks", 75, TRUE)
 		if(user)
 			oldpatient = user
 
@@ -264,7 +264,7 @@
 			var/list/messagevoice = list("Hey, [H.name]! Hold on, I'm coming." = 'sound/voice/medbot/coming.ogg',"Wait [H.name]! I want to help!" = 'sound/voice/medbot/help.ogg',"[H.name], you appear to be injured!" = 'sound/voice/medbot/injured.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
-			playsound(loc, messagevoice[message], 50, 0)
+			playsound(src, messagevoice[message], 50, 0)
 			last_newpatient_speak = world.time
 		return H
 	else
@@ -292,7 +292,7 @@
 			var/list/messagevoice = list("Radar, put a mask on!" = 'sound/voice/medbot/radar.ogg',"There's always a catch, and I'm the best there is." = 'sound/voice/medbot/catch.ogg',"I knew it, I should've been a plastic surgeon." = 'sound/voice/medbot/surgeon.ogg',"What kind of medbay is this? Everyone's dropping like flies." = 'sound/voice/medbot/flies.ogg',"Delicious!" = 'sound/voice/medbot/delicious.ogg')
 			var/message = pick(messagevoice)
 			speak(message)
-			playsound(loc, messagevoice[message], 50, 0)
+			playsound(src, messagevoice[message], 50)
 		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE) //If in stationary mode, scan range is limited to adjacent patients.
 		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
 		oldpatient = patient
@@ -425,7 +425,7 @@
 		var/list/messagevoice = list("No! Stay with me!" = 'sound/voice/medbot/no.ogg',"Live, damnit! LIVE!" = 'sound/voice/medbot/live.ogg',"I...I've never lost a patient before. Not today, I mean." = 'sound/voice/medbot/lost.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
-		playsound(loc, messagevoice[message], 50, 0)
+		playsound(src, messagevoice[message], 50)
 		oldpatient = patient
 		soft_reset()
 		return
@@ -469,7 +469,7 @@
 		//If the patient is injured but doesn't have our special reagent in them then we should give it to them first
 		if(reagent_id && use_beaker && reagent_glass && reagent_glass.reagents.total_volume)
 			for(var/datum/reagent/R in reagent_glass.reagents.reagent_list)
-				if(!C.reagents.has_reagent(R.id))
+				if(!C.reagents.has_reagent(R.id) && !check_overdose(patient, R.id, injection_amount))
 					reagent_id = "internal_beaker"
 					break
 
@@ -479,11 +479,11 @@
 		var/list/messagevoice = list("All patched up!" = 'sound/voice/medbot/patchedup.ogg',"An apple a day keeps me away." = 'sound/voice/medbot/apple.ogg',"Feel better soon!" = 'sound/voice/medbot/feelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
-		playsound(loc, messagevoice[message], 50, 0)
+		playsound(src, messagevoice[message], 50)
 		bot_reset()
 		return
 	else
-		if(!emagged && check_overdose(patient,reagent_id,injection_amount))
+		if(!emagged && (reagent_id != "internal_beaker") && check_overdose(patient, reagent_id, injection_amount))
 			soft_reset()
 			return
 		C.visible_message("<span class='danger'>[src] is trying to inject [patient]!</span>", \
@@ -540,7 +540,7 @@
 		drop_part(robot_arm, Tsec)
 
 	if(emagged && prob(25))
-		playsound(loc, 'sound/voice/medbot/insult.ogg', 50, 0)
+		playsound(src, 'sound/voice/medbot/insult.ogg', 50)
 
 	do_sparks(3, TRUE, src)
 	..()
@@ -549,7 +549,7 @@
 	if(declare_cooldown > world.time)
 		return
 	var/area/location = get_area(src)
-	speak("Medical emergency! [crit_patient ? "<b>[crit_patient]</b>" : "A patient"] is in critical condition at [location]!",radio_channel)
+	speak("Medical emergency! [crit_patient || "A patient"] is in critical condition at [location]!",radio_channel)
 	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot

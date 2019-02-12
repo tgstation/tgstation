@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	item_flags = NOBLUDGEON
 	obj_flags = UNIQUE_RENAME
-	container_type = OPENCONTAINER
+	reagent_flags = OPENCONTAINER
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -65,7 +65,7 @@
 		playsound(src, 'sound/effects/spray2.ogg', 50, 1, -6)
 		var/fraction = min(amount_per_transfer_from_this/reagents.total_volume, 1)
 		reagents.reaction(M, apply_type, fraction)
-		reagents.trans_to(M, amount_per_transfer_from_this)
+		reagents.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 	return
 
 /obj/item/reagent_containers/medspray/styptic

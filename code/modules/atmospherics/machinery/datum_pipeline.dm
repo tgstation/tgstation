@@ -43,12 +43,10 @@
 	if(!air)
 		air = new
 	var/list/possible_expansions = list(base)
-	while(possible_expansions.len>0)
+	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
-
 			var/list/result = borderline.pipeline_expansion(src)
-
-			if(result.len>0)
+			if(result && result.len)
 				for(var/obj/machinery/atmospherics/P in result)
 					if(istype(P, /obj/machinery/atmospherics/pipe))
 						var/obj/machinery/atmospherics/pipe/item = P
@@ -57,8 +55,8 @@
 							if(item.parent)
 								var/static/pipenetwarnings = 10
 								if(pipenetwarnings > 0)
-									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
-									pipenetwarnings -= 1
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)]")
+									pipenetwarnings--
 									if(pipenetwarnings == 0)
 										warning("build_pipeline(): further messages about pipenets will be suppressed")
 							members += item

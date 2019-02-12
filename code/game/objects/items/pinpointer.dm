@@ -26,11 +26,15 @@
 /obj/item/pinpointer/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	GLOB.pinpointer_list -= src
+	target = null
 	return ..()
 
 /obj/item/pinpointer/attack_self(mob/living/user)
-	active = !active
+	toggle_on()
 	user.visible_message("<span class='notice'>[user] [active ? "" : "de"]activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You [active ? "" : "de"]activate your pinpointer.</span>")
+
+/obj/item/pinpointer/proc/toggle_on()
+	active = !active
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
 	if(active)
 		START_PROCESSING(SSfastprocess, src)
@@ -94,12 +98,8 @@
 
 /obj/item/pinpointer/crew/attack_self(mob/living/user)
 	if(active)
-		active = FALSE
+		toggle_on()
 		user.visible_message("<span class='notice'>[user] deactivates [user.p_their()] pinpointer.</span>", "<span class='notice'>You deactivate your pinpointer.</span>")
-		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-		target = null //Restarting the pinpointer forces a target reset
-		STOP_PROCESSING(SSfastprocess, src)
-		update_icon()
 		return
 
 	var/list/name_counts = list()
@@ -130,11 +130,8 @@
 		return
 
 	target = names[A]
-	active = TRUE
+	toggle_on()
 	user.visible_message("<span class='notice'>[user] activates [user.p_their()] pinpointer.</span>", "<span class='notice'>You activate your pinpointer.</span>")
-	playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
-	START_PROCESSING(SSfastprocess, src)
-	update_icon()
 
 /obj/item/pinpointer/crew/scan_for_target()
 	if(target)
@@ -144,3 +141,35 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
+
+
+/obj/item/pinpointer/pair
+	name = "pair pinpointer"
+	desc = "A handheld tracking device that locks onto its other half of the matching pair."
+	var/other_pair
+
+/obj/item/pinpointer/pair/Destroy()
+	other_pair = null
+	. = ..()
+
+/obj/item/pinpointer/pair/scan_for_target()
+	target = other_pair
+
+/obj/item/pinpointer/pair/examine(mob/user)
+	. = ..()
+	if(!active || !target)
+		return
+	var/mob/mob_holder = get(target, /mob)
+	if(istype(mob_holder))
+		to_chat(user, "Its pair is being held by [mob_holder].")
+		return
+
+/obj/item/storage/box/pinpointer_pairs
+	name = "pinpointer pair box"
+
+/obj/item/storage/box/pinpointer_pairs/PopulateContents()
+	var/obj/item/pinpointer/pair/A = new(src)
+	var/obj/item/pinpointer/pair/B = new(src)
+
+	A.other_pair = B
+	B.other_pair = A

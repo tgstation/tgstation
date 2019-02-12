@@ -269,21 +269,26 @@
 		for(var/I in channels)
 			var/datum/tgs_chat_channel/channel = I
 			ids += channel.id
-	message = list("message" = message, "channels" = ids)
+	message = list("message" = message, "channelIds" = ids)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
 		Export(TGS4_COMM_CHAT, message)
 
 /datum/tgs_api/v4/ChatTargetedBroadcast(message, admin_only)
-	message = list("message" = message, "channels" = admin_only ? "admin" : "game")
+	var/list/channels = list()
+	for(var/I in ChatChannelInfo())
+		var/datum/tgs_chat_channel/channel = I
+		if (!channel.is_private_channel && ((channel.is_admin_channel && admin_only) || (!channel.is_admin_channel && !admin_only)))
+			channels += channel.id
+	message = list("message" = message, "channelIds" = channels)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
 		Export(TGS4_COMM_CHAT, message)
 
 /datum/tgs_api/v4/ChatPrivateMessage(message, datum/tgs_chat_user/user)
-	message = list("message" = message, "user" = list("id" = user.id, "channel" = user.channel.id))
+	message = list("message" = message, "channelIds" = list(user.channel.id))
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else

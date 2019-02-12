@@ -51,9 +51,9 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
-	var/reagents_holder_flags
+	var/flags
 
-/datum/reagents/New(maximum=100)
+/datum/reagents/New(maximum=100, new_flags=0)
 	maximum_volume = maximum
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -61,6 +61,8 @@
 		build_chemical_reagent_list()
 	if(!GLOB.chemical_reactions_list)
 		build_chemical_reactions_list()
+
+	flags = new_flags
 
 /datum/reagents/Destroy()
 	. = ..()
@@ -80,9 +82,10 @@
 		return "no reagents"
 
 	var/list/data = list()
+	var/seperator
 	for(var/r in reagent_list) //no reagents will be left behind
 		var/datum/reagent/R = r
-		data += "[R.id] ([round(R.volume, 0.1)]u)"
+		data += "[seperator ? " | " : null][R.id] ([round(R.volume, 0.1)]u)"
 		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
 	return english_list(data)
 
@@ -160,25 +163,36 @@
 
 	return master
 
-/datum/reagents/proc/trans_to(obj/target, amount=1, multiplier=1, preserve_data=1, no_react = 0)//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE)
+	//if preserve_data=0, the reagents data will be lost. Usefull if you use data for some strange stuff and don't want it to be transferred.
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
 	if(amount < 0)
 		return
 
+	var/atom/target_atom
 	var/datum/reagents/R
 	if(istype(target, /datum/reagents))
 		R = target
+		target_atom = R.my_atom
 	else
 		if(!target.reagents)
 			return
 		R = target.reagents
+		target_atom = target
+
+	if(transfered_by && target_atom)
+		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
+		log_combat(transfered_by, target_atom, "transferred reagents ([log_list()]) from [my_atom] to")
+
 	amount = min(min(amount, src.total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / src.total_volume
 	var/trans_data = null
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/T = reagent
+		if(remove_blacklisted && !T.can_synth)
+			continue
 		var/transfer_amount = T.volume * part
 		if(preserve_data)
 			trans_data = copy_data(T)
@@ -303,21 +317,16 @@
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
 							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
-							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_addiction")
+							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_overdose")
 							cached_addictions.Remove(R)
+						else
+							SEND_SIGNAL(C, COMSIG_CLEAR_MOOD_EVENT, "[R.id]_overdose")
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
 		C.updatehealth()
 		C.update_mobility()
 		C.update_stamina()
 	update_total()
-
-
-/datum/reagents/proc/set_reacting(react = TRUE)
-	if(react)
-		reagents_holder_flags &= ~(REAGENT_NOREACT)
-	else
-		reagents_holder_flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -334,11 +343,12 @@
 	update_total()
 
 /datum/reagents/proc/handle_reactions()
+	if(flags & NO_REACT)
+		return //Yup, no reactions here. No siree.
+
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	if(reagents_holder_flags & REAGENT_NOREACT)
-		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0
 	do
@@ -795,10 +805,10 @@
 
 // Convenience proc to create a reagents holder for an atom
 // Max vol is maximum volume of holder
-/atom/proc/create_reagents(max_vol)
+/atom/proc/create_reagents(max_vol, flags)
 	if(reagents)
 		qdel(reagents)
-	reagents = new/datum/reagents(max_vol)
+	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
 
 /proc/get_random_reagent_id()	// Returns a random reagent ID minus blacklisted reagents

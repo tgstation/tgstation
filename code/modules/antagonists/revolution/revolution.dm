@@ -98,8 +98,8 @@
 	give_hud = TRUE
 	remove_clumsy = TRUE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has head-rev'ed [new_owner.current].")
-	log_admin("[key_name(admin)] has head-rev'ed [new_owner.current].")
+	message_admins("[key_name_admin(admin)] has head-rev'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has head-rev'ed [key_name(new_owner)].")
 	to_chat(new_owner.current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
 
 /datum/antagonist/rev/head/get_admin_commands()
@@ -141,8 +141,8 @@
 		flash.update_icon()
 
 /datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)
-	message_admins("[key_name_admin(user)] has demoted [owner.current] from head revolutionary.")
-	log_admin("[key_name(user)] has demoted [owner.current] from head revolutionary.")
+	message_admins("[key_name_admin(user)] has demoted [key_name_admin(owner)] from head revolutionary.")
+	log_admin("[key_name(user)] has demoted [key_name(owner)] from head revolutionary.")
 	demote()
 
 /datum/antagonist/rev/head

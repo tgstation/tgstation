@@ -103,22 +103,12 @@
 
 
 	var/dat = 	"<div align='center'><b>Inventory of [name]</b></div><p>"
-	if(inventory_head)
-		dat +=	"<br><b>Head:</b> [inventory_head] (<a href='?src=[REF(src)];remove_inv=head'>Remove</a>)"
-	else
-		dat +=	"<br><b>Head:</b> <a href='?src=[REF(src)];add_inv=head'>Nothing</a>"
-	if(inventory_back)
-		dat +=	"<br><b>Back:</b> [inventory_back] (<a href='?src=[REF(src)];remove_inv=back'>Remove</a>)"
-	else
-		dat +=	"<br><b>Back:</b> <a href='?src=[REF(src)];add_inv=back'>Nothing</a>"
-	if(pcollar)
-		dat += "<br><b>Collar:</b> [pcollar] (<a href='?src=[REF(src)];remove_inv=collar'>Remove</a>)"
-	else
-		dat += "<br><b>Collar:</b> <a href='?src=[REF(src)];add_inv=collar'>Nothing</a>"
+	dat += "<br><B>Head:</B> <A href='?src=[REF(src)];[inventory_head ? "remove_inv=head'>[inventory_head]" : "add_inv=head'>Nothing"]</A>"
+	dat += "<br><B>Back:</B> <A href='?src=[REF(src)];[inventory_back ? "remove_inv=back'>[inventory_back]" : "add_inv=back'>Nothing"]</A>"
+	dat += "<br><B>Collar:</B> <A href='?src=[REF(src)];[pcollar ? "remove_inv=collar'>[pcollar]" : "add_inv=collar'>Nothing"]</A>"
 
-	user << browse(dat, text("window=mob[];size=325x500", real_name))
-	onclose(user, "mob[real_name]")
-	return
+	user << browse(dat, "window=mob[REF(src)];size=325x500")
+	onclose(user, "mob[REF(src)]")
 
 /mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
 	var/armorval = 0
@@ -170,7 +160,7 @@
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
 	if(!(iscarbon(usr) || iscyborg(usr)) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		usr << browse(null, "window=mob[]")
+		usr << browse(null, "window=mob[REF(src)]")
 		usr.unset_machine()
 		return
 
@@ -258,7 +248,7 @@
 
 		show_inv(usr)
 	else
-		..()
+		return ..()
 
 //Corgis are supposed to be simpler, so only a select few objects can actually be put
 //to be compatible with them. The objects are below.
@@ -277,7 +267,7 @@
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		return
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
@@ -660,7 +650,7 @@
 			if(M && stat != DEAD) // Added check to see if this mob (the dog) is dead to fix issue 2454
 				new /obj/effect/temp_visual/heart(loc)
 				emote("me", 1, "yaps happily!")
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pet_corgi", /datum/mood_event/pet_corgi)
+				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/pet_animal, src)
 		else
 			if(M && stat != DEAD) // Same check here, even though emote checks it as well (poor form to check it only in the help case)
 				emote("me", 1, "growls!")

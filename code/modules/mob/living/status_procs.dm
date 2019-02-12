@@ -201,7 +201,7 @@
 			if(P)
 				P.duration = world.time + amount
 			else
-				P = apply_status_effect(STATUS_EFFECT_IMMOBILIZED, amount, updating)
+				P = apply_status_effect(STATUS_EFFECT_PARALYZED, amount, updating)
 		return P
 
 /mob/living/proc/AdjustParalyzed(amount, updating = TRUE, ignore_canstun = FALSE) //Adds to remaining duration

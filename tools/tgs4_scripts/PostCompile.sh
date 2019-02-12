@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -68,7 +68,6 @@ fi
 
 echo "Deploying rust-g..."
 cd rust-g
-git clean -fxd
 git checkout $RUST_G_VERSION
 ~/.cargo/bin/cargo build --release
 mv target/release/librust_g.so $1/rust_g
@@ -76,10 +75,9 @@ cd ..
 
 echo "Deploying BSQL..."
 cd BSQL
-git clean -fxd
 git checkout $BSQL_VERSION
-mkdir mysql
-mkdir artifacts
+mkdir -p mysql
+mkdir -p artifacts
 cd artifacts
 cmake .. -DCMAKE_CXX_COMPILER=g++-6 -DMARIA_LIBRARY=/usr/lib/i386-linux-gnu/libmariadb.so.2
 make
@@ -96,6 +94,7 @@ shopt -s extglob dotglob
 mv !(build) build
 shopt -u dotglob
 
+chmod +x build/tools/deploy.sh
 build/tools/deploy.sh $1 $1/build
 
 rm -rf build

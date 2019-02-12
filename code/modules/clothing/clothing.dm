@@ -20,8 +20,6 @@
 	var/active_sound = null
 	var/toggle_cooldown = null
 	var/cooldown = 0
-	var/obj/item/flashlight/F = null
-	var/can_flashlight = 0
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 
 	var/clothing_flags = NONE
@@ -38,8 +36,11 @@
 	// THESE OVERRIDE THE HIDEHAIR FLAGS
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
+	
 
 /obj/item/clothing/Initialize()
+	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
+		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
@@ -57,7 +58,7 @@
 			add_fingerprint(usr)
 
 /obj/item/reagent_containers/food/snacks/clothing
-	name = "oops"
+	name = "temporary moth clothing snack item"
 	desc = "If you're reading this it means I messed up. This is related to moths eating clothes and I didn't know a better way to do it than making a new food object."
 	list_reagents = list("nutriment" = 1)
 	tastes = list("dust" = 1, "lint" = 1)

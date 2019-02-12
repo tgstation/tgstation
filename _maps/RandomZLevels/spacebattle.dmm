@@ -844,7 +844,9 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dL" = (
-/obj/mecha/working/ripley/firefighter,
+/obj/mecha/working/ripley/firefighter{
+	ruin_mecha = 1
+	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dM" = (
@@ -2887,10 +2889,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"kM" = (
-/obj/effect/mapping_helpers/planet_z,
-/turf/closed/mineral/random,
-/area/space/nearstation)
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
@@ -3168,7 +3166,7 @@ aa
 aa
 aa
 aa
-kM
+aa
 "}
 (2,1,1) = {"
 aa

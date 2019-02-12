@@ -42,6 +42,8 @@
 	name = "prosthesis organ manipulation"
 	possible_locs = list(BODY_ZONE_CHEST, BODY_ZONE_HEAD)
 	requires_bodypart_type = BODYPART_ROBOTIC
+	lying_required = FALSE
+	self_operable = TRUE
 	steps = list(
 		/datum/surgery_step/mechanic_open,
 		/datum/surgery_step/open_hatch,

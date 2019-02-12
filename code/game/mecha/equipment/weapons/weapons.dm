@@ -10,11 +10,14 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect	//the visual effect appearing when the weapon is fired.
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/combat/M)
-	if(..())
-		if(istype(M))
-			return 1
-	return 0
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/mecha/M)
+	if(!..())
+		return FALSE
+	if(istype(M, /obj/mecha/combat))
+		return TRUE
+	if((locate(/obj/item/mecha_parts/concealed_weapon_bay) in M.contents) && !(locate(/obj/item/mecha_parts/mecha_equipment/weapon) in M.equipment))
+		return TRUE
+	return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/proc/get_shot_amount()
 	return projectiles_per_shot
@@ -173,6 +176,9 @@
 			var/mob/living/carbon/human/H = M
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))
 				continue
+		var/turf/turf_check = get_turf(M)
+		if(isspaceturf(turf_check) && !turf_check.Adjacent(src)) //in space nobody can hear you honk.
+			continue
 		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 		M.stuttering += 20
@@ -424,7 +430,7 @@
 	throwforce = 35
 	icon_state = "punching_glove"
 
-/obj/item/punching_glove/throw_impact(atom/hit_atom)
+/obj/item/punching_glove/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!..())
 		if(ismovableatom(hit_atom))
 			var/atom/movable/AM = hit_atom

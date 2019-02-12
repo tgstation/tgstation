@@ -71,6 +71,14 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
 
+/obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	name = "diagnostic sunglasses"
+	desc = "Sunglasses with a diagnostic HUD."
+	icon_state = "sunhuddiag"
+	item_state = "glasses"
+	flash_protect = 1
+	tint = 1
+
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
@@ -87,8 +95,8 @@
 	// have multiple inheritance, okay?
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/glasses/hud/security/chameleon/New()
-	..()
+/obj/item/clothing/glasses/hud/security/chameleon/Initialize()
+	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"

@@ -41,7 +41,7 @@
 		return FALSE
 	if(!considered_alive(applicant.mind) || considered_afk(applicant.mind)) //makes sure the player isn't a zombie, brain, or just afk all together
 		return FALSE
-	return (!jobban_isbanned(applicant, targetrole) && !jobban_isbanned(applicant, ROLE_SYNDICATE))
+	return !is_banned_from(applicant.ckey, list(targetrole, ROLE_SYNDICATE))
 
 
 /datum/admins/proc/makeTraitors()
@@ -414,7 +414,7 @@
 				chosen_candidate.client.prefs.copy_to(ERTOperative)
 				ERTOperative.key = chosen_candidate.key
 
-				if(ertemplate.enforce_human || ERTOperative.dna.species.dangerous_existence) // Don't want any exploding plasmemes
+				if(ertemplate.enforce_human || !ERTOperative.dna.species.changesource_flags & ERT_SPAWN) // Don't want any exploding plasmemes
 					ERTOperative.set_species(/datum/species/human)
 
 				//Give antag datum

@@ -407,7 +407,7 @@
 		fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
 		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(t, ., volume_multiplier)
+		reagents.trans_to(t, ., volume_multiplier, transfered_by = user)
 	check_empty(user)
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
@@ -418,7 +418,7 @@
 			return
 		var/fraction = min(eaten / reagents.total_volume, 1)
 		reagents.reaction(M, INGEST, fraction * volume_multiplier)
-		reagents.trans_to(M, eaten, volume_multiplier)
+		reagents.trans_to(M, eaten, volume_multiplier, transfered_by = user)
 		// check_empty() is called during afterattack
 	else
 		..()
@@ -581,7 +581,7 @@
 		user.visible_message("<span class='suicide'>[user] shakes up [src] with a rattle and lifts it to [user.p_their()] mouth, spraying paint across [user.p_their()] teeth!</span>")
 		user.say("WITNESS ME!!", forced="spraycan suicide")
 		if(pre_noise || post_noise)
-			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 5)
 		if(can_change_colour)
 			paint_color = "#C0C0C0"
 		update_icon()
@@ -592,7 +592,7 @@
 		var/used = use_charges(user, 10, FALSE)
 		var/fraction = min(1, used / reagents.maximum_volume)
 		reagents.reaction(user, VAPOR, fraction * volume_multiplier)
-		reagents.trans_to(user, used, volume_multiplier)
+		reagents.trans_to(user, used, volume_multiplier, transfered_by = user)
 
 		return (OXYLOSS)
 
@@ -651,20 +651,21 @@
 
 		return
 
-	if(istype(target, /obj/structure/window))
+	if(isobj(target))
 		if(actually_paints)
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
-			if(color_hex2num(paint_color) < 255)
+			if(color_hex2num(paint_color) < 255 && istype(target, /obj/structure/window))
 				target.set_opacity(255)
 			else
 				target.set_opacity(initial(target.opacity))
 		. = use_charges(user, 2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)
-		reagents.trans_to(target, ., volume_multiplier)
+		reagents.trans_to(target, ., volume_multiplier, transfered_by = user)
 
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+		user.visible_message("[user] coats [target] with spray paint!", "<span class='notice'>You coat [target] with spray paint.</span>")
 		return
 
 	. = ..()

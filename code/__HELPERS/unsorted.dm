@@ -203,7 +203,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/loop = 1
 	var/safety = 0
 
-	var/banned = jobban_isbanned(src, "appearance")
+	var/banned = is_banned_from(C.ckey, "Appearance")
 
 	while(loop && safety < 5)
 		if(C && C.prefs.custom_names[role] && !safety && !banned)
@@ -1452,8 +1452,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vars[var_name] = var_value
 
 /proc/get_random_food()
-	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
-		/obj/item/reagent_containers/food/snacks/store/bread,
+	var/list/blocked = list(/obj/item/reagent_containers/food/snacks/store/bread,
 		/obj/item/reagent_containers/food/snacks/breadslice,
 		/obj/item/reagent_containers/food/snacks/store/cake,
 		/obj/item/reagent_containers/food/snacks/cakeslice,
@@ -1469,11 +1468,12 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		/obj/item/reagent_containers/food/snacks/grown,
 		/obj/item/reagent_containers/food/snacks/grown/mushroom,
 		/obj/item/reagent_containers/food/snacks/grown/nettle, // base type
-		/obj/item/reagent_containers/food/snacks/deepfryholder
+		/obj/item/reagent_containers/food/snacks/deepfryholder,
+		/obj/item/reagent_containers/food/snacks/clothing
 		)
 	blocked |= typesof(/obj/item/reagent_containers/food/snacks/customizable)
 
-	return pick(typesof(/obj/item/reagent_containers/food/snacks) - blocked)
+	return pick(subtypesof(/obj/item/reagent_containers/food/snacks) - blocked)
 
 /proc/get_random_drink()
 	var/list/blocked = list(/obj/item/reagent_containers/food/drinks/soda_cans,
@@ -1531,3 +1531,38 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	for(var/i in L)
 		if(condition.Invoke(i))
 			. |= i
+/proc/generate_items_inside(list/items_list,var/where_to)
+	for(var/each_item in items_list)
+		for(var/i in 1 to items_list[each_item])
+			new each_item(where_to)
+
+//sends a message to chat
+//config_setting should be one of the following
+//null - noop
+//empty string - use TgsTargetBroadcast with admin_only = FALSE
+//other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
+/proc/send2chat(message, config_setting)
+	if(config_setting == null || !world.TgsAvailable())
+		return
+
+	var/datum/tgs_version/version = world.TgsVersion()
+	if(config_setting == "" || version.suite == 3)
+		world.TgsTargetedChatBroadcast(message, FALSE)
+		return
+
+	var/list/channels_to_use = list()
+	for(var/I in world.TgsChatChannelInfo())
+		var/datum/tgs_chat_channel/channel = I
+		if(channel.tag == config_setting)
+			channels_to_use += channel
+
+	if(channels_to_use.len)
+		world.TgsChatBroadcast()
+
+/proc/num2sign(numeric)
+	if(numeric > 0)
+		return 1
+	else if(numeric < 0)
+		return -1
+	else
+		return 0

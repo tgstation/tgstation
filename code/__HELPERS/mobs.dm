@@ -72,7 +72,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -112,6 +112,13 @@
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(plasmaman_name())
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(ethereal_name())
 
 		if(!findname(.))
 			break
@@ -356,11 +363,12 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/list/new_args = list(T)
 	if(extra_args)
 		new_args += extra_args
-
+	var/atom/X
 	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(arglist(new_args))
+		X = new spawn_type(arglist(new_args))
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
+	return X //return the last mob spawned
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -391,12 +399,14 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			prefs = new
 
-		var/adminoverride = 0
+		var/override = FALSE
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+			override = TRUE
+		if(M.has_trait(TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(isnewplayer(M) && !override)
 			continue
-		if(M.stat != DEAD && !adminoverride)
+		if(M.stat != DEAD && !override)
 			continue
 		if(speaker_key && speaker_key in prefs.ignoring)
 			continue

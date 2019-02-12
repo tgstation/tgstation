@@ -13,12 +13,14 @@
 	var/droppingoil = FALSE
 	var/RTDcooldown = 150
 	var/lastRTDtime = 0
+	var/thankscount
 	var/cannonmode = FALSE
 	var/cannonbusy = FALSE
 
 /obj/vehicle/sealed/car/clowncar/generate_actions()
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/sealed/horn/clowncar, VEHICLE_CONTROL_DRIVE)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/Thank, VEHICLE_CONTROL_KIDNAPPED)
 
 /obj/vehicle/sealed/car/clowncar/auto_assign_occupant_flags(mob/M)
 	if(ishuman(M))
@@ -32,6 +34,13 @@
 /obj/vehicle/sealed/car/clowncar/mob_forced_enter(mob/M, silent = FALSE)
 	. = ..()
 	playsound(src, pick('sound/vehicles/clowncar_load1.ogg', 'sound/vehicles/clowncar_load2.ogg'), 75)
+
+/obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
+	. = ..()
+	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
+		for(var/i in return_drivers())
+			var/mob/voreman = i
+			SSmedals.UnlockMedal(MEDAL_CLOWNCARKING,voreman.client)
 
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
 	. = ..()
@@ -177,3 +186,10 @@
 		playsound(src, pick('sound/vehicles/carcannon1.ogg', 'sound/vehicles/carcannon2.ogg', 'sound/vehicles/carcannon3.ogg'), 75)
 		L.throw_at(A, 10, 2)
 		return COMSIG_MOB_CANCEL_CLICKON
+
+/obj/vehicle/sealed/car/clowncar/proc/ThanksCounter()
+	thankscount++
+	if(thankscount >= 100)
+		for(var/i in return_drivers())
+			var/mob/busdriver = i
+			SSmedals.UnlockMedal(MEDAL_THANKSALOT,busdriver.client)

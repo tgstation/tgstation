@@ -324,6 +324,10 @@ SEC_START_BRIG
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
 #GHOST_INTERACTION
 
+## NEAR-DEATH EXPERIENCE ###
+## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
+NEAR_DEATH_EXPERIENCE
+
 ## NON-VOCAL SILICONS ###
 ## Uncomment these to stop the AI, or cyborgs, from having vocal communication.
 #SILENT_AI
@@ -428,6 +432,7 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 
 ## Races that are better than humans in some ways, but worse in others
+ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES jelly
 #ROUNDSTART_RACES golem
 #ROUNDSTART_RACES adamantine
@@ -448,6 +453,10 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES agent
 
 ##-------------------------------------------------------------------------------------------
+
+## Roundstart no-reset races
+## Races defined here will not cause existing characters to be reset to human if they currently have a non-roundstart species defined.
+#ROUNDSTART_NO_HARD_CHECK felinid
 
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
 #JOIN_WITH_MUTANT_HUMANS

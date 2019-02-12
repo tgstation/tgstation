@@ -48,13 +48,6 @@
 	detail_overlay.color = detail_color
 	add_overlay(detail_overlay)
 
-/obj/item/card/data/attackby(obj/item/I, mob/living/user)
-	if(istype(I, /obj/item/integrated_electronics/detailer))
-		var/obj/item/integrated_electronics/detailer/D = I
-		detail_color = D.detail_color
-		update_icon()
-	return ..()
-
 /obj/item/proc/GetCard()
 
 /obj/item/card/data/GetCard()
@@ -403,6 +396,14 @@ update_label("John Doe", "Clowny")
 
 /obj/item/card/id/ert/chaplain/Initialize()
 	access = get_all_accesses()+get_ert_access("sec")-ACCESS_CHANGE_IDS
+	. = ..()
+
+/obj/item/card/id/ert/Janitor
+	registered_name = "Janitorial Response Officer"
+	assignment = "Janitorial Response Officer"
+
+/obj/item/card/id/ert/Janitor/Initialize()
+	access = get_all_accesses()
 	. = ..()
 
 /obj/item/card/id/prisoner

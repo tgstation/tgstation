@@ -90,12 +90,11 @@ To add a crossbreed:
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "base"
 	var/del_on_empty = TRUE
-	container_type = INJECTABLE | DRAWABLE
 	var/list/list_reagents
 
 /obj/item/slimecrossbeaker/Initialize()
 	. = ..()
-	create_reagents(50)
+	create_reagents(50, INJECTABLE | DRAWABLE)
 	if(list_reagents)
 		for(var/reagent in list_reagents)
 			reagents.add_reagent(reagent, list_reagents[reagent])
@@ -130,9 +129,12 @@ To add a crossbreed:
 	list_reagents = list("omnizine" = 15)
 
 /obj/item/slimecrossbeaker/autoinjector //As with the above, but automatically injects whomever it is used on with contents.
-	container_type = DRAWABLE //Cannot be refilled, since it's basically an autoinjector!
 	var/ignore_flags = FALSE
 	var/self_use_only = FALSE
+
+/obj/item/slimecrossbeaker/autoinjector/Initialize()
+	. = ..()
+	reagents.flags = DRAWABLE // Cannot be refilled, since it's basically an autoinjector!
 
 /obj/item/slimecrossbeaker/autoinjector/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
@@ -144,7 +146,7 @@ To add a crossbreed:
 		to_chat(user, "<span class='warning'>This can only be used on yourself.</span>")
 		return
 	if(reagents.total_volume && (ignore_flags || M.can_inject(user, 1)))
-		reagents.trans_to(M, reagents.total_volume)
+		reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 		if(user != M)
 			to_chat(M, "<span class='warning'>[user] presses [src] against you!</span>")
 			to_chat(user, "<span class='notice'>You press [src] against [M], injecting [M.p_them()].</span>")
@@ -169,11 +171,14 @@ To add a crossbreed:
 	list_reagents = list("slimejelly" = 50)
 
 /obj/item/slimecrossbeaker/autoinjector/peaceandlove
-	container_type = null //It won't be *that* easy to get your hands on pax.
 	name = "peaceful distillation"
 	desc = "A light pink gooey sphere. Simply touching it makes you a little dizzy."
 	color = "#DDAAAA"
 	list_reagents = list("synthpax" = 10, "space_drugs" = 15) //Peace, dudes
+
+/obj/item/slimecrossbeaker/autoinjector/peaceandlove/Initialize()
+	. = ..()
+	reagents.flags = NONE // It won't be *that* easy to get your hands on pax.
 
 /obj/item/slimecrossbeaker/autoinjector/slimestimulant
 	name = "invigorating gel"
