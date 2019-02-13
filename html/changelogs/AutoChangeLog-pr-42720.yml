@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - tweak: "light replacer is now WEIGHT_CLASS_SMALL, can be fit in a toolbelt and printed from engilathe"
