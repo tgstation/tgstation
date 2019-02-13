@@ -1,8 +1,8 @@
 /*********************Mining Hammer****************/
 /obj/item/twohanded/required/kinetic_crusher
 	icon = 'icons/obj/mining.dmi'
-	icon_state = "mining_hammer1"
-	item_state = "mining_hammer1"
+	icon_state = "crusher"
+	item_state = "crusher"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
@@ -15,18 +15,19 @@
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
-	light_range = 5
-	light_power = 1
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
+	actions_types = list(/datum/action/item_action/toggle_light)
 	var/list/trophies = list()
 	var/charged = TRUE
 	var/charge_time = 15
 	var/detonation_damage = 50
 	var/backstab_bonus = 30
+	var/light_on = FALSE
+	var/brightness_on = 5
 
 /obj/item/twohanded/required/kinetic_crusher/Initialize()
 	. = ..()
@@ -87,7 +88,7 @@
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
 		D.fire()
 		charged = FALSE
-		icon_state = "mining_hammer1_uncharged"
+		update_icon()
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
 	if(proximity_flag && isliving(target))
@@ -119,8 +120,33 @@
 /obj/item/twohanded/required/kinetic_crusher/proc/Recharge()
 	if(!charged)
 		charged = TRUE
-		icon_state = "mining_hammer1"
+		update_icon()
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+
+/obj/item/twohanded/required/kinetic_crusher/proc/update_brightness(mob/user = null)
+	if(light_on)
+		set_light(brightness_on)
+	else
+		set_light(0)
+
+/obj/item/twohanded/required/kinetic_crusher/attack_self(mob/user)
+	light_on = !light_on
+	playsound(user, 'sound/weapons/empty.ogg', 100, TRUE)
+	update_brightness(user)
+	update_icon()
+	return
+
+/obj/item/twohanded/required/kinetic_crusher/update_icon()
+	..()
+	cut_overlays()
+	if(!charged)
+		add_overlay("[icon_state]_uncharged")
+	if(light_on)
+		add_overlay("[icon_state]_lit")
+	spawn(1)
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
 
 //destablizing force
 /obj/item/projectile/destabilizer

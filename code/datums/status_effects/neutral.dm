@@ -85,6 +85,7 @@
 	. = ..()
 	owner.remove_trait(TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
 
+
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
@@ -102,3 +103,16 @@
 	if(!(L.movement_type & FLYING))
 		owner.setMovetype(owner.movement_type & ~FLYING)
 		owner.visible_message("<span class='danger'>[owner] is flung back into the air by the glowing wings!</span>")*/
+
+/datum/status_effect/bugged //Lets another mob hear everything you can
+	id = "bugged"
+	duration = -1
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	var/mob/living/listening_in
+
+/datum/status_effect/bugged/on_creation(mob/living/new_owner, mob/living/tracker)
+	. = ..()
+	if(.)
+		listening_in = tracker
+
