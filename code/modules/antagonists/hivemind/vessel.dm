@@ -14,7 +14,7 @@
 /mob/living/proc/is_wokevessel()
 	return mind?.has_antag_datum(/datum/antagonist/hivevessel)
 
-/mob/living/proc/hive_awaken(objective, datum/team/final_form)
+/mob/living/proc/hive_awaken(objective, datum/team/hivemind/final_form)
 	if(!mind)
 		return
 	var/datum/mind/M = mind

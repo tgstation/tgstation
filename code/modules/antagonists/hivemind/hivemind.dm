@@ -10,7 +10,7 @@
 	var/threat_level = 0 // Part of what determines how strong the radar is, on a scale of 0 to 10
 	var/track_bonus = 0 // Bonus time to your tracking abilities
 	var/size_mod = 0 // Bonus size for using reclaim
-	var/list/individual_track_bonus // Bonus time to tracking individual targets
+	var/list/individual_track_bonus = list() // Bonus time to tracking individual targets
 	var/unlocked_one_mind = FALSE
 	var/datum/team/hivemind/active_one_mind
 	var/mutable_appearance/glow
@@ -86,13 +86,17 @@
 			to_chat(owner, "<big><span class='assimilator'>Our true power, the One Mind, is finally within reach.</span></big>")
 
 /datum/antagonist/hivemind/proc/add_track_bonus(datum/antagonist/hivemind/enemy, bonus)
-	if(!locate(enemy) in individual_track_bonus)
+	if(individual_track_bonus[enenmy])
 		individual_track_bonus[enemy] = bonus
 	else
 		individual_track_bonus[enemy] += bonus
 
 /datum/antagonist/hivemind/proc/get_track_bonus(datum/antagonist/hivemind/enemy)
-	return TRACKER_DEFAULT_TIME + track_bonus + individual_track_bonus[enemy]
+	if(individual_track_bonus[enenmy])
+		. = 0
+	else
+		. = individual_track_bonus[enemy]
+	. += (TRACKER_DEFAULT_TIME + track_bonus)
 
 /datum/antagonist/hivemind/proc/add_to_hive(mob/living/carbon/C)
 	if(!C)
@@ -134,14 +138,20 @@
 
 	var/mob/living/real_C = C.get_real_hivehost()
 	var/mob/living/real_C2 = C2.get_real_hivehost()
-	var/datum/antagonist/hivemind/hive_C = C.mind.has_antag_datum(/datum/antagonist/hivemind)
-	var/datum/antagonist/hivemind/hive_C2 = C2.mind.has_antag_datum(/datum/antagonist/hivemind)
-	if(C != real_C) //Mind control check
+	var/datum/antagonist/hivemind/hive_C
+	var/datum/antagonist/hivemind/hive_C2
+	if(real_C.mind)
+		hive_C = real_C.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(real_C2.mind)
+		hive_C2 = real_C2.mind.has_antag_datum(/datum/antagonist/hivemind)
+	if(!hive_C || !hive_C2)
+		return
+	if(C == real_C) //Mind control check
 		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C, hive_C.get_track_bonus(hive_C2))
 		real_C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		to_chat(real_C, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
-	if(C2 != real_C2)
-		real_C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C2, hive_C2.get_track_bonus(hive_C) )
+	if(C2 == real_C2)
+		real_C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C2, hive_C2.get_track_bonus(hive_C))
 		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		user_warning += " and we've managed to pinpoint their location"
 	to_chat(C2, "<span class='userdanger'>[user_warning]!</span>")
@@ -159,7 +169,6 @@
 	var/mob/living/carbon/C = owner.current.get_real_hivehost()
 	if(!C)
 		return
-	active_one_mind = TRUE
 	owner.AddSpell(new/obj/effect/proc_holder/spell/self/hive_comms)
 	C.add_trait(TRAIT_STUNIMMUNE, HIVEMIND_ONE_MIND_TRAIT)
 	C.add_trait(TRAIT_SLEEPIMMUNE, HIVEMIND_ONE_MIND_TRAIT)

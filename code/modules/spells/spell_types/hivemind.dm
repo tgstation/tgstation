@@ -875,7 +875,7 @@
 	one_mind_team.objectives += objective
 	for(var/datum/antagonist/hivevessel/vessel in GLOB.antagonists)
 		var/mob/living/carbon/C = vessel.owner?.current
-		if(hive.is_carbon_member(C))
+		if(C && hive.is_carbon_member(C))
 			vessel.one_mind = one_mind_team
 	for(var/datum/antagonist/hivemind/enemy in GLOB.antagonists)
 		if(enemy.owner)
@@ -902,7 +902,6 @@
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, "<span class='assimilator'>There is no you...</span>"), 110)
 		addtimer(CALLBACK(GLOBAL_PROC, /proc/to_chat, C, "<span class='bigassimilator'>...there is only us.</span>"), 130)
 		addtimer(CALLBACK(C, /mob/living/proc/hive_awaken, objective, one_mind_team), 150)
-		addtimer(CALLBACK(one_mind_team, /datum/team/proc/add_member, C.mind), 150)
 
 /obj/effect/proc_holder/spell/self/hive_comms
 	name = "Hive Communication"
