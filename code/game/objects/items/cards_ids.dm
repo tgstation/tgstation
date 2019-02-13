@@ -190,6 +190,8 @@
 		if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
 			to_chat(user, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span")
 			return
+		if(isvirtual(user))
+			new_bank_id += "VR"
 		for(var/A in SSeconomy.bank_accounts)
 			var/datum/bank_account/B = A
 			if(B.account_id == new_bank_id)
