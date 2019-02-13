@@ -33,8 +33,8 @@
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
 #define FUSION_MOLE_THRESHOLD				250 	//Mole count required (tritium/plasma) to start a fusion reaction
-#define FUSION_TRITIUM_CONVERSION_COEFFICIENT 0.000000001
-#define INSTABILITY_GAS_POWER_FACTOR 		0.001
+#define FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
+#define INSTABILITY_GAS_POWER_FACTOR 		0.01
 #define FUSION_TRITIUM_MOLES_USED  			1
 #define PLASMA_BINDING_ENERGY  				20000000
 #define TOROID_VOLUME_BREAKEVEN			1000

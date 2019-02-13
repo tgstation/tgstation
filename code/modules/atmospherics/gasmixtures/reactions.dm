@@ -282,7 +282,7 @@
 		cached_gases[/datum/gas/nitrous_oxide][MOLES] += (reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 	else
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitryl)
-		cached_gases[/datum/gas/bz][MOLES] += FUSION_TRITIUM_MOLES_USED
+		cached_gases[/datum/gas/bz][MOLES] += (reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 		cached_gases[/datum/gas/nitryl][MOLES] += (reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 
 	if(reaction_energy)
