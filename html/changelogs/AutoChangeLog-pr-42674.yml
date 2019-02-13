@@ -1,0 +1,4 @@
+author: "imsxz"
+delete-after: True
+changes: 
+  - tweak: "antags with the pacifist trait no longer lose pacifism."
