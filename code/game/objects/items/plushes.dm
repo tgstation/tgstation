@@ -32,8 +32,7 @@
 
 /obj/item/toy/plush/Initialize()
 	. = ..()
-	for(var/A in datum_outputs)
-		AddComponent(/datum/component/squeak, A)
+	AddComponent(/datum/component/squeak, datum_outputs[1])
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
