@@ -1,0 +1,5 @@
+author: "GranpaWalton"
+delete-after: True
+changes: 
+  - tweak: "The tissue hydration water absorption bonus now applies at the correct threshold"
+  - tweak: "The interaction between tissue hydration and holy water has been added to its description"
