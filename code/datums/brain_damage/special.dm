@@ -199,7 +199,8 @@
 /datum/brain_trauma/special/existential_crisis/on_life()
 	..()
 	if(!veil && world.time > next_crisis && prob(3))
-		fade_out()
+		if(isturf(owner.loc))
+			fade_out()
 
 /datum/brain_trauma/special/existential_crisis/on_lose()
 	if(veil)
