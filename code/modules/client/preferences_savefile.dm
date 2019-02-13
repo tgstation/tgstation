@@ -49,8 +49,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		pda_style = "mono"
 	if(current_version < 20)
 		pda_color = "#808000"
-	if((current_version < 21) && S["feature_ethcolor"] && (S["feature_ethcolor"] == "#9c3030"))
-		WRITE_FILE(S["feature_ethcolor"]	, "9c3030")
+	if((current_version < 21) && features["ethcolor"] && (features["ethcolor"] == "#9c3030"))
+		features["ethcolor"] = "9c3030"
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
