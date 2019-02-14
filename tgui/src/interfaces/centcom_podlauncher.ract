@@ -141,7 +141,7 @@
     <ui-section label=' ' candystripe right> <ui-button style='{{data.styleChoice == 13 ? "selected" : null}}' action='styleGondola' tooltip-side='left'
     tooltip='this gondola can control when he wants to deliver his supplies if he has a smart enough mind, so offer up his body to ghosts for maximum enjoyment. (Make sure to turn off bluespace and set a arbitrarily high open-time if you do!)'>Gondola (alive)</ui-button> </ui-section>
     <ui-section label=' ' candystripe right> <ui-button style='{{data.styleChoice == 14 ? "selected" : null}}' action='styleSeeThrough' tooltip-side='left'
-    tooltip='By selecting this, the pod will instead look like whatevers inside it (as if it were the contents falling by themselves, without a pod). Useful for launching mechs at the station and standing tall as they soar in from the heavens.'>Show Contents!</ui-button> </ui-section>
+    tooltip='By selecting this, the pod will instead look like whatevers inside it (as if it were the contents falling by themselves, without a pod). Useful for launching mechs at the station and standing tall as they soar in from the heavens.'>Show Contents (See-Through Pod)!</ui-button> </ui-section>
 </ui-display>
 
 
