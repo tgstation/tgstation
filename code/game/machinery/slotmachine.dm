@@ -84,7 +84,7 @@
 /obj/machinery/computer/slot_machine/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/coin))
 		var/obj/item/coin/C = I
-		if(paymode = COIN)
+		if(paymode == COIN)
 			if(prob(2))
 				if(!user.transferItemToLoc(C, drop_location()))
 					return
@@ -102,10 +102,10 @@
 		else
 			to_chat(user, "<span class='warning'>This machine is only accepting holochips!</span>")
 	else if(istype(I, /obj/item/holochip))
-		if(paymode = HOLOCHIP)
+		if(paymode == HOLOCHIP)
+			var/obj/item/holochip/H = I
 			if(!user.temporarilyRemoveItemFromInventory(H))
 				return
-			var/obj/item/holochip/H = I
 			to_chat(user, "<span class='notice'>You insert [H.credits] holocredits into [src]'s!</span>")
 			balance += H.credits
 			qdel(H)
@@ -115,7 +115,7 @@
 		if(balance > 0)
 			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
 		else
-			if(paymode = HOLOCHIP)
+			if(paymode == HOLOCHIP)
 				paymode = COIN
 				visible_message("<b>[src]</b> says, 'This machine now works with COINS!'")
 			else
@@ -258,8 +258,8 @@
 		jackpots += 1
 		balance += money - give_payout(JACKPOT)
 		money = 0
-		if(payout = HOLOCHIP)
-			var/obj/item/holochip/H = new obj/item/holochip(loc,JACKPOT)
+		if(paymode == HOLOCHIP)
+			var/obj/item/holochip/H = new /obj/item/holochip(loc,JACKPOT)
 		else
 			for(var/i = 0, i < 5, i++)
 				var/cointype = pick(subtypesof(/obj/item/coin))
@@ -308,7 +308,7 @@
 	balance += surplus
 
 /obj/machinery/computer/slot_machine/proc/give_payout(amount)
-	if(paymode = HOLOCHIP)
+	if(paymode == HOLOCHIP)
 		var/cointype = /obj/item/holochip
 	else
 		var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
@@ -324,8 +324,8 @@
 	return amount
 
 /obj/machinery/computer/slot_machine/proc/dispense(amount = 0, cointype = /obj/item/coin/silver, mob/living/target, throwit = 0)
-	if(paymode = HOLOCHIP)
-		var/obj/item/holochip/H = new obj/item/holochip(loc,amount)
+	if(paymode == HOLOCHIP)
+		var/obj/item/holochip/H = new /obj/item/holochip(loc,amount)
 		
 		if(throwit && target)
 			H.throw_at(target, 3, 10)
