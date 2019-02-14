@@ -29,6 +29,7 @@
 	var/balance = 0 //How much money is in the machine, ready to be CONSUMED.
 	var/jackpots = 0
 	var/paymode = HOLOCHIP //It is a config
+	var/cointype = /obj/item/coin/iron //default cointype
 	var/list/coinvalues = list()
 	var/list/reels = list(list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0, list("", "", "") = 0)
 	var/list/symbols = list(SEVEN = 1, "<font color='orange'>&</font>" = 2, "<font color='yellow'>@</font>" = 2, "<font color='green'>$</font>" = 2, "<font color='blue'>?</font>" = 2, "<font color='grey'>#</font>" = 2, "<font color='white'>!</font>" = 2, "<font color='fuchsia'>%</font>" = 2) //if people are winning too much, multiply every number in this list by 2 and see if they are still winning too much.
@@ -48,7 +49,7 @@
 
 	toggle_reel_spin(0)
 
-	for(var/cointype in typesof(/obj/item/coin))
+	for(cointype in typesof(/obj/item/coin))
 		var/obj/item/coin/C = cointype
 		coinvalues["[cointype]"] = initial(C.value)
 
@@ -262,7 +263,7 @@
 			var/obj/item/holochip/H = new /obj/item/holochip(loc,JACKPOT)
 		else
 			for(var/i = 0, i < 5, i++)
-				var/cointype = pick(subtypesof(/obj/item/coin))
+				cointype = pick(subtypesof(/obj/item/coin))
 				var/obj/item/coin/C = new cointype(loc)
 				random_step(C, 2, 50)
 
@@ -309,9 +310,9 @@
 
 /obj/machinery/computer/slot_machine/proc/give_payout(amount)
 	if(paymode == HOLOCHIP)
-		var/cointype = /obj/item/holochip
+		cointype = /obj/item/holochip
 	else
-		var/cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
+		cointype = obj_flags & EMAGGED ? /obj/item/coin/iron : /obj/item/coin/silver
 
 	if(!(obj_flags & EMAGGED))
 		amount = dispense(amount, cointype, null, 0)
