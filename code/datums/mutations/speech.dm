@@ -72,6 +72,7 @@
 		message = replacetext(message," murder "," tease ")
 		message = replacetext(message," ugly "," beautiful ")
 		message = replacetext(message," douchbag "," nice guy ")
+		message = replacetext(message," douchebag "," nice guy ")
 		message = replacetext(message," whore "," lady ")
 		message = replacetext(message," nerd "," smart guy ")
 		message = replacetext(message," moron "," fun person ")
@@ -198,7 +199,7 @@
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
 		message = replacetext(message," faggot "," square ")
-		message = replacetext(message," muh valids "," getting my kicks ")
+		message = replacetext(message," muh valids "," my kicks ")
 	return trim(message)
 
 
