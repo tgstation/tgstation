@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed incorrect default ethereal color causing a runtime when opening player preferences."
