@@ -86,13 +86,13 @@
 			to_chat(owner, "<big><span class='assimilator'>Our true power, the One Mind, is finally within reach.</span></big>")
 
 /datum/antagonist/hivemind/proc/add_track_bonus(datum/antagonist/hivemind/enemy, bonus)
-	if(individual_track_bonus[enenmy])
+	if(individual_track_bonus[enemy])
 		individual_track_bonus[enemy] = bonus
 	else
 		individual_track_bonus[enemy] += bonus
 
 /datum/antagonist/hivemind/proc/get_track_bonus(datum/antagonist/hivemind/enemy)
-	if(individual_track_bonus[enenmy])
+	if(individual_track_bonus[enemy])
 		. = 0
 	else
 		. = individual_track_bonus[enemy]
