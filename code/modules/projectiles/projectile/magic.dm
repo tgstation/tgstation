@@ -507,7 +507,7 @@
 		if(L.anti_magic_check())
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		//L.apply_status_effect(STATUS_EFFECT_ANTIMAGIC)
+		L.apply_status_effect(STATUS_EFFECT_ANTIMAGIC)
 
 /obj/item/projectile/magic/sapping
 	name = "bolt of sapping"

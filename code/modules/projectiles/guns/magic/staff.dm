@@ -110,16 +110,16 @@
 	desc = "An artefact that spits bolts of graceful magic that can make something fly."
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/flying
-	icon_state = "staffofchange"
-	item_state = "staffofchange"
+	icon_state = "staffofflight"
+	item_state = "staffofflight"
 
 /obj/item/gun/magic/staff/grounding
 	name = "staff of grounding"
 	desc = "An artefact that spits bolts of dense magic that hates flying things."
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/grounding
-	icon_state = "staffofchange"
-	item_state = "staffofchange"
+	icon_state = "staffofgrounding"
+	item_state = "staffofgrounding"
 
 /obj/item/gun/magic/staff/bounty
 	name = "staff of bounty"

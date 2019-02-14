@@ -597,4 +597,4 @@
 		owner.visible_message("<span class='danger'>[owner] is flung back into the air by the glowing wings!</span>")
 
 /datum/status_effect/flymagic/on_remove()
-	owner.visible_message("<span class='warning'>[owner]'s glowing wings dissipates!</span>")
+	owner.visible_message("<span class='warning'>[owner]'s glowing wings dissipate!</span>")
