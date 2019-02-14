@@ -5,7 +5,7 @@
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
 
 /obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
-	return 1
+	return TRUE
 
 /obj/item/shield/riot
 	name = "riot shield"
@@ -28,7 +28,7 @@
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
-		return 0
+		return FALSE
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
 		final_block_chance += 30
 	if(attack_type == LEAP_ATTACK)
@@ -54,7 +54,7 @@
 
 /obj/item/shield/riot/examine(mob/user)
 	..()
-	var/healthpercent = (obj_integrity/max_integrity) * 100
+	var/healthpercent = round((obj_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
 		if(50 to 99)
 			to_chat(user, "<span class='info'>It looks slightly damaged.</span>")
@@ -65,8 +65,7 @@
 
 /obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
-	var/turf/T = get_turf(src)
-	new /obj/item/shard(T)
+	new /obj/item/shard((get_turf(src)))
 
 /obj/item/shield/riot/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
 	if (obj_integrity <= damage)
@@ -74,7 +73,7 @@
 		T.visible_message("<span class='warning'>[hitby] destroys [src]!</span>")
 		shatter(owner)
 		qdel(src)
-		return 0
+		return FALSE
 	take_damage(damage)
 	return ..()
 
@@ -93,11 +92,11 @@
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
 	block_chance = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	max_integrity = 30
 
 /obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/grillehit.ogg', 100)
-	var/turf/T = get_turf(src)
-	new /obj/item/stack/sheet/metal(T)
+	new /obj/item/stack/sheet/metal(get_turf(src))
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"
@@ -114,8 +113,7 @@
 
 /obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/bang.ogg', 50)
-	var/turf/T = get_turf(src)
-	new /obj/item/stack/sheet/mineral/wood(T)
+	new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 
 /obj/item/shield/riot/flash
 	name = "strobe shield"
@@ -151,7 +149,7 @@
 			return
 		else
 			to_chat(user, "You begin to replace the bulb.")
-			if(do_after(user, 20, target = src))
+			if(do_after(user, 20, target = user))
 				if(flash.crit_fail || !flash || QDELETED(flash))
 					return
 				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -168,11 +166,12 @@
 	update_icon()
 
 /obj/item/shield/riot/flash/update_icon()
-	icon_state = "flashshield"
-	item_state = "flashshield"
 	if(!embedded_flash || embedded_flash.crit_fail)
 		icon_state = "riot"
 		item_state = "riot"
+	else
+		icon_state = "flashshield"
+		item_state = "flashshield"
 
 /obj/item/shield/riot/flash/examine(mob/user)
 	..()
