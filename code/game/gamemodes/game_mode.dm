@@ -236,9 +236,14 @@
 
 		for(var/mob/Player in GLOB.alive_mob_list)
 			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
-				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
-					living_antag_player = Player
-					return 0
+				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging- but is their antagonist datum important enough to skip mulligan?
+					var/no_mulligan = FALSE
+					for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
+						if(antag_types.no_mulligan)
+							no_mulligan = TRUE
+					if(no_mulligan)//they were an important antag, they're our new mark
+						living_antag_player = Player
+						return 0
 
 		if(!are_special_antags_dead())
 			return FALSE

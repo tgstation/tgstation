@@ -4,6 +4,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/name = "Antagonist"
 	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
 	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
+	var/no_mulligan = FALSE					//Antagonist isn't important enough to hold up the round from a mulligan.
 	var/datum/mind/owner						//Mind that owns this datum
 	var/silent = FALSE							//Silent will prevent the gain/lose texts to show
 	var/can_coexist_with_others = TRUE			//Whether or not the person will be able to have more than one datum
