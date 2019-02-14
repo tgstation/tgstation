@@ -69,6 +69,7 @@
 						success = TRUE
 						hive.add_to_hive(target)
 						if(ignore_mindshield)
+							to_chat(user, "<span class='warning'>We are briefly exhausted by the effort required by our enhanced assimilation abilities.</span>")
 							user.Immobilize(50)
 							SEND_SIGNAL(target, COMSIG_NANITE_SET_VOLUME, 0)
 							for(var/obj/item/implant/mindshield/M in target.implants)
@@ -346,6 +347,7 @@
 	var/turf/starting_spot
 	var/power = 600
 	var/time_initialized = 0
+	var/out_of_range = FALSE
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/proc/release_control() //If the spell is active, force everybody into their original bodies if they exist, ghost them otherwise, delete the backseat
 	if(!active)
@@ -428,6 +430,7 @@
 			backseat.blind_eyes(power)
 			vessel.overlay_fullscreen("hive_mc", /obj/screen/fullscreen/hive_mc)
 			active = TRUE
+			out_of_range = FALSE
 			starting_spot = get_turf(vessel)
 			time_initialized = world.time
 			revert_cast()
@@ -461,13 +464,22 @@
 		else if(QDELETED(original_body) || original_body.stat == DEAD) //Return vessel to its body, either return or ghost the original
 			to_chat(vessel, "<span class='userdanger'>Our body has been destroyed, the hive cannot survive without its host!</span>")
 			release_control()
-		else if(get_dist(starting_spot, vessel) > 14)
-			vessel.blur_eyes(20)
-			if(prob(35))
-				to_chat(vessel, "<span class='warning'>Our vessel has been moved too far away from the initial point of control and has been disconnected!</span>")
-				release_control()
+		else if(!out_of_range && get_dist(starting_spot, vessel) > 14)
+			out_of_range = TRUE
+			flash_color(vessel, flash_color="#800080", flash_time=10)
+			to_chat(vessel, "<span class='warning'>Our vessel has been moved too far away from the initial point of control, we will be disconnected if we go much further!</span>")
+			addtimer(CALLBACK(src, "range_check"), 30)
+		else if(get_dist(starting_spot, vessel) > 21)
+			release_control()
 
 	..()
+
+/obj/effect/proc_holder/spell/target_hive/hive_control/proc/range_check()
+	if(!active)
+		return
+	if(get_dist(starting_spot, vessel) > 14)
+		release_control()
+	out_of_range = FALSE
 
 /obj/effect/proc_holder/spell/target_hive/hive_control/choose_targets(mob/user = usr)
 	if(!active)
@@ -803,6 +815,8 @@
 	the_spell.ignore_mindshield = !active
 	to_chat(user, "<span class='notice'>We [active?"let our minds rest and cancel our crushing power.":"prepare to crush mindshielding technology!"]</span>")
 	active = !active
+	if(active)
+		revert_cast()
 
 /obj/effect/proc_holder/spell/targeted/forcewall/hive
 	name = "Telekinetic Field"
@@ -869,7 +883,7 @@
 		to_chat(user, "<span class='notice'>This is a bug. Error:HIVE1</span>")
 		return
 	var/mob/living/boss = user.get_real_hivehost()
-	var/datum/objective/objective = "Ensure the One Mind survives under the leadership of [boss.real_name]!"
+	var/datum/objective/objective = new("Ensure the One Mind survives under the leadership of [boss.real_name]!")
 	var/datum/team/hivemind/one_mind_team = new /datum/team/hivemind(user.mind)
 	hive.active_one_mind = one_mind_team
 	one_mind_team.objectives += objective

@@ -165,7 +165,7 @@
 	calc_size()
 
 /datum/antagonist/hivemind/antag_panel_data()
-	return "Vessels Assimilated: [hive_size]"
+	return "Vessels Assimilated: [hive_size] (+[size_mod])"
 
 /datum/antagonist/hivemind/proc/awaken()
 	if(!owner?.current)

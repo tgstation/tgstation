@@ -33,9 +33,10 @@
 	else
 		var/datum/objective/brainwashing/obj = new(objective)
 		vessel.objectives += obj
-		M.add_antag_datum(vessel)
 		var/message = "<span class='deadsay'><b>[M]</b> has been brainwashed with the following objectives: [objective]."
 		deadchat_broadcast(message, follow_target = M, turf_target = get_turf(M), message_type=DEADCHAT_REGULAR)
+	if(!M.has_antag_datum(/datum/antagonist/hivevessel))
+		M.add_antag_datum(vessel)
 
 /datum/antagonist/hivevessel/apply_innate_effects()
 	if(owner.assigned_role == "Clown")
