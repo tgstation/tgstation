@@ -38,7 +38,5 @@
 				objectives_complete = FALSE
 				break
 
-	if(objectives_complete)
-		return "<span class='greentext big'>[owner.name] protected [owner.p_their()] date</span>"
-	else
+	if(!objectives_complete)
 		return "<span class='redtext big'>[owner.name] date failed!</span>"
