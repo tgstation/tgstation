@@ -260,7 +260,7 @@
 		balance += money - give_payout(JACKPOT)
 		money = 0
 		if(paymode == HOLOCHIP)
-			var/obj/item/holochip/H = new /obj/item/holochip(loc,JACKPOT)
+			new /obj/item/holochip(loc,JACKPOT)
 		else
 			for(var/i = 0, i < 5, i++)
 				cointype = pick(subtypesof(/obj/item/coin))
