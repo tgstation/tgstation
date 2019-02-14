@@ -1,0 +1,5 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - admin: "Added a Drop Pod bay conveniently close to the CentCom ferry, useful for ERTs or Deathsquads who want to arrive in style!"
+  - admin: "The CentCom-Supplypod-Launcher now has an option to clear a bay of any mobs and objects."
