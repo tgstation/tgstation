@@ -1,4 +1,0 @@
-author: "Lett1"
-delete-after: True
-changes: 
-  - code_imp: "spawn_and_random_walk not returns a list of objects created"
