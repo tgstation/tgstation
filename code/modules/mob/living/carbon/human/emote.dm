@@ -57,7 +57,7 @@
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-	if(!H.mind?.miming)
+	if(H.mind?.miming)
 		return
 	if(ishumanbasic(H) || iscatperson(H))
 		if(user.gender == FEMALE)
