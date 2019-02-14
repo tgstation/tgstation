@@ -67,7 +67,7 @@
 		else if(stage == EMPTY)
 			to_chat(user, "<span class='warning'>You need to add an activation mechanism!</span>")
 
-	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
+	else if(stage == WIRED && is_type_in_list(I, allowed_containers) && !istype(I, /obj/item/reagent_containers/glass/beaker/bluespace))
 		. = 1 //no afterattack
 		if(beakers.len == 2)
 			to_chat(user, "<span class='warning'>[src] can not hold more containers!</span>")
