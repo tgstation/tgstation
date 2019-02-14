@@ -68,7 +68,7 @@
 			sound_output.y = 1
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	if(world.time > last_played_time + cooldown)
+	if(world.time >= last_played_time + cooldown)
 		receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
 	else
 		receiver.display_output(sound_output, vfx, , turf_source, vol, vary, frequency, falloff, channel, pressure_affected) //changing the text takes more cpu time than a single if check
