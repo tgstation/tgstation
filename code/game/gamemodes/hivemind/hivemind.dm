@@ -64,6 +64,9 @@
 		if(H.hivemembers.Find(M))
 			H.hivemembers -= M
 			H.calc_size()
+	var/datum/antagonist/hivevessel/V = M.is_wokevessel()
+	if(V && M.mind)
+		M.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 
 /datum/game_mode/hivemind/pre_setup()
 

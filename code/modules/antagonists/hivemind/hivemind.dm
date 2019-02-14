@@ -127,6 +127,10 @@
 	if(M)
 		hivemembers -= M
 		calc_size()
+		if(active_one_mind)
+			var/datum/antagonist/hivevessel/V = C.is_wokevessel()
+			if(V)
+				M.remove_antag_datum(/datum/antagonist/hivevessel)
 
 /datum/antagonist/hivemind/proc/handle_ejection(mob/living/carbon/C)
 	var/user_warning = "The enemy host has been ejected from our mind"
