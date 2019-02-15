@@ -61,7 +61,8 @@
 		/obj/item/holosign_creator/atmos,
 		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
-		/obj/item/assembly/signaler
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer
 		))
 	STR.can_hold = can_hold
 

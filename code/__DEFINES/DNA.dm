@@ -36,6 +36,9 @@
 #define VOID		/datum/mutation/human/void
 #define STRONG    	/datum/mutation/human/strong
 #define FIRESWEAT	/datum/mutation/human/fire
+#define ANTENNA		/datum/mutation/human/antenna
+#define PARANOIA	/datum/mutation/human/paranoia
+#define MINDREAD	/datum/mutation/human/mindreader
 #define INSULATED	/datum/mutation/human/insulated
 #define SHOCKTOUCH	/datum/mutation/human/shock
 #define OLFACTION	/datum/mutation/human/olfaction
@@ -43,7 +46,6 @@
 #define BADBLINK	/datum/mutation/human/badblink
 #define SPASTIC		/datum/mutation/human/spastic
 #define EXTRASTUN	/datum/mutation/human/extrastun
-#define YELLING		/datum/mutation/human/yelling
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
 
@@ -137,3 +139,9 @@
 #define ORGAN_SLOT_BRAIN_ANTIDROP "brain_antidrop"
 #define ORGAN_SLOT_BRAIN_ANTISTUN "brain_antistun"
 #define ORGAN_SLOT_TAIL "tail"
+
+
+//used for the can_chromosome var on mutations
+#define CHROMOSOME_NEVER 0
+#define CHROMOSOME_NONE 1
+#define CHROMOSOME_USED 2

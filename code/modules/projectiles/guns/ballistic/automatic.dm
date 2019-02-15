@@ -104,6 +104,7 @@
 	burst_size = 2
 	bolt_type = BOLT_TYPE_OPEN
 	mag_display = TRUE
+	rack_sound = "sound/weapons/pistollock.ogg"
 
 /obj/item/gun/ballistic/automatic/m90
 	name = "\improper M-90gl Carbine"
@@ -234,7 +235,7 @@
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	..()
-	to_chat(user, "<b>ctrl + click</b> to [cover_open ? "close" : "open"] the dust cover.")
+	to_chat(user, "<b>alt + click</b> to [cover_open ? "close" : "open"] the dust cover.")
 	if(cover_open && magazine)
 		to_chat(user, "<span class='notice'>It seems like you could use an <b>empty hand</b> to remove the magazine.</span>")
 

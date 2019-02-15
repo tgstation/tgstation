@@ -6,12 +6,14 @@
 	desc = "A genetic defect that sporadically causes seizures."
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You get a headache.</span>"
+	synchronizer_coeff = 1
+	power_coeff = 1
 
 /datum/mutation/human/epilepsy/on_life()
-	if(prob(1) && owner.stat == CONSCIOUS)
+	if(prob(1 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
 		owner.visible_message("<span class='danger'>[owner] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
-		owner.Unconscious(200)
-		owner.Jitter(1000)
+		owner.Unconscious(200 * GET_MUTATION_POWER(src))
+		owner.Jitter(1000 * GET_MUTATION_POWER(src))
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "epilepsy", /datum/mood_event/epilepsy)
 		addtimer(CALLBACK(src, .proc/jitter_less), 90)
 
@@ -52,12 +54,30 @@
 	desc = "A chronic cough."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='danger'>You start coughing.</span>"
+	synchronizer_coeff = 1
+	power_coeff = 1
 
 /datum/mutation/human/cough/on_life()
-	if(prob(5) && owner.stat == CONSCIOUS)
+	if(prob(5 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS)
 		owner.drop_all_held_items()
 		owner.emote("cough")
+		if(GET_MUTATION_POWER(src) > 1)
+			var/cough_range = GET_MUTATION_POWER(src) * 4
+			var/turf/target = get_ranged_target_turf(owner, turn(owner.dir, 180), cough_range)
+			owner.throw_at(target, cough_range, GET_MUTATION_POWER(src))
 
+/datum/mutation/human/paranoia
+	name = "Paranoia"
+	desc = "Subject is easily terrified, and may suffer from hallucinations."
+	quality = NEGATIVE
+	text_gain_indication = "<span class='danger'>You feel screams echo through your mind...</span>"
+	text_lose_indication = "<span class'notice'>The screaming in your mind fades.</span>"
+
+/datum/mutation/human/paranoia/on_life()
+	if(prob(5) && owner.stat == CONSCIOUS)
+		owner.emote("scream")
+		if(prob(25))
+			owner.hallucination += 20
 
 //Dwarfism shrinks your body and lets you pass tables.
 /datum/mutation/human/dwarfism
@@ -110,9 +130,10 @@
 	desc = "A chronic twitch that forces the user to scream bad words." //definitely needs rewriting
 	quality = NEGATIVE
 	text_gain_indication = "<span class='danger'>You twitch.</span>"
+	synchronizer_coeff = 1
 
 /datum/mutation/human/tourettes/on_life()
-	if(prob(10) && owner.stat == CONSCIOUS && !owner.IsStun())
+	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
 		owner.Stun(200)
 		switch(rand(1, 3))
 			if(1)
@@ -170,12 +191,17 @@
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 1.5
+	power_coeff = 1
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	glowth = new(owner)
 	glowth.set_light(glow, glow, dna.features["mcolor"])
+
+/datum/mutation/human/glow/modify(mob/living/carbon/human/owner)
+	if(glowth)
+		glowth.set_light(glow + GET_MUTATION_POWER(src) , glow + GET_MUTATION_POWER(src), dna.features["mcolor"])
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -215,10 +241,12 @@
 	text_gain_indication = "<span class='warning'>You feel hot.</span>"
 	text_lose_indication = "<span class'notice'>You feel a lot cooler.</span>"
 	difficulty = 14
+	synchronizer_coeff = 1
+	power_coeff = 1
 
 /datum/mutation/human/fire/on_life()
-	if(prob(1+(100-dna.stability)/10))
-		owner.adjust_fire_stacks(2)
+	if(prob((1+(100-dna.stability)/10)) * GET_MUTATION_SYNCHRONIZER(src))
+		owner.adjust_fire_stacks(2 * GET_MUTATION_POWER(src))
 		owner.IgniteMob()
 
 /datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)

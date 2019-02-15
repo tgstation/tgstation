@@ -36,14 +36,14 @@
 	//Four bolt types:
 	//BOLT_TYPE_STANDARD: Gun has a bolt, it stays closed while not cycling. The gun must be racked to have a bullet chambered when a mag is inserted.
 	//Example: c20, shotguns, m90
-	//BOLT_TYPE_OPEN: Gun has a bolt, it is open when ready to fire. Largely the same as standard, except the gun can never have a chambered bullet with no magazine.
+	//BOLT_TYPE_OPEN: Gun has a bolt, it is open when ready to fire. The gun can never have a chambered bullet with no magazine, but the bolt stays ready when a mag is removed.
 	//Example: Some SMGs, the L6
 	//BOLT_TYPE_NO_BOLT: Gun has no moving bolt mechanism, it cannot be racked. Also dumps the entire contents when emptied instead of a magazine.
 	//Example: Break action shotguns, revolvers
 	//BOLT_TYPE_LOCKING: Gun has a bolt, it locks back when empty. It can be released to chamber a round if a magazine is in.
 	//Example: Pistols with a slide lock, some SMGs
 	var/bolt_type = BOLT_TYPE_STANDARD
-	var/bolt_locked = FALSE
+	var/bolt_locked = FALSE //Used for locking bolt and open bolt guns. Set a bit differently for the two but prevents firing when true for both.
 	var/bolt_wording = "bolt" //bolt, slide, etc.
 	var/semi_auto = TRUE //Whether the gun has to be racked each shot or not.
 	var/obj/item/ammo_box/magazine/magazine
@@ -58,6 +58,8 @@
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
 	if (!spawnwithmagazine)
+		bolt_locked = TRUE
+		update_icon()
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
@@ -75,13 +77,15 @@
 	cut_overlays()
 	if (bolt_type == BOLT_TYPE_LOCKING)
 		add_overlay("[icon_state]_bolt[bolt_locked ? "_locked" : ""]")
+	if (bolt_type == BOLT_TYPE_OPEN && bolt_locked)
+		add_overlay("[icon_state]_bolt")
 	if (suppressed)
 		add_overlay("[icon_state]_suppressor")
 	if(!chambered && empty_indicator)
 		add_overlay("[icon_state]_empty")
 	if (magazine)
 		if (special_mags)
-			add_overlay("[icon_state]_mag_[magazine.icon_state]")
+			add_overlay("[icon_state]_mag_[initial(magazine.icon_state)]")
 			if (!magazine.ammo_count())
 				add_overlay("[icon_state]_mag_empty")
 		else
@@ -127,10 +131,12 @@
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
 	if (bolt_type == BOLT_TYPE_NO_BOLT) //If there's no bolt, nothing to rack
 		return
-	if (bolt_type == BOLT_TYPE_OPEN && chambered != null) //If it's an open bolt, there's no way to rack it once it's open
-		if (user)
-			to_chat("<span class='notice'>It's already chambered!</span>")
-		return
+	if (bolt_type == BOLT_TYPE_OPEN)
+		if(!bolt_locked)	//If it's an open bolt, racking again would do nothing
+			if (user)
+				to_chat(user, "<span class='notice'>\The [src] is already ready to fire!</span>")
+			return
+		bolt_locked = FALSE
 	if (user)
 		to_chat(user, "<span class='notice'>You rack the [bolt_wording] of \the [src].</span>")
 	process_chamber(!chambered, FALSE)
@@ -155,6 +161,8 @@
 		if (display_message)
 			to_chat(user, "<span class='notice'>You load a new [magazine_wording] into \the [src].</span>")
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
+		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
+			chamber_round()
 		update_icon()
 		return TRUE
 	else
@@ -174,7 +182,7 @@
 		insert_magazine(user, tac_load, FALSE)
 		to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src].")
 	user.put_in_hands(old_mag)
-	magazine.update_icon()
+	old_mag.update_icon()
 	if (!tac_load)
 		magazine = null
 	if (display_message)
@@ -200,6 +208,9 @@
 		return	
 	if (istype(A, /obj/item/ammo_casing) || istype(A, /obj/item/ammo_box))
 		if (bolt_type == BOLT_TYPE_NO_BOLT || internal_magazine)
+			if (chambered && !chambered.BB)
+				chambered.forceMove(drop_location())
+				chambered = null
 			var/num_loaded = magazine.attackby(A, user, params, TRUE)
 			if (num_loaded)
 				to_chat(user, "<span class='notice'>You load [num_loaded] [cartridge_wording]\s into \the [src].</span>")
@@ -253,10 +264,18 @@
 			update_icon()
 			return
 
-/obj/item/gun/ballistic/proc/empty_checks()
+/obj/item/gun/ballistic/proc/prefire_empty_checks()
+	if (!chambered && !get_ammo())
+		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
+			bolt_locked = TRUE
+			playsound(src, bolt_drop_sound, bolt_drop_sound_volume)
+			update_icon()
+
+
+/obj/item/gun/ballistic/proc/postfire_empty_checks()
 	if (!chambered && !get_ammo())
 		if (!alarmed && empty_alarm)
-			playsound(src.loc, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
+			playsound(src, empty_alarm_sound, empty_alarm_volume, empty_alarm_vary)
 			alarmed = TRUE
 			update_icon()
 		if (bolt_type == BOLT_TYPE_LOCKING)
@@ -264,8 +283,9 @@
 			update_icon()
 
 /obj/item/gun/ballistic/afterattack()
-	empty_checks()
-	. = ..()
+	prefire_empty_checks()
+	. = ..() //The gun actually firing
+	postfire_empty_checks()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/gun/ballistic/attack_hand(mob/user)
@@ -306,7 +326,8 @@
 
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
-	to_chat(user, "It has [get_ammo()] round\s remaining.")
+	var/count_chambered = !((bolt_type == BOLT_TYPE_NO_BOLT) || (bolt_type == BOLT_TYPE_OPEN))
+	to_chat(user, "It has [get_ammo(count_chambered)] round\s remaining.")
 	if (!chambered)
 		to_chat(user, "It does not seem to have a round chambered.")
 	if (bolt_locked)
