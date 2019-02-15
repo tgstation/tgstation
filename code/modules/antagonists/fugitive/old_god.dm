@@ -13,6 +13,8 @@
 	..()
 	var/datum/action/innate/yalp_transmit/transmit = new
 	transmit.Grant(src)
+	var/datum/action/innate/yalp_transport/transport = new
+	transport.Grant(src)
 
 /mob/camera/yalp_elor/CanPass(atom/movable/mover, turf/target)
 	return TRUE
@@ -66,6 +68,8 @@
 	..()
 	var/safe = FALSE
 	for(var/mob/V in GLOB.player_list)
+		if(!V.mind)
+			continue
 		var/datum/antagonist/fugitive/fug = V.mind.has_antag_datum(/datum/antagonist/fugitive)
 		if(!fug || V == src)
 			continue
@@ -117,3 +121,35 @@
 		var/follow_rev = FOLLOW_LINK(ded, user)
 		var/follow_whispee = FOLLOW_LINK(ded, target)
 		to_chat(ded, "[follow_rev] <span class='boldnotice'>[user] [name]:</span> <span class='notice'>\"[message]\" to</span> [follow_whispee] <span class='name'>[target]</span>")
+
+/datum/action/innate/yalp_transport
+	name = "Guidance"
+	desc = "Transports you to a follower."
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
+	background_icon_state = "bg_spell"
+	button_icon_state = "god_transport"
+
+/datum/action/innate/yalp_transport/Trigger()
+	var/list/faithful = list()
+	var/mob/living/target
+	for(var/mob/V in GLOB.player_list)
+		var/datum/antagonist/fugitive/fug = V.mind.has_antag_datum(/datum/antagonist/fugitive)
+		if(!fug || V == src)
+			continue
+		if(fug.is_captured) //no, you can't teleport to people already captured. there's a lot of asterixes to that
+			continue
+		faithful += V
+	if(!faithful.len)
+		to_chat(owner, "<span class='warning'>You have no faithful to jump to!</span>")
+		return FALSE
+	if(faithful.len == 1)
+		target = faithful[1]
+	else
+		target = input("Which of your followers do you wish to jump to?", "Targeting") as null|mob in faithful
+
+	var/turf/T = get_turf(target)
+	if(target && T)
+		owner.forceMove(T)
+		return TRUE
+	to_chat(owner, "<span class='warning'>Either your target or the ground he is standing on has stopped existing!</span>")
+	return FALSE
