@@ -5,7 +5,7 @@
 	icon_state = "coil0"
 	anchored = FALSE
 	density = TRUE
-
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -102,7 +102,7 @@
 	var/power = (powernet.avail/2)
 	add_load(power)
 	playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, 1, extrarange = 5)
-	tesla_zap(src, 10, power/(coeff/2))
+	tesla_zap(src, 10, power/(coeff/2), tesla_flags)
 	tesla_buckle_check(power/(coeff/2))
 
 // Tesla R&D researcher
