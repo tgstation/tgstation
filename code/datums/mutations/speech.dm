@@ -196,6 +196,7 @@
 		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
 		message = replacetext(message," out of "," outta ")
 		message = replacetext(message," thank you "," thank you, thank you very much ")
+		message = replacetext(message," thanks "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
 		message = replacetext(message," faggot "," square ")
