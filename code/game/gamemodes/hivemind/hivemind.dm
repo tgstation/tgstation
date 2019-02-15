@@ -6,7 +6,7 @@
 	false_report_weight = 5
 	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_jobs = list("Cyborg","AI")
-	required_players = 25
+	required_players = 24
 	required_enemies = 2
 	recommended_enemies = 3
 	reroll_friendly = 1
@@ -20,20 +20,19 @@
 	var/list/hosts = list()
 
 /proc/is_hivehost(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/hivemind)
-
-/proc/is_real_hivehost(mob/living/M) //This proc ignores mind controlled vessels
 	if(!M || !M.mind)
-		return FALSE
-	var/datum/antagonist/hivemind/hive = M.mind.has_antag_datum(/datum/antagonist/hivemind)
-	if(!hive)
-		return FALSE
-	var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in M.mind.spell_list
-	if(the_spell && the_spell.active)
-		if(the_spell.original_body == M)
+		return
+	return M.mind.has_antag_datum(/datum/antagonist/hivemind)
+
+/mob/living/proc/is_real_hivehost() //This proc ignores mind controlled vessels
+	for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
+		if(!hive.owner?.spell_list)
+			continue
+		var/obj/effect/proc_holder/spell/target_hive/hive_control/the_spell = locate(/obj/effect/proc_holder/spell/target_hive/hive_control) in hive.owner.spell_list
+		if((!the_spell || !the_spell.active ) && mind == hive.owner)
 			return TRUE
-	else
-		return TRUE
+		if(the_spell?.active && the_spell.original_body == src)
+			return TRUE
 	return FALSE
 
 /mob/living/proc/get_real_hivehost() //Returns src unless it's under mind control, then it returns the original body
@@ -47,7 +46,10 @@
 		return the_spell.original_body
 	return M
 
-/proc/is_hivemember(mob/living/M)
+/proc/is_hivemember(mob/living/L)
+	if(!L)
+		return FALSE
+	var/datum/mind/M = L.mind
 	if(!M)
 		return FALSE
 	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
@@ -71,7 +73,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
-	var/num_hosts = max( 1 , rand(0,1) + min(5, round(num_players() / 12) ) ) //1 host for every 12 players up to 60, with a 50% chance of an extra
+	var/num_hosts = max( 1 , rand(0,1) + min(8, round(num_players() / 8) ) ) //1 host for every 8 players up to 64, with a 50% chance of an extra
 
 	for(var/j = 0, j < num_hosts, j++)
 		if (!antag_candidates.len)
@@ -91,10 +93,6 @@
 
 
 /datum/game_mode/hivemind/post_setup()
-	if(hosts.len >= 4 && prob(35)) //Create the versus objective here since we want a common target for all the antags
-		var/datum/antagonist/hivemind/hive
-		hive.common_assimilation_obj = new /datum/objective/hivemind/assimilate_common
-		hive.common_assimilation_obj.find_target_by_role(role = ROLE_HIVE, role_type = TRUE, invert = TRUE)
 	for(var/datum/mind/i in hosts)
 		i.add_antag_datum(/datum/antagonist/hivemind)
 	return ..()

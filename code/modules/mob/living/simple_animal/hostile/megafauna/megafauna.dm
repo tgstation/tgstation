@@ -33,16 +33,31 @@
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/gps/internal
+	var/internal_type
 	var/recovery_time = 0
+	var/true_spawn = 1 // if this is a megafauna that should grant achievements, or have a gps signal
+	var/nest_range = 10
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
+	if(internal_type && true_spawn)
+		internal = new internal_type(src)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	add_trait(TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
 	. = ..()
+
+/mob/living/simple_animal/hostile/megafauna/Moved()
+	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
+		var/turf/closest = get_turf(nest.parent)
+		for(var/i = 1 to nest_range)
+			closest = get_step(closest, get_dir(closest, src))
+		forceMove(closest) // someone teleported out probably and the megafauna kept chasing them
+		target = null
+		return
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
 	return TRUE
@@ -56,7 +71,7 @@
 		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
 			spawn_crusher_loot()
 			crusher_kill = TRUE
-		if(!(flags_1 & ADMIN_SPAWNED_1))
+		if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 			var/tab = "megafauna_kills"
 			if(crusher_kill)
 				tab = "megafauna_kills_crusher"

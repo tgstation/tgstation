@@ -1,0 +1,22 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - rscadd: "Assmilation has received a major update!
+remove: Kill, Maroon and Protect objectives have been removed from the mode."
+  - tweak: "Powers have been reorganized and are now unlocked in batches every five vessels. This gives hosts more power from the get-go and gives them distinct phases due to each batch affecting a specific area of the host's ability."
+  - tweak: "The psychic link pinpointer now starts off with very little time for hosts and must be strengthened by using Network Invasion. Each time a host is detected via NI, they can be tracked for an extra 30 seconds, and every successful use of NI increases the duration of all tracking by 10 seconds. A successful use of a new power, Reclaim, also increases the duration of all tracking by 30 seconds."
+  - tweak: "This means that without generous use of Network Invasion and Reclaim, hivemind hosts will lose their radar before Security does."
+  - rscadd: "Four new powers have been added!"
+  - rscadd: "Reclaim is an early-game ability that instantly kills critically injured hosts that are adjacent, and reduces all power requirements by five vessels for each host reclaimed, instantly unlocking your next set of powers."
+  - rscadd: "Psychoreception is an early-game ability that gives you the approximate distance of anybody currently tracking you and any hosts you've previously detected via Network Invasion."
+  - rscadd: "Chaos Induction is a mid-game power with a single use that turns four random vessels into antagonists with a single, customizable objective."
+  - rscadd: "Circadian Shift is a late-game power that sends everybody in sight to sleep for up to almost a minute. The more people affected, the less time it lasts, the minimum being eight seconds.
+remove: Mass Assimilation has been removed as Reclaim now fills its role."
+  - tweak: "Assimilate Vessel and Release Vessel's cooldown have been reduced to 5 seconds to reduce waiting time between assimilation attempts."
+  - tweak: "Bruteforce is no longer temporary, but immobilizes the user for five seconds after assimilation."
+  - tweak: "Hive Sight also lets you hear what the vessel does."
+  - tweak: "The antag limit has been upped from 6 to 9"
+  - code_imp: "A lot of internal changes to how Assimilation works. In summary, Assimilation now affects the mind instead of the mob, meaning that players will stay assimilated in a few more scenarios, most notably after death."
+  - balance: "Induce Panic and Distortion Field have been buffed to be more reliable, especially at lower hive sizes."
+  - balance: "Induce Panic and Circadian Shift can affect silicons but no longer affect hivemind hosts.
+experimental: A new endgame has been added. The One Mind that survives this ordeal will show the world the true terror of the word Hivemind."
