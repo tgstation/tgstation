@@ -71,7 +71,7 @@
 	else if(stage == WIRED && is_type_in_list(I, allowed_containers))
 		. = TRUE //no afterattack
 		if(is_type_in_list(I, banned_containers))
-			to_chat(user, "<span class='warning'>[src] is too small to fit [I]!</span>")
+			to_chat(user, "<span class='warning'>[src] is too small to fit [I]!</span>") // this one hits home huh anon?
 			return
 		if(beakers.len == 2)
 			to_chat(user, "<span class='warning'>[src] can not hold more containers!</span>")
