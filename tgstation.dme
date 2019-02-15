@@ -14,6 +14,7 @@
 
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\RandomZLevels\VR\vrhub.dmm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
@@ -1418,6 +1419,7 @@
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
 #include "code\modules\awaymissions\mission_code\undergroundoutpost45.dm"
+#include "code\modules\awaymissions\mission_code\vrhub.dm"
 #include "code\modules\awaymissions\mission_code\wildwest.dm"
 #include "code\modules\bsql\includes.dm"
 #include "code\modules\buildmode\bm_mode.dm"

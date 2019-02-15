@@ -99,10 +99,6 @@
 /obj/structure/table,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
-"aG" = (
-/obj/effect/landmark/vr_spawn/syndicate,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/cafe)
 "aH" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/indestructible,
@@ -310,6 +306,10 @@
 /obj/item/clothing/glasses/welding,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
+"bT" = (
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/general)
 "bU" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/mineral/titanium/blue,
@@ -749,10 +749,6 @@
 	icon_state = "console";
 	dir = 8
 	},
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
-"eJ" = (
-/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "eK" = (
@@ -1637,13 +1633,6 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
-"jC" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/effect/landmark/vr_spawn/syndicate,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
 "jK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -1660,11 +1649,6 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
-"jM" = (
-/obj/structure/chair,
-/obj/effect/landmark/vr_spawn/syndicate,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/general)
 "jN" = (
 /obj/machinery/vending/coffee,
 /turf/open/indestructible,
@@ -1703,13 +1687,6 @@
 "jU" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/indestructible/riveted,
-/area/awaymission/centcomAway/general)
-"jX" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/landmark/vr_spawn/syndicate,
-/turf/open/indestructible,
 /area/awaymission/centcomAway/general)
 "kf" = (
 /obj/machinery/button/door/indestructible{
@@ -1900,7 +1877,6 @@
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
-/obj/effect/landmark/vr_spawn/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
 "ll" = (
@@ -2529,10 +2505,6 @@
 /obj/effect/vr_clean_master,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
-"VC" = (
-/obj/effect/landmark/vr_spawn/syndicate,
-/turf/open/indestructible,
-/area/awaymission/centcomAway/hangar)
 
 (1,1,1) = {"
 aa
@@ -7816,7 +7788,7 @@ Tc
 bd
 bd
 bd
-VC
+bd
 bd
 aV
 aa
@@ -7933,7 +7905,7 @@ bd
 mS
 bd
 bd
-VC
+bd
 bd
 bd
 jt
@@ -10104,22 +10076,22 @@ ab
 ag
 ac
 ai
-aG
+ai
 ac
 ai
-aG
+ai
 ac
 ai
-aG
+ai
 ac
 ai
 ai
 ac
 dq
-aG
+ai
 ac
 dq
-aG
+ai
 ad
 ec
 eu
@@ -10134,7 +10106,7 @@ gp
 eu
 lB
 gW
-eJ
+gW
 gW
 gW
 dY
@@ -10143,7 +10115,7 @@ dY
 gW
 gW
 gW
-eJ
+gW
 gW
 gW
 jw
@@ -10409,10 +10381,10 @@ gW
 eu
 iu
 zk
-jM
+GJ
 jQ
 jQ
-jX
+eW
 gW
 gW
 gW
@@ -10420,7 +10392,7 @@ kj
 hk
 kr
 gW
-eJ
+gW
 gW
 gW
 eu
@@ -10539,10 +10511,10 @@ jk
 eu
 jy
 zk
-jM
+GJ
 jQ
 jQ
-jX
+eW
 gW
 gW
 gW
@@ -11427,7 +11399,7 @@ gW
 eV
 gW
 gW
-gW
+bT
 gW
 fv
 iW
@@ -11443,7 +11415,7 @@ it
 dY
 gW
 gW
-eJ
+gW
 gW
 gW
 jx
@@ -11465,7 +11437,7 @@ gM
 jK
 eu
 gW
-eJ
+gW
 gW
 zk
 zk
@@ -11711,7 +11683,7 @@ jh
 jh
 jO
 gW
-jC
+jh
 gW
 jh
 gW
@@ -11944,7 +11916,7 @@ ai
 am
 eu
 eI
-eJ
+gW
 eI
 fv
 gW
@@ -12093,7 +12065,7 @@ gW
 dY
 gW
 gW
-eJ
+gW
 gW
 hl
 eu
@@ -12371,7 +12343,7 @@ gW
 kj
 hk
 kE
-eJ
+gW
 gW
 eu
 aa

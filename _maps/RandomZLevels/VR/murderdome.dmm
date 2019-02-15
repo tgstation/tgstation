@@ -101,10 +101,6 @@
 /obj/item/gun/energy/laser/scatter,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
-"m" = (
-/obj/effect/landmark/vr_spawn,
-/turf/open/indestructible,
-/area/awaymission/vr/murderdome)
 "n" = (
 /obj/item/firing_pin,
 /turf/open/indestructible,
@@ -240,6 +236,7 @@
 /area/awaymission/vr/murderdome)
 "W" = (
 /obj/effect/vr_clean_master,
+/obj/effect/portal/permanent/one_way/destroy/murderdome,
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
 "Y" = (
@@ -409,7 +406,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -452,7 +449,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
@@ -721,7 +718,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -764,7 +761,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
@@ -1033,7 +1030,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -1076,7 +1073,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
@@ -1345,7 +1342,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -1388,7 +1385,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
@@ -1657,7 +1654,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -1700,7 +1697,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
@@ -1969,7 +1966,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -2012,7 +2009,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
@@ -2281,7 +2278,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -2324,7 +2321,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
@@ -2593,7 +2590,7 @@ b
 b
 e
 j
-m
+j
 j
 j
 j
@@ -2636,7 +2633,7 @@ j
 j
 j
 j
-m
+j
 j
 D
 b
