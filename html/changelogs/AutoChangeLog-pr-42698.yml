@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - code_imp: "Fixes ISINRANGE_EX using the wrong relational operator."
