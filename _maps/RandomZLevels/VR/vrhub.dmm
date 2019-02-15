@@ -36,7 +36,6 @@
 /area/awaymission/vr/miner)
 "ai" = (
 /obj/structure/spawner/megafauna/blood_drunk,
-/obj/effect/portal/permanent/one_way/destroy/vr_boss_rush,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission/vr/miner)
 "aj" = (
@@ -63,7 +62,6 @@
 /area/awaymission/vr/miner)
 "ap" = (
 /obj/structure/spawner/megafauna/bubblegum,
-/obj/effect/portal/permanent/one_way/destroy/vr_boss_rush_continue,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission/vr/miner)
 "aq" = (
@@ -73,18 +71,8 @@
 	},
 /turf/open/indestructible/hierophant/two,
 /area/awaymission/vr/miner)
-"ar" = (
-/obj/structure/spawner/megafauna/blood_drunk,
-/obj/effect/portal/permanent/one_way/destroy/blood_drunk_miner,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/miner)
 "as" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/healing,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/miner)
-"at" = (
-/obj/structure/spawner/megafauna/bubblegum,
-/obj/effect/portal/permanent/one_way/destroy/bubblegum,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission/vr/miner)
 "au" = (
@@ -101,11 +89,6 @@
 /area/awaymission/vr/miner)
 "ax" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/food,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/miner)
-"ay" = (
-/obj/structure/spawner/megafauna/colossus,
-/obj/effect/portal/permanent/one_way/destroy/colossus,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission/vr/miner)
 "az" = (
@@ -276,11 +259,6 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/awaymission/vr/miner)
-"bg" = (
-/obj/structure/spawner/megafauna/hierophant,
-/obj/effect/portal/permanent/one_way/destroy/hierophant,
-/turf/open/indestructible/hierophant/two,
-/area/awaymission/vr/miner)
 "bh" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/misc,
 /turf/open/floor/mineral/silver{
@@ -362,16 +340,6 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/miner)
-"bt" = (
-/obj/structure/spawner/megafauna/legion,
-/obj/effect/portal/permanent/one_way/destroy/legion,
-/turf/open/indestructible/necropolis,
-/area/awaymission/vr/miner)
-"bu" = (
-/obj/structure/spawner/megafauna/dragon,
-/obj/effect/portal/permanent/one_way/destroy/dragon,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission/vr/miner)
 "bv" = (
 /obj/structure/chair/sofa/corner,
@@ -525,6 +493,10 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/awaymission/vr/miner)
+"mX" = (
+/obj/effect/portal/permanent/one_way/destroy/bubblegum,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaymission/vr/miner)
 "nv" = (
 /obj/item/gun/energy/pulse/destroyer,
 /turf/open/floor/bronze{
@@ -549,6 +521,14 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/awaymission/vr/miner)
+"xP" = (
+/obj/effect/portal/permanent/one_way/destroy/hierophant,
+/turf/open/indestructible/hierophant,
+/area/awaymission/vr/miner)
+"yW" = (
+/obj/effect/portal/permanent/one_way/destroy/legion,
+/turf/open/indestructible/necropolis,
+/area/awaymission/vr/miner)
 "Ag" = (
 /obj/structure/table/wood,
 /obj/item/book/granter/spell/mindswap,
@@ -556,11 +536,36 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/awaymission/vr/miner)
+"CG" = (
+/obj/effect/portal/permanent/one_way/destroy/vr_boss_rush_continue,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaymission/vr/miner)
+"El" = (
+/obj/effect/landmark/vr_spawn,
+/obj/effect/mob_spawn/human/virtual_reality,
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
+"Fj" = (
+/obj/effect/portal/permanent/one_way/destroy/blood_drunk_miner,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaymission/vr/miner)
+"GG" = (
+/obj/effect/portal/permanent/one_way/destroy/vr_boss_rush,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaymission/vr/miner)
 "JW" = (
 /obj/item/gun/energy/kinetic_accelerator/crossbow,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
+/area/awaymission/vr/miner)
+"Lv" = (
+/obj/effect/portal/permanent/one_way/destroy/colossus,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/awaymission/vr/miner)
+"Rp" = (
+/obj/effect/portal/permanent/one_way/destroy/dragon,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/awaymission/vr/miner)
 "RR" = (
 /obj/item/gun/magic/staff/spellblade,
@@ -1107,6 +1112,7 @@ bM
 (3,1,1) = {"
 av
 az
+Fj
 aj
 aj
 aj
@@ -1126,8 +1132,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+Fj
 az
 av
 av
@@ -1159,7 +1164,7 @@ av
 av
 av
 al
-am
+xP
 am
 am
 am
@@ -1179,7 +1184,7 @@ am
 am
 am
 am
-am
+xP
 al
 av
 aj
@@ -1399,9 +1404,9 @@ av
 av
 av
 av
-au
-au
-au
+aO
+aO
+aO
 av
 av
 av
@@ -1656,9 +1661,9 @@ av
 av
 av
 av
-au
 aO
-au
+aO
+aO
 av
 av
 av
@@ -1913,9 +1918,9 @@ av
 av
 av
 av
-au
-au
-au
+aO
+aO
+aO
 av
 av
 av
@@ -3687,7 +3692,7 @@ aj
 aj
 aj
 aj
-ar
+ai
 aj
 aj
 aj
@@ -3739,7 +3744,7 @@ ao
 aq
 ao
 ao
-bg
+aw
 ao
 ao
 aq
@@ -6247,6 +6252,7 @@ bM
 (23,1,1) = {"
 av
 az
+Fj
 aj
 aj
 aj
@@ -6266,8 +6272,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+Fj
 az
 av
 aj
@@ -6299,7 +6304,7 @@ aj
 aj
 av
 al
-am
+xP
 am
 am
 am
@@ -6319,7 +6324,7 @@ am
 am
 am
 am
-am
+xP
 al
 av
 aj
@@ -6754,7 +6759,7 @@ bF
 bF
 bF
 bU
-bU
+El
 bU
 bM
 "}
@@ -7018,6 +7023,7 @@ bM
 (26,1,1) = {"
 av
 az
+mX
 aj
 aj
 aj
@@ -7037,8 +7043,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+mX
 az
 av
 aj
@@ -7070,6 +7075,7 @@ aj
 aj
 av
 az
+yW
 aA
 aA
 aA
@@ -7089,8 +7095,7 @@ aA
 aA
 aA
 aA
-aA
-aA
+yW
 az
 av
 aj
@@ -9598,7 +9603,7 @@ aj
 aj
 aj
 aj
-at
+ap
 aj
 aj
 aj
@@ -9650,7 +9655,7 @@ aA
 aA
 aA
 aA
-bt
+aE
 aA
 aA
 aA
@@ -12158,6 +12163,7 @@ bM
 (46,1,1) = {"
 av
 az
+mX
 aj
 aj
 aj
@@ -12177,8 +12183,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+mX
 az
 av
 aj
@@ -12210,6 +12215,7 @@ aj
 aj
 av
 az
+yW
 aA
 aA
 aA
@@ -12229,8 +12235,7 @@ aA
 aA
 aA
 aA
-aA
-aA
+yW
 az
 av
 aj
@@ -12929,6 +12934,7 @@ aj
 (49,1,1) = {"
 av
 az
+Lv
 aj
 aj
 aj
@@ -12948,8 +12954,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+Lv
 az
 av
 aj
@@ -12981,6 +12986,7 @@ aj
 aj
 av
 az
+Rp
 aj
 aj
 aj
@@ -13000,8 +13006,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+Rp
 az
 av
 aj
@@ -15509,7 +15514,7 @@ aj
 aj
 aj
 aj
-ay
+aC
 aj
 aj
 aj
@@ -15561,7 +15566,7 @@ aj
 aj
 aj
 aj
-bu
+aa
 aj
 aj
 aj
@@ -18069,6 +18074,7 @@ aj
 (69,1,1) = {"
 av
 az
+Lv
 aj
 aj
 aj
@@ -18088,8 +18094,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+Lv
 az
 aj
 aj
@@ -18121,6 +18126,7 @@ aj
 aj
 aj
 az
+Rp
 aj
 aj
 aj
@@ -18140,8 +18146,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+Rp
 az
 av
 aj
@@ -19096,6 +19101,7 @@ aj
 "}
 (73,1,1) = {"
 az
+GG
 aj
 aj
 aj
@@ -19115,8 +19121,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+GG
 az
 aj
 aj
@@ -24236,6 +24241,7 @@ aj
 "}
 (93,1,1) = {"
 az
+GG
 aj
 aj
 aj
@@ -24255,8 +24261,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+GG
 az
 aj
 aj
@@ -25007,6 +25012,7 @@ aj
 "}
 (96,1,1) = {"
 az
+CG
 aj
 aj
 aj
@@ -25026,8 +25032,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+CG
 az
 am
 am
@@ -30147,6 +30152,7 @@ aj
 "}
 (116,1,1) = {"
 az
+CG
 aj
 aj
 aj
@@ -30166,8 +30172,7 @@ aj
 aj
 aj
 aj
-aj
-aj
+CG
 az
 am
 am

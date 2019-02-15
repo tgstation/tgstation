@@ -47,9 +47,10 @@
 		personal_recall.recall_portals += src
 		if(!findspell)
 			user.mind.AddSpell(personal_recall)
-		if(equipment)
-			var/datum/outfit/O = new equipment()
-			O.equip(M)
+		if(equipment && ishuman(user))
+			var/mob/living/carbon/human/H = user
+			H.delete_equipment()
+			H.equipOutfit(equipment)
 
 /obj/effect/proc_holder/spell/portal_recall
 	name = "Portal Recall"

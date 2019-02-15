@@ -281,6 +281,10 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
+"bG" = (
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/centcomAway/hangar)
 "bJ" = (
 /obj/structure/chair/comfy/brown,
 /turf/open/indestructible,
@@ -736,6 +740,7 @@
 /area/awaymission/centcomAway/hangar)
 "eG" = (
 /obj/effect/vr_clean_master,
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/maint)
 "eH" = (
@@ -2476,6 +2481,11 @@
 /obj/structure/fans/tiny/invisible,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"yu" = (
+/obj/effect/vr_clean_master,
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/general)
 "zk" = (
 /turf/closed/indestructible/fakeglass,
 /area/awaymission/centcomAway/general)
@@ -2483,12 +2493,25 @@
 /obj/structure/chair,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"Is" = (
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/cafe)
+"KP" = (
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/hangar)
 "KX" = (
 /obj/effect/vr_clean_master,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"KY" = (
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
+/turf/open/indestructible,
+/area/awaymission/centcomAway/thunderdome)
 "Tc" = (
 /obj/effect/vr_clean_master,
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
 "TG" = (
@@ -2496,6 +2519,7 @@
 	dir = 1
 	},
 /obj/effect/vr_clean_master,
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/courtroom)
 "TP" = (
@@ -2503,6 +2527,7 @@
 /area/space)
 "Um" = (
 /obj/effect/vr_clean_master,
+/obj/effect/portal/permanent/one_way/destroy/syndicate,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 
@@ -7892,7 +7917,7 @@ fo
 bd
 bd
 bd
-bd
+KP
 bd
 bd
 bB
@@ -7905,7 +7930,7 @@ bd
 mS
 bd
 bd
-bd
+KP
 bd
 bd
 jt
@@ -8003,7 +8028,7 @@ bd
 bB
 bY
 cn
-bV
+bG
 cN
 cn
 cP
@@ -9591,7 +9616,7 @@ gW
 gW
 eu
 gW
-gW
+bT
 zk
 iu
 iu
@@ -10023,7 +10048,7 @@ lv
 lA
 lc
 lc
-lc
+KY
 lc
 lc
 mb
@@ -10392,7 +10417,7 @@ kj
 hk
 kr
 gW
-gW
+bT
 gW
 gW
 eu
@@ -11415,7 +11440,7 @@ it
 dY
 gW
 gW
-gW
+bT
 gW
 gW
 jx
@@ -11424,7 +11449,7 @@ gW
 gW
 gW
 gW
-KX
+yu
 gW
 gW
 gW
@@ -11437,7 +11462,7 @@ gM
 jK
 eu
 gW
-gW
+bT
 gW
 zk
 zk
@@ -11446,7 +11471,7 @@ lc
 lc
 lf
 lc
-lc
+KY
 lc
 lh
 lw
@@ -12431,7 +12456,7 @@ bu
 ac
 dE
 ai
-ai
+Is
 ai
 aq
 eu
@@ -12697,7 +12722,7 @@ as
 eu
 cT
 gW
-gW
+bT
 fB
 fR
 eu
@@ -12883,7 +12908,7 @@ lv
 lA
 lc
 lc
-lc
+KY
 lc
 lc
 mb
@@ -13073,7 +13098,7 @@ ai
 ai
 ai
 ai
-ai
+Is
 ai
 ai
 ai
