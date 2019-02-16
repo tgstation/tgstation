@@ -24,8 +24,6 @@
 	hijack_objective.owner = owner
 	objectives += hijack_objective
 
-	owner.objectives |= objectives
-
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
 	owner.special_role = "highlander"
@@ -60,7 +58,7 @@
 	W.access += get_all_centcom_access()
 	W.assignment = "Highlander"
 	W.registered_name = H.real_name
-	W.item_flags |= NODROP
+	W.add_trait(TRAIT_NODROP, HIGHLANDER)
 	W.update_label(H.real_name)
 	H.equip_to_slot_or_del(W, SLOT_WEAR_ID)
 

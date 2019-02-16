@@ -57,3 +57,19 @@
 	visible_message("<span class='danger'>[src] screams in agony as it sublimates into a sulfurous smoke.</span>")
 	ghostize()
 	qdel(src)
+
+
+/datum/antagonist/imp
+	name = "Imp"
+	antagpanel_category = "Devil"
+	show_in_roundend = FALSE
+
+/datum/antagonist/imp/on_gain()
+	. = ..()
+	give_objectives()
+
+/datum/antagonist/imp/proc/give_objectives()
+	var/datum/objective/newobjective = new
+	newobjective.explanation_text = "Try to get a promotion to a higher devilic rank."
+	newobjective.owner = owner
+	objectives += newobjective

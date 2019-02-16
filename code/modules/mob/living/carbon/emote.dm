@@ -22,19 +22,17 @@
 	muzzle_ignore = TRUE
 	restraint_check = TRUE
 	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
 
-/datum/emote/living/carbon/clap/run_emote(mob/living/user, params)
-	. = ..()
-	if (.)
-		if (ishuman(user))
-			// Need hands to clap
-			if (!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
-				return
-			var/clap = pick('sound/misc/clap1.ogg',
-				            'sound/misc/clap2.ogg',
-				            'sound/misc/clap3.ogg',
-				            'sound/misc/clap4.ogg')
-			playsound(user, clap, 50, 1, -1)
+/datum/emote/living/carbon/clap/get_sound(mob/living/user)
+	if(ishuman(user))
+		if(!user.get_bodypart(BODY_ZONE_L_ARM) || !user.get_bodypart(BODY_ZONE_R_ARM))
+			return
+		else
+			return pick('sound/misc/clap1.ogg',
+							'sound/misc/clap2.ogg',
+							'sound/misc/clap3.ogg',
+							'sound/misc/clap4.ogg')
 
 /datum/emote/living/carbon/gnarl
 	key = "gnarl"

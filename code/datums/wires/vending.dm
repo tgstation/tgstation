@@ -35,7 +35,7 @@
 		if(WIRE_CONTRABAND)
 			V.extended_inventory = !V.extended_inventory
 		if(WIRE_SHOCK)
-			V.seconds_electrified = 30
+			V.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
 		if(WIRE_IDSCAN)
 			V.scan_id = !V.scan_id
 		if(WIRE_SPEAKER)
@@ -50,9 +50,9 @@
 			V.extended_inventory = FALSE
 		if(WIRE_SHOCK)
 			if(mend)
-				V.seconds_electrified = FALSE
+				V.seconds_electrified = MACHINE_NOT_ELECTRIFIED
 			else
-				V.seconds_electrified = -1
+				V.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
 		if(WIRE_IDSCAN)
 			V.scan_id = mend
 		if(WIRE_SPEAKER)

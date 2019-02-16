@@ -64,7 +64,7 @@
 
 /obj/structure/showcase/mecha/ripley
 	name = "construction mech exhibit"
-	desc = "A stand with an retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
+	desc = "A stand with a retired construction mech bolted to it. The clamps are rated at 9300PSI. It seems to be falling apart."
 	icon = 'icons/mecha/mecha.dmi'
 	icon_state = "firefighter"
 
@@ -109,7 +109,7 @@
 //However if a player wants to move an existing showcase or remove one, this is for that.
 
 /obj/structure/showcase/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/screwdriver) && !anchored)
+	if(W.tool_behaviour == TOOL_SCREWDRIVER && !anchored)
 		if(deconstruction_state == SHOWCASE_SCREWDRIVERED)
 			to_chat(user, "<span class='notice'>You screw the screws back into the showcase.</span>")
 			W.play_tool_sound(src, 100)
@@ -119,7 +119,7 @@
 			W.play_tool_sound(src, 100)
 			deconstruction_state = SHOWCASE_SCREWDRIVERED
 
-	if(istype(W, /obj/item/crowbar) && deconstruction_state == SHOWCASE_SCREWDRIVERED)
+	if(W.tool_behaviour == TOOL_CROWBAR && deconstruction_state == SHOWCASE_SCREWDRIVERED)
 		if(W.use_tool(src, user, 20, volume=100))
 			to_chat(user, "<span class='notice'>You start to crowbar the showcase apart...</span>")
 			new /obj/item/stack/sheet/metal(drop_location(), 4)

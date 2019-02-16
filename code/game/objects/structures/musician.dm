@@ -33,7 +33,7 @@
 // note is a number from 1-7 for A-G
 // acc is either "b", "n", or "#"
 // oct is 1-8 (or 9 for C)
-/datum/song/proc/playnote(note, acc as text, oct)
+/datum/song/proc/playnote(mob/user, note, acc as text, oct)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -67,14 +67,17 @@
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
 		LAZYCLEARLIST(hearing_mobs)
 		for(var/mob/M in get_hearers_in_view(15, source))
-			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
-				continue
 			LAZYADD(hearing_mobs, M)
 		last_hearcheck = world.time
 
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
+		if(user.has_trait(TRAIT_MUSICIAN) && isliving(M))
+			var/mob/living/L = M
+			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
+		if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+			continue
 		M.playsound_local(source, null, 100, falloff = 5, S = music_played)
 
 /datum/song/proc/updateDialog(mob/user)
@@ -82,7 +85,7 @@
 
 /datum/song/proc/shouldStopPlaying(mob/user)
 	if(instrumentObj)
-		if(!user.canUseTopic(instrumentObj))
+		if(!user.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return TRUE
 		return !instrumentObj.anchored		// add special cases to stop in subclasses
 	else
@@ -127,7 +130,7 @@
 							cur_acc[cur_note] = "b"
 						else if(prob(75))
 							cur_acc[cur_note] = "n"
-					playnote(cur_note, cur_acc[cur_note], cur_oct[cur_note])
+					playnote(user, cur_note, cur_acc[cur_note], cur_oct[cur_note])
 				if(notes.len >= 2 && text2num(notes[2]))
 					sleep(sanitize_tempo(tempo / text2num(notes[2])))
 				else
@@ -217,7 +220,7 @@
 		updateDialog(usr)		// make sure updates when complete
 
 /datum/song/Topic(href, href_list)
-	if(!usr.canUseTopic(instrumentObj))
+	if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 		usr << browse(null, "window=instrument")
 		usr.unset_machine()
 		return
@@ -233,11 +236,13 @@
 		var/t = ""
 		do
 			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
-			if(!in_range(instrumentObj, usr))
+			if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 				return
 
 			if(lentext(t) >= MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
 				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+				if(!usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
+					return
 				if(cont == "no")
 					break
 		while(lentext(t) > MUSIC_MAXLINES * MUSIC_MAXLINECHARS)
@@ -268,7 +273,7 @@
 
 	else if(href_list["newline"])
 		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
-		if(!newline || !in_range(instrumentObj, usr))
+		if(!newline || !usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return
 		if(lines.len > MUSIC_MAXLINES)
 			return
@@ -285,7 +290,7 @@
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
 		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
-		if(!content || !in_range(instrumentObj, usr))
+		if(!content || !usr.canUseTopic(instrumentObj, BE_CLOSE, FALSE, NO_TK))
 			return
 		if(lentext(content) > MUSIC_MAXLINECHARS)
 			content = copytext(content, 1, MUSIC_MAXLINECHARS)
@@ -331,11 +336,11 @@
 /obj/structure/piano/unanchored
 	anchored = FALSE
 
-/obj/structure/piano/New()
-	..()
+/obj/structure/piano/Initialize()
+	. = ..()
 	song = new("piano", src)
 
-	if(prob(50))
+	if(prob(50) && icon_state == initial(icon_state))
 		name = "space minimoog"
 		desc = "This is a minimoog, like a space piano, but more spacey!"
 		icon_state = "minimoog"

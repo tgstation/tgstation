@@ -21,7 +21,7 @@
 
 /turf/open/floor/holofloor/plating/burnmix
 	name = "burn-mix floor"
-	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
+	initial_gas_mix = BURNMIX_ATMOS
 
 /turf/open/floor/holofloor/grass
 	gender = PLURAL
@@ -118,6 +118,10 @@
 		return 0
 	if(intact)
 		queue_smooth(src)
+
+/turf/open/floor/holofloor/wood
+	icon_state = "wood"
+	tiled_dirt = FALSE
 
 /turf/open/floor/holofloor/snow
 	gender = PLURAL

@@ -41,6 +41,8 @@
 		reset = new reset_path(get_turf(src))
 
 /obj/item/twohanded/ctf/process()
+	if(is_ctf_target(loc)) //don't reset from someone's hands.
+		return PROCESS_KILL
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in GLOB.player_list)
@@ -502,7 +504,7 @@
 	no_drops += H.get_item_by_slot(SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
-		I.item_flags |= NODROP
+		I.add_trait(TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
 
 /datum/outfit/ctf/instagib
 	r_hand = /obj/item/gun/energy/laser/instakill

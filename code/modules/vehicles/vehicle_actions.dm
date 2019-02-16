@@ -130,14 +130,14 @@
 
 /datum/action/vehicle/sealed/horn/Trigger()
 	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
+		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
 		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
 		playsound(vehicle_entered_target, hornsound, 75)
 		last_honk_time = world.time
 
 /datum/action/vehicle/sealed/horn/clowncar/Trigger()
 	if(world.time - last_honk_time > 20)
-		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks</span>")
+		vehicle_entered_target.visible_message("<span class='danger'>[vehicle_entered_target] loudly honks!</span>")
 		to_chat(owner, "<span class='notice'>You press the vehicle's horn.</span>")
 		last_honk_time = world.time
 		if(vehicle_target.inserted_key)
@@ -164,3 +164,30 @@
 	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
 		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
 		C.RollTheDice(owner)
+
+/datum/action/vehicle/sealed/Cannon
+	name = "Toggle siege mode"
+	desc = "Destroy them with their own fodder"
+	button_icon_state = "car_cannon"
+
+/datum/action/vehicle/sealed/Cannon/Trigger()
+	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+		if(C.cannonbusy)
+			to_chat(owner, "<span class='notice'>Please wait for the vehicle to finish its current action first.</span>")
+		C.ToggleCannon()
+
+/datum/action/vehicle/sealed/Thank
+	name = "Thank the Clown car Driver"
+	desc = "They're just doing their job."
+	button_icon_state = "car_thanktheclown"
+	var/last_thank_time
+
+/datum/action/vehicle/sealed/Thank/Trigger()
+	if(istype(vehicle_entered_target, /obj/vehicle/sealed/car/clowncar))
+		var/obj/vehicle/sealed/car/clowncar/C = vehicle_entered_target
+		if(world.time >= last_thank_time + 60)
+			var/mob/living/carbon/human/clown = pick(C.return_drivers())
+			owner.say("Thank you for the fun ride, [clown.name]!")
+			last_thank_time = world.time
+			C.ThanksCounter()

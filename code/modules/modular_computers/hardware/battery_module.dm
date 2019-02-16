@@ -12,6 +12,11 @@
 		battery = new battery_type(src)
 	..()
 
+/obj/item/computer_hardware/battery/handle_atom_del(atom/A)
+	if(A == battery)
+		try_eject(0, null, TRUE)
+	. = ..()
+
 /obj/item/computer_hardware/battery/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
 		return FALSE
@@ -41,7 +46,10 @@
 		to_chat(user, "<span class='warning'>There is no power cell connected to \the [src].</span>")
 		return FALSE
 	else
-		battery.forceMove(get_turf(src))
+		if(user)
+			user.put_in_hands(battery)
+		else
+			battery.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You detach \the [battery] from \the [src].</span>")
 		battery = null
 

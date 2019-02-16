@@ -12,6 +12,7 @@
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
 	var/team_mode = FALSE //Should assign team objectives ?
+	var/competitive_objectives = FALSE //Should we assign objectives in competition with other lings?
 
 	//Changeling Stuff
 
@@ -27,21 +28,31 @@
 	var/sting_range = 2
 	var/changelingID = "Changeling"
 	var/geneticdamage = 0
+	var/was_absorbed = FALSE //if they were absorbed by another ling already.
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
 	var/purchasedpowers = list()
+
 	var/mimicing = ""
-	var/canrespec = 0
+	var/canrespec = FALSE//set to TRUE in absorb.dm
 	var/changeling_speak = 0
 	var/datum/dna/chosen_dna
-	var/obj/effect/proc_holder/changeling/sting/chosen_sting
+	var/datum/action/changeling/sting/chosen_sting
 	var/datum/cellular_emporium/cellular_emporium
 	var/datum/action/innate/cellular_emporium/emporium_action
 
-	// wip stuff
-	var/static/list/all_powers = typecacheof(/obj/effect/proc_holder/changeling,TRUE)
+	var/static/list/all_powers = typecacheof(/datum/action/changeling,TRUE)
 
+/datum/antagonist/changeling/New()
+	. = ..()
+	for(var/datum/antagonist/changeling/C in GLOB.antagonists)
+		if(!C.owner || C.owner == owner)
+			continue
+		if(C.was_absorbed) //make sure the other ling wasn't already killed by another one. only matters if the changeling that absorbed them was gibbed after.
+			continue
+		competitive_objectives = TRUE
+		break
 
 /datum/antagonist/changeling/Destroy()
 	QDEL_NULL(cellular_emporium)
@@ -64,6 +75,7 @@
 /datum/antagonist/changeling/proc/create_actions()
 	cellular_emporium = new(src)
 	emporium_action = new(cellular_emporium)
+	emporium_action.Grant(owner.current)
 
 /datum/antagonist/changeling/on_gain()
 	generate_name()
@@ -109,14 +121,12 @@
 /datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
-		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
-			if(p.always_keep)
-				continue
+		for(var/datum/action/changeling/p in purchasedpowers)
 			purchasedpowers -= p
-			p.on_refund(owner.current)
+			p.Remove(owner.current)
 
 	//MOVE THIS
-	if(owner.current.hud_used)
+	if(owner.current.hud_used && owner.current.hud_used.lingstingdisplay)
 		owner.current.hud_used.lingstingdisplay.icon_state = null
 		owner.current.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
 
@@ -125,26 +135,34 @@
 		remove_changeling_powers()
 	//Repurchase free powers.
 	for(var/path in all_powers)
-		var/obj/effect/proc_holder/changeling/S = new path()
+		var/datum/action/changeling/S = new path
 		if(!S.dna_cost)
 			if(!has_sting(S))
 				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
 
-/datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
-	for(var/obj/effect/proc_holder/changeling/P in purchasedpowers)
-		if(initial(power.name) == P.name)
+/datum/antagonist/changeling/proc/regain_powers()//for when action buttons are lost and need to be regained, such as when the mind enters a new mob
+	emporium_action.Grant(owner.current)
+	for(var/power in purchasedpowers)
+		var/datum/action/changeling/S = power
+		if(istype(S) && S.needs_button)
+			S.Grant(owner.current)
+
+/datum/antagonist/changeling/proc/has_sting(datum/action/changeling/power)
+	for(var/P in purchasedpowers)
+		var/datum/action/changeling/otherpower = P
+		if(initial(power.name) == otherpower.name)
 			return TRUE
 	return FALSE
 
 
 /datum/antagonist/changeling/proc/purchase_power(sting_name)
-	var/obj/effect/proc_holder/changeling/thepower = null
+	var/datum/action/changeling/thepower
 
 	for(var/path in all_powers)
-		var/obj/effect/proc_holder/changeling/S = path
+		var/datum/action/changeling/S = path
 		if(initial(S.name) == sting_name)
-			thepower = new path()
+			thepower = new path
 			break
 
 	if(!thepower)
@@ -173,7 +191,7 @@
 
 	geneticpoints -= thepower.dna_cost
 	purchasedpowers += thepower
-	thepower.on_purchase(owner.current)
+	thepower.on_purchase(owner.current)//Grant() is ran in this proc, see changeling_powers.dm
 
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current))
@@ -190,10 +208,9 @@
 		return 0
 
 //Called in life()
-/datum/antagonist/changeling/proc/regenerate()
+/datum/antagonist/changeling/proc/regenerate()//grants the HuD in life.dm
 	var/mob/living/carbon/the_ling = owner.current
 	if(istype(the_ling))
-		emporium_action.Grant(the_ling)
 		if(the_ling.stat == DEAD)
 			chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), (chem_storage*0.5))
 			geneticdamage = max(LING_DEAD_GENETICDAMAGE_HEAL_CAP,geneticdamage-1)
@@ -229,9 +246,13 @@
 		if(verbose)
 			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
-	if((target.has_trait(TRAIT_NOCLONE)) || (target.has_trait(TRAIT_NOCLONE)))
+	if(target.has_trait(TRAIT_BADDNA))
 		if(verbose)
 			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
+		return
+	if(target.has_trait(TRAIT_HUSK))
+		if(verbose)
+			to_chat(user, "<span class='warning'>[target]'s body is ruined beyond usability!</span>")
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
@@ -340,7 +361,7 @@
 /datum/antagonist/changeling/greet()
 	if (you_are_greet)
 		to_chat(owner.current, "<span class='boldannounce'>You are [changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
-	to_chat(owner.current, "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
+	to_chat(owner.current, "<span class='boldannounce'>Use say \"[MODE_TOKEN_CHANGELING] message\" to communicate with your fellow changelings.</span>")
 	to_chat(owner.current, "<b>You must complete the following tasks:</b>")
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ling_aler.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -371,19 +392,19 @@
 		if(!CTO.escape_objective_compatible)
 			escape_objective_possible = FALSE
 			break
-	var/changeling_objective = rand(1,3)
-	switch(changeling_objective)
+
+	switch(competitive_objectives ? (team_mode ? rand(1,2) : rand(1,3)) : 1)
 		if(1)
 			var/datum/objective/absorb/absorb_objective = new
 			absorb_objective.owner = owner
 			absorb_objective.gen_amount_goal(6, 8)
 			objectives += absorb_objective
 		if(2)
-			var/datum/objective/absorb_changeling/ac = new
+			var/datum/objective/absorb_most/ac = new
 			ac.owner = owner
 			objectives += ac
-		if(3)
-			var/datum/objective/absorb_most/ac = new
+		if(3) //only give the murder other changelings goal if they're not in a team.
+			var/datum/objective/absorb_changeling/ac = new
 			ac.owner = owner
 			objectives += ac
 
@@ -410,7 +431,7 @@
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
 			if(team_mode) //No backstabbing while in a team
-				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				kill_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				kill_objective.find_target()
 			objectives += kill_objective
@@ -418,7 +439,7 @@
 			var/datum/objective/maroon/maroon_objective = new
 			maroon_objective.owner = owner
 			if(team_mode)
-				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				maroon_objective.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				maroon_objective.find_target()
 			objectives += maroon_objective
@@ -440,13 +461,11 @@
 			var/datum/objective/escape/escape_with_identity/identity_theft = new
 			identity_theft.owner = owner
 			if(team_mode)
-				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = 1, invert = 1)
+				identity_theft.find_target_by_role(role = ROLE_CHANGELING, role_type = TRUE, invert = TRUE)
 			else
 				identity_theft.find_target()
 			objectives += identity_theft
 		escape_objective_possible = FALSE
-
-	owner.objectives |= objectives
 
 /datum/antagonist/changeling/proc/update_changeling_icons_added()
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_CHANGELING]

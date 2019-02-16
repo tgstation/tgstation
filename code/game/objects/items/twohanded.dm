@@ -364,7 +364,7 @@
 /obj/item/twohanded/dualsaber/proc/impale(mob/living/user)
 	to_chat(user, "<span class='warning'>You twirl around a bit before losing your balance and impaling yourself on [src].</span>")
 	if (force_wielded)
-		user.take_bodypart_damage(20,25)
+		user.take_bodypart_damage(20,25,check_armor = TRUE)
 	else
 		user.adjustStaminaLoss(25)
 
@@ -439,7 +439,7 @@
 	possible_colors = list("purple")
 
 /obj/item/twohanded/dualsaber/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
+	if(W.tool_behaviour == TOOL_MULTITOOL)
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user, "<span class='warning'>2XRNBW_ENGAGE</span>")
@@ -472,8 +472,8 @@
 	sharpness = IS_SHARP
 	max_integrity = 200
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
-	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
+	var/icon_prefix = "spearglass"
 
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
@@ -481,75 +481,89 @@
 
 /obj/item/twohanded/spear/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	if(explosive)
-		user.say("[war_cry]", forced="spear warcry")
-		explosive.forceMove(user)
-		explosive.prime()
-		user.gib()
-		qdel(src)
-		return BRUTELOSS
 	return BRUTELOSS
 
 /obj/item/twohanded/spear/Initialize()
 	. = ..()
 	AddComponent(/datum/component/jousting)
 
-/obj/item/twohanded/spear/examine(mob/user)
-	..()
-	if(explosive)
-		to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
-
 /obj/item/twohanded/spear/update_icon()
-	if(explosive)
-		icon_state = "spearbomb[wielded]"
-	else
-		icon_state = "spearglass[wielded]"
+	icon_state = "[icon_prefix][wielded]"
 
-/obj/item/twohanded/spear/afterattack(atom/movable/AM, mob/user, proximity)
+/obj/item/twohanded/spear/CheckParts(list/parts_list)
+	var/obj/item/shard/tip = locate() in parts_list
+	if (istype(tip, /obj/item/shard/plasma))
+		force_wielded = 19
+		force_unwielded = 11
+		throwforce = 21
+		icon_prefix = "spearplasma"
+	update_icon()
+	qdel(tip)
+	var/obj/item/grenade/G = locate() in parts_list
+	if(G)
+		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
+		lance.force_wielded = force_wielded
+		lance.force_unwielded = force_unwielded
+		lance.throwforce = throwforce
+		lance.icon_prefix = icon_prefix
+		parts_list -= G
+		qdel(src)
+	..()
+	
+
+/obj/item/twohanded/spear/explosive
+	name = "explosive lance"
+	var/obj/item/grenade/explosive = null
+
+/obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
 	. = ..()
-	if(!proximity)
-		return
-	if(isopenturf(AM)) //So you can actually melee with it
-		return
-	if(explosive && wielded)
-		user.say("[war_cry]", forced="spear warcry")
-		explosive.forceMove(AM)
+	if (!G)
+		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
+	G.forceMove(src)
+	explosive = G
+
+	desc = "A makeshift spear with [G] attached to it"
+	update_icon()
+
+/obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
+	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.say("[war_cry]", forced="spear warcry")
+	explosive.forceMove(user)
+	explosive.prime()
+	user.gib()
+	qdel(src)
+	return BRUTELOSS
+
+/obj/item/twohanded/spear/explosive/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
+
+/obj/item/twohanded/spear/explosive/update_icon()	
+	icon_state = "spearbomb[wielded]"
+
+ //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
+/obj/item/twohanded/spear/explosive/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(!.) //not caught
+		explosive.forceMove(get_turf(src))
 		explosive.prime()
 		qdel(src)
 
- //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/throw_impact(atom/target)
-	. = ..()
-	if(!.) //not caught
-		if(explosive)
-			explosive.prime()
-			qdel(src)
-
-/obj/item/twohanded/spear/AltClick(mob/user)
+/obj/item/twohanded/spear/explosive/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
 		..()
-		if(!explosive)
-			return
 		if(istype(user) && loc == user)
 			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
 			if(input)
 				src.war_cry = input
 
-/obj/item/twohanded/spear/CheckParts(list/parts_list)
-	var/obj/item/twohanded/spear/S = locate() in parts_list
-	if(S)
-		if(S.explosive)
-			S.explosive.forceMove(get_turf(src))
-			S.explosive = null
-		parts_list -= S
-		qdel(S)
-	..()
-	var/obj/item/grenade/G = locate() in contents
-	if(G)
-		explosive = G
-		name = "explosive lance"
-		desc = "A makeshift spear with [G] attached to it."
-	update_icon()
+/obj/item/twohanded/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
+	. = ..()
+	if(wielded)
+		user.say("[war_cry]", forced="spear warcry")
+		explosive.forceMove(AM)
+		explosive.prime()
+		qdel(src)
 
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
@@ -825,7 +839,7 @@
 	if(!wielded)
 		return
 	if(QDELETED(mobhook))
-		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))	
+		mobhook = user.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/unwield)))
 	else
 		user.TakeComponent(mobhook)
 	user.visible_message("[user] holds [src] up to [user.p_their()] eyes.","You hold [src] up to your eyes.")

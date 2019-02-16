@@ -8,7 +8,6 @@
 	var/datum/objective/hijack/hijack = new
 	hijack.owner = owner
 	objectives += hijack
-	owner.objectives |= objectives
 
 /datum/antagonist/wishgranter/on_gain()
 	owner.special_role = "Avatar of the Wish Granter"
@@ -26,5 +25,5 @@
 		return
 	H.dna.add_mutation(HULK)
 	H.dna.add_mutation(XRAY)
-	H.dna.add_mutation(COLDRES)
+	H.dna.add_mutation(SPACEMUT)
 	H.dna.add_mutation(TK)

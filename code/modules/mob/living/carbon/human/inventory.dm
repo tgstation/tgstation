@@ -224,13 +224,13 @@
 		if(!QDELETED(src))
 			update_inv_s_store()
 
-/mob/living/carbon/human/wear_mask_update(obj/item/clothing/C, toggle_off = 1)
-	if((C.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(C.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
+/mob/living/carbon/human/wear_mask_update(obj/item/I, toggle_off = 1)
+	if((I.flags_inv & (HIDEHAIR|HIDEFACIALHAIR)) || (initial(I.flags_inv) & (HIDEHAIR|HIDEFACIALHAIR)))
 		update_hair()
 	if(toggle_off && internal && !getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 		update_internals_hud_icon(0)
 		internal = null
-	if(C.flags_inv & HIDEEYES)
+	if(I.flags_inv & HIDEEYES)
 		update_inv_glasses()
 	sec_hud_set_security_status()
 	..()

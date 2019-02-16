@@ -42,7 +42,7 @@
 						"<span class='userdanger'>[M] has attempted to punch [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 
 			if ("disarm")
-				if (!lying)
+				if (!(mobility_flags & MOBILITY_STAND))
 					if (prob(5))
 						Unconscious(40)
 						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)

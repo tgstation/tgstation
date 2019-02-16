@@ -157,7 +157,7 @@
 	.["admins"] = presentmins.len + afkmins.len //equivalent to the info gotten from adminwho
 	.["gamestate"] = SSticker.current_state
 
-	.["map_name"] = SSmapping.config.map_name
+	.["map_name"] = SSmapping.config?.map_name || "Loading..."
 
 	if(key_valid)
 		.["active_players"] = get_active_player_count()

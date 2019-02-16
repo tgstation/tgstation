@@ -41,6 +41,11 @@
 
 /obj/machinery/recycler/examine(mob/user)
 	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>Reclaiming <b>[amount_produced]%</b> of materials salvaged.<span>")
+
+/obj/machinery/recycler/examine(mob/user)
+	..()
 	to_chat(user, "The power light is [(stat & NOPOWER) ? "off" : "on"].")
 	to_chat(user, "The safety-mode light is [safety_mode ? "on" : "off"].")
 	to_chat(user, "The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"].")

@@ -270,7 +270,7 @@
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
 				snap = 1
-				if(!C.lying)
+				if(C.mobility_flags & MOBILITY_STAND)
 					def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 					if(!C.legcuffed && C.get_num_legs(FALSE) >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
@@ -297,11 +297,12 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
+	breakouttime = 30
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/obj/item/restraints/legcuffs/beartrap/energy/New()
-	..()
+/obj/item/restraints/legcuffs/beartrap/energy/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/restraints/legcuffs/beartrap/energy/proc/dissipate()
@@ -311,7 +312,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
-	. = ..()
+	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
@@ -329,7 +330,7 @@
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
 
-/obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	var/mob/living/carbon/C = hit_atom
@@ -340,7 +341,8 @@
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
-		C.Knockdown(knockdown)
+		C.Paralyze(knockdown)
+		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"
@@ -357,9 +359,28 @@
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 60
 
-/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom)
+/obj/item/restraints/legcuffs/bola/energy/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(iscarbon(hit_atom))
 		var/obj/item/restraints/legcuffs/beartrap/B = new /obj/item/restraints/legcuffs/beartrap/energy/cyborg(get_turf(hit_atom))
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
+
+/obj/item/restraints/legcuffs/bola/gonbola
+	name = "gonbola"
+	desc = "Hey, if you have to be hugged in the legs by anything, it might as well be this little guy."
+	icon_state = "gonbola"
+	breakouttime = 300
+	slowdown = 0
+	var/datum/status_effect/gonbolaPacify/effectReference
+
+/obj/item/restraints/legcuffs/bola/gonbola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	. = ..()
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/C = hit_atom
+		effectReference = C.apply_status_effect(STATUS_EFFECT_GONBOLAPACIFY)
+
+/obj/item/restraints/legcuffs/bola/gonbola/dropped(mob/user)
+	. = ..()
+	if(effectReference)
+		QDEL_NULL(effectReference)

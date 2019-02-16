@@ -9,6 +9,10 @@
 	var/obj/item/aicard/stored_card = null
 	var/locked = FALSE
 
+/obj/item/computer_hardware/ai_slot/handle_atom_del(atom/A)
+	if(A == stored_card)
+		try_eject(0, null, TRUE)
+	. = ..()
 
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
 	..()
@@ -50,19 +54,21 @@
 		return FALSE
 
 	if(stored_card)
-		stored_card.forceMove(get_turf(src))
+		to_chat(user, "<span class='notice'>You remove [stored_card] from [src].</span>")
 		locked = FALSE
-		stored_card.verb_pickup()
+		if(user)
+			user.put_in_hands(stored_card)
+		else
+			stored_card.forceMove(drop_location())
 		stored_card = null
 
-		to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 		return TRUE
 	return FALSE
 
 /obj/item/computer_hardware/ai_slot/attackby(obj/item/I, mob/living/user)
 	if(..())
 		return
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
 		try_eject(,user,1)
 		return

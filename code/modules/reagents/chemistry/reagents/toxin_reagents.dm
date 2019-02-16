@@ -9,6 +9,7 @@
 	taste_description = "bitterness"
 	taste_mult = 1.2
 	var/toxpwr = 1.5
+	var/silent_toxin = FALSE //won't produce a pain message when processed by liver/life() if there isn't another non-silent toxin present.
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
 	if(toxpwr)
@@ -41,9 +42,9 @@
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
 		if(prob(98))
-			M.randmutb()
+			M.easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 		else
-			M.randmutg()
+			M.easy_randmut(POSITIVE)
 		M.updateappearance()
 		M.domutcheck()
 	..()
@@ -143,6 +144,7 @@
 	name = "Carpotoxin"
 	id = "carpotoxin"
 	description = "A deadly neurotoxin produced by the dreaded spess carp."
+	silent_toxin = TRUE
 	color = "#003333" // rgb: 0, 51, 51
 	toxpwr = 2
 	taste_description = "fish"
@@ -151,6 +153,7 @@
 	name = "Zombie Powder"
 	id = "zombiepowder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
+	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#669900" // rgb: 102, 153, 0
 	toxpwr = 0.5
@@ -278,6 +281,7 @@
 	name = "Chloral Hydrate"
 	id = "chloralhydrate"
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
+	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
@@ -301,6 +305,7 @@
 	name = "Chloral Hydrate"
 	id = "chloralhydratedelayed"
 	description = "A powerful sedative that induces confusion and drowsiness before putting its target to sleep."
+	silent_toxin = TRUE
 	reagent_state = SOLID
 	color = "#000067" // rgb: 0, 0, 103
 	toxpwr = 0
@@ -355,6 +360,7 @@
 	name = "Mute Toxin"
 	id = "mutetoxin"
 	description = "A nonlethal poison that inhibits speech in its victim."
+	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "silence"
@@ -367,6 +373,7 @@
 	name = "Tirizene"
 	id = "tirizene"
 	description = "A nonlethal poison that causes extreme fatigue and weakness in its victim."
+	silent_toxin = TRUE
 	color = "#6E2828"
 	data = 13
 	toxpwr = 0
@@ -394,6 +401,7 @@
 	name = "Histamine"
 	id = "histamine"
 	description = "Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#FA6464"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -419,7 +427,7 @@
 
 /datum/reagent/toxin/histamine/overdose_process(mob/living/M)
 	M.adjustOxyLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	M.adjustToxLoss(2*REM, 0)
 	..()
 	. = 1
@@ -428,6 +436,7 @@
 	name = "Formaldehyde"
 	id = "formaldehyde"
 	description = "Formaldehyde, on its own, is a fairly weak toxin. It contains trace amounts of Histamine, very rarely making it decay into Histamine."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#B4004B"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -509,6 +518,7 @@
 	name = "Itching Powder"
 	id = "itching_powder"
 	description = "A powder that induces itching upon contact with the skin. Causes the victim to scratch at their itches and has a very low chance to decay into Histamine."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#C8C8C8"
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
@@ -541,6 +551,7 @@
 	name = "Initropidril"
 	id = "initropidril"
 	description = "A powerful poison with insidious effects. It can cause stuns, lethal breathing failure, and cardiac arrest."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#7F10C0"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
@@ -551,7 +562,7 @@
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				C.Knockdown(60, 0)
+				C.Paralyze(60, 0)
 				. = TRUE
 			if(2)
 				C.losebreath += 10
@@ -572,6 +583,7 @@
 	name = "Pancuronium"
 	id = "pancuronium"
 	description = "An undetectable toxin that swiftly incapacitates its victim. May also cause breathing failure."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#195096"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -590,6 +602,7 @@
 	name = "Sodium Thiopental"
 	id = "sodium_thiopental"
 	description = "Sodium Thiopental induces heavy weakness in its target as well as unconsciousness."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#6496FA"
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
@@ -606,6 +619,7 @@
 	name = "Sulfonal"
 	id = "sulfonal"
 	description = "A stealthy poison that deals minor toxin damage and eventually puts the target to sleep."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#7DC3A0"
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
@@ -620,6 +634,7 @@
 	name = "Amanitin"
 	id = "amanitin"
 	description = "A very powerful delayed toxin. Upon full metabolization, a massive amount of toxin damage will be dealt depending on how long it has been in the victim's bloodstream."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#FFFFFF"
 	toxpwr = 0
@@ -635,6 +650,7 @@
 	name = "Lipolicide"
 	id = "lipolicide"
 	description = "A powerful toxin that will destroy fat cells, massively reducing body weight in a short time. Deadly to those without nutriment in their body."
+	silent_toxin = TRUE
 	taste_description = "mothballs"
 	reagent_state = LIQUID
 	color = "#F0FFF0"
@@ -644,7 +660,7 @@
 /datum/reagent/toxin/lipolicide/on_mob_life(mob/living/carbon/M)
 	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
 		M.adjustToxLoss(1*REM, 0)
-	M.nutrition = max(M.nutrition - 3, 0) // making the chef more valuable, one meme trap at a time
+	M.adjust_nutrition(-3) // making the chef more valuable, one meme trap at a time
 	M.overeatduration = 0
 	return ..()
 
@@ -698,7 +714,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
-		M.Knockdown(60, 0)
+		M.Paralyze(60, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -707,6 +723,7 @@
 	name = "Heparin"
 	id = "heparin"
 	description = "A powerful anticoagulant. Victims will bleed uncontrollably and suffer scaling bruising."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#C8C8C8" //RGB: 200, 200, 200
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
@@ -725,6 +742,7 @@
 	name = "Rotatium"
 	id = "rotatium"
 	description = "A constantly swirling, oddly colourful fluid. Causes the consumer's sense of direction and hand-eye coordination to become wild."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#AC88CA" //RGB: 172, 136, 202
 	metabolization_rate = 0.6 * REAGENTS_METABOLISM
@@ -752,6 +770,7 @@
 	name = "Skewium"
 	id = "skewium"
 	description = "A strange, dull coloured liquid that appears to warp back and forth inside its container. Causes any consumer to experience a visual phenomena similar to said warping."
+	silent_toxin = TRUE
 	reagent_state = LIQUID
 	color = "#ADBDCD"
 	metabolization_rate = 0.8 * REAGENTS_METABOLISM
@@ -867,7 +886,7 @@
 		holder.remove_reagent(id, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
-			M.Knockdown(20, 0)
+			M.Paralyze(20, 0)
 		. = 1
 	..()
 
@@ -875,6 +894,7 @@
 	name = "Mime's Bane"
 	id = "mimesbane"
 	description = "A nonlethal neurotoxin that interferes with the victim's ability to gesture."
+	silent_toxin = TRUE
 	color = "#F0F8FF" // rgb: 240, 248, 255
 	toxpwr = 0
 	taste_description = "stillness"
@@ -884,3 +904,65 @@
 
 /datum/reagent/toxin/mimesbane/on_mob_delete(mob/living/L)
 	L.remove_trait(TRAIT_EMOTEMUTE, id)
+
+/datum/reagent/toxin/bonehurtingjuice //oof ouch
+	name = "Bone Hurting Juice"
+	id = "bonehurtingjuice"
+	description = "A strange substance that looks a lot like water. Drinking it is oddly tempting. Oof ouch."
+	silent_toxin = TRUE //no point spamming them even more.
+	color = "#AAAAAA77" //RGBA: 170, 170, 170, 77
+	toxpwr = 0
+	taste_description = "bone hurting"
+	overdose_threshold = 50
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_add(mob/living/carbon/M)
+	M.say("oof ouch my bones", forced = "bonehurtingjuice")
+
+/datum/reagent/toxin/bonehurtingjuice/on_mob_life(mob/living/carbon/M)
+	M.adjustStaminaLoss(15, 0)
+	if(M.has_trait(TRAIT_CALCIUM_HEALER))
+		M.adjustBruteLoss(0.5, 0)
+	if(prob(20))
+		switch(rand(1, 3))
+			if(1)
+				var/list/possible_says = list("oof.", "ouch!", "my bones.", "oof ouch.", "oof ouch my bones.")
+				M.say(pick(possible_says), forced = "bonehurtingjuice")
+			if(2)
+				var/list/possible_mes = list("oofs softly.", "looks like their bones hurt.", "grimaces, as though their bones hurt.")
+				M.say("*custom " + pick(possible_mes), forced = "bonehurtingjuice")
+			if(3)
+				to_chat(M, "<span class='warning'>Your bones hurt!</span>")
+	return ..()
+
+/datum/reagent/toxin/bonehurtingjuice/overdose_process(mob/living/carbon/M)
+	if(prob(4) && iscarbon(M)) //big oof
+		var/selected_part
+		switch(rand(1, 4)) //God help you if the same limb gets picked twice quickly.
+			if(1)
+				selected_part = BODY_ZONE_L_ARM
+			if(2)
+				selected_part = BODY_ZONE_R_ARM
+			if(3)
+				selected_part = BODY_ZONE_L_LEG
+			if(4)
+				selected_part = BODY_ZONE_R_LEG
+		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
+		if(M.dna.species.type != /datum/species/skeleton && M.dna.species.type != /datum/species/plasmaman) //We're so sorry skeletons, you're so misunderstood
+			if(bp)
+				bp.receive_damage(0, 0, 200)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M]'s bones hurt too much!!</span>", "<span class='danger'>Your bones hurt too much!!</span>")
+				M.say("OOF!!", forced = "bonehurtingjuice")
+			else //SUCH A LUST FOR REVENGE!!!
+				to_chat(M, "<span class='warning'>A phantom limb hurts!</span>")
+				M.say("Why are we still here, just to suffer?", forced = "bonehurtingjuice")
+		else //you just want to socialize
+			if(bp)
+				playsound(M, get_sfx("desceration"), 50, TRUE, -1)
+				M.visible_message("<span class='warning'>[M] rattles loudly and flails around!!</span>", "<span class='danger'>Your bones hurt so much that your missing muscles spasm!!</span>")
+				M.say("OOF!!", forced="bonehurtingjuice")
+				bp.receive_damage(200, 0, 0) //But I don't think we should
+			else
+				to_chat(M, "<span class='warning'>Your missing arm aches from wherever you left it.</span>")
+				M.emote("sigh")
+	return ..()

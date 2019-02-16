@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(events)
 	var/frequency_upper = 6000	//10 minutes upper bound. Basically an event will happen every 3 to 10 minutes.
 
 	var/list/holidays			//List of all holidays occuring today or null if no holidays
-	var/wizardmode = 0
+	var/wizardmode = FALSE
 
 /datum/controller/subsystem/events/Initialize(time, zlevel)
 	for(var/type in typesof(/datum/round_event_control))
@@ -91,7 +91,8 @@ SUBSYSTEM_DEF(events)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		E.max_occurrences = 0
 	else if(. == EVENT_READY)
-		E.runEvent(TRUE)
+		E.random = TRUE
+		E.runEvent()
 
 //allows a client to trigger an event
 //aka Badmin Central

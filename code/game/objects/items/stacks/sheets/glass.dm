@@ -243,8 +243,9 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 100, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 	max_integrity = 40
-	var/cooldown = 0
 	sharpness = IS_SHARP
+	var/icon_prefix
+
 
 /obj/item/shard/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat")] with the shard of glass! It looks like [user.p_theyre()] trying to commit suicide.</span>")
@@ -266,6 +267,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		if("large")
 			pixel_x = rand(-5, 5)
 			pixel_y = rand(-5, 5)
+	if (icon_prefix)
+		icon_state = "[icon_prefix][icon_state]"
 
 /obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
 	. = ..()
@@ -313,4 +316,13 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			playsound(loc, 'sound/effects/glass_step.ogg', 30, 1)
 		else
 			playsound(loc, 'sound/effects/glass_step.ogg', 50, 1)
-	. = ..()
+	return ..()
+
+/obj/item/shard/plasma
+	name = "purple shard"
+	desc = "A nasty looking shard of plasma glass."
+	force = 6
+	throwforce = 11
+	icon_state = "plasmalarge"
+	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT * 0.5, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	icon_prefix = "plasma"

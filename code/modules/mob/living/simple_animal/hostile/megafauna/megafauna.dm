@@ -21,7 +21,9 @@
 	maxbodytemp = INFINITY
 	vision_range = 5
 	aggro_vision_range = 18
-	anchored = TRUE
+	move_force = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING
+	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
@@ -31,17 +33,36 @@
 	var/elimination = 0
 	var/anger_modifier = 0
 	var/obj/item/gps/internal
+	var/internal_type
 	var/recovery_time = 0
+	var/true_spawn = 1 // if this is a megafauna that should grant achievements, or have a gps signal
+	var/nest_range = 10
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
+	if(internal_type && true_spawn)
+		internal = new internal_type(src)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	add_trait(TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/death(gibbed)
+/mob/living/simple_animal/hostile/megafauna/Moved()
+	if(nest && nest.parent && get_dist(nest.parent, src) > nest_range)
+		var/turf/closest = get_turf(nest.parent)
+		for(var/i = 1 to nest_range)
+			closest = get_step(closest, get_dir(closest, src))
+		forceMove(closest) // someone teleported out probably and the megafauna kept chasing them
+		target = null
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/prevent_content_explosion()
+	return TRUE
+
+/mob/living/simple_animal/hostile/megafauna/death(gibbed, var/list/force_grant)
 	if(health > 0)
 		return
 	else
@@ -50,13 +71,13 @@
 		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
 			spawn_crusher_loot()
 			crusher_kill = TRUE
-		if(!(flags_1 & ADMIN_SPAWNED_1))
+		if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
 			var/tab = "megafauna_kills"
 			if(crusher_kill)
 				tab = "megafauna_kills_crusher"
-			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-				grant_achievement(medal_type, score_type, crusher_kill)
+				grant_achievement(medal_type, score_type, crusher_kill, force_grant)
+				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 		..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
@@ -109,12 +130,15 @@
 
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time)
 	recovery_time = world.time + buffer_time
+	ranged_cooldown = world.time + buffer_time
 
-/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill)
+/mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, var/list/grant_achievement = list())
 	if(!medal_type || (flags_1 & ADMIN_SPAWNED_1) || !SSmedals.hub_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
-
-	for(var/mob/living/L in view(7,src))
+	if(!grant_achievement.len)
+		for(var/mob/living/L in view(7,src))
+			grant_achievement += L
+	for(var/mob/living/L in grant_achievement)
 		if(L.stat || !L.client)
 			continue
 		var/client/C = L.client

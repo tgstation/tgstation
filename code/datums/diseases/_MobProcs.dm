@@ -144,3 +144,9 @@
 		if(!((locate(thing) in bodyparts) || (locate(thing) in internal_organs)))
 			return FALSE
 	return ..()
+
+/mob/living/proc/CanSpreadAirborneDisease()
+	return !is_mouth_covered()
+
+/mob/living/carbon/CanSpreadAirborneDisease()
+	return !((head && (head.flags_cover & HEADCOVERSMOUTH) && (head.armor.getRating("bio") >= 25)) || (wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH) && (wear_mask.armor.getRating("bio") >= 25)))

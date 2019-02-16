@@ -33,6 +33,9 @@
 	else
 		return QDEL_HINT_LETMELIVE
 
+/obj/docking_port/has_gravity(turf/T)
+	return FALSE
+
 /obj/docking_port/take_damage()
 	return
 
@@ -251,7 +254,7 @@
 
 	var/launch_status = NOLAUNCH
 
-	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
+	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
 	var/engine_coeff = 1 //current engine coeff
@@ -305,14 +308,12 @@
 			id = "[id][idnum]"
 		if(name == initial(name))
 			name = "[name] [idnum]"
-	for(var/i in shuttle_areas)
-		var/area/place = i
-		for(var/obj/machinery/computer/shuttle/comp in place)
-			comp.connect_to_shuttle(src, dock, idnum)
-		for(var/obj/machinery/computer/camera_advanced/shuttle_docker/comp in place)
-			comp.connect_to_shuttle(src, dock, idnum)
-		for(var/obj/machinery/status_display/shuttle/sd in place)
-			sd.connect_to_shuttle(src, dock, idnum)
+	for(var/place in shuttle_areas)
+		var/area/area = place
+		area.connect_to_shuttle(src, dock, idnum, FALSE)
+		for(var/each in place)
+			var/atom/atom = each
+			atom.connect_to_shuttle(src, dock, idnum, FALSE)
 
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact

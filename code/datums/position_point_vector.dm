@@ -186,8 +186,8 @@
 
 /datum/point/vector/proc/increment(multiplier = 1)
 	iteration++
-	x += mpx * 1
-	y += mpy * 1
+	x += mpx * (multiplier)
+	y += mpy * (multiplier)
 
 /datum/point/vector/proc/return_vector_after_increments(amount = 7, multiplier = 1, force_simulate = FALSE)
 	var/datum/point/vector/v = copy_to()

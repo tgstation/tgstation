@@ -25,7 +25,6 @@
 	pressure_resistance = 2
 	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
-	var/traitor_unlock_degrees = 0
 	var/degrees = 0
 	var/font = PEN_FONT
 
@@ -151,9 +150,6 @@
 /*
  * Sleepypens
  */
-/obj/item/pen/sleepy
-	container_type = OPENCONTAINER
-
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user)
 	if(!istype(M))
@@ -162,12 +158,13 @@
 	if(..())
 		if(reagents.total_volume)
 			if(M.reagents)
-				reagents.trans_to(M, reagents.total_volume)
+				reagents.reaction(M, INJECT, reagents.total_volume)
+				reagents.trans_to(M, reagents.total_volume, transfered_by = user)
 
 
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
-	create_reagents(45)
+	create_reagents(45, OPENCONTAINER)
 	reagents.add_reagent("chloralhydratedelayed", 20)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)

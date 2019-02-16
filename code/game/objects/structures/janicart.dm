@@ -5,7 +5,6 @@
 	icon_state = "cart"
 	anchored = FALSE
 	density = TRUE
-	container_type = OPENCONTAINER
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/storage/bag/trash/mybag	= null
@@ -18,14 +17,15 @@
 
 /obj/structure/janitorialcart/Initialize()
 	. = ..()
-	create_reagents(100)
+	create_reagents(100, OPENCONTAINER)
 
 /obj/structure/janitorialcart/proc/wet_mop(obj/item/mop, mob/user)
 	if(reagents.total_volume < 1)
 		to_chat(user, "<span class='warning'>[src] is out of water!</span>")
 		return 0
 	else
-		reagents.trans_to(mop, 5)
+		var/obj/item/mop/M = mop
+		reagents.trans_to(mop, M.mopcap, transfered_by = user)
 		to_chat(user, "<span class='notice'>You wet [mop] in [src].</span>")
 		playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 		return 1
@@ -79,7 +79,7 @@
 			to_chat(user, "<span class='warning'>[src] can't hold any more signs!</span>")
 	else if(mybag)
 		mybag.attackby(I, user)
-	else if(istype(I, /obj/item/crowbar))
+	else if(I.tool_behaviour == TOOL_CROWBAR)
 		user.visible_message("[user] begins to empty the contents of [src].", "<span class='notice'>You begin to empty the contents of [src]...</span>")
 		if(I.use_tool(src, user, 30))
 			to_chat(usr, "<span class='notice'>You empty the contents of [src]'s bucket onto the floor.</span>")

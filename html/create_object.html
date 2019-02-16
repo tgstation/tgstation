@@ -40,6 +40,7 @@
 		Where: 
 			<select name='object_where' style="width:320px">
 				<option value='onfloor'>On floor below own mob</option>
+				<option value='frompod'>On floor below own mob, dropped via supply pod</option>
 				<option value='inhand'>In own mob's hand</option>
 				<option value='inmarked'>In marked object</option>
 			</select>
@@ -72,14 +73,15 @@
 		
 		function updateSearch()
 		{
-			old_search = document.spawner.filter.value;
+			old_search = document.spawner.filter.value.toLowerCase();
 			
 			
 			var filtered = new Array();
 			var i;
 			for (i in objects)
 			{
-				if(objects[i].search(old_search) < 0)
+				var caseInsensitiveObject = objects[i].toLowerCase();
+				if(caseInsensitiveObject.search(old_search) < 0)
 				{
 					continue;
 				}

@@ -4,12 +4,12 @@
 
 	school = "transmutation"
 	charge_max = 600
-	clothes_req = 0
+	clothes_req = FALSE
 	invocation = "DIRI CEL"
 	invocation_type = "whisper"
 	range = -1
 	cooldown_min = 400 //50 deciseconds reduction per rank
-	include_user = 1
+	include_user = TRUE
 
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
@@ -29,7 +29,7 @@
 				to_chat(M, "<span class='notice'>You feel raw magic flowing through you. It feels good!</span>")
 			else
 				to_chat(M, "<span class='notice'>You feel very strange for a moment, but then it passes.</span>")
-				burnt_out = 1
+				burnt_out = TRUE
 			charged_item = M
 			break
 		for(var/obj/item in hand_items)

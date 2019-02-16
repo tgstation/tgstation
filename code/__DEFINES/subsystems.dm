@@ -1,7 +1,7 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
-#define DB_MAJOR_VERSION 4
-#define DB_MINOR_VERSION 7
+#define DB_MAJOR_VERSION 5
+#define DB_MINOR_VERSION 0
 
 //Timing subsystem
 //Don't run if there is an identical unique timer active
@@ -21,8 +21,6 @@
 //Loops the timer repeatedly until qdeleted
 //In most cases you want a subsystem instead
 #define TIMER_LOOP				(1<<5)
-
-#define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
 
 #define TIMER_ID_NULL -1
 
@@ -51,23 +49,26 @@
 // Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
-#define INIT_ORDER_GARBAGE			19
-#define INIT_ORDER_DBCORE			18
-#define INIT_ORDER_BLACKBOX			17
-#define INIT_ORDER_SERVER_MAINT		16
-#define INIT_ORDER_INPUT			15
-#define INIT_ORDER_VIS				14
-#define INIT_ORDER_RESEARCH			13
-#define INIT_ORDER_EVENTS			12
-#define INIT_ORDER_JOBS				11
-#define INIT_ORDER_QUIRKS			10
-#define INIT_ORDER_TICKER			9
-#define INIT_ORDER_MAPPING			8
-#define INIT_ORDER_NETWORKS			7
-#define INIT_ORDER_ATOMS			6
-#define INIT_ORDER_LANGUAGE			5
-#define INIT_ORDER_MACHINES			4
-#define INIT_ORDER_CIRCUIT			3
+#define INIT_ORDER_TITLE			100
+#define INIT_ORDER_GARBAGE			99
+#define INIT_ORDER_DBCORE			95
+#define INIT_ORDER_BLACKBOX			94
+#define INIT_ORDER_SERVER_MAINT		93
+#define INIT_ORDER_INPUT			85
+#define INIT_ORDER_VIS				80
+#define INIT_ORDER_RESEARCH			75
+#define INIT_ORDER_EVENTS			70
+#define INIT_ORDER_JOBS				65
+#define INIT_ORDER_QUIRKS			60
+#define INIT_ORDER_TICKER			55
+#define INIT_ORDER_MAPPING			50
+#define INIT_ORDER_NETWORKS			45
+#define INIT_ORDER_ECONOMY			40
+#define INIT_ORDER_OUTPUTS			35
+#define INIT_ORDER_ATOMS			30
+#define INIT_ORDER_LANGUAGE			25
+#define INIT_ORDER_MACHINES			20
+#define INIT_ORDER_CIRCUIT			15
 #define INIT_ORDER_TIMER			1
 #define INIT_ORDER_DEFAULT			0
 #define INIT_ORDER_AIR				-1
@@ -78,7 +79,7 @@
 #define INIT_ORDER_STICKY_BAN		-10
 #define INIT_ORDER_LIGHTING			-20
 #define INIT_ORDER_SHUTTLE			-21
-#define INIT_ORDER_SQUEAK			-40
+#define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_PERSISTENCE		-100
 
@@ -99,7 +100,6 @@
 #define FIRE_PRIORITY_SPACEDRIFT	30
 #define FIRE_PRIORITY_FIELDS		30
 #define FIRE_PRIOTITY_SMOOTHING		35
-#define FIRE_PRIORITY_ORBIT			35
 #define FIRE_PRIORITY_NETWORKS		40
 #define FIRE_PRIORITY_OBJ			40
 #define FIRE_PRIORITY_ACID			40
@@ -141,6 +141,12 @@
 		}\
 		if(LAZYLEN(po)){\
 			A.overlays |= po;\
+		}\
+		for(var/I in A.alternate_appearances){\
+			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
+			if(AA.transfer_overlays){\
+				AA.copy_overlays(A, TRUE);\
+			}\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
 	}

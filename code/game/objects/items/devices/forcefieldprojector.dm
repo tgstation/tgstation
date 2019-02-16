@@ -2,7 +2,7 @@
 	name = "forcefield projector"
 	desc = "An experimental device that can create several forcefields at a distance."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "signmaker_engi"
+	icon_state = "signmaker_forcefield"
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NOBLUDGEON
@@ -27,6 +27,10 @@
 			qdel(F)
 			return
 	var/turf/T = get_turf(target)
+	var/obj/structure/projected_forcefield/found_field = locate() in T
+	if(found_field)
+		to_chat(user, "<span class='warning'>There is already a forcefield in that location!</span>")
+		return
 	if(T.density)
 		return
 	if(get_dist(T,src) > field_distance_limit)

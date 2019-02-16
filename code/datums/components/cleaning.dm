@@ -24,7 +24,7 @@
 				M.regenerate_icons()
 		else if(ishuman(A))
 			var/mob/living/carbon/human/cleaned_human = A
-			if(cleaned_human.lying)
+			if(!(cleaned_human.mobility_flags & MOBILITY_STAND))
 				if(cleaned_human.head)
 					SEND_SIGNAL(cleaned_human.head, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 				if(cleaned_human.wear_suit)

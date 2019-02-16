@@ -1,10 +1,18 @@
 
-/mob/living/carbon/human/Stun(amount, updating = 1, ignore_canstun = 0)
+/mob/living/carbon/human/Stun(amount, updating = TRUE, ignore_canstun = FALSE)
 	amount = dna.species.spec_stun(src,amount)
 	return ..()
 
-/mob/living/carbon/human/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
+/mob/living/carbon/human/Knockdown(amount, updating = TRUE, ignore_canstun = FALSE)
 	amount = dna.species.spec_stun(src,amount)
+	return ..()
+
+/mob/living/carbon/human/Paralyze(amount, updating = TRUE, ignore_canstun = FALSE)
+	amount = dna.species.spec_stun(src, amount)
+	return ..()
+
+/mob/living/carbon/human/Immobilize(amount, updating = TRUE, ignore_canstun = FALSE)
+	amount = dna.species.spec_stun(src, amount)
 	return ..()
 
 /mob/living/carbon/human/Unconscious(amount, updating = 1, ignore_canunconscious = 0)
@@ -43,3 +51,13 @@
 			grant_language(/datum/language/beachbum)
 		else
 			remove_language(/datum/language/beachbum)
+
+/mob/living/carbon/human/proc/adjust_hygiene(amount)
+	. = ..()
+	hygiene = CLAMP(hygiene+amount, 0, HYGIENE_LEVEL_CLEAN)
+	update_smell()
+
+/mob/living/carbon/human/proc/set_hygiene(amount)
+	. = ..()
+	hygiene	 = CLAMP(amount, 0, HYGIENE_LEVEL_CLEAN)
+	update_smell()

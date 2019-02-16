@@ -11,7 +11,7 @@
 
 /obj/item/reagent_containers/food/snacks/salad/Initialize()
 	. = ..()
-	eatverb = pick("crunch","devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
+	eatverb = pick("devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
 
 /obj/item/reagent_containers/food/snacks/salad/aesirsalad
 	name = "\improper Aesir salad"

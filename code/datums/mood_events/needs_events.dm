@@ -4,7 +4,7 @@
 	mood_change = -4
 
 /datum/mood_event/wellfed
-	description = "<span class='nicegreen'>My belly feels round and full.</span>\n"
+	description = "<span class='nicegreen'>I'm stuffed!</span>\n"
 	mood_change = 6
 
 /datum/mood_event/fed
@@ -18,6 +18,19 @@
 /datum/mood_event/starving
 	description = "<span class='boldwarning'>I'm starving!</span>\n"
 	mood_change = -15
+
+//charge
+/datum/mood_event/charged
+	description = "<span class='nicegreen'>I feel the power in my veins!</span>\n"
+	mood_change = 6
+
+/datum/mood_event/lowpower
+	description = "<span class='warning'>My power is running low, I should go charge up somewhere.</span>\n"
+	mood_change = -7
+
+/datum/mood_event/decharged
+	description = "<span class='boldwarning'>I'm in desperate need of some electricity!</span>\n"
+	mood_change = -12
 
 //Disgust
 /datum/mood_event/gross
@@ -40,6 +53,19 @@
 	description = "<span class='warning'>The stench of rotting carcasses is unbearable!</span>\n"
 	mood_change = -7
 
+//Hygiene Events
+/datum/mood_event/neat
+	description = "<span class='nicegreen'>I'm so clean, I love it.</span>\n"
+	mood_change = 3
+
+/datum/mood_event/dirty
+	description = "<span class='warning'>I smell horrid.</span>\n"
+	mood_change = -5
+
+/datum/mood_event/happy_neet
+	description = "<span class='nicegreen'>I smell horrid.</span>\n"
+	mood_change = 2
+
 //Generic needs events
 /datum/mood_event/favorite_food
 	description = "<span class='nicegreen'>I really enjoyed eating that.</span>\n"
@@ -60,3 +86,8 @@
 	description = "<span class='nicegreen'>I have recently had a nice shower.</span>\n"
 	mood_change = 2
 	timeout = 1800
+
+/datum/mood_event/fresh_laundry
+	description = "<span class='nicegreen'>There's nothing like the feeling of a freshly laundered jumpsuit.</span>\n"
+	mood_change = 2
+	timeout = 10 MINUTES

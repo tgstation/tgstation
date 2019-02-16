@@ -15,6 +15,8 @@
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
+	var/freshly_laundered = FALSE
+	var/dodgy_colours = FALSE
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -44,12 +46,11 @@
 	if(has_sensor > NO_SENSORS)
 		has_sensor = BROKEN_SENSORS
 
-/obj/item/clothing/under/New()
+/obj/item/clothing/under/Initialize()
+	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
 		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
-	adjusted = NORMAL_STYLE
-	..()
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -64,6 +65,10 @@
 		if(DIGITIGRADE in H.dna.species.species_traits)
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
+
+	if(slot == SLOT_W_UNIFORM && freshly_laundered)
+		freshly_laundered = FALSE
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
 	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -90,6 +95,9 @@
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
 			return
 		else
+
+			if(!A.can_attach_accessory(src, user)) //Make sure the suit has a place to put the accessory.
+				return
 			if(user && !user.temporarilyRemoveItemFromInventory(I))
 				return
 			if(!A.attach(src, user))
@@ -134,6 +142,10 @@
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
+	if(dodgy_colours)
+		to_chat(user, "The colours are a bit dodgy.")
+	if(freshly_laundered)
+		to_chat(user, "It looks fresh and clean.")
 	if(can_adjust)
 		if(adjusted == ALT_STYLE)
 			to_chat(user, "Alt-click on [src] to wear it normally.")

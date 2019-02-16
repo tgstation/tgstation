@@ -1,5 +1,7 @@
 GLOBAL_LIST_EMPTY(uplinks)
 
+#define PEN_ROTATIONS 2
+
 /**
  * Uplinks
  *
@@ -21,10 +23,16 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
 	var/hidden_crystals = 0
+	var/unlock_note
+	var/unlock_code
+	var/failsafe_code
+
+	var/list/previous_attempts
 
 /datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, datum/game_mode/_gamemode, starting_tc = 20)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
+
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -57,6 +65,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
+
+	previous_attempts = list()
 
 /datum/component/uplink/InheritComponent(datum/component/uplink/U)
 	lockable |= U.lockable
@@ -144,6 +154,16 @@ GLOBAL_LIST_EMPTY(uplinks)
 							is_inaccessible = 0
 					if(is_inaccessible)
 						continue
+				if(I.restricted_species)
+					if(ishuman(user))
+						var/is_inaccessible = TRUE
+						var/mob/living/carbon/human/H = user
+						for(var/F in I.restricted_species)
+							if(F == H.dna.species.id)
+								is_inaccessible = FALSE
+								break
+						if(is_inaccessible)
+							continue
 				cat["items"] += list(list(
 					"name" = I.name,
 					"cost" = I.cost,
@@ -219,7 +239,10 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/proc/new_ringtone(datum/source, mob/living/user, new_ring_text)
 	var/obj/item/pda/master = parent
-	if(trim(lowertext(new_ring_text)) != trim(lowertext(master.lock_code))) //why is the lock code stored on the pda?
+	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
+		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
+			failsafe()
+			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
 	interact(null, user)
@@ -233,7 +256,9 @@ GLOBAL_LIST_EMPTY(uplinks)
 /datum/component/uplink/proc/new_frequency(datum/source, list/arguments)
 	var/obj/item/radio/master = parent
 	var/frequency = arguments[1]
-	if(frequency != master.traitor_frequency)
+	if(frequency != unlock_code)
+		if(frequency == failsafe_code)
+			failsafe()
 		return
 	locked = FALSE
 	if(ismob(master.loc))
@@ -243,9 +268,46 @@ GLOBAL_LIST_EMPTY(uplinks)
 
 /datum/component/uplink/proc/pen_rotation(datum/source, degrees, mob/living/carbon/user)
 	var/obj/item/pen/master = parent
-	if(degrees != master.traitor_unlock_degrees)
+	previous_attempts += degrees
+	if(length(previous_attempts) > PEN_ROTATIONS)
+		popleft(previous_attempts)
+
+	if(compare_list(previous_attempts, unlock_code))
+		locked = FALSE
+		previous_attempts.Cut()
+		master.degrees = 0
+		interact(null, user)
+		to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+
+	else if(compare_list(previous_attempts, failsafe_code))
+		failsafe()
+
+/datum/component/uplink/proc/setup_unlock_code()
+	unlock_code = generate_code()
+	var/obj/item/P = parent
+	if(istype(parent,/obj/item/pda))
+		unlock_note = "<B>Uplink Passcode:</B> [unlock_code] ([P.name])."
+	else if(istype(parent,/obj/item/radio))
+		unlock_note = "<B>Radio Frequency:</B> [format_frequency(unlock_code)] ([P.name])."
+	else if(istype(parent,/obj/item/pen))
+		unlock_note = "<B>Uplink Degrees:</B> [english_list(unlock_code)] ([P.name])."
+
+/datum/component/uplink/proc/generate_code()
+	if(istype(parent,/obj/item/pda))
+		return "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
+	else if(istype(parent,/obj/item/radio))
+		return sanitize_frequency(rand(MIN_FREQ, MAX_FREQ))
+	else if(istype(parent,/obj/item/pen))
+		var/list/L = list()
+		for(var/i in 1 to PEN_ROTATIONS)
+			L += rand(1, 360)
+		return L
+
+/datum/component/uplink/proc/failsafe()
+	if(!parent)
 		return
-	locked = FALSE
-	master.degrees = 0
-	interact(null, user)
-	to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+	var/turf/T = get_turf(parent)
+	if(!T)
+		return
+	explosion(T,1,2,3)
+	qdel(parent) //Alternatively could brick the uplink.

@@ -1,5 +1,6 @@
 /datum/martial_art/boxing
 	name = "Boxing"
+	id = MARTIALART_BOXING
 
 /datum/martial_art/boxing/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	to_chat(A, "<span class='warning'>Can't disarm while boxing!</span>")
@@ -43,7 +44,7 @@
 			D.SetSleeping(100)
 			D.forcesay(GLOB.hit_appends)
 			log_combat(A, D, "knocked out (boxing) ")
-		else if(D.lying)
+		else if(!(D.mobility_flags & MOBILITY_STAND))
 			D.forcesay(GLOB.hit_appends)
 	return 1
 

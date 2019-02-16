@@ -65,15 +65,17 @@
 
 	if(!cure)
 		if(prob(stage_prob))
-			stage = min(stage + 1,max_stages)
+			update_stage(min(stage + 1,max_stages))
 	else
 		if(prob(cure_chance))
-			stage = max(stage - 1, 1)
+			update_stage(max(stage - 1, 1))
 
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
 			cure()
 
+/datum/disease/proc/update_stage(new_stage)
+	stage = new_stage
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
@@ -160,3 +162,21 @@
 	affected_mob.diseases -= src		//remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
+
+//Use this to compare severities
+/proc/get_disease_severity_value(severity)
+	switch(severity)
+		if(DISEASE_SEVERITY_POSITIVE)
+			return 1
+		if(DISEASE_SEVERITY_NONTHREAT)
+			return 2
+		if(DISEASE_SEVERITY_MINOR)
+			return 3
+		if(DISEASE_SEVERITY_MEDIUM)
+			return 4
+		if(DISEASE_SEVERITY_HARMFUL)
+			return 5
+		if(DISEASE_SEVERITY_DANGEROUS)
+			return 6
+		if(DISEASE_SEVERITY_BIOHAZARD)
+			return 7

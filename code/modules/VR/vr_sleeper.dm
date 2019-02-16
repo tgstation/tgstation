@@ -72,9 +72,15 @@
 			SStgui.close_user_uis(occupant, src)
 		..()
 
-/obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+/obj/machinery/vr_sleeper/MouseDrop_T(mob/target, mob/living/user)
+	if(!istype(user))
 		return
+	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
+		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!(L.mobility_flags & MOBILITY_STAND))
+			return
 	close_machine(target)
 
 /obj/machinery/vr_sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
@@ -93,7 +99,11 @@
 				to_chat(occupant, "<span class='warning'>Transferring to virtual reality...</span>")
 				if(vr_human && vr_human.stat == CONSCIOUS && !vr_human.real_mind)
 					SStgui.close_user_uis(occupant, src)
-					vr_human.real_mind = human_occupant.mind
+					if(istype(human_occupant, /mob/living/carbon/human/virtual_reality))
+						var/mob/living/carbon/human/virtual_reality/vr_human_occupant = human_occupant
+						vr_human.real_mind = vr_human_occupant.real_mind
+					else
+						vr_human.real_mind = human_occupant.mind
 					vr_human.ckey = human_occupant.ckey
 					to_chat(vr_human, "<span class='notice'>Transfer successful! You are now playing as [vr_human] in VR!</span>")
 				else
@@ -109,20 +119,20 @@
 							to_chat(occupant, "<span class='warning'>Virtual world misconfigured, aborting transfer</span>")
 					else
 						to_chat(occupant, "<span class='warning'>The virtual world does not support the creation of new virtual avatars, aborting transfer</span>")
-			. = TRUE
+			return TRUE
 		if("delete_avatar")
 			if(!occupant || usr == occupant)
 				if(vr_human)
 					cleanup_vr_human()
 			else
 				to_chat(usr, "<span class='warning'>The VR Sleeper's safeties prevent you from doing that.</span>")
-			. = TRUE
+			return TRUE
 		if("toggle_open")
 			if(state_open)
 				close_machine()
 			else if ((!occupant || usr == occupant) || !only_current_user_can_interact)
 				open_machine()
-			. = TRUE
+			return TRUE
 
 /obj/machinery/vr_sleeper/ui_data(mob/user)
 	var/list/data = list()

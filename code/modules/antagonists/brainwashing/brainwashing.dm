@@ -9,7 +9,6 @@
 		for(var/O in directives)
 			var/datum/objective/brainwashing/objective = new(O)
 			B.objectives += objective
-			M.objectives += objective
 		B.greet()
 	else
 		B = new()
@@ -31,10 +30,6 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	show_name_in_check_antagonists = TRUE
-
-/datum/antagonist/brainwashed/on_gain()
-	owner.objectives |= objectives
-	. = ..()
 
 /datum/antagonist/brainwashed/greet()
 	to_chat(owner, "<span class='warning'>Your mind reels as it begins focusing on a single purpose...</span>")

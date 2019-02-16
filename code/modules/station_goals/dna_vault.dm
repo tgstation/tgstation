@@ -128,7 +128,10 @@
 	idle_power_usage = 5000
 	pixel_x = -32
 	pixel_y = -64
-	light_range = 1
+	light_range = 3
+	light_power = 1.5
+	light_color = LIGHT_COLOR_CYAN
+
 
 	//High defaults so it's not completed automatically if there's no station goal
 	var/animals_max = 100
@@ -274,7 +277,7 @@
 			H.add_trait(TRAIT_PIERCEIMMUNE, "dna_vault")
 		if(VAULT_SPEED)
 			to_chat(H, "<span class='notice'>Your legs feel faster.</span>")
-			H.add_trait(TRAIT_GOTTAGOFAST, "dna_vault")
+			H.add_movespeed_modifier(MOVESPEED_ID_DNA_VAULT, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
 		if(VAULT_QUICK)
 			to_chat(H, "<span class='notice'>Your arms move as fast as lightning.</span>")
 			H.next_move_modifier = 0.5
