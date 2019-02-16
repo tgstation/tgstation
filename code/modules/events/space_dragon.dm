@@ -40,6 +40,7 @@
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, 1, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Space Dragon by an event.")
 	log_game("[key_name(S)] was spawned as a Space Dragon by an event.")
+	announce_to_ghosts(S)
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN
 
