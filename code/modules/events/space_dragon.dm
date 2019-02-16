@@ -9,7 +9,7 @@
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
 	role_name = "Space Dragon"
-	fakeable = FALSE
+	fakeable = TRUE
 
 /datum/round_event/ghost_role/space_dragon/announce(fake)
 	priority_announce("It appears a lifeform with magical traces is approaching [station_name()], please stand-by.", "Lifesign Alert")
