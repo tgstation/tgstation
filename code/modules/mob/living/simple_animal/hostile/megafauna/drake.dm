@@ -510,7 +510,7 @@ Difficulty: Medium
 	obj_damage = 80
 	melee_damage_upper = 35
 	melee_damage_lower = 35
-	speed = 0
+	speed = 1
 	mouse_opacity = MOUSE_OPACITY_ICON
 	loot = list()
 	crusher_loot = list()
