@@ -1,8 +1,3 @@
-/area/awaymission/vr/miner
-	name = "VrMining"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-
 /datum/outfit/job/miner/equipped/vr
 	name = "Virtual Reality Miner"
 	suit = /obj/item/clothing/suit/hooded/explorer
@@ -12,6 +7,20 @@
 	internals_slot = SLOT_S_STORE
 	backpack_contents = list(
 		/obj/item/gun/energy/kinetic_accelerator=2)
+
+/obj/effect/portal/permanent/one_way/recall/megafauna_arena
+	name = "Megafauna Arena Portal"
+	desc = "Fight against megafauna in the safety of virtual reality."
+	equipment = /datum/outfit/job/miner/equipped/vr
+	recall_equipment = /datum/outfit/vr
+	id = "vr megafauna arena"
+	light_color = LIGHT_COLOR_FIRE
+	light_power = 1
+	light_range = 10
+
+/obj/effect/portal/permanent/one_way/destroy/megafauna_arena
+	name = "Megafauna Arena Exit Portal"
+	id = "vr megafauna arena"
 
 /obj/effect/portal/permanent/one_way/recall/blood_drunk_miner
 	name = "Blood Drunk Miner Arena Portal"

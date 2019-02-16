@@ -1414,6 +1414,7 @@
 #include "code\modules\awaymissions\mission_code\moonoutpost19.dm"
 #include "code\modules\awaymissions\mission_code\murderdome.dm"
 #include "code\modules\awaymissions\mission_code\research.dm"
+#include "code\modules\awaymissions\mission_code\runner.dm"
 #include "code\modules\awaymissions\mission_code\snowdin.dm"
 #include "code\modules\awaymissions\mission_code\spacebattle.dm"
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"

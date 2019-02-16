@@ -4,6 +4,11 @@
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
+/area/awaymission/vr/general
+	name = "VrGeneral"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
 /obj/effect/portal/permanent/one_way/recall
 	name = "recall portal"
 	desc = "Gives you a one time ability to return to this portal once you have entered."
@@ -75,20 +80,6 @@
 	flavour_text = "<span class='big bold'>You have connected to another stations virtual reality system. Your objective is to learn as much as you can about teamwork across a language barrier.</span>"
 	assignedrole = "Vr"
 
-/obj/effect/portal/permanent/one_way/recall/megafauna_arena
-	name = "Megafauna Arena Portal"
-	desc = "Fight against megafauna in the safety of virtual reality."
-	equipment = /datum/outfit/job/miner/equipped/vr
-	recall_equipment = /datum/outfit/vr
-	id = "vr megafauna arena"
-	light_color = LIGHT_COLOR_FIRE
-	light_power = 1
-	light_range = 15
-
-/obj/effect/portal/permanent/one_way/destroy/megafauna_arena
-	name = "Megafauna Arena Exit Portal"
-	id = "vr megafauna arena"
-
 /obj/effect/portal/permanent/one_way/recall/murderdome
 	name = "Murderdome Portal"
 	desc = "Active, but only occasionally. Leads to an endless battle arena."
@@ -97,7 +88,7 @@
 	id = "vr murderdome"
 	light_color = LIGHT_COLOR_FIRE
 	light_power = 1
-	light_range = 1
+	light_range = 3
 
 /obj/effect/portal/permanent/one_way/destroy/murderdome
 	name = "Murderdome Exit Portal"
@@ -111,7 +102,7 @@
 	id = "vr syndicate"
 	light_color = LIGHT_COLOR_FIRE
 	light_power = 1
-	light_range = 1
+	light_range = 3
 
 /obj/effect/portal/permanent/one_way/destroy/syndicate
 	name = "Syndicate Exit Portal"
@@ -125,18 +116,23 @@
 	id = "vr snowdin"
 	light_color = LIGHT_COLOR_FIRE
 	light_power = 1
-	light_range = 1
+	light_range = 3
 
 /obj/effect/portal/permanent/one_way/destroy/snowdin
 	name = "Snowdin Exit Portal"
 	id = "vr snowdin"
 
 /obj/machinery/light/floor/moody
-	brightness = 2
-	light_range = 1
-	bulb_colour = "#FAA019"
-	flickering = TRUE
+	light_color = LIGHT_COLOR_FIRE
+	light_power = 1
+	light_range = 8
 	resistance_flags = INDESTRUCTIBLE
+
+/obj/machinery/light/floor/moody/update_icon()
+	return
+
+/obj/machinery/light/floor/moody/update()
+	return
 
 /obj/machinery/light/floor/moody/break_light_tube()
 	return
