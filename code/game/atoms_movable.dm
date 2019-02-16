@@ -2,6 +2,8 @@
 	layer = OBJ_LAYER
 	var/last_move = null
 	var/last_move_time = 0
+	var/last_moved = 0
+	var/real_move_delay = 0
 	var/anchored = FALSE
 	var/move_resist = MOVE_RESIST_DEFAULT
 	var/move_force = MOVE_FORCE_DEFAULT
@@ -221,6 +223,8 @@
 	var/area/newarea = get_area(newloc)
 	loc = newloc
 	. = TRUE
+	real_move_delay = world.time - last_moved
+	last_moved = world.time
 	oldloc.Exited(src, newloc)
 	if(oldarea != newarea)
 		oldarea.Exited(src, newloc)

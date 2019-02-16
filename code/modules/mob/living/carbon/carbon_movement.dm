@@ -39,5 +39,5 @@
 			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
 			adjust_nutrition(-(HUNGER_FACTOR/10))
-			if(m_intent == MOVE_INTENT_RUN)
+			if(real_move_delay >= MOVE_WALK_THRESHOLD)
 				adjust_nutrition(-(HUNGER_FACTOR/10))

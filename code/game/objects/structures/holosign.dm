@@ -64,7 +64,7 @@
 		return 1
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(allow_walk && C.m_intent == MOVE_INTENT_WALK)
+		if(allow_walk && C.real_move_delay >= MOVE_WALK_THRESHOLD)
 			return 1
 
 /obj/structure/holosign/barrier/wetsign

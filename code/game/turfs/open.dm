@@ -228,7 +228,7 @@
 		else
 			if(!(C.mobility_flags & MOBILITY_STAND) || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
-			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
+			if(C.real_move_delay >= MOVE_WALK_THRESHOLD && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
 		if(!(lube&SLIDE_ICE))
 			to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
