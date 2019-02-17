@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "The deafness symptom will now correctly make a player permanently deaf with the appropriate resistance value."
