@@ -193,6 +193,9 @@
 	fire_delay = 1
 	bolt_type = BOLT_TYPE_OPEN
 
+/obj/item/gun/ballistic/automatic/tommygun/no_mag
+	spawnwithmagazine = FALSE
+
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
 	desc = "A robust assault rifle used by Nanotrasen fighting forces."

@@ -1638,6 +1638,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted_roles = list("Curator")
 	limited_stock = 1 //please don't spam deadchat
 
+/datum/uplink_item/role_restricted/artifact_crate
+	name = "Artifact Crate"
+	desc = "A dusty crate from the back of the Syndicate warehouse. It's rumored to contain rare artifacts."
+	item = /obj/structure/closet/crate/wooden/artifact
+	cost = 13
+	restricted_roles = list("Curator")
+
 /datum/uplink_item/role_restricted/his_grace
 	name = "His Grace"
 	desc = "An incredibly dangerous weapon recovered from a station overcome by the grey tide. Once activated, He will thirst for blood and must be used to kill to sate that thirst. \
