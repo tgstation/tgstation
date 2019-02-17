@@ -7,8 +7,8 @@
 	integrity_failure = 0 //no breaking open the crate
 	var/code = null
 	var/lastattempt = null
-	var/attempts = 10
-	var/codelen = 4
+	var/attempts = 5
+	var/codelen = 2
 	tamperproof = 90
 
 /obj/structure/closet/crate/secure/loot/Initialize()
