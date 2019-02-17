@@ -58,9 +58,9 @@
 	return FALSE
 
 /proc/remove_hivemember(mob/living/L) //Removes somebody from all hives as opposed to the antag proc remove_from_hive()
-	if(!L && !L.mind)
+	var/datum/mind/M = L?.mind
+	if(!M)
 		return
-	var/datum/mind/M = L.mind
 	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
 		if(H.hivemembers.Find(M))
 			H.hivemembers -= M
