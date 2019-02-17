@@ -1,0 +1,6 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - balance: "Bluespace beakers now only fit in large grenade casings. Large casings have to be researched first and can be printed at the Security and Medical protolathes or techfabs."
+  - balance: "Increased the glass (5000), diamond (1000) and bluespace (1000) resource cost for bluespace beakers."
+  - bugfix: "Fixed bluespace beakers only containing glass in their materials list."
