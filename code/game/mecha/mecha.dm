@@ -288,7 +288,7 @@
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			to_chat(user, "[icon2html(ME, user)] \A [ME].")
-	if(!enclosed && !silicon_pilot && occupant != user)
+	if(!enclosed && !silicon_pilot && occupant && occupant != user)
 		to_chat(user, "You can see [occupant] inside.")
 	if(!enclosed && silicon_pilot)
 		to_chat(user, "[src] appears to be piloting itself...")
