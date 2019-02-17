@@ -57,13 +57,17 @@
 			return TRUE
 	return FALSE
 
-/proc/remove_hivemember(mob/living/M) //Removes somebody from all hives as opposed to the antag proc remove_from_hive()
-	if(!M)
+/proc/remove_hivemember(mob/living/L) //Removes somebody from all hives as opposed to the antag proc remove_from_hive()
+	if(!L && !L.mind)
 		return
+	var/datum/mind/M = L.mind
 	for(var/datum/antagonist/hivemind/H in GLOB.antagonists)
 		if(H.hivemembers.Find(M))
 			H.hivemembers -= M
 			H.calc_size()
+	var/datum/antagonist/hivevessel/V = L.is_wokevessel()
+	if(V && M)
+		M.remove_antag_datum(/datum/antagonist/hivevessel)
 
 /datum/game_mode/hivemind/pre_setup()
 
