@@ -9,6 +9,8 @@
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
 		if(legcuffed)
 			. += legcuffed.slowdown
+	if(m_intent == MOVE_INTENT_WALK && . < MOVE_WALK_THRESHOLD)
+		. = MOVE_WALK_THRESHOLD
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	if(movement_type & FLYING)
