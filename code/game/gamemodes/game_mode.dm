@@ -235,15 +235,10 @@
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.alive_mob_list)
-			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
-				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging but is their antagonist datum important enough to skip mulligan?
-					var/prevent_roundtype_conversion = FALSE
-					for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
-						if(antag_types.prevent_roundtype_conversion)
-							prevent_roundtype_conversion = TRUE
-							break
-					if(prevent_roundtype_conversion)//they were an important antag, they're our new mark
-						living_antag_player = Player
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client && Player.mind.special_role || LAZYLEN(Player.mind.antag_datums) //Someone's still antagging but is their antagonist datum important enough to skip mulligan?
+				for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
+					if(antag_types.prevent_roundtype_conversion)
+						living_antag_player = Player //they were an important antag, they're our new mark
 						return 0
 
 		if(!are_special_antags_dead())
