@@ -2,119 +2,119 @@
 "aa" = (
 /obj/structure/spawner/megafauna/dragon,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ac" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/accelerator,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ad" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/crusher,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ae" = (
 /turf/open/floor/sepia{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "af" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/armor,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ag" = (
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ah" = (
 /turf/open/floor/mineral/gold{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ai" = (
 /obj/structure/spawner/megafauna/blood_drunk,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aj" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ak" = (
 /turf/closed/indestructible/sandstone,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "al" = (
 /turf/closed/indestructible/riveted/hierophant,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "am" = (
 /turf/open/indestructible/hierophant,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "an" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 5
 	},
 /turf/open/indestructible/hierophant,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ao" = (
 /turf/open/indestructible/hierophant/two,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ap" = (
 /obj/structure/spawner/megafauna/bubblegum,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aq" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
 	set_luminosity = 5
 	},
 /turf/open/indestructible/hierophant/two,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "as" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/healing,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "au" = (
 /turf/open/floor/bluespace{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "av" = (
 /turf/closed/indestructible/riveted,
 /area/awaymission/vr/general)
 "aw" = (
 /obj/structure/spawner/megafauna/hierophant,
 /turf/open/indestructible/hierophant/two,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ax" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/food,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "az" = (
 /turf/closed/indestructible/riveted/boss,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aA" = (
 /turf/open/indestructible/necropolis,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aB" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/misc,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aC" = (
 /obj/structure/spawner/megafauna/colossus,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aD" = (
 /obj/structure/stone_tile/slab,
 /obj/effect/portal/permanent/one_way/recall/blood_drunk_miner,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aE" = (
 /obj/structure/spawner/megafauna/legion,
 /turf/open/indestructible/necropolis,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aF" = (
 /obj/structure/stone_tile/slab/burnt,
 /obj/effect/portal/permanent/one_way/recall/dragon,
 /turf/open/lava/smooth/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aG" = (
 /obj/effect/portal/permanent/one_way/recall/colossus,
 /turf/open/floor/fakepit{
@@ -122,89 +122,89 @@
 	icon = 'icons/turf/floors/magic_chasm.dmi';
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aH" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
 /obj/effect/portal/permanent/one_way/recall/bubblegum,
 /turf/open/floor/mineral/plastitanium{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aI" = (
 /obj/machinery/shower{
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aJ" = (
 /turf/closed/indestructible/necropolis,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aK" = (
 /turf/closed/indestructible/fakedoor,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aL" = (
 /obj/effect/decal/cleanable/blood/bubblegum,
 /turf/open/floor/mineral/plastitanium{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aM" = (
 /obj/effect/portal/permanent/one_way/recall/hierophant,
 /turf/open/indestructible/hierophant,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aN" = (
 /obj/effect/portal/permanent/one_way/recall/legion,
 /turf/open/indestructible/necropolis,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aO" = (
 /obj/effect/portal/permanent/one_way/destroy/megafauna_arena,
 /turf/open/floor/bluespace{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aP" = (
 /obj/structure/fluff/drake_statue,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aQ" = (
 /obj/structure/stone_tile/slab,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aR" = (
 /obj/structure/stone_tile/surrounding,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aS" = (
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aT" = (
 /turf/open/floor/fakepit{
 	canSmoothWith = null;
 	icon = 'icons/turf/floors/magic_chasm.dmi';
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aU" = (
 /obj/structure/stone_tile/slab/burnt,
 /turf/open/lava/smooth/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aV" = (
 /obj/structure/stone_tile/block,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aW" = (
 /obj/effect/portal/permanent/one_way/recall/vr_boss_rush,
 /turf/open/floor/mineral/gold{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aX" = (
 /turf/open/floor/clockwork/reebe{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aY" = (
 /obj/structure/chair/sofa/corner{
 	dir = 1
@@ -212,67 +212,67 @@
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "aZ" = (
 /obj/structure/chair/sofa,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ba" = (
 /obj/structure/chair/sofa/left,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bb" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/crusher,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bc" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/armor,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bd" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/accelerator,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "be" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/healing,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bf" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/food,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bh" = (
 /obj/structure/closet/crate/necropolis/vr_mining_gear/misc,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bi" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bj" = (
 /obj/structure/chair/sofa/corner,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bk" = (
 /obj/structure/chair/sofa{
 	dir = 4
@@ -280,7 +280,7 @@
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bl" = (
 /obj/structure/chair/sofa{
 	dir = 8
@@ -288,7 +288,7 @@
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bm" = (
 /obj/structure/chair/sofa/right{
 	dir = 4
@@ -296,7 +296,7 @@
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bn" = (
 /obj/structure/chair/sofa/left{
 	dir = 8
@@ -304,13 +304,13 @@
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bo" = (
 /obj/structure/table/wood,
 /turf/open/floor/mineral/gold{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bp" = (
 /obj/structure/chair/sofa/corner{
 	dir = 1
@@ -318,31 +318,31 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bq" = (
 /obj/structure/chair/sofa,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "br" = (
 /obj/structure/chair/sofa/left,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bs" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bv" = (
 /obj/structure/chair/sofa/corner,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bw" = (
 /obj/structure/chair/sofa{
 	dir = 4
@@ -350,13 +350,13 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bx" = (
 /obj/structure/table/wood,
 /turf/open/floor/clockwork/reebe{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "by" = (
 /obj/structure/chair/sofa{
 	dir = 8
@@ -364,7 +364,7 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bz" = (
 /obj/structure/chair/sofa/right{
 	dir = 4
@@ -372,7 +372,7 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bA" = (
 /obj/structure/chair/sofa/left{
 	dir = 8
@@ -380,13 +380,13 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bE" = (
 /obj/effect/portal/permanent/one_way/keep/vr_boss_rush_continue,
 /turf/open/floor/mineral/silver{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "bF" = (
 /turf/open/indestructible,
 /area/awaymission/vr/hub)
@@ -458,13 +458,13 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "eq" = (
 /obj/item/book/granter/spell/forcewall,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "eO" = (
 /turf/open/floor/mineral/titanium,
 /area/awaymission/vr/hub)
@@ -489,7 +489,7 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "kb" = (
 /obj/structure/chair/sofa/left,
 /turf/open/floor/plasteel/chapel,
@@ -499,13 +499,13 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "lJ" = (
 /obj/item/sord,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "mA" = (
 /obj/structure/table,
 /turf/open/floor/mineral/titanium,
@@ -513,25 +513,25 @@
 "mX" = (
 /obj/effect/portal/permanent/one_way/destroy/bubblegum,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "nv" = (
 /obj/item/gun/energy/pulse/destroyer,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "nN" = (
 /turf/open/floor/plasteel/stairs/medium,
 /area/awaymission/vr/hub)
 "oI" = (
 /turf/closed/indestructible/riveted/uranium,
-/area/awaymission/vr/general)
+/area/awaymission/vr/runner)
 "pY" = (
 /obj/item/gun/magic/staff/honk,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "qk" = (
 /turf/open/floor/fakespace,
 /area/awaymission/vr/hub)
@@ -543,10 +543,18 @@
 /obj/machinery/chem_dispenser/drinks/beer,
 /turf/open/indestructible,
 /area/awaymission/vr/hub)
+"to" = (
+/obj/effect/portal/permanent/one_way/destroy/pit_faller,
+/turf/open/indestructible/runner,
+/area/awaymission/vr/runner)
 "ts" = (
 /obj/machinery/light/floor/moody,
 /turf/open/indestructible,
 /area/awaymission/vr/hub)
+"tt" = (
+/obj/effect/vr_clean_master,
+/turf/open/indestructible/runner,
+/area/awaymission/vr/runner)
 "ue" = (
 /obj/effect/landmark/vr_spawn,
 /obj/effect/mob_spawn/human/virtual_reality{
@@ -563,7 +571,7 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "vn" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/barman_recipes{
@@ -579,27 +587,23 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/vr/hub)
-"wW" = (
-/obj/effect/portal/permanent/one_way/destroy/pit_faller,
-/turf/open/indestructible/runner,
-/area/awaymission/vr/general)
 "xx" = (
 /obj/item/katana,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "xP" = (
 /obj/effect/portal/permanent/one_way/destroy/hierophant,
 /turf/open/indestructible/hierophant,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "yF" = (
 /turf/closed/indestructible,
 /area/awaymission/vr/hub)
 "yW" = (
 /obj/effect/portal/permanent/one_way/destroy/legion,
 /turf/open/indestructible/necropolis,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "zc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/box/matches{
@@ -623,7 +627,7 @@
 /turf/open/floor/clockwork/reebe{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "Bf" = (
 /turf/open/floor/light/colour_cycle,
 /area/awaymission/vr/hub)
@@ -638,7 +642,7 @@
 "CG" = (
 /obj/effect/portal/permanent/one_way/destroy/vr_boss_rush_continue,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "ER" = (
 /obj/effect/vr_clean_master,
 /turf/open/floor/mineral/titanium,
@@ -646,7 +650,7 @@
 "Fj" = (
 /obj/effect/portal/permanent/one_way/destroy/blood_drunk_miner,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "Fw" = (
 /obj/structure/table,
 /obj/item/storage/book/bible{
@@ -661,17 +665,20 @@
 "GG" = (
 /obj/effect/portal/permanent/one_way/destroy/vr_boss_rush,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
+"Ir" = (
+/turf/closed/indestructible/riveted,
+/area/awaymission/vr/megafauna_arena)
 "JW" = (
 /obj/item/gun/energy/kinetic_accelerator/crossbow,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "Lv" = (
 /obj/effect/portal/permanent/one_way/destroy/colossus,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "Mi" = (
 /obj/structure/closet/secure_closet/bar{
 	req_access_txt = "25"
@@ -686,13 +693,13 @@
 "Rp" = (
 /obj/effect/portal/permanent/one_way/destroy/dragon,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "RR" = (
 /obj/item/gun/magic/staff/spellblade,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "RW" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/that{
@@ -705,7 +712,7 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "Sp" = (
 /obj/structure/chair/sofa/right,
 /turf/open/floor/plasteel/chapel,
@@ -723,10 +730,10 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "Ul" = (
 /turf/open/indestructible/runner,
-/area/awaymission/vr/general)
+/area/awaymission/vr/runner)
 "UN" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/chapel,
@@ -752,7 +759,7 @@
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
-/area/awaymission/vr/general)
+/area/awaymission/vr/megafauna_arena)
 "XE" = (
 /obj/machinery/door/airlock{
 	name = "Bar Access";
@@ -776,83 +783,83 @@
 /area/awaymission/vr/hub)
 
 (1,1,1) = {"
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 av
 av
 av
@@ -1033,7 +1040,7 @@ bM
 bM
 "}
 (2,1,1) = {"
-av
+Ir
 az
 az
 az
@@ -1057,35 +1064,35 @@ az
 az
 az
 az
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 al
 al
 al
@@ -1109,7 +1116,7 @@ al
 al
 al
 al
-av
+Ir
 uo
 uo
 uo
@@ -1290,7 +1297,7 @@ qk
 bM
 "}
 (3,1,1) = {"
-av
+Ir
 az
 Fj
 aj
@@ -1314,35 +1321,35 @@ aj
 aj
 Fj
 az
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 al
 xP
 am
@@ -1366,7 +1373,7 @@ am
 am
 xP
 al
-av
+Ir
 uo
 uo
 uo
@@ -1547,7 +1554,7 @@ qk
 bM
 "}
 (4,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -1571,35 +1578,35 @@ aj
 aj
 aj
 az
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 aO
 aO
 aO
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 al
 am
 am
@@ -1623,7 +1630,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -1804,7 +1811,7 @@ qk
 bM
 "}
 (5,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -1828,35 +1835,35 @@ aj
 aj
 aj
 az
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 aO
 aO
 aO
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 al
 am
 am
@@ -1880,7 +1887,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -2061,7 +2068,7 @@ qk
 bM
 "}
 (6,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -2085,35 +2092,35 @@ aj
 aj
 aj
 az
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 aO
 aO
 aO
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 al
 am
 an
@@ -2137,7 +2144,7 @@ am
 an
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -2318,7 +2325,7 @@ qk
 bM
 "}
 (7,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -2342,35 +2349,35 @@ aj
 aj
 aj
 az
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 au
 au
 au
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 al
 am
 an
@@ -2394,7 +2401,7 @@ am
 an
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -2575,7 +2582,7 @@ qk
 bM
 "}
 (8,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -2599,7 +2606,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -2627,7 +2634,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -2651,7 +2658,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -2832,7 +2839,7 @@ qk
 bM
 "}
 (9,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -2856,7 +2863,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -2884,7 +2891,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -2908,7 +2915,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -3089,7 +3096,7 @@ qk
 bM
 "}
 (10,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -3113,7 +3120,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -3141,7 +3148,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -3165,7 +3172,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -3346,7 +3353,7 @@ qk
 bM
 "}
 (11,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -3370,7 +3377,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -3398,7 +3405,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 al
@@ -3422,7 +3429,7 @@ am
 al
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -3603,7 +3610,7 @@ qk
 bM
 "}
 (12,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -3627,7 +3634,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -3655,7 +3662,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -3679,7 +3686,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -3860,7 +3867,7 @@ qk
 bM
 "}
 (13,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -3884,7 +3891,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -3912,7 +3919,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 an
 am
@@ -3936,7 +3943,7 @@ am
 am
 an
 al
-av
+Ir
 uo
 uo
 uo
@@ -4117,7 +4124,7 @@ qk
 bM
 "}
 (14,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -4141,7 +4148,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -4169,7 +4176,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -4193,7 +4200,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -4374,7 +4381,7 @@ qk
 bM
 "}
 (15,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -4398,7 +4405,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -4426,7 +4433,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 al
@@ -4450,7 +4457,7 @@ am
 al
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -4631,7 +4638,7 @@ qk
 bM
 "}
 (16,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -4655,7 +4662,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -4683,7 +4690,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -4707,7 +4714,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -4888,7 +4895,7 @@ qk
 bM
 "}
 (17,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -4912,7 +4919,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -4940,7 +4947,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -4964,7 +4971,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -5145,7 +5152,7 @@ qk
 bM
 "}
 (18,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -5169,7 +5176,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -5197,7 +5204,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -5221,7 +5228,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -5402,7 +5409,7 @@ qk
 bM
 "}
 (19,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -5426,7 +5433,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -5454,7 +5461,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 an
@@ -5478,7 +5485,7 @@ am
 an
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -5659,7 +5666,7 @@ qk
 bM
 "}
 (20,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -5683,7 +5690,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -5711,7 +5718,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 an
@@ -5735,7 +5742,7 @@ am
 an
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -5916,7 +5923,7 @@ qk
 bM
 "}
 (21,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -5940,7 +5947,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -5968,7 +5975,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -5992,7 +5999,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -6173,7 +6180,7 @@ qk
 bM
 "}
 (22,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -6197,7 +6204,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -6225,7 +6232,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 am
 am
@@ -6249,7 +6256,7 @@ am
 am
 am
 al
-av
+Ir
 uo
 uo
 uo
@@ -6430,7 +6437,7 @@ qk
 bM
 "}
 (23,1,1) = {"
-av
+Ir
 az
 Fj
 aj
@@ -6454,7 +6461,7 @@ aj
 aj
 Fj
 az
-av
+Ir
 aj
 aj
 aj
@@ -6482,7 +6489,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 xP
 am
@@ -6506,7 +6513,7 @@ am
 am
 xP
 al
-av
+Ir
 uo
 uo
 uo
@@ -6687,7 +6694,7 @@ qk
 bM
 "}
 (24,1,1) = {"
-av
+Ir
 az
 az
 az
@@ -6711,7 +6718,7 @@ az
 az
 az
 az
-av
+Ir
 aj
 aj
 aj
@@ -6739,7 +6746,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 al
 al
 al
@@ -6763,7 +6770,7 @@ al
 al
 al
 al
-av
+Ir
 uo
 uo
 uo
@@ -6944,7 +6951,7 @@ qk
 bM
 "}
 (25,1,1) = {"
-av
+Ir
 az
 az
 az
@@ -6968,7 +6975,7 @@ az
 az
 az
 az
-av
+Ir
 aj
 aj
 aj
@@ -6996,7 +7003,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 az
 az
@@ -7020,7 +7027,7 @@ az
 az
 az
 az
-av
+Ir
 uo
 uo
 uo
@@ -7171,7 +7178,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 Gw
 Gw
 Gw
@@ -7185,11 +7192,11 @@ eO
 eO
 Gw
 Gw
-Gw
-Gw
-Gw
-Gw
-bM
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -7201,7 +7208,7 @@ qk
 bM
 "}
 (26,1,1) = {"
-av
+Ir
 az
 mX
 aj
@@ -7225,7 +7232,7 @@ aj
 aj
 mX
 az
-av
+Ir
 aj
 aj
 aj
@@ -7253,7 +7260,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 yW
 aA
@@ -7277,7 +7284,7 @@ aA
 aA
 yW
 az
-av
+Ir
 uo
 uo
 uo
@@ -7428,7 +7435,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bO
 bO
 bO
@@ -7441,12 +7448,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -7458,7 +7465,7 @@ qk
 bM
 "}
 (27,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -7482,7 +7489,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -7510,7 +7517,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -7534,7 +7541,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -7685,7 +7692,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 Bf
 Bf
 Bf
@@ -7698,12 +7705,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -7715,7 +7722,7 @@ qk
 bM
 "}
 (28,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -7739,7 +7746,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -7767,7 +7774,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -7791,7 +7798,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -7942,7 +7949,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 cy
 Bf
 Bf
@@ -7955,12 +7962,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -7972,7 +7979,7 @@ qk
 bM
 "}
 (29,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -7996,7 +8003,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -8024,7 +8031,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -8048,7 +8055,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -8199,7 +8206,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 Bf
 Bf
 Bf
@@ -8207,17 +8214,17 @@ bF
 bF
 bF
 bF
-ts
 bF
 bF
 bF
 bF
 bF
-ts
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -8229,7 +8236,7 @@ qk
 bM
 "}
 (30,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -8253,7 +8260,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -8281,7 +8288,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -8305,7 +8312,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -8456,7 +8463,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bO
 bO
 bO
@@ -8469,12 +8476,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -8486,7 +8493,7 @@ qk
 bM
 "}
 (31,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -8510,7 +8517,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -8538,7 +8545,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -8562,7 +8569,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -8713,7 +8720,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bG
 bG
 bG
@@ -8726,12 +8733,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -8743,7 +8750,7 @@ qk
 bM
 "}
 (32,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -8767,7 +8774,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -8795,7 +8802,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -8819,7 +8826,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -8970,7 +8977,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bG
 bN
 bG
@@ -8983,12 +8990,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -9000,7 +9007,7 @@ qk
 bM
 "}
 (33,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -9024,7 +9031,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -9052,7 +9059,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -9076,7 +9083,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -9227,7 +9234,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bG
 bG
 bG
@@ -9240,12 +9247,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -9257,7 +9264,7 @@ qk
 bM
 "}
 (34,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -9281,7 +9288,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -9309,7 +9316,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -9333,7 +9340,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -9484,7 +9491,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bH
 bG
 bG
@@ -9497,12 +9504,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -9514,7 +9521,7 @@ qk
 bM
 "}
 (35,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -9538,7 +9545,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -9566,7 +9573,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -9590,7 +9597,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -9741,7 +9748,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bG
 bG
 bG
@@ -9749,17 +9756,17 @@ bF
 bF
 bF
 bF
-ts
 bF
 bF
 bF
 bF
 bF
-ts
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -9771,7 +9778,7 @@ qk
 bM
 "}
 (36,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -9795,7 +9802,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -9823,7 +9830,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -9847,7 +9854,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -9998,7 +10005,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bG
 bN
 bG
@@ -10011,12 +10018,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -10028,7 +10035,7 @@ qk
 bM
 "}
 (37,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -10052,7 +10059,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -10080,7 +10087,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -10104,7 +10111,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -10255,7 +10262,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bG
 bG
 bG
@@ -10268,12 +10275,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -10285,7 +10292,7 @@ qk
 bM
 "}
 (38,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -10309,7 +10316,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -10337,7 +10344,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -10361,7 +10368,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -10512,7 +10519,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bO
 bO
 bO
@@ -10525,12 +10532,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -10542,7 +10549,7 @@ qk
 bM
 "}
 (39,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -10566,7 +10573,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -10594,7 +10601,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -10618,7 +10625,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -10769,7 +10776,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bJ
 bP
 bP
@@ -10782,12 +10789,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -10799,7 +10806,7 @@ qk
 bM
 "}
 (40,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -10823,7 +10830,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -10851,7 +10858,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -10875,7 +10882,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -11026,7 +11033,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bK
 bP
 bP
@@ -11039,12 +11046,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -11056,7 +11063,7 @@ qk
 bM
 "}
 (41,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -11080,7 +11087,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -11108,7 +11115,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -11132,7 +11139,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -11283,7 +11290,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bL
 bP
 bP
@@ -11291,17 +11298,17 @@ bF
 bF
 bF
 bF
-ts
 bF
 bF
 bF
 bF
 bF
-ts
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -11313,7 +11320,7 @@ qk
 bM
 "}
 (42,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -11337,7 +11344,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -11365,7 +11372,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -11389,7 +11396,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -11540,7 +11547,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bO
 bO
 bO
@@ -11553,12 +11560,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -11570,7 +11577,7 @@ qk
 bM
 "}
 (43,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -11594,7 +11601,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -11622,7 +11629,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -11646,7 +11653,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -11797,7 +11804,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bF
 bF
 bF
@@ -11810,12 +11817,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -11827,7 +11834,7 @@ qk
 bM
 "}
 (44,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -11851,7 +11858,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -11879,7 +11886,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -11903,7 +11910,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -12054,7 +12061,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bF
 bF
 bF
@@ -12067,12 +12074,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -12084,7 +12091,7 @@ qk
 bM
 "}
 (45,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -12108,7 +12115,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -12136,7 +12143,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aA
 aA
@@ -12160,7 +12167,7 @@ aA
 aA
 aA
 az
-av
+Ir
 uo
 uo
 uo
@@ -12311,7 +12318,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bF
 bF
 bF
@@ -12324,12 +12331,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -12341,7 +12348,7 @@ qk
 bM
 "}
 (46,1,1) = {"
-av
+Ir
 az
 mX
 aj
@@ -12365,7 +12372,7 @@ aj
 aj
 mX
 az
-av
+Ir
 aj
 aj
 aj
@@ -12393,7 +12400,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 yW
 aA
@@ -12417,7 +12424,7 @@ aA
 aA
 yW
 az
-av
+Ir
 uo
 uo
 uo
@@ -12568,7 +12575,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bF
 bF
 bF
@@ -12581,12 +12588,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -12598,7 +12605,7 @@ qk
 bM
 "}
 (47,1,1) = {"
-av
+Ir
 az
 az
 az
@@ -12622,7 +12629,7 @@ az
 az
 az
 az
-av
+Ir
 aj
 aj
 aj
@@ -12650,7 +12657,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 az
 az
@@ -12674,7 +12681,7 @@ az
 az
 az
 az
-av
+Ir
 uo
 uo
 uo
@@ -12825,7 +12832,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bF
 bF
 bF
@@ -12833,17 +12840,17 @@ bF
 bF
 bF
 bF
-ts
 bF
 bF
 bF
 bF
 bF
-ts
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -12855,7 +12862,7 @@ qk
 bM
 "}
 (48,1,1) = {"
-av
+Ir
 az
 az
 az
@@ -12879,7 +12886,7 @@ az
 az
 az
 az
-av
+Ir
 aj
 aj
 aj
@@ -12907,7 +12914,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 az
 az
@@ -12931,7 +12938,7 @@ az
 az
 az
 az
-av
+Ir
 uo
 uo
 uo
@@ -13082,7 +13089,7 @@ qk
 qk
 qk
 qk
-bM
+Gw
 bF
 bF
 bF
@@ -13095,12 +13102,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -13112,7 +13119,7 @@ qk
 bM
 "}
 (49,1,1) = {"
-av
+Ir
 az
 Lv
 aj
@@ -13136,7 +13143,7 @@ aj
 aj
 Lv
 az
-av
+Ir
 aj
 aj
 aj
@@ -13164,7 +13171,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 Rp
 aj
@@ -13188,7 +13195,7 @@ aj
 aj
 Rp
 az
-av
+Ir
 uo
 uo
 uo
@@ -13352,12 +13359,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -13369,7 +13376,7 @@ qk
 bM
 "}
 (50,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -13393,7 +13400,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -13421,7 +13428,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aj
 aj
@@ -13445,7 +13452,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -13609,12 +13616,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -13626,7 +13633,7 @@ qk
 bM
 "}
 (51,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -13650,7 +13657,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -13678,7 +13685,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aj
 aj
@@ -13702,7 +13709,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -13866,12 +13873,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -13883,7 +13890,7 @@ qk
 bM
 "}
 (52,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -13907,7 +13914,7 @@ aj
 aj
 aj
 az
-av
+Ir
 aj
 aj
 aj
@@ -13935,7 +13942,7 @@ aj
 aj
 aj
 aj
-av
+Ir
 az
 aj
 aj
@@ -13959,7 +13966,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -14123,12 +14130,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -14140,7 +14147,7 @@ qk
 bM
 "}
 (53,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -14164,35 +14171,35 @@ aj
 aj
 aj
 az
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 az
 aj
 aj
@@ -14216,7 +14223,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -14380,12 +14387,12 @@ bF
 bF
 bF
 bF
-bF
-ts
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -14397,7 +14404,7 @@ qk
 bM
 "}
 (54,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -14473,7 +14480,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -14637,12 +14644,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -14654,7 +14661,7 @@ qk
 bM
 "}
 (55,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -14730,7 +14737,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -14894,12 +14901,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -14911,7 +14918,7 @@ qk
 bM
 "}
 (56,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -14987,7 +14994,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -15151,12 +15158,12 @@ bF
 bF
 bF
 bF
-bF
-bF
-bF
-bF
-bF
-bM
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -15168,7 +15175,7 @@ qk
 bM
 "}
 (57,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -15244,7 +15251,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -15402,18 +15409,18 @@ yF
 yF
 yF
 yF
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
-bM
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+qk
+qk
+qk
+qk
+qk
 qk
 qk
 qk
@@ -15425,7 +15432,7 @@ qk
 bM
 "}
 (58,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -15501,7 +15508,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -15682,7 +15689,7 @@ qk
 bM
 "}
 (59,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -15758,7 +15765,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -15939,7 +15946,7 @@ qk
 bM
 "}
 (60,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -16015,7 +16022,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -16196,7 +16203,7 @@ qk
 bM
 "}
 (61,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -16272,7 +16279,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -16453,7 +16460,7 @@ qk
 bM
 "}
 (62,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -16529,7 +16536,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -16710,7 +16717,7 @@ qk
 bM
 "}
 (63,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -16786,7 +16793,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -16967,7 +16974,7 @@ qk
 bM
 "}
 (64,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -17043,7 +17050,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -17224,7 +17231,7 @@ qk
 bM
 "}
 (65,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -17300,7 +17307,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -17481,7 +17488,7 @@ qk
 bM
 "}
 (66,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -17557,7 +17564,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -17738,7 +17745,7 @@ qk
 bM
 "}
 (67,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -17814,7 +17821,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -17995,7 +18002,7 @@ qk
 bM
 "}
 (68,1,1) = {"
-av
+Ir
 az
 aj
 aj
@@ -18071,7 +18078,7 @@ aj
 aj
 aj
 az
-av
+Ir
 uo
 uo
 uo
@@ -18252,7 +18259,7 @@ uo
 av
 "}
 (69,1,1) = {"
-av
+Ir
 az
 Lv
 aj
@@ -18328,7 +18335,7 @@ aj
 aj
 Rp
 az
-av
+Ir
 uo
 uo
 uo
@@ -18509,7 +18516,7 @@ uo
 av
 "}
 (70,1,1) = {"
-av
+Ir
 az
 az
 az
@@ -18585,7 +18592,7 @@ az
 az
 az
 az
-av
+Ir
 uo
 uo
 uo
@@ -18766,83 +18773,83 @@ uo
 av
 "}
 (71,1,1) = {"
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
-av
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 uo
 uo
 uo
@@ -30868,14 +30875,14 @@ oI
 oI
 oI
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
 uo
 uo
 uo
@@ -31124,15 +31131,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -31381,15 +31388,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -31627,7 +31634,15 @@ Ul
 Ul
 Ul
 Ul
-wW
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 Ul
 Ul
 Ul
@@ -31639,14 +31654,6 @@ Ul
 Ul
 Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -31895,15 +31902,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -32152,15 +32159,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -32393,6 +32400,7 @@ Ul
 Ul
 Ul
 Ul
+to
 Ul
 Ul
 Ul
@@ -32401,23 +32409,22 @@ Ul
 Ul
 Ul
 Ul
+to
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+to
 Ul
 Ul
 Ul
 Ul
 Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -32649,7 +32656,6 @@ Ul
 Ul
 Ul
 Ul
-wW
 Ul
 Ul
 Ul
@@ -32661,20 +32667,21 @@ Ul
 Ul
 Ul
 Ul
-wW
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 Ul
 Ul
 Ul
 Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -32923,15 +32930,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -33180,15 +33187,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -33437,15 +33444,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -33694,15 +33701,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -33951,15 +33958,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -34208,15 +34215,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -34446,7 +34453,6 @@ av
 oI
 Ul
 Ul
-wW
 Ul
 Ul
 Ul
@@ -34454,7 +34460,6 @@ Ul
 Ul
 Ul
 Ul
-wW
 Ul
 Ul
 Ul
@@ -34462,18 +34467,20 @@ Ul
 Ul
 Ul
 Ul
-wW
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 Ul
 Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -34722,15 +34729,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -34979,15 +34986,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -35236,15 +35243,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -35493,15 +35500,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -35734,6 +35741,7 @@ Ul
 Ul
 Ul
 Ul
+to
 Ul
 Ul
 Ul
@@ -35742,23 +35750,22 @@ Ul
 Ul
 Ul
 Ul
+tt
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+to
 Ul
 Ul
 Ul
 Ul
 Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -36007,15 +36014,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -36247,7 +36254,6 @@ Ul
 Ul
 Ul
 Ul
-wW
 Ul
 Ul
 Ul
@@ -36259,20 +36265,21 @@ Ul
 Ul
 Ul
 Ul
-wW
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 Ul
 Ul
 Ul
 Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -36521,15 +36528,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -36778,15 +36785,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -37035,15 +37042,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -37281,7 +37288,15 @@ Ul
 Ul
 Ul
 Ul
-wW
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 Ul
 Ul
 Ul
@@ -37293,14 +37308,6 @@ Ul
 Ul
 Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -37549,15 +37556,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -37806,15 +37813,15 @@ Ul
 Ul
 Ul
 Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -38042,36 +38049,36 @@ av
 "}
 (146,1,1) = {"
 oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
 oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
 uo
 uo
 uo
@@ -38298,37 +38305,37 @@ uo
 av
 "}
 (147,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -38555,37 +38562,37 @@ uo
 av
 "}
 (148,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -38812,37 +38819,37 @@ uo
 av
 "}
 (149,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -39069,37 +39076,37 @@ uo
 av
 "}
 (150,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+to
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+to
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+to
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -39326,37 +39333,37 @@ uo
 av
 "}
 (151,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -39583,37 +39590,37 @@ uo
 av
 "}
 (152,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -39840,37 +39847,37 @@ uo
 av
 "}
 (153,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -40097,37 +40104,37 @@ uo
 av
 "}
 (154,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -40354,37 +40361,37 @@ uo
 av
 "}
 (155,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+Ul
+oI
 uo
 uo
 uo
@@ -40611,37 +40618,37 @@ uo
 av
 "}
 (156,1,1) = {"
-av
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
-uo
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
+oI
 uo
 uo
 uo

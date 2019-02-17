@@ -1,13 +1,13 @@
-/area/awaymission/vr/hub
-	name = "VrHub"
-	icon_state = "away"
-	requires_power = FALSE
-	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
-
 /area/awaymission/vr/general
 	name = "VrGeneral"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
+/area/awaymission/vr/hub
+	name = "VrHub"
+	icon_state = "awaycontent2"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 
 /obj/effect/portal/permanent/one_way/recall
 	name = "recall portal"

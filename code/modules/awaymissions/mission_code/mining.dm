@@ -1,3 +1,9 @@
+/area/awaymission/vr/megafauna_arena
+	name = "VrMegafauna"
+	icon_state = "awaycontent3"
+	requires_power = FALSE
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+
 /datum/outfit/job/miner/equipped/vr
 	name = "Virtual Reality Miner"
 	suit = /obj/item/clothing/suit/hooded/explorer
