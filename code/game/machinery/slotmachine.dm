@@ -112,7 +112,7 @@
 			qdel(H)
 		else
 			to_chat(user, "<span class='warning'>This machine is only accepting coins!</span>")
-	else if(istype(I, /obj/item/screwdriver))
+	else if(istype(I, /obj/item/multitool))
 		if(balance > 0)
 			visible_message("<b>[src]</b> says, 'ERROR! Please empty the machine balance before altering paymode'") //Prevents converting coins into holocredits and vice versa
 		else
