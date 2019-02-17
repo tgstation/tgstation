@@ -1,9 +1,0 @@
-version: "1"
-rules:
-  - base: upstream
-    upstream: tgstation:master    # change `wei` to the owner of upstream repo
-    mergeMethod: hardreset
-  - base: master
-    upstream: upstream
-    assignees:
-    - HiddenKn
