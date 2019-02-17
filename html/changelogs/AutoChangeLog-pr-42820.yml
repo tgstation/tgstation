@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "You can now print mutators and stuff again from storage if the occupant doesnt have it"
