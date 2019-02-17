@@ -1,0 +1,6 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - bugfix: "Fixed several bugs involving hivemind tracking, team assignation and de-assimilation not working."
+  - tweak: "Assimilated vessels lose their vessel status when cloned once again."
+  - tweak: "Made several hivemind abilities less janky."
