@@ -61,11 +61,8 @@
 			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
 
 /obj/mecha/working/ripley/bullet_act(obj/item/projectile/P)
-	if (enclosed || !occupant)
-//		take_damage((P.damage) , BRUTE, "melee", 1)
-		to_chat(world, "boop")
+	if (enclosed || !occupant || silicon_pilot)
 		return ..()
-//	P.on_hit(occupant)
 	occupant.bullet_act(P) //If the sides are open, the occupant can be hit
 
 
