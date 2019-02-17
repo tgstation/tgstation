@@ -51,9 +51,6 @@
 /obj/item/ammo_casing/magic/flying
 	projectile_type = /obj/item/projectile/magic/flying
 
-/obj/item/ammo_casing/magic/grounding
-	projectile_type = /obj/item/projectile/magic/grounding
-
 /obj/item/ammo_casing/magic/bounty
 	projectile_type = /obj/item/projectile/magic/bounty
 
@@ -62,12 +59,3 @@
 
 /obj/item/ammo_casing/magic/sapping
 	projectile_type = /obj/item/projectile/magic/sapping
-
-/obj/item/ammo_casing/magic/law
-	projectile_type = /obj/item/projectile/magic/law
-
-/obj/item/ammo_casing/magic/awakening
-	projectile_type = /obj/item/projectile/magic/awakening
-
-/obj/item/ammo_casing/magic/gib
-	projectile_type = /obj/item/projectile/magic/gib

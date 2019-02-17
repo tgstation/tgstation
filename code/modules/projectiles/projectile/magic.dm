@@ -462,8 +462,8 @@
 		if(L.anti_magic_check())
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-			var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-			target.throw_at(throw_target, 200, 4)
+			var/atom/throw_target = get_edge_target_turf(L, get_dir(src, get_step_away(L, src)))
+			L.throw_at(throw_target, 200, 4)
 
 /obj/item/projectile/magic/bounty
 	name = "bolt of bounty"
@@ -502,8 +502,8 @@
 		if(L.anti_magic_check() || !firer)
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		var/atom/throw_target = get_edge_target_turf(target, get_dir(starting, get_step_away(target, starting)))
-		target.throw_at(throw_target, 200, 4)
+		var/atom/throw_target = get_edge_target_turf(L, get_dir(starting, get_step_away(L, starting)))
+		L.throw_at(throw_target, 200, 4)
 
 /obj/item/projectile/magic/sapping
 	name = "bolt of sapping"
