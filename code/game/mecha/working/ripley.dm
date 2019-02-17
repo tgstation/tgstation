@@ -1,10 +1,11 @@
 /obj/mecha/working/ripley
-	desc = "Autonomous Power Loader Unit. This newer model is refitted with powerful armour against the dangers of planetary mining."
+	desc = "Autonomous Power Loader Unit. Designed primarily around heavy lifting, the Ripley can be outfitted with utility equipment to fill a number of roles."
 	name = "\improper APLU \"Ripley\""
 	icon_state = "ripley"
-	step_in = 4 //Move speed, lower is faster.
-	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
-	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
+	silicon_icon_state = "ripley-empty"
+	step_in = 1.5 //Move speed, lower is faster.
+	var/fast_pressure_step_in = 1.5 //step_in while in normal pressure conditions
+	var/slow_pressure_step_in = 2.5 //step_in while in better pressure conditions
 	max_temperature = 20000
 	max_integrity = 200
 	lights_power = 7
@@ -16,6 +17,9 @@
 	var/list/cargo = new
 	var/cargo_capacity = 15
 	var/hides = 0
+	enclosed = 0 //Normal ripley has an open cockpit design
+	enter_delay = 10 //can enter in a quarter of the time of other mechs
+	opacity = 0 //Ripley has a window
 
 /obj/mecha/working/ripley/Move()
 	. = ..()
@@ -56,33 +60,52 @@
 		else
 			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
 
+/obj/mecha/working/ripley/bullet_act(obj/item/projectile/P)
+	if (enclosed || !occupant)
+//		take_damage((P.damage) , BRUTE, "melee", 1)
+		to_chat(world, "boop")
+		return ..()
+//	P.on_hit(occupant)
+	occupant.bullet_act(P) //If the sides are open, the occupant can be hit
+
+
 /obj/mecha/working/ripley/Initialize()
 	. = ..()
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
 
 
 /obj/mecha/working/ripley/firefighter
-	desc = "Autonomous Power Loader Unit. This model is refitted with additional thermal protection."
+	desc = "Autonomous Power Loader Unit. This model is refitted with a pressurized cabin and additional thermal protection."
 	name = "\improper APLU \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
 	max_integrity = 250
+	step_in = 4
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
+	enclosed = 1
+	enter_delay = 40
+	silicon_icon_state = ""
+	opacity = 1
 
 
 /obj/mecha/working/ripley/deathripley
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
+	step_in = 4
 	slow_pressure_step_in = 3
 	opacity=0
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
+	enclosed = 1
+	enter_delay = 40
+	silicon_icon_state = ""
+	opacity = 1
 
 /obj/mecha/working/ripley/deathripley/Initialize()
 	. = ..()
@@ -101,6 +124,14 @@
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
 	ME.attach(src)
 
+/*/obj/mecha/working/ripley/firefigher/Move()
+	. = ..()
+	update_pressure()
+
+/obj/mecha/working/ripley/deathripley/Move()
+	. = ..()
+	update_pressure()
+*/
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
