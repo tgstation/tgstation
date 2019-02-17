@@ -446,6 +446,11 @@
 	max_stamina_damage = 100
 	var/obj/item/cavity_item
 
+/obj/item/bodypart/chest/can_dismember(obj/item/I)
+	if(health <= crit_threshold)
+		return FALSE
+	return ..()
+
 /obj/item/bodypart/chest/Destroy()
 	QDEL_NULL(cavity_item)
 	return ..()
