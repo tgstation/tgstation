@@ -236,6 +236,11 @@
 	desc = "A small bottle. Contains an untested viral culture in synthblood medium."
 	spawned_disease = /datum/disease/advance/random
 
+/obj/item/reagent_containers/glass/bottle/pharaoh
+	name = "Curse of the Pharaoh culture bottle"
+	desc = "A small bottle. Contains a culture of Curse of the Pharaoh."
+	spawned_disease = /datum/disease/advance/pharaoh
+
 /obj/item/reagent_containers/glass/bottle/pierrot_throat
 	name = "Pierrot's Throat culture bottle"
 	desc = "A small bottle. Contains H0NI<42 virion culture in synthblood medium."
@@ -409,3 +414,4 @@
 /obj/item/reagent_containers/glass/bottle/bromine
 	name = "bromine bottle"
 	list_reagents = list("bromine" = 30)
+

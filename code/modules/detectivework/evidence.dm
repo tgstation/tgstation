@@ -24,13 +24,28 @@
 	icon_state = initial(icon_state)
 	desc = initial(desc)
 
+/obj/item/evidencebag/proc/insertItem(obj/item/I)
+	icon_state = "evidence"
+
+	var/mutable_appearance/in_evidence = new(I)
+	in_evidence.plane = FLOAT_PLANE
+	in_evidence.layer = FLOAT_LAYER
+	in_evidence.pixel_x = 0
+	in_evidence.pixel_y = 0
+	add_overlay(in_evidence)
+	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
+
+	desc = "An evidence bag containing [I]. [I.desc]"
+	I.forceMove(src)
+	w_class = I.w_class
+
 /obj/item/evidencebag/proc/evidencebagEquip(obj/item/I, mob/user)
 	if(!istype(I) || I.anchored == 1)
 		return
 
 	if(istype(I, /obj/item/evidencebag))
 		to_chat(user, "<span class='notice'>You find putting an evidence bag in another evidence bag to be slightly absurd.</span>")
-		return 1 //now this is podracing
+		return TRUE //now this is podracing
 
 	if(I.w_class > WEIGHT_CLASS_NORMAL)
 		to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
@@ -49,20 +64,8 @@
 	user.visible_message("[user] puts [I] into [src].", "<span class='notice'>You put [I] inside [src].</span>",\
 	"<span class='italics'>You hear a rustle as someone puts something into a plastic bag.</span>")
 
-	icon_state = "evidence"
-
-	var/mutable_appearance/in_evidence = new(I)
-	in_evidence.plane = FLOAT_PLANE
-	in_evidence.layer = FLOAT_LAYER
-	in_evidence.pixel_x = 0
-	in_evidence.pixel_y = 0
-	add_overlay(in_evidence)
-	add_overlay("evidence")	//should look nicer for transparent stuff. not really that important, but hey.
-
-	desc = "An evidence bag containing [I]. [I.desc]"
-	I.forceMove(src)
-	w_class = I.w_class
-	return 1
+	insertItem(I)
+	return TRUE
 
 /obj/item/evidencebag/attack_self(mob/user)
 	if(contents.len)
@@ -79,6 +82,21 @@
 		to_chat(user, "[src] is empty.")
 		icon_state = "evidenceobj"
 	return
+
+/obj/item/evidencebag/random/Initialize()
+	. = ..()
+	var/T = pick(/obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+				 /obj/item/kitchen/knife/butcher,
+				 /obj/item/crowbar/red,
+				 /obj/item/reagent_containers/glass/bottle/cyanide,
+				 /obj/item/bikehorn,
+				 /obj/item/wrench/brass,
+				 /obj/item/grenade/empgrenade,
+				 /obj/item/grenade/smokebomb,
+				 /obj/item/grenade/plastic/c4,
+				 /obj/item/soap/syndie,
+				 /obj/item/ammo_casing/shotgun/buckshot)
+	insertItem(new T(src))
 
 /obj/item/storage/box/evidence
 	name = "evidence bag box"

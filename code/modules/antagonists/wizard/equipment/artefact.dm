@@ -193,10 +193,15 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	var/list/spooky_scaries = list()
-	var/unlimited = 0
+	var/max_skeletons = 0
+	var/weak = FALSE
 
 /obj/item/necromantic_stone/unlimited
-	unlimited = 1
+	max_skeletons = 50
+
+/obj/item/necromantic_stone/one
+	max_skeletons = 1
+	weak = TRUE
 
 /obj/item/necromantic_stone/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
@@ -219,8 +224,8 @@
 		return
 
 	check_spooky()//clean out/refresh the list
-	if(spooky_scaries.len >= 3 && !unlimited)
-		to_chat(user, "<span class='warning'>This artifact can only affect three undead at a time!</span>")
+	if(spooky_scaries.len >= max_skeletons)
+		to_chat(user, "<span class='warning'>This artifact can only affect [max_skeletons] undead at a time!</span>")
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
@@ -231,12 +236,9 @@
 
 	equip_roman_skeleton(M)
 
-	desc = "A shard capable of resurrecting humans as skeleton thralls[unlimited ? "." : ", [spooky_scaries.len]/3 active thralls."]"
+	desc = "A shard capable of resurrecting humans as skeleton thralls, [spooky_scaries.len]/[max_skeletons] active thralls."
 
 /obj/item/necromantic_stone/proc/check_spooky()
-	if(unlimited) //no point, the list isn't used.
-		return
-
 	for(var/X in spooky_scaries)
 		if(!ishuman(X))
 			spooky_scaries.Remove(X)
@@ -257,9 +259,12 @@
 	H.equip_to_slot_or_del(new hat(H), SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/roman(H), SLOT_W_UNIFORM)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/roman(H), SLOT_SHOES)
-	H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
-	H.put_in_hands(new /obj/item/claymore(H), TRUE)
-	H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
+	if(weak)
+		H.put_in_hands(new /obj/item/twohanded/spear(H), TRUE)
+	else
+		H.put_in_hands(new /obj/item/shield/riot/roman(H), TRUE)
+		H.put_in_hands(new /obj/item/claymore(H), TRUE)
+		H.equip_to_slot_or_del(new /obj/item/twohanded/spear(H), SLOT_BACK)
 
 
 /obj/item/voodoo

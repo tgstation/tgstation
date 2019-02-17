@@ -40,3 +40,20 @@
 	Refresh()
 
 	name = "Sample #[rand(1,10000)]"
+
+/datum/disease/advance/pharaoh
+	copy_type = /datum/disease/advance
+
+/datum/disease/advance/pharaoh/New()
+	name = "Curse of the Pharaoh"
+
+	symptoms = list(new/datum/symptom/fever, new/datum/symptom/sneeze, new/datum/symptom/viralevolution)
+	for(var/datum/symptom/S in symptoms)
+		NeuterSymptom(S)
+
+	symptoms += new/datum/symptom/inorganic_adaptation
+	symptoms += new/datum/symptom/undead_adaptation
+	symptoms += new/datum/symptom/flesh_death
+
+	..()
+

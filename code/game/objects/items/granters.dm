@@ -392,3 +392,21 @@
 		icon_state = "blankscroll"
 
 // I did not include mushpunch's grant, it is not a book and the item does it just fine.
+
+/obj/item/book/granter/martial/krav_maga
+	martial = /datum/martial_art/krav_maga
+	name = "battered scroll"
+	martialname = "krav maga"
+	desc = "An aged and frayed scrap of paper written in Hebrew. There are hand-drawn illustrations of pugilism."
+	greet = "<span class='boldannounce'>You have learned the martial art of Krav Maga!</span>"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state ="scroll2"
+	remarks = list("The Octagon...", "Starla...", "Bad boys...", "Break the wrist...", "Walk away...", "Bow to your sensei...", "No more flying solo...")
+
+/obj/item/book/granter/martial/krav_maga/onlearned(mob/living/carbon/user)
+	..()
+	if(oneuse == TRUE)
+		desc = "It's completely blank."
+		name = "empty scroll"
+		icon_state = "blankscroll"
+
