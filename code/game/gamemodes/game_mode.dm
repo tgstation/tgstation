@@ -241,6 +241,7 @@
 					for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
 						if(antag_types.prevent_roundtype_conversion)
 							prevent_roundtype_conversion = TRUE
+							break
 					if(prevent_roundtype_conversion)//they were an important antag, they're our new mark
 						living_antag_player = Player
 						return 0
