@@ -64,7 +64,7 @@
 
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
-	if(brainmob || decoy_override)
+	if(brainmob)
 		return
 	if(!L.mind)
 		return
@@ -83,7 +83,7 @@
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
-	if(L.mind && L.mind.current)
+	if(!decoy_override && L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")
 
