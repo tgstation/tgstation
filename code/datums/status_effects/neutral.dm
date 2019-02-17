@@ -85,24 +85,40 @@
 	. = ..()
 	owner.remove_trait(TRAIT_SOOTHED_THROAT, "[STATUS_EFFECT_TRAIT]_[id]")
 
-
 /datum/status_effect/bounty
 	id = "bounty"
 	status_type = STATUS_EFFECT_UNIQUE
+	var/mob/living/rewarded
 
-/*
+/datum/status_effect/bounty/on_creation(mob/living/new_owner, mob/living/caster)
+	. = ..()
+	if(.)
+		rewarded = caster
+
 /datum/status_effect/bounty/on_apply()
-	if(!(L.movement_type & FLYING))
-		owner.visible_message("<span class='notice'>[owner] begins to magically fly!</span>")
-		owner.setMovetype(owner.movement_type & ~FLYING)
-		//glowing wings overlay
-	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
+	to_chat(M, "<span class='boldnotice'>You hear something behind you talking...</span> <span class='notice'>You have been marked for death by [rewarded]. If you die, they will be rewarded.</span>")
+	playsound(owner, 'sound/weapons/shotgunpump.ogg', 75, 0)
 	return ..()
 
 /datum/status_effect/bounty/tick()
-	if(!(L.movement_type & FLYING))
-		owner.setMovetype(owner.movement_type & ~FLYING)
-		owner.visible_message("<span class='danger'>[owner] is flung back into the air by the glowing wings!</span>")*/
+	if(owner.stat == DEAD)
+		rewards()
+		qdel(src)
+
+/datum/status_effect/bounty/proc/rewards()
+	if(rewarded && rewarded.mind && rewarded.stat != DEAD)
+		to_chat(M, "<span class='boldnotice'>You hear something behind you talking...</span> <span class='notice'>Bounty claimed.</span>")
+		playsound(owner, 'sound/weapons/shotgunshot.ogg', 75, 0)
+		to_chat(M, "<span class='greentext'>You feel a surge of mana flow into you!</span>")
+		for(var/obj/effect/proc_holder/spell/spell in rewarded.mind.spell_list)
+			spell.charge_counter = spell.charge_max
+			spell.recharging = FALSE
+			spell.update_icon()
+		rewarded.adjustBruteLoss(-25)
+		rewarded.adjustFireLoss(-25)
+		rewarded.adjustToxLoss(-25)
+		rewarded.adjustOxyLoss(-25)
+		rewarded.adjustCloneLoss(-25)
 
 /datum/status_effect/bugged //Lets another mob hear everything you can
 	id = "bugged"
@@ -115,4 +131,3 @@
 	. = ..()
 	if(.)
 		listening_in = tracker
-

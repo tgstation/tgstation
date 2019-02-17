@@ -38,7 +38,7 @@
 
 #define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core
 
-#define STATUS_EFFECT_FLYMAGIC /datum/status_effect/flymagic //adds forced flight, readds even if the flight is later removed
+#define STATUS_EFFECT_ANTIMAGIC /datum/status_effect/antimagic //grants antimagic (and reapplies if lost) for the duration
 
 /////////////
 // DEBUFFS //

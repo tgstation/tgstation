@@ -462,26 +462,8 @@
 		if(L.anti_magic_check())
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		L.apply_status_effect(STATUS_EFFECT_FLYMAGIC)
-
-/obj/item/projectile/magic/grounding
-	name = "bolt of grounding"
-	icon_state = "pulse1_bl"
-
-/obj/item/projectile/magic/grounding/on_hit(target)
-	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check())
-			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-		if(!(L.movement_type & FLYING))
-			return BULLET_ACT_BLOCK
-		L.visible_message("<span class='danger'>[target] is violently ripped out of the air!</span>")
-		L.setMovetype(L.movement_type | FLYING) //will be used with staff of flying for combos often...
-		L.adjustBruteLoss(L.maxHealth/2)//...because the fly magic will throw them back in the air after getting grounded!
-		if(!L.health)
-			L.gib()
+			var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
+			target.throw_at(throw_target, 200, 4)
 
 /obj/item/projectile/magic/bounty
 	name = "bolt of bounty"
@@ -491,10 +473,10 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/L = target
-		if(L.anti_magic_check())
+		if(L.anti_magic_check() || !firer)
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		L.apply_status_effect(STATUS_EFFECT_BOUNTY)
+		L.apply_status_effect(STATUS_EFFECT_BOUNTY, firer)
 
 /obj/item/projectile/magic/antimagic
 	name = "bolt of antimagic"
@@ -509,6 +491,20 @@
 			return BULLET_ACT_BLOCK
 		L.apply_status_effect(STATUS_EFFECT_ANTIMAGIC)
 
+/obj/item/projectile/magic/fetch
+	name = "bolt of fetching"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/fetch/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check() || !firer)
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		var/atom/throw_target = get_edge_target_turf(target, get_dir(starting, get_step_away(target, starting)))
+		target.throw_at(throw_target, 200, 4)
+
 /obj/item/projectile/magic/sapping
 	name = "bolt of sapping"
 	icon_state = "pulse1_bl"
@@ -521,46 +517,6 @@
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
-
-/obj/item/projectile/magic/law
-	name = "bolt of the law"
-	icon_state = "pulse1_bl"
-
-/obj/item/projectile/magic/law/on_hit(target)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.anti_magic_check())
-			C.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-		playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
-		C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
-		C.update_handcuffed()
-
-/obj/item/projectile/magic/awakening
-	name = "bolt of awakening"
-	icon_state = "pulse1_bl"
-
-/obj/item/projectile/magic/awakening/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-
-/obj/item/projectile/magic/gib
-	name = "bolt of gibbing"//different name than the staff of gravitokinesis but much clearer coming out of the staff of chaos
-	icon_state = "pulse1_bl"
-
-/obj/item/projectile/magic/gib/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
-			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return BULLET_ACT_BLOCK
-		M.gib()
 
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"

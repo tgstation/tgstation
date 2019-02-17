@@ -578,23 +578,18 @@
 /datum/status_effect/regenerative_core/on_remove()
 	owner.remove_trait(TRAIT_IGNOREDAMAGESLOWDOWN, "regenerative_core")
 
-/datum/status_effect/flymagic
-	id = "flymagic"
-	duration = 1 MINUTES
-	status_type = STATUS_EFFECT_UNIQUE
+/datum/status_effect/antimagic
+	id = "antimagic"
+	duration = 10 SECONDS
+	examine_text = "<span class='notice'>They seem to be covered in a dull, grey aura.</span>"
 
-/datum/status_effect/flymagic/on_apply()
-	if(!(owner.movement_type & FLYING))
-		owner.visible_message("<span class='notice'>[owner] begins to magically fly!</span>")
-		owner.setMovetype(owner.movement_type & ~FLYING)
-		//glowing wings overlay
+/datum/status_effect/antimagic/on_apply()
+	owner.visible_message("<span class='notice'>[owner] is coated with a dull aura!</span>")
+	owner.add_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	//glowing wings overlay
 	playsound(owner, 'sound/weapons/fwoosh.wav', 75, 0)
 	return ..()
 
-/datum/status_effect/flymagic/tick()
-	if(!(owner.movement_type & FLYING))
-		owner.setMovetype(owner.movement_type & ~FLYING)
-		owner.visible_message("<span class='danger'>[owner] is flung back into the air by the glowing wings!</span>")
-
-/datum/status_effect/flymagic/on_remove()
-	owner.visible_message("<span class='warning'>[owner]'s glowing wings dissipate!</span>")
+/datum/status_effect/antimagic/on_remove()
+	owner.remove_trait(TRAIT_ANTIMAGIC, MAGIC_TRAIT)
+	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
