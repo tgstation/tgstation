@@ -638,4 +638,6 @@
 /obj/item/clothing/suit/sheik
 	name = "sheik"
 	icon_state = "sheik"
+	item_state = "sheik"
+	desc = "wip"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)

@@ -1056,7 +1056,7 @@
 /obj/item/storage/box/treasure
 	name = "box of treasure"
 	desc = "Contains all your ducats."
-	icon_state = "lockbox+l"
+	icon_state = "medalbox+l"
 
 /obj/item/storage/box/treasure/PopulateContents()
 	var/static/items_inside = list(

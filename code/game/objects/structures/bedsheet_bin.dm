@@ -222,8 +222,10 @@ LINEN BINS
 
 /obj/item/bedsheet/regal
 	name = "liege's mantle"
+	desc = "wip"
+	icon_state = "sheetregal"
 	item_color = "regal"
-	dream_messages = list("authority")
+	dream_messages = list("authority", "chivalry")
 
 /obj/item/bedsheet/ian
 	icon_state = "sheetian"

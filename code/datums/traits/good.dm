@@ -74,8 +74,8 @@
 	H.regenerate_icons()
 
 /datum/quirk/rich
-	name = "rich"
-	desc = "You won the lottery."
+	name = "rich wip"
+	desc = "wip"
 	value = 2
 	gain_text = "<span class='notice'>Your pockets are fat.</span>"
 	lose_text = "<span class='danger'>You are poor.</span>"
