@@ -73,6 +73,20 @@
 	H.equip_to_slot(B, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
+/datum/quirk/rich
+	name = "rich"
+	desc = "You won the lottery."
+	value = 2
+	gain_text = "<span class='notice'>Your pockets are fat.</span>"
+	lose_text = "<span class='danger'>You are poor.</span>"
+
+/datum/quirk/rich/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/choice_beacon/baggage/B = new(get_turf(H))
+	H.put_in_hands(B)
+	H.equip_to_slot(B, SLOT_IN_BACKPACK)
+	H.regenerate_icons()
+
 /datum/quirk/night_vision
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."

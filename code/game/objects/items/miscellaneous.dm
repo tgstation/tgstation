@@ -101,6 +101,29 @@
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
 
+/obj/item/choice_beacon/baggage
+	name = "heroic beacon"
+	desc = "To summon heroes from the past to protect the future."
+
+/obj/item/choice_beacon/baggage/generate_display_names()
+	var/static/list/my_clothes
+	if(!my_clothes)
+		my_clothes = list()
+		var/list/templist = typesof(/obj/item/storage/briefcase/baggage) //we have to convert type = name to name = type, how lovely!
+		for(var/V in templist)
+			var/atom/A = V
+			my_clothes[initial(A.name)] = A
+	return my_clothes
+
+/obj/item/storage/briefcase/baggage/sheik
+/obj/item/storage/briefcase/baggage/elpresidente
+	name = "el presidente"
+/obj/item/storage/briefcase/baggage/elpresidente(PopulateContents())
+	new /obj/item/clothing/head/pirate/captain(src)
+
+/obj/item/storage/briefcase/baggage/liege
+/obj/item/storage/briefcase/baggage/capitalist
+
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"
