@@ -305,7 +305,7 @@
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round(FALSE)
 			chambered = null
-			if (CB != null)
+			if (CB)
 				CB.forceMove(drop_location())
 				CB.bounce_away(FALSE, NONE)
 				num_unloaded++
