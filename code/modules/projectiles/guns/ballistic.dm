@@ -305,9 +305,10 @@
 			var/obj/item/ammo_casing/CB
 			CB = magazine.get_round(FALSE)
 			chambered = null
-			CB.forceMove(drop_location())
-			CB.bounce_away(FALSE, NONE)
-			num_unloaded++
+			if (CB != null)
+				CB.forceMove(drop_location())
+				CB.bounce_away(FALSE, NONE)
+				num_unloaded++
 		if (num_unloaded)
 			to_chat(user, "<span class='notice'>You unload [num_unloaded] [cartridge_wording]\s from [src].</span>")
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
