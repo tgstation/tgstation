@@ -81,7 +81,7 @@
 	gain_text = "<span class='notice'>You feel like a self made man.</span>"
 	lose_text = "<span class='danger'>You feel lazier.</span>"
 
-/datum/quirk/rich/on_spawn()
+/datum/quirk/wealthy/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/choice_beacon/baggage/B = new(get_turf(H))
 	H.put_in_hands(B)
