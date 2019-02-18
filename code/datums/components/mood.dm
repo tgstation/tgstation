@@ -200,11 +200,11 @@
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
 	if(owner.has_trait(TRAIT_WEALTHY))
-		if(prob(0.02))
-			var/mob/living/carbon/human/H = quirk_holder
-			var/datum/bank_account/money = H.get_bank_account()
-				if(money < 500)
-					add_event(null, "poor", /datum/mood_event/poor)
+		if(prob(1))
+			var/mob/living/L = parent
+			var/datum/bank_account/B = L.get_bank_account()
+			if(B.account_balance < 500)
+				add_event(null, "poor", /datum/mood_event/poor)
 
 	HandleNutrition(owner)
 	HandleHygiene(owner)

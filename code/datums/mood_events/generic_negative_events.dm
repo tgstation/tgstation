@@ -82,8 +82,8 @@
 
 /datum/mood_event/poor
 	description = "<span class='warning'>You feel poor.</span>\n"
-	mood_change = -10
-	timeout = 500
+	mood_change = -20
+	timeout = 100
 
 /datum/mood_event/table/add_effects()
 	if(ishuman(owner))
