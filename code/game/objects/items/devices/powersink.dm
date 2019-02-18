@@ -102,7 +102,9 @@
 				"<span class='italics'>You hear a click.</span>")
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
 			log_game("Power sink activated by [key_name(user)] at [AREACOORD(src)]")
+			notify_ghosts("\A [src] has been activated at [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
 			set_mode(OPERATING)
+			GLOB.poi_list |= src
 
 		if(OPERATING)
 			user.visible_message( \
@@ -114,6 +116,7 @@
 /obj/item/powersink/process()
 	if(!attached)
 		set_mode(DISCONNECTED)
+		GLOB.poi_list -= src
 		return
 
 	var/datum/powernet/PN = attached.powernet
