@@ -52,7 +52,12 @@
 					else
 						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-					return 0
+					if(!mind.martial_art.reroute_deflection)
+						return BULLET_ACT_BLOCK
+					else
+						P.firer = src
+						P.setAngle(rand(0, 360))//SHING
+						return BULLET_ACT_FORCE_PIERCE
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(P.reflectable & REFLECT_NORMAL)
@@ -76,13 +81,13 @@
 						new_angle_s -= 360
 					P.setAngle(new_angle_s)
 
-				return -1 // complete projectile permutation
+				return BULLET_ACT_FORCE_PIERCE // complete projectile permutation
 
 		if(check_shields(P, P.damage, "the [P.name]", PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
-			return 2
+			return BULLET_ACT_HIT
 
-	return (..(P , def_zone))
+	return ..(P, def_zone)
 
 /mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
 	if(wear_suit)
@@ -649,7 +654,16 @@
 		return
 
 	if(src == M)
+		if(has_status_effect(STATUS_EFFECT_CHOKINGSTRAND))
+			to_chat(src, "<span class='notice'>You attempt to remove the durathread strand from around your neck.</span>")
+			if(do_after(src, 35, null, src))
+				to_chat(src, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
+				remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			return
+		visible_message("[src] examines [p_them()]self.", \
+			"<span class='notice'>You check yourself for injuries.</span>")
 		check_self_for_injuries()
+
 
 	else
 		if(wear_suit)

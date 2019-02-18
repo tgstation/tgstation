@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "gbasood.byond-dm-language-support",
-        "platymuus.dm-langclient"
+        "platymuus.dm-langclient",
+        "EditorConfig.EditorConfig"
     ]
 }

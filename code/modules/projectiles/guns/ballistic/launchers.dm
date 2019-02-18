@@ -4,12 +4,13 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher//this is only used for underbarrel grenade launchers at the moment, but admins can still spawn it if they feel like being assholes
 	desc = "A break-operated grenade launcher."
 	name = "grenade launcher"
-	icon_state = "dshotgun-sawn"
+	icon_state = "dshotgun_sawn"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
+	bolt_type = BOLT_TYPE_NO_BOLT
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
@@ -41,10 +42,6 @@
 	actions_types = list()
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/gyropistol/update_icon()
-	..()
-	icon_state = "[initial(icon_state)][magazine ? "loaded" : ""]"
-
 /obj/item/gun/ballistic/rocketlauncher
 	name = "rocket propelled grenade launcher"
 	desc = "A reusable rocket propelled grenade launcher."
@@ -59,7 +56,9 @@
 	fire_delay = 0
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
+	bolt_type = BOLT_TYPE_NO_BOLT
 	magazine_wording = "rocket"
+	empty_indicator = TRUE
 
 /obj/item/gun/ballistic/rocketlauncher/handle_atom_del(atom/A)
 	if(A == chambered)
@@ -106,9 +105,6 @@
 	else
 		to_chat(user, "<span class='notice'>There's no rocket in [src].</span>")
 	update_icon()
-
-/obj/item/gun/ballistic/rocketlauncher/update_icon()
-	icon_state = "[initial(icon_state)]-[chambered ? "1" : "0"]"
 
 /obj/item/gun/ballistic/rocketlauncher/suicide_act(mob/living/user)
 	user.visible_message("<span class='warning'>[user] aims [src] at the ground! It looks like [user.p_theyre()] performing a sick rocket jump!<span>", \

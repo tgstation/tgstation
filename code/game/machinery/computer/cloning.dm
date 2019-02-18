@@ -63,7 +63,7 @@
 				. = pod
 
 /proc/grow_clone_from_record(obj/machinery/clonepod/pod, datum/data/record/R)
-	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"]) 	
+	return pod.growclone(R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["last_death"], R.fields["mrace"], R.fields["features"], R.fields["factions"], R.fields["quirks"], R.fields["bank_account"], R.fields["traumas"])
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && LAZYLEN(pods) && autoprocess))
@@ -474,7 +474,7 @@
 			else if(pod.occupant)
 				temp = "<font class='bad'>Cloning cycle already in progress.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-			else 
+			else
 				var/result = grow_clone_from_record(pod, C)
 				if(result & CLONING_SUCCESS)
 					temp = "[C.fields["name"]] => <font class='good'>Cloning cycle in progress...</font>"
@@ -488,7 +488,7 @@
 						active_record = null
 					menu = 1
 					records -= C
-					
+
 			if(!success)
 				temp = "[C.fields["name"]] => <font class='bad'>Initialisation failure.</font>"
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -567,11 +567,17 @@
 	R.fields["features"] = dna.features
 	R.fields["factions"] = mob_occupant.faction
 	R.fields["quirks"] = list()
-	R.fields["bank_account"] = has_bank_account
 	for(var/V in mob_occupant.roundstart_quirks)
 		var/datum/quirk/T = V
 		R.fields["quirks"][T.type] = T.clone_data()
 
+	R.fields["traumas"] = list()
+	if(ishuman(mob_occupant))
+		R.fields["traumas"] = C.get_traumas()
+	if(isbrain(mob_occupant))
+		R.fields["traumas"] = B.get_traumas()
+
+	R.fields["bank_account"] = has_bank_account
 	R.fields["mind"] = "[REF(mob_occupant.mind)]"
 	R.fields["last_death"] = mob_occupant.stat == DEAD ? mob_occupant.mind.last_death : -1
 
@@ -591,4 +597,4 @@
 	else
 		scantemp = "Subject successfully scanned."
 	records += R
-	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50)

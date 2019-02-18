@@ -191,9 +191,15 @@
 		var/obj/O
 		if(R.max_res_amount > 1) //Is it a stack?
 			O = new R.result_type(usr.drop_location(), R.res_amount * multiplier)
+		else if(ispath(R.result_type, /turf))
+			var/turf/T = usr.drop_location()
+			if(!isturf(T))
+				return
+			T.PlaceOnTop(R.result_type)
 		else
 			O = new R.result_type(usr.drop_location())
-		O.setDir(usr.dir)
+		if(O)
+			O.setDir(usr.dir)
 		use(R.req_amount * multiplier)
 
 		//START: oh fuck i'm so sorry

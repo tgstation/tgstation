@@ -8,9 +8,9 @@
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
-	
+
 	icon_state = ""		//Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
-	
+
 	//initialize limbs first
 	create_bodyparts()
 
@@ -77,7 +77,8 @@
 				stat("Absorbed DNA", changeling.absorbedcount)
 			var/datum/antagonist/hivemind/hivemind = mind.has_antag_datum(/datum/antagonist/hivemind)
 			if(hivemind)
-				stat("Hivemind Vessels", hivemind.hive_size)
+				stat("Hivemind Vessels", "[hivemind.hive_size] (+[hivemind.size_mod])")
+				stat("Psychic Link Duration", "[(hivemind.track_bonus + TRACKER_DEFAULT_TIME)/10] seconds")
 
 	//NINJACODE
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.
@@ -252,7 +253,7 @@
 
 		var/delay_denominator = 1
 		if(pocket_item && !(pocket_item.item_flags & ABSTRACT))
-			if(pocket_item.item_flags & NODROP)
+			if(pocket_item.has_trait(TRAIT_NODROP))
 				to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
 			to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
 		else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.item_flags & ABSTRACT))
@@ -968,11 +969,32 @@
 /mob/living/carbon/human/species/golem/plastic
 	race = /datum/species/golem/plastic
 
+/mob/living/carbon/human/species/golem/bronze
+	race = /datum/species/golem/bronze
+
+/mob/living/carbon/human/species/golem/cardboard
+	race = /datum/species/golem/cardboard
+
+/mob/living/carbon/human/species/golem/leather
+	race = /datum/species/golem/leather
+
+/mob/living/carbon/human/species/golem/bone
+	race = /datum/species/golem/bone
+
+/mob/living/carbon/human/species/golem/durathread
+	race = /datum/species/golem/durathread
+
 /mob/living/carbon/human/species/golem/clockwork
 	race = /datum/species/golem/clockwork
 
 /mob/living/carbon/human/species/golem/clockwork/no_scrap
 	race = /datum/species/golem/clockwork/no_scrap
+
+/mob/living/carbon/human/species/golem/capitalist
+	race = /datum/species/golem/capitalist
+
+/mob/living/carbon/human/species/golem/soviet
+	race = /datum/species/golem/soviet
 
 /mob/living/carbon/human/species/jelly
 	race = /datum/species/jelly
