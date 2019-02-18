@@ -15,7 +15,7 @@
 	var/flipped_build_type
 	var/base_icon
 
-proc/can_wrench_in_loc()
+/obj/structure/c_transit_tube/proc/can_wrench_in_loc(mob/user)
 	var/turf/source_turf = get_turf(loc)
 	var/existing_tubes = 0
 	for(var/obj/structure/transit_tube/tube in source_turf)
@@ -42,8 +42,7 @@ proc/can_wrench_in_loc()
 /obj/structure/c_transit_tube/wrench_act(mob/living/user, obj/item/I)
 	to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
 	add_fingerprint(user)
-	can_wrench_in_loc()
-	if(I.use_tool(src, user, time_to_unwrench, volume=50, extra_checks=CALLBACK(src, .proc/can_wrench_in_loc))
+	if(I.use_tool(src, user, time_to_unwrench, volume=50, extra_checks=CALLBACK(src, .proc/can_wrench_in_loc, user)))
 		to_chat(user, "<span class='notice'>You attach the [name].</span>")
 		var/obj/structure/transit_tube/R = new build_type(loc, dir)
 		transfer_fingerprints_to(R)
