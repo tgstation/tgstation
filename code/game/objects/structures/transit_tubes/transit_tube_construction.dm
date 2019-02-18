@@ -22,7 +22,8 @@
 		existing_tubes +=1
 		if(existing_tubes >= 2)
 			to_chat(user, "<span class='warning'>You cannot wrench anymore transit tubes!</span> ")
-			return TRUE
+			return FALSE
+	return TRUE
 
 /obj/structure/c_transit_tube/ComponentInitialize()
 	. = ..()
