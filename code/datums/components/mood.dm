@@ -201,8 +201,8 @@
 			clear_event(null, "depression")
 	if(owner.has_trait(TRAIT_WEALTHY))
 		if(prob(1))
-			var/mob/living/L = parent
-			var/datum/bank_account/B = L.get_bank_account()
+			var/mob/living/carbon/human/H = parent
+			var/datum/bank_account/B = H.get_bank_account()
 			if(B.account_balance < 500)
 				add_event(null, "poor", /datum/mood_event/poor)
 
