@@ -80,6 +80,11 @@
 	mood_change = -2
 	timeout = 1200
 
+/datum/mood_event/poor
+	description = "<span class='warning'>You feel poor.</span>\n"
+	mood_change = -10
+	timeout = 500
+
 /datum/mood_event/table/add_effects()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner

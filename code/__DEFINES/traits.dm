@@ -102,6 +102,7 @@
 #define TRAIT_PHOTOGRAPHER		"photographer"
 #define TRAIT_MUSICIAN			"musician"
 #define TRAIT_LIGHT_DRINKER		"light_drinker"
+#define TRAIT_WEALTHY			"wealthy"
 
 // common trait sources
 #define TRAIT_GENERIC "generic"

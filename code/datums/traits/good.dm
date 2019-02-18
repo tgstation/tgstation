@@ -75,6 +75,7 @@
 
 /datum/quirk/rich
 	name = "rich wip"
+	mob_trait = TRAIT_WEALTHY
 	desc = "wip"
 	value = 2
 	gain_text = "<span class='notice'>Your pockets are fat.</span>"
