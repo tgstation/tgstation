@@ -121,14 +121,6 @@
 	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/real
 	ME.attach(src)
 
-/*/obj/mecha/working/ripley/firefigher/Move()
-	. = ..()
-	update_pressure()
-
-/obj/mecha/working/ripley/deathripley/Move()
-	. = ..()
-	update_pressure()
-*/
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
