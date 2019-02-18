@@ -39,7 +39,6 @@
 	var/rad_flags = NONE // Will move to flags_1 when i can be arsed to
 	var/rad_insulation = RAD_NO_INSULATION
 
-	var/list/datum_outputs
 
 /atom/New(loc, ...)
 	//atom creation method that preloads variables at creation
@@ -85,10 +84,6 @@
 
 	if(canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
-
-	if(datum_outputs)
-		for(var/A in datum_outputs)
-			A = SSoutputs.outputs[A]
 
 	ComponentInitialize()
 

@@ -1,5 +1,4 @@
 /datum/component/squeak
-	var/datum/outputs/squeak_datum
 	var/squeak_chance = 100
 	var/volume = 30
 
@@ -11,7 +10,7 @@
 	var/last_use = 0
 	var/use_delay = 20
 
-/datum/component/squeak/Initialize(custom_datum, volume_override, chance_override, step_delay_override, use_delay_override)
+/datum/component/squeak/Initialize(volume_override, chance_override, step_delay_override, use_delay_override)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
@@ -27,7 +26,6 @@
 			if(istype(parent, /obj/item/clothing/shoes))
 				RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
-	squeak_datum = SSoutputs.outputs[custom_datum]
 	if(chance_override)
 		squeak_chance = chance_override
 	if(volume_override)
@@ -39,10 +37,10 @@
 
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))
-		if(!squeak_datum)
+		if(!datum_outputs)
 			CRASH("Squeak datum attempted to play missing datum")
 		else
-			playsound(parent, squeak_datum, volume, 1, -1)
+			playsound(parent, datum_outputs[1], volume, 1, -1)
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)
@@ -84,3 +82,21 @@
 	//If the dir changes it means we're going through a bend in the pipes, let's pretend we bumped the wall
 	if(old_dir != new_dir)
 		play_squeak()
+
+/datum/component/squeak/carp
+	datum_outputs = list(/datum/outputs/bite)
+
+/datum/component/squeak/bubbleplush
+	datum_outputs = list(/datum/outputs/demonattack)
+
+/datum/component/squeak/lizardplushie
+	datum_outputs = list(/datum/outputs/slash)
+
+/datum/component/squeak/snakeplushie
+	datum_outputs = list(/datum/outputs/bite)
+
+/datum/component/squeak/nukeplushie
+	datum_outputs = list(/datum/outputs/punch)
+
+/datum/component/squeak/slimeplushie
+	datum_outputs = list(/datum/outputs/squelch)
