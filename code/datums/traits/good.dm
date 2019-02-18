@@ -73,13 +73,13 @@
 	H.equip_to_slot(B, SLOT_IN_BACKPACK)
 	H.regenerate_icons()
 
-/datum/quirk/rich
-	name = "rich wip"
+/datum/quirk/wealthy
+	name = "Wealthy"
 	mob_trait = TRAIT_WEALTHY
-	desc = "wip"
+	desc = "You just happen to have enough money from luck or connections."
 	value = 2
-	gain_text = "<span class='notice'>Your pockets are fat.</span>"
-	lose_text = "<span class='danger'>You are poor.</span>"
+	gain_text = "<span class='notice'>You feel like a self made man.</span>"
+	lose_text = "<span class='danger'>You feel lazier.</span>"
 
 /datum/quirk/rich/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder

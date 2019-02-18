@@ -81,7 +81,7 @@
 	timeout = 1200
 
 /datum/mood_event/poor
-	description = "<span class='warning'>You feel poor.</span>\n"
+	description = "<span class='warning'>You feel poor, go make some cash.</span>\n"
 	mood_change = -20
 	timeout = 100
 

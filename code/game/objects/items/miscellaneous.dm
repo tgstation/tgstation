@@ -102,21 +102,21 @@
 	new /obj/item/clothing/shoes/sandal(src)
 
 /obj/item/choice_beacon/baggage
-	name = "heroic beacon"
-	desc = "To summon heroes from the past to protect the future."
+	name = "fast delivery beacon"
+	desc = "All you need for your new enterprise."
 
 /obj/item/choice_beacon/baggage/generate_display_names()
 	var/static/list/my_clothes
 	if(!my_clothes)
 		my_clothes = list()
-		var/list/templist = typesof(/obj/item/storage/briefcase/baggage) //we have to convert type = name to name = type, how lovely!
+		var/list/templist = typesof(/obj/item/storage/briefcase/baggage)
 		for(var/V in templist)
 			var/atom/A = V
 			my_clothes[initial(A.name)] = A
 	return my_clothes
 
 /obj/item/storage/briefcase/baggage/sheik
-	name = "sheik wip"
+	name = "Oriental Baggage"
 /obj/item/storage/briefcase/baggage/sheik/PopulateContents()
 	new /obj/item/clothing/shoes/sandal(src)
 	new /obj/item/stack/sheet/mineral/plasma/twenty(src)
@@ -125,9 +125,9 @@
 	new /obj/item/clothing/head/sheik_hat(src)
 
 /obj/item/storage/briefcase/baggage/elpresidente
-	name = "el presidente wip"
+	name = "Cuban Baggage"
 /obj/item/storage/briefcase/baggage/elpresidente/PopulateContents()
-	new /obj/item/clothing/head/pirate/captain(src)
+	new /obj/item/clothing/head/pirate/captain/cuban(src)
 	new /obj/item/clothing/suit/jacket/miljacket(src)
 	new /obj/item/clothing/under/pants/camo(src)
 	new /obj/item/clothing/shoes/laceup(src)
@@ -135,10 +135,9 @@
 	new /obj/item/storage/fancy/cigarettes/cigars/havana(src)
 	new /obj/item/storage/box/matches(src)
 	new /obj/item/stack/spacecash/c1000(src)
-	new /obj/item/stack/spacecash/c1000(src)
 
 /obj/item/storage/briefcase/baggage/liege
-	name = "duke wip"
+	name = "Medieval Baggage"
 /obj/item/storage/briefcase/baggage/liege/PopulateContents()
 	new /obj/item/clothing/head/crown(src)
 	new /obj/item/coin/gold(src)
@@ -148,7 +147,7 @@
 	new /obj/item/dnainjector/chavmut(src)
 
 /obj/item/storage/briefcase/baggage
-	name = "capitalist wip"
+	name = "Professional Baggage"
 /obj/item/storage/briefcase/baggage/capitalist/PopulateContents()
 	new /obj/item/storage/bag/money(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
@@ -158,8 +157,6 @@
 	new /obj/item/clothing/glasses/monocle(src)
 	new /obj/item/cane(src)
 	new /obj/item/clothing/mask/cigarette/pipe(src)
-	new /obj/item/stack/spacecash/c1000(src)
-	new /obj/item/stack/spacecash/c1000(src)
 	new /obj/item/stack/spacecash/c1000(src)
 
 /obj/item/skub

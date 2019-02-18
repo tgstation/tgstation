@@ -151,6 +151,9 @@
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
+/obj/item/clothing/head/pirate/captain/cuban
+	name = "Caribbean Hat"
+
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
 	desc = "Yarr."
@@ -371,5 +374,5 @@
 /obj/item/clothing/head/sheik_hat
 	icon_state = "sheik_hat"
 	item_state = "sheik_hat"
-	desc = "wip"
+	desc = "May protect you from sun burns, if you were in a desert."
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 20)
