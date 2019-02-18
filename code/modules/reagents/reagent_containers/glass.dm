@@ -207,7 +207,7 @@
 		and Element Cuban combined with the Compound Pete. Can hold up to \
 		300 units."
 	icon_state = "beakerbluespace"
-	materials = list(MAT_GLASS=3000)
+	materials = list(MAT_GLASS = 5000, MAT_PLASMA = 3000, MAT_DIAMOND = 1000, MAT_BLUESPACE = 1000)
 	volume = 300
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,300)
