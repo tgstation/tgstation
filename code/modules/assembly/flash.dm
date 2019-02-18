@@ -200,11 +200,19 @@
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	if(cooldown)
+		return FALSE
+	else
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
+		return 
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	new /obj/effect/temp_visual/borgflash(get_turf(src))
+	if(cooldown)
+		return FALSE
+	else
+		new /obj/effect/temp_visual/borgflash(get_turf(src))
+		return 
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
