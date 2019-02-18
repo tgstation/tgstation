@@ -42,7 +42,7 @@
 	icon_state = "blueshift"
 	item_state = "blueshift"
 	custom_premium_price = 600
-	
+
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence."
@@ -237,6 +237,9 @@
 /obj/item/clothing/suit/armor/riot/knight/red
 	icon_state = "knight_red"
 	item_state = "knight_red"
+
+/obj/item/clothing/suit/armor/riot/knight/red/weak
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 5, "energy" = 20, "bomb" = 30, "bio" = 10, "rad" = 10, "fire" = 20, "acid" = 50)
 
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"

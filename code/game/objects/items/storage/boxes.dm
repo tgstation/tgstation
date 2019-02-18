@@ -1052,3 +1052,14 @@
 		/obj/item/stock_parts/micro_laser/quadultra = 3,
 		/obj/item/stock_parts/matter_bin/bluespace = 3)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/treasure
+	name = "box of treasure"
+	desc = "Contains all your ducats."
+	icon_state = "lockbox+l"
+
+/obj/item/storage/box/treasure/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/coin/gold = 10,
+		/obj/item/coin/silver = 10)
+	generate_items_inside(items_inside,src)

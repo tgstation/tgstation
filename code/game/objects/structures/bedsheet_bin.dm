@@ -220,6 +220,11 @@ LINEN BINS
 	item_color = "nanotrasen"
 	dream_messages = list("authority", "an ending")
 
+/obj/item/bedsheet/regal
+	name = "liege's mantle"
+	item_color = "regal"
+	dream_messages = list("authority")
+
 /obj/item/bedsheet/ian
 	icon_state = "sheetian"
 	item_color = "ian"
@@ -257,7 +262,7 @@ LINEN BINS
 	var/type = pickweight(list("Colors" = 80, "Special" = 20))
 	switch(type)
 		if("Colors")
-			type = pick(list(/obj/item/bedsheet, 
+			type = pick(list(/obj/item/bedsheet,
 				/obj/item/bedsheet/blue,
 				/obj/item/bedsheet/green,
 				/obj/item/bedsheet/grey,

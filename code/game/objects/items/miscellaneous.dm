@@ -116,14 +116,46 @@
 	return my_clothes
 
 /obj/item/storage/briefcase/baggage/sheik
+	name = "sheik"
+/obj/item/storage/briefcase/baggage/sheik/PopulateContents()
+	new /obj/item/clothing/shoes/sandal(src)
+	new /obj/item/stack/sheet/mineral/plasma(src)
+	new /obj/item/stack/spacecash/c1000(src)
+	new /obj/item/clothing/suit/sheik(src)
+	new /obj/item/clothing/head/sheik_hat(src)
 /obj/item/storage/briefcase/baggage/elpresidente
 	name = "el presidente"
-/obj/item/storage/briefcase/baggage/elpresidente(PopulateContents())
+/obj/item/storage/briefcase/baggage/elpresidente/PopulateContents()
 	new /obj/item/clothing/head/pirate/captain(src)
-
+	new /obj/item/clothing/suit/jacket/miljacket(src)
+	new /obj/item/clothing/under/pants/camo(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/glasses/sunglasses(src)
+	new /obj/item/storage/fancy/cigarettes/cigars/havana(src)
+	new /obj/item/storage/box/matches(src)
+	new /obj/item/stack/spacecash/c1000(src)
+	new /obj/item/stack/spacecash/c1000(src)
 /obj/item/storage/briefcase/baggage/liege
-/obj/item/storage/briefcase/baggage/capitalist
-
+	name = "duke"
+/obj/item/storage/briefcase/baggage/liege/PopulateContents()
+	new /obj/item/clothing/head/crown(src)
+	new /obj/item/coin/gold(src)
+	new /obj/item/bedsheet/regal(src)
+	new /obj/item/storage/box/treasure(src)
+	new /obj/item/clothing/suit/armor/riot/knight/red/weak(src)
+/obj/item/storage/briefcase/baggage
+	name = "capitalist"
+/obj/item/storage/briefcase/baggage/capitalist/PopulateContents()
+	new /obj/item/storage/bag/money(src)
+	new /obj/item/clothing/suit/toggle/lawyer/black(src)
+	new /obj/item/clothing/head/that(src)
+	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/glasses/monocle(src)
+	new /obj/item/cane(src)
+	new /obj/item/clothing/mask/cigarette/pipe(src)
+	new /obj/item/stack/spacecash/c1000(src)
+	new /obj/item/stack/spacecash/c1000(src)
+	new /obj/item/stack/spacecash/c1000(src)
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"
