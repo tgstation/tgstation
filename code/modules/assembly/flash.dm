@@ -212,13 +212,13 @@
 	return
 
 /obj/item/assembly/flash/cyborg/tier_1
-	cooldown = 4
+	cooldown = 40
 	
 /obj/item/assembly/flash/cyborg/tier_2
-	cooldown = 12
+	cooldown = 120
 
 /obj/item/assembly/flash/cyborg/tier_3
-	cooldown = 20
+	cooldown = 200
 
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
