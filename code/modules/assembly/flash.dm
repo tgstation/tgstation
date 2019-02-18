@@ -211,6 +211,15 @@
 /obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
 
+/obj/item/assembly/flash/cyborg/tier_1
+	cooldown = 4
+	
+/obj/item/assembly/flash/cyborg/tier_2
+	cooldown = 12
+
+/obj/item/assembly/flash/cyborg/tier_3
+	cooldown = 20
+
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
 	desc = "If you see this, you're not likely to remember it any time soon."
