@@ -223,7 +223,7 @@
 	cooldown = 40
 	
 /obj/item/assembly/flash/cyborg/tier_2
-	cooldown = 120
+	cooldown = 140
 
 /obj/item/assembly/flash/cyborg/tier_3
 	cooldown = 200
