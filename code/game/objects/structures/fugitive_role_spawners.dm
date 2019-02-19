@@ -9,7 +9,7 @@
 
 /obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)
 	. = ..()
-	notify_ghosts("Hunters are waking up looking for refugees!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_ASHWALKER)
+	notify_ghosts("Hunters are waking up looking for refugees!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_FUGITIVE)
 
 /obj/effect/mob_spawn/human/fugitive/special(mob/living/new_spawn)
 	var/datum/antagonist/fugitive_hunter/fughunter = new_spawn.mind.add_antag_datum(/datum/antagonist/fugitive_hunter)

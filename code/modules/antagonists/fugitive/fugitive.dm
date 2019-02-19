@@ -2,7 +2,6 @@
 
 /datum/antagonist/fugitive
 	name = "Fugitive"
-	//show_in_antagpanel = FALSE //remove this later- they are event specific. this is 100% for testing
 	roundend_category = "Fugitive"
 	silent = TRUE //greet called by the event
 	var/datum/team/fugitive/fugitive_team

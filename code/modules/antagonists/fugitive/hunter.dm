@@ -1,7 +1,6 @@
 //The hunters!!
 /datum/antagonist/fugitive_hunter
 	name = "Fugitive Hunter"
-	//show_in_antagpanel = FALSE //remove this later- they are event specific. this is 100% for testing
 	roundend_category = "Fugitive"
 	silent = TRUE //greet called by the event as well
 	var/datum/team/fugitive_hunters/hunter_team
@@ -58,10 +57,11 @@
 
 /datum/team/fugitive_hunters/proc/get_all_fugitives()
 	. = list()
-	for(var/mob/crew in GLOB.mob_list)
-		if(crew.mind)
-			if(crew.mind.has_antag_datum(/datum/antagonist/fugitive))
-				. += crew
+	for(var/mob/crew in GLOB.antagonists)
+		if(!(crew.owner || crew.mind)
+			continue
+		if(crew.mind.has_antag_datum(/datum/antagonist/fugitive))
+			. += crew
 
 /datum/team/fugitive_hunters/proc/fugitives_dead(list/fugitives_counted)
 	. = 0
@@ -156,16 +156,16 @@
 			result += "<span class='neutraltext big'>Bugged Victory</span>"
 			result += "<B>Well, shit. Someone, anyone report this to github so I can see it. No duplicate reports!</B>"
 
+	result += "</div>"
+
 	return result.Join("<br>")
 
 /datum/antagonist/fugitive_hunter/proc/update_fugitive_icons_added(var/mob/living/carbon/human/fugitive)
 	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
 	fughud.join_hud(fugitive)
-	//fughud.add_hud_to(fugitive) //can detect who the fugitives are, and see other hunters. fugitives don't get this
 	set_antag_hud(fugitive, "fugitive")
 
 /datum/antagonist/fugitive_hunter/proc/update_fugitive_icons_removed(var/mob/living/carbon/human/fugitive)
 	var/datum/atom_hud/antag/fughud = GLOB.huds[ANTAG_HUD_FUGITIVE]
 	fughud.leave_hud(fugitive)
-	//fughud.remove_hud_from(fugitive)
 	set_antag_hud(fugitive, null)
