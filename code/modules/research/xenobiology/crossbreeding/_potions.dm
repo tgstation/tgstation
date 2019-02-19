@@ -44,7 +44,7 @@ Slimecrossing Potions
 		to_chat(user, "<span class='warning'>The pacification potion only works on the living.</span>")
 		return ..()
 	if(M.has_trait(MEGAFAUNA_TRAIT))
-		to_chat(user, "<span class='warning'>The love potion does not work on beings of pure evil!</span>")
+		to_chat(user, "<span class='warning'>The pacification potion does not work on beings of pure evil!</span>")
 		return ..()
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] starts to feed [M] a pacification potion!</span>",
