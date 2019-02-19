@@ -470,7 +470,7 @@
 	if (istype(drug_instance, /obj/item/storage/pill_bottle))
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
-			var/obj/item/reagent_containers/pill/P = new(1)
+			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
 			P.reagents.add_reagent(reagent_id, 1)
 
