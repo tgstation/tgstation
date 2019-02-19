@@ -27,7 +27,7 @@
 		if(H.has_trait(TRAIT_PIERCEIMMUNE))
 			return
 
-		if((flags & CALTROP_IGNORE_WALKERS) && H.real_move_delay < MOVE_WALK_THRESHOLD)
+		if((flags & CALTROP_IGNORE_WALKERS) && H.real_move_delay < CONFIG_GET(number/movedelay/walk_delay))
 			return
 
 		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)

@@ -9,8 +9,8 @@
 			. += 6 - 3*get_num_arms() //crawling is harder with fewer arms
 		if(legcuffed)
 			. += legcuffed.slowdown
-	if(m_intent == MOVE_INTENT_WALK && . < MOVE_WALK_THRESHOLD)
-		. = MOVE_WALK_THRESHOLD
+	if(m_intent == MOVE_INTENT_WALK && . < CONFIG_GET(number/movedelay/walk_delay))
+		. = CONFIG_GET(number/movedelay/walk_delay)
 
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube, paralyze, force_drop)
 	if(movement_type & FLYING)
@@ -41,5 +41,5 @@
 			set_nutrition(NUTRITION_LEVEL_FED - 1)	//just less than feeling vigorous
 		else if(nutrition && stat != DEAD)
 			adjust_nutrition(-(HUNGER_FACTOR/10))
-			if(real_move_delay >= MOVE_WALK_THRESHOLD)
+			if(real_move_delay >= CONFIG_GET(number/movedelay/walk_delay))
 				adjust_nutrition(-(HUNGER_FACTOR/10))

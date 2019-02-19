@@ -64,7 +64,7 @@
 		return 1
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(allow_walk && C.real_move_delay >= MOVE_WALK_THRESHOLD)
+		if(allow_walk && C.real_move_delay >= CONFIG_GET(number/movedelay/walk_delay))
 			return 1
 
 /obj/structure/holosign/barrier/wetsign

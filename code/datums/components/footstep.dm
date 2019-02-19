@@ -28,7 +28,7 @@
 		var/mob/living/carbon/C = LM
 		if(!C.get_bodypart(BODY_ZONE_L_LEG) && !C.get_bodypart(BODY_ZONE_R_LEG))
 			return
-		if(ishuman(C) && C.real_move_delay < MOVE_WALK_THRESHOLD)
+		if(ishuman(C) && C.real_move_delay < CONFIG_GET(number/movedelay/walk_delay))
 			v /= 2
 			e -= 5
 	steps++

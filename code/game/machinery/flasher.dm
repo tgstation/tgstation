@@ -164,7 +164,7 @@
 
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if (M.real_move_delay < MOVE_WALK_THRESHOLD && anchored)
+		if (M.real_move_delay < CONFIG_GET(number/movedelay/walk_delay) && anchored)
 			flash()
 
 /obj/machinery/flasher/portable/attackby(obj/item/W, mob/user, params)

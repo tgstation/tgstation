@@ -11,9 +11,6 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
 
-//Walking Speed Threshold for slips and stuff. If you move slower than this, you are considered walking, regardless of intent.
-#define MOVE_WALK_THRESHOLD 4 // Roundstart with shoes in walk-intent your move-delay reads as 4.
-
 //Blood levels
 #define BLOOD_VOLUME_MAXIMUM		2000
 #define BLOOD_VOLUME_SLIME_SPLIT	1120
