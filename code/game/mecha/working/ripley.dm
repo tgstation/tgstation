@@ -77,8 +77,8 @@
 	icon_state = "firefighter"
 	max_temperature = 65000
 	max_integrity = 250
-	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
-	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
+	fast_pressure_step_in = 2 //step_in while in normal pressure conditions
+	slow_pressure_step_in = 4 //step_in while in better pressure conditions
 	step_in = 4
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
@@ -95,8 +95,8 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
-	var/fast_pressure_step_in = 2 //step_in while in normal pressure conditions
-	var/slow_pressure_step_in = 4 //step_in while in better pressure conditions
+	fast_pressure_step_in = 2 //step_in while in normal pressure conditions
+	slow_pressure_step_in = 4 //step_in while in better pressure conditions
 	step_in = 4
 	slow_pressure_step_in = 3
 	opacity=0
