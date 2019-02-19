@@ -1,0 +1,5 @@
+author: "daklaj"
+delete-after: True
+changes: 
+  - balance: "beam projectiles now pass through riot shields"
+  - balance: "shields will break after absorbing too much damage"
