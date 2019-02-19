@@ -28,16 +28,14 @@
 
 /mob/living/carbon/human/cure_husk(list/sources)
 	. = ..()
-	if(.)
-		update_hair()
+	update_hair()
 
 /mob/living/carbon/human/become_husk(source)
 	if(istype(dna.species, /datum/species/skeleton)) //skeletons shouldn't be husks.
 		cure_husk()
 		return
 	. = ..()
-	if(.)
-		update_hair()
+	update_hair()
 
 /mob/living/carbon/human/set_drugginess(amount)
 	..()
