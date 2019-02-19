@@ -43,7 +43,9 @@
 	no_den_usage = 1
 	var/allowed_projectile_types = list(/obj/item/projectile/magic/change, /obj/item/projectile/magic/animate, /obj/item/projectile/magic/resurrection,
 	/obj/item/projectile/magic/death, /obj/item/projectile/magic/teleport, /obj/item/projectile/magic/door, /obj/item/projectile/magic/aoe/fireball,
-	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage, /obj/item/projectile/magic/locker)
+	/obj/item/projectile/magic/spellblade, /obj/item/projectile/magic/arcane_barrage, /obj/item/projectile/magic/locker, /obj/item/projectile/magic/flying,
+	/obj/item/projectile/magic/bounty, /obj/item/projectile/magic/antimagic, /obj/item/projectile/magic/fetch, /obj/item/projectile/magic/sapping,
+	/obj/item/projectile/magic/necropotence, /obj/item/projectile/magic, /obj/item/projectile/temp/chill, /obj/item/projectile/magic/wipe)
 
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
@@ -112,3 +114,27 @@
 	ammo_type = /obj/item/ammo_casing/magic/flying
 	icon_state = "staffofflight"
 	item_state = "staffofflight"
+
+/obj/item/gun/magic/staff/sapping
+	name = "staff of sapping"
+	desc = "An artefact that spits bolts of sapping magic that can make something sad."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/sapping
+	icon_state = "staffofsapping"
+	item_state = "staffofsapping"
+
+/obj/item/gun/magic/staff/sapping
+	name = "staff of necropotence"
+	desc = "An artefact that spits bolts of death magic that can repurpose the soul."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/necropotence
+	icon_state = "staffofnecropotence"
+	item_state = "staffofnecropotence"
+
+/obj/item/gun/magic/staff/wipe
+	name = "staff of possession"
+	desc = "An artefact that spits bolts of mind-unlocking magic that can let ghosts invade the victim's mind."
+	fire_sound = 'sound/magic/staff_change.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/wipe
+	icon_state = "staffofflying"
+	item_state = "staffofflying"

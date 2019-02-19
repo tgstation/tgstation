@@ -219,3 +219,38 @@
 	I.hidden = !I.hidden
 	I.Show()
 	update_status()
+
+//down here is the trapped mind
+//like imaginary friend but a lot less imagination and more like mind prison//
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner
+	name = "Trapped Victim"
+	desc = "Patient appears to be targeted by an invisible entity."
+	gain_text = ""
+	lose_text = ""
+	random_gain = FALSE
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/make_friend()
+	friend = new /mob/camera/imaginary_friend/trapped(get_turf(owner), src)
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/reroll_friend() //no rerolling- it's just the last owner's hell
+	if(friend.client) //reconnected
+		return
+	friend_initialized = FALSE
+	QDEL_NULL(friend)
+	qdel(src)
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/get_ghost() //no randoms
+	return
+
+/mob/camera/imaginary_friend/trapped
+	name = "figment of imagination?"
+	real_name = "figment of imagination?"
+	desc = "The previous host of this body."
+
+/mob/camera/imaginary_friend/trapped/Login()
+	..()
+	to_chat(src, "<span class='notice'><b>You have managed to hold on as a figment of the new host's imagination!</b></span>")
+	to_chat(src, "<span class='notice'>All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them.</span>")
+	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what the host cannot.</span>")
+	Show()

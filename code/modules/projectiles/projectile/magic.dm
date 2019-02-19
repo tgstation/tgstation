@@ -462,7 +462,7 @@
 		if(L.anti_magic_check())
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-			var/atom/throw_target = get_edge_target_turf(L, get_dir(src, get_step_away(L, src)))
+			var/atom/throw_target = get_edge_target_turf(L, angle2dir(Angle))
 			L.throw_at(throw_target, 200, 4)
 
 /obj/item/projectile/magic/bounty
@@ -502,7 +502,7 @@
 		if(L.anti_magic_check() || !firer)
 			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
-		var/atom/throw_target = get_edge_target_turf(L, get_dir(starting, get_step_away(L, starting)))
+		var/atom/throw_target = get_edge_target_turf(L, get_dir(L, firer))
 		L.throw_at(throw_target, 200, 4)
 
 /obj/item/projectile/magic/sapping
@@ -517,6 +517,71 @@
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			return BULLET_ACT_BLOCK
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, src, /datum/mood_event/sapped)
+
+/obj/item/projectile/magic/necropotence
+	name = "bolt of necropotence"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/necropotence/on_hit(target)
+	. = ..()
+	if(isliving(target))
+		var/mob/living/L = target
+		if(L.anti_magic_check() || !L.mind || !L.mind.hasSoul)
+			L.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		to_chat(L, "<span class='danger'>Your body feels drained and there is a burning pain in your chest.</span>")
+		L.maxHealth -= 20
+		L.health = min(L.health, L.maxHealth)
+		if(L.maxHealth <= 0)
+			to_chat(L, "<span class='userdanger'>Your weakened soul is completely consumed by the [src]!</span>")
+			L.mind.hasSoul = FALSE
+		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
+			spell.charge_counter = spell.charge_max
+			spell.recharging = FALSE
+			spell.update_icon()
+
+/obj/item/projectile/magic/wipe
+	name = "bolt of possession"
+	icon_state = "pulse1_bl"
+
+/obj/item/projectile/magic/wipe/on_hit(target)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+		for(var/x in M.get_traumas())//checks to see if the victim is already going through possession
+			if(istype(x, /datum/brain_trauma/special/imaginary_friend/trapped_owner))
+				M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+				return BULLET_ACT_BLOCK
+		to_chat(M, "<span class='userdanger'>Your mind has been opened to possession!</span>")
+		var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
+		var/poll_message = "Do you want to play as [M.real_name]?"
+		if(M.mind && M.mind.assigned_role)
+			poll_message = "[poll_message] Job:[M.mind.assigned_role]."
+		if(M.mind && M.mind.special_role)
+			poll_message = "[poll_message] Status:[M.mind.special_role]."
+		else if(M.mind)
+			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
+			if(A)
+				poll_message = "[poll_message] Status:[A.name]."
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
+
+		if(M.stat == DEAD)//boo.
+			return BULLET_ACT_BLOCK
+		if(LAZYLEN(candidates))
+			var/mob/dead/observer/C = pick(candidates)
+			to_chat(M, "You have been noticed by a ghost, and it has possessed you!")
+			var/oldkey = M.key
+			M.ghostize(0)
+			M.key = C.key
+			trauma.friend.key = oldkey
+			trauma.friend.Show()
+		else
+			to_chat(M, "<span class='notice'>Your mind has managed to go unnoticed in the spirit world.</span>")
+			qdel(trauma)
+			return BULLET_ACT_BLOCK
 
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
@@ -607,3 +672,15 @@
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)
+
+//still magic related, but a different path
+
+/obj/item/projectile/temp/chill
+	name = "bolt of chills"
+	icon_state = "ice_2"
+	damage = 0
+	damage_type = BURN
+	nodamage = 1
+	armour_penetration = 100
+	temperature = 50
+	flag = "magic"

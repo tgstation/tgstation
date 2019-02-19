@@ -59,3 +59,9 @@
 
 /obj/item/ammo_casing/magic/sapping
 	projectile_type = /obj/item/projectile/magic/sapping
+
+/obj/item/ammo_casing/magic/necropotence
+	projectile_type = /obj/item/projectile/magic/necropotence
+
+/obj/item/ammo_casing/magic/wipe
+	projectile_type = /obj/item/projectile/magic/wipe
