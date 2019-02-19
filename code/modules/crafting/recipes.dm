@@ -47,7 +47,7 @@
 
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
-	result = /obj/item/assembly/flash/shield
+	result = /obj/item/shield/riot/flash
 	reqs = list(/obj/item/wallframe/flasher = 1,
 				/obj/item/assembly/flash/handheld = 1,
 				/obj/item/shield/riot = 1)

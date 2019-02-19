@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed runtime related to the neet quirk when spawning in as a special role without a bank account."
