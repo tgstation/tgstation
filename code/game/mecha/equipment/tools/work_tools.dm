@@ -464,19 +464,22 @@
 
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
-	name = "Ripley MK-II Upgrade"
-	desc = "A pressurized canopy attachment for Autonomous Power Loader Unit \"Ripley\" MK-I mechas, to upgrade them to MK-II. Upgrade cannot be removed, once applied."
+	name = "Ripley MK-II Conversion Kit"
+	desc = "A pressurized canopy attachment kit for an Autonomous Power Loader Unit \"Ripley\" MK-I mecha, to convert it to the slower, but space-worthy MK-II design. This kit cannot be removed, once applied."
 	icon_state = "ripleyupgrade"
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/mecha/working/ripley/M as obj)
 	if(!istype(M, /obj/mecha/working/ripley))
-		to_chat(loc, "<span class='warning'>This upgrade can only be applied to APLU MK-I models.</span>")
+		to_chat(loc, "<span class='warning'>This conversion kit can only be applied to APLU MK-I models.</span>")
+		return 0
+	if(M.cargo.len)
+		to_chat(loc, "<span class='warning'>[M]'s cargo hold must be empty before this conversion kit can be applied.</span>")
 		return 0
 	if(!M.maint_access) //non-removable upgrade, so lets make sure the pilot or owner has their say.
-		to_chat(loc, "<span class='warning'>[M] must have maintenance protocols active in order to allow this upgrade.</span>")
+		to_chat(loc, "<span class='warning'>[M] must have maintenance protocols active in order to allow this conversion kit.</span>")
 		return 0
 	if(M.occupant) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
-		to_chat(loc, "<span class='warning'>[M] must be unoccupied before this upgrade can be applied.</span>")
+		to_chat(loc, "<span class='warning'>[M] must be unoccupied before this conversion kit can be applied.</span>")
 		return 0
 	return 1
 
@@ -497,4 +500,5 @@
 		M.equipment -= E
 	M.wreckage = 0
 	qdel(M)
+	playsound(get_turf(N),'sound/items/ratchet.ogg',50,1)
 	return

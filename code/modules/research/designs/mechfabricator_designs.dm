@@ -477,7 +477,7 @@
 
 //Exosuit Equipment
 /datum/design/ripleyupgrade
-	name = "Ripley MK-1 to MK-II upgade"
+	name = "Ripley MK-1 to MK-II conversion kit"
 	id = "ripleyupgrade"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/ripleyupgrade

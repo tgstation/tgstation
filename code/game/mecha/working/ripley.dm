@@ -64,6 +64,17 @@
 	if (enclosed || !occupant || silicon_pilot)
 		return ..()
 	occupant.bullet_act(P) //If the sides are open, the occupant can be hit
+/*
+/obj/mecha/working/ripley/fire_act()
+	if (!enclosed)
+		occupant.on_fire = TRUE // No atmos protection means no fire protection
+	. = ..()
+*/
+/obj/mecha/working/ripley/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
+	if (!enclosed)
+		possible_int_damage -= MECHA_INT_TEMP_CONTROL //if we don't even have an air tank, these two doesn't make a ton of sense.
+		possible_int_damage -= MECHA_INT_TANK_BREACH
+	. = ..()
 
 
 /obj/mecha/working/ripley/Initialize()
@@ -72,8 +83,8 @@
 
 
 /obj/mecha/working/ripley/mkii
-	desc = "Autonomous Power Loader Unit MK-II. This prototype upgraded Ripley is refitted with a pressurized cabin."
-	name = "\improper APLU \"Ripley MK-II\""
+	desc = "Autonomous Power Loader Unit MK-II. This prototype Ripley is refitted with a pressurized cabin, trading its prior speed for atmospheric protection"
+	name = "\improper APLU \"Ripley\" MK-II"
 	icon_state = "ripleymkii"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
 	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
