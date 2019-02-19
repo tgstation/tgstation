@@ -1,11 +1,10 @@
-/*
-So much of atmospherics.dm was used solely by components, so separating this makes things all a lot cleaner.
-On top of that, now people can add component-speciic procs/vars if they want!
-*/
+// So much of atmospherics.dm was used solely by components, so separating this makes things all a lot cleaner.
+// On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
 	var/welded = FALSE //Used on pumps and scrubbers
 	var/showpipe = FALSE
+	var/shift_underlay_only = TRUE //Layering only shifts underlay?
 
 	var/list/datum/pipeline/parents
 	var/list/datum/gas_mixture/airs
@@ -13,15 +12,15 @@ On top of that, now people can add component-speciic procs/vars if they want!
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
+
 	..()
 
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/A = new
 		A.volume = 200
 		airs[i] = A
-/*
-Iconnery
-*/
+
+// Iconnery
 
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
@@ -34,8 +33,10 @@ Iconnery
 	var/turf/T = loc
 	if(level == 2 || !T.intact)
 		showpipe = TRUE
+		plane = GAME_PLANE
 	else
 		showpipe = FALSE
+		plane = FLOOR_PLANE
 
 	if(!showpipe)
 		return //no need to update the pipes if they aren't showing
@@ -44,14 +45,25 @@ Iconnery
 
 	for(var/i in 1 to device_type) //adds intact pieces
 		if(nodes[i])
-			connected |= icon_addintact(nodes[i])
+			var/obj/machinery/atmospherics/node = nodes[i]
+			var/image/img = get_pipe_underlay("pipe_intact", get_dir(src, node), node.pipe_color)
+			underlays += img
+			connected |= img.dir
 
-	icon_addbroken(connected) //adds broken pieces
+	for(var/direction in GLOB.cardinals)
+		if((initialize_directions & direction) && !(connected & direction))
+			underlays += get_pipe_underlay("pipe_exposed", direction)
 
+	if(!shift_underlay_only)
+		PIPING_LAYER_SHIFT(src, piping_layer)
 
-/*
-Pipenet stuff; housekeeping
-*/
+/obj/machinery/atmospherics/components/proc/get_pipe_underlay(state, dir, color = null)
+	if(color)
+		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, color, piping_layer = shift_underlay_only ? piping_layer : 2)
+	else
+		. = getpipeimage('icons/obj/atmospherics/components/binary_devices.dmi', state, dir, piping_layer = shift_underlay_only ? piping_layer : 2)
+
+// Pipenet stuff; housekeeping
 
 /obj/machinery/atmospherics/components/nullifyNode(i)
 	if(nodes[i])
@@ -71,6 +83,9 @@ Pipenet stuff; housekeeping
 			P.build_pipeline(src)
 
 /obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
+	if(!reference)
+		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
+		return
 	var/i = parents.Find(reference)
 	reference.other_airs -= airs[i]
 	reference.other_atmosmch -= src
@@ -124,9 +139,7 @@ Pipenet stuff; housekeeping
 		return new_value
 	return default_set
 
-/*
-Helpers
-*/
+// Helpers
 
 /obj/machinery/atmospherics/components/proc/update_parents()
 	for(var/i in 1 to device_type)
@@ -141,12 +154,15 @@ Helpers
 	for(var/i in 1 to device_type)
 		. += returnPipenet(nodes[i])
 
-/*
-UI Stuff
-*/
+// UI Stuff
 
 /obj/machinery/atmospherics/components/ui_status(mob/user)
 	if(allowed(user))
 		return ..()
 	to_chat(user, "<span class='danger'>Access denied.</span>")
 	return UI_CLOSE
+
+// Tool acts
+
+/obj/machinery/atmospherics/components/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(airs, user, src)

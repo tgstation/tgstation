@@ -70,7 +70,15 @@
 		/obj/item/stack/sheet/cloth	                = /datum/species/golem/cloth,
 		/obj/item/stack/sheet/mineral/adamantine	= /datum/species/golem/adamantine,
 		/obj/item/stack/sheet/plastic	            = /datum/species/golem/plastic,
-		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork)
+		/obj/item/stack/tile/brass					= /datum/species/golem/clockwork,
+		/obj/item/stack/tile/bronze					= /datum/species/golem/bronze,
+		/obj/item/stack/sheet/cardboard				= /datum/species/golem/cardboard,
+		/obj/item/stack/sheet/leather				= /datum/species/golem/leather,
+		/obj/item/stack/sheet/bone					= /datum/species/golem/bone,
+		/obj/item/stack/sheet/cloth/durathread		= /datum/species/golem/durathread,
+		/obj/item/stack/sheet/cotton/durathread		= /datum/species/golem/durathread,
+		/obj/item/stack/sheet/capitalisium			= /datum/species/golem/capitalist,
+		/obj/item/stack/sheet/stalinium				= /datum/species/golem/soviet)
 
 	if(istype(I, /obj/item/stack))
 		var/obj/item/stack/O = I
@@ -112,7 +120,7 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	r_pocket = /obj/item/gun/ballistic/automatic/pistol
 	id = /obj/item/card/id/syndicate/anyone
@@ -140,7 +148,7 @@
 
 /obj/item/clothing/mask/chameleon/gps/Initialize()
 	. = ..()
-	new /obj/item/device/gps/internal/lavaland_syndicate_base(src)
+	new /obj/item/gps/internal/lavaland_syndicate_base(src)
 
-/obj/item/device/gps/internal/lavaland_syndicate_base
+/obj/item/gps/internal/lavaland_syndicate_base
 	gpstag = "Encrypted Signal"

@@ -23,6 +23,8 @@
 	speed = 10
 	glide_size = 2
 
+	do_footstep = TRUE
+
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork

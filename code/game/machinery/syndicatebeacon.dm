@@ -5,7 +5,7 @@
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "beacon"
+	icon_state = "beacon0"
 
 	anchored = FALSE
 	density = TRUE
@@ -56,13 +56,13 @@
 		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
 
 /obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/screwdriver))
+	if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return
 
 		if(anchored)
-			anchored = FALSE
+			setAnchored(FALSE)
 			to_chat(user, "<span class='notice'>You unscrew the beacon from the floor.</span>")
 			disconnect_from_network()
 			return
@@ -70,7 +70,7 @@
 			if(!connect_to_network())
 				to_chat(user, "<span class='warning'>This device must be placed over an exposed, powered cable node!</span>")
 				return
-			anchored = TRUE
+			setAnchored(TRUE)
 			to_chat(user, "<span class='notice'>You screw the beacon to the floor and attach the cable.</span>")
 			return
 	else
@@ -86,7 +86,7 @@
 	if(!active)
 		return
 
-	if(surplus() > 1500)
+	if(surplus() >= 1500)
 		add_load(1500)
 		if(cooldown <= world.time)
 			cooldown = world.time + 80
@@ -103,7 +103,7 @@
 	icon_state = "beaconsynd0"
 
 // SINGULO BEACON SPAWNER
-/obj/item/device/sbeacondrop
+/obj/item/sbeacondrop
 	name = "suspicious beacon"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "beacon"
@@ -114,7 +114,7 @@
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
 
 
-/obj/item/device/sbeacondrop/attack_self(mob/user)
+/obj/item/sbeacondrop/attack_self(mob/user)
 	if(user)
 		to_chat(user, "<span class='notice'>Locked In.</span>")
 		new droptype( user.loc )
@@ -122,14 +122,14 @@
 		qdel(src)
 	return
 
-/obj/item/device/sbeacondrop/bomb
+/obj/item/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb
 
-/obj/item/device/sbeacondrop/powersink
+/obj/item/sbeacondrop/powersink
 	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."
-	droptype = /obj/item/device/powersink
+	droptype = /obj/item/powersink
 
-/obj/item/device/sbeacondrop/clownbomb
+/obj/item/sbeacondrop/clownbomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a silly explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb/badmin/clown

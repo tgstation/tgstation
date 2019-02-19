@@ -1,13 +1,14 @@
 SUBSYSTEM_DEF(title)
 	name = "Title Screen"
-	flags = SS_NO_FIRE|SS_NO_INIT
+	flags = SS_NO_FIRE
+	init_order = INIT_ORDER_TITLE
 
 	var/file_path
 	var/icon/icon
 	var/icon/previous_icon
 	var/turf/closed/indestructible/splashscreen/splash_turf
 
-/datum/controller/subsystem/title/PreInit()
+/datum/controller/subsystem/title/Initialize()
 	if(file_path && icon)
 		return
 
@@ -21,6 +22,7 @@ SUBSYSTEM_DEF(title)
 	var/list/title_screens = list()
 	var/use_rare_screens = prob(1)
 
+	SSmapping.HACK_LoadMapConfig()
 	for(var/S in provisional_title_screens)
 		var/list/L = splittext(S,"+")
 		if((L.len == 1 && L[1] != "blank.png")|| (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
@@ -38,6 +40,8 @@ SUBSYSTEM_DEF(title)
 
 	if(splash_turf)
 		splash_turf.icon = icon
+
+	return ..()
 
 /datum/controller/subsystem/title/vv_edit_var(var_name, var_value)
 	. = ..()

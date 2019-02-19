@@ -3,6 +3,7 @@
 
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are processed at an accelerated rate."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = FALSE
@@ -83,6 +84,8 @@
 	if(Adjacent(target) && usr.Adjacent(target))
 		if(beaker)
 			usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>You attach [src] to [target].</span>")
+			log_combat(usr, target, "attached", src, "containing: [beaker.name] - ([beaker.reagents.log_list()])")
+			add_fingerprint(usr)
 			attached = target
 			START_PROCESSING(SSmachines, src)
 			update_icon()
@@ -99,6 +102,8 @@
 			return
 		beaker = W
 		to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
+		user.log_message("attached a [W] to [src] at [AREACOORD(src)] containing ([beaker.reagents.log_list()])", LOG_ATTACK)
+		add_fingerprint(user)
 		update_icon()
 		return
 	else
@@ -166,7 +171,7 @@
 	else
 		toggle_mode()
 
-/obj/machinery/iv_drip/verb/eject_beaker(mob/user)
+/obj/machinery/iv_drip/verb/eject_beaker()
 	set category = "Object"
 	set name = "Remove IV Container"
 	set src in view(1)

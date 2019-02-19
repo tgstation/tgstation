@@ -7,11 +7,6 @@
 	caliber = "shotgun"
 	projectile_type = /obj/item/projectile/bullet/shotgun_slug
 	materials = list(MAT_METAL=4000)
-	
-/obj/item/ammo_casing/shotgun/tengauge
-	name = "10g shotgun slug"
-	desc = "A 10 gauge lead slug."
-	projectile_type = /obj/item/projectile/bullet/shotgun_slug/tengauge
 
 /obj/item/ammo_casing/shotgun/beanbag
 	name = "beanbag slug"
@@ -97,10 +92,12 @@
 	variance = 35
 
 /obj/item/ammo_casing/shotgun/laserslug
-	name = "laser slug"
-	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a laser weapon in a ballistic package."
+	name = "scatter laser shell"
+	desc = "An advanced shotgun shell that uses a micro laser to replicate the effects of a scatter laser weapon in a ballistic package."
 	icon_state = "lshell"
-	projectile_type = /obj/item/projectile/beam/laser
+	projectile_type = /obj/item/projectile/beam/weak
+	pellets = 6
+	variance = 35
 
 /obj/item/ammo_casing/shotgun/techshell
 	name = "unloaded technological shell"
@@ -114,23 +111,23 @@
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/bullet/dart
 	var/reagent_amount = 30
-	var/reagent_react = TRUE
-
-/obj/item/ammo_casing/shotgun/dart/noreact
-	name = "cryostasis shotgun dart"
-	desc = "A dart for use in shotguns, using similar technolgoy as cryostatis beakers to keep internal reagents from reacting. Can be injected with up to 10 units of any chemical."
-	icon_state = "cnrshell"
-	reagent_amount = 10
-	reagent_react = FALSE
 
 /obj/item/ammo_casing/shotgun/dart/Initialize()
 	. = ..()
-	container_type |= OPENCONTAINER
-	create_reagents(reagent_amount)
-	reagents.set_reacting(reagent_react)
+	create_reagents(reagent_amount, OPENCONTAINER)
 
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
+
+/obj/item/ammo_casing/shotgun/dart/noreact
+	name = "cryostasis shotgun dart"
+	desc = "A dart for use in shotguns, using similar technology as cryostatis beakers to keep internal reagents from reacting. Can be injected with up to 10 units of any chemical."
+	icon_state = "cnrshell"
+	reagent_amount = 10
+
+/obj/item/ammo_casing/shotgun/dart/noreact/Initialize()
+	. = ..()
+	ENABLE_BITFIELD(reagents.flags, NO_REACT)
 
 /obj/item/ammo_casing/shotgun/dart/bioterror
 	desc = "A shotgun dart filled with deadly toxins."

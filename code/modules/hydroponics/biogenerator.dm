@@ -4,7 +4,6 @@
 	icon = 'icons/obj/machines/biogenerator.dmi'
 	icon_state = "biogen-empty"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	circuit = /obj/item/circuitboard/machine/biogenerator
@@ -16,7 +15,7 @@
 	var/productivity = 0
 	var/max_items = 40
 	var/datum/techweb/stored_research
-	var/list/show_categories = list("Food", "Botany Chemicals", "Leather and Cloth")
+	var/list/show_categories = list("Food", "Botany Chemicals", "Organic Materials")
 	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
 
 /obj/machinery/biogenerator/Initialize()
@@ -53,6 +52,11 @@
 	productivity = P
 	max_items = max_storage
 
+/obj/machinery/biogenerator/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<br>Matter consumption reduced by <b>[(efficiency*25)-25]</b>%.<br>Machine can hold up to <b>[max_items]</b> pieces of produce.<span>")
+
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
@@ -81,9 +85,6 @@
 			B.forceMove(drop_location())
 			beaker = null
 		update_icon()
-		return
-
-	if(exchange_parts(user, O))
 		return
 
 	if(default_deconstruction_crowbar(O))
@@ -116,7 +117,7 @@
 			for(var/obj/item/reagent_containers/food/snacks/grown/G in PB.contents)
 				if(i >= max_items)
 					break
-				if(PB.SendSignal(COMSIG_TRY_STORAGE_TAKE, G, src))
+				if(SEND_SIGNAL(PB, COMSIG_TRY_STORAGE_TAKE, G, src))
 					i++
 			if(i<max_items)
 				to_chat(user, "<span class='info'>You empty the plant bag into the biogenerator.</span>")
@@ -177,7 +178,7 @@
 			for(var/V in categories)
 				categories[V] = list()
 			for(var/V in stored_research.researched_designs)
-				var/datum/design/D = stored_research.researched_designs[V]
+				var/datum/design/D = SSresearch.techweb_design_by_id(V)
 				for(var/C in categories)
 					if(C in D.category)
 						categories[C] += D
@@ -265,8 +266,7 @@
 		if(!check_cost(D.materials, amount))
 			return FALSE
 
-		var/obj/item/stack/product = new D.build_path(loc)
-		product.amount = amount
+		new D.build_path(drop_location(), amount)
 		for(var/R in D.make_reagents)
 			beaker.reagents.add_reagent(R, D.make_reagents[R]*amount)
 	else

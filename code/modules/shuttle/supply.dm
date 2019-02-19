@@ -5,24 +5,27 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/spider/spiderling,
 		/obj/item/disk/nuclear,
 		/obj/machinery/nuclearbomb,
-		/obj/item/device/beacon,
-		/obj/singularity,
+		/obj/item/beacon,
+		/obj/singularity/narsie,
+		/obj/singularity/wizard,
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn,
 		/obj/effect/hierophant,
-		/obj/structure/recieving_pad,
+		/obj/structure/receiving_pad,
 		/obj/effect/clockwork/spatial_gateway,
 		/obj/structure/destructible/clockwork/powered/clockwork_obelisk,
-		/obj/item/device/warp_cube,
+		/obj/item/warp_cube,
 		/obj/machinery/rnd/production/protolathe, //print tracking beacons, send shuttle
 		/obj/machinery/autolathe, //same
 		/obj/item/projectile/beam/wormhole,
 		/obj/effect/portal,
-		/obj/item/device/shared_storage,
-		/obj/structure/extraction_point
+		/obj/item/shared_storage,
+		/obj/structure/extraction_point,
+		/obj/machinery/syndicatebomb,
+		/obj/item/hilbertshotel
 	)))
 
 /obj/docking_port/mobile/supply
@@ -35,10 +38,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	width = 12
 	dwidth = 5
 	height = 7
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
-	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
-	var/contraband = FALSE
-	var/emagged = FALSE
+
+	//Export categories for this run, this is set by console sending the shuttle.
+	var/export_categories = EXPORT_CARGO
 
 /obj/docking_port/mobile/supply/register()
 	. = ..()
@@ -59,7 +63,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 					return FALSE
 	return TRUE
 
-/obj/docking_port/mobile/supply/request()
+/obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)
 	if(mode != SHUTTLE_IDLE)
 		return 2
 	return ..()
@@ -90,51 +94,72 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
 		if(!empty_turfs.len)
 			break
-		if(SO.pack.cost > SSshuttle.points)
-			continue
+		var/price = SO.pack.cost
+		var/datum/bank_account/D
+		if(SO.paying_account) //Someone paid out of pocket
+			D = SO.paying_account
+			price *= 1.1 //TODO make this customizable by the quartermaster
+		else
+			D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+		if(D)
+			if(!D.adjust_money(-price))
+				if(SO.paying_account)
+					D.bank_card_talk("Cargo order #[SO.id] rejected due to lack of funds. Credits required: [price]")
+				continue
 
-		SSshuttle.points -= SO.pack.cost
+		if(SO.paying_account)
+			D.bank_card_talk("Cargo order #[SO.id] has shipped. [price] credits have been charged to your bank account.")
+			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
+			cargo.adjust_money(price - SO.pack.cost) //Cargo gets the handling fee
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
 
 		SO.generate(pick_n_take(empty_turfs))
 		SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
-		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]) has shipped.", INVESTIGATE_CARGO)
+		investigate_log("Order #[SO.id] ([SO.pack.name], placed by [key_name(SO.orderer_ckey)]), paid by [D.account_holder] has shipped.", INVESTIGATE_CARGO)
 		if(SO.pack.dangerous)
-			message_admins("\A [SO.pack.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
+			message_admins("\A [SO.pack.name] ordered by [ADMIN_LOOKUPFLW(SO.orderer_ckey)], paid by [D.account_holder] has shipped.")
 		purchases++
 
-	investigate_log("[purchases] orders in this shipment, worth [value] credits. [SSshuttle.points] credits left.", INVESTIGATE_CARGO)
+	var/datum/bank_account/cargo_budget = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	investigate_log("[purchases] orders in this shipment, worth [value] credits. [cargo_budget.account_balance] credits left.", INVESTIGATE_CARGO)
 
 /obj/docking_port/mobile/supply/proc/sell()
-	var/presale_points = SSshuttle.points
+	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	var/presale_points = D.account_balance
 
 	if(!GLOB.exports_list.len) // No exports list? Generate it!
 		setupExports()
 
 	var/msg = ""
-	var/sold_atoms = ""
+	var/matched_bounty = FALSE
+
+	var/datum/export_report/ex = new
 
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		for(var/atom/movable/AM in shuttle_area)
-			if(AM.anchored || iscameramob(AM))
+			if(iscameramob(AM))
 				continue
-			sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
+			if(bounty_ship_item_and_contents(AM, dry_run = FALSE))
+				matched_bounty = TRUE
+			if(!AM.anchored || istype(AM, /obj/mecha))
+				export_item_and_contents(AM, export_categories , dry_run = FALSE, external_report = ex)
 
-	if(sold_atoms)
-		sold_atoms += "."
+	if(ex.exported_atoms)
+		ex.exported_atoms += "." //ugh
 
-	for(var/a in GLOB.exports_list)
-		var/datum/export/E = a
-		var/export_text = E.total_printout()
+	if(matched_bounty)
+		msg += "Bounty items received. An update has been sent to all bounty consoles. "
+
+	for(var/datum/export/E in ex.total_amount)
+		var/export_text = E.total_printout(ex)
 		if(!export_text)
 			continue
 
 		msg += export_text + "\n"
-		SSshuttle.points += E.total_cost
-		E.export_end()
+		D.adjust_money(ex.total_value[E])
 
 	SSshuttle.centcom_message = msg
-	investigate_log("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
+	investigate_log("Shuttle contents sold for [D.account_balance - presale_points] credits. Contents: [ex.exported_atoms ? ex.exported_atoms.Join(",") + "." : "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)

@@ -30,7 +30,7 @@
 	"<span class='notice'>You raise [src] skywards, inspiring your allies!</span>")
 	playsound(src, "rustle", 100, FALSE)
 	if(warcry)
-		user.say("[warcry]")
+		user.say("[warcry]", forced="banner")
 	var/old_transform = user.transform
 	user.transform *= 1.2
 	animate(user, transform = old_transform, time = 10)
@@ -66,6 +66,8 @@
 	H.adjustFireLoss(-15)
 	H.AdjustStun(-40)
 	H.AdjustKnockdown(-40)
+	H.AdjustImmobilized(-40)
+	H.AdjustParalyzed(-40)
 	H.AdjustUnconscious(-40)
 	playsound(H, 'sound/magic/staff_healing.ogg', 25, FALSE)
 
@@ -187,7 +189,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/command/check_inspiration(mob/living/carbon/human/H)
-	return H.isloyal() //Command is stalwart but rewards their allies.
+	return H.has_trait(TRAIT_MINDSHIELD) //Command is stalwart but rewards their allies.
 
 /datum/crafting_recipe/command_banner
 	name = "Command Banner"
@@ -288,9 +290,10 @@
 
 
 /obj/item/godstaff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
-	user.visible_message("[user] chants deeply and waves their staff!")
+	user.visible_message("[user] chants deeply and waves [user.p_their()] staff!")
 	if(do_after(user, 20,1,src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
@@ -325,7 +328,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60) //does this even do anything on boots?
-	flags_1 = NOSLIP_1
+	clothing_flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
@@ -344,20 +347,14 @@
 	desc = "This armour is said to be based on the armor of kings on another world thousands of years ago, who tended to assassinate, conspire, and plot against everyone who tried to do the same to them.  Some things never change."
 
 
-/obj/item/storage/box/itemset/crusader/blue/New()
-	..()
-	contents = list()
-	sleep(1)
+/obj/item/storage/box/itemset/crusader/blue/PopulateContents()
 	new /obj/item/clothing/suit/armor/plate/crusader/blue(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
 	new /obj/item/clothing/gloves/plate/blue(src)
 	new /obj/item/clothing/shoes/plate/blue(src)
 
 
-/obj/item/storage/box/itemset/crusader/red/New()
-	..()
-	contents = list()
-	sleep(1)
+/obj/item/storage/box/itemset/crusader/red/PopulateContents()
 	new /obj/item/clothing/suit/armor/plate/crusader/red(src)
 	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
 	new /obj/item/clothing/gloves/plate/red(src)
@@ -368,3 +365,9 @@
 	desc = "This one is rusted."
 	force = 30
 	armour_penetration = 15
+	
+/obj/item/claymore/weak/ceremonial
+	desc = "A rusted claymore, once at the heart of a powerful scottish clan struck down and oppressed by tyrants, it has been passed down the ages as a symbol of defiance."
+	force = 15
+	block_chance = 30
+	armour_penetration = 5

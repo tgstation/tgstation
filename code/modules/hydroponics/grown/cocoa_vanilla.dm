@@ -27,6 +27,7 @@
 	bitesize_mod = 2
 	foodtype = FRUIT
 	tastes = list("cocoa" = 1)
+	distill_reagent = "creme_de_cacao"
 
 // Vanilla Pod
 /obj/item/seeds/cocoapod/vanillapod
@@ -48,3 +49,4 @@
 	filling_color = "#FFD700"
 	foodtype = FRUIT
 	tastes = list("vanilla" = 1)
+	distill_reagent = "vanilla" //Takes longer, but you can get even more vanilla from it.

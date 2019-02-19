@@ -53,7 +53,7 @@
 	SSticker.mode.servants_of_ratvar += owner
 	SSticker.mode.update_servant_icons_added(owner)
 	owner.special_role = ROLE_SERVANT_OF_RATVAR
-	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
+	owner.current.log_message("has been converted to the cult of Ratvar!", LOG_ATTACK, color="#BE8700")
 	if(issilicon(current))
 		if(iscyborg(current) && !silent)
 			var/mob/living/silicon/robot/R = current
@@ -159,9 +159,9 @@
 	SSticker.mode.servants_of_ratvar -= owner
 	SSticker.mode.update_servant_icons_removed(owner)
 	if(!silent)
-		owner.current.visible_message("<span class='deconversion_message'>[owner] seems to have remembered their true allegiance!</span>", null, null, null, owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>[owner.current] seems to have remembered [owner.current.p_their()] true allegiance!</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
-	owner.current.log_message("<font color=#BE8700>Has renounced the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
+	owner.current.log_message("has renounced the cult of Ratvar!", LOG_ATTACK, color="#BE8700")
 	owner.special_role = null
 	if(iscyborg(owner.current))
 		to_chat(owner.current, "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
@@ -170,13 +170,13 @@
 
 /datum/antagonist/clockcult/admin_add(datum/mind/new_owner,mob/admin)
 	add_servant_of_ratvar(new_owner.current, TRUE)
-	message_admins("[key_name_admin(admin)] has made [new_owner.current] into a servant of Ratvar.")
-	log_admin("[key_name(admin)] has made [new_owner.current] into a servant of Ratvar.")
+	message_admins("[key_name_admin(admin)] has made [key_name_admin(new_owner)] into a servant of Ratvar.")
+	log_admin("[key_name(admin)] has made [key_name(new_owner)] into a servant of Ratvar.")
 
 /datum/antagonist/clockcult/admin_remove(mob/user)
 	remove_servant_of_ratvar(owner.current, TRUE)
-	message_admins("[key_name_admin(user)] has removed clockwork servant status from [owner.current].")
-	log_admin("[key_name(user)] has removed clockwork servant status from [owner.current].")
+	message_admins("[key_name_admin(user)] has removed clockwork servant status from [key_name_admin(owner)].")
+	log_admin("[key_name(user)] has removed clockwork servant status from [key_name(owner)].")
 
 /datum/antagonist/clockcult/get_admin_commands()
 	. = ..()
@@ -193,6 +193,17 @@
 	var/list/objective
 	var/datum/mind/eminence
 
+/datum/team/clockcult/New(starting_members)
+	. = ..()
+	START_PROCESSING(SSobj,src)
+
+/datum/team/clockcult/process()
+	GLOB.scripture_states = scripture_unlock_alert(GLOB.scripture_states)
+
+/datum/team/clockcult/Destroy(force, ...)
+	STOP_PROCESSING(SSobj,src)
+	. = ..()
+
 /datum/team/clockcult/proc/check_clockwork_victory()
 	if(GLOB.clockwork_gateway_activated)
 		return TRUE
@@ -208,9 +219,9 @@
 	parts += " "
 	parts += "<b>The servants' objective was:</b> [CLOCKCULT_OBJECTIVE]."
 	parts += "<b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
-	for(var/i in SSticker.scripture_states)
+	for(var/i in GLOB.scripture_states)
 		if(i != SCRIPTURE_DRIVER)
-			parts += "<b>[i] scripture</b> was: <b>[SSticker.scripture_states[i] ? "UN":""]LOCKED</b>"
+			parts += "<b>[i] scripture</b> was: <b>[GLOB.scripture_states[i] ? "UN":""]LOCKED</b>"
 	if(eminence)
 		parts += "<span class='header'>The Eminence was:</span> [printplayer(eminence)]"
 	if(members.len)

@@ -5,7 +5,7 @@
 {{/if}}
 {{#if data.uv_active}}
   <ui-notice>
-    <span>Contents are being disinfected. Please wait.</span>
+    <span>Contents are being decontaminated. Please wait.</span>
   </ui-notice>
 {{else}}
   <ui-display title='Storage' button>
@@ -35,7 +35,7 @@
             action='dispense' params='{"item": "storage"}'>{{data.storage || "Empty"}}</ui-button>
         </ui-section>
     {{else}}
-      <ui-button icon='recycle' state='{{data.occupied && data.safeties ? "disabled" : null}}' action='uv'>Disinfect</ui-button>
+      <ui-button icon='recycle' state='{{data.occupied && data.safeties ? "disabled" : null}}' action='uv'>Decontaminate</ui-button>
     {{/if}}
   </ui-display>
 {{/if}}

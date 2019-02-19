@@ -26,10 +26,9 @@ God bless America.
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer_off"
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
-	container_type = OPENCONTAINER
+	layer = BELOW_OBJ_LAYER
 	var/obj/item/reagent_containers/food/snacks/deepfryholder/frying	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/oil_use = 0.05 //How much cooking oil is used per tick
@@ -41,18 +40,19 @@ God bless America.
 		/obj/item/crowbar,
 		/obj/item/wrench,
 		/obj/item/wirecutters,
-		/obj/item/device/multitool,
+		/obj/item/multitool,
 		/obj/item/weldingtool,
 		/obj/item/reagent_containers/glass,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/food/condiment,
-		/obj/item/storage/part_replacer,
+		/obj/item/storage,
+		/obj/item/smallDelivery,
 		/obj/item/his_grace))
 	var/datum/looping_sound/deep_fryer/fry_loop
 
 /obj/machinery/deepfryer/Initialize()
 	. = ..()
-	create_reagents(50)
+	create_reagents(50, OPENCONTAINER)
 	reagents.add_reagent("cooking_oil", 25)
 	component_parts = list()
 	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
@@ -67,10 +67,12 @@ God bless America.
 	oil_use = initial(oil_use) - (oil_efficiency * 0.0095)
 	fry_speed = oil_efficiency
 
-/obj/machinery/deepfryer/examine()
+/obj/machinery/deepfryer/examine(mob/user)
 	..()
 	if(frying)
 		to_chat(usr, "You can make out \a [frying] in the oil.")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use*10]</b> units of oil per second.<span>")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
@@ -78,23 +80,24 @@ God bless America.
 			to_chat(user, "<span class='warning'>There's nothing to dissolve [I] in!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] drops [I] into [src].</span>", "<span class='notice'>You dissolve [I] in [src].</span>")
-		I.reagents.trans_to(src, I.reagents.total_volume)
+		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
 		qdel(I)
 		return
 	if(!reagents.has_reagent("cooking_oil"))
 		to_chat(user, "<span class='warning'>[src] has no cooking oil to fry with!</span>")
+		return
+	if(I.resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, "<span class='warning'>You don't feel it would be wise to fry [I]...</span>")
 		return
 	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(exchange_parts(user, I))
-		return
 	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I))	//where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || (I.flags_1 & (ABSTRACT_1 | NODROP_1 | DROPDEL_1)))
+		if(is_type_in_typecache(I, deepfry_blacklisted_items) || I.has_trait(TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
 		else if(!frying && user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
@@ -129,7 +132,9 @@ God bless America.
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
 			frying.fry(cook_time)
 			icon_state = "fryer_off"
-			user.put_in_hands(frying)
+			frying.forceMove(drop_location())
+			if(Adjacent(user) && !issilicon(user))
+				user.put_in_hands(frying)
 			frying = null
 			cook_time = 0
 			frying_fried = FALSE
@@ -145,6 +150,6 @@ God bless America.
 		reagents.reaction(C, TOUCH)
 		C.apply_damage(min(30, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		reagents.remove_any((reagents.total_volume/2))
-		C.Knockdown(60)
+		C.Paralyze(60)
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()

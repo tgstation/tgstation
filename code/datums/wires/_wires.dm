@@ -6,8 +6,8 @@
 
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.tool_behaviour == TOOL_MULTITOOL)
 		return TRUE
-	if(istype(I, /obj/item/device/assembly))
-		var/obj/item/device/assembly/A = I
+	if(istype(I, /obj/item/assembly))
+		var/obj/item/assembly/A = I
 		if(A.attachable)
 			return TRUE
 
@@ -98,6 +98,12 @@
 /datum/wires/proc/get_wire(color)
 	return colors[color]
 
+/datum/wires/proc/get_color_of_wire(wire_type)
+	for(var/color in colors)
+		var/other_type = colors[color]
+		if(wire_type == other_type)
+			return color
+
 /datum/wires/proc/get_attached(color)
 	if(assemblies[color])
 		return assemblies[color]
@@ -149,13 +155,13 @@
 /datum/wires/proc/pulse_color(color, mob/living/user)
 	pulse(get_wire(color), user)
 
-/datum/wires/proc/pulse_assembly(obj/item/device/assembly/S)
+/datum/wires/proc/pulse_assembly(obj/item/assembly/S)
 	for(var/color in assemblies)
 		if(S == assemblies[color])
 			pulse_color(color)
 			return TRUE
 
-/datum/wires/proc/attach_assembly(color, obj/item/device/assembly/S)
+/datum/wires/proc/attach_assembly(color, obj/item/assembly/S)
 	if(S && istype(S) && S.attachable && !is_attached(color))
 		assemblies[color] = S
 		S.forceMove(holder)
@@ -163,7 +169,7 @@
 		return S
 
 /datum/wires/proc/detach_assembly(color)
-	var/obj/item/device/assembly/S = get_attached(color)
+	var/obj/item/assembly/S = get_attached(color)
 	if(S && istype(S))
 		assemblies -= color
 		S.connected = null
@@ -229,7 +235,7 @@
 		reveal_wires = TRUE
 
 	// Same for anyone with an abductor multitool.
-	else if(user.is_holding_item_of_type(/obj/item/device/multitool/abductor))
+	else if(user.is_holding_item_of_type(/obj/item/multitool/abductor))
 		reveal_wires = TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
@@ -257,8 +263,8 @@
 		if("cut")
 			I = L.is_holding_tool_quality(TOOL_WIRECUTTER)
 			if(I || IsAdminGhost(usr))
-				if(I)
-					I.play_tool_sound(src, 20)
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
 				cut_color(target_wire)
 				. = TRUE
 			else
@@ -266,8 +272,8 @@
 		if("pulse")
 			I = L.is_holding_tool_quality(TOOL_MULTITOOL)
 			if(I || IsAdminGhost(usr))
-				if(I)
-					I.play_tool_sound(src, 20)
+				if(I && holder)
+					I.play_tool_sound(holder, 20)
 				pulse_color(target_wire, L)
 				. = TRUE
 			else
@@ -280,8 +286,8 @@
 					. = TRUE
 			else
 				I = L.get_active_held_item()
-				if(istype(I, /obj/item/device/assembly))
-					var/obj/item/device/assembly/A = I
+				if(istype(I, /obj/item/assembly))
+					var/obj/item/assembly/A = I
 					if(A.attachable)
 						if(!L.temporarilyRemoveItemFromInventory(A))
 							return

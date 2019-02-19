@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/lobotomy
-	name = "Lobotomy Surgery Disk"
-	desc = "The disk provides instructions on how to perform a lobotomy, to cure the most resilient brain ailments."
-	surgeries = list(/datum/surgery/advanced/lobotomy)
-
 /datum/surgery/advanced/lobotomy
-	name = "lobotomy"
+	name = "Lobotomy"
+	desc = "An invasive surgical procedure which guarantees removal of almost all brain traumas, but might cause another permanent trauma in return."
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/retract_skin,
@@ -13,7 +9,7 @@
 	/datum/surgery_step/lobotomize,
 	/datum/surgery_step/close)
 
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_HEAD)
 	requires_bodypart_type = 0
 

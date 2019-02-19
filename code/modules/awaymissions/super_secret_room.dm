@@ -5,6 +5,7 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "speaking_tile"
 	layer = 5
+	resistance_flags = INDESTRUCTIBLE
 	var/speaking = FALSE
 	var/times_spoken_to = 0
 	var/list/shenanigans = list()
@@ -88,6 +89,27 @@
 	speaking = FALSE
 	times_spoken_to++
 
+/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, params)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_paw(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_hulk(mob/user, does_attack_animation = 0)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_larva(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_ai(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_slime(mob/user)
+	return interact(user)
+
+/obj/structure/speaking_tile/attack_animal(mob/user)
+	return interact(user)
+
 /obj/structure/speaking_tile/proc/SpeakPeace(list/statements)
 	for(var/i in 1 to statements.len)
 		say("<span class='deadsay'>[statements[i]]</span>")
@@ -102,10 +124,10 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_GLASS = 500)
 
-/obj/item/rupee/New()
+/obj/item/rupee/Initialize()
+	. = ..()
 	var/newcolor = color2hex(pick(10;"green", 5;"blue", 3;"red", 1;"purple"))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
-	..()
 
 /obj/item/rupee/Crossed(mob/M)
 	if(!istype(M))

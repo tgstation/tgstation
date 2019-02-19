@@ -1,4 +1,4 @@
-/datum/hud/monkey/New(mob/living/carbon/monkey/owner, ui_style = 'icons/mob/screen_midnight.dmi')
+/datum/hud/monkey/New(mob/living/carbon/monkey/owner)
 	..()
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
@@ -24,7 +24,7 @@
 	using.screen_loc = ui_drop_throw
 	static_inventory += using
 
-	build_hand_slots(ui_style)
+	build_hand_slots()
 
 	using = new /obj/screen/swap_hand()
 	using.icon = ui_style
@@ -44,7 +44,7 @@
 	inv_box.icon_state = "mask"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_mask
-	inv_box.slot_id = slot_wear_mask
+	inv_box.slot_id = SLOT_WEAR_MASK
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -53,7 +53,7 @@
 	inv_box.icon_state = "neck"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_neck
-	inv_box.slot_id = slot_neck
+	inv_box.slot_id = SLOT_NECK
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -62,7 +62,7 @@
 	inv_box.icon_state = "head"
 //	inv_box.icon_full = "template"
 	inv_box.screen_loc = ui_monkey_head
-	inv_box.slot_id = slot_head
+	inv_box.slot_id = SLOT_HEAD
 	static_inventory += inv_box
 
 	inv_box = new /obj/screen/inventory()
@@ -70,7 +70,7 @@
 	inv_box.icon = ui_style
 	inv_box.icon_state = "back"
 	inv_box.screen_loc = ui_monkey_back
-	inv_box.slot_id = slot_back
+	inv_box.slot_id = SLOT_BACK
 	static_inventory += inv_box
 
 	throw_icon = new /obj/screen/throw_catch()
@@ -87,7 +87,7 @@
 	pull_icon = new /obj/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_icon(mymob)
-	pull_icon.screen_loc = ui_pull_resist
+	pull_icon.screen_loc = ui_above_movement
 	static_inventory += pull_icon
 
 	lingchemdisplay = new /obj/screen/ling/chems()
@@ -106,7 +106,7 @@
 
 	using = new /obj/screen/resist()
 	using.icon = ui_style
-	using.screen_loc = ui_pull_resist
+	using.screen_loc = ui_above_intent
 	hotkeybuttons += using
 
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
@@ -149,7 +149,3 @@
 		for(var/obj/item/I in M.held_items)
 			I.screen_loc = null
 			M.client.screen -= I
-
-/mob/living/carbon/monkey/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/monkey(src, ui_style2icon(client.prefs.UI_style))

@@ -348,6 +348,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
 		return
+
+	if(!usr.canUseTopic(src, !issilicon(usr)) || !is_operational())
+		usr.unset_machine()
+		usr << browse(null, "window=id_com")
+		return
+
 	usr.set_machine(src)
 	switch(href_list["choice"])
 		if ("modify")
@@ -428,6 +434,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
 						updateUsrDialog()
 						return
+					if(modify.registered_account)
+						modify.registered_account.account_job = jobdatum // this is a terrible idea and people will grief but sure whatever
+						if(modify.registered_account.welfare)
+							modify.registered_account.add_neetbux()
 
 					modify.access = ( istype(src, /obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
@@ -532,11 +542,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	updateUsrDialog()
 
 /obj/machinery/computer/card/AltClick(mob/user)
-	if(user.canUseTopic(src))
-		if(scan)
-			eject_id_scan(user)
-		if(modify)
-			eject_id_modify(user)
+	if(!user.canUseTopic(src, !issilicon(user)) || !is_operational())
+		return
+	if(scan)
+		eject_id_scan(user)
+	if(modify)
+		eject_id_modify(user)
 
 /obj/machinery/computer/card/proc/eject_id_scan(mob/user)
 	if(scan)

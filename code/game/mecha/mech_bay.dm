@@ -1,5 +1,6 @@
 /turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
 	name = "mech bay recharge station"                      //        Recharging turfs
+	desc = "Parking a mech on this station will recharge its internal power cell."
 	icon = 'icons/turf/floors.dmi'                          //		  That are set in stone to check the west turf for recharge port
 	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
 
@@ -8,12 +9,12 @@
 
 /turf/open/floor/mech_bay_recharge_floor/airless
 	icon_state = "recharge_floor_asteroid"
-	initial_gas_mix = "TEMP=2.7"
+	initial_gas_mix = AIRLESS_ATMOS
 
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
+	desc = "This port recharges a mech's internal power cell."
 	density = TRUE
-	anchored = TRUE
 	dir = EAST
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
@@ -22,7 +23,6 @@
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/max_charge = 50
 	var/on = FALSE
-	var/repairability = 0
 	var/turf/recharging_turf = null
 
 /obj/machinery/mech_bay_recharge_port/Initialize()
@@ -34,6 +34,11 @@
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		MC += C.rating
 	max_charge = MC * 25
+
+/obj/machinery/mech_bay_recharge_port/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Base recharge rate at <b>[max_charge]J</b> per cycle.<span>")
 
 /obj/machinery/mech_bay_recharge_port/process()
 	if(stat & NOPOWER || !recharge_console)
@@ -62,16 +67,13 @@
 		recharging_turf = get_step(loc, dir)
 		return
 
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 
 /obj/machinery/computer/mech_bay_power_console
 	name = "mech bay power control console"
-	desc = "Used to control mechbay power ports."
+	desc = "Displays the status of mechs connected to the recharge station."
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
 	circuit = /obj/item/circuitboard/computer/mech_bay_power_console

@@ -13,6 +13,7 @@
 	var/viewavail = 0			// the available power as it appears on the power console (gradually updated)
 	var/viewload = 0			// the load as it appears on the power console (gradually updated)
 	var/netexcess = 0			// excess power on the powernet (typically avail-load)///////
+	var/delayedload = 0			// load applied to powernet between power ticks.
 
 /datum/powernet/New()
 	SSmachines.powernets += src
@@ -88,12 +89,13 @@
 	viewload = round(0.8 * viewload + 0.2 * load)
 
 	// reset the powernet
-	load = 0
+	load = delayedload
+	delayedload = 0
 	avail = newavail
 	newavail = 0
 
 /datum/powernet/proc/get_electrocute_damage()
 	if(avail >= 1000)
-		return CLAMP(round(avail/10000), 10, 90) + rand(-5,5)
+		return CLAMP(20 + round(avail/25000), 20, 195) + rand(-5,5)
 	else
 		return 0

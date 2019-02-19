@@ -71,10 +71,18 @@
 	materials = list(MAT_TITANIUM=500)
 
 /obj/item/stack/tile/mineral/plastitanium
-	name = "plas-titanium tile"
-	singular_name = "plas-titanium floor tile"
-	desc = "A tile made of plas-titanium, used for very evil shuttles."
+	name = "plastitanium tile"
+	singular_name = "plastitanium floor tile"
+	desc = "A tile made of plastitanium, used for very evil shuttles."
 	icon_state = "tile_darkshuttle"
 	turf_type = /turf/open/floor/mineral/plastitanium
 	mineralType = "plastitanium"
 	materials = list(MAT_TITANIUM=250, MAT_PLASMA=250)
+
+/obj/item/stack/tile/mineral/snow
+	name = "snow tile"
+	singular_name = "snow tile"
+	desc = "A layer of snow."
+	icon_state = "tile_snow"
+	turf_type = /turf/open/floor/grass/snow/safe
+	mineralType = "snow"

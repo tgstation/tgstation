@@ -32,7 +32,7 @@
 	if(structureclimber && structureclimber != user)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
-		structureclimber.Knockdown(40)
+		structureclimber.Paralyze(40)
 		structureclimber.visible_message("<span class='warning'>[structureclimber] has been knocked off [src].", "You're knocked off [src]!", "You see [structureclimber] get knocked off [src].</span>")
 
 /obj/structure/ui_act(action, params)
@@ -44,7 +44,8 @@
 	if(!climbable)
 		return
 	if(user == O && iscarbon(O))
-		if(user.canmove)
+		var/mob/living/carbon/C = O
+		if(C.mobility_flags & MOBILITY_MOVE)
 			climb_structure(user)
 			return
 	if(!istype(O, /obj/item) || user.get_active_held_item() != O)
@@ -79,7 +80,7 @@
 			if(do_climb(user))
 				user.visible_message("<span class='warning'>[user] climbs onto [src].</span>", \
 									"<span class='notice'>You climb onto [src].</span>")
-				add_logs(user, src, "climbed onto")
+				log_combat(user, src, "climbed onto")
 				if(climb_stun)
 					user.Stun(climb_stun)
 				. = 1

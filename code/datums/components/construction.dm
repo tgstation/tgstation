@@ -13,14 +13,13 @@
 
 /datum/component/construction/Initialize()
 	if(!isatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("A construction component was applied incorrectly to non-atom: [parent.type].")
+		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(COMSIG_PARENT_ATTACKBY,.proc/action)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/action)
 	update_parent(index)
 
-/datum/component/construction/proc/examine(mob/user)
+/datum/component/construction/proc/examine(datum/source, mob/user)
 	if(desc)
 		to_chat(user, desc)
 
@@ -30,7 +29,7 @@
 	else
 		update_parent(index)
 
-/datum/component/construction/proc/action(obj/item/I, mob/living/user)
+/datum/component/construction/proc/action(datum/source, obj/item/I, mob/living/user)
 	return check_step(I, user)
 
 /datum/component/construction/proc/update_index(diff)

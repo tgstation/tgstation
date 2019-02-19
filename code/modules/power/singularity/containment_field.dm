@@ -5,8 +5,8 @@
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
-	anchored = TRUE
 	density = FALSE
+	move_resist = INFINITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	use_power = NO_POWER_USE
 	interaction_flags_atom = NONE
@@ -88,7 +88,7 @@
 /obj/machinery/field
 	var/hasShocked = FALSE //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 
-/obj/machinery/field/CollidedWith(atom/movable/mover)
+/obj/machinery/field/Bumped(atom/movable/mover)
 	if(hasShocked)
 		return
 	if(isliving(mover))
@@ -108,7 +108,7 @@
 	var/shock_damage = min(rand(30,40),rand(30,40))
 
 	if(iscarbon(user))
-		user.Knockdown(300)
+		user.Paralyze(300)
 		user.electrocute_act(shock_damage, src, 1)
 
 	else if(issilicon(user))

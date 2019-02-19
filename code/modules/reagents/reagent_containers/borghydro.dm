@@ -105,13 +105,13 @@ Borg Hypospray
 		var/fraction = min(amount_per_transfer_from_this/R.total_volume, 1)
 		R.reaction(M, INJECT, fraction)
 		if(M.reagents)
-			var/trans = R.trans_to(M, amount_per_transfer_from_this)
+			var/trans = R.trans_to(M, amount_per_transfer_from_this, transfered_by = user)
 			to_chat(user, "<span class='notice'>[trans] unit\s injected.  [R.total_volume] unit\s remaining.</span>")
 
 	var/list/injected = list()
 	for(var/datum/reagent/RG in R.reagent_list)
 		injected += RG.name
-	add_logs(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
+	log_combat(user, M, "injected", src, "(CHEMICALS: [english_list(injected)])")
 
 /obj/item/reagent_containers/borghypo/attack_self(mob/user)
 	var/chosen_reagent = modes[input(user, "What reagent do you want to dispense?") as null|anything in reagent_ids]
@@ -180,7 +180,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("beer", "orangejuice", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale")
+	reagent_ids = list("beer", "orangejuice", "grenadine", "limejuice", "tomatojuice", "cola", "tonic", "sodawater", "ice", "cream", "whiskey", "vodka", "rum", "gin", "tequila", "vermouth", "wine", "kahlua", "cognac", "ale", "milk", "coffee", "banana", "lemonjuice")
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
@@ -197,6 +197,7 @@ Borg Shaker
 					RG.add_reagent(reagent_ids[valueofi], 5)
 
 /obj/item/reagent_containers/borghypo/borgshaker/afterattack(obj/target, mob/user, proximity)
+	. = ..()
 	if(!proximity)
 		return
 
@@ -210,7 +211,7 @@ Borg Shaker
 			to_chat(user, "<span class='notice'>[target] is full.</span>")
 			return
 
-		var/trans = R.trans_to(target, amount_per_transfer_from_this)
+		var/trans = R.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
 
 /obj/item/reagent_containers/borghypo/borgshaker/DescribeContents()
@@ -235,7 +236,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("fakebeer")
+	reagent_ids = list("fakebeer", "fernet")
 
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
@@ -251,6 +252,6 @@ Borg Shaker
 
 /obj/item/reagent_containers/borghypo/epi
 	name = "epinephrine injector"
-	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients.."
+	desc = "An advanced chemical synthesizer and injection system, designed to stabilize patients."
 	reagent_ids = list("epinephrine")
 	accepts_reagent_upgrades = FALSE

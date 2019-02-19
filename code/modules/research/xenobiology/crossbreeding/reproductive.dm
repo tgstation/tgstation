@@ -19,7 +19,7 @@ Reproductive extracts:
 		return
 	if(istype(O, /obj/item/storage/bag/bio))
 		var/list/inserted = list()
-		O.SendSignal(COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/monkeycube, src, 1, null, null, user, inserted)
+		SEND_SIGNAL(O, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/reagent_containers/food/snacks/monkeycube, src, 1, null, null, user, inserted)
 		if(inserted.len)
 			var/obj/item/reagent_containers/food/snacks/monkeycube/M = inserted[1]
 			if(istype(M))

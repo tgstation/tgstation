@@ -8,20 +8,17 @@
 	icon_state = "smartfridge"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
-	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/smartfridge
 	var/max_n_of_items = 1500
-	var/icon_on = "smartfridge"
-	var/icon_off = "smartfridge-off"
+	var/allow_ai_retrieve = FALSE
 	var/list/initial_contents
 
 /obj/machinery/smartfridge/Initialize()
 	. = ..()
-	create_reagents()
-	reagents.set_reacting(FALSE)
+	create_reagents(100, NO_REACT)
 
 	if(islist(initial_contents))
 		for(var/typekey in initial_contents)
@@ -35,15 +32,21 @@
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
 
+/obj/machinery/smartfridge/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.<span>")
+
 /obj/machinery/smartfridge/power_change()
 	..()
 	update_icon()
 
 /obj/machinery/smartfridge/update_icon()
+	var/startstate = initial(icon_state)
 	if(!stat)
-		icon_state = icon_on
+		icon_state = startstate
 	else
-		icon_state = icon_off
+		icon_state = "[startstate]-off"
 
 
 
@@ -52,10 +55,11 @@
 ********************/
 
 /obj/machinery/smartfridge/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "smartfridge_open", "smartfridge", O))
-		return
-
-	if(exchange_parts(user, O))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, O))
+		cut_overlays()
+		if(panel_open)
+			add_overlay("[initial(icon_state)]-panel")
+		updateUsrDialog()
 		return
 
 	if(default_pry_open(O))
@@ -129,14 +133,11 @@
 		else
 			return TRUE
 	else
-		if(O.loc.SendSignal(COMSIG_CONTAINS_STORAGE))
-			return O.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, O, src)
+		if(SEND_SIGNAL(O.loc, COMSIG_CONTAINS_STORAGE))
+			return SEND_SIGNAL(O.loc, COMSIG_TRY_STORAGE_TAKE, O, src)
 		else
 			O.forceMove(src)
 			return TRUE
-
-/obj/machinery/smartfridge/attack_ai(mob/user)
-	return FALSE
 
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -175,6 +176,10 @@
 		if("Release")
 			var/desired = 0
 
+			if(!allow_ai_retrieve && isAI(usr))
+				to_chat(usr, "<span class='warning'>[src] does not seem to be configured to respect your authority!</span>")
+				return
+
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
@@ -182,6 +187,15 @@
 
 			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
+
+			if(desired == 1 && Adjacent(usr) && !issilicon(usr))
+				for(var/obj/item/O in src)
+					if(O.name == params["name"])
+						if(!usr.put_in_hands(O))
+							O.forceMove(drop_location())
+							adjust_item_drop_location(O)
+						break
+				return TRUE
 
 			for(var/obj/item/O in src)
 				if(desired <= 0)
@@ -201,12 +215,10 @@
 	name = "drying rack"
 	desc = "A wooden contraption, used to dry plant products, food and leather."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "drying_rack_on"
+	icon_state = "drying_rack"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 200
-	icon_on = "drying_rack_on"
-	icon_off = "drying_rack"
 	var/drying = FALSE
 
 /obj/machinery/smartfridge/drying_rack/Initialize()
@@ -302,14 +314,15 @@
 			qdel(S)
 		return TRUE
 	for(var/obj/item/stack/sheet/wetleather/WL in src)
-		var/obj/item/stack/sheet/leather/L = new(drop_location())
-		L.amount = WL.amount
+		new /obj/item/stack/sheet/leather(drop_location(), WL.amount)
 		qdel(WL)
 		return TRUE
 	return FALSE
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
-	..()
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	atmos_spawn_air("TEMP=1000")
 
 
@@ -321,7 +334,7 @@
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/O)
-	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1) || !O.reagents || !O.reagents.reagent_list.len)
+	if(!istype(O, /obj/item/reagent_containers) || (O.item_flags & ABSTRACT) || !O.reagents || !O.reagents.reagent_list.len)
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/glass) || istype(O, /obj/item/reagent_containers/food/drinks) || istype(O, /obj/item/reagent_containers/food/condiment))
 		return TRUE
@@ -347,12 +360,12 @@
 /obj/machinery/smartfridge/extract/accept_check(obj/item/O)
 	if(istype(O, /obj/item/slime_extract))
 		return TRUE
-	if(istype(O, /obj/item/device/slime_scanner))
+	if(istype(O, /obj/item/slime_scanner))
 		return TRUE
 	return FALSE
 
 /obj/machinery/smartfridge/extract/preloaded
-	initial_contents = list(/obj/item/device/slime_scanner = 2)
+	initial_contents = list(/obj/item/slime_scanner = 2)
 
 // -----------------------------
 // Chemistry Medical Smartfridge
@@ -369,7 +382,7 @@
 					return FALSE
 			return TRUE
 		return FALSE
-	if(!istype(O, /obj/item/reagent_containers) || (O.flags_1 & ABSTRACT_1))
+	if(!istype(O, /obj/item/reagent_containers) || (O.item_flags & ABSTRACT))
 		return FALSE
 	if(istype(O, /obj/item/reagent_containers/pill)) // empty pill prank ok
 		return TRUE
@@ -409,6 +422,8 @@
 /obj/machinery/smartfridge/disks
 	name = "disk compartmentalizer"
 	desc = "A machine capable of storing a variety of disks. Denoted by most as the DSU (disk storage unit)."
+	icon_state = "disktoaster"
+	pass_flags = PASSTABLE
 
 /obj/machinery/smartfridge/disks/accept_check(obj/item/O)
 	if(istype(O, /obj/item/disk/))

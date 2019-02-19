@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/vein_threading
-	name = "Vein Threading Surgery Disk"
-	desc = "The disk provides instructions on how to modify the circulatory system to greatly slow down bleeding."
-	surgeries = list(/datum/surgery/advanced/bioware/vein_threading)
-
 /datum/surgery/advanced/bioware/vein_threading
-	name = "vein threading"
+	name = "Vein Threading"
+	desc = "A surgical procedure which severely reduces the amount of blood lost in case of injury."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -31,7 +27,7 @@
 /datum/bioware/threaded_veins
 	name = "Threaded Veins"
 	desc = "The circulatory system is woven into a mesh, severely reducing the amount of blood lost from wounds."
-	mod_type = "circulation"
+	mod_type = BIOWARE_CIRCULATION
 
 /datum/bioware/threaded_veins/on_gain()
 	..()

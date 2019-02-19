@@ -13,7 +13,8 @@
 		message = T.TongueSpeech(message)
 	if(wear_mask)
 		message = wear_mask.speechModification(message)
-
+	if(head)
+		message = head.speechModification(message)
 	return message
 
 /mob/living/carbon/can_speak_vocal(message)
@@ -38,10 +39,11 @@
 	else
 		. = initial(dt.flags) & TONGUELESS_SPEECH
 
-/mob/living/carbon/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(!client)
-		return
+/mob/living/carbon/hear_intercept(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
+	var/datum/status_effect/bugged/B = has_status_effect(STATUS_EFFECT_BUGGED)
+	if(B)
+		B.listening_in.show_message(message)
 	for(var/T in get_traumas())
 		var/datum/brain_trauma/trauma = T
 		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
-	return ..()
+	return message

@@ -5,7 +5,6 @@
 	icon_state = "syndbeacon"
 
 	use_power = NO_POWER_USE
-	anchored = TRUE
 	density = TRUE
 
 	var/charges = 1

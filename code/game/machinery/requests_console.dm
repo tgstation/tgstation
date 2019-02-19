@@ -14,7 +14,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 /obj/machinery/requests_console
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
-	anchored = TRUE
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "req_comp0"
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
@@ -51,7 +50,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/message = "";
 	var/dpt = ""; //the department which will be receiving the message
 	var/priority = -1 ; //Priority of the message being sent
-	var/obj/item/device/radio/Radio
+	var/obj/item/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/receive_ore_updates = FALSE //If ore redemption machines will send an update when it receives new ores.
 	max_integrity = 300
@@ -121,7 +120,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			if(!("[department]" in GLOB.req_console_information))
 				GLOB.req_console_information += department
 
-	Radio = new /obj/item/device/radio(src)
+	Radio = new /obj/item/radio(src)
 	Radio.listening = 0
 
 /obj/machinery/requests_console/Destroy()
@@ -303,8 +302,8 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			message = L.treat_message(message)
 		minor_announce(message, "[department] Announcement:")
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
-		log_talk(usr,"[key_name(usr)] has made a station announcement: [message]",LOGSAY)
-		message_admins("[key_name_admin(usr)] has made a station announcement.")
+		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 		announceAuth = FALSE
 		message = ""
 		screen = 0
@@ -487,7 +486,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			messages += "<b>From:</b> [linkedsender]<BR>[message]"
 
 /obj/machinery/requests_console/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/crowbar))
+	if(O.tool_behaviour == TOOL_CROWBAR)
 		if(open)
 			to_chat(user, "<span class='notice'>You close the maintenance panel.</span>")
 			open = FALSE
@@ -496,7 +495,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 			open = TRUE
 		update_icon()
 		return
-	if(istype(O, /obj/item/screwdriver))
+	if(O.tool_behaviour == TOOL_SCREWDRIVER)
 		if(open)
 			hackState = !hackState
 			if(hackState)

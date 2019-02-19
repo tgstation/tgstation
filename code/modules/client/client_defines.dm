@@ -11,7 +11,7 @@
 	var/datum/click_intercept = null // Needs to implement InterceptClickOn(user,params,atom) proc
 	var/AI_Interact		= 0
 
-	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
+	var/ban_cache = null //Used to cache this client's bans to save on DB queries
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 	var/ircreplyamount = 0
@@ -20,8 +20,8 @@
 		//OTHER//
 		/////////
 	var/datum/preferences/prefs = null
-	var/move_delay		= 1
-
+	var/last_turn = 0
+	var/move_delay = 0
 	var/area			= null
 
 		///////////////
@@ -49,6 +49,10 @@
 
 	var/obj/screen/click_catcher/void
 
+	//These two vars are used to make a special mouse cursor, with a unique icon for clicking
+	var/mouse_up_icon = null
+	var/mouse_down_icon = null
+
 	var/ip_intel = "Disabled"
 
 	//datum that controls the displaying and hiding of tooltips
@@ -69,3 +73,5 @@
 	var/list/credits //lazy list of all credit object bound to this client
 
 	var/datum/player_details/player_details //these persist between logins/logouts during the same round.
+
+	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.

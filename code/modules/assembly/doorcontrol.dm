@@ -1,30 +1,30 @@
-/obj/item/device/assembly/control
+/obj/item/assembly/control
 	name = "blast door controller"
 	desc = "A small electronic device able to control a blast door remotely."
 	icon_state = "control"
-	attachable = 1
+	attachable = TRUE
 	var/id = null
 	var/can_change_id = 0
-	var/cooldown = 0//Door cooldowns
+	var/cooldown = FALSE //Door cooldowns
+	var/sync_doors = TRUE
 
-/obj/item/device/assembly/control/examine(mob/user)
+/obj/item/assembly/control/examine(mob/user)
 	..()
 	if(id)
 		to_chat(user, "<span class='notice'>Its channel ID is '[id]'.</span>")
 
-/obj/item/device/assembly/control/activate()
-	cooldown = 1
+/obj/item/assembly/control/activate()
+	cooldown = TRUE
 	var/openclose
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if(M.id == src.id)
-			if(openclose == null)
+			if(openclose == null || !sync_doors)
 				openclose = M.density
 			INVOKE_ASYNC(M, openclose ? /obj/machinery/door/poddoor.proc/open : /obj/machinery/door/poddoor.proc/close)
-	sleep(10)
-	cooldown = 0
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 
-/obj/item/device/assembly/control/airlock
+/obj/item/assembly/control/airlock
 	name = "airlock controller"
 	desc = "A small electronic device able to control an airlock remotely."
 	id = "badmin" // Set it to null for MEGAFUN.
@@ -37,8 +37,8 @@
 				16= door safties (SAFE)
 	*/
 
-/obj/item/device/assembly/control/airlock/activate()
-	cooldown = 1
+/obj/item/assembly/control/airlock/activate()
+	cooldown = TRUE
 	var/doors_need_closing = FALSE
 	var/list/obj/machinery/door/airlock/open_or_close = list()
 	for(var/obj/machinery/door/airlock/D in GLOB.airlocks)
@@ -55,27 +55,24 @@
 					D.update_icon()
 			if(specialfunctions & SHOCK)
 				if(D.secondsElectrified)
-					D.secondsElectrified = -1
-					D.shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-					add_logs(usr, D, "electrified")
+					D.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
 				else
-					D.secondsElectrified = 0
+					D.set_electrified(MACHINE_NOT_ELECTRIFIED, usr)
 			if(specialfunctions & SAFE)
 				D.safe = !D.safe
 
 	for(var/D in open_or_close)
 		INVOKE_ASYNC(D, doors_need_closing ? /obj/machinery/door/airlock.proc/close : /obj/machinery/door/airlock.proc/open)
 
-	sleep(10)
-	cooldown = 0
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 
-/obj/item/device/assembly/control/massdriver
+/obj/item/assembly/control/massdriver
 	name = "mass driver controller"
 	desc = "A small electronic device able to control a mass driver."
 
-/obj/item/device/assembly/control/massdriver/activate()
-	cooldown = 1
+/obj/item/assembly/control/massdriver/activate()
+	cooldown = TRUE
 	for(var/obj/machinery/door/poddoor/M in GLOB.machines)
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/open)
@@ -92,16 +89,15 @@
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/door/poddoor.proc/close)
 
-	sleep(10)
-	cooldown = 0
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 10)
 
 
-/obj/item/device/assembly/control/igniter
+/obj/item/assembly/control/igniter
 	name = "ignition controller"
 	desc = "A remote controller for a mounted igniter."
 
-/obj/item/device/assembly/control/igniter/activate()
-	cooldown = 1
+/obj/item/assembly/control/igniter/activate()
+	cooldown = TRUE
 	for(var/obj/machinery/sparker/M in GLOB.machines)
 		if (M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/sparker.proc/ignite)
@@ -112,33 +108,29 @@
 			M.on = !M.on
 			M.icon_state = "igniter[M.on]"
 
-	sleep(30)
-	cooldown = 0
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
 
-
-/obj/item/device/assembly/control/flasher
+/obj/item/assembly/control/flasher
 	name = "flasher controller"
 	desc = "A remote controller for a mounted flasher."
 
-/obj/item/device/assembly/control/flasher/activate()
-	cooldown = 1
+/obj/item/assembly/control/flasher/activate()
+	cooldown = TRUE
 	for(var/obj/machinery/flasher/M in GLOB.machines)
 		if(M.id == src.id)
 			INVOKE_ASYNC(M, /obj/machinery/flasher.proc/flash)
 
-	sleep(50)
-	cooldown = 0
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
 
 
-/obj/item/device/assembly/control/crematorium
+/obj/item/assembly/control/crematorium
 	name = "crematorium controller"
 	desc = "An evil-looking remote controller for a crematorium."
 
-/obj/item/device/assembly/control/crematorium/activate()
-	cooldown = 1
+/obj/item/assembly/control/crematorium/activate()
+	cooldown = TRUE
 	for (var/obj/structure/bodycontainer/crematorium/C in GLOB.crematoriums)
 		if (C.id == id)
 			C.cremate(usr)
 
-	sleep(50)
-	cooldown = 0
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)

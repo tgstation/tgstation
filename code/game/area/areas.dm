@@ -7,6 +7,7 @@
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
 	layer = AREA_LAYER
+	plane = BLACKNESS_PLANE //Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
@@ -17,28 +18,22 @@
 	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
 	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
 
-	var/eject = null
-
 	var/fire = null
 	var/atmos = TRUE
 	var/atmosalm = FALSE
 	var/poweralm = TRUE
-	var/party = null
 	var/lightswitch = TRUE
 
 	var/requires_power = TRUE
-	var/always_unpowered = FALSE	// This gets overriden to 1 for space in area/Initialize().
+	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
 
 	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
 
-	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
-	var/beauty = 0 // Beauty average per open turf in the area
 	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
 
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
-	var/music = null
 	var/used_equip = 0
 	var/used_light = 0
 	var/used_environ = 0
@@ -46,10 +41,12 @@
 	var/static_light = 0
 	var/static_environ
 
-	var/has_gravity = FALSE
+	var/has_gravity = 0
 	var/noteleport = FALSE			//Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/hidden = FALSE 			//Hides area from player Teleport function.
 	var/safe = FALSE 				//Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	/// If false, loading multiple maps with this area type will create multiple instances.
+	var/unique = TRUE
 
 	var/no_air = null
 
@@ -86,6 +83,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 // ===
 
+/area/New()
+	// This interacts with the map loader, so it needs to be set immediately
+	// rather than waiting for atoms to initialize.
+	if (unique)
+		GLOB.areas_by_type[type] = src
+	return ..()
 
 /area/Initialize()
 	icon_state = ""
@@ -116,6 +119,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!IS_DYNAMIC_LIGHTING(src))
 		add_overlay(/obj/effect/fullbright)
 
+	reg_in_areas_in_z()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/area/LateInitialize()
+	power_change()		// all machines set to current power level, also updates icon
+
+/area/proc/reg_in_areas_in_z()
 	if(contents.len)
 		var/list/areas_in_z = SSmapping.areas_in_z
 		var/z
@@ -133,13 +144,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
 
-	return INITIALIZE_HINT_LATELOAD
-
-/area/LateInitialize()
-	power_change()		// all machines set to current power level, also updates icon
-	update_beauty()
-
 /area/Destroy()
+	if(GLOB.areas_by_type[type] == src)
+		GLOB.areas_by_type[type] = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -255,9 +262,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/proc/firereset(obj/source)
 	if (fire)
-		fire = 0
-		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		updateicon()
+		unset_fire_alarm_effects()
 		ModifyFiredoors(TRUE)
 		for(var/item in firealarms)
 			var/obj/machinery/firealarm/F = item
@@ -289,7 +294,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		DOOR.lock()
 
 /area/proc/burglaralert(obj/trigger)
-	if(always_unpowered == 1) //no burglar alarms in space/asteroid
+	if(always_unpowered) //no burglar alarms in space/asteroid
 		return
 
 	//Trigger alarm effect
@@ -305,61 +310,32 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			addtimer(CALLBACK(SILICON, /mob/living/silicon.proc/cancelAlarm,"Burglar",src,trigger), 600)
 
 /area/proc/set_fire_alarm_effect()
-	fire = 1
-	updateicon()
+	fire = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/alarm in firealarms)
+		var/obj/machinery/firealarm/F = alarm
+		F.update_fire_light(fire)
+	for(var/obj/machinery/light/L in src)
+		L.update()
 
-/area/proc/readyalert()
-	if(name == "Space")
-		return
-	if(!eject)
-		eject = 1
-		updateicon()
-
-/area/proc/readyreset()
-	if(eject)
-		eject = 0
-		updateicon()
-
-/area/proc/partyalert()
-	if(src.name == "Space") //no parties in space!!!
-		return
-	if (!( src.party ))
-		src.party = 1
-		src.updateicon()
-		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/area/proc/partyreset()
-	if (src.party)
-		src.party = 0
-		src.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		src.updateicon()
-		for(var/obj/machinery/door/firedoor/D in src)
-			if(!D.welded)
-				if(D.operating)
-					D.nextstate = OPEN
-				else if(D.density)
-					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
+/area/proc/unset_fire_alarm_effects()
+	fire = FALSE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	for(var/alarm in firealarms)
+		var/obj/machinery/firealarm/F = alarm
+		F.update_fire_light(fire)
+	for(var/obj/machinery/light/L in src)
+		L.update()
 
 /area/proc/updateicon()
-	if ((fire || eject || party) && (!requires_power||power_environ))//If it doesn't require power, can still activate this proc.
-		if(fire && !eject && !party)
-			icon_state = "blue"
-		else if(!fire && eject && !party)
-			icon_state = "red"
-		else if(party && !fire && !eject)
-			icon_state = "party"
-		else
-			icon_state = "blue-red"
-	else
-		var/weather_icon
-		for(var/V in SSweather.processing)
-			var/datum/weather/W = V
-			if(W.stage != END_STAGE && (src in W.impacted_areas))
-				W.update_areas()
-				weather_icon = TRUE
-		if(!weather_icon)
-			icon_state = null
+	var/weather_icon
+	for(var/V in SSweather.processing)
+		var/datum/weather/W = V
+		if(W.stage != END_STAGE && (src in W.impacted_areas))
+			W.update_areas()
+			weather_icon = TRUE
+	if(!weather_icon)
+		icon_state = null
 
 /area/space/updateicon()
 	icon_state = null
@@ -442,8 +418,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /area/Entered(atom/movable/M)
 	set waitfor = FALSE
-	SendSignal(COMSIG_AREA_ENTERED, M)
-	M.SendSignal(COMSIG_ENTER_AREA, src) //The atom that enters the area
+	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
+	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
 	if(!isliving(M))
 		return
 
@@ -468,8 +444,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
 /area/Exited(atom/movable/M)
-	SendSignal(COMSIG_AREA_EXITED, M)
-	M.SendSignal(COMSIG_EXIT_AREA, src) //The atom that exits the area
+	SEND_SIGNAL(src, COMSIG_AREA_EXITED, M)
+	SEND_SIGNAL(M, COMSIG_EXIT_AREA, src) //The atom that exits the area
 
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
@@ -477,16 +453,34 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /atom/proc/has_gravity(turf/T)
 	if(!T || !isturf(T))
 		T = get_turf(src)
-	var/area/A = get_area(T)
+
+	if(!T)
+		return 0
+
+	var/list/forced_gravity = list()
+	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
+	if(!forced_gravity.len)
+		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
+	if(forced_gravity.len)
+		var/max_grav
+		for(var/i in forced_gravity)
+			max_grav = max(max_grav, i)
+		return max_grav
+
 	if(isspaceturf(T)) // Turf never has gravity
-		return FALSE
-	else if(A && A.has_gravity) // Areas which always has gravity
-		return TRUE
+		return 0
+
+	var/area/A = get_area(T)
+	if(A.has_gravity) // Areas which always has gravity
+		return A.has_gravity
 	else
 		// There's a gravity generator on our z level
-		if(T && GLOB.gravity_generators["[T.z]"] && length(GLOB.gravity_generators["[T.z]"]))
-			return TRUE
-	return FALSE
+		if(GLOB.gravity_generators["[T.z]"])
+			var/max_grav = 0
+			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
+				max_grav = max(G.setting,max_grav)
+			return max_grav
+	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 
 /area/proc/setup(a_name)
 	name = a_name
@@ -497,11 +491,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	valid_territory = FALSE
 	blob_allowed = FALSE
 	addSorted()
-
-/area/proc/update_beauty()
-	if(!areasize)
-		return FALSE
-	beauty = totalbeauty / areasize
 
 /area/proc/update_areasize()
 	if(outdoors)

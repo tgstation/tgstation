@@ -52,7 +52,7 @@
 			layer = initial(layer)
 
 	else if(ispath(pipe_type, /obj/machinery/disposal/bin))
-		// Disposal bins recieve special icon treating
+		// Disposal bins receive special icon treating
 		if(anchored)
 			icon_state = "disposal"
 		else

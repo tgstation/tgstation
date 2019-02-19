@@ -42,6 +42,9 @@
 	to_chat(user, "<span class='info'>[src] is assembled in the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm configuration. You can use a screwdriver to reassemble it.</span>")
 
 /obj/item/organ/cyberimp/arm/screwdriver_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return TRUE
 	I.play_tool_sound(src)
 	if(zone == BODY_ZONE_R_ARM)
 		zone = BODY_ZONE_L_ARM
@@ -56,11 +59,13 @@
 	..()
 
 /obj/item/organ/cyberimp/arm/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(prob(15/severity) && owner)
 		to_chat(owner, "<span class='warning'>[src] is hit by EMP!</span>")
 		// give the owner an idea about why his implant is glitching
 		Retract()
-	..()
 
 /obj/item/organ/cyberimp/arm/proc/Retract()
 	if(!holder || (holder in src))
@@ -70,8 +75,8 @@
 		"<span class='notice'>[holder] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm.</span>",
 		"<span class='italics'>You hear a short mechanical noise.</span>")
 
-	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
-		var/obj/item/device/assembly/flash/F = holder
+	if(istype(holder, /obj/item/assembly/flash/armimplant))
+		var/obj/item/assembly/flash/F = holder
 		F.set_light(0)
 
 	owner.transferItemToLoc(holder, src, TRUE)
@@ -84,13 +89,13 @@
 
 	holder = item
 
-	holder.flags_1 |= NODROP_1
+	holder.add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.materials = null
 
-	if(istype(holder, /obj/item/device/assembly/flash/armimplant))
-		var/obj/item/device/assembly/flash/F = holder
+	if(istype(holder, /obj/item/assembly/flash/armimplant))
+		var/obj/item/assembly/flash/F = holder
 		F.set_light(7)
 
 	var/obj/item/arm_item = owner.get_active_held_item()
@@ -124,16 +129,22 @@
 		holder = null
 		if(contents.len == 1)
 			Extend(contents[1])
-		else // TODO: make it similar to borg's storage-like module selection
-			var/obj/item/choise = input("Activate which item?", "Arm Implant", null, null) as null|anything in items_list
-			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && istype(choise) && (choise in contents))
-				// This monster sanity check is a nice example of how bad input() is.
-				Extend(choise)
+		else
+			var/list/choice_list = list()
+			for(var/obj/item/I in items_list)
+				choice_list[I] = getFlatIcon(I)
+			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
+			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && (choice in contents))
+				// This monster sanity check is a nice example of how bad input is.
+				Extend(choice)
 	else
 		Retract()
 
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	if(prob(30/severity) && owner && !crit_fail)
 		Retract()
 		owner.visible_message("<span class='danger'>A loud bang comes from [owner]\'s [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm!</span>")
@@ -143,8 +154,6 @@
 		owner.IgniteMob()
 		owner.adjustFireLoss(25)
 		crit_fail = 1
-	else // The gun will still discharge anyway.
-		..()
 
 
 /obj/item/organ/cyberimp/arm/gun/laser
@@ -170,7 +179,7 @@
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of the engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
 	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
-		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
+		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/multitool/cyborg)
 
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
@@ -196,12 +205,12 @@
 /obj/item/organ/cyberimp/arm/flash
 	name = "integrated high-intensity photon projector" //Why not
 	desc = "An integrated projector mounted onto a user's arm that is able to be used as a powerful flash."
-	contents = newlist(/obj/item/device/assembly/flash/armimplant)
+	contents = newlist(/obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/flash/Initialize()
 	. = ..()
-	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
-		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
+		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
 
 /obj/item/organ/cyberimp/arm/baton
@@ -212,12 +221,12 @@
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm."
-	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/assembly/flash/armimplant)
 
 /obj/item/organ/cyberimp/arm/combat/Initialize()
 	. = ..()
-	if(locate(/obj/item/device/assembly/flash/armimplant) in items_list)
-		var/obj/item/device/assembly/flash/armimplant/F = locate(/obj/item/device/assembly/flash/armimplant) in items_list
+	if(locate(/obj/item/assembly/flash/armimplant) in items_list)
+		var/obj/item/assembly/flash/armimplant/F = locate(/obj/item/assembly/flash/armimplant) in items_list
 		F.I = src
 
 /obj/item/organ/cyberimp/arm/surgery

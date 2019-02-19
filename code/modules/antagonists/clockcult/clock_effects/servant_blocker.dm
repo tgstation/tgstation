@@ -15,9 +15,7 @@
 /obj/effect/clockwork/servant_blocker/Destroy(force)
 	if(!force)
 		return QDEL_HINT_LETMELIVE
-	var/turf/T = get_turf(src)
-	. = ..()
-	T.air_update_turf(TRUE)
+	return ..()
 
 /obj/effect/clockwork/servant_blocker/CanPass(atom/movable/M, turf/target)
 	var/list/target_contents = M.GetAllContents() + M

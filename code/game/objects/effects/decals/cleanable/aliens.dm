@@ -6,9 +6,8 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
-	bloodiness = MAX_SHOE_BLOODINESS
+	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	blood_state = BLOOD_STATE_XENO
-	beauty = -75
 
 /obj/effect/decal/cleanable/xenoblood/Initialize()
 	. = ..()
@@ -40,27 +39,35 @@
 	return
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/up
+	icon_state = "xgibup1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/down
+	icon_state = "xgibdown1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibdown1","xgibdown1","xgibdown1")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/body
+	icon_state = "xgibtorso"
 	random_icon_states = list("xgibhead", "xgibtorso")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/torso
+	icon_state = "xgibtorso"
 	random_icon_states = list("xgibtorso")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/limb
+	icon_state = "xgibleg"
 	random_icon_states = list("xgibleg", "xgibarm")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/core
+	icon_state = "xgibmid1"
 	random_icon_states = list("xgibmid1", "xgibmid2", "xgibmid3")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/larva
+	icon_state = "xgiblarva1"
 	random_icon_states = list("xgiblarva1", "xgiblarva2")
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/larva/body
+	icon_state = "xgiblarvatorso"
 	random_icon_states = list("xgiblarvahead", "xgiblarvatorso")
 
 /obj/effect/decal/cleanable/blood/xtracks

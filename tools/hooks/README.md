@@ -14,6 +14,10 @@ automatically by GUI tools like TortoiseGit and GitHub for Windows, but
 ## Current Hooks
 
 * **Pre-commit**: Runs [mapmerge2] on changed maps, if any.
+* **DMI merger**: Attempts to [fix icon conflicts] when performing a git merge.
+  If it succeeds, the file is marked merged. If it fails, it logs what states
+  are still in conflict and adds them to the .dmi file, where the desired
+  resolution can be chosen.
 
 ## Adding New Hooks
 
@@ -34,3 +38,4 @@ version of Python is found.
 [merge drivers]: https://git-scm.com/docs/gitattributes#_performing_a_three_way_merge
 [Git for Windows]: https://gitforwindows.org/
 [mapmerge2]: ../mapmerge2/README.md
+[fix icon conflicts]: ../mapmerge2/merge_driver_dmi.py

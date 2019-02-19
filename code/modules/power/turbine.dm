@@ -27,7 +27,6 @@
 	desc = "The compressor stage of a gas turbine generator."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "compressor"
-	anchored = TRUE
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -48,7 +47,6 @@
 	desc = "A gas turbine used for backup power generation."
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
 	icon_state = "turbine"
-	anchored = TRUE
 	density = TRUE
 	resistance_flags = FIRE_PROOF
 	CanAtmosPass = ATMOS_PASS_DENSITY
@@ -96,6 +94,11 @@
 		E += M.rating
 	efficiency = E / 6
 
+/obj/machinery/power/compressor/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
+
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -110,9 +113,6 @@
 		else
 			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
 			stat |= BROKEN
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)
@@ -181,6 +181,11 @@
 		P += C.rating
 	productivity = P / 6
 
+/obj/machinery/power/turbine/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.<span>")
+
 /obj/machinery/power/turbine/locate_machinery()
 	if(compressor)
 		return
@@ -241,9 +246,6 @@
 		else
 			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
 			stat |= BROKEN
-		return
-
-	if(exchange_parts(user, I))
 		return
 
 	default_deconstruction_crowbar(I)

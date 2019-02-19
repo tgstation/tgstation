@@ -19,7 +19,7 @@
 			// messenging the client
 			malfhacked(malfhack)
 
-		if(!eyeobj || QDELETED(eyeobj) || !eyeobj.loc)
+		if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 			view_core()
 
 		if(machine)
@@ -96,6 +96,7 @@
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()
 	to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
+	end_multicam()
 	sleep(50)
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)

@@ -93,6 +93,14 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/plantgene(src)
 
+/obj/item/storage/box/disks_nanite
+	name = "nanite program disks box"
+	illustration = "disk_kit"
+
+/obj/item/storage/box/disks_nanite/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/disk/nanite_program(src)
+
 // Ordinary survival box
 /obj/item/storage/box/survival/PopulateContents()
 	new /obj/item/clothing/mask/breath(src)
@@ -101,11 +109,11 @@
 
 /obj/item/storage/box/survival/radio/PopulateContents()
 	..() // we want the survival stuff too.
-	new /obj/item/device/radio/off(src)
+	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/survival_mining/PopulateContents()
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
@@ -118,7 +126,7 @@
 
 /obj/item/storage/box/engineer/radio/PopulateContents()
 	..() // we want the regular items too.
-	new /obj/item/device/radio/off(src)
+	new /obj/item/radio/off(src)
 
 // Syndie survival box
 /obj/item/storage/box/syndie/PopulateContents()
@@ -133,7 +141,7 @@
 
 /obj/item/storage/box/security/radio/PopulateContents()
 	..() // we want the regular stuff too
-	new /obj/item/device/radio/off(src)
+	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -162,6 +170,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/syringe(src)
 
+/obj/item/storage/box/syringes/variety
+	name = "syringe variety box"
+
+/obj/item/storage/box/syringes/variety/PopulateContents()
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/syringe/lethal(src)
+	new /obj/item/reagent_containers/syringe/noreact(src)
+	new /obj/item/reagent_containers/syringe/piercing(src)
+	new /obj/item/reagent_containers/syringe/bluespace(src)
+
 /obj/item/storage/box/medipens
 	name = "box of medipens"
 	desc = "A box full of epinephrine MediPens."
@@ -189,6 +207,25 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker( src )
 
+/obj/item/storage/box/beakers/bluespace
+	name = "box of bluespace beakers"
+	illustration = "beaker"
+
+/obj/item/storage/box/beakers/bluespace/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/glass/beaker/bluespace(src)
+
+/obj/item/storage/box/beakers/variety
+	name = "beaker variety box"
+
+/obj/item/storage/box/beakers/variety/PopulateContents()
+	new /obj/item/reagent_containers/glass/beaker(src)
+	new /obj/item/reagent_containers/glass/beaker/large(src)
+	new /obj/item/reagent_containers/glass/beaker/plastic(src)
+	new /obj/item/reagent_containers/glass/beaker/meta(src)
+	new /obj/item/reagent_containers/glass/beaker/noreact(src)
+	new /obj/item/reagent_containers/glass/beaker/bluespace(src)
+
 /obj/item/storage/box/medsprays
 	name = "box of medical sprayers"
 	desc = "A box full of medical sprayers, with unscrewable caps and precision spray heads."
@@ -202,10 +239,10 @@
 	desc = "This box contains injectors, it seems."
 
 /obj/item/storage/box/injectors/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/dnainjector/h2m(src)
-	for(var/i in 1 to 3)
-		new /obj/item/dnainjector/m2h(src)
+	var/static/items_inside = list(
+		/obj/item/dnainjector/h2m = 3,
+		/obj/item/dnainjector/m2h = 3)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/flashbangs
 	name = "box of flashbangs (WARNING)"
@@ -225,7 +262,7 @@
 
 /obj/item/storage/box/flashes/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/assembly/flash/handheld(src)
+		new /obj/item/assembly/flash/handheld(src)
 
 /obj/item/storage/box/wall_flash
 	name = "wall-mounted flash kit"
@@ -238,11 +275,11 @@
 
 	new /obj/item/wallframe/button(src)
 	new /obj/item/electronics/airlock(src)
-	var/obj/item/device/assembly/control/flasher/remote = new(src)
+	var/obj/item/assembly/control/flasher/remote = new(src)
 	remote.id = id
 	var/obj/item/wallframe/flasher/frame = new(src)
 	frame.id = id
-	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/screwdriver(src)
 
 
@@ -270,11 +307,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/trackimp/PopulateContents()
-	for(var/i in 1 to 4)
-		new /obj/item/implantcase/tracking(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
-	new /obj/item/locator(src)
+	var/static/items_inside = list(
+		/obj/item/implantcase/tracking = 4,
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
+		/obj/item/locator = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/minertracker
 	name = "boxed tracking implant kit"
@@ -282,11 +320,12 @@
 	illustration = "implant"
 
 /obj/item/storage/box/minertracker/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/implantcase/tracking(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
-	new /obj/item/locator(src)
+	var/static/items_inside = list(
+		/obj/item/implantcase/tracking = 3,
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1,
+		/obj/item/locator = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/chemimp
 	name = "boxed chemical implant kit"
@@ -294,10 +333,11 @@
 	illustration = "implant"
 
 /obj/item/storage/box/chemimp/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/implantcase/chem(src)
-	new /obj/item/implanter(src)
-	new /obj/item/implantpad(src)
+	var/static/items_inside = list(
+		/obj/item/implantcase/chem = 5,
+		/obj/item/implanter = 1,
+		/obj/item/implantpad = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/exileimp
 	name = "boxed exile implant kit"
@@ -305,9 +345,10 @@
 	illustration = "implant"
 
 /obj/item/storage/box/exileimp/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/implantcase/exile(src)
-	new /obj/item/implanter(src)
+	var/static/items_inside = list(
+		/obj/item/implantcase/exile = 5,
+		/obj/item/implanter = 1)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/bodybags
 	name = "body bags"
@@ -372,6 +413,7 @@
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
 	illustration = null
+	var/cube_type = /obj/item/reagent_containers/food/snacks/monkeycube
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
@@ -381,7 +423,27 @@
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/food/snacks/monkeycube(src)
+		new cube_type(src)
+
+/obj/item/storage/box/monkeycubes/syndicate
+	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
+	cube_type = /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
+
+/obj/item/storage/box/gorillacubes
+	name = "gorilla cube box"
+	desc = "Waffle Co. brand gorilla cubes. Do not taunt."
+	icon_state = "monkeycubebox"
+	illustration = null
+
+/obj/item/storage/box/gorillacubes/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 3
+	STR.can_hold = typecacheof(list(/obj/item/reagent_containers/food/snacks/monkeycube))
+
+/obj/item/storage/box/gorillacubes/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/food/snacks/monkeycube/gorilla(src)
 
 /obj/item/storage/box/ids
 	name = "box of spare IDs"
@@ -399,10 +461,8 @@
 	illustration = "pda"
 
 /obj/item/storage/box/PDAs/PopulateContents()
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
-	new /obj/item/device/pda(src)
+	for(var/i in 1 to 4)
+		new /obj/item/pda(src)
 	new /obj/item/cartridge/head(src)
 
 	var/newcart = pick(	/obj/item/cartridge/engineering,
@@ -453,7 +513,7 @@
 
 /obj/item/storage/box/firingpins/PopulateContents()
 	for(var/i in 1 to 5)
-		new /obj/item/device/firing_pin(src)
+		new /obj/item/firing_pin(src)
 
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
@@ -462,8 +522,8 @@
 
 /obj/item/storage/box/lasertagpins/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/device/firing_pin/tag/red(src)
-		new /obj/item/device/firing_pin/tag/blue(src)
+		new /obj/item/firing_pin/tag/red(src)
+		new /obj/item/firing_pin/tag/blue(src)
 
 /obj/item/storage/box/handcuffs
 	name = "box of spare handcuffs"
@@ -507,11 +567,11 @@
 /obj/item/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
 	desc = "<span class='alert'>Keep out of reach of children.</span>"
-	illustration = "mousetraps"
+	illustration = "mousetrap"
 
 /obj/item/storage/box/mousetraps/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/assembly/mousetrap(src)
+		new /obj/item/assembly/mousetrap(src)
 
 /obj/item/storage/box/pillbottles
 	name = "box of pill bottles"
@@ -535,7 +595,7 @@
 	STR.max_items = 8
 
 /obj/item/storage/box/snappops/PopulateContents()
-	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/toy/snappop)
 
 /obj/item/storage/box/matches
 	name = "matchbox"
@@ -544,7 +604,7 @@
 	icon_state = "matchbox"
 	item_state = "zippo"
 	w_class = WEIGHT_CLASS_TINY
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
@@ -553,7 +613,7 @@
 	STR.can_hold = typecacheof(list(/obj/item/match))
 
 /obj/item/storage/box/matches/PopulateContents()
-	SendSignal(COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/match)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_FILL_TYPE, /obj/item/match)
 
 /obj/item/storage/box/matches/attackby(obj/item/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/match))
@@ -575,7 +635,7 @@
 	STR.max_items = 21
 	STR.can_hold = typecacheof(list(/obj/item/light/tube, /obj/item/light/bulb))
 	STR.max_combined_w_class = 21
-	STR.click_gather = TRUE
+	STR.click_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)
@@ -644,7 +704,7 @@
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
 /////clown box & honkbot assembly
-obj/item/storage/box/clown
+/obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
@@ -657,7 +717,7 @@ obj/item/storage/box/clown
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		qdel(I)
-		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got an honkbot assembly now! Honk!</span>")
+		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got a honkbot assembly now! Honk!</span>")
 		var/obj/item/bot_assembly/honkbot/A = new
 		qdel(src)
 		user.put_in_hands(A)
@@ -950,7 +1010,6 @@ obj/item/storage/box/clown
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/patch/silver_sulf(src)
 
-
 /obj/item/storage/box/fountainpens
 	name = "box of fountain pens"
 
@@ -966,3 +1025,30 @@ obj/item/storage/box/clown
 /obj/item/storage/box/holy_grenades/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/grenade/chem_grenade/holy(src)
+
+/obj/item/storage/box/stockparts/basic //for ruins where it's a bad idea to give access to an autolathe/protolathe, but still want to make stock parts accessible
+	name = "box of stock parts"
+	desc = "Contains a variety of basic stock parts."
+
+/obj/item/storage/box/stockparts/basic/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/stock_parts/capacitor = 3,
+		/obj/item/stock_parts/scanning_module = 3,
+		/obj/item/stock_parts/manipulator = 3,
+		/obj/item/stock_parts/micro_laser = 3,
+		/obj/item/stock_parts/matter_bin = 3)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/box/stockparts/deluxe
+	name = "box of deluxe stock parts"
+	desc = "Contains a variety of deluxe stock parts."
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/stockparts/deluxe/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/stock_parts/capacitor/quadratic = 3,
+		/obj/item/stock_parts/scanning_module/triphasic = 3,
+		/obj/item/stock_parts/manipulator/femto = 3,
+		/obj/item/stock_parts/micro_laser/quadultra = 3,
+		/obj/item/stock_parts/matter_bin/bluespace = 3)
+	generate_items_inside(items_inside,src)

@@ -1,51 +1,53 @@
 GLOBAL_LIST_EMPTY(GPS_list)
-/obj/item/device/gps
+/obj/item/gps
 	name = "global positioning system"
 	desc = "Helping lost spacemen find their way through the planets since 2016."
 	icon = 'icons/obj/telescience.dmi'
 	icon_state = "gps-c"
 	w_class = WEIGHT_CLASS_SMALL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	obj_flags = UNIQUE_RENAME
 	var/gpstag = "COM0"
 	var/emped = FALSE
-	var/turf/locked_location
 	var/tracking = TRUE
 	var/updating = TRUE //Automatic updating of GPS list. Can be set to manual by user.
 	var/global_mode = TRUE //If disabled, only GPS signals of the same Z level are shown
 
-/obj/item/device/gps/examine(mob/user)
+/obj/item/gps/examine(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>Alt-click to switch it [tracking ? "off":"on"].</span>")
 
-/obj/item/device/gps/Initialize()
+/obj/item/gps/Initialize()
 	. = ..()
 	GLOB.GPS_list += src
 	name = "global positioning system ([gpstag])"
 	add_overlay("working")
 
-/obj/item/device/gps/Destroy()
+/obj/item/gps/Destroy()
 	GLOB.GPS_list -= src
 	return ..()
 
-/obj/item/device/gps/emp_act(severity)
+/obj/item/gps/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_SELF)
+		return
 	emped = TRUE
 	cut_overlay("working")
 	add_overlay("emp")
-	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
+	addtimer(CALLBACK(src, .proc/reboot), 300, TIMER_UNIQUE|TIMER_OVERRIDE) //if a new EMP happens, remove the old timer so it doesn't reactivate early
 	SStgui.close_uis(src) //Close the UI control if it is open.
 
-/obj/item/device/gps/proc/reboot()
+/obj/item/gps/proc/reboot()
 	emped = FALSE
 	cut_overlay("emp")
 	add_overlay("working")
 
-/obj/item/device/gps/AltClick(mob/user)
+/obj/item/gps/AltClick(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	toggletracking(user)
 
-/obj/item/device/gps/proc/toggletracking(mob/user)
+/obj/item/gps/proc/toggletracking(mob/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return //user not valid to use gps
 	if(emped)
@@ -61,7 +63,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		tracking = TRUE
 
 
-/obj/item/device/gps/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/item/gps/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	if(emped)
 		to_chat(user, "[src] fizzles weakly.")
 		return
@@ -74,7 +76,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	ui.set_autoupdate(state = updating)
 
 
-/obj/item/device/gps/ui_data(mob/user)
+/obj/item/gps/ui_data(mob/user)
 	var/list/data = list()
 	data["power"] = tracking
 	data["tag"] = gpstag
@@ -90,7 +92,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	data["signals"] = list()
 
 	for(var/gps in GLOB.GPS_list)
-		var/obj/item/device/gps/G = gps
+		var/obj/item/gps/G = gps
 		if(G.emped || !G.tracking || G == src)
 			continue
 		var/turf/pos = get_turf(G)
@@ -115,7 +117,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 
 
 
-/obj/item/device/gps/ui_act(action, params)
+/obj/item/gps/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
@@ -137,42 +139,45 @@ GLOBAL_LIST_EMPTY(GPS_list)
 			. = TRUE
 
 
-/obj/item/device/gps/science
+/obj/item/gps/science
 	icon_state = "gps-s"
 	gpstag = "SCI0"
 
-/obj/item/device/gps/engineering
+/obj/item/gps/engineering
 	icon_state = "gps-e"
 	gpstag = "ENG0"
 
-/obj/item/device/gps/mining
+/obj/item/gps/mining
 	icon_state = "gps-m"
 	gpstag = "MINE0"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
-/obj/item/device/gps/cyborg
+/obj/item/gps/cyborg
 	icon_state = "gps-b"
 	gpstag = "BORG0"
 	desc = "A mining cyborg internal positioning system. Used as a recovery beacon for damaged cyborg assets, or a collaboration tool for mining teams."
-	flags_1 = NODROP_1
 
-/obj/item/device/gps/internal
+/obj/item/gps/cyborg/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+
+/obj/item/gps/internal
 	icon_state = null
-	flags_1 = ABSTRACT_1
+	item_flags = ABSTRACT
 	gpstag = "Eerie Signal"
 	desc = "Report to a coder immediately."
 	invisibility = INVISIBILITY_MAXIMUM
 
-/obj/item/device/gps/mining/internal
+/obj/item/gps/mining/internal
 	icon_state = "gps-m"
 	gpstag = "MINER"
 	desc = "A positioning system helpful for rescuing trapped or injured miners, keeping one on you at all times while mining might just save your life."
 
-/obj/item/device/gps/internal/base
+/obj/item/gps/internal/base
 	gpstag = "NT_AUX"
 	desc = "A homing signal from Nanotrasen's mining base."
 
-/obj/item/device/gps/visible_debug
+/obj/item/gps/visible_debug
 	name = "visible GPS"
 	gpstag = "ADMIN"
 	desc = "This admin-spawn GPS unit leaves the coordinates visible \
@@ -180,12 +185,12 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		for marking the area around the transition edges."
 	var/list/turf/tagged
 
-/obj/item/device/gps/visible_debug/Initialize()
+/obj/item/gps/visible_debug/Initialize()
 	. = ..()
 	tagged = list()
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/item/device/gps/visible_debug/process()
+/obj/item/gps/visible_debug/process()
 	var/turf/T = get_turf(src)
 	if(T)
 		// I assume it's faster to color,tag and OR the turf in, rather
@@ -194,13 +199,13 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		T.maptext = "[T.x],[T.y],[T.z]"
 		tagged |= T
 
-/obj/item/device/gps/visible_debug/proc/clear()
+/obj/item/gps/visible_debug/proc/clear()
 	while(tagged.len)
 		var/turf/T = pop(tagged)
 		T.color = initial(T.color)
 		T.maptext = initial(T.maptext)
 
-/obj/item/device/gps/visible_debug/Destroy()
+/obj/item/gps/visible_debug/Destroy()
 	if(tagged)
 		clear()
 	tagged = null

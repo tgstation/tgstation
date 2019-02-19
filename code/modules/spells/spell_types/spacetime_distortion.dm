@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/spacetime_dist
 	name = "Spacetime Distortion"
-	desc = "Entangle the strings of spacetime to deny easy movement around you. The strings vibrate..."
+	desc = "Entangle the strings of space-time in an area around you, randomizing the layout and making proper movement impossible. The strings vibrate..."
 	charge_max = 300
 	var/duration = 150
 	range = 7
@@ -81,13 +81,12 @@
 
 /obj/effect/cross_action/spacetime_dist/Initialize(mapload)
 	. = ..()
-	sound = "sound/guitar/[safepick(GLOB.guitar_notes)]"
-	dir = pick(GLOB.cardinals)
+	setDir(pick(GLOB.cardinals))
 
 /obj/effect/cross_action/spacetime_dist/proc/walk_link(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
-		if(M.anti_magic_check())
+		if(M.anti_magic_check(major = FALSE))
 			return
 	if(linked_dist && walks_left > 0)
 		flick("purplesparkles", src)

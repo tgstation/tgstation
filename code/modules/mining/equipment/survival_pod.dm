@@ -4,7 +4,7 @@
 	icon_state = "away"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
-	has_gravity = TRUE
+	has_gravity = STANDARD_GRAVITY
 	valid_territory = FALSE
 
 //Survival Capsule
@@ -57,12 +57,12 @@
 			used = FALSE
 			return
 
-		playsound(get_turf(src), 'sound/effects/phasein.ogg', 100, 1)
+		playsound(src, 'sound/effects/phasein.ogg', 100, 1)
 
 		var/turf/T = deploy_location
 		if(!is_mining_level(T.z)) //only report capsules away from the mining/lavaland level
-			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_JMP(T)]")
-			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [get_area(T)][COORD(T)]")
+			message_admins("[ADMIN_LOOKUPFLW(usr)] activated a bluespace capsule away from the mining level! [ADMIN_VERBOSEJMP(T)]")
+			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [AREACOORD(T)]")
 		template.load(deploy_location, centered = TRUE)
 		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
@@ -139,7 +139,7 @@
 		add_overlay("sleeper_cover")
 
 //Computer
-/obj/item/device/gps/computer
+/obj/item/gps/computer
 	name = "pod computer"
 	icon_state = "pod_computer"
 	icon = 'icons/obj/lavaland/pod_computer.dmi'
@@ -147,18 +147,18 @@
 	density = TRUE
 	pixel_y = -32
 
-/obj/item/device/gps/computer/wrench_act(mob/living/user, obj/item/I)
+/obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	if(flags_1 & NODECONSTRUCT_1)
 		return TRUE
 
 	user.visible_message("<span class='warning'>[user] disassembles [src].</span>",
 		"<span class='notice'>You start to disassemble [src]...</span>", "You hear clanking and banging noises.")
 	if(I.use_tool(src, user, 20, volume=50))
-		new /obj/item/device/gps(loc)
+		new /obj/item/gps(loc)
 		qdel(src)
 	return TRUE
 
-/obj/item/device/gps/computer/attack_hand(mob/user)
+/obj/item/gps/computer/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
@@ -175,8 +175,6 @@
 	desc = "A heated storage unit."
 	icon_state = "donkvendor"
 	icon = 'icons/obj/lavaland/donkvendor.dmi'
-	icon_on = "donkvendor"
-	icon_off = "donkvendor"
 	light_range = 5
 	light_power = 1.2
 	light_color = "#DDFFD3"
@@ -184,6 +182,9 @@
 	pixel_y = -4
 	flags_1 = NODECONSTRUCT_1
 	var/empty = FALSE
+
+/obj/machinery/smartfridge/survival_pod/update_icon()
+	return
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	. = ..()
@@ -196,7 +197,7 @@
 		var/obj/item/storage/pill_bottle/dice/D = new(src)
 		load(D)
 	else
-		var/obj/item/device/instrument/guitar/G = new(src)
+		var/obj/item/instrument/guitar/G = new(src)
 		load(G)
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
@@ -246,11 +247,6 @@
 /obj/structure/fans/Initialize(mapload)
 	. = ..()
 	air_update_turf(1)
-
-/obj/structure/fans/Destroy()
-	var/turf/T = loc
-	. = ..()
-	T.air_update_turf(1)
 
 //Inivisible, indestructible fans
 /obj/structure/fans/tiny/invisible

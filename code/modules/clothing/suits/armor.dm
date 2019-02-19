@@ -37,9 +37,12 @@
 	slowdown = 1
 
 /obj/item/clothing/suit/armor/vest/blueshirt
+	name = "large armor vest"
+	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	item_state = "blueshift"
-
+	custom_premium_price = 600
+	
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence."
@@ -53,7 +56,7 @@
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchoat"
-	desc = "A trenchcoat enchanced with a special lightweight kevlar. The epitome of tactical plainclothes."
+	desc = "A trenchcoat enhanced with a special lightweight kevlar. The epitome of tactical plainclothes."
 	icon_state = "hostrench"
 	item_state = "hostrench"
 	flags_inv = 0
@@ -165,186 +168,6 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
-//Reactive armor
-/obj/item/clothing/suit/armor/reactive
-	name = "reactive armor"
-	desc = "Doesn't seem to do much for some reason."
-	var/active = 0
-	var/reactivearmor_cooldown_duration = 0 //cooldown specific to reactive armor
-	var/reactivearmor_cooldown = 0
-	icon_state = "reactiveoff"
-	item_state = "reactiveoff"
-	blood_overlay_type = "armor"
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
-	actions_types = list(/datum/action/item_action/toggle)
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	hit_reaction_chance = 50
-
-
-/obj/item/clothing/suit/armor/reactive/attack_self(mob/user)
-	src.active = !( src.active )
-	if (src.active)
-		to_chat(user, "<span class='notice'>[src] is now active.</span>")
-		src.icon_state = "reactive"
-		src.item_state = "reactive"
-	else
-		to_chat(user, "<span class='notice'>[src] is now inactive.</span>")
-		src.icon_state = "reactiveoff"
-		src.item_state = "reactiveoff"
-	src.add_fingerprint(user)
-	return
-
-/obj/item/clothing/suit/armor/reactive/emp_act(severity)
-	active = 0
-	src.icon_state = "reactiveoff"
-	src.item_state = "reactiveoff"
-	reactivearmor_cooldown = world.time + 200
-	..()
-
-//When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)
-/obj/item/clothing/suit/armor/reactive/teleport
-	name = "reactive teleport armor"
-	desc = "Someone separated our Research Director from his own head!"
-	var/tele_range = 6
-	var/rad_amount= 15
-	reactivearmor_cooldown_duration = 100
-
-/obj/item/clothing/suit/armor/reactive/teleport/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
-	if(prob(hit_reaction_chance))
-		var/mob/living/carbon/human/H = owner
-		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive teleport system is still recharging! It fails to teleport [H]!</span>")
-			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text], shutting itself off in the process!</span>")
-		var/list/turfs = new/list()
-		for(var/turf/T in orange(tele_range, H))
-			if(T.density)
-				continue
-			if(T.x>world.maxx-tele_range || T.x<tele_range)
-				continue
-			if(T.y>world.maxy-tele_range || T.y<tele_range)
-				continue
-			turfs += T
-		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
-		var/turf/picked = pick(turfs)
-		if(!isturf(picked))
-			return
-		H.forceMove(picked)
-		H.rad_act(rad_amount)
-		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
-
-/obj/item/clothing/suit/armor/reactive/fire
-	name = "reactive incendiary armor"
-	desc = "An experimental suit of armor with a reactive sensor array rigged to a flame emitter. For the stylish pyromaniac."
-
-/obj/item/clothing/suit/armor/reactive/fire/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
-	if(prob(hit_reaction_chance))
-		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive incendiary armor on [owner] activates, but fails to send out flames as it is still recharging its flame jets!</span>")
-			return
-		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out jets of flame!</span>")
-		for(var/mob/living/carbon/C in range(6, owner))
-			if(C != owner)
-				C.fire_stacks += 8
-				C.IgniteMob()
-		owner.fire_stacks = -20
-		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
-
-
-/obj/item/clothing/suit/armor/reactive/stealth
-	name = "reactive stealth armor"
-	desc = "An experimental suit of armor that renders the wearer invisible on detection of imminent harm, and creates a decoy that runs away from the owner. You can't fight what you can't see."
-
-/obj/item/clothing/suit/armor/reactive/stealth/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
-	if(prob(hit_reaction_chance))
-		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive stealth system on [owner] activates, but is still recharging its holographic emitters!</span>")
-			return
-		var/mob/living/simple_animal/hostile/illusion/escape/E = new(owner.loc)
-		E.Copy_Parent(owner, 50)
-		E.GiveTarget(owner) //so it starts running right away
-		E.Goto(owner, E.move_to_delay, E.minimum_distance)
-		owner.alpha = 0
-		owner.visible_message("<span class='danger'>[owner] is hit by [attack_text] in the chest!</span>") //We pretend to be hit, since blocking it would stop the message otherwise
-		spawn(40)
-			owner.alpha = initial(owner.alpha)
-		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-
-/obj/item/clothing/suit/armor/reactive/tesla
-	name = "reactive tesla armor"
-	desc = "An experimental suit of armor with sensitive detectors hooked up to a huge capacitor grid, with emitters strutting out of it. Zap."
-	siemens_coefficient = -1
-	var/tesla_power = 25000
-	var/tesla_range = 20
-	var/tesla_boom = FALSE
-	var/tesla_stun = FALSE
-
-/obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
-	if(prob(hit_reaction_chance))
-		if(world.time < reactivearmor_cooldown)
-			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-			sparks.set_up(1, 1, src)
-			sparks.start()
-			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</span>")
-			return
-		owner.visible_message("<span class='danger'>[src] blocks [attack_text], sending out arcs of lightning!</span>")
-		tesla_zap(owner,tesla_range,tesla_power,tesla_boom, tesla_stun)
-		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-
-/obj/item/clothing/suit/armor/reactive/table
-	name = "reactive table armor"
-	desc = "If you can't beat the memes, embrace them."
-	var/tele_range = 10
-
-/obj/item/clothing/suit/armor/reactive/table/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(!active)
-		return 0
-	if(prob(hit_reaction_chance))
-		var/mob/living/carbon/human/H = owner
-		if(world.time < reactivearmor_cooldown)
-			owner.visible_message("<span class='danger'>The reactive table armor's fabricators are still on cooldown!</span>")
-			return
-		owner.visible_message("<span class='danger'>The reactive teleport system flings [H] clear of [attack_text] and slams them into a fabricated table!</span>")
-		owner.visible_message("<font color='red' size='3'>[H] GOES ON THE TABLE!!!</font>")
-		owner.Knockdown(40)
-		var/list/turfs = new/list()
-		for(var/turf/T in orange(tele_range, H))
-			if(T.density)
-				continue
-			if(T.x>world.maxx-tele_range || T.x<tele_range)
-				continue
-			if(T.y>world.maxy-tele_range || T.y<tele_range)
-				continue
-			turfs += T
-		if(!turfs.len)
-			turfs += pick(/turf in orange(tele_range, H))
-		var/turf/picked = pick(turfs)
-		if(!isturf(picked))
-			return
-		H.forceMove(picked)
-		new /obj/structure/table(get_turf(owner))
-		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
-		return 1
-	return 0
-
-/obj/item/clothing/suit/armor/reactive/table/emp_act()
-	return
-
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/centcom
@@ -355,7 +178,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
-	flags_1 = THICKMATERIAL_1
+	clothing_flags = THICKMATERIAL
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -370,7 +193,7 @@
 	item_state = "swat_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.9
-	flags_1 = THICKMATERIAL_1
+	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -379,7 +202,7 @@
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags_1 = THICKMATERIAL_1
+	clothing_flags = THICKMATERIAL
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90)
@@ -415,8 +238,13 @@
 	icon_state = "knight_red"
 	item_state = "knight_red"
 
-/obj/item/clothing/suit/armor/riot/knight/templar
-	name = "crusader armour"
-	desc = "God wills it!"
-	icon_state = "knight_templar"
-	item_state = "knight_templar"
+/obj/item/clothing/suit/armor/vest/durathread
+	name = "durathread vest"
+	desc = "A vest made of durathread with strips of leather acting as trauma plates."
+	icon_state = "durathread"
+	item_state = "durathread"
+	strip_delay = 60
+	equip_delay_other = 40
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	armor = list("melee" = 20, "bullet" = 10, "laser" = 30, "energy" = 5, "bomb" = 15, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 50)

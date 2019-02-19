@@ -40,7 +40,7 @@
 /obj/effect/clockwork/city_of_cogs_rift/attack_hand(atom/movable/AM)
 	beckon(AM)
 
-/obj/effect/clockwork/city_of_cogs_rift/CollidedWith(atom/movable/AM)
+/obj/effect/clockwork/city_of_cogs_rift/Bumped(atom/movable/AM)
 	if(!QDELETED(AM))
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -72,6 +72,6 @@
 		var/mob/living/L = AM
 		L.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		L.clear_fullscreen("flash", 5)
-		var/obj/item/device/transfer_valve/TTV = locate() in L.GetAllContents()
+		var/obj/item/transfer_valve/TTV = locate() in L.GetAllContents()
 		if(TTV)
 			to_chat(L, "<span class='userdanger'>The air resonates with the Ark's presence; your explosives will be significantly dampened here!</span>")

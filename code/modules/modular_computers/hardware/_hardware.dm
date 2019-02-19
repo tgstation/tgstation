@@ -6,7 +6,7 @@
 
 	w_class = WEIGHT_CLASS_TINY	// w_class limits which devices can contain this component.
 	// 1: PDAs/Tablets, 2: Laptops, 3-4: Consoles only
-	var/obj/item/device/modular_computer/holder = null
+	var/obj/item/modular_computer/holder = null
 	// Computer that holds this hardware, if any.
 
 	var/power_usage = 0 			// If the hardware uses extra power, change this.
@@ -32,13 +32,6 @@
 
 
 /obj/item/computer_hardware/attackby(obj/item/I, mob/living/user)
-	// Multitool. Runs diagnostics
-	if(istype(I, /obj/item/device/multitool))
-		to_chat(user, "***** DIAGNOSTICS REPORT *****")
-		diagnostics(user)
-		to_chat(user, "******************************")
-		return 1
-
 	// Cable coil. Works as repair method, but will probably require multiple applications and more cable.
 	if(istype(I, /obj/item/stack/cable_coil))
 		var/obj/item/stack/S = I
@@ -51,9 +44,15 @@
 		return 1
 
 	if(try_insert(I, user))
-		return 1
+		return TRUE
 
 	return ..()
+
+/obj/item/computer_hardware/multitool_act(mob/living/user, obj/item/I)
+	to_chat(user, "***** DIAGNOSTICS REPORT *****")
+	diagnostics(user)
+	to_chat(user, "******************************")
+	return TRUE
 
 // Called on multitool click, prints diagnostic information to the user.
 /obj/item/computer_hardware/proc/diagnostics(var/mob/user)
@@ -83,15 +82,15 @@
 		to_chat(user, "<span class='notice'>It seems to be slightly damaged.</span>")
 
 // Component-side compatibility check.
-/obj/item/computer_hardware/proc/can_install(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/can_install(obj/item/modular_computer/M, mob/living/user = null)
 	return can_install
 
 // Called when component is installed into PC.
-/obj/item/computer_hardware/proc/on_install(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/on_install(obj/item/modular_computer/M, mob/living/user = null)
 	return
 
 // Called when component is removed from PC.
-/obj/item/computer_hardware/proc/on_remove(obj/item/device/modular_computer/M, mob/living/user = null)
+/obj/item/computer_hardware/proc/on_remove(obj/item/modular_computer/M, mob/living/user = null)
 	try_eject(forced = 1)
 
 // Called when someone tries to insert something in it - paper in printer, card in card reader, etc.

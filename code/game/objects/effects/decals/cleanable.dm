@@ -1,15 +1,14 @@
 /obj/effect/decal/cleanable
 	gender = PLURAL
 	layer = ABOVE_NORMAL_TURF_LAYER
-	var/list/random_icon_states = list()
+	var/list/random_icon_states = null
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
 	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
-	var/beauty
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	if (random_icon_states && length(random_icon_states) > 0)
+	if (random_icon_states && (icon_state == initial(icon_state)) && length(random_icon_states) > 0)
 		icon_state = pick(random_icon_states)
 	create_reagents(300)
 	if(loc && isturf(loc))
@@ -26,10 +25,6 @@
 		if(LAZYLEN(diseases_to_add))
 			AddComponent(/datum/component/infective, diseases_to_add)
 
-/obj/effect/decal/cleanable/ComponentInitialize()
-	. = ..()
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, beauty), 0) //inb4 i get yelled at for using the beauty var on cleanable instead of calling this proc on every subtype which would be pedantic and actually run worse.
-
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(mergeable_decal)
 		return TRUE
@@ -45,7 +40,7 @@
 				to_chat(user, "<span class='notice'>[W] is full!</span>")
 				return
 			to_chat(user, "<span class='notice'>You scoop up [src] into [W]!</span>")
-			reagents.trans_to(W, reagents.total_volume)
+			reagents.trans_to(W, reagents.total_volume, transfered_by = user)
 			if(!reagents.total_volume) //scooped up all of it
 				qdel(src)
 				return
@@ -77,8 +72,10 @@
 	..()
 	if(ishuman(O))
 		var/mob/living/carbon/human/H = O
-		if(H.shoes && blood_state && bloodiness)
+		if(H.shoes && blood_state && bloodiness && !H.has_trait(TRAIT_LIGHT_STEP))
 			var/obj/item/clothing/shoes/S = H.shoes
+			if(!S.can_be_bloody)
+				return
 			var/add_blood = 0
 			if(bloodiness >= BLOOD_GAIN_PER_STEP)
 				add_blood = BLOOD_GAIN_PER_STEP

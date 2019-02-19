@@ -12,7 +12,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	materials = list(MAT_GLASS=1000)
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("silicon" = 20, "sacid" = 0.5) //Retrieving acid this way is extremely inefficient
+	grind_results = list("silicon" = 20)
 	var/build_path = null
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
@@ -54,3 +54,14 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				M.component_parts += new comp_path(null)
 
 	M.RefreshParts()
+
+/obj/item/circuitboard/machine/examine(mob/user)
+	..()
+	if(LAZYLEN(req_components))
+		var/list/nice_list = list()
+		for(var/B in req_components)
+			var/atom/A = B
+			if(!ispath(A))
+				continue
+			nice_list += list("[req_components[A]] [initial(A.name)]")
+		to_chat(user,"<span class='notice'>Required components: [english_list(nice_list)].</span>")

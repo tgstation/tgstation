@@ -6,13 +6,13 @@
 	item_state = "utility"
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins belting themselves with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
 /obj/item/storage/belt/update_icon()
@@ -27,34 +27,44 @@
 	. = ..()
 	update_icon()
 
+/obj/item/storage/belt/examine(mob/user)
+	..()
+	clothing_resistance_flag_examine_message(user)
+
+
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	content_overlays = TRUE
+	custom_price = 50
 
-/obj/item/storage/belt/ulility/ComponentInitialize()
+/obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
-	STR.can_hold = typecacheof(list(
+	var/static/list/can_hold = typecacheof(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/device/multitool,
-		/obj/item/device/flashlight,
+		/obj/item/multitool,
+		/obj/item/flashlight,
 		/obj/item/stack/cable_coil,
-		/obj/item/device/t_scanner,
-		/obj/item/device/analyzer,
-		/obj/item/device/geiger_counter,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter,
 		/obj/item/extinguisher/mini,
-		/obj/item/device/radio,
+		/obj/item/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/holosign_creator,
-		/obj/item/device/assembly/signaler
+		/obj/item/holosign_creator/atmos,
+		/obj/item/holosign_creator/engineering,
+		/obj/item/forcefield_projector,
+		/obj/item/assembly/signaler,
+		/obj/item/lightreplacer
 		))
+	STR.can_hold = can_hold
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
@@ -66,10 +76,10 @@
 	new /obj/item/screwdriver/power(src)
 	new /obj/item/crowbar/power(src)
 	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 	new /obj/item/extinguisher/mini(src)
-	new /obj/item/device/analyzer(src)
+	new /obj/item/analyzer(src)
 	//much roomier now that we've managed to remove two tools
 
 /obj/item/storage/belt/utility/full/PopulateContents()
@@ -78,7 +88,7 @@
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
@@ -87,7 +97,7 @@
 	new /obj/item/weldingtool/largetank(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src,30,pick("red","yellow","orange"))
 
 
@@ -97,7 +107,7 @@
 	new /obj/item/weldingtool(src)
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
-	new /obj/item/device/t_scanner(src)
+	new /obj/item/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
 /obj/item/storage/belt/utility/servant/PopulateContents()
@@ -106,7 +116,7 @@
 	new /obj/item/wrench/brass(src)
 	new /obj/item/crowbar/brass(src)
 	new /obj/item/weldingtool/experimental/brass(src)
-	new /obj/item/device/multitool(src)
+	new /obj/item/multitool(src)
 	new /obj/item/stack/cable_coil(src, 30, "yellow")
 
 /obj/item/storage/belt/medical
@@ -120,7 +130,7 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.can_hold = typecacheof(list(
-		/obj/item/device/healthanalyzer,
+		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
@@ -132,11 +142,11 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/medical,
-		/obj/item/device/flashlight/pen,
+		/obj/item/flashlight/pen,
 		/obj/item/extinguisher/mini,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/device/sensor_device,
-		/obj/item/device/radio,
+		/obj/item/sensor_device,
+		/obj/item/radio,
 		/obj/item/clothing/gloves/,
 		/obj/item/lazarus_injector,
 		/obj/item/bikehorn/rubberducky,
@@ -150,7 +160,7 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
-		/obj/item/device/geiger_counter,
+		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,
@@ -164,7 +174,8 @@
 		/obj/item/implantcase,
 		/obj/item/implant,
 		/obj/item/implanter,
-		/obj/item/pinpointer/crew
+		/obj/item/pinpointer/crew,
+		/obj/item/holosign_creator/medical
 		))
 
 /obj/item/storage/belt/security
@@ -185,26 +196,40 @@
 		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
-		/obj/item/device/assembly/flash/handheld,
+		/obj/item/assembly/flash/handheld,
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
 		/obj/item/reagent_containers/food/snacks/donut,
 		/obj/item/kitchen/knife/combat,
-		/obj/item/device/flashlight/seclite,
+		/obj/item/flashlight/seclite,
 		/obj/item/melee/classic_baton/telescopic,
-		/obj/item/device/radio,
+		/obj/item/radio,
 		/obj/item/clothing/gloves,
-		/obj/item/restraints/legcuffs/bola
+		/obj/item/restraints/legcuffs/bola,
+		/obj/item/holosign_creator/security
 		))
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/grenade/flashbang(src)
-	new /obj/item/device/assembly/flash/handheld(src)
+	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/melee/baton/loaded(src)
 	update_icon()
+
+/obj/item/storage/belt/security/webbing
+	name = "security webbing"
+	desc = "Unique and versatile chest rig, can hold security gear."
+	icon_state = "securitywebbing"
+	item_state = "securitywebbing"
+	content_overlays = FALSE
+	custom_premium_price = 800
+
+/obj/item/storage/belt/security/webbing/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
@@ -225,15 +250,15 @@
 		/obj/item/weldingtool,
 		/obj/item/wirecutters,
 		/obj/item/wrench,
-		/obj/item/device/multitool,
-		/obj/item/device/flashlight,
+		/obj/item/multitool,
+		/obj/item/flashlight,
 		/obj/item/stack/cable_coil,
-		/obj/item/device/analyzer,
+		/obj/item/analyzer,
 		/obj/item/extinguisher/mini,
-		/obj/item/device/radio,
+		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/resonator,
-		/obj/item/device/mining_scanner,
+		/obj/item/mining_scanner,
 		/obj/item/pickaxe,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/sinew,
@@ -244,16 +269,16 @@
 		/obj/item/stack/medical,
 		/obj/item/kitchen/knife,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/device/gps,
+		/obj/item/gps,
 		/obj/item/storage/bag/ore,
 		/obj/item/survivalcapsule,
-		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/t_scanner/adv_mining_scanner,
 		/obj/item/reagent_containers/pill,
 		/obj/item/storage/pill_bottle,
 		/obj/item/stack/ore,
 		/obj/item/reagent_containers/food/drinks,
 		/obj/item/organ/regenerative_core,
-		/obj/item/device/wormhole_jaunter,
+		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
 		/obj/item/stack/marker_beacon
 		))
@@ -288,16 +313,16 @@
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 6
 	STR.can_hold = typecacheof(list(
-		/obj/item/device/soulstone
+		/obj/item/soulstone
 		))
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/soulstone(src)
+		new /obj/item/soulstone(src)
 
 /obj/item/storage/belt/soulstone/full/chappy/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/device/soulstone/anybody/chaplain(src)
+		new /obj/item/soulstone/anybody/chaplain(src)
 
 /obj/item/storage/belt/champion
 	name = "championship belt"
@@ -319,11 +344,59 @@
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
 	icon_state = "militarywebbing"
 	item_state = "militarywebbing"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/storage/belt/military/ComponentInitialize()
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/storage/belt/military/snack
+	name = "tactical snack rig"
+
+/obj/item/storage/belt/military/snack/Initialize()
+	. = ..()
+	var/sponsor = pick("DonkCo", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
+	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
+
+/obj/item/storage/belt/military/snack/ComponentInitialize()
+	. = ..()
+	GET_COMPONENT(STR, /datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_SMALL
+	STR.can_hold = typecacheof(list(
+		/obj/item/reagent_containers/food/snacks,
+		/obj/item/reagent_containers/food/drinks
+		))
+
+	var/amount = 5
+	var/rig_snacks
+	while(contents.len <= amount)
+		rig_snacks = pick(list(
+		/obj/item/reagent_containers/food/snacks/candy,
+		/obj/item/reagent_containers/food/drinks/dry_ramen,
+		/obj/item/reagent_containers/food/snacks/chips,
+		/obj/item/reagent_containers/food/snacks/sosjerky,
+		/obj/item/reagent_containers/food/snacks/syndicake,
+		/obj/item/reagent_containers/food/snacks/spacetwinkie,
+		/obj/item/reagent_containers/food/snacks/cheesiehonkers,
+		/obj/item/reagent_containers/food/snacks/nachos,
+		/obj/item/reagent_containers/food/snacks/cheesynachos,
+		/obj/item/reagent_containers/food/snacks/cubannachos,
+		/obj/item/reagent_containers/food/snacks/nugget,
+		/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato,
+		/obj/item/reagent_containers/food/snacks/rofflewaffles,
+		/obj/item/reagent_containers/food/snacks/donkpocket,
+		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
+		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
+		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
+		/obj/item/reagent_containers/food/drinks/soda_cans/starkist,
+		/obj/item/reagent_containers/food/drinks/soda_cans/space_up,
+		/obj/item/reagent_containers/food/drinks/soda_cans/pwr_game,
+		/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
+		))
+		new rig_snacks(src)
 
 /obj/item/storage/belt/military/abductor
 	name = "agent belt"
@@ -338,7 +411,7 @@
 	new /obj/item/weldingtool/abductor(src)
 	new /obj/item/crowbar/abductor(src)
 	new /obj/item/wirecutters/abductor(src)
-	new /obj/item/device/multitool/abductor(src)
+	new /obj/item/multitool/abductor(src)
 	new /obj/item/stack/cable_coil(src,30,"white")
 
 /obj/item/storage/belt/military/army
@@ -375,40 +448,26 @@
 		/obj/item/grenade,
 		/obj/item/screwdriver,
 		/obj/item/lighter,
-		/obj/item/device/multitool,
+		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/plastic/c4,
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	new /obj/item/grenade/flashbang(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/smokebomb(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/empgrenade(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/syndieminibomb/concussion/frag(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/gluon(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/incendiary(src)
-	new /obj/item/grenade/chem_grenade/facid(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/grenade/syndieminibomb(src)
-	new /obj/item/screwdriver(src)
-	new /obj/item/device/multitool(src)
+	var/static/items_inside = list(
+		/obj/item/grenade/flashbang = 1,
+		/obj/item/grenade/smokebomb = 4,
+		/obj/item/grenade/empgrenade = 1,
+		/obj/item/grenade/empgrenade = 1,
+		/obj/item/grenade/syndieminibomb/concussion/frag = 10,
+		/obj/item/grenade/gluon = 4,
+		/obj/item/grenade/chem_grenade/incendiary = 2,
+		/obj/item/grenade/chem_grenade/facid = 1,
+		/obj/item/grenade/syndieminibomb = 2,
+		/obj/item/screwdriver = 1,
+		/obj/item/multitool = 1)
+	generate_items_inside(items_inside,src)
+
 
 /obj/item/storage/belt/wands
 	name = "wand belt"
@@ -449,16 +508,24 @@
 	STR.max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
 	STR.can_hold = typecacheof(list(
 		/obj/item/grenade/chem_grenade,
-		/obj/item/device/lightreplacer,
-		/obj/item/device/flashlight,
+		/obj/item/lightreplacer,
+		/obj/item/flashlight,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/holosign_creator,
+		/obj/item/holosign_creator/janibarrier,
+		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
-		/obj/item/device/assembly/mousetrap
+		/obj/item/assembly/mousetrap
 		))
+
+/obj/item/storage/belt/janitor/full/PopulateContents()
+	new /obj/item/lightreplacer(src)
+	new /obj/item/reagent_containers/spray/cleaner(src)
+	new /obj/item/soap/nanotrasen(src)
+	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/melee/flyswatter(src)
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
@@ -494,15 +561,18 @@
 		))
 
 /obj/item/storage/belt/holster/full/PopulateContents()
-	new /obj/item/gun/ballistic/revolver/detective(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/ammo_box/c38(src)
+	var/static/items_inside = list(
+		/obj/item/gun/ballistic/revolver/detective = 1,
+		/obj/item/ammo_box/c38 = 2)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
+	item_color = "fannypackleather"
+	custom_price = 15
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -514,51 +584,61 @@
 	name = "black fannypack"
 	icon_state = "fannypack_black"
 	item_state = "fannypack_black"
+	item_color = "black"
 
 /obj/item/storage/belt/fannypack/red
 	name = "red fannypack"
 	icon_state = "fannypack_red"
 	item_state = "fannypack_red"
+	item_color = "red"
 
 /obj/item/storage/belt/fannypack/purple
 	name = "purple fannypack"
 	icon_state = "fannypack_purple"
 	item_state = "fannypack_purple"
+	item_color = "purple"
 
 /obj/item/storage/belt/fannypack/blue
 	name = "blue fannypack"
 	icon_state = "fannypack_blue"
 	item_state = "fannypack_blue"
+	item_color = "blue"
 
 /obj/item/storage/belt/fannypack/orange
 	name = "orange fannypack"
 	icon_state = "fannypack_orange"
 	item_state = "fannypack_orange"
+	item_color = "orange"
 
 /obj/item/storage/belt/fannypack/white
 	name = "white fannypack"
 	icon_state = "fannypack_white"
 	item_state = "fannypack_white"
+	item_color = "white"
 
 /obj/item/storage/belt/fannypack/green
 	name = "green fannypack"
 	icon_state = "fannypack_green"
 	item_state = "fannypack_green"
+	item_color = "green"
 
 /obj/item/storage/belt/fannypack/pink
 	name = "pink fannypack"
 	icon_state = "fannypack_pink"
 	item_state = "fannypack_pink"
+	item_color = "pink"
 
 /obj/item/storage/belt/fannypack/cyan
 	name = "cyan fannypack"
 	icon_state = "fannypack_cyan"
 	item_state = "fannypack_cyan"
+	item_color = "cyan"
 
 /obj/item/storage/belt/fannypack/yellow
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
+	item_color = "yellow"
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"

@@ -9,7 +9,6 @@
 	desc = "A radio beacon used for bot navigation."
 	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
-	anchored = TRUE
 	max_integrity = 500
 	armor = list("melee" = 70, "bullet" = 70, "laser" = 70, "energy" = 70, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
@@ -20,7 +19,7 @@
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 
-	req_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_ENGINE, ACCESS_ROBOTICS)
 
 /obj/machinery/navbeacon/Initialize()
 	. = ..()
@@ -38,9 +37,17 @@
 		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/Destroy()
-	GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
+	if (GLOB.navbeacons["[z]"])
+		GLOB.navbeacons["[z]"] -= src //Remove from beacon list, if in one.
 	GLOB.deliverybeacons -= src
 	return ..()
+
+/obj/machinery/navbeacon/onTransitZ(old_z, new_z)
+	if (GLOB.navbeacons["[old_z]"])
+		GLOB.navbeacons["[old_z]"] -= src
+	if (GLOB.navbeacons["[new_z]"])
+		GLOB.navbeacons["[new_z]"] += src
+	..()
 
 // set the transponder codes assoc list from codes_txt
 /obj/machinery/navbeacon/proc/set_codes()
@@ -82,14 +89,14 @@
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
 
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		open = !open
 
 		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "<span class='notice'>You [open ? "open" : "close"] the beacon's cover.</span>")
 
 		updateicon()
 
-	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/device/pda))
+	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
 		if(open)
 			if (src.allowed(user))
 				src.locked = !src.locked

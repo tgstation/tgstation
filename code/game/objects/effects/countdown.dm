@@ -5,18 +5,18 @@
 		And maybe we'll come back\n\
 		To Earth, who can tell?"
 
-	var/displayed_text
-	var/atom/attached_to
-	color = "#ff0000"
-	var/text_size = 4
-	var/started = FALSE
 	invisibility = INVISIBILITY_OBSERVER
 	anchored = TRUE
 	layer = GHOST_LAYER
+	color = "#ff0000" // text color
+	var/text_size = 3 // larger values clip when the displayed text is larger than 2 digits.
+	var/started = FALSE
+	var/displayed_text
+	var/atom/attached_to
 
-/obj/effect/countdown/New(atom/A)
+/obj/effect/countdown/Initialize()
 	. = ..()
-	attach(A)
+	attach(loc)
 
 /obj/effect/countdown/examine(mob/user)
 	. = ..()
@@ -86,7 +86,7 @@
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
-	color = "#0C479D"
+	color = "#18d100"
 	text_size = 1
 
 /obj/effect/countdown/clonepod/get_value()
@@ -135,7 +135,6 @@
 
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
-	text_size = 3
 
 /obj/effect/countdown/doomsday/get_value()
 	var/obj/machinery/doomsday_device/DD = attached_to

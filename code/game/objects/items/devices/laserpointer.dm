@@ -1,12 +1,13 @@
-/obj/item/device/laser_pointer
+/obj/item/laser_pointer
 	name = "laser pointer"
 	desc = "Don't shine it in your eyes!"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "pointer"
 	item_state = "pen"
 	var/pointer_icon_state
-	flags_1 = CONDUCT_1 | NOBLUDGEON_1
-	slot_flags = SLOT_BELT
+	flags_1 = CONDUCT_1
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = WEIGHT_CLASS_SMALL
 	var/turf/pointer_loc
@@ -18,26 +19,26 @@
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 
 
-/obj/item/device/laser_pointer/red
+/obj/item/laser_pointer/red
 	pointer_icon_state = "red_laser"
-/obj/item/device/laser_pointer/green
+/obj/item/laser_pointer/green
 	pointer_icon_state = "green_laser"
-/obj/item/device/laser_pointer/blue
+/obj/item/laser_pointer/blue
 	pointer_icon_state = "blue_laser"
-/obj/item/device/laser_pointer/purple
+/obj/item/laser_pointer/purple
 	pointer_icon_state = "purple_laser"
 
-/obj/item/device/laser_pointer/New()
-	..()
+/obj/item/laser_pointer/Initialize()
+	. = ..()
 	diode = new(src)
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser","green_laser","blue_laser","purple_laser")
 
-/obj/item/device/laser_pointer/upgraded/New()
-	..()
+/obj/item/laser_pointer/upgraded/Initialize()
+	. = ..()
 	diode = new /obj/item/stock_parts/micro_laser/ultra
 
-/obj/item/device/laser_pointer/attackby(obj/item/W, mob/user, params)
+/obj/item/laser_pointer/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/micro_laser))
 		if(!diode)
 			if(!user.transferItemToLoc(W, src))
@@ -47,7 +48,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a diode installed.</span>")
 
-	else if(istype(W, /obj/item/screwdriver))
+	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
 			diode.forceMove(drop_location())
@@ -55,10 +56,19 @@
 	else
 		return ..()
 
-/obj/item/device/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/laser_pointer/examine(mob/user)
+	..()
+	if(in_range(user, src) || isobserver(user))
+		if(!diode)
+			to_chat(user, "<span class='notice'>The diode is missing.<span>")
+		else
+			to_chat(user, "<span class='notice'>A class <b>[diode.rating]</b> laser diode is installed. It is <i>screwed</i> in place.<span>")
+
+/obj/item/laser_pointer/afterattack(atom/target, mob/living/user, flag, params)
+	. = ..()
 	laser_act(target, user, params)
 
-/obj/item/device/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
+/obj/item/laser_pointer/proc/laser_act(atom/target, mob/living/user, params)
 	if( !(user in (viewers(7,target))) )
 		return
 	if (!diode)
@@ -90,7 +100,7 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-			add_logs(user, C, "shone in the eyes", src)
+			log_combat(user, C, "shone in the eyes", src)
 
 			var/severity = 1
 			if(prob(33))
@@ -100,22 +110,22 @@
 
 			//chance to actually hit the eyes depends on internal component
 			if(prob(effectchance * diode.rating) && C.flash_act(severity))
-				outmsg = "<span class='notice'>You blind [C] by shining [src] in their eyes.</span>"
+				outmsg = "<span class='notice'>You blind [C] by shining [src] in [C.p_their()] eyes.</span>"
 			else
-				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at their eyes!</span>"
+				outmsg = "<span class='warning'>You fail to blind [C] by shining [src] at [C.p_their()] eyes!</span>"
 
 	//robots
 	else if(iscyborg(target))
 		var/mob/living/silicon/S = target
-		add_logs(user, S, "shone in the sensors", src)
+		log_combat(user, S, "shone in the sensors", src)
 		//chance to actually hit the eyes depends on internal component
 		if(prob(effectchance * diode.rating))
 			S.flash_act(affect_silicon = 1)
-			S.Knockdown(rand(100,200))
+			S.Paralyze(rand(100,200))
 			to_chat(S, "<span class='danger'>Your sensors were overloaded by a laser!</span>")
-			outmsg = "<span class='notice'>You overload [S] by shining [src] at their sensors.</span>"
+			outmsg = "<span class='notice'>You overload [S] by shining [src] at [S.p_their()] sensors.</span>"
 		else
-			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at their sensors!</span>"
+			outmsg = "<span class='warning'>You fail to overload [S] by shining [src] at [S.p_their()] sensors!</span>"
 
 	//cameras
 	else if(istype(target, /obj/machinery/camera))
@@ -123,7 +133,7 @@
 		if(prob(effectchance * diode.rating))
 			C.emp_act(EMP_HEAVY)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
-			add_logs(user, C, "EMPed", src)
+			log_combat(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
@@ -131,12 +141,12 @@
 	for(var/mob/living/carbon/human/H in view(1,targloc))
 		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
 			continue
-		if(!H.lying)
+		if(user.mobility_flags & MOBILITY_STAND)
 			H.setDir(get_dir(H,targloc)) // kitty always looks at the light
 			if(prob(effectchance))
 				H.visible_message("<span class='warning'>[H] makes a grab for the light!</span>","<span class='userdanger'>LIGHT!</span>")
 				H.Move(targloc)
-				add_logs(user, H, "moved with a laser pointer",src)
+				log_combat(user, H, "moved with a laser pointer",src)
 			else
 				H.visible_message("<span class='notice'>[H] looks briefly distracted by the light.</span>","<span class = 'warning'> You're briefly tempted by the shiny light... </span>")
 		else
@@ -147,8 +157,7 @@
 		if(prob(50))
 			C.visible_message("<span class='notice'>[C] pounces on the light!</span>","<span class='warning'>LIGHT!</span>")
 			C.Move(targloc)
-			C.resting = TRUE
-			C.update_canmove()
+			C.set_resting(TRUE, FALSE)
 		else
 			C.visible_message("<span class='notice'>[C] looks uninterested in your games.</span>","<span class='warning'>You spot [user] shining [src] at you. How insulting!</span>")
 
@@ -182,7 +191,7 @@
 	flick_overlay_view(I, targloc, 10)
 	icon_state = "pointer"
 
-/obj/item/device/laser_pointer/process()
+/obj/item/laser_pointer/process()
 	if(prob(20 - recharge_locked*5))
 		energy += 1
 		if(energy >= max_energy)

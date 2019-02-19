@@ -3,10 +3,10 @@
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
 	item_state = null	//so the human update icon uses the icon_state instead.
-	can_flashlight = 1
+	can_flashlight = TRUE
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 =  CONDUCT_1
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACK
 	ammo_type = list(/obj/item/ammo_casing/energy/ion)
 	ammo_x_offset = 3
 	flight_x_offset = 17
@@ -20,7 +20,7 @@
 	desc = "The MK.II Prototype Ion Projector is a lightweight carbine version of the larger ion rifle, built to be ergonomic and efficient."
 	icon_state = "ioncarbine"
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	pin = null
 	ammo_x_offset = 2
 	flight_x_offset = 18
@@ -37,7 +37,7 @@
 /obj/item/gun/energy/decloner/update_icon()
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if(cell.charge > shot.e_cost)
+	if(!QDELETED(cell) && (cell.charge > shot.e_cost))
 		add_overlay("decloner_spin")
 
 /obj/item/gun/energy/floragun
@@ -93,9 +93,8 @@
 	overheat_time = 20
 	holds_charge = TRUE
 	unique_frequency = TRUE
-	can_flashlight = 0
+	can_flashlight = FALSE
 	max_mod_capacity = 0
-	empty_state = null
 
 /obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
 	name = "candy corn crossbow"
@@ -114,6 +113,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
 
+
 /obj/item/gun/energy/plasmacutter
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff."
@@ -124,12 +124,15 @@
 	attack_verb = list("attacked", "slashed", "cut", "sliced")
 	force = 12
 	sharpness = IS_SHARP
-	can_charge = 0
+	can_charge = FALSE
 
 	heat = 3800
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+	var/progress_flash_divisor = 10  //copypasta is best pasta
+	var/light_intensity = 1
+	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/Initialize()
 	. = ..()
@@ -141,27 +144,63 @@
 		to_chat(user, "<span class='notice'>[src] is [round(cell.percent())]% charged.</span>")
 
 /obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
+	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
 	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+		charge_multiplier = 2
+	if(istype(I, /obj/item/stack/ore/plasma))
+		charge_multiplier = 1
+	if(charge_multiplier)
+		if(cell.charge == cell.maxcharge)
+			to_chat(user, "<span class='notice'>You try to insert [I] into [src], but it's fully charged.</span>") //my cell is round and full
+			return
 		I.use(1)
-		cell.give(1000)
-		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
-	else if(istype(I, /obj/item/stack/ore/plasma))
-		I.use(1)
-		cell.give(500)
+		cell.give(500*charge_multiplier)
 		to_chat(user, "<span class='notice'>You insert [I] in [src], recharging it.</span>")
 	else
 		..()
 
 // Tool procs, in case plasma cutter is used as welder
-/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
-	if(cell.charge >= amount * 100)
-		return TRUE
+// Can we start welding?
+/obj/item/gun/energy/plasmacutter/tool_start_check(mob/living/user, amount)
+	. = tool_use_check(user, amount)
+	if(. && user)
+		user.flash_act(light_intensity)
 
-	to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
-	return FALSE
+// Can we weld? Plasma cutter does not use charge continuously.
+// Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
+/obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
+	if(QDELETED(cell))
+		to_chat(user, "<span class='warning'>[src] does not have a cell, and cannot be used!</span>")
+		return FALSE
+	// Amount cannot be used if drain is made continuous, e.g. amount = 5, charge_weld = 25
+	// Then it'll drain 125 at first and 25 periodically, but fail if charge dips below 125 even though it still can finish action
+	// Alternately it'll need to drain amount*charge_weld every period, which is either obscene or makes it free for other uses
+	if(amount ? cell.charge < charge_weld * amount : cell.charge < charge_weld)
+		to_chat(user, "<span class='warning'>You need more charge to complete this task!</span>")
+		return FALSE
+
+	return TRUE
 
 /obj/item/gun/energy/plasmacutter/use(amount)
-	return cell.use(amount * 100)
+	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
+
+// This only gets called by use_tool(delay > 0)
+// It's also supposed to not get overridden in the first place.
+/obj/item/gun/energy/plasmacutter/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
+	. = ..() //return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+	if(. && user)
+		if (progress_flash_divisor == 0)
+			user.flash_act(min(light_intensity,1))
+			progress_flash_divisor = initial(progress_flash_divisor)
+		else
+			progress_flash_divisor--
+
+/obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
+	if(amount)
+		. = ..()
+	else
+		. = ..(amount=1)
+
 
 /obj/item/gun/energy/plasmacutter/update_icon()
 	return
@@ -180,6 +219,7 @@
 	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
+	var/atmos_link = FALSE
 
 /obj/item/gun/energy/wormhole_projector/update_icon()
 	icon_state = "[initial(icon_state)][select]"
@@ -228,7 +268,7 @@
 	p_blue.link_portal(p_orange)
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W, turf/target)
-	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null)
+	var/obj/effect/portal/P = new /obj/effect/portal(target, src, 300, null, FALSE, null, atmos_link)
 	if(istype(W, /obj/item/projectile/beam/wormhole/orange))
 		qdel(p_orange)
 		p_orange = P
@@ -242,13 +282,13 @@
 
 /obj/item/gun/energy/printer
 	name = "cyborg lmg"
-	desc = "A machinegun that fires 3d-printed flechettes slowly regenerated using a cyborg's internal power source."
-	icon_state = "l6closed0"
+	desc = "An LMG that fires 3D-printed flechettes. They are slowly resupplied using the cyborg's internal power source."
+	icon_state = "l6_cyborg"
 	icon = 'icons/obj/guns/projectile.dmi'
 	cell_type = "/obj/item/stock_parts/cell/secborg"
 	ammo_type = list(/obj/item/ammo_casing/energy/c3dbullet)
-	can_charge = 0
-	use_cyborg_cell = 1
+	can_charge = FALSE
+	use_cyborg_cell = TRUE
 
 /obj/item/gun/energy/printer/update_icon()
 	return
@@ -267,7 +307,7 @@
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
 	desc = "A weapon that can only be used to its full potential by the truly robust."
-	pin = /obj/item/device/firing_pin
+	pin = /obj/item/firing_pin
 
 /obj/item/gun/energy/laser/instakill
 	name = "instakill rifle"
@@ -295,7 +335,7 @@
 /obj/item/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
-	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
+	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4

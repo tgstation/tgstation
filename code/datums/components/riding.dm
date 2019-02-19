@@ -1,5 +1,6 @@
 /datum/component/riding
-	var/next_vehicle_move = 0 //used for move delays
+	var/last_vehicle_move = 0 //used for move delays
+	var/last_move_diagonal = FALSE
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/keytype
 
@@ -18,19 +19,23 @@
 	var/ride_check_rider_restrained = FALSE
 	var/ride_check_ridden_incapacitated = FALSE
 
+	var/del_on_unbuckle_all = FALSE
+
 /datum/component/riding/Initialize()
 	if(!ismovableatom(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("RIDING COMPONENT ASSIGNED TO NON ATOM MOVABLE!")
-	RegisterSignal(COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
-	RegisterSignal(COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
-	RegisterSignal(COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
+	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
 
-/datum/component/riding/proc/vehicle_mob_unbuckle(mob/living/M, force = FALSE)
+/datum/component/riding/proc/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	var/atom/movable/AM = parent
 	restore_position(M)
 	unequip_buckle_inhands(M)
+	if(del_on_unbuckle_all && !AM.has_buckled_mobs())
+		qdel(src)
 
-/datum/component/riding/proc/vehicle_mob_buckle(mob/living/M, force = FALSE)
+/datum/component/riding/proc/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	handle_vehicle_offsets()
 
 /datum/component/riding/proc/handle_vehicle_layer()
@@ -46,7 +51,7 @@
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
 
-/datum/component/riding/proc/vehicle_moved()
+/datum/component/riding/proc/vehicle_moved(datum/source)
 	var/atom/movable/AM = parent
 	for(var/i in AM.buckled_mobs)
 		ride_check(i)
@@ -147,9 +152,9 @@
 		Unbuckle(user)
 		return
 
-	if(world.time < next_vehicle_move)
+	if(world.time < last_vehicle_move + ((last_move_diagonal? 2 : 1) * vehicle_move_delay))
 		return
-	next_vehicle_move = world.time + vehicle_move_delay
+	last_vehicle_move = world.time
 
 	if(keycheck(user))
 		var/turf/next = get_step(AM, direction)
@@ -162,6 +167,11 @@
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
 		step(AM, direction)
+
+		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
+			last_move_diagonal = TRUE
+		else
+			last_move_diagonal = FALSE
 
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
@@ -185,10 +195,11 @@
 
 ///////Yes, I said humans. No, this won't end well...//////////
 /datum/component/riding/human
+	del_on_unbuckle_all = TRUE
 
 /datum/component/riding/human/Initialize()
 	. = ..()
-	RegisterSignal(COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
+	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/AM = parent
@@ -208,10 +219,11 @@
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
-	user.Knockdown(60)
-	user.visible_message("<span class='warning'>[AM] pushes [user] off of them!</span>")
+	user.Paralyze(60)
+	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>")
 
 /datum/component/riding/cyborg
+	del_on_unbuckle_all = TRUE
 
 /datum/component/riding/cyborg/ride_check(mob/user)
 	var/atom/movable/AM = parent
@@ -266,7 +278,7 @@
 	M.Move(targetm)
 	M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>")
 	M.throw_at(target, 14, 5, AM)
-	M.Knockdown(60)
+	M.Paralyze(60)
 
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/atom/movable/AM = parent
@@ -302,7 +314,7 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | DROPDEL_1 | NOBLUDGEON_1
+	item_flags = ABSTRACT | DROPDEL | NOBLUDGEON
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/mob/living/carbon/rider
 	var/mob/living/parent

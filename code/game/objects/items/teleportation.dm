@@ -12,8 +12,8 @@
  * Locator
  */
 /obj/item/locator
-	name = "locator"
-	desc = "Used to track those with locater implants."
+	name = "bluespace locator"
+	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "locator"
 	var/temp = null
@@ -55,7 +55,7 @@
 
 			if (sr)
 				temp += "<B>Beacon Signals:</B><BR>"
-				for(var/obj/item/device/beacon/W in GLOB.teleportbeacons)
+				for(var/obj/item/beacon/W in GLOB.teleportbeacons)
 					if (!W.renamed)
 						continue
 					var/turf/tr = get_turf(W)
@@ -80,7 +80,7 @@
 					else
 						var/mob/living/M = W.loc
 						if (M.stat == DEAD)
-							if (M.timeofdeath + 6000 < world.time)
+							if (M.timeofdeath + W.lifespan_postmortem < world.time)
 								continue
 
 					var/turf/tr = get_turf(W)
@@ -131,6 +131,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/list/active_portal_pairs
 	var/max_portal_pairs = 3
+	var/atmos_link_override
 
 /obj/item/hand_tele/Initialize()
 	. = ..()
@@ -197,14 +198,14 @@
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	user.show_message("<span class='notice'>Locked In.</span>", 2)
-	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1)
+	var/list/obj/effect/portal/created = create_portal_pair(current_location, get_teleport_turf(get_turf(T)), src, 300, 1, null, atmos_link_override)
 	if(!(LAZYLEN(created) == 2))
 		return
 	try_move_adjacent(created[1])
 	active_portal_pairs[created[1]] = created[2]
 	var/obj/effect/portal/c1 = created[1]
 	var/obj/effect/portal/c2 = created[2]
-	investigate_log("was used by [key_name(user)] at [COORD(user)] to create a portal pair with destinations [COORD(c1)] and [COORD(c2)].", INVESTIGATE_PORTAL)
+	investigate_log("was used by [key_name(user)] at [AREACOORD(user)] to create a portal pair with destinations [AREACOORD(c1)] and [AREACOORD(c2)].", INVESTIGATE_PORTAL)
 	add_fingerprint(user)
 
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
@@ -219,3 +220,17 @@
 		if(active_portal_pairs[i] == P)
 			return DESTINATION_PORTAL
 	return FALSE
+
+/obj/item/hand_tele/suicide_act(mob/user)
+	if(iscarbon(user))
+		user.visible_message("<span class='suicide'>[user] is creating a weak portal and sticking [user.p_their()] head through! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		var/mob/living/carbon/itemUser = user
+		var/obj/item/bodypart/head/head = itemUser.get_bodypart(BODY_ZONE_HEAD)
+		if(head)
+			head.drop_limb()
+			var/list/safeLevels = SSmapping.levels_by_any_trait(list(ZTRAIT_SPACE_RUINS, ZTRAIT_LAVA_RUINS, ZTRAIT_STATION, ZTRAIT_MINING))
+			head.forceMove(locate(rand(1, world.maxx), rand(1, world.maxy), pick(safeLevels)))
+			itemUser.visible_message("<span class='suicide'>The portal snaps closed taking [user]'s head with it!</span>")
+		else
+			itemUser.visible_message("<span class='suicide'>[user] looks even further depressed as they realize they do not have a head...and suddenly dies of shame!</span>")
+		return (BRUTELOSS)

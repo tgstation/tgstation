@@ -1,8 +1,9 @@
-/obj/item/device/reverse_bear_trap
+/obj/item/reverse_bear_trap
 	name = "reverse bear trap"
 	desc = "A horrifying set of shut metal jaws, rigged to a kitchen timer and secured by padlock to a head-mounted clamp. To apply, hit someone with it."
+	icon = 'icons/obj/device.dmi'
 	icon_state = "reverse_bear_trap"
-	slot_flags = SLOT_HEAD
+	slot_flags = ITEM_SLOT_HEAD
 	flags_1 = CONDUCT_1
 	resistance_flags = FIRE_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_NORMAL
@@ -21,18 +22,18 @@
 	var/datum/looping_sound/reverse_bear_trap/soundloop
 	var/datum/looping_sound/reverse_bear_trap_beep/soundloop2
 
-/obj/item/device/reverse_bear_trap/Initialize()
+/obj/item/reverse_bear_trap/Initialize()
 	. = ..()
 	soundloop = new(list(src))
 	soundloop2 = new(list(src))
 
-/obj/item/device/reverse_bear_trap/Destroy()
+/obj/item/reverse_bear_trap/Destroy()
 	QDEL_NULL(soundloop)
 	QDEL_NULL(soundloop2)
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-/obj/item/device/reverse_bear_trap/process()
+/obj/item/reverse_bear_trap/process()
 	if(!ticking)
 		return
 	time_left--
@@ -44,11 +45,11 @@
 		to_chat(loc, "<span class='userdanger'>*ding*</span>")
 		addtimer(CALLBACK(src, .proc/snap), 2)
 
-/obj/item/device/reverse_bear_trap/attack_hand(mob/user)
+/obj/item/reverse_bear_trap/attack_hand(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if(C.get_item_by_slot(slot_head) == src)
-			if(flags_1 & NODROP_1 && !struggling)
+		if(C.get_item_by_slot(SLOT_HEAD) == src)
+			if(has_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT) && !struggling)
 				struggling = TRUE
 				var/fear_string
 				switch(time_left)
@@ -73,39 +74,39 @@
 				else
 					user.visible_message("<span class='warning'>The lock on [user]'s [name] pops open!</span>", \
 					"<span class='userdanger'>You force open the padlock!</span>", "<i>You hear a single, pronounced click!</i>")
-					flags_1 &= ~NODROP_1
+					remove_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 				struggling = FALSE
 			else
 				..()
 			return
 	..()
 
-/obj/item/device/reverse_bear_trap/attack(mob/living/target, mob/living/user)
-	if(target.get_item_by_slot(slot_head))
-		to_chat(user, "<span class='warning'>Remove their headgear first!</span>")
+/obj/item/reverse_bear_trap/attack(mob/living/target, mob/living/user)
+	if(target.get_item_by_slot(SLOT_HEAD))
+		to_chat(user, "<span class='warning'>Remove [target.p_their()] headgear first!</span>")
 		return
 	target.visible_message("<span class='warning'>[user] starts forcing [src] onto [target]'s head!</span>", \
 	"<span class='userdanger'>[target] starts forcing [src] onto your head!</span>", "<i>You hear clanking.</i>")
 	to_chat(user, "<span class='danger'>You start forcing [src] onto [target]'s head...</span>")
-	if(!do_after(user, 30, target = target) || target.get_item_by_slot(slot_head))
+	if(!do_after(user, 30, target = target) || target.get_item_by_slot(SLOT_HEAD))
 		return
 	target.visible_message("<span class='warning'>[user] forces and locks [src] onto [target]'s head!</span>", \
 	"<span class='userdanger'>[target] locks [src] onto your head!</span>", "<i>You hear a click, and then a timer ticking down.</i>")
 	to_chat(user, "<span class='danger'>You force [src] onto [target]'s head and click the padlock shut.</span>")
 	user.dropItemToGround(src)
-	target.equip_to_slot_if_possible(src, slot_head)
+	target.equip_to_slot_if_possible(src, SLOT_HEAD)
 	arm()
-	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/beep.ogg')
+	notify_ghosts("[user] put a reverse bear trap on [target]!", source = src, action = NOTIFY_ORBIT, ghost_sound = 'sound/machines/beep.ogg', notify_volume = 75)
 
-/obj/item/device/reverse_bear_trap/proc/snap()
+/obj/item/reverse_bear_trap/proc/snap()
 	reset()
 	var/mob/living/carbon/human/H = loc
-	if(!istype(H) || H.get_item_by_slot(slot_head) != src)
+	if(!istype(H) || H.get_item_by_slot(SLOT_HEAD) != src)
 		visible_message("<span class='warning'>[src]'s jaws snap open with an ear-piercing crack!</span>")
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE)
 	else
 		var/mob/living/carbon/human/jill = loc
-		jill.visible_message("<span class='boldwarning'>[src] goes off in [jill]'s mouth, ripping their head apart!</span>", "<span class='userdanger'>[src] goes off!</span>")
+		jill.visible_message("<span class='boldwarning'>[src] goes off in [jill]'s mouth, ripping [jill.p_their()] head apart!</span>", "<span class='userdanger'>[src] goes off!</span>")
 		jill.emote("scream")
 		playsound(src, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
@@ -113,18 +114,18 @@
 		jill.death() //just in case, for some reason, they're still alive
 		flash_color(jill, flash_color = "#FF0000", flash_time = 100)
 
-/obj/item/device/reverse_bear_trap/proc/reset()
+/obj/item/reverse_bear_trap/proc/reset()
 	ticking = FALSE
-	flags_1 &= ~NODROP_1
+	remove_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 	soundloop.stop()
 	soundloop2.stop()
 	STOP_PROCESSING(SSprocessing, src)
 
-/obj/item/device/reverse_bear_trap/proc/arm() //hulen
+/obj/item/reverse_bear_trap/proc/arm() //hulen
 	ticking = TRUE
 	escape_chance = initial(escape_chance) //we keep these vars until re-arm, for tracking purposes
 	time_left = initial(time_left)
-	flags_1 |= NODROP_1
+	add_trait(TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 	soundloop.start()
 	soundloop2.mid_length = initial(soundloop2.mid_length)
 	soundloop2.start()

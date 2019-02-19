@@ -2,7 +2,6 @@
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE
-	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	use_power = IDLE_POWER_USE
@@ -20,7 +19,7 @@
 	var/working_state = "dispenser_working"
 	var/nopower_state = "dispenser_nopower"
 	var/has_panel_overlay = TRUE
-	var/macrotier = 1
+	var/macroresolution = 1
 	var/obj/item/reagent_containers/beaker = null
 	var/list/dispensable_reagents = list(
 		"hydrogen",
@@ -50,6 +49,15 @@
 		"bromine",
 		"stable_plasma"
 	)
+	//these become available once the manipulator has been upgraded to tier 4 (femto)
+	var/list/upgrade_reagents = list(
+		"oil",
+		"ash",
+		"acetone",
+		"saltpetre",
+		"ammonia",
+		"diethylamine"
+	)
 	var/list/emagged_reagents = list(
 		"space_drugs",
 		"morphine",
@@ -75,6 +83,8 @@
 	..()
 	if(panel_open)
 		to_chat(user, "<span class='notice'>[src]'s maintenance hatch is open!</span>")
+	if(in_range(user, src) || isobserver(user))
+		to_chat(user, "<span class='notice'>The status display reads: <br>Recharging <b>[recharge_amount]</b> power units per interval.<br>Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.<br>Macro granularity at <b>[macroresolution]u</b>.<span>")
 
 /obj/machinery/chem_dispenser/process()
 	if (recharge_counter >= 4)
@@ -94,7 +104,7 @@
 	b_o.pixel_x = -7
 	return b_o
 
-obj/machinery/chem_dispenser/proc/work_animation()
+/obj/machinery/chem_dispenser/proc/work_animation()
 	if(working_state)
 		flick(working_state,src)
 
@@ -140,7 +150,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_dispenser", name, 550, 550, master_ui, state)
+		ui = new(user, src, ui_key, "chem_dispenser", name, 565, 550, master_ui, state)
 		if(user.hallucinating())
 			ui.set_autoupdate(FALSE) //to not ruin the immersion by constantly changing the fake chemicals
 		ui.open()
@@ -192,7 +202,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		return
 	switch(action)
 		if("amount")
-			if(!is_operational())
+			if(!is_operational() || QDELETED(beaker))
 				return
 			var/target = text2num(params["target"])
 			if(target in beaker.possible_transfer_amounts)
@@ -224,26 +234,21 @@ obj/machinery/chem_dispenser/proc/work_animation()
 				work_animation()
 				. = TRUE
 		if("eject")
-			if(beaker)
-				beaker.forceMove(drop_location())
-				if(Adjacent(usr) && !issilicon(usr))
-					usr.put_in_hands(beaker)
-				beaker = null
-				update_icon()
-				. = TRUE
+			replace_beaker(usr)
+			. = TRUE
 		if("dispense_recipe")
 			if(!is_operational() || QDELETED(cell))
 				return
 			var/recipe_to_use = params["recipe"]
 			var/list/chemicals_to_dispense = process_recipe_list(recipe_to_use)
-			var/res = get_macro_resolution()
+			var/res = macroresolution
 			for(var/key in chemicals_to_dispense) // i suppose you could edit the list locally before passing it
 				var/list/keysplit = splittext(key," ")
 				var/r_id = keysplit[1]
 				if(beaker && dispensable_reagents.Find(r_id)) // but since we verify we have the reagent, it'll be fine
 					var/datum/reagents/R = beaker.reagents
 					var/free = R.maximum_volume - R.total_volume
-					var/actual = min(round(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
+					var/actual = min(max(chemicals_to_dispense[key], res), (cell.charge * powerefficiency)*10, free)
 					if(actual)
 						if(!cell.use(actual / powerefficiency))
 							say("Not enough energy to complete operation!")
@@ -267,7 +272,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 				var/list/first_process = splittext(recipe, ";")
 				if(!LAZYLEN(first_process))
 					return
-				var/res = get_macro_resolution()
+				var/res = macroresolution
 				var/resmismatch = FALSE
 				for(var/reagents in first_process)
 					var/list/reagent = splittext(reagents, "=")
@@ -279,7 +284,7 @@ obj/machinery/chem_dispenser/proc/work_animation()
 						var/chemid = reagent[1]
 						visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
 						to_chat(usr, "<span class ='danger'>[src] cannot find Chemical ID: <b>[chemid]</b>!</span>")
-						playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
+						playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 						return
 				if (resmismatch && alert("[src] is not yet capable of replicating this recipe with the precision it needs, do you want to save it anyway?",, "Yes","No") == "No")
 					return
@@ -291,22 +296,16 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_icon()
 		return
-
-	if(exchange_parts(user, I))
-		return
-
 	if(default_deconstruction_crowbar(I))
 		return
-	if(istype(I, /obj/item/reagent_containers) && !(I.flags_1 & ABSTRACT_1) && I.is_open_container())
+	if(istype(I, /obj/item/reagent_containers) && !(I.item_flags & ABSTRACT) && I.is_open_container())
 		var/obj/item/reagent_containers/B = I
-		. = 1 //no afterattack
-		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into [src]!</span>")
-			return
+		. = TRUE //no afterattack
 		if(!user.transferItemToLoc(B, src))
 			return
-		beaker = B
+		replace_beaker(user, B)
 		to_chat(user, "<span class='notice'>You add [B] to [src].</span>")
+		updateUsrDialog()
 		update_icon()
 	else if(user.a_intent != INTENT_HARM && !istype(I, /obj/item/card/emag))
 		to_chat(user, "<span class='warning'>You can't load [I] into [src]!</span>")
@@ -318,6 +317,9 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	return cell
 
 /obj/machinery/chem_dispenser/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 	var/list/datum/reagents/R = list()
 	var/total = min(rand(7,15), FLOOR(cell.charge*powerefficiency, 1))
 	var/datum/reagents/Q = new(total*10)
@@ -333,12 +335,11 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	cell.emp_act(severity)
 	work_animation()
 	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
-	..()
-
 
 /obj/machinery/chem_dispenser/RefreshParts()
 	recharge_amount = initial(recharge_amount)
 	var/newpowereff = 0.0666666
+	macroresolution = 5
 	for(var/obj/item/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
@@ -346,11 +347,23 @@ obj/machinery/chem_dispenser/proc/work_animation()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_amount *= C.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		if (M.rating > macrotier)
-			macrotier = M.rating
+		if (M.rating > 1)
+			macroresolution -= M.rating		//5 for t1, 3 for t2, 2 for t3, 1 for t4
+		if (M.rating > 3)
+			dispensable_reagents |= upgrade_reagents
 	powerefficiency = round(newpowereff, 0.01)
 
-
+/obj/machinery/chem_dispenser/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		if(user && Adjacent(user) && !issiliconoradminghost(user))
+			user.put_in_hands(beaker)
+	if(new_beaker)
+		beaker = new_beaker
+	else
+		beaker = null
+	update_icon()
+	return TRUE
 
 /obj/machinery/chem_dispenser/on_deconstruction()
 	cell = null
@@ -359,32 +372,43 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		beaker = null
 	return ..()
 
-/obj/machinery/chem_dispenser/proc/get_macro_resolution()
-	. = 5
-	if (macrotier > 1)
-		. -= macrotier // 5 for tier1, 3 for 2, 2 for 3, 1 for 4.
-
 /obj/machinery/chem_dispenser/proc/check_macro(macro)
-	var/res = get_macro_resolution()
+	var/res = macroresolution
 	for (var/reagent in splittext(trim(macro), ";"))
 		if (!check_macro_part(reagent, res))
 			return FALSE
 	return TRUE
 
-/obj/machinery/chem_dispenser/proc/check_macro_part(var/part, var/res = get_macro_resolution())
+/obj/machinery/chem_dispenser/proc/check_macro_part(var/part, var/res = macroresolution)
 	var/detail = splittext(part, "=")
-	if (round(text2num(detail[2]), res) != text2num(detail[2]))
+	if (text2num(detail[2]) < res)
 		return FALSE
 	return TRUE
 
-/obj/machinery/chem_dispenser/proc/process_recipe_list(var/fucking_hell)
+/obj/machinery/chem_dispenser/proc/process_recipe_list(var/recipe)
 	var/list/key_list = list()
 	var/list/final_list = list()
-	var/list/first_process = splittext(fucking_hell, ";")
+	var/list/first_process = splittext(recipe, ";")
 	for(var/reagents in first_process)
-		var/list/fuck = splittext(reagents, "=")
-		final_list += list(avoid_assoc_duplicate_keys(fuck[1],key_list) = text2num(fuck[2]))
+		var/list/splitreagent = splittext(reagents, "=")
+		final_list += list(avoid_assoc_duplicate_keys(splitreagent[1],key_list) = text2num(splitreagent[2]))
 	return final_list
+
+/obj/machinery/chem_dispenser/AltClick(mob/living/user)
+	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	replace_beaker(user)
+	return
+
+/obj/machinery/chem_dispenser/drinks/Initialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
+
+/obj/machinery/chem_dispenser/drinks/setDir()
+	var/old = dir
+	. = ..()
+	if(dir != old)
+		update_icon()  // the beaker needs to be re-positioned if we rotate
 
 /obj/machinery/chem_dispenser/drinks/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
@@ -406,15 +430,16 @@ obj/machinery/chem_dispenser/proc/work_animation()
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
 	desc = "Contains a large reservoir of soft drinks."
-	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "soda_dispenser"
 	has_panel_overlay = FALSE
 	amount = 10
 	pixel_y = 6
 	layer = WALL_OBJ_LAYER
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	working_state = null
 	nopower_state = null
+	pass_flags = PASSTABLE
 	dispensable_reagents = list(
 		"water",
 		"ice",
@@ -433,10 +458,13 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"shamblers",
 		"sugar",
 		"orangejuice",
+		"grenadine",
 		"limejuice",
 		"tomatojuice",
-		"lemonjuice"
+		"lemonjuice",
+		"menthol"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"thirteenloko",
 		"whiskeycola",
@@ -444,12 +472,30 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"tirizene"
 	)
 
+/obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
+	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
+	obj_flags = CAN_BE_HIT | EMAGGED
+	flags_1 = NODECONSTRUCT_1
+
+/obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize()
+	. = ..()
+	dispensable_reagents |= emagged_reagents //adds emagged reagents
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
+
 /obj/machinery/chem_dispenser/drinks/beer
 	name = "booze dispenser"
 	desc = "Contains a large reservoir of the good stuff."
-	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "booze_dispenser"
+	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer
 	dispensable_reagents = list(
 		"beer",
 		"kahlua",
@@ -466,26 +512,49 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"hcider",
 		"creme_de_menthe",
 		"creme_de_cacao",
-		"triple_sec"
+		"triple_sec",
+		"sake"
 	)
+	upgrade_reagents = null
 	emagged_reagents = list(
 		"ethanol",
 		"iron",
 		"minttoxin",
-		"atomicbomb"
+		"atomicbomb",
+		"fernet"
 	)
 
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
+	desc = "Contains a large reservoir of the good stuff. This model has had its safeties shorted out."
+	obj_flags = CAN_BE_HIT | EMAGGED
+	flags_1 = NODECONSTRUCT_1
+
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize()
+	. = ..()
+	dispensable_reagents |= emagged_reagents //adds emagged reagents
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser/drinks/beer(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
 
 /obj/machinery/chem_dispenser/mutagen
 	name = "mutagen dispenser"
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
+	upgrade_reagents = null
 	emagged_reagents = list("plasma")
 
 
 /obj/machinery/chem_dispenser/mutagensaltpeter
 	name = "botanical chemical dispenser"
 	desc = "Creates and dispenses chemicals useful for botany."
+	flags_1 = NODECONSTRUCT_1
+
 	dispensable_reagents = list(
 		"mutagen",
 		"saltpetre",
@@ -500,3 +569,34 @@ obj/machinery/chem_dispenser/proc/work_animation()
 		"ammonia",
 		"ash",
 		"diethylamine")
+	upgrade_reagents = null
+
+/obj/machinery/chem_dispenser/mutagensaltpeter/Initialize()
+	. = ..()
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()
+
+/obj/machinery/chem_dispenser/fullupgrade //fully ugpraded stock parts, emagged
+	desc = "Creates and dispenses chemicals. This model has had its safeties shorted out."
+	obj_flags = CAN_BE_HIT | EMAGGED
+	flags_1 = NODECONSTRUCT_1
+
+/obj/machinery/chem_dispenser/fullupgrade/Initialize()
+	. = ..()
+	dispensable_reagents |= emagged_reagents //adds emagged reagents
+	component_parts = list()
+	component_parts += new /obj/item/circuitboard/machine/chem_dispenser(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
+	component_parts += new /obj/item/stock_parts/capacitor/quadratic(null)
+	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
+	component_parts += new /obj/item/stack/sheet/glass(null)
+	component_parts += new /obj/item/stock_parts/cell/bluespace(null)
+	RefreshParts()

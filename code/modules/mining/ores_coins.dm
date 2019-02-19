@@ -99,23 +99,22 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	recipes = GLOB.sand_recipes
 	. = ..()
 
-/obj/item/stack/ore/glass/throw_impact(atom/hit_atom)
+/obj/item/stack/ore/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !ishuman(hit_atom))
 		return
 	var/mob/living/carbon/human/C = hit_atom
-	if(C.head && C.head.flags_cover & HEADCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s headgear blocks the sand!</span>")
-		return
-	if(C.wear_mask && C.wear_mask.flags_cover & MASKCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s mask blocks the sand!</span>")
-		return
-	if(C.glasses && C.glasses.flags_cover & GLASSESCOVERSEYES)
-		visible_message("<span class='danger'>[C]'s glasses block the sand!</span>")
+	if(C.is_eyes_covered())
+		C.visible_message("<span class='danger'>[C]'s eye protection blocks the sand!</span>", "<span class='warning'>Your eye protection blocks the sand!</span>")
 		return
 	C.adjust_blurriness(6)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
 	C.confused += 5
 	to_chat(C, "<span class='userdanger'>\The [src] gets into your eyes! The pain, it burns!</span>")
+	qdel(src)
+
+/obj/item/stack/ore/glass/ex_act(severity, target)
+	if (severity == EXPLODE_NONE)
+		return
 	qdel(src)
 
 /obj/item/stack/ore/glass/basalt
@@ -210,7 +209,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	return ..()
 
 /obj/item/twohanded/required/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(!wires && istype(I, /obj/item/device/assembly/igniter))
+	if(!wires && istype(I, /obj/item/assembly/igniter))
 		user.visible_message("[user] attaches [I] to [src].", "<span class='notice'>You attach [I] to [src].</span>")
 		wires = new /datum/wires/explosive/gibtonite(src)
 		attacher = key_name(user)
@@ -227,7 +226,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		GibtoniteReaction(user)
 		return
 	if(primed)
-		if(istype(I, /obj/item/device/mining_scanner) || istype(I, /obj/item/device/t_scanner/adv_mining_scanner) || istype(I, /obj/item/device/multitool))
+		if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
 			primed = FALSE
 			if(det_timer)
 				deltimer(det_timer)
@@ -245,38 +244,32 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/twohanded/required/gibtonite/bullet_act(obj/item/projectile/P)
 	GibtoniteReaction(P.firer)
-	..()
+	. = ..()
 
 /obj/item/twohanded/required/gibtonite/ex_act()
 	GibtoniteReaction(null, 1)
-
-
 
 /obj/item/twohanded/required/gibtonite/proc/GibtoniteReaction(mob/user, triggered_by = 0)
 	if(!primed)
 		primed = TRUE
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,1)
 		icon_state = "Gibtonite active"
-		var/turf/bombturf = get_turf(src)
-		var/area/A = get_area(bombturf)
-		var/notify_admins = 0
+		var/notify_admins = FALSE
 		if(z != 5)//Only annoy the admins ingame if we're triggered off the mining zlevel
-			notify_admins = 1
+			notify_admins = TRUE
 
-		if(notify_admins)
-			if(triggered_by == 1)
-				message_admins("An explosion has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)].")
-			else if(triggered_by == 2)
-				message_admins("A signal has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
-			else
-				message_admins("[ADMIN_LOOKUPFLW(attacher)] has triggered a [name] to detonate at [ADMIN_COORDJMP(bombturf)].")
 		if(triggered_by == 1)
-			log_game("An explosion has primed a [name] for detonation at [A][COORD(bombturf)]")
+			log_bomber(null, "An explosion has primed a", src, "for detonation", notify_admins)
 		else if(triggered_by == 2)
-			log_game("A signal has primed a [name] for detonation at [A][COORD(bombturf)]. Igniter attacher: [key_name(attacher)].")
+			var/turf/bombturf = get_turf(src)
+			if(notify_admins)
+				message_admins("A signal has triggered a [name] to detonate at [ADMIN_VERBOSEJMP(bombturf)]. Igniter attacher: [ADMIN_LOOKUPFLW(attacher)]")
+			var/bomb_message = "A signal has primed a [name] for detonation at [AREACOORD(bombturf)]. Igniter attacher: [key_name(attacher)]."
+			log_game(bomb_message)
+			GLOB.bombers += bomb_message
 		else
 			user.visible_message("<span class='warning'>[user] strikes \the [src], causing a chain reaction!</span>", "<span class='danger'>You strike \the [src], causing a chain reaction.</span>")
-			log_game("[key_name(user)] has primed a [name] for detonation at [A][COORD(bombturf)]")
+			log_bomber(user, "has primed a", src, "for detonation", notify_admins)
 		det_timer = addtimer(CALLBACK(src, .proc/detonate, notify_admins), det_time, TIMER_STOPPABLE)
 
 /obj/item/twohanded/required/gibtonite/proc/detonate(notify_admins)
@@ -300,10 +293,6 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	qdel(src)
 
-/obj/item/ore/stack/glass/ex_act(severity, target)
-	if (severity == EXPLODE_NONE)
-		return
-	qdel(src)
 
 /*****************************Coin********************************/
 
@@ -325,6 +314,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/value = 1
 	var/coinflip
 
+/obj/item/coin/get_item_credit_value()
+	return value
+
 /obj/item/coin/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] contemplates suicide with \the [src]!</span>")
 	if (!attack_self(user))
@@ -335,9 +327,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/coin/proc/manual_suicide(mob/living/user)
 	var/index = sideslist.Find(coinflip)
-	message_admins("coinflip landed on [coinflip] which is [index] in sideslist")
 	if (index==2)//tails
-		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promply falls over, dead!</span>")
+		user.visible_message("<span class='suicide'>\the [src] lands on [coinflip]! [user] promptly falls over, dead!</span>")
 		user.adjustOxyLoss(200)
 		user.death(0)
 	else
@@ -357,22 +348,25 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "gold coin"
 	cmineral = "gold"
 	icon_state = "coin_gold_heads"
-	value = 50
+	value = 25
 	materials = list(MAT_GOLD = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("gold" = 4)
 
 /obj/item/coin/silver
 	name = "silver coin"
 	cmineral = "silver"
 	icon_state = "coin_silver_heads"
-	value = 20
+	value = 10
 	materials = list(MAT_SILVER = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("silver" = 4)
 
 /obj/item/coin/diamond
 	name = "diamond coin"
 	cmineral = "diamond"
 	icon_state = "coin_diamond_heads"
-	value = 500
+	value = 100
 	materials = list(MAT_DIAMOND = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("carbon" = 4)
 
 /obj/item/coin/iron
 	name = "iron coin"
@@ -380,39 +374,43 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_iron_heads"
 	value = 1
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("iron" = 4)
 
 /obj/item/coin/plasma
 	name = "plasma coin"
 	cmineral = "plasma"
 	icon_state = "coin_plasma_heads"
-	value = 100
+	value = 40
 	materials = list(MAT_PLASMA = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("plasma" = 4)
 
 /obj/item/coin/uranium
 	name = "uranium coin"
 	cmineral = "uranium"
 	icon_state = "coin_uranium_heads"
-	value = 80
+	value = 25
 	materials = list(MAT_URANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("uranium" = 4)
 
 /obj/item/coin/bananium
 	name = "bananium coin"
 	cmineral = "bananium"
 	icon_state = "coin_bananium_heads"
-	value = 1000 //makes the clown cry
+	value = 200 //makes the clown cry
 	materials = list(MAT_BANANIUM = MINERAL_MATERIAL_AMOUNT*0.2)
+	grind_results = list("banana" = 4)
 
 /obj/item/coin/adamantine
 	name = "adamantine coin"
 	cmineral = "adamantine"
 	icon_state = "coin_adamantine_heads"
-	value = 1500
+	value = 100
 
 /obj/item/coin/mythril
 	name = "mythril coin"
 	cmineral = "mythril"
 	icon_state = "coin_mythril_heads"
-	value = 3000
+	value = 300
 
 /obj/item/coin/twoheaded
 	cmineral = "iron"
@@ -421,6 +419,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	sideslist = list("heads")
 	materials = list(MAT_METAL = MINERAL_MATERIAL_AMOUNT*0.2)
 	value = 1
+	grind_results = list("iron" = 4)
 
 /obj/item/coin/antagtoken
 	name = "antag token"
@@ -429,6 +428,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	desc = "A novelty coin that helps the heart know what hard evidence cannot prove."
 	sideslist = list("valid", "salad")
 	value = 0
+	grind_results = list("sodiumchloride" = 4)
 
 /obj/item/coin/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stack/cable_coil))

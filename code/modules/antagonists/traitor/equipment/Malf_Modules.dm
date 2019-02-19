@@ -238,6 +238,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
+	if (active)
+		return //prevent the AI from activating an already active doomsday
 	active = TRUE
 	set_us_up_the_bomb(owner)
 
@@ -319,7 +321,6 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	name = "doomsday device"
 	icon_state = "nuclearbomb_base"
 	desc = "A weapon which disintegrates all organic life in a large area."
-	anchored = TRUE
 	density = TRUE
 	verb_exclaim = "blares"
 	var/timing = FALSE
@@ -487,8 +488,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /datum/AI_Module/large/break_fire_alarms
 	module_name = "Thermal Sensor Override"
 	mod_pick_name = "burnpigs"
-	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert. \
-	Anyone can check the fire alarm's interface and may be tipped off by its status."
+	description = "Gives you the ability to override the thermal sensors on all fire alarms. This will remove their ability to scan for fire and thus their ability to alert."
 	one_purchase = TRUE
 	cost = 25
 	power_type = /datum/action/innate/ai/break_fire_alarms
@@ -506,6 +506,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(F.z))
 			continue
 		F.obj_flags |= EMAGGED
+		F.update_icon()
 	to_chat(owner, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
@@ -533,7 +534,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!is_station_level(AA.z))
 			continue
 		AA.obj_flags |= EMAGGED
-	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.</span>")
+	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overridden. Air alarms may now use the Flood environmental mode.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
 
@@ -556,6 +557,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(obj/machinery/M)
 	if(M && !QDELETED(M))
+		var/turf/T = get_turf(M)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] overloaded [M.name] at [ADMIN_VERBOSEJMP(T)].")
+		log_game("[key_name(usr)] overloaded [M.name] at [AREACOORD(T)].")
 		explosion(get_turf(M), 0, 2, 3, 0)
 		if(M) //to check if the explosion killed it before we try to delete it
 			qdel(M)
@@ -623,7 +627,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		to_chat(ranged_ability_user, "<span class='warning'>You can only animate machines!</span>")
 		return
 	if(!target.can_be_overridden() || is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
-		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overriden!</span>")
+		to_chat(ranged_ability_user, "<span class='warning'>That machine can't be overridden!</span>")
 		return
 	ranged_ability_user.playsound_local(ranged_ability_user, 'sound/misc/interference.ogg', 50, 0)
 	attached_action.adjust_uses(-1)
@@ -666,6 +670,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		active = FALSE
 		return
 	if(!owner_AI.can_place_transformer(src))
+		active = FALSE
 		return
 	var/turf/T = get_turf(owner_AI.eyeobj)
 	var/obj/machinery/transformer/conveyor = new(T)
@@ -803,7 +808,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		desc = "[initial(desc)] There are [uses] reactivations remaining."
 
 
-//Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them x-ray vision.
+//Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
 /datum/AI_Module/large/upgrade_cameras
 	module_name = "Upgrade Camera Network"
 	mod_pick_name = "upgradecam"
@@ -823,17 +828,17 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	for(var/V in GLOB.cameranet.cameras)
 		var/obj/machinery/camera/C = V
 		if(C.assembly)
-			var/upgraded = 0
+			var/upgraded = FALSE
 
 			if(!C.isXRay())
-				C.upgradeXRay()
+				C.upgradeXRay(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_xray_firmware_active and clean up isxray()
 				//Update what it can see.
 				GLOB.cameranet.updateVisibility(C, 0)
-				upgraded = 1
+				upgraded = TRUE
 
 			if(!C.isEmpProof())
-				C.upgradeEmpProof()
-				upgraded = 1
+				C.upgradeEmpProof(TRUE) //if this is removed you can get rid of camera_assembly/var/malf_emp_firmware_active and clean up isemp()
+				upgraded = TRUE
 
 			if(upgraded)
 				upgraded_cameras++

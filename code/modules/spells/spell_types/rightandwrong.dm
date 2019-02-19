@@ -13,13 +13,13 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/gyropistol,
 	/obj/item/gun/energy/pulse,
 	/obj/item/gun/ballistic/automatic/pistol/suppressed,
-	/obj/item/gun/ballistic/revolver/doublebarrel,
+	/obj/item/gun/ballistic/shotgun/doublebarrel,
 	/obj/item/gun/ballistic/shotgun,
 	/obj/item/gun/ballistic/shotgun/automatic/combat,
 	/obj/item/gun/ballistic/automatic/ar,
 	/obj/item/gun/ballistic/revolver/mateba,
-	/obj/item/gun/ballistic/shotgun/boltaction,
-	/obj/item/gun/ballistic/automatic/speargun,
+	/obj/item/gun/ballistic/rifle/boltaction,
+	/obj/item/pneumatic_cannon/speargun,
 	/obj/item/gun/ballistic/automatic/mini_uzi,
 	/obj/item/gun/energy/lasercannon,
 	/obj/item/gun/energy/kinetic_accelerator/crossbow/large,
@@ -38,14 +38,16 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/energy/plasmacutter/adv,
 	/obj/item/gun/energy/wormhole_projector,
 	/obj/item/gun/ballistic/automatic/wt550,
-	/obj/item/gun/ballistic/automatic/shotgun/bulldog,
+	/obj/item/gun/ballistic/shotgun/bulldog,
 	/obj/item/gun/ballistic/revolver/grenadelauncher,
 	/obj/item/gun/ballistic/revolver/golden,
 	/obj/item/gun/ballistic/automatic/sniper_rifle,
+	/obj/item/gun/ballistic/rocketlauncher,
 	/obj/item/gun/medbeam,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/gravity_gun))
 
+//if you add anything that isn't covered by the typepaths below, add it to summon_magic_objective_types
 GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/spell/fireball,
 	/obj/item/book/granter/spell/smoke,
@@ -69,7 +71,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/voodoo,
 	/obj/item/warpwhistle,
 	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
-	/obj/item/device/immortality_talisman,
+	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword))
 
 GLOBAL_LIST_INIT(summoned_special_magic, list(
@@ -78,8 +80,23 @@ GLOBAL_LIST_INIT(summoned_special_magic, list(
 	/obj/item/storage/belt/wands/full,
 	/obj/item/antag_spawner/contract,
 	/obj/item/gun/magic/staff/chaos,
-	/obj/item/device/necromantic_stone,
+	/obj/item/necromantic_stone,
 	/obj/item/blood_contract))
+
+//everything above except for single use spellbooks, because they are counted separately (and are for basic bitches anyways)
+GLOBAL_LIST_INIT(summoned_magic_objectives, list(
+	/obj/item/antag_spawner/contract,
+	/obj/item/blood_contract,
+	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
+	/obj/item/gun/magic,
+	/obj/item/immortality_talisman,
+	/obj/item/melee/ghost_sword,
+	/obj/item/necromantic_stone,
+	/obj/item/scrying,
+	/obj/item/spellbook,
+	/obj/item/storage/belt/wands/full,
+	/obj/item/voodoo,
+	/obj/item/warpwhistle))
 
 // If true, it's the probability of triggering "survivor" antag.
 GLOBAL_VAR_INIT(summon_guns_triggered, FALSE)
@@ -96,7 +113,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		SSticker.mode.traitors += H.mind
 
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
-		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
+		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
 
 	var/gun_type = pick(GLOB.summoned_guns)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
@@ -116,7 +133,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 
 	if(prob(GLOB.summon_magic_triggered) && !(H.mind.has_antag_datum(/datum/antagonist)))
 		H.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
-		H.log_message("<font color='red'>Was made into a survivalist, and trusts no one!</font>", INDIVIDUAL_ATTACK_LOG)
+		H.log_message("was made into a survivalist, and trusts no one!</font>", LOG_ATTACK, color="red")
 
 	var/magic_type = pick(GLOB.summoned_magic)
 	var/lucky = FALSE
@@ -137,7 +154,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 /proc/rightandwrong(summon_type, mob/user, survivor_probability)
 	if(user) //in this case either someone holding a spellbook or a badmin
 		to_chat(user, "<span class='warning'>You summoned [summon_type]!</span>")
-		message_admins("[key_name_admin(user, 1)] summoned [summon_type]!")
+		message_admins("[ADMIN_LOOKUPFLW(user)] summoned [summon_type]!")
 		log_game("[key_name(user)] summoned [summon_type]!")
 
 	if(summon_type == SUMMON_MAGIC)
@@ -148,6 +165,9 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		CRASH("Bad summon_type given: [summon_type]")
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
+		var/turf/T = get_turf(H)
+		if(T && is_away_level(T.z))
+			continue
 		if(summon_type == SUMMON_MAGIC)
 			give_magic(H)
 		else

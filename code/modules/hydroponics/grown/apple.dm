@@ -26,6 +26,7 @@
 	foodtype = FRUIT
 	juice_results = list("applejuice" = 0)
 	tastes = list("apple" = 1)
+	distill_reagent = "hcider"
 
 // Gold Apple
 /obj/item/seeds/apple/gold
@@ -47,3 +48,5 @@
 	desc = "Emblazoned upon the apple is the word 'Kallisti'."
 	icon_state = "goldapple"
 	filling_color = "#FFD700"
+	distill_reagent = null
+	wine_power = 50

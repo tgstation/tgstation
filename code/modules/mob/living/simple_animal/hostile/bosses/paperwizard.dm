@@ -23,6 +23,8 @@
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 	var/list/copies = list()
 
+	do_footstep = TRUE
+
 
 //Summon Ability
 //Lets the wizard summon his art to fight for him

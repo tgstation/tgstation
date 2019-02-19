@@ -5,7 +5,7 @@
 /mob/living/carbon/alien/get_ear_protection()
 	return 2 //no ears
 
-/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush)
+/mob/living/carbon/alien/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..(AM, skipcatch = TRUE, hitpush = FALSE)
 
 
@@ -21,9 +21,11 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
-			resting = 0
+			set_resting(FALSE)
 			AdjustStun(-60)
 			AdjustKnockdown(-60)
+			AdjustImmobilized(-60)
+			AdjustParalyzed(-60)
 			AdjustUnconscious(-60)
 			AdjustSleeping(-100)
 			visible_message("<span class='notice'>[M.name] nuzzles [src] trying to wake [p_them()] up!</span>")
@@ -38,7 +40,7 @@ In all, this is a lot like the monkey code. /N
 				visible_message("<span class='danger'>[M.name] bites [src]!</span>", \
 						"<span class='userdanger'>[M.name] bites [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 				adjustBruteLoss(1)
-				add_logs(M, src, "attacked")
+				log_combat(M, src, "attacked")
 				updatehealth()
 			else
 				to_chat(M, "<span class='warning'>[name] is too injured for that.</span>")
@@ -97,7 +99,7 @@ In all, this is a lot like the monkey code. /N
 		if(M.is_adult)
 			damage = rand(10, 40)
 		adjustBruteLoss(damage)
-		add_logs(M, src, "attacked")
+		log_combat(M, src, "attacked")
 		updatehealth()
 
 /mob/living/carbon/alien/ex_act(severity, target, origin)

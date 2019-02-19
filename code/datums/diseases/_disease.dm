@@ -32,6 +32,7 @@
 	var/list/strain_data = list() //dna_spread special bullshit
 	var/list/infectable_biotypes = list(MOB_ORGANIC) //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
+	var/copy_type = null //if this is null, copies will use the type of the instance being copied
 
 /datum/disease/Destroy()
 	. = ..()
@@ -41,10 +42,8 @@
 
 //add this disease if the host does not already have too many
 /datum/disease/proc/try_infect(var/mob/living/infectee, make_copy = TRUE)
-	if(infectee.diseases.len < DISEASE_LIMIT)
-		infect(infectee, make_copy)
-		return TRUE
-	return FALSE
+	infect(infectee, make_copy)
+	return TRUE
 
 //add the disease with no checks
 /datum/disease/proc/infect(var/mob/living/infectee, make_copy = TRUE)
@@ -66,15 +65,17 @@
 
 	if(!cure)
 		if(prob(stage_prob))
-			stage = min(stage + 1,max_stages)
+			update_stage(min(stage + 1,max_stages))
 	else
 		if(prob(cure_chance))
-			stage = max(stage - 1, 1)
+			update_stage(max(stage - 1, 1))
 
 	if(disease_flags & CURABLE)
 		if(cure && prob(cure_chance))
 			cure()
 
+/datum/disease/proc/update_stage(new_stage)
+	stage = new_stage
 
 /datum/disease/proc/has_cure()
 	if(!(disease_flags & CURABLE))
@@ -141,7 +142,7 @@
 									"bypasses_immunity", "permeability_mod", "severity", "required_organs", "needs_all_cures", "strain_data",
 									"infectable_biotypes", "process_dead")
 
-	var/datum/disease/D = new type()
+	var/datum/disease/D = copy_type ? new copy_type() : new type()
 	for(var/V in copy_vars)
 		var/val = vars[V]
 		if(islist(val))
@@ -161,3 +162,21 @@
 	affected_mob.diseases -= src		//remove the datum from the list
 	affected_mob.med_hud_set_status()
 	affected_mob = null
+
+//Use this to compare severities
+/proc/get_disease_severity_value(severity)
+	switch(severity)
+		if(DISEASE_SEVERITY_POSITIVE)
+			return 1
+		if(DISEASE_SEVERITY_NONTHREAT)
+			return 2
+		if(DISEASE_SEVERITY_MINOR)
+			return 3
+		if(DISEASE_SEVERITY_MEDIUM)
+			return 4
+		if(DISEASE_SEVERITY_HARMFUL)
+			return 5
+		if(DISEASE_SEVERITY_DANGEROUS)
+			return 6
+		if(DISEASE_SEVERITY_BIOHAZARD)
+			return 7

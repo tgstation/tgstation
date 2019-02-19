@@ -1,3 +1,8 @@
+//defines the drill hat's yelling setting
+#define DRILL_DEFAULT	"default"
+#define DRILL_SHOUTING	"shouting"
+#define DRILL_YELLING	"yelling"
+#define DRILL_CANADIAN	"canadian"
 
 //Chef
 /obj/item/clothing/head/chefhat
@@ -12,10 +17,10 @@
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is donning [src]! It looks like [user.p_theyre()] trying to become a chef.</span>")
-	user.say("Bork Bork Bork!")
+	user.say("Bork Bork Bork!", forced = "chef hat suicide")
 	sleep(20)
 	user.visible_message("<span class='suicide'>[user] climbs into an imaginary oven!</span>")
-	user.say("BOOORK!")
+	user.say("BOOORK!", forced = "chef hat suicide")
 	playsound(user, 'sound/machines/ding.ogg', 50, 1)
 	return(FIRELOSS)
 
@@ -55,34 +60,17 @@
 	flags_inv = HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 
-/obj/item/clothing/head/cage
-	name = "cage"
-	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
-	icon_state = "cage"
-	item_state = "cage"
-	worn_x_dimension = 64
-	worn_y_dimension = 64
-	dynamic_hair_suffix = ""
-
-
-/obj/item/clothing/head/witchunter_hat
-	name = "witchunter hat"
-	desc = "This hat saw much use back in the day."
-	icon_state = "witchhunterhat"
-	item_state = "witchhunterhat"
-	flags_cover = HEADCOVERSEYES
-
 //Detective
 /obj/item/clothing/head/fedora/det_hat
 	name = "detective's fedora"
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
+	armor = list("melee" = 25, "bullet" = 5, "laser" = 25, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 50)
 	icon_state = "detective"
 	var/candy_cooldown = 0
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/detective
 	dog_fashion = /datum/dog_fashion/head/detective
 
-/obj/item/clothing/head/fedora/Initialize()
+/obj/item/clothing/head/fedora/det_hat/Initialize()
 	. = ..()
 	new /obj/item/reagent_containers/food/drinks/flask/det(src)
 
@@ -118,8 +106,18 @@
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
-	flags_1 = NODROP_1
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
+
+/obj/item/clothing/head/beret/highlander/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, HIGHLANDER)
+
+/obj/item/clothing/head/beret/durathread
+	name = "durathread beret"
+	desc =  "A beret made from durathread, its resilient fibres provide some protection to the wearer."
+	icon_state = "beretdurathread"
+	item_color = null
+	armor = list("melee" = 15, "bullet" = 5, "laser" = 15, "energy" = 5, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 5)
 
 //Security
 
@@ -152,9 +150,68 @@
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/warden/drill
+	name = "warden's campaign hat"
+	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
+	icon_state = "wardendrill"
+	item_state = "wardendrill"
+	dog_fashion = null
+	var/mode = DRILL_DEFAULT
+
+/obj/item/clothing/head/warden/drill/screwdriver_act(mob/living/carbon/human/user, obj/item/I)
+	if(..())
+		return TRUE
+	switch(mode)
+		if(DRILL_DEFAULT)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the middle position.</span>")
+			mode = DRILL_SHOUTING
+		if(DRILL_SHOUTING)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the last position.</span>")
+			mode = DRILL_YELLING
+		if(DRILL_YELLING)
+			to_chat(user, "<span class='notice'>You set the voice circuit to the first position.</span>")
+			mode = DRILL_DEFAULT
+		if(DRILL_CANADIAN)
+			to_chat(user, "<span class='danger'>You adjust voice circuit but nothing happens, probably because it's broken.</span>")
+	return TRUE
+
+/obj/item/clothing/head/warden/drill/wirecutter_act(mob/living/user, obj/item/I)
+	if(mode != DRILL_CANADIAN)
+		to_chat(user, "<span class='danger'>You broke the voice circuit!</span>")
+		mode = DRILL_CANADIAN
+	return TRUE
+
+/obj/item/clothing/head/warden/drill/speechModification(M)
+	if(copytext(M, 1, 2) != "*")
+		if(mode == DRILL_DEFAULT)
+			M = " [M]"
+			return trim(M)
+		if(mode == DRILL_SHOUTING)
+			M = " [M]!"
+			return trim(M)
+		if(mode ==  DRILL_YELLING)
+			M = " [M]!!"
+			return trim(M)
+		if(mode == DRILL_CANADIAN)
+			M = " [M]"
+			var/list/canadian_words = strings("canadian_replacement.json", "canadian")
+
+			for(var/key in canadian_words)
+				var/value = canadian_words[key]
+				if(islist(value))
+					value = pick(value)
+
+				M = replacetextEx(M, " [uppertext(key)]", " [uppertext(value)]")
+				M = replacetextEx(M, " [capitalize(key)]", " [capitalize(value)]")
+				M = replacetextEx(M, " [key]", " [value]")
+
+			if(prob(30))
+				M += pick(", eh?", ", EH?")
+		return trim(M)
+
 /obj/item/clothing/head/beret/sec
 	name = "security beret"
-	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficent protection."
+	desc = "A robust beret with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
 	icon_state = "beret_badge"
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 20, "acid" = 50)
 	strip_delay = 60
@@ -181,3 +238,8 @@
 	name = "treasure hunter's fedora"
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
+
+#undef DRILL_DEFAULT
+#undef DRILL_SHOUTING
+#undef DRILL_YELLING
+#undef DRILL_CANADIAN

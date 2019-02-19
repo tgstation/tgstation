@@ -44,6 +44,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "clockwork_floor"
 	layer = TURF_LAYER
+	plane = FLOOR_PLANE
 
 /obj/effect/clockwork/overlay/floor/bloodcult //this is used by BLOOD CULT, it shouldn't use such a path...
 	icon_state = "cult"

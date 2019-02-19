@@ -7,7 +7,7 @@
 	nodamage = 1
 	flag = "bullet"
 
-/obj/item/projectile/meteor/Collide(atom/A)
+/obj/item/projectile/meteor/Bump(atom/A)
 	if(A == firer)
 		forceMove(A.loc)
 		return

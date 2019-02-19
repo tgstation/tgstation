@@ -68,7 +68,7 @@
 		var/obj/item/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
-			var/obj/item/device/flashlight/flare/torch/T = new /obj/item/device/flashlight/flare/torch(user.loc)
+			var/obj/item/flashlight/flare/torch/T = new /obj/item/flashlight/flare/torch(user.loc)
 			usr.dropItemToGround(W)
 			usr.put_in_active_hand(T)
 			qdel(leaf)
@@ -110,11 +110,16 @@
 	anchored = TRUE
 	buckle_lying = 0
 	var/burning = 0
+	var/burn_icon = "bonfire_on_fire" //for a softer more burning embers icon, use "bonfire_warm"
 	var/grill = FALSE
 	var/fire_stack_strength = 5
 
 /obj/structure/bonfire/dense
 	density = TRUE
+
+/obj/structure/bonfire/prelit/Initialize()
+	. = ..()
+	StartBurning()
 
 /obj/structure/bonfire/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSTABLE))
@@ -146,7 +151,7 @@
 	if(W.is_hot())
 		StartBurning()
 	if(grill)
-		if(user.a_intent != INTENT_HARM && !(W.flags_1 & ABSTRACT_1))
+		if(user.a_intent != INTENT_HARM && !(W.item_flags & ABSTRACT))
 			if(user.temporarilyRemoveItemFromInventory(W))
 				W.forceMove(get_turf(src))
 				var/list/click_params = params2list(params)
@@ -183,13 +188,13 @@
 		if(O.air)
 			var/loc_gases = O.air.gases
 			if(loc_gases[/datum/gas/oxygen][MOLES] > 13)
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /obj/structure/bonfire/proc/StartBurning()
 	if(!burning && CheckOxygen())
-		icon_state = "bonfire_on_fire"
-		burning = 1
+		icon_state = burn_icon
+		burning = TRUE
 		set_light(6)
 		Burn()
 		START_PROCESSING(SSobj, src)

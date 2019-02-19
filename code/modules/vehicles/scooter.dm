@@ -26,7 +26,7 @@
 	. = ..()
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
-		if(buckled_mob.get_num_legs() > 0)
+		if(buckled_mob.get_num_legs(FALSE) > 0)
 			buckled_mob.pixel_y = 5
 		else
 			buckled_mob.pixel_y = -4
@@ -41,14 +41,15 @@
 
 /obj/vehicle/ridden/scooter/skateboard
 	name = "skateboard"
-	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars."
+	desc = "An unfinished scooter which can only barely be called a skateboard. It's still rideable, but probably unsafe. Looks like you'll need to add a few rods to make handlebars. Alt-click to adjust speed."
 	icon_state = "skateboard"
 	density = FALSE
+	var/adjusted_speed = FALSE
 
 /obj/vehicle/ridden/scooter/skateboard/Initialize()
 	. = ..()
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
-	D.vehicle_move_delay = 0
+	D.vehicle_move_delay = 1.5
 	D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
 	D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
 	D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
@@ -63,16 +64,16 @@
 		density = FALSE
 	return ..()
 
-/obj/vehicle/ridden/scooter/skateboard/Collide(atom/A)
+/obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
-		H.Knockdown(100)
+		H.Paralyze(100)
 		H.adjustStaminaLoss(40)
-		var/head_slot = H.get_item_by_slot(slot_head)
+		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(3)
 			H.updatehealth()
@@ -91,6 +92,17 @@
 		var/obj/item/melee/skateboard/board = new /obj/item/melee/skateboard()
 		M.put_in_hands(board)
 		qdel(src)
+
+/obj/vehicle/ridden/scooter/skateboard/AltClick(mob/user)
+	var/datum/component/riding/R = src.GetComponent(/datum/component/riding)
+	if (!adjusted_speed)
+		R.vehicle_move_delay = 0
+		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go faster.</span>")
+		adjusted_speed = TRUE
+	else
+		R.vehicle_move_delay = 1
+		to_chat(user, "<span class='notice'>You adjust the wheels on [src] to make it go slower.</span>")
+		adjusted_speed = FALSE
 
 //CONSTRUCTION
 /obj/item/scooter_frame
@@ -136,6 +148,8 @@
 		return ..()
 
 /obj/vehicle/ridden/scooter/skateboard/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
 	to_chat(user, "<span class='notice'>You begin to deconstruct and remove the wheels on [src]...</span>")
 	if(I.use_tool(src, user, 20, volume=50))
 		to_chat(user, "<span class='notice'>You deconstruct the wheels on [src].</span>")
@@ -146,6 +160,9 @@
 			unbuckle_mob(H)
 		qdel(src)
 	return TRUE
+
+/obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
+	return
 
 //Wheelys
 /obj/vehicle/ridden/scooter/wheelys
@@ -173,16 +190,16 @@
 	to_chat(M, "<span class='notice'>You pop out the Wheely-Heel's wheels.</span>")
 	return ..()
 
-/obj/vehicle/ridden/scooter/wheelys/Collide(atom/A)
+/obj/vehicle/ridden/scooter/wheelys/Bump(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/mob/living/H = buckled_mobs[1]
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
-		H.Knockdown(30)
+		H.Paralyze(30)
 		H.adjustStaminaLoss(10)
-		var/head_slot = H.get_item_by_slot(slot_head)
+		var/head_slot = H.get_item_by_slot(SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			H.adjustBrainLoss(1)
 			H.updatehealth()

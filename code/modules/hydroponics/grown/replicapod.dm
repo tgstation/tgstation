@@ -13,6 +13,7 @@
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
+	var/volume = 5
 	var/ckey = null
 	var/realName = null
 	var/datum/mind/mind = null
@@ -20,31 +21,41 @@
 	var/blood_type = null
 	var/list/features = null
 	var/factions = null
-	var/list/traits = null
+	var/list/quirks = null
 	var/contains_sample = 0
 
-/obj/item/seeds/replicapod/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/reagent_containers/syringe))
-		if(!contains_sample)
-			for(var/datum/reagent/blood/bloodSample in W.reagents.reagent_list)
-				if(bloodSample.data["mind"] && bloodSample.data["cloneable"] == 1)
-					mind = bloodSample.data["mind"]
-					ckey = bloodSample.data["ckey"]
-					realName = bloodSample.data["real_name"]
-					blood_gender = bloodSample.data["gender"]
-					blood_type = bloodSample.data["blood_type"]
-					features = bloodSample.data["features"]
-					factions = bloodSample.data["factions"]
-					traits = bloodSample.data["traits"]
-					W.reagents.clear_reagents()
-					to_chat(user, "<span class='notice'>You inject the contents of the syringe into the seeds.</span>")
-					contains_sample = 1
-				else
-					to_chat(user, "<span class='warning'>The seeds reject the sample!</span>")
-		else
-			to_chat(user, "<span class='warning'>The seeds already contain a genetic sample!</span>")
-	else
-		return ..()
+/obj/item/seeds/replicapod/Initialize()
+	. = ..()
+
+	create_reagents(volume, INJECTABLE|DRAWABLE)
+
+/obj/item/seeds/replicapod/on_reagent_change(changetype)
+	if(changetype == ADD_REAGENT)
+		var/datum/reagent/blood/B = reagents.has_reagent("blood")
+		if(B)
+			if(B.data["mind"] && B.data["cloneable"])
+				mind = B.data["mind"]
+				ckey = B.data["ckey"]
+				realName = B.data["real_name"]
+				blood_gender = B.data["gender"]
+				blood_type = B.data["blood_type"]
+				features = B.data["features"]
+				factions = B.data["factions"]
+				factions = B.data["quirks"]
+				contains_sample = TRUE
+				visible_message("<span class='notice'>The [src] is injected with a fresh blood sample.</span>")
+			else
+				visible_message("<span class='warning'>The [src] rejects the sample!</span>")
+
+	if(!reagents.has_reagent("blood"))
+		mind = null
+		ckey = null
+		realName = null
+		blood_gender = null
+		blood_type = null
+		features = null
+		factions = null
+		contains_sample = FALSE
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
@@ -53,10 +64,11 @@
 	return text
 
 
-/obj/item/seeds/replicapod/harvest(mob/user = usr) //now that one is fun -- Urist
+/obj/item/seeds/replicapod/harvest(mob/user) //now that one is fun -- Urist
 	var/obj/machinery/hydroponics/parent = loc
 	var/make_podman = 0
 	var/ckey_holder = null
+	var/list/result = list()
 	if(CONFIG_GET(flag/revival_pod_plants))
 		if(ckey)
 			for(var/mob/M in GLOB.player_list)
@@ -101,7 +113,7 @@
 		podman.faction |= factions
 		if(!features["mcolor"])
 			features["mcolor"] = "#59CE00"
-		for(var/V in traits)
+		for(var/V in quirks)
 			new V(podman)
 		podman.hardset_dna(null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 		podman.set_cloned_appearance()
@@ -113,6 +125,8 @@
 		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
+			result.Add(harvestseeds)
 			harvestseeds.forceMove(output_loc)
 
 	parent.update_tray()
+	return result

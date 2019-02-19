@@ -66,11 +66,11 @@
 		update_equip_info()
 		occupant_message("<span class='notice'>[target] successfully loaded into [src]. Life support functions engaged.</span>")
 		chassis.visible_message("<span class='warning'>[chassis] loads [target] into [src].</span>")
-		log_message("[target] loaded. Life support functions engaged.")
+		log_message("[target] loaded. Life support functions engaged.", LOG_MECHA)
 
 /obj/item/mecha_parts/mecha_equipment/medical/sleeper/proc/patient_insertion_check(mob/living/carbon/target)
 	if(target.buckled)
-		occupant_message("<span class='warning'>[target] will not fit into the sleeper because [target.p_they()] [target.p_are()] buckled to [target.buckled]!</span>")
+		occupant_message("<span class='warning'>[target] will not fit into the sleeper because [target.p_theyre()] buckled to [target.buckled]!</span>")
 		return
 	if(target.has_buckled_mobs())
 		occupant_message("<span class='warning'>[target] will not fit into the sleeper because of the creatures attached to it!</span>")
@@ -85,7 +85,7 @@
 		return
 	patient.forceMove(get_turf(src))
 	occupant_message("[patient] ejected. Life support functions disabled.")
-	log_message("[patient] ejected. Life support functions disabled.")
+	log_message("[patient] ejected. Life support functions disabled.", LOG_MECHA)
 	STOP_PROCESSING(SSobj, src)
 	patient = null
 	update_equip_info()
@@ -193,8 +193,8 @@
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && patient.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*2)
 		occupant_message("Injecting [patient] with [to_inject] units of [R.name].")
-		log_message("Injecting [patient] with [to_inject] units of [R.name].")
-		add_logs(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
+		log_message("Injecting [patient] with [to_inject] units of [R.name].", LOG_MECHA)
+		log_combat(chassis.occupant, patient, "injected", "[name] ([R] - [to_inject] units)")
 		SG.reagents.trans_id_to(patient,R.id,to_inject)
 		update_equip_info()
 	return
@@ -216,7 +216,7 @@
 		return
 	if(!chassis.has_charge(energy_drain))
 		set_ready_state(1)
-		log_message("Deactivated.")
+		log_message("Deactivated.", LOG_MECHA)
 		occupant_message("[src] deactivated - no power.")
 		STOP_PROCESSING(SSobj, src)
 		return
@@ -227,6 +227,8 @@
 		M.adjustOxyLoss(-1)
 	M.AdjustStun(-80)
 	M.AdjustKnockdown(-80)
+	M.AdjustParalyzed(-80)
+	M.AdjustImmobilized(-80)
 	M.AdjustUnconscious(-80)
 	if(M.reagents.get_reagent_amount("epinephrine") < 5)
 		M.reagents.add_reagent("epinephrine", 5)
@@ -257,8 +259,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/Initialize()
 	. = ..()
-	create_reagents(max_volume)
-	reagents.set_reacting(FALSE)
+	create_reagents(max_volume, NO_REACT)
 	syringes = new
 	known_reagents = list("epinephrine"="Epinephrine","charcoal"="Charcoal")
 	processed_reagents = new
@@ -274,7 +275,7 @@
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/critfail()
 	..()
 	if(reagents)
-		reagents.set_reacting(TRUE)
+		DISABLE_BITFIELD(reagents.flags, NO_REACT)
 
 /obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/mecha/medical/M)
 	if(..())
@@ -308,12 +309,12 @@
 	var/turf/trg = get_turf(target)
 	var/obj/item/reagent_containers/syringe/mechsyringe = syringes[1]
 	mechsyringe.forceMove(get_turf(chassis))
-	reagents.trans_to(mechsyringe, min(mechsyringe.volume, reagents.total_volume))
+	reagents.trans_to(mechsyringe, min(mechsyringe.volume, reagents.total_volume), transfered_by = chassis.occupant)
 	syringes -= mechsyringe
 	mechsyringe.icon = 'icons/obj/chemical.dmi'
 	mechsyringe.icon_state = "syringeproj"
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
-	log_message("Launched [mechsyringe] from [src], targeting [target].")
+	log_message("Launched [mechsyringe] from [src], targeting [target].", LOG_MECHA)
 	var/mob/originaloccupant = chassis.occupant
 	spawn(0)
 		src = null //if src is deleted, still process the syringe
@@ -336,9 +337,9 @@
 						mechsyringe.icon_state = initial(mechsyringe.icon_state)
 						mechsyringe.icon = initial(mechsyringe.icon)
 						mechsyringe.reagents.reaction(M, INJECT)
-						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume)
+						mechsyringe.reagents.trans_to(M, mechsyringe.reagents.total_volume, transfered_by = originaloccupant)
 						M.take_bodypart_damage(2)
-						add_logs(originaloccupant, M, "shot", "syringegun")
+						log_combat(originaloccupant, M, "shot", "syringegun")
 					break
 				else if(mechsyringe.loc == trg)
 					mechsyringe.icon_state = initial(mechsyringe.icon_state)
@@ -378,7 +379,7 @@
 			START_PROCESSING(SSobj, src)
 			occupant_message(message)
 			occupant_message("Reagent processing started.")
-			log_message("Reagent processing started.")
+			log_message("Reagent processing started.", LOG_MECHA)
 		return
 	if(afilter.get("show_reagents"))
 		chassis.occupant << browse(get_reagents_page(),"window=msyringegun")
@@ -464,7 +465,7 @@
 			if(!(D.CanPass(S,src.loc)))
 				occupant_message("Unable to load syringe.")
 				return 0
-		S.reagents.trans_to(src, S.reagents.total_volume)
+		S.reagents.trans_to(src, S.reagents.total_volume, transfered_by = chassis.occupant)
 		S.forceMove(src)
 		syringes += S
 		occupant_message("Syringe loaded.")
@@ -513,7 +514,7 @@
 		return
 	if(!processed_reagents.len || reagents.total_volume >= reagents.maximum_volume || !chassis.has_charge(energy_drain))
 		occupant_message("<span class=\"alert\">Reagent processing stopped.</a>")
-		log_message("Reagent processing stopped.")
+		log_message("Reagent processing stopped.", LOG_MECHA)
 		STOP_PROCESSING(SSobj, src)
 		return
 	var/amount = synth_speed / processed_reagents.len

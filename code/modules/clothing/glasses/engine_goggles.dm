@@ -90,10 +90,10 @@
 		var/strength = round(rad_places[i] / 1000, 0.1)
 		var/image/pic = new(loc = place)
 		var/mutable_appearance/MA = new()
-		MA.alpha = 128
+		MA.alpha = 180
 		MA.maptext = "[strength]k"
 		MA.color = "#64C864"
-		MA.layer = AREA_LAYER
+		MA.layer = FLY_LAYER
 		pic.appearance = MA
 		flick_overlay(pic, list(user.client), 8)
 
@@ -123,7 +123,7 @@
 	item_state = icon_state
 	if(isliving(loc))
 		var/mob/living/user = loc
-		if(user.get_item_by_slot(slot_glasses) == src)
+		if(user.get_item_by_slot(SLOT_GLASSES) == src)
 			user.update_inv_glasses()
 		else
 			user.update_inv_hands()

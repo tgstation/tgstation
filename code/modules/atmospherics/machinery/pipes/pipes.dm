@@ -32,14 +32,6 @@
 		parent = new
 		parent.build_pipeline(src)
 
-/obj/machinery/atmospherics/pipe/update_icon() //overridden by manifolds
-	if(nodes[1] && nodes[2])
-		icon_state = "intact[invisibility ? "-f" : "" ]"
-	else
-		var/have_node1 = nodes[1] ? TRUE : FALSE
-		var/have_node2 = nodes[2] ? TRUE : FALSE
-		icon_state = "exposed[have_node1][have_node2][invisibility ? "-f" : "" ]"
-
 /obj/machinery/atmospherics/pipe/atmosinit()
 	var/turf/T = loc			// hide if turf is not intact
 	hide(T.intact)
@@ -63,14 +55,15 @@
 	return parent.air.remove(amount)
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer))
-		atmosanalyzer_scan(parent.air, user)
 	if(istype(W, /obj/item/pipe_meter))
 		var/obj/item/pipe_meter/meter = W
 		user.dropItemToGround(meter)
 		meter.setAttachLayer(piping_layer)
 	else
 		return ..()
+
+/obj/machinery/atmospherics/pipe/analyzer_act(mob/living/user, obj/item/I)
+	atmosanalyzer_scan(parent.air, user, src)
 
 /obj/machinery/atmospherics/pipe/returnPipenet()
 	return parent
@@ -91,6 +84,13 @@
 			meter.transfer_fingerprints_to(PM)
 			qdel(meter)
 	. = ..()
+
+/obj/machinery/atmospherics/pipe/update_icon()
+	. = ..()
+	update_alpha()
+
+/obj/machinery/atmospherics/pipe/proc/update_alpha()
+	alpha = invisibility ? 64 : 255
 
 /obj/machinery/atmospherics/pipe/proc/update_node_icon()
 	for(var/i in 1 to device_type)

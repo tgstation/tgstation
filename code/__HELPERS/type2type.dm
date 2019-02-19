@@ -143,6 +143,17 @@
 		if(337.5 to 360)
 			return NORTH
 
+/proc/angle2dir_cardinal(angle)
+	switch(round(angle, 0.1))
+		if(315.5 to 360, 0 to 45.5)
+			return NORTH
+		if(45.6 to 135.5)
+			return EAST
+		if(135.6 to 225.5)
+			return SOUTH
+		if(225.6 to 315.5)
+			return WEST
+
 //returns the north-zero clockwise angle in degrees, given a direction
 /proc/dir2angle(D)
 	switch(D)
@@ -184,7 +195,7 @@
 //Converts a rights bitfield into a string
 /proc/rights2text(rights, seperator="", prefix = "+")
 	seperator += prefix
-	if(rights & R_BUILDMODE)
+	if(rights & R_BUILD)
 		. += "[seperator]BUILDMODE"
 	if(rights & R_ADMIN)
 		. += "[seperator]ADMIN"
@@ -206,32 +217,17 @@
 		. += "[seperator]POLL"
 	if(rights & R_VAREDIT)
 		. += "[seperator]VAREDIT"
-	if(rights & R_SOUNDS)
+	if(rights & R_SOUND)
 		. += "[seperator]SOUND"
 	if(rights & R_SPAWN)
 		. += "[seperator]SPAWN"
-	if(rights & R_AUTOLOGIN)
+	if(rights & R_AUTOADMIN)
 		. += "[seperator]AUTOLOGIN"
 	if(rights & R_DBRANKS)
 		. += "[seperator]DBRANKS"
 	if(!.)
 		. = "NONE"
 	return .
-
-/proc/ui_style2icon(ui_style)
-	switch(ui_style)
-		if("Retro")
-			return 'icons/mob/screen_retro.dmi'
-		if("Plasmafire")
-			return 'icons/mob/screen_plasmafire.dmi'
-		if("Slimecore")
-			return 'icons/mob/screen_slimecore.dmi'
-		if("Operative")
-			return 'icons/mob/screen_operative.dmi'
-		if("Clockwork")
-			return 'icons/mob/screen_clockwork.dmi'
-		else
-			return 'icons/mob/screen_midnight.dmi'
 
 //colour formats
 /proc/rgb2hsl(red, green, blue)
@@ -400,25 +396,25 @@
 
 /proc/slot2body_zone(slot)
 	switch(slot)
-		if(slot_back, slot_wear_suit, slot_w_uniform, slot_belt, slot_wear_id)
+		if(SLOT_BACK, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_BELT, SLOT_WEAR_ID)
 			return BODY_ZONE_CHEST
 
-		if(slot_gloves, slot_hands, slot_handcuffed)
+		if(SLOT_GLOVES, SLOT_HANDS, SLOT_HANDCUFFED)
 			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 
-		if(slot_head, slot_neck, slot_neck, slot_ears)
+		if(SLOT_HEAD, SLOT_NECK, SLOT_NECK, SLOT_EARS)
 			return BODY_ZONE_HEAD
 
-		if(slot_wear_mask)
+		if(SLOT_WEAR_MASK)
 			return BODY_ZONE_PRECISE_MOUTH
 
-		if(slot_glasses)
+		if(SLOT_GLASSES)
 			return BODY_ZONE_PRECISE_EYES
 
-		if(slot_shoes)
+		if(SLOT_SHOES)
 			return pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
 
-		if(slot_legcuffed)
+		if(SLOT_LEGCUFFED)
 			return pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/
@@ -451,6 +447,17 @@
 			. = 0
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
+
+/proc/fusionpower2text(power) //used when displaying fusion power on analyzers
+	switch(power)
+		if(0 to 5)
+			return "low"
+		if(5 to 20)
+			return "mid"
+		if(20 to 50)
+			return "high"
+		if(50 to INFINITY)
+			return "super"
 
 /proc/color2hex(color)	//web colors
 	if(!color)

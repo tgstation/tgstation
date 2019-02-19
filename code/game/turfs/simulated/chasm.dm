@@ -8,6 +8,7 @@
 	icon_state = "smooth"
 	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
+	bullet_bounce_sound = null //abandon all hope ye who enter
 
 /turf/open/chasm/Initialize()
 	. = ..()
@@ -26,6 +27,20 @@
 
 /turf/open/chasm/MakeDry()
 	return
+
+/turf/open/chasm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 3)
+	return FALSE
+
+/turf/open/chasm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			PlaceOnTop(/turf/open/floor/plating)
+			return TRUE
+	return FALSE
 
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -85,3 +100,19 @@
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "dirt"
 	return TRUE
+
+//For Bag of Holding Bombs
+
+/turf/open/chasm/magic
+	name = "tear in the fabric of reality"
+	desc = "Where does it lead?"
+	icon = 'icons/turf/floors/magic_chasm.dmi'
+	baseturfs = /turf/open/chasm/magic
+	light_range = 1.9
+	light_power = 0.65
+
+/turf/open/chasm/magic/Initialize()
+	. = ..()
+	var/turf/T = safepick(get_area_turfs(/area/fabric_of_reality))
+	if(T)
+		set_target(T)

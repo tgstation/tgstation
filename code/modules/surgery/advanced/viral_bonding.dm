@@ -1,10 +1,6 @@
-/obj/item/disk/surgery/viral_bonding
-	name = "Viral Bonding Surgery Disk"
-	desc = "The disk provides instructions on how to force symbiosis between a virus and its host."
-	surgeries = list(/datum/surgery/advanced/viral_bonding)
-
 /datum/surgery/advanced/viral_bonding
-	name = "viral bonding"
+	name = "Viral Bonding"
+	desc = "A surgical procedure that forces a symbiotic relationship between a virus and its host. The patient must be dosed with spaceacillin, virus food, and formaldehyde."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -12,7 +8,7 @@
 				/datum/surgery_step/viral_bond,
 				/datum/surgery_step/close)
 
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 /datum/surgery/advanced/viral_bonding/can_start(mob/user, mob/living/carbon/target)

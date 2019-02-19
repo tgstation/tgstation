@@ -4,7 +4,7 @@
 	icon_state = "wallet"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-	slot_flags = SLOT_ID
+	slot_flags = ITEM_SLOT_ID
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access
@@ -13,11 +13,13 @@
 	. = ..()
 	GET_COMPONENT(STR, /datum/component/storage)
 	STR.max_items = 4
+	STR.cant_hold = typecacheof(list(/obj/item/screwdriver/power)) //Must be specifically called out since normal screwdrivers can fit but not the wrench form of the drill
 	STR.can_hold = typecacheof(list(
 		/obj/item/stack/spacecash,
+		/obj/item/holochip,
 		/obj/item/card,
 		/obj/item/clothing/mask/cigarette,
-		/obj/item/device/flashlight/pen,
+		/obj/item/flashlight/pen,
 		/obj/item/seeds,
 		/obj/item/stack/medical,
 		/obj/item/toy/crayon,
@@ -41,14 +43,18 @@
 	refreshID()
 
 /obj/item/storage/wallet/proc/refreshID()
+	LAZYCLEARLIST(combined_access)
 	if(!(front_id in src))
 		front_id = null
 	for(var/obj/item/card/id/I in contents)
-		LAZYINITLIST(combined_access)
-		LAZYCLEARLIST(combined_access)
 		if(!front_id)
 			front_id = I
+		LAZYINITLIST(combined_access)
 		combined_access |= I.access
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		if(H.wear_id == src)
+			H.sec_hud_set_ID()
 	update_icon()
 
 /obj/item/storage/wallet/Entered(atom/movable/AM)
@@ -75,17 +81,5 @@
 	icon_state = "random_wallet"
 
 /obj/item/storage/wallet/random/PopulateContents()
-	var/item1_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
-	var/item2_type
-	if(prob(50))
-		item2_type = pick( /obj/item/stack/spacecash/c10, /obj/item/stack/spacecash/c100, /obj/item/stack/spacecash/c1000, /obj/item/stack/spacecash/c20, /obj/item/stack/spacecash/c200, /obj/item/stack/spacecash/c50, /obj/item/stack/spacecash/c500)
-	var/item3_type = pick( /obj/item/coin/silver, /obj/item/coin/silver, /obj/item/coin/gold, /obj/item/coin/iron, /obj/item/coin/iron, /obj/item/coin/iron )
-
-	spawn(2)
-		if(item1_type)
-			new item1_type(src)
-		if(item2_type)
-			new item2_type(src)
-		if(item3_type)
-			new item3_type(src)
+	new /obj/item/holochip(src, rand(5,30))
 	update_icon()

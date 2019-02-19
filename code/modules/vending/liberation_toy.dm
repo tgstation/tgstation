@@ -2,10 +2,10 @@
 	name = "\improper Syndicate Donksoft Toy Vendor"
 	desc = "An ages 8 and up approved vendor that dispenses toys. If you were to find the right wires, you can unlock the adult mode setting!"
 	icon_state = "syndi"
-	req_access_txt = "1"
-	product_slogans = "Get your cool toys today!;Trigger a valid hunter today!;Quality toy weapons for cheap prices!;Give them to HoPs for all access!;Give them to HoS to get perma briged!"
+	product_slogans = "Get your cool toys today!;Trigger a valid hunter today!;Quality toy weapons for cheap prices!;Give them to HoPs for all access!;Give them to HoS to get permabrigged!"
 	product_ads = "Feel robust with your toys!;Express your inner child today!;Toy weapons don't kill people, but valid hunters do!;Who needs responsibilities when you have toy weapons?;Make your next murder FUN!"
 	vend_reply = "Come back for more!"
+	circuit = /obj/item/circuitboard/machine/vending/syndicatedonksofttoyvendor
 	products = list(/obj/item/gun/ballistic/automatic/toy/unrestricted = 10,
 					/obj/item/gun/ballistic/automatic/toy/pistol/unrestricted = 10,
 					/obj/item/gun/ballistic/shotgun/toy/unrestricted = 10,
@@ -25,3 +25,6 @@
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
+	default_price = 25
+	extra_price = 50
+	payment_department = ACCOUNT_SRV

@@ -6,8 +6,7 @@
 
 /obj/item/projectile/bullet/dart/Initialize()
 	. = ..()
-	create_reagents(50)
-	reagents.set_reacting(FALSE)
+	create_reagents(50, NO_REACT)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
@@ -17,16 +16,16 @@
 				..()
 				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
-				return TRUE
+				return BULLET_ACT_HIT
 			else
 				blocked = 100
 				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
 									   "<span class='userdanger'>You were protected against \the [src]!</span>")
 
 	..(target, blocked)
-	reagents.set_reacting(TRUE)
+	DISABLE_BITFIELD(reagents.flags, NO_REACT)
 	reagents.handle_reactions()
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/dart/metalfoam/Initialize()
 	. = ..()

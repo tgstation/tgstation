@@ -1,6 +1,6 @@
 #define GUILLOTINE_BLADE_MAX_SHARP  10 // This is maxiumum sharpness and will decapitate without failure
 #define GUILLOTINE_DECAP_MIN_SHARP  7  // Minimum amount of sharpness for decapitation. Any less and it will just do severe brute damage
-#define GUILLOTINE_ANIMATION_LENGTH 9 // How many deciseconds the animation is 
+#define GUILLOTINE_ANIMATION_LENGTH 9 // How many deciseconds the animation is
 #define GUILLOTINE_BLADE_RAISED     1
 #define GUILLOTINE_BLADE_MOVING     2
 #define GUILLOTINE_BLADE_DROPPED    3
@@ -118,7 +118,7 @@
 		playsound(src, 'sound/weapons/bladeslice.ogg', 100, 1)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
 			head.dismember()
-			add_logs(user, H, "beheaded", src)
+			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
 			unbuckle_all_mobs()
 			kill_count += 1
@@ -144,7 +144,7 @@
 					delay_offset++
 		else
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
-			add_logs(user, H, "dropped the blade on", src, " non-fatally")
+			log_combat(user, H, "dropped the blade on", src, " non-fatally")
 			H.emote("scream")
 
 		if (blade_sharpness > 1)
@@ -158,7 +158,7 @@
 		add_fingerprint(user)
 		if (blade_status == GUILLOTINE_BLADE_SHARPENING)
 			return
-		
+
 		if (blade_status == GUILLOTINE_BLADE_RAISED)
 			if (blade_sharpness < GUILLOTINE_BLADE_MAX_SHARP)
 				blade_status = GUILLOTINE_BLADE_SHARPENING
@@ -187,7 +187,7 @@
 		return FALSE
 
 	if (!istype(M, /mob/living/carbon/human))
-		to_chat(usr, "<span class='warning'>It doesn't look like they can fit into this properly!</span>")
+		to_chat(usr, "<span class='warning'>It doesn't look like [M.p_they()] can fit into this properly!</span>")
 		return FALSE // Can't decapitate non-humans
 
 	if (blade_status != GUILLOTINE_BLADE_RAISED)
@@ -246,7 +246,7 @@
 	if (do_after(user, GUILLOTINE_WRENCH_DELAY, target = src))
 		current_action = 0
 		default_unfasten_wrench(user, I, 0)
-		dir = SOUTH
+		setDir(SOUTH)
 		return TRUE
 	else
 		current_action = 0

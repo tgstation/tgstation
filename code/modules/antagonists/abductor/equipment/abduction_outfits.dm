@@ -1,9 +1,9 @@
 /datum/outfit/abductor
 	name = "Abductor Basic"
-	uniform = /obj/item/clothing/under/color/grey //they're greys gettit
+	uniform = /obj/item/clothing/under/abductor
 	shoes = /obj/item/clothing/shoes/combat
 	back = /obj/item/storage/backpack
-	ears = /obj/item/device/radio/headset/abductor
+	ears = /obj/item/radio/headset/abductor
 
 /datum/outfit/abductor/proc/link_to_console(mob/living/carbon/human/H, team_number)
 	var/datum/antagonist/abductor/A = H.mind.has_antag_datum(/datum/antagonist/abductor)
@@ -17,11 +17,11 @@
 		var/obj/item/clothing/suit/armor/abductor/vest/V = locate() in H
 		if(V)
 			console.AddVest(V)
-			V.flags_1 |= NODROP_1
+			V.add_trait(TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
 
 		var/obj/item/storage/backpack/B = locate() in H
 		if(B)
-			for(var/obj/item/device/abductor/gizmo/G in B.contents)
+			for(var/obj/item/abductor/gizmo/G in B.contents)
 				console.AddGizmo(G)
 
 /datum/outfit/abductor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -34,19 +34,19 @@
 	name = "Abductor Agent"
 	head = /obj/item/clothing/head/helmet/abductor
 	suit = /obj/item/clothing/suit/armor/abductor/vest
-	suit_store = /obj/item/abductor_baton
+	suit_store = /obj/item/abductor/baton
 	belt = /obj/item/storage/belt/military/abductor/full
 
 	backpack_contents = list(
 		/obj/item/gun/energy/alien = 1,
-		/obj/item/device/abductor/silencer = 1
+		/obj/item/abductor/silencer = 1
 		)
 
 /datum/outfit/abductor/scientist
 	name = "Abductor Scientist"
 
 	backpack_contents = list(
-		/obj/item/device/abductor/gizmo = 1
+		/obj/item/abductor/gizmo = 1
 		)
 
 /datum/outfit/abductor/scientist/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

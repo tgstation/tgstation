@@ -5,7 +5,6 @@ Industrial extracts:
 /obj/item/slimecross/industrial
 	name = "industrial extract"
 	desc = "A gel-like, sturdy extract, fond of plasma and industry."
-	container_type = INJECTABLE | DRAWABLE
 	effect = "industrial"
 	icon_state = "industrial_still"
 	var/plasmarequired = 2 //Units of plasma required to be consumed to produce item.
@@ -21,8 +20,8 @@ Industrial extracts:
 	return
 
 /obj/item/slimecross/industrial/Initialize()
-	..()
-	create_reagents(100)
+	. = ..()
+	create_reagents(100, INJECTABLE | DRAWABLE)
 	START_PROCESSING(SSobj,src)
 
 /obj/item/slimecross/industrial/Destroy()
@@ -75,12 +74,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/metal
 	colour = "metal"
 	plasmarequired = 3
-	itempath = /obj/item/stack/sheet/metal
-
-/obj/item/slimecross/industrial/metal/do_after_spawn(obj/item/spawned)
-	var/obj/item/stack/sheet/metal/M = spawned
-	if(istype(M))
-		M.amount = 10
+	itempath = /obj/item/stack/sheet/metal/ten
 
 /obj/item/slimecross/industrial/yellow
 	colour = "yellow"
@@ -124,7 +118,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/sepia
 	colour = "sepia"
 	plasmarequired = 2
-	itempath = /obj/item/device/camera
+	itempath = /obj/item/camera
 
 /obj/item/slimecross/industrial/cerulean
 	colour = "cerulean"

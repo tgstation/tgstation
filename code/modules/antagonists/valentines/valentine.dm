@@ -12,25 +12,33 @@
 		protect_objective.human_check = FALSE
 	protect_objective.explanation_text = "Protect [date.name], your date."
 	objectives += protect_objective
-	owner.objectives += objectives
 
 /datum/antagonist/valentine/on_gain()
 	forge_objectives()
+	if(isliving(owner))
+		var/mob/living/L = owner
+		L.apply_status_effect(STATUS_EFFECT_INLOVE, date)
 	. = ..()
 
+/datum/antagonist/valentine/on_removal()
+	. = ..()
+	if(isliving(owner))
+		var/mob/living/L = owner
+		L.remove_status_effect(STATUS_EFFECT_INLOVE)
+
 /datum/antagonist/valentine/greet()
-	to_chat(owner, "<span class='warning'><B>You're on a date with [date.name]! Protect them at all costs. This takes priority over all other loyalties.</B></span>")
+	to_chat(owner, "<span class='warning'><B>You're on a date with [date.name]! Protect [date.p_them()] at all costs. This takes priority over all other loyalties.</B></span>")
 
 //Squashed up a bit
 /datum/antagonist/valentine/roundend_report()
 	var/objectives_complete = TRUE
-	if(owner.objectives.len)
-		for(var/datum/objective/objective in owner.objectives)
+	if(objectives.len)
+		for(var/datum/objective/objective in objectives)
 			if(!objective.check_completion())
 				objectives_complete = FALSE
 				break
 
 	if(objectives_complete)
-		return "<span class='greentext big'>[owner.name] protected their date</span>"
+		return "<span class='greentext big'>[owner.name] protected [owner.p_their()] date</span>"
 	else
 		return "<span class='redtext big'>[owner.name] date failed!</span>"

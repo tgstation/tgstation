@@ -1,9 +1,8 @@
-/*
-3-Way Manifold
-*/
+//3-Way Manifold
+
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold.dmi'
-	icon_state = "manifold"
+	icon_state = "manifold-2"
 
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes."
@@ -16,159 +15,32 @@
 	construction_type = /obj/item/pipe/trinary
 	pipe_state = "manifold"
 
+	var/mutable_appearance/center
+
+/* We use New() instead of Initialize() because these values are used in update_icon()
+ * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
+ * This is true for the other manifolds (the 4 ways and the heat exchanges) too.
+ */
+/obj/machinery/atmospherics/pipe/manifold/New()
+	icon_state = ""
+	center = mutable_appearance(icon, "manifold_center")
+	return ..()
+
 /obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
-	switch(dir)
-		if(NORTH)
-			initialize_directions = EAST|SOUTH|WEST
-		if(SOUTH)
-			initialize_directions = WEST|NORTH|EAST
-		if(EAST)
-			initialize_directions = SOUTH|WEST|NORTH
-		if(WEST)
-			initialize_directions = NORTH|EAST|SOUTH
+	initialize_directions = NORTH|SOUTH|EAST|WEST
+	initialize_directions &= ~dir
 
 /obj/machinery/atmospherics/pipe/manifold/update_icon()
-	var/invis = invisibility ? "-f" : ""
-
-	icon_state = "manifold_center[invis]"
-
 	cut_overlays()
+	if(!center)
+		center = mutable_appearance(icon, "manifold_center")
+	PIPING_LAYER_DOUBLE_SHIFT(center, piping_layer)
+	add_overlay(center)
 
 	//Add non-broken pieces
 	for(var/i in 1 to device_type)
 		if(nodes[i])
-			add_overlay(getpipeimage('icons/obj/atmospherics/pipes/manifold.dmi', "manifold_full[invis]", get_dir(src, nodes[i])))
+			add_overlay( getpipeimage(icon, "pipe-[piping_layer]", get_dir(src, nodes[i])) )
 
-//Colored pipes, use these for mapping
-/obj/machinery/atmospherics/pipe/manifold/general
-
-/obj/machinery/atmospherics/pipe/manifold/general/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/general/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/scrubbers
-	name="scrubbers pipe"
-	pipe_color=rgb(255,0,0)
-	color=rgb(255,0,0)
-
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/supply
-	name="air supply pipe"
-	pipe_color=rgb(0,0,255)
-	color=rgb(0,0,255)
-
-/obj/machinery/atmospherics/pipe/manifold/supply/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/supplymain
-	name="main air supply pipe"
-	pipe_color=rgb(130,43,255)
-	color=rgb(130,43,255)
-
-/obj/machinery/atmospherics/pipe/manifold/supplymain/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/yellow
-	pipe_color=rgb(255,198,0)
-	color=rgb(255,198,0)
-
-/obj/machinery/atmospherics/pipe/manifold/yellow/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/yellow/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/cyan
-	pipe_color=rgb(0,255,249)
-	color=rgb(0,255,249)
-
-/obj/machinery/atmospherics/pipe/manifold/cyan/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/cyan/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/green
-	pipe_color=rgb(30,255,0)
-	color=rgb(30,255,0)
-
-/obj/machinery/atmospherics/pipe/manifold/green/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/green/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/orange
-	pipe_color=rgb(255,129,25)
-	color=rgb(255,129,25)
-
-/obj/machinery/atmospherics/pipe/manifold/orange/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/orange/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/purple
-	pipe_color=rgb(128,0,182)
-	color=rgb(128,0,182)
-
-/obj/machinery/atmospherics/pipe/manifold/purple/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/purple/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/dark
-	pipe_color=rgb(69,69,69)
-	color=rgb(69,69,69)
-
-/obj/machinery/atmospherics/pipe/manifold/dark/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/dark/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/violet
-	pipe_color=rgb(64,0,128)
-	color=rgb(64,0,128)
-
-/obj/machinery/atmospherics/pipe/manifold/violet/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/violet/hidden
-	level = PIPE_HIDDEN_LEVEL
-
-/obj/machinery/atmospherics/pipe/manifold/brown
-	pipe_color=rgb(178,100,56)
-	color=rgb(178,100,56)
-
-/obj/machinery/atmospherics/pipe/manifold/brown/visible
-	level = PIPE_VISIBLE_LEVEL
-	layer = GAS_PIPE_VISIBLE_LAYER
-
-/obj/machinery/atmospherics/pipe/manifold/brown/hidden
-	level = PIPE_HIDDEN_LEVEL
+	update_layer()
+	update_alpha()

@@ -89,16 +89,16 @@
 	status = ORGAN_ROBOTIC
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
-	if(!owner)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	if(severity > 1)
-		if(prob(10 * severity))
-			return
+	if(prob(10 * severity))
+		return
 	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
 	owner.flash_act(visual = 1)
 
 /obj/item/organ/eyes/robotic/xray
-	name = "X-ray eyes"
+	name = "\improper X-ray eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	eye_color = "000"
 	see_in_dark = 8
@@ -121,7 +121,7 @@
 	icon_state = "flashlight_eyes"
 	flash_protect = 2
 	tint = INFINITY
-	var/obj/item/device/flashlight/eyelight/eye
+	var/obj/item/flashlight/eyelight/eye
 
 /obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
 	return
@@ -129,7 +129,7 @@
 /obj/item/organ/eyes/robotic/flashlight/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	..()
 	if(!eye)
-		eye = new /obj/item/device/flashlight/eyelight()
+		eye = new /obj/item/flashlight/eyelight()
 	eye.on = TRUE
 	eye.forceMove(M)
 	eye.update_brightness(M)
@@ -232,15 +232,17 @@
 		owner.cut_overlay(mob_overlay)
 
 /obj/item/organ/eyes/robotic/glow/emp_act()
-	if(active)
-		deactivate(silent = TRUE)
-		
+	. = ..()
+	if(!active || . & EMP_PROTECT_SELF)
+		return
+	deactivate(silent = TRUE)
+
 /obj/item/organ/eyes/robotic/glow/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
 	. = ..()
 	if (mobhook && mobhook.parent != M)
 		QDEL_NULL(mobhook)
 	if (!mobhook)
-		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE), CALLBACK(src, .proc/update_visuals))
+		mobhook = M.AddComponent(/datum/component/redirect, list(COMSIG_ATOM_DIR_CHANGE = CALLBACK(src, .proc/update_visuals)))
 
 /obj/item/organ/eyes/robotic/glow/Remove(mob/living/carbon/M)
 	. = ..()
@@ -264,7 +266,7 @@
 	active = FALSE
 	remove_mob_overlay()
 
-/obj/item/organ/eyes/robotic/glow/proc/update_visuals(olddir, newdir)
+/obj/item/organ/eyes/robotic/glow/proc/update_visuals(datum/source, olddir, newdir)
 	if((LAZYLEN(eye_lighting) < light_beam_distance) || !on_mob)
 		regenerate_light_effects()
 	var/turf/scanfrom = get_turf(owner)

@@ -19,13 +19,15 @@
 #define SHAME 			(1<<4)
 #define MANUAL_SUICIDE	(1<<5)	//suicide_act will do the actual killing.
 
-#define EFFECT_STUN		"stun"
-#define EFFECT_KNOCKDOWN		"knockdown"
+#define EFFECT_STUN			"stun"
+#define EFFECT_KNOCKDOWN	"knockdown"
 #define EFFECT_UNCONSCIOUS	"unconscious"
+#define EFFECT_PARALYZE		"paralyze"
+#define EFFECT_IMMOBILIZE	"immobilize"
 #define EFFECT_IRRADIATE	"irradiate"
 #define EFFECT_STUTTER		"stutter"
 #define EFFECT_SLUR 		"slur"
-#define EFFECT_EYE_BLUR	"eye_blur"
+#define EFFECT_EYE_BLUR		"eye_blur"
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
@@ -40,6 +42,8 @@
 #define HEALTH_THRESHOLD_CRIT 0
 #define HEALTH_THRESHOLD_FULLCRIT -30
 #define HEALTH_THRESHOLD_DEAD -100
+
+#define HEALTH_THRESHOLD_NEARDEATH -90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
 
 //Actual combat defines
 
@@ -63,8 +67,10 @@
 #define GRAB_NECK					2
 #define GRAB_KILL					3
 
-//slowdown when in softcrit
-#define SOFTCRIT_ADD_SLOWDOWN 6
+//slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
+#define SOFTCRIT_ADD_SLOWDOWN 2
+//slowdown when crawling
+#define CRAWLING_ADD_SLOWDOWN 4
 
 //Attack types for checking shields/hit reactions
 #define MELEE_ATTACK 1
@@ -118,6 +124,18 @@
 #define TRIGGER_GUARD_ALLOW_ALL -1
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
+//Gun bolt types
+#define BOLT_TYPE_STANDARD 1
+#define BOLT_TYPE_OPEN 2
+#define BOLT_TYPE_NO_BOLT 3
+#define BOLT_TYPE_LOCKING 4
+//Sawn off nerfs
+#define SAWN_OFF_ACC_PENALTY 25
+#define SAWN_OFF_RECOIL 1
+
+//Projectile Reflect
+#define REFLECT_NORMAL 				(1<<0)
+#define REFLECT_FAKEPROJECTILE		(1<<1)
 
 //Object/Item sharpness
 #define IS_BLUNT			0
@@ -161,3 +179,12 @@
 #define BODY_ZONE_PRECISE_R_HAND	"r_hand"
 #define BODY_ZONE_PRECISE_L_FOOT	"l_foot"
 #define BODY_ZONE_PRECISE_R_FOOT	"r_foot"
+
+//We will round to this value in damage calculations.
+#define DAMAGE_PRECISION 0.1
+
+//bullet_act() return values
+#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
+#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.

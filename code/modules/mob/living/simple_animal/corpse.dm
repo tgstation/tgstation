@@ -21,12 +21,11 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas
 	head = /obj/item/clothing/head/helmet/swat
 	back = /obj/item/storage/backpack
 	id = /obj/item/card/id/syndicate
-
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
 	name = "Syndicate Commando"
@@ -41,7 +40,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
@@ -61,7 +60,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/syndicate
 	back = /obj/item/tank/jetpack/oxygen/harness
 	id = /obj/item/card/id/syndicate
@@ -76,7 +75,7 @@
 
 /obj/effect/mob_spawn/human/corpse/pirate
 	name = "Pirate"
-	skin_tone = "Caucasian1" //all pirates are white because it's easier that way
+	skin_tone = "caucasian1" //all pirates are white because it's easier that way
 	outfit = /datum/outfit/piratecorpse
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
@@ -132,7 +131,7 @@
 	suit = /obj/item/clothing/suit/armor/bulletproof
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/helmet/alt
 	mask = /obj/item/clothing/mask/balaclava
 
@@ -146,7 +145,7 @@
 	uniform = /obj/item/clothing/under/rank/security/navyblue/russian
 	suit = /obj/item/clothing/suit/security/officer/russian
 	shoes = /obj/item/clothing/shoes/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	head = /obj/item/clothing/head/ushanka
 
 
@@ -155,7 +154,7 @@
 	outfit = /datum/outfit/wizardcorpse
 	hair_style = "Bald"
 	facial_hair_style = "Long Beard"
-	skin_tone = "Caucasian1"
+	skin_tone = "caucasian1"
 
 /datum/outfit/wizardcorpse
 	name = "Space Wizard Corpse"
@@ -179,7 +178,7 @@
 	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	mask = /obj/item/clothing/mask/gas/sechailer/swat
 	head = /obj/item/clothing/head/helmet/swat/nanotrasen
 	back = /obj/item/storage/backpack/security
@@ -200,7 +199,23 @@
 	suit = /obj/item/clothing/suit/apron/surgical
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
-	ears = /obj/item/device/radio/headset
+	ears = /obj/item/radio/headset
 	back = /obj/item/storage/backpack/satchel/med
 	id = /obj/item/card/id
 	glasses = /obj/item/clothing/glasses/hud/health
+
+/obj/effect/mob_spawn/human/corpse/bee_terrorist
+	name = "BLF Operative"
+	outfit = /datum/outfit/bee_terrorist
+	
+/datum/outfit/bee_terrorist
+	name = "BLF Operative"
+	uniform = /obj/item/clothing/under/color/yellow
+	suit = /obj/item/clothing/suit/hooded/bee_costume
+	shoes = /obj/item/clothing/shoes/sneakers/yellow
+	gloves = /obj/item/clothing/gloves/color/yellow
+	ears = /obj/item/radio/headset
+	belt = /obj/item/storage/belt/fannypack/yellow/bee_terrorist
+	id = /obj/item/card/id
+	l_pocket = /obj/item/paper/fluff/bee_objectives
+	mask = /obj/item/clothing/mask/rat/bee

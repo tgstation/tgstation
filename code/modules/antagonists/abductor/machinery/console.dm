@@ -17,8 +17,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
 	density = TRUE
-	anchored = TRUE
-	var/obj/item/device/abductor/gizmo/gizmo
+	var/obj/item/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
 	var/obj/machinery/abductor/pad/pad
@@ -29,7 +28,7 @@
 	. = ..()
 	if(.)
 		return
-	if(!isabductor(user))
+	if(!user.has_trait(TRAIT_ABDUCTOR_TRAINING))
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100, target = src))
 			TeleporterSend()
@@ -44,12 +43,13 @@
 		dat += "Collected Samples : [points] <br>"
 		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
-		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=tool'>Science Tool</A><br>"
-		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=tongue'>Superlingual Matrix</a><br>"
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
@@ -76,7 +76,7 @@
 
 		dat+="<br>"
 		dat += "<a href='?src=[REF(src)];select_disguise=1'>Select Agent Vest Disguise</a><br>"
-		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[vest.flags_1 & NODROP_1 ? "Unlock" : "Lock"] Vest</a><br>"
+		dat += "<a href='?src=[REF(src)];toggle_vest=1'>[vest.has_trait(TRAIT_NODROP, ABDUCTOR_VEST_TRAIT) ? "Unlock" : "Lock"] Vest</a><br>"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
@@ -102,17 +102,19 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("baton")
-				Dispense(/obj/item/abductor_baton,cost=2)
+				Dispense(/obj/item/abductor/baton,cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
-				Dispense(/obj/item/device/abductor/silencer)
+				Dispense(/obj/item/abductor/silencer)
 			if("tool")
-				Dispense(/obj/item/device/abductor/gizmo)
+				Dispense(/obj/item/abductor/gizmo)
 			if("vest")
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
 			if("mind_device")
-				Dispense(/obj/item/device/abductor/mind_device,cost=2)
+				Dispense(/obj/item/abductor/mind_device,cost=2)
+			if("tongue")
+				Dispense(/obj/item/organ/tongue/abductor)
 	updateUsrDialog()
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
@@ -127,8 +129,20 @@
 	if(vest)
 		vest.flip_mode()
 
-/obj/machinery/abductor/console/proc/SelectDisguise(remote = 0)
-	var/entry_name = input( "Choose Disguise", "Disguise") as null|anything in disguises
+/obj/machinery/abductor/console/proc/SelectDisguise(remote = FALSE)
+	var/list/disguises2 = list()
+	for(var/name in disguises)
+		var/datum/icon_snapshot/snap = disguises[name]
+		var/image/dummy = image(snap.icon, src, snap.icon_state)
+		dummy.overlays = snap.overlays
+		disguises2[name] = dummy
+
+	var/entry_name
+	if(remote)
+		entry_name = show_radial_menu(usr, camera.eyeobj, disguises2, tooltips = TRUE)
+	else
+		entry_name = show_radial_menu(usr, src, disguises2, require_near = TRUE, tooltips = TRUE)
+
 	var/datum/icon_snapshot/chosen = disguises[entry_name]
 	if(chosen && vest && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
@@ -167,7 +181,7 @@
 			c.console = src
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
-	if(istype(target.get_item_by_slot(slot_head), /obj/item/clothing/head/foilhat))
+	if(istype(target.get_item_by_slot(SLOT_HEAD), /obj/item/clothing/head/foilhat))
 		say("Subject wearing specialized protective headgear, unable to get a proper scan!")
 		return
 	var/datum/icon_snapshot/entry = new
@@ -181,7 +195,7 @@
 		return
 	disguises[entry.name] = entry
 
-/obj/machinery/abductor/console/proc/AddGizmo(obj/item/device/abductor/gizmo/G)
+/obj/machinery/abductor/console/proc/AddGizmo(obj/item/abductor/gizmo/G)
 	if(G == gizmo && G.console == src)
 		return FALSE
 
@@ -205,7 +219,7 @@
 	return TRUE
 
 /obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/device/abductor/gizmo) && AddGizmo(O))
+	if(istype(O, /obj/item/abductor/gizmo) && AddGizmo(O))
 		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(O))
 		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")

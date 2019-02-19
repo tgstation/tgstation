@@ -22,6 +22,7 @@
 	icon_state = "really_black_suit"
 	item_state = "bl_suit"
 	item_color = "black_suit"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/camo
 	name = "camouflage fatigues"
@@ -29,6 +30,7 @@
 	icon_state = "camogreen"
 	item_state = "g_suit"
 	item_color = "camogreen"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"

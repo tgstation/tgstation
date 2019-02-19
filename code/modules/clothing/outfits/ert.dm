@@ -4,7 +4,7 @@
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/device/radio/headset/headset_cent/alt
+	ears = /obj/item/radio/headset/headset_cent/alt
 
 /datum/outfit/ert/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
@@ -13,7 +13,7 @@
 	var/obj/item/implant/mindshield/L = new/obj/item/implant/mindshield(H)
 	L.implant(H, null, 1)
 
-	var/obj/item/device/radio/R = H.ears
+	var/obj/item/radio/R = H.ears
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
 
@@ -27,7 +27,7 @@
 	id = /obj/item/card/id/ert
 	suit = /obj/item/clothing/suit/space/hardsuit/ert
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	back = /obj/item/storage/backpack/captain
+	back = /obj/item/storage/backpack/ert
 	belt = /obj/item/storage/belt/security/full
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/melee/baton/loaded=1,\
@@ -40,8 +40,8 @@
 
 	if(visualsOnly)
 		return
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/captain
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/captain
 	R.recalculateChannels()
 
 /datum/outfit/ert/commander/alert
@@ -60,7 +60,7 @@
 	id = /obj/item/card/id/ert/Security
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/sec
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	back = /obj/item/storage/backpack/security
+	back = /obj/item/storage/backpack/ert/security
 	belt = /obj/item/storage/belt/security/full
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
 		/obj/item/storage/box/handcuffs=1,\
@@ -74,8 +74,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/hos
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/hos
 	R.recalculateChannels()
 
 /datum/outfit/ert/security/alert
@@ -94,7 +94,7 @@
 	id = /obj/item/card/id/ert/Medical
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/med
 	glasses = /obj/item/clothing/glasses/hud/health
-	back = /obj/item/storage/backpack/satchel/med
+	back = /obj/item/storage/backpack/ert/medical
 	belt = /obj/item/storage/belt/medical
 	r_hand = /obj/item/storage/firstaid/regular
 	backpack_contents = list(/obj/item/storage/box/engineer=1,\
@@ -110,8 +110,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/cmo
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/cmo
 	R.recalculateChannels()
 
 /datum/outfit/ert/medic/alert
@@ -130,7 +130,7 @@
 	id = /obj/item/card/id/ert/Engineer
 	suit = /obj/item/clothing/suit/space/hardsuit/ert/engi
 	glasses =  /obj/item/clothing/glasses/meson/engine
-	back = /obj/item/storage/backpack/industrial
+	back = /obj/item/storage/backpack/ert/engineer
 	belt = /obj/item/storage/belt/utility/full
 	l_pocket = /obj/item/rcd_ammo/large
 	r_hand = /obj/item/storage/firstaid/regular
@@ -146,8 +146,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/ce
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/ce
 	R.recalculateChannels()
 
 /datum/outfit/ert/engineer/alert
@@ -166,12 +166,12 @@
 	uniform = /obj/item/clothing/under/rank/centcom_officer
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
-	ears = /obj/item/device/radio/headset/headset_cent
+	ears = /obj/item/radio/headset/headset_cent
 	glasses = /obj/item/clothing/glasses/sunglasses
 	belt = /obj/item/gun/energy/e_gun
 	l_pocket = /obj/item/pen
 	back = /obj/item/storage/backpack/satchel
-	r_pocket = /obj/item/device/pda/heads
+	r_pocket = /obj/item/pda/heads
 	l_hand = /obj/item/clipboard
 	id = /obj/item/card/id
 
@@ -179,7 +179,7 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/pda/heads/pda = H.r_store
+	var/obj/item/pda/heads/pda = H.r_store
 	pda.owner = H.real_name
 	pda.ownjob = "CentCom Official"
 	pda.update_label()
@@ -231,8 +231,8 @@
 	if(visualsOnly)
 		return
 
-	var/obj/item/device/radio/R = H.ears
-	R.keyslot = new /obj/item/device/encryptionkey/heads/hop
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/heads/hop
 	R.recalculateChannels()
 
 /datum/outfit/ert/chaplain
@@ -261,3 +261,42 @@
 		/obj/item/clothing/mask/gas/sechailer=1,
 		/obj/item/gun/energy/e_gun=1,
 		)
+
+/datum/outfit/ert/janitor
+	name = "ERT Janitor"
+
+	id = /obj/item/card/id/ert/Janitor
+	suit = /obj/item/clothing/suit/space/hardsuit/ert/jani
+	glasses = /obj/item/clothing/glasses/night
+	back = /obj/item/storage/backpack
+	belt = /obj/item/storage/belt/janitor/full
+	r_pocket = /obj/item/grenade/chem_grenade/cleaner
+	l_pocket = /obj/item/grenade/chem_grenade/cleaner
+	l_hand = /obj/item/storage/bag/trash/bluespace
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/storage/box/lights/mixed=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/clothing/mask/gas/sechailer=1,\
+		/obj/item/mop/advanced=1,\
+		/obj/item/reagent_containers/glass/bucket=1,\
+		/obj/item/grenade/clusterbuster/cleaner=1)
+
+/datum/outfit/ert/janitor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+
+	if(visualsOnly)
+		return
+
+	var/obj/item/radio/R = H.ears
+	R.keyslot = new /obj/item/encryptionkey/headset_service
+	R.recalculateChannels()
+
+/datum/outfit/ert/janitor/heavy
+	name = "ERT Janitor - Heavy Duty"
+	r_hand = /obj/item/reagent_containers/spray/chemsprayer/janitor
+	backpack_contents = list(/obj/item/storage/box/engineer=1,\
+		/obj/item/storage/box/lights/mixed=1,\
+		/obj/item/melee/baton/loaded=1,\
+		/obj/item/clothing/mask/gas/sechailer=1,\
+		/obj/item/grenade/clusterbuster/cleaner=3)
+

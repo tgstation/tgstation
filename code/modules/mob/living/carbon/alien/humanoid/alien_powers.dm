@@ -97,7 +97,7 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 	if(msg)
-		log_talk(user,"AlienWhisper: [key_name(user)]->[M.key] : [msg]",LOGSAY)
+		log_directed_talk(user, M, msg, LOG_SAY, tag="alien whisper")
 		to_chat(M, "<span class='noticealien'>You hear a strange, alien voice in your head...</span>[msg]")
 		to_chat(user, "<span class='noticealien'>You said: \"[msg]\" to [M]</span>")
 		for(var/ded in GLOB.dead_mob_list)
@@ -159,7 +159,7 @@ Doesn't work on other aliens/AI.*/
 
 			return 0
 	else
-		to_chat(src, "<span class='noticealien'>Target is too far away.</span>")
+		to_chat(src, "<span class='noticealien'>[target] is too far away.</span>")
 		return 0
 
 
@@ -205,7 +205,7 @@ Doesn't work on other aliens/AI.*/
 	if(..())
 		return
 	var/p_cost = 50
-	if(!iscarbon(ranged_ability_user) || ranged_ability_user.lying || ranged_ability_user.stat)
+	if(!iscarbon(ranged_ability_user) || ranged_ability_user.stat)
 		remove_ranged_ability()
 		return
 
@@ -233,19 +233,19 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin/on_lose(mob/living/carbon/user)
 	remove_ranged_ability()
 
-/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user, msg)
+/obj/effect/proc_holder/alien/neurotoxin/add_ranged_ability(mob/living/user,msg,forced)
 	..()
 	if(isalienadult(user))
 		var/mob/living/carbon/alien/humanoid/A = user
 		A.drooling = 1
 		A.update_icons()
 
-/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(mob/living/user, msg)
-	..()
-	if(isalienadult(user))
-		var/mob/living/carbon/alien/humanoid/A = user
+/obj/effect/proc_holder/alien/neurotoxin/remove_ranged_ability(msg)
+	if(isalienadult(ranged_ability_user))
+		var/mob/living/carbon/alien/humanoid/A = ranged_ability_user
 		A.drooling = 0
 		A.update_icons()
+	..()
 
 /obj/effect/proc_holder/alien/resin
 	name = "Secrete Resin"

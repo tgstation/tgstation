@@ -29,6 +29,8 @@
 	del_on_death = 1
 	loot = list(/obj/effect/decal/cleanable/robot_debris)
 
+	do_footstep = TRUE
+
 /mob/living/simple_animal/hostile/hivebot/Initialize()
 	. = ..()
 	deathmessage = "[src] blows apart!"
@@ -48,7 +50,7 @@
 	icon_living = "ranged"
 	icon_dead = "ranged"
 	ranged = 1
-	rapid = 1
+	rapid = 3
 	retreat_distance = 5
 	minimum_distance = 5
 

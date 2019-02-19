@@ -3,12 +3,17 @@
 	desc = "A vending machine for costumes."
 	icon_state = "theater"
 	icon_deny = "theater-deny"
-	req_access_txt = "46" //Theatre access needed, unless hacked.
+	req_access = list(ACCESS_THEATRE)
 	product_slogans = "Dress for success!;Suited and booted!;It's show time!;Why leave style up to fate? Use AutoDrobe!"
 	vend_reply = "Thank you for using AutoDrobe!"
 	products = list(/obj/item/clothing/suit/chickensuit = 1,
 		            /obj/item/clothing/head/chicken = 1,
-		            /obj/item/clothing/under/gladiator = 1,
+		            /obj/item/clothing/under/rank/blueclown = 1,
+					/obj/item/clothing/under/rank/greenclown = 1,
+					/obj/item/clothing/under/rank/yellowclown = 1,
+					/obj/item/clothing/under/rank/orangeclown = 1,
+					/obj/item/clothing/under/rank/purpleclown = 1,
+					/obj/item/clothing/under/gladiator = 1,
 					/obj/item/clothing/head/helmet/gladiator = 1,
 					/obj/item/clothing/under/gimmick/rank/captain/suit = 1,
 					/obj/item/clothing/head/flatcap = 1,
@@ -110,20 +115,26 @@
 		              /obj/item/clothing/head/powdered_wig = 1,
 		              /obj/item/gun/magic/wand = 2,
 		              /obj/item/clothing/glasses/sunglasses/garb = 2,
-		              /obj/item/clothing/glasses/sunglasses/blindfold = 1,
+		              /obj/item/clothing/glasses/blindfold = 1,
 		              /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
 		           /obj/item/clothing/head/pirate/captain = 2,
-		           /obj/item/clothing/head/helmet/roman = 1,
-		           /obj/item/clothing/head/helmet/roman/legionaire = 1,
+				   /obj/item/clothing/under/rank/rainbowclown = 1,
+		           /obj/item/clothing/head/helmet/roman/fake = 1,
+		           /obj/item/clothing/head/helmet/roman/legionnaire/fake = 1,
 		           /obj/item/clothing/under/roman = 1,
 		           /obj/item/clothing/shoes/roman = 1,
-		           /obj/item/shield/riot/roman = 1,
-		           /obj/item/skub = 1)
+		           /obj/item/shield/riot/roman/fake = 1,
+		           /obj/item/skub = 1,)
+
 	refill_canister = /obj/item/vending_refill/autodrobe
+	default_price = 50
+	extra_price = 75
+	payment_department = ACCOUNT_SRV
+/obj/machinery/vending/autodrobe/all_access
+	desc = "A vending machine for costumes. This model appears to have no access restrictions."
+	req_access = null
 
 /obj/item/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(32, 2, 3)// of 96 standard, 6 contraband, 9 premium
-	init_charges = list(32, 2, 3)

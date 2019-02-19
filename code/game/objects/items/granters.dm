@@ -23,8 +23,10 @@
 	used = TRUE
 
 /obj/item/book/granter/attack_self(mob/user)
-	if(reading == TRUE)
+	if(reading)
 		to_chat(user, "<span class='warning'>You're already reading this!</span>")
+		return FALSE
+	if(!user.can_read(src))
 		return FALSE
 	return TRUE
 
@@ -32,7 +34,7 @@
 
 /obj/item/book/granter/action
 	var/granted_action
-	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name aciton buttons toggle this or that without it fucking up the granter, also caps
+	var/actionname = "catching bugs" //might not seem needed but this makes it so you can safely name action buttons toggle this or that without it fucking up the granter, also caps
 
 /obj/item/book/granter/action/attack_self(mob/user)
 	. = ..()
@@ -62,28 +64,30 @@
 			G.Grant(user)
 		reading = FALSE
 
-/obj/item/book/granter/action/drink_fling
-	granted_action = /datum/action/innate/drink_fling
-	name = "Tapper: This One's For You"
-	desc = "A seminal work on the dying art of booze sliding."
-	icon_state = "barbook"
-	actionname = "drink flinging"
-	oneuse = FALSE
-	remarks = list("The trick is keeping a low center of gravity it seems...", "The viscosity of the liquid is important...", "Accounting for crosswinds... really?", "Drag coefficients of various popular drinking glasses...", "What the heck is laminar flow and why does it matter here?", "Greasing the bar seems like it'd be cheating...", "I don't think I'll be working with superfluids...")
+/obj/item/book/granter/action/origami
+	granted_action = /datum/action/innate/origami
+	name = "The Art of Origami"
+	desc = "A meticulously in-depth manual explaining the art of paper folding."
+	icon_state = "origamibook"
+	actionname = "origami"
+	oneuse = TRUE
+	remarks = list("Dead-stick stability...", "Symmetry seems to play a rather large factor...", "Accounting for crosswinds... really?", "Drag coefficients of various paper types...", "Thrust to weight ratios?", "Positive dihedral angle?", "Center of gravity forward of the center of lift...")
 
-/datum/action/innate/drink_fling
-	name = "Drink Flinging"
-	desc = "Toggles your ability to satifyingly throw glasses without spilling them."
-	button_icon_state = "drinkfling_off"
-	check_flags = 0
+/datum/action/innate/origami
+	name = "Origami Folding"
+	desc = "Toggles your ability to fold and catch robust paper airplanes."
+	button_icon_state = "origami_off"
+	check_flags = NONE
 
-/datum/action/innate/drink_fling/Activate()
-	button_icon_state = "drinkfling_on"
+/datum/action/innate/origami/Activate()
+	to_chat(owner, "<span class='notice'>You will now fold origami planes.</span>")
+	button_icon_state = "origami_on"
 	active = TRUE
 	UpdateButtonIcon()
 
-/datum/action/innate/drink_fling/Deactivate()
-	button_icon_state = "drinkfling_off"
+/datum/action/innate/origami/Deactivate()
+	to_chat(owner, "<span class='notice'>You will no longer fold origami planes.</span>")
+	button_icon_state = "origami_off"
 	active = FALSE
 	UpdateButtonIcon()
 
@@ -104,10 +108,10 @@
 		if(knownspell.type == S.type)
 			if(user.mind)
 				if(iswizard(user))
-					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy howto book can provide.</span>")
+					to_chat(user,"<span class='notice'>You're already far more versed in this spell than this flimsy how-to book can provide.</span>")
 				else
 					to_chat(user,"<span class='notice'>You've already read this one.</span>")
-			return
+			return FALSE
 	if(used == TRUE && oneuse == TRUE)
 		recoil(user)
 	else
@@ -118,11 +122,11 @@
 				to_chat(user, "<span class='notice'>You stop reading...</span>")
 				reading = FALSE
 				qdel(S)
-				return
+				return FALSE
 		if(do_after(user,50, user))
 			to_chat(user, "<span class='notice'>You feel like you've experienced enough to cast [spellname]!</span>")
 			user.mind.AddSpell(S)
-			user.log_message("<font color='orange'>learned the spell [spellname] ([S]).</font>", INDIVIDUAL_ATTACK_LOG)
+			user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
 			onlearned(user)
 		reading = FALSE
 
@@ -151,7 +155,7 @@
 	spellname = "sacred flame"
 	icon_state ="booksacredflame"
 	desc = "Become one with the flames that burn within... and invite others to do so as well."
-	remarks = list("Well, it's one way to stop an attacker...", "I'm gonna need some good gear to stop myself from burning to death...", "Keep a fire extingusher handy, got it...", "I think I just burned my hand...", "Apply flame directly to chest for proper ignition...", "No pain, no gain...", "One with the flame...")
+	remarks = list("Well, it's one way to stop an attacker...", "I'm gonna need some good gear to stop myself from burning to death...", "Keep a fire extinguisher handy, got it...", "I think I just burned my hand...", "Apply flame directly to chest for proper ignition...", "No pain, no gain...", "One with the flame...")
 
 /obj/item/book/granter/spell/smoke
 	spell = /obj/effect/proc_holder/spell/targeted/smoke
@@ -167,9 +171,9 @@
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
 	if(user.nutrition)
-		user.nutrition = 200
+		user.set_nutrition(200)
 		if(user.nutrition <= 0)
-			user.nutrition = 0
+			user.set_nutrition(0)
 
 /obj/item/book/granter/spell/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
@@ -208,12 +212,13 @@
 	if(stored_swap == user)
 		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
-
 	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
-	swapper.cast(user, stored_swap, TRUE)
+	if(swapper.cast(list(stored_swap), user, TRUE, TRUE))
+		to_chat(user,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
+		to_chat(stored_swap,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
+	else
+		user.visible_message("<span class='warning'>[src] fizzles slightly as it stops glowing!</span>") //if the mind_transfer failed to transfer mobs, likely due to the target being catatonic.
 
-	to_chat(stored_swap,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
-	to_chat(user,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	stored_swap = null
 
 /obj/item/book/granter/spell/forcewall
@@ -221,7 +226,7 @@
 	spellname = "forcewall"
 	icon_state ="bookforcewall"
 	desc = "This book has a dedication to mimes everywhere inside the front cover."
-	remarks = list("I can go through the wall! Neat.", "Why are there so many mime references...?", "This would cause much grief in a hallway...", "This is some suprisingly strong magic to create a wall nobody can pass through...", "Why the dumb stance? It's just a flick of the hand...", "Why are the pages so hard to turn, is this even paper?", "I can't mo Oh, i'm fine...")
+	remarks = list("I can go through the wall! Neat.", "Why are there so many mime references...?", "This would cause much grief in a hallway...", "This is some surprisingly strong magic to create a wall nobody can pass through...", "Why the dumb stance? It's just a flick of the hand...", "Why are the pages so hard to turn, is this even paper?", "I can't mo Oh, i'm fine...")
 
 /obj/item/book/granter/spell/forcewall/recoil(mob/living/user)
 	..()
@@ -234,12 +239,12 @@
 	spellname = "knock"
 	icon_state ="bookknock"
 	desc = "This book is hard to hold closed properly."
-	remarks = list("Open Sesame!", "So THAT'S the magic password!", "Slow down, book. I still haven't finished this page...", "The book won't stop moving!", "I think this is hurting the spine of the book...", "I can't get to the next page, it's stuck t I'm good, it just turned to the next page on it's own.", "Yeah, staff of doors does the same thing. Go figure...")
+	remarks = list("Open Sesame!", "So THAT'S the magic password!", "Slow down, book. I still haven't finished this page...", "The book won't stop moving!", "I think this is hurting the spine of the book...", "I can't get to the next page, it's stuck t- I'm good, it just turned to the next page on it's own.", "Yeah, staff of doors does the same thing. Go figure...")
 
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Knockdown(40)
+	user.Paralyze(40)
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
@@ -251,13 +256,10 @@
 /obj/item/book/granter/spell/barnyard/recoil(mob/living/carbon/user)
 	if(ishuman(user))
 		to_chat(user,"<font size='15' color='red'><b>HORSIE HAS RISEN</b></font>")
-		var/obj/item/clothing/mask/horsehead/magichead = new /obj/item/clothing/mask/horsehead
-		magichead.flags_1 |= NODROP_1		//curses!
-		magichead.flags_inv &= ~HIDEFACE //so you can still see their face
-		magichead.voicechange = TRUE	//NEEEEIIGHH
+		var/obj/item/clothing/magichead = new /obj/item/clothing/mask/horsehead/cursed(user.drop_location())
 		if(!user.dropItemToGround(user.wear_mask))
 			qdel(user.wear_mask)
-		user.equip_to_slot_if_possible(magichead, slot_wear_mask, TRUE, TRUE)
+		user.equip_to_slot_if_possible(magichead, SLOT_WEAR_MASK, TRUE, TRUE)
 		qdel(src)
 	else
 		to_chat(user,"<span class='notice'>I say thee neigh</span>") //It still lives here
@@ -310,11 +312,9 @@
 	if(!martial)
 		return
 	var/datum/martial_art/MA = new martial
-	if(user.mind.martial_art)
-		for(var/datum/martial_art/knownmartial in user.mind.martial_art)
-			if(knownmartial.type == MA.type)
-				to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
-				return
+	if(user.mind.has_martialart(MA.id))
+		to_chat(user,"<span class='warning'>You already know [martialname]!</span>")
+		return
 	if(used == TRUE && oneuse == TRUE)
 		recoil(user)
 	else
@@ -329,7 +329,7 @@
 		if(do_after(user,50, user))
 			to_chat(user, "[greet]")
 			MA.teach(user)
-			user.log_message("<font color='orange'>learned the martial art [martialname] ([MA]).</font>", INDIVIDUAL_ATTACK_LOG)
+			user.log_message("learned the martial art [martialname] ([MA])", LOG_ATTACK, color="orange")
 			onlearned(user)
 		reading = FALSE
 

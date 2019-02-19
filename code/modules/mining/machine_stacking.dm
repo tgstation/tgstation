@@ -6,21 +6,23 @@
 	icon_state = "console"
 	desc = "Controls a stacking machine... in theory."
 	density = FALSE
-	anchored = TRUE
-	var/obj/machinery/mineral/stacking_machine/machine = null
+	circuit = /obj/item/circuitboard/machine/stacking_unit_console
+	var/obj/machinery/mineral/stacking_machine/machine
 	var/machinedir = SOUTHEAST
-	speed_process = TRUE
 
 /obj/machinery/mineral/stacking_unit_console/Initialize()
 	. = ..()
 	machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 	if (machine)
 		machine.CONSOLE = src
-	else
-		qdel(src)
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
 	. = ..()
+
+	if(!machine)
+		to_chat(user, "<span class='notice'>[src] is not linked to a machine!</span>")
+		return
+
 	var/obj/item/stack/sheet/s
 	var/dat
 
@@ -35,6 +37,14 @@
 
 	user << browse(dat, "window=console_stacking_machine")
 
+/obj/machinery/mineral/stacking_unit_console/multitool_act(mob/living/user, obj/item/I)
+	if(!multitool_check_buffer(user, I))
+		return
+	var/obj/item/multitool/M = I
+	M.buffer = src
+	to_chat(user, "<span class='notice'>You store linkage information in [I]'s buffer.</span>")
+	return TRUE
+
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
 		return
@@ -44,8 +54,7 @@
 		if(!(text2path(href_list["release"]) in machine.stack_list))
 			return //someone tried to spawn materials by spoofing hrefs
 		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
-		var/obj/item/stack/sheet/out = new inp.type()
-		out.amount = inp.amount
+		var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
 		inp.amount = 0
 		machine.unload_mineral(out)
 
@@ -62,33 +71,52 @@
 	icon_state = "stacker"
 	desc = "A machine that automatically stacks acquired materials. Controlled by a nearby console."
 	density = TRUE
-	anchored = TRUE
+	circuit = /obj/item/circuitboard/machine/stacking_machine
+	input_dir = EAST
+	output_dir = WEST
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
 	var/stack_list[0] //Key: Type.  Value: Instance of type.
-	var/stack_amt = 50; //ammount to stack before releassing
-	input_dir = EAST
-	output_dir = WEST
+	var/stack_amt = 50 //amount to stack before releassing
+	var/datum/component/remote_materials/materials
+	var/force_connect = FALSE
 
-/obj/machinery/mineral/stacking_machine/Initialize()
+/obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 1)
+	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, mapload && force_connect)
 
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)
 
+/obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/M)
+	if(istype(M))
+		if(istype(M.buffer, /obj/machinery/mineral/stacking_unit_console))
+			CONSOLE = M.buffer
+			CONSOLE.machine = src
+			to_chat(user, "<span class='notice'>You link [src] to the console in [M]'s buffer.</span>")
+			return TRUE
+
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
-	if(!(inp.type in stack_list)) //It's the first of this sheet added
-		var/obj/item/stack/sheet/s = new inp.type(src,0)
-		s.amount = 0
-		stack_list[inp.type] = s
-	var/obj/item/stack/sheet/storage = stack_list[inp.type]
+	var/key = inp.merge_type
+	var/obj/item/stack/sheet/storage = stack_list[key]
+	if(!storage) //It's the first of this sheet added
+		stack_list[key] = storage = new inp.type(src, 0)
 	storage.amount += inp.amount //Stack the sheets
-	qdel(inp) //Let the old sheet garbage collect
-	while(storage.amount > stack_amt) //Get rid of excessive stackage
-		var/obj/item/stack/sheet/out = new inp.type()
-		out.amount = stack_amt
+	qdel(inp)
+
+	if(materials.silo && !materials.on_hold()) //Dump the sheets to the silo
+		var/matlist = storage.materials & materials.mat_container.materials
+		if (length(matlist))
+			var/inserted = materials.mat_container.insert_stack(storage)
+			materials.silo_log(src, "collected", inserted, "sheets", matlist)
+			if (QDELETED(storage))
+				stack_list -= key
+			return
+
+	while(storage.amount >= stack_amt) //Get rid of excessive stackage
+		var/obj/item/stack/sheet/out = new inp.type(null, stack_amt)
 		unload_mineral(out)
 		storage.amount -= stack_amt

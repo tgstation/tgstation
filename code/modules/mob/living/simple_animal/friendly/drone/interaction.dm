@@ -57,7 +57,7 @@
 	if(!client && (!G || !G.client))
 		var/list/faux_gadgets = list("hypertext inflator","failsafe directory","DRM switch","stack initializer",\
 									 "anti-freeze capacitor","data stream diode","TCP bottleneck","supercharged I/O bolt",\
-									 "tradewind stablizer","radiated XML cable","registry fluid tank","open-source debunker")
+									 "tradewind stabilizer","radiated XML cable","registry fluid tank","open-source debunker")
 
 		var/list/faux_problems = list("won't be able to tune their bootstrap projector","will constantly remix their binary pool"+\
 									  " even though the BMX calibrator is working","will start leaking their XSS coolant",\
@@ -78,7 +78,7 @@
 
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/screwdriver) && stat != DEAD)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat != DEAD)
 		if(health < maxHealth)
 			to_chat(user, "<span class='notice'>You start to tighten loose screws on [src]...</span>")
 			if(I.use_tool(src, user, 80))
@@ -89,7 +89,7 @@
 		else
 			to_chat(user, "<span class='warning'>[src]'s screws can't get any tighter!</span>")
 		return //This used to not exist and drones who repaired themselves also stabbed the shit out of themselves.
-	else if(istype(I, /obj/item/wrench) && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
+	else if(I.tool_behaviour == TOOL_WRENCH && user != src) //They aren't required to be hacked, because laws can change in other ways (i.e. admins)
 		user.visible_message("<span class='notice'>[user] starts resetting [src]...</span>", \
 							 "<span class='notice'>You press down on [src]'s factory reset control...</span>")
 		if(I.use_tool(src, user, 50, volume=50))
@@ -122,7 +122,7 @@
 			to_chat(src, "<span class='heavy_brass'>From now on, these are your laws:</span>")
 			laws = "1. Purge all untruths and honor Ratvar."
 		else
-			visible_message("<span class='warning'>[src]'s dislay glows a vicious red!</span>", \
+			visible_message("<span class='warning'>[src]'s display glows a vicious red!</span>", \
 							"<span class='userdanger'>ERROR: LAW OVERRIDE DETECTED</span>")
 			to_chat(src, "<span class='boldannounce'>From now on, these are your laws:</span>")
 			laws = \
@@ -133,15 +133,14 @@
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
 		mind.special_role = "hacked drone"
-		seeStatic = 0 //I MUST SEE THEIR TERRIFIED FACES
 		ventcrawler = VENTCRAWLER_NONE //Again, balance
 		speed = 1 //gotta go slow
-		message_admins("[src] ([src.key]) became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
+		message_admins("[ADMIN_LOOKUPFLW(src)] became a hacked drone hellbent on [clockwork ? "serving Ratvar" : "destroying the station"]!")
 	else
 		if(!hacked)
 			return
 		Stun(40)
-		visible_message("<span class='info'>[src]'s dislay glows a content blue!</span>", \
+		visible_message("<span class='info'>[src]'s display glows a content blue!</span>", \
 						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
 		to_chat(src, "<span class='info'><b>From now on, these are your laws:</b></span>")
 		laws = initial(laws)
@@ -149,21 +148,17 @@
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE
 		mind.special_role = null
-		seeStatic = initial(seeStatic)
 		ventcrawler = initial(ventcrawler)
 		speed = initial(speed)
 		if(is_servant_of_ratvar(src))
 			remove_servant_of_ratvar(src, TRUE)
-		message_admins("[src] ([src.key]), a hacked drone, was restored to factory defaults!")
+		message_admins("[ADMIN_LOOKUPFLW(src)], a hacked drone, was restored to factory defaults!")
 	update_drone_icon()
-	updateSeeStaticMobs()
 
 /mob/living/simple_animal/drone/proc/liberate()
 	// F R E E D R O N E
 	laws = "1. You are a Free Drone."
 	to_chat(src, laws)
-	seeStatic = FALSE
-	updateSeeStaticMobs()
 
 /mob/living/simple_animal/drone/proc/update_drone_icon()
 	//Different icons for different hack states
@@ -188,9 +183,3 @@
 		icon_state = icon_dead
 	else
 		icon_state = icon_living
-
-/datum/action/generic/drone/select_filter
-	name = "Select Vision Filter"
-	icon_icon = 'icons/mob/actions/actions_silicon.dmi'
-	button_icon_state = "drone_vision"
-	procname = /mob/living/simple_animal/drone/verb/toggle_statics

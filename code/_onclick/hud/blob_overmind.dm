@@ -175,10 +175,3 @@
 	using = new /obj/screen/blob/RelocateCore()
 	using.screen_loc = ui_storage2
 	static_inventory += using
-
-
-/mob/camera/blob/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/blob_overmind(src)
-
-

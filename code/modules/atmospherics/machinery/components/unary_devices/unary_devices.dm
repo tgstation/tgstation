@@ -19,12 +19,6 @@
 	update_icon()
 	..(intact)
 
-/obj/machinery/atmospherics/components/unary/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/analyzer))
-		atmosanalyzer_scan(airs[1], user)
-	else
-		return ..()
-
 /obj/machinery/atmospherics/components/unary/proc/assign_uid_vents()
 	uid = num2text(gl_uid++)
 	return uid

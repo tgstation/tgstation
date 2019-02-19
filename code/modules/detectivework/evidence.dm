@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/evidencebag/afterattack(obj/item/I, mob/user,proximity)
+	. = ..()
 	if(!proximity || loc == I)
 		return
 	evidencebagEquip(I, user)
@@ -40,8 +41,8 @@
 		return
 
 	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(I.loc.SendSignal(COMSIG_CONTAINS_STORAGE))	//in a container.
-			I.loc.SendSignal(COMSIG_TRY_STORAGE_TAKE, I, src)
+		if(SEND_SIGNAL(I.loc, COMSIG_CONTAINS_STORAGE))	//in a container.
+			SEND_SIGNAL(I.loc, COMSIG_TRY_STORAGE_TAKE, I, src)
 		if(!user.dropItemToGround(I))
 			return
 
@@ -83,12 +84,6 @@
 	name = "evidence bag box"
 	desc = "A box claiming to contain evidence bags."
 
-/obj/item/storage/box/evidence/New()
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	new /obj/item/evidencebag(src)
-	..()
-	return
+/obj/item/storage/box/evidence/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/evidencebag(src)

@@ -29,6 +29,8 @@
 	status_flags = CANPUSH
 	del_on_death = 1
 
+	do_footstep = TRUE
+
 
 /mob/living/simple_animal/hostile/russian/ranged
 	icon_state = "russianranged"
@@ -44,7 +46,7 @@
 
 /mob/living/simple_animal/hostile/russian/ranged/mosin
 	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged,
-				/obj/item/gun/ballistic/shotgun/boltaction)
+				/obj/item/gun/ballistic/rifle/boltaction)
 	casingtype = /obj/item/ammo_casing/a762
 
 /mob/living/simple_animal/hostile/russian/ranged/trooper
@@ -62,7 +64,7 @@
 	icon_living = "russianofficer"
 	maxHealth = 65
 	health = 65
-	rapid = 1
+	rapid = 3
 	casingtype = /obj/item/ammo_casing/c9mm
 	loot = list(/obj/effect/mob_spawn/human/corpse/russian/ranged/officer,
 				/obj/item/gun/ballistic/automatic/pistol/APS)

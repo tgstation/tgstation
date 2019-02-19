@@ -1,6 +1,3 @@
-#define VEHICLE_CONTROL_PERMISSION 1
-#define VEHICLE_CONTROL_DRIVE 2
-
 /obj/vehicle
 	name = "generic vehicle"
 	desc = "Yell at coderbus."
@@ -18,7 +15,7 @@
 	var/key_type
 	var/obj/item/key/inserted_key
 	var/key_type_exact = TRUE		//can subtypes work
-	var/canmove = TRUE
+	var/canmove = TRUE //If this is false the vehicle cant drive. (thanks for making this actually functional kevinz :^) )
 	var/emulate_door_bumps = TRUE	//when bumping a door try to make occupants bump them to open them.
 	var/default_driver_move = TRUE	//handle driver movement instead of letting something else do it like riding datums.
 	var/list/autogrant_actions_passenger	//plain list of typepaths
@@ -33,6 +30,19 @@
 	autogrant_actions_controller = list()
 	occupant_actions = list()
 	generate_actions()
+
+/obj/vehicle/examine(mob/user)
+	..()
+	if(resistance_flags & ON_FIRE)
+		to_chat(user, "<span class='warning'>It's on fire!</span>")
+	var/healthpercent = obj_integrity/max_integrity * 100
+	switch(healthpercent)
+		if(50 to 99)
+			to_chat(user,  "It looks slightly damaged.")
+		if(25 to 50)
+			to_chat(user,  "It appears heavily damaged.")
+		if(0 to 25)
+			to_chat(user,  "<span class='warning'>It's falling apart!</span>")
 
 /obj/vehicle/proc/is_key(obj/item/I)
 	return I? (key_type_exact? (I.type == key_type) : istype(I, key_type)) : FALSE
@@ -72,8 +82,8 @@
 		return FALSE
 	occupants[M] = NONE
 	add_control_flags(M, control_flags)
-	grant_passenger_actions(M)
 	after_add_occupant(M)
+	grant_passenger_actions(M)
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
@@ -106,6 +116,8 @@
 		return FALSE
 	if(!default_driver_move)
 		return
+	if(!canmove)
+		return
 	vehicle_move(direction)
 
 /obj/vehicle/proc/vehicle_move(direction)
@@ -119,7 +131,11 @@
 			step(trailer, dir_to_move)
 		return did_move
 	else
+		after_move(direction)
 		return step(src, direction)
+
+/obj/vehicle/proc/after_move(direction)
+	return
 
 /obj/vehicle/proc/add_control_flags(mob/controller, flags)
 	if(!istype(controller) || !flags)
@@ -139,12 +155,12 @@
 			remove_controller_actions_by_flag(controller, i)
 	return TRUE
 
-/obj/vehicle/Collide(atom/movable/M)
+/obj/vehicle/Bump(atom/movable/M)
 	. = ..()
 	if(emulate_door_bumps)
-		if(istype(M, /obj/machinery/door) && has_buckled_mobs())
+		if(istype(M, /obj/machinery/door))
 			for(var/m in occupants)
-				M.CollidedWith(m)
+				M.Bumped(m)
 
 /obj/vehicle/Move(newloc, dir)
 	. = ..()

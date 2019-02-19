@@ -193,6 +193,60 @@
 		R.module.basic_modules += S
 		R.module.add_module(S, FALSE, TRUE)
 
+/obj/item/borg/upgrade/tboh
+	name = "janitor cyborg trash bag of holding"
+	desc = "A trash bag of holding replacement for the janiborg's standard trash bag."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/robot_module/janitor
+
+/obj/item/borg/upgrade/tboh/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		for(var/obj/item/storage/bag/trash/cyborg/TB in R.module.modules)
+			R.module.remove_module(TB, TRUE)
+
+		var/obj/item/storage/bag/trash/bluespace/cyborg/B = new /obj/item/storage/bag/trash/bluespace/cyborg(R.module)
+		R.module.basic_modules += B
+		R.module.add_module(B, FALSE, TRUE)
+
+/obj/item/borg/upgrade/tboh/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/storage/bag/trash/bluespace/cyborg/B in R.module.modules)
+			R.module.remove_module(B, TRUE)
+
+		var/obj/item/storage/bag/trash/cyborg/TB = new (R.module)
+		R.module.basic_modules += TB
+		R.module.add_module(TB, FALSE, TRUE)
+
+/obj/item/borg/upgrade/amop
+	name = "janitor cyborg advanced mop"
+	desc = "An advanced mop replacement for the janiborg's standard mop."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/robot_module/janitor
+
+/obj/item/borg/upgrade/amop/action(mob/living/silicon/robot/R)
+	. = ..()
+	if(.)
+		for(var/obj/item/mop/cyborg/M in R.module.modules)
+			R.module.remove_module(M, TRUE)
+
+	var/obj/item/mop/advanced/cyborg/A = new /obj/item/mop/advanced/cyborg(R.module)
+	R.module.basic_modules += A
+	R.module.add_module(A, FALSE, TRUE)
+
+/obj/item/borg/upgrade/amop/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		for(var/obj/item/mop/advanced/cyborg/A in R.module.modules)
+			R.module.remove_module(A, TRUE)
+
+		var/obj/item/mop/cyborg/M = new (R.module)
+		R.module.basic_modules += M
+		R.module.add_module(M, FALSE, TRUE)
+
 /obj/item/borg/upgrade/syndicate
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
@@ -267,6 +321,7 @@
 		deactivate_sr()
 
 /obj/item/borg/upgrade/selfrepair/dropped()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/check_dropped), 1)
 
 /obj/item/borg/upgrade/selfrepair/proc/check_dropped()
@@ -372,13 +427,7 @@
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list("mannitol", "oculine", "inacusiate",
-		"mutadone", "haloperidol")
-
-/obj/item/borg/upgrade/hypospray/high_strength
-	name = "medical cyborg high-strength hypospray"
-	desc = "An upgrade to the Medical module's hypospray, containing \
-		stronger versions of existing chemicals."
-	additional_reagents = list("oxandrolone", "sal_acid", "rezadone",
+		"mutadone", "haloperidol", "oxandrolone", "sal_acid", "rezadone",
 		"pen_acid")
 
 /obj/item/borg/upgrade/piercing_hypospray
@@ -406,7 +455,7 @@
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
-	desc = "An upgrade to the Medical module, installing a builtin \
+	desc = "An upgrade to the Medical module, installing a built-in \
 		defibrillator, for on the scene revival."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
@@ -424,6 +473,28 @@
 	if (.)
 		var/obj/item/twohanded/shockpaddles/cyborg/S = locate() in R.module
 		R.module.remove_module(S, TRUE)
+
+/obj/item/borg/upgrade/processor
+	name = "medical cyborg surgical processor"
+	desc = "An upgrade to the Medical module, installing a processor \
+		capable of scanning surgery disks and carrying \
+		out procedures"
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/robot_module/medical
+
+/obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/surgical_processor/SP = new(R.module)
+		R.module.basic_modules += SP
+		R.module.add_module(SP, FALSE, TRUE)
+
+/obj/item/borg/upgrade/processor/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/surgical_processor/SP = locate() in R.module
+		R.module.remove_module(SP, TRUE)
 
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
@@ -484,9 +555,10 @@
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		R.resize = 0.5
-		R.hasExpanded = FALSE
-		R.update_transform()
+		if (R.hasExpanded)
+			R.hasExpanded = FALSE
+			R.resize = 0.5
+			R.update_transform()
 
 /obj/item/borg/upgrade/rped
 	name = "engineering cyborg RPED"
@@ -543,3 +615,20 @@
 		var/obj/item/pinpointer/crew/PP = locate() in R.module
 		if (PP)
 			R.module.remove_module(PP, TRUE)
+
+/obj/item/borg/upgrade/transform
+	name = "borg module picker (Standard)"
+	desc = "Allows you to to turn a cyborg into a standard cyborg."
+	icon_state = "cyborg_upgrade3"
+	var/obj/item/robot_module/new_module = /obj/item/robot_module/standard
+
+/obj/item/borg/upgrade/transform/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		R.module.transform_to(new_module)
+
+/obj/item/borg/upgrade/transform/clown
+	name = "borg module picker (Clown)"
+	desc = "Allows you to to turn a cyborg into a clown, honk."
+	icon_state = "cyborg_upgrade3"
+	new_module = /obj/item/robot_module/clown

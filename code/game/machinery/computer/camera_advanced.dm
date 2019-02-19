@@ -54,9 +54,13 @@
 		var/datum/action/A = V
 		A.Remove(user)
 	actions.Cut()
+	for(var/V in eyeobj.visibleCameraChunks)
+		var/datum/camerachunk/C = V
+		C.remove(eyeobj)
 	if(user.client)
 		user.reset_perspective(null)
-		eyeobj.RemoveImages()
+		if(eyeobj.visible_icon && user.client)
+			user.client.images -= eyeobj.user_image
 	eyeobj.eye_user = null
 	user.remote_control = null
 
@@ -92,6 +96,8 @@
 	. = ..()
 	if(.)
 		return
+	if(!is_operational()) //you cant use broken machine you chumbis
+		return
 	if(current_user)
 		to_chat(user, "The console is already in use!")
 		return
@@ -105,7 +111,7 @@
 	if(!eyeobj.eye_initialized)
 		var/camera_location
 		var/turf/myturf = get_turf(src)
-		if(eyeobj.use_static)
+		if(eyeobj.use_static != USE_STATIC_NONE)
 			if((!z_lock.len || (myturf.z in z_lock)) && GLOB.cameranet.checkTurfVis(myturf))
 				camera_location = myturf
 			else
@@ -148,6 +154,7 @@
 
 /mob/camera/aiEye/remote
 	name = "Inactive Camera Eye"
+	ai_detector_visible = FALSE
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
@@ -159,21 +166,16 @@
 
 /mob/camera/aiEye/remote/update_remote_sight(mob/living/user)
 	user.see_invisible = SEE_INVISIBLE_LIVING //can't see ghosts through cameras
-	user.sight = 0
+	user.sight = SEE_TURFS | SEE_BLACKNESS
 	user.see_in_dark = 2
 	return 1
 
-/mob/camera/aiEye/remote/RemoveImages()
-	..()
-	if(visible_icon)
-		var/client/C = GetViewerClient()
-		if(C)
-			C.images -= user_image
-
 /mob/camera/aiEye/remote/Destroy()
-	eye_user = null
+	if(origin && eye_user)
+		origin.remove_eye_control(eye_user)
 	origin = null
-	return ..()
+	. = ..()
+	eye_user = null
 
 /mob/camera/aiEye/remote/GetViewerClient()
 	if(eye_user)
@@ -182,15 +184,14 @@
 
 /mob/camera/aiEye/remote/setLoc(T)
 	if(eye_user)
-		if(!isturf(eye_user.loc))
-			return
 		T = get_turf(T)
 		if (T)
 			forceMove(T)
 		else
 			moveToNullspace()
-		if(use_static)
-			GLOB.cameranet.visibility(src)
+		update_ai_detect_hud()
+		if(use_static != USE_STATIC_NONE)
+			GLOB.cameranet.visibility(src, GetViewerClient(), null, use_static)
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
@@ -288,9 +289,9 @@
 
 /obj/machinery/computer/camera_advanced/ratvar/CreateEye()
 	..()
-	eyeobj.visible_icon = 1
-	eyeobj.icon = 'icons/obj/abductor.dmi' //in case you still had any doubts
-	eyeobj.icon_state = "camera_target"
+	eyeobj.visible_icon = TRUE
+	eyeobj.icon = 'icons/mob/cameramob.dmi' //in case you still had any doubts
+	eyeobj.icon_state = "generic_camera"
 
 /obj/machinery/computer/camera_advanced/ratvar/GrantActions(mob/living/carbon/user)
 	..()

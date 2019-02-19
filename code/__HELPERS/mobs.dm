@@ -72,7 +72,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),"ethcolor" = GLOB.color_list_ethereal[pick(GLOB.color_list_ethereal)], "tail_lizard" = pick(GLOB.tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(GLOB.snouts_list), "horns" = pick(GLOB.horns_list), "ears" = "None", "frills" = pick(GLOB.frills_list), "spines" = pick(GLOB.spines_list), "body_markings" = pick(GLOB.body_markings_list), "legs" = "Normal Legs", "caps" = pick(GLOB.caps_list), "moth_wings" = pick(GLOB.moth_wings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -116,10 +116,17 @@
 		if(!findname(.))
 			break
 
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(ethereal_name())
+
+		if(!findname(.))
+			break
+
 /proc/random_unique_moth_name(attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(pick(GLOB.moth_first)) + " " + capitalize(pick(GLOB.moth_last))
-	
+
 		if(!findname(.))
 			break
 
@@ -166,65 +173,6 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/*
-Proc for attack log creation, because really why not
-1 argument is the actor
-2 argument is the target of action
-3 is the description of action(like punched, throwed, or any other verb)
-4 is the tool with which the action was made(usually item)					4 and 5 are very similar(5 have "by " before it, that it) and are separated just to keep things in a bit more in order
-5 is additional information, anything that needs to be added
-*/
-
-/proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
-	var/turf/attack_location = get_turf(target)
-
-	var/is_mob_user = user && GLOB.typecache_mob[user.type]
-	var/is_mob_target = target && GLOB.typecache_mob[target.type]
-
-	var/mob/living/living_target
-
-	if(target && isliving(target))
-		living_target = target
-
-	var/hp =" "
-	if(living_target)
-		hp = " (NEWHP: [living_target.health]) "
-
-	var/starget = "NON-EXISTENT SUBJECT"
-	if(target)
-		if(is_mob_target && target.ckey)
-			starget = "[target.name]([target.ckey])"
-		else
-			starget = "[target.name]"
-
-	var/ssource = "NON-EXISTENT USER" //How!?
-	if(user)
-		if(is_mob_user && user.ckey)
-			ssource = "[user.name]([user.ckey])"
-		else
-			ssource = "[user.name]"
-
-	var/sobject = ""
-	if(object)
-		sobject = "[object]"
-		if(addition)
-			addition = " [addition]"
-
-	var/sattackloc = ""
-	if(attack_location)
-		sattackloc = "([attack_location.x],[attack_location.y],[attack_location.z])"
-
-	if(is_mob_user)
-		var/message = "<font color='red'>has [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		user.log_message(message, INDIVIDUAL_ATTACK_LOG)
-
-	if(is_mob_target)
-		var/message = "<font color='orange'>has been [what_done] by [ssource][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]</font>"
-		target.log_message(message, INDIVIDUAL_ATTACK_LOG)
-
-	log_attack("[ssource] [what_done] [starget][(sobject||addition) ? " with ":""][sobject][addition][hp][sattackloc]")
-
-
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return 0
@@ -258,7 +206,7 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if (progress)
@@ -316,9 +264,15 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
+
+		if(isliving(user))
+			var/mob/living/L = user
+			if(L.IsStun() || L.IsParalyzed())
+				. = 0
+				break
 
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
@@ -342,7 +296,7 @@ Proc for attack log creation, because really why not
 	. = 1
 	return
 
-/proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks)
+/proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
 	if(!user || !targets)
 		return 0
 	if(!islist(targets))
@@ -364,6 +318,9 @@ Proc for attack log creation, because really why not
 
 	var/endtime = world.time + time
 	var/starttime = world.time
+	var/mob/living/L
+	if(isliving(user))
+		L = user
 	. = 1
 	mainloop:
 		while(world.time < endtime)
@@ -380,8 +337,12 @@ Proc for attack log creation, because really why not
 				drifting = 0
 				user_loc = user.loc
 
+			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
+				. = 0
+				break
+
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
+				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
 					. = 0
 					break mainloop
 	if(progbar)
@@ -402,10 +363,12 @@ Proc for attack log creation, because really why not
 	var/list/new_args = list(T)
 	if(extra_args)
 		new_args += extra_args
-
+	var/atom/X
 	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(arglist(new_args))
-		X.admin_spawned = admin_spawn
+		X = new spawn_type(arglist(new_args))
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
+	return X //return the last mob spawned
 
 /proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
 	var/turf/T = get_turf(target)
@@ -413,9 +376,14 @@ Proc for attack log creation, because really why not
 	if(!T)
 		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
+	var/list/spawned_mobs = new(amount)
+
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
+		if (admin_spawn)
+			X.flags_1 |= ADMIN_SPAWNED_1
+
+		spawned_mobs[j] = X
 
 		if(always_max_walk || prob(walk_chance))
 			if(always_max_walk)
@@ -426,7 +394,10 @@ Proc for attack log creation, because really why not
 			for(var/i in 1 to step_count)
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
+	return spawned_mobs
+
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+	message = "<span class='linkify'>[message]</span>"
 	for(var/mob/M in GLOB.player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)
@@ -434,12 +405,14 @@ Proc for attack log creation, because really why not
 		else
 			prefs = new
 
-		var/adminoverride = 0
+		var/override = FALSE
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+			override = TRUE
+		if(M.has_trait(TRAIT_SIXTHSENSE))
+			override = TRUE
+		if(isnewplayer(M) && !override)
 			continue
-		if(M.stat != DEAD && !adminoverride)
+		if(M.stat != DEAD && !override)
 			continue
 		if(speaker_key && speaker_key in prefs.ignoring)
 			continue
@@ -469,41 +442,6 @@ Proc for attack log creation, because really why not
 			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
-
-
-/proc/log_talk(mob/user,message,logtype)
-	var/turf/say_turf = get_turf(user)
-
-	var/sayloc = ""
-	if(say_turf)
-		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
-
-
-	var/logmessage = "[message] [sayloc]"
-
-	switch(logtype)
-
-		if(LOGDSAY)
-			log_dsay(logmessage)
-		if(LOGSAY)
-			log_say(logmessage)
-		if(LOGWHISPER)
-			log_whisper(logmessage)
-		if(LOGEMOTE)
-			log_emote(logmessage)
-		if(LOGPDA)
-			log_pda(logmessage)
-		if(LOGCHAT)
-			log_chat(logmessage)
-		if(LOGCOMMENT)
-			log_comment(logmessage)
-		if(LOGASAY)
-			log_adminsay(logmessage)
-		if(LOGOOC)
-			log_ooc(logmessage)
-		else
-			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
-			log_say(logmessage)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)

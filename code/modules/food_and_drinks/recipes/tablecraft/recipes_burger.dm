@@ -293,3 +293,13 @@
 
 	result = /obj/item/reagent_containers/food/snacks/burger/baconburger
 	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/empoweredburger
+	name = "Empowered Burger"
+	reqs = list(
+			/obj/item/stack/sheet/mineral/plasma = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+
+	result = /obj/item/reagent_containers/food/snacks/burger/empoweredburger
+	subcategory = CAT_BURGER

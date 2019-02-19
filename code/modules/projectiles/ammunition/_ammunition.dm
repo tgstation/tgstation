@@ -4,9 +4,10 @@
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "s-casing"
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
+	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
+	materials = list(MAT_METAL = 500)
 	var/fire_sound = null						//What sound should play when this ammo is fired
 	var/caliber = null							//Which kind of guns it can be loaded into
 	var/projectile_type = null					//The bullet type to create when New() is called
@@ -20,6 +21,9 @@
 	var/heavy_metal = TRUE
 	var/harmful = TRUE //pacifism check for boolet, set to FALSE if bullet is non-lethal
 
+/obj/item/ammo_casing/spent
+	name = "spent bullet casing"
+	BB = null
 
 /obj/item/ammo_casing/Initialize()
 	. = ..()
@@ -33,7 +37,7 @@
 /obj/item/ammo_casing/update_icon()
 	..()
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
-	desc = "[initial(desc)][BB ? "" : " This one is spent"]"
+	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
 //proc to magically refill a casing with a new projectile
 /obj/item/ammo_casing/proc/newshot() //For energy weapons, syringe gun, shotgun shells and wands (!).
@@ -61,46 +65,16 @@
 	else
 		return ..()
 
-/obj/item/ammo_casing/throw_impact(atom/A)
+/obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(heavy_metal)
 		bounce_away(FALSE, NONE)
 	. = ..()
 
-/obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, delay = 3)
-	SpinAnimation(10, 1)
+/obj/item/ammo_casing/proc/bounce_away(still_warm = FALSE, bounce_delay = 3)
 	update_icon()
+	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
-	if(still_warm && T && (is_type_in_typecache(T, GLOB.bullet_bounce_away_sizzle)))
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/welder.ogg', 20, 1), delay)
-	else if(T && (!is_type_in_typecache(T, GLOB.bullet_bounce_away_blacklist)))
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/weapons/bulletremove.ogg', 60, 1), delay)
-
-GLOBAL_LIST_INIT(bullet_bounce_away_sizzle, typecacheof(list(
-	/turf/closed/indestructible/rock/snow,
-	/turf/closed/wall/ice,
-	/turf/closed/wall/mineral/snow,
-	/turf/open/floor/grass/snow,
-	/turf/open/floor/holofloor/snow,
-	/turf/open/floor/plating/asteroid/snow,
-	/turf/open/floor/plating/ice,
-	/turf/open/water)))
-
-GLOBAL_LIST_INIT(bullet_bounce_away_blacklist, typecacheof(list(
-	/turf/closed/indestructible/rock/snow,
-	/turf/closed/indestructible/splashscreen,
-	/turf/closed/wall/mineral/snow,
-	/turf/open/chasm,
-	/turf/open/floor/carpet,
-	/turf/open/floor/grass,
-	/turf/open/floor/holofloor/beach,
-	/turf/open/floor/holofloor/carpet,
-	/turf/open/floor/holofloor/grass,
-	/turf/open/floor/holofloor/hyperspace,
-	/turf/open/floor/holofloor/snow,
-	/turf/open/floor/plating/asteroid/snow,
-	/turf/open/floor/plating/beach,
-	/turf/open/indestructible/reebe_void,
-	/turf/open/lava,
-	/turf/open/space,
-	/turf/open/water,
-	/turf/template_noop)))
+	if(still_warm && T && T.bullet_sizzle)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
+	else if(T && T.bullet_bounce_sound)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, T.bullet_bounce_sound, 60, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.

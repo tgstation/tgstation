@@ -17,7 +17,7 @@ This file contains the cult dagger and rune list code
 /obj/item/melee/cultblade/dagger/examine(mob/user)
 	..()
 	if(iscultist(user) || isobserver(user))
-		to_chat(user, "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar-Sie.</span>")
+		to_chat(user, "<span class='cult'>The scriptures of the Geometer. Allows the scribing of runes and access to the knowledge archives of the cult of Nar'Sie.</span>")
 		to_chat(user, "<span class='cult'>Striking a cult structure will unanchor or reanchor it.</span>")
 		to_chat(user, "<span class='cult'>Striking another cultist with it will purge holy water from them.</span>")
 		to_chat(user, "<span class='cult'>Striking a noncultist, however, will tear their flesh.</span>")
@@ -29,7 +29,7 @@ This file contains the cult dagger and rune list code
 			var/holy2unholy = M.reagents.get_reagent_amount("holywater")
 			M.reagents.del_reagent("holywater")
 			M.reagents.add_reagent("unholywater",holy2unholy)
-			add_logs(user, M, "smacked", src, " removing the holy water from them")
+			log_combat(user, M, "smacked", src, " removing the holy water from them")
 		return FALSE
 	. = ..()
 
@@ -78,7 +78,7 @@ This file contains the cult dagger and rune list code
 			return
 		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 		if(!(A in summon_objective.summon_spots))
-			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site (where Nar-sie can be summoned), it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
+			to_chat(user, "<span class='cultlarge'>The Apocalypse rune will remove a ritual site (where Nar'Sie can be summoned), it can only be scribed in [english_list(summon_objective.summon_spots)]!</span>")
 			return
 		if(summon_objective.summon_spots.len < 2)
 			to_chat(user, "<span class='cultlarge'>Only one ritual site remains - it must be reserved for the final summoning!</span>")
@@ -87,7 +87,7 @@ This file contains the cult dagger and rune list code
 		var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
 		var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
 		if(!summon_objective)
-			to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
+			to_chat(user, "<span class='warning'>Nar'Sie does not wish to be summoned!</span>")
 			return
 		if(sac_objective && !sac_objective.check_completion())
 			to_chat(user, "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>")
@@ -98,7 +98,7 @@ This file contains the cult dagger and rune list code
 		if(!(A in summon_objective.summon_spots))
 			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
 			return
-		var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
+		var/confirm_final = alert(user, "This is the FINAL step to summon Nar'Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar'Sie!", "No")
 		if(confirm_final == "No")
 			to_chat(user, "<span class='cult'>You decide to prepare further before scribing the rune.</span>")
 			return
@@ -111,7 +111,7 @@ This file contains the cult dagger and rune list code
 		for(var/B in spiral_range_turfs(1, user, 1))
 			var/obj/structure/emergency_shield/sanguine/N = new(B)
 			shields += N
-	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open their arm and begins writing in their own blood":"begins sketching out a strange design"]!</span>", \
+	user.visible_message("<span class='warning'>[user] [user.blood_volume ? "cuts open [user.p_their()] arm and begins writing in [user.p_their()] own blood":"begins sketching out a strange design"]!</span>", \
 						 "<span class='cult'>You [user.blood_volume ? "slice open your arm and ":""]begin drawing a sigil of the Geometer.</span>")
 	if(user.blood_volume)
 		user.apply_damage(initial(rune_to_scribe.scribe_damage), BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
@@ -126,7 +126,7 @@ This file contains the cult dagger and rune list code
 		return
 	if(!check_rune_turf(Turf, user))
 		return
-	user.visible_message("<span class='warning'>[user] creates a strange circle[user.blood_volume ? " in their own blood":""].</span>", \
+	user.visible_message("<span class='warning'>[user] creates a strange circle[user.blood_volume ? " in [user.p_their()] own blood":""].</span>", \
 						 "<span class='cult'>You finish drawing the arcane markings of the Geometer.</span>")
 	for(var/V in shields)
 		var/obj/structure/emergency_shield/S = V
@@ -144,7 +144,8 @@ This file contains the cult dagger and rune list code
 	if(locate(/obj/effect/rune) in T)
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
-	if(!is_station_level(T.z) && !is_mining_level(T.z))
+	var/area/A = get_area(T)
+	if((!is_station_level(T.z) && !is_mining_level(T.z)) || (A && !A.blob_allowed))
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
 		return FALSE
 	return TRUE

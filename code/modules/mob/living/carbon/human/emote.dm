@@ -45,6 +45,31 @@
 	message = "mumbles!"
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/carbon/human/scream
+	key = "scream"
+	key_third_person = "screams"
+	message = "screams!"
+	emote_type = EMOTE_AUDIBLE
+	only_forced_audio = TRUE
+	vary = TRUE
+
+/datum/emote/living/carbon/human/scream/get_sound(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.mind?.miming)
+		return
+	if(ishumanbasic(H) || iscatperson(H))
+		if(user.gender == FEMALE)
+			return pick('sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg')
+		else
+			if(prob(1))
+				return 'sound/voice/human/wilhelm_scream.ogg'
+			return pick('sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg')
+	else if(ismoth(H))
+		return 'sound/voice/moth/scream_moth.ogg'
+
+
 /datum/emote/living/carbon/human/pale
 	key = "pale"
 	message = "goes pale for a second."
@@ -77,53 +102,26 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/H = user
-	if(!H.is_wagging_tail())
-		H.startTailWag()
+	if(!istype(H) || !H.dna || !H.dna.species || !H.dna.species.can_wag_tail(H))
+		return
+	if(!H.dna.species.is_wagging_tail())
+		H.dna.species.start_wagging_tail(H)
 	else
-		H.endTailWag()
-
-/mob/living/carbon/human/proc/is_wagging_tail()
-	return (dna && dna.species && (("waggingtail_lizard" in dna.species.mutant_bodyparts) || ("waggingtail_human" in dna.species.mutant_bodyparts)))
+		H.dna.species.stop_wagging_tail(H)
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check = TRUE)
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("tail_human" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts)))
-		return TRUE
+	return H.dna && H.dna.species && H.dna.species.can_wag_tail(user)
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if(H.is_wagging_tail())
+	if(!H.dna || !H.dna.species)
+		return
+	if(H.dna.species.is_wagging_tail())
 		. = null
-
-//Don't know where else to put this, it's basically an emote
-/mob/living/carbon/human/proc/startTailWag()
-	if(!dna || !dna.species)
-		return
-	if("tail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_lizard"
-		dna.species.mutant_bodyparts -= "spines"
-		dna.species.mutant_bodyparts |= "waggingtail_lizard"
-		dna.species.mutant_bodyparts |= "waggingspines"
-	if("tail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_human"
-		dna.species.mutant_bodyparts |= "waggingtail_human"
-	update_body()
-
-/mob/living/carbon/human/proc/endTailWag()
-	if(!dna || !dna.species)
-		return
-	if("waggingtail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_lizard"
-		dna.species.mutant_bodyparts -= "waggingspines"
-		dna.species.mutant_bodyparts |= "tail_lizard"
-		dna.species.mutant_bodyparts |= "spines"
-	if("waggingtail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_human"
-		dna.species.mutant_bodyparts |= "tail_human"
-	update_body()
 
 /datum/emote/living/carbon/human/wing
 	key = "wing"

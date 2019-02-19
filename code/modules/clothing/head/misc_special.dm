@@ -131,7 +131,7 @@
 	dog_fashion = /datum/dog_fashion/head/kitty
 
 /obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
-	if(ishuman(user) && slot == slot_head)
+	if(ishuman(user) && slot == SLOT_HEAD)
 		update_icon(user)
 		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
@@ -169,7 +169,7 @@
 
 /obj/item/clothing/head/cardborg/equipped(mob/living/user, slot)
 	..()
-	if(ishuman(user) && slot == slot_head)
+	if(ishuman(user) && slot == SLOT_HEAD)
 		var/mob/living/carbon/human/H = user
 		if(istype(H.wear_suit, /obj/item/clothing/suit/cardborg))
 			var/obj/item/clothing/suit/cardborg/CB = H.wear_suit
@@ -236,15 +236,17 @@
 	item_state = "foilhat"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = -5,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = -5, "fire" = 0, "acid" = 0)
 	equip_delay_other = 140
-	var/datum/brain_trauma/mild/phobia/paranoia
+	var/datum/brain_trauma/mild/phobia/conspiracies/paranoia
 
 /obj/item/clothing/head/foilhat/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot == slot_head)
+	if(slot == SLOT_HEAD)
 		if(paranoia)
 			QDEL_NULL(paranoia)
 		paranoia = new()
-		user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC, "conspiracies")
+		paranoia.clonable = FALSE
+
+		user.gain_trauma(paranoia, TRAUMA_RESILIENCE_MAGIC)
 		to_chat(user, "<span class='warning'>As you don the foiled hat, an entire world of conspiracy theories and seemingly insane ideas suddenly rush into your mind. What you once thought unbelievable suddenly seems.. undeniable. Everything is connected and nothing happens just by accident. You know too much and now they're out to get you. </span>")
 
 /obj/item/clothing/head/foilhat/dropped(mob/user)

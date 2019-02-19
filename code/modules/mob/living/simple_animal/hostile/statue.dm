@@ -43,7 +43,10 @@
 	search_objects = 1 // So that it can see through walls
 
 	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
-	anchored = TRUE
+
+	move_force = MOVE_FORCE_EXTREMELY_STRONG
+	move_resist = MOVE_FORCE_EXTREMELY_STRONG
+	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
@@ -133,7 +136,7 @@
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/statue/say()
+/mob/living/simple_animal/hostile/statue/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	return 0
 
 // Turn to dust when gibbed

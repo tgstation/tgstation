@@ -2,12 +2,17 @@
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
 	body_parts_covered = HEAD
-	slot_flags = SLOT_MASK
+	slot_flags = ITEM_SLOT_MASK
 	strip_delay = 40
 	equip_delay_other = 40
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
 
+/obj/item/clothing/mask/attack_self(mob/user)
+	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
+		TOGGLE_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
+		var/status = !CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
+		to_chat(user, "<span class='notice'>You turn the voice box in [src] [status ? "on" : "off"].</span>")
 
 /obj/item/clothing/mask/worn_overlays(isinhands = FALSE)
 	. = list()
@@ -33,7 +38,7 @@
 		src.icon_state = initial(icon_state)
 		gas_transfer_coefficient = initial(gas_transfer_coefficient)
 		permeability_coefficient = initial(permeability_coefficient)
-		flags_1 |= visor_flags
+		clothing_flags |= visor_flags
 		flags_inv |= visor_flags_inv
 		flags_cover |= visor_flags_cover
 		to_chat(user, "<span class='notice'>You push \the [src] back into place.</span>")
@@ -43,7 +48,7 @@
 		to_chat(user, "<span class='notice'>You push \the [src] out of the way.</span>")
 		gas_transfer_coefficient = null
 		permeability_coefficient = null
-		flags_1 &= ~visor_flags
+		clothing_flags &= ~visor_flags
 		flags_inv &= ~visor_flags_inv
 		flags_cover &= ~visor_flags_cover
 		if(adjusted_flags)

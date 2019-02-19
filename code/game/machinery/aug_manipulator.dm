@@ -4,7 +4,6 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter"
 	density = TRUE
-	anchored = TRUE
 	obj_integrity = 200
 	max_integrity = 200
 	var/obj/item/bodypart/storedpart
@@ -13,7 +12,8 @@
 
 /obj/machinery/aug_manipulator/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click to eject the limb.</span>")
+	if(storedpart)
+		to_chat(user, "<span class='notice'>Alt-click to eject the limb.</span>")
 
 /obj/machinery/aug_manipulator/Initialize()
     initial_icon_state = initial(icon_state)
@@ -73,7 +73,7 @@
 			O.add_fingerprint(user)
 			update_icon()
 
-	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+	else if(O.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
 		if(obj_integrity < max_integrity)
 			if(!O.tool_start_check(user, amount=0))
 				return

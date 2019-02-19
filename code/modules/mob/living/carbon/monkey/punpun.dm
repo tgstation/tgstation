@@ -27,9 +27,9 @@
 	//bodyparts are actually created before we try to equip things to
 	//those slots
 	if(relic_hat)
-		equip_to_slot_or_del(new relic_hat, slot_head)
+		equip_to_slot_or_del(new relic_hat, SLOT_HEAD)
 	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
+		equip_to_slot_or_del(new relic_mask, SLOT_WEAR_MASK)
 
 /mob/living/carbon/monkey/punpun/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

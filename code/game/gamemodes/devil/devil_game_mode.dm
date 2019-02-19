@@ -1,6 +1,7 @@
 /datum/game_mode/devil
 	name = "devil"
 	config_tag = "devil"
+	report_type = "devil"
 	antag_flag = ROLE_DEVIL
 	false_report_weight = 1
 	protected_jobs = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
@@ -41,10 +42,11 @@
 		devil.special_role = traitor_name
 		devil.restricted_roles = restricted_jobs
 
-		log_game("[devil.key] (ckey) has been selected as a [traitor_name]")
+		log_game("[key_name(devil)] has been selected as a [traitor_name]")
 		antag_candidates.Remove(devil)
 
 	if(devils.len < required_enemies)
+		setup_error = "Not enough devil candidates"
 		return 0
 	return 1
 

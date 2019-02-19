@@ -14,8 +14,8 @@
 	var/start_lit = FALSE
 	heat = 1000
 
-/obj/item/candle/New()
-	..()
+/obj/item/candle/Initialize()
+	. = ..()
 	if(start_lit)
 		// No visible message
 		light(show_message = FALSE)

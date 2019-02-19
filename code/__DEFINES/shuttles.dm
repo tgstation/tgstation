@@ -14,13 +14,13 @@
 
 // Shuttle return values
 #define SHUTTLE_CAN_DOCK "can_dock"
-#define SHUTTLE_NOT_A_DOCKING_PORT "not_a_docking_port"
-#define SHUTTLE_DWIDTH_TOO_LARGE "docking_width_too_large"
-#define SHUTTLE_WIDTH_TOO_LARGE "width_too_large"
-#define SHUTTLE_DHEIGHT_TOO_LARGE "docking_height_too_large"
-#define SHUTTLE_HEIGHT_TOO_LARGE "height_too_large"
-#define SHUTTLE_ALREADY_DOCKED "we_are_already_docked"
-#define SHUTTLE_SOMEONE_ELSE_DOCKED "someone_else_docked"
+#define SHUTTLE_NOT_A_DOCKING_PORT "not a docking port"
+#define SHUTTLE_DWIDTH_TOO_LARGE "docking width too large"
+#define SHUTTLE_WIDTH_TOO_LARGE "width too large"
+#define SHUTTLE_DHEIGHT_TOO_LARGE "docking height too large"
+#define SHUTTLE_HEIGHT_TOO_LARGE "height too large"
+#define SHUTTLE_ALREADY_DOCKED "we are already docked"
+#define SHUTTLE_SOMEONE_ELSE_DOCKED "someone else docked"
 
 //Launching Shuttles to CentCom
 #define NOLAUNCH -1

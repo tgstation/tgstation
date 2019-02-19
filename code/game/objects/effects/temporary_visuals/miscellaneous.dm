@@ -313,6 +313,11 @@
 	randomdir = 0
 	duration = 6
 
+/obj/effect/temp_visual/desynchronizer
+	name = "desynchronizer field"
+	icon_state = "chronofield"
+	duration = 3
+
 /obj/effect/temp_visual/impact_effect
 	icon_state = "impact_bullet"
 	duration = 5
@@ -357,6 +362,29 @@
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
+
+/obj/effect/temp_visual/love_heart
+	name = "love heart"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "heart"
+	duration = 25
+
+/obj/effect/temp_visual/love_heart/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-10,10)
+	pixel_y = rand(-10,10)
+	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = duration)
+
+/obj/effect/temp_visual/love_heart/invisible
+	icon_state = null
+
+/obj/effect/temp_visual/love_heart/invisible/Initialize(mapload, mob/seer)
+	. = ..()
+	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "heart", layer = ABOVE_MOB_LAYER, loc = src)
+	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "heart", I, seer)
+	I.alpha = 255
+	I.appearance_flags = RESET_ALPHA
+	animate(I, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/bleed
 	name = "bleed"

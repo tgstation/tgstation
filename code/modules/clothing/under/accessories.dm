@@ -10,11 +10,18 @@
 	var/above_suit = FALSE
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
 	var/datum/component/storage/detached_pockets
+	var/attachment_slot = CHEST
+
+/obj/item/clothing/accessory/proc/can_attach_accessory(obj/item/clothing/U, mob/user)
+	if(!attachment_slot || (U && U.body_parts_covered & attachment_slot))
+		return TRUE
+	if(user)
+		to_chat(user, "<span class='warning'>There doesn't seem to be anywhere to put [src]...</span>")
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	GET_COMPONENT(storage, /datum/component/storage)
 	if(storage)
-		if(U.SendSignal(COMSIG_CONTAINS_STORAGE))
+		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
 		U.TakeComponent(storage)
 		detached_pockets = storage
@@ -28,10 +35,10 @@
 		pixel_y -= 8
 	U.add_overlay(src)
 
-	if (islist(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
+	if (islist(U.armor) || isnull(U.armor)) 										// This proc can run before /obj/Initialize has run for U and src,
 		U.armor = getArmor(arglist(U.armor))	// we have to check that the armor list has been transformed into a datum before we try to call a proc on it
 																					// This is safe to do as /obj/Initialize only handles setting up the datum if actually needed.
-	if (islist(armor))
+	if (islist(armor) || isnull(armor))
 		armor = getArmor(arglist(armor))
 
 	U.armor = U.armor.attachArmor(armor)
@@ -85,6 +92,7 @@
 	item_state = "waistcoat"
 	item_color = "waistcoat"
 	minimize_when_attached = FALSE
+	attachment_slot = null
 
 /obj/item/clothing/accessory/maidapron
 	name = "maid apron"
@@ -93,6 +101,7 @@
 	item_state = "maidapron"
 	item_color = "maidapron"
 	minimize_when_attached = FALSE
+	attachment_slot = null
 
 //////////
 //Medals//
@@ -139,9 +148,9 @@
 							SSblackbox.record_feedback("associative", "commendation", 1, list("commender" = "[user.real_name]", "commendee" = "[M.real_name]", "medal" = "[src]", "reason" = input))
 							GLOB.commendations += "[user.real_name] awarded <b>[M.real_name]</b> the <span class='medaltext'>[name]</span>! \n- [input]"
 							commended = TRUE
-							desc += "<br>The inscription reads: [input] - [user.real_name]" 
+							desc += "<br>The inscription reads: [input] - [user.real_name]"
 							log_game("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
-							message_admins("<b>[key_name(M)]</b> was given the following commendation by <b>[key_name(user)]</b>: [input]")
+							message_admins("<b>[key_name_admin(M)]</b> was given the following commendation by <b>[key_name_admin(user)]</b>: [input]")
 
 		else
 			to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
@@ -230,6 +239,7 @@
 	desc = "An fancy red armband!"
 	icon_state = "redband"
 	item_color = "redband"
+	attachment_slot = null
 
 /obj/item/clothing/accessory/armband/deputy
 	name = "security deputy armband"
@@ -281,6 +291,11 @@
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
 
+/obj/item/clothing/accessory/lawyers_badge/attack_self(mob/user)
+	if(prob(1))
+		user.say("The testimony contradicts the evidence!", forced = "attorney's badge")
+	user.visible_message("[user] shows [user.p_their()] attorney's badge.", "<span class='notice'>You show your attorney's badge.</span>")
+
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L)
@@ -322,6 +337,7 @@
 	icon_state = "talisman"
 	item_color = "talisman"
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	attachment_slot = null
 
 /obj/item/clothing/accessory/skullcodpiece
 	name = "skull codpiece"
@@ -330,3 +346,4 @@
 	item_color = "skull"
 	above_suit = TRUE
 	armor = list("melee" = 5, "bullet" = 5, "laser" = 5, "energy" = 5, "bomb" = 20, "bio" = 20, "rad" = 5, "fire" = 0, "acid" = 25)
+	attachment_slot = GROIN

@@ -6,7 +6,6 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
 	density = TRUE
-	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/active = 0
 	var/checkparts = TRUE
@@ -135,7 +134,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 	update_icon()
 
 //okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/CollidedWith(atom/movable/AM)
+/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
 	if(!active)
 		return
 	if(!detect())
@@ -159,15 +158,13 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 			use_power(5000)
 		return
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		if(calibrated)
-			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
-			return
-		else
-			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
-			calibrated = TRUE
-			return
+/obj/machinery/gateway/centeraway/multitool_act(mob/living/user, obj/item/I)
+	if(calibrated)
+		to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+	else
+		to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
+		calibrated = TRUE
+	return TRUE
 
 /////////////////////////////////////Away////////////////////////
 
@@ -211,7 +208,7 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 		return TRUE
 	return FALSE
 
-/obj/machinery/gateway/centeraway/CollidedWith(atom/movable/AM)
+/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
 	if(!detect())
 		return
 	if(!active)
@@ -252,5 +249,5 @@ GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
 
 
 /obj/item/paper/fluff/gateway
-	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research"
+	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
 	name = "Confidential Correspondence, Pg 1"

@@ -4,22 +4,27 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	move_resist = INFINITY
+	throwforce = 0
 
 /mob/dead/Initialize()
-	if(initialized)
+	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
+	flags_1 |= INITIALIZED_1
 	tag = "mob_[next_mob_id++]"
 	GLOB.mob_list += src
 
 	prepare_huds()
 
-	if(length(CONFIG_GET(keyed_string_list/cross_server)))
+	if(length(CONFIG_GET(keyed_list/cross_server)))
 		verbs += /mob/dead/proc/server_hop
 	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
 
-/mob/dead/dust()	//ghosts can't be vaporised.
+/mob/dead/canUseStorage()
+	return FALSE
+
+/mob/dead/dust(just_ash, drop_items, force)	//ghosts can't be vaporised.
 	return
 
 /mob/dead/gib()		//ghosts can't be gibbed.
@@ -29,7 +34,13 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	return
 
 /mob/dead/forceMove(atom/destination)
+	var/turf/old_turf = get_turf(src)
+	var/turf/new_turf = get_turf(destination)
+	if (old_turf?.z != new_turf?.z)
+		onTransitZ(old_turf?.z, new_turf?.z)
+	var/oldloc = loc
 	loc = destination
+	Moved(oldloc, NONE, TRUE)
 
 /mob/dead/Stat()
 	..()
@@ -59,7 +70,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/list/csa = CONFIG_GET(keyed_string_list/cross_server)
+	var/list/csa = CONFIG_GET(keyed_list/cross_server)
 	var/pick
 	switch(csa.len)
 		if(0)
@@ -72,7 +83,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(!pick)
 		return
-	
+
 	var/addr = csa[pick]
 
 	if(alert(src, "Jump to server [pick] ([addr])?", "Server Hop", "Yes", "No") != "Yes")
@@ -92,3 +103,28 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	winset(src, null, "command=.options") //other wise the user never knows if byond is downloading resources
 
 	C << link("[addr]?server_hop=[key]")
+
+/mob/dead/proc/update_z(new_z) // 1+ to register, null to unregister
+	if (registered_z != new_z)
+		if (registered_z)
+			SSmobs.dead_players_by_zlevel[registered_z] -= src
+		if (client)
+			if (new_z)
+				SSmobs.dead_players_by_zlevel[new_z] += src
+			registered_z = new_z
+		else
+			registered_z = null
+
+/mob/dead/Login()
+	. = ..()
+	var/turf/T = get_turf(src)
+	if (isturf(T))
+		update_z(T.z)
+
+/mob/dead/Logout()
+	update_z(null)
+	return ..()
+
+/mob/dead/onTransitZ(old_z,new_z)
+	..()
+	update_z(new_z)

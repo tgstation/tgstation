@@ -9,7 +9,7 @@
 	icon_dead = "Fugu_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = MOUSE_OPACITY_ICON
 	move_to_delay = 5
 	friendly = "floats near"
 	speak_emote = list("puffs")
@@ -33,7 +33,7 @@
 	var/wumbo = 0
 	var/inflate_cooldown = 0
 	var/datum/action/innate/fugu/expand/E
-	loot = list(/obj/item/asteroid/fugu_gland{layer = ABOVE_MOB_LAYER})
+	loot = list(/obj/item/fugu_gland{layer = ABOVE_MOB_LAYER})
 
 /mob/living/simple_animal/hostile/asteroid/fugu/Initialize()
 	. = ..()
@@ -116,17 +116,18 @@
 	Deflate()
 	..(gibbed)
 
-/obj/item/asteroid/fugu_gland
+/obj/item/fugu_gland
 	name = "wumborian fugu gland"
 	desc = "The key to the wumborian fugu's ability to increase its mass arbitrarily, this disgusting remnant can apply the same effect to other creatures, giving them great strength."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "fugu_gland"
-	flags_1 = NOBLUDGEON_1
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	var/list/banned_mobs
 
-/obj/item/asteroid/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/fugu_gland/afterattack(atom/target, mob/user, proximity_flag)
+	. = ..()
 	if(proximity_flag && isanimal(target))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)

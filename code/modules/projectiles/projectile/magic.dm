@@ -17,7 +17,7 @@
 		var/mob/M = target
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
-			return
+			return BULLET_ACT_BLOCK
 		M.death(0)
 
 /obj/item/projectile/magic/resurrection
@@ -31,9 +31,10 @@
 	. = ..()
 	if(isliving(target))
 		if(target.hellbound)
-			return
+			return BULLET_ACT_BLOCK
 		if(target.anti_magic_check())
 			target.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			C.regenerate_limbs()
@@ -49,7 +50,7 @@
 	icon_state = "bluespace"
 	damage = 0
 	damage_type = OXY
-	nodamage = 1
+	nodamage = TRUE
 	var/inner_tele_radius = 0
 	var/outer_tele_radius = 6
 
@@ -59,18 +60,44 @@
 		var/mob/M = target
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
-			return
+			return BULLET_ACT_BLOCK
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
 		teleloc = target.loc
 	for(var/atom/movable/stuff in teleloc)
 		if(!stuff.anchored && stuff.loc)
-			if(do_teleport(stuff, stuff, 10))
+			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
 				teleammount++
 				var/datum/effect_system/smoke_spread/smoke = new
 				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
+
+/obj/item/projectile/magic/safety
+	name = "bolt of safety"
+	icon_state = "bluespace"
+	damage = 0
+	damage_type = OXY
+	nodamage = TRUE
+
+/obj/item/projectile/magic/safety/on_hit(atom/target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
+			return BULLET_ACT_BLOCK
+	if(isturf(target))
+		return BULLET_ACT_HIT
+
+	var/turf/origin_turf = get_turf(target)
+	var/turf/destination_turf = find_safe_turf()
+
+	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
+		for(var/t in list(origin_turf, destination_turf))
+			var/datum/effect_system/smoke_spread/smoke = new
+			smoke.set_up(0, t)
+			smoke.start()
 
 /obj/item/projectile/magic/door
 	name = "bolt of door creation"
@@ -115,7 +142,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] fizzles on contact with [M]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	wabbajack(change)
 	qdel(src)
 
@@ -123,8 +150,8 @@
 	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags))
 		return
 
-	M.notransform = 1
-	M.canmove = 0
+	M.notransform = TRUE
+	M.mobility_flags = NONE
 	M.icon = null
 	M.cut_overlays()
 	M.invisibility = INVISIBILITY_ABSTRACT
@@ -152,6 +179,7 @@
 			var/robot = pick(200;/mob/living/silicon/robot,
 							/mob/living/silicon/robot/modules/syndicate,
 							/mob/living/silicon/robot/modules/syndicate/medical,
+							/mob/living/silicon/robot/modules/syndicate/saboteur,
 							200;/mob/living/simple_animal/drone/polymorphed)
 			new_mob = new robot(M.loc)
 			if(issilicon(new_mob))
@@ -164,7 +192,7 @@
 				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
 				Robot.clear_inherent_laws(0)
 				Robot.clear_zeroth_law(0)
-        
+
 		if("slime")
 			new_mob = new /mob/living/simple_animal/slime/random(M.loc)
 
@@ -216,7 +244,13 @@
 			if(prob(50))
 				new_mob = new /mob/living/carbon/human(M.loc)
 			else
-				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
+				var/chooseable_races = list()
+				for(var/speciestype in subtypesof(/datum/species))
+					var/datum/species/S = speciestype
+					if(initial(S.changesource_flags) & WABBAJACK)
+						chooseable_races += speciestype
+
+				var/hooman = pick(chooseable_races)
 				new_mob =new hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
@@ -231,14 +265,12 @@
 	if(!new_mob)
 		return
 	new_mob.grant_language(/datum/language/common)
-	new_mob.flags_2 |= OMNITONGUE_2
-	new_mob.logging = M.logging
 
 	// Some forms can still wear some items
 	for(var/obj/item/W in contents)
 		new_mob.equip_to_appropriate_slot(W)
 
-	M.log_message("<font color='orange'>became [new_mob.real_name].</font>", INDIVIDUAL_ATTACK_LOG)
+	M.log_message("became [new_mob.real_name]", LOG_ATTACK, color="orange")
 
 	new_mob.a_intent = INTENT_HARM
 
@@ -246,7 +278,7 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
-	var/poly_msg = CONFIG_GET(keyed_string_list/policy)["polymorph"]
+	var/poly_msg = CONFIG_GET(keyed_list/policy)["polymorph"]
 	if(poly_msg)
 		to_chat(new_mob, poly_msg)
 
@@ -315,7 +347,7 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [target]!</span>")
 			qdel(src)
-			return
+			return BULLET_ACT_BLOCK
 	. = ..()
 
 /obj/item/projectile/magic/arcane_barrage
@@ -337,6 +369,88 @@
 			return
 	. = ..()
 
+
+/obj/item/projectile/magic/locker
+	name = "locker bolt"
+	icon_state = "locker"
+	nodamage = TRUE
+	flag = "magic"
+	var/weld = TRUE
+	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
+	var/locker_suck = TRUE
+
+/obj/item/projectile/magic/locker/prehit(atom/A)
+	if(ismob(A) && locker_suck)
+		var/mob/M = A
+		if(M.anti_magic_check())
+			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
+			qdel(src)
+			return
+		if(M.anchored)
+			return ..()
+		M.forceMove(src)
+		return FALSE
+	return ..()
+
+/obj/item/projectile/magic/locker/on_hit(target)
+	if(created)
+		return ..()
+	var/obj/structure/closet/decay/C = new(get_turf(src))
+	if(LAZYLEN(contents))
+		for(var/atom/movable/AM in contents)
+			C.insert(AM)
+		C.welded = weld
+		C.update_icon()
+	created = TRUE
+	return ..()
+
+/obj/item/projectile/magic/locker/Destroy()
+	locker_suck = FALSE
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(get_turf(src))
+	. = ..()
+
+/obj/structure/closet/decay
+	breakout_time = 600
+	icon_welded = null
+	var/magic_icon = "cursed"
+	var/weakened_icon = "decursed"
+	var/auto_destroy = TRUE
+
+/obj/structure/closet/decay/Initialize()
+	. = ..()
+	if(auto_destroy)
+		addtimer(CALLBACK(src, .proc/bust_open), 5 MINUTES)
+	addtimer(CALLBACK(src, .proc/magicly_lock), 5)
+
+/obj/structure/closet/decay/proc/magicly_lock()
+	if(!welded)
+		return
+	icon_state = magic_icon
+	update_icon()
+
+/obj/structure/closet/decay/after_weld(weld_state)
+	if(weld_state)
+		unmagify()
+
+/obj/structure/closet/decay/proc/decay()
+	animate(src, alpha = 0, time = 30)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
+
+/obj/structure/closet/decay/open(mob/living/user)
+	. = ..()
+	if(.)
+		if(icon_state == magic_icon) //check if we used the magic icon at all before giving it the lesser magic icon
+			unmagify()
+		else
+			addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+
+/obj/structure/closet/decay/proc/unmagify()
+	icon_state = weakened_icon
+	update_icon()
+	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+	icon_welded = "welded"
+
 /obj/item/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
@@ -347,8 +461,9 @@
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
-				return Collide(L)
+				return Bump(L)
 	..()
+
 
 /obj/item/projectile/magic/aoe/lightning
 	name = "lightning bolt"
@@ -361,7 +476,7 @@
 
 	var/tesla_power = 20000
 	var/tesla_range = 15
-	var/tesla_boom = FALSE
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_MOB_STUN | TESLA_OBJ_DAMAGE
 	var/chain
 	var/mob/living/caster
 
@@ -377,8 +492,8 @@
 		if(M.anti_magic_check())
 			visible_message("<span class='warning'>[src] fizzles on contact with [target]!</span>")
 			qdel(src)
-			return
-	tesla_zap(src, tesla_range, tesla_power, tesla_boom)
+			return BULLET_ACT_BLOCK
+	tesla_zap(src, tesla_range, tesla_power, tesla_flags)
 	qdel(src)
 
 /obj/item/projectile/magic/aoe/lightning/Destroy()
@@ -404,7 +519,7 @@
 		var/mob/living/M = target
 		if(M.anti_magic_check())
 			visible_message("<span class='warning'>[src] vanishes into smoke on contact with [target]!</span>")
-			return
+			return BULLET_ACT_BLOCK
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
 	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire)
@@ -421,7 +536,7 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.anti_magic_check())
-			return
+			return BULLET_ACT_BLOCK
 	var/turf/T = get_turf(target)
 	for(var/i=0, i<50, i+=10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)

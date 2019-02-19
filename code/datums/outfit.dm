@@ -21,17 +21,19 @@
 	var/l_hand = null
 	var/internals_slot = null //ID of slot containing a gas tank
 	var/list/backpack_contents = null // In the list(path=count,otherpath=count) format
+	var/box // Internals box. Will be inserted at the start of backpack_contents
 	var/list/implants = null
 	var/accessory = null
 
 	var/can_be_admin_equipped = TRUE // Set to FALSE if your outfit requires runtime parameters
+	var/list/chameleon_extras //extra types for chameleon outfit changes, mostly guns
 
 /datum/outfit/proc/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	//to be overriden for customization depending on client prefs,species etc
+	//to be overridden for customization depending on client prefs,species etc
 	return
 
 /datum/outfit/proc/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	//to be overriden for toggling internals, id binding, access etc
+	//to be overridden for toggling internals, id binding, access etc
 	return
 
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -39,31 +41,31 @@
 
 	//Start with uniform,suit,backpack for additional slots
 	if(uniform)
-		H.equip_to_slot_or_del(new uniform(H),slot_w_uniform)
+		H.equip_to_slot_or_del(new uniform(H),SLOT_W_UNIFORM)
 	if(suit)
-		H.equip_to_slot_or_del(new suit(H),slot_wear_suit)
+		H.equip_to_slot_or_del(new suit(H),SLOT_WEAR_SUIT)
 	if(back)
-		H.equip_to_slot_or_del(new back(H),slot_back)
+		H.equip_to_slot_or_del(new back(H),SLOT_BACK)
 	if(belt)
-		H.equip_to_slot_or_del(new belt(H),slot_belt)
+		H.equip_to_slot_or_del(new belt(H),SLOT_BELT)
 	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H),slot_gloves)
+		H.equip_to_slot_or_del(new gloves(H),SLOT_GLOVES)
 	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H),slot_shoes)
+		H.equip_to_slot_or_del(new shoes(H),SLOT_SHOES)
 	if(head)
-		H.equip_to_slot_or_del(new head(H),slot_head)
+		H.equip_to_slot_or_del(new head(H),SLOT_HEAD)
 	if(mask)
-		H.equip_to_slot_or_del(new mask(H),slot_wear_mask)
+		H.equip_to_slot_or_del(new mask(H),SLOT_WEAR_MASK)
 	if(neck)
-		H.equip_to_slot_or_del(new neck(H),slot_neck)
+		H.equip_to_slot_or_del(new neck(H),SLOT_NECK)
 	if(ears)
-		H.equip_to_slot_or_del(new ears(H),slot_ears)
+		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
 	if(glasses)
-		H.equip_to_slot_or_del(new glasses(H),slot_glasses)
+		H.equip_to_slot_or_del(new glasses(H),SLOT_GLASSES)
 	if(id)
-		H.equip_to_slot_or_del(new id(H),slot_wear_id)
+		H.equip_to_slot_or_del(new id(H),SLOT_WEAR_ID)
 	if(suit_store)
-		H.equip_to_slot_or_del(new suit_store(H),slot_s_store)
+		H.equip_to_slot_or_del(new suit_store(H),SLOT_S_STORE)
 
 	if(accessory)
 		var/obj/item/clothing/under/U = H.w_uniform
@@ -79,16 +81,23 @@
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(l_pocket)
-			H.equip_to_slot_or_del(new l_pocket(H),slot_l_store)
+			H.equip_to_slot_or_del(new l_pocket(H),SLOT_L_STORE)
 		if(r_pocket)
-			H.equip_to_slot_or_del(new r_pocket(H),slot_r_store)
+			H.equip_to_slot_or_del(new r_pocket(H),SLOT_R_STORE)
+
+		if(box)
+			if(!backpack_contents)
+				backpack_contents = list()
+			backpack_contents.Insert(1, box)
+			backpack_contents[box] = 1
+
 		if(backpack_contents)
 			for(var/path in backpack_contents)
 				var/number = backpack_contents[path]
 				if(!isnum(number))//Default to 1
 					number = 1
 				for(var/i in 1 to number)
-					H.equip_to_slot_or_del(new path(H),slot_in_backpack)
+					H.equip_to_slot_or_del(new path(H),SLOT_IN_BACKPACK)
 
 	if(!H.head && toggle_helmet && istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit))
 		var/obj/item/clothing/suit/space/hardsuit/HS = H.wear_suit
@@ -149,3 +158,9 @@
 	for(var/obj/item/I in H.held_items)
 		I.add_fingerprint(H,1)
 	return 1
+
+/datum/outfit/proc/get_chameleon_disguise_info()
+	var/list/types = list(uniform, suit, back, belt, gloves, shoes, head, mask, neck, ears, glasses, id, l_pocket, r_pocket, suit_store, r_hand, l_hand)
+	types += chameleon_extras
+	listclearnulls(types)
+	return types

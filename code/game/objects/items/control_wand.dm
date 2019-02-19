@@ -32,6 +32,7 @@
 
 // Airlock remote works by sending NTNet packets to whatever it's pointed at.
 /obj/item/door_remote/afterattack(atom/A, mob/user)
+	. = ..()
 	GET_COMPONENT_FROM(target_interface, /datum/component/ntnet_interface, A)
 
 	if(!target_interface)
@@ -43,13 +44,13 @@
 
 	switch(mode)
 		if(WAND_OPEN)
-			data.plaintext_data = "open"
+			data.data["data"] = "open"
 		if(WAND_BOLT)
-			data.plaintext_data = "bolt"
+			data.data["data"] = "bolt"
 		if(WAND_EMERGENCY)
-			data.plaintext_data = "emergency"
+			data.data["data"] = "emergency"
 
-	data.plaintext_data_secondary = "toggle"
+	data.data["data_secondary"] = "toggle"
 	data.passkey = access_list
 
 	ntnet_send(data)
@@ -83,6 +84,7 @@
 
 /obj/item/door_remote/quartermaster
 	name = "supply door remote"
+	desc = "Remotely controls airlocks. This remote has additional Vault access."
 	icon_state = "gangtool-green"
 	region_access = 6
 
@@ -92,7 +94,7 @@
 	region_access = 3
 
 /obj/item/door_remote/civillian
-	name = "civillian door remote"
+	name = "civilian door remote"
 	icon_state = "gangtool-white"
 	region_access = 1
 

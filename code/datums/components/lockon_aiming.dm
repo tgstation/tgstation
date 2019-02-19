@@ -4,7 +4,7 @@
 
 /datum/component/lockon_aiming
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	var/lock_icon = 'icons/mob/blob.dmi'
+	var/lock_icon = 'icons/mob/cameramob.dmi'
 	var/lock_icon_state = "marker"
 	var/mutable_appearance/lock_appearance
 	var/list/image/lock_images
@@ -22,8 +22,7 @@
 
 /datum/component/lockon_aiming/Initialize(range, list/typecache, amount, list/immune, datum/callback/when_locked, icon, icon_state, datum/callback/target_callback)
 	if(!ismob(parent))
-		. = COMPONENT_INCOMPATIBLE
-		CRASH("Lockon aiming component attempted to be added to a non mob!")
+		return COMPONENT_INCOMPATIBLE
 	if(target_callback)
 		can_target_callback = target_callback
 	else
@@ -239,5 +238,5 @@
 		cd++
 		CHECK_TICK
 
-/datum/component/lockon_aiming/OnTransfer(datum/new_parent)
-	CRASH("Warning: Lockon aiming component transfer attempted, but transfer behavior is not implemented!")
+/datum/component/lockon_aiming/PostTransfer(datum/new_parent)
+	return COMPONENT_INCOMPATIBLE

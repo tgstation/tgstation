@@ -16,6 +16,7 @@ Regenerative extracts:
 
 
 /obj/item/slimecross/regenerative/afterattack(atom/target,mob/user,prox)
+	. = ..()
 	if(!prox || !isliving(target))
 		return
 	var/mob/living/H = target
@@ -89,10 +90,10 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/darkpurple/core_effect(mob/living/target, mob/user)
 	var/equipped = 0
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), slot_shoes)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), slot_w_uniform)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), slot_gloves)
-	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), slot_head)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/shoes/sneakers/purple(null), SLOT_SHOES)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/under/color/lightpurple(null), SLOT_W_UNIFORM)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/purple(null), SLOT_GLOVES)
+	equipped += target.equip_to_slot_or_del(new /obj/item/clothing/head/soft/purple(null), SLOT_HEAD)
 	if(equipped > 0)
 		target.visible_message("<span class='notice'>The milky goo congeals into clothing!</span>")
 
@@ -104,13 +105,13 @@ Regenerative extracts:
 		return
 	var/mob/living/carbon/human/H = target
 	var/fireproofed = FALSE
-	if(H.get_item_by_slot(slot_wear_suit))
+	if(H.get_item_by_slot(SLOT_WEAR_SUIT))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(slot_wear_suit)
+		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_WEAR_SUIT)
 		fireproof(C)
-	if(H.get_item_by_slot(slot_head))
+	if(H.get_item_by_slot(SLOT_HEAD))
 		fireproofed = TRUE
-		var/obj/item/clothing/C = H.get_item_by_slot(slot_head)
+		var/obj/item/clothing/C = H.get_item_by_slot(SLOT_HEAD)
 		fireproof(C)
 	if(fireproofed)
 		target.visible_message("<span class='notice'>Some of [target]'s clothing gets coated in the goo, and turns blue!</span>")
@@ -119,7 +120,7 @@ Regenerative extracts:
 	C.name = "fireproofed [C.name]"
 	C.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 	C.add_atom_colour("#000080", FIXED_COLOUR_PRIORITY)
-	C.max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	C.max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	C.heat_protection = C.body_parts_covered
 	C.resistance_flags |= FIRE_PROOF
 
@@ -127,7 +128,7 @@ Regenerative extracts:
 	colour = "silver"
 
 /obj/item/slimecross/regenerative/silver/core_effect(mob/living/target, mob/user)
-	target.nutrition = NUTRITION_LEVEL_FULL - 1
+	target.set_nutrition(NUTRITION_LEVEL_FULL - 1)
 	to_chat(target, "<span class='notice'>You feel satiated.</span>")
 
 /obj/item/slimecross/regenerative/bluespace
@@ -141,7 +142,7 @@ Regenerative extracts:
 	do_sparks(5,FALSE,target)
 
 /obj/item/slimecross/regenerative/bluespace/Initialize()
-	..()
+	. = ..()
 	T = get_turf(src)
 
 /obj/item/slimecross/regenerative/sepia

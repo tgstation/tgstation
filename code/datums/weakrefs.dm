@@ -2,6 +2,7 @@
 	if(istype(input) && !QDELETED(input))
 		if(istype(input, /datum/weakref))
 			return input
+
 		if(!input.weak_reference)
 			input.weak_reference = new /datum/weakref(input)
 		return input.weak_reference

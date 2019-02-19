@@ -11,7 +11,7 @@
 /area/shuttle/escape)
 "d" = (
 /obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green,
+/obj/item/flashlight/lamp/green,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "e" = (

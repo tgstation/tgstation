@@ -6,15 +6,18 @@
 /obj/machinery/telecomms/allinone
 	name = "telecommunications mainframe"
 	icon_state = "comm_server"
-	desc = "A compact machine used for portable subspace telecommuniations processing."
+	desc = "A compact machine used for portable subspace telecommunications processing."
 	density = TRUE
-	anchored = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	var/intercept = FALSE  // If true, only works on the Syndicate frequency.
 
+/obj/machinery/telecomms/allinone/indestructable
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	flags_1 = NODECONSTRUCT_1
+
 /obj/machinery/telecomms/allinone/Initialize()
-	..()
+	. = ..()
 	if (intercept)
 		freq_listening = list(FREQ_SYNDICATE)
 
@@ -37,5 +40,5 @@
 	signal.broadcast()
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/device/multitool))
+	if(P.tool_behaviour == TOOL_MULTITOOL)
 		return attack_hand(user)

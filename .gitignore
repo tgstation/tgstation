@@ -2,6 +2,7 @@
 
 #Ignore everything in datafolder and subdirectories
 /data/**/*
+/tmp/**/*
 
 #Ignore byond config folder.
 /cfg/**/*
@@ -194,7 +195,13 @@ Temporary Items
 
 #Visual studio stuff
 *.vscode/*
-tools/MapAtmosFixer/MapAtmosFixer/obj/x86/Debug/MapAtmosFixer.csproj.CoreCompileInputs.cache
+!/.vscode/extensions.json
+tools/MapAtmosFixer/MapAtmosFixer/obj/*
+tools/MapAtmosFixer/MapAtmosFixer/bin/*
 
 #GitHub Atom
 .atom-build.json
+
+#extra map stuff
+/_maps/**/backup/
+/_maps/templates.dm

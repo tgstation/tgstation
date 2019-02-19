@@ -15,7 +15,7 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/shuttle/transport)
 "f" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
 /turf/open/floor/plasteel/freezer,
@@ -90,7 +90,7 @@
 /area/shuttle/transport)
 "n" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair,
+/obj/structure/chair/comfy/shuttle,
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "o" = (
@@ -131,7 +131,7 @@
 /turf/open/floor/plasteel/freezer,
 /area/shuttle/transport)
 "w" = (
-/obj/structure/chair{
+/obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /turf/open/floor/plasteel/freezer,

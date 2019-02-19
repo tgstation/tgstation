@@ -3,7 +3,7 @@
 ////////////////////
 //Drones with custom laws
 //Drones with custom shells
-//Drones with overriden procs
+//Drones with overridden procs
 //Drones with camogear for hat related memes
 //Drone type for use with polymorph (no preloaded items, random appearance)
 
@@ -26,9 +26,8 @@
 	"1. Interfere.\n"+\
 	"2. Kill.\n"+\
 	"3. Destroy."
-	default_storage = /obj/item/device/radio/uplink
+	default_storage = /obj/item/uplink
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi
-	seeStatic = 0 //Our programming is superior.
 	hacked = TRUE
 	flavortext = null
 
@@ -44,14 +43,14 @@
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
 	default_hatmask = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
-	default_storage = /obj/item/device/radio/uplink/nuclear
+	default_storage = /obj/item/uplink/nuclear
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize()
 	. = ..()
 	GET_COMPONENT_FROM(hidden_uplink, /datum/component/uplink, internal_storage)
 	hidden_uplink.telecrystals = 30
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
-	W.implant(src)
+	W.implant(src, force = TRUE)
 
 /mob/living/simple_animal/drone/snowflake
 	default_hatmask = /obj/item/clothing/head/chameleon/drone
@@ -128,7 +127,6 @@
 	heavy_emp_damage = 0
 	laws = "0. Purge all untruths and honor Ratvar."
 	default_storage = /obj/item/storage/toolbox/brass/prefilled
-	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
@@ -166,7 +164,7 @@
 	..()
 
 /mob/living/simple_animal/drone/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/screwdriver) && stat == DEAD)
+	if(I.tool_behaviour == TOOL_SCREWDRIVER && stat == DEAD)
 		try_reactivate(user)
 	else
 		..()
@@ -209,37 +207,6 @@
 	else
 		icon_state = "[visualAppearence]_dead"
 
-/mob/living/simple_animal/drone/cogscarab/Stun(amount, updating = 1, ignore_canstun = 0)
+/mob/living/simple_animal/drone/cogscarab/update_mobility()
 	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/SetStun(amount, updating = 1, ignore_canstun = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/AdjustStun(amount, updating = 1, ignore_canstun = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/Knockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/SetKnockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/AdjustKnockdown(amount, updating = 1, ignore_canknockdown = 0)
-	. = ..()
-	if(.)
-		update_icons()
-
-/mob/living/simple_animal/drone/cogscarab/update_canmove()
-	. = ..()
-	if(.)
-		update_icons()
+	update_icons()

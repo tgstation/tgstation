@@ -1,7 +1,7 @@
 /datum/surgery/cavity_implant
 	name = "cavity implant"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/incise, /datum/surgery_step/handle_cavity, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list(BODY_ZONE_CHEST)
 
 
@@ -19,7 +19,7 @@
 	if(tool)
 		if(istype(tool, /obj/item/surgical_drapes) || istype(tool, /obj/item/bedsheet))
 			var/obj/item/inactive = user.get_inactive_held_item()
-			if(istype(inactive, /obj/item/cautery) || istype(inactive, /obj/item/screwdriver) || iscyborg(user))
+			if(istype(inactive, /obj/item/cautery) || inactive.tool_behaviour == TOOL_SCREWDRIVER || iscyborg(user))
 				attempt_cancel_surgery(surgery, tool, target, user)
 				return -1
 		user.visible_message("[user] begins to insert [tool] into [target]'s [target_zone].", "<span class='notice'>You begin to insert [tool] into [target]'s [target_zone]...</span>")
@@ -29,7 +29,7 @@
 /datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart(BODY_ZONE_CHEST)
 	if(tool)
-		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || (tool.flags_1 & NODROP_1) || istype(tool, /obj/item/organ))
+		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || tool.has_trait(TRAIT_NODROP) || istype(tool, /obj/item/organ))
 			to_chat(user, "<span class='warning'>You can't seem to fit [tool] in [target]'s [target_zone]!</span>")
 			return 0
 		else

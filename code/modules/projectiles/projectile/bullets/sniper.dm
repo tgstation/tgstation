@@ -4,7 +4,7 @@
 	name =".50 bullet"
 	speed = 0.4
 	damage = 70
-	knockdown = 100
+	paralyze = 100
 	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE
@@ -18,9 +18,9 @@
 /obj/item/projectile/bullet/p50/soporific
 	name =".50 soporific bullet"
 	armour_penetration = 0
-	nodamage = TRUE
+	damage = 0
 	dismemberment = 0
-	knockdown = 0
+	paralyze = 0
 	breakthings = FALSE
 
 /obj/item/projectile/bullet/p50/soporific/on_hit(atom/target, blocked = FALSE)
@@ -34,7 +34,13 @@
 	icon_state = "gauss"
 	name = "penetrator round"
 	damage = 60
-	forcedodge = TRUE
+	movement_type = FLYING | UNSTOPPABLE
 	dismemberment = 0 //It goes through you cleanly.
-	knockdown = 0
+	paralyze = 0
 	breakthings = FALSE
+
+/obj/item/projectile/bullet/p50/penetrator/shuttle //Nukeop Shuttle Variety
+	icon_state = "gaussstrong"
+	damage = 25
+	speed = 0.3
+	range = 16

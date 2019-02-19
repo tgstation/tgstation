@@ -3,6 +3,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
+	custom_price = 5
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
@@ -16,8 +17,9 @@
 	cut_overlays()
 	if(reagents.reagent_list.len)
 		var/datum/reagent/R = reagents.get_master_reagent()
-		name = R.glass_name
-		desc = R.glass_desc
+		if(!renamedByPlayer)
+			name = R.glass_name
+			desc = R.glass_desc
 		if(R.glass_icon_state)
 			icon_state = R.glass_icon_state
 		else
@@ -26,8 +28,7 @@
 			add_overlay(reagent_overlay)
 	else
 		icon_state = "glass_empty"
-		name = "drinking glass"
-		desc = "Your standard drinking glass."
+		renamedByPlayer = FALSE //so new drinks can rename the glass
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -39,6 +40,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
+	custom_price = 5
 	icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
@@ -89,7 +91,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola
 	name = "Nuka Cola"
 	list_reagents = list("nuka_cola" = 50)
-
+	
 /obj/item/reagent_containers/food/drinks/drinkingglass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I
@@ -108,13 +110,14 @@
 	if(user.a_intent == INTENT_HARM && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
 						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
-		add_logs(user, target, "splashed", src)
+		log_combat(user, target, "splashed", src)
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return
 	..()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/afterattack(obj/target, mob/user, proximity)
+	. = ..()
 	if((!proximity) || !check_allowed_items(target,target_self=1))
 		return
 
@@ -124,5 +127,4 @@
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return
-	..()
 

@@ -30,11 +30,6 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 	
 	stat("Globals:", statclick.update("Edit"))
 
-/datum/controller/global_vars/can_vv_get(var_name)
-	if(gvars_datum_protected_varlist[var_name])
-		return FALSE
-	return ..()
-
 /datum/controller/global_vars/vv_edit_var(var_name, var_value)
 	if(gvars_datum_protected_varlist[var_name])
 		return FALSE
