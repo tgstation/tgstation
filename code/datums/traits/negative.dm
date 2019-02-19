@@ -470,9 +470,9 @@
 	if (istype(drug_instance, /obj/item/storage/pill_bottle))
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
-			var/obj/item/reagent_containers/pill/P = new(drug_instance)
+			var/obj/item/reagent_containers/pill/P = new(1)
 			P.icon_state = pill_state
-			P.list_reagents = list("[reagent_id]" = 1)
+			P.reagents.add_reagent(reagent_id, 1)
 
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
@@ -530,11 +530,11 @@
 		/obj/item/storage/fancy/cigarettes/cigars,
 		/obj/item/storage/fancy/cigarettes/cigars/cohiba,
 		/obj/item/storage/fancy/cigarettes/cigars/havana)
-	. = ..()	
+	. = ..()
 
 /datum/quirk/junkie/smoker/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
-	
+
 
 /datum/quirk/junkie/smoker/on_process()
 	. = ..()
@@ -542,7 +542,7 @@
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/C = drug_instance
-		if(istype(I, C.spawn_type))	
+		if(istype(I, C.spawn_type))
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
