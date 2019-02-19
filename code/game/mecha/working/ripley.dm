@@ -1,11 +1,11 @@
 /obj/mecha/working/ripley
-	desc = "Autonomous Power Loader Unit. Designed primarily around heavy lifting, the Ripley can be outfitted with utility equipment to fill a number of roles."
-	name = "\improper APLU \"Ripley\""
+	desc = "Autonomous Power Loader Unit MK-I. Designed primarily around heavy lifting, the Ripley can be outfitted with utility equipment to fill a number of roles."
+	name = "\improper APLU \"Ripley\" MK-I"
 	icon_state = "ripley"
 	silicon_icon_state = "ripley-empty"
 	step_in = 1.5 //Move speed, lower is faster.
-	var/fast_pressure_step_in = 1.5 //step_in while in normal pressure conditions
-	var/slow_pressure_step_in = 2.5 //step_in while in better pressure conditions
+	var/fast_pressure_step_in = 1.5 //step_in while in low pressure conditions
+	var/slow_pressure_step_in = 2.0 //step_in while in normal pressure conditions
 	max_temperature = 20000
 	max_integrity = 200
 	lights_power = 7
@@ -71,14 +71,28 @@
 	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
 
 
+/obj/mecha/working/ripley/mkii
+	desc = "Autonomous Power Loader Unit MK-II. This prototype upgraded Ripley is refitted with a pressurized cabin."
+	name = "\improper APLU \"Ripley MK-II\""
+	icon_state = "ripleymkii"
+	fast_pressure_step_in = 2 //step_in while in low pressure conditions
+	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
+	step_in = 4
+	armor = list("melee" = 40, "bullet" = 20, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	wreckage = /obj/structure/mecha_wreckage/ripley/mkii
+	enclosed = 1
+	enter_delay = 40
+	silicon_icon_state = ""
+	opacity = 1
+
 /obj/mecha/working/ripley/firefighter
-	desc = "Autonomous Power Loader Unit. This model is refitted with a pressurized cabin and additional thermal protection."
-	name = "\improper APLU \"Firefighter\""
+	desc = "Autonomous Power Loader Unit MK-III. This model is refitted with a pressurized cabin and additional thermal protection."
+	name = "\improper APLU \"Firefighter\" MK-III"
 	icon_state = "firefighter"
 	max_temperature = 65000
 	max_integrity = 250
-	fast_pressure_step_in = 2 //step_in while in normal pressure conditions
-	slow_pressure_step_in = 4 //step_in while in better pressure conditions
+	fast_pressure_step_in = 2 //step_in while in low pressure conditions
+	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
 	step_in = 4
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
@@ -95,8 +109,8 @@
 	desc = "OH SHIT IT'S THE DEATHSQUAD WE'RE ALL GONNA DIE"
 	name = "\improper DEATH-RIPLEY"
 	icon_state = "deathripley"
-	fast_pressure_step_in = 2 //step_in while in normal pressure conditions
-	slow_pressure_step_in = 4 //step_in while in better pressure conditions
+	fast_pressure_step_in = 2 //step_in while in low pressure conditions
+	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
 	step_in = 4
 	slow_pressure_step_in = 3
 	opacity=0

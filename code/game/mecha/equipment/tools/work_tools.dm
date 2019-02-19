@@ -461,3 +461,40 @@
 	//NC.mergeConnectedNetworksOnTurf()
 	last_piece = NC
 	return 1
+
+//Dunno where else to put this so shrug
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade
+	name = "Ripley MK-II Upgrade"
+	desc = "A pressurized canopy attachment for Autonomous Power Loader Unit \"Ripley\" MK-I mechas, to upgrade them to MK-II. Upgrade cannot be removed, once applied."
+	icon_state = "ripleyupgrade"
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/mecha/working/ripley/M as obj)
+	if(!istype(M, /obj/mecha/working/ripley))
+		to_chat(loc, "<span class='warning'>This upgrade can only be applied to APLU MK-I models.</span>")
+		return 0
+	if(!M.maint_access) //non-removable upgrade, so lets make sure the pilot or owner has their say.
+		to_chat(loc, "<span class='warning'>[M] must have maintenance protocols active in order to allow this upgrade.</span>")
+		return 0
+	if(M.occupant) //We're actualy making a new mech and swapping things over, it might get weird if players are involved
+		to_chat(loc, "<span class='warning'>[M] must be unoccupied before this upgrade can be applied.</span>")
+		return 0
+	return 1
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/mecha/M as obj)
+	var/obj/mecha/working/ripley/mkii/N = new /obj/mecha/working/ripley/mkii(get_turf(M),1)
+	if(!N)
+		return
+	qdel(N.cell)
+	N.cell = M.cell
+	M.cell.forceMove(N)
+	M.cell = ""
+	N.step_energy_drain = M.step_energy_drain //For the scanning module
+	N.armor = N.armor.setRating(energy = M.armor["energy"]) //for the capacitor
+	for(var/obj/item/mecha_parts/mecha_equipment/E in M.equipment) //Move the equipment over...
+		N.equipment += E
+		E.forceMove(N)
+		E.chassis = N
+		M.equipment -= E
+	M.wreckage = 0
+	qdel(M)
+	return
