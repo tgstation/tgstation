@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - admin: "Added a cancel button to ahelp and asay popups."
