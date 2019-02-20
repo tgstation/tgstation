@@ -695,7 +695,7 @@
 							var/datum/mutation/human/A = new HM.type()
 							A.copy_mutation(HM)
 							succes = TRUE
- 							stored_mutations += A
+							stored_mutations += A
 							to_chat(usr,"<span class='notice'>Mutation succesfully stored.</span>")
 				if(!succes) //we can exactly return here
 					to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
