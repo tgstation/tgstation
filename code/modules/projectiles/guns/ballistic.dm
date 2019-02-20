@@ -115,7 +115,7 @@
 			AC.forceMove(drop_location()) //Eject casing onto ground.
 			AC.bounce_away(TRUE)
 			chambered = null
-		if (empty_chamber)
+		else if (empty_chamber)
 			chambered = null
 	if (chamber_next_round && (magazine.max_ammo > 1))
 		chamber_round()
