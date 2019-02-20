@@ -2119,6 +2119,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\eyeballs.dm"
 #include "code\modules\mob\living\simple_animal\hostile\faithless.dm"
 #include "code\modules\mob\living\simple_animal\hostile\giant_spider.dm"
+#include "code\modules\mob\living\simple_animal\hostile\glyphid.dm"
 #include "code\modules\mob\living\simple_animal\hostile\headcrab.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hivebot.dm"
 #include "code\modules\mob\living\simple_animal\hostile\hostile.dm"
