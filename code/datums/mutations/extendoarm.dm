@@ -26,8 +26,8 @@
 /obj/effect/proc_holder/spell/aimed/extendoarm/ready_projectile(obj/item/projectile/bullet/arm/P, atom/target, mob/user, iteration)
 	var/mob/living/carbon/C = user
 	var/new_color
-	if(C.dna?.species)
-		new_color = C.dna.features["mcolor"]
+	if(C.dna?.species && !C.dna.species.use_skintones)
+		new_color = C.dna.species.default_features["mcolor"]
 		if(!("#" in new_color))
 			new_color = "#[new_color]"
 		P.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
@@ -48,9 +48,11 @@
 	if(!iscarbon(caller))
 		return
 	var/mob/living/carbon/C = caller
-	if(!C.hand_bodyparts[C.active_hand_index])
+	if(!C.hand_bodyparts[C.active_hand_index]) //all these checks are here, because we dont want to adjust the spell icon thing in your screen and break it. wich it otherwise does in can_cast
 		return
 	if(caller.has_trait(TRAIT_NODISMEMBER))
+		return
+	if(!caller.canUnEquip(caller.get_active_held_item()))
 		return
 	return ..()
 
@@ -85,8 +87,7 @@
 				arm.attach_limb(firer, TRUE)
 				arm = null
 			L.put_in_hands(ungrab())
-			return TRUE
-		return FALSE //Otherwise we get multiple collisions deleting arms. That'll be handled by range
+			qdel(src) //If we let it run it's course, it's going to awkwardly hit you
 	else if(!isitem(target) && !grabbed && firer)
 		target.attack_hand(firer)
 		go_home()
@@ -96,7 +97,6 @@
 		else if(isitem(target))
 			grab(target)
 		go_home()
-		return FALSE
 
 /obj/item/projectile/bullet/arm/proc/go_home()
 	homing_target = firer
