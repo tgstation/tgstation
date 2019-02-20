@@ -65,7 +65,7 @@
 		if(!A.owner)
 			continue
 		fugitives_counted += A
-		if(A.owner.stat == DEAD)
+		if(A.owner.current.stat == DEAD)
 			fugitives_dead += A
 		if(A.is_captured)
 			fugitives_captured += A
