@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - imageadd: "Added sprites for emitters so they stop facing weird directions when their maintenance panel is opened."

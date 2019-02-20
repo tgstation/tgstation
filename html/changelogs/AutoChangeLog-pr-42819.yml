@@ -1,0 +1,4 @@
+author: "Vile Beggar"
+delete-after: True
+changes: 
+  - soundadd: "Soviet Golems now play the USSR anthem instead of the Russian Federation one."

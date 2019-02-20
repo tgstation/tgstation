@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed some DNA console issues causing mutations breaking injector and disk printing."
