@@ -117,7 +117,7 @@
 			chambered = null
 		if (empty_chamber)
 			chambered = null
-	if (chamber_next_round)
+	if (chamber_next_round && (magazine.max_ammo > 1))
 		chamber_round()
 
 /obj/item/gun/ballistic/proc/chamber_round()
@@ -311,6 +311,7 @@
 		if (num_unloaded)
 			to_chat(user, "<span class='notice'>You unload [num_unloaded] [cartridge_wording]\s from [src].</span>")
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
+			update_icon()
 		else
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
