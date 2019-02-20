@@ -80,3 +80,15 @@
 	name = "wumborian fugu den"
 	desc = "A den housing a nest of wumborian fugus, how do they all even fit in there?"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/fugu)
+
+/obj/structure/spawner/glyphid
+	name = "glyphid tower"
+	desc = "A strange tower of biomass, it seems to be moving..."
+	icon_state = "hole"
+	icon = 'icons/mob/nest.dmi'
+	max_integrity = 100
+	max_mobs = 3
+	spawn_time = 450
+	mob_types = list(/mob/living/simple_animal/hostile/glyphid/swarmer)
+	spawn_text = "emerges from"
+	faction = list("glyphid")
