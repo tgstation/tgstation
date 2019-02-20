@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Junkies will now spawn with their pills correctly filled with their appropriate drug."
