@@ -30,7 +30,8 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/head/helmet/space/plasmaman,
 		/obj/item/tank/internals,
 		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/gas))
+		/obj/item/clothing/mask/gas,
+		/obj/item/restraints/handcuffs))
 
 /obj/machinery/gulag_teleporter/Initialize()
 	. = ..()
@@ -138,9 +139,6 @@ The console is located at computer/gulag_teleporter.dm
 	for(var/obj/item/W in mob_occupant)
 		if(!is_type_in_typecache(W, telegulag_required_items))
 			if(mob_occupant.temporarilyRemoveItemFromInventory(W))
-				if(istype(W, /obj/item/restraints/handcuffs))
-					W.forceMove(get_turf(src))
-					continue
 				if(linked_reclaimer)
 					linked_reclaimer.stored_items[mob_occupant] += W
 					linked_reclaimer.contents += W
