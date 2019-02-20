@@ -5,7 +5,7 @@
 	icon_state = "coil0"
 	anchored = FALSE
 	density = TRUE
-	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
+
 	// Executing a traitor caught releasing tesla was never this fun!
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -13,6 +13,7 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
+	var/tesla_flags = TESLA_MOB_DAMAGE | TESLA_OBJ_DAMAGE
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
