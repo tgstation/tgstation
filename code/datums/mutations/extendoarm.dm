@@ -6,7 +6,7 @@
 	text_gain_indication = "<span class='notice'>Your arms feel stretchy.</span>"
 	text_lose_indication = "<span class='warning'>Your arms feel solid again.</span>"
 	power = /obj/effect/proc_holder/spell/aimed/extendoarm
-	instability = 40
+	instability = 30
 
 /obj/effect/proc_holder/spell/aimed/extendoarm
 	name = "Arm"
