@@ -21,10 +21,12 @@
 /turf/open/floor/attackby(obj/I, mob/user, params)
 	. = ..()
 	if(istype(I, /obj/item/minecraft))
-		var/obj/item/minecraft/X = I
-		to_chat(user, "you place [I]")
-		ChangeTurf(X.build_type)
-		qdel(I)
+		to_chat(user, "You begin placing a block...")
+		if(do_after(user, 20, target = src))
+			var/obj/item/minecraft/X = I
+			to_chat(user, "you place [I]")
+			ChangeTurf(X.build_type)
+			qdel(I)
 
 /obj/item/minecraft
 	name = "block"
@@ -81,9 +83,10 @@
 			var/sound = pick(hit_sounds)//Spam the mining sound minecraft style :)
 			SEND_SOUND(user,sound)
 			if(strong)
-				var/mineralType = pick(ores)
-				var/num = rand(1,5)
-				new mineralType(src, num)
+				if(prob(5))
+					var/mineralType = pick(ores)
+					var/num = rand(1,5)
+					new mineralType(src, num)
 			new drop_type(src)
 			ChangeTurf(floor_type)
 		beingdug = FALSE
