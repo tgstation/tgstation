@@ -50,6 +50,8 @@
 	var/mob/living/carbon/C = caller
 	if(!C.hand_bodyparts[C.active_hand_index])
 		return
+	if(caller.has_trait(TRAIT_NODISMEMBER))
+		return
 	return ..()
 
 /obj/effect/proc_holder/spell/aimed/extendoarm/can_cast(mob/user = usr)
