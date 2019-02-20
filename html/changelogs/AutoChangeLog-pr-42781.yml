@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - tweak: "The emergency internals crate now contains breath masks instead of gas masks."
