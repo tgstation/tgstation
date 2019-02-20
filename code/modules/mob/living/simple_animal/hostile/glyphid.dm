@@ -468,7 +468,7 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "lay_eggs"
 		
-/datum/action/innate/glyphid/grunt_evolve/Activate()
+/datum/action/innate/glyphid/grunt/grunt_evolve/Activate()
 	var/mob/living/simple_animal/hostile/glyphid/grunt/L = owner
 	if(L.amount_grown >= L.max_grown)
 		var/mob/living/simple_animal/hostile/glyphid/new_glyphid
@@ -485,8 +485,8 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "lay_eggs"
 		
-/datum/action/innate/glyphid/veteran_evolve/Activate()
-	var/mob/living/simple_animal/hostile/glyphid/L = owner
+/datum/action/innate/glyphid/veteran/veteran_evolve/Activate()
+	var/mob/living/simple_animal/hostile/glyphid/veteran/L = owner
 	if(L.amount_grown >= L.max_grown)
 		var/mob/living/simple_animal/hostile/glyphid/new_glyphid
 		new_glyphid = new /mob/living/simple_animal/hostile/glyphid/praetorian(L.loc)
@@ -502,8 +502,8 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "lay_eggs"
 		
-/datum/action/innate/glyphid/praetorian_evolve/Activate()
-	var/mob/living/simple_animal/hostile/glyphid/veteran/L = owner
+/datum/action/innate/glyphid/praetorian/praetorian_evolve/Activate()
+	var/mob/living/simple_animal/hostile/glyphid/praetorian/L = owner
 	if(L.amount_grown >= L.max_grown)
 		var/mob/living/simple_animal/hostile/glyphid/new_glyphid
 		new_glyphid = new /mob/living/simple_animal/hostile/glyphid/dreadnought(L.loc)
