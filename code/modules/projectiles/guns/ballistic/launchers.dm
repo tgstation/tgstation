@@ -44,7 +44,7 @@
 
 /obj/item/gun/ballistic/rocketlauncher
 	name = "PML-9"
-	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" along with an arrow have been draw near the barrel."
+	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel."
 	icon_state = "rocketlauncher"
 	item_state = "rocketlauncher"
 	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
@@ -54,7 +54,7 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
 	fire_delay = 0
-	casing_ejector = TRUE
+	casing_ejector = TRUE //Used to dump the fake chambered "rocket" after firing
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
 	internal_magazine = TRUE
