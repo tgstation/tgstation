@@ -67,15 +67,15 @@
 
 /mob/living/simple_animal/hostile/glyphid/proc/humanize_glyphid(mob/user)
 	if(key || !playable_glyphid || stat)//Someone is in it, it's dead, or the fun police are shutting it down
-		return false
+		return FALSE
 	var/glyphid_ask = alert("Become a glyphid?", "Do you hate dwarves?", "Yes", "No")
 	if(glyphid_ask == "No" || !src || QDELETED(src))
-		return true
+		return TRUE
 	if(key)
 		to_chat(user, "<span class='notice'>Someone else already took this glyphid.</span>")
-		return true
+		return TRUE
 	key = user.key
-	return true
+	return TRUE
 	
 /mob/living/simple_animal/hostile/glyphid/swarmer
 	name = "glyphid swarmer"
