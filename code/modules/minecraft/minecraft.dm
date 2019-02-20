@@ -99,9 +99,9 @@
 		SEND_SOUND(steve, sound)
 
 /turf/open/floor/minecraft
-	name = "grass block"
+	name = "dirt block"
 	desc = "it's....totally square?"
-	icon_state = "grass"
+	icon_state = "dirt"
 	icon = 'icons/turf/minecraft.dmi'
 
 /turf/closed/wall/minecraft/stone
