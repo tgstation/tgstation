@@ -43,7 +43,7 @@
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/rocketlauncher
-	name = "PML-9"
+	name = "pml-9"
 	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel."
 	icon_state = "rocketlauncher"
 	item_state = "rocketlauncher"
@@ -54,15 +54,19 @@
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
 	fire_delay = 0
-	casing_ejector = TRUE //Used to dump the fake chambered "rocket" after firing
+	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
 	internal_magazine = TRUE
-	magazine_wording = "rocket"
+	cartridge_wording = "rocket"
 	empty_indicator = TRUE
 
 /obj/item/gun/ballistic/rocketlauncher/unrestricted
 	pin = /obj/item/firing_pin
+
+/obj/item/gun/ballistic/rocketlauncher/afterattack()
+	. = ..()
+	magazine.get_round(FALSE) //Hack to clear the mag after it's fired
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK
