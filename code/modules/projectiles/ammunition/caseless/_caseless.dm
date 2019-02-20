@@ -5,6 +5,7 @@
 
 /obj/item/ammo_casing/caseless/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	if (..()) //successfully firing
+		stack_trace("AAAAAAAAAAAAAAAAAAAAAAAAAAA FUUUUUCK")
 		moveToNullspace()
 		qdel(src)
 		return TRUE
