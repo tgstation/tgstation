@@ -13,6 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
+#include "arm.dm"
 #include "_maps\_basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
@@ -470,6 +471,7 @@
 #include "code\datums\mutations\body.dm"
 #include "code\datums\mutations\chameleon.dm"
 #include "code\datums\mutations\cold.dm"
+#include "code\datums\mutations\extendoarm.dm"
 #include "code\datums\mutations\hulk.dm"
 #include "code\datums\mutations\radioactive.dm"
 #include "code\datums\mutations\sight.dm"
