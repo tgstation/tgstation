@@ -15,6 +15,7 @@
 	speak_emote = list("chitters", "roars")
 	turns_per_move = 5
 	see_in_dark = 10
+	aggro_vision_range = 18
 	response_help  = "rubs the hard chitin of"
 	response_disarm = "gently pushes aside"
 	response_harm   = "bashes"
@@ -27,6 +28,7 @@
 	var/playable_glyphid = TRUE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	deathmessage = "screeches before falling limp."
+	weather_immunities = list("ash")
 	var/datum/action/innate/glyphid/build_tower/build_tower
 	
 	var/amount_grown = 0
@@ -124,8 +126,6 @@
 	maxHealth = 50
 	health = 50
 	max_grown = 300
-	melee_damage_lower = 10
-	melee_damage_upper = 10
 	speed = 1
 	color = rgb(152,251,152)
 	var/datum/action/innate/glyphid/grunt/grunt_evolve/grunt_evolve
@@ -163,6 +163,11 @@
 	melee_damage_upper = 0
 	var/datum/action/innate/glyphid/silkspinner/lay_web/lay_web
 	var/datum/action/innate/glyphid/silkspinner/silkspinner_evolve/silkspinner_evolve
+	projectiletype = /obj/item/projectile/silkspinner
+	projectilesound = 'sound/effects/spray3.ogg'
+	ranged = 1
+	ranged_message = "spits at"
+	ranged_cooldown_time = 30
 	
 /mob/living/simple_animal/hostile/glyphid/silkspinner/Initialize()
 	. = ..()
@@ -191,6 +196,42 @@
 		// GROW!
 		if(amount_grown < max_grown)
 			amount_grown++
+			
+/datum/status_effect/webshot
+	id = "webshot"
+	duration = 20
+	tick_interval = 0
+
+/datum/status_effect/webshot/on_apply()
+	. = ..()
+	if(isanimal(owner))
+		var/mob/living/simple_animal/aff = owner
+		aff.speed += 1
+	if(ishuman(owner))
+		var/mob/living/carbon/aff = owner
+		aff.add_movespeed_modifier("glyphid_webbed", TRUE, multiplicative_slowdown = 0.5)
+		
+/datum/status_effect/webshot/on_remove()
+	if(isanimal(owner))
+		var/mob/living/simple_animal/aff = owner
+		aff.speed -= 1
+	if(ishuman(owner))
+		var/mob/living/carbon/aff = owner
+		aff.remove_movespeed_modifier("glyphid_webbed", TRUE)
+		
+/obj/item/projectile/silkspinner
+	name = "web shot"
+	icon_state = "tentacle_end"
+	damage = 0
+	nodamage = 1
+	damage_type = BRUTE
+	color = rgb(255,255,0)
+	
+/obj/item/projectile/silkspinner/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(.)
+		var/mob/living/L = target
+		L.apply_status_effect(/datum/status_effect/webshot)
 	
 /mob/living/simple_animal/hostile/glyphid/exploder
 	name = "glyphid exploder"
@@ -213,7 +254,6 @@
 	max_grown = 300
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	speed = 1
 	color = rgb(152,251,152)
 	var/datum/action/innate/glyphid/veteran/veteran_evolve/veteran_evolve
 	
@@ -242,13 +282,13 @@
 	maxHealth = 60
 	health = 60
 	color = rgb(114,228,250)
-	projectiletype = /obj/item/projectile/temp/acidspitter
+	projectiletype = /obj/item/projectile/acidspitter
 	projectilesound = 'sound/effects/spray3.ogg'
 	ranged = 1
 	ranged_message = "spits at"
 	ranged_cooldown_time = 30
 	
-/obj/item/projectile/temp/acidspitter
+/obj/item/projectile/acidspitter
 	name = "acid spit"
 	icon_state = "tentacle_end"
 	damage = 20
@@ -271,6 +311,7 @@
 	melee_damage_upper = 40
 	speed = 2
 	color = rgb(114,228,250)
+	ventcrawler = 0
 	var/datum/action/innate/glyphid/praetorian/praetorian_evolve/praetorian_evolve
 	
 /mob/living/simple_animal/hostile/glyphid/praetorian/Initialize()
@@ -305,10 +346,21 @@
 	ranged = 1
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
 	obj_damage = 400
-	speed = 2
+	speed = 3
 	color = rgb(114,228,250)
+	ventcrawler = 0
 	projectiletype = /obj/item/projectile/magic/aoe/fireball
 	ranged_cooldown_time = 100
+	move_force = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING
+	pull_force = MOVE_FORCE_OVERPOWERING
+	mob_size = MOB_SIZE_LARGE
+	layer = LARGE_MOB_LAYER
+	
+/mob/living/simple_animal/hostile/glyphid/dreadnought/OpenFire()
+	visible_message("<span class='boldwarning'>[src] has smoke pouring from its maw!</span>")
+	sleep(10)
+	. = ..()
 	
 /mob/living/simple_animal/hostile/glyphid/dreadnought/Initialize()
 	. = ..()
@@ -538,6 +590,12 @@
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	range = 2
+	cooldown_min = 150
+	invocation_type = "none"
+	anti_magic_check = FALSE
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/glyphid/cast(list/targets,mob/user = usr)
+	..(targets, user, 60)
 	cooldown_min = 150
 	invocation_type = "none"
 	anti_magic_check = FALSE
