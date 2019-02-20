@@ -44,7 +44,6 @@
 		internal = new internal_type(src)
 	apply_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 	add_trait(TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)
-	add_trait(MEGAFAUNA_TRAIT)
 
 /mob/living/simple_animal/hostile/megafauna/Destroy()
 	QDEL_NULL(internal)
