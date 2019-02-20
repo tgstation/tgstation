@@ -4,6 +4,7 @@
 	roundend_category = "Fugitive"
 	silent = TRUE //greet called by the event as well
 	var/datum/team/fugitive_hunters/hunter_team
+	var/backstory = "error"
 
 /datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
@@ -37,6 +38,7 @@
 				hunter_team = H.hunter_team
 				return
 		hunter_team = new /datum/team/fugitive_hunters
+		hunter_team.backstory = backstory
 		hunter_team.update_objectives()
 		return
 	if(!istype(new_team))
@@ -55,28 +57,19 @@
 	O.team = src
 	objectives += O
 
-/datum/team/fugitive_hunters/proc/get_all_fugitives()
-	. = list()
-	for(var/mob/crew in GLOB.antagonists)
-		if(!(crew.owner || crew.mind)
+/datum/team/fugitive_hunters/proc/assemble_fugitive_results()
+	var/list/fugitives_counted = list()
+	var/list/fugitives_dead = list()
+	var/list/fugitives_captured = list()
+	for(var/datum/antagonist/fugitive/A in GLOB.antagonists)
+		if(!A.owner)
 			continue
-		if(crew.mind.has_antag_datum(/datum/antagonist/fugitive))
-			. += crew
-
-/datum/team/fugitive_hunters/proc/fugitives_dead(list/fugitives_counted)
-	. = 0
-	for(var/mob/living/L in fugitives_counted)
-		if(!istype(L))
-			.++
-		if(L.stat != DEAD)
-			.++
-
-/datum/team/fugitive_hunters/proc/fugitives_captured(list/fugitives_counted)
-	. = 0
-	for(var/mob/living/L in fugitives_counted)
-		var/datum/antagonist/fugitive/fug = L.mind.has_antag_datum(/datum/antagonist/fugitive)
-		if(fug.is_captured == TRUE)
-			.++
+		fugitives_counted += A
+		if(A.owner.stat == DEAD)
+			fugitives_dead += A
+		if(A.is_captured)
+			fugitives_captured += A
+	. = list(fugitives_counted, fugitives_dead, fugitives_captured) //okay, check out how cool this is.
 
 /datum/team/fugitive_hunters/proc/all_hunters_dead()
 	var/dead_boys = 0
@@ -87,30 +80,32 @@
 	return dead_boys >= members.len
 
 /datum/team/fugitive_hunters/proc/get_result()
-	var/list/fugitives_counted = get_all_fugitives()
-	var/fugitives_captured = fugitives_captured(fugitives_counted)
-	var/fugitives_dead = fugitives_dead(fugitives_counted)
+	var/list/fugitive_results = assemble_fugitive_results()
+	var/list/fugitives_counted = fugitive_results[1]
+	var/list/fugitives_dead = fugitive_results[2]
+	var/list/fugitives_captured = fugitive_results[3]
 	var/hunters_dead = all_hunters_dead()
-	if(fugitives_captured)
-		if(fugitives_captured == fugitives_counted)
-			if(!fugitives_dead)
+	//this gets a little confusing so follow the comments if it helps
+	if(fugitives_captured.len)//any captured
+		if(fugitives_captured.len == fugitives_counted.len)//if the hunters captured all the fugitives, there's a couple special wins
+			if(!fugitives_dead)//specifically all of the fugitives alive
 				return FUGITIVE_RESULT_BADASS_HUNTER
-			else if(hunters_dead)
+			else if(hunters_dead)//specifically all of the hunters died (while capturing all the fugitives)
 				return FUGITIVE_RESULT_POSTMORTEM_HUNTER
-			else
+			else//no special conditional wins, so just the normal major victory
 				return FUGITIVE_RESULT_MAJOR_HUNTER
-		else if(!hunters_dead)
+		else if(!hunters_dead)//so some amount captured, and the hunters survived.
 			return FUGITIVE_RESULT_HUNTER_VICTORY
-		else
+		else//so some amount captured, but NO survivors.
 			return FUGITIVE_RESULT_MINOR_HUNTER
-	else
-		if(!fugitives_dead)
+	else//from here on out, hunters lost because they did not capture any fugitive dead or alive. there are different levels of getting beat though:
+		if(!fugitives_dead)//all fugitives survived
 			return FUGITIVE_RESULT_MAJOR_FUGITIVE
-		else if(fugitives_dead < fugitives_counted)
+		else if(fugitives_dead < fugitives_counted)//at least ANY fugitive lived
 			return FUGITIVE_RESULT_FUGITIVE_VICTORY
-		else if(!hunters_dead)
+		else if(!hunters_dead)//all fugitives died, but none were taken in by the hunters. minor win
 			return FUGITIVE_RESULT_MINOR_FUGITIVE
-		else
+		else//all fugitives died, all hunters died, nobody brought back. seems weird to not give fugitives a victory if they managed to kill the hunters but literally no progress to either goal should lead to a nobody wins situation
 			return FUGITIVE_RESULT_STALEMATE
 
 /datum/team/fugitive_hunters/roundend_report() //shows the number of fugitives, but not if they won in case there is no security
@@ -152,9 +147,9 @@
 		if(FUGITIVE_RESULT_MAJOR_FUGITIVE)
 			result += "<span class='redtext big'>Major Fugitive Victory</span>"
 			result += "<B>All of the fugitives survived and avoided capture!</B>"
-		else //get_result returned null when it shouldn't
-			result += "<span class='neutraltext big'>Bugged Victory</span>"
-			result += "<B>Well, shit. Someone, anyone report this to github so I can see it. No duplicate reports!</B>"
+		else //get_result returned null- either bugged or no fugitives showed
+			result += "<span class='neutraltext big'>Prank Call!</span>"
+			result += "<B>[uppertext(backstory)] were called, yet there were no fugitives...?</B>"
 
 	result += "</div>"
 

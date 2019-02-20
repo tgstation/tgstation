@@ -76,7 +76,8 @@
 	spawned_mobs += S
 	return S
 
-/datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(var/mob/dead/leader, var/turf/landing_turf, backstory) //spawns the leader of the fugitive group, if they have one.
+ //special spawn for one member. it can be used for a special mob or simply to give one normal member special items. for special items you can
+/datum/round_event/ghost_role/fugitives/proc/gear_fugitive_leader(var/mob/dead/leader, var/turf/landing_turf, backstory)
 	var/datum/mind/player_mind = new /datum/mind(leader.key)
 	player_mind.active = TRUE
 	switch(backstory)
@@ -87,7 +88,7 @@
 			player_mind.special_role = "Old God"
 			player_mind.add_antag_datum(/datum/antagonist/fugitive)
 		if("synth")
-			S = gear_fugitive(leader, landing_turf, backstory)
+			var/mob/living/carbon/human/S = gear_fugitive(leader, landing_turf, backstory)
 			var/obj/item/choice_beacon/augments/A = new(S)
 			H.put_in_hands(A))
 			var/obj/item/autosurgeon/auto = new(landing_turf)
@@ -95,7 +96,7 @@
 //security team gets called in after 10 minutes of prep to find the refugees
 /datum/round_event/ghost_role/fugitives/proc/spawn_security()
 
-	var/hunter_team = pick("police", "russian")
+	var/hunter_team = pick("space cop", "russian")
 
 	var/datum/map_template/shuttle/pirate/default/ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
@@ -111,7 +112,7 @@
 	for(var/turf/A in ship.get_affected_turfs(T))
 		for(var/obj/structure/chair/comfy/shuttle/chair in A) //every chair gets a spawner on it.
 			switch(backstory)
-				if("police")
+				if("space cop")
 					new /obj/effect/mob_spawn/human/fugitive/spacepol(get_turf(chair))
 				if("russian")
 					new /obj/effect/mob_spawn/human/fugitive/russian(get_turf(chair))

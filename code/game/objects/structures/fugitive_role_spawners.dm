@@ -13,6 +13,7 @@
 
 /obj/effect/mob_spawn/human/fugitive/special(mob/living/new_spawn)
 	var/datum/antagonist/fugitive_hunter/fughunter = new_spawn.mind.add_antag_datum(/datum/antagonist/fugitive_hunter)
+	fughunter.backstory = flavour_text
 	fughunter.greet(flavour_text)
 	message_admins("[ADMIN_LOOKUPFLW(new_spawn)] has been made into a Fugitive Hunter by an event.")
 	log_game("[key_name(new_spawn)] was spawned as a Fugitive Hunter by an event.")
