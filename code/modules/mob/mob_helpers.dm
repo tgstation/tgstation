@@ -368,7 +368,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/reagent_check(datum/reagent/R) // utilized in the species code
 	return 1
 
-/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE) //Easy notification of ghosts.
+/proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/mutable_appearance/alert_overlay = null, var/action = NOTIFY_JUMP, flashwindow = TRUE, ignore_mapload = TRUE, ignore_key, header = null, notify_suiciders = TRUE, var/notify_volume = 100) //Easy notification of ghosts.
 	if(ignore_mapload && SSatoms.initialized != INITIALIZATION_INNEW_REGULAR)	//don't notify for objects created during a map load
 		return
 	for(var/mob/dead/observer/O in GLOB.player_list)
@@ -377,9 +377,12 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 				continue
 			if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
 				continue
-			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]</span>")
+			var/orbit_link
+			if (source && action == NOTIFY_ORBIT)
+				orbit_link = " <a href='?src=[REF(O)];follow=[REF(source)]'>(Orbit)</a>"
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""][orbit_link]</span>")
 			if(ghost_sound)
-				SEND_SOUND(O, sound(ghost_sound))
+				SEND_SOUND(O, sound(ghost_sound, volume = notify_volume))
 			if(flashwindow)
 				window_flash(O.client)
 			if(source)
@@ -407,7 +410,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		else
 			dam = 0
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
-			if(affecting.heal_damage(brute_heal, burn_heal, 0, TRUE, FALSE))
+			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
 			user.visible_message("[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>")
@@ -513,3 +516,11 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(has_trait(TRAIT_DISSECTED))
 		. += "<span class='notice'>This body has been dissected and analyzed. It is no longer worth experimenting on.</span><br>"
+
+/mob/has_trait(trait, list/sources, check_mind=TRUE)
+	. = ..(trait, sources)
+	if(.)
+		return
+
+	if(check_mind && istype(mind))
+		return mind.has_trait(trait, sources)

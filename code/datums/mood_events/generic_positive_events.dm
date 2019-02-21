@@ -23,10 +23,13 @@
 	mood_change = 3
 	timeout = 3000
 
-/datum/mood_event/pet_corgi
-	description = "<span class='nicegreen'>Corgis are adorable! I can't stop petting them!</span>\n"
+/datum/mood_event/pet_animal
+	description = "<span class='nicegreen'>Animals are adorable! I can't stop petting them!</span>\n"
 	mood_change = 3
 	timeout = 3000
+
+/datum/mood_event/pet_animal/add_effects(mob/animal)
+	description = "<span class='nicegreen'>\The [animal.name] is adorable! I can't stop petting [animal.p_them()]!</span>\n"
 
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
@@ -55,6 +58,14 @@
 /datum/mood_event/badass_antag
 	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around."
 	mood_change = 15
+	hidden = TRUE
+	special_screen_obj = "badass_sun"
+	special_screen_replace = FALSE
+
+/datum/mood_event/creeping
+	description = "<span class='greentext'>The voices have released their hooks on my mind! I feel free again!</span>\n" //creeps get it when they are around their obsession
+	mood_change = 18
+	timeout = 30
 	hidden = TRUE
 
 /datum/mood_event/revolution
@@ -89,3 +100,7 @@
 	description = "<span class='nicegreen'>*WHEEZE*</span>\n"
 	mood_change = 12
 	timeout = 1800
+
+/datum/mood_event/religiously_comforted
+	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>"
+	mood_change = 3

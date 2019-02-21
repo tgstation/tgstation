@@ -14,6 +14,7 @@
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
 	burnmod = 0.5 // = 1/2x generic burn damage
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -42,7 +43,7 @@
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
 			H.blood_volume += 3
-			H.nutrition -= 2.5
+			H.adjust_nutrition(-2.5)
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
 			to_chat(H, "<span class='danger'>You feel drained!</span>")
@@ -170,7 +171,7 @@
 			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
-		H.nutrition -= 2.5
+		H.adjust_nutrition(-2.5)
 
 	..()
 
@@ -330,7 +331,8 @@
 		return
 	switch(action)
 		if("swap")
-			var/mob/living/carbon/human/selected = locate(params["ref"])
+			var/datum/species/jelly/slime/SS = H.dna.species
+			var/mob/living/carbon/human/selected = locate(params["ref"]) in SS.bodies
 			if(!can_swap(selected))
 				return
 			SStgui.close_uis(src)

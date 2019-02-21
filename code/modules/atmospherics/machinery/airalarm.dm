@@ -85,12 +85,12 @@
 	var/datum/radio_frequency/radio_connection
 
 	var/list/TLV = list( // Breathable air.
-		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
+		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa. Values are min2, min1, max1, max2
 		"temperature"				= new/datum/tlv(T0C, T0C+10, T0C+40, T0C+66),
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
-		/datum/gas/miasma			= new/datum/tlv/(-1, -1, 2, 5),
+		/datum/gas/miasma			= new/datum/tlv/(-1, -1, 15, 30),
 		/datum/gas/plasma			= new/datum/tlv/dangerous,
 		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous,
 		/datum/gas/bz				= new/datum/tlv/dangerous,
@@ -121,10 +121,10 @@
 		/datum/gas/pluoxium			= new/datum/tlv/no_checks
 	)
 
-/obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
+/obj/machinery/airalarm/kitchen_cold_room // Kitchen cold rooms start off at -80°C or 193.15°K.
 	TLV = list(
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
-		"temperature"				= new/datum/tlv(T0C-73.15, T0C-63.15, T0C, T0C+10),
+		"temperature"				= new/datum/tlv(T0C-273.15, T0C-100, T0C-60, T0C),
 		/datum/gas/oxygen			= new/datum/tlv(16, 19, 135, 140), // Partial pressure, kpa
 		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
 		/datum/gas/carbon_dioxide	= new/datum/tlv(-1, -1, 5, 10),
@@ -514,7 +514,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide, /datum/gas/miasma),
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))
@@ -567,7 +567,7 @@
 			for(var/device_id in A.air_scrub_names)
 				send_signal(device_id, list(
 					"power" = 1,
-					"set_filters" = list(/datum/gas/carbon_dioxide, /datum/gas/miasma),
+					"set_filters" = list(/datum/gas/carbon_dioxide),
 					"scrubbing" = 1,
 					"widenet" = 0,
 				))

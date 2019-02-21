@@ -89,7 +89,7 @@
 
 	holder = item
 
-	holder.item_flags |= NODROP
+	holder.add_trait(TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
 	holder.resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	holder.slot_flags = null
 	holder.materials = null
@@ -129,11 +129,14 @@
 		holder = null
 		if(contents.len == 1)
 			Extend(contents[1])
-		else // TODO: make it similar to borg's storage-like module selection
-			var/obj/item/choise = input("Activate which item?", "Arm Implant", null, null) as null|anything in items_list
-			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && istype(choise) && (choise in contents))
-				// This monster sanity check is a nice example of how bad input() is.
-				Extend(choise)
+		else
+			var/list/choice_list = list()
+			for(var/obj/item/I in items_list)
+				choice_list[I] = getFlatIcon(I)
+			var/obj/item/choice = show_radial_menu(owner, owner, choice_list)
+			if(owner && owner == usr && owner.stat != DEAD && (src in owner.internal_organs) && !holder && (choice in contents))
+				// This monster sanity check is a nice example of how bad input is.
+				Extend(choice)
 	else
 		Retract()
 

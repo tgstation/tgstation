@@ -31,8 +31,6 @@
 	..()
 	if(in_range(user, src) || isobserver(user))
 		to_chat(user, "<span class='notice'>The status display reads: Radiation pulse accuracy increased by factor <b>[precision_coeff**2]</b>.<br>Radiation pulse damage decreased by factor <b>[damage_coeff**2]</b>.<span>")
-		if(scan_level >= 3)
-			to_chat(user, "<span class='notice'>Scanner has been upgraded to support autoprocessing.<span>")
 
 /obj/machinery/dna_scannernew/update_icon()
 
@@ -101,13 +99,6 @@
 		return FALSE
 
 	..(user)
-
-	// search for ghosts, if the corpse is empty and the scanner is connected to a cloner
-	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
-	if(istype(mob_occupant))
-		if(locate_computer(/obj/machinery/computer/cloning))
-			if(!mob_occupant.suiciding && !(mob_occupant.has_trait(TRAIT_NOCLONE)) && !mob_occupant.hellbound)
-				mob_occupant.notify_ghost_cloning("Your corpse has been placed into a cloning scanner. Re-enter your corpse if you want to be cloned!", source = src)
 
 	// DNA manipulators cannot operate on severed heads or brains
 	if(iscarbon(occupant))

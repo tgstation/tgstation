@@ -6,14 +6,15 @@
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	inherent_biotypes = list(MOB_UNDEAD, MOB_HUMANOID)
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	exotic_bloodtype = "U"
 	use_skintones = TRUE
 	mutant_heart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
-	blacklisted = TRUE
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform //attached to the datum itself to avoid cloning memes, and other duplicates
 
 /datum/species/vampire/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -25,22 +26,20 @@
 	to_chat(C, "[info_text]")
 	C.skin_tone = "albino"
 	C.update_body(0)
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/B = new
-	C.AddSpell(B)
+	if(isnull(batform))
+		batform = new
+		C.AddSpell(batform)
 
 /datum/species/vampire/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	if(C.mind)
-		for(var/S in C.mind.spell_list)
-			var/obj/effect/proc_holder/spell/S2 = S
-			if(S2.type == /obj/effect/proc_holder/spell/targeted/shapeshift/bat)
-				C.mind.spell_list.Remove(S2)
-				qdel(S2)
+	if(!isnull(batform))
+		C.RemoveSpell(batform)
+		QDEL_NULL(batform)
 
 /datum/species/vampire/spec_life(mob/living/carbon/human/C)
 	. = ..()
 	if(istype(C.loc, /obj/structure/closet/crate/coffin))
-		C.heal_overall_damage(4,4)
+		C.heal_overall_damage(4,4,0, BODYPART_ORGANIC)
 		C.adjustToxLoss(-4)
 		C.adjustOxyLoss(-4)
 		C.adjustCloneLoss(-4)
@@ -48,6 +47,9 @@
 	C.blood_volume -= 0.75
 	if(C.blood_volume <= BLOOD_VOLUME_SURVIVE)
 		to_chat(C, "<span class='danger'>You ran out of blood!</span>")
+		var/obj/shapeshift_holder/H = locate() in C
+		if(H)
+			H.shape.dust() //make sure we're killing the bat if you are out of blood, if you don't it creates weird situations where the bat is alive but the caster is dusted.
 		C.dust()
 	var/area/A = get_area(C)
 	if(istype(A, /area/chapel))
@@ -88,7 +90,7 @@
 				to_chat(H, "<span class='notice'>[victim] doesn't have blood!</span>")
 				return
 			V.drain_cooldown = world.time + 30
-			if(victim.anti_magic_check(FALSE, TRUE))
+			if(victim.anti_magic_check(FALSE, TRUE, FALSE))
 				to_chat(victim, "<span class='warning'>[H] tries to bite you, but stops before touching you!</span>")
 				to_chat(H, "<span class='warning'>[victim] is blessed! You stop just in time to avoid catching fire.</span>")
 				return

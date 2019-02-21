@@ -135,6 +135,23 @@
 		/obj/item/healthanalyzer = 1)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/firstaid/advanced
+	name = "advanced first aid kit"
+	desc = "An advanced kit to help deal with advanced wounds."
+	icon_state = "radfirstaid"
+	item_state = "firstaid-rad"
+	custom_premium_price = 600
+
+/obj/item/storage/firstaid/advanced/PopulateContents()
+	if(empty)
+		return
+	var/static/items_inside = list(
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
+		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+		/obj/item/stack/medical/gauze = 1,
+		/obj/item/storage/pill_bottle/penacid = 1)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/firstaid/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
@@ -249,7 +266,7 @@
 
 /obj/item/storage/pill_bottle/lsd
 	name = "suspicious pill bottle"
-	desc = "There is a badly drawn thing with the shape of a mushroom."
+	desc = "There is a crude drawing which could be either a mushroom, or a deformed moon."
 
 /obj/item/storage/pill_bottle/lsd/PopulateContents()
 	for(var/i in 1 to 5)
@@ -257,7 +274,7 @@
 
 /obj/item/storage/pill_bottle/aranesp
 	name = "suspicious pill bottle"
-	desc = "The label says 'gotta go fast'."
+	desc = "The label has 'fuck disablers' hastily scrawled in black marker."
 
 /obj/item/storage/pill_bottle/aranesp/PopulateContents()
 	for(var/i in 1 to 5)
@@ -278,3 +295,37 @@
 /obj/item/storage/pill_bottle/happiness/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/happiness(src)
+
+/obj/item/storage/pill_bottle/penacid
+	name = "bottle of pentetic acid pills"
+	desc = "Contains pills to expunge radioation and toxins"
+
+/obj/item/storage/pill_bottle/penacid/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/pill/penacid(src)
+
+
+/obj/item/storage/pill_bottle/neurine
+	name = "bottle of neurine pills"
+	desc = "Contains pills to treat non-severe mental traumas."
+
+/obj/item/storage/pill_bottle/neurine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/neurine(src)
+
+/obj/item/storage/pill_bottle/floorpill
+	name = "bottle of floorpills"
+	desc = "An old pill bottle. It smells musty."
+
+/obj/item/storage/pill_bottle/floorpill/Initialize()
+	. = ..()
+	var/obj/item/reagent_containers/pill/P = locate() in src
+	name = "bottle of [P.name]s"
+
+/obj/item/storage/pill_bottle/floorpill/PopulateContents()
+	for(var/i in 1 to rand(1,7))
+		new /obj/item/reagent_containers/pill/floorpill(src)
+
+/obj/item/storage/pill_bottle/floorpill/full/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/floorpill(src)

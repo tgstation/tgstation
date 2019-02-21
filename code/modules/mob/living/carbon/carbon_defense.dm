@@ -93,7 +93,9 @@
 				add_splatter_floor(location)
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
-
+					if(ishuman(user))
+						var/mob/living/carbon/human/dirtyboy = user
+						dirtyboy.adjust_hygiene(-10)
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
 						wear_mask.add_mob_blood(src)
@@ -129,9 +131,9 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	if(!(mobility_flags & MOBILITY_STAND) && surgeries.len)
-		if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
-			for(var/datum/surgery/S in surgeries)
+	for(var/datum/surgery/S in surgeries)
+		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+			if(user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM)
 				if(S.next_step(user, user.a_intent))
 					return 1
 	return 0
@@ -271,6 +273,8 @@
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+		for(var/datum/brain_trauma/trauma in M.get_traumas())
+			trauma.on_hug(M, src)
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)
@@ -346,7 +350,7 @@
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			var/deaf = deafen_pwr * effect_amount
 			adjustEarDamage(ear_damage,deaf)
 
 			if(ears.ear_damage >= 15)

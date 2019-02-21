@@ -437,7 +437,7 @@
 	do_help(H, user)
 
 /obj/item/twohanded/shockpaddles/proc/can_defib(mob/living/carbon/H)
-	if(H.suiciding || H.has_trait(TRAIT_NOCLONE) || H.hellbound)
+	if(H.suiciding || H.hellbound || H.has_trait(TRAIT_HUSK))
 		return
 	if((world.time - H.timeofdeath) > tlimit)
 		return
@@ -569,7 +569,7 @@
 				shock_touching(30, H)
 				var/failed
 
-				if (H.suiciding || (H.has_trait(TRAIT_NOCLONE)))
+				if (H.suiciding)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Recovery of patient impossible. Further attempts futile.</span>"
 				else if (H.hellbound)
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's soul appears to be on another plane of existence.  Further attempts futile.</span>"
@@ -577,7 +577,7 @@
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Body has decayed for too long. Further attempts futile.</span>"
 				else if (!H.getorgan(/obj/item/organ/heart))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Patient's heart is missing.</span>"
-				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE)
+				else if(total_burn >= MAX_REVIVE_FIRE_DAMAGE || total_brute >= MAX_REVIVE_BRUTE_DAMAGE || H.has_trait(TRAIT_HUSK))
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - Severe tissue damage makes recovery of patient impossible via defibrillator. Further attempts futile.</span>"
 				else if(H.get_ghost())
 					failed = "<span class='warning'>[req_defib ? "[defib]" : "[src]"] buzzes: Resuscitation failed - No activity in patient's brain. Further attempts may be successful.</span>"

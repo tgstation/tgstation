@@ -414,6 +414,18 @@
 	to_chat(S, "<span class='warning'>Destroying this object would cause a catastrophic chain reaction. Aborting.</span>")
 	return FALSE
 
+/obj/machinery/field/containment/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/shieldwallgen/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>Destroying this object would have an unpredictable effect on structure integrity. Aborting.</span>")
+	return FALSE
+
+/obj/machinery/shieldwall/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
+	to_chat(S, "<span class='warning'>This object does not contain solid matter. Aborting.</span>")
+	return FALSE
+
 ////END CTRL CLICK FOR SWARMERS////
 
 /mob/living/simple_animal/hostile/swarmer/proc/Fabricate(atom/fabrication_object,fabrication_cost = 0)
@@ -489,7 +501,7 @@
 	S.set_up(4,0,get_turf(target))
 	S.start()
 	playsound(src,'sound/effects/sparks4.ogg',50,1)
-	do_teleport(target, F, 0)
+	do_teleport(target, F, 0, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /mob/living/simple_animal/hostile/swarmer/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = FALSE, tesla_shock = FALSE, illusion = FALSE, stun = TRUE)
 	if(!tesla_shock)

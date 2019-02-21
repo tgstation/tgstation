@@ -59,7 +59,7 @@
 		to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
 /obj/machinery/computer/message_monitor/New()
-	. = ..()
+	..()
 	GLOB.telecomms_list += src
 
 /obj/machinery/computer/message_monitor/Initialize()
@@ -75,7 +75,7 @@
 
 /obj/machinery/computer/message_monitor/Destroy()
 	GLOB.telecomms_list -= src
-	. = ..()
+	return ..()
 
 /obj/machinery/computer/message_monitor/ui_interact(mob/living/user)
 	. = ..()
@@ -352,7 +352,7 @@
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
-					linkedServer.pda_msgs -= locate(href_list["delete_logs"])
+					linkedServer.pda_msgs -= locate(href_list["delete_logs"]) in linkedServer.pda_msgs
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
 		//Delete the request console log.
 		if (href_list["delete_requests"])
@@ -361,7 +361,7 @@
 				if(LINKED_SERVER_NONRESPONSIVE)
 					message = noserver
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
-					linkedServer.rc_msgs -= locate(href_list["delete_requests"])
+					linkedServer.rc_msgs -= locate(href_list["delete_requests"]) in linkedServer.rc_msgs
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
 		//Create a custom message
 		if (href_list["msg"])
@@ -423,7 +423,7 @@
 						))
 						// this will log the signal and transmit it to the target
 						linkedServer.receive_information(signal, null)
-						usr.log_message("(PDA: [name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
+						usr.log_message("(PDA: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
 
 
 		//Request Console Logs - KEY REQUIRED

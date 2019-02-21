@@ -15,12 +15,12 @@
 	disliked_food = FRUIT | GROSS
 	toxic_food = MEAT | RAW
 	mutanteyes = /obj/item/organ/eyes/moth
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE)
 	. = ..()
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		H.dna.features["moth_wings"] = "[(H.client && H.client.prefs && LAZYLEN(H.client.prefs.features) && H.client.prefs.features["moth_wings"]) ? H.client.prefs.features["moth_wings"] : "Plain"]"
 		handle_mutant_bodyparts(H)
 
 /datum/species/moth/random_name(gender,unique,lastname)

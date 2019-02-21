@@ -273,12 +273,13 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	connection_timeofday = world.timeofday
 	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	var/cev = CONFIG_GET(number/client_error_version)
+	var/ceb = CONFIG_GET(number/client_error_build)
 	var/cwv = CONFIG_GET(number/client_warn_version)
-	if (byond_version < cev)		//Out of date client.
+	if (byond_version < cev || byond_build < ceb)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of BYOND is too old:</b></span>")
 		to_chat(src, CONFIG_GET(string/client_error_message))
-		to_chat(src, "Your version: [byond_version]")
-		to_chat(src, "Required version: [cev] or later")
+		to_chat(src, "Your version: [byond_version].[byond_build]")
+		to_chat(src, "Required version: [cev].[ceb] or later")
 		to_chat(src, "Visit <a href=\"https://secure.byond.com/download\">BYOND's website</a> to get the latest version of BYOND.")
 		if (connecting_admin)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
@@ -425,6 +426,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
+	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
@@ -441,7 +443,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
-	query_get_related_ip.Execute()
+	if(!query_get_related_ip.Execute())
+		qdel(query_get_related_ip)
+		return
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())
 		related_accounts_ip += "[query_get_related_ip.item[1]], "
@@ -664,7 +668,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/sql_system_ckey = sanitizeSQL(system_ckey)
 	var/sql_ckey = sanitizeSQL(ckey)
 	//check to see if we noted them in the last day.
-	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND expire_timestamp > NOW()")
+	var/datum/DBQuery/query_get_notes = SSdbcore.NewQuery("SELECT id FROM [format_table_name("messages")] WHERE type = 'note' AND targetckey = '[sql_ckey]' AND adminckey = '[sql_system_ckey]' AND timestamp + INTERVAL 1 DAY < NOW() AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)")
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -673,7 +677,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		return
 	qdel(query_get_notes)
 	//regardless of above, make sure their last note is not from us, as no point in repeating the same note over and over.
-	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 AND expire_timestamp > NOW() ORDER BY timestamp DESC LIMIT 1")
+	query_get_notes = SSdbcore.NewQuery("SELECT adminckey FROM [format_table_name("messages")] WHERE targetckey = '[sql_ckey]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL) ORDER BY timestamp DESC LIMIT 1")
 	if(!query_get_notes.Execute())
 		qdel(query_get_notes)
 		return
@@ -696,8 +700,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/Click(atom/object, atom/location, control, params)
 	var/ab = FALSE
 	var/list/L = params2list(params)
+
+	var/dragged = L["drag"]
+	if(dragged && !L[dragged])
+		return
+
 	if (object && object == middragatom && L["left"])
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
+
 	var/mcl = CONFIG_GET(number/minute_click_limit)
 	if (!holder && mcl)
 		var/minute = round(world.time, 600)
@@ -717,7 +727,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 					log_game("[key_name(src)] is using the middle click aimbot exploit")
 					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 					add_system_note("aimbot", "Is using the middle click aimbot exploit")
-
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
@@ -839,3 +848,23 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
+
+/client/proc/show_character_previews(mutable_appearance/MA)
+	var/pos = 0
+	for(var/D in GLOB.cardinals)
+		pos++
+		var/obj/screen/O = LAZYACCESS(char_render_holders, "[D]")
+		if(!O)
+			O = new
+			LAZYSET(char_render_holders, "[D]", O)
+			screen |= O
+		O.appearance = MA
+		O.dir = D
+		O.screen_loc = "character_preview_map:0,[pos]"
+
+/client/proc/clear_character_previews()
+	for(var/index in char_render_holders)
+		var/obj/screen/S = char_render_holders[index]
+		screen -= S
+		qdel(S)
+	char_render_holders = null

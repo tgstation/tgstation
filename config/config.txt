@@ -46,9 +46,6 @@ ADMIN_LEGACY_SYSTEM
 ##If enabled, each time admins are loaded ranks the database will be updated with the current ranks and their flags
 #LOAD_LEGACY_RANKS_ONLY
 
-## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
-BAN_LEGACY_SYSTEM
-
 ## Comment this out to stop locally connected clients from being given the almost full access !localhost! admin rank
 ENABLE_LOCALHOST_RANK
 
@@ -389,6 +386,8 @@ AUTOADMIN_RANK Game Master
 #CLIENT_WARN_MESSAGE Byond released 511 as the stable release. You can set the framerate your client runs at, which makes the game feel very different and cool. Shortly after its release we will end up using 511 client features and you will be forced to update.
 CLIENT_ERROR_VERSION 511
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
+## The minimum build needed for joining the server, if using 512, a good minimum build would be 1421 as that disables the Middle Mouse Button exploit.
+CLIENT_ERROR_BUILD 1421
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
@@ -420,8 +419,16 @@ MINUTE_CLICK_LIMIT 400
 ##How long to wait between messaging admins about occurences of a unique error
 #ERROR_MSG_DELAY 50
 
-## Send a message to IRC when starting a new game
-#IRC_ANNOUNCE_NEW_GAME
+
+## Chat Announce Options
+## Various messages to be sent to game chats
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4
+## If using TGS4, the string option can be set as a chat channel tag to limit the message to channels of that tag type (case-sensitive)
+## i.e. CHAT_ANNOUNCE_NEW_GAME chat_channel_tag
+
+## Send a message with the station name starting a new game
+#CHAT_ANNOUNCE_NEW_GAME
+
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS

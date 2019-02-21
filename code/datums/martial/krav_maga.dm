@@ -1,5 +1,6 @@
 /datum/martial_art/krav_maga
 	name = "Krav Maga"
+	id = MARTIALART_KRAVMAGA
 	var/datum/action/neck_chop/neckchop = new/datum/action/neck_chop()
 	var/datum/action/leg_sweep/legsweep = new/datum/action/leg_sweep()
 	var/datum/action/lung_punch/lungpunch = new/datum/action/lung_punch()
@@ -110,7 +111,7 @@
 	D.visible_message("<span class='warning'>[A] karate chops [D]'s neck!</span>", \
 				  	"<span class='userdanger'>[A] karate chops your neck, rendering you unable to speak!</span>")
 	playsound(get_turf(A), 'sound/effects/hit_punch.ogg', 50, 1, -1)
-	D.apply_damage(5, BRUTE)
+	D.apply_damage(5, A.dna.species.attack_type)
 	if(D.silent <= 10)
 		D.silent = CLAMP(D.silent + 10, 0, 10)
 	log_combat(A, D, "neck chopped")
@@ -131,7 +132,7 @@
 	if(!(D.mobility_flags & MOBILITY_STAND))
 		bonus_damage += 5
 		picked_hit_type = "stomps on"
-	D.apply_damage(bonus_damage, BRUTE)
+	D.apply_damage(bonus_damage, A.dna.species.attack_type)
 	if(picked_hit_type == "kicks" || picked_hit_type == "stomps on")
 		A.do_attack_animation(D, ATTACK_EFFECT_KICK)
 		playsound(get_turf(D), 'sound/effects/hit_kick.ogg', 50, 1, -1)
@@ -191,3 +192,18 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = NONE
+
+/obj/item/clothing/gloves/krav_maga/combatglovesplus
+	name = "combat gloves plus"
+	desc = "These tactical gloves are fireproof and shock resistant, and using nanochip technology it teaches you the powers of krav maga."
+	icon_state = "black"
+	item_state = "blackglovesplus"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.05
+	strip_delay = 80
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 50)

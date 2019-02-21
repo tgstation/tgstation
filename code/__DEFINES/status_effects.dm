@@ -7,6 +7,8 @@
 
 #define STATUS_EFFECT_REPLACE 2 //if it allows only one, but new instances replace
 
+#define STATUS_EFFECT_REFRESH 3 // if it only allows one, and new instances just instead refresh the timer
+
 ///////////
 // BUFFS //
 ///////////
@@ -32,6 +34,10 @@
 
 #define STATUS_EFFECT_HIPPOCRATIC_OATH /datum/status_effect/hippocraticOath //Gives you an aura of healing as well as regrowing the Rod of Asclepius if lost
 
+#define STATUS_EFFECT_GOOD_MUSIC /datum/status_effect/good_music
+
+#define STATUS_EFFECT_REGENERATIVE_CORE /datum/status_effect/regenerative_core
+
 /////////////
 // DEBUFFS //
 /////////////
@@ -48,6 +54,8 @@
 
 #define STATUS_EFFECT_SLEEPING /datum/status_effect/incapacitating/sleeping //the affected is asleep
 
+#define STATUS_EFFECT_PACIFY /datum/status_effect/pacify //the affected is pacified, preventing direct hostile actions
+
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 
 #define STATUS_EFFECT_GEISTRACKER /datum/status_effect/geis_tracker //if you're using geis, this tracks that and keeps you from using scripture
@@ -55,6 +63,8 @@
 #define STATUS_EFFECT_MANIAMOTOR /datum/status_effect/maniamotor //disrupts, damages, and confuses the affected as long as they're in range of the motor
 #define MAX_MANIA_SEVERITY 100 //how high the mania severity can go
 #define MANIA_DAMAGE_TO_CONVERT 90 //how much damage is required before it'll convert affected targets
+
+#define STATUS_EFFECT_CHOKINGSTRAND /datum/status_effect/strandling //Choking Strand
 
 #define STATUS_EFFECT_HISWRATH /datum/status_effect/his_wrath //His Wrath.
 
@@ -76,6 +86,8 @@
 
 #define STATUS_EFFECT_GONBOLAPACIFY /datum/status_effect/gonbolaPacify //Gives the user gondola traits while the gonbola is attached to them.
 
+#define STATUS_EFFECT_SPASMS /datum/status_effect/spasms //causes random muscle spasms
+
 /////////////
 // NEUTRAL //
 /////////////
@@ -87,6 +99,12 @@
 #define STATUS_EFFECT_SYPHONMARK /datum/status_effect/syphon_mark //tracks kills for the KA death syphon module
 
 #define STATUS_EFFECT_INLOVE /datum/status_effect/in_love //Displays you as being in love with someone else, and makes hearts appear around them.
+
+#define STATUS_EFFECT_BUGGED /datum/status_effect/bugged //Lets other mobs listen in on what it hears
+
+#define STATUS_EFFECT_HIVE_TRACKER /datum/status_effect/hive_track
+
+#define STATUS_EFFECT_HIVE_RADAR /datum/status_effect/agent_pinpointer/hivemind
 
 /////////////
 //  SLIME  //

@@ -49,6 +49,10 @@
 	if(!uses)
 		qdel(src)
 
+/obj/item/implanter/adrenalin
+	name = "implanter (adrenalin)"
+	imp_type = /obj/item/implant/adrenalin
+
 
 /obj/item/implant/emp
 	name = "emp implant"
@@ -62,6 +66,10 @@
 	empulse(imp_in, 3, 5)
 	if(!uses)
 		qdel(src)
+
+/obj/item/implanter/emp
+	name = "implanter (EMP)"
+	imp_type = /obj/item/implant/emp
 
 
 //Health Tracker Implant

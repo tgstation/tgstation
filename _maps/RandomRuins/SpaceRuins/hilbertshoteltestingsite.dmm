@@ -197,13 +197,19 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "K" = (
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/plasteel/stairs/right{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
-"L" = (
-/turf/open/floor/plasteel/stairs/medium,
+"U" = (
+/turf/open/floor/plasteel/stairs/medium{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
-"M" = (
-/turf/open/floor/plasteel/stairs/right,
+"X" = (
+/turf/open/floor/plasteel/stairs/left{
+	initial_gas_mix = "TEMP=2.7"
+	},
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
@@ -788,7 +794,7 @@ B
 B
 B
 d
-K
+X
 b
 b
 b
@@ -816,7 +822,7 @@ B
 B
 B
 I
-L
+U
 b
 b
 b
@@ -844,7 +850,7 @@ c
 d
 c
 d
-M
+K
 b
 b
 b

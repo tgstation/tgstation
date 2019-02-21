@@ -101,9 +101,8 @@
 	var/list/cached_results = air.reaction_results
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
-
 	var/burned_fuel = 0
-	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES])
+	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/tritium][MOLES] || MINIMUM_TRIT_OXYBURN_ENERGY > air.thermal_energy())
 		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTOR
 		cached_gases[/datum/gas/tritium][MOLES] -= burned_fuel
 	else
@@ -112,7 +111,7 @@
 		cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/tritium][MOLES]
 
 	if(burned_fuel)
-		energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel
+		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY) //woah there let's not crash the server
 			radiation_pulse(location, energy_released/TRITIUM_BURN_RADIOACTIVITY_FACTOR)
 
@@ -308,6 +307,7 @@
 			if(do_explosion)
 				explosion(location, 0, 0, 5, power_ratio, TRUE, TRUE) //large shockwave, the actual radius is quite small - people will recognize that you're doing fusion
 			radiation_pulse(location, radiation_power) //You mean causing a super-tier fusion reaction in the halls is a bad idea?
+			SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, 30000)//The science is cool though.
 			playsound(location, 'sound/effects/supermatter.ogg', 100, 0)
 		else
 			playsound(location, 'sound/effects/phasein.ogg', 75, 0)
@@ -370,17 +370,21 @@
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/pressure = air.return_pressure()
-
 	var/old_heat_capacity = air.heat_capacity()
 	var/reaction_efficency = min(1/((pressure/(0.1*ONE_ATMOSPHERE))*(max(cached_gases[/datum/gas/plasma][MOLES]/cached_gases[/datum/gas/nitrous_oxide][MOLES],1))),cached_gases[/datum/gas/nitrous_oxide][MOLES],cached_gases[/datum/gas/plasma][MOLES]/2)
 	var/energy_released = 2*reaction_efficency*FIRE_CARBON_ENERGY_RELEASED
-	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2*reaction_efficency) < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2*reaction_efficency) < 0) || energy_released <= 0) //Shouldn't produce gas from nothing.
 		return NO_REACTION
 	ASSERT_GAS(/datum/gas/bz,air)
 	cached_gases[/datum/gas/bz][MOLES] += reaction_efficency
+	if(reaction_efficency == cached_gases[/datum/gas/nitrous_oxide][MOLES])
+		ASSERT_GAS(/datum/gas/oxygen,air)
+		cached_gases[/datum/gas/bz][MOLES] -= min(pressure,1)
+		cached_gases[/datum/gas/oxygen][MOLES] += min(pressure,1)
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
 	cached_gases[/datum/gas/plasma][MOLES]  -= 2*reaction_efficency
 
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((reaction_efficency**2)*BZ_RESEARCH_SCALE),BZ_RESEARCH_MAX_AMOUNT)
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -415,7 +419,7 @@
 	cached_gases[/datum/gas/tritium][MOLES] -= heat_scale
 	cached_gases[/datum/gas/plasma][MOLES] -= heat_scale
 	cached_gases[/datum/gas/nitryl][MOLES] -= heat_scale
-
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, STIMULUM_RESEARCH_AMOUNT*max(stim_energy_change,0))
 	if(stim_energy_change)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -444,7 +448,7 @@
 	cached_gases[/datum/gas/tritium][MOLES] -= 10*nob_formed
 	cached_gases[/datum/gas/nitrogen][MOLES] -= 20*nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES]+= nob_formed
-
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, nob_formed*NOBLIUM_RESEARCH_AMOUNT)
 
 	if (nob_formed)
 		var/new_heat_capacity = air.heat_capacity()
@@ -477,3 +481,4 @@
 
 	//Possibly burning a bit of organic matter through maillard reaction, so a *tiny* bit more heat would be understandable
 	air.temperature += cleaned_air * 0.002
+	SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, cleaned_air*MIASMA_RESEARCH_AMOUNT)//Turns out the burning of miasma is kinda interesting to scientists

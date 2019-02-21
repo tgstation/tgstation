@@ -153,9 +153,6 @@
 
 /datum/config_entry/flag/usewhitelist
 
-/datum/config_entry/flag/ban_legacy_system	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system.
-	protection = CONFIG_ENTRY_LOCKED
-
 /datum/config_entry/flag/use_age_restriction_for_jobs	//Do jobs use account age restrictions? --requires database
 
 /datum/config_entry/flag/use_account_age_for_jobs	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
@@ -357,6 +354,10 @@
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
+/datum/config_entry/number/client_error_build
+	config_entry_value = null
+	min_val = 0
+
 /datum/config_entry/number/minute_topic_limit
 	config_entry_value = null
 	min_val = 0
@@ -390,6 +391,13 @@
 	integer = FALSE
 
 /datum/config_entry/flag/irc_announce_new_game
+	deprecated_by = /datum/config_entry/string/chat_announce_new_game
+
+/datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
+	return ""	//default broadcast
+
+/datum/config_entry/string/chat_announce_new_game
+	config_entry_value = null
 
 /datum/config_entry/flag/debug_admin_hrefs
 

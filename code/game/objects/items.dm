@@ -48,6 +48,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	var/flags_inv //This flag is used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
+	var/transparent_protection = NONE //you can see someone's mask through their transparent visor, but you can't reach it
 
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 
@@ -603,7 +604,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		if(success)
 			location = get_turf(M)
 	if(isturf(location))
-		location.hotspot_expose(flame_heat, 1)
+		location.hotspot_expose(flame_heat, 5)
 
 /obj/item/proc/ignition_effect(atom/A, mob/user)
 	if(is_hot())
@@ -650,7 +651,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		..()
 
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
-	if(M && M.dirty < 100)
+	if(istype(M) && M.dirty < 100)
 		M.dirty++
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
@@ -789,6 +790,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (item_flags & NODROP)
+	if(has_trait(TRAIT_NODROP))
 		return
 	return ..()

@@ -391,7 +391,7 @@
 	specialfunctions = 4
 	},
 /obj/effect/turf_decal/stripes/corner{
-	dir = 1
+	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -781,6 +781,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	aidisabled = 1;
 	dir = 1;
 	name = "Pirate Corvette APC";
 	pixel_y = 24;

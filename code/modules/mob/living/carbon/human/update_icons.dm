@@ -479,8 +479,13 @@ There are several things that need to be remembered:
 		client.screen += I
 	update_observer_view(I)
 
-
-
+//Update whether we smell
+/mob/living/carbon/human/proc/update_smell(var/smelly_icon = "generic_mob_smell")
+	remove_overlay(SMELL_LAYER)
+	if(hygiene <= HYGIENE_LEVEL_DIRTY)
+		var/mutable_appearance/new_smell_overlay = mutable_appearance('icons/mob/smelly.dmi', smelly_icon, -SMELL_LAYER)
+		overlays_standing[SMELL_LAYER] = new_smell_overlay
+ 	apply_overlay(SMELL_LAYER)
 
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list

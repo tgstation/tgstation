@@ -8,6 +8,12 @@
 	. = ..()
 	upgradeEmpProof()
 
+// EMP + Motion
+
+/obj/machinery/camera/emp_proof/motion/Initialize()
+	. = ..()
+	upgradeMotion()
+
 // X-ray
 
 /obj/machinery/camera/xray

@@ -6,6 +6,7 @@
 
 /datum/martial_art/cqc
 	name = "CQC"
+	id = MARTIALART_CQC
 	help_verb = /mob/living/carbon/human/proc/CQC_help
 	block_chance = 75
 	var/just_a_cook = FALSE
@@ -68,7 +69,7 @@
 		playsound(get_turf(A), 'sound/weapons/cqchit1.ogg', 50, 1, -1)
 		var/atom/throw_target = get_edge_target_turf(D, A.dir)
 		D.throw_at(throw_target, 1, 14, A)
-		D.apply_damage(10, BRUTE)
+		D.apply_damage(10, A.dna.species.attack_type)
 		log_combat(A, D, "kicked (CQC)")
 	if(D.IsParalyzed() && !D.stat)
 		D.visible_message("<span class='warning'>[A] kicks [D]'s head, knocking [D.p_them()] out!</span>", \
@@ -111,7 +112,7 @@
 		if(I && D.temporarilyRemoveItemFromInventory(I))
 			A.put_in_hands(I)
 		D.adjustStaminaLoss(50)
-		D.apply_damage(25, BRUTE)
+		D.apply_damage(25, A.dna.species.attack_type)
 	return TRUE
 
 /datum/martial_art/cqc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
@@ -177,7 +178,7 @@
 			if(I && D.temporarilyRemoveItemFromInventory(I))
 				A.put_in_hands(I)
 			D.Jitter(2)
-			D.apply_damage(5, BRUTE)
+			D.apply_damage(5, A.dna.species.attack_type)
 	else
 		D.visible_message("<span class='danger'>[A] attempted to disarm [D]!</span>", \
 							"<span class='userdanger'>[A] attempted to disarm [D]!</span>")

@@ -34,7 +34,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	nutrition = rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX)
+	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
@@ -104,6 +104,18 @@
 			to_chat(src, "<I>... You can almost hear something ...</I>")
 	else
 		to_chat(src, msg)
+
+/mob/proc/display_output(sound/S, mutable_appearance/vfx, text, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+	if(!can_hear())
+		return
+	//Process sound
+	if(S)
+		SEND_SOUND(src, S)
+	//Process text
+	if(text)
+		to_chat(src, "<span class='italics'>[text]</span>")
+	//to whoever sees this: icons are handled in living.dm
+
 
 // Show a message to all player mobs who sees this atom
 // Show a message to the src mob (if the src is a mob)
@@ -554,6 +566,12 @@
 			GLOB.cameranet.stat_entry()
 		if(statpanel("Tickets"))
 			GLOB.ahelp_tickets.stat_entry()
+		if(length(GLOB.sdql2_queries))
+			if(statpanel("SDQL2"))
+				stat("Access Global SDQL2 List", GLOB.sdql2_vv_statobj)
+				for(var/i in GLOB.sdql2_queries)
+					var/datum/SDQL2_query/Q = i
+					Q.generate_stat()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -578,9 +596,6 @@
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
@@ -593,11 +608,6 @@
 					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
-
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
 
 #define MOB_FACE_DIRECTION_DELAY 1
 
@@ -691,15 +701,17 @@
 			mob_spell_list -= S
 			qdel(S)
 
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE)
+/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, major = TRUE, self = FALSE)
 	if(!magic && !holy)
 		return
 	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, magic, holy, protection_sources) & COMPONENT_BLOCK_MAGIC)
+	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, major, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
 		if(protection_sources.len)
 			return pick(protection_sources)
 		else
 			return src
+	if((magic && has_trait(TRAIT_ANTIMAGIC)) || (holy && has_trait(TRAIT_HOLY)))
+		return src
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -933,6 +945,12 @@
 
 	var/datum/language_holder/H = get_language_holder()
 	H.open_language_menu(usr)
+
+/mob/proc/adjust_nutrition(var/change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
+	nutrition = max(0, nutrition + change)
+
+/mob/proc/set_nutrition(var/change) //Seriously fuck you oldcoders.
+	nutrition = max(0, change)
 
 /mob/setMovetype(newval)
 	. = ..()

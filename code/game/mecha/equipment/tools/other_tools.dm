@@ -17,7 +17,7 @@
 		return
 	var/turf/T = get_turf(target)
 	if(T)
-		do_teleport(chassis, T, 4)
+		do_teleport(chassis, T, 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 		return 1
 
 
@@ -251,8 +251,8 @@
 				chassis.clearInternalDamage(int_dam_flag)
 				repaired = 1
 				break
-	if(health_boost<0 || chassis.obj_integrity < chassis.max_integrity)
-		chassis.obj_integrity += min(health_boost, chassis.max_integrity-chassis.obj_integrity)
+	if(h_boost<0 || chassis.obj_integrity < chassis.max_integrity)
+		chassis.obj_integrity += min(h_boost, chassis.max_integrity-chassis.obj_integrity)
 		repaired = 1
 	if(repaired)
 		if(!chassis.use_power(energy_drain))
@@ -293,12 +293,12 @@
 	if(equip_ready) //disabled
 		return
 	var/area/A = get_area(chassis)
-	var/pow_chan = get_power_channel(A)
+	var/pow_chan = GET_MUTATION_POWER_channel(A)
 	if(pow_chan)
 		return 1000 //making magic
 
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_power_channel(var/area/A)
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/GET_MUTATION_POWER_channel(var/area/A)
 	var/pow_chan
 	if(A)
 		for(var/c in use_channels)

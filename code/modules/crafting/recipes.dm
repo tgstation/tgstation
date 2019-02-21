@@ -47,7 +47,7 @@
 
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
-	result = /obj/item/assembly/flash/shield
+	result = /obj/item/shield/riot/flash
 	reqs = list(/obj/item/wallframe/flasher = 1,
 				/obj/item/assembly/flash/handheld = 1,
 				/obj/item/shield/riot = 1)
@@ -207,7 +207,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 4,
 				/obj/item/stack/packageWrap = 8,
 				/obj/item/pipe = 2)
-	time = 300
+	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
@@ -303,7 +303,7 @@
 
 /datum/crafting_recipe/ishotgun
 	name = "Improvised Shotgun"
-	result = /obj/item/gun/ballistic/revolver/doublebarrel/improvised
+	result = /obj/item/gun/ballistic/shotgun/doublebarrel/improvised
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/weaponcrafting/stock = 1,
@@ -380,6 +380,14 @@
 	time = 65
 	reqs = list(/obj/item/stack/sheet/metal = 5,
 				/obj/item/stack/rods = 12)
+	category = CAT_MISC
+
+/datum/crafting_recipe/wheelchair
+	name = "Wheelchair"
+	result = /obj/vehicle/ridden/wheelchair
+	reqs = list(/obj/item/stack/sheet/metal = 4,
+				/obj/item/stack/rods = 6)
+	time = 100
 	category = CAT_MISC
 
 /datum/crafting_recipe/mousetrap

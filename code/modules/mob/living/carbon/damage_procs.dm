@@ -63,22 +63,22 @@
 	return amount
 
 
-/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(amount, 0, 0, updating_health)
+		take_overall_damage(amount, 0, 0, updating_health, required_status)
 	else
-		heal_overall_damage(abs(amount), 0, 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(abs(amount), 0, 0, required_status ? required_status : BODYPART_ORGANIC, updating_health)
 	return amount
 
-/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
 	if(amount > 0)
-		take_overall_damage(0, amount, 0, updating_health)
+		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
-		heal_overall_damage(0, abs(amount), 0, FALSE, TRUE, updating_health)
+		heal_overall_damage(0, abs(amount), 0, required_status ? required_status : BODYPART_ORGANIC, updating_health)
 	return amount
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -102,7 +102,7 @@
 	if(amount > 0)
 		take_overall_damage(0, 0, amount, updating_health)
 	else
-		heal_overall_damage(0, 0, abs(amount), FALSE, FALSE, updating_health)
+		heal_overall_damage(0, 0, abs(amount), null, updating_health)
 	return amount
 
 /mob/living/carbon/setStaminaLoss(amount, updating = TRUE, forced = FALSE)
@@ -119,17 +119,19 @@
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(status && BP.status != status)
+		if(status && (BP.status != status))
 			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP
 	return parts
 
 //Returns a list of damageable bodyparts
-/mob/living/carbon/proc/get_damageable_bodyparts()
+/mob/living/carbon/proc/get_damageable_bodyparts(status)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(status && (BP.status != status))
+			continue
 		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
 			parts += BP
 	return parts
@@ -137,28 +139,28 @@
 //Heals ONE bodypart randomly selected from damaged ones.
 //It automatically updates damage overlays if necessary
 //It automatically updates health status
-/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, only_robotic = FALSE, only_organic = TRUE)
-	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn)
+/mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
+	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn,stamina,required_status)
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.heal_damage(brute, burn, stamina, only_robotic, only_organic))
+	if(picked.heal_damage(brute, burn, stamina, required_status))
 		update_damage_overlays()
 
 //Damages ONE bodypart randomly selected from damagable ones.
 //It automatically updates damage overlays if necessary
 //It automatically updates health status
-/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, stamina = 0)
-	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
+/mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE)
+	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
-	if(picked.receive_damage(brute, burn, stamina))
+	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? "melee" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE))
 		update_damage_overlays()
 
 //Heal MANY bodyparts, in random order
-/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
-	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina)
+/mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
+	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina, required_status)
 
 	var/update = NONE
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
@@ -168,7 +170,7 @@
 		var/burn_was = picked.burn_dam
 		var/stamina_was = picked.stamina_dam
 
-		update |= picked.heal_damage(brute, burn, stamina, only_robotic, only_organic, FALSE)
+		update |= picked.heal_damage(brute, burn, stamina, required_status, FALSE)
 
 		brute = round(brute - (brute_was - picked.brute_dam), DAMAGE_PRECISION)
 		burn = round(burn - (burn_was - picked.burn_dam), DAMAGE_PRECISION)
@@ -182,11 +184,11 @@
 		update_damage_overlays()
 
 // damage MANY bodyparts, in random order
-/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status = null)
+/mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	if(status_flags & GODMODE)
 		return	//godmode
 
-	var/list/obj/item/bodypart/parts = get_damageable_bodyparts()
+	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)
 	var/update = 0
 	while(parts.len && (brute > 0 || burn > 0 || stamina > 0))
 		var/obj/item/bodypart/picked = pick(parts)
@@ -231,10 +233,10 @@
 		return
 	var/brainloss = getBrainLoss()
 	if(brainloss > BRAIN_DAMAGE_MILD)
-		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_MILD)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
+		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 			gain_trauma_type(BRAIN_TRAUMA_MILD)
 	if(brainloss > BRAIN_DAMAGE_SEVERE)
-		if(prob(amount * ((2 * (100 + brainloss - BRAIN_DAMAGE_SEVERE)) / 100))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 2%
+		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
 			if(prob(20))
 				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			else

@@ -31,7 +31,7 @@
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
-	var/list/datum/game_mode/replacementmode = null
+	var/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
@@ -160,7 +160,7 @@
 	var/list/antag_candidates = list()
 
 	for(var/mob/living/carbon/human/H in living_crew)
-		if(H.client && H.client.prefs.allow_midround_antag)
+		if(H.client && H.client.prefs.allow_midround_antag && !is_centcom_level(H.z))
 			antag_candidates += H
 
 	if(!antag_candidates)
@@ -235,10 +235,11 @@
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.alive_mob_list)
-			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
-				if(Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antaging!
-					living_antag_player = Player
-					return 0
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client && Player.mind.special_role || LAZYLEN(Player.mind.antag_datums)) //Someone's still antagging but is their antagonist datum important enough to skip mulligan?
+				for(var/datum/antagonist/antag_types in Player.mind.antag_datums)
+					if(antag_types.prevent_roundtype_conversion)
+						living_antag_player = Player //they were an important antag, they're our new mark
+						return 0
 
 		if(!are_special_antags_dead())
 			return FALSE
@@ -368,7 +369,7 @@
 	for(var/mob/dead/new_player/player in players)
 		if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 			if(role in player.client.prefs.be_special)
-				if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player) && !jobban_isbanned(player, role) && !QDELETED(player)) //Nodrak/Carn: Antag Job-bans
+				if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
 					if(age_check(player.client)) //Must be older than the minimum age
 						candidates += player.mind				// Get a list of all the people who want to be the antagonist for this round
 
@@ -382,7 +383,7 @@
 		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
 				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
-					if(!jobban_isbanned(player, ROLE_SYNDICATE) && !QDELETED(player)  && !jobban_isbanned(player, role) && !QDELETED(player) ) //Nodrak/Carn: Antag Job-bans
+					if(!is_banned_from(player.ckey, list(role, ROLE_SYNDICATE)) && !QDELETED(player))
 						drafted += player.mind
 
 	if(restricted_jobs)

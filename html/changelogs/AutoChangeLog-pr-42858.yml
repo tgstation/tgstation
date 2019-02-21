@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - code_imp: "Removes duplicant paraplegic quirk in the code"

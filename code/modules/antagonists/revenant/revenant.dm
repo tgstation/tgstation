@@ -70,12 +70,15 @@
 /mob/living/simple_animal/revenant/Initialize(mapload)
 	. = ..()
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/revenant_transmit(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/revenant(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/defile(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
 	random_revenant_name()
+
+/mob/living/simple_animal/revenant/canUseTopic()
+	return FALSE
 
 /mob/living/simple_animal/revenant/proc/random_revenant_name()
 	var/built_name = ""
@@ -347,8 +350,8 @@
 	var/old_key //key of the previous revenant, will have first pick on reform.
 	var/mob/living/simple_animal/revenant/revenant
 
-/obj/item/ectoplasm/revenant/New()
-	..()
+/obj/item/ectoplasm/revenant/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
 /obj/item/ectoplasm/revenant/proc/scatter()

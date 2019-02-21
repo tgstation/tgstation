@@ -297,11 +297,12 @@
 	armed = 1
 	icon_state = "e_snare"
 	trap_damage = 0
+	breakouttime = 30
 	item_flags = DROPDEL
 	flags_1 = NONE
 
-/obj/item/restraints/legcuffs/beartrap/energy/New()
-	..()
+/obj/item/restraints/legcuffs/beartrap/energy/Initialize()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/dissipate), 100)
 
 /obj/item/restraints/legcuffs/beartrap/energy/proc/dissipate()
@@ -311,7 +312,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user)
 	Crossed(user) //honk
-	. = ..()
+	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 20 // Cyborgs shouldn't have a strong restraint
@@ -341,6 +342,7 @@
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Paralyze(knockdown)
+		playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
 /obj/item/restraints/legcuffs/bola/tactical//traitor variant
 	name = "reinforced bola"

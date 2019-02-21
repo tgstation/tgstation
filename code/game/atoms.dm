@@ -6,7 +6,6 @@
 
 	var/flags_1 = NONE
 	var/interaction_flags_atom = NONE
-	var/container_type = NONE
 	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
@@ -186,6 +185,10 @@
 			else
 				M.forceMove(src)
 
+//common name
+/atom/proc/update_multiz(prune_on_fail = FALSE)
+	return FALSE
+
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	qdel(giver)
 	return null
@@ -210,16 +213,16 @@
 	return is_refillable() && is_drainable()
 
 /atom/proc/is_injectable(mob/user, allowmobs = TRUE)
-	return reagents && (container_type & (INJECTABLE | REFILLABLE))
+	return reagents && (reagents.flags & (INJECTABLE | REFILLABLE))
 
 /atom/proc/is_drawable(mob/user, allowmobs = TRUE)
-	return reagents && (container_type & (DRAWABLE | DRAINABLE))
+	return reagents && (reagents.flags & (DRAWABLE | DRAINABLE))
 
 /atom/proc/is_refillable()
-	return reagents && (container_type & REFILLABLE)
+	return reagents && (reagents.flags & REFILLABLE)
 
 /atom/proc/is_drainable()
-	return reagents && (container_type & DRAINABLE)
+	return reagents && (reagents.flags & DRAINABLE)
 
 
 /atom/proc/AllowDrop()
@@ -268,7 +271,7 @@
 		to_chat(user, desc)
 
 	if(reagents)
-		if(container_type & TRANSPARENT)
+		if(reagents.flags & TRANSPARENT)
 			to_chat(user, "It contains:")
 			if(reagents.reagent_list.len)
 				if(user.can_see_reagents()) //Show each individual reagent
@@ -281,7 +284,7 @@
 					to_chat(user, "[total_volume] units of various reagents")
 			else
 				to_chat(user, "Nothing.")
-		else if(container_type & AMOUNT_VISIBLE)
+		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
 				to_chat(user, "<span class='notice'>It has [reagents.total_volume] unit\s left.</span>")
 			else
@@ -542,7 +545,7 @@
 	var/atom/L = loc
 	if(!L)
 		return null
-	return L.AllowDrop() ? L : get_turf(L)
+	return L.AllowDrop() ? L : L.drop_location()
 
 /atom/Entered(atom/movable/AM, atom/oldLoc)
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, oldLoc)
@@ -726,3 +729,6 @@ Proc for attack log creation, because really why not
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])
 		return filters[filter_data.Find(name)]
+
+/atom/proc/intercept_zImpact(atom/movable/AM, levels = 1)
+	return FALSE

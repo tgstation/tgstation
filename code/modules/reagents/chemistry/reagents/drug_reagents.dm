@@ -52,12 +52,11 @@
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
-	M.AdjustStun(-20, FALSE)
-	M.AdjustKnockdown(-20, FALSE)
-	M.AdjustUnconscious(-20, FALSE)
-	M.AdjustParalyzed(-20, FALSE)
-	M.AdjustImmobilized(-20, FALSE)
-	M.adjustStaminaLoss(-0.5*REM, 0)
+	M.AdjustStun(-5, FALSE)
+	M.AdjustKnockdown(-5, FALSE)
+	M.AdjustUnconscious(-5, FALSE)
+	M.AdjustParalyzed(-5, FALSE)
+	M.AdjustImmobilized(-5, FALSE)
 	..()
 	. = 1
 
@@ -91,7 +90,7 @@
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustBrainLoss(2*REM)
 	M.adjustToxLoss(2*REM, 0)
-	M.adjustInternalLoss(2*REM, 0)
+	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
 
@@ -354,7 +353,7 @@
 /datum/reagent/drug/aranesp
 	name = "Aranesp"
 	id = "aranesp"
-	description = "Amps you up and gets you going, fixes all stamina damage you might have but can cause toxin and oxygen damage."
+	description = "Amps you up, gets you going, and rapidly restores stamina damage. Side effects include breathlessness and toxicity."
 	reagent_state = LIQUID
 	color = "#78FFF0"
 

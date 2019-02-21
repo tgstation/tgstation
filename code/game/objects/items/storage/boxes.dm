@@ -113,7 +113,7 @@
 
 /obj/item/storage/box/survival_mining/PopulateContents()
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/tank/internals/emergency_oxygen/engi(src)
+	new /obj/item/tank/internals/emergency_oxygen(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/reagent_containers/hypospray/medipen(src)
 
@@ -170,6 +170,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/syringe(src)
 
+/obj/item/storage/box/syringes/variety
+	name = "syringe variety box"
+
+/obj/item/storage/box/syringes/variety/PopulateContents()
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/syringe/lethal(src)
+	new /obj/item/reagent_containers/syringe/noreact(src)
+	new /obj/item/reagent_containers/syringe/piercing(src)
+	new /obj/item/reagent_containers/syringe/bluespace(src)
+
 /obj/item/storage/box/medipens
 	name = "box of medipens"
 	desc = "A box full of epinephrine MediPens."
@@ -204,6 +214,17 @@
 /obj/item/storage/box/beakers/bluespace/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/glass/beaker/bluespace(src)
+
+/obj/item/storage/box/beakers/variety
+	name = "beaker variety box"
+
+/obj/item/storage/box/beakers/variety/PopulateContents()
+	new /obj/item/reagent_containers/glass/beaker(src)
+	new /obj/item/reagent_containers/glass/beaker/large(src)
+	new /obj/item/reagent_containers/glass/beaker/plastic(src)
+	new /obj/item/reagent_containers/glass/beaker/meta(src)
+	new /obj/item/reagent_containers/glass/beaker/noreact(src)
+	new /obj/item/reagent_containers/glass/beaker/bluespace(src)
 
 /obj/item/storage/box/medsprays
 	name = "box of medical sprayers"
@@ -546,7 +567,7 @@
 /obj/item/storage/box/mousetraps
 	name = "box of Pest-B-Gon mousetraps"
 	desc = "<span class='alert'>Keep out of reach of children.</span>"
-	illustration = "mousetraps"
+	illustration = "mousetrap"
 
 /obj/item/storage/box/mousetraps/PopulateContents()
 	for(var/i in 1 to 6)

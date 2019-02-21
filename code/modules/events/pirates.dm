@@ -17,6 +17,7 @@
 	startWhen = 60 //2 minutes to answer
 	var/datum/comm_message/threat
 	var/payoff = 0
+	var/payoff_min = 20000
 	var/paid_off = FALSE
 	var/ship_name = "Space Privateers Association"
 	var/shuttle_spawned = FALSE
@@ -31,7 +32,7 @@
 	threat = new
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
-		payoff = round(D.account_balance * 0.80)
+		payoff = max(payoff_min, FLOOR(D.account_balance * 0.80, 1000))
 	threat.title = "Business proposition"
 	threat.content = "This is [ship_name]. Pay up [payoff] credits or you'll walk the plank."
 	threat.possible_answers = list("We'll pay.","No way.")

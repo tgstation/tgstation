@@ -38,7 +38,7 @@
 		if(radiation > RAD_MOB_MUTATE)
 			if(prob(1))
 				to_chat(src, "<span class='danger'>You mutate!</span>")
-				randmutb()
+				easy_randmut(NEGATIVE+MINOR_NEGATIVE)
 				emote("gasp")
 				domutcheck()
 
@@ -151,7 +151,7 @@
 	//the fire tries to damage the exposed clothes and items
 	var/list/burning_items = list()
 	//HEAD//
-	var/list/obscured = check_obscured_slots()
+	var/list/obscured = check_obscured_slots(TRUE)
 	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
 		burning_items += wear_mask
 	if(wear_neck && !(SLOT_NECK in obscured))

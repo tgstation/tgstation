@@ -77,11 +77,11 @@
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas)
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
@@ -1098,7 +1098,8 @@
 					/obj/item/reagent_containers/blood/BMinus,
 					/obj/item/reagent_containers/blood/OPlus,
 					/obj/item/reagent_containers/blood/OMinus,
-					/obj/item/reagent_containers/blood/lizard)
+					/obj/item/reagent_containers/blood/lizard,
+					/obj/item/reagent_containers/blood/ethereal)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
@@ -1405,12 +1406,11 @@
 	crate_type = /obj/structure/closet/crate/secure
 
 /datum/supply_pack/service/vending/bartending
-	name = "Bartending Supply Crate"
-	desc = "Bring on the booze with vending machine refills, as well as a free book containing the well-kept secrets to the bartending trade!"
+	name = "Booze-o-mat and Coffee Supply Crate"
+	desc = "Bring on the booze and coffee vending machine refills."
 	cost = 2000
 	contains = list(/obj/item/vending_refill/boozeomat,
-					/obj/item/vending_refill/coffee,
-					/obj/item/book/granter/action/drink_fling)
+					/obj/item/vending_refill/coffee)
 	crate_name = "bartending supply crate"
 
 /datum/supply_pack/service/vending/cigarette
@@ -1942,7 +1942,6 @@
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/gas/mime,
-					/obj/item/clothing/head/beret,
 					/obj/item/clothing/head/frenchberet,
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,

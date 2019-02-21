@@ -289,7 +289,7 @@
 /mob/living/silicon/ai/can_interact_with(atom/A)
 	. = ..()
 	var/turf/ai = get_turf(src)
-	var/turf/target = get_turf(A)	
+	var/turf/target = get_turf(A)
 	if (.)
 		return
 	if ((ai.z != target.z) && !is_station_level(ai))
@@ -349,7 +349,7 @@
 		unset_machine()
 		src << browse(null, t1)
 	if (href_list["switchcamera"])
-		switchCamera(locate(href_list["switchcamera"])) in GLOB.cameranet.cameras
+		switchCamera(locate(href_list["switchcamera"]) in GLOB.cameranet.cameras)
 	if (href_list["showalerts"])
 		ai_alerts()
 #ifdef AI_VOX
@@ -362,7 +362,7 @@
 			src << browse(last_paper_seen, "window=show_paper")
 	//Carn: holopad requests
 	if(href_list["jumptoholopad"])
-		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"])
+		var/obj/machinery/holopad/H = locate(href_list["jumptoholopad"]) in GLOB.machines
 		if(H)
 			H.attack_ai(src) //may as well recycle
 		else
@@ -404,7 +404,19 @@
 		return
 
 	if (href_list["ai_take_control"]) //Mech domination
-		var/obj/mecha/M = locate(href_list["ai_take_control"])
+		var/obj/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
+		if (!M)
+			return
+
+		var/mech_has_controlbeacon = FALSE
+		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in M.trackers)
+			mech_has_controlbeacon = TRUE
+			break
+		if(!can_dominate_mechs && !mech_has_controlbeacon)
+			message_admins("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
+			log_game("Warning: possible href exploit by [key_name(usr)] - attempted control of a mecha without can_dominate_mechs or a control beacon in the mech.")
+			return
+
 		if(controlled_mech)
 			to_chat(src, "<span class='warning'>You are already loaded into an onboard computer!</span>")
 			return
@@ -415,7 +427,7 @@
 			to_chat(src, "<span class='warning'>You aren't in your core!</span>")
 			return
 		if(M)
-			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
+			M.transfer_ai(AI_MECH_HACK, src, usr) //Called om the mech itself.
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)

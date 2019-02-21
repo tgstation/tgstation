@@ -40,8 +40,8 @@
 	icon_state = "blob_glow"
 	flags_1 = CHECK_RICOCHET_1
 	point_return = 8
-	max_integrity = 50
-	brute_resist = 1
+	max_integrity = 100
+	brute_resist = 0.5
 	explosion_block = 2
 
 /obj/structure/blob/shield/reflective/handle_ricochet(obj/item/projectile/P)
@@ -53,5 +53,6 @@
 		return FALSE
 	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
 	P.setAngle(new_angle_s)
-	visible_message("<span class='warning'>[P] reflects off [src]!</span>")
+	if(!(P.reflectable & REFLECT_FAKEPROJECTILE))
+		visible_message("<span class='warning'>[P] reflects off [src]!</span>")
 	return TRUE

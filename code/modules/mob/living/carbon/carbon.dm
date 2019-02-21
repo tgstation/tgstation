@@ -86,9 +86,9 @@
 		mode() // Activate held item
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(!(mobility_flags & MOBILITY_STAND) && surgeries.len)
-		if(user != src && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
-			for(var/datum/surgery/S in surgeries)
+	for(var/datum/surgery/S in surgeries)
+		if(!(mobility_flags & MOBILITY_STAND) || !S.lying_required)
+			if((S.self_operable || user != src) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
 				if(S.next_step(user,user.a_intent))
 					return 1
 	return ..()
@@ -105,14 +105,14 @@
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			Paralyze(20)
-			take_bodypart_damage(10)
+			take_bodypart_damage(10,check_armor = TRUE)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
 		if(hurt)
-			victim.take_bodypart_damage(10)
-			take_bodypart_damage(10)
+			victim.take_bodypart_damage(10,check_armor = TRUE)
+			take_bodypart_damage(10,check_armor = TRUE)
 			victim.Paralyze(20)
 			Paralyze(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
@@ -169,7 +169,7 @@
 				if(start_T && end_T)
 					log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!(I.item_flags & (NODROP | ABSTRACT)))
+	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !I.has_trait(TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I)
 
@@ -268,9 +268,13 @@
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
 		last_special = world.time + CLICK_CD_BREAKOUT
+		var/buckle_cd = 600
+		if(handcuffed)
+			var/obj/item/restraints/O = src.get_item_by_slot(SLOT_HANDCUFFED)
+			buckle_cd = O.breakouttime
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
-					"<span class='notice'>You attempt to unbuckle yourself... (This will take around one minute and you need to stay still.)</span>")
-		if(do_after(src, 600, 0, target = src))
+					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
+		if(do_after(src, buckle_cd, 0, target = src))
 			if(!buckled)
 				return
 			buckled.user_unbuckle_mob(src,src)
@@ -407,7 +411,7 @@
 		return initial(pixel_y)
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.item_flags & (NODROP | ABSTRACT)))
+	if(!I || (I.item_flags & ABSTRACT) || I.has_trait(TRAIT_NODROP))
 		return
 
 	dropItemToGround(I)
@@ -480,7 +484,7 @@
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
 	if(!blood)
-		nutrition -= lost_nutrition
+		adjust_nutrition(-lost_nutrition)
 		adjustToxLoss(-3)
 	for(var/i=0 to distance)
 		if(blood)
@@ -590,12 +594,10 @@
 			see_invisible = min(G.invis_view, see_invisible)
 		if(!isnull(G.lighting_alpha))
 			lighting_alpha = min(lighting_alpha, G.lighting_alpha)
-	if(dna)
-		for(var/X in dna.mutations)
-			var/datum/mutation/M = X
-			if(M.name == XRAY)
-				sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-				see_in_dark = max(see_in_dark, 8)
+
+	if(has_trait(TRAIT_XRAY_VISION))
+		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		see_in_dark = max(see_in_dark, 8)
 
 	if(see_override)
 		see_invisible = see_override
@@ -923,3 +925,17 @@
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()
+
+/mob/living/carbon/proc/hypnosis_vulnerable()
+	if(has_trait(TRAIT_MINDSHIELD))
+		return FALSE
+	if(hallucinating())
+		return TRUE
+	if(IsSleeping())
+		return TRUE
+	if(has_trait(TRAIT_DUMB))
+		return TRUE
+	GET_COMPONENT_FROM(mood, /datum/component/mood, src)
+	if(mood)
+		if(mood.sanity < SANITY_UNSTABLE)
+			return TRUE
