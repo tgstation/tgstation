@@ -27,10 +27,11 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 
-/obj/machinery/atmospherics/components/binary/pump/CtrlClick()
-	on = !on
-	target_pressure = MAX_OUTPUT_PRESSURE
-	update_icon()
+/obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		on = !on
+		target_pressure = MAX_OUTPUT_PRESSURE
+		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
