@@ -1,0 +1,4 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "fixed a bug where husks kept their hair if husked by fire damage or Ling succ"
