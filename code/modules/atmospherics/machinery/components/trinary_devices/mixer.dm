@@ -16,7 +16,7 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
-/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick()
+/obj/machinery/atmospherics/components/trinary/mixer/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
 		target_pressure = MAX_OUTPUT_PRESSURE

@@ -15,7 +15,7 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
-/obj/machinery/atmospherics/components/trinary/filter/CtrlClick()
+/obj/machinery/atmospherics/components/trinary/filter/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
 		target_pressure = MAX_OUTPUT_PRESSURE

@@ -27,7 +27,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 
-/obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick()
+/obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		on = !on
 		transfer_rate = MAX_TRANSFER_RATE
