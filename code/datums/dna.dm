@@ -249,49 +249,9 @@
 				if(-INFINITY to 0)
 					message = "<span class='boldwarning'>You can feel your DNA exploding, we need to do something fast!</span>"
 		if(stability <= 0)
-			addtimer(CALLBACK(src, .proc/something_horrible), 600) //you've got 60 seconds to get your shit togheter
+			holder.apply_status_effect(STATUS_EFFECT_DNA_MELT)
 		if(message)
 			to_chat(holder, message)
-
-/datum/dna/proc/something_horrible()
-	if(!holder || (stability > 0))
-		return
-	var/instability = -stability
-	remove_all_mutations()
-	stability = 100
-	if(!ishuman(holder))
-		holder.gib()
-		return
-	var/mob/living/carbon/human/H = holder
-	if(prob(max(70-instability,0)))
-		switch(rand(0,3)) //not complete and utter death
-			if(0)
-				H.monkeyize()
-			if(1)
-				H.gain_trauma(/datum/brain_trauma/severe/paralysis)
-			if(2)
-				H.corgize()
-			if(3)
-				to_chat(H, "<span class='notice'>Oh, we actually feel quite alright!</span>")
-	else
-		switch(rand(0,3))
-			if(0)
-				H.gib()
-			if(1)
-				H.dust()
-
-			if(2)
-				H.death()
-				H.petrify(INFINITY)
-			if(3)
-				if(prob(90))
-					var/obj/item/bodypart/BP = H.get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
-					if(BP)
-						BP.dismember()
-					else
-						H.gib()
-				else
-					H.set_species(/datum/species/dullahan)
 
 //used to update dna UI, UE, and dna.real_name.
 /datum/dna/proc/update_dna_identity()
@@ -596,3 +556,59 @@
 	return value
 
 /////////////////////////// DNA HELPER-PROCS
+
+/mob/living/carbon/human/proc/something_horrible(ignore_stability)
+	if(!has_dna()) //shouldn't ever happen anyway so it's just in really weird cases
+		return
+	if(!ignore_stability && (dna.stability > 0))
+		return
+	var/instability = -dna.stability
+	dna.remove_all_mutations()
+	dna.stability = 100
+	if(prob(max(70-instability,0)))
+		switch(rand(0,6)) //not complete and utter death
+			if(0)
+				monkeyize()
+			if(1)
+				gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
+				new/obj/vehicle/ridden/wheelchair(get_turf(src)) //don't buckle, because I can't imagine to plethora of things to go through that could otherwise break
+				to_chat(src, "<span class='warning'>My flesh turned into a wheelchair and I can't feel my legs.</span>")
+			if(2)
+				corgize()
+			if(3)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+			if(4)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>") //you thought
+				physiology.damage_resistance = -20000
+			if(5)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+				reagents.add_reagent("slime_toxin", 10)
+			if(6)
+				apply_status_effect(STATUS_EFFECT_GO_AWAY)
+
+	else
+		switch(rand(0,4))
+			if(0)
+				gib()
+			if(1)
+				dust()
+
+			if(2)
+				death()
+				petrify(INFINITY)
+			if(3)
+				if(prob(90))
+					var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
+					if(BP)
+						BP.dismember()
+					else
+						gib()
+				else
+					set_species(/datum/species/dullahan)
+			if(4)
+				visible_message("<span class='warning'>[src]'s skin melts off!</span>", "<span class='boldwarning'>Your skin melts off!</span>")
+				spawn_gibs()
+				set_species(/datum/species/skeleton)
+				addtimer(CALLBACK(src, .proc/death), 30)
+				if(mind)
+					mind.hasSoul = FALSE
