@@ -82,14 +82,13 @@
 		if(do_after(user, 20, target = src))
 			var/sound = pick(hit_sounds)//Spam the mining sound minecraft style :)
 			SEND_SOUND(user,sound)
-			if(strong)
-				if(prob(5))
-					var/mineralType = pick(ores)
-					var/num = rand(1,5)
-					new mineralType(src, num)
-					return
-			new drop_type(src)
-			ChangeTurf(floor_type)
+			if(strong && prob(5))
+				var/mineralType = pick(ores)
+				var/num = rand(1,5)
+				new mineralType(src, num)
+			else
+				new drop_type(src)
+		ChangeTurf(floor_type)
 		beingdug = FALSE
 		STOP_PROCESSING(SSfastprocess,src)
 		steve = null
