@@ -509,7 +509,6 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	race = /datum/species/golem/random
 	mutationtext = "<span class='danger'>The pain subsides. You feel... rocky.</span>"
-	can_synth = FALSE
 
 /datum/reagent/mutationtoxin/abductor
 	name = "Abductor Mutation Toxin"
