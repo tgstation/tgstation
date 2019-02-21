@@ -31,7 +31,7 @@
 		var/last_played_time = source.datum_outputs[input]
 		var/datum/outputs/O = input
 		O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected, last_played_time)
-		source.datum_outputs[source.datum_outputs[1]] = world.time
+		source.datum_outputs[input] = world.time
 	else
 		var/sound/S = sound(get_sfx(input))
 		receiver.playsound_local(turf_source, input, vol, vary, frequency, falloff, channel, pressure_affected, S)

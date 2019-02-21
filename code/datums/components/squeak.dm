@@ -100,3 +100,6 @@
 
 /datum/component/squeak/slimeplushie
 	datum_outputs = list(/datum/outputs/squelch)
+
+/datum/component/squeak/mouse
+	datum_outputs = list(/datum/outputs/squeak)
