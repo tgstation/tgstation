@@ -33,7 +33,6 @@
 	update_icon()
 	return ..()
 
-
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()

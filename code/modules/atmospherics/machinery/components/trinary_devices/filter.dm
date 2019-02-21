@@ -15,6 +15,12 @@
 	construction_type = /obj/item/pipe/trinary/flippable
 	pipe_state = "filter"
 
+/obj/machinery/atmospherics/components/trinary/filter/CtrlClick()
+	on = !on
+	target_pressure = MAX_OUTPUT_PRESSURE
+	update_icon()
+	return ..()
+
 /obj/machinery/atmospherics/components/trinary/filter/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
