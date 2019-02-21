@@ -28,14 +28,8 @@
 	pipe_state = "pump"
 
 /obj/machinery/atmospherics/components/binary/pump/CtrlClick()
-	if(on)
-		if(target_pressure == MAX_OUTPUT_PRESSURE)
-			on = FALSE
-		else
-			target_pressure = MAX_OUTPUT_PRESSURE
-	else
-		on = TRUE
-		target_pressure = MAX_OUTPUT_PRESSURE
+	on = !on
+	target_pressure = MAX_OUTPUT_PRESSURE
 	update_icon()
 	return ..()
 
