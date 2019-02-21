@@ -582,7 +582,7 @@
 				physiology.damage_resistance = -20000
 			if(5)
 				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
-				reagents.add_reagent("slime_toxin", 10)
+				reagents.add_reagent("mutationtoxin2", 10)
 			if(6)
 				apply_status_effect(STATUS_EFFECT_GO_AWAY)
 
@@ -609,6 +609,7 @@
 				visible_message("<span class='warning'>[src]'s skin melts off!</span>", "<span class='boldwarning'>Your skin melts off!</span>")
 				spawn_gibs()
 				set_species(/datum/species/skeleton)
-				addtimer(CALLBACK(src, .proc/death), 30)
-				if(mind)
-					mind.hasSoul = FALSE
+				if(prob(90))
+					addtimer(CALLBACK(src, .proc/death), 30)
+					if(mind)
+						mind.hasSoul = FALSE
