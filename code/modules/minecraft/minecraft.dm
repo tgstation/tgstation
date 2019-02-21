@@ -87,6 +87,7 @@
 					var/mineralType = pick(ores)
 					var/num = rand(1,5)
 					new mineralType(src, num)
+					return
 			new drop_type(src)
 			ChangeTurf(floor_type)
 		beingdug = FALSE
