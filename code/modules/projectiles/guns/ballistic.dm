@@ -107,15 +107,15 @@
 
 
 /obj/item/gun/ballistic/process_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
-	if (!semi_auto && from_firing)
+	if(!semi_auto && from_firing)
 		return
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if (istype(AC)) //there's a chambered round
-		if (casing_ejector || !from_firing)
+	if(istype(AC)) //there's a chambered round
+		if(casing_ejector || !from_firing)
 			AC.forceMove(drop_location()) //Eject casing onto ground.
 			AC.bounce_away(TRUE)
 			chambered = null
-		else if (empty_chamber)
+		else if(empty_chamber)
 			chambered = null
 	if (chamber_next_round && (magazine.max_ammo > 1))
 		chamber_round()
