@@ -9,10 +9,10 @@
 	desc = "it's....totally square?"
 	icon = 'icons/turf/minecraft.dmi'
 	icon_state = "dirt"
+	smooth = FALSE
 	var/strong = FALSE //can you mine this by hand? if false, you can
 	var/hit_sounds = list('sound/effects/minecraft/grass1.ogg','sound/effects/minecraft/grass2.ogg','sound/effects/minecraft/grass3.ogg','sound/effects/minecraft/grass4.ogg')
 	var/beingdug = FALSE
-	smooth = FALSE
 	var/floor_type = /turf/open/floor/minecraft
 	var/drop_type = /obj/item/minecraft
 	var/mob/steve
@@ -24,13 +24,13 @@
 		to_chat(user, "You begin placing a block...")
 		if(do_after(user, 20, target = src))
 			var/obj/item/minecraft/X = I
-			to_chat(user, "you place [I]")
+			to_chat(user, "You place [I].")
 			ChangeTurf(X.build_type)
 			qdel(I)
 
 /obj/item/minecraft
-	name = "block"
-	desc = "you build things with it :)"
+	name = "Block"
+	desc = "You build things with it :)"
 	icon = 'icons/obj/minecraft_items.dmi'
 	icon_state = "dirt"
 	var/build_type = /turf/closed/wall/minecraft
@@ -57,16 +57,16 @@
 
 /turf/closed/wall/minecraft/attack_hand(mob/user)
 	if(strong)
-		to_chat(user, "<b>[src] is too strong to mine by hand!</b>")
+		to_chat(user, "<span_class='warning'>[src] is too strong to mine by hand!</span>")
 		return
 	if(isliving(user))
-		to_chat(user, "you start picking away at [src]")
+		to_chat(user, "You start picking away at [src].")
 		START_PROCESSING(SSfastprocess,src)
 		beingdug = TRUE
 		steve = user
 		if(do_after(user, 30, target = src))
 			var/sound = pick(hit_sounds)//Spam the mining sound minecraft style :)
-			playsound(loc,sound,50)
+			playsound(src,sound,50)
 			new drop_type(src)
 			ChangeTurf(floor_type)
 		beingdug = FALSE
@@ -75,7 +75,7 @@
 
 /turf/closed/wall/minecraft/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/pickaxe))
-		to_chat(user, "you start picking away at [src]")
+		to_chat(user, "You start picking away at [src].")
 		START_PROCESSING(SSfastprocess,src)
 		beingdug = TRUE
 		steve = user
@@ -106,21 +106,18 @@
 
 /turf/closed/wall/minecraft/stone
 	name = "stone block"
-	desc = "it's....totally square?"
 	icon_state = "stone"
 	strong = TRUE
-	drop_type = /obj/item/minecraft/stone
+	drop_type = /obj/item/minecraft/cobblestone
 	floor_type = /turf/open/floor/minecraft/stone
 	hit_sounds = list('sound/effects/minecraft/stone1.ogg','sound/effects/minecraft/stone2.ogg','sound/effects/minecraft/stone3.ogg','sound/effects/minecraft/stone4.ogg')
 
 /turf/open/floor/minecraft/stone
 	name = "stone block"
-	desc = "it's....totally square?"
 	icon_state = "stone"
 
 /turf/closed/wall/minecraft/andesite
 	name = "andesite block"
-	desc = "it's....totally square?"
 	icon_state = "andesite"
 	strong = TRUE
 	floor_type = /turf/open/floor/minecraft/stone
@@ -129,7 +126,6 @@
 
 /turf/closed/wall/minecraft/stonebrick
 	name = "stone brick block"
-	desc = "it's....totally square?"
 	icon_state = "stonebrick"
 	strong = TRUE
 	floor_type = /turf/open/floor/minecraft/stone
@@ -138,7 +134,6 @@
 
 /turf/closed/wall/minecraft/cobblestone
 	name = "cobblestone block"
-	desc = "it's....totally square?"
 	icon_state = "cobblestone"
 	strong = TRUE
 	floor_type = /turf/open/floor/minecraft/stone
