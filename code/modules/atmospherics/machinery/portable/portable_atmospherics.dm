@@ -43,7 +43,7 @@
 		T.assume_air(air_contents)
 		T.air_update_turf()
 
-		return ..()
+	return ..()
 
 /obj/machinery/portable_atmospherics/process_atmos()
 	if(!connected_port) // Pipe network handles reactions if connected.
