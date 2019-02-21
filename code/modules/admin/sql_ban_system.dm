@@ -97,7 +97,7 @@
 	<div class='inputbox'></div></label>
 	<input type='text' name='keytext' size='26' value='[player_key]'>
 	<label class='inputlabel checkbox'>IP:
-	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[isnull(duration) " checked": ""]>
+	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[isnull(duration) ? " checked" : ""]>
 	<div class='inputbox'></div></label>
 	<input type='text' name='iptext' size='18' value='[player_ip]'>
 	<label class='inputlabel checkbox'>CID:
