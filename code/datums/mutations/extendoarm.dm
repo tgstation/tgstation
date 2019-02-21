@@ -62,7 +62,7 @@
 		return FALSE
 	var/mob/living/carbon/C = user
 	if(C.handcuffed) //this doesnt mix well with the whole arm removal thing
-		return
+		return FALSE
 
 /obj/item/projectile/bullet/arm
 	name = "arm"
