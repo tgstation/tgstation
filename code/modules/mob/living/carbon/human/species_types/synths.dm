@@ -13,8 +13,6 @@
 	var/list/initial_inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_INTERNALIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species //a species to do most of our work for us, unless we're damaged
-	var/list/initial_species_traits //for getting these values back for assume_disguise()
-	var/list/initial_inherent_traits
 	changesource_flags = MIRROR_BADMIN | WABBAJACK
 	
 /datum/species/synth/New()
