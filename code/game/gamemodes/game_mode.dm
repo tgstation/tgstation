@@ -31,7 +31,7 @@
 	var/recommended_enemies = 0
 	var/antag_flag = null //preferences flag such as BE_WIZARD that need to be turned on for players to be antag
 	var/mob/living/living_antag_player = null
-	var/list/datum/game_mode/replacementmode = null
+	var/datum/game_mode/replacementmode = null
 	var/round_converted = 0 //0: round not converted, 1: round going to convert, 2: round converted
 	var/reroll_friendly 	//During mode conversion only these are in the running
 	var/continuous_sanity_checked	//Catches some cases where config options could be used to suggest that modes without antagonists should end when all antagonists die
