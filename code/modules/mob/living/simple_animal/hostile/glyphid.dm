@@ -596,9 +596,3 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/glyphid/cast(list/targets,mob/user = usr)
 	..(targets, user, 60)
-	cooldown_min = 150
-	invocation_type = "none"
-	anti_magic_check = FALSE
-
-/obj/effect/proc_holder/spell/aoe_turf/repulse/glyphid/cast(list/targets,mob/user = usr)
-	..(targets, user, 60)
