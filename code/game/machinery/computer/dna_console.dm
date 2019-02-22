@@ -354,7 +354,10 @@
 			for(var/datum/mutation/human/HM in stored_mutations)
 				var/i = stored_mutations.Find(HM)
 				temp_html += "<tr><td><a href='?src=[REF(src)];task=inspectstorage;num=[i]'>[HM.name]</a></td>"
-				temp_html += "<td><a href='?src=[REF(src)];task=exportdiskmut;path=[HM.type]'>Export</a></td>"
+				if(diskette)
+					temp_html += "<td><a href='?src=[REF(src)];task=exportdiskmut;path=[HM.type]'>Export</a></td>"
+				else
+					temp_html += "<td><td><span class='linkOff'>Export</span></td>"
 				temp_html += "<td><a href='?src=[REF(src)];task=deletemut;num=[i]'>Delete</a></td>"
 				if(combine == HM.type)
 					temp_html += "<td><span class='linkOff'>Combine</span></td></tr>"
@@ -367,7 +370,6 @@
 				var/obj/item/chromosome/CM = stored_chromosomes[i]
 				temp_html += "<td><a href='?src=[REF(src)];task=ejectchromosome;num=[i]'>[CM.name]</a></td><br>"
 			temp_html += "</table>"
-
 		else
 			temp_html += status
 			temp_html += buttons
@@ -693,7 +695,7 @@
 							var/datum/mutation/human/A = new HM.type()
 							A.copy_mutation(HM)
 							succes = TRUE
- 							stored_mutations += A
+							stored_mutations += A
 							to_chat(usr,"<span class='notice'>Mutation succesfully stored.</span>")
 				if(!succes) //we can exactly return here
 					to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
@@ -883,7 +885,9 @@
 /obj/machinery/computer/scan_consolenew/proc/get_valid_mutation(mutation)
 	var/mob/living/carbon/C = get_viable_occupant()
 	if(C)
-		return C.dna.get_mutation(mutation)
+		var/datum/mutation/human/HM = C.dna.get_mutation(mutation)
+		if(HM)
+			return HM
 	for(var/datum/mutation/human/A in stored_mutations)
 		if(A.type == mutation)
 			return A
