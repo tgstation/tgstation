@@ -139,6 +139,8 @@
 			M.confused += min(power, diff)
 
 /obj/item/assembly/flash/attack(mob/living/M, mob/user)
+	if(crit_fail || (world.time < last_trigger + cooldown))
+		return FALSE	
 	if(!try_use_flash(user))
 		return FALSE
 	if(iscarbon(M))
@@ -158,6 +160,8 @@
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
 
 /obj/item/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
+	if(crit_fail || (world.time < last_trigger + cooldown))
+		return FALSE	
 	if(holder)
 		return FALSE
 	if(!AOE_flash(FALSE, 3, 5, FALSE, user))
@@ -199,18 +203,12 @@
 /obj/item/assembly/flash/cyborg
 
 /obj/item/assembly/flash/cyborg/attack(mob/living/M, mob/user)
-	if(world.time < last_trigger + cooldown)
-		return FALSE
-	else
-		new /obj/effect/temp_visual/borgflash(get_turf(src))
-		..()
+    if(..())
+        new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attack_self(mob/user)
-	if(world.time < last_trigger + cooldown)
-		return FALSE
-	else
-		new /obj/effect/temp_visual/borgflash(get_turf(src))
-		..()
+    if(..())
+        new /obj/effect/temp_visual/borgflash(get_turf(src))
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, params)
 	return
