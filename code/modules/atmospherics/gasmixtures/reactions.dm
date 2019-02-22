@@ -266,7 +266,8 @@
 	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
 	if(instability < FUSION_INSTABILITY_ENDOTHERMALITY)
 		reaction_energy = max(reaction_energy,0) //Stable reactions don't end up endothermic.
-
+	else if (reaction_energy < 0)
+		reaction_energy *= (instability-FUSION_INSTABILITY_ENDOTHERMALITY)**0.5
 	//to_chat(world,"Fusion! IP:[initial_plasma] IC:[initial_carbon] Scale:[scale_factor] TS: [toroidal_size] Instbl:[instability] DP:[delta_plasma] DC:[delta_carbon] FP:[cached_gases[/datum/gas/plasma][MOLES]] FC:[cached_gases[/datum/gas/carbon_dioxide][MOLES]] RE:[reaction_energy]")
 
 
@@ -288,14 +289,14 @@
 	if(reaction_energy)
 		if(location)
 			var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
-			if(prob(particle_chance*100))
+			if(PERCENT(particle_chance))
 				location.fire_nuclear_particle()
 			var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + FUSION_RAD_MAX,0)
 			radiation_pulse(location,rad_power)
 
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB)
+			air.temperature = CLAMP(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY)
 		return REACTING
 
 /datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires N2O as a catalyst.

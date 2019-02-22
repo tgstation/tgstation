@@ -51,6 +51,9 @@
 	if((input_starting_pressure < 0.01) || ((output_starting_pressure > 9000))&&!overclocked)
 		return
 
+	if(overclocked && (output_starting_pressure-input_starting_pressure > 1000))//Overclocked pumps can only force gas a certain amount.
+		return
+
 
 	var/transfer_ratio = transfer_rate/air1.volume
 

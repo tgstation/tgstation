@@ -6,8 +6,6 @@
 	desc = "Very useful for filtering gasses."
 
 	can_unwrench = TRUE
-
-	var/target_pressure = ONE_ATMOSPHERE
 	var/transfer_rate = MAX_TRANSFER_RATE
 	var/filter_type = null
 	var/frequency = 0
@@ -147,7 +145,7 @@
 				rate = MAX_TRANSFER_RATE
 				. = TRUE
 			else if(rate == "input")
-				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, target_pressure) as num|null
+				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, transfer_rate) as num|null
 				if(!isnull(rate) && !..())
 					. = TRUE
 			else if(text2num(rate) != null)
