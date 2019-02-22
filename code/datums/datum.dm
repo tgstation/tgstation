@@ -10,11 +10,6 @@
 	var/datum/weakref/weak_reference
 	var/list/datum_outputs
 
-/datum/New()
-	if(datum_outputs)
-		for(var/A in datum_outputs)
-			A = SSoutputs.outputs[A]
-
 #ifdef TESTING
 	var/running_find_references
 	var/last_find_references = 0
@@ -73,6 +68,11 @@
 	//END: ECS SHIT
 
 	return QDEL_HINT_QUEUE
+
+/datum/New()
+	if(datum_outputs)
+		for(var/A in datum_outputs)
+			A = SSoutputs.outputs[A]
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()
