@@ -58,7 +58,7 @@
 
 /obj/mecha/working/ripley/Initialize()
 	. = ..()
-	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 10, "bullet" = 5, "laser" = 5))
+	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list("melee" = 5, "bullet" = 5, "laser" = 5))
 
 
 /obj/mecha/working/ripley/firefighter
