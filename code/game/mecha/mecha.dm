@@ -213,6 +213,11 @@
 	GLOB.mechas_list -= src //global mech list
 	return ..()
 
+/obj/mecha/bullet_act(obj/item/projectile/P)
+	if (enclosed || !occupant || silicon_pilot)
+		return ..()
+	occupant.bullet_act(P) //If the sides are open, the occupant can be hit
+
 /obj/mecha/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
@@ -412,6 +417,14 @@
 	diag_hud_set_mechstat()
 	diag_hud_set_mechtracking()
 
+	//Check if we should ignite the pilot of an open-canopy mech
+	var/turf/target = get_turf(src)
+	if(isopenturf(target))
+		var/turf/open/T = target
+		if (T.active_hotspot && occupant && !enclosed && !silicon_pilot)
+			if (occupant.fire_stacks < 20)
+				occupant.fire_stacks += 1
+			occupant.IgniteMob()
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return

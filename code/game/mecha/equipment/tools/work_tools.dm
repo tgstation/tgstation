@@ -488,9 +488,11 @@
 	if(!N)
 		return
 	qdel(N.cell)
-	N.cell = M.cell
-	M.cell.forceMove(N)
-	M.cell = ""
+	N.cell = null
+	if (M.cell)
+		N.cell = M.cell
+		M.cell.forceMove(N)
+		M.cell = null
 	N.step_energy_drain = M.step_energy_drain //For the scanning module
 	N.armor = N.armor.setRating(energy = M.armor["energy"]) //for the capacitor
 	for(var/obj/item/mecha_parts/mecha_equipment/E in M.equipment) //Move the equipment over...

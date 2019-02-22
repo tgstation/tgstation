@@ -1,6 +1,6 @@
 /obj/mecha/working/ripley
 	desc = "Autonomous Power Loader Unit MK-I. Designed primarily around heavy lifting, the Ripley can be outfitted with utility equipment to fill a number of roles."
-	name = "\improper APLU \"Ripley\" MK-I"
+	name = "\improper APLU MK-I \"Ripley\""
 	icon_state = "ripley"
 	silicon_icon_state = "ripley-empty"
 	step_in = 1.5 //Move speed, lower is faster.
@@ -60,16 +60,6 @@
 		else
 			add_overlay(occupant ? "ripley-g-full" : "ripley-g-full-open")
 
-/obj/mecha/working/ripley/bullet_act(obj/item/projectile/P)
-	if (enclosed || !occupant || silicon_pilot)
-		return ..()
-	occupant.bullet_act(P) //If the sides are open, the occupant can be hit
-/*
-/obj/mecha/working/ripley/fire_act()
-	if (!enclosed)
-		occupant.on_fire = TRUE // No atmos protection means no fire protection
-	. = ..()
-*/
 /obj/mecha/working/ripley/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
 	if (!enclosed)
 		possible_int_damage -= MECHA_INT_TEMP_CONTROL //if we don't even have an air tank, these two doesn't make a ton of sense.
@@ -84,7 +74,7 @@
 
 /obj/mecha/working/ripley/mkii
 	desc = "Autonomous Power Loader Unit MK-II. This prototype Ripley is refitted with a pressurized cabin, trading its prior speed for atmospheric protection"
-	name = "\improper APLU \"Ripley\" MK-II"
+	name = "\improper APLU MK-II \"Ripley\""
 	icon_state = "ripleymkii"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
 	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
@@ -98,7 +88,7 @@
 
 /obj/mecha/working/ripley/firefighter
 	desc = "Autonomous Power Loader Unit MK-III. This model is refitted with a pressurized cabin and additional thermal protection."
-	name = "\improper APLU \"Firefighter\" MK-III"
+	name = "\improper APLU MK-III \"Firefighter\""
 	icon_state = "firefighter"
 	max_temperature = 65000
 	max_integrity = 250
