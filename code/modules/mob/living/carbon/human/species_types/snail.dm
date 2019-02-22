@@ -5,13 +5,19 @@
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
 	attack_verb = "slops"
+	say_mod = "slurs"
 	coldmod = 0.5 //snails only come out when its cold and wet
-	speedmod = 4
+	burnmod = 2
+	speedmod = 6
+	punchdamagehigh = 0 //snails are soft and squishy
+	siemens_coeff = 2 //snails are mostly water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	sexes = FALSE //snails are hermaphrodites
 	var/shell_type = /obj/item/storage/backpack/snail
 
 	mutanteyes = /obj/item/organ/eyes/snail
+	mutanttongue = /obj/item/organ/tongue/snail
+	exotic_blood = "spacelube"
 
 /datum/species/snail/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "sodiumchloride")
@@ -22,15 +28,16 @@
 
 /datum/species/snail/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
-	var/obj/item/BP = C.get_item_by_slot(SLOT_BACK)
-	if(!BP || !C.doUnEquip(BP))
+	if(C.doUnEquip(C.get_item_by_slot(SLOT_BACK)))
 		C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), SLOT_BACK)
 	C.AddComponent(/datum/component/snailcrawl)
+	C.add_trait(NOSLIP, TRAIT_SPECIES)
 
-/datum/species/jelly/on_species_loss(mob/living/carbon/C)
+/datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	var/datum/component/CP = C.GetComponent(/datum/component/snailcrawl)
 	CP.RemoveComponent()
+	C.remove_trait(NOSLIP, TRAIT_SPECIES)
 
 /obj/item/storage/backpack/snail
 	name = "snail shell"
@@ -46,4 +53,3 @@
 /obj/item/storage/backpack/snail/Initialize()
 	. = ..()
 	add_trait(TRAIT_NODROP)
-
