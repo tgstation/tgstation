@@ -43,7 +43,7 @@
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/rocketlauncher
-	name = "pml-9"
+	name = "\improper PML-9"
 	desc = "A reusable rocket propelled grenade launcher. The words \"NT this way\" and an arrow have been written near the barrel."
 	icon_state = "rocketlauncher"
 	item_state = "rocketlauncher"
