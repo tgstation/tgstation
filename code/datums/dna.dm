@@ -566,7 +566,7 @@
 	dna.remove_all_mutations()
 	dna.stability = 100
 	if(prob(max(70-instability,0)))
-		switch(rand(0,6)) //not complete and utter death
+		switch(rand(0,7)) //not complete and utter death
 			if(0)
 				monkeyize()
 			if(1)
@@ -585,9 +585,23 @@
 				reagents.add_reagent("mutationtoxin2", 10)
 			if(6)
 				apply_status_effect(STATUS_EFFECT_GO_AWAY)
-
+			if(7)
+				to_chat(src, "<span class='notice'>Oh, I actually feel quite alright!</span>")
+				ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS
+			if(8)
+				var/list/elligible_organs = list()
+				for(var/obj/item/organ/O in internal_organs) //make sure we dont get an implant or cavity item
+					elligible_organs += O
+				vomit(20, TRUE)
+				if(elligible_organs.len)
+					var/obj/item/organ/O = pick(elligible_organs)
+					O.Remove(src)
+					visible_message("<span class='danger'>[src] vomits up their [O.name]!</span>", "<span class='danger'>You vomit up your [O.name]") //no "vomit up your the heart"
+					O.forceMove(drop_location())
+					if(prob(20))
+						O.animate_atom_living()
 	else
-		switch(rand(0,4))
+		switch(rand(0,5))
 			if(0)
 				gib()
 			if(1)
@@ -597,7 +611,7 @@
 				death()
 				petrify(INFINITY)
 			if(3)
-				if(prob(90))
+				if(prob(95))
 					var/obj/item/bodypart/BP = get_bodypart(pick(BODY_ZONE_CHEST,BODY_ZONE_HEAD))
 					if(BP)
 						BP.dismember()
@@ -613,3 +627,14 @@
 					addtimer(CALLBACK(src, .proc/death), 30)
 					if(mind)
 						mind.hasSoul = FALSE
+			if(5)
+				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
+				spawn(30)
+					if(!has_trait(TRAIT_BLIND))
+						var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
+						if(!eyes)
+							return
+						eyes.Remove(src)
+						qdel(eyes)
+						visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
+						addtimer(CALLBACK(src, .proc/adjustBrainLoss, 200), 20)

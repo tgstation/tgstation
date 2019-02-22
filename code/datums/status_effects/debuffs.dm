@@ -722,7 +722,7 @@
 
 /obj/screen/alert/status_effect/dna_melt
 	name = "Genetic Breakdown"
-	desc = "I don't feel so good. Your body can't handle the mutations! You have one minute to remove your mutations, or you will be met with a horrible faith."
+	desc = "I don't feel so good. Your body can't handle the mutations! You have one minute to remove your mutations, or you will be met with a horrible fate."
 	icon_state = "dna_melt"
 
 /datum/status_effect/go_away
