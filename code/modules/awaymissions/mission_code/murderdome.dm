@@ -39,3 +39,4 @@
 	name = "Murderdome"
 	requires_power = FALSE
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	icon_state = "awaycontent5"
