@@ -70,6 +70,11 @@
 
 	update_parents()
 
+/obj/machinery/atmospherics/components/binary/volume_pump/examine(mob/user)
+	..()
+	if(overclocked)
+		to_chat(user,"Its warning light is on" + (on ? " and it's spewing gas!" : "."))
+
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
@@ -173,7 +178,6 @@
 	if(!overclocked)
 		overclocked = TRUE
 		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
-		desc += " Its warning light is on."
 	else
 		overclocked = FALSE
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")

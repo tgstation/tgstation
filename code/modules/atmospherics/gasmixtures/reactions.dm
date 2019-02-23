@@ -245,21 +245,22 @@
 	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/initial_carbon = cached_gases[/datum/gas/carbon_dioxide][MOLES]
 	var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
-	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
-	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
 	var/toroidal_size = (2*PI)+TORADIANS(arctan((air.volume-TOROID_VOLUME_BREAKEVEN)/TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
 	var/instability = MODULUS(gas_power*INSTABILITY_GAS_POWER_FACTOR,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
 	cached_scan_results[id] = instability//used for analyzer feedback
-	//to_chat(world,"LPI:[plasma] LCI:[carbon]")
+
+	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of carbon and plasma down a significant amount in order to show the chaotic dynamics we want
+	var/carbon = (initial_carbon-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
+
 	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
 	plasma = MODULUS(plasma - (instability*sin(TODEGREES(carbon))), toroidal_size)
 	carbon = MODULUS(carbon - plasma, toroidal_size)
-	//to_chat(world,"LPF:[plasma] LCF:[carbon]")
 
-	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD
+
+	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD //Scales the gases back up
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] = carbon*scale_factor + FUSION_MOLE_THRESHOLD
 	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
 
@@ -268,23 +269,21 @@
 		reaction_energy = max(reaction_energy,0) //Stable reactions don't end up endothermic.
 	else if (reaction_energy < 0)
 		reaction_energy *= (instability-FUSION_INSTABILITY_ENDOTHERMALITY)**0.5
-	//to_chat(world,"Fusion! IP:[initial_plasma] IC:[initial_carbon] Scale:[scale_factor] TS: [toroidal_size] Instbl:[instability] DP:[delta_plasma] DC:[delta_carbon] FP:[cached_gases[/datum/gas/plasma][MOLES]] FC:[cached_gases[/datum/gas/carbon_dioxide][MOLES]] RE:[reaction_energy]")
-
 
 	if(air.thermal_energy() + reaction_energy < 0) //No using energy that doesn't exist.
 		cached_gases[/datum/gas/plasma][MOLES] = initial_plasma
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] = initial_carbon
 		return NO_REACTION
 	cached_gases[/datum/gas/tritium][MOLES] -= FUSION_TRITIUM_MOLES_USED
-	//The decay of the tritium produces waste gases, different ones depending on whether the reaction is endo or exothermic
+	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
 	if(reaction_energy > 0)
 		air.assert_gases(/datum/gas/oxygen,/datum/gas/nitrous_oxide)
 		cached_gases[/datum/gas/oxygen][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
-		cached_gases[/datum/gas/nitrous_oxide][MOLES] += (reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/nitrous_oxide][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 	else
 		air.assert_gases(/datum/gas/bz,/datum/gas/nitryl)
-		cached_gases[/datum/gas/bz][MOLES] += (reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
-		cached_gases[/datum/gas/nitryl][MOLES] += (reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/bz][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/nitryl][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 
 	if(reaction_energy)
 		if(location)
