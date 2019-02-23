@@ -516,6 +516,10 @@
 	name = "Very Long with Fringe"
 	icon_state = "hair_vlongfringe"
 
+/datum/sprite_accessory/hair/trumphair
+	name = "Trump hair"
+	icon_state = "hair_trump"
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
