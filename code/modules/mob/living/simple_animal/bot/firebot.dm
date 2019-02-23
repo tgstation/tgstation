@@ -183,7 +183,7 @@
 			var/mob/living/M = target_fire
 			M.Knockdown(3)
 			src.do_attack_animation(M)
-			visible_message("<span class='danger'>[src] rams into [target] knocking them over!</span>")
+			visible_message("<span class='danger'>[src] rams into [M] knocking them over!</span>")
 
 			var/turf/T = get_turf(M.loc)
 
@@ -277,10 +277,8 @@
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 	var/atom/loc = drop_location()
 
-	//drop_part(toolbox, Tsec)
-
 	new /obj/item/assembly/prox_sensor(loc)
-	new obj/item/clothing/head/hardhat/red(loc)
+	new /obj/item/clothing/head/hardhat/red(loc)
 
 	var/turf/T = get_turf(loc)
 	if(isopenturf(T))
@@ -288,7 +286,7 @@
 		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 	if(prob(50))
-		drop_part(robot_arm, Tsec)
+		drop_part(robot_arm, loc)
 
 	do_sparks(3, TRUE, src)
 	..()
