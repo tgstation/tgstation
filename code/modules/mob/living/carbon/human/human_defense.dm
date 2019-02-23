@@ -105,6 +105,9 @@
 		if(!istype(I, /obj/item/clothing))
 			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+				if (istype(I, /obj/item/shield))
+					var/obj/item/shield/S = I
+					return S.on_shield_block(src, AM, attack_text, damage, attack_type)
 				return 1
 	if(wear_suit)
 		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier

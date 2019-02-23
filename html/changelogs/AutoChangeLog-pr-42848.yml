@@ -1,0 +1,4 @@
+author: "Yenwodyah"
+delete-after: True
+changes: 
+  - bugfix: "Destroying an empty head no longer destroys the organs you pulled out of it."

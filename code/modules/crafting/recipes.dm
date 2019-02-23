@@ -47,7 +47,7 @@
 
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
-	result = /obj/item/assembly/flash/shield
+	result = /obj/item/shield/riot/flash
 	reqs = list(/obj/item/wallframe/flasher = 1,
 				/obj/item/assembly/flash/handheld = 1,
 				/obj/item/shield/riot = 1)
@@ -207,7 +207,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 4,
 				/obj/item/stack/packageWrap = 8,
 				/obj/item/pipe = 2)
-	time = 300
+	time = 50
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 

@@ -260,11 +260,6 @@
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
 
-/datum/quirk/nonviolent/on_process()
-	if(quirk_holder.mind && LAZYLEN(quirk_holder.mind.antag_datums))
-		to_chat(quirk_holder, "<span class='boldannounce'>Your antagonistic nature has caused you to renounce your pacifism.</span>")
-		qdel(src)
-
 /datum/quirk/paraplegic
 	name = "Paraplegic"
 	desc = "Your legs do not function. Nothing will ever fix this. But hey, free wheelchair!"
@@ -298,7 +293,6 @@
 	for(var/obj/item/I in T)
 		if(I.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(I)
-
 
 /datum/quirk/poor_aim
 	name = "Poor Aim"
@@ -442,7 +436,7 @@
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
-			P.list_reagents = list("[reagent_id]" = 1)
+			P.reagents.add_reagent(reagent_id, 1)
 
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
@@ -500,11 +494,11 @@
 		/obj/item/storage/fancy/cigarettes/cigars,
 		/obj/item/storage/fancy/cigarettes/cigars/cohiba,
 		/obj/item/storage/fancy/cigarettes/cigars/havana)
-	. = ..()	
+	. = ..()
 
 /datum/quirk/junkie/smoker/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
-	
+
 
 /datum/quirk/junkie/smoker/on_process()
 	. = ..()
@@ -512,7 +506,7 @@
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/C = drug_instance
-		if(istype(I, C.spawn_type))	
+		if(istype(I, C.spawn_type))
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)

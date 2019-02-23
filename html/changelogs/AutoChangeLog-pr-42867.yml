@@ -1,0 +1,4 @@
+author: "subject217"
+delete-after: True
+changes: 
+  - tweak: "Soviet and Capitalist golems no longer appear in opportunities where a random golem species was selected, primarily golem mutation toxin."
