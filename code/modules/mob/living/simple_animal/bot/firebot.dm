@@ -1,4 +1,9 @@
-//Floorbot
+//Firebot
+
+#define SPEECH_INTERVAL 300  // Time between idle speeches
+#define DETECTED_VOICE_INTERVAL 300  // Time between fire detected callouts
+#define FOAM_INTERVAL 50  // Time between deployment of fire fighting foam
+
 /mob/living/simple_animal/bot/firebot
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
@@ -33,10 +38,6 @@
 	var/extinguish_people = TRUE
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
-
-	#define SPEECH_INTERVAL 300  // Time between idle speeches
-	#define DETECTED_VOICE_INTERVAL 300  // Time between fire detected callouts
-	#define FOAM_INTERVAL 50  // Time between deployment of fire fighting foam
 
 /mob/living/simple_animal/bot/firebot/Initialize()
 	. = ..()
@@ -297,7 +298,10 @@
 	do_sparks(3, TRUE, src)
 	..()
 
-
-
 /obj/machinery/bot_core/firebot
 	req_one_access = list(ACCESS_CONSTRUCTION, ACCESS_ROBOTICS)
+
+#undef SPEECH_INTERVAL
+#undef DETECTED_VOICE_INTERVAL
+#undef FOAM_INTERVAL
+
