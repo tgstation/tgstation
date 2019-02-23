@@ -36,7 +36,7 @@
 	// THESE OVERRIDE THE HIDEHAIR FLAGS
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
-	
+
 
 /obj/item/clothing/Initialize()
 	. = ..()
@@ -133,7 +133,7 @@
 		update_clothes_damaged_state(TRUE)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
 		var/mob/M = loc
-		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!</span>")
+		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
