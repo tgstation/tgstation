@@ -3,7 +3,7 @@
 	name = "\improper Firebot"
 	desc = "A little fire extinguishing bot. He looks rather anxious."
 	icon = 'icons/mob/aibots.dmi'
-	icon_state = "floorbot0"
+	icon_state = "firebot"
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -14,7 +14,7 @@
 	radio_channel = RADIO_CHANNEL_ENGINEERING
 	bot_type = FIRE_BOT
 	model = "Firebot"
-	bot_core = /obj/machinery/bot_core/floorbot
+	bot_core = /obj/machinery/bot_core/firebot
 	window_id = "autoextinguisher"
 	window_name = "Mobile Fire Extinguisher v1.0"
 	path_image_color = "#FFA500"
@@ -31,6 +31,7 @@
 
 	var/extinguish_people = TRUE
 	var/extinguish_fires = TRUE
+	var/stationary_mode = FALSE
 
 /mob/living/simple_animal/bot/firebot/Initialize()
 	. = ..()
@@ -86,6 +87,7 @@
 		dat += "Extinguish Fires: <A href='?src=[REF(src)];operation=extinguish_fires'>[extinguish_fires ? "Yes" : "No"]</A><BR>"
 		dat += "Extinguish People: <A href='?src=[REF(src)];operation=extinguish_people'>[extinguish_people ? "Yes" : "No"]</A><BR>"
 		dat += "Patrol Station: <A href='?src=[REF(src)];operation=patrol'>[auto_patrol ? "Yes" : "No"]</A><BR>"
+		dat += "Stationary Mode: <a href='?src=[REF(src)];operation=stationary_mode'>[stationary_mode ? "Yes" : "No"]</a><br>"
 
 	return dat
 
@@ -100,7 +102,6 @@
 			old_target_fire = user
 		extinguish_fires = FALSE
 		extinguish_people = TRUE
-		a_intent = "harm"
 
 /mob/living/simple_animal/bot/firebot/Topic(href, href_list)
 	if(..())
@@ -111,13 +112,16 @@
 			extinguish_fires = !extinguish_fires
 		if("extinguish_people")
 			extinguish_people = !extinguish_people
+		if("stationary_mode")
+			stationary_mode = !stationary_mode
 
 	update_controls()
+	update_icon()
 
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
 		var/mob/living/M = target
-		if(M.on_fire || emagged == 2)
+		if(M.on_fire || (emagged == 2 && !M.IsKnockdown()))
 			return TRUE
 
 	else if(isturf(target))
@@ -138,10 +142,10 @@
 		return
 
 	if(prob(1) && target_fire == null)
-		var/list/messagevoice = list("No fires detected" = 'sound/voice/firebot/nofires.ogg',
+		var/list/messagevoice = list("No fires detected." = 'sound/voice/firebot/nofires.ogg',
 		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
-		"Temperature nominal" = 'sound/voice/firebot/tempnominal.ogg',
-		"Keep it cool" = 'sound/voice/firebot/keepitcool.ogg')
+		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
+		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(loc, messagevoice[message], 50, 0)
@@ -154,18 +158,18 @@
 	// We extinguished our target or it was deleted
 	if(QDELETED(target_fire) || !is_burning(target_fire) || isdead(target_fire))
 		target_fire = null
+		var/scan_range = (stationary_mode ? 1 : DEFAULT_SCAN_RANGE)
 
 		if(extinguish_people)
-			target_fire = scan(/mob/living, old_target_fire, DEFAULT_SCAN_RANGE) // Scan for burning humans first
+			target_fire = scan(/mob/living, old_target_fire, scan_range) // Scan for burning humans first
 
 		if(target_fire == null && extinguish_fires)
-			target_fire = scan(/turf/open, old_target_fire, DEFAULT_SCAN_RANGE) // Scan for burning turfs second
+			target_fire = scan(/turf/open, old_target_fire, scan_range) // Scan for burning turfs second
 
 		old_target_fire = target_fire
 
 	// Target reached ENGAGE WATER CANNON
-	if(target_fire && (get_dist(src, target_fire) <= 1))
-
+	if(target_fire && (get_dist(src, target_fire) <= (emagged == 2 ? 1 : 2))) // Make the bot spray water from afar when not emagged
 		if((speech_cooldown + 300) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
@@ -175,10 +179,19 @@
 				playsound(src.loc, "sound/voice/firebot/extinguishing.ogg", 50, 0)
 			speech_cooldown = world.time
 
-		if(emagged == 2)
-			internal_ext.attack(target_fire, src)
+		if(emagged == 2) // When emagged, knock people down and wet the floors under em
+			var/mob/living/M = target_fire
+			M.Knockdown(3)
+			src.do_attack_animation(M)
+			var/turf/T = get_turf(M.loc)
+			if(isopenturf(T))
+				var/turf/open/theturf = T
+				theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 		else
-			internal_ext.afterattack(target_fire, src, null)
+			flick("firebot1_use", src)
+			spray_water(target_fire, src)
+
+		soft_reset()
 
 	// Target ran away
 	else if(target_fire && path.len && (get_dist(target_fire,path[path.len]) > 2))
@@ -186,7 +199,12 @@
 		mode = BOT_IDLE
 		last_found = world.time
 
-	if(target_fire && (get_dist(src, target_fire) > 1))
+	else if(target_fire && stationary_mode)
+		soft_reset()
+		return
+
+	if(target_fire && (get_dist(src, target_fire) > 2))
+
 		path = get_path_to(src, get_turf(target_fire), /turf/proc/Distance_cardinal, 0, 30, 1, id=access_card)
 		mode = BOT_MOVING
 		if(!path.len)
@@ -214,6 +232,9 @@
 /mob/living/simple_animal/bot/firebot/process_scan(atom/scan_target)
 	var/result
 
+	if(scan_target == src)
+		return result
+
 	if(is_burning(scan_target))
 		if((detected_cooldown + 300) < world.time)
 			speak("Fire detected!")
@@ -225,12 +246,27 @@
 
 /mob/living/simple_animal/bot/firebot/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
-		internal_ext.afterattack(src, src, null)
+		spray_water(src, src)
 	..()
 
+/mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
+	if(stationary_mode)
+		flick("firebots_use", user)
+	else
+		flick("firebot1_use", user)
+	internal_ext.afterattack(target, user, null)
 
 /mob/living/simple_animal/bot/firebot/update_icon()
-	icon_state = "floorbot[on]"
+	if(!on)
+		icon_state = "firebot0"
+		return
+	if(IsStun() || IsParalyzed())
+		icon_state = "firebots1"
+		return
+	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
+		icon_state = "firebots1"
+	else
+		icon_state = "firebot1"
 
 
 /mob/living/simple_animal/bot/firebot/explode()
@@ -242,11 +278,13 @@
 
 	new /obj/item/assembly/prox_sensor(Tsec)
 
+	var/turf/T = get_turf(loc)
+	if(isopenturf(T))
+		var/turf/open/theturf = T
+		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 	if(prob(50))
 		drop_part(robot_arm, Tsec)
-
-	new /obj/item/stack/tile/plasteel(Tsec, 1)
 
 	do_sparks(3, TRUE, src)
 	..()

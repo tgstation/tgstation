@@ -505,3 +505,33 @@
 				to_chat(user, "<span class='notice'>You unbolt [src]'s energy swords</span>")
 				for(var/IS in 1 to swordamt)
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
+
+//Firebot Assembly
+/obj/item/bot_assembly/firebot
+	name = "incomplete firebot assembly"
+	desc = "A fire extinguisher with an arm attached to it."
+	icon_state = "firebot_arm"
+	created_name = "Firebot"
+
+/obj/item/bot_assembly/firebot/attackby(obj/item/I, mob/user, params)
+	..()
+	switch(build_step)
+		if(ASSEMBLY_FIRST_STEP)
+			if(istype(I, /obj/item/clothing/head/hardhat/red))
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				to_chat(user,"<span class='notice'>You add the [I] to [src]!</span>")
+				icon_state = "firebot_helmet"
+				desc = "An incomplete firebot assembly with a fire helmet."
+				qdel(I)
+				build_step++
+
+		if(ASSEMBLY_SECOND_STEP)
+			if(isprox(I))
+				if(!can_finish_build(I, user))
+					return
+				to_chat(user, "<span class='notice'>You add the [I] to [src]! Beep Boop!</span>")
+				var/mob/living/simple_animal/bot/firebot/S = new(drop_location())
+				S.name = created_name
+				qdel(I)
+				qdel(src)
