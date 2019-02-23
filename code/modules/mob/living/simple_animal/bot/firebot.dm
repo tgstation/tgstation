@@ -28,10 +28,15 @@
 
 	var/speech_cooldown = 0
 	var/detected_cooldown = 0
+	var/foam_cooldown = 0
 
 	var/extinguish_people = TRUE
 	var/extinguish_fires = TRUE
 	var/stationary_mode = FALSE
+
+	#define SPEECH_INTERVAL 300  // Time between idle speeches
+	#define DETECTED_VOICE_INTERVAL 300  // Time between fire detected callouts
+	#define FOAM_INTERVAL 50  // Time between deployment of fire fighting foam
 
 /mob/living/simple_animal/bot/firebot/Initialize()
 	. = ..()
@@ -170,7 +175,7 @@
 
 	// Target reached ENGAGE WATER CANNON
 	if(target_fire && (get_dist(src, target_fire) <= (emagged == 2 ? 1 : 2))) // Make the bot spray water from afar when not emagged
-		if((speech_cooldown + 300) < world.time)
+		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
 				playsound(src.loc, "sound/voice/firebot/stopdropnroll.ogg", 50, 0)
@@ -239,7 +244,7 @@
 		return result
 
 	if(is_burning(scan_target))
-		if((detected_cooldown + 300) < world.time)
+		if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
 			speak("Fire detected!")
 			playsound(src.loc, "sound/voice/firebot/detected.ogg", 50, 0)
 			detected_cooldown = world.time
@@ -248,8 +253,9 @@
 	return result
 
 /mob/living/simple_animal/bot/firebot/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
-		spray_water(src, src)
+	if((temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT) && foam_cooldown + FOAM_INTERVAL < world.time)
+		new /obj/effect/particle_effect/foam/firefighting(loc)
+		foam_cooldown = world.time
 	..()
 
 /mob/living/simple_animal/bot/firebot/proc/spray_water(atom/target, mob/user)
