@@ -4,27 +4,91 @@ Slimecrossing Items
 	Collected here for clarity.
 */
 
-//Timefreeze camera - Burning Sepia
+#define DEJAVU_REWIND_INTERVAL 50
+
+//Rewind camera - I'm already Burning Sepia
+/obj/item/camera/rewind
+	name = "sepia-tinted camera"
+	desc = "They say a picture is like a moment stopped in time."
+	pictures_left = 1
+	pictures_max = 1
+	var/used = FALSE
+
+/datum/component/dejavu
+	var/health	//health for simple animals, and integrity for objects
+	var/x
+	var/y
+	var/z
+	var/rewinds_remaining = 1
+
+/datum/component/dejavu/Initialize()
+	var/turf/T = get_turf(parent)
+	if(T)
+		x = T.x
+		y = T.y
+		z = T.z
+	if(istype(parent, /mob/living/simple_animal))
+		var/mob/living/simple_animal/M = parent
+		health = M.health
+	else if(istype(parent, /obj))
+		var/obj/O = parent
+		health = O.obj_integrity
+	addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
+
+/datum/component/dejavu/proc/rewind()
+	to_chat(parent, "<span class=notice>You remember a time not so long ago...</span>")
+	if(!isnull(x) && istype(parent, /atom/movable))
+		var/atom/movable/AM = parent
+		var/turf/T = locate(x,y,z)
+		AM.forceMove(T)
+	if(istype(parent, /mob/living/simple_animal))
+		var/mob/living/simple_animal/M = parent
+		M.adjustHealth(health)
+	else if(istype(parent, /obj))
+		var/obj/O = parent
+		O.obj_integrity = health
+	rewinds_remaining -= 1
+	if(rewinds_remaining)
+		addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
+	else
+		to_chat(parent, "<span class=notice>But the memory falls out of your reach.</span>")
+
+
+
+/obj/item/camera/rewind/afterattack(atom/target, mob/user, flag)
+	if(!on || !pictures_left || !isturf(target.loc))
+		return
+	if(!used)//selfie time
+		if(user == target)
+			to_chat(user, "<span class=notice>You take a selfie!</span>")
+			to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
+		else
+			to_chat(user, "<span class=notice>You take a selfie with [target]!</span>")
+			to_chat(target, "<span class=notice>[user] takes a selfie with you!</span>")
+			
+		used = TRUE
+		target.AddComponent(/datum/component/dejavu)
+	.=..()
+		
+		
+	
+//Timefreeze camera - Old Burning Sepia result. Kept in case admins want to spawn it
 /obj/item/camera/timefreeze
 	name = "sepia-tinted camera"
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
+	var/used = FALSE
 
 /obj/item/camera/timefreeze/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || !isturf(target.loc))
 		return
-	new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
+	if(!used) //refilling the film does not refill the timestop
+		new /obj/effect/timestop(get_turf(target), 2, 50, list(user))
+		used = TRUE
+		desc = "This camera has seen better days."
 	. = ..()
-	var/text = "The camera fades away"
-	if(disk)
-		text += ", leaving the disk behind!"
-		if(!user.put_in_hands(disk))
-			disk.forceMove(user.drop_location())
-	else
-		text += "!"
-	to_chat(user,"<span class='notice'>[text]</span>")
-	qdel(src)
+
 
 //Hypercharged slime cell - Charged Yellow
 /obj/item/stock_parts/cell/high/slime/hypercharged
