@@ -1075,7 +1075,6 @@
 	
 	if(should_be_lying)
 		mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL | MOBILITY_STAND)
-		lying = 0
 		if(buckled)
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying
