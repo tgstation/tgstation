@@ -7,7 +7,7 @@
 	death = FALSE
 	show_flavour = FALSE
 
-/obj/effect/mob_spawn/human/ash_walker/Initialize(mapload)
+/obj/effect/mob_spawn/human/fugitive/Initialize(mapload)
 	. = ..()
 	notify_ghosts("Hunters are waking up looking for refugees!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_FUGITIVE)
 

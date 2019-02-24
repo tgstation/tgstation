@@ -3,8 +3,8 @@
 /obj/machinery/fugitive_capture
 	name = "bluespace capture machine"
 	desc = "Much, MUCH bigger on the inside to transport prisoners safely."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "experiment-open"
+	icon = 'icons/obj/machines/teleporter.dmi'
+	icon_state = "bluespace-prison"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF //ha ha no getting out!!
 
@@ -23,3 +23,11 @@
 	fug.is_captured = TRUE
 	to_chat(target, "<span class='userdanger'>You are thrown into a vast void of bluespace, and as you fall further into oblivion the comparatively small entrance to reality gets smaller and smaller until you cannot see it anymore. You have failed to avoid capture.</span>")
 	target.ghostize(0) //so they cannot suicide, round end stuff.
+
+/datum/map_template/space_cop_ship
+	name = "Police Spacevan"
+	mappath = "_maps/shuttles/fugitive_hunter_space_cop.dmm"
+
+/datum/map_template/russian_ship
+	name = "Russian Cargo Ship"
+	mappath = "_maps/shuttles/fugitive_hunter_russian.dmm"

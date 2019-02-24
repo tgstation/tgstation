@@ -47,7 +47,7 @@
 //after spawning
 	playsound(src, 'sound/weapons/emitter.ogg', 50, 1)
 	new /obj/item/storage/toolbox/mechanical(landing_turf) //so they can actually escape maint
-	addtimer(CALLBACK(src, .proc/spawn_security), 6000) //10 minutes
+	addtimer(CALLBACK(src, .proc/spawn_hunters), 6000) //10 minutes
 	role_name = "fugitive hunter"
 	return SUCCESSFUL_SPAWN
 
@@ -94,11 +94,14 @@
 			var/obj/item/autosurgeon/auto = new(landing_turf)
 
 //security team gets called in after 10 minutes of prep to find the refugees
-/datum/round_event/ghost_role/fugitives/proc/spawn_security()
+/datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
+	var/backstory = pick("space cop", "russian")
+	var/static/list/hunter_ship_types = list(
+		"space cop"	= /datum/map_template/space_cop_ship,
+		"russian"		= /datum/map_template/russian_ship)
 
-	var/hunter_team = pick("space cop", "russian")
-
-	var/datum/map_template/shuttle/pirate/default/ship = new
+	var/datum/map_template/ship = hunter_ship_types[backstory]
+	ship = new
 	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
 	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
 	var/z = SSmapping.empty_space.z_value
@@ -110,7 +113,7 @@
 	priority_announce("Unidentified armed ship detected near the station.")
 	var/list/spawner_spots = list()
 	for(var/turf/A in ship.get_affected_turfs(T))
-		for(var/obj/structure/chair/comfy/shuttle/chair in A) //every chair gets a spawner on it.
+		for(var/obj/structure/chair/chair in A) //every chair gets a spawner on it.
 			switch(backstory)
 				if("space cop")
 					new /obj/effect/mob_spawn/human/fugitive/spacepol(get_turf(chair))
