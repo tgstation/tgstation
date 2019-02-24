@@ -154,7 +154,7 @@
 		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
-		playsound(loc, messagevoice[message], 50)
+		playsound(src, messagevoice[message], 50)
 
 	// Couldn't reach the target, reset and try again ignoring the old one
 	if(frustration > 8)
