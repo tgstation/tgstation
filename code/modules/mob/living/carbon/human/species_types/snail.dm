@@ -1,15 +1,15 @@
 /datum/species/snail
 	name = "Snailperson"
 	id = "snail"
-	default_color = "00cc00"
+	default_color = "336600" //vomit green
 	species_traits = list(MUTCOLORS, NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_ALWAYS_CLEAN)
-	attack_verb = "slops"
+	attack_verb = "slap"
 	say_mod = "slurs"
 	coldmod = 0.5 //snails only come out when its cold and wet
 	burnmod = 2
 	speedmod = 6
-	punchdamagehigh = 0 //snails are soft and squishy
+	punchdamagehigh = 0.5 //snails are soft and squishy
 	siemens_coeff = 2 //snails are mostly water
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	sexes = FALSE //snails are hermaphrodites
@@ -28,16 +28,23 @@
 
 /datum/species/snail/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
-	if(C.doUnEquip(C.get_item_by_slot(SLOT_BACK)))
-		C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), SLOT_BACK)
+	var/obj/item/storage/backpack/bag = C.get_item_by_slot(SLOT_BACK)
+	if(!istype(bag, /obj/item/storage/backpack/snail))
+		if(C.dropItemToGround(bag)) //returns TRUE even if its null
+			C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), SLOT_BACK)
 	C.AddComponent(/datum/component/snailcrawl)
-	C.add_trait(NOSLIP, TRAIT_SPECIES)
+	C.add_trait(TRAIT_NOSLIPALL, SPECIES_TRAIT)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	var/datum/component/CP = C.GetComponent(/datum/component/snailcrawl)
 	CP.RemoveComponent()
-	C.remove_trait(NOSLIP, TRAIT_SPECIES)
+	C.remove_trait(TRAIT_NOSLIPALL, SPECIES_TRAIT)
+	var/obj/item/storage/backpack/bag = C.get_item_by_slot(SLOT_BACK)
+	if(istype(bag, /obj/item/storage/backpack/snail))
+		bag.emptyStorage()
+		C.doUnEquip(bag, TRUE, no_move = TRUE)
+		qdel(bag)
 
 /obj/item/storage/backpack/snail
 	name = "snail shell"

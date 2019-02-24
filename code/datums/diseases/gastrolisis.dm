@@ -42,19 +42,19 @@
 			if(!istype(shell, /obj/item/storage/backpack/snail))
 				shell = null
 			if(!shell && prob(5))
-				if(affected_mob.doUnEquip(affected_mob.get_item_by_slot(SLOT_BACK)))
+				if(affected_mob.dropItemToGround(affected_mob.get_item_by_slot(SLOT_BACK)))
 					affected_mob.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(affected_mob), SLOT_BACK)
 					affected_mob.visible_message("<span class='warning'>[affected_mob] grows a grotesque shell on their back!</span>", \
 					"<span class='userdanger'>You scream in pain as a shell pushes itself out from under your skin!</span>")
 					affected_mob.emote("scream")
 					return
 			var/obj/item/organ/tongue/tongue = locate(/obj/item/organ/tongue/snail) in affected_mob.internal_organs
-			if(!tongue && prob(15))
+			if(!tongue && prob(5))
 				var/obj/item/organ/tongue/snail/new_tongue = new()
-				new_tongue.Insert(affected_mob)
+				new_tongue.Insert(affected_mob, drop_if_replaced = FALSE)
 				to_chat(affected_mob, "<span class='userdanger'>You feel your speech slow down</span>")
 				return
-			if(shell && eyes && tongue && prob(15))
+			if(shell && eyes && tongue && prob(5))
 				affected_mob.set_species(/datum/species/snail)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] turns into a snail!</span>", \
 				"<span class='boldnotice'>You turned into a snail person! You feel an urge to cccrrraaawwwlll...</span>")
