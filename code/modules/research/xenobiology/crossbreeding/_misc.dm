@@ -12,6 +12,8 @@ Slimecrossing Items
 	desc = "They say a picture is like a moment stopped in time."
 	pictures_left = 1
 	pictures_max = 1
+	can_customise = FALSE
+	default_picture_name = "A nostalgic picture"
 	var/used = FALSE
 
 /datum/component/dejavu
