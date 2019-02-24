@@ -160,17 +160,19 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
+/obj/item/gun/ballistic/revolver/russian/do_spin()
+	spun = TRUE
+
 /obj/item/gun/ballistic/revolver/russian/attackby(obj/item/A, mob/user, params)
 	..()
 	if(get_ammo() > 0)
 		spin()
-		spun = TRUE
 	update_icon()
 	A.update_icon()
 	return
 
 /obj/item/gun/ballistic/revolver/russian/attack_self(mob/user)
-	if(!spun && can_shoot())
+	if(!spun)
 		spin()
 		spun = TRUE
 		return
@@ -215,6 +217,11 @@
 
 		user.visible_message("<span class='danger'>*click*</span>")
 		playsound(src, dry_fire_sound, 30, TRUE)
+
+/obj/item/gun/ballistic/revolver/russian/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	add_fingerprint(user)
+	playsound(src, dry_fire_sound, 30, TRUE)
+	user.visible_message("<span class='danger'>[user.name] tries to fire the russian revolver at the same time, but only succeeds in looking like an idiot.</span>", "<span class='danger'>\The [src]'s anti-combat mechanism prevents you from firing it at the same time!</span>")
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = BODY_ZONE_HEAD)
 	user.apply_damage(300, BRUTE, affecting)
