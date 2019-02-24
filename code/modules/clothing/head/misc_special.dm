@@ -189,6 +189,7 @@
 	flags_inv = HIDEHAIR
 	var/hair_style = "Very Long Hair"
 	var/hair_color = "#000"
+	var/fixedcolor = TRUE //can color be changed manually?
 
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
@@ -216,9 +217,39 @@
 		M.color = hair_color
 		. += M
 
+/obj/item/clothing/head/wig/attack_self(mob/user)
+	var/new_style = input(user, "Select a hair style", "Wig Styling")  as null|anything in (GLOB.hair_styles_list - "Bald")
+	if(!user.canUseTopic(src, BE_CLOSE))
+		return
+	if(new_style)
+		hair_style = new_style
+		user.visible_message("<span class='notice'>[user] changes the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change the [src]'s hairstyle to [new_style].</span>")
+	if(fixedcolor)
+		hair_color = input(usr,"","Choose Color",hair_color) as color|null
+	update_icon()
+
 /obj/item/clothing/head/wig/random/Initialize(mapload)
 	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
 	hair_color = "#[random_short_color()]"
+	. = ..()
+
+/obj/item/clothing/head/wig/chameleon
+	name = "chameleon wig"
+	desc = "A bunch of hair without a head attached. This one changes color to match the natural hair of the wearer."
+	hair_color = "#FFF"
+	fixedcolor = FALSE
+	custom_price = 25
+
+/obj/item/clothing/head/wig/chameleon/Initialize(mapload)
+	hair_style = pick(GLOB.hair_styles_list - "Bald")
+	. = ..()
+
+/obj/item/clothing/head/wig/chameleon/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == SLOT_HEAD)
+		hair_color = "#[user.hair_color]"
+		update_icon()
+	else
+		hair_color = "#FFF"
 	. = ..()
 
 /obj/item/clothing/head/bronze
