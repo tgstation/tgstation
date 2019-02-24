@@ -1,0 +1,15 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/indestructible/riveted,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaa
+abaaaaaaba
+aaaaaaaaaa
+aaaaaaaaaa
+aaaabbaaaa
+aaaabbaaaa
+aaaaaaaaaa
+aaaaaaaaaa
+abaaaaaaba
+aaaaaaaaaa
+"}
