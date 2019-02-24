@@ -17,6 +17,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
+	var/list/engine_templates = list()
 
 	var/list/areas_in_z = list()
 
@@ -155,6 +156,7 @@ SUBSYSTEM_DEF(mapping)
 	lava_ruins_templates = SSmapping.lava_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
+	engine_templates = SSmapping.engine_templates
 	unused_turfs = SSmapping.unused_turfs
 	turf_reservations = SSmapping.turf_reservations
 	used_turfs = SSmapping.used_turfs
@@ -333,6 +335,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	preloadRuinTemplates()
 	preloadShuttleTemplates()
 	preloadShelterTemplates()
+	preloadEngineTemplates()
 
 /datum/controller/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
@@ -381,6 +384,16 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/datum/controller/subsystem/mapping/proc/preloadEngineTemplates()
+	for(var/item in subtypesof(/datum/map_template/engine))
+		var/datum/map_template/engine/engine_type = item
+		if(!(initial(engine_type.mappath)))
+			continue
+		var/datum/map_template/engine/S = new engine_type()
+
+		engine_templates[S.engine_id] = S
+		map_templates[S.engine_id] = S
 
 //Manual loading of away missions.
 /client/proc/admin_away()
