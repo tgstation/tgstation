@@ -282,18 +282,18 @@
 /mob/living/simple_animal/bot/firebot/explode()
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
-	var/atom/loc = drop_location()
+	var/atom/drop_location = drop_location()
 
-	new /obj/item/assembly/prox_sensor(loc)
-	new /obj/item/clothing/head/hardhat/red(loc)
+	new /obj/item/assembly/prox_sensor(drop_location)
+	new /obj/item/clothing/head/hardhat/red(drop_location)
 
-	var/turf/T = get_turf(loc)
+	var/turf/T = get_turf(drop_location)
 	if(isopenturf(T))
 		var/turf/open/theturf = T
 		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 	if(prob(50))
-		drop_part(robot_arm, loc)
+		drop_part(robot_arm, drop_location)
 
 	do_sparks(3, TRUE, src)
 	..()
