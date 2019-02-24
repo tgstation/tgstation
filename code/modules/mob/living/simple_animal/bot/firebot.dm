@@ -103,7 +103,7 @@
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
-		playsound(src, "sparks", 75, 1)
+		playsound(src, "sparks", 75, TRUE)
 		if(user)
 			old_target_fire = user
 		extinguish_fires = FALSE
@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/bot/firebot/Topic(href, href_list)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(href_list["operation"])
 		if("extinguish_fires")
@@ -154,7 +154,7 @@
 		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
-		playsound(loc, messagevoice[message], 50, 0)
+		playsound(loc, messagevoice[message], 50)
 
 	// Couldn't reach the target, reset and try again ignoring the old one
 	if(frustration > 8)
@@ -179,19 +179,19 @@
 		if((speech_cooldown + SPEECH_INTERVAL) < world.time)
 			if(ishuman(target_fire))
 				speak("Stop, drop and roll!")
-				playsound(src.loc, "sound/voice/firebot/stopdropnroll.ogg", 50, 0)
+				playsound(src, "sound/voice/firebot/stopdropnroll.ogg", 50, 0)
 			else
 				speak("Extinguishing!")
-				playsound(src.loc, "sound/voice/firebot/extinguishing.ogg", 50, 0)
+				playsound(src, "sound/voice/firebot/extinguishing.ogg", 50, 0)
 			speech_cooldown = world.time
 
 		if(emagged == 2) // When emagged, knock people down and wet the floors under em
 			var/mob/living/M = target_fire
 			M.Knockdown(3)
 			src.do_attack_animation(M)
-			visible_message("<span class='danger'>[src] rams into [M] knocking them over!</span>")
+			visible_message("<span class='danger'>[src] rams into [M] knocking [M.p_them()] over!</span>")
 
-			var/turf/T = get_turf(M.loc)
+			var/turf/T = get_turf(M)
 
 			if(isopenturf(T))
 				var/turf/open/theturf = T
@@ -247,7 +247,7 @@
 	if(is_burning(scan_target))
 		if((detected_cooldown + DETECTED_VOICE_INTERVAL) < world.time)
 			speak("Fire detected!")
-			playsound(src.loc, "sound/voice/firebot/detected.ogg", 50, 0)
+			playsound(src, "sound/voice/firebot/detected.ogg", 50, 0)
 			detected_cooldown = world.time
 		result = scan_target
 
@@ -272,7 +272,6 @@
 		return
 	if(IsStun() || IsParalyzed())
 		icon_state = "firebots1"
-		return
 	else if(stationary_mode) //Bot has yellow light to indicate stationary mode.
 		icon_state = "firebots1"
 	else
@@ -283,16 +282,19 @@
 	on = FALSE
 	visible_message("<span class='boldannounce'>[src] blows apart!</span>")
 
-	new /obj/item/assembly/prox_sensor(src.loc)
-	new /obj/item/clothing/head/hardhat/red(src.loc)
+	var/atom/Tsec = drop_location()
 
-	var/turf/T = get_turf(src)
+	new /obj/item/assembly/prox_sensor(Tsec)
+	new /obj/item/clothing/head/hardhat/red(Tsec)
+
+	var/turf/T = get_turf(Tsec)
+
 	if(isopenturf(T))
 		var/turf/open/theturf = T
 		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
 	if(prob(50))
-		drop_part(robot_arm, src.loc)
+		drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 	..()
