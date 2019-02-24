@@ -29,7 +29,7 @@
 /area/shuttle/hunter)
 "ag" = (
 /obj/structure/mirror{
-	step_y = 28
+	pixel_y = 28
 	},
 /turf/open/floor/plating,
 /area/shuttle/hunter)
@@ -113,7 +113,7 @@
 "av" = (
 /obj/structure/table,
 /obj/item/storage/fancy/cigarettes/cigars/cohiba{
-	step_y = 6
+	pixel_y = 6
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
