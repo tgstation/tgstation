@@ -1068,13 +1068,14 @@
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying)
 	var/canstand = canstand_involuntary && !resting
 
-	var/should_be_lying = canstand
+	var/should_be_lying = !canstand
 	if(buckled)
 		if(buckled.buckle_lying != -1)
 			should_be_lying = buckled.buckle_lying
 	
 	if(should_be_lying)
 		mobility_flags &= ~(MOBILITY_UI | MOBILITY_PULL | MOBILITY_STAND)
+		lying = 0
 		if(buckled)
 			if(buckled.buckle_lying != -1)
 				lying = buckled.buckle_lying
