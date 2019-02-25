@@ -1,0 +1,4 @@
+author: "4dplanner"
+delete-after: True
+changes: 
+  - bugfix: "the center blast of the hierophant club cross attack no longer deals reduced damage"
