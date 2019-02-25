@@ -59,7 +59,7 @@
 /datum/bank_account/proc/add_neetbux()
 	account_job.paycheck += PAYCHECK_WELFARE
 
-/datum/bank_account/proc/bank_card_talk(message, force = 0)
+/datum/bank_account/proc/bank_card_talk(message, force)
 	if(!message || !bank_cards.len)
 		return
 	for(var/obj/A in bank_cards)
