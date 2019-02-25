@@ -199,7 +199,9 @@
 		if(prob(0.05))
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
-
+	if(owner.has_trait(TRAIT_UNSTABLE) && sanity < SANITY_CRAZY)
+		owner.apply_status_effect(/datum/status_effect/unstable_insanity)
+//wip
 	HandleNutrition(owner)
 	HandleHygiene(owner)
 
