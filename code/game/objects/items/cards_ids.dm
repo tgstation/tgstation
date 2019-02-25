@@ -174,7 +174,6 @@
 	if(!isliving(user))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	
 	return TRUE
@@ -198,8 +197,9 @@
 				return
 		to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 		return
-	var/amount_to_remove = input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Account Reclamation", 5) as num
+	var/amount_to_remove = input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num
 	if(!amount_to_remove || amount_to_remove < 0)
+		to_chat(user, "<span class='warning'>You're pretty sure that's not how money works.</span>")
 		return
 	if(!alt_click_can_use_id(user))
 		return
@@ -210,7 +210,7 @@
 		return
 	else
 		var/difference = amount_to_remove - registered_account.account_balance
-		to_chat(user, "<span class='warning'>The linked account needs [difference] more credit(s) to perform that withdrawal.</span>")
+		to_chat(user, "<span class='warning'>The linked account needs [difference] more credit\s to perform that withdrawal.</span>")
 
 /obj/item/card/id/examine(mob/user)
 	..()
