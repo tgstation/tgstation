@@ -1,0 +1,4 @@
+author: "MacHac"
+delete-after: True
+changes: 
+  - bugfix: "Portable atmospherics machinery now releases its air when it explodes."
