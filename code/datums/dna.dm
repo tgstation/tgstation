@@ -629,12 +629,15 @@
 						mind.hasSoul = FALSE
 			if(5)
 				to_chat(src, "<span class='phobia'>LOOK UP!</span>")
-				spawn(30)
-					if(!has_trait(TRAIT_BLIND))
-						var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
-						if(!eyes)
-							return
-						eyes.Remove(src)
-						qdel(eyes)
-						visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
-						addtimer(CALLBACK(src, .proc/adjustBrainLoss, 200), 20)
+				addtimer(CALLBACK(src, .proc/something_horrible_mindmelt), 30)
+
+
+/mob/living/carbon/human/proc/something_horrible_mindmelt()
+	if(!has_trait(TRAIT_BLIND))
+		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in internal_organs
+		if(!eyes)
+			return
+		eyes.Remove(src)
+		qdel(eyes)
+		visible_message("<span class='notice'>[src] looks up and their eyes melt away!</span>", "<span class>='userdanger'>I understand now.</span>")
+		addtimer(CALLBACK(src, .proc/adjustBrainLoss, 200), 20)

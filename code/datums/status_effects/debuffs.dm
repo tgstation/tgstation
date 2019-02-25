@@ -731,16 +731,16 @@
 	status_type = STATUS_EFFECT_REPLACE
 	tick_interval = 1
 	alert_type = /obj/screen/alert/status_effect/go_away
-	var/dir
+	var/direction
 
 /datum/status_effect/go_away/on_creation(mob/living/new_owner, set_duration, updating_canmove)
 	. = ..()
-	dir = pick(NORTH, SOUTH, EAST, WEST)
-	new_owner.setDir(dir)
+	direction = pick(NORTH, SOUTH, EAST, WEST)
+	new_owner.setDir(direction)
 
 /datum/status_effect/go_away/tick()
 	owner.AdjustStun(1, ignore_canstun = TRUE)
-	var/turf/T = get_step(owner, dir)
+	var/turf/T = get_step(owner, direction)
 	owner.forceMove(T)
 
 /obj/screen/alert/status_effect/go_away
