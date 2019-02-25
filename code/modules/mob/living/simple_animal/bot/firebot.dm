@@ -109,6 +109,11 @@
 		extinguish_fires = FALSE
 		extinguish_people = TRUE
 
+		internal_ext.chem = "clf3" //Refill the internal extinguisher with liquid fire
+		internal_ext.power = 3
+		internal_ext.precision = FALSE
+		internal_ext.Initialize()
+
 /mob/living/simple_animal/bot/firebot/Topic(href, href_list)
 	if(..())
 		return TRUE
@@ -127,7 +132,7 @@
 /mob/living/simple_animal/bot/firebot/proc/is_burning(atom/target)
 	if(ismob(target))
 		var/mob/living/M = target
-		if(M.on_fire || (emagged == 2 && !M.IsKnockdown()))
+		if(M.on_fire || (emagged == 2 && !M.on_fire))
 			return TRUE
 
 	else if(isturf(target))
@@ -185,18 +190,6 @@
 				playsound(src, "sound/voice/firebot/extinguishing.ogg", 50, 0)
 			speech_cooldown = world.time
 
-		if(emagged == 2) // When emagged, knock people down and wet the floors under em
-			var/mob/living/M = target_fire
-			M.Knockdown(3)
-			src.do_attack_animation(M)
-			visible_message("<span class='danger'>[src] rams into [M] knocking [M.p_them()] over!</span>")
-
-			var/turf/T = get_turf(M)
-
-			if(isopenturf(T))
-				var/turf/open/theturf = T
-				theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-		else
 			flick("firebot1_use", src)
 			spray_water(target_fire, src)
 
