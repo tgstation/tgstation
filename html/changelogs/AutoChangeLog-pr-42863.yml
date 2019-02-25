@@ -1,0 +1,5 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - rscadd: "pumps, volume pumps, filters and mixers can be turned on and off by ctrlclick"
+  - rscadd: "pumps, volume pumps, filters and mixers can be set to max transfer by altclick"
