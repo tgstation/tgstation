@@ -1,4 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - admin: "Admins can now use the Centcom Podlauncher to launch things without the things looking like they're being sent inside a pod."
