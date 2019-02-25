@@ -248,9 +248,7 @@
 	if(ishuman(user) && slot == SLOT_HEAD)
 		hair_color = "#[user.hair_color]"
 		update_icon()
-	else
-		hair_color = "#FFF"
-	. = ..()
+		user.update_inv_head()
 
 /obj/item/clothing/head/bronze
 	name = "bronze hat"
