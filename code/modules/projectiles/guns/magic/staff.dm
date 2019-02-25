@@ -136,5 +136,5 @@
 	desc = "An artefact that spits bolts of mind-unlocking magic that can let ghosts invade the victim's mind."
 	fire_sound = 'sound/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/wipe
-	icon_state = "staffofflying"
-	item_state = "staffofflying"
+	icon_state = "staffofwipe"
+	item_state = "staffofwipe"

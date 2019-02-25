@@ -74,25 +74,33 @@
 
 /mob/camera/imaginary_friend/Login()
 	..()
-	to_chat(src, "<span class='notice'><b>You are the imaginary friend of [owner]!</b></span>")
-	to_chat(src, "<span class='notice'>You are absolutely loyal to your friend, no matter what.</span>")
-	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what [owner] cannot.</span>")
+	greet()
 	Show()
+
+/mob/camera/imaginary_friend/proc/greet()
+		to_chat(src, "<span class='notice'><b>You are the imaginary friend of [owner]!</b></span>")
+		to_chat(src, "<span class='notice'>You are absolutely loyal to your friend, no matter what.</span>")
+		to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what [owner] cannot.</span>")
 
 /mob/camera/imaginary_friend/Initialize(mapload, _trauma)
 	. = ..()
-	var/gender = pick(MALE, FEMALE)
-	real_name = random_unique_name(gender)
-	name = real_name
+
 	trauma = _trauma
 	owner = trauma.owner
 	copy_known_languages_from(owner, TRUE)
-	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
+
+	setup_friend()
 
 	join = new
 	join.Grant(src)
 	hide = new
 	hide.Grant(src)
+
+/mob/camera/imaginary_friend/proc/setup_friend()
+	var/gender = pick(MALE, FEMALE)
+	real_name = random_unique_name(gender)
+	name = real_name
+	human_image = get_flat_human_icon(null, pick(SSjob.occupations))
 
 /mob/camera/imaginary_friend/proc/Show()
 	if(!client) //nobody home
@@ -248,9 +256,12 @@
 	real_name = "figment of imagination?"
 	desc = "The previous host of this body."
 
-/mob/camera/imaginary_friend/trapped/Login()
-	..()
+/mob/camera/imaginary_friend/trapped/greet()
 	to_chat(src, "<span class='notice'><b>You have managed to hold on as a figment of the new host's imagination!</b></span>")
 	to_chat(src, "<span class='notice'>All hope is lost for you, but at least you may interact with your host. You do not have to be loyal to them.</span>")
 	to_chat(src, "<span class='notice'>You cannot directly influence the world around you, but you can see what the host cannot.</span>")
-	Show()
+
+/mob/camera/imaginary_friend/trapped/setup_friend()
+	real_name = "[owner.real_name]?"
+	name = real_name
+	human_image = icon('icons/mob/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
