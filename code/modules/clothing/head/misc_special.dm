@@ -233,18 +233,18 @@
 	hair_color = "#[random_short_color()]"
 	. = ..()
 
-/obj/item/clothing/head/wig/chameleon
-	name = "chameleon wig"
-	desc = "A bunch of hair without a head attached. This one changes color to match the natural hair of the wearer."
+/obj/item/clothing/head/wig/natural
+	name = "natural wig"
+	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
 	hair_color = "#FFF"
 	fixedcolor = FALSE
 	custom_price = 25
 
-/obj/item/clothing/head/wig/chameleon/Initialize(mapload)
+/obj/item/clothing/head/wig/natural/Initialize(mapload)
 	hair_style = pick(GLOB.hair_styles_list - "Bald")
 	. = ..()
 
-/obj/item/clothing/head/wig/chameleon/equipped(mob/living/carbon/human/user, slot)
+/obj/item/clothing/head/wig/natural/equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && slot == SLOT_HEAD)
 		hair_color = "#[user.hair_color]"
 		update_icon()
