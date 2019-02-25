@@ -174,7 +174,7 @@
 	if(!isliving(user))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		to_chat(user, "<span class='warning'>You must hold the ID in your hand to do this.</span>")
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	
 	return TRUE
