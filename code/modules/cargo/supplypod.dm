@@ -61,7 +61,13 @@
 
 /obj/structure/closet/supplypod/update_icon()
 	cut_overlays()
-	if (style != STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
+	if (style == STYLE_SEETHROUGH && !opened)
+		pixel_x = 0
+		pixel_y = 0
+		for (var/atom/movable/O in contents)
+			var/icon/I = getFlatIcon(O) //im so sorry
+			add_overlay(I)
+	else if (style != STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
 		if (opened)
 			add_overlay("[icon_state]_open")
 		else
@@ -143,22 +149,24 @@
 		moveToNullspace()
 		addtimer(CALLBACK(src, .proc/open, benis), openingDelay) //After the openingDelay passes, we use the open proc from this supplyprod while referencing the contents of the "holder", in this case the gondolapod mob
 	else
-		addtimer(CALLBACK(src, .proc/open, src), openingDelay) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
+		addtimer(CALLBACK(src, .proc/open, src), (style == STYLE_SEETHROUGH ? 0 : openingDelay)) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
 /obj/structure/closet/supplypod/open(atom/movable/holder, var/broken = FALSE, var/forced = FALSE) //The holder var represents an atom whose contents we will be working with
+	opened = TRUE //This is to ensure we don't open something that has already been opened
+	if (style == STYLE_SEETHROUGH)
+		update_icon()
 	var/turf/T = get_turf(holder) //Get the turf of whoever's contents we're talking about
 	var/mob/M
 	if (istype(holder, /mob)) //Allows mobs to assume the role of the holder, meaning we look at the mob's contents rather than the supplypod's contents. Typically by this point the supplypod's contents have already been moved over to the mob's contents
 		M = holder
 		if (M.key && !forced && !broken) //If we are player controlled, then we shouldnt open unless the opening is manual, or if it is due to being destroyed (represented by the "broken" parameter)
 			return
-	opened = TRUE //This is to ensure we don't open something that has already been opened
 	if (openingSound)
-		playsound(get_turf(holder), openingSound, soundVolume, 0, 0)
+		playsound(get_turf(holder), openingSound, soundVolume, 0, 0) //Special admin sound to play
 	INVOKE_ASYNC(holder, .proc/setOpened) //Use the INVOKE_ASYNC proc to call setOpened() on whatever the holder may be, without giving the atom/movable base class a setOpened() proc definition
 	for (var/atom/movable/O in holder.contents) //Go through the contents of the holder
 		O.forceMove(T) //move everything from the contents of the holder to the turf of the holder
-	if (!effectQuiet) //If we aren't being quiet, play an open sound
+	if (!effectQuiet && !openingSound && style != STYLE_SEETHROUGH) //If we aren't being quiet, play the default pod open sound
 		playsound(get_turf(holder), open_sound, 15, 1, -3)
 	if (broken) //If the pod is opening because it's been destroyed, we end here
 		return
@@ -170,7 +178,7 @@
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
-		if (style != STYLE_INVISIBLE)
+		if (style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
@@ -215,7 +223,13 @@
 	icon_state = ""
 
 /obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
-	if (pod.style != STYLE_INVISIBLE) //Check to ensure the pod isn't invisible
+	if (pod.style == STYLE_SEETHROUGH)
+		pixel_x = 0
+		pixel_y = 0
+		for (var/atom/movable/O in pod.contents)
+			var/icon/I = getFlatIcon(O) //im so sorry
+			add_overlay(I)
+	else if (pod.style != STYLE_INVISIBLE) //Check to ensure the pod isn't invisible
 		icon_state = "[pod.icon_state]_falling"
 		name = pod.name
 	. = ..()
@@ -282,6 +296,7 @@
 	addtimer(CALLBACK(src, .proc/endLaunch), pod.fallDuration, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 /obj/effect/DPtarget/proc/endLaunch()
+	pod.update_icon()
 	pod.forceMove(drop_location()) //The fallingPod animation is over, now's a good time to forceMove the actual pod into position
 	QDEL_NULL(fallingPod) //Delete the falling pod effect, because at this point its animation is over. We dont use temp_visual because we want to manually delete it as soon as the pod appears
 	for (var/mob/living/M in src) //Remember earlier (initialization) when we moved mobs into the DPTarget so they wouldnt get lost in nullspace? Time to get them out
