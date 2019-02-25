@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - bugfix: "Drunkenness will now correctly reach zero over time"
+  - bugfix: "Drunk moodlet now clears properly"
