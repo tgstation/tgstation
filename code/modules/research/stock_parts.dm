@@ -28,10 +28,14 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 	if(flag)
 		return
 	else if(works_from_distance)
-		if(istype(T))
-			//if(T.component_parts)
-			if(T.exchange_parts(user, src))
-				user.Beam(T,icon_state="rped_upgrade",time=5)
+		var/turf/srcturf = get_turf(user)
+		var/turf/Tturf = get_turf(T)
+		//preventing the use of this item through cameras. -falaskian
+		if(srcturf && Tturf && srcturf.z == Tturf.z && get_dist(srcturf,Tturf) <= world.view)
+			if(istype(T))
+				//if(T.component_parts)
+				if(T.exchange_parts(user, src))
+					user.Beam(T,icon_state="rped_upgrade",time=5)
 	return
 
 /obj/item/storage/part_replacer/bluespace

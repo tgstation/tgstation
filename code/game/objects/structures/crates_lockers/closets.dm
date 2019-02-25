@@ -215,6 +215,29 @@
 /obj/structure/closet/attackby(obj/item/W, mob/user, params)
 	if(user in src)
 		return
+	if(istype(W,/obj/item/stack/sheet/plasteel) && opened && !istype(src,/obj/structure/closet/secure_closet) && !istype(src,/obj/structure/closet/crate))
+		var/obj/item/stack/sheet/plasteel/P = W
+		to_chat(user, "<span class='notice'>You begin reinforce the [src].</span>")
+		playsound(src, 'sound/items/crowbar.ogg', 50, 1)
+		if(P.amount >= 5 && do_after(user, 80, 1, src) && opened && loc)
+			dump_contents()
+			var/obj/structure/closet/secure_closet/S = new(loc)
+			for(var/atom/movable/AM in S)
+				AM.moveToNullspace()
+				qdel(AM)
+			S.locked = FALSE
+			S.opened = TRUE
+			if(!dense_when_open)
+				density = FALSE
+			S.climb_time *= 0.5
+			S.circuit = 0
+			S.circuit_wires = 0
+			S.name = name
+			S.update_icon()
+			to_chat(user, "<span class='notice'>You upgrade the [src] to a secure locker.</span>")
+			src.moveToNullspace()
+			qdel(src)
+			return
 	if(!src.tool_interact(W,user))
 		return ..()
 
