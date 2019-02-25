@@ -497,16 +497,16 @@
 
 //Recursively checks if an item is inside a given type, even through layers of storage. Returns the atom if it finds it.
 /proc/recursive_loc_check(atom/movable/target, type)
-  var/atom/A = target
-  if(istype(A, type))
-    return A
+	var/atom/A = target
+	if(istype(A, type))
+		return A
 
-  while(!istype(A.loc, type))
-    if(!A.loc)
-      return
-    A = A.loc
+	while(!istype(A.loc, type))
+		if(!A.loc)
+			return
+		A = A.loc
 
-  return A.loc
+	return A.loc
 
 /proc/AnnounceArrival(var/mob/living/carbon/human/character, var/rank)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
