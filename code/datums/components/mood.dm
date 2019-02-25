@@ -212,7 +212,10 @@
 		amount = sanity + 0.5
 	else if(sanity > maximum && amount > sanity - 0.5)
 		amount = sanity - 0.5
-	sanity = amount
+
+	// Disturbed stops you from getting any more sane
+	if(!(owner.has_trait(TRAIT_UNSTABLE) && amount > sanity))
+		sanity = amount
 
 	var/mob/living/master = parent
 	switch(sanity)
