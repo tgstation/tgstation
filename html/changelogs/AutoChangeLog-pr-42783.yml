@@ -1,0 +1,5 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Corrected slime mutation not correctly replacing the word douchebag."
+  - bugfix: "Fixed Elvis speech mutation inserting the word \"getting\" when saying \"muh valids\""
