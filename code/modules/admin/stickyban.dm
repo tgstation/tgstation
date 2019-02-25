@@ -35,7 +35,7 @@
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 			SSstickyban.cache[ckey] = ban
 
-			if(!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+			if(SSdbcore.Connect())
 				var/datum/DBQuery/query_create_stickyban = SSdbcore.NewQuery("INSERT INTO [format_table_name("stickyban")] (ckey, reason, banning_admin) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(ban["message"])]', '[sanitizeSQL(usr.ckey)]')")
 				query_create_stickyban.warn_execute()
 
@@ -59,7 +59,7 @@
 			world.SetConfig("ban",ckey, null)
 			SSstickyban.cache -= ckey
 
-			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+			if (SSdbcore.Connect())
 				var/datum/DBQuery/query_remove_stickyban = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 				query_remove_stickyban.warn_execute()
 				var/datum/DBQuery/query_remove_stickyban_alts = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]'")
@@ -105,7 +105,7 @@
 
 			SSstickyban.cache[ckey] = ban
 
-			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+			if (SSdbcore.Connect())
 				var/datum/DBQuery/query_remove_stickyban_alt = SSdbcore.NewQuery("DELETE FROM [format_table_name("stickyban_matched_ckey")] WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 				query_remove_stickyban_alt.warn_execute()
 
@@ -135,7 +135,7 @@
 
 			SSstickyban.cache[ckey] = ban
 
-			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+			if (SSdbcore.Connect())
 				var/datum/DBQuery/query_edit_stickyban = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban")] SET reason = '[sanitizeSQL(reason)]' WHERE ckey = '[sanitizeSQL(ckey)]'")
 				query_edit_stickyban.warn_execute()
 
@@ -181,7 +181,7 @@
 
 			SSstickyban.cache[ckey] = ban
 
-			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+			if (!SSdbcore.Connect())
 				var/datum/DBQuery/query_exempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 1 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 				query_exempt_stickyban_alt.warn_execute()
 
@@ -227,7 +227,7 @@
 
 			SSstickyban.cache[ckey] = ban
 
-			if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+			if (SSdbcore.Connect())
 
 				var/datum/DBQuery/query_unexempt_stickyban_alt = SSdbcore.NewQuery("UPDATE [format_table_name("stickyban_matched_ckey")] SET exempt = 0 WHERE stickyban = '[sanitizeSQL(ckey)]' AND matched_ckey = '[sanitizeSQL(alt)]'")
 				query_unexempt_stickyban_alt.warn_execute()
@@ -238,7 +238,7 @@
 		if ("timeout")
 			if (!data["ckey"])
 				return
-			if (CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
+			if (!SSdbcore.Connect())
 				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 				return
 
@@ -265,7 +265,7 @@
 		if ("untimeout")
 			if (!data["ckey"])
 				return
-			if (CONFIG_GET(flag/ban_legacy_system) || !SSdbcore.Connect())
+			if (!SSdbcore.Connect())
 				to_chat(usr, "<span class='adminnotice'>No database connection!</span>")
 				return
 			var/ckey = data["ckey"]
@@ -319,7 +319,7 @@
 	if (!ban)
 		return
 	var/timeout
-	if (!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
+	if (SSdbcore.Connect())
 		timeout = "<a href='?_src_=holder;[HrefToken()];stickyban=[(ban["timeout"] ? "untimeout" : "timeout")]&ckey=[ckey]'>\[[(ban["timeout"] ? "untimeout" : "timeout" )]\]</a>"
 	. = list({"
 		<a href='?_src_=holder;[HrefToken()];stickyban=remove&ckey=[ckey]'>\[-\]</a>
@@ -368,7 +368,7 @@
 	usr << browse(html,"window=stickybans;size=700x400")
 
 /proc/sticky_banned_ckeys()
-	if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
+	if (SSdbcore.Connect() || length(SSstickyban.dbcache))
 		if (SSstickyban.dbcacheexpire < world.time)
 			SSstickyban.Populatedbcache()
 		if (SSstickyban.dbcacheexpire)
@@ -381,7 +381,7 @@
 	. = list()
 	if (!ckey)
 		return null
-	if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
+	if (SSdbcore.Connect() || length(SSstickyban.dbcache))
 		if (SSstickyban.dbcacheexpire < world.time)
 			SSstickyban.Populatedbcache()
 		if (SSstickyban.dbcacheexpire)
