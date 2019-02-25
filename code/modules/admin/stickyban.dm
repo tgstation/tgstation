@@ -386,7 +386,7 @@
 			SSstickyban.Populatedbcache()
 		if (SSstickyban.dbcacheexpire)
 			. = SSstickyban.dbcache[ckey]
-			//reset the cache incase its a newer ban (but only if we didn't update the cache
+			//reset the cache incase its a newer ban (but only if we didn't update the cache recently)
 			if (!. && SSstickyban.dbcacheexpire != world.time+STICKYBAN_DB_CACHE_TIME)
 				SSstickyban.dbcacheexpire = 1
 				SSstickyban.Populatedbcache()
@@ -434,6 +434,10 @@
 	. = ban.Copy()
 	if (.["keys"])
 		.["keys"] = jointext(.["keys"], ",")
+	if (.["IP"])
+		.["IP"] = jointext(.["IP"], ",")
+	if (.["computer_id"])
+		.["computer_id"] = jointext(.["computer_id"], ",")
 	if (.["whitelist"])
 		.["whitelist"] = jointext(.["whitelist"], ",")
 	if (.["type"])

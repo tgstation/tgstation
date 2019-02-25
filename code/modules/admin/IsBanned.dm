@@ -61,7 +61,8 @@
 		if(!SSdbcore.Connect())
 			var/msg = "Ban database connection failure. Key [ckey] not checked"
 			log_world(msg)
-			message_admins(msg)
+			if (message)
+				message_admins(msg)
 		else
 			var/list/ban_details = is_banned_from_with_details(ckey, address, computer_id, "Server")
 			for(var/i in ban_details)
@@ -69,12 +70,14 @@
 					if(text2num(i["applies_to_admins"]))
 						var/msg = "Admin [key] is admin banned, and has been disallowed access."
 						log_admin(msg)
-						message_admins(msg)
+						if (message)
+							message_admins(msg)
 					else
 						var/msg = "Admin [key] has been allowed to bypass a matching non-admin ban on [i["key"]] [i["ip"]]-[i["computerid"]]."
 						log_admin(msg)
-						message_admins(msg)
-						addclientmessage(ckey,"<span class='adminnotice'>Admin [key] has been allowed to bypass a matching non-admin ban on [i["key"]] [i["ip"]]-[i["computerid"]].</span>")
+						if (message)
+							message_admins(msg)
+							addclientmessage(ckey,"<span class='adminnotice'>Admin [key] has been allowed to bypass a matching non-admin ban on [i["key"]] [i["ip"]]-[i["computerid"]].</span>")
 						continue
 				var/expires = "This is a permanent ban."
 				if(i["expiration_time"])
@@ -166,9 +169,13 @@
 				return null
 
 			if (ban["fromdb"])
-				if(!CONFIG_GET(flag/ban_legacy_system) && SSdbcore.Connect())
-					var/datum/DBQuery/query_add_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(bannedckey)]')")
-					query_add_match.warn_execute()
+				if(SSdbcore.Connect())
+					var/datum/DBQuery/query_add_ckey_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES ('[sanitizeSQL(ckey)]', '[sanitizeSQL(bannedckey)]')")
+					query_add_ckey_match.warn_execute()
+					var/datum/DBQuery/query_add_ip_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_ip")] (matched_ip, stickyban) VALUES ('[sanitizeSQL(address)]', '[sanitizeSQL(bannedckey)]')")
+					query_add_ip_match.warn_execute()
+					var/datum/DBQuery/query_add_cid_match = SSdbcore.NewQuery("INSERT IGNORE INTO [format_table_name("stickyban_matched_cid")] (matched_cid, stickyban) VALUES ('[sanitizeSQL(computer_id)]', '[sanitizeSQL(bannedckey)]')")
+					query_add_cid_match.warn_execute()
 
 		//byond will not trigger isbanned() for "global" host bans,
 		//ie, ones where the "apply to this game only" checkbox is not checked (defaults to not checked)

@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(stickyban)
 	//sanitize the sticky ban list
 
 	//delete db bans that no longer exist in the database and add new legacy bans to the database
-	if (!CONFIG_GET(flag/ban_legacy_system) && (SSdbcore.Connect() || length(SSstickyban.dbcache)))
+	if (SSdbcore.Connect() || length(SSstickyban.dbcache))
 		for (var/oldban in (world.GetConfig("ban") - bannedkeys))
 			var/ckey = ckey(oldban)
 			if (ckey != oldban && (ckey in bannedkeys))
@@ -61,7 +61,6 @@ SUBSYSTEM_DEF(stickyban)
 	var/datum/DBQuery/query_stickyban_matches = SSdbcore.NewQuery("SELECT stickyban, matched_ckey, first_matched, exempt FROM [format_table_name("stickyban_matched_ckey")] ORDER BY first_matched")
 	if (!query_stickyban_matches.warn_execute())
 		return
-	query_stickyban_matches.SetConversion(4, SSdbcore.NUMBER_CONV) //read exempt as a number, not a string
 
 	while (query_stickybans.NextRow())
 		var/list/ban = list()
@@ -82,7 +81,7 @@ SUBSYSTEM_DEF(stickyban)
 		match["stickyban"] = query_stickyban_matches.item[1]
 		match["matched_ckey"] = query_stickyban_matches.item[2]
 		match["first_matched"] = query_stickyban_matches.item[3]
-		match["exempt"] = query_stickyban_matches.item[4]
+		match["exempt"] = text2num(query_stickyban_matches.item[4])
 
 		var/ban = newdbcache[query_stickyban_matches.item[1]]
 		if (!ban)
