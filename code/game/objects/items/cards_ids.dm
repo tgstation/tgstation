@@ -174,10 +174,9 @@
 	if(!isliving(user))
 		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-	if(user.get_active_held_item() != src)
 		to_chat(user, "<span class='warning'>You must hold the ID in your hand to do this.</span>")
 		return
+	
 	return TRUE
 
 /obj/item/card/id/AltClick(mob/living/user)
