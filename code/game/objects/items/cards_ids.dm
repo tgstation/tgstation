@@ -198,7 +198,7 @@
 				return
 		to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 		return
-	var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
+	var/amount_to_remove = input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Account Reclamation", 5) as num
 	if(!amount_to_remove || amount_to_remove < 0)
 		return
 	if(!alt_click_can_use_id(user))
@@ -209,7 +209,8 @@
 		to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
 		return
 	else
-		to_chat(user, "<span class='warning'>The linked account doesn't have the funds for that.</span>")
+		var/difference = amount_to_remove - registered_account.account_balance
+		to_chat(user, "<span class='warning'>The linked account needs [difference] more credit(s) to perform that withdrawal.</span>")
 
 /obj/item/card/id/examine(mob/user)
 	..()
@@ -221,7 +222,7 @@
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
 				to_chat(user, "The [D.account_holder] reports a balance of $[D.account_balance].")
-		to_chat(user, "<span class='info'>Alt-Click the ID while holding it to pull money from the linked account in the form of holochips.</span>")
+		to_chat(user, "<span class='info'>Alt-Click the ID to pull money from the linked account in the form of holochips.</span>")
 		to_chat(user, "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>")
 		if(registered_account.account_holder == user.real_name)
 			to_chat(user, "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>")
