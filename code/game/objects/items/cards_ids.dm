@@ -193,10 +193,18 @@
 		for(var/A in SSeconomy.bank_accounts)
 			var/datum/bank_account/B = A
 			if(B.account_id == new_bank_id)
-				B.bank_cards += src
-				registered_account = B
-				to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
-				return
+				var/new_bank_password = input(user, "Enter your account password.", "Account Password", 0000) as num
+				if(!new_bank_password || new_bank_password < 0000 || new_bank_password > 9999)
+					to_chat(user, "<span class='warning'>The account password needs to be between 0000 and 9999.</span")
+					return
+				if(B.account_password == new_bank_password)
+					B.bank_cards += src
+					registered_account = B
+					to_chat(user, "<span class='notice'>The provided account has been linked to this ID card.</span>")
+					return
+				else
+					to_chat(user, "<span class='warning'>The account password provided is invalid.</span>")
+					return
 		to_chat(user, "<span class='warning'>The account ID number provided is invalid.</span>")
 		return
 	var/amount_to_remove = input(user, "How much do you want to withdraw?", "Account Reclamation", 5) as num
