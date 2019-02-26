@@ -14,6 +14,7 @@
 
 /mob/living/silicon/ai
 	name = "AI"
+	real_name = "AI"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
 	move_resist = MOVE_FORCE_VERY_STRONG
@@ -125,7 +126,8 @@
 	job = "AI"
 
 	create_eye()
-	apply_pref_name("ai")
+	if(client)
+		apply_pref_name("ai",client)
 
 	set_core_display_icon()
 
@@ -138,9 +140,9 @@
 	verbs += /mob/living/silicon/ai/proc/show_laws_verb
 
 	aiPDA = new/obj/item/pda/ai(src)
-	aiPDA.owner = name
+	aiPDA.owner = real_name
 	aiPDA.ownjob = "AI"
-	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
+	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
 
 	aiMulti = new(src)
 	radio = new /obj/item/radio/headset/ai(src)

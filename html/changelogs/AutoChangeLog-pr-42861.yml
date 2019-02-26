@@ -1,0 +1,7 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - admin: "Some tweaks to the ban interface:"
+  - rscadd: "Bans apply to computer_ids by default"
+  - rscadd: "Bans only apply to IPs by default if its a permaban."
+  - admin: "Note: The behavior of the \"Use IP and CID from last connection of key\" box has been changed. It now only fills in checked values, where as before it would error if CID or IP was check."

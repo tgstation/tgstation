@@ -1,0 +1,5 @@
+author: "Mickyan"
+delete-after: True
+changes: 
+  - tweak: "Clowns now get a mood boost from wearing clown shoes, but no longer feel sad when they are not."
+  - bugfix: "Wearing shoes means on your FEET!"
