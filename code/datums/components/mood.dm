@@ -199,9 +199,11 @@
 		if(prob(0.05))
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
-	if(owner.has_trait(TRAIT_UNSTABLE) && sanity < SANITY_CRAZY)
-		owner.apply_status_effect(/datum/status_effect/unstable_insanity)
-//wip
+	if(owner.has_trait(TRAIT_UNSTABLE))
+		if(iscarbon(owner) && sanity < SANITY_CRAZY)
+			var/mob/living/carbon/C = owner
+			C.gain_trauma(/datum/brain_trauma/special/unstable_insanity)
+
 	HandleNutrition(owner)
 	HandleHygiene(owner)
 
@@ -218,7 +220,9 @@
 		amount = sanity - 0.5
 
 	// Disturbed stops you from getting any more sane
-	if(!(owner.has_trait(TRAIT_UNSTABLE) && amount > sanity))
+	if(owner.has_trait(TRAIT_UNSTABLE))
+		sanity = min(amount,sanity)
+	else
 		sanity = amount
 
 	var/mob/living/master = parent
