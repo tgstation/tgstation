@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Jaunting mobs will no longer cause mice/ducks/ect to squeek when moving over them."

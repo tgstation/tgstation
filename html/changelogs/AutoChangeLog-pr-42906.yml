@@ -1,4 +1,0 @@
-author: "BuffEngineering"
-delete-after: True
-changes: 
-  - bugfix: "Mass driver time is now in sync with normal time"
