@@ -233,7 +233,7 @@
 		to_chat(user, "<span class='info'>Alt-Click the ID while holding it to pull money from the linked account in the form of holochips.</span>")
 		to_chat(user, "<span class='info'>You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.</span>")
 		if(registered_account.account_holder == user.real_name)
-			to_chat(user, "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.</span>")
+			to_chat(user, "<span class='boldnotice'>If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number and your account password.</span>")
 	else
 		to_chat(user, "<span class='info'>There is no registered account linked to this card. Alt-Click to add one.</span>")
 
