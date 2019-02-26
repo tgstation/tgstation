@@ -438,6 +438,8 @@ SUBSYSTEM_DEF(job)
 		var/mob/living/carbon/human/wageslave = H
 		to_chat(M, "<b>Your account ID is [wageslave.account_id].</b>")
 		H.add_memory("Your account ID is [wageslave.account_id].")
+		to_chat(M, "<b>Your account password is [wageslave.account_password].</b>")
+		H.add_memory("Your account password is [wageslave.account_password].")
 	if(job && H)
 		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 
