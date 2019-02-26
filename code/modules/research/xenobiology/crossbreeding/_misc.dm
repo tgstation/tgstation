@@ -4,7 +4,7 @@ Slimecrossing Items
 	Collected here for clarity.
 */
 
-#define DEJAVU_REWIND_INTERVAL 50
+#define DEJAVU_REWIND_INTERVAL (10 SECONDS)
 
 //Rewind camera - I'm already Burning Sepia
 /obj/item/camera/rewind
