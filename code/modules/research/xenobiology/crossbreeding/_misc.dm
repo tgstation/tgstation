@@ -65,8 +65,8 @@ Slimecrossing Items
 			to_chat(user, "<span class=notice>You take a selfie!</span>")
 			to_chat(target, "<span class=notice>You'll remember this moment forever!</span>")
 		else
-			to_chat(user, "<span class=notice>You take a selfie with [target]!</span>")
-			to_chat(target, "<span class=notice>[user] takes a selfie with you!</span>")
+			to_chat(user, "<span class=notice>You take a photo with [target]!</span>")
+			to_chat(target, "<span class=notice>[user] takes a photo with you!</span>")
 			
 		used = TRUE
 		target.AddComponent(/datum/component/dejavu)
