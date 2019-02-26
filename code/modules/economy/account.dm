@@ -5,6 +5,7 @@
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
+	var/account_password //In-game Bank password, not real bank password
 	var/welfare = TRUE
 
 /datum/bank_account/New(newname, job)
@@ -13,6 +14,7 @@
 	account_holder = newname
 	account_job = job
 	account_id = rand(111111,999999)
+	account_password = rand(0000,9999)
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
