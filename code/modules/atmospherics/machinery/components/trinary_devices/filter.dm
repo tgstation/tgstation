@@ -22,7 +22,7 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		target_pressure = MAX_OUTPUT_PRESSURE
+		transfer_rate = MAX_TRANSFER_RATE
 		update_icon()
 	return ..()
 
