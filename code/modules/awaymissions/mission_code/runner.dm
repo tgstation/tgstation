@@ -20,55 +20,64 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 	id = "vr runner"
 	light_color = LIGHT_COLOR_FIRE
 	light_power = 1
-	light_range = 2
+	light_range = 4
 	var/game_starting = 0
-	var/one_player = 0
+	var/game_start_time = 0
+	var/fall_wait = 5 // time in deciseconds between randomly falling tiles
 
 /obj/effect/portal/permanent/one_way/recall/pit_faller/teleport(atom/movable/M, force = FALSE)
 	if(GLOB.vr_runner_active)
 		return FALSE
+	if(!ishuman(M))
+		return FALSE
 	. = ..()
-	if(. && ishuman(M))
-		GLOB.vr_runner_players += M
+	if(.)
+		var/mob/living/carbon/human/H = M
+		GLOB.vr_runner_players += H
+		H.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 		if(!game_starting)
 			INVOKE_ASYNC(src, .proc/game_start_countdown)
 
-/obj/effect/portal/permanent/one_way/recall/pit_faller/proc/game_start_countdown(wait_seconds = 15)
+/obj/effect/portal/permanent/one_way/recall/pit_faller/recall_effect(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.remove_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
+		GLOB.vr_runner_players -= H
+		if(GLOB.vr_runner_active)
+			if(GLOB.vr_runner_players.len == 0)
+				to_chat(H, "<span class='notice'>You win! You survived for [(world.time - game_start_time) / 10] seconds.</span>")
+				end_game()
+			else
+				to_chat(H, "<span class='notice'>You survived for [(world.time - game_start_time) / 10] seconds. [GLOB.vr_runner_players.len] other player(s) remained.</span>")
+
+/obj/effect/portal/permanent/one_way/recall/pit_faller/proc/game_start_countdown(wait_seconds = 10)
 	game_starting = 1
 	for(var/seconds_remaining = wait_seconds to 1 step -1)
 		if(GLOB.vr_runner_players.len == 0)
+			game_starting = 0
 			return FALSE
 		for(var/mob/living/carbon/human/H in GLOB.vr_runner_players)
-			var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
-			if(!findspell)
-				GLOB.vr_runner_players -= H
-				continue
 			to_chat(H, "<span class='notice'>Game starting in [seconds_remaining].</span>")
 		sleep(10)
 	if(GLOB.vr_runner_players.len > 0)
+		GLOB.vr_runner_active = 1
 		for(var/mob/living/carbon/human/H in GLOB.vr_runner_players)
 			to_chat(H, "<span class='notice'>Game Started!</span>")
 			var/turf/open/indestructible/runner/R = get_turf(H)
 			INVOKE_ASYNC(R, /turf/open/indestructible/runner.proc/turf_fall)
 		color = COLOR_RED
-		GLOB.vr_runner_active = 1
-		if(GLOB.vr_runner_players.len == 1)
-			one_player = 1
-		INVOKE_ASYNC(src, .proc/game_check_end_loop)
+		INVOKE_ASYNC(src, .proc/random_falling_tiles)
 	game_starting = 0
+	game_start_time = world.time
 
-/obj/effect/portal/permanent/one_way/recall/pit_faller/proc/game_check_end_loop()
-	for(var/mob/living/carbon/human/H in GLOB.vr_runner_players)
-		var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
-		if(!findspell)
-			GLOB.vr_runner_players -= H
-	if(!one_player && GLOB.vr_runner_players.len <= 1)
-		return end_game()
-	if(GLOB.vr_runner_players.len == 0)
-		return end_game()
-	sleep(1)
-	INVOKE_ASYNC(src, .proc/game_check_end_loop)
-
+/obj/effect/portal/permanent/one_way/recall/pit_faller/proc/random_falling_tiles()
+	if(!GLOB.vr_runner_active)
+		return FALSE
+	for(var/turf/open/indestructible/runner/R in GLOB.vr_runner_tiles)
+		if(R.color != COLOR_ALMOST_BLACK && prob(1))
+			INVOKE_ASYNC(R, /turf/open/indestructible/runner.proc/turf_fall)
+	sleep(fall_wait)
+	random_falling_tiles()
 
 /obj/effect/portal/permanent/one_way/recall/pit_faller/proc/end_game()
 	color = initial(color)
@@ -76,11 +85,6 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 	game_starting = 0
 	for(var/turf/open/indestructible/runner/R in GLOB.vr_runner_tiles)
 		R.reset_fall()
-	for(var/mob/living/carbon/human/H in GLOB.vr_runner_players)
-		to_chat(H, "<span class='notice'>You win!</span>")
-		GLOB.vr_runner_players -= H
-		var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
-		findspell.Click(H)
 
 /obj/effect/portal/permanent/one_way/destroy/pit_faller
 	name = "Runner Exit Portal"
@@ -101,9 +105,9 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 	if(isliving(A) && GLOB.vr_runner_active)
 		if(color == COLOR_ALMOST_BLACK)
 			if(locate(A) in GLOB.vr_runner_players)
-				if(!A.throwing)
+				var/datum/thrownthing/TT = A.throwing
+				if(!TT || TT && TT.target_turf == src)
 					var/mob/living/carbon/human/H = A
-					GLOB.vr_runner_players -= H
 					var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
 					findspell.Click(H)
 			else
@@ -122,7 +126,6 @@ GLOBAL_LIST_EMPTY(vr_runner_tiles)
 	for(var/mob/living/carbon/human/H in GLOB.vr_runner_players)
 		var/turf/open/indestructible/runner/R = get_turf(H)
 		if(src == R)
-			GLOB.vr_runner_players -= H
 			var/obj/effect/proc_holder/spell/portal_recall/findspell = locate(/obj/effect/proc_holder/spell/portal_recall) in H.mind.spell_list
 			findspell.Click(H)
 	return

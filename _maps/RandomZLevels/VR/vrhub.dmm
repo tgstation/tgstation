@@ -461,6 +461,12 @@
 /obj/structure/lattice,
 /turf/open/space,
 /area/space/nearstation)
+"cu" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "cy" = (
 /obj/effect/portal/permanent/one_way/recall/pit_faller,
 /turf/open/floor/light/colour_cycle,
@@ -1572,6 +1578,10 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
+"sT" = (
+/obj/structure/sign/barsign,
+/turf/closed/indestructible,
+/area/awaymission/vr/hub)
 "sV" = (
 /obj/structure/chair{
 	dir = 1
@@ -1598,10 +1608,6 @@
 /obj/effect/portal/permanent/one_way/destroy/pit_faller,
 /turf/open/indestructible/runner,
 /area/awaymission/vr/runner)
-"ts" = (
-/obj/machinery/light/floor/moody,
-/turf/open/indestructible,
-/area/awaymission/vr/hub)
 "tt" = (
 /obj/effect/vr_clean_master,
 /turf/open/indestructible/runner,
@@ -1633,14 +1639,6 @@
 /obj/machinery/autolathe,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
-"ue" = (
-/obj/effect/landmark/vr_spawn,
-/obj/effect/mob_spawn/human/virtual_reality{
-	light_color = null;
-	light_range = 0
-	},
-/turf/open/floor/mineral/titanium,
-/area/awaymission/vr/hub)
 "uj" = (
 /obj/structure/table/reinforced,
 /turf/open/indestructible,
@@ -1695,6 +1693,9 @@
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/shaker,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/indestructible,
 /area/awaymission/vr/hub)
 "vs" = (
@@ -1971,7 +1972,9 @@
 "zN" = (
 /obj/structure/table/wood,
 /obj/machinery/reagentgrinder,
-/obj/machinery/light/floor/moody,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/indestructible,
 /area/awaymission/vr/hub)
 "zP" = (
@@ -2401,6 +2404,12 @@
 /obj/effect/vr_clean_master,
 /turf/open/floor/goonplaque,
 /area/awaymission/centcomAway/thunderdome)
+"GY" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/awaymission/vr/hub)
 "Hb" = (
 /obj/structure/sign/departments/science,
 /turf/closed/indestructible/riveted,
@@ -2904,6 +2913,20 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
+"Pq" = (
+/obj/structure/chair/stool/bar,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
+"Pr" = (
+/obj/structure/chair/stool/bar,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "Pw" = (
 /obj/structure/rack,
 /obj/item/gun/energy/pulse/carbine,
@@ -3200,6 +3223,14 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/thunderdome)
+"TC" = (
+/obj/effect/mob_spawn/human/virtual_reality{
+	light_color = null;
+	light_range = 0
+	},
+/obj/effect/landmark/vr_spawn,
+/turf/open/floor/mineral/titanium,
+/area/awaymission/vr/hub)
 "TD" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Med-Sci";
@@ -6878,7 +6909,7 @@ qk
 Gw
 Bs
 eO
-ue
+eO
 eO
 mA
 Gw
@@ -7135,7 +7166,7 @@ qk
 Gw
 Fw
 eO
-ER
+TC
 eO
 mA
 Gw
@@ -7392,7 +7423,7 @@ qk
 Gw
 SH
 eO
-eO
+ER
 eO
 mA
 Gw
@@ -9704,9 +9735,9 @@ qk
 Gw
 Gw
 eO
+GY
 eO
-eO
-eO
+GY
 eO
 Gw
 Gw
@@ -9947,12 +9978,12 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
 Gw
 Gw
 Gw
@@ -10204,19 +10235,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
 bO
 bO
 bO
-bF
-bF
-bF
+bO
+bO
+bO
+bO
+bO
+bO
+bO
+bO
+Gw
 bF
 bF
 bF
@@ -10461,19 +10492,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 Bf
 Bf
 Bf
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -10718,19 +10749,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 cy
 Bf
 Bf
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -10975,19 +11006,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 Bf
 Bf
 Bf
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -11232,19 +11263,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
 bO
+bI
+bI
+bI
+bF
+bF
+bF
+bF
+bF
+bF
 bO
-bO
-bF
-bF
-bF
+Gw
 bF
 bF
 bF
@@ -11489,19 +11520,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bG
 bG
 bG
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -11746,19 +11777,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bG
 bN
 bG
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -12003,13 +12034,8 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bG
 bG
 bG
@@ -12017,6 +12043,11 @@ bF
 bF
 bF
 bF
+bF
+bF
+bO
+Gw
+cu
 bF
 bF
 bF
@@ -12260,16 +12291,16 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bH
 bG
 bG
+bF
+bF
+bF
+bF
+bF
 bF
 bF
 bF
@@ -12517,13 +12548,8 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bG
 bG
 bG
@@ -12531,6 +12557,11 @@ bF
 bF
 bF
 bF
+bF
+bF
+bO
+Gw
+cu
 bF
 bF
 bF
@@ -12774,19 +12805,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bG
 bN
 bG
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -13031,19 +13062,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bG
 bG
 bG
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -13288,19 +13319,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
 bO
+bI
+bI
+bI
+bF
+bF
+bF
+bF
+bF
+bF
 bO
-bO
-bF
-bF
-bF
+Gw
 bF
 bF
 bF
@@ -13545,19 +13576,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bJ
 bP
 bP
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -13802,19 +13833,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bK
 bP
 bP
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -14059,19 +14090,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
+bO
 bL
 bP
 bP
 bF
 bF
 bF
+bF
+bF
+bF
+bO
+Gw
 bF
 bF
 bF
@@ -14316,19 +14347,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
 bO
 bO
 bO
-bF
-bF
-bF
+bO
+bO
+bO
+bO
+bO
+bO
+bO
+bO
+Gw
 bF
 bF
 bF
@@ -14573,19 +14604,19 @@ uo
 bM
 qk
 qk
-qk
-qk
-qk
-qk
-qk
-qk
 Gw
-bF
-bF
-bF
-bF
-bF
-bF
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
 bF
 bF
 bF
@@ -15351,7 +15382,7 @@ qk
 qk
 qk
 Gw
-bF
+cu
 bF
 bF
 bF
@@ -16384,7 +16415,7 @@ bF
 yF
 bF
 MO
-zi
+Pr
 bF
 bF
 bF
@@ -16637,8 +16668,8 @@ qk
 qk
 yF
 Mi
-ts
-yF
+bF
+sT
 bF
 bS
 zi
@@ -17153,11 +17184,11 @@ yF
 Sv
 bF
 bF
-ts
+bF
 bS
 dB
 bF
-ts
+bF
 bF
 bF
 bF
@@ -17926,7 +17957,7 @@ bF
 bF
 bF
 XZ
-zi
+Pq
 bF
 bF
 bF

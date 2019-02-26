@@ -42,6 +42,10 @@
 			H.delete_equipment()
 			H.equipOutfit(equipment)
 
+// the effect that happens when someone recalls to your portal
+/obj/effect/portal/permanent/one_way/recall/proc/recall_effect(mob/user)
+	return
+
 /obj/effect/proc_holder/spell/portal_recall
 	name = "Portal Recall"
 	desc = "This will teleport you back to your previously used portal. One use only."
@@ -59,6 +63,7 @@
 			var/mob/living/carbon/human/H = user
 			H.delete_equipment()
 			H.equipOutfit(last_portal.recall_equipment)
+		last_portal.recall_effect(user)
 		do_teleport(user, recall_turf, 0, no_effects = FALSE, channel = TELEPORT_CHANNEL_BLUESPACE)
 		recall_portals -= last_portal
 		if(!recall_portals.len)
@@ -77,7 +82,9 @@
 	random = TRUE
 	mob_species = /datum/species/human
 	outfit = /datum/outfit/vr
-	flavour_text = "<span class='big bold'>You have connected to another stations virtual reality system. Your objective is to learn as much as you can about teamwork across a language barrier.</span>"
+	flavour_text = "<span class='big bold'>You have connected to another stations virtual reality system</span>\n\
+	<b>You have been assigned a mission by nanotrasen to increase productivity in a station that lacks any and all teamwork.\n\
+	Your objective is to help other people by completing tasks, whether social or combatative, together, while also improving your own skills.</b>"
 	assignedrole = "Vr"
 
 /obj/effect/portal/permanent/one_way/recall/murderdome
@@ -121,21 +128,3 @@
 /obj/effect/portal/permanent/one_way/destroy/snowdin
 	name = "Snowdin Exit Portal"
 	id = "vr snowdin"
-
-/obj/machinery/light/floor/moody
-	light_color = LIGHT_COLOR_FIRE
-	light_power = 1
-	light_range = 8
-	resistance_flags = INDESTRUCTIBLE
-
-/obj/machinery/light/floor/moody/update_icon()
-	return
-
-/obj/machinery/light/floor/moody/update()
-	return
-
-/obj/machinery/light/floor/moody/break_light_tube()
-	return
-
-/obj/machinery/light/floor/moody/drop_light_tube(mob/user)
-	return
