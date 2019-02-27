@@ -139,9 +139,11 @@
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
 	global_frozen_atoms[L] = TRUE
+	if(isanimal(L))
+		var/mob/living/simple_animal/S = L
+		S.toggle_ai(AI_OFF)
 	if(ishostile(L))
 		var/mob/living/simple_animal/hostile/H = L
-		H.toggle_ai(AI_OFF)
 		H.LoseTarget()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/L)
@@ -150,9 +152,9 @@
 	L.anchored = frozen_mobs[L]
 	frozen_mobs -= L
 	global_frozen_atoms -= L
-	if(ishostile(L))
-		var/mob/living/simple_animal/hostile/H = L
-		H.toggle_ai(initial(H.AIStatus))
+	if(isanimal(L))
+		var/mob/living/simple_animal/S = L
+		S.toggle_ai(initial(H.AIStatus))
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
