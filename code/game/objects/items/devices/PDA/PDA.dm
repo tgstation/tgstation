@@ -595,7 +595,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 								B.log_money(howmuch,id.registered_account.account_id)
 								B.bank_card_talk("Transfer of $[howmuch] received from [id.registered_account.account_id]",TRUE)
 								id.registered_account.adjust_money(-howmuch)
-								id.registered_account(-howmuch,B.account_id)
+								id.registered_account.log_money(-howmuch,B.account_id)
 								to_chat(usr, "<span class='notice'>You successfully transfered $[howmuch] from account [id.registered_account.account_id] to [B.account_id]</span>")
 								return
 						to_chat(usr, "<span class='warning'>The account ID number provided is invalid.</span>")
