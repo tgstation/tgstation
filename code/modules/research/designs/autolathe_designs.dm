@@ -44,6 +44,14 @@
 	build_path = /obj/item/extinguisher/mini
 	category = list("initial","Tools")
 
+/datum/design/firefighterhelmet
+	name = "Firefighter Helmet"
+	id = "firefighterhelmet"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 150, MAT_GLASS = 40)
+	build_path = /obj/item/clothing/head/hardhat/red
+	category = list("initial","Tools")
+
 /datum/design/multitool
 	name = "Multitool"
 	id = "multitool"
