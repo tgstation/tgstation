@@ -27,6 +27,18 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 
+/obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		transfer_rate = MAX_TRANSFER_RATE
+		update_icon()
+	return ..()
+
 /obj/machinery/atmospherics/components/binary/volume_pump/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()

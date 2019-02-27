@@ -29,7 +29,7 @@
 			if(HM == RACEMUT)
 				message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(M)] with the [name] <span class='danger'>(MONKEY)</span>")
 				log_msg += " (MONKEY)"
-			if(mutation_in_sequence(HM, M.dna))
+			if(M.dna.mutation_in_sequence(HM))
 				M.dna.activate_mutation(HM)
 			else
 				M.dna.add_mutation(HM, MUT_EXTRA)
@@ -304,6 +304,37 @@
 	name = "\improper DNA injector (Anti-Void)"
 	remove_mutations = list(VOID)
 
+/obj/item/dnainjector/antenna
+	name = "\improper DNA injector (Antenna)"
+	add_mutations = list(ANTENNA)
+
+/obj/item/dnainjector/antiantenna
+	name = "\improper DNA injector (Anti-Antenna)"
+	remove_mutations = list(ANTENNA)
+
+/obj/item/dnainjector/paranoia
+	name = "\improper DNA injector (Paranoia)"
+	add_mutations = list(PARANOIA)
+
+/obj/item/dnainjector/antiparanoia
+	name = "\improper DNA injector (Anti-Paranoia)"
+	remove_mutations = list(PARANOIA)
+
+/obj/item/dnainjector/mindread
+	name = "\improper DNA injector (Mindread)"
+	add_mutations = list(MINDREAD)
+
+/obj/item/dnainjector/antimindread
+	name = "\improper DNA injector (Anti-Mindread)"
+	remove_mutations = list(MINDREAD)
+
+/obj/item/dnainjector/radioactive
+	name = "\improper DNA injector (Radioactive)"
+	add_mutations = list(RADIOACTIVE)
+
+/obj/item/dnainjector/antiradioactive
+	name = "\improper DNA injector (Anti-Radioactive)"
+	remove_mutations = list(RADIOACTIVE)
 /obj/item/dnainjector/olfaction
 	name = "\improper DNA injector (Olfaction)"
 	add_mutations = list(OLFACTION)
@@ -328,6 +359,61 @@
 	name = "\improper DNA injector (Anti-Shock Touch)"
 	remove_mutations = list(SHOCKTOUCH)
 
+/obj/item/dnainjector/spacialinstability
+	name = "\improper DNA injector (Spacial Instability)"
+	add_mutations = list(BADBLINK)
+
+/obj/item/dnainjector/antispacialinstability
+	name = "\improper DNA injector (Anti-Spacial Instability)"
+	remove_mutations = list(BADBLINK)
+
+/obj/item/dnainjector/acidflesh
+	name = "\improper DNA injector (Acid Flesh)"
+	add_mutations = list(ACIDFLESH)
+
+/obj/item/dnainjector/antiacidflesh
+	name = "\improper DNA injector (Acid Flesh)"
+	remove_mutations = list(ACIDFLESH)
+
+/obj/item/dnainjector/gigantism
+	name = "\improper DNA injector (Gigantism)"
+	add_mutations = list(GIGANTISM)
+
+/obj/item/dnainjector/antigigantism
+	name = "\improper DNA injector (Anti-Gigantism)"
+	remove_mutations = list(GIGANTISM)
+
+/obj/item/dnainjector/spastic
+	name = "\improper DNA injector (Spastic)"
+	add_mutations = list(SPASTIC)
+
+/obj/item/dnainjector/antispastic
+	name = "\improper DNA injector (Anti-Spastic)"
+	remove_mutations = list(SPASTIC)
+
+/obj/item/dnainjector/twoleftfeet
+	name = "\improper DNA injector (Two Left Feet)"
+	add_mutations = list(EXTRASTUN)
+
+/obj/item/dnainjector/antitwoleftfeet
+	name = "\improper DNA injector (Anti-Two Left Feet)"
+	remove_mutations = list(EXTRASTUN)
+
+/obj/item/dnainjector/geladikinesis
+	name = "\improper DNA injector (Geladikinesis)"
+	add_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/antigeladikinesis
+	name = "\improper DNA injector (Anti-Geladikinesis)"
+	remove_mutations = list(GELADIKINESIS)
+
+/obj/item/dnainjector/cryokinesis
+	name = "\improper DNA injector (Cryokinesis)"
+	add_mutations = list(CRYOKINESIS)
+
+/obj/item/dnainjector/anticryokinesis
+	name = "\improper DNA injector (Anti-Cryokinesis)"
+	remove_mutations = list(CRYOKINESIS)
 
 /obj/item/dnainjector/timed
 	var/duration = 600
@@ -395,19 +481,30 @@
 	name = "\improper DNA activator"
 	desc = "Activates the current mutation on injection, if the subject has it."
 	var/doitanyway = FALSE
+	var/research = FALSE //Set to true to get expended and filled injectors for chromosomes
+	var/filled = FALSE
 
 /obj/item/dnainjector/activator/inject(mob/living/carbon/M, mob/user)
 	if(M.has_dna() && !M.has_trait(TRAIT_RADIMMUNE) && !M.has_trait(TRAIT_BADDNA))
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"
 		for(var/mutation in add_mutations)
-			if(!M.dna.activate_mutation(mutation) && !doitanyway)
-				log_msg += "(FAILED)"
-			else if(doitanyway)
-				M.dna.add_mutation(mutation, MUT_EXTRA)
+			var/datum/mutation/human/HM = mutation
+			if(istype(HM, /datum/mutation/human))
+				mutation = HM.type
+			if(!M.dna.activate_mutation(HM))
+				if(!doitanyway)
+					log_msg += "(FAILED)"
+				else
+					M.dna.add_mutation(HM, MUT_EXTRA)
+					name = "expended [name]"
+			else if(research && M.client)
+				filled = TRUE
+				name = "filled [name]"
+			else
+				name = "expended [name]"
 			log_msg += "([mutation])"
 		log_attack("[log_msg] [loc_name(user)]")
-		M.dna.update_instability()
 		return TRUE
 	return FALSE
 

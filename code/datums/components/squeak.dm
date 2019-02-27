@@ -1,6 +1,5 @@
 /datum/component/squeak
-	var/static/list/default_squeak_sounds = list('sound/items/toysqueak1.ogg'=1, 'sound/items/toysqueak2.ogg'=1, 'sound/items/toysqueak3.ogg'=1)
-	var/list/override_squeak_sounds
+	var/datum/outputs/squeak_datum
 	var/squeak_chance = 100
 	var/volume = 30
 
@@ -12,7 +11,7 @@
 	var/last_use = 0
 	var/use_delay = 20
 
-/datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override)
+/datum/component/squeak/Initialize(custom_datum, volume_override, chance_override, step_delay_override, use_delay_override)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_BLOB_ACT, COMSIG_ATOM_HULK_ATTACK, COMSIG_PARENT_ATTACKBY), .proc/play_squeak)
@@ -28,7 +27,7 @@
 			if(istype(parent, /obj/item/clothing/shoes))
 				RegisterSignal(parent, COMSIG_SHOES_STEP_ACTION, .proc/step_squeak)
 
-	override_squeak_sounds = custom_sounds
+	squeak_datum = SSoutputs.outputs[custom_datum]
 	if(chance_override)
 		squeak_chance = chance_override
 	if(volume_override)
@@ -40,10 +39,10 @@
 
 /datum/component/squeak/proc/play_squeak()
 	if(prob(squeak_chance))
-		if(!override_squeak_sounds)
-			playsound(parent, pickweight(default_squeak_sounds), volume, 1, -1)
+		if(!squeak_datum)
+			CRASH("Squeak datum attempted to play missing datum")
 		else
-			playsound(parent, pickweight(override_squeak_sounds), volume, 1, -1)
+			playsound(parent, squeak_datum, volume, 1, -1)
 
 /datum/component/squeak/proc/step_squeak()
 	if(steps > step_delay)
@@ -61,6 +60,8 @@
 			var/obj/item/projectile/P = AM
 			if(P.original != parent)
 				return
+	if(istype(AM, /obj/effect/dummy/phased_mob)) //don't squeek if they're in a phased/jaunting container.
+		return
 	var/atom/current_parent = parent
 	if(isturf(current_parent.loc))
 		play_squeak()

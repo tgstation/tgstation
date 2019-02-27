@@ -1,0 +1,4 @@
+author: "WJohn"
+delete-after: True
+changes: 
+  - tweak: "Very minor tweaks to lavaland syndie base to fix a dark spot left by the removal of the circuit lab and to dissuade players blowing themselves up with explosive testing in the test chamber."

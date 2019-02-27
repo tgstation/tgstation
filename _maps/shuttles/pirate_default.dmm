@@ -781,6 +781,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc{
+	aidisabled = 1;
 	dir = 1;
 	name = "Pirate Corvette APC";
 	pixel_y = 24;

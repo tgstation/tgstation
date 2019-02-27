@@ -72,6 +72,7 @@
 		message = replacetext(message," murder "," tease ")
 		message = replacetext(message," ugly "," beautiful ")
 		message = replacetext(message," douchbag "," nice guy ")
+		message = replacetext(message," douchebag "," nice guy ")
 		message = replacetext(message," whore "," lady ")
 		message = replacetext(message," nerd "," smart guy ")
 		message = replacetext(message," moron "," fun person ")
@@ -195,10 +196,11 @@
 		message = replacetext(message," man ",pick(" son "," buddy "," brother"," pal "," friendo "))
 		message = replacetext(message," out of "," outta ")
 		message = replacetext(message," thank you "," thank you, thank you very much ")
+		message = replacetext(message," thanks "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
 		message = replacetext(message," faggot "," square ")
-		message = replacetext(message," muh valids "," getting my kicks ")
+		message = replacetext(message," muh valids "," my kicks ")
 	return trim(message)
 
 
@@ -219,16 +221,3 @@
 	..()
 	owner.grant_language(/datum/language/common)
 	owner.remove_language(/datum/language/beachbum)
-
-/datum/mutation/human/yelling
-	name = "Yelling"
-	desc = "A mutation that forces the host to constantly yell their sentences out."
-	quality = MINOR_NEGATIVE
-	locked = TRUE
-	text_gain_indication = "<span class='danger'>You feel really angry.</span>"
-	text_lose_indication = "<span class='notice'>You feel calmer.</span>"
-
-/datum/mutation/human/yelling/say_mod(message)
-	if(message)
-		message = "[uppertext(replacetext(message, ".", "!"))]!"
-	return (message)

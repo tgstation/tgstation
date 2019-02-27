@@ -62,10 +62,6 @@
   mood_change = -8
   timeout = 2400
 
-/datum/mood_event/noshoes
-	description = "<span class='warning'>I am a disgrace to comedy everywhere!</span>\n"
-	mood_change = -5
-
 /datum/mood_event/tased
 	description = "<span class='warning'>There's no \"z\" in \"taser\". It's in the zap.</span>\n"
 	mood_change = -3
@@ -148,16 +144,14 @@
 	timeout = 1200
 
 /datum/mood_event/notcreeping
-	description = "<span class='warning'>I sure wish I was around my obsession...</span>\n"
+	description = "<span class='warning'>The voices are not happy, and they painfully contort my thoughts into getting back on task.</span>\n"
 	mood_change = -6
 	timeout = 30
 	hidden = TRUE
 
-/datum/mood_event/notcreeping/add_effects(name)
-	description = "<span class='warning'>I sure wish I was around [name]...</span>\n"
 
 /datum/mood_event/notcreepingsevere//not hidden since it's so severe
-	description = "<span class='boldwarning'>OBSESSIONNNN WHERE ARE YOUUUUUUUUUUUUU?!</span>\n"
+	description = "<span class='boldwarning'>THEY NEEEEEEED OBSESSIONNNN!!</span>\n"
 	mood_change = -30
 	timeout = 30
 
@@ -166,7 +160,7 @@
 	for(var/i in 1 to rand(3,5))
 		unstable += copytext(name, -1)
 	var/unhinged = uppertext(unstable.Join(""))//example Tinea Luxor > TINEA LUXORRRR (with randomness in how long that slur is)
-	description = "<span class='boldwarning'>[unhinged] WHERE ARE YOUUUUUUUUUUUUU?!</span>\n"
+	description = "<span class='boldwarning'>THEY NEEEEEEED [unhinged]!!</span>\n"
 
 /datum/mood_event/idiot_shower
 	description = "<span class='warning'>I showered with my clothes on, I'm a fucking idiot.</span>\n"

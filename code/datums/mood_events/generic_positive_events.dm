@@ -28,8 +28,8 @@
 	mood_change = 3
 	timeout = 3000
 
-/datum/mood_event/pet_animal/add_effects(name)
-	description = "<span class='nicegreen'>\The [name] is adorable! I can't stop petting \him!</span>\n"
+/datum/mood_event/pet_animal/add_effects(mob/animal)
+	description = "<span class='nicegreen'>\The [animal.name] is adorable! I can't stop petting [animal.p_them()]!</span>\n"
 
 /datum/mood_event/honk
 	description = "<span class='nicegreen'>Maybe clowns aren't so bad after all. Honk!</span>\n"
@@ -63,15 +63,10 @@
 	special_screen_replace = FALSE
 
 /datum/mood_event/creeping
-	description = "<span class='greentext'>I'm so close to my obsession and I never want this to end.</span>\n" //creeps get it when they are around their obsession
+	description = "<span class='greentext'>The voices have released their hooks on my mind! I feel free again!</span>\n" //creeps get it when they are around their obsession
 	mood_change = 18
 	timeout = 30
 	hidden = TRUE
-	special_screen_obj = "creep_inlove"
-	special_screen_replace = FALSE
-
-/datum/mood_event/creeping/add_effects(name)
-	description = "<span class='greentext'>I'm so close to [name] and I NEVER want this to end.</span>\n"
 
 /datum/mood_event/revolution
 	description = "<span class='nicegreen'>VIVA LA REVOLUTION!</span>\n"
@@ -109,3 +104,7 @@
 /datum/mood_event/religiously_comforted
 	description = "<span class='nicegreen'>You are comforted by the presence of a holy person.</span>"
 	mood_change = 3
+
+/datum/mood_event/clownshoes
+	description = "<span class='nicegreen'>The shoes are a clown's legacy, I never want to take them off!</span>\n"
+	mood_change = 5

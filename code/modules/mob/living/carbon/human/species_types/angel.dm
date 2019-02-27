@@ -7,9 +7,9 @@
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "Angel")
 	use_skintones = 1
 	no_equip = list(SLOT_BACK)
-	blacklisted = 1
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 	var/datum/action/innate/flight/fly
 

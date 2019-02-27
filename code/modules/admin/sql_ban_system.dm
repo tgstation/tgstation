@@ -97,16 +97,16 @@
 	<div class='inputbox'></div></label>
 	<input type='text' name='keytext' size='26' value='[player_key]'>
 	<label class='inputlabel checkbox'>IP:
-	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[player_ip ? " checked": ""]>
+	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[isnull(duration) ? " checked" : ""]>
 	<div class='inputbox'></div></label>
 	<input type='text' name='iptext' size='18' value='[player_ip]'>
 	<label class='inputlabel checkbox'>CID:
-	<input type='checkbox' id='cidcheck' name='cidcheck' value='1'[player_cid ? " checked": ""]>
+	<input type='checkbox' id='cidcheck' name='cidcheck' value='1' checked>
 	<div class='inputbox'></div></label>
 	<input type='text' name='cidtext' size='14' value='[player_cid]'>
 	<br>
 	<label class='inputlabel checkbox'>Use IP and CID from last connection of key
-	<input type='checkbox' id='lastconn' name='lastconn' value='1'>
+	<input type='checkbox' id='lastconn' name='lastconn' value='1' [(isnull(duration) && !player_ip) || (!player_cid) ? " checked": ""]>
 	<div class='inputbox'></div></label>
 	<label class='inputlabel checkbox'>Applies to Admins
 	<input type='checkbox' id='applyadmins' name='applyadmins' value='1'[applies_to_admins ? " checked": ""]>
@@ -244,7 +244,7 @@
 			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in headless_job_lists[department])
-				if(break_counter % 3 == 0)
+				if(break_counter > 0 && (break_counter % 3 == 0))
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
 							<input type='checkbox' name='[job]' class='[department]' value='1'>
@@ -309,17 +309,16 @@
 		if(!player_key)
 			error_state += "Key was ticked but none was provided."
 	if(href_list["lastconn"])
-		use_last_connection = TRUE
-		if(!player_key)
-			error_state += "A key must be provided to use IP and CID from last connection."
+		if(player_key)
+			use_last_connection = TRUE
 	else
 		if(href_list["ipcheck"])
-			player_ip = href_list["iptext"]
-			if(!player_ip)
+			player_ip = href_list["iptext"] || ""
+			if(!player_ip && !use_last_connection)
 				error_state += "IP was ticked but none was provided."
 		if(href_list["cidcheck"])
-			player_cid = href_list["cidtext"]
-			if(!player_cid)
+			player_cid = href_list["cidtext"] || ""
+			if(!player_cid && !use_last_connection)
 				error_state += "CID was ticked but none was provided."
 	if(!use_last_connection && !player_ip && !player_cid && !player_key)
 		error_state += "At least a key, IP or CID must be provided."
@@ -370,10 +369,10 @@
 			if("server")
 				roles_to_ban += "Server"
 			if("role")
+				href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Abstract", "Civilian", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
 				if(href_list[href_list.len] == "roleban_delimiter")
 					error_state += "Role ban was selected but no roles to ban were selected."
 				else
-					href_list.Remove("Command", "Security", "Engineering", "Medical", "Science", "Supply", "Silicon", "Abstract", "Civilian", "Ghost and Other Roles", "Antagonist Positions") //remove the role banner hidden input values
 					var/delimiter_pos = href_list.Find("roleban_delimiter")
 					href_list.Cut(1, delimiter_pos+1)//remove every list element before and including roleban_delimiter so we have a list of only the roles to ban
 					for(var/key in href_list) //flatten into a list of only unique keys
@@ -397,25 +396,28 @@
 	var/player_ckey = sanitizeSQL(ckey(player_key))
 	player_ip = sanitizeSQL(player_ip)
 	player_cid = sanitizeSQL(player_cid)
-	var/datum/DBQuery/query_create_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, INET_NTOA(ip), computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
-	if(!query_create_ban_get_player.warn_execute())
-		qdel(query_create_ban_get_player)
-		return
-	if(query_create_ban_get_player.NextRow())
-		player_key = query_create_ban_get_player.item[1]
-		if(use_last_connection)
-			player_ip = query_create_ban_get_player.item[2]
-			player_cid = query_create_ban_get_player.item[3]
-	else
-		if(use_last_connection)
-			to_chat(usr, "<span class='danger'>Ban not created. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+	if(player_ckey)
+		var/datum/DBQuery/query_create_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, INET_NTOA(ip), computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
+		if(!query_create_ban_get_player.warn_execute())
 			qdel(query_create_ban_get_player)
 			return
+		if(query_create_ban_get_player.NextRow())
+			player_key = query_create_ban_get_player.item[1]
+			if(use_last_connection)
+				if (!isnull(player_ip))
+					player_ip = query_create_ban_get_player.item[2]
+				if (!isnull(player_cid))
+					player_cid = query_create_ban_get_player.item[3]
 		else
-			if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
-				qdel(query_create_ban_get_player)
-				return
-	qdel(query_create_ban_get_player)
+			if(use_last_connection)
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_create_ban_get_player)
+					return
+			else
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_create_ban_get_player)
+					return
+		qdel(query_create_ban_get_player)
 	var/admin_ckey = sanitizeSQL(usr.client.ckey)
 	if(applies_to_admins)
 		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery("SELECT COUNT(DISTINCT bantime) FROM [format_table_name("ban")] WHERE a_ckey = '[admin_ckey]' AND applies_to_admins = 1 AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
@@ -474,20 +476,25 @@
 		))
 	if(!SSdbcore.MassInsert(format_table_name("ban"), sql_ban, warn = 1))
 		return
-	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [player_key]."
+	var/target = ban_target_string(player_key, player_ip, player_cid)
+	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [target]."
 	log_admin_private("[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
 	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]\nReason: [reason]")
 	if(applies_to_admins)
 		send2irc("BAN ALERT","[kn] [msg]")
-	create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
+	if(player_ckey)
+		create_message("note", player_ckey, admin_ckey, note_reason, null, null, 0, 0, null, 0, severity)
 	var/client/C = GLOB.directory[player_ckey]
 	var/datum/admin_help/AH = admin_ticket_log(player_ckey, msg)
 	var/appeal_url = "No ban appeal url set!"
 	appeal_url = CONFIG_GET(string/banappeals)
+	var/is_admin = FALSE
 	if(C)
 		build_ban_cache(C)
 		to_chat(C, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
-		if(roles_to_ban[1] == "Server")
+		if(GLOB.admin_datums[C.ckey] || GLOB.deadmins[C.ckey])
+			is_admin = TRUE
+		if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
 			qdel(C)
 	if(roles_to_ban[1] == "Server" && AH)
 		AH.Resolve()
@@ -495,7 +502,9 @@
 		if(i.address == player_ip || i.computer_id == player_cid)
 			build_ban_cache(i)
 			to_chat(i, "<span class='boldannounce'>You have been [applies_to_admins ? "admin " : ""]banned by [usr.client.key] from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"].\nReason: [reason]</span><br><span class='danger'>This ban is [isnull(duration) ? "permanent." : "temporary, it will be removed in [time_message]."] The round ID is [GLOB.round_id].</span><br><span class='danger'>To appeal this ban go to [appeal_url]</span>")
-			if(roles_to_ban[1] == "Server")
+			if(GLOB.admin_datums[i.ckey] || GLOB.deadmins[i.ckey])
+				is_admin = TRUE
+			if(roles_to_ban[1] == "Server" && (!is_admin || (is_admin && applies_to_admins)))
 				qdel(i)
 
 /datum/admins/proc/unban_panel(player_key, admin_key, player_ip, player_cid, page = 0)
@@ -574,7 +583,8 @@
 			var/unban_datetime = query_unban_search_bans.item[15]
 			var/unban_key = query_unban_search_bans.item[16]
 			var/unban_round_id = query_unban_search_bans.item[17]
-			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[player_key]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
+			var/target = ban_target_string(player_key, player_ip, player_cid)
+			output += "<div class='banbox'><div class='header [unban_datetime ? "unbanned" : "banned"]'><b>[target]</b>[applies_to_admins ? " <b>ADMIN</b>" : ""] banned by <b>[admin_key]</b> from <b>[role]</b> on <b>[ban_datetime]</b> during round <b>#[ban_round_id]</b>.<br>"
 			if(!expiration_time)
 				output += "<b>Permanent ban</b>."
 			else
@@ -598,7 +608,8 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	if(alert(usr, "Please confirm unban of [player_key] from [role].", "Unban confirmation", "Yes", "No") == "No")
+	var/target = ban_target_string(player_key, player_ip, player_cid)
+	if(alert(usr, "Please confirm unban of [target] from [role].", "Unban confirmation", "Yes", "No") == "No")
 		return
 	ban_id = sanitizeSQL(ban_id)
 	var/admin_ckey = sanitizeSQL(usr.client.ckey)
@@ -611,8 +622,8 @@
 		qdel(query_unban)
 		return
 	qdel(query_unban)
-	log_admin_private("[kn] has unbanned [player_key] from [role].")
-	message_admins("[kna] has unbanned [player_key] from [role].")
+	log_admin_private("[kn] has unbanned [target] from [role].")
+	message_admins("[kna] has unbanned [target] from [role].")
 	var/client/C = GLOB.directory[player_key]
 	if(C)
 		build_ban_cache(C)
@@ -634,22 +645,23 @@
 	player_ip = sanitizeSQL(player_ip)
 	player_cid = sanitizeSQL(player_cid)
 	var/bantime
-	var/datum/DBQuery/query_edit_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, (SELECT bantime FROM [format_table_name("ban")] WHERE id = [ban_id]), ip, computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
-	if(!query_edit_ban_get_player.warn_execute())
-		qdel(query_edit_ban_get_player)
-		return
-	if(query_edit_ban_get_player.NextRow())
-		player_key = query_edit_ban_get_player.item[1]
-		bantime = query_edit_ban_get_player.item[2]
-		if(use_last_connection)
-			player_ip = query_edit_ban_get_player.item[3]
-			player_cid = query_edit_ban_get_player.item[4]
-	else
-		if(use_last_connection)
-			to_chat(usr, "<span class='danger'>Ban not edited. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+	if(player_ckey)
+		var/datum/DBQuery/query_edit_ban_get_player = SSdbcore.NewQuery("SELECT byond_key, (SELECT bantime FROM [format_table_name("ban")] WHERE id = [ban_id]), ip, computerid FROM [format_table_name("player")] WHERE ckey = '[player_ckey]'")
+		if(!query_edit_ban_get_player.warn_execute())
 			qdel(query_edit_ban_get_player)
 			return
-	qdel(query_edit_ban_get_player)
+		if(query_edit_ban_get_player.NextRow())
+			player_key = query_edit_ban_get_player.item[1]
+			bantime = query_edit_ban_get_player.item[2]
+			if(use_last_connection)
+				player_ip = query_edit_ban_get_player.item[3]
+				player_cid = query_edit_ban_get_player.item[4]
+		else
+			if(use_last_connection)
+				to_chat(usr, "<span class='danger'>Ban not edited. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+				qdel(query_edit_ban_get_player)
+				return
+		qdel(query_edit_ban_get_player)
 	if(applies_to_admins && (applies_to_admins != old_applies))
 		var/admin_ckey = sanitizeSQL(usr.client.ckey)
 		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery("SELECT COUNT(DISTINCT bantime) FROM [format_table_name("ban")] WHERE a_ckey = '[admin_ckey]' AND applies_to_admins = 1 AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())")
@@ -728,3 +740,18 @@
 		edit_log.set_content(edits)
 		edit_log.open()
 	qdel(query_get_ban_edits)
+
+/datum/admins/proc/ban_target_string(player_key, player_ip, player_cid)
+	. = list()
+	if(player_key)
+		. += player_key
+	else
+		if(player_ip)
+			. += player_ip
+		else
+			. += "NULL"
+		if(player_cid)
+			. += player_cid
+		else
+			. += "NULL"
+	. = jointext(., "/")
