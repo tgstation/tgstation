@@ -334,7 +334,7 @@
 		else if(noms.has_quirk(/datum/quirk/pineapple_hater))
 			var/list/pineapple_pizza_liker = pizza_types.Copy()
 			pineapple_pizza_liker -= /obj/item/reagent_containers/food/snacks/pizza/pineapple
-			pizza_preferences[noms.ckey] = pineapple_pizza_liker
+			pizza_preferences[noms.ckey] = pickweight(pineapple_pizza_liker)
 		else if(noms.mind && noms.mind.assigned_role == "Botanist")
 			pizza_preferences[noms.ckey] = /obj/item/reagent_containers/food/snacks/pizza/dank
 
