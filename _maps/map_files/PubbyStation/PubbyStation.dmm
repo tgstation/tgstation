@@ -1597,10 +1597,7 @@
 /area/ai_monitored/turret_protected/AIsatextAP)
 "afL" = (
 /obj/structure/table,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/item/tank/internals/emergency_oxygen,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAP)
@@ -4079,10 +4076,7 @@
 /obj/machinery/atmospherics/pipe/manifold/cyan/hidden{
 	dir = 8
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "alk" = (
@@ -5815,10 +5809,7 @@
 "aoX" = (
 /obj/structure/rack,
 /obj/item/crowbar,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/item/laser_pointer/red,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
@@ -11827,10 +11818,7 @@
 /area/storage/primary)
 "aCt" = (
 /obj/structure/table,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/item/analyzer,
 /obj/machinery/requests_console{
 	department = "Tool Storage";
@@ -16800,10 +16788,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
@@ -19265,10 +19250,7 @@
 	pixel_x = 26
 	},
 /obj/item/crowbar,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aUb" = (
@@ -19643,10 +19625,7 @@
 "aUS" = (
 /obj/structure/closet/crate/hydroponics,
 /obj/item/shovel/spade,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/wirecutters,
@@ -26383,10 +26362,7 @@
 /area/hallway/primary/aft)
 "bks" = (
 /obj/structure/table,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/item/stack/cable_coil,
 /obj/item/electronics/apc,
 /obj/item/electronics/airlock,
@@ -28373,10 +28349,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bpo" = (
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/engine,
 /area/science/explab)
 "bpq" = (
@@ -30280,10 +30253,7 @@
 "btg" = (
 /obj/structure/rack,
 /obj/item/crowbar,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -28
@@ -35028,10 +34998,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -36226,10 +36193,7 @@
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/toxins,
 /obj/item/analyzer,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -41024,10 +40988,7 @@
 "bPK" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/fyellow,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bPL" = (
@@ -42186,10 +42147,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 4
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSg" = (
@@ -43054,10 +43012,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bUb" = (
@@ -47737,10 +47692,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cgr" = (
@@ -48549,10 +48501,7 @@
 "cjZ" = (
 /obj/structure/table,
 /obj/item/storage/crayons,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cka" = (
@@ -48605,10 +48554,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "ckg" = (
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "ckh" = (
@@ -49069,10 +49015,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/structure/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -51634,10 +51577,7 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
 "cuZ" = (
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/chapel/main/monastery)
 "cvb" = (
@@ -53819,10 +53759,7 @@
 	dir = 4;
 	layer = 2.4
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/security/execution/transfer)
@@ -53855,7 +53792,7 @@
 	dir = 1
 	},
 /obj/machinery/airalarm/engine{
-	step_y = 22
+	pixel_y = 22
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -54132,10 +54069,7 @@
 	id = "Supermatter";
 	name = "supermatter shielding"
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "eOZ" = (
@@ -55017,10 +54951,7 @@
 	pixel_y = 3
 	},
 /obj/item/stack/sheet/metal/fifty,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/item/crowbar,
 /obj/item/clothing/glasses/welding,
 /turf/open/floor/plasteel/dark,
@@ -55407,10 +55338,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -57179,10 +57107,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "lJr" = (
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "lKK" = (
@@ -59448,10 +59373,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
@@ -60490,10 +60412,7 @@
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "tDn" = (
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "tHk" = (
@@ -61783,10 +61702,7 @@
 /area/maintenance/department/cargo)
 "wRk" = (
 /obj/structure/rack,
-/obj/item/wrench{
-	step_x = 5;
-	step_y = 4
-	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "wRz" = (
