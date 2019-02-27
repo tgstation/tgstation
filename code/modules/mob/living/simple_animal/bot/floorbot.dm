@@ -42,16 +42,16 @@
 	#define REPLACE_TILE		6
 	#define TILE_EMAG		7
 
-/mob/living/simple_animal/bot/floorbot/Initialize(mapload, toolbox_color)
+/mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
 	. = ..()
-	src.toolbox_color = toolbox_color
+	toolbox_color = new_toolbox_color
 	update_icon()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-	if(src.toolbox_color == "s")
-		src.health = 100
-		src.maxHealth = 100
+	if(toolbox_color == "s")
+		health = 100
+		maxHealth = 100
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
