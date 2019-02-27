@@ -55,6 +55,9 @@
 	var/recent_rack = 0
 	var/tac_reloads = FALSE //Snowflake mechanic no more.
 
+#define CARTRIDGE_LEAVES_CHAMBER (((bolt_type == BOLT_TYPE_NO_BOLT) || (bolt_type == BOLT_TYPE_OPEN))) //Macro for quick checking if a gun should stay chambered when unloaded
+//The name kind of sucks but hopefully this makes more sense in the actual code
+
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
 	if (!spawnwithmagazine)
@@ -124,8 +127,8 @@
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
-		chambered = magazine.get_round((bolt_type == BOLT_TYPE_NO_BOLT))
-		if (bolt_type != BOLT_TYPE_OPEN)
+		chambered = magazine.get_round(CARTRIDGE_LEAVES_CHAMBER)
+		if (!CARTRIDGE_LEAVES_CHAMBER)
 			chambered.forceMove(src)
 
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
@@ -324,7 +327,7 @@
 
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
-	var/count_chambered = !((bolt_type == BOLT_TYPE_NO_BOLT) || (bolt_type == BOLT_TYPE_OPEN))
+	var/count_chambered = !CARTRIDGE_LEAVES_CHAMBER
 	to_chat(user, "It has [get_ammo(count_chambered)] round\s remaining.")
 	if (!chambered)
 		to_chat(user, "It does not seem to have a round chambered.")
