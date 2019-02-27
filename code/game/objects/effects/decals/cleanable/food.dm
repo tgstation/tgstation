@@ -32,9 +32,20 @@
 
 /obj/effect/decal/cleanable/food/salt/CanPass(atom/movable/AM, turf/target)
 	if(is_species(AM, /datum/species/snail))
-		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span></span>")
-		return FALSE
+		var/mob/living/carbon/human/H = AM
+		if(H.stat == CONSCIOUS && !H.IsStun())
+			to_chat(H, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
+			return FALSE
 	return TRUE
+
+/obj/effect/decal/cleanable/food/salt/Crossed(atom/movable/AM)//will only really happen when a snail is teleported onto salt
+	if(is_species(AM, /datum/species/snail)) //all sanity checks are evaluated there
+		var/mob/living/carbon/human/H = AM
+		H.adjustFireLoss(25)
+		playsound(H, 'sound/weapons/sear.ogg', 30, 1)
+		to_chat(H, "<span class='danger'>The <span class='phobia'>salt</span> is absorbed into your wet, snailly body!</span>")
+		H.emote("scream")
+		qdel(src)
 
 /obj/effect/decal/cleanable/food/flour
 	name = "flour"
