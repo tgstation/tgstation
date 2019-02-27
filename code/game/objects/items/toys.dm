@@ -986,12 +986,8 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "nuketoyidle"
 	w_class = WEIGHT_CLASS_SMALL
-	var/datum/outputs/output
+	datum_outputs = list(/datum/outputs/alarm)
 	var/cooldown = 0
-
-/obj/item/toy/nuke/Initialize()
-	. = ..()
-	output = SSoutputs.outputs[/datum/outputs/alarm]
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
@@ -999,7 +995,7 @@
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
 		sleep(5)
 		icon_state = "nuketoy"
-		playsound(src, output, 100, 0)
+		playsound(src, datum_outputs[1], 100, 0)
 		sleep(135)
 		icon_state = "nuketoycool"
 		sleep(cooldown - world.time)

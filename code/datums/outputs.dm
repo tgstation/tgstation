@@ -4,11 +4,12 @@
 	var/text = ""
 	var/list/sounds = 'sound/items/airhorn.ogg' //can be either a sound path or a WEIGHTED list, put multiple for random selection between sounds
 	var/mutable_appearance/vfx = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
+	var/cooldown = 100
 
 /datum/outputs/New()
 	vfx = mutable_appearance(vfx[1],vfx[2],vfx[3])
 
-/datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE)
+/datum/outputs/proc/send_info(mob/receiver, turf/turf_source, vol as num, vary, frequency, falloff, channel = 0, pressure_affected = TRUE, last_played_time)
 	var/sound/sound_output
 	//Pick sound
 	if(islist(sounds))
@@ -67,7 +68,10 @@
 			sound_output.y = 1
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	if(world.time >= last_played_time + cooldown)
+		receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+	else
+		receiver.display_output(sound_output, vfx, , turf_source, vol, vary, frequency, falloff, channel, pressure_affected) //changing the text takes more cpu time than a single if check
 
 /datum/outputs/bikehorn
 	text = "You hear a HONK."
