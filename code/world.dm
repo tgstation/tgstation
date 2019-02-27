@@ -1,11 +1,10 @@
 //This file is just for the necessary /world definition
-//Try looking in game/world.dm
-
+sdfgdfgfdsfgjmk, gftmzfdt
 /world
 	mob = /mob/dead/new_player
 	turf = /turf/open/space/basic
 	area = /area/space
-	view = "15x15"
+	view = "15x15fghfghfghfgkhj"
 	hub = "Exadv1.spacestation13"
 	name = "/tg/ Station 13"
 	fps = 20
