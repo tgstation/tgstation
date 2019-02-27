@@ -1257,41 +1257,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		
-
 		log_combat(user, target, "shoved")
-
-		var/randn = rand(1, 100)
-		if(randn <= 25)
-			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
-				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.apply_effect(40, EFFECT_PARALYZE, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
-			target.forcesay(GLOB.hit_appends)
-			log_combat(user, target, "pushed over")
-			return
-
-		if(randn <= 60)
-			var/obj/item/I = null
-			if(target.pulling)
-				target.visible_message("<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
-				target.stop_pulling()
-			else
-				I = target.get_active_held_item()
-				if(target.dropItemToGround(I))
-					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
-						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-				else
-					I = null
-			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			log_combat(user, target, "disarmed", "[I ? " removing \the [I]" : ""]")
-			return
-
-
-		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
-						"<span class='userdanger'>[user] attempted to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-		log_combat(user, target, "attempted to disarm")
-
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
