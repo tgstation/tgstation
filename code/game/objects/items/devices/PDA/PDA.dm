@@ -218,7 +218,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if (0)
 				dat += "<h2>PERSONAL DATA ASSISTANT v.1.2</h2>"
 				dat += "Owner: [owner], [ownjob]<br>"
-				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[id ? "[id.registered_name], [id.assignment]" : "----------"]")
+				dat += text("ID: <a href='?src=[REF(src)];choice=Authenticate'>[(id && id.registered_name) ? "[id.registered_name], [id.assignment]" : "----------"]")
+				dat += text("<li>Account: <a href='?src=[REF(src)];choice=AccountAuth'>[(id && id.registered_account) ? "[id.registered_account.account_id]" : "------"]</li>")
 				dat += text("<br><a href='?src=[REF(src)];choice=UpdateInfo'>[id ? "Update PDA Info" : ""]</A><br><br>")
 
 				dat += "[station_time_timestamp()]<br>" //:[world.time / 100 % 6][world.time / 100 % 10]"
@@ -230,6 +231,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<ul>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=1'>[PDAIMG(notes)]Notekeeper</a></li>"
 				dat += "<li><a href='byond://?src=[REF(src)];choice=2'>[PDAIMG(mail)]Messenger</a></li>"
+				dat += "<li><a href='byond://?src=[REF(src)];choice=66'>[PDAIMG(mail)]Bank account</a></li>"
 
 				if (cartridge)
 					if (cartridge.access & CART_CLOWN)
@@ -365,6 +367,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 					dat += "Temperature: [round(environment.temperature-T0C)]&deg;C<br>"
 				dat += "<br>"
+			if (66) //money money money
+				dat += "<h4>[PDAIMG(notes)] Money Manager V1.0</h4>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Check Balance'>Check Balance</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Transfer Money'>Transfer Money</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];choice=Eject Holocredits'>Eject Holocredits</a><br>"
+
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cartridge.generate_menu()
 
@@ -414,7 +422,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				underline_flag = !underline_flag
 
 			if("Return")//Return
-				if(mode<=9)
+				if(mode<=9 || mode == 66)
 					mode = 0
 				else
 					mode = round(mode/10)
@@ -422,11 +430,14 @@ GLOBAL_LIST_EMPTY(PDAs)
 						mode = 0
 			if ("Authenticate")//Checks for ID
 				id_check(U)
+			if ("AccountAuth")//Checks for ID too?
+				id_check(U)
 			if("UpdateInfo")
-				ownjob = id.assignment
-				if(istype(id, /obj/item/card/id/syndicate))
-					owner = id.registered_name
-				update_label()
+				if(id)
+					ownjob = id.assignment
+					if(istype(id, /obj/item/card/id/syndicate))
+						owner = id.registered_name
+					update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
 					U.put_in_hands(cartridge)
@@ -450,6 +461,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				mode = 3
 			if("4")//Redirects to hub
 				mode = 0
+			if("66")//Go to moneymanager
+				mode = 66
 
 
 //MAIN FUNCTIONS===================================
@@ -548,6 +561,37 @@ GLOBAL_LIST_EMPTY(PDAs)
 								M.open()
 							else
 								M.close()
+								
+//BANKING FUNCTIONS===================================
+
+			if("Check Balance")
+				if(id.registered_account)
+					to_chat(usr, "The account linked to the ID belongs to '[id.registered_account.account_holder]' and reports a balance of $[id.registered_account.account_balance].")
+					//actually needs logging to display, so for now it just shows in chat
+				else if(id)
+					to_chat(usr, "<span class='notice'>There is no registered account on the ID inserted.</span>")
+				else if(!id)
+					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
+					
+			if("Transfer Money")
+				//do moneything
+				
+			if("Eject Holocredits")
+				if(id.registered_account)
+					var/amount_to_remove = input(usr, "How much do you want to withdraw?", "Account Reclamation", 5) as num
+					if(!amount_to_remove || amount_to_remove < 0)
+						return
+					if(id.registered_account.adjust_money(-amount_to_remove))
+						var/obj/item/holochip/holochip = new (usr.drop_location(), amount_to_remove)
+						usr.put_in_hands(holochip)
+						to_chat(usr, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
+						return
+					else
+						to_chat(usr, "<span class='warning'>The linked account doesn't have the funds for that.</span>")
+				else if(id)
+					to_chat(usr, "<span class='notice'>There is no registered account on the ID inserted.</span>")
+				else if(!id)
+					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")		
 
 //pAI FUNCTIONS===================================
 			if("pai")
@@ -773,7 +817,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(istype(C))
 				I = C
 
-	if(I && I.registered_name)
+	if(I && (I.registered_name || I.registered_account))
 		if(!user.transferItemToLoc(I, src))
 			return FALSE
 		var/obj/old_id = id
@@ -799,7 +843,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	else if(istype(C, /obj/item/card/id))
 		var/obj/item/card/id/idcard = C
-		if(!idcard.registered_name)
+		if(!idcard.registered_name && !idcard.registered_account)
 			to_chat(user, "<span class='warning'>\The [src] rejects the ID!</span>")
 			return
 		if(!owner)
@@ -836,6 +880,20 @@ GLOBAL_LIST_EMPTY(PDAs)
 		var/obj/item/photo/P = C
 		picture = P.picture
 		to_chat(user, "<span class='notice'>You scan \the [C].</span>")
+	else if(id)
+		if(id.registered_account)
+			var/obj/item/card/id/I = id
+			if(istype(C, /obj/item/holochip))
+				I.insert_money(C, user)
+				return
+			else if(istype(C, /obj/item/stack/spacecash))
+				I.insert_money(C, user, TRUE)
+				return
+			else if(istype(C, /obj/item/coin))
+				I.insert_money(C, user, TRUE)
+				return
+		else
+			to_chat(user, "<span class='warning'>The inserted ID doesn't have a linked account to deposit [C] into!</span>")
 	else
 		return ..()
 
