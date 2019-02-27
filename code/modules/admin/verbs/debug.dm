@@ -88,7 +88,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		//this currently has no hascall protection. wasn't able to get it working.
 		log_admin("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
-		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc
+		returnval = WrapAdminProcCall(GLOBAL_PROC, "/[proctype]/[procname]", lst) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, .)
