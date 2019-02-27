@@ -95,7 +95,7 @@
 	for(var/obj/A in bank_cards)
 		var/obj/card_holder = recursive_loc_check(A, /obj)
 		if(istype(card_holder,/obj/item/pda)) //check if it is inside pda
-			card_holder.brep += "<i><b>&larr; [amount] [amount > 0 ? "from " : " to "] [target] :</b></i><br>"
+			card_holder.brec += "<i><b>&larr; [amount] [amount > 0 ? "from " : " to "] [target] :</b></i><br>"
 			return
 	
 /datum/bank_account/department
