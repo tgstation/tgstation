@@ -136,6 +136,7 @@
 		immune += L
 		return
 	L.Stun(20, 1, 1)
+	walk(L, 0) //stops them mid pathing
 	frozen_mobs[L] = L.anchored
 	L.anchored = TRUE
 	global_frozen_atoms[L] = TRUE
@@ -154,7 +155,7 @@
 	global_frozen_atoms -= L
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L
-		S.toggle_ai(initial(H.AIStatus))
+		S.toggle_ai(initial(S.AIStatus))
 
 //you don't look quite right, is something the matter?
 /datum/proximity_monitor/advanced/timestop/proc/into_the_negative_zone(atom/A)
