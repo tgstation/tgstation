@@ -75,6 +75,83 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
 	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
+
+//The advanced pea-green monochrome lcd of tomorrow.
+
+GLOBAL_LIST_EMPTY(PDAs)
+
+#define PDA_SCANNER_NONE		0
+#define PDA_SCANNER_MEDICAL		1
+#define PDA_SCANNER_FORENSICS	2 //unused
+#define PDA_SCANNER_REAGENT		3
+#define PDA_SCANNER_HALOGEN		4
+#define PDA_SCANNER_GAS			5
+#define PDA_SPAM_DELAY		    2 MINUTES
+
+/obj/item/pda
+	name = "\improper PDA"
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
+	icon = 'icons/obj/pda.dmi'
+	icon_state = "pda"
+	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
+	item_flags = NOBLUDGEON
+	w_class = WEIGHT_CLASS_TINY
+	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+
+	//Main variables
+	var/owner = null // String name of owner
+	var/default_cartridge = 0 // Access level defined by cartridge
+	var/obj/item/cartridge/cartridge = null //current cartridge
+	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
+	var/font_index = 0 //This int tells DM which font is currently selected and lets DM know when the last font has been selected so that it can cycle back to the first font when "toggle font" is pressed again.
+	var/font_mode = "font-family:monospace;" //The currently selected font.
+	var/background_color = "#808000" //The currently selected background color.
+
+	#define FONT_MONO "font-family:monospace;"
+	#define FONT_SHARE "font-family:\"Share Tech Mono\", monospace;letter-spacing:0px;"
+	#define FONT_ORBITRON "font-family:\"Orbitron\", monospace;letter-spacing:0px; font-size:15px"
+	#define FONT_VT "font-family:\"VT323\", monospace;letter-spacing:1px;"
+	#define MODE_MONO 0
+	#define MODE_SHARE 1
+	#define MODE_ORBITRON 2
+	#define MODE_VT 3
+
+	//Secondary variables
+	var/scanmode = PDA_SCANNER_NONE
+	var/fon = FALSE //Is the flashlight function on?
+	var/f_lum = 2.3 //Luminosity for the flashlight function
+	var/silent = FALSE //To beep or not to beep, that is the question
+	var/toff = FALSE //If TRUE, messenger disabled
+	var/tnote = null //Current Texts
+	var/last_text //No text spamming
+	var/last_everyone //No text for everyone spamming
+	var/last_noise //Also no honk spamming that's bad too
+	var/ttone = "beep" //The ringtone!
+	var/honkamt = 0 //How many honks left when infected with honk.exe
+	var/mimeamt = 0 //How many silence left when infected with mime.exe
+	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
+	var/notehtml = ""
+	var/notescanned = FALSE // True if what is in the notekeeper was from a paper.
+	var/detonatable = TRUE // Can the PDA be blown up?
+	var/hidden = FALSE // Is the PDA hidden from the PDA list?
+	var/emped = FALSE
+	var/equipped = FALSE  //used here to determine if this is the first time its been picked up
+
+	var/obj/item/card/id/id = null //Making it possible to slot an ID card into the PDA so it can function as both.
+	var/ownjob = null //related to above
+
+	var/obj/item/paicard/pai = null	// A slot for a personal AI device
+
+	var/datum/picture/picture //Scanned photo
+
+	var/list/contained_item = list(/obj/item/pen, /obj/item/toy/crayon, /obj/item/lipstick, /obj/item/flashlight/pen, /obj/item/clothing/mask/cigarette)
+	var/obj/item/inserted_item //Used for pen, crayon, and lipstick insertion or removal. Same as above.
 	var/overlays_x_offset = 0	//x offset to use for certain overlays
 
 	var/underline_flag = TRUE //flag for underline
@@ -372,7 +449,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<a href='byond://?src=[REF(src)];choice=Check Balance'>Check Balance</a><br>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Transfer Money'>Transfer Money</a><br>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Eject Holocredits'>Eject Holocredits</a><br>"
-
+				dat += "<a href='byond://?src=[REF(src)];choice=Create Account'>[(id && !id.registered_account) ? "Create Bank Account" : ""]</a><br>"
+				
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cartridge.generate_menu()
 
@@ -565,7 +643,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BANKING FUNCTIONS===================================
 
 			if("Check Balance")
-				if(id && id.registered_account)
+				if(id.registered_account)
 					to_chat(usr, "The account linked to the ID belongs to '[id.registered_account.account_holder]' and reports a balance of $[id.registered_account.account_balance].")
 					//actually needs logging to display, so for now it just shows in chat
 				else if(id)
@@ -574,33 +652,10 @@ GLOBAL_LIST_EMPTY(PDAs)
 					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
 					
 			if("Transfer Money")
-				if(id && id.registered_account)
-					var/new_bank_id = input(usr, "Enter the account ID number you wish to transfer to.", "Destination Account", 111111) as num
-					if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
-						to_chat(usr, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span")
-						return
-					for(var/A in SSeconomy.bank_accounts)
-						var/datum/bank_account/B = A
-						if(B.account_id == new_bank_id)
-							var/howmuch = input(usr, "How much do you want to transfer?", "Amount", 0) as num
-							if(!howmuch || howmuch < 0)
-								return
-							if(id && !id.registered_account.has_money(howmuch))
-								to_chat(usr, "<span class='warning'>The linked account doesn't have the funds for that.</span>")
-								return
-							if(id && id.registered_account.has_money(howmuch)) //prevents runtimes
-								B.adjust_money(howmuch)
-								B.bank_card_talk("Transfer of $[howmuch] received from [id.registered_account.account_id]",TRUE)
-								id.registered_account.adjust_money(-howmuch)
-								to_chat(usr, "<span class='notice'>You successfully transfered $[howmuch] from account [id.registered_account.account_id] to [B.account_id]</span>")
-								return
-						to_chat(usr, "<span class='warning'>The account ID number provided is invalid.</span>")
-				else if(id)
-					to_chat(usr, "<span class='notice'>There is no registered account on the ID inserted.</span>")
-				else if(!id)
-					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
+				//do moneything
+				
 			if("Eject Holocredits")
-				if(id && id.registered_account)
+				if(id.registered_account)
 					var/amount_to_remove = input(usr, "How much do you want to withdraw?", "Account Reclamation", 5) as num
 					if(!amount_to_remove || amount_to_remove < 0)
 						return
@@ -614,8 +669,29 @@ GLOBAL_LIST_EMPTY(PDAs)
 				else if(id)
 					to_chat(usr, "<span class='notice'>There is no registered account on the ID inserted.</span>")
 				else if(!id)
-					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")		
-
+					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
+					
+			if("Create Account")
+				if(id && !id.registered_account)
+					if(!id.assignment)
+						to_chat(usr, "<span class='notice'>Nanotrasen bank requires a registered job to create an account</span>")
+						return
+					if(!id.registered_name)
+						to_chat(usr, "<span class='notice'>Nanotrasen bank requires a registered name to create an account</span>")
+						return
+					if(iscarbon(usr))
+						var/datum/bank_account/A = new (id.registered_name,id.assignment)
+						var/mob/living/carbon/human/H = usr
+						to_chat(usr, "<b>Your account ID is [A.account_id].</b>")
+						id.registered_account = A
+						A.bank_cards += id
+						H.add_memory("Your account ID is [A.account_id].")
+						to_chat(usr, "<b>Your account password is [A.account_password].</b>")
+						H.add_memory("Your account password is [A.account_password].")
+				else if(id && id.registered_account)
+					to_chat(usr, "<span class='notice'>This ID already has an account linked to it.</span>")
+				else if(!id)
+					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
 //pAI FUNCTIONS===================================
 			if("pai")
 				switch(href_list["option"])
