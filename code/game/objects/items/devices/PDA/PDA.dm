@@ -52,6 +52,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/silent = FALSE //To beep or not to beep, that is the question
 	var/toff = FALSE //If TRUE, messenger disabled
 	var/tnote = null //Current Texts
+	var/brec = null //Current Bank Records
 	var/last_text //No text spamming
 	var/last_everyone //No text for everyone spamming
 	var/last_noise //Also no honk spamming that's bad too
@@ -575,7 +576,33 @@ GLOBAL_LIST_EMPTY(PDAs)
 					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
 					
 			if("Transfer Money")
-				//do moneything
+				if(id && id.registered_account)
+					var/new_bank_id = input(usr, "Enter the account ID number you wish to transfer to.", "Destination Account", 111111) as num
+					if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
+						to_chat(usr, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span")
+						return
+					for(var/A in SSeconomy.bank_accounts)
+						var/datum/bank_account/B = A
+						if(B.account_id == new_bank_id)
+							var/howmuch = input(usr, "How much do you want to transfer?", "Amount", 0) as num
+							if(!howmuch || howmuch < 0)
+								return
+							if(id && !id.registered_account.has_money(howmuch))
+								to_chat(usr, "<span class='warning'>The linked account doesn't have the funds for that.</span>")
+								return
+							if(id && id.registered_account.has_money(howmuch)) //prevents runtimes
+								B.adjust_money(howmuch)
+								B.log_money(howmuch,id.registered_account.account_id)
+								B.bank_card_talk("Transfer of $[howmuch] received from [id.registered_account.account_id]",TRUE)
+								id.registered_account.adjust_money(-howmuch)
+								id.registered_account(-howmuch,B.account_id)
+								to_chat(usr, "<span class='notice'>You successfully transfered $[howmuch] from account [id.registered_account.account_id] to [B.account_id]</span>")
+								return
+						to_chat(usr, "<span class='warning'>The account ID number provided is invalid.</span>")
+				else if(id)
+					to_chat(usr, "<span class='notice'>There is no registered account on the ID inserted.</span>")
+				else if(!id)
+					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
 				
 			if("Eject Holocredits")
 				if(id.registered_account)
@@ -584,6 +611,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						return
 					if(id.registered_account.adjust_money(-amount_to_remove))
 						var/obj/item/holochip/holochip = new (usr.drop_location(), amount_to_remove)
+						id.registered_account.log_money(-amount_to_remove,"Holochip Withdraw")
 						usr.put_in_hands(holochip)
 						to_chat(usr, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
 						return
@@ -907,12 +935,18 @@ GLOBAL_LIST_EMPTY(PDAs)
 			var/obj/item/card/id/I = id
 			if(istype(C, /obj/item/holochip))
 				I.insert_money(C, user)
+				if(C.get_item_credit_value())
+					id.registered_account.log_money(C.get_item_credit_value(),"Holochip deposit")
 				return
 			else if(istype(C, /obj/item/stack/spacecash))
 				I.insert_money(C, user, TRUE)
+				if(C.get_item_credit_value())
+					id.registered_account.log_money(C.get_item_credit_value(),"Cash deposit")
 				return
 			else if(istype(C, /obj/item/coin))
 				I.insert_money(C, user, TRUE)
+				if(C.get_item_credit_value())
+					id.registered_account.log_money(C.get_item_credit_value(),"Coin deposit")
 				return
 		else
 			to_chat(user, "<span class='warning'>The inserted ID doesn't have a linked account to deposit [C] into!</span>")

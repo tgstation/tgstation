@@ -38,6 +38,7 @@
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
 		adjust_money(amount)
+		log_money(amount,"PAYCHECK")
 		from.adjust_money(-amount)
 		return TRUE
 	return FALSE
@@ -69,7 +70,7 @@
 		if(ismob(card_holder)) //If on a mob
 			if(card_holder.client && !(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
 				return
-
+				
 			card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep.ogg', 50, TRUE)
 			if(card_holder.can_hear())
 				to_chat(card_holder, "[icon2html(A, card_holder)] *[message]*")
@@ -87,7 +88,16 @@
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep.ogg', 50, TRUE)
 				if(M.can_hear())
 					to_chat(M, "[icon2html(A, M)] *[message]*")
-
+					
+/datum/bank_account/proc/log_money(amount,target)
+	if(!amount)
+		return
+	for(var/obj/A in bank_cards)
+		var/item/card_holder = recursive_loc_check(A, /obj/item)
+		if(istype(card_holder,/obj/item/pda)) //check if it is inside pda
+			card_holder.brep += "<i><b>&larr; [amount] [amount > 0 ? "from " : " to "] [target] :</b></i><br>"
+			return
+	
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"
 	var/department_id = "REPLACE_ME"
