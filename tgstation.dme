@@ -330,6 +330,7 @@
 #include "code\datums\brain_damage\severe.dm"
 #include "code\datums\brain_damage\special.dm"
 #include "code\datums\brain_damage\split_personality.dm"
+#include "code\datums\brain_damage\unstable_insanity.dm"
 #include "code\datums\components\_component.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\armor_plate.dm"

@@ -11,7 +11,7 @@
 
 /datum/brain_trauma/special/unstable_insanity/on_life()
 	for(var/obj/effect/temp_visual/watching_eyeball/current_eyes in eyeballs)
-		update_looks()
+		current_eyes.update_looks()
 
 	if(prob(1))
 		switch(rand(1,3))
@@ -22,9 +22,10 @@
 				if(valid_walls_to_eyeballs.len)
 					var/obj/effect/temp_visual/watching_eyeball/new_eye = new(pick(valid_walls_to_eyeballs), owner)
 					eyeballs += new_eye
-			if(2)//random chatter from objects
+	//		if(2)//random chatter from objects
 				//
-			if(3)//vibrant colors!!
+	//		if(3)//vibrant colors!!
+
 
 /*
 /datum/brain_trauma/special/unstable_insanity/on_hear(message, speaker, message_language, raw_message, radio_freq)
@@ -39,14 +40,14 @@
 /obj/effect/temp_visual/watching_eyeball
 	icon_state = null
 	duration = 3 MINUTES
-	/datum/brain_trauma/special/unstable_insanity/trauma
+	var/datum/brain_trauma/special/unstable_insanity/trauma
 
-/obj/effect/temp_visual/watching_eyeball/Initialize(mapload, mob/seer)
+/obj/effect/temp_visual/watching_eyeball/Initialize(mapload, mob/living/carbon/seer)
 	. = ..()
-	for(var/datum/brain_trauma/special/unstable_insanity/B in get_traumas())
+	for(var/datum/brain_trauma/special/unstable_insanity/B in seer.get_traumas())
 		trauma = B
 		break
-	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "eyeball", layer = ABOVE_MOB_LAYER, loc = src)
+	var/image/I = image(icon = 'icons/effects/effects.dmi', icon_state = "eyeball_[rand(1,3)]", layer = ABOVE_MOB_LAYER, loc = src)
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/onePerson, "eyeball", I, seer)
 
 /obj/effect/temp_visual/watching_eyeball/proc/update_looks(mob/watched)
