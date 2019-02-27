@@ -208,6 +208,7 @@
 	throwforce = 10
 	created_name = "Floorbot"
 	var/toolbox = /obj/item/storage/toolbox/mechanical
+	var/toolbox_color = "" //Blank for blue, r for red, y for yellow, etc.
 
 /obj/item/bot_assembly/floorbot/Initialize()
 	. = ..()
@@ -219,16 +220,24 @@
 		if(ASSEMBLY_FIRST_STEP)
 			desc = initial(desc)
 			name = initial(name)
-			icon_state = initial(icon_state)
+			icon_state = "[toolbox_color]toolbox_tiles"
 
 		if(ASSEMBLY_SECOND_STEP)
 			desc = "It's a toolbox with tiles sticking out the top and a sensor attached."
 			name = "incomplete floorbot assembly"
-			icon_state = "toolbox_tiles_sensor"
+			icon_state = "[toolbox_color]toolbox_tiles_sensor"
 
-/obj/item/storage/toolbox/mechanical/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
+/obj/item/storage/toolbox/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
+	var/list/allowed_toolbox = list(/obj/item/storage/toolbox/emergency,	//which toolboxes can be made into floorbots
+							/obj/item/storage/toolbox/electrical,
+							/obj/item/storage/toolbox/mechanical,
+							/obj/item/storage/toolbox/artistic,
+							/obj/item/storage/toolbox/syndicate)
+
 	if(!istype(T, /obj/item/stack/tile/plasteel))
 		..()
+		return
+	if(!is_type_in_list(src, allowed_toolbox))
 		return
 	if(contents.len >= 1)
 		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
@@ -236,7 +245,17 @@
 	if(T.use(10))
 		var/obj/item/bot_assembly/floorbot/B = new
 		B.toolbox = type
+		switch(B.toolbox)
+			if(/obj/item/storage/toolbox/emergency)
+				B.toolbox_color = "r"
+			if(/obj/item/storage/toolbox/electrical)
+				B.toolbox_color = "y"
+			if(/obj/item/storage/toolbox/artistic)
+				B.toolbox_color = "g"
+			if(/obj/item/storage/toolbox/syndicate)
+				B.toolbox_color = "s"
 		user.put_in_hands(B)
+		B.update_icon()
 		to_chat(user, "<span class='notice'>You add the tiles into the empty [src.name]. They protrude from the top.</span>")
 		qdel(src)
 	else
@@ -259,7 +278,7 @@
 			if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
 				if(!can_finish_build(W, user))
 					return
-				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location())
+				var/mob/living/simple_animal/bot/floorbot/A = new(drop_location(), toolbox_color)
 				A.name = created_name
 				A.robot_arm = W.type
 				A.toolbox = toolbox
