@@ -565,7 +565,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 //BANKING FUNCTIONS===================================
 
 			if("Check Balance")
-				if(id.registered_account)
+				if(id && id.registered_account)
 					to_chat(usr, "The account linked to the ID belongs to '[id.registered_account.account_holder]' and reports a balance of $[id.registered_account.account_balance].")
 					//actually needs logging to display, so for now it just shows in chat
 				else if(id)
@@ -574,10 +574,33 @@ GLOBAL_LIST_EMPTY(PDAs)
 					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
 					
 			if("Transfer Money")
-				//do moneything
-				
+				if(id && id.registered_account)
+					var/new_bank_id = input(usr, "Enter the account ID number you wish to transfer to.", "Destination Account", 111111) as num
+					if(!new_bank_id || new_bank_id < 111111 || new_bank_id > 999999)
+						to_chat(usr, "<span class='warning'>The account ID number needs to be between 111111 and 999999.</span")
+						return
+					for(var/A in SSeconomy.bank_accounts)
+						var/datum/bank_account/B = A
+						if(B.account_id == new_bank_id)
+							var/howmuch = input(usr, "How much do you want to transfer?", "Amount", 0) as num
+							if(!howmuch || howmuch < 0)
+								return
+							if(id && !id.registered_account.has_money(howmuch))
+								to_chat(usr, "<span class='warning'>The linked account doesn't have the funds for that.</span>")
+								return
+							if(id && id.registered_account.has_money(howmuch)) //prevents runtimes
+								B.adjust_money(howmuch)
+								B.bank_card_talk("Transfer of $[howmuch] received from [id.registered_account.account_id]",TRUE)
+								id.registered_account.adjust_money(-howmuch)
+								to_chat(usr, "<span class='notice'>You successfully transfered $[howmuch] from account [id.registered_account.account_id] to [B.account_id]</span>")
+								return
+						to_chat(usr, "<span class='warning'>The account ID number provided is invalid.</span>")
+				else if(id)
+					to_chat(usr, "<span class='notice'>There is no registered account on the ID inserted.</span>")
+				else if(!id)
+					to_chat(usr, "<span class='notice'>There is no ID inserted.</span>")
 			if("Eject Holocredits")
-				if(id.registered_account)
+				if(id && id.registered_account)
 					var/amount_to_remove = input(usr, "How much do you want to withdraw?", "Account Reclamation", 5) as num
 					if(!amount_to_remove || amount_to_remove < 0)
 						return
