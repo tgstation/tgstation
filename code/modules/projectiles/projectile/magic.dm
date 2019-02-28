@@ -244,7 +244,13 @@
 			if(prob(50))
 				new_mob = new /mob/living/carbon/human(M.loc)
 			else
-				var/hooman = pick(subtypesof(/mob/living/carbon/human/species))
+				var/chooseable_races = list()
+				for(var/speciestype in subtypesof(/datum/species))
+					var/datum/species/S = speciestype
+					if(initial(S.changesource_flags) & WABBAJACK)
+						chooseable_races += speciestype
+
+				var/hooman = pick(chooseable_races)
 				new_mob =new hooman(M.loc)
 
 			var/datum/preferences/A = new()	//Randomize appearance for the human
@@ -379,11 +385,11 @@
 		if(M.anti_magic_check())
 			M.visible_message("<span class='warning'>[src] vanishes on contact with [A]!</span>")
 			qdel(src)
-			return BULLET_ACT_BLOCK
+			return
 		if(M.anchored)
 			return ..()
 		M.forceMove(src)
-		return BULLET_ACT_HIT
+		return FALSE
 	return ..()
 
 /obj/item/projectile/magic/locker/on_hit(target)

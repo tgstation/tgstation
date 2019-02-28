@@ -6581,7 +6581,7 @@
 /turf/closed/wall,
 /area/awaymission/snowdin/post/secpost)
 "od" = (
-/obj/item/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/rifle/boltaction,
 /obj/item/ammo_box/a762,
 /obj/item/ammo_box/a762,
 /obj/structure/closet/secure_closet{

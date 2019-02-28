@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed suit storage units not correctly clearing out the radiation of built-in hardsuit helmets and jetpacks."
