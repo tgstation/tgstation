@@ -59,6 +59,7 @@
 	var/list/mob/living/frozen_mobs = list()
 	var/list/obj/item/projectile/frozen_projectiles = list()
 	var/list/atom/movable/frozen_throws = list()
+	var/list/obj/mecha/frozen_mechs = list()
 	var/check_anti_magic = FALSE
 	var/check_holy = FALSE
 
@@ -80,6 +81,8 @@
 		freeze_mob(A)
 	else if(istype(A, /obj/item/projectile))
 		freeze_projectile(A)
+	else if(istype(A, /obj/mecha))
+		freeze_mecha(A)
 	else
 		return FALSE
 
@@ -94,6 +97,20 @@
 		unfreeze_mob(i)
 	for(var/i in frozen_throws)
 		unfreeze_throw(i)
+	for(var/i in frozen_mechs)
+		unfreeze_mecha(i)
+
+/datum/proximity_monitor/advanced/timestop/proc/freeze_mecha(obj/mecha/M)
+	M.completely_disabled = TRUE
+	frozen_mechs[M] = TRUE
+	global_frozen_atoms[M] = TRUE
+
+/datum/proximity_monitor/advanced/timestop/proc/unfreeze_mecha(obj/mecha/M)
+	escape_the_negative_zone(P)
+	M.completely_disabled = FALSE
+	frozen_mechs -= M
+	global_frozen_atoms -= M
+	
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_throwing(atom/movable/AM)
 	var/datum/thrownthing/T = AM.throwing
