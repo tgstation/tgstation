@@ -106,7 +106,7 @@
 	global_frozen_atoms[M] = TRUE
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mecha(obj/mecha/M)
-	escape_the_negative_zone(P)
+	escape_the_negative_zone(M)
 	M.completely_disabled = FALSE
 	frozen_mechs -= M
 	global_frozen_atoms -= M
