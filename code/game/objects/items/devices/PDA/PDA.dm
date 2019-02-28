@@ -344,7 +344,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 				dat += tnote
 				dat += "<br>"
-
+				
+			if(67)
+				dat += "<h4>Account Statement</h4>"
+				dat += brec
+				dat += "<br>"
+				
 			if (3)
 				dat += "<h4>[PDAIMG(atmos)] Atmospheric Readings</h4>"
 
@@ -374,6 +379,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 				dat += "<a href='byond://?src=[REF(src)];choice=Transfer Money'>Transfer Money</a><br>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Eject Holocredits'>Eject Holocredits</a><br>"
 				dat += "<a href='byond://?src=[REF(src)];choice=Create Account'>[(id && !id.registered_account) ? "Create Bank Account" : ""]</a><br>"
+				dat += "<a href='byond://?src=[REF(src)];choice=67'>[PDAIMG(mail)]Statement</a><br>"
 				
 			else//Else it links to the cart menu proc. Although, it really uses menu hub 4--menu 4 doesn't really exist as it simply redirects to hub.
 				dat += cartridge.generate_menu()
@@ -426,6 +432,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if("Return")//Return
 				if(mode<=9 || mode == 66)
 					mode = 0
+				else if(mode == 67)
+					mode = 66
 				else
 					mode = round(mode/10)
 					if(mode==4 || mode == 5)//Fix for cartridges. Redirects to hub.
@@ -592,13 +600,13 @@ GLOBAL_LIST_EMPTY(PDAs)
 								return
 							if(id && id.registered_account.has_money(howmuch)) //prevents runtimes
 								B.adjust_money(howmuch)
-								B.log_money(howmuch,id.registered_account.account_id)
+								B.log_money(howmuch,"[id.registered_account.account_id] Account")
 								B.bank_card_talk("Transfer of $[howmuch] received from [id.registered_account.account_id]",TRUE)
 								id.registered_account.adjust_money(-howmuch)
-								id.registered_account.log_money(-howmuch,B.account_id)
+								id.registered_account.log_money(-howmuch,"[B.account_id] Account")
 								to_chat(usr, "<span class='notice'>You successfully transfered $[howmuch] from account [id.registered_account.account_id] to [B.account_id]</span>")
 								return
-						to_chat(usr, "<span class='warning'>The account ID number provided is invalid.</span>")
+					to_chat(usr, "<span class='warning'>The account ID number provided is invalid.</span>")
 				else if(id)
 					to_chat(usr, "<span class='notice'>There is no registered account on the ID inserted.</span>")
 				else if(!id)
@@ -631,7 +639,17 @@ GLOBAL_LIST_EMPTY(PDAs)
 						to_chat(usr, "<span class='notice'>Nanotrasen bank requires a registered name to create an account</span>")
 						return
 					if(iscarbon(usr))
-						var/datum/bank_account/A = new (id.registered_name,id.assignment)
+						var/list/all_jobs = subtypesof(/datum/job)
+						var/datum/job/assign = null
+						to_chat(usr, "<b>wat.</b>")
+						for(var/datum/job/J in all_jobs)
+							to_chat(usr, "<b>[id.assignment] and [J.title].</b>")
+							if(J.title == id.assignment)
+								assign = J
+								break
+						if(!assign)
+							assign = id.assignment
+						var/datum/bank_account/A = new (id.registered_name,assign)
 						var/mob/living/carbon/human/H = usr
 						to_chat(usr, "<b>Your account ID is [A.account_id].</b>")
 						id.registered_account = A
@@ -936,17 +954,17 @@ GLOBAL_LIST_EMPTY(PDAs)
 			if(istype(C, /obj/item/holochip))
 				I.insert_money(C, user)
 				if(C.get_item_credit_value())
-					id.registered_account.log_money(C.get_item_credit_value(),"Holochip deposit")
+					id.registered_account.log_money(C.get_item_credit_value(),"Holochip Deposit")
 				return
 			else if(istype(C, /obj/item/stack/spacecash))
 				I.insert_money(C, user, TRUE)
 				if(C.get_item_credit_value())
-					id.registered_account.log_money(C.get_item_credit_value(),"Cash deposit")
+					id.registered_account.log_money(C.get_item_credit_value(),"Cash Deposit")
 				return
 			else if(istype(C, /obj/item/coin))
 				I.insert_money(C, user, TRUE)
 				if(C.get_item_credit_value())
-					id.registered_account.log_money(C.get_item_credit_value(),"Coin deposit")
+					id.registered_account.log_money(C.get_item_credit_value(),"Coin Deposit")
 				return
 		else
 			to_chat(user, "<span class='warning'>The inserted ID doesn't have a linked account to deposit [C] into!</span>")

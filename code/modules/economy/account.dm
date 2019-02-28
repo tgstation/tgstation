@@ -38,7 +38,7 @@
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
 		adjust_money(amount)
-		log_money(amount,"PAYCHECK")
+		log_money(amount," Nanotrasen Payment")
 		from.adjust_money(-amount)
 		return TRUE
 	return FALSE
@@ -93,9 +93,9 @@
 	if(!amount)
 		return
 	for(var/obj/A in bank_cards)
-		var/obj/card_holder = recursive_loc_check(A, /obj)
+		var/obj/item/pda/card_holder = recursive_loc_check(A, /obj/item/pda)
 		if(istype(card_holder,/obj/item/pda)) //check if it is inside pda
-			card_holder.brec += "<i><b>&larr; [amount] [amount > 0 ? "from " : " to "] [target] :</b></i><br>"
+			card_holder.brec += "<i><b>&larr; [amount] [amount > 0 ? "from " : " to "] [target] </b></i><br>"
 			return
 	
 /datum/bank_account/department
@@ -107,4 +107,4 @@
 	department_id = dep_id
 	account_balance = budget
 	account_holder = SSeconomy.department_accounts[dep_id]
-	SSeconomy.generated_accounts += src
+SSeconomy.generated_accounts += src
