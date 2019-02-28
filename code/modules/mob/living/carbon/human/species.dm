@@ -1256,8 +1256,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/randomized_zone = ran_zone(user.zone_selected)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
-		
-		log_combat(user, target, "shoved")
+		var/shove_dir = get_dir(user.loc, target.loc)
+		var/turf/target_location = get_step(target.loc, shove_dir)
+		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		if(!is_blocked_turf(target_location, FALSE))
+			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>", "<span class='danger'>You shove [target.name]!</span>")
+			target.Move(target_location)
+			log_combat(user, target, "shoved")
+		else
+			target.Knockdown(30)
+			user.visible_message("<span class='danger'>[user.name] shoves [target.name] into !</span>", "<span class='danger'>You shove [target.name]!</span>")
+			playsound(target, get_sfx("punch"), 50, TRUE, -1)
+			log_combat(user, target, "shoved", "into a wall")
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return

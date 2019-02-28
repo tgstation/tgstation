@@ -100,7 +100,7 @@
 		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
 				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
-			return 1
+			return TRUE
 
 		if(L.pulling)
 			if(ismob(L.pulling))
@@ -108,10 +108,10 @@
 				if(P.restrained())
 					if(!(world.time % 5))
 						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
-					return 1
+					return TRUE
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
-		return 1
+		return TRUE
 
 	if(!M.buckled && !M.has_buckled_mobs())
 		var/mob_swap = FALSE
@@ -126,7 +126,7 @@
 		if(mob_swap)
 			//switch our position with M
 			if(loc && !loc.Adjacent(M.loc))
-				return 1
+				return TRUE
 			now_pushing = 1
 			var/oldloc = loc
 			var/oldMloc = M.loc
@@ -150,21 +150,23 @@
 			now_pushing = 0
 
 			if(!move_failed)
-				return 1
+				return TRUE
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH))
-		return 1
+		return TRUE
 	if(isliving(M))
 		var/mob/living/L = M
 		if(L.has_trait(TRAIT_PUSHIMMUNE))
-			return 1
+			return TRUE
+	if(ishuman(M))
+		return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
 			if(prob(I.block_chance*2))
-				return 1
+				return 
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/mob_details = list()
