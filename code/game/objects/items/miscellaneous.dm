@@ -18,6 +18,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	item_state = "radio"
+	var/uses = 1
 
 /obj/item/choice_beacon/attack_self(mob/user)
 	if(canUseBeacon(user))
@@ -42,7 +43,11 @@
 		return
 
 	spawn_option(display_names[choice],M)
-	qdel(src)
+	uses--
+	if(!uses)
+		qdel(src)
+	else
+		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
 
 /obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
 	var/obj/new_item = new choice()
@@ -104,7 +109,7 @@
 /obj/item/choice_beacon/augments
 	name = "augment beacon"
 	desc = "Summons augmentations. Can be used 3 times!"
-	var/uses = 3
+	uses = 3
 
 /obj/item/choice_beacon/augments/generate_display_names()
 	var/static/list/augment_list
@@ -121,21 +126,6 @@
 			var/atom/A = V
 			augment_list[initial(A.name)] = A
 	return augment_list
-
-/obj/item/choice_beacon/augments/generate_options(mob/living/M)
-	var/list/display_names = generate_display_names()
-	if(!display_names.len)
-		return
-	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in display_names
-	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
-		return
-
-	spawn_option(display_names[choice],M)
-	uses--
-	if(!uses)
-		qdel(src)
-	else
-		to_chat(M, "<span class='notice'>[uses] use[uses > 1 ? "s" : ""] remaining on the [src].</span>")
 
 /obj/item/choice_beacon/augments/spawn_option(obj/choice,mob/living/M)
 	new choice(get_turf(M))
