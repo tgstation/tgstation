@@ -32,7 +32,7 @@
 
 /obj/effect/decal/cleanable/food/salt/CanPass(atom/movable/AM, turf/target)
 	if(is_species(AM, /datum/species/snail))
-		to_chat(H, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
+		to_chat(AM, "<span class='danger'>Your path is obstructed by <span class='phobia'>salt</span>.</span>")
 		return FALSE
 	return TRUE
 
