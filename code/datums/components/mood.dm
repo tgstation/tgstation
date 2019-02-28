@@ -199,10 +199,6 @@
 		if(prob(0.05))
 			add_event(null, "jolly", /datum/mood_event/jolly)
 			clear_event(null, "depression")
-	if(owner.has_trait(TRAIT_UNSTABLE))
-		if(iscarbon(owner) && sanity < SANITY_CRAZY)
-			var/mob/living/carbon/C = owner
-			C.gain_trauma(/datum/brain_trauma/special/unstable_insanity)
 
 	HandleNutrition(owner)
 	HandleHygiene(owner)

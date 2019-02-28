@@ -500,11 +500,11 @@
 		/obj/item/storage/fancy/cigarettes/cigars,
 		/obj/item/storage/fancy/cigarettes/cigars/cohiba,
 		/obj/item/storage/fancy/cigarettes/cigars/havana)
-	. = ..()	
+	. = ..()
 
 /datum/quirk/junkie/smoker/announce_drugs()
 	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
-	
+
 
 /datum/quirk/junkie/smoker/on_process()
 	. = ..()
@@ -512,14 +512,14 @@
 	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/C = drug_instance
-		if(istype(I, C.spawn_type))	
+		if(istype(I, C.spawn_type))
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
 
 /datum/quirk/unstable
 	name = "Unstable"
-	desc = "Due to past troubles, you are unable to recover your sanity if you lose it, and insanity is more dangerous. Be very careful managing your mood!"
+	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
 	value = -2
 	mob_trait = TRAIT_UNSTABLE
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
