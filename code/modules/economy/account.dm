@@ -7,6 +7,7 @@
 	var/account_id
 	var/account_password //In-game Bank password, not real bank password
 	var/welfare = TRUE
+	var/password_legth = 4
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -14,7 +15,6 @@
 	account_holder = newname
 	account_job = job
 	account_id = rand(111111,999999)
-	password_legth = 4
 	account_password = ""
 	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
 	for(var/i = 0, i < password_legth, i++)
