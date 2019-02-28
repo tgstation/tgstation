@@ -1255,11 +1255,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.w_uniform.add_fingerprint(user)
 		var/randomized_zone = ran_zone(user.zone_selected)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
-		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
+		//var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/shove_dir = get_dir(user.loc, target.loc)
 		var/turf/target_location = get_step(target.loc, shove_dir)
 		var/obj/structure/table/tabled
-		var/mob/living/carbon/human/collateral_person
+		var/mob/living/carbon/human/collateral_human
 		if(!is_blocked_turf(target_location, FALSE))
 			for(var/content in target_location.contents)
 				if(istype(content, /obj/structure/table))
