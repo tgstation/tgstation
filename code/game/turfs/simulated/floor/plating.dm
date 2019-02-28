@@ -129,6 +129,19 @@
 		else
 			to_chat(user, "<span class='danger'>You hit [src], to no effect!</span>")
 
+/turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	switch(the_rcd.mode)
+		if(RCD_FLOORWALL)
+			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+
+/turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			PlaceOnTop(/turf/open/floor/plating)
+			return TRUE
+	return FALSE
+
 /turf/open/floor/plating/foam/ex_act()
 	..()
 	ScrapeAway()

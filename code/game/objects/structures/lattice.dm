@@ -51,6 +51,15 @@
 		new /obj/item/stack/rods(get_turf(src), number_of_rods)
 	qdel(src)
 
+/obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_FLOORWALL)
+			to_chat(user, "<span class='notice'>You build a floor.</span>")
+			new /turf/open/floor/plating(loc)
+			qdel(src)
+			return TRUE
+	return FALSE
+
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
