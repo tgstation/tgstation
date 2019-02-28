@@ -469,7 +469,7 @@
 	icon_state = "ripleyupgrade"
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/mecha/working/ripley/M as obj)
-	if(!istype(M, /obj/mecha/working/ripley))
+	if(M.type != /obj/mecha/working/ripley)
 		to_chat(loc, "<span class='warning'>This conversion kit can only be applied to APLU MK-I models.</span>")
 		return 0
 	if(M.cargo.len)
@@ -500,6 +500,10 @@
 		E.forceMove(N)
 		E.chassis = N
 		M.equipment -= E
+	for(var/obj/item/mecha_parts/E in M.contents)
+		if(istype(E, /obj/item/mecha_parts/concealed_weapon_bay)) //why is the bay not just a variable change who did this
+			E.forceMove(N)
+	N.obj_integrity = M.obj_integrity //This is not a repair tool
 	M.wreckage = 0
 	qdel(M)
 	playsound(get_turf(N),'sound/items/ratchet.ogg',50,1)
