@@ -893,6 +893,12 @@
 "hN" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/awaymission/centcomAway/hangar)
+"hP" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/indestructible/hoteltile,
+/area/awaymission/vr/hub)
 "hT" = (
 /obj/machinery/door/airlock/maintenance,
 /turf/open/indestructible,
@@ -1016,6 +1022,12 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"jh" = (
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/indestructible/hoteltile,
+/area/awaymission/vr/hub)
 "jo" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1;
@@ -1073,6 +1085,12 @@
 /obj/item/paper/fluff/awaymissions/centcom/gateway_memo,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/hangar)
+"kq" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "kr" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /obj/structure/window/reinforced{
@@ -2062,6 +2080,10 @@
 "Bf" = (
 /turf/open/floor/light/colour_cycle,
 /area/awaymission/vr/hub)
+"Bm" = (
+/obj/machinery/light,
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "Bp" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
@@ -2127,6 +2149,17 @@
 "Ch" = (
 /turf/open/indestructible,
 /area/awaymission/vr/murderdome)
+"Cj" = (
+/obj/machinery/camera{
+	c_tag = "Virtual Reality";
+	dir = 1;
+	network = list("ss13","virtual");
+	pixel_x = 16;
+	pixel_y = 0;
+	resistance_flags = 64
+	},
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "Cl" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire,
@@ -2167,6 +2200,10 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"CR" = (
+/obj/machinery/door/airlock,
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "CS" = (
 /obj/structure/closet/wardrobe/red,
 /turf/open/indestructible,
@@ -2212,6 +2249,9 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
+"DG" = (
+/turf/closed/indestructible/sandstone,
+/area/awaymission/vr/hub)
 "DK" = (
 /obj/machinery/door/airlock/shuttle,
 /turf/open/floor/mineral/titanium/blue,
@@ -2355,6 +2395,10 @@
 /obj/structure/sign/warning/vacuum,
 /turf/closed/indestructible/riveted,
 /area/awaymission/centcomAway/maint)
+"FP" = (
+/obj/machinery/vending/clothing,
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "FS" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -2421,6 +2465,10 @@
 	},
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
+"Ht" = (
+/obj/structure/mirror,
+/turf/closed/wall/mineral/iron,
+/area/awaymission/vr/hub)
 "Hu" = (
 /obj/machinery/door/airlock/external{
 	name = "Arrival Airlock"
@@ -2461,6 +2509,17 @@
 /obj/structure/window/reinforced,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/general)
+"Ia" = (
+/obj/machinery/camera{
+	c_tag = "Virtual Reality";
+	dir = 8;
+	network = list("ss13","virtual");
+	pixel_x = 0;
+	pixel_y = -16;
+	resistance_flags = 64
+	},
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "In" = (
 /obj/machinery/pdapainter,
 /turf/open/indestructible,
@@ -2497,6 +2556,10 @@
 /obj/structure/sign/warning/electricshock,
 /turf/closed/indestructible/riveted,
 /area/awaymission/centcomAway/general)
+"IG" = (
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/indestructible,
+/area/awaymission/vr/hub)
 "II" = (
 /turf/closed/wall/mineral/titanium,
 /area/awaymission/centcomAway/hangar)
@@ -14617,19 +14680,19 @@ Gw
 Gw
 Gw
 Gw
+cu
 bF
 bF
 bF
 bF
-bF
-bF
+Bm
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
+Gw
+Gw
+Gw
+Gw
+Gw
+Gw
 qk
 qk
 qk
@@ -14880,13 +14943,13 @@ bF
 bF
 bF
 bF
+DG
+jh
+jh
+jh
+jh
+jh
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -15137,13 +15200,13 @@ bF
 bF
 bF
 bF
+DG
+bP
+bP
+bP
+bP
+bP
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -15394,13 +15457,13 @@ bF
 bF
 bF
 bF
+DG
+bP
+bP
+bP
+bP
+bP
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -15651,13 +15714,13 @@ bF
 bF
 bF
 bF
+DG
+bP
+hP
+bP
+hP
+bP
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -15901,20 +15964,20 @@ bF
 bF
 bF
 bF
+Ia
 bF
 bF
 bF
 bF
 bF
 bF
-bF
+DG
+DG
+DG
+CR
+DG
+DG
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -16165,13 +16228,13 @@ bF
 bF
 bF
 bF
+DG
+bF
+bF
+bF
+bF
+bF
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -16422,13 +16485,13 @@ bF
 bF
 bF
 bF
+CR
+bF
+bF
+bF
+bF
+Bm
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -16678,14 +16741,14 @@ bF
 bF
 bF
 bF
+Cj
+DG
+bF
+bF
+bF
+bF
 bF
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -16936,13 +16999,13 @@ bF
 bF
 bF
 bF
+DG
+DG
+DG
+CR
+DG
+DG
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -17193,13 +17256,13 @@ bF
 bF
 bF
 bF
+DG
+bF
+kq
+bF
+kq
+FP
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -17450,13 +17513,13 @@ bF
 bF
 bF
 bF
+DG
+bF
+bF
+bF
+bF
+FP
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -17707,13 +17770,13 @@ bF
 bF
 bF
 bF
+DG
+bF
+bF
+bF
+bF
+IG
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -17955,7 +18018,7 @@ yF
 rH
 bF
 bF
-bF
+Ia
 XZ
 Pq
 bF
@@ -17964,13 +18027,13 @@ bF
 bF
 bF
 bF
+DG
+bF
+bF
+bF
+bF
+IG
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
 qk
 qk
 qk
@@ -18222,12 +18285,12 @@ Gw
 Gw
 Gw
 Gw
-qk
-qk
-qk
-qk
-qk
-qk
+Ht
+Ht
+Ht
+Ht
+Gw
+Gw
 qk
 qk
 qk

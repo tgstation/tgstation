@@ -16,6 +16,7 @@
 	var/vr_category = "default" //Specific category of spawn points to pick from
 	var/allow_creating_vr_humans = TRUE //So you can have vr_sleepers that always spawn you as a specific person or 1 life/chance vr games
 	var/only_current_user_can_interact = FALSE
+	var/pacifist = TRUE // if the virtual human upon spawning is a pacifist
 
 /obj/machinery/vr_sleeper/Initialize()
 	. = ..()
@@ -182,6 +183,8 @@
 		if(transfer && H.mind)
 			SStgui.close_user_uis(H, src)
 			vr_human.ckey = H.ckey
+		if(pacifist)
+			vr_human.add_trait(TRAIT_PACIFISM, TRAUMA_TRAIT)
 
 /obj/machinery/vr_sleeper/proc/cleanup_vr_human()
 	if(vr_human)
