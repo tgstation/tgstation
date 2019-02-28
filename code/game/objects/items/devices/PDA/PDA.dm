@@ -641,9 +641,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if(iscarbon(usr))
 						var/list/all_jobs = subtypesof(/datum/job)
 						var/datum/job/assign = null
-						to_chat(usr, "<b>wat.</b>")
 						for(var/datum/job/J in all_jobs)
-							to_chat(usr, "<b>[id.assignment] and [J.title].</b>")
 							if(J.title == id.assignment)
 								assign = J
 								break

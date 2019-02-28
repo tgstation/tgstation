@@ -14,7 +14,12 @@
 	account_holder = newname
 	account_job = job
 	account_id = rand(111111,999999)
-	account_password = rand(0000,9999)
+	password_legth = 4
+	account_password = ""
+	var/list/digits = list("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	for(var/i = 0, i < password_legth, i++)
+		var/dig = pick(digits)
+		account_password += dig
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
@@ -47,14 +52,15 @@
 	if(free)
 		adjust_money(account_job.paycheck * amt_of_paychecks)
 	else
-		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
-		if(D)
-			if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
-				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
-				return FALSE
-			else
-				bank_card_talk("Payday processed, account now holds $[account_balance].")
-				return TRUE
+		if(!isnull(account_job) && !istext(account_job))
+			var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
+			if(D)
+				if(!transfer_money(D, account_job.paycheck * amt_of_paychecks))
+					bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
+					return FALSE
+				else
+					bank_card_talk("Payday processed, account now holds $[account_balance].")
+					return TRUE
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
 
