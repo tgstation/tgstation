@@ -76,13 +76,12 @@
 	slowdown = SHOES_SLOWDOWN+1
 	item_color = "clown"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
-	datum_outputs = list(/datum/outputs/squeak)
 	var/datum/component/waddle
 	var/enabled_waddle = FALSE
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, datum_outputs[1], 50)
+	AddComponent(/datum/component/squeak/clownstep, 50)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()

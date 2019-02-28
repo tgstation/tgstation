@@ -106,3 +106,6 @@
 
 /datum/component/squeak/mouse
 	datum_outputs = list(/datum/outputs/squeak)
+
+/datum/component/squeak/clownstep
+	datum_outputs = list(/datum/outputs/clownstep)
