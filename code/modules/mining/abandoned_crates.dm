@@ -169,6 +169,7 @@
 				locked = FALSE
 				cut_overlays()
 				add_overlay("securecrateg")
+				tamperproof = 0
 			else if (input == null || sanitycheck == null || length(input) != codelen)
 				to_chat(user, "<span class='notice'>You leave the crate alone.</span>")
 			else
