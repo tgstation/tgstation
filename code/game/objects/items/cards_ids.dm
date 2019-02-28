@@ -194,7 +194,7 @@
 			var/datum/bank_account/B = A
 			if(B.account_id == new_bank_id)
 				var/new_bank_password = input(user, "Enter your account password.", "Account Password", "0000") as text
-				if(!new_bank_password || len(new_bank_password) != 4)
+				if(!new_bank_password)
 					to_chat(user, "<span class='warning'>The account password needs to be between 0000 and 9999, with only numbers.</span")
 					return
 				if(B.account_password == new_bank_password)
