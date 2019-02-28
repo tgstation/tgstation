@@ -1253,7 +1253,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
-		var/randomized_zone = ran_zone(user.zone_selected)
+		//var/randomized_zone = ran_zone(user.zone_selected)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		//var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/shove_dir = get_dir(user.loc, target.loc)
@@ -1266,7 +1266,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					tabled = content
 					break
 				if(ishuman(content))
-					collateral_person = content
+					collateral_human = content
 					break
 			if(tabled)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
