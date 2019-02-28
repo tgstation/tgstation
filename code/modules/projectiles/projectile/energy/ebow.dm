@@ -5,7 +5,8 @@
 	damage_type = TOX
 	nodamage = 0
 	stamina = 50
-	eyeblur = 50
+	eyeblur = 10
+	knockdown = 10
 	slur = 5
 
 /obj/item/projectile/energy/bolt/halloween
