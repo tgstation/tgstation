@@ -422,7 +422,7 @@
 	if(isopenturf(target))
 		var/turf/open/T = target
 		if (T.active_hotspot && occupant && !enclosed && !silicon_pilot)
-			if (occupant.fire_stacks < 20)
+			if (occupant.fire_stacks < 5)
 				occupant.fire_stacks += 1
 			occupant.IgniteMob()
 
