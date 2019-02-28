@@ -93,7 +93,7 @@
 			bank_account.multiplier -= 0.2
 		if(H.gender == NEUTER)
 			bank_account.multiplier -= 0.3
-		if(!(H.skin_tone in list("albino", "caucasian1", "caucasian2", "caucasian3"))
+		if(!(H.skin_tone in list("albino", "caucasian1", "caucasian2", "caucasian3")))
 			bank_account.multiplier -= 0.2
 		bank_account.payday(STARTING_PAYCHECKS, TRUE)
 		H.account_id = bank_account.account_id
