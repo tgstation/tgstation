@@ -1258,16 +1258,37 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/shove_dir = get_dir(user.loc, target.loc)
 		var/turf/target_location = get_step(target.loc, shove_dir)
-		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+		var/obj/structure/table/tabled
+		var/mob/living/carbon/human/collateral_person
 		if(!is_blocked_turf(target_location, FALSE))
-			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>", "<span class='danger'>You shove [target.name]!</span>")
-			target.Move(target_location)
-			log_combat(user, target, "shoved")
+			for(var/content in target_location.contents)
+				if(istype(content, /obj/structure/table))
+					tabled = content
+					break
+				if(ishuman(content))
+					collateral_person = content
+					break
+			if(tabled)
+				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [tabled]!</span>", "<span class='danger'>You shove [target.name] onto \the [tabled]!</span>")
+				target.forceMove(target_location)
+				playsound(target, get_sfx("punch"), 50, TRUE, -1)
+				log_combat(user, target, "shoved", "onto [tabled]")
+			else if(collateral_human)
+				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				playsound(target, get_sfx("punch"), 50, TRUE, -1)
+				log_combat(user, target, "shoved", "into [collateral_human.name]")
+			else
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>", "<span class='danger'>You shove [target.name]!</span>")
+				target.Move(target_location)
+				log_combat(user, target, "shoved")
 		else
-			target.Knockdown(30)
+			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name] into !</span>", "<span class='danger'>You shove [target.name]!</span>")
 			playsound(target, get_sfx("punch"), 50, TRUE, -1)
-			log_combat(user, target, "shoved", "into a wall")
+			log_combat(user, target, "shoved", "knocking them down")
+		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return

@@ -103,6 +103,12 @@
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
 
+//Shove knockdown lengths
+#define SHOVE_KNOCKDOWN_SOLID 30
+#define SHOVE_KNOCKDOWN_HUMAN 30
+#define SHOVE_KNOCKDOWN_TABLE 30
+#define SHOVE_KNOCKDOWN_COLLATERAL 10
+
 //Combat object defines
 
 //Embedded objects
