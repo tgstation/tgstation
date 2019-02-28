@@ -1260,7 +1260,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/turf/target_location = get_step(target.loc, shove_dir)
 		var/obj/structure/table/tabled
 		var/mob/living/carbon/human/collateral_human
-		if(!is_blocked_turf(target_location, FALSE))
+		if(is_blocked_turf(target_location, FALSE))
 			for(var/content in target_location.contents)
 				if(istype(content, /obj/structure/table))
 					tabled = content
@@ -1280,14 +1280,15 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				playsound(target, get_sfx("punch"), 50, TRUE, -1)
 				log_combat(user, target, "shoved", "into [collateral_human.name]")
 			else
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>", "<span class='danger'>You shove [target.name]!</span>")
-				target.Move(target_location)
-				log_combat(user, target, "shoved")
+				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into !</span>", "<span class='danger'>You shove [target.name]!</span>")
+				playsound(target, get_sfx("punch"), 50, TRUE, -1)
+				log_combat(user, target, "shoved", "knocking them down")
 		else
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-			user.visible_message("<span class='danger'>[user.name] shoves [target.name] into !</span>", "<span class='danger'>You shove [target.name]!</span>")
-			playsound(target, get_sfx("punch"), 50, TRUE, -1)
-			log_combat(user, target, "shoved", "knocking them down")
+			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>", "<span class='danger'>You shove [target.name]!</span>")
+			target.Move(target_location)
+			log_combat(user, target, "shoved")
+	
 		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
