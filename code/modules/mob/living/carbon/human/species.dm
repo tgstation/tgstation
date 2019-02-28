@@ -1270,22 +1270,27 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					break
 			if(tabled)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [tabled]!</span>", "<span class='danger'>You shove [target.name] onto \the [tabled]!</span>")
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [tabled]!</span>",
+					"<span class='danger'>You shove [target.name] onto \the [tabled]!</span>", null, COMBAT_MESSAGE_RANGE)
 				target.forceMove(target_location)
 				playsound(target, get_sfx("punch"), 50, TRUE, -1)
 				log_combat(user, target, "shoved", "onto [tabled]")
 			else if(collateral_human)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [collateral_human.name]!</span>",
+					"<span class='danger'>You shove [target.name] into [collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(target, get_sfx("punch"), 50, TRUE, -1)
 				log_combat(user, target, "shoved", "into [collateral_human.name]")
 			else
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into !</span>", "<span class='danger'>You shove [target.name]!</span>")
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
+					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
 				playsound(target, get_sfx("punch"), 50, TRUE, -1)
 				log_combat(user, target, "shoved", "knocking them down")
 		else
-			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>", "<span class='danger'>You shove [target.name]!</span>")
+			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
+				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.Move(target_location)
 			log_combat(user, target, "shoved")
 	
