@@ -55,9 +55,6 @@
 	var/recent_rack = 0
 	var/tac_reloads = FALSE //Snowflake mechanic no more.
 
-#define CARTRIDGE_LEAVES_CHAMBER (((bolt_type == BOLT_TYPE_NO_BOLT) || (bolt_type == BOLT_TYPE_OPEN))) //Macro for quick checking if a gun should stay chambered when unloaded
-//The name kind of sucks but hopefully this makes more sense in the actual code
-
 /obj/item/gun/ballistic/Initialize()
 	. = ..()
 	if (!spawnwithmagazine)
@@ -123,12 +120,12 @@
 	if (chamber_next_round && (magazine.max_ammo > 1))
 		chamber_round()
 
-/obj/item/gun/ballistic/proc/chamber_round()
+/obj/item/gun/ballistic/proc/chamber_round(keep_bullet = FALSE)
 	if (chambered || !magazine)
 		return
 	if (magazine.ammo_count())
-		chambered = magazine.get_round(CARTRIDGE_LEAVES_CHAMBER)
-		if (!CARTRIDGE_LEAVES_CHAMBER)
+		chambered = magazine.get_round(keep_bullet || bolt_type == BOLT_TYPE_NO_BOLT)
+		if (bolt_type != BOLT_TYPE_OPEN)
 			chambered.forceMove(src)
 
 /obj/item/gun/ballistic/proc/rack(mob/user = null)
@@ -165,7 +162,7 @@
 			to_chat(user, "<span class='notice'>You load a new [magazine_wording] into \the [src].</span>")
 		playsound(src, load_empty_sound, load_sound_volume, load_sound_vary)
 		if (bolt_type == BOLT_TYPE_OPEN && !bolt_locked)
-			chamber_round()
+			chamber_round(TRUE)
 		update_icon()
 		return TRUE
 	else
@@ -327,7 +324,7 @@
 
 /obj/item/gun/ballistic/examine(mob/user)
 	..()
-	var/count_chambered = !CARTRIDGE_LEAVES_CHAMBER
+	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	to_chat(user, "It has [get_ammo(count_chambered)] round\s remaining.")
 	if (!chambered)
 		to_chat(user, "It does not seem to have a round chambered.")
