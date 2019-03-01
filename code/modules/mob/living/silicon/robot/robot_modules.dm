@@ -146,7 +146,7 @@
 		if(istype(I, /obj/item/assembly/flash))
 			var/obj/item/assembly/flash/F = I
 			F.times_used = 0
-			F.crit_fail = 0
+			F.burnt_out = FALSE
 			F.update_icon()
 		else if(istype(I, /obj/item/melee/baton))
 			var/obj/item/melee/baton/B = I
