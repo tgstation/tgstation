@@ -1387,7 +1387,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
 			log_combat(user, target, "shoved")
 
-		target.setDir(angle2dir_cardinal(turn(shove_dir, 180))) //change the dir to face the shover to represent reeling back
+		var/facing_dir = turn(shove_dir, 180)
+		if(facing_dir in GLOB.diagonals)
+			facing_dir -= 45
+		target.setDir(facing_dir) //change the dir to face the shover to represent reeling back
 		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
