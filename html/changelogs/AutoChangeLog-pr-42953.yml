@@ -1,0 +1,4 @@
+author: "Kierany9"
+delete-after: True
+changes: 
+  - bugfix: "The hivemind radar works again."
