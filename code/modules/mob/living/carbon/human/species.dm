@@ -1257,52 +1257,56 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/shove_dir = get_dir(user.loc, target.loc)
-		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+		var/turf/target_shove_turf
 		var/mob/living/carbon/human/collateral_human
 		var/obj/structure/table/target_table
-		var/shove_blocked = FALSE
+		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 		if (shove_dir in GLOB.diagonals) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
-			var/turf/target_loc = target.loc
-			if(!target_loc.ClickCross(shove_dir, FALSE, target, target))
-				var/turf/cardinal_turf_1 = get_step(user.loc, turn(shove_dir, -45))
-				var/turf/cardinal_turf_2 = get_step(user.loc, turn(shove_dir, 45))
-				if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
-					cardinal_turf_1 = get_step(user.loc, turn(shove_dir, -45))
-					cardinal_turf_2 = get_step(user.loc, turn(shove_dir, 45))
-				else
-					cardinal_turf_1 = get_step(user.loc, turn(shove_dir, -45))
-					cardinal_turf_2 = get_step(user.loc, turn(shove_dir, 45))
-				var/free_tile_found = FALSE
-				if(is_blocked_turf(cardinal_turf_1, FALSE))
-					target_shove_turf = cardinal_turf_1
-					free_tile_found = TRUE
-				if(free_tile_found && is_blocked_turf(cardinal_turf_2, FALSE))
-					target_shove_turf = cardinal_turf_2
-					free_tile_found = TRUE
-				if(!free_tile_found) //If a free tile wasn't found, we need to do even more expensive of checks
-					shove_blocked = TRUE
-					if(!istype(cardinal_turf_1, /turf/closed))
-						for(var/content in cardinal_turf_1.contents)
-							if(istype(content, /obj/structure/table))
-								target_table = content
-								break
-							if(ishuman(content))
-								collateral_human = content
-								break
-						if(target_table || collateral_human)
-							target_shove_turf = cardinal_turf_1
-					if(!target_table && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
-						for(var/content in cardinal_turf_2.contents)
-							if(istype(content, /obj/structure/table))
-								target_table = content
-								break
-							if(ishuman(content))
-								collateral_human = content
-								break
-						if(target_table || collateral_human)
-							target_shove_turf = cardinal_turf_2
-
+			var/turf/diagonal_turf = get_step(target.loc, shove_dir)
+			var/turf/cardinal_turf_1
+			var/turf/cardinal_turf_2
+			if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
+				cardinal_turf_1 = get_step(target.loc, turn(shove_dir, -45))
+				cardinal_turf_2 = get_step(target.loc, turn(shove_dir, 45))
+			else
+				cardinal_turf_1 = get_step(target.loc, turn(shove_dir, 45))
+				cardinal_turf_2 = get_step(target.loc, turn(shove_dir, -45))
+			var/cardinal_1_free = FALSE
+			var/cardinal_2_free = FALSE
+			var/diagonal_free = FALSE
+			if(!is_blocked_turf(cardinal_turf_1, FALSE))
+				target_shove_turf = cardinal_turf_1
+				cardinal_1_free = TRUE
+			if(!is_blocked_turf(cardinal_turf_2, FALSE))
+				target_shove_turf = cardinal_turf_2
+				cardinal_2_free = TRUE
+			if(cardinal_1_free && cardinal_2_free && !is_blocked_turf(diagonal_turf, FALSE)) //Check the diagonal last because the other two need to be clear as well
+				target_shove_turf = diagonal_turf
+				diagonal_free = TRUE
+			if(!cardinal_1_free && !cardinal_2_free && !diagonal_free) //If a free tile wasn't found, we need to do even more expensive of checks
+				shove_blocked = TRUE
+				if(!istype(cardinal_turf_1, /turf/closed))
+					for(var/content in cardinal_turf_1.contents)
+						if(istype(content, /obj/structure/table))
+							target_table = content
+							break
+						if(ishuman(content))
+							collateral_human = content
+							break
+					if(target_table || collateral_human)
+						target_shove_turf = cardinal_turf_1
+				if(!target_table && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
+					for(var/content in cardinal_turf_2.contents)
+						if(istype(content, /obj/structure/table))
+							target_table = content
+							break
+						if(ishuman(content))
+							collateral_human = content
+							break
+					if(target_table || collateral_human)
+						target_shove_turf = cardinal_turf_2
 		else
+			target_shove_turf = get_step(target.loc, shove_dir)
 			if(is_blocked_turf(target_shove_turf, FALSE))
 				shove_blocked = TRUE
 		if(shove_blocked)
@@ -1314,25 +1318,23 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(ishuman(content))
 						collateral_human = content
 						break
+			playsound(target, get_sfx("punch"), 50, TRUE, -1)
 			if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
 					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
 				target.forceMove(target_shove_turf)
-				playsound(target, get_sfx("punch"), 50, TRUE, -1)
 				log_combat(user, target, "shoved", "onto [target_table]")
 			else if(collateral_human)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-				playsound(target, get_sfx("punch"), 50, TRUE, -1)
 				log_combat(user, target, "shoved", "into [collateral_human.name]")
 			else
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
-				playsound(target, get_sfx("punch"), 50, TRUE, -1)
 				log_combat(user, target, "shoved", "knocking them down")
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
