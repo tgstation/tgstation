@@ -1,0 +1,4 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - rscadd: "the robotics assembly crate now actually has parts for 2 of each friendly bots"

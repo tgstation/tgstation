@@ -1,0 +1,4 @@
+author: "MASMC"
+delete-after: True
+changes: 
+  - bugfix: "Cult shields now don't shatter on anything but brute and burn damage."
