@@ -1254,10 +1254,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(user == target)
 			return
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
+		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
+
 		var/turf/target_oldturf = target.loc
 		var/shove_dir = get_dir(user.loc, target_oldturf)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
@@ -1265,6 +1267,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/obj/structure/table/target_table
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 		var/directional_obstruction = FALSE //used for checking if a directional structure on the tile is potentially blocking
+		
+		//WARNING: INCOMING MEGA HELLCODE
+		//Blame that directional windows are insane and that diagonal movement is kind of a bitch.
 		for(var/obj/O in target_oldturf.contents)
 			if(O.flags_1 & ON_BORDER_1)
 				directional_obstruction = TRUE
@@ -1391,7 +1396,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(facing_dir in GLOB.diagonals)
 			facing_dir -= 45
 		target.setDir(facing_dir) //change the dir to face the shover to represent reeling back
-		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
