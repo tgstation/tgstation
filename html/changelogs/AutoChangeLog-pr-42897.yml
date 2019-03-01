@@ -1,0 +1,6 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Fixed beartraps cuffing a flying/floating mob when crossing over it."
+  - bugfix: "Fixed beartraps cuffing and harming a mob who passes over them while inside/on a vehicle."
+  - bugfix: "Beartraps will now only cuff/harm you while in a vehicle if your legs are exposed/the primary propulsion method (ie scooters/skateboards.)"
