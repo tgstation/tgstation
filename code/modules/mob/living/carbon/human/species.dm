@@ -1248,6 +1248,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
+	if(user.resting)
+		return FALSE
 	else
 		if(user == target)
 			return
@@ -1262,7 +1264,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/mob/living/carbon/human/collateral_human
 		var/obj/structure/table/target_table
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
-		var/directional_obstruction = FALSE //used for checking if a directional structure on the tile is blocking
+		var/directional_obstruction = FALSE //used for checking if a directional structure on the tile is potentially blocking
 		for(var/obj/O in target_oldturf.contents)
 			if(O.flags_1 & ON_BORDER_1)
 				directional_obstruction = TRUE
