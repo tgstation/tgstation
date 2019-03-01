@@ -877,14 +877,12 @@
 /obj/machinery/syndicatebomb/self_destruct{
 	anchored = 1
 	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'DANGER: SELF DESTRUCT DEVICE'.";
-	name = "DANGER: SELF DESTRUCT DEVICE";
-	pixel_x = 32
-	},
 /obj/machinery/door/window/brigdoor{
 	dir = 8;
 	req_access_txt = "150"
+	},
+/obj/structure/sign/warning/explosives/alt{
+	pixel_x = 32
 	},
 /turf/open/floor/circuit/red,
 /area/ruin/space/has_grav/listeningstation)
