@@ -1390,12 +1390,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
+			if(!target.has_movespeed_modifier(SHOVE_SLOWDOWN_ID))
+				target.add_movespeed_modifier(SHOVE_SLOWDOWN_ID, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+				addtimer(CALLBACK(target, /datum/species/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 			log_combat(user, target, "shoved")
 
 		var/facing_dir = turn(shove_dir, 180)
 		if(facing_dir in GLOB.diagonals)
 			facing_dir -= 45
 		target.setDir(facing_dir) //change the dir to face the shover to represent reeling back
+
+/datum/species/proc/clear_shove_slowdown()
+	target.remove_movespeed_modifier(SHOVE_SLOWDOWN_ID)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return

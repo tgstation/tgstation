@@ -103,11 +103,16 @@
 //the define for visible message range in combat
 #define COMBAT_MESSAGE_RANGE 3
 
-//Shove knockdown lengths
+//Shove knockdown lengths (deciseconds)
 #define SHOVE_KNOCKDOWN_SOLID 30
 #define SHOVE_KNOCKDOWN_HUMAN 30
 #define SHOVE_KNOCKDOWN_TABLE 30
 #define SHOVE_KNOCKDOWN_COLLATERAL 10
+//Shove slowdown
+#define SHOVE_SLOWDOWN_ID "shove_slowdown"
+#define SHOVE_SLOWDOWN_LENGTH 30
+#define SHOVE_SLOWDOWN_STRENGTH 0.8 //multiplier
+
 
 //Combat object defines
 
