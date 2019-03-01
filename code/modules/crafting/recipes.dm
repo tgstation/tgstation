@@ -47,7 +47,7 @@
 
 /datum/crafting_recipe/strobeshield
 	name = "Strobe Shield"
-	result = /obj/item/shield/riot/flash
+	result = /obj/item/assembly/flash/shield
 	reqs = list(/obj/item/wallframe/flasher = 1,
 				/obj/item/assembly/flash/handheld = 1,
 				/obj/item/shield/riot = 1)
@@ -173,8 +173,8 @@
 /datum/crafting_recipe/floorbot
 	name = "Floorbot"
 	result = /mob/living/simple_animal/bot/floorbot
-	reqs = list(/obj/item/storage/toolbox = 1,
-				/obj/item/stack/tile/plasteel = 10,
+	reqs = list(/obj/item/storage/toolbox/mechanical = 1,
+				/obj/item/stack/tile/plasteel = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	time = 40
@@ -200,16 +200,6 @@
 	time = 40
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/Firebot
-	name = "Firebot"
-	result = /mob/living/simple_animal/bot/firebot
-	reqs = list(/obj/item/extinguisher = 1,
-				/obj/item/bodypart/r_arm/robot = 1,
-				/obj/item/assembly/prox_sensor = 1,
-				/obj/item/clothing/head/hardhat/red = 1)
-	time = 40
-	category = CAT_ROBOT
-
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
 	result = /obj/item/pneumatic_cannon/ghetto
@@ -217,7 +207,7 @@
 	reqs = list(/obj/item/stack/sheet/metal = 4,
 				/obj/item/stack/packageWrap = 8,
 				/obj/item/pipe = 2)
-	time = 50
+	time = 300
 	category = CAT_WEAPONRY
 	subcategory = CAT_WEAPON
 
@@ -637,6 +627,13 @@
 	time = 10
 	tools = list(/obj/item/nullrod/egyptian)
 	reqs = list(/obj/item/stack/sheet/cloth = 2)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/romanarmor
+	name = "Iron Vest"
+	result = /obj/item/clothing/suit/armor/vest/roman
+	time = 20
+	reqs = list(/obj/item/stack/sheet/leather = 3, /obj/item/stack/sheet/metal = 3)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/mummy/body

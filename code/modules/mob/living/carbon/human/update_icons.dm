@@ -485,7 +485,7 @@ There are several things that need to be remembered:
 	if(hygiene <= HYGIENE_LEVEL_DIRTY)
 		var/mutable_appearance/new_smell_overlay = mutable_appearance('icons/mob/smelly.dmi', smelly_icon, -SMELL_LAYER)
 		overlays_standing[SMELL_LAYER] = new_smell_overlay
-		apply_overlay(SMELL_LAYER)
+ 	apply_overlay(SMELL_LAYER)
 
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
@@ -657,13 +657,13 @@ generate/load female uniform sprites matching all previously decided variables
 
 		// eyes
 		if(!(NOEYES in dna.species.species_traits))
-			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
+			var/has_eyes = getorganslot(ORGAN_SLOT_EYES)
 			var/mutable_appearance/eye_overlay
-			if(!E)
+			if(!has_eyes)
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
 			else
-				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
-			if((EYECOLOR in dna.species.species_traits) && E)
+				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+			if((EYECOLOR in dna.species.species_traits) && has_eyes)
 				eye_overlay.color = "#" + eye_color
 			if(OFFSET_FACE in dna.species.offset_features)
 				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]

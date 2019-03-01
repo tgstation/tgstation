@@ -32,7 +32,6 @@
 	var/turf/target
 	var/oldloc = null
 	var/toolbox = /obj/item/storage/toolbox/mechanical
-	var/toolbox_color = ""
 
 	#define HULL_BREACH		1
 	#define LINE_SPACE_MODE		2
@@ -42,16 +41,12 @@
 	#define REPLACE_TILE		6
 	#define TILE_EMAG		7
 
-/mob/living/simple_animal/bot/floorbot/Initialize(mapload, new_toolbox_color)
+/mob/living/simple_animal/bot/floorbot/Initialize()
 	. = ..()
-	toolbox_color = new_toolbox_color
 	update_icon()
 	var/datum/job/engineer/J = new/datum/job/engineer
 	access_card.access += J.get_access()
 	prev_access = access_card.access
-	if(toolbox_color == "s")
-		health = 100
-		maxHealth = 100
 
 /mob/living/simple_animal/bot/floorbot/turn_on()
 	. = ..()
@@ -317,7 +312,7 @@
 		return
 	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
 		anchored = TRUE
-		icon_state = "[toolbox_color]floorbot-c"
+		icon_state = "floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
 		mode = BOT_REPAIRING
 		sleep(50)
@@ -332,7 +327,7 @@
 
 		if(F.type != initial(tiletype.turf_type) && (F.broken || F.burnt || isplatingturf(F)) || F.type == (initial(tiletype.turf_type) && (F.broken || F.burnt)))
 			anchored = TRUE
-			icon_state = "[toolbox_color]floorbot-c"
+			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 			sleep(50)
@@ -343,7 +338,7 @@
 
 		if(replacetiles && F.type != initial(tiletype.turf_type) && specialtiles && !isplatingturf(F))
 			anchored = TRUE
-			icon_state = "[toolbox_color]floorbot-c"
+			icon_state = "floorbot-c"
 			mode = BOT_REPAIRING
 			visible_message("<span class='notice'>[src] begins replacing the floor tiles.</span>")
 			sleep(50)
@@ -360,7 +355,7 @@
 	target = null
 
 /mob/living/simple_animal/bot/floorbot/update_icon()
-	icon_state = "[toolbox_color]floorbot[on]"
+	icon_state = "floorbot[on]"
 
 
 /mob/living/simple_animal/bot/floorbot/explode()

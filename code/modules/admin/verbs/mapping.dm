@@ -19,6 +19,7 @@
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
+GLOBAL_PROTECT(admin_verbs_debug_mapping)
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/camera_view, 				//-errorage
 	/client/proc/sec_camera_report, 		//-errorage
@@ -52,7 +53,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/debug_z_levels,
 	/client/proc/place_ruin
 ))
-GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
 /obj/effect/debugging/mapfix_marker
 	name = "map fix marker"

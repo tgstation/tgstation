@@ -1,0 +1,25 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/water/shallow,/area/template_noop)
+"c" = (/turf/open/floor/plating/asteroid,/area/template_noop)
+"d" = (/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"e" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"f" = (/obj/structure/flora/ausbushes/grassybush,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"g" = (/mob/living/simple_animal/hostile/retaliate/goat,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaabbbbbbaa
+abbbbbbbbbbbbbb
+abbbbbbbbccbbbb
+bbcbbcccbccccbb
+bbccccdcccdccbb
+bbccdefddedcbbb
+abbcdddefdfcbbb
+abbcfedgdfeccbb
+abbcdfdfdddfcbb
+abbcddeddfddcbb
+abbcccfddfcccbb
+abbcbccdcccbcbb
+abbbbbcccbcbcbb
+abbbbbbbbbbbbbb
+aaaabbbbbbbbbbb
+"}

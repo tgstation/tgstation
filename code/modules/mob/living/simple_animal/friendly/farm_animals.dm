@@ -12,7 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, , /obj/item/stack/sheet/bone = 3, /obj/item/stack/sheet/animalhide/generic = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -105,6 +105,45 @@
 								  "<span class='userdanger'>[src] takes a big chomp out of your [NB]!</span>")
 			NB.dismember()
 //cow
+/mob/living/simple_animal/calf
+	name = "calf"
+	desc = "Grows up into cows"
+	icon_state = "calf"
+	icon_living = "calf"
+	icon_dead = "calf_dead"
+	icon_gib = "calf_gib"
+	gender = FEMALE
+	mob_biotypes = list(MOB_ORGANIC, MOB_BEAST)
+	speak = list("moo?","moo","mooooo")
+	speak_emote = list("moos","moos adorably")
+	emote_hear = list("brays.")
+	emote_see = list("shakes its head.")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/veal = 2, /obj/item/stack/sheet/bone = 1, /obj/item/stack/sheet/animalhide/generic = 1)
+	response_help  = "pets"
+	response_disarm = "gently pushes aside"
+	response_harm   = "kicks"
+	attacktext = "kicks"
+	attack_sound = 'sound/weapons/punch1.ogg'
+	health = 10
+	maxHealth = 10
+	var/amount_grown = 0
+	blood_volume = BLOOD_VOLUME_NORMAL
+
+	do_footstep = TRUE
+
+/mob/living/simple_animal/calf/Life()
+	. =..()
+	if(!.)
+		return
+	if(!stat && !ckey)
+		amount_grown += rand(1,2)
+		if(amount_grown >= 100)
+			new /mob/living/simple_animal/cow(src.loc)
+			qdel(src)
+
 /mob/living/simple_animal/cow
 	name = "cow"
 	desc = "Known for their milk, just don't tip them over."
@@ -121,7 +160,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 6)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/beef = 6, /obj/item/stack/sheet/bone = 2, /obj/item/stack/sheet/animalhide/generic = 2)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -129,6 +168,7 @@
 	attack_sound = 'sound/weapons/punch1.ogg'
 	health = 50
 	maxHealth = 50
+	var/breed = 0
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = FRIENDLY_SPAWN
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -148,6 +188,15 @@
 	if(stat == CONSCIOUS && istype(O, /obj/item/reagent_containers/glass))
 		udder.milkAnimal(O, user)
 		return 1
+	else if(istype(O,/obj/item/reagent_containers/food/snacks/grown/wheat))
+		breed += 1
+		src.visible_message("<span class='notice'>[user] feeds [src].</span>",
+			"<span class='notice'>[user] feeds you.</span>")
+		if(breed >= 3)
+			new /mob/living/simple_animal/calf(src.loc)
+			src.visible_message("<span class='warning'>[src] gives birth to a calf!.</span>",
+			"<span class='notice'>You give birth to a calf.</span>")
+		del(O)
 	else
 		return ..()
 
@@ -198,7 +247,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 2
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 1, /obj/item/stack/sheet/bone = 1)
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "kicks"
@@ -247,7 +296,7 @@
 	density = FALSE
 	speak_chance = 2
 	turns_per_move = 3
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 2, /obj/item/stack/sheet/bone = 1, /obj/item/stack/sheet/sinew = 1)
 	var/egg_type = /obj/item/reagent_containers/food/snacks/egg
 	var/food_type = /obj/item/reagent_containers/food/snacks/grown/wheat
 	response_help  = "pets"

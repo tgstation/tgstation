@@ -1,0 +1,38 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/water/shallow,/area/template_noop)
+"c" = (/turf/open/floor/plating/asteroid,/area/template_noop)
+"d" = (/turf/closed/mineral/random/high_chance,/area/template_noop)
+"e" = (/turf/closed/mineral/random/high_chance,/area/lavaland/underground)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaabbbbaaaaaaa
+aaaaaaaaaaaaaaaaabbbccbbbbbaaa
+aaaaaaaaaaaaaaabbbccddccccbbaa
+aaaaaaaaaaabbbbbccddddddddcbba
+aaaaaaaaaabbccccdddeeeeeeddcba
+aaaabbbbbbbcdddddeeeeeeeeddcba
+aaabbccccccddeeeeeeeeeeeedcbba
+aaabcdddddddeeeeeeeeeeeeedcbaa
+aabbcdeeeeeeeeeeeeeeeeeeedcbaa
+aabcdeeeeeeeeeeeeeeeeeeeedcbaa
+aabcdeeeeeeeeeeeeeeeeeeeedcbaa
+aabcdeeeeeeeeeeeeeeeeeeeedcbaa
+aabcdeeeeeeeeeeeeeeeeeeeedcbaa
+aabcddeeeeeeeeeeeeeeeeeeedcbaa
+aabbcdeeeeeeeeeeeeeeeeeeedcbba
+aaabcddeeeeeeeeeeeeeeeeeeddcba
+aaabbcddeeeeeeeeeeeeeeeeeedcba
+aaaabbcddeeeeeeeeeeeeeeeeedcba
+aaaaabbcdeeeeeeeeeeeeeeeeedcba
+aaaaabbcdeeeeeeeeeeeeeeeeedcba
+aaaaabcddeeeeeeeeeeeeeeeeedcba
+aaaaabcdeeeeeeeeeeeeeeeeeedcba
+aaaabbcdeeeeeeeeeeeeeeeeeedcba
+aaaabcddeeeeeeeeeeeeeeeeeddcba
+aaaabcdeeeeeeeeeeeeeeeeeddcbba
+aaabbcdeeeeeeddddddeeedddcbbaa
+aaabcddeeeddddccccdddddccbbaaa
+aaabbcdddddcccbbbbcccccbbbaaaa
+aaaabbcccccbbbbaabbbbbbbaaaaaa
+aaaaabbbbbbbaaaaaaaaaaaaaaaaaa
+"}

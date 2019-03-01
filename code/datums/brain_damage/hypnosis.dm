@@ -7,17 +7,11 @@
 	resilience = TRAUMA_RESILIENCE_SURGERY
 
 	var/hypnotic_phrase = ""
-	var/regex/target_phrase
 
 /datum/brain_trauma/hypnosis/New(phrase)
 	if(!phrase)
 		qdel(src)
 	hypnotic_phrase = phrase
-	try
-		target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
-	catch(var/exception/e)
-		stack_trace("[e] on [e.file]:[e.line]")
-		qdel(src)
 	..()
 
 /datum/brain_trauma/hypnosis/on_gain()
@@ -49,5 +43,6 @@
 				new /datum/hallucination/chat(owner, TRUE, FALSE, "<span class='hypnophrase'>[hypnotic_phrase]</span>")
 
 /datum/brain_trauma/hypnosis/on_hear(message, speaker, message_language, raw_message, radio_freq)
+	var/regex/target_phrase = new("(\\b[hypnotic_phrase]\\b)","ig")
 	message = target_phrase.Replace(message, "<span class='hypnophrase'>$1</span>")
 	return message

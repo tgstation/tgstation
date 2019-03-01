@@ -46,6 +46,7 @@
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 	var/list/icon_states = list("pine_1", "pine_2", "pine_3")
+	log_amount = 30
 
 /obj/structure/flora/tree/pine/Initialize()
 	. = ..()
@@ -97,6 +98,7 @@
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	desc = "A dead tree. How it died, you know not."
 	icon_state = "tree_1"
+	log_amount = 20
 
 /obj/structure/flora/tree/palm
 	icon = 'icons/misc/beach2.dmi'
@@ -131,6 +133,7 @@
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
+	log_amount = 100
 
 /obj/structure/flora/tree/jungle/Initialize()
 	icon_state = "[icon_state][rand(1, 6)]"
@@ -140,6 +143,7 @@
 	pixel_y = 0
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
+	log_amount = 45
 
 //grass
 /obj/structure/flora/grass

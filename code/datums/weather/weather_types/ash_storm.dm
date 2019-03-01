@@ -90,10 +90,12 @@
 		L = L.loc //Check parent items immunities (recurses up to the turf)
 	return FALSE //RIP you
 
-/datum/weather/ash_storm/weather_act(mob/living/L)
-	if(is_ash_immune(L))
-		return
-	L.adjustFireLoss(4)
+/datum/weather/ash_storm/weather_act(atom/A)
+	if(istype(A,/mob/living))
+		var/mob/living/L = A
+		if(is_ash_immune(L))
+			return
+		L.adjustFireLoss(4)
 
 
 //Emberfalls are the result of an ash storm passing by close to the playable area of lavaland. They have a 10% chance to trigger in place of an ash storm.

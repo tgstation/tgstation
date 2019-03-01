@@ -13,7 +13,7 @@
 	custom_price = 10
 
 /obj/item/clothing/gloves/botanic_leather
-	name = "botanist's leather gloves"
+	name = "leather gloves"
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin.  They're also quite warm."
 	icon_state = "leather"
 	item_state = "ggloves"

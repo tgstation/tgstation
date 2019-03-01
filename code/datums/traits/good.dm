@@ -174,7 +174,5 @@
 /datum/quirk/neet/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/datum/bank_account/D = H.get_bank_account()
-	if(!D) //if their current mob doesn't have a bank account, likely due to them being a special role (ie nuke op)
-		return
 	D.welfare = TRUE
 	D.add_neetbux()

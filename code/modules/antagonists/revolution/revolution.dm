@@ -137,7 +137,7 @@
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
 	else
-		flash.burnt_out = FALSE
+		flash.crit_fail = 0
 		flash.update_icon()
 
 /datum/antagonist/rev/head/proc/admin_demote(datum/mind/target,mob/user)

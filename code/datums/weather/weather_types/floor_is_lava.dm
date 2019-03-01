@@ -23,18 +23,20 @@
 	immunity_type = "lava"
 
 
-/datum/weather/floor_is_lava/weather_act(mob/living/L)
-	if(issilicon(L))
-		return
-	if(istype(L.buckled, /obj/structure/bed))
-		return
-	for(var/obj/structure/O in L.loc)
-		if(O.density)
+/datum/weather/floor_is_lava/weather_act(atom/A)
+	if(istype(A,/mob/living))
+		var/mob/living/L = A
+		if(issilicon(L))
 			return
-	if(L.loc.density)
-		return
-	if(!L.client) //Only sentient people are going along with it!
-		return
-	if(L.movement_type & FLYING)
-		return
-	L.adjustFireLoss(3)
+		if(istype(L.buckled, /obj/structure/bed))
+			return
+		for(var/obj/structure/O in L.loc)
+			if(O.density)
+				return
+		if(L.loc.density)
+			return
+		if(!L.client) //Only sentient people are going along with it!
+			return
+		if(L.movement_type & FLYING)
+			return
+		L.adjustFireLoss(3)

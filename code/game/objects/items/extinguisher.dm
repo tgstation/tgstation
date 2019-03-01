@@ -124,13 +124,10 @@
 	if (target.loc == user)
 		return
 	//TODO; Add support for reagents in water.
-
 	if(refilling)
 		refilling = FALSE
 		return
 	if (!safety)
-
-
 		if (src.reagents.total_volume < 1)
 			to_chat(usr, "<span class='warning'>\The [src] is empty!</span>")
 			return

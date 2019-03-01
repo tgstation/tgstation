@@ -1,5 +1,4 @@
 // Held by /obj/machinery/modular_computer to reduce amount of copy-pasted code.
-//TODO: REFACTOR THIS SPAGHETTI CODE, MAKE IT A COMPUTER_HARDWARE COMPONENT OR REMOVE IT
 /obj/item/modular_computer/processor
 	name = "processing unit"
 	desc = "You shouldn't see this. If you do, report it."
@@ -18,7 +17,6 @@
 	machinery_computer = null
 
 /obj/item/modular_computer/processor/New(comp)
-	..()
 	STOP_PROCESSING(SSobj, src) // Processed by its machine
 
 	if(!comp || !istype(comp, /obj/machinery/modular_computer))

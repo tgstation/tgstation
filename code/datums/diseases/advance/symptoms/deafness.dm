@@ -48,7 +48,7 @@ Bonus
 			if(prob(base_message_chance) && !suppress_warning)
 				to_chat(M, "<span class='warning'>[pick("You hear a ringing in your ear.", "Your ears pop.")]</span>")
 		if(5)
-			if(power >= 2)
+			if(power > 2)
 				var/obj/item/organ/ears/ears = M.getorganslot(ORGAN_SLOT_EARS)
 				if(istype(ears) && ears.ear_damage < UNHEALING_EAR_DAMAGE)
 					to_chat(M, "<span class='userdanger'>Your ears pop painfully and start bleeding!</span>")

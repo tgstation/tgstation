@@ -93,7 +93,7 @@
 	ambientsounds = MINING
 
 /area/lavaland/underground
-	name = "Lavaland Caves"
+	name = "Caves"
 	icon_state = "unexplored"
 	always_unpowered = TRUE
 	requires_power = TRUE
@@ -105,8 +105,10 @@
 
 
 /area/lavaland/surface/outdoors
-	name = "Lavaland Wastes"
+	name = "Earth"
 	outdoors = TRUE
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	luminosity = 8
 
 /area/lavaland/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"

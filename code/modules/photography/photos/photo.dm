@@ -64,7 +64,7 @@
 /obj/item/photo/examine(mob/user)
 	..()
 
-	if(in_range(src, user) || isobserver(user))
+	if(in_range(src, user))
 		show(user)
 	else
 		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")

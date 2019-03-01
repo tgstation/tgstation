@@ -220,6 +220,12 @@
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
 
+/obj/item/clothing/suit/poncho/leather
+	name = "hide poncho"
+	desc = "A cloak made out of animal hide, nice and toasty."
+	icon_state = "classicponcho"
+	item_state = "classicponcho"
+
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is green."

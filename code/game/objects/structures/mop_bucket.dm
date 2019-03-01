@@ -21,8 +21,7 @@
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 			update_icon()
 	else
-		. = ..()
-		update_icon()
+		return ..()
 
 /obj/structure/mopbucket/update_icon()
 	cut_overlays()

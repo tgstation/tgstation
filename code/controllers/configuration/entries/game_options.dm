@@ -306,9 +306,6 @@
 	value_mode = VALUE_MODE_NUM
 	splitter = ","
 
-/datum/config_entry/number/max_law_len
-	config_entry_value = 1024
-
 /datum/config_entry/number/overflow_cap
 	config_entry_value = -1
 	min_val = -1
@@ -321,6 +318,11 @@
 
 /datum/config_entry/number/lavaland_budget
 	config_entry_value = 60
+	integer = FALSE
+	min_val = 0
+
+/datum/config_entry/number/earth_budget
+	config_entry_value = 30
 	integer = FALSE
 	min_val = 0
 

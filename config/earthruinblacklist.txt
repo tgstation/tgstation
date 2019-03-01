@@ -1,0 +1,26 @@
+#Listing maps here will blacklist them from generating on earth.
+#Maps must be the full path to them
+#A list of maps valid to blacklist can be found in _maps\RandomRuins\EarthRuins
+#SPECIFYING AN INVALID MAP WILL RESULT IN RUNTIMES ON GAME START
+
+##HUMANS
+#_maps/RandomRuins/EarthRuins/earth_human_island1.dmm
+#_maps/RandomRuins/EarthRuins/earth_human_island2.dmm
+#_maps/RandomRuins/EarthRuins/earth_human_island3.dmm
+
+##MINING
+#_maps/RandomRuins/EarthRuins/miner_island1.dmm
+#_maps/RandomRuins/EarthRuins/miner_island2.dmm
+#_maps/RandomRuins/EarthRuins/miner_island3.dmm
+
+##LUCKY
+#_maps/RandomRuins/EarthRuins/highchance_island1.dmm
+#_maps/RandomRuins/EarthRuins/highchance_island2.dmm
+
+##GEM LOCATIONS
+#_maps/RandomRuins/EarthRuins/berrybattlefield.dmm
+
+##MISC
+#_maps/RandomRuins/EarthRuins/goat_island.dmm
+
+

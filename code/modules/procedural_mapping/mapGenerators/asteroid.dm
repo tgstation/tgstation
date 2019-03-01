@@ -17,11 +17,11 @@
 	spawnableTurfs = list(/turf/closed/mineral = 30)
 
 //Monsters
-/datum/mapGeneratorModule/splatterLayer/asteroidMonsters
-	spawnableTurfs = list()
-	spawnableAtoms = list(/mob/living/simple_animal/hostile/asteroid/basilisk = 10, \
-		/mob/living/simple_animal/hostile/asteroid/hivelord = 10, \
-		/mob/living/simple_animal/hostile/asteroid/goliath = 10)
+//datum/mapGeneratorModule/splatterLayer/asteroidMonsters
+//	spawnableTurfs = list()
+//	spawnableAtoms = list(/mob/living/simple_animal/hostile/asteroid/basilisk = 10, \
+//		/mob/living/simple_animal/hostile/asteroid/hivelord = 10, \
+//		/mob/living/simple_animal/hostile/asteroid/goliath = 10)
 
 
 // GENERATORS
@@ -40,8 +40,7 @@
 /datum/mapGenerator/asteroid/hollow/random/monsters
 	modules = list(/datum/mapGeneratorModule/bottomLayer/asteroidTurfs, \
 		/datum/mapGeneratorModule/border/asteroidWalls, \
-		/datum/mapGeneratorModule/splatterLayer/asteroidWalls, \
-		/datum/mapGeneratorModule/splatterLayer/asteroidMonsters)
+		/datum/mapGeneratorModule/splatterLayer/asteroidWalls)
 	buildmode_name = "Pattern: Asteroid Room: Splatter Walls + Monsters \[AIRLESS!\]"
 
 /datum/mapGenerator/asteroid/filled

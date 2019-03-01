@@ -87,6 +87,26 @@
 	mood_change = 2
 	timeout = 1800
 
+/datum/mood_event/swam
+	description = "<span class='nicegreen'>I went swimming.</span>\n"
+	mood_change = 2
+	timeout = 1800
+
+/datum/mood_event/rain
+	description = "<span class='warning'>The rain is pretty cold.</span>\n"
+	mood_change = -2
+	timeout = 600
+
+/datum/mood_event/lightning
+	description = "<span class='warning'>I got struck by lightning.</span>\n"
+	mood_change = -12
+	timeout = 2400
+
+/datum/mood_event/lightningneardeath
+	description = "<span class='warning'>I was almost struck by lightning.</span>\n"
+	mood_change = -12
+	timeout = 600
+
 /datum/mood_event/fresh_laundry
 	description = "<span class='nicegreen'>There's nothing like the feeling of a freshly laundered jumpsuit.</span>\n"
 	mood_change = 2

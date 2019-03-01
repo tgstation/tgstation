@@ -84,6 +84,14 @@
 	name = "Afro (Large)"
 	icon_state = "hair_bigafro"
 
+/datum/sprite_accessory/hair/afro_ruby
+	name = "Afro (Square)"
+	icon_state = "hair_ruby"
+
+/datum/sprite_accessory/hair/afro_peridot
+	name = "Afro (Triangle)"
+	icon_state = "hair_peridot"
+
 /datum/sprite_accessory/hair/antenna
 	name = "Ahoge"
 	icon_state = "hair_antenna"
@@ -299,6 +307,14 @@
 /datum/sprite_accessory/hair/kusangi
 	name = "Kusanagi Hair"
 	icon_state = "hair_kusanagi"
+
+/datum/sprite_accessory/hair/sapphire
+	name = "Sapphire Hair"
+	icon_state = "hair_sapphire"
+
+/datum/sprite_accessory/hair/bismuth
+	name = "Bismuth Hair"
+	icon_state = "hair_bismuth"
 
 /datum/sprite_accessory/hair/long
 	name = "Long Hair 1"

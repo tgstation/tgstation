@@ -23,6 +23,9 @@ SUBSYSTEM_DEF(weather)
 			var/mob/living/L = i
 			if(W.can_weather_act(L))
 				W.weather_act(L)
+		for(var/obj/L in world)
+			if(W.can_weather_act(L))
+				W.weather_act(L)
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)

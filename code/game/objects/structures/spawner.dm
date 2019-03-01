@@ -13,11 +13,10 @@
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
 	var/spawn_text = "emerges from"
 	var/faction = list("hostile")
-	var/spawner_type = /datum/component/spawner
 
 /obj/structure/spawner/Initialize()
 	. = ..()
-	AddComponent(spawner_type, mob_types, spawn_time, faction, spawn_text, max_mobs)
+	AddComponent(/datum/component/spawner, mob_types, spawn_time, faction, spawn_text, max_mobs)
 
 /obj/structure/spawner/attack_animal(mob/living/simple_animal/M)
 	if(faction_check(faction, M.faction, FALSE)&&!M.client)

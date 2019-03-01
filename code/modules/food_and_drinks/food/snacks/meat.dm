@@ -164,8 +164,20 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/corgi
 	name = "corgi meat"
-	desc = "Tastes like... well you know..."
+	desc = "You monster."
 	tastes = list("meat" = 4, "a fondness for wearing hats" = 1)
+	foodtype = RAW | MEAT | GROSS
+
+/obj/item/reagent_containers/food/snacks/meat/slab/beef
+	name = "beef"
+	desc = "Ah, there's the beef."
+	tastes = list("beef" = 2)
+	foodtype = RAW | MEAT | GROSS
+
+/obj/item/reagent_containers/food/snacks/meat/slab/veal
+	name = "veal"
+	desc = "the flesh of a baby cow."
+	tastes = list("tender meat" = 2) //tastes like human!
 	foodtype = RAW | MEAT | GROSS
 
 /obj/item/reagent_containers/food/snacks/meat/slab/pug

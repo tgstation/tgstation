@@ -8,12 +8,13 @@
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 	buttontooltipstyle = "clockcult"
+	var/isclockcult = TRUE
 	var/cooldown = 0
 	var/obj/item/clockwork/weapon/weapon_type //The type of weapon to create
 	var/obj/item/clockwork/weapon/weapon
 
 /datum/action/innate/call_weapon/IsAvailable()
-	if(!is_servant_of_ratvar(owner))
+	if(!is_servant_of_ratvar(owner) && isclockcult == TRUE)
 		qdel(src)
 		return
 	if(cooldown > world.time)

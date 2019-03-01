@@ -221,15 +221,3 @@
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT
-
-/obj/item/organ/tongue/snail
-	name = "snailtongue"
-
-/obj/item/organ/tongue/snail/TongueSpeech(message)
-	var/new_message
-	for(var/i in 1 to length(message))
-		if(findtext("ABCDEFGHIJKLMNOPWRSTUVWXYZabcdefghijklmnopqrstuvwxyz", message[i])) //Im open to suggestions
-			new_message += message[i] + message[i] + message[i] //aaalllsssooo ooopppeeennn tttooo sssuuuggggggeeessstttiiiooonsss
-		else
-			new_message += message[i]
-	return new_message

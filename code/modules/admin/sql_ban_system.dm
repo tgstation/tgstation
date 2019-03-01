@@ -97,16 +97,16 @@
 	<div class='inputbox'></div></label>
 	<input type='text' name='keytext' size='26' value='[player_key]'>
 	<label class='inputlabel checkbox'>IP:
-	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[isnull(duration) ? " checked" : ""]>
+	<input type='checkbox' id='ipcheck' name='ipcheck' value='1'[player_ip ? " checked": ""]>
 	<div class='inputbox'></div></label>
 	<input type='text' name='iptext' size='18' value='[player_ip]'>
 	<label class='inputlabel checkbox'>CID:
-	<input type='checkbox' id='cidcheck' name='cidcheck' value='1' checked>
+	<input type='checkbox' id='cidcheck' name='cidcheck' value='1'[player_cid ? " checked": ""]>
 	<div class='inputbox'></div></label>
 	<input type='text' name='cidtext' size='14' value='[player_cid]'>
 	<br>
 	<label class='inputlabel checkbox'>Use IP and CID from last connection of key
-	<input type='checkbox' id='lastconn' name='lastconn' value='1' [(isnull(duration) && !player_ip) || (!player_cid) ? " checked": ""]>
+	<input type='checkbox' id='lastconn' name='lastconn' value='1'>
 	<div class='inputbox'></div></label>
 	<label class='inputlabel checkbox'>Applies to Admins
 	<input type='checkbox' id='applyadmins' name='applyadmins' value='1'[applies_to_admins ? " checked": ""]>
@@ -309,16 +309,17 @@
 		if(!player_key)
 			error_state += "Key was ticked but none was provided."
 	if(href_list["lastconn"])
-		if(player_key)
-			use_last_connection = TRUE
+		use_last_connection = TRUE
+		if(!player_key)
+			error_state += "A key must be provided to use IP and CID from last connection."
 	else
 		if(href_list["ipcheck"])
-			player_ip = href_list["iptext"] || ""
-			if(!player_ip && !use_last_connection)
+			player_ip = href_list["iptext"]
+			if(!player_ip)
 				error_state += "IP was ticked but none was provided."
 		if(href_list["cidcheck"])
-			player_cid = href_list["cidtext"] || ""
-			if(!player_cid && !use_last_connection)
+			player_cid = href_list["cidtext"]
+			if(!player_cid)
 				error_state += "CID was ticked but none was provided."
 	if(!use_last_connection && !player_ip && !player_cid && !player_key)
 		error_state += "At least a key, IP or CID must be provided."
@@ -404,15 +405,13 @@
 		if(query_create_ban_get_player.NextRow())
 			player_key = query_create_ban_get_player.item[1]
 			if(use_last_connection)
-				if (!isnull(player_ip))
-					player_ip = query_create_ban_get_player.item[2]
-				if (!isnull(player_cid))
-					player_cid = query_create_ban_get_player.item[3]
+				player_ip = query_create_ban_get_player.item[2]
+				player_cid = query_create_ban_get_player.item[3]
 		else
 			if(use_last_connection)
-				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
-					qdel(query_create_ban_get_player)
-					return
+				to_chat(usr, "<span class='danger'>Ban not created. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
+				qdel(query_create_ban_get_player)
+				return
 			else
 				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to create a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
 					qdel(query_create_ban_get_player)

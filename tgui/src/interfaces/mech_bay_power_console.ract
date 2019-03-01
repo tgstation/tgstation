@@ -2,7 +2,7 @@
   component.exports = {
     data: {
       mechChargeState(charge) {
-	    let maxcharge = this.get('data.recharge_port.mech.cell.maxcharge')
+	    let maxcharge = this.get('data.recharge_port.mech.cell.maxcharge') 
 		if(charge >= (maxcharge/1.5)) return 'good'
 		else if(charge >= (maxcharge/3)) return 'average'
 		else return 'bad'
@@ -21,12 +21,16 @@
   {{#if data.recharge_port}}
 	{{#if data.recharge_port.mech}}
 	  <ui-section label='Integrity'>
-	    <ui-bar min='0' max='{{adata.recharge_port.mech.maxhealth}}' value='{{adata.recharge_port.mech.health}}'state='{{mechHealthState(adata.recharge_port.mech.health)}}'>{{Math.round(adata.recharge_port.mech.health)}}/{{adata.recharge_port.mech.maxhealth}}</ui-bar>
+	    <ui-bar min='0' max='{{adata.recharge_port.mech.maxhealth}}' value='{{adata.recharge_port.mech.health}}'state='{{mechHealthState(adata.recharge_port.mech.health)}}'>{{Math.round(adata.recharge_port.mech.health)}}/{{adata.recharge_port.mech.maxhealth}}</ui-bar>	
       </ui-section>
 	  {{#if data.recharge_port.mech.cell}}
-		<ui-section label='Power'>
-		<ui-bar min='0' max='{{adata.recharge_port.mech.cell.maxcharge}}' value='{{adata.recharge_port.mech.cell.charge}}'state='{{mechChargeState(adata.recharge_port.mech.cell.charge)}}'>{{Math.round(adata.recharge_port.mech.cell.charge)}}/{{Math.round(adata.recharge_port.mech.cell.maxcharge)}}</ui-bar>
-		</ui-section>
+		{{#if data.recharge_port.mech.cell.critfail}}
+		  <ui-section label='Power'><span class='bad'>Cell Critical Failure</span></ui-section>
+		{{else}}
+          <ui-section label='Power'>
+            <ui-bar min='0' max='{{adata.recharge_port.mech.cell.maxcharge}}' value='{{adata.recharge_port.mech.cell.charge}}'state='{{mechChargeState(adata.recharge_port.mech.cell.charge)}}'>{{Math.round(adata.recharge_port.mech.cell.charge)}}/{{Math.round(adata.recharge_port.mech.cell.maxcharge)}}</ui-bar>		  
+		  </ui-section>
+		{{/if}}
 	  {{else}}
 		<ui-section label='Power'><span class='bad'>Cell Missing</span></ui-section>
 	  {{/if}}

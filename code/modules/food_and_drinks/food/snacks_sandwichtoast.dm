@@ -62,6 +62,17 @@
 	tastes = list("ice cream" = 1)
 	foodtype = GRAIN | DAIRY
 
+/obj/item/reagent_containers/food/snacks/icecreamsandwich/cookiecat
+	name = "cookie cat"
+	desc = "He left his family behind!"
+	icon_state = "cookie_cat"
+	tastes = list("vanilla" = 2, "strawberry" = 2, "chocolate" = 4)
+	foodtype = GRAIN | DAIRY
+
+/obj/item/reagent_containers/food/snacks/icecreamsandwich/cookiecat/Initialize()
+	..()
+	desc = pick("A refugee of an interstellar war.","He's a pet for your tummy.","He's super duper yummy.","He left his family behind!")
+
 /obj/item/reagent_containers/food/snacks/notasandwich
 	name = "not-a-sandwich"
 	desc = "Something seems to be wrong with this, you can't quite figure what. Maybe it's his moustache."

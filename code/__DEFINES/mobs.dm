@@ -38,6 +38,7 @@
 //Mob bio-types
 #define MOB_ORGANIC 	"organic"
 #define MOB_INORGANIC 	"inorganic"
+#define MOB_GEM 	"gem"
 #define MOB_ROBOTIC 	"robotic"
 #define MOB_UNDEAD		"undead"
 #define MOB_HUMANOID 	"humanoid"

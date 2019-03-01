@@ -85,17 +85,16 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
-		if(enabled_waddle)
-			waddle = user.AddComponent(/datum/component/waddling)
-		if(user.mind && user.mind.assigned_role == "Clown")
-			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
+	if(slot == SLOT_SHOES && enabled_waddle)
+		waddle = user.AddComponent(/datum/component/waddling)
+	if(user.mind && user.mind.assigned_role == "Clown")
+		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "noshoes")
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
 	QDEL_NULL(waddle)
 	if(user.mind && user.mind.assigned_role == "Clown")
-		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "noshoes", /datum/mood_event/noshoes)
 
 /obj/item/clothing/shoes/clown_shoes/CtrlClick(mob/living/user)
 	if(!isliving(user))

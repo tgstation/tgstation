@@ -128,7 +128,7 @@
 	))
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
-	if(broken_cyber_organ || working)
+	if(crit_fail || working)
 		return
 	working = TRUE
 	if(owner.AmountStun() > stun_cap_amount)
@@ -143,13 +143,13 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
-	if(broken_cyber_organ || . & EMP_PROTECT_SELF)
+	if(crit_fail || . & EMP_PROTECT_SELF)
 		return
-	broken_cyber_organ = TRUE
+	crit_fail = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
-	broken_cyber_organ = FALSE
+	crit_fail = FALSE
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

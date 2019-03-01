@@ -60,6 +60,17 @@
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
+/obj/item/pickaxe/drill/badmin //badmin weapon
+	name = "the breaking point"
+	icon_state = "handdrill"
+	item_state = "jackhammer"
+	slot_flags = ITEM_SLOT_BELT
+	force = 200 //instant kill, instant shatter.
+	toolspeed = 0.2
+	usesound = 'sound/weapons/drill.ogg'
+	hitsound = 'sound/weapons/drill.ogg'
+	desc = "One shot from this baby will shatter any gem in the galaxy in the blink of an eye."
+
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."

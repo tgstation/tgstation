@@ -2,6 +2,7 @@
 Mineral Sheets
 	Contains:
 		- Sandstone
+		- Dirt
 		- Sandbags
 		- Diamond
 		- Snow
@@ -29,7 +30,6 @@ Mineral Sheets
  */
 
 GLOBAL_LIST_INIT(sandstone_recipes, list ( \
-	new/datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("sandstone door", /obj/structure/mineral_door/sandstone, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 1, 4, 20), \
 	new/datum/stack_recipe("Assistant Statue", /obj/structure/statue/sandstone/assistant, 5, one_per_turf = 1, on_floor = 1), \
@@ -53,6 +53,32 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
 	. = ..()
 
 /obj/item/stack/sheet/mineral/sandstone/thirty
+	amount = 30
+
+/*
+ * Dirt
+ */
+
+GLOBAL_LIST_INIT(dirt_recipes, list ( \
+	new/datum/stack_recipe("farm plot", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1) \
+	))
+
+/obj/item/stack/sheet/mineral/dirt
+	name = "clod"
+	desc = "You're one of these."
+	singular_name = "clod"
+	icon_state = "sheet-dirt"
+	item_state = "sheet-dirt"
+	throw_speed = 3
+	throw_range = 5
+	sheettype = "dirt"
+	merge_type = /obj/item/stack/sheet/mineral/dirt
+
+/obj/item/stack/sheet/mineral/dirt/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.dirt_recipes
+	. = ..()
+
+/obj/item/stack/sheet/mineral/dirt/thirty
 	amount = 30
 
 /*
@@ -241,6 +267,8 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	new/datum/stack_recipe("Sec Officer Statue", /obj/structure/statue/silver/sec, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Sec Borg Statue", /obj/structure/statue/silver/secborg, 5, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("Med Borg Statue", /obj/structure/statue/silver/medborg, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Warp Pad Frame", /obj/structure/warp_pad_frame, 5, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Galaxy Warp Frame", /obj/structure/galaxy_warp_frame, 20, one_per_turf = 1, on_floor = 1), \
 	))
 
 /obj/item/stack/sheet/mineral/silver/Initialize(mapload, new_amount, merge = TRUE)

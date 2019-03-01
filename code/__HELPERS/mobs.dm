@@ -376,14 +376,10 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(!T)
 		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
 
-	var/list/spawned_mobs = new(amount)
-
 	for(var/j in 1 to amount)
 		var/atom/movable/X = new spawn_type(T)
 		if (admin_spawn)
 			X.flags_1 |= ADMIN_SPAWNED_1
-
-		spawned_mobs[j] = X
 
 		if(always_max_walk || prob(walk_chance))
 			if(always_max_walk)
@@ -393,8 +389,6 @@ GLOBAL_LIST_EMPTY(species_list)
 
 			for(var/i in 1 to step_count)
 				step(X, pick(NORTH, SOUTH, EAST, WEST))
-
-	return spawned_mobs
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	message = "<span class='linkify'>[message]</span>"

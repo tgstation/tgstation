@@ -24,7 +24,7 @@
 				qdel(monster)
 			for(var/obj/structure/flora/ash/plant in T)
 				qdel(plant)
-		
+
 		load(central_turf,centered = TRUE)
 		loaded++
 
@@ -94,7 +94,7 @@
 			//TODO : handle forced ruins with multiple variants
 			forced_ruins -= current_pick
 			forced = FALSE
-		
+
 		if(failed_to_place)
 			for(var/datum/map_template/ruin/R in ruins_availible)
 				if(R.id == current_pick.id)
@@ -121,6 +121,8 @@
 									forced_ruins[linked] = forced_z ? forced_z : z_placed //I guess you might want a chain somehow
 								if(PLACE_LAVA_RUIN)
 									forced_ruins[linked] = pick(SSmapping.levels_by_trait(ZTRAIT_LAVA_RUINS))
+								if(PLACE_EARTH_RUIN)
+									forced_ruins[linked] = pick(SSmapping.levels_by_trait(ZTRAIT_EARTH_RUINS))
 								if(PLACE_SPACE_RUIN)
 									forced_ruins[linked] = pick(SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS))
 								if(PLACE_DEFAULT)
@@ -131,5 +133,5 @@
 		for(var/datum/map_template/ruin/R in ruins_availible)
 			if(R.cost > budget)
 				ruins_availible -= R
-	
+
 	log_world("Ruin loader finished with [budget] left to spend.")

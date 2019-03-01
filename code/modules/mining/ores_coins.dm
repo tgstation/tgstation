@@ -91,6 +91,16 @@
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/stack/ore/glass
+	name = "sand pile"
+	icon_state = "Glass ore"
+	item_state = "Glass ore"
+	singular_name = "sand pile"
+	points = 1
+	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/glass
+	w_class = WEIGHT_CLASS_TINY
+
 GLOBAL_LIST_INIT(sand_recipes, list(\
 		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50)\
 		))

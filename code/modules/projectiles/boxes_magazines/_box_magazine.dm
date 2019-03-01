@@ -98,6 +98,7 @@
 			playsound(src, 'sound/weapons/bulletinsert.ogg', 60, TRUE)
 		A.update_icon()
 		update_icon()
+
 	return num_loaded
 
 /obj/item/ammo_box/attack_self(mob/user)
@@ -130,12 +131,6 @@
 		if(bullet && (bullet.BB || countempties))
 			boolets++
 	return boolets
-
-/obj/item/ammo_box/magazine/proc/ammo_list(drop_list = FALSE)
-	var/list/L = stored_ammo.Copy()
-	if(drop_list)
-		stored_ammo.Cut()
-	return L
 
 /obj/item/ammo_box/magazine/proc/empty_magazine()
 	var/turf_mag = get_turf(src)

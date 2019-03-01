@@ -1,0 +1,38 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/water/shallow,/area/template_noop)
+"c" = (/turf/open/floor/plating/asteroid,/area/template_noop)
+"d" = (/turf/closed/mineral/random,/area/lavaland/underground)
+"e" = (/turf/closed/mineral/random,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaabbbbbbbaaaabbbbbbbbbbba
+aaaaabbbcccccbbaabbcccccccccbb
+aaaaabcceeeeecbbbbceeeeeeeeecb
+aaaaabceedeccbbbbbbcceeedddecb
+aaaaabbceeecbbbbbbbbbcceeeeecb
+abbbbbbbcccbbbbbbbbbbbbcccccbb
+bbccccbcccccbbbbbbbbbbbbbbbbba
+bceeeeceeeeecbcbbbbbbbbaaaaaaa
+bbceeeeeddecccecbbbbccbbaaaaaa
+abbcedddddeeeeecbbbceecbbbaaaa
+abceeeddddddeeecbbceeecccbbaaa
+abceceeeeeeeeceecbcedeceecbaaa
+abbccecccceeecccbbcedeeecbbaaa
+aabbbcbbbbceecbbbbcedddecbaaaa
+aaabbbbbbbbccbbbbbcedddecbbaaa
+aaabbbbbbbbbbbbbbceedddeecbaaa
+aaabbbbbbccbbbbbbbcedddecbbaaa
+aabbcbccceecbbbbbbcedeeecbaaaa
+abbceceeceeecbbbbceeeececbaaaa
+bbcceceeeedeeccbbbccecbcbbaaaa
+bceeeeedddddeeecbbbbcbbbbbbbba
+bceeedddddddddeccbbbbbbbbcccbb
+bbcceeddddddddeeecbbbbcbceeecb
+abbbcedddddddddeecbbbceceeecbb
+aabceeeeedddddeecbbbceecedecba
+aabcececedddeeecbbabceeeedecba
+aabbcceceeeeeccbbaabceeddeecba
+aaabbbcbcecccbbbaaabbceeeecbba
+aaaaabbbbcbbbbaaaaaabbccccbbaa
+aaaaaaaabbbaaaaaaaaaabbbbbbaaa
+"}

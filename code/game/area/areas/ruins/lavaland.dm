@@ -22,6 +22,9 @@
 /area/ruin/powered/greed
 	icon_state = "dk_yellow"
 
+/area/ruin/powered/admingravity
+	icon_state = "dk_yellow"
+
 /area/ruin/unpowered/hierophant
 	name = "Hierophant's Arena"
 	icon_state = "dk_yellow"

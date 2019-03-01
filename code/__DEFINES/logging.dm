@@ -15,26 +15,25 @@
 #define INVESTIGATE_RADIATION		"radiation"
 #define INVESTIGATE_EXONET			"exonet"
 #define INVESTIGATE_NANITES			"nanites"
-#define INVESTIGATE_PRESENTS		"presents"
+#define INVESTIGATE_PRESENTS        "presents"
 
 // Logging types for log_message()
-#define LOG_ATTACK			(1 << 0)
-#define LOG_SAY				(1 << 1)
-#define LOG_WHISPER			(1 << 2)
-#define LOG_EMOTE			(1 << 3)
-#define LOG_DSAY			(1 << 4)
-#define LOG_PDA				(1 << 5)
-#define LOG_CHAT			(1 << 6)
-#define LOG_COMMENT			(1 << 7)
-#define LOG_TELECOMMS		(1 << 8)
-#define LOG_OOC				(1 << 9)
-#define LOG_ADMIN			(1 << 10)
-#define LOG_OWNERSHIP		(1 << 11)
-#define LOG_GAME			(1 << 12)
-#define LOG_ADMIN_PRIVATE	(1 << 13)
-#define LOG_ASAY			(1 << 14)
-#define LOG_MECHA			(1 << 15)
-#define LOG_VIRUS			(1 << 16)
+#define LOG_ATTACK		(1 << 0)
+#define LOG_SAY			(1 << 1)
+#define LOG_WHISPER		(1 << 2)
+#define LOG_EMOTE		(1 << 3)
+#define LOG_DSAY		(1 << 4)
+#define LOG_PDA			(1 << 5)
+#define LOG_CHAT		(1 << 6)
+#define LOG_COMMENT		(1 << 7)
+#define LOG_TELECOMMS	(1 << 8)
+#define LOG_OOC			(1 << 9)
+#define LOG_ADMIN		(1 << 10)
+#define LOG_OWNERSHIP	(1 << 11)
+#define LOG_GAME		(1 << 12)
+#define LOG_ADMIN_PRIVATE (1 << 13)
+#define LOG_ASAY		(1 << 14)
+#define LOG_MECHA (1 << 15)
 
 //Individual logging panel pages
 #define INDIVIDUAL_ATTACK_LOG		(LOG_ATTACK)

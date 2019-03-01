@@ -13,12 +13,13 @@
 	novariants = FALSE
 	var/heal_brute = 0
 	var/heal_burn = 0
+	var/adminheal = FALSE
 	var/stop_bleeding = 0
 	var/self_delay = 50
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 
-	if(M.stat == DEAD)
+	if(M.stat == DEAD && adminheal == FALSE)
 		var/t_him = "it"
 		if(M.gender == MALE)
 			t_him = "him"
@@ -96,7 +97,11 @@
 		else
 			to_chat(user, "<span class='notice'>Medicine won't work on a robotic limb!</span>")
 	else
-		M.heal_bodypart_damage((src.heal_brute/2), (src.heal_burn/2))
+		if(adminheal == FALSE)
+			M.heal_bodypart_damage((src.heal_brute/2), (src.heal_burn/2))
+		else
+			M.revive(full_heal = TRUE, admin_revive = TRUE)
+			M.grab_ghost()
 
 	use(1)
 

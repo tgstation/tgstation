@@ -7,14 +7,14 @@
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = null
-	baseturfs = /turf/open/floor/plating/asteroid/airless
-	initial_gas_mix = AIRLESS_ATMOS
+	baseturfs = /turf/open/floor/plating/asteroid
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	opacity = 1
 	density = TRUE
 	layer = EDGED_TURF_LAYER
 	temperature = TCMB
 	var/environment_type = "asteroid"
-	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
+	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid
 	var/mineralType = null
 	var/mineralAmt = 3
 	var/spread = 0 //will the seam spread?
@@ -67,7 +67,29 @@
 				gets_drilled(user)
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
-		return attack_hand(user)
+		if(istype(I,/obj/item/handheldinjector))
+			if(is_station_level(src.z))
+				var/obj/item/handheldinjector/hhi = I
+				if(last_act + (40 * hhi.toolspeed) > world.time)//prevents message spam
+					return
+				last_act = world.time
+				to_chat(user, "<span class='notice'>You start injecting...</span>")
+
+				if(I.use_tool(src, user, 120, volume=50))
+					if(ismineralturf(src))
+						to_chat(user, "<span class='notice'>You finish injecting into the rock.</span>")
+						hhi.charges = hhi.charges-1
+						if(hhi.charges == 0)
+							del(hhi)
+							new/obj/item/trash/handheldinjector(locate(user.x,user.y,user.z))
+						else
+							hhi.icon_state = "injector[hhi.charges]"
+						new/turf/open/floor/plating/kindergarden(locate(src.x,src.y,src.z))
+						new/obj/kindergartengem(locate(src.x,src.y,src.z))
+			else
+				to_chat(user, "<span class='notice'>You can't inject in this lifeless soil.</span>")
+		else
+			return attack_hand(user)
 
 /turf/closed/mineral/proc/gets_drilled()
 	if (mineralType && (mineralAmt > 0))
@@ -132,7 +154,7 @@
 /turf/closed/mineral/random
 	var/list/mineralSpawnChanceList = list(/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
 		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40, /turf/closed/mineral/titanium = 11,
-		/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /turf/closed/mineral/bscrystal = 1)
+		/turf/closed/mineral/gibtonite = 4, /turf/closed/mineral/bscrystal = 1)
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
 	var/display_icon_state = "rock"
@@ -164,6 +186,10 @@
 	mineralSpawnChanceList = list(
 		/turf/closed/mineral/uranium = 35, /turf/closed/mineral/diamond = 30, /turf/closed/mineral/gold = 45, /turf/closed/mineral/titanium = 45,
 		/turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20)
+
+/turf/closed/mineral/random/high_chance/airless
+	baseturfs = /turf/open/floor/plating/asteroid/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/closed/mineral/random/high_chance/volcanic
 	environment_type = "basalt"

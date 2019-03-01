@@ -25,7 +25,9 @@
 	barometer_predictable = TRUE
 
 
-/datum/weather/acid_rain/weather_act(mob/living/L)
-	var/resist = L.getarmor(null, "acid")
-	if(prob(max(0,100-resist)))
-		L.acid_act(20,20)
+/datum/weather/acid_rain/weather_act(atom/A)
+	if(istype(A,/mob/living))
+		var/mob/living/L = A
+		var/resist = L.getarmor(null, "acid")
+		if(prob(max(0,100-resist)))
+			L.acid_act(20,20)

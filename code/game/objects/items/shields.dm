@@ -2,10 +2,6 @@
 	name = "shield"
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
-	var/transparent = FALSE	// makes beam projectiles pass through the shield
-
-/obj/item/shield/proc/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
-	return TRUE
 
 /obj/item/shield/riot
 	name = "riot shield"
@@ -23,17 +19,7 @@
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
-	transparent = TRUE
-	max_integrity = 75
 
-/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	if(transparent && (hitby.pass_flags & PASSGLASS))
-		return FALSE
-	if(attack_type == THROWN_PROJECTILE_ATTACK)
-		final_block_chance += 30
-	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
-	return ..()
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
@@ -41,40 +27,14 @@
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
-	else if(istype(W, /obj/item/stack/sheet/mineral/titanium))
-		if (obj_integrity >= max_integrity)
-			to_chat(user, "<span class='notice'>[src] is already in perfect condition.</span>")
-		else
-			var/obj/item/stack/sheet/mineral/titanium/T = W
-			T.use(1)
-			obj_integrity = max_integrity
-			to_chat(user, "<span class='notice'>You repair [src] with [T].</span>")
 	else
 		return ..()
 
-/obj/item/shield/riot/examine(mob/user)
-	..()
-	var/healthpercent = round((obj_integrity/max_integrity) * 100, 1)
-	switch(healthpercent)
-		if(50 to 99)
-			to_chat(user, "<span class='info'>It looks slightly damaged.</span>")
-		if(25 to 50)
-			to_chat(user, "<span class='info'>It appears heavily damaged.</span>")
-		if(0 to 25)
-			to_chat(user, "<span class='warning'>It's falling apart!</span>")
-
-/obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
-	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
-	new /obj/item/shard((get_turf(src)))
-
-/obj/item/shield/riot/on_shield_block(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", damage = 0, attack_type = MELEE_ATTACK)
-	if (obj_integrity <= damage)
-		var/turf/T = get_turf(owner)
-		T.visible_message("<span class='warning'>[hitby] destroys [src]!</span>")
-		shatter(owner)
-		qdel(src)
-		return FALSE
-	take_damage(damage)
+/obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(attack_type == THROWN_PROJECTILE_ATTACK)
+		final_block_chance += 30
+	if(attack_type == LEAP_ATTACK)
+		final_block_chance = 100
 	return ..()
 
 /obj/item/shield/riot/roman
@@ -84,19 +44,11 @@
 	item_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	transparent = FALSE
-	materials = list(MAT_METAL=8500)
-	max_integrity = 65
 
 /obj/item/shield/riot/roman/fake
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>. It appears to be a bit flimsy."
 	block_chance = 0
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
-	max_integrity = 30
-
-/obj/item/shield/riot/roman/shatter(mob/living/carbon/human/owner)
-	playsound(owner, 'sound/effects/grillehit.ogg', 100)
-	new /obj/item/stack/sheet/metal(get_turf(src))
 
 /obj/item/shield/riot/buckler
 	name = "wooden buckler"
@@ -108,74 +60,6 @@
 	materials = list()
 	resistance_flags = FLAMMABLE
 	block_chance = 30
-	transparent = FALSE
-	max_integrity = 65
-
-/obj/item/shield/riot/buckler/shatter(mob/living/carbon/human/owner)
-	playsound(owner, 'sound/effects/bang.ogg', 50)
-	new /obj/item/stack/sheet/mineral/wood(get_turf(src))
-
-/obj/item/shield/riot/flash
-	name = "strobe shield"
-	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
-	icon_state = "flashshield"
-	item_state = "flashshield"
-	var/obj/item/assembly/flash/handheld/embedded_flash
-
-/obj/item/shield/riot/flash/Initialize()
-	. = ..()
-	embedded_flash = new(src)
-
-/obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
-	. =  embedded_flash.attack(M, user)
-	update_icon()
-
-/obj/item/shield/riot/flash/attack_self(mob/living/carbon/user)
-	. = embedded_flash.attack_self(user)
-	update_icon()
-
-/obj/item/shield/riot/flash/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	. = ..()
-	if (. && !embedded_flash.burnt_out)
-		embedded_flash.activate()
-		update_icon()
-
-
-/obj/item/shield/riot/flash/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = W
-		if(flash.burnt_out)
-			to_chat(user, "No sense replacing it with a broken bulb.")
-			return
-		else
-			to_chat(user, "You begin to replace the bulb.")
-			if(do_after(user, 20, target = user))
-				if(flash.burnt_out || !flash || QDELETED(flash))
-					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				qdel(embedded_flash)
-				embedded_flash = flash
-				flash.forceMove(src)
-				update_icon()
-				return
-	..()
-
-/obj/item/shield/riot/flash/emp_act(severity)
-	. = ..()
-	embedded_flash.emp_act(severity)
-	update_icon()
-
-/obj/item/shield/riot/flash/update_icon()
-	if(!embedded_flash || embedded_flash.burnt_out)
-		icon_state = "riot"
-		item_state = "riot"
-	else
-		icon_state = "flashshield"
-		item_state = "flashshield"
-
-/obj/item/shield/riot/flash/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>")
 
 /obj/item/shield/energy
 	name = "energy combat shield"

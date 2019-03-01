@@ -75,13 +75,3 @@
 	name = "\improper ENGINEERING SAFETY"
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
 	icon_state = "safety"
-
-/obj/structure/sign/warning/explosives
-	name = "\improper HIGH EXPLOSIVES"
-	desc = "A warning sign which reads 'HIGH EXPLOSIVES'."
-	icon_state = "explosives"
-
-/obj/structure/sign/warning/explosives/alt
-	name = "\improper HIGH EXPLOSIVES"
-	desc = "A warning sign which reads 'HIGH EXPLOSIVES'."
-	icon_state = "explosives2"

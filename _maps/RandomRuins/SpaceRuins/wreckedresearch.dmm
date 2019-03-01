@@ -1,0 +1,44 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/wall/rust,/area/template_noop)
+"c" = (/obj/structure/lattice,/turf/template_noop,/area/template_noop)
+"d" = (/turf/open/floor/plating/airless,/area/template_noop)
+"e" = (/mob/living/carbon/monkey{cloneloss = 200},/turf/open/floor/plating/airless,/area/template_noop)
+"f" = (/mob/living/simple_animal/slime{health = 0},/turf/open/floor/plating/airless,/area/template_noop)
+"g" = (/mob/living/simple_animal/slime/random{health = 0},/turf/open/floor/plating/airless,/area/template_noop)
+"h" = (/obj/structure/lattice,/mob/living/simple_animal/slime/random{health = 0},/turf/template_noop,/area/template_noop)
+"i" = (/obj/structure/sign/diamondauthority/rusted,/turf/closed/wall/rust,/area/template_noop)
+"j" = (/obj/structure/galaxy_warp/researchfacility,/turf/open/floor/plating/airless,/area/template_noop)
+"k" = (/obj/structure/grille/broken,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating/airless,/area/template_noop)
+"l" = (/obj/structure/frame/computer{dir = 4},/turf/open/floor/plating/airless,/area/template_noop)
+"m" = (/obj/structure/lattice,/obj/item/shard/gem{desc = "It appears to be the remains of Jade cut-776"; icon_state = "jadeshard"; name = "Shattered Jade"},/turf/template_noop,/area/template_noop)
+"n" = (/obj/structure/lattice,/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/turf/template_noop,/area/template_noop)
+"o" = (/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/turf/open/floor/plating/airless,/area/template_noop)
+"p" = (/obj/structure/door_assembly/door_assembly_research,/turf/open/floor/plating/airless,/area/template_noop)
+"q" = (/obj/structure/frame/machine,/turf/open/floor/plating/airless,/area/template_noop)
+"r" = (/obj/structure/sign/diamondauthority/rusted{step_y = 28},/turf/open/floor/plating/airless,/area/template_noop)
+"s" = (/obj/structure/sign/yellowdiamond/rusted{step_y = 28},/turf/open/floor/plating/airless,/area/template_noop)
+"t" = (/turf/closed/mineral/random/high_chance/airless,/area/template_noop)
+"u" = (/obj/structure/lattice,/turf/closed/mineral/random/high_chance/airless,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaataaaaaaaaaattt
+aaaaatttaaaaaaaaaaat
+abbcuuuuubbbbbccccaa
+abddcuuudbdedbdcccaa
+abdedbuddbdccbddccaa
+abdddbddebdcdbdddcaa
+abkdkikdkikdkikdkbaa
+abeddddddddedddedkaa
+akdfedgdgdgdddgddkaa
+akccfdddddedgeddekaa
+aklmnnobbpbbdddhdbaa
+abqdnqbbdddbbdcccbaa
+abbkkbbrdddsbcccccaa
+aaaaaaadddddaaaaaaaa
+aattaaacdjddaaaaaaaa
+aaattaaccdddaaaattaa
+aattaaacccddaaatatta
+aaaaaaaaaaaaaaaaatta
+aaaaaaaaaaaaaaaaataa
+aaaaaaaaaaaaaaaaaaaa
+"}

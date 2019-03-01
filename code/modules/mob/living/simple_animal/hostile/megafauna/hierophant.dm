@@ -56,9 +56,8 @@ Difficulty: Hard
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/hierophant_club)
-	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
+	crusher_loot = list(/obj/item/hierophant_club)
 	wander = FALSE
-	internal_type = /obj/item/gps/internal/hierophant
 	medal_type = BOSS_MEDAL_HIEROPHANT
 	score_type = HIEROPHANT_SCORE
 	del_on_death = TRUE
@@ -81,7 +80,11 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
+	internal = new/obj/item/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
+	new /obj/item/crusher_trophy/vortex_talisman(get_turf(spawned_beacon))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()

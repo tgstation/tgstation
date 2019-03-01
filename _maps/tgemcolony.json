@@ -1,0 +1,11 @@
+{
+    "map_name": "Earth",
+    "map_path": "map_files/Earth",
+    "map_file": "Earth.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    }
+}

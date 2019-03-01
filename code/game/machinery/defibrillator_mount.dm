@@ -78,7 +78,7 @@
 		defib = I
 		update_icon()
 		return
-	else if(defib && I == defib.paddles)
+	else if(I == defib.paddles)
 		defib.paddles.snap_back()
 		return
 	var/obj/item/card/id = I.GetID()

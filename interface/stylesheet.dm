@@ -136,7 +136,6 @@ h1.alert, h2.alert		{color: #000000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .changeling				{color: #800080;	font-style: italic;}
 .assimilator			{color: #800080;	font-size: 2 ; font-weight: bold;}
-.bigassimilator			{color: #800080;	font-size: 4 ; font-weight: bold;}
 
 .spider					{color: #4d004d;}
 

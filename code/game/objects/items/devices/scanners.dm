@@ -7,7 +7,6 @@ HEALTH ANALYZER
 GAS ANALYZER
 SLIME SCANNER
 NANITE SCANNER
-GENE SCANNER
 
 */
 /obj/item/t_scanner
@@ -192,7 +191,6 @@ GENE SCANNER
 			to_chat(user, "\t<span class='info'>Subject has the following physiological traits: [C.get_trait_string()].</span>")
 	if(advanced)
 		to_chat(user, "\t<span class='info'>Brain Activity Level: [(200 - M.getBrainLoss())/2]%.</span>")
-
 	if (M.radiation)
 		to_chat(user, "\t<span class='alert'>Subject is irradiated.</span>")
 		if(advanced)
@@ -256,8 +254,6 @@ GENE SCANNER
 		var/ldamage = H.return_liver_damage()
 		if(ldamage > 10)
 			to_chat(user, "\t<span class='alert'>[ldamage > 45 ? "Severe" : "Minor"] liver damage detected.</span>")
-		if(advanced && H.has_dna())
-			to_chat(user, "\t<span class='info'>Genetic Stability: [H.dna.stability]%.</span>")
 
 	// Body part damage report
 	if(iscarbon(M) && mode == 1)
@@ -705,13 +701,13 @@ GENE SCANNER
 		return
 	to_chat(user, "<span class='notice'>[C.name]'s potential mutations.")
 	for(var/A in C.dna.mutation_index)
-		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(A)
+		var/datum/mutation/human/HM = get_initialized_mutation(A)
 		var/mut_name
 		if(G && (A in G.discovered))
 			mut_name = "[HM.name] ([HM.alias])"
 		else
 			mut_name = HM.alias
-		var/temp = GET_GENE_STRING(HM.type, C.dna)
+		var/temp = get_gene_string(HM.type, C.dna)
 		var/display
 		for(var/i in 0 to length(temp) / DNA_MUTATION_BLOCKS-1)
 			if(i)

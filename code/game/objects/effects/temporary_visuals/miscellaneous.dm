@@ -275,6 +275,26 @@
 	icon_state = "mummy_revive"
 	duration = 20
 
+/obj/effect/temp_visual/warpin
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "warpin"
+	duration = 6
+
+/obj/effect/temp_visual/warpout
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "warpout"
+	duration = 6
+
+/obj/effect/temp_visual/gem_poof
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "gem_poof"
+	duration = 12
+
+/obj/effect/temp_visual/gem_reform
+	icon = 'icons/mob/mob.dmi'
+	icon_state = "gem_reform"
+	duration = 12
+
 /obj/effect/temp_visual/heal //color is white by default, set to whatever is needed
 	name = "healing glow"
 	icon_state = "heal"

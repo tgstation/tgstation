@@ -4,13 +4,9 @@
 
 #ifndef LOWMEMORYMODE
 	#ifdef ALL_MAPS
-		#include "map_files\Mining\Lavaland.dmm"
-		#include "map_files\debug\runtimestation.dmm"
-		#include "map_files\Deltastation\DeltaStation2.dmm"
-		#include "map_files\MetaStation\MetaStation.dmm"
-		#include "map_files\PubbyStation\PubbyStation.dmm"
-		#include "map_files\BoxStation\BoxStation.dmm"
-		#include "map_files\Donutstation\Donutstation.dmm"
+	//	#include "map_files\Mining\Lavaland.dmm"
+	//	#include "map_files\debug\runtimestation.dmm"
+		#include "map_files\Earth\Earth.dmm"
 
 		#ifdef TRAVISBUILDING
 			#include "templates.dm"

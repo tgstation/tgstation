@@ -53,7 +53,7 @@
 
 	var/obj/item/integrated_signaler/signaler // AI's signaller
 
-	var/obj/item/instrument/piano_synth/internal_instrument
+	var/obj/item/instrument/recorder/internal_instrument
 
 	var/holoform = FALSE
 	var/canholo = TRUE

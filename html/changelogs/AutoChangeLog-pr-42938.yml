@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Fixed 10mm rifle mags and sniper mags not reporting ammo/updating material values."

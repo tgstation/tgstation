@@ -26,4 +26,4 @@
 		G.on_report()
 
 /datum/game_mode/extended/announced/send_intercept(report = 0)
-	priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", 'sound/ai/commandreport.ogg')
+	priority_announce("Reports of Gem Rebellion has been detected, but threats against the Colony seem to be minimal. Proceed with building Pink's Colony", "Security Report", 'sound/ai/commandreport.ogg')

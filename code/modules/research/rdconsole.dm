@@ -33,7 +33,7 @@ Nothing else in the console has ID requirements.
 	//UI VARS
 	var/screen = RDSCREEN_MENU
 	var/back = RDSCREEN_MENU
-	var/locked = FALSE
+	var/locked = TRUE //no cheesing it.
 	var/tdisk_uple = FALSE
 	var/ddisk_uple = FALSE
 	var/datum/selected_node_id
@@ -274,7 +274,7 @@ Nothing else in the console has ID requirements.
 	if(linked_lathe.materials.mat_container)
 		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.format_amount()]</A>"
 	else
-		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
+		l += "<font color='red'>No material storage connected, please contact the agate.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -408,7 +408,7 @@ Nothing else in the console has ID requirements.
 	if (linked_imprinter.materials.mat_container)
 		l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.format_amount()]</A>"
 	else
-		l += "<font color='red'>No material storage connected, please contact the quartermaster.</font>"
+		l += "<font color='red'>No material storage connected, please contact the agate.</font>"
 	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
 	return l
 
@@ -852,13 +852,21 @@ Nothing else in the console has ID requirements.
 		if(obj_flags & EMAGGED)
 			to_chat(usr, "<span class='boldwarning'>Security protocol error: Unable to lock.</span>")
 			return
-		if(allowed(usr))
-			lock_console(usr)
+		if(istype(usr,/mob/living/carbon))
+			var/mob/living/carbon/C = usr
+			if(C.dna.species.id == "jade")
+				lock_console(usr)
+			else
+				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 		else
 			to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 	if(ls["unlock_console"])
-		if(allowed(usr))
-			unlock_console(usr)
+		if(istype(usr,/mob/living/carbon))
+			var/mob/living/carbon/C = usr
+			if(C.dna.species.id == "jade")
+				unlock_console(usr)
+			else
+				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 		else
 			to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
 	if(ls["find_device"])

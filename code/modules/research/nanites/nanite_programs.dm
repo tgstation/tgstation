@@ -136,10 +136,8 @@
 	if(timer && timer_counter > timer)
 		if(timer_type == NANITE_TIMER_DEACTIVATE)
 			deactivate()
-			return
 		else if(timer_type == NANITE_TIMER_SELFDELETE)
 			qdel(src)
-			return
 		else if(can_trigger && timer_type == NANITE_TIMER_TRIGGER)
 			trigger()
 			timer_counter = activation_delay

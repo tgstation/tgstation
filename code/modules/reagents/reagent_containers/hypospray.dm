@@ -180,9 +180,3 @@
 	name = "atropine autoinjector"
 	desc = "A rapid way to save a person from a critical injury state!"
 	list_reagents = list("atropine" = 10)
-
-/obj/item/reagent_containers/hypospray/medipen/snail
-	name = "snail shot"
-	desc = "All-purpose snail medicine! Do not use on non-snails!"
-	list_reagents = list("snailserum" = 10)
-	icon_state = "snail"

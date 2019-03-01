@@ -22,7 +22,6 @@
 	var/list/autogrant_actions_controller	//assoc list "[bitflag]" = list(typepaths)
 	var/list/mob/occupant_actions			//assoc list mob = list(type = action datum assigned to mob)
 	var/obj/vehicle/trailer
-	var/are_legs_exposed = FALSE
 
 /obj/vehicle/Initialize(mapload)
 	. = ..()

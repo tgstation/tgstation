@@ -41,24 +41,19 @@
 			qdel(src)
 			return FALSE
 
-		var/datum/antagonist/hivevessel/woke = target.is_wokevessel()
 		if(is_hivemember(target))
 			for(var/datum/antagonist/hivemind/hive in GLOB.antagonists)
 				if(hive.hivemembers.Find(target))
 					var/mob/living/carbon/C = hive.owner.current.get_real_hivehost()
 					if(C)
-						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target, woke?TRACKER_AWAKENED_TIME:TRACKER_MINDSHIELD_TIME)
-						target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, C, TRACKER_DEFAULT_TIME)
+						C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, target)
+						target.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, C)
 						if(C.mind) //If you were using mind control, too bad
 							C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-							to_chat(C, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+							to_chat(C, "<span class='userdanger'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
 			to_chat(target, "<span class='assimilator'>You hear supernatural wailing echo throughout your mind as you are finally set free. Deep down, you can feel the lingering presence of those who enslaved you... as can they!</span>")
 			target.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 			remove_hivemember(target)
-
-		if(woke)
-			woke.one_mind.remove_member(target.mind)
-			target.mind.remove_antag_datum(/datum/antagonist/hivevessel)
 
 		var/datum/antagonist/rev/rev = target.mind.has_antag_datum(/datum/antagonist/rev)
 		if(rev)

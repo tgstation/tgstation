@@ -289,7 +289,10 @@
 /datum/action/item_action/synthswitch/Trigger()
 	if(istype(target, /obj/item/instrument/piano_synth))
 		var/obj/item/instrument/piano_synth/synth = target
-		return synth.selectInstrument()
+		var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", "piano") as null|anything in synth.insTypes
+		if(!synth.insTypes[chosen])
+			return
+		return synth.changeInstrument(chosen)
 	return ..()
 
 /datum/action/item_action/vortex_recall
@@ -704,10 +707,6 @@
 /datum/action/small_sprite/drake
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 	small_icon_state = "ash_whelp"
-
-/datum/action/small_sprite/spacedragon
-	small_icon = 'icons/mob/animal.dmi'
-	small_icon_state = "carp"
 
 /datum/action/small_sprite/Trigger()
 	..()

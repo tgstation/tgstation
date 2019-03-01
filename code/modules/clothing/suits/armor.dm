@@ -24,6 +24,18 @@
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back
 
+/obj/item/clothing/suit/armor/vest/roman
+	desc = "An iron vest that provides decent protection against most types of damage."
+	icon_state = "roman"
+	item_state = "roman"
+
+/obj/item/clothing/suit/armor/vest/primitiveleather
+	name = "padded vest"
+	desc = "An leather vest that provides minimal protection against most types of damage."
+	icon_state = "leatherarmor"
+	item_state = "leatherarmor"
+	armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 5, "bomb" = 12, "bio" = 0, "rad" = 0, "fire" = 25, "acid" = 25)
+
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
 	icon_state = "armor"
@@ -42,7 +54,7 @@
 	icon_state = "blueshift"
 	item_state = "blueshift"
 	custom_premium_price = 600
-	
+
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
 	desc = "A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence."

@@ -50,7 +50,7 @@
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
-				bank_card_talk("Payday processed, account now holds $[account_balance].")
+				bank_card_talk("Payday processed, account now holds $[account_balance].")		
 				return TRUE
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
@@ -59,29 +59,22 @@
 /datum/bank_account/proc/add_neetbux()
 	account_job.paycheck += PAYCHECK_WELFARE
 
-/datum/bank_account/proc/bank_card_talk(message, force)
+/datum/bank_account/proc/bank_card_talk(message)
 	if(!message || !bank_cards.len)
 		return
 	for(var/obj/A in bank_cards)
 		var/mob/card_holder = recursive_loc_check(A, /mob)
 		if(ismob(card_holder)) //If on a mob
-			if(card_holder.client && !(card_holder.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
-				return
-
 			card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep.ogg', 50, TRUE)
 			if(card_holder.can_hear())
 				to_chat(card_holder, "[icon2html(A, card_holder)] *[message]*")
 		else if(isturf(A.loc)) //If on the ground
 			for(var/mob/M in hearers(1,get_turf(A)))
-				if(M.client && !(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
-					return
 				playsound(A, 'sound/machines/twobeep.ogg', 50, TRUE)
 				A.audible_message("[icon2html(A, hearers(A))] *[message]*", null, 1)
 				break
 		else
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
-				if(M.client && !(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
-					return
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep.ogg', 50, TRUE)
 				if(M.can_hear())
 					to_chat(M, "[icon2html(A, M)] *[message]*")

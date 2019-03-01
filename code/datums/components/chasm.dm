@@ -23,6 +23,9 @@
 		/obj/effect/dummy/phased_mob
 		))
 
+/datum/component/chasm/ocean
+	oblivion_message = "You struggle against the currents, and it drags you under into Davy Jone's personal closet!"
+
 /datum/component/chasm/Initialize(turf/target)
 	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED, COMSIG_ATOM_ENTERED), .proc/Entered)
 	target_turf = target

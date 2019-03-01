@@ -1,0 +1,88 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/wall/mineral/titanium,/area/awaymission/humanzoo)
+"c" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/awaymission/humanzoo)
+"d" = (/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"e" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"f" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"g" = (/obj/machinery/button/door{id = "humanzoo"; name = "Human Zoo Door Control"; pixel_x = -1; pixel_y = -24; req_access_txt = ""},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"h" = (/obj/machinery/door/poddoor{id = "humanzoo"; name = "Zoo Entry"},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"i" = (/turf/open/floor/grass,/area/awaymission/humanzoo)
+"j" = (/obj/structure/flora/ash/earth,/turf/open/floor/grass,/area/awaymission/humanzoo)
+"k" = (/obj/structure/lattice,/turf/template_noop,/area/template_noop)
+"l" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"m" = (/obj/structure/flora/ausbushes/ywflowers,/turf/open/floor/grass,/area/awaymission/humanzoo)
+"n" = (/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/grass,/area/awaymission/humanzoo)
+"o" = (/obj/structure/flora/ausbushes/ppflowers,/turf/open/floor/grass,/area/awaymission/humanzoo)
+"p" = (/turf/open/floor/plasteel/stairs/left,/area/awaymission/humanzoo)
+"q" = (/turf/open/floor/plasteel/stairs/right,/area/awaymission/humanzoo)
+"r" = (/obj/machinery/door/airlock/shuttle{name = "human zoo airlock"},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"s" = (/obj/structure/flora/ausbushes/reedbush,/turf/open/floor/grass,/area/awaymission/humanzoo)
+"t" = (/obj/machinery/light,/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"u" = (/turf/open/water/shallow,/area/awaymission/humanzoo)
+"v" = (/obj/structure/rack,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/obj/item/clothing/ears/zooman,/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"w" = (/turf/open/water,/area/awaymission/humanzoo)
+"x" = (/obj/machinery/disposal/bin{desc = "Used to toss humans into the zoo."; name = "human integration unit"},/obj/structure/disposalpipe/trunk{dir = 4},/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"y" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/closed/wall/mineral/titanium,/area/awaymission/humanzoo)
+"z" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"A" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/floor/grass,/area/awaymission/humanzoo)
+"B" = (/obj/structure/rack,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/obj/item/clothing/under/zooman,/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"C" = (/obj/structure/bed/pod,/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"D" = (/turf/open/floor/plasteel/stairs/medium,/area/awaymission/humanzoo)
+"E" = (/obj/structure/galaxy_warp/zoo,/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"F" = (/obj/structure/fans/tiny,/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"G" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/water/shallow,/area/awaymission/humanzoo)
+"H" = (/obj/structure/sign/pinkdiamond{step_y = 28},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"I" = (/obj/machinery/light{dir = 1},/obj/structure/sign/diamondauthority{pixel_y = 28},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaabbbbbbbbbbcbcbbbbbbbcbcbbbbbbbbbbaaaaaaaaaaaaa
+aaabblddddlddddlddddlddddlddddlddddlbbaaaaaaaaaaaa
+aabbdddddddddddddddddddddddddddddddddbbaaaaaaaaaaa
+abbdddddddddddddddddddddddddddddddddddbbaaaaaaaaaa
+bbdddddddddddddddddddddddddddddddddddddbbaaaaaaaaa
+beddddddddtddddtdddddddddtddddtddddddddfbaaaaaaaaa
+bdddddbbbbbbbbcbcbbdddbbcbcbbbbbbbbdddddbaaaaaaaaa
+bdddddbkkkkkkkkkkkbgddbkkkkkkkkkkkbdddddbaaaaaaaaa
+bdddddbkkkkkkkkkkkbbhbbkkkkkkkkkkkbdddddbaaaaaaaaa
+bdddddbkkkkkkkkkkkbiiibkkkkkkkkkkkbdddddbaaaaaaaaa
+beddddbkkkbbbbbbbbbiiibbbbbbbbbkkkbedddfbbbbbbbbba
+bdddddbkkkbiiiijiiijiiijiiijiibkkkbdddddbdldddldba
+bdddddbkkkbminiiiniiiionimiiiibkkkbdddddbdddddddba
+bdddddbkkkbijiiiijiiiiiiiiiioibkkkbdddddbpqbbbpqba
+cdddddckkkbiioiiniiiijijiiiijibkkkcdddddrdddldddca
+bedddfbkkkbiiiiiimioiiiiiiniiibkkkbedddfbedddddfba
+cdddddckkkbiniijiisiiiiisjiimibkkkcdddddrdddtdddca
+bdddddbkkkbiiiiiiuuuuuuuiiiiiibkkkbdddddbpqbbbpqba
+bdddddbbkkbjimniiuuuuuuuioiiiibkkkbdddddbdddddddba
+bdddddvbccbiiiiiiuuwwwuuiiiijibkkkbdddddbdtdddtdba
+beddddxyzzyAAAAAAGuwwwuuiijiiibkkkbedddfbbbbbbbbba
+bdddddBbccbiiiiiiuuwwwuuiiiniibkkkbdddddbdldddldba
+bdddddbbkkbinijosuuuuuuusmiiijbkkkbdddddbdCCCCCdba
+bdddddbkkkbiiiiiiuuuuuuuiioiiibkkkbdddddbdddddddba
+cdddddckkkbiiiimisiiiiiiiiiinibkkkcdddddrdCCCCCdba
+bedddfbkkkbiojiiiinijiiiiiiimibkkkbedddfbedddddfba
+cdddddckkkbiiiiiiiiiiiiiiniiiibkkkcdddddrdCCCCCdba
+bdddddbkkkbjiiniioiiiiiiiiiijibkkkbdddddbdddddddba
+bdddddbkkkbiiiiiiiiiimioiijiiibkkkbdddddbdCCCCCdba
+bdddddbkkkbimiijiiiiiiijiiiijibkkkbdddddbdtdddtdba
+bedddfbkkkbbbbbbbbbbbbbbbbbbbbbkkkbedddfbbbbbbbbba
+bdddddbkkkkkkkkkkkkkkkkkkkkkkkkkkkbdddddbaaaaaaaaa
+bdddddbkkkkkkkkkkkkkkkkkkkkkkkkkkkbdddddbaaaaaaaaa
+bdddddbkkkkkkkkkkkkkkkkkkkkkkkkkkkbdddddbaaaaaaaaa
+bdddddbbbbbbbbcbcbbbbbbbcbcbbbbbbbbdddddbaaaaaaaaa
+beddddddddlddddlddddlddddlddddlddddddddfbaaaaaaaaa
+bbdddddddddddddddddddddddddddddddddddddbbaaaaaaaaa
+abbdddddddddddddddddddddddddddddddddddbbaaaaaaaaaa
+aabbdddddddddddddddddddddddddddddddddbbaaaaaaaaaaa
+aaabbtddddtddddtddddtddddtddddtdddddbbaaaaaaaaaaaa
+aaaabbbbbbbbbbbbbbbrbrbbbbbbbbbbbbbbbaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabHddIddHbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabdddddddbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabpDDDDDqbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabpDDDDDqbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabedddddfbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabdddEdddbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabdddddddbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabFFFFFFFbaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

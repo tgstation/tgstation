@@ -1,0 +1,57 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/floor/plating/asteroid,/area/template_noop)
+"c" = (/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"d" = (/obj/structure/flora/ausbushes/fullgrass,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"e" = (/obj/structure/flora/ash/earth,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"f" = (/obj/item/twohanded/bostaff,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"g" = (/obj/item/twohanded/required/kinetic_crusher,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"h" = (/obj/item/claymore,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"i" = (/obj/item/twohanded/fireaxe,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"j" = (/obj/item/melee/transforming/cleaving_saw,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"k" = (/obj/item/melee/sabre,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"l" = (/obj/item/shard/gem/random,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"m" = (/obj/effect/mob_spawn/human/gem/bismuth/homeworld,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"n" = (/obj/structure/warp_pad/berrybattlefield,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaabbaaaaaaaaaaaaaaaabbbaaaaaaaaaaaaaa
+aaaaabbbbbbaaaaaaaaaaaabcbbbaaaaaaabbaaa
+aaaaaabcccbbbbaaaaaaaaabcccbbbbbbbbbbaaa
+aaaaaabbdccccbbbbbaaaaabccedcecccdcbaaaa
+aaaaaaabcceccccccbbaaaabccccclccecebaaaa
+aaaaaaabcdccdcccccbaaaabcececcdccccbaaaa
+aaaaaaabcccccfecccbbbabbccccccceccbbaaaa
+aaaaabbbccececccdcccbbbcccdcccccccbaaaaa
+aaabbbccdcccccclcecccccccccccecdcbbaaaaa
+aaabccdcccdccdcccegdceecceclcecccbaaaaaa
+aaabccclecgccccccccclcdcccccccccbbaaaaaa
+aaabbccdcccceecccedcccceccccecccbaaaaaaa
+aaaabbccccdlcceccccceccccecdccccbaaaaaaa
+aaaaabccecccecclccdcccdcchccccccbbaaaaaa
+aaaaabccccccccdccdcicfcecccecccccbaaaaaa
+aaaaabcdcccfccccecccecclccccdlcclbbaaaaa
+aaaaabccleccdehcccccccccceecdcccccbbbbaa
+aaaabbccccccccccececcecgeccccceccdcccbaa
+aaaabccdcccclcdcccccmcdccecdcccccceccbaa
+aaaabbccecdcccccdcejccccccccecccdcccbbaa
+aaaaabbcccchcccecccdcecclcccccccccbbbaaa
+aaaaaabbbcccecfdcicchcececfccddccbbaaaaa
+aaaaaaaabccccccccceccccccccecceccbaaaaaa
+aaaaaaaabbcelcelccccddcdccccccclcbaaaaaa
+aaaaaaaaabcdcgcecccecneccckcclcccbaaaaaa
+aaaaaaaabbccccdccccdcclcdcceccdccbbaaaaa
+aaaaaaabbccececclccccceccclcccgcdcbaaaaa
+aaaaaabbcccdccccccecdccccccedcceccbaaaaa
+aaaaabbcceccccbbbbcgcccdecccccccdcbbaaaa
+aaaabbbbbbbbbbbaabcbbbbcccdccbbbbbcbaaaa
+aaaaaaabbaabbbaaabcbaabbbcccbbaaabbbaaaa
+aaaaaabbaaabbaaaabbbaaaabbbbbaaaaaabaaaa
+aaaaaaaaaaabaaaaabbaaaaaaaabaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}

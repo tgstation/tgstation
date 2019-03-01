@@ -211,8 +211,6 @@
 		var/obj/item/bodypart/chest/LC = target.get_bodypart(BODY_ZONE_CHEST)
 		if((!LC || LC.status != BODYPART_ROBOTIC) && !target.getorgan(/obj/item/organ/body_egg/alien_embryo))
 			new /obj/item/organ/body_egg/alien_embryo(target)
-			var/turf/T = get_turf(target)
-			log_game("[key_name(target)] was impregnated by a facehugger at [loc_name(T)]")
 
 	else
 		target.visible_message("<span class='danger'>[src] violates [target]'s face!</span>", \

@@ -117,13 +117,6 @@
 	//this is a new disease starting over at stage 1, so processing is not copied
 	return A
 
-//Describe this disease to an admin in detail (for logging)
-/datum/disease/advance/admin_details()
-	var/list/name_symptoms = list()
-	for(var/datum/symptom/S in symptoms)
-		name_symptoms += S.name
-	return "[name] sym:[english_list(name_symptoms)] r:[totalResistance()] s:[totalStealth()] ss:[totalStageSpeed()] t:[totalTransmittable()]"
-
 /*
 
 	NEW PROCS
@@ -438,8 +431,7 @@
 		var/list/name_symptoms = list()
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()]")
-		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()]!")
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
 
 
 /datum/disease/advance/proc/totalStageSpeed()

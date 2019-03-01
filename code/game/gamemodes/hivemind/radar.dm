@@ -66,7 +66,7 @@
 	if(.)
 		tracked_by = hunter
 		if(isnum(set_duration))
-			duration = world.time + set_duration
+			duration = set_duration
 
 //Screen alert
 /obj/screen/alert/status_effect/agent_pinpointer/hivemind

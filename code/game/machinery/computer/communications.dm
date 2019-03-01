@@ -68,64 +68,27 @@
 		if("main")
 			state = STATE_DEFAULT
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+
 		if("login")
 			var/mob/M = usr
 
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
-
-			if(I && istype(I))
-				if(check_access(I))
-					authenticated = 1
-					auth_id = "[I.registered_name] ([I.assignment])"
-					if((20 in I.access))
-						authenticated = 2
+			if(istype(M,/mob/living/carbon))
+				var/mob/living/carbon/C = M
+				if(C.dna.species.id == "agate")
+					authenticated = 2
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				if(obj_flags & EMAGGED)
 					authenticated = 2
-					auth_id = "Unknown"
 					to_chat(M, "<span class='warning'>[src] lets out a quiet alarm as its login is overridden.</span>")
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 					playsound(src, 'sound/machines/terminal_alert.ogg', 25, 0)
 					if(prob(25))
 						for(var/mob/living/silicon/ai/AI in active_ais())
 							SEND_SOUND(AI, sound('sound/machines/terminal_alert.ogg', volume = 10)) //Very quiet for balance reasons
+
 		if("logout")
 			authenticated = 0
 			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
-
-		if("swipeidseclevel")
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_active_held_item()
-			if (istype(I, /obj/item/pda))
-				var/obj/item/pda/pda = I
-				I = pda.id
-			if (I && istype(I))
-				if(ACCESS_CAPTAIN in I.access)
-					var/old_level = GLOB.security_level
-					if(!tmp_alertlevel)
-						tmp_alertlevel = SEC_LEVEL_GREEN
-					if(tmp_alertlevel < SEC_LEVEL_GREEN)
-						tmp_alertlevel = SEC_LEVEL_GREEN
-					if(tmp_alertlevel > SEC_LEVEL_BLUE)
-						tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
-					set_security_level(tmp_alertlevel)
-					if(GLOB.security_level != old_level)
-						to_chat(usr, "<span class='notice'>Authorization confirmed. Modifying security level.</span>")
-						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-						//Only notify people if an actual change happened
-						var/security_level = get_security_level()
-						log_game("[key_name(usr)] has changed the security level to [security_level] with [src] at [AREACOORD(usr)].")
-						message_admins("[ADMIN_LOOKUPFLW(usr)] has changed the security level to [security_level] with [src] at [AREACOORD(usr)].")
-						deadchat_broadcast("<span class='deadsay'><span class='name'>[usr.real_name]</span> has changed the security level to [security_level] with [src] at <span class='name'>[get_area_name(usr, TRUE)]</span>.</span>", usr)
-					tmp_alertlevel = 0
-				else
-					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
-					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-					tmp_alertlevel = 0
-				state = STATE_DEFAULT
-			else
-				to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		if("announce")
 			if(authenticated==2)
@@ -149,61 +112,6 @@
 				deadchat_broadcast("<span class='deadsay bold'>[usr.real_name] has sent an outgoing message to the other station(s).</span>", usr)
 				CM.lastTimeUsed = world.time
 
-		if("purchase_menu")
-			state = STATE_PURCHASE
-
-		if("buyshuttle")
-			if(authenticated==2)
-				var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
-				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
-				if(S && istype(S))
-					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
-						to_chat(usr, "It's a bit late to buy a new shuttle, don't you think?")
-						return
-					if(SSshuttle.shuttle_purchased)
-						to_chat(usr, "A replacement shuttle has already been purchased.")
-					else if(!S.prerequisites_met())
-						to_chat(usr, "You have not met the requirements for purchasing this shuttle.")
-					else
-						var/points_to_check
-						var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
-						if(D)
-							points_to_check = D.account_balance
-						if(points_to_check >= S.credit_cost)
-							var/obj/machinery/shuttle_manipulator/M = locate() in GLOB.machines
-							if(M)
-								SSshuttle.shuttle_purchased = TRUE
-								M.unload_preview()
-								M.load_template(S)
-								M.existing_shuttle = SSshuttle.emergency
-								M.action_load(S)
-								D.adjust_money(-S.credit_cost)
-								minor_announce("[usr.real_name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
-								message_admins("[ADMIN_LOOKUPFLW(usr)] purchased [S.name].")
-								SSblackbox.record_feedback("text", "shuttle_purchase", 1, "[S.name]")
-							else
-								to_chat(usr, "Something went wrong! The shuttle exchange system seems to be down.")
-						else
-							to_chat(usr, "Not enough credits.")
-
-		if("callshuttle")
-			state = STATE_DEFAULT
-			if(authenticated)
-				state = STATE_CALLSHUTTLE
-		if("callshuttle2")
-			if(authenticated)
-				SSshuttle.requestEvac(usr, href_list["call"])
-				if(SSshuttle.emergency.timer)
-					post_status("shuttle")
-			state = STATE_DEFAULT
-		if("cancelshuttle")
-			state = STATE_DEFAULT
-			if(authenticated)
-				state = STATE_CANCELSHUTTLE
-		if("cancelshuttle2")
-			if(authenticated)
-				SSshuttle.cancelEvac(usr)
-			state = STATE_DEFAULT
 		if("messagelist")
 			currmsg = 0
 			state = STATE_MESSAGELIST
@@ -419,12 +327,6 @@
 
 	updateUsrDialog()
 
-/obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
-	if(istype(I, /obj/item/card/id))
-		attack_hand(user)
-	else
-		return ..()
-
 /obj/machinery/computer/communications/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
@@ -449,47 +351,22 @@
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 
-	if(issilicon(user))
-		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
-		if(dat2)
-			dat +=  dat2
-			popup.set_content(dat)
-			popup.open()
-		return
-
 	switch(state)
 		if(STATE_DEFAULT)
 			if (authenticated)
-				if(SSshuttle.emergencyCallAmount)
-					if(SSshuttle.emergencyLastCallLoc)
-						dat += "Most recent shuttle call/recall traced to: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b><BR>"
-					else
-						dat += "Unable to trace most recent shuttle call/recall signal.<BR>"
-				dat += "Logged in as: [auth_id]"
+				dat += "Logged in."
 				dat += "<BR>"
-				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=logout'>Log Out</A> \]<BR>"
-				dat += "<BR><B>General Functions</B>"
+				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=logout'>Log Out</A> \]<BR><BR>"
 				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=messagelist'>Message List</A> \]"
-				switch(SSshuttle.emergency.mode)
-					if(SHUTTLE_IDLE, SHUTTLE_RECALL)
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=callshuttle'>Call Emergency Shuttle</A> \]"
-					else
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 
 				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=status'>Set Status Display</A> \]"
 				if (authenticated==2)
-					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=announce'>Make a Captain's Announcement</A> \]"
 					var/cross_servers_count = length(CONFIG_GET(keyed_list/cross_server))
 					if(cross_servers_count)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to [cross_servers_count == 1 ? "an " : ""]allied station[cross_servers_count > 1 ? "s" : ""]</A> \]"
-					if(SSmapping.config.allow_custom_shuttles)
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
 					if(!(obj_flags & EMAGGED))
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageCentCom'>Send Message to CentCom</A> \]"
+						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageCentCom'>Send Message to Diamond Authority</A> \]"
 					else
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageSyndicate'>Send Message to \[UNKNOWN\]</A> \]"
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
@@ -620,94 +497,13 @@
 	dat += "<BR>Are you sure you want to cancel the shuttle? \[ <a href='#' onclick='submit()'>Cancel</a> \]"
 	return dat
 
-/obj/machinery/computer/communications/proc/interact_ai(mob/living/silicon/ai/user)
-	var/dat = ""
-	switch(aistate)
-		if(STATE_DEFAULT)
-			if(SSshuttle.emergencyCallAmount)
-				if(SSshuttle.emergencyLastCallLoc)
-					dat += "Latest emergency signal trace attempt successful.<BR>Last signal origin: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b>.<BR>"
-				else
-					dat += "Latest emergency signal trace attempt failed.<BR>"
-			if(authenticated)
-				dat += "Current login: [auth_id]"
-			else
-				dat += "Current login: None"
-			dat += "<BR><BR><B>General Functions</B>"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-messagelist'>Message List</A> \]"
-			if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
-				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-status'>Set Status Display</A> \]"
-			dat += "<BR><BR><B>Special Functions</B>"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-announce'>Make an Announcement</A> \]"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-changeseclevel'>Change Alert Level</A> \]"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
-		if(STATE_CALLSHUTTLE)
-			dat += get_call_shuttle_form(1)
-		if(STATE_MESSAGELIST)
-			dat += "Messages:"
-			for(var/i in 1 to messages.len)
-				var/datum/comm_message/M = messages[i]
-				dat += "<BR><A HREF='?src=[REF(src)];operation=ai-viewmessage;message-num=[i]'>[M.title]</A>"
-		if(STATE_VIEWMESSAGE)
-			if (aicurrmsg)
-				dat += "<B>[aicurrmsg.title]</B><BR><BR>[aicurrmsg.content]"
-				if(!aicurrmsg.answered && aicurrmsg.possible_answers.len)
-					for(var/i in 1 to aicurrmsg.possible_answers.len)
-						var/answer = aicurrmsg.possible_answers[i]
-						dat += "<br>\[ <A HREF='?src=[REF(src)];operation=ai-respond;answer=[i]'>Answer : [answer]</A> \]"
-				else if(aicurrmsg.answered)
-					var/answered = aicurrmsg.possible_answers[aicurrmsg.answered]
-					dat += "<br> Archived Answer : [answered]"
-				dat += "<BR><BR>\[ <A HREF='?src=[REF(src)];operation=ai-delmessage'>Delete</A> \]"
-			else
-				aistate = STATE_MESSAGELIST
-				attack_hand(user)
-				return null
-		if(STATE_DELMESSAGE)
-			if(aicurrmsg)
-				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=[REF(src)];operation=ai-delmessage2'>OK</A> | <A HREF='?src=[REF(src)];operation=ai-viewmessage'>Cancel</A> \]"
-			else
-				aistate = STATE_MESSAGELIST
-				attack_hand(user)
-				return
-
-		if(STATE_STATUSDISPLAY)
-			dat += "Set Status Displays<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=blank'>Clear</A> \]<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=message'>Message</A> \]"
-			dat += "<ul><li> Line 1: <A HREF='?src=[REF(src)];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
-			dat += "<li> Line 2: <A HREF='?src=[REF(src)];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += "\[ Alert: <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=default'>None</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
-
-		if(STATE_ALERT_LEVEL)
-			dat += "Current alert level: [get_security_level()]<BR>"
-			if(GLOB.security_level == SEC_LEVEL_DELTA)
-				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
-			else
-				dat += "<A HREF='?src=[REF(src)];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
-				dat += "<A HREF='?src=[REF(src)];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
-
-		if(STATE_TOGGLE_EMERGENCY)
-			if(GLOB.emergency_access == 1)
-				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
-				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=[REF(src)];operation=ai-disableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=ai-viewmessage'>Cancel</A> \]"
-			else
-				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
-				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=[REF(src)];operation=ai-enableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=ai-viewmessage'>Cancel</A> \]"
-
-	dat += "<BR><BR>\[ [(aistate != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
-	return dat
+//there isn't any AI.
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
 	if(!SScommunications.can_announce(user, is_silicon))
 		to_chat(user, "Intercomms recharging. Please stand by.")
 		return
-	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
+	var/input = stripped_input(user, "Please choose a message to announce to the colony.", "What?")
 	if(!input || !user.canUseTopic(src))
 		return
 	SScommunications.make_announcement(user, is_silicon, input)

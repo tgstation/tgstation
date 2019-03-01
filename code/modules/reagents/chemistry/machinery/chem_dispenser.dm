@@ -98,6 +98,7 @@
 	recharge_counter++
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
+	..()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	b_o.pixel_y = -4
 	b_o.pixel_x = -7

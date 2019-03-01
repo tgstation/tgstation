@@ -100,6 +100,13 @@
 	underlays += mutable_appearance('icons/obj/structures.dmi', "grille") //add a grille underlay
 	underlays += mutable_appearance('icons/turf/floors.dmi', "plating") //add the plating underlay, below the grille
 
+/turf/closed/indestructible/ocean
+	opacity = 0
+	name = "water"
+	desc = "Deep water."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "oceanwater_motion"
+
 /turf/closed/indestructible/fakedoor
 	name = "CentCom Access"
 	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'

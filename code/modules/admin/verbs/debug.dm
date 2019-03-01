@@ -52,17 +52,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
 	if(!procname)
 		return
-	
+
 	//strip away everything but the proc name
 	var/list/proclist = splittext(procname, "/")
 	if (!length(proclist))
 		return
 	procname = proclist[proclist.len]
-	
+
 	var/proctype = "proc"
 	if ("verb" in proclist)
 		proctype = "verb"
-	
+
 	if(targetselected && !hascall(target, procname))
 		to_chat(usr, "<font color='red'>Error: callproc(): type [target.type] has no [proctype] named [procname].</font>")
 		return
@@ -973,6 +973,9 @@ GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 	names += "---- Lava Ruins ----"
 	for(var/name in SSmapping.lava_ruins_templates)
 		names[name] = list(SSmapping.lava_ruins_templates[name], ZTRAIT_LAVA_RUINS, /area/lavaland/surface/outdoors/unexplored)
+
+	for(var/name in SSmapping.earth_ruins_templates)
+		names[name] = list(SSmapping.earth_ruins_templates[name], ZTRAIT_EARTH_RUINS, /area/lavaland/surface/outdoors/unexplored)
 
 	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in names
 	var/data = names[ruinname]

@@ -9,6 +9,56 @@
 	var/buildable_sign = 1 //unwrenchable and modifiable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 
+/obj/structure/sign/diamondauthority
+	name = "Diamond Authority Insignia"
+	desc = "The glorious four."
+	icon_state = "diamondauthority"
+
+/obj/structure/sign/diamondauthority/rusted
+	name = "Rusted Diamond Authority Insignia"
+	desc = "Time has disfigured this glorious insignia."
+	icon_state = "diamondauthorityrusted"
+
+/obj/structure/sign/whitediamond
+	name = "White Diamond Insignia"
+	desc = "The insignia of the Glorious White Diamond!"
+	icon_state = "whitediamond"
+
+/obj/structure/sign/whitediamond/rusted
+	name = "Rusted White Diamond Insignia"
+	desc = "Time has disfigured this glorious insignia."
+	icon_state = "whitediamondrusted"
+
+/obj/structure/sign/yellowdiamond
+	name = "Yellow Diamond Insignia"
+	desc = "The insignia of the Luminous Yellow Diamond!"
+	icon_state = "yellowdiamond"
+
+/obj/structure/sign/yellowdiamond/rusted
+	name = "Rusted Yellow Diamond Insignia"
+	desc = "Time has disfigured this luminous insignia."
+	icon_state = "yellowdiamondrusted"
+
+/obj/structure/sign/bluediamond
+	name = "Blue Diamond Insignia"
+	desc = "The insignia of the Lustrous Blue Diamond!"
+	icon_state = "bluediamond"
+
+/obj/structure/sign/bluediamond/rusted
+	name = "Rusted Blue Diamond Insignia"
+	desc = "Time has disfigured this lustrous insignia."
+	icon_state = "bluediamondrusted"
+
+/obj/structure/sign/pinkdiamond
+	name = "Pink Diamond Insignia"
+	desc = "The insignia of the Beautiful Pink Diamond!"
+	icon_state = "pinkdiamond"
+
+/obj/structure/sign/pinkdiamond/rusted
+	name = "Rusted Pink Diamond Insignia"
+	desc = "Time has disfigured this beautiful insignia."
+	icon_state = "pinkdiamondrusted"
+
 /obj/structure/sign/basic
 	name = "blank sign"
 	desc = "How can signs be real if our eyes aren't real?"

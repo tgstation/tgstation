@@ -9,10 +9,23 @@
 	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	density = TRUE //This will prevent hostile mobs from pathing into chasms, while the canpass override will still let it function like an open turf
 	bullet_bounce_sound = null //abandon all hope ye who enter
+	var/chasmtype = /datum/component/chasm
+
+/turf/open/chasm/ocean
+	gender = PLURAL
+	name = "water"
+	desc = "The currents are so incredibly powerful!"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "chasmwater_motion"
+	baseturfs = /turf/open/chasm/ocean
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = TRUE
+	smooth = null
+	chasmtype = /datum/component/chasm/ocean
 
 /turf/open/chasm/Initialize()
 	. = ..()
-	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
+	AddComponent(chasmtype, SSmapping.get_turf_below(src))
 
 /turf/open/chasm/proc/set_target(turf/target)
 	GET_COMPONENT(chasm_component, /datum/component/chasm)

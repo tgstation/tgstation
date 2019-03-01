@@ -184,7 +184,7 @@
 
 /obj/item/clothing/head/helmet/roman
 	name = "\improper Roman helmet"
-	desc = "An ancient helmet made of bronze and leather."
+	desc = "A helmet made of bronze and leather."
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_cover = HEADCOVERSEYES
 	armor = list("melee" = 25, "bullet" = 0, "laser" = 25, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)

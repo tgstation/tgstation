@@ -333,6 +333,9 @@
 	on_damage = 10
 	slot_flags = null
 
+/obj/item/flashlight/flare/torch/prelit
+	on = TRUE
+
 /obj/item/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"

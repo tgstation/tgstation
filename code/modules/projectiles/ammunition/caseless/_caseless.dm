@@ -6,10 +6,9 @@
 /obj/item/ammo_casing/caseless/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread)
 	if (..()) //successfully firing
 		moveToNullspace()
-		QDEL_NULL(src)
-		return TRUE
+		return 1
 	else
-		return FALSE
+		return 0
 
 /obj/item/ammo_casing/caseless/update_icon()
 	..()

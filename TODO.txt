@@ -1,0 +1,13 @@
+Bug Fixes:
+
+Claimed humans screw up the spawner menu
+
+------------------
+
+Gems to Add:
+
+Rose Quartz, weapon is shield, ability to heal.
+
+Zircon, weapon is space law book.
+
+Bismuth, weapon is toolbox, can smelt ores in hand as good as maxxed ore redemption.

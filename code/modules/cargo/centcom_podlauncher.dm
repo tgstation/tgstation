@@ -60,9 +60,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 
 /datum/centcom_podlauncher/ui_data(mob/user) //Sends info about the pod to the UI.
 	var/list/data = list() //*****NOTE*****: Many of these comments are similarly described in supplypod.dm. If you change them here, please consider doing so in the supplypod code as well!
-	var/B = (istype(bay, /area/centcom/supplypod/loading/one)) ? 1 : (istype(bay, /area/centcom/supplypod/loading/two)) ? 2 : (istype(bay, /area/centcom/supplypod/loading/three)) ? 3 : (istype(bay, /area/centcom/supplypod/loading/four)) ? 4 : (istype(bay, /area/centcom/supplypod/loading/ert)) ? 5 : 0 //top ten THICCEST FUCKING TERNARY CONDITIONALS OF 2036
-	data["bay"] = bay //Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
-	data["bayNumber"] = B //Holds the bay as a number. Useful for comparisons in centcom_podlauncher.ract
+	var/B = (istype(bay, /area/centcom/supplypod/loading/one)) ? 1 : (istype(bay, /area/centcom/supplypod/loading/two)) ? 2 : (istype(bay, /area/centcom/supplypod/loading/three)) ? 3 : (istype(bay, /area/centcom/supplypod/loading/four)) ? 4 : 0 //top ten THICCEST FUCKING TERNARY CONDITIONALS OF 2036
+	data["bay"] = B //Holds the current bay the user is launching objects from. Bays are specific rooms on the centcom map.
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
 	data["launchClone"] = launchClone //Do we launch the actual items in the bay or just launch clones of them?
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
@@ -116,14 +115,10 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			bay =  locate(/area/centcom/supplypod/loading/four) in GLOB.sortedAreas
 			refreshBay()
 			. = TRUE
-		if("bay5")
-			bay =  locate(/area/centcom/supplypod/loading/ert) in GLOB.sortedAreas
-			refreshBay()
-			. = TRUE
 		if("teleportCentcom") //Teleports the user to the centcom supply loading facility.
 			var/mob/M = holder.mob //We teleport whatever mob the client is attached to at the point of clicking
 			oldTurf = get_turf(M) //Used for the "teleportBack" action
-			var/area/A = locate(bay) in GLOB.sortedAreas
+			var/area/A = locate(/area/centcom/supplypod/loading) in GLOB.sortedAreas
 			var/list/turfs = list()
 			for(var/turf/T in A)
 				turfs.Add(T) //Fill a list with turfs in the area
@@ -418,20 +413,12 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if("styleGondola")
 			temp_pod.setStyle(STYLE_GONDOLA)
 			. = TRUE
-		if("styleSeeThrough")
-			temp_pod.setStyle(STYLE_SEETHROUGH)
-			. = TRUE
 		if("refresh") //Refresh the Pod bay. User should press this if they spawn something new in the centcom bay. Automatically called whenever the user launches a pod
 			refreshBay()
 			. = TRUE
 		if("giveLauncher") //Enters the "Launch Mode". When the launcher is activated, temp_pod is cloned, and the result it filled and launched anywhere the user clicks (unless specificTarget is true)
 			launcherActivated = !launcherActivated
 			updateCursor(launcherActivated) //Update the cursor of the user to a cool looking target icon
-			. = TRUE
-		if("clearBay") //Delete all mobs and objs in the selected bay
-			if(alert(usr, "This will delete all objs and mobs in [bay]. Are you sure?", "Confirmation", "Delete that shit", "No") == "Delete that shit")
-				clearBay()
-				refreshBay()
 			. = TRUE
 
 /datum/centcom_podlauncher/ui_close() //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
@@ -571,12 +558,6 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		selector.forceMove(acceptableTurfs[index]) //forceMove the selector to the next turf in the ordered acceptableTurfs list
 	else
 		selector.moveToNullspace() //Otherwise, we move the selector to nullspace until it is needed again
-
-/datum/centcom_podlauncher/proc/clearBay() //Clear all objs and mobs from the selected bay
-	for (var/obj/O in bay.GetAllContents())
-		qdel(O)
-	for (var/mob/M in bay.GetAllContents())
-		qdel(M)
 
 /datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game
 	updateCursor(FALSE) //Make sure our moues cursor resets to default. False means we are not in launch mode

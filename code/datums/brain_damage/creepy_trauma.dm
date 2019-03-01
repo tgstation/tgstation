@@ -60,8 +60,7 @@
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreepingsevere, obsession.name)
 	else
 		SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "creeping", /datum/mood_event/notcreeping, obsession.name)
-
-/datum/brain_trauma/special/obsessed/on_lose()
+/datum/brain_trauma/special/creep/on_lose()
 	..()
 	owner.mind.remove_antag_datum(/datum/antagonist/obsessed)
 

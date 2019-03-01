@@ -39,12 +39,13 @@
 
 /obj/item/clothing/under/roman
 	name = "\improper Roman armor"
-	desc = "Ancient Roman armor. Made of metallic and leather straps."
+	desc = "Made of metallic and leather straps."
 	icon_state = "roman"
 	item_color = "roman"
 	item_state = "armor"
 	can_adjust = FALSE
 	strip_delay = 100
+	armor = list("melee" = 25, "bullet" = 0, "laser" = 25, "energy" = 10, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = NONE
 
 /obj/item/clothing/under/waiter
@@ -733,6 +734,14 @@
 	item_state = "lobster"
 	item_color = "lobster"
 	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
+
+/obj/item/clothing/under/tribal
+	name = "tribal clothes"
+	desc = "Crude clothes made for tribals."
+	icon_state = "leather"
+	item_state = "lb_suit"
+	item_color = "leather"
 	can_adjust = FALSE
 
 /obj/item/clothing/under/gondola

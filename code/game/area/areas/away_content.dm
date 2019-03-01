@@ -10,6 +10,13 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	has_gravity = STANDARD_GRAVITY
 	ambientsounds = AWAY_MISSION
 
+/area/awaymission/humanzoo
+	name = "Human Zoo"
+	icon_state = "away"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+	requires_power = FALSE
+	has_gravity = STANDARD_GRAVITY
+
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "away"

@@ -8,7 +8,7 @@
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/sanity_level = 5 //To track what stage of sanity they're on
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
-	var/list/datum/mood_event/mood_events = list()
+	var/datum/mood_event/list/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
 	var/obj/screen/sanity/screen_obj_sanity
@@ -204,8 +204,6 @@
 	HandleHygiene(owner)
 
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_NEUTRAL)
-	var/mob/living/owner = parent
-
 	if(amount == sanity)
 		return
 	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
@@ -214,12 +212,7 @@
 		amount = sanity + 0.5
 	else if(sanity > maximum && amount > sanity - 0.5)
 		amount = sanity - 0.5
-
-	// Disturbed stops you from getting any more sane
-	if(owner.has_trait(TRAIT_UNSTABLE))
-		sanity = min(amount,sanity)
-	else
-		sanity = amount
+	sanity = amount
 
 	var/mob/living/master = parent
 	switch(sanity)

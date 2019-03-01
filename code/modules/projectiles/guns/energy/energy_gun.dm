@@ -95,11 +95,10 @@
 	item_state = "nucgun"
 	charge_delay = 5
 	pin = null
-	can_charge = FALSE
+	can_charge = 0
 	ammo_x_offset = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
-	var/reactor_overloaded
 	var/fail_tick = 0
 	var/fail_chance = 0
 
@@ -124,7 +123,7 @@
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
 				M.rad_act(80)
-				reactor_overloaded = TRUE
+				crit_fail = 1
 				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
@@ -135,7 +134,7 @@
 
 /obj/item/gun/energy/e_gun/nuclear/update_icon()
 	..()
-	if(reactor_overloaded)
+	if(crit_fail)
 		add_overlay("[icon_state]_fail_3")
 	else
 		switch(fail_tick)

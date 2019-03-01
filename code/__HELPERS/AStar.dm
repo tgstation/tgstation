@@ -181,12 +181,12 @@ Actual Adjacent procs :
 		T = get_step(src,GLOB.cardinals[k])
 		if(!T || (simulated_only && space_type_cache[T.type]))
 			continue
-		if(!T.density && !LinkBlockedWithAccess(T,caller, ID))
+		if(!T.density && !istype(T, /turf/open/water) && !LinkBlockedWithAccess(T,caller, ID))
 			L.Add(T)
 	return L
 
 /turf/proc/reachableTurftest(caller, var/turf/T, ID, simulated_only)
-	if(T && !T.density && !(simulated_only && SSpathfinder.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
+	if(T && !T.density && !istype(T, /turf/open/water) && !(simulated_only && SSpathfinder.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
 		return TRUE
 
 //Returns adjacent turfs in cardinal directions that are reachable via atmos
