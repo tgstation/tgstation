@@ -276,11 +276,6 @@
 			reagents.trans_to(O, 5, transfered_by = user)
 			to_chat(user, "<span class='notice'>You wet [O] in [src].</span>")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
-	else if(isprox(O))
-		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
-		qdel(O)
-		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/cleanbot)
 	else
 		..()
 

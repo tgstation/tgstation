@@ -53,22 +53,6 @@
 /obj/item/clothing/head/helmet/sec
 	can_flashlight = TRUE
 
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
-	if(issignaler(I))
-		var/obj/item/assembly/signaler/S = I
-		if(attached_light) //Has a flashlight. Player must remove it, else it will be lost forever.
-			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
-			return
-
-		if(S.secured)
-			qdel(S)
-			var/obj/item/bot_assembly/secbot/A = new
-			user.put_in_hands(A)
-			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
-			qdel(src)
-			return
-	return ..()
-
 /obj/item/clothing/head/helmet/alt
 	name = "bulletproof helmet"
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
