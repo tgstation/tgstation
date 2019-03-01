@@ -1257,12 +1257,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
 		var/shove_dir = get_dir(user.loc, target.loc)
-		var/turf/target_shove_turf
+		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/collateral_human
 		var/obj/structure/table/target_table
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 		if (shove_dir in GLOB.diagonals) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
-			var/turf/diagonal_turf = get_step(target.loc, shove_dir)
+			var/turf/diagonal_turf = target_shove_turf
 			var/turf/cardinal_turf_1
 			var/turf/cardinal_turf_2
 			target_shove_turf = diagonal_turf
@@ -1307,7 +1307,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(target_table || collateral_human)
 						target_shove_turf = cardinal_turf_2
 		else
-			target_shove_turf = get_step(target.loc, shove_dir)
 			if(is_blocked_turf(target_shove_turf, FALSE))
 				shove_blocked = TRUE
 		if(shove_blocked)
