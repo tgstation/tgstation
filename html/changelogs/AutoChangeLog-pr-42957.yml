@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - tweak: "loot crates can't explode after unlocking anymore"
