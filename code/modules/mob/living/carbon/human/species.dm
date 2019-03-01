@@ -1253,44 +1253,39 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
-		//var/randomized_zone = ran_zone(user.zone_selected)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
-		//var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/shove_dir = get_dir(user.loc, target.loc)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
+		var/mob/living/carbon/human/collateral_human
+		var/obj/structure/table/table_target
 		var/shove_blocked = FALSE
-		if (shove_dir in GLOB.diagonals)
+		if (shove_dir in GLOB.diagonals) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
 			var/turf/target_loc = target.loc
 			if(!target_loc.ClickCross(shove_dir, FALSE, target, target))
 				var/turf/cardinal_turf_1 = get_step(user.loc, turn(shove_dir, -45))
 				var/turf/cardinal_turf_2 = get_step(user.loc, turn(shove_dir, 45))
-				var/free_tile_found = FALSE
 				if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
-					if(!is_blocked_turf(cardinal_turf_2, FALSE))
-						target_shove_turf = cardinal_turf_2
-						free_tile_found = TRUE
-					if(free_tile_found && !is_blocked_turf(cardinal_turf_1, FALSE))
-						target_shove_turf = cardinal_turf_1
-						free_tile_found = TRUE
-					if(!free_tile_found)
-						shove_blocked = TRUE
+					cardinal_turf_1 = get_step(user.loc, turn(shove_dir, -45))
+					cardinal_turf_2 = get_step(user.loc, turn(shove_dir, 45))
 				else
-					if(is_blocked_turf(cardinal_turf_1, FALSE))
-						target_shove_turf = cardinal_turf_1
-						free_tile_found = TRUE
-					if(free_tile_found && is_blocked_turf(cardinal_turf_2, FALSE))
-						target_shove_turf = cardinal_turf_2
-						free_tile_found = TRUE
-					if(!free_tile_found)
-						shove_blocked = TRUE
+					cardinal_turf_1 = get_step(user.loc, turn(shove_dir, -45))
+					cardinal_turf_2 = get_step(user.loc, turn(shove_dir, 45))
+				var/free_tile_found = FALSE
+				if(is_blocked_turf(cardinal_turf_1, FALSE))
+					target_shove_turf = cardinal_turf_1
+					free_tile_found = TRUE
+				if(free_tile_found && is_blocked_turf(cardinal_turf_2, FALSE))
+					target_shove_turf = cardinal_turf_2
+					free_tile_found = TRUE
+				if(!free_tile_found)
+					shove_blocked = TRUE
+					if(!istype(cardinal_turf_1, /turf/closed))
+					if(!istype(cardinal_turf_2, /turf/closed))
+					//TODO: LOOK HERE IDIOT
 		else
 			if(is_blocked_turf(target_shove_turf, FALSE))
 				shove_blocked = TRUE
-
-
 		if(shove_blocked)
-			var/mob/living/carbon/human/collateral_human
-			var/obj/structure/table/tabled
 			for(var/content in target_shove_turf.contents)
 				if(istype(content, /obj/structure/table))
 					tabled = content
@@ -1321,9 +1316,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.Move(target_shove_turf)
+			target.ForceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
 			log_combat(user, target, "shoved")
-	
+
+		target.setDir(angle2dir_cardinal(turn(shove_dir, 180))) //change the dir to face the shover to represent reeling back
 		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
