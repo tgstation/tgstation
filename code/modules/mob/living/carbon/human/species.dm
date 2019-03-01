@@ -1291,10 +1291,21 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					shove_dir = dir_2
 				else if(dir_2 && !dir_1_blocked)
 					shove_dir = dir_1
+				target_shove_turf = get_step(target.loc, shove_dir)
+				
 		if(!shove_blocked) //Skip this if it's already directionally blocked for speed reasons
 			if (!(shove_dir in GLOB.diagonals)) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
 				if(is_blocked_turf(target_shove_turf, FALSE))
-					shove_blocked = TRUE
+					var/blocking_dir = turn(shove_dir, 180)
+					var/no_directionals = TRUE
+					var/blocked_by_directional = FALSE
+					for(var/obj/O in target_shove_turf.contents)
+						if(O.flags_1 & ON_BORDER_1)
+							no_directionals = FALSE
+							if(O.dir == blocking_dir)
+								blocked_by_directional = TRUE
+					if(no_directionals || blocked_by_directional)
+						shove_blocked = TRUE
 			else
 				var/turf/diagonal_turf = target_shove_turf
 				var/turf/cardinal_turf_1
