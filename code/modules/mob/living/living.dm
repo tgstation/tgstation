@@ -688,18 +688,21 @@
 	return 1 //returning 0 means we successfully broke free
 
 /mob/living/resist_grab(moving_resist)
-	. = 1
-	if(pulledby.grab_state)
-		if(prob(30/pulledby.grab_state))
+	. = TRUE
+	if(pulledby.grab_state || resting)
+		var/altered_grab_state = pulledby.grab_state
+		if(resting) //If resting, resisting out of a grab is equivalent to 1 grab state higher
+			altered_grab_state++
+		if(prob(30/altered_grab_state))
 			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
 			log_combat(pulledby, src, "broke grab")
 			pulledby.stop_pulling()
-			return 0
+			return FALSE
 		if(moving_resist && client) //we resisted by trying to move
 			client.move_delay = world.time + 20
 	else
 		pulledby.stop_pulling()
-		return 0
+		return FALSE
 
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
