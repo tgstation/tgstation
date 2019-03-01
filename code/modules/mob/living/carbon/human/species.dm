@@ -1249,6 +1249,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
 	else
+		if(user == target)
+			return
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 
 		if(target.w_uniform)
