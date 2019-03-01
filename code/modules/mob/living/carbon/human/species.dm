@@ -1265,6 +1265,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			var/turf/diagonal_turf = get_step(target.loc, shove_dir)
 			var/turf/cardinal_turf_1
 			var/turf/cardinal_turf_2
+			target_shove_turf = diagonal_turf
 			if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
 				cardinal_turf_1 = get_step(target.loc, turn(shove_dir, -45))
 				cardinal_turf_2 = get_step(target.loc, turn(shove_dir, 45))
