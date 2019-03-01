@@ -567,3 +567,5 @@ Difficulty: Medium
 		playsound(C.loc,'sound/effects/hit_punch.ogg', 80, 1, 1)
 		C.spin(6,1)
 	..(targets, user, 60)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/space_dragon/AltClickOn(atom/movable/A)
