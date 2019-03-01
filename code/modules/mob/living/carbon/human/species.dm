@@ -1392,7 +1392,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
 			if(!target.has_movespeed_modifier(SHOVE_SLOWDOWN_ID))
 				target.add_movespeed_modifier(SHOVE_SLOWDOWN_ID, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
-				addtimer(CALLBACK(target, /datum/species/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
+				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 			log_combat(user, target, "shoved")
 
 		var/facing_dir = turn(shove_dir, 180)
