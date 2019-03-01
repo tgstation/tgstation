@@ -61,9 +61,10 @@
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
 			var/turf/T = src.loc
-			T.PlaceOnTop(/turf/open/floor/plating)
-			qdel(src)
-			return TRUE
+			if(isspaceturf(T))
+				T.PlaceOnTop(/turf/open/floor/plating)
+				qdel(src)
+				return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(S, current_size)

@@ -138,7 +138,7 @@
 	if(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			PlaceOnTop(/turf/open/floor/plating)
+			ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
 
