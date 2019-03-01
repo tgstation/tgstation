@@ -2705,7 +2705,6 @@
 #include "code\modules\surgery\organs\tails.dm"
 #include "code\modules\surgery\organs\tongue.dm"
 #include "code\modules\surgery\organs\vocal_cords.dm"
-#include "code\modules\tgs\event_handler.dm"
 #include "code\modules\tgs\includes.dm"
 #include "code\modules\tgui\external.dm"
 #include "code\modules\tgui\states.dm"
