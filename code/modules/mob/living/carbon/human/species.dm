@@ -1257,7 +1257,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/shove_dir = get_dir(user.loc, target.loc)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/collateral_human
-		var/obj/structure/table/table_target
+		var/obj/structure/table/target_table
 		var/shove_blocked = FALSE
 		if (shove_dir in GLOB.diagonals) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
 			var/turf/target_loc = target.loc
@@ -1282,43 +1282,43 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(!istype(cardinal_turf_1, /turf/closed))
 						for(var/content in cardinal_turf_1.contents)
 							if(istype(content, /obj/structure/table))
-								tabled = content
+								target_table = content
 								break
 							if(ishuman(content))
 								collateral_human = content
 								break
-						if(tabled || collateral_human)
+						if(target_table || collateral_human)
 							target_shove_turf = cardinal_turf_1
-					if(!tabled && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
+					if(!target_table && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
 						for(var/content in cardinal_turf_2.contents)
 							if(istype(content, /obj/structure/table))
-								tabled = content
+								target_table = content
 								break
 							if(ishuman(content))
 								collateral_human = content
 								break
-						if(tabled || collateral_human)
+						if(target_table || collateral_human)
 							target_shove_turf = cardinal_turf_2
 
 		else
 			if(is_blocked_turf(target_shove_turf, FALSE))
 				shove_blocked = TRUE
 		if(shove_blocked)
-			if(!tabled || !collateral_human)
+			if(!target_table || !collateral_human) //In case if this check was already done in the diagonal check
 				for(var/content in target_shove_turf.contents)
 					if(istype(content, /obj/structure/table))
-						tabled = content
+						target_table = content
 						break
 					if(ishuman(content))
 						collateral_human = content
 						break
-			if(tabled)
+			if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [tabled]!</span>",
-					"<span class='danger'>You shove [target.name] onto \the [tabled]!</span>", null, COMBAT_MESSAGE_RANGE)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
+					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
 				target.forceMove(target_shove_turf)
 				playsound(target, get_sfx("punch"), 50, TRUE, -1)
-				log_combat(user, target, "shoved", "onto [tabled]")
+				log_combat(user, target, "shoved", "onto [target_table]")
 			else if(collateral_human)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
@@ -1335,7 +1335,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.ForceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
+			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
 			log_combat(user, target, "shoved")
 
 		target.setDir(angle2dir_cardinal(turn(shove_dir, 180))) //change the dir to face the shover to represent reeling back
