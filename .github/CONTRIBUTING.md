@@ -243,7 +243,7 @@ This prevents nesting levels from getting deeper then they need to be.
 
 * Queries must never specify the database, be it in code, or in text files in the repo.
 
-* Primary keys are inharently immutable and your must never do anything to change the primary key of a row. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids will save you from this policy.
+* Primary keys are inherently immutable and your must never do anything to change the primary key of a row. This includes preserving auto increment numbers of rows when copying data to a table in a conversion script. No amount of bitching about gaps in ids will save you from this policy.
 
 ### Mapping Standards
 * TGM Format & Map Merge
