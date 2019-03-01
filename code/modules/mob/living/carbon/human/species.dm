@@ -1277,22 +1277,41 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(free_tile_found && is_blocked_turf(cardinal_turf_2, FALSE))
 					target_shove_turf = cardinal_turf_2
 					free_tile_found = TRUE
-				if(!free_tile_found)
+				if(!free_tile_found) //If a free tile wasn't found, we need to do even more expensive of checks
 					shove_blocked = TRUE
 					if(!istype(cardinal_turf_1, /turf/closed))
-					if(!istype(cardinal_turf_2, /turf/closed))
-					//TODO: LOOK HERE IDIOT
+						for(var/content in cardinal_turf_1.contents)
+							if(istype(content, /obj/structure/table))
+								tabled = content
+								break
+							if(ishuman(content))
+								collateral_human = content
+								break
+						if(tabled || collateral_human)
+							target_shove_turf = cardinal_turf_1
+					if(!tabled && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
+						for(var/content in cardinal_turf_2.contents)
+							if(istype(content, /obj/structure/table))
+								tabled = content
+								break
+							if(ishuman(content))
+								collateral_human = content
+								break
+						if(tabled || collateral_human)
+							target_shove_turf = cardinal_turf_2
+
 		else
 			if(is_blocked_turf(target_shove_turf, FALSE))
 				shove_blocked = TRUE
 		if(shove_blocked)
-			for(var/content in target_shove_turf.contents)
-				if(istype(content, /obj/structure/table))
-					tabled = content
-					break
-				if(ishuman(content))
-					collateral_human = content
-					break
+			if(!tabled || !collateral_human)
+				for(var/content in target_shove_turf.contents)
+					if(istype(content, /obj/structure/table))
+						tabled = content
+						break
+					if(ishuman(content))
+						collateral_human = content
+						break
 			if(tabled)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [tabled]!</span>",
