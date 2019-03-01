@@ -703,11 +703,26 @@
 	playsound(loc, "rustle", 50, 1, -5)
 	user.visible_message("<span class='notice'>[user] hugs \the [src].</span>","<span class='notice'>You hug \the [src].</span>")
 
-/////clown box
+/////clown box & honkbot assembly
 /obj/item/storage/box/clown
 	name = "clown box"
 	desc = "A colorful cardboard box for the clown"
 	illustration = "clown"
+
+/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
+	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
+		if(contents.len) //prevent accidently deleting contents
+			to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
+			return
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		qdel(I)
+		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got a honkbot assembly now! Honk!</span>")
+		var/obj/item/bot_assembly/honkbot/A = new
+		qdel(src)
+		user.put_in_hands(A)
+	else
+		return ..()
 
 //////
 /obj/item/storage/box/hug/medical/PopulateContents()

@@ -40,13 +40,6 @@
 	throwforce = 5
 	created_name = "Cleanbot"
 
-/obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
-	if(isprox(O))
-		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
-		qdel(O)
-		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/cleanbot)
-
 /obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/bodypart/l_arm/robot) || istype(W, /obj/item/bodypart/r_arm/robot))
@@ -69,22 +62,6 @@
 	created_name = "ED-209 Security Robot" //To preserve the name if it's a unique securitron I guess
 	var/lasercolor = ""
 	var/vest_type = /obj/item/clothing/suit/armor/vest
-
-/obj/item/robot_suit/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/sheet/metal))
-		var/obj/item/stack/sheet/metal/M = W
-		if(!l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
-			if (M.use(1))
-				var/obj/item/bot_assembly/ed209/B = new
-				B.forceMove(drop_location())
-				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
-				var/holding_this = user.get_inactive_held_item()==src
-				qdel(src)
-				if (holding_this)
-					user.put_in_inactive_hand(B)
-			else
-				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
-				return
 
 /obj/item/bot_assembly/ed209/attackby(obj/item/W, mob/user, params)
 	..()
@@ -387,21 +364,6 @@
 	icon_state = "honkbot_arm"
 	created_name = "Honkbot"
 
-/obj/item/storage/box/clown/attackby(obj/item/I, mob/user, params)
-	if((istype(I, /obj/item/bodypart/l_arm/robot)) || (istype(I, /obj/item/bodypart/r_arm/robot)))
-		if(contents.len) //prevent accidently deleting contents
-			to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		qdel(I)
-		to_chat(user, "<span class='notice'>You add some wheels to the [src]! You've got a honkbot assembly now! Honk!</span>")
-		var/obj/item/bot_assembly/honkbot/A = new
-		qdel(src)
-		user.put_in_hands(A)
-	else
-		return ..()
-
 /obj/item/bot_assembly/honkbot/attackby(obj/item/I, mob/user, params)
 	..()
 	switch(build_step)
@@ -438,22 +400,6 @@
 	created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 	var/swordamt = 0 //If you're converting it into a grievousbot, how many swords have you attached
 	var/toyswordamt = 0 //honk
-
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/I, mob/user, params)
-	if(issignaler(I))
-		var/obj/item/assembly/signaler/S = I
-		if(attached_light) //Has a flashlight. Player must remove it, else it will be lost forever.
-			to_chat(user, "<span class='warning'>The mounted flashlight is in the way, remove it first!</span>")
-			return
-
-		if(S.secured)
-			qdel(S)
-			var/obj/item/bot_assembly/secbot/A = new
-			user.put_in_hands(A)
-			to_chat(user, "<span class='notice'>You add the signaler to the helmet.</span>")
-			qdel(src)
-			return
-	return ..()
 
 /obj/item/bot_assembly/secbot/attackby(obj/item/I, mob/user, params)
 	..()
@@ -580,12 +526,6 @@
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
 
 
-//Firebot Assembly
-/obj/item/bot_assembly/firebot
-	name = "incomplete firebot assembly"
-	desc = "A fire extinguisher with an arm attached to it."
-	icon_state = "firebot_arm"
-	created_name = "Firebot"
 
 // Fire extinguisher + borg arm = firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, params)
@@ -596,6 +536,13 @@
 		user.put_in_hands(new /obj/item/bot_assembly/firebot)
 	else
 		..()
+
+//Firebot Assembly
+/obj/item/bot_assembly/firebot
+	name = "incomplete firebot assembly"
+	desc = "A fire extinguisher with an arm attached to it."
+	icon_state = "firebot_arm"
+	created_name = "Firebot"
 
 /obj/item/bot_assembly/firebot/attackby(obj/item/I, mob/user, params)
 	..()
