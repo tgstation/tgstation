@@ -1400,9 +1400,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			facing_dir -= 45
 		target.setDir(facing_dir) //change the dir to face the shover to represent reeling back
 
-/datum/species/proc/clear_shove_slowdown()
-	target.remove_movespeed_modifier(SHOVE_SLOWDOWN_ID)
-
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
 

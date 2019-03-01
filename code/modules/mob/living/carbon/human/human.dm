@@ -863,6 +863,9 @@
 		stop_pulling()
 		. = ..(M,force,check_loc)
 
+/mob/living/carbon/human/proc/clear_shove_slowdown()
+	remove_movespeed_modifier(SHOVE_SLOWDOWN_ID)
+
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
 	. *= physiology.do_after_speed
