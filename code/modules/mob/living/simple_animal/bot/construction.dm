@@ -590,11 +590,10 @@
 // Fire extinguisher + borg arm = firebot assembly
 /obj/item/extinguisher/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
-		var/obj/item/bot_assembly/firebot/B = new
-		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
 		qdel(O)
 		qdel(src)
+		user.put_in_hands(new /obj/item/bot_assembly/firebot)
 	else
 		..()
 
