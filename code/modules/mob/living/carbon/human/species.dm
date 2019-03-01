@@ -1256,61 +1256,93 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
-		var/shove_dir = get_dir(user.loc, target.loc)
+		var/turf/target_oldturf = target.loc
+		var/shove_dir = get_dir(user.loc, target_oldturf)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/collateral_human
 		var/obj/structure/table/target_table
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
-		if (shove_dir in GLOB.diagonals) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
-			var/turf/diagonal_turf = target_shove_turf
-			var/turf/cardinal_turf_1
-			var/turf/cardinal_turf_2
-			target_shove_turf = diagonal_turf
-			if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
-				cardinal_turf_1 = get_step(target.loc, turn(shove_dir, -45))
-				cardinal_turf_2 = get_step(target.loc, turn(shove_dir, 45))
+		var/directional_obstruction = FALSE //used for checking if a directional structure on the tile is blocking
+		for(var/obj/O in target_oldturf.contents)
+			if(O.flags_1 & ON_BORDER_1)
+				directional_obstruction = TRUE
+				break
+		if(directional_obstruction)
+			if(!(shove_dir in GLOB.diagonals)) //the logic is a bit different for diagonal shoves, see later in the code
+				for(var/obj/A in target_oldturf.contents)
+					if(A.flags_1 & ON_BORDER_1 && A.dir == shove_dir)
+						shove_blocked = TRUE
 			else
-				cardinal_turf_1 = get_step(target.loc, turn(shove_dir, 45))
-				cardinal_turf_2 = get_step(target.loc, turn(shove_dir, -45))
-			var/cardinal_1_free = FALSE
-			var/cardinal_2_free = FALSE
-			var/diagonal_free = FALSE
-			if(!is_blocked_turf(cardinal_turf_1, FALSE))
-				target_shove_turf = cardinal_turf_1
-				cardinal_1_free = TRUE
-			if(!is_blocked_turf(cardinal_turf_2, FALSE))
-				target_shove_turf = cardinal_turf_2
-				cardinal_2_free = TRUE
-			if(cardinal_1_free && cardinal_2_free && !is_blocked_turf(diagonal_turf, FALSE)) //Check the diagonal last because the other two need to be clear as well
+				var/dir_1 = turn(shove_dir, -45) //No randomization on the assignment here because the situation that requires randomization can't happen
+				var/dir_1_blocked = FALSE
+				var/dir_2 = turn(shove_dir, 45)
+				var/dir_2_blocked = FALSE
+				for(var/obj/A in target_oldturf.contents)
+					if(A.flags_1 & ON_BORDER_1)
+						if(A.dir == dir_1)
+							dir_1_blocked = TRUE
+						else if(A.dir == dir_2)
+							dir_2_blocked = TRUE
+						if(dir_1_blocked && dir_2_blocked)
+							break
+				if(dir_1_blocked && dir_2_blocked)
+					shove_blocked = TRUE
+				else if(dir_1_blocked && !dir_2_blocked)
+					shove_dir = dir_2
+				else if(dir_2 && !dir_1_blocked)
+					shove_dir = dir_1
+		if(!shove_blocked) //Skip this if it's already directionally blocked for speed reasons
+			if (!(shove_dir in GLOB.diagonals)) //Diagonals have a lot more complicated of logic, so if it's not a diagonal a much faster check can be run
+				if(is_blocked_turf(target_shove_turf, FALSE))
+					shove_blocked = TRUE
+			else
+				var/turf/diagonal_turf = target_shove_turf
+				var/turf/cardinal_turf_1
+				var/turf/cardinal_turf_2
 				target_shove_turf = diagonal_turf
-				diagonal_free = TRUE
-			if(!cardinal_1_free && !cardinal_2_free && !diagonal_free) //If a free tile wasn't found, we need to do even more expensive of checks
-				shove_blocked = TRUE
-				if(!istype(cardinal_turf_1, /turf/closed))
-					for(var/content in cardinal_turf_1.contents)
-						if(istype(content, /obj/structure/table))
-							target_table = content
-							break
-						if(ishuman(content))
-							collateral_human = content
-							break
-					if(target_table || collateral_human)
-						target_shove_turf = cardinal_turf_1
-				if(!target_table && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
-					for(var/content in cardinal_turf_2.contents)
-						if(istype(content, /obj/structure/table))
-							target_table = content
-							break
-						if(ishuman(content))
-							collateral_human = content
-							break
-					if(target_table || collateral_human)
-						target_shove_turf = cardinal_turf_2
-		else
-			if(is_blocked_turf(target_shove_turf, FALSE))
-				shove_blocked = TRUE
+				if(prob(50)) //Check the two turfs in a random order to make sure if both are free one isn't always favored
+					cardinal_turf_1 = get_step(target.loc, turn(shove_dir, -45))
+					cardinal_turf_2 = get_step(target.loc, turn(shove_dir, 45))
+				else
+					cardinal_turf_1 = get_step(target.loc, turn(shove_dir, 45))
+					cardinal_turf_2 = get_step(target.loc, turn(shove_dir, -45))
+				var/cardinal_1_free = FALSE
+				var/cardinal_2_free = FALSE
+				var/diagonal_free = FALSE
+				if(!is_blocked_turf(cardinal_turf_1, FALSE))
+					target_shove_turf = cardinal_turf_1
+					cardinal_1_free = TRUE
+				if(!is_blocked_turf(cardinal_turf_2, FALSE))
+					target_shove_turf = cardinal_turf_2
+					cardinal_2_free = TRUE
+				if(cardinal_1_free && cardinal_2_free && !is_blocked_turf(diagonal_turf, FALSE)) //Check the diagonal last because the other two need to be clear as well
+					target_shove_turf = diagonal_turf
+					diagonal_free = TRUE
+				if(!cardinal_1_free && !cardinal_2_free && !diagonal_free) //If a free tile wasn't found, we need to do even more expensive of checks
+					shove_blocked = TRUE
+					if(!istype(cardinal_turf_1, /turf/closed))
+						for(var/content in cardinal_turf_1.contents)
+							if(istype(content, /obj/structure/table))
+								target_table = content
+								break
+							if(ishuman(content))
+								collateral_human = content
+								break
+						if(target_table || collateral_human)
+							target_shove_turf = cardinal_turf_1
+					if(!target_table && !collateral_human && !istype(cardinal_turf_2, /turf/closed))
+						for(var/content in cardinal_turf_2.contents)
+							if(istype(content, /obj/structure/table))
+								target_table = content
+								break
+							if(ishuman(content))
+								collateral_human = content
+								break
+						if(target_table || collateral_human)
+							target_shove_turf = cardinal_turf_2
+
 		if(shove_blocked)
-			if(!target_table || !collateral_human) //In case if this check was already done in the diagonal check
+			if((!target_table || !collateral_human)) //In case if this check was already done in the diagonal check
 				for(var/content in target_shove_turf.contents)
 					if(istype(content, /obj/structure/table))
 						target_table = content
