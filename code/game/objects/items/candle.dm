@@ -60,8 +60,7 @@
 
 /obj/item/candle/process()
 	if(!lit)
-		STOP_PROCESSING(SSprocessing, src)
-		return
+		return PROCESS_KILL
 	if(!infinite)
 		wax--
 	if(!wax)
