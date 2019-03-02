@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/bundles_TC/bulldog
 	name = "Bulldog bundle"
 	desc = "Lean and mean: Optimized for people that want to get up close and personal. Contains the popular \
-			Bulldog shotgun, a 12g buckshot drum, a 12g taser slug drum and a pair of Thermal imaging goggles."
+			Bulldog shotgun, two 12g buckshot drums, and a pair of Thermal imaging goggles."
 	item = /obj/item/storage/backpack/duffelbag/syndie/bulldogbundle
 	cost = 13 // normally 16
 	include_modes = list(/datum/game_mode/nuclear)
@@ -667,13 +667,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Now 8 times less likely to shoot your pals."
 	cost = 3
 	item = /obj/item/ammo_box/magazine/m12g/slug
-
-/datum/uplink_item/ammo/shotgun/stun
-	name = "12g Stun Slug Drum"
-	desc = "An alternative 8-round stun slug magazine for use with the Bulldog shotgun. \
-			Saying that they're completely non-lethal would be lying."
-	item = /obj/item/ammo_box/magazine/m12g/stun
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/revolver
 	name = ".357 Speed Loader"
