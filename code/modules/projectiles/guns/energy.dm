@@ -20,6 +20,10 @@
 	var/charge_delay = 4
 	var/use_cyborg_cell = FALSE //whether the gun's cell drains the cyborg user's cell to recharge
 	var/dead_cell = FALSE //set to true so the gun is given an empty cell
+	var/last_used = 0 //Last time the gun was used.
+	var/max_electrodes = 1 //The maximum ammount of electrodes the gun can store.
+	var/num_electrodes = max_electrodes //The number of electordes the gun currently has.
+	var/electrode_recharge_time = 300 //Time it takes to recharge the electrodes in deciseconds (ticks).
 
 /obj/item/gun/energy/emp_act(severity)
 	. = ..()
@@ -79,6 +83,8 @@
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if (istype(shot,/obj/item/ammo_casing/energy/electrode) && (num_electrodes > 0))//If the gun has no electrode left, it can not fire an electrode
+		return FALSE
 	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
 
 /obj/item/gun/energy/recharge_newshot(no_cyborg_drain)
@@ -106,16 +112,32 @@
 	recharge_newshot() //try to charge a new shot
 
 /obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	var/result
+	var/obj/item/ammo_casing/energy/AC
+	recharge_electrodes()
 	if(!chambered && can_shoot())
 		process_chamber()	// If the gun was drained and then recharged, load a new shot.
-	return ..()
+	AC = chambered
+	result = ..()
+	//Was an electrode fired?
+	if(istype(AC,/obj/item/ammo_casing/energy/electrode))
+		num_electrodes--
+		if((num_electrodes <= 0) && (ammo_type.length > 1)) //If the gun can fire something else than electrodes, switch ammo.
+			select_fire(user)
+	return result
 
 /obj/item/gun/energy/process_burst(mob/living/user, atom/target, message = TRUE, params = null, zone_override="", sprd = 0, randomized_gun_spread = 0, randomized_bonus_spread = 0, rand_spr = 0, iteration = 0)
 	if(!chambered && can_shoot())
 		process_chamber()	// Ditto.
 	return ..()
 
+/obj/item/gun/energy/recharge_electrodes()
+	var/time_passed = last_used - world.time
+	if(time_passed >= electrode_recharge_time)
+		num_electrodes = max_electrodes
+
 /obj/item/gun/energy/proc/select_fire(mob/living/user)
+	recharge_electrodes()
 	select++
 	if (select > ammo_type.len)
 		select = 1
