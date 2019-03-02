@@ -31,7 +31,7 @@
 		var/last_played_time = source.datum_outputs[input]
 		var/datum/outputs/O = input
 		O.send_info(receiver, turf_source, vol, vary, frequency, falloff, channel, pressure_affected, last_played_time)
-		if(O.cooldown[2] == TRUE) //if we're cooled down ,reset the time
+		if(O.cooldown[2] == TRUE) //if we're cooled down, reset the time
 			source.datum_outputs[input] = world.time
 			O.cooldown[2] = FALSE //start cooling down again
 	else
