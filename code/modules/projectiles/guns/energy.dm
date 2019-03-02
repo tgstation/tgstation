@@ -83,6 +83,7 @@
 
 /obj/item/gun/energy/can_shoot()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	recharge_electrodes()
 	if (istype(shot,/obj/item/ammo_casing/energy/electrode) && (num_electrodes <= 0))//If the gun has no electrode left, it can not fire an electrode
 		return FALSE
 	return !QDELETED(cell) ? (cell.charge >= shot.e_cost) : FALSE
@@ -114,7 +115,7 @@
 /obj/item/gun/energy/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	var/result
 	var/obj/item/ammo_casing/energy/AC
-	recharge_electrodes()
+	//recharge_electrodes()
 	if(can_shoot())
 		last_used = world.time
 		if(!chambered)
