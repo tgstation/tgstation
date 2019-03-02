@@ -4,7 +4,7 @@
 	var/text = ""
 	var/list/sounds = 'sound/items/airhorn.ogg' //can be either a sound path or a WEIGHTED list, put multiple for random selection between sounds
 	var/mutable_appearance/vfx = list('icons/sound_icon.dmi',"circle", HUD_LAYER) //syntax: icon, icon_state, layer
-	var/cooldown = 100
+	var/list/cooldown = list(100, FALSE) //1: how long is our cooldown, 2: are we cooling down or not. the 2nd value can be made into its own var but having 2 vars just for cooldown seems pretty dirty to me
 
 /datum/outputs/New()
 	vfx = mutable_appearance(vfx[1],vfx[2],vfx[3])
@@ -68,8 +68,9 @@
 			sound_output.y = 1
 			sound_output.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
-	if(world.time >= last_played_time + cooldown)
+	if(world.time >= last_played_time + cooldown[1])
 		receiver.display_output(sound_output, vfx, text, turf_source, vol, vary, frequency, falloff, channel, pressure_affected)
+		cooldown[2] = TRUE
 	else
 		receiver.display_output(sound_output, vfx, , turf_source, vol, vary, frequency, falloff, channel, pressure_affected) //changing the text takes more cpu time than a single if check
 

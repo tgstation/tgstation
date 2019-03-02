@@ -6,7 +6,6 @@
 	attack_verb = list("thumped", "whomped", "bumped")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-	var/component = /datum/component/squeak
 	var/stuffed = TRUE //If the plushie has stuffing in it
 	var/obj/item/grenade/grenade //You can remove the stuffing from a plushie and add a grenade to it for *nefarious uses*
 	//--love ~<3--
@@ -33,7 +32,8 @@
 
 /obj/item/toy/plush/Initialize()
 	. = ..()
-	AddComponent(component)
+	if(datum_outputs)
+		AddComponent(/datum/component/squeak, datum_outputs[1])
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
 	if(gender == NEUTER)
@@ -88,7 +88,6 @@
 
 	//null remaining lists
 	datum_outputs = null
-
 	love_message = null
 	partner_message = null
 	heartbroken_message = null
@@ -369,14 +368,14 @@
 	icon_state = "carpplush"
 	item_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
-	component = /datum/component/squeak/carp
+	datum_outputs = list(/datum/outputs/bite)
 
 /obj/item/toy/plush/bubbleplush
 	name = "\improper Bubblegum plushie"
 	desc = "The friendly red demon that gives good miners gifts."
 	icon_state = "bubbleplush"
 	attack_verb = list("rent")
-	component = /datum/component/squeak/bubbleplush
+	datum_outputs = list(/datum/outputs/demonattack)
 
 /obj/item/toy/plush/plushvar
 	name = "\improper Ratvar plushie"
@@ -488,7 +487,7 @@
 	icon_state = "plushie_lizard"
 	item_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
-	component = /datum/component/squeak/lizardplushie
+	datum_outputs = list(/datum/outputs/slash)
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
@@ -496,7 +495,7 @@
 	icon_state = "plushie_snake"
 	item_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
-	component = /datum/component/squeak/snakeplushie
+	datum_outputs = list(/datum/outputs/bite)
 
 /obj/item/toy/plush/nukeplushie
 	name = "operative plushie"
@@ -504,7 +503,7 @@
 	icon_state = "plushie_nuke"
 	item_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
-	component = /datum/component/squeak/nukeplushie
+	datum_outputs = list(/datum/outputs/punch)
 
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
@@ -512,6 +511,7 @@
 	icon_state = "plushie_slime"
 	item_state = "plushie_slime"
 	attack_verb = list("blorbled", "slimed", "absorbed")
+	datum_outputs = list(/datum/outputs/squelch)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
 
 /obj/item/toy/plush/awakenedplushie
