@@ -2731,7 +2731,7 @@
 /area/security/prison)
 "afD" = (
 /obj/structure/table,
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -2970,7 +2970,7 @@
 /area/security/execution/transfer)
 "agh" = (
 /obj/structure/table,
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /obj/item/screwdriver,
 /obj/item/wrench,
 /obj/item/clothing/head/helmet,

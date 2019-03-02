@@ -83,7 +83,7 @@
 	..()
 	new /obj/item/assembly/signaler(src)
 	for(var/i in 1 to 3)
-		new /obj/item/electropack(src)
+		new /obj/item/assembly/signaler/electropack(src)
 
 /obj/structure/closet/secure_closet/chemical
 	name = "chemical closet"

@@ -24338,7 +24338,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /obj/item/assembly/signaler,
 /obj/machinery/light{
 	dir = 8

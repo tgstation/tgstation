@@ -2812,7 +2812,7 @@
 "aiK" = (
 /obj/structure/table,
 /obj/item/assembly/signaler,
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -32959,7 +32959,7 @@
 /area/science/explab)
 "bzi" = (
 /obj/structure/table,
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /obj/item/taperecorder,
 /obj/item/screwdriver,
 /turf/open/floor/plasteel/dark,

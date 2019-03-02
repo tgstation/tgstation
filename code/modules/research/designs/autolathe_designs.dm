@@ -695,7 +695,7 @@
 	id = "electropack"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2500)
-	build_path = /obj/item/electropack
+	build_path = /obj/item/assembly/signaler/electropack
 	category = list("hacked", "Tools")
 
 /datum/design/large_welding_tool

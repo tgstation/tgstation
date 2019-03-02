@@ -4,7 +4,7 @@
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "shock_kit"
 	var/obj/item/clothing/head/helmet/part1 = null
-	var/obj/item/electropack/part2 = null
+	var/obj/item/assembly/signaler/electropack/part2 = null
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
 

@@ -4364,7 +4364,7 @@
 /area/security/prison)
 "aki" = (
 /obj/structure/table,
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /obj/item/assembly/signaler,
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -40984,7 +40984,7 @@
 /area/science/research)
 "bDj" = (
 /obj/structure/table/reinforced,
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /obj/item/assembly/signaler,
 /turf/open/floor/plating,
 /area/maintenance/department/security)

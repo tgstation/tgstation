@@ -629,7 +629,7 @@
 /area/tcommsat/oldaisat)
 "ce" = (
 /obj/structure/table,
-/obj/item/electropack,
+/obj/item/assembly/signaler/electropack,
 /turf/open/floor/plating/airless,
 /area/tcommsat/oldaisat)
 "cf" = (
