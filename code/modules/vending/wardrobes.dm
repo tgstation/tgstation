@@ -262,7 +262,7 @@
 					/obj/item/melee/flyswatter = 1,
 					/obj/item/flashlight = 1,
 					/obj/item/caution = 6,
-					/obj/item/holosign_creator = 1,
+					/obj/item/holosign_creator/janibarrier = 1,
 					/obj/item/lightreplacer = 1,
 					/obj/item/soap/nanotrasen = 1,
 					/obj/item/storage/bag/trash = 1,

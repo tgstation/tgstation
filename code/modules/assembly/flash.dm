@@ -9,21 +9,21 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
-	crit_fail = FALSE     //Is the flash burnt out?
 	light_color = LIGHT_COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
+	var/burnt_out = FALSE     //Is the flash burnt out?
 	var/burnout_resistance = 0
 	var/last_used = 0 //last world.time it was used.
 	var/cooldown = 0
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)
-	if (crit_fail)
+	if(burnt_out)
 		user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but it's burnt out!</span>")
 		return SHAME
-	else if (user.eye_blind)
+	else if(user.eye_blind)
 		user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but [user.p_theyre()] blind!</span>")
 		return SHAME
 	user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -33,7 +33,7 @@
 /obj/item/assembly/flash/update_icon(flash = FALSE)
 	cut_overlays()
 	attached_overlays = list()
-	if(crit_fail)
+	if(burnt_out)
 		add_overlay("flashburnt")
 		attached_overlays += "flashburnt"
 	if(flash)
@@ -50,8 +50,8 @@
 	return TRUE
 
 /obj/item/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
-	if(!crit_fail)
-		crit_fail = TRUE
+	if(!burnt_out)
+		burnt_out = TRUE
 		update_icon()
 	if(ismob(loc))
 		var/mob/M = loc
@@ -93,7 +93,7 @@
 		return typecache_filter_list(target_loc.GetAllContents(), GLOB.typecache_living)
 
 /obj/item/assembly/flash/proc/try_use_flash(mob/user = null)
-	if(crit_fail || (world.time < last_trigger + cooldown))
+	if(burnt_out || (world.time < last_trigger + cooldown))
 		return FALSE
 	last_trigger = world.time
 	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
