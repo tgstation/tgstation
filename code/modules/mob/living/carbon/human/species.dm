@@ -1382,6 +1382,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					"<span class='danger'>You shove [target.name] into [collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "into [collateral_human.name]")
 			else
+				target.Move(shove_dir)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1390,15 +1391,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
+			target.Move(target_shove_turf) //A normal move to fix some weirdness
 			if(!target.has_movespeed_modifier(SHOVE_SLOWDOWN_ID))
 				target.add_movespeed_modifier(SHOVE_SLOWDOWN_ID, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
 				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 			log_combat(user, target, "shoved")
-
-		var/facing_dir = turn(shove_dir, 180)
-		if(facing_dir in GLOB.diagonals)
-			facing_dir -= 45
-		target.setDir(facing_dir) //change the dir to face the shover to represent reeling back
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return

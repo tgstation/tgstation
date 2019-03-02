@@ -111,7 +111,7 @@
 //Shove slowdown
 #define SHOVE_SLOWDOWN_ID "shove_slowdown"
 #define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.8 //multiplier
+#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
 
 
 //Combat object defines
