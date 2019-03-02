@@ -36,7 +36,7 @@
 	icon_state = "disabler"
 	item_state = null
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-	ammo_x_offset = 3
+	ammo_x_offset = 2
 
 /obj/item/gun/energy/disabler/cyborg
 	name = "cyborg disabler"
