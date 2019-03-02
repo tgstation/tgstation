@@ -300,8 +300,9 @@
 			eject_magazine(user)
 			return
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
+		chambered = null
 		var/num_unloaded = 0
-		for(var/obj/item/ammo_casing/CB in get_ammo_list(TRUE, TRUE))
+		for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
 			CB.forceMove(drop_location())
 			CB.bounce_away(FALSE, NONE)
 			num_unloaded++
