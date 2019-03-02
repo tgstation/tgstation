@@ -5,13 +5,8 @@
 	damtype = "fire"
 	hitsound = 'sound/weapons/egloves.ogg'
 
-/obj/item/melee/chainofcommand/agatewhip/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP)
-
-/datum/action/innate/call_weapon/agatewhip
+/datum/action/innate/gem/weapon/agatewhip
 	name = "Summon Whip"
 	desc = "Whenever you summon your weapon, Amethysts hit the deck."
-	isclockcult = FALSE
 	weapon_type = /obj/item/melee/chainofcommand/agatewhip
 

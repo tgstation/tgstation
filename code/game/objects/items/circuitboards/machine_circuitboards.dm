@@ -538,6 +538,13 @@
 		/obj/item/stack/sheet/mineral/uranium = 10,
 		/obj/item/stack/sheet/mineral/plasma = 5)
 
+/datum/design/board/rtg/advanced
+	name = "Machine Design (Advanced RTG)"
+	desc = "Produces power all by itself."
+	id = "rtgadvanced"
+	build_path = /obj/item/circuitboard/machine/rtg/advanced
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /obj/item/circuitboard/machine/abductor/core
 	name = "alien board (Void Core)"
 	build_path = /obj/machinery/power/rtg/abductor
@@ -548,6 +555,13 @@
 	def_components = list(
 		/obj/item/stock_parts/capacitor = /obj/item/stock_parts/capacitor/quadratic,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra)
+
+/datum/design/board/abductor/core
+	name = "Machine Design (Void Core)"
+	desc = "Volitile tech that explodes if so much as punched, but generates a lot of power."
+	id = "voidcore"
+	build_path = /obj/item/circuitboard/machine/abductor/core
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /obj/item/circuitboard/machine/emitter
 	name = "Emitter (Machine Board)"

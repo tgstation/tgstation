@@ -60,8 +60,12 @@
 
 	triggering = TRUE
 	if (alert_observers)
-		message_admins("Random Event triggering in 10 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
-		sleep(100)
+		message_admins("Random Event triggering in 1 minute 30 seconds: [name] (<a href='?src=[REF(src)];cancel=1'>CANCEL</a>)")
+		for(var/mob/living/carbon/human/H in world)
+			var/datum/species/gem/G = H.dna.species
+			if(G.id == "sapphire" && H.gemstatus != "offcolor") //Off color sapphires can't predict the future.
+				to_chat(H, "<span class='unconscious'>You predict <b>[name]</b> is going to happen!")
+		sleep(900)
 		var/gamemode = SSticker.mode.config_tag
 		var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
 		if(!canSpawnEvent(players_amt, gamemode))

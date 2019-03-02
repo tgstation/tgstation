@@ -62,7 +62,7 @@
 
 /obj/item/pickaxe/drill/badmin //badmin weapon
 	name = "the breaking point"
-	icon_state = "handdrill"
+	icon_state = "breakingpoint"
 	item_state = "jackhammer"
 	slot_flags = ITEM_SLOT_BELT
 	force = 200 //instant kill, instant shatter.

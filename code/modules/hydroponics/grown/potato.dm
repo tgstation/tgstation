@@ -36,6 +36,14 @@
 	filling_color = "#E9967A"
 	bitesize = 100
 
+/datum/techweb_node/shard_power
+	id = "shard_power"
+	display_name = "Shard Power Interfacer"
+	description = "Get zap from dead gems."
+	prereq_ids = list("adv_power")
+	design_ids = list("shard_interfacer")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
 
 /obj/item/reagent_containers/food/snacks/grown/potato/attackby(obj/item/W, mob/user, params)
 	if(W.is_sharp())

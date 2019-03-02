@@ -740,55 +740,9 @@
 	density = FALSE
 	kindergarten = FALSE
 	uniform = /obj/item/clothing/under/chameleon/gem/white
-	back = /obj/item/storage/backpack/duffelbag/sciencekit
 	flavour_text = "<span class='big bold'>You are a homeworld jade,</span><b><br>You must start a science lab,\
-	<br>Your goal is to further the progress of Homeworld and your Colony through upgrades.\
-	<br>You start with a Science Kit containing the basics of R&D.</b>"
+	<br>Your goal is to further the progress of Homeworld and your Colony through upgrades.</b>"
 
-/obj/item/storage/backpack/duffelbag/sciencekit/PopulateContents()
-	new /obj/item/storage/box/rndboards(src)
-	new /obj/item/storage/box/rndpartsA(src)
-	new /obj/item/storage/box/rndpartsB(src)
-	new /obj/item/stack/cable_coil(src,30,"red")
-	new /obj/item/stack/sheet/metal/fifty(src)
-	new /obj/item/stack/sheet/metal/fifty(src)
-	new /obj/item/stack/sheet/glass/fifty(src)
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-
-/obj/item/storage/box/rndboards
-	name = "R&D Boards"
-
-/obj/item/storage/box/rndboards/PopulateContents()
-	new /obj/item/circuitboard/machine/rdserver(src)
-	new /obj/item/circuitboard/machine/protolathe(src)
-	new /obj/item/circuitboard/machine/destructive_analyzer(src)
-	new /obj/item/circuitboard/machine/circuit_imprinter(src)
-	new /obj/item/circuitboard/computer/rdconsole(src)
-
-/obj/item/storage/box/rndpartsA
-	name = "R&D Stock Parts A"
-
-/obj/item/storage/box/rndpartsA/PopulateContents()
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/matter_bin(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-	new /obj/item/stock_parts/manipulator(src)
-
-/obj/item/storage/box/rndpartsB
-	name = "R&D Stock Parts B"
-
-/obj/item/storage/box/rndpartsB/PopulateContents()
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/reagent_containers/glass/beaker(src)
-	new /obj/item/reagent_containers/glass/beaker(src)
-	new /obj/item/stock_parts/scanning_module(src)
-	new /obj/item/stock_parts/micro_laser(src)
-	new /obj/item/reagent_containers/glass/beaker(src)
-	new /obj/item/reagent_containers/glass/beaker(src)
 
 /obj/effect/mob_spawn/human/gem/pearl
 	name = "Pearl Deposit"
@@ -902,11 +856,11 @@
 			var/datum/species/gem/G = H.dna.species
 			if(G.id == "sapphire" && H.gemstatus != "offcolor") //Off color sapphires can't predict the future.
 				if(status == "Rebel")
-					to_chat(H, "<span class='userdanger'>[mob_name] Cut-[gemcut] is going to betray Homeworld!")
+					to_chat(H, "<span class='unconscious'>[mob_name] Cut-[gemcut] is going to betray Homeworld!")
 				else if(status == "Prime")
-					to_chat(H, "<span class='userdanger'>[mob_name] Cut-[gemcut] is going to emerge as a Prime Gem!")
+					to_chat(H, "<span class='unconscious'>[mob_name] Cut-[gemcut] is going to emerge as a Prime Gem!")
 				else if(status == "OffColor")
-					to_chat(H, "<span class='userdanger'>[mob_name] Cut-[gemcut] is going to emerge as a Defective Gem!")
+					to_chat(H, "<span class='unconscious'>[mob_name] Cut-[gemcut] is going to emerge as a Defective Gem!")
 	..()
 
 /obj/effect/mob_spawn/human/gem/special(mob/living/new_spawn, name)
@@ -918,10 +872,10 @@
 		var/datum/species/gem/G = H.dna.species
 		H.gender = "female"
 		H.lastname = G.name
-		//if(G.height == "big")
-		//	H.resize = 1.2
-		//if(G.height == "small")
-		//	H.resize = 0.8
+		if(G.height == "big")
+			H.resize = 1.2
+		if(G.height == "small")
+			H.resize = 0.8
 		if(!name)
 			H.fully_replace_character_name(null, "[mob_name] Cut-[gemcut]")
 		else
@@ -952,6 +906,7 @@
 				new_spawn.maxHealth = new_spawn.maxHealth*3
 				new_spawn.mind.unconvertable = TRUE
 				H.gemstatus = "prime"
+				H.resize = 1.2
 				new_spawn.equip_to_slot_or_del(new/obj/item/clothing/neck/cloak/prime(null), SLOT_NECK)
 				log_game("[key_name(new_spawn)] as [mob_name] is a Prime Gem.")
 				log_admin("[key_name(new_spawn)] as [mob_name] is a Prime Gem.")
@@ -964,6 +919,7 @@
 				log_game("[key_name(new_spawn)] as [mob_name] is a Defective Gem.")
 				log_admin("[key_name(new_spawn)] as [mob_name] is a Defective Gem.")
 				H.gemstatus = "offcolor"
+				H.resize = 0.8
 				to_chat(new_spawn, "<span class='notice'>You are an <b>Off Color</b>, You came out of the ground all wrong!</span>")
 				to_chat(new_spawn, "<span class='notice'>You'll be treated like Dirt by Homeworld, if not out right shattered!</span>")
 		if(status != "OffColor")
@@ -1005,7 +961,8 @@
 	mob_species = /datum/species/gem/sapphire
 	flavour_text = "<span class='big bold'>You are a sapphire,</span><b><br>You can predict the Future,\
 	<br>This'll let you pinpoint Traitors, Offcolors, and Prime Gems before they even Emerge.\
-	<br>You can also get the coordinates of any mob anywhere.</b>"
+	<br>You can also get the coordinates of any mob anywhere.\
+	<br>You can also predict Random Events 1 minute 30 seconds before they even happen.</b>"
 
 /obj/effect/mob_spawn/human/gem/amethyst
 	name = "Amethyst Deposit"

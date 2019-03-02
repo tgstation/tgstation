@@ -9,6 +9,13 @@
 		//scanner increases scan speed
 		//manipulator increases cooldown
 
+/datum/design/board/geminjector
+	name = "Machine Design (Gem Injector)"
+	desc = "Produce more gems for Homeworld."
+	id = "geminjector"
+	build_path = /obj/item/circuitboard/machine/geminjector
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /obj/machinery/geminjector
 	name = "Injector"
 	desc = "A big bulky machine that Bad gems use to make more Bad gems."

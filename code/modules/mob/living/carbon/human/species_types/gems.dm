@@ -11,7 +11,7 @@
 	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_NODISMEMBER)
 	inherent_biotypes = list(MOB_GEM, MOB_HUMANOID)
 	default_features = list("mcolor" = "F22", "wings" = "None")
-	var/datum/action/weapon = new/datum/action/innate/call_weapon/rubyfist
+	var/datum/action/weapon = new/datum/action/innate/gem/weapon
 	var/datum/action/fusion = new/datum/action/innate/gem/fusion
 	var/datum/action/unfuse = new/datum/action/innate/gem/unfuse
 	var/datum/action/ability1 = null
@@ -33,7 +33,7 @@
 	fixed_mut_color = "2C2"
 	hair_color = "AFA"
 	hairstyle = "Ponytail 4"
-	weapon = new/datum/action/innate/call_weapon/jadedagger
+	weapon = new/datum/action/innate/gem/weapon/jadedagger
 
 /datum/species/gem/amethyst
 	name = "Amethyst"
@@ -43,7 +43,7 @@
 	hair_color = "FAF"
 	armor = 50
 	hairstyle = "Long Hair 3"
-	weapon = new/datum/action/innate/call_weapon/amethystwhip
+	weapon = new/datum/action/innate/gem/weapon/amethystwhip
 
 /datum/species/gem/agate
 	name = "Agate"
@@ -53,7 +53,7 @@
 	hair_color = "FCC"
 	armor = 50
 	hairstyle = "Updo"
-	weapon = new/datum/action/innate/call_weapon/agatewhip
+	weapon = new/datum/action/innate/gem/weapon/agatewhip
 
 /datum/species/gem/sapphire
 	name = "Sapphire"
@@ -76,7 +76,7 @@
 	fixed_mut_color = "FCF"
 	hair_color = "F6C"
 	hairstyle = "Spiky 3"
-	weapon = new/datum/action/innate/call_weapon/pearlspear
+	weapon = new/datum/action/innate/gem/weapon/pearlspear
 	ability1 = new/datum/action/innate/gem/store
 	ability2 = new/datum/action/innate/gem/withdraw
 
@@ -92,7 +92,7 @@
 	fixed_mut_color = "FC9"
 	hair_color = "F9C"
 	hairstyle = "Drill Hair (Extended)"
-	weapon = new/datum/action/innate/call_weapon/roseshield
+	weapon = new/datum/action/innate/gem/weapon/roseshield
 	ability1 = new/datum/action/innate/gem/healingtears
 
 /datum/species/gem/bismuth
@@ -102,7 +102,7 @@
 	fixed_mut_color = "C6C"
 	hair_color = "FFF"
 	hairstyle = "Bismuth Hair"
-	weapon = new/datum/action/innate/call_weapon/bismuthpick
+	weapon = new/datum/action/innate/gem/weapon/bismuthpick
 	ability1 = new/datum/action/innate/gem/smelt
 
 /mob/living/carbon/human/species/gem
@@ -124,17 +124,12 @@
 		var/mob/living/carbon/human/N = C
 		N.hair_style = hairstyle
 		N.hair_color = hair_color
-		//spawn(1)
-		//if(N.isfusion == FALSE)
-		//	if(height == "big")
-		//		N.resize = 1.2
-		//	if(height == "small")
-		//		N.resize = 0.8
-		//else
-		//	if(height == "big")
-		//		N.resize = 1.6
-		//	if(height == "normal")
-		//		N.resize = 1.2
+		spawn(1)
+		if(N.isfusion == TRUE)
+			if(height == "big")
+				N.resize = 1.4
+			else if(height == "normal")
+				N.resize = 1.2
 	sleep(1)
 	C.revive(full_heal = TRUE, admin_revive = TRUE)
 
@@ -153,6 +148,10 @@
 /datum/species/gem/spec_death(gibbed, mob/living/carbon/human/H)
 	if(gibbed)
 		return
+	if(H.summoneditem != null)
+		QDEL_NULL(H.summoneditem)
+		H.regenerate_icons()
+
 	if(H.isfusion == FALSE)
 		new /obj/effect/temp_visual/gem_poof(get_turf(H))
 		if(H.suiciding)
@@ -179,6 +178,8 @@
 				var/mob/living/carbon/human/M = A
 				M.myfusion = FALSE
 				M.reset_perspective()
+				if(H.willingunfuse == FALSE)
+					M.adjustStaminaLoss(200)
 		H.visible_message("<span class='danger'>[H] unfused!</span>")
 		var/mob/domfuse = H.dominantfuse
 		domfuse.key = H.key

@@ -179,5 +179,5 @@
 
 /obj/kindergartengem/Initialize()
 	. = ..()
-	spawn(200)
+	spawn(600)
 	pickgem()

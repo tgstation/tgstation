@@ -44,6 +44,6 @@
 	grind_results = list("silver_sulfadiazine" = 2, "styptic_powder" = 2)
 
 /obj/item/stack/medical/aloevera/suicide_act(mob/living/user)
-	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is bad to eat?</span>")
-	return TOXLOSS
+	user.visible_message("<span class='suicide'>[user] can't think of a way to kill themselves with \the [src].</span>")
+	return SHAME
 

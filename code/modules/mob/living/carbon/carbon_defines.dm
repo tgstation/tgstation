@@ -6,8 +6,10 @@
 	has_limbs = 1
 	held_items = list(null, null)
 	var/isfusion = FALSE
+	var/summoneditem = null
 	var/dominantfuse = null
 	var/myfusion = null
+	var/willingunfuse = FALSE
 	var/gemcut = "nil"
 	var/gemstatus = "normal"
 	var/list/fused_with = list()
