@@ -2,9 +2,9 @@
 	name = "Nano-symbiosis"
 	desc = "The virus reacts to nanites in the host's bloodstream by enhancing their replication cycle."
 	stealth = 0
-	resistance = 2
-	stage_speed = 2
-	transmittable = -1
+	resistance = -1
+	stage_speed = 4
+	transmittable = 1
 	level = 7
 	severity = 0
 	symptom_delay_min = 1

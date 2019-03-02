@@ -22,7 +22,7 @@ Bonus
 	stealth = 1
 	resistance = -1
 	stage_speed = -3
-	transmittable = 0
+	transmittable = 1
 	level = 4
 	severity = 2
 	base_message_chance = 25

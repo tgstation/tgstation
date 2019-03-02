@@ -19,8 +19,8 @@ Bonus
 
 	name = "Dizziness"
 	desc = "The virus causes inflammation of the vestibular system, leading to bouts of dizziness."
-	resistance = -2
-	stage_speed = -3
+	resistance = -1
+	stage_speed = -2
 	transmittable = -1
 	level = 4
 	severity = 2

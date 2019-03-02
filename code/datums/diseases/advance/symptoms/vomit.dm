@@ -24,9 +24,9 @@ Bonus
 	name = "Vomiting"
 	desc = "The virus causes nausea and irritates the stomach, causing occasional vomit."
 	stealth = -2
-	resistance = -1
+	resistance = 1
 	stage_speed = 0
-	transmittable = 1
+	transmittable = 2
 	level = 3
 	severity = 3
 	base_message_chance = 100

@@ -15,10 +15,10 @@ Bonus
 /datum/symptom/narcolepsy
 	name = "Narcolepsy"
 	desc = "The virus causes a hormone imbalance, making the host sleepy and narcoleptic."
-	stealth = -1
+	stealth = 1
 	resistance = -2
 	stage_speed = -3
-	transmittable = -4
+	transmittable = -2
 	level = 6
 	symptom_delay_min = 15
 	symptom_delay_max = 80

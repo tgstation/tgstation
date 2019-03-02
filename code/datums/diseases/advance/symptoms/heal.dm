@@ -92,9 +92,7 @@
 	return 1
 
 /datum/symptom/heal/starlight/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss() || M.getToxLoss())
-		return TRUE
-	return FALSE
+	return M.getBruteLoss() || M.getFireLoss() || M.getToxLoss()
 
 /datum/symptom/heal/chem
 	name = "Toxolysis"
@@ -205,9 +203,7 @@
 	return 1
 
 /datum/symptom/heal/darkness/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss())
-		return TRUE
-	return FALSE
+	return M.getBruteLoss() || M.getFireLoss()
 
 /datum/symptom/heal/coma
 	name = "Regenerative Coma"
@@ -280,9 +276,7 @@
 	return 1
 
 /datum/symptom/heal/coma/passive_message_condition(mob/living/M)
-	if((M.getBruteLoss() + M.getFireLoss()) > 30)
-		return TRUE
-	return FALSE
+	return (M.getBruteLoss() + M.getFireLoss()) > 30
 
 /datum/symptom/heal/water
 	name = "Tissue Hydration"
@@ -336,9 +330,7 @@
 	return 1
 
 /datum/symptom/heal/water/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss())
-		return TRUE
-	return FALSE
+	return M.getBruteLoss() || M.getFireLoss()
 
 /datum/symptom/heal/plasma
 	name = "Plasma Fixation"
@@ -464,3 +456,46 @@
 		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, null, BODYPART_ORGANIC))
 			M.update_damage_overlays()
 	return 1
+
+/datum/symptom/heal/surface
+	name = "Surface Healing"
+	desc = "The virus heals minor brute and burn wounds. Severe injuries are unaffected."
+	stealth = 0
+	resistance = -1
+	stage_speed = -1
+	transmittable = 0
+	level = 4
+	passive_message = "<span class='notice'>Your skin tingles.</span>"
+	var/threshhold = 15
+
+	threshold_desc = "<b>Stage Speed 8:</b> Doubles healing speed.<br>\
+					  <b>Resistance 8:</b> Improves healing threshhold."
+
+/datum/symptom/heal/surface/Start(datum/disease/advance/A)
+	if(!..())
+		return
+	if(A.properties["stage_rate"] >= 8) //stronger healing
+		power = 2
+	if(A.properties["resistance"] >= 8)
+		threshhold = 25
+
+/datum/symptom/heal/surface/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
+	var/healed = FALSE
+
+	if(M.getBruteLoss() && M.getBruteLoss() <= threshhold)
+		M.adjustBruteLoss(-power)
+		healed = TRUE
+
+	if(M.getFireLoss() && M.getFireLoss() <= threshhold)
+		M.adjustFireLoss(-power)
+		healed = TRUE
+
+	if(healed)
+		to_chat(M, "<span class='notice'>Your wounds heal.</span>")
+
+	return healed
+
+
+/datum/symptom/heal/surface/passive_message_condition(mob/living/M)
+	return M.getBruteLoss() <= threshhold || M.getFireLoss() <= threshhold
+

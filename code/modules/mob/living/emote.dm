@@ -511,3 +511,17 @@
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
+
+/datum/emote/living/fart // Fetish content
+	key = "fart"
+	key_third_person = "farts"
+	message = "farts."
+	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
+
+/datum/emote/living/fart/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return !intentional
+
+/datum/emote/living/fart/get_sound(mob/living/user)
+	return 'sound/health/fart.ogg'
+

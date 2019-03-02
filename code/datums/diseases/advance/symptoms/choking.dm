@@ -19,10 +19,10 @@ Bonus
 
 	name = "Choking"
 	desc = "The virus causes inflammation of the host's air conduits, leading to intermittent choking."
-	stealth = -3
-	resistance = -2
-	stage_speed = -2
-	transmittable = -4
+	stealth = -2
+	resistance = -1
+	stage_speed = -3
+	transmittable = -3
 	level = 3
 	severity = 3
 	base_message_chance = 15
@@ -90,8 +90,8 @@ Bonus
 	name = "Acute respiratory distress syndrome"
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
 	stealth = -2
-	resistance = -0
-	stage_speed = -1
+	resistance = -1
+	stage_speed = -2
 	transmittable = -2
 	level = 7
 	severity = 6

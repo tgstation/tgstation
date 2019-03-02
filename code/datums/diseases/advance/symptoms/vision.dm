@@ -20,9 +20,9 @@ Bonus
 	name = "Hyphema"
 	desc = "The virus causes inflammation of the retina, leading to eye damage and eventually blindness."
 	stealth = -1
-	resistance = -4
+	resistance = -3
 	stage_speed = -4
-	transmittable = -3
+	transmittable = -2
 	level = 5
 	severity = 5
 	base_message_chance = 50

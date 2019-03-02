@@ -47,9 +47,7 @@
 
 // Called when the advance disease is going to be deleted or when the advance disease stops processing.
 /datum/symptom/proc/End(datum/disease/advance/A)
-	if(neutered)
-		return FALSE
-	return TRUE
+	return !neutered
 
 /datum/symptom/proc/Activate(datum/disease/advance/A)
 	if(neutered)
@@ -61,9 +59,7 @@
 		return TRUE
 
 /datum/symptom/proc/on_stage_change(new_stage, datum/disease/advance/A)
-	if(neutered)
-		return FALSE
-	return TRUE
+	return !neutered
 
 /datum/symptom/proc/Copy()
 	var/datum/symptom/new_symp = new type
@@ -74,3 +70,9 @@
 
 /datum/symptom/proc/generate_threshold_desc()
 	return
+
+/datum/symptom/proc/OnDeath(datum/disease/advance/A)
+	return !neutered
+
+/datum/symptom/proc/OnScan(datum/disease/advance/A, obj/item/healthanalyzer/HA)
+	return !neutered

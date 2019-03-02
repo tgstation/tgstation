@@ -124,6 +124,11 @@ GENE SCANNER
 
 	add_fingerprint(user)
 
+	if(!advanced)
+		for(var/datum/disease/advance/D in M.diseases)
+			for(var/symptom in D.symptoms)
+				var/datum/symptom/S = symptom
+				S.OnScan(D, src)
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/M, mode = 1, advanced = FALSE)
