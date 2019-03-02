@@ -1169,6 +1169,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job == "Mime")
+		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1,1)
 		. = 1
 	return ..() || .
@@ -1331,30 +1332,45 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	id = "neurotoxin"
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	color = "#2E2E61" // rgb: 46, 46, 97
-	boozepwr = 0 //custom drunk effect
+	boozepwr = 50
 	quality = DRINK_VERYGOOD
 	taste_description = "a numbing sensation"
 	glass_icon_state = "neurotoxinglass"
 	glass_name = "Neurotoxin"
 	glass_desc = "A drink that is guaranteed to knock you silly."
 
+/datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
+	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
+
 /datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M)
-	M.Paralyze(60, 1, 0)
+	M.set_drugginess(50)
 	M.dizziness +=2
-	switch(current_cycle)
-		if(15 to 45)
-			if(!M.slurring)
-				M.slurring = 1
-			M.slurring += 3
-		if(45 to 55)
-			if(prob(50))
-				M.confused = max(M.confused+3,0)
-		if(55 to 200)
-			M.set_drugginess(55)
-		if(200 to INFINITY)
-			M.adjustToxLoss(2, 0)
-	..()
+	M.adjustBrainLoss(1*REM, 150)
+	if(prob(20))
+		M.adjustStaminaLoss(10)
+		M.drop_all_held_items()
+		to_chat(M, "<span class='notice'>You cant feel your hands!</span>")
+	if(current_cycle > 5)
+		if(prob(20))
+			M.add_trait(pickt(), "neurotoxin")
+			M.adjustStaminaLoss(10)
+		if(current_cycle > 30)
+			M.adjustBrainLoss(2*REM)
+			if(current_cycle > 50 && prob(15))
+				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
+					M.set_heartattack(TRUE)
+					if(M.stat == CONSCIOUS)
+						M.visible_message("<span class='userdanger'>[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!</span>")
 	. = 1
+	..()
+
+/datum/reagent/consumable/ethanol/neurotoxin/on_mob_delete(mob/living/carbon/M)
+	M.remove_trait(TRAIT_PARALYSIS_L_ARM, "neurotoxin")
+	M.remove_trait(TRAIT_PARALYSIS_R_ARM, "neurotoxin")
+	M.remove_trait(TRAIT_PARALYSIS_R_LEG, "neurotoxin")
+	M.remove_trait(TRAIT_PARALYSIS_L_LEG, "neurotoxin")
+	M.adjustStaminaLoss(10)
+	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
 	name = "Hippie's Delight"
@@ -1855,6 +1871,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/M)
 	if(ishuman(M) && M.job == "Mime")
+		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
 		M.heal_bodypart_damage(1,1)
 		. = 1
 	return ..()

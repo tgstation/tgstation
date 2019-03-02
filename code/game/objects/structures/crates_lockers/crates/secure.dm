@@ -26,7 +26,7 @@
 	if(prob(tamperproof) && damage_amount >= DAMAGE_PRECISION)
 		boom()
 	else
-		..()
+		return ..()
 
 
 /obj/structure/closet/crate/secure/proc/boom(mob/user)

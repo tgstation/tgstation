@@ -22,6 +22,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
+	var/transfer_overlays = FALSE
 
 /datum/atom_hud/alternate_appearance/New(key)
 	..()
@@ -50,6 +51,8 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(.)
 		LAZYREMOVE(A.alternate_appearances, appearance_key)
 
+/datum/atom_hud/alternate_appearance/proc/copy_overlays(atom/other, cut_old)
+	return
 
 //an alternate appearance that attaches a single image to a single atom
 /datum/atom_hud/alternate_appearance/basic
@@ -58,19 +61,23 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/add_ghost_version = FALSE
 	var/ghost_appearance
 
-/datum/atom_hud/alternate_appearance/basic/New(key, image/I, target_sees_appearance = TRUE)
+/datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
 	..()
+	transfer_overlays = options & AA_MATCH_TARGET_OVERLAYS
 	theImage = I
 	target = I.loc
+	if(transfer_overlays)
+		I.copy_overlays(target)
+
 	hud_icons = list(appearance_key)
 	add_to_hud(target, I)
-	if(target_sees_appearance && ismob(target))
+	if((options & AA_TARGET_SEE_APPEARANCE) && ismob(target))
 		add_hud_to(target)
 	if(add_ghost_version)
 		var/image/ghost_image = image(icon = I.icon , icon_state = I.icon_state, loc = I.loc)
 		ghost_image.override = FALSE
 		ghost_image.alpha = 128
-		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image, FALSE)
+		ghost_appearance = new /datum/atom_hud/alternate_appearance/basic/observers(key + "_observer", ghost_image, NONE)
 
 /datum/atom_hud/alternate_appearance/basic/Destroy()
 	. = ..()
@@ -87,6 +94,9 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	A.hud_list -= appearance_key
 	if(. && !QDELETED(src))
 		qdel(src)
+
+/datum/atom_hud/alternate_appearance/basic/copy_overlays(atom/other, cut_old)
+		theImage.copy_overlays(other, cut_old)
 
 /datum/atom_hud/alternate_appearance/basic/everyone
 	add_ghost_version = TRUE

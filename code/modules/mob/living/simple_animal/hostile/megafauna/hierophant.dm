@@ -56,8 +56,9 @@ Difficulty: Hard
 	ranged_cooldown_time = 40
 	aggro_vision_range = 21 //so it can see to one side of the arena to the other
 	loot = list(/obj/item/hierophant_club)
-	crusher_loot = list(/obj/item/hierophant_club)
+	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman)
 	wander = FALSE
+	internal_type = /obj/item/gps/internal/hierophant
 	medal_type = BOSS_MEDAL_HIEROPHANT
 	score_type = HIEROPHANT_SCORE
 	del_on_death = TRUE
@@ -75,14 +76,12 @@ Difficulty: Hard
 	var/did_reset = TRUE //if we timed out, returned to our beacon, and healed some
 	var/list/kill_phrases = list("Wsyvgi sj irivkc xettih. Vitemvmrk...", "Irivkc wsyvgi jsyrh. Vitemvmrk...", "Jyip jsyrh. Egxmzexmrk vitemv gcgpiw...", "Kix fiex. Liepmrk...")
 	var/list/target_phrases = list("Xevkix psgexih.", "Iriqc jsyrh.", "Eguymvih xevkix.")
+	var/list/stored_nearby = list() // stores people nearby the hierophant when it enters the death animation
+	var/hierophant_dying = FALSE // if we're in the death animation and don't want to proc death repeatedly every time we take damage, do not set stat = dead or deathsounds and messages wont work
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize()
 	. = ..()
-	internal = new/obj/item/gps/internal/hierophant(src)
 	spawned_beacon = new(loc)
-
-/mob/living/simple_animal/hostile/megafauna/hierophant/spawn_crusher_loot()
-	new /obj/item/crusher_trophy/vortex_talisman(get_turf(spawned_beacon))
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Life()
 	. = ..()
@@ -103,15 +102,17 @@ Difficulty: Hard
 				visible_message("<span class='hierophant'>\"Vitemvw gsqtpixi. Stivexmsrep ijjmgmirgc gsqtvsqmwih.\"</span>")
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/death()
-	if(health > 0 || stat == DEAD)
+	if(health > 0 || hierophant_dying)
 		return
 	else
-		stat = DEAD
+		hierophant_dying = TRUE
 		blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 		visible_message("<span class='hierophant'>\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\"</span>")
 		visible_message("<span class='hierophant_warning'>[src] shrinks, releasing a massive burst of energy!</span>")
-		INVOKE_ASYNC(GLOBAL_PROC, .proc/hierophant_burst, null, get_turf(src), 10)
-		..()
+		for(var/mob/living/L in view(7,src))
+			stored_nearby += L // store the people to grant the achievements to once we die
+		hierophant_burst(null, get_turf(src), 10)
+		..(force_grant = stored_nearby)
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	qdel(spawned_beacon)

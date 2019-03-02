@@ -144,7 +144,7 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/toggle(silent = FALSE)
 	if(!on)
-		if(crit_fail)
+		if(broken_cyber_organ)
 			if(!silent)
 				to_chat(owner, "<span class='warning'>Your thrusters set seems to be broken!</span>")
 			return 0

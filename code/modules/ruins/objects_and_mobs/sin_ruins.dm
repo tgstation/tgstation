@@ -98,6 +98,13 @@
 	desc = "Pride cometh before the..."
 	icon_state = "magic_mirror"
 
+/obj/structure/mirror/magic/pride/New()
+	for(var/speciestype in subtypesof(/datum/species))
+		var/datum/species/S = speciestype
+		if(initial(S.changesource_flags) & MIRROR_PRIDE)
+			choosable_races += initial(S.id)
+	..()
+
 /obj/structure/mirror/magic/pride/curse(mob/user)
 	user.visible_message("<span class='danger'><B>The ground splits beneath [user] as [user.p_their()] hand leaves the mirror!</B></span>", \
 	"<span class='notice'>Perfect. Much better! Now <i>nobody</i> will be able to resist yo-</span>")

@@ -41,11 +41,13 @@
 	sprite_name = "miniFE"
 	dog_fashion = null
 
-/obj/item/extinguisher/Initialize()
-	. = ..()
+/obj/item/extinguisher/proc/refill()
 	create_reagents(max_water, AMOUNT_VISIBLE)
 	reagents.add_reagent(chem, max_water)
 
+/obj/item/extinguisher/Initialize()
+	. = ..()
+	refill()
 
 /obj/item/extinguisher/advanced
 	name = "advanced fire extinguisher"
@@ -124,10 +126,13 @@
 	if (target.loc == user)
 		return
 	//TODO; Add support for reagents in water.
+
 	if(refilling)
 		refilling = FALSE
 		return
 	if (!safety)
+
+
 		if (src.reagents.total_volume < 1)
 			to_chat(usr, "<span class='warning'>\The [src] is empty!</span>")
 			return
