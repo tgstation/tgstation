@@ -131,12 +131,12 @@
 
 /turf/open/floor/plating/foam/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_FLOORWALL)
-			return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
+		return list("mode" = RCD_FLOORWALL, "delay" = 0, "cost" = 1)
 
 /turf/open/floor/plating/foam/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(passed_mode == RCD_FLOORWALL)
-			to_chat(user, "<span class='notice'>You build a floor.</span>")
-			ChangeTurf(/turf/open/floor/plating)
+		to_chat(user, "<span class='notice'>You build a floor.</span>")
+		ChangeTurf(/turf/open/floor/plating)
 			return TRUE
 	return FALSE
 
