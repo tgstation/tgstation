@@ -5802,7 +5802,7 @@
 "amy" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/shaker,
-/obj/item/gun/ballistic/revolver/doublebarrel,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "amz" = (
