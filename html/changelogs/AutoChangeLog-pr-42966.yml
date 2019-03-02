@@ -1,0 +1,4 @@
+author: "TerraGS"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a firebot related runtime"
