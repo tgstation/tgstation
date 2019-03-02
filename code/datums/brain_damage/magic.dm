@@ -140,21 +140,19 @@
 	if(get_dist(owner, stalker) >= 10 && prob(20))
 		qdel(stalker)
 		create_stalker()
-	// Dead and unconscious people are not interesting to the psychic stalker.
 	if(owner.stat != CONSCIOUS)
+		if(prob(20))
+			playsound(owner, 'sound/voice/beepsky/iamthelaw.ogg', 50)
 		return
-
-	// Not even nullspace will keep it at bay.
 	if(!stalker || !stalker.loc || stalker.z != owner.z)
 		qdel(stalker)
 		create_stalker()
-//	stalker.forceMove(get_step_towards(stalker, owner))
 	if(get_dist(owner, stalker) <= 1)
-		playsound(owner, 'sound/voice/beepsky/iamthelaw.ogg', 50)
 		playsound(owner, 'sound/weapons/egloves.ogg', 50)
 		owner.visible_message("<span class='warning'>[owner] is torn apart by invisible claws!</span>", "<span class='userdanger'>Ghostly claws tear your body apart!</span>")
-		owner.take_bodypart_damage(rand(20, 45))
-	if(get_dist(owner, stalker) <= 8)
+		owner.take_bodypart_damage(0,0,rand(20, 45))
+		QDEL_NULL(stalker)
+	if(prob(20) && get_dist(owner, stalker) <= 8)
 		playsound(owner, 'sound/voice/beepsky/criminal.ogg', 40)
 	..()
 
@@ -162,17 +160,20 @@
 	name = "???"
 	desc = "It's coming closer..."
 	image_icon = 'icons/mob/aibots.dmi'
-	image_state = "secbot1"
+	image_state = "secbot-c"
 	var/victim
 
 /obj/effect/hallucination/simple/stalker_phantom/New()
 	name = pick ( "beepsky", "johnson", "officer")
-	START_PROCESSING(SSobj,src)
+	START_PROCESSING(SSfastprocess,src)
 	..()
 
 /obj/effect/hallucination/simple/stalker_phantom/process()
-	forceMove(get_step_towards(src, victim))
+	if(prob(60))
+		forceMove(get_step_towards(src, victim))
+		if(prob(5))
+			say("Criminal detected")
 
 /obj/effect/hallucination/simple/stalker_phantom/Destroy()
-	STOP_PROCESSING(SSobj,src)
+	STOP_PROCESSING(SSfastprocess,src)
 	return ..()

@@ -645,12 +645,29 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "beepskysmashglass"
 	glass_name = "Beepsky Smash"
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
+	var/datum/brain_trauma/magic/beepsky/Bee
+
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_add(mob/living/carbon/M)
+	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
+		metabolization_rate = 1.6
+	if(!M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		Bee = new()
+		M.gain_trauma(Bee, TRAUMA_RESILIENCE_ABSOLUTE)
+	..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
-	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
-		M.Stun(30, 0) //this realistically does nothing to prevent chainstunning but will cause them to recover faster once it's out of their system
-	else
-		M.Stun(40, 0)
+	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
+		M.adjustStaminaLoss(-10, 0)
+		if(prob(20))
+			new /datum/hallucination/items_other(M)
+		if(prob(10))
+			new /datum/hallucination/stray_bullet(M)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_delete(mob/living/carbon/M)
+	if(Bee)
+		QDEL_NULL(Bee)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irish_cream
