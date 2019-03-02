@@ -6,14 +6,15 @@
 	earliest_start = 70 MINUTES
 	min_players = 20
 
+/datum/round_event/space_dragon
+	
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
 	role_name = "Space Dragon"
-	fakeable = FALSE
-
+	announceWhen = 10
+	
 /datum/round_event/ghost_role/space_dragon/announce(fake)
 	priority_announce("It appears a lifeform with magical traces is approaching [station_name()], please stand-by.", "Lifesign Alert")
-
 	
 /datum/round_event/ghost_role/space_dragon/spawn_role()
 	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
