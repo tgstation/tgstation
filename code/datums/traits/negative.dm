@@ -510,3 +510,12 @@
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
+
+/datum/quirk/unstable
+	name = "Unstable"
+	desc = "Due to past troubles, you are unable to recover your sanity if you lose it. Be very careful managing your mood!"
+	value = -2
+	mob_trait = TRAIT_UNSTABLE
+	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
+	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
+	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."

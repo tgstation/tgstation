@@ -173,8 +173,8 @@
 /datum/crafting_recipe/floorbot
 	name = "Floorbot"
 	result = /mob/living/simple_animal/bot/floorbot
-	reqs = list(/obj/item/storage/toolbox/mechanical = 1,
-				/obj/item/stack/tile/plasteel = 1,
+	reqs = list(/obj/item/storage/toolbox = 1,
+				/obj/item/stack/tile/plasteel = 10,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	time = 40
@@ -197,6 +197,16 @@
 				/obj/item/bodypart/r_arm/robot = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bikehorn/ = 1)
+	time = 40
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/Firebot
+	name = "Firebot"
+	result = /mob/living/simple_animal/bot/firebot
+	reqs = list(/obj/item/extinguisher = 1,
+				/obj/item/bodypart/r_arm/robot = 1,
+				/obj/item/assembly/prox_sensor = 1,
+				/obj/item/clothing/head/hardhat/red = 1)
 	time = 40
 	category = CAT_ROBOT
 
