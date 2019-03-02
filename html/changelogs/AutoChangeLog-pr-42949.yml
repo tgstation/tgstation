@@ -1,4 +1,0 @@
-author: "WJohnston"
-delete-after: True
-changes: 
-  - bugfix: "Hats that partially cover up your hair should no longer leave baldness lines, most notably seen with the HoP's cap, and should transition more smoothly in some cases."
