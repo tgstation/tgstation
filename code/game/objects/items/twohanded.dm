@@ -565,6 +565,27 @@
 		explosive.prime()
 		qdel(src)
 
+/obj/item/twohanded/spear/explosive/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	var/obj/item/projectile/P = hitby
+	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(50))
+		owner.visible_message("<span class='danger'>[attack_text] hits [owner]'s [src], setting it off! What did they think would happen?</span>")
+		explosive.forceMove(get_turf(src))
+		explosive.prime()
+		qdel(src)
+		return TRUE //It hit the mounted grenade, not them
+
+/obj/item/twohanded/spear/explosive/fire_act(exposed_temperature, exposed_volume)
+	explosive.forceMove(get_turf(src)) 
+	explosive.prime()
+	qdel(src)
+
+/obj/item/twohanded/spear/explosive/dropped(mob/user)
+	. = ..()
+	if(loc == get_turf(src) && get_turf(src) == get_turf(user) && !src.targeting)
+		explosive.forceMove(get_turf(src))
+		explosive.prime()
+		qdel(src)
+
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
 	name = "chainsaw"

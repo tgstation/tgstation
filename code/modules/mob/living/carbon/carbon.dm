@@ -171,13 +171,16 @@
 
 	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !I.has_trait(TRAIT_NODROP))
 		thrown_thing = I
+		I.targeting = 1
 		dropItemToGround(I)
 
 		if(has_trait(TRAIT_PACIFISM) && I.throwforce)
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
+			I.targeting = 0
 			return
 
 	if(thrown_thing)
+		I.targeting = 0
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
 		log_message("has thrown [thrown_thing]", LOG_ATTACK)
 		newtonian_move(get_dir(target, src))

@@ -71,6 +71,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 
 	var/mob/thrownby = null
+	var/targeting = 0 // Before dropping but after throwing has been started
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
