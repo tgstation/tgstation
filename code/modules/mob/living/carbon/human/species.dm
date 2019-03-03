@@ -1360,7 +1360,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							target_shove_turf = cardinal_turf_2
 
 		if(shove_blocked)
-			if((!target_table || !collateral_human)) //In case if this check was already done in the diagonal check
+			if((!target_table || !collateral_human) && !directional_obstruction) //In case if this check was already done in the diagonal check
 				for(var/content in target_shove_turf.contents)
 					if(istype(content, /obj/structure/table))
 						target_table = content
@@ -1381,7 +1381,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					"<span class='danger'>You shove [target.name] into [collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "into [collateral_human.name]")
 			else
-				target.Move(target_shove_turf)
+				target.Move(target_shove_turf) //This move should be blocked anyways, this fixes some odd behavior with things like doors and grills
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
@@ -1389,12 +1389,31 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
-			target.Move(target_shove_turf) //A normal move to fix some weirdness
+			var/target_held_item = target.get_active_held_item()
+			var/knocked_item = FALSE
+			if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types))
+				target_held_item = null
 			if(!target.has_movespeed_modifier(SHOVE_SLOWDOWN_ID))
 				target.add_movespeed_modifier(SHOVE_SLOWDOWN_ID, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH)
+				if(target_held_item)
+					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
+						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
 				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
-			log_combat(user, target, "shoved")
+			else
+				if(target_held_item)
+					target.dropItemToGround()
+					knocked_item = TRUE
+					target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
+						"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
+			target.Move(target_shove_turf) //A normal move to fix some weirdness
+			var/append_message = ""
+			if(target_held_item)
+				if(knocked_item)
+					append_message = "causing them to drop [target_held_item]"
+				else
+					append_message = "loosening their grip on [target_held_item]"
+			log_combat(user, target, "shoved", append_message)
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
