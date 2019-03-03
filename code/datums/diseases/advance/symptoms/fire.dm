@@ -96,7 +96,7 @@ Explosive Death
 	stage_speed = -1
 	transmittable = -1
 	level = 8
-	severity = 6
+	severity = 2 // Doesn't actually damage host.
 	base_message_chance = 50
 	symptom_delay_min = 60
 	symptom_delay_max = 120

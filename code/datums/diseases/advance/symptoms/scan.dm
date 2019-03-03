@@ -8,22 +8,26 @@ Observer Effect
 
 /datum/symptom/observer
 	name = "Observer Effect"
-	desc = "The virus gains stages when analyzed."
+	desc = "The virus gains stages when exposed to rays emitted by health analyzers. Advanced analyzers do not trigger it."
 	stealth = 1
 	resistance = 2
 	stage_speed = -2
 	transmittable = 1
 	level = 3
 	severity = 1
-	threshold_desc = "<b>Stage Speed 5:</b> Maximizes the stage when scanned.<br>"
+	threshold_desc = "<b>Stage Speed 5:</b> Maximizes the stage when scanned.<br>\
+					  <b>Stealth 4:</b> Hides the effect."
 
 	var/maximize = FALSE
+	var/hide_message = FALSE
 
 /datum/symptom/observer/Start(datum/disease/advance/A)
 	if(!..())
 		return
 	if(A.properties["stage_rate"] >= 5)
 		maximize = TRUE
+	if(A.properties["stealth"] >= 4)
+		hide_message = TRUE
 
 /datum/symptom/observer/OnScan(datum/disease/advance/A, obj/item/healthanalyzer/HA)
 	if(!..())
@@ -32,18 +36,21 @@ Observer Effect
 		A.stage = A.max_stages
 	else
 		A.stage = min(A.stage + 2, A.max_stages)
+	if(!hide_message)
+		var/mob/living/M = A.affected_mob
+		to_chat(M, "<span class='warning'>Your body aches as it is analyzed.</span>")
 
 /*
 //////////////////////////////////////
 
-Scan Defense
+Theracian RNA
 
 //////////////////////////////////////
 */
 
 /datum/symptom/scan_defense
-	name = "Scan Defense"
-	desc = "The virus explodes when scanned by health analyzers, destroying them."
+	name = "Theracian RNA"
+	desc = "The virus triggers an obscure software bug in Nanotrasen-brand health analyzers, destroying them when scanned. More recent analyzer models are unaffected."
 	stealth = 0
 	resistance = 1
 	stage_speed = -2

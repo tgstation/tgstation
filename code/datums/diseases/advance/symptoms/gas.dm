@@ -1,37 +1,26 @@
 /*
 //////////////////////////////////////
 
-Farts
+Gas release
 
 //////////////////////////////////////
 */
 
-/datum/symptom/fart
+/datum/symptom/gas
 	name = "Flatulence"
 	desc = "The virus affects intestinal biota causing flatulence."
 	base_message_chance = 20
 	symptom_delay_min = 15
 	symptom_delay_max = 40
-	var/infective = FALSE
-	threshold_desc = "<b>Stage Speed 4:</b> Increases the amount of gas.<br>\
-					  <b>Stage Speed 7:</b> Increases the amount of gas.<br>\
-					  <b>Transmission 7:</b> Host will spread the virus when farting."
 	naturally_occuring = FALSE
 
+	var/infective = FALSE
 	var/gas_type = /datum/gas/carbon_dioxide
 	var/base_moles = 1
+	var/emote = "fart"
+	var/oral = FALSE
 
-/datum/symptom/fart/Start(datum/disease/advance/A)
-	if(!..())
-		return
-	if(A.properties["stage_rate"] >= 4)
-		power = 1.5
-	if(A.properties["stage_rate"] >= 7)
-		power = 2
-	if(A.properties["transmittable"] >= 7)
-		infective = TRUE
-
-/datum/symptom/fart/Activate(datum/disease/advance/A)
+/datum/symptom/gas/Activate(datum/disease/advance/A)
 	if(!..())
 		return
 
@@ -52,12 +41,12 @@ Farts
 	cached_gases[gas_type][MOLES] += base_moles * power * A.stage
 	T.air_update_turf()
 
-	if(infective)
+	if(infective && (!oral || M.CanSpreadAirborneDisease()))
 		A.spread(4)
 
-	M.emote("fart")
+	M.emote(emote)
 
-/datum/symptom/fart/plasma
+/datum/symptom/gas/plasma_flatulence
 	name = "Plasma Flatulence"
 	desc = "The virus affects intestinal biota causing flatulence of plasma."
 	stealth = -2
@@ -66,18 +55,46 @@ Farts
 	transmittable = 1
 	level = 5
 	severity = 5
+	threshold_desc = "<b>Stage Speed 4:</b> Increases the amount of gas.<br>\
+					  <b>Stage Speed 8:</b> Increases the amount of gas.<br>\
+					  <b>Transmission 6:</b> Host will spread the virus when farting."
 	naturally_occuring = TRUE
 	gas_type = /datum/gas/plasma
 	base_moles = 3
 
-/datum/symptom/fart/water
-	name = "Wet Flatulence"
-	desc = "The virus affects intestinal biota causing flatulence of water vapor."
+/datum/symptom/gas/plasma_flatulence/Start(datum/disease/advance/A)
+	if(!..())
+		return
+	if(A.properties["stage_rate"] >= 4)
+		power = 1.5
+	if(A.properties["stage_rate"] >= 8)
+		power = 2
+	if(A.properties["transmittable"] >= 6)
+		infective = TRUE
+
+/datum/symptom/gas/belch
+	name = "Belching"
+	desc = "The virus affects the stomach lining, causing burps."
 	stealth = -1
-	resistance = -1
+	resistance = 0
 	stage_speed = -1
 	transmittable = 2
 	level = 4
 	severity = 1
+	threshold_desc = "<b>Stage Speed 8:</b> Increases the amount of gas.<br>\
+					  <b>Resistance 8:</b> Host will belch water vapor.<br>\
+					  <b>Transmission 6:</b> Host will spread the virus when belching."
 	naturally_occuring = TRUE
-	gas_type = /datum/gas/water_vapor
+	gas_type = /datum/gas/carbon_dioxide
+	emote = "burp"
+	oral = TRUE
+
+/datum/symptom/gas/belch/Start(datum/disease/advance/A)
+	if(!..())
+		return
+	if(A.properties["stage_rate"] >= 8)
+		base_moles = 3
+	if(A.properties["resistance"] >= 8)
+		gas_type = /datum/gas/water_vapor
+	if(A.properties["transmittable"] >= 6)
+		infective = TRUE

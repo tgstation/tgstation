@@ -63,6 +63,17 @@
 	if(user.has_trait(TRAIT_SOOTHED_THROAT))
 		return FALSE
 
+/datum/emote/living/cough/get_sound(mob/living/user)
+	if(iscarbon(user))
+		if(user.gender == FEMALE)
+			return pick('sound/health/womancough1.ogg', 
+						'sound/health/womancough2.ogg', 
+						'sound/health/womancough3.ogg')
+		else
+			return pick('sound/health/mancough1.ogg', 
+						'sound/health/mancough2.ogg', 
+						'sound/health/mancough3.ogg')
+
 /datum/emote/living/dance
 	key = "dance"
 	key_third_person = "dances"
@@ -306,6 +317,13 @@
 	message = "sneezes."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/sneeze/get_sound(mob/living/user)
+	if(iscarbon(user))
+		if(user.gender == FEMALE)
+			return'sound/health/womansneeze1.ogg'
+		else
+			return'sound/health/mansneeze1.ogg'
+
 /datum/emote/living/smug
 	key = "smug"
 	key_third_person = "smugs"
@@ -523,5 +541,20 @@
 	return !intentional
 
 /datum/emote/living/fart/get_sound(mob/living/user)
-	return 'sound/health/fart.ogg'
+	if(iscarbon(user))
+		return 'sound/health/fart.ogg'
+
+/datum/emote/living/burp // Fetish content
+	key = "burp"
+	key_third_person = "burps"
+	message = "burps."
+	emote_type = EMOTE_AUDIBLE
+	vary = TRUE
+
+/datum/emote/living/burp/can_run_emote(mob/living/user, status_check = TRUE, intentional = FALSE)
+	return !intentional
+
+/datum/emote/living/burp/get_sound(mob/living/user)
+	if(iscarbon(user))
+		return 'sound/health/burp.ogg'
 

@@ -20,7 +20,7 @@ Bonus
 	name = "Sneezing"
 	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally."
 	stealth = -2
-	resistance = -1
+	resistance = 0
 	stage_speed = -1
 	transmittable = 5
 	level = 1

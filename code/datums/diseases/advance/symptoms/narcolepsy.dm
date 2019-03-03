@@ -20,8 +20,8 @@ Bonus
 	stage_speed = -3
 	transmittable = -2
 	level = 6
-	symptom_delay_min = 15
-	symptom_delay_max = 80
+	symptom_delay_min = 10
+	symptom_delay_max = 30
 	severity = 4
 	var/sleep_level = 0
 	var/sleepy_ticks = 0
@@ -35,8 +35,8 @@ Bonus
 	if(A.properties["transmittable"] >= 7) //stamina damage
 		stamina = TRUE
 	if(A.properties["resistance"] >= 10) //act more often
-		symptom_delay_min = 10
-		symptom_delay_max = 60
+		symptom_delay_min = 5
+		symptom_delay_max = 20
 
 /datum/symptom/narcolepsy/Activate(var/datum/disease/advance/A)
 	var/mob/living/M = A.affected_mob
