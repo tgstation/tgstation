@@ -563,7 +563,7 @@
 		if(I && M.dropItemToGround(I))
 			to_chat(M, "<span class ='notice'>Your hands spaz out and you drop what you were holding!</span>")
 			M.Jitter(10)
-	
+
 	M.AdjustAllImmobility(-20, FALSE)
 	M.adjustStaminaLoss(-1*REM, FALSE)
 	..()
@@ -578,7 +578,7 @@
 
 	if(prob(7))
 		to_chat(M, "<span class='notice'>[pick("Your head pounds.", "You feel a tight pain in your chest.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]</span>")
-	
+
 	if(prob(33))
 		M.adjustToxLoss(1*REM, 0)
 		M.losebreath++
@@ -590,7 +590,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(2*REM, 0)
 		M.losebreath += 2
@@ -602,7 +602,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(3*REM, 0)
 		M.losebreath += 3
@@ -614,7 +614,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(4*REM, 0)
 		M.losebreath += 4
@@ -626,7 +626,7 @@
 		M.visible_message("<span class='danger'>[M] starts having a seizure!</span>", "<span class='userdanger'>You have a seizure!</span>")
 		M.Unconscious(100)
 		M.Jitter(350)
-	
+
 	if(prob(33))
 		M.adjustToxLoss(5*REM, 0)
 		M.losebreath += 5
@@ -1092,6 +1092,7 @@
 	description = "Miniature medical robots that swiftly restore bodily damage."
 	reagent_state = SOLID
 	color = "#555555"
+	overdose_threshold = 30
 
 /datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/carbon/M)
 	M.adjustBruteLoss(-5*REM, 0) //A ton of healing - this is a 50 telecrystal investment.
@@ -1102,6 +1103,13 @@
 	M.adjustCloneLoss(-3*REM, 0)
 	..()
 	. = 1
+
+/datum/reagent/medicine/syndicate_nanites/overdose_process(mob/living/M)
+	M.adjustBruteLoss(10*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustFireLoss(10*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	..()
+	. = 1
+
 
 /datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
