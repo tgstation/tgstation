@@ -499,17 +499,7 @@
 		icon_prefix = "spearplasma"
 	update_icon()
 	qdel(tip)
-	var/obj/item/grenade/G = locate() in parts_list
-	if(G)
-		var/obj/item/twohanded/spear/explosive/lance = new /obj/item/twohanded/spear/explosive(src.loc, G)
-		lance.force_wielded = force_wielded
-		lance.force_unwielded = force_unwielded
-		lance.throwforce = throwforce
-		lance.icon_prefix = icon_prefix
-		parts_list -= G
-		qdel(src)
 	..()
-	
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
