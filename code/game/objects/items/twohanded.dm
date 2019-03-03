@@ -513,7 +513,6 @@
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
-	desc = "A spear with a grenade at the tip, it looks dangerous to even put down!"
 	var/obj/item/grenade/explosive = null
 
 /obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
@@ -523,7 +522,7 @@
 	G.forceMove(src)
 	explosive = G
 
-	desc = "A makeshift spear with [G] attached to it"
+	desc = "A makeshift spear with [G] attached to it, it looks dangerous to even put down!"
 	update_icon()
 
 /obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
