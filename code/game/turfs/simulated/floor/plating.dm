@@ -137,7 +137,7 @@
 	if(passed_mode == RCD_FLOORWALL)
 		to_chat(user, "<span class='notice'>You build a floor.</span>")
 		ChangeTurf(/turf/open/floor/plating)
-			return TRUE
+		return TRUE
 	return FALSE
 
 /turf/open/floor/plating/foam/ex_act()
