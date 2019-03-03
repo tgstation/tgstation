@@ -1405,8 +1405,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					knocked_item = TRUE
 					target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 						"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.forceMove(target_shove_turf) //A forcemove so that it ignores cooldowns properly.
-			target.Move(target_shove_turf) //A normal move to fix some weirdness
+			target.Move(target_shove_turf) //A normal move attempt to try to make things work better
+			target.forceMove(target_shove_turf) //A forcemove so that it ignores move cooldowns and the like.
 			var/append_message = ""
 			if(target_held_item)
 				if(knocked_item)
