@@ -133,5 +133,5 @@
 	..()
 	ScrapeAway()
 
-/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/tool/I, tool_type)
+/turf/open/floor/plating/foam/tool_act(mob/living/user, obj/item/I, tool_type)
 	return
