@@ -58,12 +58,9 @@ SUBSYSTEM_DEF(job)
 	for(var/datum/job/job in jobdatums)
 		name_occupations[job.title] = job
 		type_occupations[job.type] = job
+		occupations += job
 		if(job.whitelisted)
 			whitelisted_occupations += job
-		else
-			occupations += job
-	for(var/datum/job/job in whitelisted_occupations)
-		occupations += job
 
 	return 1
 

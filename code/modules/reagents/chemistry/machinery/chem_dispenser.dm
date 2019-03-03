@@ -54,7 +54,8 @@
 		"morphine",
 		"carpotoxin",
 		"mine_salve",
-		"toxin"
+		"toxin",
+		"fernet"
 	)
 
 	var/list/saved_recipes = list()

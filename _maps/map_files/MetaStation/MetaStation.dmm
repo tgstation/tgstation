@@ -7054,7 +7054,7 @@
 "cFH" = (/obj/machinery/libraryscanner,/turf/open/floor/plasteel/white,/area/science/circuit)
 "cFI" = (/obj/structure/cable{icon_state = "0-2"},/obj/structure/lattice/catwalk,/turf/open/space,/area/solar/port/aft)
 "cFJ" = (/obj/structure/disposalpipe/segment{dir = 10},/obj/structure/cable/yellow{icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/effect/turf_decal/stripes/line{dir = 4},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/floor/plating,/area/maintenance/port/aft)
-"cFK" = (/obj/machinery/door/airlock/maintenance{name = "Medbay Maintenance"; req_access_txt = "5"},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/floor/plating,/area/medical/psychiatry)
+"cFK" = (/obj/machinery/door/airlock/maintenance{name = "Medbay Maintenance"; req_access_txt = "69"},/obj/structure/cable/yellow{icon_state = "4-8"},/turf/open/floor/plating,/area/medical/psychiatry)
 "cFL" = (/obj/structure/cable/yellow{icon_state = "2-8"},/turf/open/floor/carpet,/area/medical/psychiatry)
 "cFM" = (/obj/structure/disposalpipe/segment{dir = 5},/turf/open/floor/carpet,/area/medical/psychiatry)
 "cFN" = (/obj/structure/disposalpipe/segment{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 4},/turf/open/floor/carpet,/area/medical/psychiatry)

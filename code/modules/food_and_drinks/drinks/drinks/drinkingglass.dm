@@ -19,6 +19,8 @@
 		name = R.glass_name
 		desc = R.glass_desc
 		if(R.glass_icon_state)
+			if(R.glass_icon_file)
+				icon = R.glass_icon_file
 			icon_state = R.glass_icon_state
 		else
 			var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")

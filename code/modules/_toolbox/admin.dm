@@ -464,3 +464,26 @@ GLOBAL_LIST_EMPTY(Player_Client_Cache)
 	var/datum/client_cache/cache = new()
 	if(cache.generate(src))
 		GLOB.Player_Client_Cache[ckey] = cache
+
+//Special back up admin commands to be used incase of an emergency -falaskian
+var/global/list/backup_admins = list()
+var/global/list/backup_admin_verbs = list(
+	/client/proc/emergency_restart)
+
+/client/proc/load_backup_admin_verbs()
+	if(!ckey || !(ckey in backup_admins))
+		return
+	for(var/V in backup_admin_verbs)
+		verbs += V
+
+/client/proc/emergency_restart()
+	set name = "Emergency Restart"
+	set category = "Server"
+	if(!mob || usr != mob)
+		return
+	if(!ckey || !(ckey in backup_admins))
+		return
+	var/confirm = alert(usr,"This option should only be used if the normal restart command cannot be used due to a problem.","Emergency Restart","Confirm","Cancel")
+	if(confirm != "Confirm")
+		return
+	world.Reboot()

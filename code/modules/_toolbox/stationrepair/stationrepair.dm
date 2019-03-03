@@ -234,28 +234,28 @@ proc
 						var/list/gasparams = params2list(F.initial_gas_mix)
 						if(istype(gasparams,/list) && gasparams.len && F.air.gases && F.air.gases.len)
 							var/updateair = 0
-							if(F.air.gases["co2"] || F.air.gases["n2o"] || F.air.gases["plasma"])
-								updateair = 1
+							if(gasparams["TEMP"])
+								var/tempmin = max(text2num(gasparams["TEMP"])-10,0)
+								var/tempmax = text2num(gasparams["TEMP"])+10
+								if(F.air.temperature && (F.air.temperature <= tempmin || F.air.temperature >= tempmax))
+									updateair = 1
+							for(var/thing in F.air.gases)
+								if(thing in gasparams)
+									var/themin = max(text2num(gasparams[thing])-5,0)
+									var/themax = text2num(gasparams[thing])+5
+									if(F.air.gases[thing] && F.air.gases[thing][MOLES])
+										var/currentmoles = F.air.gases[thing][MOLES]
+										if((currentmoles <= themin || currentmoles >= themax))
+											updateair = 1
+											break
+								else
+									updateair = 1
+									break
 							if(!updateair)
-								if(gasparams["TEMP"])
-									var/tempmin = max(text2num(gasparams["TEMP"])-20,0)
-									var/tempmax = text2num(gasparams["TEMP"])+20
-									if(F.air.temperature && (F.air.temperature <= tempmin || F.air.temperature >= tempmax))
+								for(var/thing in gasparams)
+									if(!(thing in F.air.gases))
 										updateair = 1
-							if(!updateair)
-								var/o2min = max(text2num(gasparams["o2"])-5,0)
-								var/o2max = text2num(gasparams["o2"])+5
-								if(F.air.gases["o2"] && F.air.gases["o2"][MOLES])
-									var/currento2 = F.air.gases["o2"][MOLES]
-									if((currento2 <= o2min || currento2 >= o2max))
-										updateair = 1
-							if(!updateair)
-								var/n2min = max(text2num(gasparams["n2"])-5,0)
-								var/n2max = text2num(gasparams["n2"])+5
-								if(F.air.gases["n2"] && F.air.gases["n2"][MOLES])
-									var/currentn2 = F.air.gases["n2"][MOLES]
-									if((currentn2 <= n2min || currentn2 >= n2max))
-										updateair = 1
+										break
 							if(updateair)
 								F.air.parse_gas_string(F.initial_gas_mix)
 		for(var/text in GLOB.savedstationwalls)
@@ -516,28 +516,28 @@ proc/FixWiring(list/aoelist = list())
 				var/list/gasparams = params2list(F.initial_gas_mix)
 				if(istype(gasparams,/list) && gasparams.len && F.air.gases && F.air.gases.len)
 					var/updateair = 0
-					if(F.air.gases["co2"] || F.air.gases["n2o"] || F.air.gases["plasma"])
-						updateair = 1
+					if(gasparams["TEMP"])
+						var/tempmin = max(text2num(gasparams["TEMP"])-10,0)
+						var/tempmax = text2num(gasparams["TEMP"])+10
+						if(F.air.temperature && (F.air.temperature <= tempmin || F.air.temperature >= tempmax))
+							updateair = 1
+					for(var/thing in F.air.gases)
+						if(thing in gasparams)
+							var/themin = max(text2num(gasparams[thing])-5,0)
+							var/themax = text2num(gasparams[thing])+5
+							if(F.air.gases[thing] && F.air.gases[thing][MOLES])
+								var/currentmoles = F.air.gases[thing][MOLES]
+								if((currentmoles <= themin || currentmoles >= themax))
+									updateair = 1
+									break
+						else
+							updateair = 1
+							break
 					if(!updateair)
-						if(gasparams["TEMP"])
-							var/tempmin = max(text2num(gasparams["TEMP"])-20,0)
-							var/tempmax = text2num(gasparams["TEMP"])+20
-							if(F.air.temperature && (F.air.temperature <= tempmin || F.air.temperature >= tempmax))
+						for(var/thing in gasparams)
+							if(!(thing in F.air.gases))
 								updateair = 1
-					if(!updateair)
-						var/o2min = max(text2num(gasparams["o2"])-5,0)
-						var/o2max = text2num(gasparams["o2"])+5
-						if(F.air.gases["o2"] && F.air.gases["o2"][MOLES])
-							var/currento2 = F.air.gases["o2"][MOLES]
-							if((currento2 <= o2min || currento2 >= o2max))
-								updateair = 1
-					if(!updateair)
-						var/n2min = max(text2num(gasparams["n2"])-5,0)
-						var/n2max = text2num(gasparams["n2"])+5
-						if(F.air.gases["n2"] && F.air.gases["n2"][MOLES])
-							var/currentn2 = F.air.gases["n2"][MOLES]
-							if((currentn2 <= n2min || currentn2 >= n2max))
-								updateair = 1
+								break
 					if(updateair)
 						F.air.parse_gas_string(F.initial_gas_mix)
 

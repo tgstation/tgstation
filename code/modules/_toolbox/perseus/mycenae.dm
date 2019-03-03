@@ -6,6 +6,7 @@
 	req_access = list(ACCESS_PERSEUS_ENFORCER)
 	icon = 'icons/oldschool/perseus.dmi'
 	icon_state = "enforcer"
+	circuitry_removable = 0
 	PopulateContents()
 		..()
 		new /obj/item/clothing/shoes/combat(src)
@@ -31,6 +32,7 @@
 	req_access = list(ACCESS_PERSEUS_COMMANDER)
 	icon = 'icons/oldschool/perseus.dmi'
 	icon_state = "commander"
+	circuitry_removable = 0
 	PopulateContents()
 		..()
 		new /obj/item/clothing/under/perseus_fatigues(src)
@@ -94,6 +96,7 @@
 	icon = 'icons/oldschool/perseus.dmi'
 	icon_state = "medical_wall"
 	wall_mounted = 1
+	circuitry_removable = 0
 
 	PopulateContents()
 		new /obj/item/storage/firstaid/o2(src)

@@ -273,15 +273,9 @@
 
 	outfit = /datum/outfit/job/psychiatrist
 
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_PSYCHIATRIST)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CHEMISTRY, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_PSYCHIATRIST, ACCESS_SURGERY, ACCESS_GENETICS)
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_PSYCHIATRIST)
 	position_after_type = /datum/job/virologist
-
-/datum/job/psychiatrist/map_check() //making psychiatrist only available if mapped in.
-	for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-		if(sloc.name != title)
-			return 1
-	return 0
 
 /area/medical/psychiatry
 	name = "Psychiatry Office"

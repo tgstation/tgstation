@@ -220,7 +220,7 @@ Borg Shaker
 	recharge_time = 3
 	accepts_reagent_upgrades = FALSE
 
-	reagent_ids = list("fakebeer")
+	reagent_ids = list("fakebeer","fernet")
 
 /obj/item/reagent_containers/borghypo/peace
 	name = "Peace Hypospray"
