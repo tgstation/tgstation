@@ -219,6 +219,8 @@
 			var/mob/living/L = A
 			L.adjust_fire_stacks(fire_stack_strength)
 			L.IgniteMob()
+			if(L.health <= -200) //get rid of them.
+				L.dust(force = TRUE)
 
 /obj/structure/bonfire/proc/Cook()
 	var/turf/current_location = get_turf(src)

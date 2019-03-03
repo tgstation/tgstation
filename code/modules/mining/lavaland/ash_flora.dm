@@ -19,10 +19,14 @@
 	var/base_icon
 	var/regrowth_time_low = 8 MINUTES
 	var/regrowth_time_high = 16 MINUTES
+	var/randomize = TRUE
 
 /obj/structure/flora/ash/Initialize()
 	. = ..()
-	base_icon = "[icon_state][rand(1, 4)]"
+	if(randomize == TRUE)
+		base_icon = "[icon_state][rand(1, 4)]"
+	else
+		base_icon = "[icon_state]"
 	icon_state = base_icon
 
 /obj/structure/flora/ash/proc/harvest(user)

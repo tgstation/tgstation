@@ -89,12 +89,27 @@
 
 /datum/mood_event/swam
 	description = "<span class='nicegreen'>I went swimming.</span>\n"
+	mood_change = 4
+	timeout = 1800
+
+/datum/mood_event/slept
+	description = "<span class='nicegreen'>I had some sleep.</span>\n"
 	mood_change = 2
+	timeout = 10 MINUTES
+
+/datum/mood_event/sleptbed
+	description = "<span class='nicegreen'>I had some really good sleep.</span>\n"
+	mood_change = 4
+	timeout = 10 MINUTES
+
+/datum/mood_event/swam/deep
+	description = "<span class='warning'>The water is cold.</span>\n"
+	mood_change = -4
 	timeout = 1800
 
 /datum/mood_event/rain
 	description = "<span class='warning'>The rain is pretty cold.</span>\n"
-	mood_change = -2
+	mood_change = -4
 	timeout = 600
 
 /datum/mood_event/lightning

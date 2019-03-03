@@ -1,14 +1,9 @@
 "a" = (/turf/template_noop,/area/template_noop)
 "b" = (/turf/open/floor/plating/asteroid,/area/template_noop)
 "c" = (/obj/structure/flora/tree/palm,/turf/open/floor/plating/asteroid,/area/template_noop)
-"d" = (/obj/structure/flora/ash/earth,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"d" = (/obj/item/reagent_containers/glass/bucket/wood,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "e" = (/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"f" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"g" = (/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"h" = (/obj/structure/flora/rock/jungle,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"i" = (/obj/structure/flora/rock,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"j" = (/obj/structure/flora/tree/jungle,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"k" = (/turf/closed/mineral,/area/ruin/unpowered/ash_walkers)
+"k" = (/obj/structure/mudbricks,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "l" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "m" = (/obj/item/twohanded/bonespear,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "n" = (/obj/item/reagent_containers/glass/bowl,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
@@ -17,11 +12,10 @@
 "q" = (/turf/open/water/shallow,/area/template_noop)
 "r" = (/obj/item/stack/rods,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "s" = (/obj/structure/bonfire,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
-"t" = (/obj/item/flashlight/flare/torch/prelit,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
-"u" = (/obj/structure/flora/ash/earth/wheat,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"t" = (/obj/structure/mineral_door/wood,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "v" = (/mob/living/simple_animal/cow,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"w" = (/obj/structure/flora/ash/earth/aloevera,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
 "x" = (/obj/structure/sink/puddle,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"y" = (/obj/structure/mudbricks/torch,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 
 (1,1,1) = {"
 aaaqqqqqqqqaaaaaaaaqqqqqqqaaaa
@@ -30,24 +24,24 @@ aaqqqbbbbqqqqqqqqqqqqbbbqqqqqq
 aaqqbbbcbqqqqqqbbbqqqbbcqqbbqq
 aaqqbbebbbbbbqqbbbbbbbbbbbbcqq
 aaqqbbebbbcbbbcbbbcbbbbbbbbbqq
-aqqqbceeefebbbbbbegeufegeebbqq
-aqqqbbeehefeeedivegegeeeegbbqq
-qqqbbbgeegeeeeeehefeeeefiebbqq
-qqqbbbbeueeeeegeeeefeegeeebbqq
-qqbcbbbbheeejeexkklkkxehehbcqq
-qqqbqbbbbeeeewekkmlnkkeeeebbqq
-qqqqqqbbbbegeeekmlllnkeegebbqq
-aqqqqqqbbceeheelltotllefiebbqq
-aqqqqqqqbbieegekplllrkgvdecbqq
-qqqbbbbqbbeefeekkplskkeehebbqq
-qqqbcbbbcbvehefxkklkkxeueebcqq
-qqbcbbbbbbeeeegeeeefeeeefgbbqq
-qqbbbeeeefeeeeeidegeeeegebbbqq
-qqbbbbeheeeeeeeefeeeeeeeebbbqq
-qqqbcbeeeeejefeeegheejeebbcqqq
-qqqqbbefghedfegieeeeeweebbbqqq
+aqqqbceeeeebbbbbbeeeeeeeeebbqq
+aqqqbbeeeeeeeeeeveeeeeeeeebbqq
+qqqbbbeeeeeeeeeeeeeeeeeeeebbqq
+qqqbbbbeeeeeeeeeeeeeeeeeeebbqq
+qqbcbbbbeeeeeeexkktkkxeeeebcqq
+qqqbqbbbbeeeeeekymldykeeeebbqq
+qqqqqqbbbbeeeeekmlllnkeeeebbqq
+aqqqqqqbbceeeeetllollteeeebbqq
+aqqqqqqqbbeeeeekplllrkeveecbqq
+qqqbbbbqbbeeeeekyplsykeeeebbqq
+qqqbcbbbcbveeeexkktkkxeeeebcqq
+qqbcbbbbbbeeeeeeeeeeeeeeeebbqq
+qqbbbeeeeeeeeeeeeeeeeeeeebbbqq
+qqbbbbeeeeeeeeeeeeeeeeeeebbbqq
+qqqbcbeeeeeeeeeeeeeeeeeebbcqqq
+qqqqbbeeeeeeeeeeeeeeeeeebbbqqq
 qqqqbbeeeeeeeeeebbbbbbbbbbqqqq
-qqbcbbbbbbbbgeebbbbbcbbbbcqqqq
+qqbcbbbbbbbbeeebbbbbcbbbbcqqqq
 qqbbbbbbbbbcbeebbcqqqbbbbbqqqq
 qqbbebbcqqbbbbcbbqqqqbbcbbbbqq
 qqbbbbbqqqqbbbbbbqqqqqqbbbbqqq

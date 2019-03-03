@@ -602,39 +602,30 @@
 	var/firstname = "Hoomayn"
 	var/lastname = "Guiyz"
 
-/obj/effect/mob_spawn/human/tribal/zooman
-	uniform = /obj/item/clothing/under/zooman
-	ears = /obj/item/clothing/ears/zooman
-	name = "zooman infant" //pink diamond's human zoo!
-	flavour_text = "<span class='big bold'>You are a Zooman.</span><b><br>You belong to Pink Diamond\
-	<br>Live out your life within the Zoo.</b>"
-	assignedrole = "Zooman"
-	lastname = "Zooman"
-
-/obj/effect/mob_spawn/human/tribal/attack_hand(mob/user)
-	..()
-	if(ishuman(user) && assignedrole != "Zooman")
-		var/mob/living/carbon/human/H = user
-		if(H.lastname != "Guiyz")
-			if(isgem(H)) //Freemasons and Homeworld gems can put humans in a zoo, crystal gems can not.
-				if(H.mind.assigned_role != "Crystal Gem")
-					to_chat(H, "<span class='notice'>You claim the infant for the zoo.</span>")
-					new /obj/effect/mob_spawn/human/tribal/zooman(src.loc)
-					del(src)
-				else
-					to_chat(H, "<span class='notice'>You can't tear this child away from their family.</span>")
-
 /obj/effect/mob_spawn/human/tribal/Initialize(mapload)
 	if(firstname == "Human")
 		notify_ghosts("A [mob_name] is ready to grow up!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
-	else if(lastname == "Zooman")
-		notify_ghosts("A [mob_name] was captured by Homeworld!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_GOLEM)
 	..()
 
 /obj/effect/mob_spawn/human/tribal/special(mob/living/new_spawn)
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude" //You're a Tribal, partner
+		var/positivetrait = pick(/datum/quirk/alcohol_tolerance, /datum/quirk/apathetic, /datum/quirk/drunkhealing, /datum/quirk/freerunning, /datum/quirk/jolly, /datum/quirk/light_step, /datum/quirk/musician, /datum/quirk/night_vision, /datum/quirk/selfaware, /datum/quirk/skittish, /datum/quirk/spiritual, /datum/quirk/voracious)
+		var/negativetrait = pick(/datum/quirk/depression, /datum/quirk/heavy_sleeper, /datum/quirk/hypersensitive, /datum/quirk/light_drinker, /datum/quirk/nearsighted, /datum/quirk/nyctophobia, /datum/quirk/nonviolent, /datum/quirk/poor_aim, /datum/quirk/prosopagnosia, /datum/quirk/obstructive, /datum/quirk/social_anxiety)
+		//checking for conflicting
+		var/traitconflict = FALSE
+		if(positivetrait == /datum/quirk/alcohol_tolerance && negativetrait == /datum/quirk/light_drinker)
+			traitconflict = TRUE
+		else if(positivetrait == /datum/quirk/jolly && negativetrait == /datum/quirk/depression)
+			traitconflict = TRUE
+		else if(positivetrait == /datum/quirk/apathetic && negativetrait == /datum/quirk/hypersensitive)
+			traitconflict = TRUE
+		else if(positivetrait == /datum/quirk/apathetic && negativetrait == /datum/quirk/depression) //eh... don't really care about feeling bad.
+			traitconflict = TRUE
+		if(traitconflict == FALSE)
+			new positivetrait(new_spawn)
+			new negativetrait(new_spawn)
 		if(H.gender == "female")
 			H.facial_hair_style = "Shaved"
 			if(firstname == "Hoomayn")

@@ -15,6 +15,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	item_color = "hosred"
 	item_flags = DROPDEL
+	clothing_flags = NOSLIP
 
 /obj/item/clothing/under/chameleon/gem/Initialize()
 	. = ..()
@@ -23,6 +24,9 @@
 /obj/item/clothing/shoes/chameleon/gem/Initialize()
 	. = ..()
 	add_trait(TRAIT_NODROP)
+
+/obj/item/clothing/shoes/chameleon/gem/negates_gravity()
+	return 1
 
 /obj/item/clothing/under/gem
 	name = "Homeworld Uniform"

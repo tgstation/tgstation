@@ -268,6 +268,11 @@
 		SLOT_GENERC_DEXTROUS_STORAGE
 	)
 
+/obj/item/reagent_containers/glass/bucket/wood
+	icon_state = "woodbucket"
+	item_state = "woodbucket"
+	materials = list(MAT_METAL=0)
+
 /obj/item/reagent_containers/glass/bucket/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/mop))
 		if(reagents.total_volume < 1)

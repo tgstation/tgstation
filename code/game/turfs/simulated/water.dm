@@ -41,7 +41,6 @@ turf/open/water/Enter(mob/A)
 	if(istype(A,/mob/living))
 		var/mob/living/L = A
 		if(!L.buckled)
-			L.adjust_bodytemperature(-rand(4,6))
 			SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 			L.wash_cream()
 			L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -82,7 +81,12 @@ turf/open/water/Enter(mob/A)
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
 					H.set_hygiene(HYGIENE_LEVEL_CLEAN)
-					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam)
+
+					if(slowdown == 5)
+						SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam)
+					else
+						SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam/deep)
+						L.adjust_bodytemperature(-rand(16,20))
 
 					if(H.wear_suit && wash_obj(H.wear_suit))
 						H.update_inv_wear_suit()
@@ -100,10 +104,19 @@ turf/open/water/Enter(mob/A)
 						H.update_inv_belt()
 				else
 					SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam)
+					if(slowdown == 5)
+						SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam)
+					else
+						SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam/deep)
+						L.adjust_bodytemperature(-rand(16,20))
 			else
 				SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-				SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam)
+
+				if(slowdown == 5)
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam)
+				else
+					SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "swam", /datum/mood_event/swam/deep)
+					L.adjust_bodytemperature(-rand(16,20))
 
 /turf/open/water/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return

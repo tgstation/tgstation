@@ -334,6 +334,7 @@
 			add_event(null, "nutrition", /datum/mood_event/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
+			L.blood_volume = max(L.blood_volume - 1, 0)
 
 /datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
 	var/datum/species/ethereal/E = H.dna?.species

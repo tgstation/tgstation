@@ -60,11 +60,11 @@ GLOBAL_LIST_INIT(sandstone_recipes, list ( \
  */
 
 GLOBAL_LIST_INIT(dirt_recipes, list ( \
-	new/datum/stack_recipe("farm plot", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1) \
+	new/datum/stack_recipe("farm plot", /obj/machinery/hydroponics/soil, 3, time = 10, one_per_turf = 1, on_floor = 1),
 	))
 
 /obj/item/stack/sheet/mineral/dirt
-	name = "clod"
+	name = "clods"
 	desc = "You're one of these."
 	singular_name = "clod"
 	icon_state = "sheet-dirt"
@@ -79,6 +79,36 @@ GLOBAL_LIST_INIT(dirt_recipes, list ( \
 	. = ..()
 
 /obj/item/stack/sheet/mineral/dirt/thirty
+	amount = 30
+
+/obj/item/stack/sheet/mineral/dirt/machine_wash(obj/machinery/washing_machine/WM)
+	new /obj/item/stack/sheet/mineral/mudbrick(drop_location(), amount)
+	qdel(src)
+
+/*
+ * Mud Bricks
+ */
+
+GLOBAL_LIST_INIT(mudbrick_recipes, list ( \
+	new/datum/stack_recipe("mud brick wall", /obj/structure/mudbricks, 5, time = 15),
+	))
+
+/obj/item/stack/sheet/mineral/mudbrick
+	name = "mud bricks"
+	desc = "Clumpy and crude, won't stand up very well against physical force."
+	singular_name = "mud brick"
+	icon_state = "sheet-mudbrick"
+	item_state = "sheet-mudbrick"
+	throw_speed = 3
+	throw_range = 5
+	sheettype = "mudbrick"
+	merge_type = /obj/item/stack/sheet/mineral/mudbrick
+
+/obj/item/stack/sheet/mineral/mudbrick/Initialize(mapload, new_amount, merge = TRUE)
+	recipes = GLOB.mudbrick_recipes
+	. = ..()
+
+/obj/item/stack/sheet/mineral/mudbrick/thirty
 	amount = 30
 
 /*

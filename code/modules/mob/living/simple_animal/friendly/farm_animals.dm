@@ -196,6 +196,7 @@
 			new /mob/living/simple_animal/calf(src.loc)
 			src.visible_message("<span class='warning'>[src] gives birth to a calf!.</span>",
 			"<span class='notice'>You give birth to a calf.</span>")
+			breed = breed-3
 		del(O)
 	else
 		return ..()

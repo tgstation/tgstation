@@ -17,7 +17,7 @@
 /obj/item/reagent_containers/food/snacks/grown/banana
 	seed = /obj/item/seeds/banana
 	name = "banana"
-	desc = "It's an excellent prop for a clown."
+	desc = "Always bring one to a party."
 	icon_state = "banana"
 	item_state = "banana"
 	trash = /obj/item/grown/bananapeel

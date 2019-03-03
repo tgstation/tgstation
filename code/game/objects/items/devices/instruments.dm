@@ -69,6 +69,16 @@
 	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
 	actions_types = list(/datum/action/item_action/synthswitch)
 
+/datum/design/piano_synth
+	name = "Synthesizer"
+	desc = "An advanced electronic synthesizer that can be used as various instruments."
+	id = "piano_synth"
+	build_path = /obj/item/instrument/piano_synth
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2500)
+	category = list("Misc")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
 	song.instrumentDir = name
 	song.instrumentExt = insTypes[name]

@@ -4,7 +4,7 @@
 	var/viewing_subcategory = 1
 	var/list/categories = list(
 				CAT_WEAPONRY,
-				CAT_INSTRUMENT,
+				CAT_ROBOT,
 				CAT_MISC,
 				CAT_PRIMAL,
 				CAT_FOOD,
@@ -431,4 +431,3 @@
 	data["tool_text"] = tool_text
 
 	return data
-

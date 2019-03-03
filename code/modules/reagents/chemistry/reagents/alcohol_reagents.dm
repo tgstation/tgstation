@@ -12,6 +12,7 @@
 	description = "A well-known alcohol with a variety of applications."
 	color = "#404030" // rgb: 64, 64, 48
 	nutriment_factor = 0
+	addiction_threshold = 100
 	taste_description = "alcohol"
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
 

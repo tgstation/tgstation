@@ -8,7 +8,7 @@
 	hair_color = "911"
 	var/hairstyle = "Afro (Square)"
 	species_traits = list(HAIR,LIPS,MUTCOLORS,NOBLOOD,NO_UNDERWEAR) //no mutcolors, and can burn
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_ALWAYS_CLEAN,TRAIT_NOHUNGER,TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_NODISMEMBER)
 	inherent_biotypes = list(MOB_GEM, MOB_HUMANOID)
 	default_features = list("mcolor" = "F22", "wings" = "None")
 	var/datum/action/weapon = new/datum/action/innate/gem/weapon
@@ -16,6 +16,7 @@
 	var/datum/action/unfuse = new/datum/action/innate/gem/unfuse
 	var/datum/action/ability1 = null
 	var/datum/action/ability2 = null
+	var/datum/quirk/quirk = null
 
 /datum/species/gem/peridot
 	name = "Peridot"
@@ -24,7 +25,7 @@
 	fixed_mut_color = "2C2"
 	hair_color = "AFA"
 	hairstyle = "Afro (Triangle)"
-	weapon = null
+	weapon = /datum/action/innate/gem/weapon/peridottoolbox
 
 /datum/species/gem/jade
 	name = "Jade"
@@ -44,6 +45,7 @@
 	armor = 50
 	hairstyle = "Long Hair 3"
 	weapon = new/datum/action/innate/gem/weapon/amethystwhip
+	quirk = /datum/quirk/voracious
 
 /datum/species/gem/agate
 	name = "Agate"
@@ -79,6 +81,9 @@
 	weapon = new/datum/action/innate/gem/weapon/pearlspear
 	ability1 = new/datum/action/innate/gem/store
 	ability2 = new/datum/action/innate/gem/withdraw
+	quirk = /datum/quirk/musician
+	//EATING FOOD IS SO DISGUSTING!
+	disliked_food = GROSS | RAW | JUNKFOOD | FRIED | FRUIT | MEAT | VEGETABLES | GRAIN | TOXIC | PINEAPPLE | SUGAR | DAIRY | ALCOHOL
 
 /datum/species/gem/pearl/homeworld
 	fixed_mut_color = "6C6"
@@ -110,6 +115,7 @@
 
 /datum/species/gem/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
+	C.update_gravity(1,1)
 	if(weapon != null)
 		weapon.Grant(C)
 	fusion.Grant(C)
@@ -118,6 +124,8 @@
 		ability1.Grant(C)
 	if(ability2 != null)
 		ability2.Grant(C)
+	if(quirk != null)
+		new quirk(C)
 	C.add_trait(SPECIES_TRAIT)
 	C.gender = "female"
 	if(ishuman(C))

@@ -37,7 +37,7 @@
 			var/nutrition_ratio = 0
 			switch(nutrition)
 				if(0 to NUTRITION_LEVEL_STARVING)
-					nutrition_ratio = 0.2
+					nutrition_ratio = 0
 				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
 					nutrition_ratio = 0.4
 				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
@@ -94,6 +94,28 @@
 /mob/living/carbon/proc/bleed(amt)
 	if(blood_volume)
 		blood_volume = max(blood_volume - amt, 0)
+		if(prob(5))
+			var/seriousness = pick("minor","bad","serious","lethal")
+			var/hasdisease = FALSE
+			for(var/thing in src.diseases)
+				hasdisease = TRUE
+			if(hasdisease == FALSE)
+				if(seriousness == "minor")
+					to_chat(src, "<span class='userdanger'>Your wound looks a bit swollen.</span>")
+					var/datum/disease/INFECT = new /datum/disease/infectionminor()
+					src.ForceContractDisease(INFECT, FALSE, TRUE)
+				else if(seriousness == "bad")
+					to_chat(src, "<span class='userdanger'>Your wound looks red and swollen.</span>")
+					var/datum/disease/INFECT = new /datum/disease/infectionbad()
+					src.ForceContractDisease(INFECT, FALSE, TRUE)
+				else if(seriousness == "serious")
+					to_chat(src, "<span class='userdanger'>Your wound begins to ooze, that can't be good.</span>")
+					var/datum/disease/INFECT = new /datum/disease/infectionserious()
+					src.ForceContractDisease(INFECT, FALSE, TRUE)
+				else if(seriousness == "lethal")
+					to_chat(src, "<span class='userdanger'>Your wound begins to turn black and the skin around a sickly green. You are going to die.</span>")
+					var/datum/disease/INFECT = new /datum/disease/infectionlethal()
+					src.ForceContractDisease(INFECT, FALSE, TRUE)
 		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
 			if(amt >= 10)
 				add_splatter_floor(src.loc)

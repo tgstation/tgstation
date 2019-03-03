@@ -61,6 +61,16 @@
 	//stuff in the stomach
 	handle_stomach()
 
+	if(src.IsSleeping())
+		var/onbed = FALSE
+		for(var/obj/structure/bed/B in view(src,0))
+			if(!istype(B, /obj/structure/bed/dogbed) && !istype(B, /obj/structure/bed/nest) && !istype(B, /obj/structure/bed/roller))
+				onbed = TRUE
+		if(onbed == FALSE)
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "slept", /datum/mood_event/slept)
+		else
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "slept", /datum/mood_event/sleptbed)
+
 	handle_gravity()
 
 	if(machine)

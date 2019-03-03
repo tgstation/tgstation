@@ -137,7 +137,6 @@ SUBSYSTEM_DEF(ticker)
 			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
-			create_observers()
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -180,6 +179,7 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
+			create_observers()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED

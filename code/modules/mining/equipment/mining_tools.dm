@@ -131,6 +131,14 @@
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
 	return SHAME
 
+/obj/item/shovel/bone
+	name = "bone shovel"
+	desc = "A large tool for digging and moving dirt, crudely made out of a cow's skull."
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "boneshovel"
+	materials = list(MAT_METAL=0)
+	toolspeed = 2
+
 /obj/item/shovel/spade
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."

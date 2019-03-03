@@ -82,7 +82,7 @@
 /obj/item/reagent_containers/food/snacks/grown/citrus/lemon
 	seed = /obj/item/seeds/lemon
 	name = "lemon"
-	desc = "When life gives you lemons, make lemonade."
+	desc = "When life gives you lemons, get your jades to burn life's house down."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
 	juice_results = list("lemonjuice" = 0)

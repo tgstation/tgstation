@@ -1,28 +1,23 @@
 "a" = (/turf/template_noop,/area/template_noop)
 "b" = (/turf/open/floor/plating/asteroid,/area/template_noop)
 "c" = (/turf/closed/mineral/random/high_chance,/area/template_noop)
-"d" = (/obj/item/flashlight/flare/torch/prelit,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
+"d" = (/obj/structure/mudbricks,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "e" = (/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"f" = (/obj/structure/flora/ash/earth,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"f" = (/obj/item/reagent_containers/glass/bucket/wood,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "g" = (/turf/open/water/shallow,/area/template_noop)
 "h" = (/obj/structure/flora/tree/palm,/turf/open/floor/plating/asteroid,/area/template_noop)
-"i" = (/obj/structure/flora/ausbushes/ppflowers,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"j" = (/obj/structure/flora/tree/jungle,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"k" = (/turf/closed/mineral,/area/ruin/unpowered/ash_walkers)
+"k" = (/obj/structure/mineral_door/wood,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "l" = (/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "m" = (/obj/item/twohanded/bonespear,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "n" = (/obj/item/reagent_containers/glass/bowl,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "o" = (/obj/structure/lavaland/human_nest,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "p" = (/obj/item/kitchen/knife/combat/bone,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
-"q" = (/obj/structure/flora/ash/earth/wheat,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"r" = (/obj/structure/flora/ausbushes/ywflowers,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
 "s" = (/obj/item/stack/rods,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 "t" = (/obj/structure/bonfire,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
-"u" = (/obj/structure/flora/ausbushes/brflowers,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
 "v" = (/mob/living/simple_animal/chicken,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
 "w" = (/mob/living/simple_animal/cow,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
-"x" = (/obj/structure/flora/ash/earth/aloevera,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
 "y" = (/obj/structure/sink/puddle,/turf/open/floor/plating/asteroid/grass,/area/template_noop)
+"z" = (/obj/structure/mudbricks/torch,/turf/open/floor/plating/asteroid,/area/ruin/unpowered/ash_walkers)
 
 (1,1,1) = {"
 aggggggggggggaaaaaaggggaaaaaaaaaaagggggaaaaaaaaaaaggggaaaaaa
@@ -32,37 +27,37 @@ aggbbbhbbbbbbbbgghbbbbbbbbggggbbbbbbbbbbhbbbbgggbbbbbbbgggga
 aggbbeeeeeeeebbbbbbeeeebbhbbbbbbbheeeeebbbbbbbbhbbbeebhbbggg
 aggbbbbeeeeeeeebbeeeeeeeeebbbbeeeeeeeeeeeeeeebbbeeeeeeebbggg
 aggbhbeeeecccceeeeeeeeeeeeeeeeeeeeeecccceeeeeeeeeeeeeeeebbgg
-aggbbeeieecccceeeeeeeeeeeeeeeeeeeeeecccceeeeeeeeieeeeeeebbgg
-aggbbeeeeeccccceeeeeeeeeeeeeqeeeeeeecccceeeeeeeeeeejeeeebbgg
-aggbbeeeeeeeccceeeeejeieeeeeeeeeeeeecccceeeeeeeeeeeeeeebbhgg
-aggbbeeeeeeeeeeeeereeeeeeeecceejeeeeccceeejeeeeqeeeeeeubbggg
-aggbbhereeeeeeeeeeeeeeeeeeecceeeeieueeeeeeeeeeeeeeeeeeebbgga
-agggbbbeeejeeeieeeeqeeeeeeccccccexeeeeeeeeeeeeeeeeeeeeebbgga
-aggbbbeeeeeeuexeeeeeeveeeecccccceeeeeeeeeeeueieeeeeeeeebbgga
-aggbbeeeeeeeeeeeeeeeeeeeeeeecccceeeeeeeeeeeeeeeeejeeeeebbgga
-aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeereeeeeeeeeeeeeeeeeeeeebbhgga
-agghbeeeeeereqeeeueeeeejeeeeeeeeeeeeeejeeereeeeeeeerehbbggga
-aggbbeeeueeeeeeeeeeeeeeeereieeeeeeweeeeeeeeykklkkyeeebbgggaa
-aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeueeeeekkmlnkkeeeebbggaa
-agggbheeeeeeeeeeeeeeeeeeeeeeeejeeeeeeeeeeeekmlllnkeeeebbggaa
-aggbbeeeeeeeeeeeeejeeeeueeeeeeeeecccceeeeeelldodlleeeebbggaa
-aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeecccceeeeeekplllskeeeeehbgga
-aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeecccceeeeeekkpltkkeeieebbgga
-aggbbeeeejeeeeeeeeeeeeeeeeeeeeeeeecceejeeeeykklkkyeeqeebbgga
+aggbbeeeeecccceeeeeeeeeeeeeeeeeeeeeecccceeeeeeeeeeeeeeeebbgg
+aggbbeeeeeccccceeeeeeeeeeeeeeeeeeeeecccceeeeeeeeeeeeeeeebbgg
+aggbbeeeeeeeccceeeeeeeeeeeeeeeeeeeeecccceeeeeeeeeeeeeeebbhgg
+aggbbeeeeeeeeeeeeeeeeeeeeeecceeeeeeeccceeeeeeeeeeeeeeeebbggg
+aggbbheeeeeeeeeeeeeeeeeeeeecceeeeeeeeeeeeeeeeeeeeeeeeeebbgga
+agggbbbeeeeeeeeeeeeeeeeeeecccccceeeeeeeeeeeeeeeeeeeeeeebbgga
+aggbbbeeeeeeeeeeeeeeeveeeecccccceeeeeeeeeeeeeeeeeeeeeeebbgga
+aggbbeeeeeeeeeeeeeeeeeeeeeeecccceeeeeeeeeeeeeeeeeeeeeeebbgga
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeebbhgga
+agghbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehbbggga
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeweeeeeeeeyddkddyeeebbgggaa
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedzmlfzdeeeebbggaa
+agggbheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedmlllndeeeebbggaa
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeecccceeeeeekllollkeeeebbggaa
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeecccceeeeeedplllsdeeeeehbgga
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeecccceeeeeedzpltzdeeeeebbgga
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeeecceeeeeeeyddkddyeeeeebbgga
 agggbbeeeeeeeeccceeeeeeeeeeeeeeeeecceeeeeeeeeeeeeeeeeeebbgga
-aaggbbeeeeeeecccceeeeejeeeeeeeeeeeeeeeeeeeveeeeeeeeeeeebbgga
-aggbbeeeeeeecccccccceeeeeeeeeeejeeeeeeeeeeeeeeeeeeeueebbbgga
-aggbheeeeeeecccccccceeereeecceeeeeeeeeeeeexeeeeeeeeerfebbgga
-aaggbbeeieeecccccccceeeeeeecceeeeeefeeeeeeeeeueeejeeeeebhbgg
-aaggbbefeeeeeecccceeeeeeecccccceeeeqejeeeeeeeeeweeeecceebbgg
-aggbbeeeeeeqeeeeeeeieefeeeeccccxeeereeeeieeeeeereecccceebbgg
-aggbbeereeeeeeueeeeeeeeeveeeeeeeeeeecccceejeeeeeeecccceebbgg
-aggbbeeeeieeeeeeeeeeeeeeeueqeeeeeeecccccceeeeeefeeeecceebbgg
-aggbbbbeeeeeeewfeeeeeeeeeeeeeeeeeeeccccccfeeeeeeeeeeeeeebbgg
-aaggbbbeueeeereeeqeeeeeeeeefeieeeeecccccceeeeeueeeeeeeuebhgg
-aagggbbbeeejeeeueeeeeejeeeeeeeeejeecccccceeeeeeeiejeeeebbbgg
-aaaggghbeeeeefeeeeeeeeeeeeereeeeeeecccccceeeeeeeeeeeeebbbgga
-aaaaggbbeeeeeeeccceeeiefeeeeueeeefeeeeeeeeejeeeeeeeebbhbggga
+aaggbbeeeeeeecccceeeeeeeeeeeeeeeeeeeeeeeeeveeeeeeeeeeeebbgga
+aggbbeeeeeeecccccccceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeebbbgga
+aggbheeeeeeecccccccceeeeeeecceeeeeeeeeeeeeeeeeeeeeeeeeebbgga
+aaggbbeeeeeecccccccceeeeeeecceeeeeeeeeeeeeeeeeeeeeeeeeebhbgg
+aaggbbeeeeeeeecccceeeeeeecccccceeeeeeeeeeeeeeeeweeeecceebbgg
+aggbbeeeeeeeeeeeeeeeeeeeeeecccceeeeeeeeeeeeeeeeeeecccceebbgg
+aggbbeeeeeeeeeeeeeeeeeeeveeeeeeeeeeecccceeeeeeeeeecccceebbgg
+aggbbeeeeeeeeeeeeeeeeeeeeeeeeeeeeeecccccceeeeeeeeeeecceebbgg
+aggbbbbeeeeeeeweeeeeeeeeeeeeeeeeeeecccccceeeeeeeeeeeeeeebbgg
+aaggbbbeeeeeeeeeeeeeeeeeeeeeeeeeeeecccccceeeeeeeeeeeeeeebhgg
+aagggbbbeeeeeeeeeeeeeeeeeeeeeeeeeeecccccceeeeeeeeeeeeeebbbgg
+aaaggghbeeeeeeeeeeeeeeeeeeeeeeeeeeecccccceeeeeeeeeeeeebbbgga
+aaaaggbbeeeeeeeccceeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeebbhbggga
 aaaaggbbbeeeeeccccceeeeeeeeeeebhbbbbbbbbbeeeeebbbbhbbbggggaa
 aaaaagghbbeeeeeeeeeeeebbbeeebbbbbbbbhbbbbbhbbbbbbbbbgggggaaa
 aaaaaggbbheeeeeeeeeeeebbbhbbbhgggggggggggbbbbbggggggggaaaaaa

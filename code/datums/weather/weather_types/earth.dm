@@ -35,7 +35,8 @@
 		H.adjustWater(5)
 	if(istype(A,/mob/living))
 		var/mob/living/L = A
-		L.adjust_bodytemperature(-rand(4,6))
+		if(istype(A,/mob/living/carbon/human))
+			L.adjust_bodytemperature(-rand(8,10))
 		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
 		L.wash_cream()
 		L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
@@ -148,6 +149,6 @@
 		var/obj/machinery/hydroponics/H = A
 		H.adjustWater(-2)
 		H.adjustNutri(1)
-	if(istype(A,/mob/living))
-		var/mob/living/L = A
-		L.adjust_bodytemperature(rand(4,6))
+	if(istype(A,/mob/living/carbon/human))
+		var/mob/living/carbon/human/L = A
+		L.adjust_bodytemperature(rand(10,16))

@@ -12,7 +12,7 @@
 	. = list()
 	var/list/checked_turfs = list()
 	var/list/found_turfs = list(origin)
-	while(found_turfs.len)
+	while(found_turfs.len && checked_turfs.len <= BP_MAX_ROOM_SIZE)
 		var/turf/sourceT = found_turfs[1]
 		found_turfs.Cut(1, 2)
 		var/dir_flags = checked_turfs[sourceT]
@@ -48,7 +48,7 @@
 		to_chat(creator, "<span class='warning'>The new area must be completely airtight and not a part of a shuttle.</span>")
 		return
 	if(turfs.len > BP_MAX_ROOM_SIZE)
-		to_chat(creator, "<span class='warning'>The room you're in is too big. It is [((turfs.len / BP_MAX_ROOM_SIZE)-1)*100]% larger than allowed.</span>")
+		to_chat(creator, "<span class='warning'>The room you're in is too big.</span>")
 		return
 	var/list/areas = list("New Area" = /area)
 	for(var/i in 1 to turfs.len)

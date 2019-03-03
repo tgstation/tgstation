@@ -19,8 +19,12 @@
 	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
 	var/floor_variance = 20 //probability floor has a different icon state
 	attachment_holes = FALSE
+	var/flora_spawn_list = null
+	var/flora_chance = 0
+	var/decor_spawn_list = null
+	var/decor_chance = 0
 	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
-	var/dug
+	var/dug = FALSE
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -28,6 +32,13 @@
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
+	if(SSticker.current_state != GAME_STATE_PLAYING && SSticker.current_state != GAME_STATE_FINISHED)
+		if(flora_spawn_list != null && prob(flora_chance))
+			var/pickplant = pick(flora_spawn_list)
+			new pickplant(src)
+		else if(decor_spawn_list != null && prob(decor_chance))
+			var/pickplant = pick(decor_spawn_list)
+			new pickplant(src)
 
 /turf/open/floor/plating/asteroid/proc/getDug()
 	new digResult(src, 5)
@@ -36,6 +47,10 @@
 			icon_plating = "[environment_type]_dug"
 			icon_state = "[environment_type]_dug"
 	dug = TRUE
+	spawn(600)
+	dug = FALSE
+	icon_plating = "[environment_type]"
+	icon_state = "[environment_type]"
 
 /turf/open/floor/plating/asteroid/proc/can_dig(mob/user)
 	if(!dug)
@@ -102,6 +117,26 @@
 	baseturfs = /turf/open/floor/plating/asteroid
 	environment_type = "grass"
 	digResult = /obj/item/stack/sheet/mineral/dirt
+	flora_spawn_list = list(/obj/structure/flora/tree/jungle, \
+	/obj/structure/flora/ash/earth, /obj/structure/flora/ash/earth/wheat, /obj/structure/flora/ash/earth/aloevera,\
+	/obj/structure/flora/ash/earth/grape, /obj/structure/flora/ash/earth/tomato, /obj/structure/flora/ash/earth/corn,\
+	/obj/structure/flora/ash/earth/potato, /obj/structure/flora/ash/earth/carrot, /obj/structure/flora/ash/earth/wheat,\
+	/obj/structure/flora/ash/earth/rice, /obj/structure/flora/ash/earth/ambrosia, /obj/structure/flora/ash/earth/watermelon,\
+	/obj/structure/flora/ash/earth/pumpkin, /obj/structure/flora/ash/earth/cotton, /obj/structure/flora/ash/earth/tobacco,\
+	/obj/structure/flora/ash/earth/poppy, /obj/structure/flora/ash/earth/sunflower, /obj/structure/flora/ash/earth/sugarcane,\
+	/obj/structure/flora/ash/earth/pineapple, /obj/structure/flora/ash/earth/eggplant, /obj/structure/flora/ash/earth/whitebeet,\
+	/obj/structure/flora/ash/earth/banana, /obj/structure/flora/ash/earth/vanillapod, /obj/structure/flora/ash/earth/cocoapod,\
+	/obj/structure/flora/ash/earth/lime, /obj/structure/flora/ash/earth/lemon, /obj/structure/flora/ash/earth/orange,\
+	/obj/structure/flora/ash/earth/cherries,/obj/structure/flora/ash/earth/cabbage,/obj/structure/flora/ash/earth/soybeans,\
+	/obj/structure/flora/ash/earth/rainbowbunch, /obj/structure/flora/ash/earth/onion, /obj/structure/flora/ash/earth/tea)
+	decor_spawn_list = list(/obj/structure/flora/rock, /obj/structure/flora/ausbushes/fullgrass, /obj/structure/flora/ausbushes/grassybush, /obj/structure/flora/ausbushes/fernybush, /obj/structure/flora/ausbushes/brflowers, /obj/structure/flora/ausbushes/ppflowers, /obj/structure/flora/ausbushes/ywflowers, /obj/structure/flora/ausbushes/sparsegrass, /obj/structure/flora/ausbushes/sunnybush)
+	flora_chance = 3
+	decor_chance = 15
+
+/turf/open/floor/plating/asteroid/grass/nocrops
+	flora_spawn_list = null
+	flora_chance = 0
+
 
 /turf/open/floor/plating/rocksmelt
 	baseturfs = /turf/open/floor/plating/rocksmelt
@@ -164,7 +199,7 @@
 	var/length = 100
 	var/list/mob_spawn_list
 	var/list/megafauna_spawn_list
-	var/list/flora_spawn_list
+	flora_spawn_list = null
 	var/sanity = 1
 	var/forward_cave_dir = 1
 	var/backward_cave_dir = 2

@@ -25,14 +25,9 @@
 		del(A)
 	return ..()
 
-/obj/item/storage/toolbox/peridot/Initialize()
-	. = ..()
-	add_trait(TRAIT_NODROP)
-
-/datum/action/innate/call_weapon/peridottoolbox
+/datum/action/innate/gem/weapon/peridottoolbox
 	name = "Summon Toolbox"
 	desc = "Obtain all the tools you need to do engineering."
-	isclockcult = FALSE
 	weapon_type = /obj/item/storage/toolbox/peridot
 
 /obj/item/screwdriver/peridot

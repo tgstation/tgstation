@@ -169,6 +169,11 @@
 		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
 		qdel(HH)
 
+	else if(istype(O, /obj/item/stack/sheet/mineral/dirt))
+		var/obj/item/stack/sheet/mineral/dirt/DIRT = O
+		new /obj/item/stack/sheet/mineral/mudbrick(get_turf(DIRT), DIRT.amount)
+		qdel(DIRT)
+
 /*
  *	Water reaction to a mob
  */

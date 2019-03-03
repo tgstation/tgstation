@@ -627,6 +627,12 @@ datum/status_effect/stabilized/blue/on_remove()
 		var/obj/item/stack/sheet/hairlesshide/HH = O
 		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
 		qdel(HH)
+
+	else if(istype(O, /obj/item/stack/sheet/mineral/dirt))
+		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It wets [O]!</span>")
+		var/obj/item/stack/sheet/mineral/dirt/DIRT = O
+		new /obj/item/stack/sheet/mineral/mudbrick(get_turf(DIRT), DIRT.amount)
+		qdel(DIRT)
 	..()
 
 /datum/status_effect/stabilized/silver

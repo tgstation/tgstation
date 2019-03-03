@@ -41,22 +41,22 @@
 	description = "Slightly reduces stun times. If overdosed it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
-	addiction_threshold = 10
+	addiction_threshold = 5
 	taste_description = "smoke"
 	trippy = FALSE
 	overdose_threshold=15
-	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	metabolization_rate = 0.01 * REAGENTS_METABOLISM
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M)
 	if(prob(1))
 		var/smoke_message = pick("You feel relaxed.", "You feel calmed.","You feel alert.","You feel rugged.")
 		to_chat(M, "<span class='notice'>[smoke_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoked", /datum/mood_event/smoked, name)
-	M.AdjustStun(-5, FALSE)
-	M.AdjustKnockdown(-5, FALSE)
-	M.AdjustUnconscious(-5, FALSE)
-	M.AdjustParalyzed(-5, FALSE)
-	M.AdjustImmobilized(-5, FALSE)
+	M.AdjustStun(-1, FALSE)
+	M.AdjustKnockdown(-1, FALSE)
+	M.AdjustUnconscious(-1, FALSE)
+	M.AdjustParalyzed(-1, FALSE)
+	M.AdjustImmobilized(-1, FALSE)
 	..()
 	. = 1
 
