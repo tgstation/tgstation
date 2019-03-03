@@ -640,22 +640,23 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 90 //THE FIST OF THE LAW IS STRONG AND HARD
 	quality = DRINK_GOOD
-	metabolization_rate = 0.8
+	metabolization_rate = 0.5
 	taste_description = "JUSTICE"
 	glass_icon_state = "beepskysmashglass"
 	glass_name = "Beepsky Smash"
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
-	var/datum/brain_trauma/magic/beepsky/Bee
+	var/datum/brain_trauma/special/beepsky/B
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_add(mob/living/carbon/M)
 	if(M.has_trait(TRAIT_ALCOHOL_TOLERANCE))
-		metabolization_rate = 1.6
+		metabolization_rate = 0.8
 	if(!M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		Bee = new()
-		M.gain_trauma(Bee, TRAUMA_RESILIENCE_ABSOLUTE)
+		B = new()
+		M.gain_trauma(B, TRAUMA_RESILIENCE_ABSOLUTE)
 	..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M)
+	M.Jitter(2)
 	if(M.has_trait(TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		M.adjustStaminaLoss(-10, 0)
 		if(prob(20))
@@ -666,8 +667,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	. = 1
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_delete(mob/living/carbon/M)
-	if(Bee)
-		QDEL_NULL(Bee)
+	if(B)
+		QDEL_NULL(B)
 	return ..()
 
 /datum/reagent/consumable/ethanol/irish_cream
