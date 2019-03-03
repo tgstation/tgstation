@@ -15,9 +15,9 @@
 	var/spin_delay = 10
 	var/recent_spin = 0
 
-/obj/item/gun/ballistic/revolver/chamber_round(spin = 1)
+/obj/item/gun/ballistic/revolver/chamber_round(spin = TRUE)
 	if(spin)
-		chambered = magazine.get_round(1)
+		chambered = magazine.get_round(TRUE)
 	else
 		chambered = magazine.stored_ammo[1]
 
