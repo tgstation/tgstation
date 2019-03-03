@@ -1368,7 +1368,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(ishuman(content))
 						collateral_human = content
 						break
-			playsound(target, get_sfx("punch"), 50, TRUE, -1)
 			if(target_table)
 				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
@@ -1382,7 +1381,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					"<span class='danger'>You shove [target.name] into [collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "into [collateral_human.name]")
 			else
-				target.Move(shove_dir)
+				target.Move(target_shove_turf)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
