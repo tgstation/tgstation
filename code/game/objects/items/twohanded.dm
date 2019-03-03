@@ -501,60 +501,6 @@
 	qdel(tip)
 	..()
 
-/obj/item/twohanded/spear/explosive
-	name = "explosive lance"
-	var/obj/item/grenade/explosive = null
-
-/obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
-	. = ..()
-	if (!G)
-		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
-	G.forceMove(src)
-	explosive = G
-
-	desc = "A makeshift spear with [G] attached to it"
-	update_icon()
-
-/obj/item/twohanded/spear/explosive/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	user.say("[war_cry]", forced="spear warcry")
-	explosive.forceMove(user)
-	explosive.prime()
-	user.gib()
-	qdel(src)
-	return BRUTELOSS
-
-/obj/item/twohanded/spear/explosive/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to set your war cry.</span>")
-
-/obj/item/twohanded/spear/explosive/update_icon()	
-	icon_state = "spearbomb[wielded]"
-
- //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/explosive/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(!.) //not caught
-		explosive.forceMove(get_turf(src))
-		explosive.prime()
-		qdel(src)
-
-/obj/item/twohanded/spear/explosive/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE))
-		..()
-		if(istype(user) && loc == user)
-			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
-			if(input)
-				src.war_cry = input
-
-/obj/item/twohanded/spear/explosive/afterattack(atom/movable/AM, mob/user, proximity)
-	. = ..()
-	if(wielded)
-		user.say("[war_cry]", forced="spear warcry")
-		explosive.forceMove(AM)
-		explosive.prime()
-		qdel(src)
-
 // CHAINSAW
 /obj/item/twohanded/required/chainsaw
 	name = "chainsaw"
