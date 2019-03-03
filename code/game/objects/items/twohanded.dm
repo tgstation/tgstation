@@ -521,7 +521,6 @@
 		G = new /obj/item/grenade/iedcasing() //For admin-spawned explosive lances
 	G.forceMove(src)
 	explosive = G
-
 	desc = "A makeshift spear with [G] attached to it"
 	update_icon()
 
@@ -540,14 +539,6 @@
 
 /obj/item/twohanded/spear/explosive/update_icon()	
 	icon_state = "spearbomb[wielded]"
-
- //THIS MIGHT BE UNBALANCED SO I DUNNO // it totally is.
-/obj/item/twohanded/spear/explosive/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(!.) //not caught
-		explosive.forceMove(get_turf(src))
-		explosive.prime()
-		qdel(src)
 
 /obj/item/twohanded/spear/explosive/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
