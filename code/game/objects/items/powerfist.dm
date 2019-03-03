@@ -87,7 +87,7 @@
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 
-	target.throw_at(throw_target, 5 * fisto_setting, 0.2)
+	target.throw_at(throw_target, 5 * fisto_setting, 1.5)
 
 	log_combat(user, target, "power fisted", src)
 
