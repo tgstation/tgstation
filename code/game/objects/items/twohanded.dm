@@ -513,6 +513,7 @@
 
 /obj/item/twohanded/spear/explosive
 	name = "explosive lance"
+	desc = "A spear with a grenade at the tip, it looks dangerous to even put down!"
 	var/obj/item/grenade/explosive = null
 
 /obj/item/twohanded/spear/explosive/Initialize(mapload, obj/item/grenade/G)
@@ -575,7 +576,7 @@
 		return TRUE //It hit the mounted grenade, not them
 
 /obj/item/twohanded/spear/explosive/fire_act(exposed_temperature, exposed_volume)
-	explosive.forceMove(get_turf(src)) 
+	explosive.forceMove(get_turf(src))
 	explosive.prime()
 	qdel(src)
 
