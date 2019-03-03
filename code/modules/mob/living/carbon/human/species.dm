@@ -1360,7 +1360,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							target_shove_turf = cardinal_turf_2
 
 		if(shove_blocked)
-			if((!target_table || !collateral_human) && !directional_obstruction) //In case if this check was already done in the diagonal check
+			if((!target_table || !collateral_human) && (!directional_obstruction && !(shove_dir in GLOB.diagonals)) //In case if this check was already done in the diagonal check
 				for(var/content in target_shove_turf.contents)
 					if(istype(content, /obj/structure/table))
 						target_table = content
@@ -1401,7 +1401,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 			else
 				if(target_held_item)
-					target.dropItemToGround()
+					target.dropItemToGround(target_held_item)
 					knocked_item = TRUE
 					target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
 						"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
