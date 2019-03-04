@@ -26,7 +26,7 @@
 	var/specialtiles = 0
 	var/maxtiles = 100
 	var/obj/item/stack/tile/tiletype
-	var/fixfloors = 0
+	var/fixfloors = 1
 	var/autotile = 0
 	var/max_targets = 50
 	var/turf/target
