@@ -542,6 +542,7 @@
 	if (mood)
 		mood.remove_temp_moods(admin_revive)
 	update_mobility()
+	stop_sound_channel(CHANNEL_HEARTBEAT)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
 /mob/living/proc/can_be_revived()
