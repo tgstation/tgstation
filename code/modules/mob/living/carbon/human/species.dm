@@ -1359,8 +1359,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(target_table || collateral_human)
 							target_shove_turf = cardinal_turf_2
 
-		if(shove_blocked)
-			if((!target_table || !collateral_human) && (!directional_obstruction && !(shove_dir in GLOB.diagonals))) //In case if this check was already done in the diagonal check
+		if(shove_blocked && !target.is_shove_knockdown_blocked())
+			if((!target_table || !collateral_human) && !directional_obstruction && !(shove_dir in GLOB.diagonals))
 				for(var/content in target_shove_turf.contents)
 					if(istype(content, /obj/structure/table))
 						target_table = content

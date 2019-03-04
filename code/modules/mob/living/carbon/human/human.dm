@@ -863,6 +863,15 @@
 		stop_pulling()
 		. = ..(M,force,check_loc)
 
+/mob/living/carbon/human/proc/is_shove_knockdown_blocked()
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	for(var/bp in body_parts)
+		if(istype(bp, /obj/item/clothing))
+			var/obj/item/clothing/C = bp
+			if(C.blocks_shove_knockdown)
+				return TRUE
+	return FALSE
+
 /mob/living/carbon/human/proc/clear_shove_slowdown()
 	remove_movespeed_modifier(SHOVE_SLOWDOWN_ID)
 	var/active_item = get_active_held_item()
