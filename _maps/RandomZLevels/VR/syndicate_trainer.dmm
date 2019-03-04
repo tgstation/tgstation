@@ -244,7 +244,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "bu" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "bw" = (

@@ -53558,7 +53558,7 @@
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
 "dye" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /obj/structure/sign/departments/science{
 	pixel_y = 32
 	},
