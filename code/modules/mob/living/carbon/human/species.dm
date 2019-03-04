@@ -1307,12 +1307,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					var/no_directionals = TRUE
 					var/blocked_by_directional = FALSE
 					for(var/obj/O in target_shove_turf.contents)
+						if(O.anchored)
+							shove_blocked = TRUE
 						if(O.flags_1 & ON_BORDER_1)
 							no_directionals = FALSE
 							if(O.dir == blocking_dir)
 								blocked_by_directional = TRUE
-					if(no_directionals || blocked_by_directional)
-						shove_blocked = TRUE
 			else
 				var/turf/diagonal_turf = target_shove_turf
 				var/turf/cardinal_turf_1
@@ -1399,14 +1399,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					target.visible_message("<span class='danger'>[target.name]'s grip on \the [target_held_item] loosens!</span>",
 						"<span class='danger'>Your grip on \the [target_held_item] loosens!</span>", null, COMBAT_MESSAGE_RANGE)
 				addtimer(CALLBACK(target, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
-			else
-				if(target_held_item)
-					target.dropItemToGround(target_held_item)
-					knocked_item = TRUE
-					target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
-						"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
-			target.Move(target_shove_turf) //A normal move attempt to try to make things work better
-			target.forceMove(target_shove_turf) //A forcemove so that it ignores move cooldowns and the like. If the last move worked, this does nothing, if the last move failed, it forces it
+			else if(target_held_item)
+				target.dropItemToGround(target_held_item)
+				knocked_item = TRUE
+				target.visible_message("<span class='danger'>[target.name] drops \the [target_held_item]!!</span>",
+					"<span class='danger'>You drop \the [target_held_item]!!</span>", null, COMBAT_MESSAGE_RANGE)
+			target.Move(target_shove_turf)
 			var/append_message = ""
 			if(target_held_item)
 				if(knocked_item)
