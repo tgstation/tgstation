@@ -34,6 +34,14 @@
 		return
 	if(isobj(target))
 		var/obj/O = target
+		if(istype(O, /obj/machinery/door/firedoor))
+			var/obj/machinery/door/firedoor/D = O
+			D.try_to_crowbar(src,chassis.occupant)
+			return
+		if(istype(O, /obj/machinery/door/airlock/))
+			var/obj/machinery/door/airlock/D = O
+			D.try_to_crowbar(src,chassis.occupant)
+			return
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
