@@ -170,7 +170,7 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/empty_tiles()
 	new tiletype(drop_location(), specialtiles)
-	specialtiles = FALSE
+	specialtiles = 0
 	tiletype = null
 
 /mob/living/simple_animal/bot/floorbot/handle_automated_action()
@@ -337,7 +337,7 @@
 			visible_message("<span class='notice'>[src] begins repairing the floor.</span>")
 			sleep(50)
 			if(mode == BOT_REPAIRING && F && src.loc == F)
-				F.broken = FALSE
+				F.broken = FALSE 
 				F.burnt = FALSE
 				F.PlaceOnTop(/turf/open/floor/plasteel)
 
