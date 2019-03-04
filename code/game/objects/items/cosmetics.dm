@@ -171,14 +171,12 @@
 											 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
 						shave(H, location)
 				else
-					var/turf/H_loc = H.loc
 					user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
 										 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
 					if(do_after(user, 50, target = H))
-						if(H_loc == H.loc)
-							user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
-												 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
-							shave(H, location)
+						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
+											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
+						shave(H, location)
 
 		else if(location == BODY_ZONE_HEAD)
 			if(user.a_intent == INTENT_HELP)
