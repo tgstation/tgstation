@@ -570,7 +570,7 @@
 	},
 /area/awaymission/spacebattle/cruiser)
 "cH" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},

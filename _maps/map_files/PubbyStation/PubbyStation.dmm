@@ -51402,9 +51402,7 @@
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
 "cuG" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	req_access = null
-	},
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/machinery/light/small{
 	dir = 2
 	},

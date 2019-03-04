@@ -673,7 +673,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ct" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
 "cu" = (

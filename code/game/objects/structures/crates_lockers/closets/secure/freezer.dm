@@ -58,6 +58,9 @@
 	for(var/i = 0, i < 2, i++)
 		new /obj/item/storage/fancy/egg_box(src)
 
+/obj/structure/closet/secure_closet/freezer/fridge/open
+	req_access = null
+
 /obj/structure/closet/secure_closet/freezer/money
 	name = "freezer"
 	desc = "This contains cold hard cash."

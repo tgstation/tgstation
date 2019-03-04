@@ -14599,7 +14599,7 @@
 /turf/open/floor/plasteel/dark,
 /area/tdome/tdomeobserve)
 "GG" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/potato,
 /obj/item/reagent_containers/food/snacks/grown/whitebeet,
@@ -18450,9 +18450,7 @@
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
 "Yu" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	locked = 0
-	},
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/cafeteria,
 /area/centcom/holding)
 "Yv" = (

@@ -3793,7 +3793,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
 "alJ" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)

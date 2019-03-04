@@ -35,7 +35,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "ap" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "aq" = (
