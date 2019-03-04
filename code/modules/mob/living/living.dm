@@ -160,8 +160,9 @@
 		var/mob/living/L = M
 		if(L.has_trait(TRAIT_PUSHIMMUNE))
 			return TRUE
-	if(ishuman(M))
-		return TRUE
+	//If they're a human, and the pusher is not in help intent, block pushing
+	if(ishuman(M) && (a_intent != INTENT_HELP))
+			return TRUE
 	//anti-riot equipment is also anti-push
 	for(var/obj/item/I in M.held_items)
 		if(!istype(M, /obj/item/clothing))
