@@ -1313,6 +1313,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 							no_directionals = FALSE
 							if(O.dir == blocking_dir)
 								blocked_by_directional = TRUE
+					if((no_directionals && blocked_by_directional)
+						shove_blocked = TRUE
 			else
 				var/turf/diagonal_turf = target_shove_turf
 				var/turf/cardinal_turf_1
