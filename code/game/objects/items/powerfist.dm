@@ -79,9 +79,9 @@
         return
     T.assume_air(gasused)
     T.air_update_turf()
-    if(gasused.total_moles() == 0)
+    if(!gasused)
         to_chat(user, "<span class='warning'>\The [src]'s tank is empty!</span>")
-        target.apply_damage(force / 5, BRUTE)
+        target.apply_damage((force / 5), BRUTE)
         playsound(loc, 'sound/weapons/punch1.ogg', 50, 1)
         target.visible_message("<span class='danger'>[user]'s powerfist lets out a dull thunk as [user.p_they()] punch[user.p_es()] [target.name]!</span>", \
             "<span class='userdanger'>[user]'s punches you!</span>")
@@ -89,7 +89,7 @@
     if(gasused.total_moles() < gasperfist * fisto_setting)
         to_chat(user, "<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
         playsound(loc, 'sound/weapons/punch4.ogg', 50, 1)
-        target.apply_damage(force / 2, BRUTE)
+        target.apply_damage((force / 2), BRUTE)
         target.visible_message("<span class='danger'>[user]'s powerfist lets out a weak hiss as [user.p_they()] punch[user.p_es()] [target.name]!</span>", \
             "<span class='userdanger'>[user]'s punch strikes with force!</span>")
         return
