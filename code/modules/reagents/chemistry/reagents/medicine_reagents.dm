@@ -799,7 +799,7 @@
 		M.adjustToxLoss(-0.5*REM, 0)
 		M.adjustBruteLoss(-0.5*REM, 0)
 		M.adjustFireLoss(-0.5*REM, 0)
-		M.adjustOxyLoss*0.5*REM, 0)
+		M.adjustOxyLoss(-0.5*REM, 0)
 	if(M.losebreath >= 4)
 		M.losebreath -= 2
 	if(M.losebreath < 0)
