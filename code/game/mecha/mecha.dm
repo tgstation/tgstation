@@ -213,11 +213,6 @@
 	GLOB.mechas_list -= src //global mech list
 	return ..()
 
-/obj/mecha/bullet_act(obj/item/projectile/P)
-	if (enclosed || !occupant || silicon_pilot)
-		return ..()
-	occupant.bullet_act(P) //If the sides are open, the occupant can be hit
-
 /obj/mecha/CheckParts(list/parts_list)
 	..()
 	cell = locate(/obj/item/stock_parts/cell) in contents
