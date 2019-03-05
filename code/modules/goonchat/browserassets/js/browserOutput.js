@@ -65,6 +65,7 @@ var opts = {
 	'volumeUpdateDelay': 5000, //Time from when the volume updates to data being sent to the server
 	'volumeUpdating': false, //True if volume update function set to fire
 	'updatedVolume': 0, //The volume level that is sent to the server
+	'musicStartAt': 0, //The position the music starts playing
 	
 	'defaultMusicVolume': 25,
 
@@ -552,6 +553,11 @@ function ehjaxCallback(data) {
 				} else {
 					$('#adminMusic').prop('defaultPlaybackRate', 1.0);
 				}
+				if (data.musicSeek) {
+					opts.musicStartAt = Number(data.musicSeek) || 0;
+				} else {
+					opts.musicStartAt = 0;
+				}
 				$('#adminMusic').prop('src', adminMusic);
 				$('#adminMusic').trigger("play");
 			}
@@ -582,6 +588,12 @@ function sendVolumeUpdate() {
 	opts.volumeUpdating = false;
 	if(opts.updatedVolume) {
 		runByond('?_src_=chat&proc=setMusicVolume&param[volume]='+opts.updatedVolume);
+	}
+}
+
+function adminMusicCanPlay(event) {
+	if ($('#adminMusic').prop('duration') === Infinity || (opts.musicStartAt <= $('#adminMusic').prop('duration'))) {
+		$('#adminMusic').prop('currentTime', opts.musicStartAt);
 	}
 }
 
@@ -1062,6 +1074,8 @@ $(function() {
 			opts.volumeUpdating = true;
 		}
 	});
+
+	$('#adminMusic').on('canplay', adminMusicCanPlay);
 
 	$('#toggleCombine').click(function(e) {
 		opts.messageCombining = !opts.messageCombining;
