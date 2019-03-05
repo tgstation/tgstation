@@ -48,7 +48,8 @@
 	var/lights = FALSE
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
-
+	var/list/death_explosion = list("devestation" = 0, "heavy" = 0, "light" = 1, "flash" = 3)
+	
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
 	var/use_internal_tank = 0
@@ -158,8 +159,7 @@
 		else
 			M.forceMove(loc)
 	if(wreckage)
-		if(prob(30))
-			explosion(get_turf(src), 0, 0, 1, 3)
+		explosion(get_turf(src), src.death_explosion["devestation"], src.death_explosion["heavy"], src.death_explosion["light"], src.death_explosion["flash"])	
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
