@@ -105,14 +105,14 @@
 						<div class='header'>Electronics</div>
 						<div class='links'>
 						<b>Radio settings:</b><br>
-						Microphone: <a href='?src=[REF(src)];rmictoggle=1'><span id="rmicstate">[radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
-						Speaker: <a href='?src=[REF(src)];rspktoggle=1'><span id="rspkstate">[radio.listening?"Engaged":"Disengaged"]</span></a><br>
+						Microphone: [radio? "<a href='?src=[REF(src)];rmictoggle=1'><span id=\"rmicstate\">[radio.broadcasting?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
+						Speaker: [radio? "<a href='?src=[REF(src)];rspktoggle=1'><span id=\"rspkstate\">[radio.listening?"Engaged":"Disengaged"]</span></a>":"Error"]<br>
 						Frequency:
-						<a href='?src=[REF(src)];rfreq=-10'>-</a>
-						<a href='?src=[REF(src)];rfreq=-2'>-</a>
-						<span id="rfreq">[format_frequency(radio.frequency)]</span>
-						<a href='?src=[REF(src)];rfreq=2'>+</a>
-						<a href='?src=[REF(src)];rfreq=10'>+</a><br>
+						[radio? "<a href='?src=[REF(src)];rfreq=-10'>-</a>":"-"]
+						[radio? "<a href='?src=[REF(src)];rfreq=-2'>-</a>":"-"]
+						<span id="rfreq">[radio?"[format_frequency(radio.frequency)]":"Error"]</span>
+						[radio? "<a href='?src=[REF(src)];rfreq=2'>+</a>":"+"]
+						[radio? "<a href='?src=[REF(src)];rfreq=10'>+</a><br>":"+"]
 						</div>
 						</div>
 						<div class='wr'>
