@@ -189,7 +189,7 @@
 	flags_inv = HIDEHAIR
 	var/hair_style = "Very Long Hair"
 	var/hair_color = "#000"
-	var/fixedcolor = TRUE //can color be changed manually?
+	var/adjustablecolor = TRUE //can color be changed manually?
 
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
@@ -221,10 +221,10 @@
 	var/new_style = input(user, "Select a hair style", "Wig Styling")  as null|anything in (GLOB.hair_styles_list - "Bald")
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
-	if(new_style)
+	if(new_style && new_style != hair_style)
 		hair_style = new_style
-		user.visible_message("<span class='notice'>[user] changes the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change the [src]'s hairstyle to [new_style].</span>")
-	if(fixedcolor)
+		user.visible_message("<span class='notice'>[user] changes \the [src]'s hairstyle to [new_style].</span>", "<span class='notice'>You change \the [src]'s hairstyle to [new_style].</span>")
+	if(adjustablecolor)
 		hair_color = input(usr,"","Choose Color",hair_color) as color|null
 	update_icon()
 
@@ -237,7 +237,7 @@
 	name = "natural wig"
 	desc = "A bunch of hair without a head attached. This one changes color to match the hair of the wearer. Nothing natural about that."
 	hair_color = "#FFF"
-	fixedcolor = FALSE
+	adjustablecolor = FALSE
 	custom_price = 25
 
 /obj/item/clothing/head/wig/natural/Initialize(mapload)

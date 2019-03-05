@@ -147,8 +147,7 @@
 						user.visible_message("<span class='notice'>[user] successfully changes [H]'s facial hair style using [src].</span>", "<span class='notice'>You successfully change [H]'s facial hair style using [src].</span>")
 						H.facial_hair_style = new_style
 						H.update_hair()
-
-					return
+						return
 				else
 					return
 
@@ -194,7 +193,7 @@
 					user.visible_message("<span class='notice'>[user] successfully changes [H]'s hairstyle using [src].</span>", "<span class='notice'>You successfully change [H]'s hairstyle using [src].</span>")
 					H.hair_style = new_style
 					H.update_hair()
-				return
+					return
 
 			else
 				if(!(HAIR in H.dna.species.species_traits))
