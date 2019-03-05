@@ -50,6 +50,7 @@
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 	var/list/death_explosion = list("devestation" = 0, "heavy" = 0, "light" = 1, "flash" = 3)
 	var/exit_delay = 50
+	var/enter_delay = 50
 	var/currently_exiting = 0 //0 normally, 1 while the pilot is trying to eject. Disables mech equiptment when true 
 	
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
@@ -847,7 +848,7 @@
 
 	visible_message("[user] starts to climb into [name].")
 
-	if(do_after(user, 40, target = src))
+	if(do_after(user, src.enter_delay, target = src))
 		if(obj_integrity <= 0)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
