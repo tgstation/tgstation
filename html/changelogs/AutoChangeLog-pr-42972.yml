@@ -1,4 +1,0 @@
-author: "TerraGS"
-delete-after: True
-changes: 
-  - code_imp: "Cleans up bot construction code"

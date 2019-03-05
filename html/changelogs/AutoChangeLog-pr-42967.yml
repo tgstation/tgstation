@@ -1,4 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - bugfix: "Fixed space dragon being able to swoop and subsequently becoming invisible"

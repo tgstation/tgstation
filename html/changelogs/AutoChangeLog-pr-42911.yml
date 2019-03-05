@@ -1,5 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - bugfix: "The centcom podlauncher UI no longer looks like shit"
-  - bugfix: "Tooltips will no longer stay around if you hover over them (which would lead to them blocking shit underneath)"
