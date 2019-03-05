@@ -44,7 +44,7 @@
 	if(!chassis || chassis.occupant != owner)
 		return
 	to_chat(owner, "You start exiting the mech.")
-	if(do_after(chassis.occupant,100, target = chassis))
+	if(do_after(chassis.occupant,chassis.exit_delay, target = chassis))
 		to_chat(owner, "You exit the mech.")
 		chassis.go_out()
 	else

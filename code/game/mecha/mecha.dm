@@ -49,6 +49,7 @@
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 	var/list/death_explosion = list("devestation" = 0, "heavy" = 0, "light" = 1, "flash" = 3)
+	var/exit_delay = 50
 	
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
