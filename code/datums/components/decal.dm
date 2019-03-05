@@ -1,6 +1,6 @@
 /datum/component/decal
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-
+	can_transfer = TRUE
 	var/cleanable
 	var/description
 	var/mutable_appearance/pic
