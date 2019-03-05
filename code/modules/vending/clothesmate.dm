@@ -56,6 +56,7 @@
 		            /obj/item/clothing/under/pants/tan = 2,
 		            /obj/item/clothing/under/pants/track = 2,
 		            /obj/item/clothing/shoes/sneakers/black = 4,
+		            /obj/item/clothing/head/wig/natural  = 4,
 		            /obj/item/clothing/under/plaid_skirt = 2,
 		            /obj/item/clothing/under/plaid_skirt/blue = 2,
 		            /obj/item/clothing/under/plaid_skirt/purple = 2,
