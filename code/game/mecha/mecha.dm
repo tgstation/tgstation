@@ -50,7 +50,7 @@
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
 	var/list/death_explosion = list("devestation" = 0, "heavy" = 0, "light" = 1, "flash" = 3)
 	var/exit_delay = 50
-	var/currently_exiting = 0
+	var/currently_exiting = 0 //0 normally, 1 while the pilot is trying to eject. Disables mech equiptment when true 
 	
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
@@ -447,6 +447,9 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
+	if(currently_exiting)
+		to_chat(user, "<span class='warning'>You cannot use the mech while exiting it.</span>")
+		return
 
 	var/mob/living/L = user
 	if(!Adjacent(target))
