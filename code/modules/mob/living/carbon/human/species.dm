@@ -1284,33 +1284,32 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(shove_dir in GLOB.cardinals) //Directional checks to make sure that we're not shoving through a windoor or something like that
 				var/target_turf = get_turf(target)
 				for(var/obj/O in target_turf)
-					if(O.flags_1 & ON_BORDER_1 && O.dir == shove_dir)
+					if(O.flags_1 & ON_BORDER_1 && O.dir == shove_dir && O.density)
 						directional_blocked = TRUE
 						break
-				if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice, and also run it in a bugged fashion
+				if(target_turf != target_shove_turf) //Make sure that we don't run the exact same check twice on the same tile
 					for(var/obj/O in target_shove_turf)
-						if(O.flags_1 & ON_BORDER_1 && O.dir == turn(shove_dir, 180))
+						if(O.flags_1 & ON_BORDER_1 && O.dir == turn(shove_dir, 180) && O.density)
 							directional_blocked = TRUE
 							break
-			if(!directional_blocked)
-				if(target_table)
-					target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-					user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
-						"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
-					target.forceMove(target_shove_turf)
-					log_combat(user, target, "shoved", "onto [target_table]")
-				else if(target_collateral_human)
-					target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-					target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-					user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
-						"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
-					log_combat(user, target, "shoved", "into [target_collateral_human.name]")
-			else
-				target.Move(target_shove_turf) //This move should be blocked anyways, this fixes some odd behavior with things like doors and grills
+			if((!target_table && !target_collateral_human) || directional_blocked)
 				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name], knocking them down!</span>",
 					"<span class='danger'>You shove [target.name], knocking them down!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "knocking them down")
+			else if(target_table)
+				target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
+					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
+				target.forceMove(target_shove_turf)
+				log_combat(user, target, "shoved", "onto [target_table]")
+			else if(target_collateral_human)
+				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
+				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
+					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
+
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
