@@ -36,7 +36,7 @@
 					var/datum/reagent/pickedreagent = I
 					if(istype(pickedreagent, /datum/reagent/toxin))
 						var/datum/reagent/toxin/found_toxin = pickedreagent
-						var/thisamount = C.reagents.get_reagent_amount(initial(found_toxin.id))
+						var/thisamount = round(C.reagents.get_reagent_amount(initial(found_toxin.id)),0.01) //no rounding errors
 						if (thisamount <= toxTolerance && thisamount)
 							C.reagents.remove_reagent(initial(found_toxin.id), 1)
 						else
