@@ -43,8 +43,12 @@
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
-	chassis.go_out()
-
+	to_chat(owner, "You start exiting the mech.")
+	if(do_after(chassis.occupant,100, target = chassis))
+		to_chat(owner, "You exit the mech.")
+		chassis.go_out()
+	else
+		to_chat(owner, "You stop exiting the mech.")
 
 /datum/action/innate/mecha/mech_toggle_internals
 	name = "Toggle Internal Airtank Usage"
