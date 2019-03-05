@@ -848,7 +848,7 @@
 
 	visible_message("[user] starts to climb into [name].")
 
-	if(do_after(user, src.enter_delay, target = src))
+	if(do_after(user, enter_delay, target = src))
 		if(obj_integrity <= 0)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
