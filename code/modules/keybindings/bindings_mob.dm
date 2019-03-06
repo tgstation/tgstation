@@ -10,14 +10,14 @@
 			else
 				stop_pulling()
 			return
-		if("Insert", "G")
+		if("Insert", "F")
 			var/list/limb_choices = list(
-			"chest" = image(icon = 'icons/mob/radial.dmi', icon_state = "chest"),
+			"head" = image(icon = 'icons/mob/radial.dmi', icon_state = "head"),
 			"left arm" = image(icon = 'icons/mob/radial.dmi', icon_state = "l_arm"),
 			"left leg" = image(icon = 'icons/mob/radial.dmi', icon_state = "l_leg"),
+			"chest" = image(icon = 'icons/mob/radial.dmi', icon_state = "chest"),
 			"right leg" = image(icon = 'icons/mob/radial.dmi', icon_state = "r_leg"),
-			"right arm" = image(icon = 'icons/mob/radial.dmi', icon_state = "r_arm"),
-			"head" = image(icon = 'icons/mob/radial.dmi', icon_state = "head"),
+			"right arm" = image(icon = 'icons/mob/radial.dmi', icon_state = "r_arm")
 			)
 			var/chosen = show_radial_menu(src, src, limb_choices)
 			switch(chosen)
@@ -34,8 +34,8 @@
 				if("head")
 					user.body_toggle_head()
 			return
-		if("F")
-			a_intent_change(INTENT_HOTKEY_LEFT)
+		if("G")
+			a_intent_change(INTENT_HOTKEY_RIGHT)
 			return
 		if("X", "Northeast") // Northeast is Page-up
 			swap_hand()
