@@ -80,15 +80,14 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 
-	var/silicon_pilot = 0 //set to true if an AI or MMI is piloting.
+	var/silicon_pilot = FALSE //set to true if an AI or MMI is piloting.
 
 	var/enter_delay = 40 //Time taken to enter the mech
-	var/enclosed = 1 //Set to zero for open-cockpit mechs
-	var/silicon_icon_state = "" //if the mech has a different icon when piloted by an AI or MMI
+	var/enclosed = TRUE //Set to false for open-cockpit mechs
+	var/silicon_icon_state = null //if the mech has a different icon when piloted by an AI or MMI
 
 	//Action datums
 	var/datum/action/innate/mecha/mech_eject/eject_action = new
-//	if (enclosed)
 	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
 	var/datum/action/innate/mecha/mech_cycle_equip/cycle_action = new
 	var/datum/action/innate/mecha/mech_toggle_lights/lights_action = new
@@ -134,7 +133,7 @@
 	icon_state += "-open"
 	add_radio()
 	add_cabin()
-	if (enclosed == 1)
+	if (enclosed)
 		add_airtank()
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
@@ -288,10 +287,11 @@
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			to_chat(user, "[icon2html(ME, user)] \A [ME].")
-	if(!enclosed && !silicon_pilot && occupant && occupant != user)
-		to_chat(user, "You can see [occupant] inside.")
-	if(!enclosed && silicon_pilot)
-		to_chat(user, "[src] appears to be piloting itself...")
+	if(!enclosed)
+	    if(silicon_pilot)
+        	to_chat(user, "[src] appears to be piloting itself...")
+    	else if(occupant && occupant != user) //!silicon_pilot implied
+	        to_chat(user, "You can see [occupant] inside.")
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -424,7 +424,7 @@
 /obj/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
 	if(speaker == occupant)
-		if(radio && radio.broadcasting)
+		if(radio?.broadcasting)
 			radio.talk_into(speaker, text, , spans, message_language)
 		//flick speech bubble
 		var/list/speech_bubble_recipients = list()
@@ -500,7 +500,7 @@
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
-	if (internal_tank && internal_tank.disconnect()) // Something moved us and broke connection
+	if (internal_tank?.disconnect()) // Something moved us and broke connection
 		occupant_message("<span class='warning'>Air port connection teared off!</span>")
 		log_message("Lost connection to gas port.", LOG_MECHA)
 
@@ -526,7 +526,7 @@
 		user.forceMove(get_turf(src))
 		to_chat(user, "<span class='notice'>You climb out from [src].</span>")
 		return 0
-	if(internal_tank && internal_tank.connected_port)
+	if(internal_tank?.connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time

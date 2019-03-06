@@ -17,9 +17,9 @@
 	var/list/cargo = new
 	var/cargo_capacity = 15
 	var/hides = 0
-	enclosed = 0 //Normal ripley has an open cockpit design
+	enclosed = FALSE //Normal ripley has an open cockpit design
 	enter_delay = 10 //can enter in a quarter of the time of other mechs
-	opacity = 0 //Ripley has a window
+	opacity = FALSE //Ripley has a window
 
 /obj/mecha/working/ripley/Move()
 	. = ..()
@@ -81,10 +81,10 @@
 	step_in = 4
 	armor = list("melee" = 40, "bullet" = 20, "laser" = 10, "energy" = 20, "bomb" = 40, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	wreckage = /obj/structure/mecha_wreckage/ripley/mkii
-	enclosed = 1
+	enclosed = TRUE
 	enter_delay = 40
-	silicon_icon_state = ""
-	opacity = 1
+	silicon_icon_state = null
+	opacity = TRUE
 
 /obj/mecha/working/ripley/firefighter
 	desc = "Autonomous Power Loader Unit MK-III. This model is refitted with a pressurized cabin and additional thermal protection."
@@ -100,10 +100,10 @@
 	armor = list("melee" = 40, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	max_equip = 5 // More armor, less tools
 	wreckage = /obj/structure/mecha_wreckage/ripley/firefighter
-	enclosed = 1
+	enclosed = TRUE
 	enter_delay = 40
-	silicon_icon_state = ""
-	opacity = 1
+	silicon_icon_state = null
+	opacity = TRUE
 
 
 /obj/mecha/working/ripley/deathripley
@@ -118,10 +118,10 @@
 	lights_power = 7
 	wreckage = /obj/structure/mecha_wreckage/ripley/deathripley
 	step_energy_drain = 0
-	enclosed = 1
+	enclosed = TRUE
 	enter_delay = 40
-	silicon_icon_state = ""
-	opacity = 1
+	silicon_icon_state = null
+	opacity = TRUE
 
 /obj/mecha/working/ripley/deathripley/Initialize()
 	. = ..()
