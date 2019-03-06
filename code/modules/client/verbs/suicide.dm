@@ -73,6 +73,10 @@
 				if(damagetype & MANUAL_SUICIDE)	//Assume the object will handle the death.
 					return
 
+				if(damagetype & MANUAL_SUICIDE_NONLETHAL)
+					set_suicide(FALSE)
+					return
+
 				//If something went wrong, just do normal oxyloss
 				if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS) ))
 					adjustOxyLoss(max(200 - getToxLoss() - getFireLoss() - getBruteLoss() - getOxyLoss(), 0))
