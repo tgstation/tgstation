@@ -163,7 +163,7 @@
 /atom/movable/proc/Move_Pulled(atom/A)
 	if(!pulling)
 		return
-	if(pulling.anchored || !pulling.Adjacent(src))
+	if(pulling.anchored || pulling.move_resist > move_force || !pulling.Adjacent(src))
 		stop_pulling()
 		return
 	if(isliving(pulling))
@@ -190,7 +190,7 @@
 			log_game("DEBUG:[src]'s pull on [pullee] wasn't broken despite [pullee] being in [pullee.loc]. Pull stopped manually.")
 			stop_pulling()
 			return
-		if(pulling.anchored)
+		if(pulling.anchored || pulling.move_resist > move_force)
 			stop_pulling()
 			return
 	if(pulledby && moving_diagonally != FIRST_DIAG_STEP && get_dist(src, pulledby) > 1)		//separated from our puller and not in the middle of a diagonal move.
