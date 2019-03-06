@@ -5,8 +5,6 @@
 	weight = 8
 	earliest_start = 70 MINUTES
 	min_players = 20
-
-/datum/round_event/space_dragon
 	
 /datum/round_event/ghost_role/space_dragon
 	minimum_required = 1
