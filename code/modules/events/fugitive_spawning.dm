@@ -12,23 +12,30 @@
 	fakeable = FALSE
 
 /datum/round_event/ghost_role/fugitives/spawn_role()
-	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
-	if(candidates.len < 4)//reminder to set this after the backstory or enable backstory choices with the amount of candidates
-		return NOT_ENOUGH_PLAYERS
-
 	var/turf/landing_turf = pick(GLOB.xeno_spawn)
 	if(!landing_turf)
 		message_admins("No valid spawn locations found, aborting...")
 		return MAP_ERROR
 
-	var/backstory = pick(list("prisoner", "cultists", "waldo", "synth"))
+	var/list/possible_backstories = list()
+	var/list/candidates = get_candidates(ROLE_TRAITOR, null, ROLE_TRAITOR)
+	if(candidates.len >= 1) //solo refugees
+		possible_backstories += "waldo"
+	if(candidates.len >= 4)//group refugees
+		possible_backstories += "prisoner"
+		possible_backstories += "cultists"
+		possible_backstories += "synth"
+	if(!possible_backstories.len)
+		return NOT_ENOUGH_PLAYERS
+
+	var/backstory = pick(possible_backstories)
 	var/member_size = 3
 	var/leader
 	switch(backstory)
 		if("cultists" || "synth")
 			leader = pick_n_take(candidates)
 		if("waldo")
-			member_size = 0 //no leader, so it will be bumped to the one and only waldo
+			member_size = 0 //solo refugees have no leader so the member_size gets bumped to one a bit later
 	var/list/members = list()
 	var/list/spawned_mobs = list()
 	if(isnull(leader))
@@ -97,7 +104,7 @@
 /datum/round_event/ghost_role/fugitives/proc/spawn_hunters()
 	var/backstory = pick("space cop", "russian")
 	var/static/list/hunter_ship_types = list(
-		"space cop"	= /datum/map_template/space_cop_ship,
+		"space cop"		= /datum/map_template/space_cop_ship,
 		"russian"		= /datum/map_template/russian_ship)
 
 	var/datum/map_template/ship = hunter_ship_types[backstory]
