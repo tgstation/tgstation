@@ -140,7 +140,7 @@
 	for(var/obj/machinery/computer/cloning/recordkeeper in GLOB.machines) //just 100% making sure they aren't coming back from the absolutely-removed-from-the-freaking-universe-forever zone
 		for(var/datum/data/record/R in recordkeeper.records)
 			if(R.fields["name"] == M.real_name)
-				records.Remove(R)
+				recordkeeper.records.Remove(R)
 				qdel(R)
 	qdel(target)
 	return ..()
