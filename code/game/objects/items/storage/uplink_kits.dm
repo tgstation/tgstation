@@ -1,3 +1,4 @@
+
 /obj/item/storage/box/syndicate
 
 /obj/item/storage/box/syndicate/bundle_A/PopulateContents()
