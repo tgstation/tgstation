@@ -78,11 +78,10 @@
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/datum/component/waddle
 	var/enabled_waddle = FALSE
-	datum_outputs = list(/datum/outputs/clownstep)
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
-	AddComponent(/datum/component/squeak, datum_outputs[1], 50)
+	AddComponent(/datum/component/squeak/clownstep, 50)
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
