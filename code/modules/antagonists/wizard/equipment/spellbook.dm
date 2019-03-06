@@ -34,8 +34,11 @@
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
 		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
 			if(aspell.spell_level >= aspell.level_max)
-				to_chat(user,  "<span class='warning'>This spell cannot be improved further.</span>")
-				return FALSE
+				if(!aspell.maxlevel_upgrade)
+					to_chat(user,  "<span class='warning'>This spell cannot be improved further.</span>")
+					return FALSE
+				else
+					to_chat(user,  "<span class='warning'>You have further improved [aspell.name] into a new form!</span>")
 			else
 				aspell.name = initial(aspell.name)
 				aspell.spell_level++
@@ -56,7 +59,10 @@
 						to_chat(user, "<span class='notice'>You have further improved [aspell.name] into Instant [aspell.name].</span>")
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
-					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
+					if(!aspell.maxlevel_upgrade)
+						to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
+					else
+						to_chat(user, "<span class='notice'>This spell cannot be strengthened any further and will instead transmute it into a more powerful version.</span>")
 				SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[aspell.spell_level]"))
 				return TRUE
 	//No same spell found - just learn it

@@ -62,6 +62,7 @@
 	clothes_req = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
+	maxlevel_upgrade = /obj/effect/proc_holder/spell/targeted/touch/AWOL
 	action_icon_state = "gib"
 
 /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
@@ -76,3 +77,16 @@
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/awol
+	name = "AWOL"
+	desc = "This spell calls upon extremely powerful magic to put a target into the absolutely-removed-from-the-freaking-universe-forever zone."
+	hand_path = /obj/item/melee/touch_attack/awol
+
+	school = "evocation"
+	charge_max = 600
+	clothes_req = TRUE
+	cooldown_min = 200 //100 deciseconds reduction per rank
+
+	maxlevel_upgrade = /obj/effect/proc_holder/spell/targeted/touch/AWOL
+	action_icon_state = "gib"

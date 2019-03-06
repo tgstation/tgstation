@@ -107,3 +107,40 @@
 	M.Stun(40)
 	M.petrify()
 	return ..()
+
+/obj/item/melee/touch_attack/awol
+	name = "\improper AWOL"
+	desc = "Let them complain. As long as you have the hand, you can do anything you want."
+	catchphrase = "AVEHAY OUYAY EENSAY ISTHAY ANMAY!!"
+	on_use_sound = 'sound/magic/fleshtostone.ogg'
+	icon_state = "fleshtostone"
+	item_state = "fleshtostone"
+
+/obj/item/melee/touch_attack/awol/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || !isliving(target) || !iscarbon(user))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE))
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='notice'>You can't get the words out!</span>")
+		return
+	var/mob/living/M = target
+	if(M.anti_magic_check())
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			new /obj/effect/immortality_talisman/void(get_turf(C), C) //switch this to the AWOL version
+		else
+			to_chat(user, "<span class='warning'>The spell can't seem to affect [M]!</span>")
+			to_chat(M, "<span class='warning'>For a moment, you didn't feel all there!</span>")
+		..()
+		return
+
+	//effect of their outline slowly fading away
+	for(var/obj/machinery/computer/cloning/recordkeeper in GLOB.machines) //just 100% making sure they aren't coming back from the absolutely-removed-from-the-freaking-universe-forever zone
+		for(var/datum/data/record/R in recordkeeper.records)
+			if(R.fields["name"] == M.real_name)
+				records.Remove(R)
+				qdel(R)
+	qdel(target)
+	return ..()
