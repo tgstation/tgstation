@@ -137,10 +137,13 @@
 		return
 
 	//effect of their outline slowly fading away
-	for(var/obj/machinery/computer/cloning/recordkeeper in GLOB.machines) //just 100% making sure they aren't coming back from the absolutely-removed-from-the-freaking-universe-forever zone
+	for(var/obj/machinery/computer/cloning/recordkeeper in GLOB.machines)//removes from all cloning machines- perhaps something with the datacore is better?
 		for(var/datum/data/record/R in recordkeeper.records)
 			if(R.fields["name"] == M.real_name)
 				recordkeeper.records.Remove(R)
 				qdel(R)
+	var/datum/data/record/generalrecord = find_record("name", M.real_name, GLOB.data_core.general)//removes from the manifest
+	if(generalrecord)
+		qdel(generalrecord)
 	qdel(target)
 	return ..()
