@@ -42,7 +42,6 @@
 	var/list/no_drops = list()
 	no_drops += H.get_item_by_slot(SLOT_SHOES)
 	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_EARS)
 	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
 	no_drops += H.get_item_by_slot(SLOT_HEAD)
 	no_drops += H.get_item_by_slot(SLOT_GLASSES)
@@ -73,3 +72,12 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_pocket = /obj/item/ammo_box/magazine/m45
 	r_pocket = /obj/item/ammo_box/magazine/m45
+	id = /obj/item/card/id
+
+/datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Police Officer"
+	W.registered_name = H.real_name
+	W.update_label()
