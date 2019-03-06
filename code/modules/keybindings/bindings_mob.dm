@@ -11,7 +11,28 @@
 				stop_pulling()
 			return
 		if("Insert", "G")
-			a_intent_change(INTENT_HOTKEY_RIGHT)
+			var/list/limb_choices = list(
+			"chest" = image(icon = 'icons/mob/radial.dmi', icon_state = "chest"),
+			"left arm" = image(icon = 'icons/mob/radial.dmi', icon_state = "l_arm"),
+			"left leg" = image(icon = 'icons/mob/radial.dmi', icon_state = "l_leg"),
+			"right leg" = image(icon = 'icons/mob/radial.dmi', icon_state = "r_leg"),
+			"right arm" = image(icon = 'icons/mob/radial.dmi', icon_state = "r_arm"),
+			"head" = image(icon = 'icons/mob/radial.dmi', icon_state = "head"),
+			)
+			var/chosen = show_radial_menu(src, src, limb_choices)
+			switch(chosen)
+				if("chest")
+					user.body_chest()
+				if("left arm")
+					user.body_l_arm()
+				if("left leg")
+					user.body_l_leg()
+				if("right leg")
+					user.body_r_leg()
+				if("right arm")
+					user.body_r_arm()
+				if("head")
+					user.body_toggle_head()
 			return
 		if("F")
 			a_intent_change(INTENT_HOTKEY_LEFT)
