@@ -1,0 +1,4 @@
+author: "Denton"
+delete-after: True
+changes: 
+  - balance: "Explosive lances no longer explode when thrown (but still do with melee attacks)."
