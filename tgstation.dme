@@ -74,6 +74,7 @@
 #include "code\__DEFINES\pinpointers.dm"
 #include "code\__DEFINES\pipe_construction.dm"
 #include "code\__DEFINES\preferences.dm"
+#include "code\__DEFINES\procpath.dm"
 #include "code\__DEFINES\profile.dm"
 #include "code\__DEFINES\qdel.dm"
 #include "code\__DEFINES\radiation.dm"
