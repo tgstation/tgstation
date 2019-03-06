@@ -288,10 +288,10 @@
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			to_chat(user, "[icon2html(ME, user)] \A [ME].")
 	if(!enclosed)
-	    if(silicon_pilot)
-        	to_chat(user, "[src] appears to be piloting itself...")
-    	else if(occupant && occupant != user) //!silicon_pilot implied
-	        to_chat(user, "You can see [occupant] inside.")
+		if(silicon_pilot)
+			to_chat(user, "[src] appears to be piloting itself...")
+		else if(occupant && occupant != user) //!silicon_pilot implied
+			to_chat(user, "You can see [occupant] inside.")
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
