@@ -242,7 +242,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/powered/beach)
 "aX" = (
-/obj/structure/closet/secure_closet/freezer/meat,
+/obj/structure/closet/secure_closet/freezer/meat/open,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "aY" = (

@@ -5017,7 +5017,7 @@
 /turf/open/floor/wood,
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "my" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /obj/item/reagent_containers/food/condiment/enzyme,
 /obj/item/reagent_containers/food/snacks/chocolatebar,
 /obj/effect/decal/cleanable/dirt,
