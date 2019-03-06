@@ -11,6 +11,7 @@
 				stop_pulling()
 			return
 		if("Insert", "F")
+			playsound(src, 'sound/effects/vats.ogg', 100, TRUE, -1)
 			var/list/limb_choices = list(
 			"head" = image(icon = 'icons/mob/radial.dmi', icon_state = "head"),
 			"left arm" = image(icon = 'icons/mob/radial.dmi', icon_state = "l_arm"),
