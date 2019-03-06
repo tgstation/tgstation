@@ -48,8 +48,8 @@
 	var/lights = FALSE
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
-	var/list/death_explosion = list("devestation" = 0, "heavy" = 0, "light" = 1, "flash" = 3)
-	var/exit_delay = 50
+	var/destruction_sleep_duration = 30
+	var/exit_delay = 30
 	var/currently_exiting = 0 //0 normally, 1 while the pilot is trying to eject. Disables mech equiptment when true 
 	
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
@@ -152,6 +152,7 @@
 	return cell
 
 /obj/mecha/Destroy()
+	occupant.SetSleeping(destruction_sleep_duration)
 	go_out()
 	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
@@ -161,7 +162,6 @@
 		else
 			M.forceMove(loc)
 	if(wreckage)
-		explosion(get_turf(src), src.death_explosion["devestation"], src.death_explosion["heavy"], src.death_explosion["light"], src.death_explosion["flash"])	
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
