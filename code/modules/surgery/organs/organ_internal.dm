@@ -5,7 +5,7 @@
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
-	var/broken_cyber_organ = TRUE //if the organ stopped working.
+	var/broken_cyber_organ = FALSE //if the organ stopped working.
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
