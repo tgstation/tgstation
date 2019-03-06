@@ -1,0 +1,7 @@
+author: "as334"
+delete-after: True
+changes: 
+  - rscadd: "Fusion got reworked again. Start it using 250+ moles of plasma and carbon dioxide, with tritium, all at 10000 degrees."
+  - rscadd: "Fusion undergoes a chaotic reaction, and will release energy(or absorb it with high instabilities), as well as releasing waste gases."
+  - rscadd: "To accommodate fusion, filters have been changed to move gas in the same way as volume pumps."
+  - rscadd: "As well, hitting a volume pump with a multitool will overclock it, allowing it to move gases to higher than normal pressures at the cost of leaking some of the contents."

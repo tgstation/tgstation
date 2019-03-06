@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Adminhealing someone in crit will now properly clear the heartbeat sound."

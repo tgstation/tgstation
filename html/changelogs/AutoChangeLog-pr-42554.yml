@@ -1,0 +1,5 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "New event: Fugitives!"
+  - rscadd: "Fugitives will land on the station, and have to prepare for the hunters looking for them!"
