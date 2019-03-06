@@ -1,0 +1,4 @@
+author: "py01"
+delete-after: True
+changes: 
+  - tweak: "Removed stamina damage from Mech Scattershot, added a little more brute."
