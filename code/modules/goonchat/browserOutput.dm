@@ -120,9 +120,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 		return
 	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
 
-	if(extra_data && extra_data.len)
+	if(extra_data?.len)
 		music_data["musicRate"] = extra_data["pitch"]
-		music_data["musicSeek"] = extra_data["seek"]
+		music_data["musicSeek"] = extra_data["start"]
+		music_data["musicHalt"] = extra_data["end"]
 
 	ehjax_send(data = music_data)
 
