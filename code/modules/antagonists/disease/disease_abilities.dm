@@ -20,6 +20,8 @@ new /datum/disease_ability/symptom/medium/vomit,
 new /datum/disease_ability/symptom/medium/voice_change,
 new /datum/disease_ability/symptom/medium/visionloss,
 new /datum/disease_ability/symptom/medium/deafness,
+new /datum/disease_ability/symptom/medium/belch,
+new /datum/disease_ability/symptom/medium/observer,
 new /datum/disease_ability/symptom/powerful/narcolepsy,
 new /datum/disease_ability/symptom/medium/fever,
 new /datum/disease_ability/symptom/medium/shivering,
@@ -38,6 +40,9 @@ new /datum/disease_ability/symptom/powerful/fire,
 new /datum/disease_ability/symptom/powerful/flesh_eating,
 new /datum/disease_ability/symptom/powerful/genetic_mutation,
 new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
+new /datum/disease_ability/symptom/powerful/plasma_flatulence,
+new /datum/disease_ability/symptom/powerful/scan_defense,
+new /datum/disease_ability/symptom/powerful/explosive_death,
 new /datum/disease_ability/symptom/powerful/heal/starlight,
 new /datum/disease_ability/symptom/powerful/heal/oxygen,
 new /datum/disease_ability/symptom/powerful/heal/chem,
@@ -47,7 +52,8 @@ new /datum/disease_ability/symptom/powerful/heal/water,
 new /datum/disease_ability/symptom/powerful/heal/plasma,
 new /datum/disease_ability/symptom/powerful/heal/radiation,
 new /datum/disease_ability/symptom/powerful/heal/coma,
-new /datum/disease_ability/symptom/powerful/heal/youth
+new /datum/disease_ability/symptom/powerful/heal/youth,
+new /datum/disease_ability/symptom/powerful/heal/surface
 ))
 
 /datum/disease_ability
@@ -363,6 +369,12 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 /datum/disease_ability/symptom/medium/deafness
 	symptoms = list(/datum/symptom/deafness)
 
+/datum/disease_ability/symptom/medium/belch
+	symptoms = list(/datum/symptom/gas/belch)
+
+/datum/disease_ability/symptom/medium/observer
+	symptoms = list(/datum/symptom/observer)
+
 /datum/disease_ability/symptom/medium/fever
 	symptoms = list(/datum/symptom/fever)
 
@@ -432,6 +444,15 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 /datum/disease_ability/symptom/powerful/narcolepsy
 	symptoms = list(/datum/symptom/narcolepsy)
 
+/datum/disease_ability/symptom/powerful/plasma_flatulence
+	symptoms = list(/datum/symptom/gas/plasma_flatulence)
+
+/datum/disease_ability/symptom/powerful/explosive_death
+	symptoms = list(/datum/symptom/explosive_death)
+
+/datum/disease_ability/symptom/powerful/scan_defense
+	symptoms = list(/datum/symptom/scan_defense)
+
 /****HEALING SUBTYPE****/
 
 /datum/disease_ability/symptom/powerful/heal/starlight
@@ -467,3 +488,6 @@ new /datum/disease_ability/symptom/powerful/heal/youth
 
 /datum/disease_ability/symptom/powerful/heal/youth
 	symptoms = list(/datum/symptom/youth)
+
+/datum/disease_ability/symptom/powerful/heal/surface
+	symptoms = list(/datum/symptom/heal/surface)
