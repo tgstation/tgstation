@@ -1,5 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "rcd works when you hit catwalks/lattice"
-  - bugfix: "rcd works when you hit foamed floor"
