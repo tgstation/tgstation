@@ -32,6 +32,10 @@
 		S = new spell_type()
 	//Check if we got the spell already
 	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
+		if(S.maxlevel_upgrade)
+			if(initial(S.maxlevel_upgrade.name) == initial(aspell.name))//essentially, you can't buy it because you already upgraded it to it's full form.
+				to_chat(user,  "<span class='warning'>You already have the legendary variant of this spell!</span>")
+				return FALSE
 		if(initial(S.name) == initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
 			if(aspell.spell_level >= aspell.level_max)
 				if(!aspell.maxlevel_upgrade)
@@ -39,6 +43,10 @@
 					return FALSE
 				else
 					to_chat(user,  "<span class='warning'>You have further improved [aspell.name] into a new form!</span>")
+					aspell.maxlevel_upgrade = new
+					user.mind.AddSpell(aspell.maxlevel_upgrade)
+					user.mind.spell_list.Remove(aspell)
+					qdel(aspell)
 			else
 				aspell.name = initial(aspell.name)
 				aspell.spell_level++
