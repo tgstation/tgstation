@@ -155,25 +155,21 @@
 						build_step++
 
 		if(7)
-			var/newname = ""
 			switch(lasercolor)
 				if("b")
 					if(!istype(W, /obj/item/gun/energy/laser/bluetag))
 						return
-					newname = "bluetag ED-209 assembly"
 				if("r")
 					if(!istype(W, /obj/item/gun/energy/laser/redtag))
 						return
-					newname = "redtag ED-209 assembly"
 				if("")
-					if(!istype(W, /obj/item/gun/energy/e_gun/advtaser))
+					if(!istype(W, /obj/item/gun/energy/e_gun/dragnet))
 						return
-					newname = "taser ED-209 assembly"
 				else
 					return
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			name = newname
+			name = "[W.name] ED-209 assembly"
 			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 			item_state = "[lasercolor]ed209_taser"
 			icon_state = "[lasercolor]ed209_taser"
@@ -185,7 +181,7 @@
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					name = "armed [name]"
-					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
+					to_chat(user, "<span class='notice'>The gun is now securely fastened to the frame.</span>")
 					build_step++
 
 		if(9)
