@@ -68,14 +68,14 @@
 	if(src.notransform)
 		to_chat(src, "<span class='warning'>Are you sure you're done sapping your last target?</span>")
 		return 0
-	T.visible_message("<span class='warning'>[T] starts to shimmer...</span>")
+	T.visible_message("<span class='warning'>Is [T], shimmering..?</span>")
 	if(!do_after(src, 20, target = T))
 		return
 	if(!T)
 		return
 	forceMove(B.loc)
 	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] rises out of [T]!</B></span>")
+	src.visible_message("<span class='warning'><B>Do I see [src] rising out of [T]!?</B></span>")
 	exit_blood_effect()
 	qdel(src.holder)
 	src.holder = null
@@ -99,7 +99,7 @@
 /mob/living/simple_animal/question_elemental/bloodpool_sink()
 	var/turf/mobloc = get_turf(src.loc)
 
-	src.visible_message("<span class='warning'>[src] sinks into the [mobloc]!</span>")
+	src.visible_message("<span class='warning'>Did [src] just sink into [mobloc]!?</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 50, 1, -1)
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
