@@ -56,24 +56,23 @@
 
 /mob/living/simple_animal/question_elemental/treat_message(message)
 	message = ..(message)
-	message = " [message] "
-	//only questions allowed thanks
-	message = replacetext(message,"... ","...? ")
-	message = replacetext(message,"!! ","!? ")
-	message = replacetext(message,"! ","!? ")
-	message = replacetext(message,". ","? ")
-	return trim(message)
+	//how could a question elemental say something that isn't a question? Does that make any sort of sense to you?
+	var/regex/reg = regex("?")
+	if(!findtext(copytext(message, -1), stun_words))//the last character must be a question mark
+		to_chat(src, "<span class='warning'>Are you sure that's a question?</span>")
+		return
+	return message
 
 /mob/living/simple_animal/question_elemental/phasein(turf/T)
 	if(src.notransform)
-		to_chat(src, "<span class='warning'>Are you sure you're done sapping your last target?</span>")
+		to_chat(src, "<span class='warning'>Are you sure you're done feasting on your last target?</span>")
 		return 0
-	T.visible_message("<span class='warning'>Is [T], shimmering..?</span>")
+	T.visible_message("<span class='warning'>Is [T] shimmering..?</span>")
 	if(!do_after(src, 20, target = T))
 		return
 	if(!T)
 		return
-	forceMove(B.loc)
+	forceMove(T)
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>Do I see [src] rising out of [T]!?</B></span>")
 	exit_blood_effect()
@@ -125,19 +124,16 @@
 	var/kidnapped = FALSE
 
 	if(victim.stat == CONSCIOUS)
-		src.visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
-	else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
-		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
+		src.visible_message("<span class='warning'>[victim] hits the floor, and yet is not dragged in?</span>", null, "<span class='notice'>You hear struggling?</span>")
 	else
 		victim.forceMove(src)
 		victim.emote("scream")
-		src.visible_message("<span class='warning'><b>[src] drags [victim] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>")
+		src.visible_message("<span class='warning'><b>Did [src] just drag [victim] into the floor!?</b></span>")
 		kidnapped = TRUE
 
 	if(kidnapped)
-		var/success = bloodcrawl_consume(victim)
-		if(!success)
-			to_chat(src, "<span class='danger'>You happily devour... nothing? Your meal vanished at some point!</span>")
+		if(!bloodcrawl_consume(victim))
+			to_chat(src, "<span class='danger'>Where did your meal go!?</span>")
 	return 1
 
 /obj/effect/proc_holder/spell/targeted/questionwalk
@@ -158,15 +154,14 @@
 	var/ready_to_emerge = FALSE
 
 /obj/effect/proc_holder/spell/targeted/questionwalk/cast(list/targets,mob/living/user = usr)
-	var/L = user.loc
 	if(istype(user.loc, /obj/effect/dummy/phased_mob/question))
-		to_chat(user, "<span class='warning'>Ask a question to go back to questionwalking?</span>")
+		to_chat(user, "<span class='warning'>Have you asked a question to go back to questionwalking yet?</span>")
 		return
 	else
 		if(ready_to_emerge)
 			user.phasein(get_turf(user))
 		else
-			to_chat(user, "<span class='warning'>Nobody has asked a non-question in the last 5 seconds?</span>")
+			to_chat(user, "<span class='warning'>Are you sure someone has asked a question in the last 5 seconds?</span>")
 
 /obj/effect/dummy/phased_mob/question
 	name = "anomaly?"
