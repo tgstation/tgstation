@@ -1,0 +1,11 @@
+author: "actioninja"
+delete-after: True
+changes: 
+  - balance: "New NT regulations have replaced the standard issue hybrid taser with a pure disabler."
+  - balance: "Also fuck the stun mode on the advanced energy gun who thought that was a good idea."
+  - balance: "The hos's laser can only fire three taser shots instead of five."
+  - balance: "Energy crossbows have been reworked. They no longer paralyze, but instead heavily blur vision, apply a huge burst of stamina damage, and knock you on your ass for one second. Two shots is enough to down someone from stamina crit on both the mini and large versions. The blur lasts for 10 seconds."
+  - balance: "The price of the mini ebow has been reduced to 10TC to compensate for this weaker effect."
+  - tweak: "The ED-209 is now built with a DRAGnet and fires netshot instead of taser bolts."
+  - balance: "Stunshells can no longer be produced in any lathe."
+  - balance: "The \"pacifier\" mech taser can no longer be built."
