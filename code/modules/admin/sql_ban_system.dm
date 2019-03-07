@@ -286,7 +286,9 @@
 		return
 	var/list/error_state = list()
 	var/player_key
+	var/ip_check = FALSE
 	var/player_ip
+	var/cid_check = FALSE
 	var/player_cid
 	var/use_last_connection = FALSE
 	var/applies_to_admins = FALSE
@@ -308,20 +310,26 @@
 		player_key = href_list["keytext"]
 		if(!player_key)
 			error_state += "Key was ticked but none was provided."
+	if(href_list["ipcheck"])
+		ip_check = TRUE
+	if(href_list["cidcheck"])
+		cid_check = TRUE
 	if(href_list["lastconn"])
 		if(player_key)
 			use_last_connection = TRUE
 	else
-		if(href_list["ipcheck"])
-			player_ip = href_list["iptext"] || ""
+		if(ip_check)
+			player_ip = href_list["iptext"]
 			if(!player_ip && !use_last_connection)
 				error_state += "IP was ticked but none was provided."
-		if(href_list["cidcheck"])
-			player_cid = href_list["cidtext"] || ""
+		if(cid_check)
+			player_cid = href_list["cidtext"]
 			if(!player_cid && !use_last_connection)
 				error_state += "CID was ticked but none was provided."
 	if(!use_last_connection && !player_ip && !player_cid && !player_key)
 		error_state += "At least a key, IP or CID must be provided."
+	if(use_last_connection && !ip_check && !cid_check)
+		error_state += "Use last connection was ticked, but neither IP nor CID was."
 	if(href_list["applyadmins"])
 		applies_to_admins = TRUE
 	switch(href_list["radioduration"])
@@ -383,11 +391,11 @@
 		to_chat(usr, "<span class='danger'>Ban not [edit_id ? "edited" : "created"] because the following errors were present:\n[error_state.Join("\n")]</span>")
 		return
 	if(edit_id)
-		edit_ban(edit_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
+		edit_ban(edit_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, page, admin_key, changes)
 	else
-		create_ban(player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
+		create_ban(player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, roles_to_ban)
 
-/datum/admins/proc/create_ban(player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, list/roles_to_ban)
+/datum/admins/proc/create_ban(player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, severity, reason, list/roles_to_ban)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -404,9 +412,9 @@
 		if(query_create_ban_get_player.NextRow())
 			player_key = query_create_ban_get_player.item[1]
 			if(use_last_connection)
-				if (!isnull(player_ip))
+				if(ip_check)
 					player_ip = query_create_ban_get_player.item[2]
-				if (!isnull(player_cid))
+				if(cid_check)
 					player_cid = query_create_ban_get_player.item[3]
 		else
 			if(use_last_connection)
@@ -634,7 +642,7 @@
 			to_chat(i, "<span class='boldannounce'>[usr.client.key] has removed a ban from [role] for your IP or CID.")
 	unban_panel(player_key, admin_key, player_ip, player_cid, page)
 
-/datum/admins/proc/edit_ban(ban_id, player_key, player_ip, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
+/datum/admins/proc/edit_ban(ban_id, player_key, ip_check, player_ip, cid_check, player_cid, use_last_connection, applies_to_admins, duration, interval, reason, mirror_edit, old_key, old_ip, old_cid, old_applies, admin_key, page, list/changes)
 	if(!check_rights(R_BAN))
 		return
 	if(!SSdbcore.Connect())
@@ -654,13 +662,19 @@
 			player_key = query_edit_ban_get_player.item[1]
 			bantime = query_edit_ban_get_player.item[2]
 			if(use_last_connection)
-				player_ip = query_edit_ban_get_player.item[3]
-				player_cid = query_edit_ban_get_player.item[4]
+				if(ip_check)
+					player_ip = query_edit_ban_get_player.item[3]
+				if(cid_check)
+					player_cid = query_edit_ban_get_player.item[4]
 		else
 			if(use_last_connection)
-				to_chat(usr, "<span class='danger'>Ban not edited. [player_key]/([player_ckey]) hasn't been seen before, unable to use IP and CID from last connection.</span>")
-				qdel(query_edit_ban_get_player)
-				return
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, unable to use IP and CID from last connection. Are you sure you want to edit a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_edit_ban_get_player)
+					return
+			else
+				if(alert(usr, "[player_key]/([player_ckey]) has not been seen before, are you sure you want to edit a ban for them?", "Unknown key", "Yes", "No", "Cancel") != "Yes")
+					qdel(query_edit_ban_get_player)
+					return
 		qdel(query_edit_ban_get_player)
 	if(applies_to_admins && (applies_to_admins != old_applies))
 		var/admin_ckey = sanitizeSQL(usr.client.ckey)
