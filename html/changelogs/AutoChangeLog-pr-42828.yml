@@ -1,0 +1,5 @@
+author: "Zxaber"
+delete-after: True
+changes: 
+  - tweak: "Ripley now has an open cabin. This means it cannot protect against atmospheric dangers, and it does not provide the user cover from ranged attacks, but moves quicker and is slightly cheaper to manufacture."
+  - rscadd: "A conversion kit is available in the exosuit fabricator that gives the Ripley a pressurized cabin as before, but the added weight will slow it down again."
