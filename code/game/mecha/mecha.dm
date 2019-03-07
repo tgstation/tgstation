@@ -83,6 +83,12 @@
 	var/melee_cooldown = 10
 	var/melee_can_hit = 1
 
+	var/silicon_pilot = FALSE //set to true if an AI or MMI is piloting.
+
+	var/enter_delay = 40 //Time taken to enter the mech
+	var/enclosed = TRUE //Set to false for open-cockpit mechs
+	var/silicon_icon_state = null //if the mech has a different icon when piloted by an AI or MMI
+
 	//Action datums
 	var/datum/action/innate/mecha/mech_eject/eject_action = new
 	var/datum/action/innate/mecha/mech_toggle_internals/internals_action = new
@@ -130,7 +136,8 @@
 	icon_state += "-open"
 	add_radio()
 	add_cabin()
-	add_airtank()
+	if (enclosed)
+		add_airtank()
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
 	smoke_system.set_up(3, src)
@@ -147,6 +154,11 @@
 	diag_hud_set_mechcell()
 	diag_hud_set_mechstat()
 	diag_hud_set_mechtracking()
+
+/obj/mecha/update_icon()
+	if (silicon_pilot && silicon_icon_state)
+		icon_state = silicon_icon_state
+	. = ..()
 
 /obj/mecha/get_cell()
 	return cell
@@ -282,6 +294,11 @@
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
 			to_chat(user, "[icon2html(ME, user)] \A [ME].")
+	if(!enclosed)
+		if(silicon_pilot)
+			to_chat(user, "[src] appears to be piloting itself...")
+		else if(occupant && occupant != user) //!silicon_pilot implied
+			to_chat(user, "You can see [occupant] inside.")
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -402,6 +419,11 @@
 	diag_hud_set_mechstat()
 	diag_hud_set_mechtracking()
 
+/obj/mecha/fire_act() //Check if we should ignite the pilot of an open-canopy mech
+	if (occupant && !enclosed && !silicon_pilot)
+		if (occupant.fire_stacks < 5)
+			occupant.fire_stacks += 1
+		occupant.IgniteMob()
 
 /obj/mecha/proc/drop_item()//Derpfix, but may be useful in future for engineering exosuits.
 	return
@@ -409,7 +431,7 @@
 /obj/mecha/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	. = ..()
 	if(speaker == occupant)
-		if(radio.broadcasting)
+		if(radio?.broadcasting)
 			radio.talk_into(speaker, text, , spans, message_language)
 		//flick speech bubble
 		var/list/speech_bubble_recipients = list()
@@ -488,7 +510,7 @@
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
-	if (internal_tank.disconnect()) // Something moved us and broke connection
+	if (internal_tank?.disconnect()) // Something moved us and broke connection
 		occupant_message("<span class='warning'>Air port connection teared off!</span>")
 		log_message("Lost connection to gas port.", LOG_MECHA)
 
@@ -514,7 +536,7 @@
 		user.forceMove(get_turf(src))
 		to_chat(user, "<span class='notice'>You climb out from [src].</span>")
 		return 0
-	if(internal_tank.connected_port)
+	if(internal_tank?.connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
@@ -702,6 +724,7 @@
 			AI.disconnect_shell()
 			RemoveActions(AI, TRUE)
 			occupant = null
+			silicon_pilot = FALSE
 			AI.forceMove(card)
 			card.AI = AI
 			AI.controlled_mech = null
@@ -743,7 +766,9 @@
 	AI.ai_restore_power()
 	AI.forceMove(src)
 	occupant = AI
+	silicon_pilot = TRUE
 	icon_state = initial(icon_state)
+	update_icon()
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
@@ -847,11 +872,7 @@
 
 	visible_message("[user] starts to climb into [name].")
 
-<<<<<<< HEAD
-	if(do_after(user, 40, target = src))
-=======
 	if(do_after(user, enter_delay, target = src))
->>>>>>> 297d64fab56dbb5deca031828cdde9dc4bb12e1b
 		if(obj_integrity <= 0)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
@@ -924,6 +945,7 @@
 	var/mob/living/brainmob = mmi_as_oc.brainmob
 	mmi_as_oc.mecha = src
 	occupant = brainmob
+	silicon_pilot = TRUE
 	brainmob.forceMove(src) //should allow relaymove
 	brainmob.reset_perspective(src)
 	brainmob.remote_control = src
@@ -965,6 +987,7 @@
 			RemoveActions(occupant)
 			occupant.gib()  //If one Malf decides to steal a mech from another AI (even other Malfs!), they are destroyed, as they have nowhere to go when replaced.
 			occupant = null
+			silicon_pilot = FALSE
 			return
 		else
 			if(!AI.linked_core)
@@ -982,6 +1005,7 @@
 		return
 	var/mob/living/L = occupant
 	occupant = null //we need it null when forceMove calls Exited().
+	silicon_pilot = FALSE
 	if(mob_container.forceMove(newloc))//ejecting mob container
 		log_message("[mob_container] moved out.", LOG_MECHA)
 		L << browse(null, "window=exosuit")

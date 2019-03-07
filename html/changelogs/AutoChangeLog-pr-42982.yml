@@ -1,5 +1,0 @@
-author: "IndieanaJones"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the Space Dragon announcement"
-  - admin: "Manually-spawned space dragon events can now have their announcement cancelled"

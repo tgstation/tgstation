@@ -1,0 +1,5 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - tweak: "You no longer have to hold you ID in your active hand to pull out dosh"
+  - tweak: "Cards now tell you more about your account when withdrawing cash"
