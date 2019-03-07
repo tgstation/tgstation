@@ -68,6 +68,8 @@
 			var/icon/I = getFlatIcon(O) //im so sorry
 			add_overlay(I)
 	else if (style != STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
+		pixel_x = initial(pixel_x)
+		pixel_y = initial(pixel_x)
 		if (opened)
 			add_overlay("[icon_state]_open")
 		else
@@ -152,7 +154,9 @@
 		addtimer(CALLBACK(src, .proc/open, src), (style == STYLE_SEETHROUGH ? 0 : openingDelay)) //After the openingDelay passes, we use the open proc from this supplypod, while referencing this supplypod's contents
 
 /obj/structure/closet/supplypod/open(atom/movable/holder, var/broken = FALSE, var/forced = FALSE) //The holder var represents an atom whose contents we will be working with
-	opened = TRUE //This is to ensure we don't open something that has already been opened
+	if (opened) //This is to ensure we don't open something that has already been opened
+		return
+	opened = TRUE 
 	if (style == STYLE_SEETHROUGH)
 		update_icon()
 	var/turf/T = get_turf(holder) //Get the turf of whoever's contents we're talking about
@@ -178,7 +182,7 @@
 	if (reversing) //If we're reversing, we call the close proc. This sends the pod back up to centcom
 		close(holder)
 	else if (bluespace) //If we're a bluespace pod, then delete ourselves (along with our holder, if a seperate holder exists)
-		if (style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
+		if (!effectQuiet && style != STYLE_INVISIBLE && style != STYLE_SEETHROUGH)
 			do_sparks(5, TRUE, holder) //Create some sparks right before closing
 		qdel(src) //Delete ourselves and the holder
 		if (holder != src)
@@ -207,8 +211,7 @@
 	update_icon()
 
 /obj/structure/closet/supplypod/Destroy()
-	if (!opened) //If we havent opened yet, we're opening because we've been destroyed. Lets dump our contents by opening up
-		open(src, broken = TRUE)
+	open(src, broken = TRUE) //Lets dump our contents by opening up
 	. = ..()
 
 //------------------------------------FALLING SUPPLY POD-------------------------------------//
@@ -224,8 +227,8 @@
 
 /obj/effect/DPfall/Initialize(dropLocation, obj/structure/closet/supplypod/pod)
 	if (pod.style == STYLE_SEETHROUGH)
-		pixel_x = 0
-		pixel_y = 0
+		//pixel_x = 0
+		//pixel_y = 0
 		for (var/atom/movable/O in pod.contents)
 			var/icon/I = getFlatIcon(O) //im so sorry
 			add_overlay(I)
@@ -266,7 +269,7 @@
 		for (var/mob/living/M in get_turf(src))
 			M.Stun(pod.landingDelay+10, ignore_canstun = TRUE)//you aint goin nowhere, kid.
 	if (pod.effectStealth) //If effectStealth is true we want to be invisible
-		alpha = 255
+		icon_state = ""
 	if (pod.fallDuration == initial(pod.fallDuration) && pod.landingDelay + pod.fallDuration < pod.fallingSoundLength)
 		pod.fallingSoundLength = 3 //The default falling sound is a little long, so if the landing time is shorter than the default falling sound, use a special, shorter default falling sound
 		pod.fallingSound =  'sound/weapons/mortar_whistle.ogg'
