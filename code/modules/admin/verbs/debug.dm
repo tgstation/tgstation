@@ -104,8 +104,8 @@ GLOBAL_LIST_EMPTY(AdminProcCallSpamPrevention)
 GLOBAL_PROTECT(AdminProcCallSpamPrevention)
 
 /proc/WrapAdminProcCall(datum/target, procname, list/arguments)
-	if(target != GLOBAL_PROC && procname in list("Del","Destroy"))
-		to_chat(usr, "<span class='warning'>Calling [procname]() is not allowed</span>")
+	if(target != GLOBAL_PROC && procname == "Del")
+		to_chat(usr, "<span class='warning'>Calling Del() is not allowed</span>")
 		return
 
 	if(target != GLOBAL_PROC && !target.CanProcCall(procname))
