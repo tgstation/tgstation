@@ -1,4 +1,0 @@
-author: "kriskog"
-delete-after: True
-changes: 
-  - bugfix: "Non-kitchen fridges and meat lockers have had their access requirements removed."

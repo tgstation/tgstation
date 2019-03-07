@@ -1,4 +1,0 @@
-author: "Unit2E"
-delete-after: True
-changes: 
-  - tweak: "powersinks now become dense when anchored, like a machine."

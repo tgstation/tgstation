@@ -1,6 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - rscadd: "You can now use a razor on help intent to change your fellow crewmembers' hair/facial hair styles"
-  - rscadd: "Using a wig in your hand lets you change it to a new style/color"
-  - rscadd: "Natural Wigs are now available in the Clothesmate: made of 100% natural chromatic nanofibers, these wigs automatically match the color of your natural hair"
