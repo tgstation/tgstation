@@ -758,7 +758,7 @@
 	overdose_threshold = 35
 
 /datum/reagent/medicine/atropine/on_mob_life(mob/living/carbon/M)
-	if(M.health < 0)
+	if(M.health < M.crit_threshold)
 		M.adjustToxLoss(-2*REM, 0)
 		M.adjustBruteLoss(-2*REM, 0)
 		M.adjustFireLoss(-2*REM, 0)
@@ -777,7 +777,8 @@
 	M.Jitter(1)
 	..()
 
-/datum/reagent/medicine/epinephrine
+/datum/reagent/medicine/
+phrine
 	name = "Epinephrine"
 	id = "epinephrine"
 	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
