@@ -48,6 +48,9 @@
 	var/lights = FALSE
 	var/lights_power = 6
 	var/last_user_hud = 1 // used to show/hide the mecha hud while preserving previous preference
+	var/destruction_sleep_duration = 20 //sleep duration applied to pilot if mech is destroyed
+	var/is_currently_ejecting = FALSE //True when pilot is attempting to exit mech, disables equipment and punching when true
+	var/exit_delay = 20 //How long it takes pilot to eject from mech
 
 	var/bumpsmash = 0 //Whether or not the mech destroys walls by running into it.
 	//inner atmos
@@ -161,6 +164,7 @@
 	return cell
 
 /obj/mecha/Destroy()
+	occupant.SetSleeping(destruction_sleep_duration)
 	go_out()
 	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
@@ -170,8 +174,6 @@
 		else
 			M.forceMove(loc)
 	if(wreckage)
-		if(prob(30))
-			explosion(get_turf(src), 0, 0, 1, 3)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
@@ -467,7 +469,9 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
-
+	if(is_currently_ejecting)
+		return
+	
 	var/mob/living/L = user
 	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
