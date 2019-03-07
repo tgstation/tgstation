@@ -152,6 +152,11 @@
 	diag_hud_set_mechstat()
 	diag_hud_set_mechtracking()
 
+/obj/mecha/update_icon()
+	if (silicon_pilot && silicon_icon_state)
+		icon_state = silicon_icon_state
+	. = ..()
+
 /obj/mecha/get_cell()
 	return cell
 
@@ -757,10 +762,8 @@
 	AI.forceMove(src)
 	occupant = AI
 	silicon_pilot = TRUE
-	if (silicon_icon_state)
-		icon_state = silicon_icon_state
-	else
-		icon_state = initial(icon_state)
+	icon_state = initial(icon_state)
+	update_icon()
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
 	if(!internal_damage)
 		SEND_SOUND(occupant, sound('sound/mecha/nominal.ogg',volume=50))
@@ -943,10 +946,7 @@
 	brainmob.remote_control = src
 	brainmob.update_mobility()
 	brainmob.update_mouse_pointer()
-	if (silicon_icon_state)
-		icon_state = silicon_icon_state
-	else
-		icon_state = initial(icon_state)
+	icon_state = initial(icon_state)
 	update_icon()
 	setDir(dir_in)
 	log_message("[mmi_as_oc] moved in as pilot.", LOG_MECHA)
