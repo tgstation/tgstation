@@ -67,7 +67,7 @@
 	if(istext(web_sound_input))
 		var/web_sound_url = ""
 		var/stop_web_sounds = FALSE
-		var/list/music_extra_data = list("pitch", "start", "end")
+		var/list/music_extra_data = list()
 		if(length(web_sound_input))
 
 			web_sound_input = trim(web_sound_input)
