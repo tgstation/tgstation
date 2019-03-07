@@ -1,0 +1,4 @@
+author: "Bawhoppen"
+delete-after: True
+changes: 
+  - rscadd: "Disablers now have a new sprite and now can attach flashlights."
