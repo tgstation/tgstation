@@ -30,6 +30,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	var/obj/screen/blobpwrdisplay
 
+	var/obj/screen/infectionpwrdisplay
+
 	var/obj/screen/alien_plasma_display
 	var/obj/screen/alien_queen_finder
 
@@ -105,6 +107,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	devilsouldisplay = null
 	lingstingdisplay = null
 	blobpwrdisplay = null
+	infectionpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
 

@@ -184,6 +184,8 @@ GLOBAL_LIST_INIT(heavyfootmob, typecacheof(list(
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
+#define iscommander(A) (istype(A, /mob/camera/commander))
+
 #define iscameramob(A) (istype(A, /mob/camera))
 
 #define isaicamera(A) (istype(A, /mob/camera/aiEye))

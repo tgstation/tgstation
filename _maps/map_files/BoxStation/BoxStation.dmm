@@ -4843,6 +4843,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ajM" = (
@@ -7959,6 +7960,7 @@
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "arK" = (
@@ -16814,6 +16816,7 @@
 	codes_txt = "patrol;next_patrol=CHW";
 	location = "Lockers"
 	},
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aNk" = (
@@ -23488,6 +23491,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bdU" = (
@@ -45216,6 +45220,7 @@
 "ceL" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ceM" = (
@@ -55581,6 +55586,11 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
+"eUn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "eUr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "testlab";
@@ -55602,6 +55612,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
+"eZA" = (
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "fcG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -56247,6 +56261,20 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"koo" = (
+/obj/effect/landmark/beacon_start/west,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"ktw" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "kwA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -56331,6 +56359,10 @@
 /obj/machinery/door/firedoor/heavy,
 /turf/open/floor/engine,
 /area/science/explab)
+"kIf" = (
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel,
+/area/hallway/primary/starboard)
 "kKK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -56623,6 +56655,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
+"mUe" = (
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "nbv" = (
 /turf/closed/wall,
 /area/science/explab)
@@ -56646,6 +56682,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"ntf" = (
+/obj/effect/landmark/infection_start,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "nvb" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/vending/cigarette,
@@ -56708,6 +56748,13 @@
 /obj/item/radio/headset/headset_med,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"nRo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/effect/landmark/infection_start,
+/turf/open/floor/plasteel,
+/area/hallway/secondary/entry)
 "nRG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -57309,6 +57356,13 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
+"sSZ" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -57451,6 +57505,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+"tFw" = (
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "tJU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -57800,6 +57858,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"wip" = (
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "wkN" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -68417,7 +68479,7 @@ apN
 apN
 apJ
 awZ
-aIK
+nRo
 ayl
 aAE
 awW
@@ -68431,7 +68493,7 @@ aaa
 awW
 aOe
 ayl
-ayl
+ntf
 aRY
 awW
 aaa
@@ -68441,7 +68503,7 @@ aaa
 aaa
 awW
 awZ
-ayl
+ntf
 ayl
 aAE
 awW
@@ -70473,7 +70535,7 @@ apJ
 apJ
 apJ
 axG
-aIK
+nRo
 aQH
 aAI
 aBH
@@ -70487,7 +70549,7 @@ aLv
 aBH
 azz
 aym
-ayl
+ntf
 ayl
 aNh
 aQH
@@ -70497,7 +70559,7 @@ azz
 aym
 ayl
 aIK
-ayl
+ntf
 beM
 aAC
 aaf
@@ -81264,7 +81326,7 @@ aaa
 arP
 asP
 aqR
-aqR
+tFw
 awb
 axt
 ayG
@@ -81337,7 +81399,7 @@ aoV
 aoV
 aoV
 bLv
-bUs
+koo
 bLv
 aaa
 cjJ
@@ -81558,7 +81620,7 @@ bmk
 bbR
 boT
 bbR
-bbR
+wip
 buI
 bbR
 bbR
@@ -81576,7 +81638,7 @@ bCq
 bLu
 bHE
 bHE
-bHE
+mUe
 bHE
 bLv
 aaf
@@ -89759,7 +89821,7 @@ aAh
 aAh
 aAh
 aLR
-aJq
+eZA
 aOE
 aJn
 aaa
@@ -89788,7 +89850,7 @@ buY
 buY
 bqH
 aJq
-aJq
+eZA
 aXf
 bCv
 bDP
@@ -90086,7 +90148,7 @@ bOh
 ccw
 cDm
 cjP
-ckF
+eUn
 cDJ
 ckF
 cpE
@@ -99000,7 +99062,7 @@ anf
 apC
 aoQ
 cqM
-asw
+sSZ
 asw
 asw
 aCA
@@ -99023,7 +99085,7 @@ aYQ
 bam
 aYV
 aYV
-aYV
+kIf
 aYV
 beE
 bfS
@@ -105191,7 +105253,7 @@ aZf
 baA
 bbF
 aYV
-aXq
+ktw
 aYV
 bfX
 bhD
