@@ -38752,11 +38752,11 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
 "bwn" = (
-/obj/machinery/computer/card{
-	dir = 1
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/computer/card{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/heads/hop)
