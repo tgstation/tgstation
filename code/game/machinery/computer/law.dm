@@ -3,6 +3,23 @@
 /obj/machinery/computer/upload
 	var/mob/living/silicon/current = null //The target of future law uploads
 	icon_screen = "command"
+	var/obj/item/gps/internal
+	var/internal_type = /obj/item/gps/internal/internal_gps
+	time_to_scewdrive = 40
+
+/obj/item/gps/internal/internal_gps
+	icon_state = null
+	gpstag = "Artificial Intelligence Remote Signal"
+	desc = "Signal used to connect remotely with silicons."
+	invisibility = 100
+
+/obj/machinery/computer/upload/Initialize()
+	internal = new internal_type(src)
+	. = ..()
+
+/obj/machinery/computer/upload/Destroy()
+	QDEL_NULL(internal)
+	. = ..()
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/aiModule))
