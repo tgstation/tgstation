@@ -206,6 +206,7 @@
 		if(S.mind) //Ensures only skeletons can control the grave warden. (Including more at once)
 			add_control_flags(S, VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_PERMISSION)
 			remove_action_type_from_mob(/datum/action/vehicle/sealed/DumpKidnappedMobs, S)
+			remove_action_type_from_mob(/datum/action/vehicle/sealed/remove_key, S)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
 	
