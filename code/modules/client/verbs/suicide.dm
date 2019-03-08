@@ -39,17 +39,19 @@
 	if(!canSuicide())
 		return
 	if(confirm == "Yes")
-		set_suicide(TRUE)
 		var/obj/item/held_item = get_active_held_item()
 		if(held_item)
 			var/damagetype = held_item.suicide_act(src)
 			if(damagetype)
 				if(damagetype & SHAME)
 					adjustStaminaLoss(200)
-					set_suicide(FALSE)
 					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shameful_suicide", /datum/mood_event/shameful_suicide)
 					return
 
+				if(damagetype & MANUAL_SUICIDE_NONLETHAL) //Make sure to call the necessary procs if it does kill later
+					return
+
+				set_suicide(TRUE)
 				suicide_log()
 
 				var/damage_mod = 0
@@ -71,10 +73,6 @@
 					adjustOxyLoss(200/damage_mod)
 
 				if(damagetype & MANUAL_SUICIDE)	//Assume the object will handle the death.
-					return
-
-				if(damagetype & MANUAL_SUICIDE_NONLETHAL)
-					set_suicide(FALSE)
 					return
 
 				//If something went wrong, just do normal oxyloss

@@ -28,6 +28,7 @@
 	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(0)
 	user.set_suicide(TRUE)
+	user.suicide_log()
 
 /obj/item/assembly/signaler/Initialize()
 	. = ..()
