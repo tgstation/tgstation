@@ -1123,6 +1123,18 @@
 	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
 		L.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
 
+/datum/reagent/snail
+	name = "Agent-S"
+	id = "snailserum"
+	description = "Virological agent that infects the subject with Gastrolosis."
+	color = "#003300" // rgb(0, 51, 0)
+	taste_description = "goo"
+	can_synth = FALSE //special orange man request
+
+/datum/reagent/snail/reaction_mob(mob/living/L, method=TOUCH, reac_volume, show_message = 1, touch_protection = 0)
+	if(method==PATCH || method==INGEST || method==INJECT || (method == VAPOR && prob(min(reac_volume,100)*(1 - touch_protection))))
+		L.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)
+
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
 	id = "fluorosurfactant"
@@ -1209,7 +1221,7 @@
 	M.drowsyness += 2
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.blood_volume = max(H.blood_volume - 2.5, 0)
+		H.blood_volume = max(H.blood_volume - 10, 0)
 	if(prob(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)
@@ -1748,7 +1760,7 @@
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
 
 /datum/reagent/pax
-	name = "pax"
+	name = "Pax"
 	id = "pax"
 	description = "A colorless liquid that suppresses violence on the subjects."
 	color = "#AAAAAA55"

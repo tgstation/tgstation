@@ -13,8 +13,9 @@
 
 /obj/effect/dummy/phased_mob/slaughter/ex_act()
 	return
+
 /obj/effect/dummy/phased_mob/slaughter/bullet_act()
-	return
+	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/slaughter/singularity_act()
 	return
@@ -138,7 +139,11 @@
 	name = "blood crawl"
 	desc = "You are unable to hold anything while in this form."
 	icon = 'icons/effects/blood.dmi'
-	item_flags = NODROP | ABSTRACT | DROPDEL
+	item_flags = ABSTRACT | DROPDEL
+
+/obj/item/bloodcrawl/Initialize()
+	. = ..()
+	add_trait(TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 50, 1, -1)

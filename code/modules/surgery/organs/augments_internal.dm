@@ -50,8 +50,7 @@
 	active = !active
 	if(active)
 		for(var/obj/item/I in owner.held_items)
-			if(!(I.item_flags & NODROP))
-				stored_items += I
+			stored_items += I
 
 		var/list/L = owner.get_empty_held_indexes()
 		if(LAZYLEN(L) == owner.held_items.len)
@@ -61,7 +60,7 @@
 		else
 			for(var/obj/item/I in stored_items)
 				to_chat(owner, "<span class='notice'>Your [owner.get_held_index_name(owner.get_held_index_of_item(I))]'s grip tightens.</span>")
-				I.item_flags |= NODROP
+				I.add_trait(TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
 
 	else
 		release_items()
@@ -85,7 +84,7 @@
 
 /obj/item/organ/cyberimp/brain/anti_drop/proc/release_items()
 	for(var/obj/item/I in stored_items)
-		I.item_flags &= ~NODROP
+		I.remove_trait(TRAIT_NODROP, ANTI_DROP_IMPLANT_TRAIT)
 	stored_items = list()
 
 
@@ -129,7 +128,7 @@
 	))
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
-	if(crit_fail || working)
+	if(broken_cyber_organ || working)
 		return
 	working = TRUE
 	if(owner.AmountStun() > stun_cap_amount)
@@ -144,13 +143,13 @@
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
-	if(crit_fail || . & EMP_PROTECT_SELF)
+	if(broken_cyber_organ || . & EMP_PROTECT_SELF)
 		return
-	crit_fail = TRUE
+	broken_cyber_organ = TRUE
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
-	crit_fail = FALSE
+	broken_cyber_organ = FALSE
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth

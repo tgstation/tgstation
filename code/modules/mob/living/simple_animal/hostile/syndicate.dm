@@ -75,7 +75,7 @@
 	maxHealth = 250
 	health = 250
 
-/mob/living/simple_animal/hostile/syndicate/melee
+/mob/living/simple_animal/hostile/syndicate/melee //dude with a knife and no shields
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	icon_state = "syndicate_knife"
@@ -84,6 +84,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	status_flags = 0
+	var/projectile_deflect_chance = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/space
 	icon_state = "syndicate_space_knife"
@@ -95,6 +96,7 @@
 	minbodytemp = 0
 	speed = 1
 	spacewalk = TRUE
+	projectile_deflect_chance = 50
 
 /mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
 	. = ..()
@@ -106,6 +108,7 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
+	projectile_deflect_chance = 50
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword
 	melee_damage_lower = 30
@@ -118,6 +121,7 @@
 	light_color = LIGHT_COLOR_RED
 	status_flags = 0
 	var/obj/effect/light_emitter/red_energy_sword/sord
+	projectile_deflect_chance = 50
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/Initialize()
 	. = ..()
@@ -128,13 +132,10 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/item/projectile/Proj)
-	if(!Proj)
-		return
-	if(prob(50))
-		return ..()
-	else
+	if(prob(projectile_deflect_chance))
 		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
-		return 0
+		return BULLET_ACT_BLOCK
+	return ..()
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space
 	icon_state = "syndicate_space_sword"
@@ -146,6 +147,7 @@
 	minbodytemp = 0
 	speed = 1
 	spacewalk = TRUE
+	projectile_deflect_chance = 50
 
 /mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize()
 	. = ..()
@@ -162,6 +164,7 @@
 	name = "Syndicate Stormtrooper"
 	maxHealth = 250
 	health = 250
+	projectile_deflect_chance = 50
 
 ///////////////Guns////////////
 
@@ -207,7 +210,7 @@
 	rapid = 2
 	icon_state = "syndicate_smg"
 	icon_living = "syndicate_smg"
-	casingtype = /obj/item/ammo_casing/c45/nostamina
+	casingtype = /obj/item/ammo_casing/c45
 	projectilesound = 'sound/weapons/gunshot_smg.ogg'
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot //caravan ambush ruin

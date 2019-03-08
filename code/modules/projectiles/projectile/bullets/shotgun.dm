@@ -52,7 +52,7 @@
 /obj/item/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()
 	explosion(target, -1, 0, 1)
-	return TRUE
+	return BULLET_ACT_HIT
 
 /obj/item/projectile/bullet/pellet
 	var/tile_dropoff = 0.75
@@ -91,5 +91,4 @@
 // Mech Scattershot
 
 /obj/item/projectile/bullet/scattershot
-	damage = 20
-	stamina = 65
+	damage = 24

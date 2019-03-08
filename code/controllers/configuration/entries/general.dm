@@ -40,6 +40,8 @@
 
 /datum/config_entry/flag/log_mecha	// log mech data
 
+/datum/config_entry/flag/log_virus	// log virology data
+
 /datum/config_entry/flag/log_vote	// log voting
 
 /datum/config_entry/flag/log_whisper	// log client whisper
@@ -353,6 +355,10 @@
 
 /datum/config_entry/string/client_error_message
 	config_entry_value = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
+
+/datum/config_entry/number/client_error_build
+	config_entry_value = null
+	min_val = 0
 
 /datum/config_entry/number/minute_topic_limit
 	config_entry_value = null

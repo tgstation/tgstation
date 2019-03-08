@@ -1,5 +1,7 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
+#define HIEROPHANT_CLUB_CARDINAL_DAMAGE 30
+
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
@@ -143,7 +145,7 @@
 
 //Rod of Asclepius
 /obj/item/rod_of_asclepius
-	name = "Rod of Asclepius"
+	name = "\improper Rod of Asclepius"
 	desc = "A wooden rod about the size of your forearm with a snake carved around it, winding its way up the sides of the rod. Something about it seems to inspire in you the responsibilty and duty to help others."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "asclepius_dormant"
@@ -189,7 +191,8 @@
 	activated()
 
 /obj/item/rod_of_asclepius/proc/activated()
-	item_flags = NODROP | DROPDEL
+	item_flags = DROPDEL
+	add_trait(TRAIT_NODROP, CURSED_ITEM_TRAIT)
 	desc = "A short wooden rod with a mystical snake inseparably gripping itself and the rod to your forearm. It flows with a healing energy that disperses amongst yourself and those around you. "
 	icon_state = "asclepius_active"
 	activated = TRUE
@@ -1298,7 +1301,9 @@
 	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
+	var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, friendly_fire_check)
+	B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
+	B.monster_damage_boost = FALSE
 	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
@@ -1312,7 +1317,7 @@
 		if(!J)
 			return
 		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
-		B.damage = 30
+		B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
 		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)

@@ -790,6 +790,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ..()
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, var/datum/callback/callback)
-	if (item_flags & NODROP)
+	if(has_trait(TRAIT_NODROP))
 		return
 	return ..()
+
+/obj/item/proc/canStrip(mob/stripper, mob/owner)
+	return !has_trait(TRAIT_NODROP)
+
+/obj/item/proc/doStrip(mob/stripper, mob/owner)
+	return owner.dropItemToGround(src)
+

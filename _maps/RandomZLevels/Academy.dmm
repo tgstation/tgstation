@@ -1333,7 +1333,7 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "er" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
 /turf/open/floor/plasteel/white,
 /area/awaymission/academy/classrooms)
 "es" = (

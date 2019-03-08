@@ -94,7 +94,7 @@
 				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
 					user.add_mob_blood(src)
 					if(ishuman(user))
-						var/mob/living/carbon/human/dirtyboy
+						var/mob/living/carbon/human/dirtyboy = user
 						dirtyboy.adjust_hygiene(-10)
 				if(affecting.body_zone == BODY_ZONE_HEAD)
 					if(wear_mask)
@@ -350,7 +350,7 @@
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))
 			var/ear_damage = damage_pwr * effect_amount
-			var/deaf = max(ears.deaf, deafen_pwr * effect_amount)
+			var/deaf = deafen_pwr * effect_amount
 			adjustEarDamage(ear_damage,deaf)
 
 			if(ears.ear_damage >= 15)

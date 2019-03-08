@@ -7,6 +7,7 @@
 	max_ammo = 10
 
 /obj/item/ammo_box/magazine/m10mm/rifle/update_icon()
+	..()
 	if(ammo_count())
 		icon_state = "75-8"
 	else

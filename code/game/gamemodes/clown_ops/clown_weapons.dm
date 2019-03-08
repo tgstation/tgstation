@@ -217,11 +217,11 @@
 
 /obj/item/clothing/mask/fakemoustache/sticky/Initialize()
 	. = ..()
-	item_flags |= NODROP
+	add_trait(TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
 	addtimer(CALLBACK(src, .proc/unstick), unstick_time)
 
 /obj/item/clothing/mask/fakemoustache/sticky/proc/unstick()
-	item_flags &= ~NODROP
+	remove_trait(TRAIT_NODROP, STICKY_MOUSTACHE_TRAIT)
 
 //DARK H.O.N.K. AND CLOWN MECH WEAPONS
 

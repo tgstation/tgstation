@@ -77,11 +77,11 @@
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
 					/obj/item/tank/internals/air,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas,
-					/obj/item/clothing/mask/gas)
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath,
+					/obj/item/clothing/mask/breath)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
@@ -362,15 +362,6 @@
 					/obj/item/melee/baton/loaded,
 					/obj/item/melee/baton/loaded)
 	crate_name = "stun baton crate"
-
-/datum/supply_pack/security/taser
-	name = "Taser Crate"
-	desc = "From the depths of stunbased combat, this order rises above, supreme. Contains three hybrid tasers, capable of firing both electrodes and disabling shots. Requires Security access to open."
-	cost = 3000
-	contains = list(/obj/item/gun/energy/e_gun/advtaser,
-					/obj/item/gun/energy/e_gun/advtaser,
-					/obj/item/gun/energy/e_gun/advtaser)
-	crate_name = "taser crate"
 
 /datum/supply_pack/security/wall_flash
 	name = "Wall-Mounted Flash Crate"
@@ -1230,16 +1221,23 @@
 
 /datum/supply_pack/science/robotics
 	name = "Robotics Assembly Crate"
-	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains three proximity sensors, two high-powered cells, six flashes, and an electrical toolbox. Requires Robotics access to open."
-	cost = 1000
+	desc = "The tools you need to replace those finicky humans with a loyal robot army! Contains four proximity sensors, two empty first aid kits, two health analyzers, two red hardhats, two mechanical toolboxes, and two cleanbot assemblies! Requires Robotics access to open."
+	cost = 1500
 	access = ACCESS_ROBOTICS
 	contains = list(/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
-					/obj/item/storage/toolbox/electrical,
-					/obj/item/storage/box/flashes,
-					/obj/item/stock_parts/cell/high,
-					/obj/item/stock_parts/cell/high)
+					/obj/item/assembly/prox_sensor,
+					/obj/item/storage/firstaid,
+					/obj/item/storage/firstaid,
+					/obj/item/healthanalyzer,
+					/obj/item/healthanalyzer,
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/clothing/head/hardhat/red,
+					/obj/item/storage/toolbox/mechanical,
+					/obj/item/storage/toolbox/mechanical,
+					/obj/item/bot_assembly/cleanbot,
+					/obj/item/bot_assembly/cleanbot)
 	crate_name = "robotics assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
@@ -1942,7 +1940,6 @@
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/gas/mime,
-					/obj/item/clothing/head/beret,
 					/obj/item/clothing/head/frenchberet,
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing,

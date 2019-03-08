@@ -105,14 +105,14 @@
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
 			Paralyze(20)
-			take_bodypart_damage(10)
+			take_bodypart_damage(10,check_armor = TRUE)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
 		if(victim.movement_type & FLYING)
 			return
 		if(hurt)
-			victim.take_bodypart_damage(10)
-			take_bodypart_damage(10)
+			victim.take_bodypart_damage(10,check_armor = TRUE)
+			take_bodypart_damage(10,check_armor = TRUE)
 			victim.Paralyze(20)
 			Paralyze(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>",\
@@ -169,7 +169,7 @@
 				if(start_T && end_T)
 					log_combat(src, throwable_mob, "thrown", addition="grab from tile in [AREACOORD(start_T)] towards tile at [AREACOORD(end_T)]")
 
-	else if(!(I.item_flags & (NODROP | ABSTRACT)))
+	else if(!CHECK_BITFIELD(I.item_flags, ABSTRACT) && !I.has_trait(TRAIT_NODROP))
 		thrown_thing = I
 		dropItemToGround(I)
 
@@ -411,7 +411,7 @@
 		return initial(pixel_y)
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.item_flags & (NODROP | ABSTRACT)))
+	if(!I || (I.item_flags & ABSTRACT) || I.has_trait(TRAIT_NODROP))
 		return
 
 	dropItemToGround(I)
@@ -900,7 +900,6 @@
 				. *= 1.25
 			if(SANITY_NEUTRAL to SANITY_GREAT)
 				. *= 0.90
-
 
 /mob/living/carbon/proc/create_internal_organs()
 	for(var/X in internal_organs)

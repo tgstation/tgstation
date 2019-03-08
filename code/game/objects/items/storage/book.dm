@@ -18,8 +18,10 @@
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
 GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon"))
+//If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
+// if your bible has no custom itemstate, use one of the existing ones
 GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon"))
-GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "bible", "bible", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon"))
+GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon"))
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/storage/book/bible/B = locate() in src
@@ -173,6 +175,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible", "
 			var/unholy2clean = A.reagents.get_reagent_amount("unholywater")
 			A.reagents.del_reagent("unholywater")
 			A.reagents.add_reagent("holywater",unholy2clean)
+		if(istype(A, /obj/item/storage/book/bible) && !istype(A, /obj/item/storage/book/bible/syndicate))
+			to_chat(user, "<span class='notice'>You purify [A], conforming it to your belief.</span>")
+			var/obj/item/storage/book/bible/B = A
+			B.name = name
+			B.icon_state = icon_state
+			B.item_state = item_state
 	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
 		var/obj/item/twohanded/required/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")

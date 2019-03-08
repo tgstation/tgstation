@@ -53,9 +53,10 @@
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	cell_type = /obj/item/stock_parts/cell{charge = 1200; maxcharge = 1200}
 	icon_state = "hoslaser"
 	force = 10
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/disabler/hos)
 	ammo_x_offset = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
@@ -95,10 +96,11 @@
 	item_state = "nucgun"
 	charge_delay = 5
 	pin = null
-	can_charge = 0
+	can_charge = FALSE
 	ammo_x_offset = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/disabler)
 	selfcharge = 1
+	var/reactor_overloaded
 	var/fail_tick = 0
 	var/fail_chance = 0
 
@@ -123,7 +125,7 @@
 			if(201 to INFINITY)
 				SSobj.processing.Remove(src)
 				M.rad_act(80)
-				crit_fail = 1
+				reactor_overloaded = TRUE
 				to_chat(M, "<span class='userdanger'>Your [name]'s reactor overloads!</span>")
 
 /obj/item/gun/energy/e_gun/nuclear/emp_act(severity)
@@ -134,7 +136,7 @@
 
 /obj/item/gun/energy/e_gun/nuclear/update_icon()
 	..()
-	if(crit_fail)
+	if(reactor_overloaded)
 		add_overlay("[icon_state]_fail_3")
 	else
 		switch(fail_tick)
