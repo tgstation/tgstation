@@ -317,6 +317,16 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
 	force = 60
 
+/obj/item/gun/energy/laser/instakill/fake
+	name = "laser rifle"
+	desc = "A specialized laser-rifle, capable of rapid fire in the right hands."
+	icon_state = "instagibred"
+	item_state = "instagibred"
+	burst_size = 3
+	fire_delay = 2
+	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+	force = 30
+
 /obj/item/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
 	icon_state = "instagibred"

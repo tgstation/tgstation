@@ -285,7 +285,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/lizardwine
 	name = "bottle of lizard wine"
-	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
+	desc = "An alcoholic beverage from the Isoman Empire, made by infusing lizard tails in ethanol. Seems they practiced some form of Cannibalism."
 	icon_state = "lizardwine"
 	list_reagents = list("lizardwine" = 100)
 	foodtype = FRUIT | ALCOHOL

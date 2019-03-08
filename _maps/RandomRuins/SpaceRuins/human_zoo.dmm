@@ -33,6 +33,7 @@
 "G" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/open/water/shallow,/area/awaymission/humanzoo)
 "H" = (/obj/structure/sign/pinkdiamond{step_y = 28},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
 "I" = (/obj/machinery/light{dir = 1},/obj/structure/sign/diamondauthority{pixel_y = 28},/turf/open/floor/plasteel/white,/area/awaymission/humanzoo)
+"J" = (/obj/item/gps/internal/humanzoo,/turf/open/floor/plasteel/stairs/medium,/area/awaymission/humanzoo)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -79,7 +80,7 @@ aaabbtddddtddddtddddtddddtddddtdddddbbaaaaaaaaaaaa
 aaaabbbbbbbbbbbbbbbrbrbbbbbbbbbbbbbbbaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaabHddIddHbaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaabdddddddbaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaabpDDDDDqbaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaabpDDJDDqbaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaabpDDDDDqbaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaabedddddfbaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaabdddEdddbaaaaaaaaaaaaaaaaaaaaaaaaa

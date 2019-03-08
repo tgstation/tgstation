@@ -3,19 +3,39 @@
 /datum/map_template/ruin/space
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
-	allow_duplicates = FALSE
+	allow_duplicates = TRUE
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
 	suffix = "human_zoo.dmm"
 	name = "Pink's Human Zoo"
 	description = "A facility made by Homeworld."
+	cost = 3
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/space/xenobio
 	id = "xenobio"
 	suffix = "wreckedresearch.dmm"
 	name = "Ruined Biology Lab"
-	description = "Hit by various asteroids, monkies got loose and a Jade got shattered."
+	description = "Hit by space pirates, a bit of fixing up and it'll be ready to use."
+	cost = 3
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/space/quantumanomaly
+	id = "quantumanomaly"
+	suffix = "quantumanomaly.dmm"
+	name = "Nanotrasen Emergency Shuttle"
+	description = "Some poor assistant survived a Quantum Bomb because they weren't conscious."
+	cost = 3
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/space/stolenship
+	id = "stolenship"
+	suffix = "stolenship.dmm"
+	name = "H.S.S Quartz Pulsar"
+	description = "A miner ship taken over by Isomen, Still has a lot of valuable minerals on board."
+	cost = 3
+	allow_duplicates = FALSE
 
 /datum/map_template/ruin/space/asteroid1
 	id = "asteroid1"

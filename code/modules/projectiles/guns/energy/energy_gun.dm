@@ -21,6 +21,11 @@
 	charge_sections = 3
 	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
 
+/obj/item/gun/energy/e_gun/mini/lethal
+	name = "laser pistol"
+	desc = "A small, pistol-sized laser gun with a built-in flashlight.."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+
 /obj/item/gun/energy/e_gun/mini/Initialize()
 	gun_light = new /obj/item/flashlight/seclite(src)
 	return ..()

@@ -854,7 +854,7 @@ Nothing else in the console has ID requirements.
 			return
 		if(istype(usr,/mob/living/carbon))
 			var/mob/living/carbon/C = usr
-			if(C.dna.species.id == "jade")
+			if(C.dna.species.id == "peridot")
 				lock_console(usr)
 			else
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")
@@ -863,7 +863,7 @@ Nothing else in the console has ID requirements.
 	if(ls["unlock_console"])
 		if(istype(usr,/mob/living/carbon))
 			var/mob/living/carbon/C = usr
-			if(C.dna.species.id == "jade")
+			if(C.dna.species.id == "peridot")
 				unlock_console(usr)
 			else
 				to_chat(usr, "<span class='boldwarning'>Unauthorized Access.</span>")

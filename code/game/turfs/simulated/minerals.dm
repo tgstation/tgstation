@@ -66,6 +66,15 @@
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+				if(istype(I, /obj/item/pickaxe))
+					var/obj/item/pickaxe/pick = I
+					if(pick.breakable == TRUE)
+						if(prob(pick.breakchance))
+							to_chat(user, "<span class='notice'>Your [pick] breaks!</span>")
+							del(pick)
+							user.regenerate_icons()
+						else
+							pick.breakchance = pick.breakchance+pick.increasechance
 	else
 		if(istype(I,/obj/item/handheldinjector))
 			if(is_station_level(src.z))
@@ -152,12 +161,18 @@
 	T.ChangeTurf(type)
 
 /turf/closed/mineral/random
-	var/list/mineralSpawnChanceList = list(/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
-		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40, /turf/closed/mineral/titanium = 11,
-		/turf/closed/mineral/gibtonite = 4, /turf/closed/mineral/bscrystal = 1)
+	var/list/mineralSpawnChanceList = list(
+		/turf/closed/mineral/uranium = 2, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 4,
+		/turf/closed/mineral/titanium = 4, /turf/closed/mineral/silver = 6, /turf/closed/mineral/coal = 10,
+		/turf/closed/mineral/iron = 20, /turf/closed/mineral/gibtonite = 2, /turf/closed/mineral/bscrystal = 1,
+		/turf/closed/mineral/copper = 20, /turf/closed/mineral/tin = 20, /turf/closed/mineral/magnesium = 20)
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
 	var/display_icon_state = "rock"
+
+/turf/closed/mineral/random/airless
+	baseturfs = /turf/open/floor/plating/asteroid/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/closed/mineral/random/Initialize()
 
@@ -184,8 +199,10 @@
 	icon_state = "rock_highchance"
 	mineralChance = 25
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 35, /turf/closed/mineral/diamond = 30, /turf/closed/mineral/gold = 45, /turf/closed/mineral/titanium = 45,
-		/turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20)
+		/turf/closed/mineral/uranium = 4, /turf/closed/mineral/diamond = 2, /turf/closed/mineral/gold = 8,
+		/turf/closed/mineral/titanium = 8, /turf/closed/mineral/silver = 12, /turf/closed/mineral/coal = 20,
+		/turf/closed/mineral/iron = 40, /turf/closed/mineral/gibtonite = 4, /turf/closed/mineral/bscrystal = 2,
+		/turf/closed/mineral/copper = 40, /turf/closed/mineral/tin = 40, /turf/closed/mineral/magnesium = 40)
 
 /turf/closed/mineral/random/high_chance/airless
 	baseturfs = /turf/open/floor/plating/asteroid/airless
@@ -206,10 +223,6 @@
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
-	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 2, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 4, /turf/closed/mineral/titanium = 4,
-		/turf/closed/mineral/silver = 6, /turf/closed/mineral/plasma = 15, /turf/closed/mineral/iron = 40,
-		/turf/closed/mineral/gibtonite = 2, /turf/closed/mineral/bscrystal = 1)
 
 
 /turf/closed/mineral/random/volcanic
@@ -252,6 +265,24 @@
 	spreadChance = 20
 	spread = 1
 	scan_state = "rock_Iron"
+
+/turf/closed/mineral/copper
+	mineralType = /obj/item/stack/ore/iron
+	spreadChance = 20
+	spread = 1
+	scan_state = "rock_Copper"
+
+/turf/closed/mineral/tin
+	mineralType = /obj/item/stack/ore/iron
+	spreadChance = 20
+	spread = 1
+	scan_state = "rock_Tin"
+
+/turf/closed/mineral/magnesium
+	mineralType = /obj/item/stack/ore/iron
+	spreadChance = 20
+	spread = 1
+	scan_state = "rock_Magnesium"
 
 /turf/closed/mineral/iron/volcanic
 	environment_type = "basalt"
@@ -348,6 +379,11 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
 
+/turf/closed/mineral/coal
+	mineralType = /obj/item/stack/sheet/mineral/coal
+	spreadChance = 8
+	spread = 1
+	scan_state = "rock_Coal"
 
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma

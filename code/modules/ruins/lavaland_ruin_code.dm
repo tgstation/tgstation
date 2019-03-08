@@ -152,3 +152,12 @@
 
 /obj/item/gps/internal/lavaland_syndicate_base
 	gpstag = "Encrypted Signal"
+
+/obj/item/gps/internal/humanzoo
+	gpstag = "Pink Diamond's Human Zoo"
+
+/obj/item/gps/internal/wreckedresearch
+	gpstag = "Biological Research Facility"
+
+/obj/item/gps/internal/stolenship
+	gpstag = "H.S.S Quartz Pulsar !!!S.O.S ACTIVE!!!"

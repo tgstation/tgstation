@@ -145,6 +145,36 @@
 	job_loyalties = list("Captain", "Head of Personnel", "Chief Engineer", "Head of Security", "Research Director", "Chief Medical Officer")
 	warcry = "Hail Nanotrasen!"
 
+/obj/item/banner/crystalgem
+	name = "crystal gem banner"
+	desc = "The banner of Command, a staunch and ancient line of bueraucratic kings and queens."
+	icon_state = "banner_crystalgem"
+	role_loyalties = list("Crystal Gem")
+	warcry = "We are the Crystal Gems!"
+
+/datum/crafting_recipe/crystalgem
+	name = "Crystal Gem Banner"
+	result = /obj/item/banner/crystalgem
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/stack/sheet/cloth = 6)
+	category = CAT_MISC
+
+/obj/item/banner/freemason
+	name = "freemason banner"
+	desc = "The banner of the Freemasons, fighting for independance."
+	icon_state = "banner_freemason"
+	role_loyalties = list("Freemason")
+	warcry = "Victory, or Death. We shall be Free!"
+
+/datum/crafting_recipe/freemason
+	name = "Free Mason Banner"
+	result = /obj/item/banner/freemason
+	time = 40
+	reqs = list(/obj/item/stack/rods = 2,
+				/obj/item/stack/sheet/cloth = 6)
+	category = CAT_MISC
+
 /obj/item/banner/command/mundane
 	inspiration_available = FALSE
 

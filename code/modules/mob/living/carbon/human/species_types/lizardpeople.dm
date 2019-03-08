@@ -24,6 +24,13 @@
 	inert_mutation = FIREBREATH
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 
+/datum/species/lizard/isoman
+	name = "Isoman"
+	id = "isomanlizard"
+	limbs_id = "lizard"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,DIGITIGRADE)
+	fixed_mut_color = "DDD"
+
 /datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H.grant_language(/datum/language/draconic)
 

@@ -1,0 +1,70 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/machinery/porta_turret/syndicate/energy,/turf/closed/wall/r_wall/syndicate,/area/awaymission/stolenship)
+"c" = (/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/awaymission/stolenship)
+"d" = (/obj/machinery/door/airlock/external,/obj/structure/fans/tiny,/obj/structure/fans/tiny,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"e" = (/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"f" = (/obj/structure/grille,/obj/structure/window/plastitanium,/turf/open/floor/plating,/area/awaymission/stolenship)
+"g" = (/obj/structure/shuttle/engine/propulsion{dir = 8},/turf/open/floor/plating,/area/awaymission/stolenship)
+"h" = (/obj/structure/shuttle/engine/heater{dir = 8},/obj/structure/window/reinforced{dir = 8},/turf/open/floor/plating,/area/awaymission/stolenship)
+"i" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"j" = (/obj/machinery/door/airlock/external,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"k" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"l" = (/mob/living/simple_animal/hostile/syndicate/ranged,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"m" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"n" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"o" = (/obj/structure/fans,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"p" = (/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"q" = (/obj/structure/flora/ash/cacti,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"r" = (/obj/machinery/hydroponics/soil,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"s" = (/obj/machinery/hydroponics/soil,/obj/machinery/light,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"t" = (/obj/structure/sink/puddle,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"u" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"v" = (/obj/structure/closet/crate/engineering,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"w" = (/obj/structure/closet/crate/solarpanel_small,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"x" = (/obj/structure/closet/crate/engineering/electrical,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"y" = (/obj/machinery/hydroponics/soil,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"z" = (/obj/item/shard/gem/random,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"A" = (/obj/machinery/light{dir = 1},/obj/structure/fermenting_barrel,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"B" = (/obj/structure/chair/comfy/black{dir = 4},/obj/item/shard/gem/random,/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"C" = (/obj/structure/frame/computer{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"D" = (/obj/structure/chair/comfy/black,/mob/living/simple_animal/hostile/syndicate/civilian,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"E" = (/obj/structure/chair/comfy/black,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"F" = (/obj/machinery/light{dir = 8},/mob/living/simple_animal/hostile/syndicate/ranged,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"G" = (/obj/structure/chair/comfy/black{dir = 4},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"H" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/drinkingglass,/obj/item/reagent_containers/food/drinks/drinkingglass,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"I" = (/obj/structure/table/reinforced,/obj/item/reagent_containers/food/drinks/bottle/lizardwine,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"J" = (/obj/structure/chair/comfy/black{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"K" = (/obj/structure/chair/comfy/black{dir = 4},/obj/item/shard/gem/random,/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"L" = (/obj/structure/chair/comfy/black{dir = 1},/mob/living/simple_animal/hostile/syndicate/civilian,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"M" = (/obj/structure/chair/comfy/black{dir = 1},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"N" = (/obj/machinery/geminjector,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"O" = (/obj/machinery/light,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"P" = (/obj/structure/flora/ash/cacti,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"Q" = (/obj/machinery/light{dir = 1},/obj/structure/flora/ash/cacti,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"R" = (/obj/machinery/hydroponics/soil,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"S" = (/obj/machinery/door/airlock/external,/obj/structure/fans/tiny,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"T" = (/obj/structure/sign/diamondauthority,/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/awaymission/stolenship)
+"U" = (/obj/item/gps/internal/stolenship,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"V" = (/obj/machinery/light{dir = 8},/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/mythril/thirty,/obj/item/stack/sheet/mineral/abductor/thirty,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"W" = (/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/diamond/thirty,/obj/item/stack/sheet/mineral/gold/thirty,/obj/item/stack/sheet/mineral/plasma/thirty,/obj/item/stack/sheet/mineral/silver/thirty,/obj/item/stack/sheet/mineral/titanium/thirty,/obj/item/stack/sheet/mineral/uranium/thirty,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+"X" = (/obj/machinery/light{dir = 8},/obj/structure/closet/crate,/obj/item/stack/sheet/mineral/bananium/thirty,/obj/item/gemwarpwhistle,/turf/open/floor/plasteel/dark,/area/awaymission/stolenship)
+
+(1,1,1) = {"
+bcTcdcbaaaaaaaaaaaaaaaaaaaa
+ccceeeccccccfffffcccbaaaaaa
+ghcieejeklmeeeeeeemecaaaaaa
+ghcnnoccmcTeeeepeececaaaaaa
+cccccccqercsrqtrqscucaaaaaa
+ghcvwxcyzrccfffffccpccfffcb
+ghcezecreqckezeeeAcecVBCeuc
+ccceeemelemeeDEDeefemeeeeef
+ccTFWlTeteTeGHIHJefuTeKUBCf
+ccczeemelemeeLMLeefemeeeeef
+ghcNNNcreqcOeeeezOcecXBCeuc
+ghcNNNcPerccfffffccpccfffcb
+cccccccrercQrrtqrRcucaaaaaa
+ghcnnoccmcTeeezpeececaaaaaa
+ghcieejeOlmeeeeeeemecaaaaaa
+ccceeeccccccfffffcccbaaaaaa
+bcTcScbaaaaaaaaaaaaaaaaaaaa
+"}

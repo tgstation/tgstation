@@ -1,44 +1,194 @@
-"a" = (/turf/template_noop,/area/template_noop)
-"b" = (/turf/closed/wall/rust,/area/template_noop)
-"c" = (/obj/structure/lattice,/turf/template_noop,/area/template_noop)
-"d" = (/turf/open/floor/plating/airless,/area/template_noop)
-"e" = (/mob/living/carbon/monkey{cloneloss = 200},/turf/open/floor/plating/airless,/area/template_noop)
-"f" = (/mob/living/simple_animal/slime{health = 0},/turf/open/floor/plating/airless,/area/template_noop)
-"g" = (/mob/living/simple_animal/slime/random{health = 0},/turf/open/floor/plating/airless,/area/template_noop)
-"h" = (/obj/structure/lattice,/mob/living/simple_animal/slime/random{health = 0},/turf/template_noop,/area/template_noop)
-"i" = (/obj/structure/sign/diamondauthority/rusted,/turf/closed/wall/rust,/area/template_noop)
-"j" = (/obj/structure/galaxy_warp/researchfacility,/turf/open/floor/plating/airless,/area/template_noop)
-"k" = (/obj/structure/grille/broken,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating/airless,/area/template_noop)
-"l" = (/obj/structure/frame/computer{dir = 4},/turf/open/floor/plating/airless,/area/template_noop)
-"m" = (/obj/structure/lattice,/obj/item/shard/gem{desc = "It appears to be the remains of Jade cut-776"; icon_state = "jadeshard"; name = "Shattered Jade"},/turf/template_noop,/area/template_noop)
-"n" = (/obj/structure/lattice,/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/turf/template_noop,/area/template_noop)
-"o" = (/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/turf/open/floor/plating/airless,/area/template_noop)
-"p" = (/obj/structure/door_assembly/door_assembly_research,/turf/open/floor/plating/airless,/area/template_noop)
-"q" = (/obj/structure/frame/machine,/turf/open/floor/plating/airless,/area/template_noop)
-"r" = (/obj/structure/sign/diamondauthority/rusted{step_y = 28},/turf/open/floor/plating/airless,/area/template_noop)
-"s" = (/obj/structure/sign/yellowdiamond/rusted{step_y = 28},/turf/open/floor/plating/airless,/area/template_noop)
-"t" = (/turf/closed/mineral/random/high_chance/airless,/area/template_noop)
-"u" = (/obj/structure/lattice,/turf/closed/mineral/random/high_chance/airless,/area/template_noop)
+"aa" = (/turf/template_noop,/area/template_noop)
+"ab" = (/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"ac" = (/turf/closed/mineral/random/airless,/area/template_noop)
+"ad" = (/turf/closed/wall/r_wall/rust,/area/science/xenobiology)
+"ae" = (/obj/structure/frame/computer{dir = 4},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"af" = (/obj/item/shard/gem/random,/obj/machinery/airalarm/directional/north,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"ag" = (/obj/machinery/smartfridge/extract/preloaded,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"ah" = (/obj/structure/lattice,/turf/template_noop,/area/science/xenobiology)
+"ai" = (/obj/structure/frame/machine,/obj/machinery/light/broken{dir = 8},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aj" = (/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
+"ak" = (/obj/structure/frame/machine,/obj/machinery/light/broken{dir = 4},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"al" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 2; external_pressure_bound = 140; pressure_checks = 0; name = "killroom vent"},/obj/machinery/camera{c_tag = "Xenobiology Kill Room"; dir = 4; network = list("ss13","rd")},/turf/open/floor/circuit/telecomms,/area/science/xenobiology)
+"am" = (/obj/machinery/light/broken{dir = 1},/turf/open/floor/circuit/telecomms,/area/science/xenobiology)
+"an" = (/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{dir = 2; external_pressure_bound = 120; name = "killroom vent"},/obj/structure/lattice,/turf/template_noop,/area/science/xenobiology)
+"ao" = (/obj/effect/spawner/structure/window/reinforced,/obj/structure/sign/warning/biohazard,/turf/open/floor/plating,/area/science/xenobiology)
+"ap" = (/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,/obj/effect/turf_decal/stripes/line{dir = 9},/turf/open/floor/plasteel,/area/science/xenobiology)
+"aq" = (/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/obj/item/reagent_containers/food/snacks/monkeycube,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"ar" = (/turf/open/floor/plasteel/airless{icon_state = "damaged3"},/area/science/xenobiology)
+"as" = (/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"at" = (/obj/structure/grille/broken,/obj/effect/decal/cleanable/glass,/turf/open/floor/plating/airless,/area/science/xenobiology)
+"au" = (/obj/machinery/light/broken{dir = 1},/turf/open/floor/plasteel/airless{icon_state = "damaged3"},/area/science/xenobiology)
+"av" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 5},/turf/open/floor/circuit/telecomms,/area/science/xenobiology)
+"aw" = (/obj/structure/lattice,/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 4},/turf/template_noop,/area/science/xenobiology)
+"ax" = (/obj/machinery/atmospherics/pipe/manifold/general/visible,/turf/open/floor/circuit/telecomms,/area/science/xenobiology)
+"ay" = (/obj/machinery/door/airlock/research,/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 4},/turf/open/floor/circuit/telecomms,/area/science/xenobiology)
+"az" = (/obj/machinery/atmospherics/pipe/simple/general/visible{dir = 9},/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
+"aA" = (/mob/living/simple_animal/slime/random{health = -200},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aB" = (/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
+"aC" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aD" = (/turf/open/floor/circuit/telecomms,/area/science/xenobiology)
+"aE" = (/mob/living/simple_animal/slime/random{health = -200},/turf/open/floor/circuit/telecomms,/area/science/xenobiology)
+"aF" = (/mob/living/carbon/monkey{cloneloss = 200},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aG" = (/turf/open/floor/plating/asteroid/airless,/area/science/xenobiology)
+"aH" = (/obj/machinery/light/broken{dir = 8},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aI" = (/obj/machinery/light/broken{dir = 4},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aJ" = (/turf/open/floor/plasteel/airless{icon_state = "damaged5"},/area/science/xenobiology)
+"aK" = (/obj/machinery/light/broken{dir = 1},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aL" = (/obj/effect/decal/cleanable/glass,/turf/open/floor/plasteel/airless{icon_state = "damaged5"},/area/science/xenobiology)
+"aM" = (/obj/structure/lattice,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{dir = 4},/turf/template_noop,/area/science/xenobiology)
+"aN" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 10},/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/stormtrooper,/turf/open/floor/plasteel/airless{icon_state = "damaged3"},/area/science/xenobiology)
+"aO" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/mob/living/carbon/monkey{cloneloss = 200},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aP" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aQ" = (/obj/machinery/light/broken{dir = 8},/turf/open/floor/plasteel/airless{icon_state = "damaged5"},/area/science/xenobiology)
+"aR" = (/obj/machinery/light/broken{dir = 4},/turf/open/floor/plasteel/airless{icon_state = "damaged5"},/area/science/xenobiology)
+"aS" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/mob/living/simple_animal/slime/random{health = -200},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"aT" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "1-2"},/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"aU" = (/obj/structure/cable{icon_state = "0-2"},/obj/machinery/power/solar,/turf/open/floor/plating/airless,/area/template_noop)
+"aV" = (/obj/structure/cable{icon_state = "0-2"},/obj/item/solar_assembly,/turf/open/floor/plating/airless,/area/template_noop)
+"aW" = (/obj/structure/lattice/catwalk,/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"aX" = (/obj/structure/lattice/catwalk,/obj/item/stack/cable_coil/cut/red,/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"aY" = (/obj/structure/cable{icon_state = "0-2"},/obj/structure/cable{icon_state = "1-2"},/obj/item/solar_assembly,/turf/open/floor/plating/airless,/area/template_noop)
+"aZ" = (/obj/structure/cable{icon_state = "0-2"},/obj/structure/cable{icon_state = "1-2"},/obj/machinery/power/solar,/turf/open/floor/plating/airless,/area/template_noop)
+"ba" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "2-4"},/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bb" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "1-4"},/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bc" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "2-8"},/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bd" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "4-8"},/obj/structure/cable{icon_state = "2-4"},/obj/structure/cable{icon_state = "1-4"},/turf/template_noop,/area/template_noop)
+"be" = (/obj/structure/lattice/catwalk,/obj/item/stack/cable_coil/cut/red,/turf/template_noop,/area/template_noop)
+"bf" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "4-8"},/turf/template_noop,/area/template_noop)
+"bg" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "4-8"},/obj/structure/cable{icon_state = "2-4"},/turf/template_noop,/area/template_noop)
+"bh" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bi" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "1-8"},/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bj" = (/obj/structure/galaxy_warp/researchfacility,/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bk" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "1-4"},/turf/open/floor/plating/asteroid/airless,/area/template_noop)
+"bl" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "4-8"},/obj/structure/cable{icon_state = "1-8"},/obj/structure/cable{icon_state = "2-8"},/turf/template_noop,/area/template_noop)
+"bm" = (/obj/structure/cable,/obj/structure/cable{icon_state = "1-2"},/obj/item/solar_assembly,/turf/open/floor/plating/airless,/area/template_noop)
+"bn" = (/obj/structure/cable,/obj/item/solar_assembly,/turf/open/floor/plating/airless,/area/template_noop)
+"bo" = (/obj/structure/cable,/obj/machinery/power/solar,/turf/open/floor/plating/airless,/area/template_noop)
+"bp" = (/mob/living/carbon/monkey{cloneloss = 200},/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
+"bq" = (/obj/effect/decal/cleanable/glass,/mob/living/simple_animal/slime/random{health = -200},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"br" = (/obj/machinery/door/airlock/research,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"bs" = (/obj/machinery/biogenerator,/obj/machinery/light/broken{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bt" = (/obj/machinery/seed_extractor,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bu" = (/obj/structure/frame/machine,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bv" = (/obj/machinery/smartfridge,/obj/machinery/light/broken{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bw" = (/obj/machinery/light/broken{dir = 8},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bx" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel,/area/science/xenobiology)
+"by" = (/obj/machinery/light/broken{dir = 4},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bz" = (/obj/machinery/light/broken{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bA" = (/turf/open/floor/plasteel,/area/science/xenobiology)
+"bB" = (/obj/machinery/airalarm/directional/west,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bC" = (/obj/item/shard/gem/random,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bD" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 6},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bE" = (/obj/machinery/door/airlock/research,/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 4},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bF" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 4},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 4},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bG" = (/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden/layer1,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bH" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 10},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bI" = (/obj/machinery/atmospherics/components/binary/pump{dir = 8; name = "Air to Distro"},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bJ" = (/obj/machinery/atmospherics/pipe/manifold/cyan/visible{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bK" = (/obj/machinery/atmospherics/pipe/simple/cyan/visible{dir = 10},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bL" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{dir = 4},/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bM" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 9},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bN" = (/obj/machinery/door/airlock/research,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bO" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 5},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bP" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{dir = 8},/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bQ" = (/obj/machinery/atmospherics/pipe/simple/cyan/visible,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bR" = (/obj/structure/frame/machine,/obj/machinery/light/broken,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bS" = (/obj/machinery/light/broken,/turf/open/floor/plasteel,/area/science/xenobiology)
+"bT" = (/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bU" = (/obj/machinery/light/broken,/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bV" = (/obj/machinery/airalarm/directional/west,/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{dir = 4},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bW" = (/obj/machinery/atmospherics/pipe/manifold/supply/hidden{dir = 8},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{dir = 4},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bX" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bY" = (/obj/structure/cable{icon_state = "0-4"},/obj/machinery/power/apc/auto_name/west,/obj/machinery/light/broken{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"bZ" = (/obj/structure/frame/machine,/obj/structure/cable{icon_state = "0-8"},/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/plasteel,/area/science/xenobiology)
+"ca" = (/obj/structure/cable{icon_state = "0-8"},/obj/machinery/power/smes,/obj/structure/cable{icon_state = "0-8"},/obj/machinery/light/broken{dir = 1},/turf/open/floor/plating,/area/science/xenobiology)
+"cb" = (/obj/structure/bed/pod,/obj/machinery/light/broken{dir = 1},/turf/open/floor/plasteel,/area/science/xenobiology)
+"cc" = (/obj/structure/bed/pod,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cd" = (/obj/structure/cable{icon_state = "0-2"},/turf/open/floor/plasteel,/area/science/xenobiology)
+"ce" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable{icon_state = "0-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 6},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 6},/turf/open/floor/plasteel,/area/science/xenobiology)
+"cf" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 10},/turf/open/floor/plasteel,/area/science/xenobiology)
+"cg" = (/obj/structure/cable{icon_state = "1-4"},/turf/open/floor/plasteel,/area/science/xenobiology)
+"ch" = (/obj/structure/cable{icon_state = "1-4"},/obj/structure/cable{icon_state = "4-8"},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{dir = 4},/turf/open/floor/plasteel,/area/science/xenobiology)
+"ci" = (/obj/structure/cable{icon_state = "1-4"},/obj/structure/cable{icon_state = "4-8"},/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 1},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 9},/turf/open/floor/plasteel,/area/science/xenobiology)
+"cj" = (/obj/structure/cable{icon_state = "4-8"},/obj/machinery/door/airlock/research,/turf/open/floor/plasteel,/area/science/xenobiology)
+"ck" = (/obj/structure/cable{icon_state = "4-8"},/turf/open/floor/plasteel,/area/science/xenobiology)
+"cl" = (/obj/structure/cable{icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cm" = (/mob/living/simple_animal/hostile/syndicate/ranged/space,/turf/open/floor/plasteel/airless{icon_state = "damaged5"},/area/science/xenobiology)
+"cn" = (/obj/machinery/airalarm/directional/east,/turf/open/floor/plasteel,/area/science/xenobiology)
+"co" = (/mob/living/simple_animal/hostile/syndicate/ranged/space,/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"cp" = (/obj/structure/cable{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cq" = (/obj/structure/bed/pod,/obj/machinery/light/broken,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cr" = (/obj/structure/cable{icon_state = "1-2"},/obj/machinery/door/airlock/external,/obj/machinery/atmospherics/pipe/simple/supply/hidden,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cs" = (/obj/machinery/light/broken{dir = 8},/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{dir = 4},/turf/open/floor/plasteel,/area/science/xenobiology)
+"ct" = (/obj/structure/cable{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 5},/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{dir = 4},/obj/item/gps/internal/wreckedresearch,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cu" = (/obj/machinery/airalarm/directional/east,/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8},/turf/open/floor/plasteel,/area/science/xenobiology)
+"cv" = (/obj/structure/cable{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cw" = (/obj/structure/cable{icon_state = "1-2"},/obj/structure/fans/tiny,/obj/machinery/door/airlock/external,/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cx" = (/turf/closed/mineral/random/airless,/area/science/xenobiology)
+"cy" = (/obj/machinery/light/broken{dir = 1},/turf/open/floor/plating/asteroid/airless,/area/science/xenobiology)
+"cz" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,/turf/open/floor/plating/asteroid/airless,/area/science/xenobiology)
+"cA" = (/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/layer1{dir = 4},/turf/open/floor/plating/asteroid/airless,/area/science/xenobiology)
+"cB" = (/obj/structure/lattice/catwalk,/obj/structure/cable{icon_state = "1-2"},/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{dir = 9},/turf/open/floor/plating/asteroid/airless,/area/science/xenobiology)
+"cC" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{dir = 8},/turf/open/floor/plasteel,/area/science/xenobiology)
+"cD" = (/mob/living/simple_animal/hostile/syndicate/melee/space,/turf/open/floor/plasteel,/area/science/xenobiology)
+"cE" = (/obj/machinery/camera{c_tag = "Xenobiology Cage 5"; dir = 8; network = list("ss13","rd")},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"cF" = (/obj/structure/lattice,/mob/living/simple_animal/slime{health = -150},/turf/template_noop,/area/science/xenobiology)
+"cG" = (/obj/machinery/camera{c_tag = "Xenobiology Cage 2"; dir = 4; network = list("ss13","rd")},/turf/open/floor/plasteel/airless{icon_state = "damaged5"},/area/science/xenobiology)
+"cH" = (/obj/machinery/camera{c_tag = "Xenobiology Cage 4"; dir = 8; network = list("ss13","rd")},/turf/open/floor/plasteel/airless{icon_state = "damaged5"},/area/science/xenobiology)
+"cI" = (/mob/living/simple_animal/slime{health = -150},/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
+"cJ" = (/obj/machinery/camera{c_tag = "Xenobiology Cage 1"; dir = 4; network = list("ss13","rd")},/turf/open/floor/plasteel/airless,/area/science/xenobiology)
+"cK" = (/obj/machinery/camera{c_tag = "Xenobiology Cage 3"; dir = 8; network = list("ss13","rd")},/turf/open/floor/plasteel/airless{icon_state = "damaged2"},/area/science/xenobiology)
 
 (1,1,1) = {"
-aaaaaataaaaaaaaaattt
-aaaaatttaaaaaaaaaaat
-abbcuuuuubbbbbccccaa
-abddcuuudbdedbdcccaa
-abdedbuddbdccbddccaa
-abdddbddebdcdbdddcaa
-abkdkikdkikdkikdkbaa
-abeddddddddedddedkaa
-akdfedgdgdgdddgddkaa
-akccfdddddedgeddekaa
-aklmnnobbpbbdddhdbaa
-abqdnqbbdddbbdcccbaa
-abbkkbbrdddsbcccccaa
-aaaaaaadddddaaaaaaaa
-aattaaacdjddaaaaaaaa
-aaattaaccdddaaaattaa
-aattaaacccddaaatatta
-aaaaaaaaaaaaaaaaatta
-aaaaaaaaaaaaaaaaataa
-aaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacacaaaaacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacacabacabacadadadadadacacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacacababababadaeafagadacacacacacacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacadadahahadadaiajakadadadadadadacacacacacacacacacacacacaaaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacadalamanaoapaqaqarasatasaucEadacacacacacacacacacacacacaaaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacadavawaxayazaraAaBaCaCarascFadabacacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacadaDaEaDaoasaFarasasatasahahaGababacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacadadadadadadaHaBaIadadadadahadacabacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacadcGaKaBatahahahaBasatasaKcHadacacacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaacacacacacacacacacacadahaBasaCaLaMaNaOaCaCcIarasadacacacacacacacacacacacacaaaaaaaaaa
+aaaaaaaaaaaaaaaaacacacacacacacacacacahahahaJataAasaPaAarataBasaradacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacadahadadadadaQaPaRadadadadadadacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacadcJauasatcmasaSaBcoataFaKcKadacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacadasasbpaCbqaraPaFaCaLahahasadacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacadaraBasatasaFaPaBasatasahaBadacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaacacacacacacacacacacacacacadadadadadadadbradadadadadadadacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaaaacacacacacacacacacacacacacadbsbtbubvadbwbxbyadbzbAbAbzadacacacacacacacacacacacacacaaaaaaaa
+aaaaaaaaacacacacacacacacacacacacacacadbBbCbAbDbEbFbGbFbEbHbIbJbKadacacacacacacacacacacacacaaaaaaaaaa
+aaaaaaaaacacacacacacacacacacacacacacadbAbAbLbMbNbAbxbAbNbObPbQbQadacacacacacacacacacacacacaaaaaaaaaa
+aaaaaaaaacacacacacacacacacacacacacacadbRbububRadbwbxbyadbSbAbTbUadacacacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaacacacacacacacacacacacacacacadadadadadadbVbWbXadadadadadadacacacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaacacacacacacacacacacacacacacadbYbZbZcaadbwbxbyadcbcccccbadacacacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaacacacacacacacacacacacacacacadbAcdcdcebEbFbGbFbEcfbAbCbAadacacacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaaaacacacacacacacacacacacacacadbBcgchcicjckclbAbNbOcCcDcnadacacacacacacacacacacacaaaaaaaaaaaa
+aaaaaaaaaaaaacacacacacacacacacacacacadbScDbAbSadbwcpbyadcqcccccqadacacacacacacacacaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaacacacacacacacacacacacadadadadadadadcradadadadadadadacacacacacacacaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacacadbAcpbAadacacacacacacacacacacacacaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacacacadcsctcuadacacacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacacacadbAcvbAadacacacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacacacacadadcwadadacacacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacacacaccxcyczcycxacacacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacacaccxcAcBaGcxacacacacacacacacacacaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacacabaTabababacacacacacacababaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabacacacacabaTabababababacacabababaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababacacacabaTababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaUaaaVaaaVababacabaWaXaWababababaUabaVaaaaaaaaaaaVaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaYaaaZaaaYabababaWbabbbcaWabababaYaaaZaaaYaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaabdbebdbfbgbhaXbhbhbibjbkbhbhbhaXblbfblbfblbfbebfaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabmaabmabababaWaWaWaWaWabababbmaabmaabmaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaabnaaaaaabnaaabababaWaWaWabababaabnaaaaaaaaaabnaaboaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}

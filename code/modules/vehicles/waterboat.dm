@@ -19,7 +19,7 @@
 	item_state = "oar"
 	lefthand_file = 'icons/mob/inhands/misc/lavaland_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/lavaland_righthand.dmi'
-	desc = "Not to be confused with the kind Jades hassles you for."
+	desc = "Not to be confused with the kind Peridots hassles you for."
 	force = 12
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FLAMMABLE

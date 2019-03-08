@@ -70,6 +70,18 @@
 /obj/item/gun/energy/pulse/destroyer/attack_self(mob/living/user)
 	to_chat(user, "<span class='danger'>[src.name] has three settings, and they are all DESTROY.</span>")
 
+/obj/item/gun/energy/pulse/destroyer/isoman
+	name = "isoman pulsar rifle"
+	icon_state = "isomanshotgun"
+	item_state = "isomanshotgun"
+	desc = "A heavy-duty energy rifle made from the scraps of gem ships."
+	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/pulse)
+	pin = /obj/item/firing_pin
+
+/obj/item/gun/energy/pulse/destroyer/isoman/attack_self(mob/living/user)
+	to_chat(user, "<span class='danger'>[src.name] 's knob is stuck on EXTERMINATE.</span>")
+
 /obj/item/gun/energy/pulse/pistol/m1911
 	name = "\improper M1911-P"
 	desc = "A compact pulse core in a classic handgun frame for Nanotrasen officers. It's not the size of the gun, it's the size of the hole it puts through people."

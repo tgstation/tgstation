@@ -9,6 +9,9 @@
 /obj/item/paper/fluff/shuttles/daniel
 	info = "i love daniel<br>daniel is my best friend<br><br>you are tearing me apart elise"
 
+obj/item/paper/fluff/quantumanomaly
+	name = "paper- Quantum Bomb"
+	info = "<B>QUANTUM BOMB OWNER'S MANUAL</B><br>Congratulations, Mister or Miss REDACTED!<br>You are the proud owner of this highly illegal piece of Bluespace Technology!<br>The Quantum Bomb sends the area it's planted in into a whole other dimension!<br>However the area must be moving, So plant it on a Shuttle if you really wanna see this baby go!<br>Step 1: Set the bomb down and wrench the bolts into the ground.<br>Step 2: Press the button.<br>Step 3: Jump off the shuttle because the moment that baby blows, everyone in it's radius can't be cloned back in your dimension of origin!<br>This is because their Brainwaves is now in a completely different dimension, and brainwaves cannot breach the dimensional barrier.<br>Unless the victim is unconscious, their minds will be completely erased too."
 
 ////////////	Job guides n' fluff
 

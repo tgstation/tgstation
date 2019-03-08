@@ -615,7 +615,7 @@
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
 	id = "mulligan"
-	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Syndicate spies and assassins in need of an emergency ID change."
+	description = "This toxin will rapidly change the DNA of human beings. Commonly used by Isoman spies and assassins in need of an emergency ID change."
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	metabolization_rate = INFINITY
 	taste_description = "slime"

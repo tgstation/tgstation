@@ -64,10 +64,14 @@
 	var/gibtonite = 0
 	var/gold = 0
 	var/iron = 0
-	var/plasma = 0
+	var/coal = 0
 	var/silver = 0
 	var/titanium = 0
 	var/uranium = 0
+	var/copper = 0
+	var/tin = 0
+	var/magnesium = 0
+	var/nearwater = FALSE
 
 /obj/kindergartengem/proc/pickgem()
 	for(var/turf/A in range(3,src))
@@ -85,52 +89,60 @@
 				gold = gold+1
 			if(istype(M, /turf/closed/mineral/iron))
 				iron = iron+1
-			if(istype(M, /turf/closed/mineral/plasma))
-				plasma = plasma+1
+			if(istype(M, /turf/closed/mineral/coal))
+				coal = coal+1
 			if(istype(M, /turf/closed/mineral/silver))
 				silver = silver+1
 			if(istype(M, /turf/closed/mineral/titanium))
 				titanium = titanium+1
 			if(istype(M, /turf/closed/mineral/uranium))
 				uranium = uranium+1
+			if(istype(M, /turf/closed/mineral/copper))
+				copper = copper+1
+			if(istype(M, /turf/closed/mineral/tin))
+				tin = tin+1
+			if(istype(M, /turf/closed/mineral/magnesium))
+				magnesium = magnesium+1
+		else if(istype(A, /turf/open/water))
+			nearwater = TRUE
 
 	//checking for potential gems.
-	if(bscrystal >= 2)
+	if(bscrystal >= 1 && nearwater == TRUE)
 		src.potentialgems.Add("Pearl")
 		if(rubyremoved == FALSE)
 			src.potentialgems.Remove("Ruby")
 			rubyremoved = TRUE
-	if(iron >= 3 && plasma >= 1)
+	if(iron >= 2 && uranium >= 1)
 		src.potentialgems.Add("Amethyst")
 		if(rubyremoved == FALSE)
 			src.potentialgems.Remove("Ruby")
 			rubyremoved = TRUE
-	if(titanium >= 1 && uranium >= 1)
+	if(iron >= 2 && magnesium >= 1)
 		src.potentialgems.Add("Peridot")
 		if(rubyremoved == FALSE)
 			src.potentialgems.Remove("Ruby")
 			rubyremoved = TRUE
-	if(titanium >= 1 && diamond >= 1)
+	if(iron >= 2 && diamond >= 1 && nearwater == TRUE)
 		src.potentialgems.Add("Agate")
 		if(rubyremoved == FALSE)
 			src.potentialgems.Remove("Ruby")
 			rubyremoved = TRUE
-	if(plasma >= 3 && uranium >= 1)
-		src.potentialgems.Add("Jade")
-		if(rubyremoved == FALSE)
-			src.potentialgems.Remove("Ruby")
-			rubyremoved = TRUE
-	if(plasma >= 3 && diamond >= 1)
+	//if(coal >= 3 && uranium >= 1)
+	//	src.potentialgems.Add("Jade")
+	//	if(rubyremoved == FALSE)
+	//		src.potentialgems.Remove("Ruby")
+	//		rubyremoved = TRUE
+	if(iron >= 2 && titanium >= 2)
 		src.potentialgems.Add("Rose Quartz")
 		if(rubyremoved == FALSE)
 			src.potentialgems.Remove("Ruby")
 			rubyremoved = TRUE
-	if(uranium >= 2 && titanium >= 2)
+	if(iron >= 2 && tin >= 2)
 		src.potentialgems.Add("Bismuth")
 		if(rubyremoved == FALSE)
 			src.potentialgems.Remove("Ruby")
 			rubyremoved = TRUE
-	if(bscrystal >= 1 && diamond >= 2) //highly expensive due to it's OPness.
+	if(copper >= 2 && magnesium >= 2 && titanium >= 2 && bscrystal >= 1) //highly expensive due to it's OPness.
 		src.potentialgems.Add("Sapphire")
 		if(rubyremoved == FALSE)
 			src.potentialgems.Remove("Ruby")
@@ -144,8 +156,8 @@
 		new/obj/effect/mob_spawn/human/gem/pearl(get_turf(src))
 	if(chosengem == "Agate")
 		new/obj/effect/mob_spawn/human/gem/agate(get_turf(src))
-	if(chosengem == "Jade")
-		new/obj/effect/mob_spawn/human/gem/jade(get_turf(src))
+	//if(chosengem == "Jade")
+	//	new/obj/effect/mob_spawn/human/gem/jade(get_turf(src))
 	if(chosengem == "Rose Quartz")
 		new/obj/effect/mob_spawn/human/gem/rosequartz(get_turf(src))
 	if(chosengem == "Amethyst")

@@ -9,60 +9,48 @@
 //List of different corpse types
 
 /obj/effect/mob_spawn/human/corpse/syndicatesoldier
-	name = "Syndicate Operative"
-	id_job = "Operative"
+	name = "Isoman Soldier"
+	id_job = "Soldier"
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
 	outfit = /datum/outfit/syndicatesoldiercorpse
+	mob_species = /datum/species/lizard/isoman
 
 /datum/outfit/syndicatesoldiercorpse
-	name = "Syndicate Operative Corpse"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/armor/vest
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/radio/headset
-	mask = /obj/item/clothing/mask/gas
-	head = /obj/item/clothing/head/helmet/swat
-	back = /obj/item/storage/backpack
+	name = "Isoman Soldier Corpse"
+	uniform = /obj/item/clothing/under/gladiator/isoman
 	id = /obj/item/card/id/syndicate
 
 /obj/effect/mob_spawn/human/corpse/syndicatecommando
-	name = "Syndicate Commando"
-	id_job = "Operative"
+	name = "Isoman Commando"
+	id_job = "Commando"
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
 	outfit = /datum/outfit/syndicatecommandocorpse
+	mob_species = /datum/species/lizard/isoman
 
 /datum/outfit/syndicatecommandocorpse
-	name = "Syndicate Commando Corpse"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/radio/headset
-	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/tank/jetpack/oxygen
+	name = "Isoman Commando Corpse"
+	uniform = /obj/item/clothing/under/gladiator/isoman
+	suit = /obj/item/clothing/suit/armor/bone
+	mask = /obj/item/clothing/mask/gas/cyborg
 	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	id = /obj/item/card/id/syndicate
 
 
 /obj/effect/mob_spawn/human/corpse/syndicatestormtrooper
-	name = "Syndicate Stormtrooper"
-	id_job = "Operative"
+	name = "Isoman Stormtrooper"
+	id_job = "Stormtrooper"
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
 	outfit = /datum/outfit/syndicatestormtroopercorpse
+	mob_species = /datum/species/lizard/isoman
 
 /datum/outfit/syndicatestormtroopercorpse
-	name = "Syndicate Stormtrooper Corpse"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi/elite
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	ears = /obj/item/radio/headset
-	mask = /obj/item/clothing/mask/gas/syndicate
-	back = /obj/item/tank/jetpack/oxygen/harness
+	name = "Isoman Stormtrooper Corpse"
+	uniform = /obj/item/clothing/under/gladiator/isoman
+	suit = /obj/item/clothing/suit/hooded/cloak/drake
+	r_pocket = /obj/item/tank/internals/emergency_oxygen
 	id = /obj/item/card/id/syndicate
 
 
@@ -207,7 +195,7 @@
 /obj/effect/mob_spawn/human/corpse/bee_terrorist
 	name = "BLF Operative"
 	outfit = /datum/outfit/bee_terrorist
-	
+
 /datum/outfit/bee_terrorist
 	name = "BLF Operative"
 	uniform = /obj/item/clothing/under/color/yellow

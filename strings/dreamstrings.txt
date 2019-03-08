@@ -1,35 +1,35 @@
 %A% %ADJECTIVE% familiar face
 %A% %ADJECTIVE% crewmember
-%A% %ADJECTIVE% security officer
-%A% %ADJECTIVE% doctor
-%A% %ADJECTIVE% engineer
-%A% %ADJECTIVE% miner
+%A% %ADJECTIVE% amethyst
+%A% %ADJECTIVE% rose quartz
+%A% %ADJECTIVE% peridot
+%A% %ADJECTIVE% bismuth
 %A% %ADJECTIVE% slime
 %A% %ADJECTIVE% alien
 %A% %ADJECTIVE% traitor
 %A% %ADJECTIVE% ally
-%A% %ADJECTIVE% scientist
+%A% %ADJECTIVE% human
 %A% %ADJECTIVE% monkey
 %A% %ADJECTIVE% loved one
 %A% %ADJECTIVE% monster
-the %ADJECTIVE% captain
+the %ADJECTIVE% agate
 %A% %ADJECTIVE% hat
-%A% %ADJECTIVE% ID card
+%A% %ADJECTIVE% gemstone
 %A% %ADJECTIVE% bottle
 %A% %ADJECTIVE% toolbox
-%A% %ADJECTIVE% gun
+%A% %ADJECTIVE% weapon
 the sun
-the engine
-the station
+the ship
+the earth
 %A% %ADJECTIVE% planet
-the medical bay
+the zoo
 the %ADJECTIVE% bridge
 the %ADJECTIVE% brig
 %A% %ADJECTIVE% shuttle
 %A% %ADJECTIVE% laboratory
-Nanotrasen
-the Syndicate
-the Wizard Federation
+Homeworld
+the Freemasons
+the Crystal Gems
 %ADJECTIVE% blood
 %ADJECTIVE% plasma
 %ADJECTIVE% wind
@@ -38,7 +38,7 @@ the Wizard Federation
 %ADJECTIVE% death
 %ADJECTIVE% blinking lights
 %ADJECTIVE% power
-%ADJECTIVE% riches
+%ADJECTIVE% life
 water
 %ADJECTIVE% flames
 some %ADJECTIVE% melons

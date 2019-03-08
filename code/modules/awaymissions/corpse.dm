@@ -346,6 +346,14 @@
 	name = "Scientist"
 	outfit = /datum/outfit/job/scientist
 
+/obj/effect/mob_spawn/human/officer
+	name = "Security Officer"
+	outfit = /datum/outfit/job/security
+
+/obj/effect/mob_spawn/human/secheadhardsuit
+	name = "Head of Security"
+	outfit = /datum/outfit/job/hos/hardsuit
+
 /obj/effect/mob_spawn/human/miner
 	name = "Shaft Miner"
 	outfit = /datum/outfit/job/miner

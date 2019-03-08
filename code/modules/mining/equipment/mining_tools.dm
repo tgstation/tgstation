@@ -16,6 +16,9 @@
 	toolspeed = 1
 	usesound = list('sound/effects/picaxe1.ogg', 'sound/effects/picaxe2.ogg', 'sound/effects/picaxe3.ogg')
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
+	var/breakable = TRUE
+	var/breakchance = 0.25
+	var/increasechance = 0.25
 
 /obj/item/pickaxe/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] begins digging into [user.p_their()] chest!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -23,6 +26,16 @@
 		return BRUTELOSS
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
 	return SHAME
+
+/obj/item/pickaxe/bone
+	name = "bone pickaxe"
+	icon_state = "bpickaxe"
+	item_state = "spickaxe"
+	toolspeed = 2 //mines slower than a normal pickaxe
+	desc = "A crude pickaxe made out of bone."
+	force = 10
+	breakchance = 10
+	increasechance = 5
 
 /obj/item/pickaxe/mini
 	name = "compact pickaxe"
@@ -33,6 +46,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=1000)
+	breakchance = 0.3
+	increasechance = 0.3
 
 /obj/item/pickaxe/silver
 	name = "silver-plated pickaxe"
@@ -41,6 +56,8 @@
 	toolspeed = 0.5 //mines faster than a normal pickaxe, bought from mining vendor
 	desc = "A silver-plated pickaxe that mines slightly faster than standard-issue."
 	force = 17
+	breakchance = 0.2
+	increasechance = 0.2
 
 /obj/item/pickaxe/diamond
 	name = "diamond-tipped pickaxe"
@@ -49,6 +66,8 @@
 	toolspeed = 0.3
 	desc = "A pickaxe with a diamond pick head. Extremely robust at cracking rock walls and digging up dirt."
 	force = 19
+	breakchance = 0.15
+	increasechance = 0.15
 
 /obj/item/pickaxe/drill
 	name = "mining drill"
@@ -59,6 +78,8 @@
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
+	breakchance = 0.2
+	increasechance = 0.2
 
 /obj/item/pickaxe/drill/badmin //badmin weapon
 	name = "the breaking point"
@@ -70,11 +91,13 @@
 	usesound = 'sound/weapons/drill.ogg'
 	hitsound = 'sound/weapons/drill.ogg'
 	desc = "One shot from this baby will shatter any gem in the galaxy in the blink of an eye."
+	breakable = FALSE
 
 /obj/item/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
 	flags_1 = NONE
+	breakable = FALSE
 
 /obj/item/pickaxe/drill/cyborg/Initialize()
 	. = ..()
@@ -85,11 +108,14 @@
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
 	desc = "Yours is the drill that will pierce the heavens!"
+	breakchance = 0.05
+	increasechance = 0.05
 
 /obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
 	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
 	toolspeed = 0.2
+	breakable = FALSE
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"
@@ -99,6 +125,7 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
+	breakable = FALSE
 
 /obj/item/shovel
 	name = "shovel"

@@ -1,0 +1,20 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/floor/circuit,/area/template_noop)
+"c" = (/obj/structure/warp_pad_frame,/turf/open/floor/circuit,/area/template_noop)
+"d" = (/turf/closed/wall/r_wall,/area/template_noop)
+"e" = (/obj/structure/galaxy_warp/earth,/turf/open/floor/circuit,/area/template_noop)
+"f" = (/obj/structure/warp_pad/earthgalaxywarp,/turf/open/floor/circuit,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaaaaaaa
+aaaabbbaaaa
+aaabbcbbaaa
+aabdbbbdbaa
+abbbbbbbbba
+abcbbebbcba
+abbbbbbbbba
+aabdbbbdbaa
+aaabbfbbaaa
+aaaabbbaaaa
+aaaaaaaaaaa
+"}

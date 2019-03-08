@@ -1,5 +1,6 @@
 /obj/item/pickaxe/bismuth
 	name = "bismuth pick"
+	breakable = FALSE
 
 /obj/item/pickaxe/bismuth/Initialize()
 	. = ..()

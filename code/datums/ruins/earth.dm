@@ -42,37 +42,45 @@
 	suffix = "goat_island.dmm"
 	cost = 5
 
+/datum/map_template/ruin/earth/galaxywarp
+	name = "Galaxy Warp"
+	id = "galaxywarp"
+	description = "May or may not contain crying breakfast friend stickers."
+	suffix = "galaxywarp.dmm"
+	cost = 5
+	allow_duplicates = FALSE
+
 /datum/map_template/ruin/earth/mineA
 	name = "Miner Island A"
 	id = "mineA"
 	description = "A rocky location with plenty of minerals."
 	suffix = "miner_island1.dmm"
-	cost = 5
+	cost = 3
 
 /datum/map_template/ruin/earth/mineB
 	name = "Miner Island B"
 	id = "mineB"
 	description = "A rocky location with plenty of minerals."
 	suffix = "miner_island2.dmm"
-	cost = 5
+	cost = 3
 
 /datum/map_template/ruin/earth/mineC
 	name = "Miner Island C"
 	id = "mineC"
 	description = "A rocky location with plenty of minerals."
 	suffix = "miner_island3.dmm"
-	cost = 5
+	cost = 3
 
 /datum/map_template/ruin/earth/luckyA
 	name = "Lucky Island A"
 	id = "luckyA"
 	description = "A rocky location with a metric ton of minerals, perfect kindergarden spot."
 	suffix = "highchance_island1.dmm"
-	cost = 10
+	cost = 6
 
 /datum/map_template/ruin/earth/luckyB
 	name = "Lucky Island B"
 	id = "luckyA"
 	description = "A rocky location with a metric ton of minerals, perfect kindergarden spot."
 	suffix = "highchance_island1.dmm"
-	cost = 10
+	cost = 6

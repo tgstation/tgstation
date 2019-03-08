@@ -419,6 +419,13 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
+/obj/item/clothing/under/gladiator/isoman
+	name = "isoman uniform"
+	desc = "You wouldn't download a ship, Space piracy is a crime."
+	icon_state = "isoman"
+	item_state = "isoman"
+	item_color = "isoman"
+
 /obj/item/clothing/under/gladiator/ash_walker
 	desc = "This gladiator uniform appears to be covered in ash and fairly dated."
 	has_sensor = NO_SENSORS

@@ -8,7 +8,7 @@
 /datum/action/innate/gem/healingtears/Activate()
 	var/list/nearby = list()
 	for(var/atom/A in view(owner,1))
-		if(istype(A,/mob/living) || istype(A,/obj/structure/gem))
+		if(istype(A,/mob/living) || istype(A,/obj/item/gem))
 			if(A != owner) //no self healing.
 				nearby.Add(A)
 	var/atom/target = input("Who do you want to heal?") as null|anything in nearby
@@ -23,9 +23,12 @@
 				mobheal.revive(full_heal = TRUE, admin_revive = TRUE)
 				mobheal.grab_ghost()
 				owner.visible_message("<span class='warning'>[owner] heals [target] with their tears!</span>")
-			if(istype(target,/obj/structure/gem))
-				var/obj/structure/gem/gemheal = target
-				gemheal.revive()
-				owner.visible_message("<span class='warning'>[owner] heals [target] with their tears!</span>")
+			if(istype(target,/obj/item/gem))
+				var/obj/item/gem/gemheal = target
+				if(gemheal.bubbled == FALSE)
+					gemheal.revive()
+					owner.visible_message("<span class='warning'>[owner] heals [target] with their tears!</span>")
+				else
+					to_chat(usr, "<span class='warning'>Pop the bubble first.</span>")
 		else
 			to_chat(usr, "<span class='warning'>You have to be in range.</span>")

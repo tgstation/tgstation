@@ -110,6 +110,7 @@
 #define MAT_SILVER		"$silver"
 #define MAT_GOLD		"$gold"
 #define MAT_DIAMOND		"$diamond"
+#define MAT_COAL		"$coal"
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
 #define MAT_BLUESPACE	"$bluespace"

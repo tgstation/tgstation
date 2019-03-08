@@ -53,6 +53,10 @@
 	name = "warp pad (Berry Battlefield)"
 	warplocation = "Berry Battlefield"
 
+/obj/structure/warp_pad/earthgalaxywarp
+	name = "warp pad (Earth Galaxy Warp)"
+	warplocation = "Earth Galaxy Warp"
+
 /obj/structure/warp_pad/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -110,6 +114,10 @@
 	name = "galaxy warp (Pink's Human Zoo)"
 	warplocation = "Pink's Human Zoo"
 
+/obj/structure/galaxy_warp/earth
+	name = "galaxy warp (Earth)"
+	warplocation = "Earth"
+
 /obj/structure/galaxy_warp/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -122,7 +130,7 @@
 				if(W.warplocation != null && W != src) //no null warp pads either
 					warppads.Add(W)
 
-			var/obj/structure/warp_pad/W = input("Where do you wish to warp?") as null|anything in warppads
+			var/obj/structure/galaxy_warp/W = input("Where do you wish to warp?") as null|anything in warppads
 			if(W != null)
 				playsound(src, 'sound/effects/warppad.ogg', 50)
 				for(var/atom/A in range(src,0))

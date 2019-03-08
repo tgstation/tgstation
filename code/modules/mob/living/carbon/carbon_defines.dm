@@ -9,7 +9,6 @@
 	var/summoneditem = null
 	var/dominantfuse = null
 	var/myfusion = null
-	var/willingunfuse = FALSE
 	var/gemcut = "nil"
 	var/gemstatus = "normal"
 	var/list/fused_with = list()
