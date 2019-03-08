@@ -164,7 +164,8 @@
 	return cell
 
 /obj/mecha/Destroy()
-	occupant.SetSleeping(destruction_sleep_duration)
+	if(occupant!=null)
+		occupant.SetSleeping(destruction_sleep_duration)
 	go_out()
 	var/mob/living/silicon/ai/AI
 	for(var/mob/M in src) //Let's just be ultra sure
