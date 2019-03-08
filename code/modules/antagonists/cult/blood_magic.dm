@@ -176,7 +176,7 @@
 
 /datum/action/innate/cult/blood_spell/construction
 	name = "Twisted Construction"
-	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)"	
+	desc = "Empowers your hand to corrupt certain metalic objects.<br><u>Converts:</u><br>Plasteel into runed metal<br>50 metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)"
 	button_icon_state = "transmute"
 	magic_path = "/obj/item/melee/blood_magic/construction"
 	health_cost = 12
@@ -335,8 +335,10 @@
 // The "magic hand" items
 /obj/item/melee/blood_magic
 	name = "\improper magical aura"
-	desc = "Sinister looking aura that distorts the flow of reality around it."
+	desc = "A sinister looking aura that distorts the flow of reality around it."
 	icon = 'icons/obj/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
 	item_state = null
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
@@ -556,7 +558,7 @@
 	desc = "Corrupts certain metalic objects on contact."
 	invocation = "Ethra p'ni dedol!"
 	color = "#000000" // black
-	
+
 /obj/item/melee/blood_magic/construction/examine(mob/user)
 	..()
 	to_chat(user,"<u>A sinister spell used to convert:</u><br>Plasteel into runed metal<br>[METAL_TO_CONSTRUCT_SHELL_CONVERSION] metal into a construct shell<br>Living cyborgs into constructs after a delay<br>Cyborg shells into construct shells<br>Airlocks into brittle runed airlocks after a delay (harm intent)")
@@ -813,4 +815,4 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
-						
+
