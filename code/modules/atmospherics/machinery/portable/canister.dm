@@ -145,6 +145,32 @@
 	gas_type = /datum/gas/miasma
 	filled = 1
 
+
+/obj/machinery/portable_atmospherics/canister/fusion_test
+	name = "Fusion Test Canister"
+	desc = "This should never be spawned in game."
+	icon_state = "green"
+/obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
+	air_contents.add_gases(/datum/gas/tritium,/datum/gas/plasma,/datum/gas/carbon_dioxide,/datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/tritium][MOLES] = 10
+	air_contents.gases[/datum/gas/plasma][MOLES] = 500
+	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 500
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = 100
+	air_contents.temperature = 9999
+
+/obj/machinery/portable_atmospherics/canister/fusion_test_2
+	name = "Fusion Test Canister"
+	desc = "This should never be spawned in game."
+	icon_state = "green"
+/obj/machinery/portable_atmospherics/canister/fusion_test_2/create_gas()
+	air_contents.add_gases(/datum/gas/tritium,/datum/gas/plasma,/datum/gas/carbon_dioxide,/datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/tritium][MOLES] = 10
+	air_contents.gases[/datum/gas/plasma][MOLES] = 15000
+	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 1500
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = 100
+	air_contents.temperature = 9999
+
+
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
 	if(timing)
 		. = round(max(0, valve_timer - world.time) / 10, 1)
@@ -480,8 +506,8 @@
 		if("eject")
 			if(holding)
 				if(valve_open)
-					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the <span class='boldannounce'>air</span><br>.")
-					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span><br>", INVESTIGATE_ATMOS)
+					message_admins("[ADMIN_LOOKUPFLW(usr)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the <span class='boldannounce'>air</span>.")
+					investigate_log("[key_name(usr)] removed the [holding], leaving the valve open and transferring into the <span class='boldannounce'>air</span>.", INVESTIGATE_ATMOS)
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_icon()

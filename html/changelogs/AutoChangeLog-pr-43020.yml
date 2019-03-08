@@ -1,0 +1,4 @@
+author: "TerraGS"
+delete-after: True
+changes: 
+  - bugfix: "Curing advanced voice change virus symptoms no longer leaves you unable to speak"

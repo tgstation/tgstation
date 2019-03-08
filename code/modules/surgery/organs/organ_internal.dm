@@ -5,6 +5,7 @@
 	var/status = ORGAN_ORGANIC
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 0
+	var/broken_cyber_organ = FALSE //if the organ stopped working.
 	var/zone = BODY_ZONE_CHEST
 	var/slot
 	// DO NOT add slots with matching names to different zones - it will break internal_organs_slot list!
@@ -56,7 +57,7 @@
 
 /obj/item/organ/examine(mob/user)
 	..()
-	if(status == ORGAN_ROBOTIC && crit_fail)
+	if(status == ORGAN_ROBOTIC && broken_cyber_organ)
 		to_chat(user, "<span class='warning'>[src] seems to be broken!</span>")
 
 

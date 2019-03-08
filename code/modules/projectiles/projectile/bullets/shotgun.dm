@@ -91,5 +91,4 @@
 // Mech Scattershot
 
 /obj/item/projectile/bullet/scattershot
-	damage = 20
-	stamina = 65
+	damage = 24

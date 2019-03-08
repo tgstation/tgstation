@@ -1,5 +1,7 @@
 //The chests dropped by mob spawner tendrils. Also contains associated loot.
 
+#define HIEROPHANT_CLUB_CARDINAL_DAMAGE 30
+
 
 /obj/structure/closet/crate/necropolis
 	name = "necropolis chest"
@@ -1299,7 +1301,9 @@
 	new /obj/effect/temp_visual/hierophant/telegraph/cardinal(T, user)
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
-	new /obj/effect/temp_visual/hierophant/blast(T, user, friendly_fire_check)
+	var/obj/effect/temp_visual/hierophant/blast/B = new(T, user, friendly_fire_check)
+	B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
+	B.monster_damage_boost = FALSE
 	for(var/d in GLOB.cardinals)
 		INVOKE_ASYNC(src, .proc/blast_wall, T, d, user)
 
@@ -1313,7 +1317,7 @@
 		if(!J)
 			return
 		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
-		B.damage = 30
+		B.damage = HIEROPHANT_CLUB_CARDINAL_DAMAGE
 		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)

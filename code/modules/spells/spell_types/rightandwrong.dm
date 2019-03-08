@@ -4,8 +4,9 @@
 #define SPECIALIST_MAGIC_PROB 2
 
 GLOBAL_LIST_INIT(summoned_guns, list(
-	/obj/item/gun/energy/e_gun/advtaser,
+	/obj/item/gun/energy/disabler,
 	/obj/item/gun/energy/e_gun,
+	/obj/item/gun/energy/e_gun/advtaser,
 	/obj/item/gun/energy/laser,
 	/obj/item/gun/ballistic/revolver,
 	/obj/item/gun/ballistic/revolver/detective,
