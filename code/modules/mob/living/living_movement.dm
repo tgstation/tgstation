@@ -41,6 +41,14 @@
 	else
 		remove_movespeed_modifier(MOVESPEED_ID_LIVING_TURF_SPEEDMOD)
 
+/mob/living/proc/update_pull_movespeed()
+	if(pulling && isliving(pulling))
+		var/mob/living/L = pulling
+		if((L.resting || L.IsKnockdown() || L.InCritical()) && !has_movespeed_modifier(PULL_PRONE_SLOWDOWN_ID))
+			add_movespeed_modifier(PULL_PRONE_SLOWDOWN_ID, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
+			return	
+	remove_movespeed_modifier(PULL_PRONE_SLOWDOWN_ID)
+
 /mob/living/can_zFall(turf/T, levels)
 	return !(movement_type & FLYING)
 
