@@ -28,7 +28,10 @@
 	. = ..()
 
 /obj/structure/infection/core/proc/generate_announcement()
-	priority_announce("Confirmed outbreak of level 3 biohazard outside of [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/aimalf.ogg')
+	priority_announce("The infection core has landed, I hope you've prepared well.\n\
+					   You should see our reinforcements warp in near the emergency shuttle outpost as we send them in.\n\
+					   Good luck, these are the most important hours of your lives. I'll be here to notify you should anything change for better or for worse.",
+					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 
 /obj/structure/infection/core/scannerreport()
 	return "Directs the infection's expansion, gradually expands, and sustains nearby infection spores and infesternauts."

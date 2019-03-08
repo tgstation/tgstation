@@ -1,3 +1,40 @@
+GLOBAL_LIST_INIT(commander_phrases, list("Fight and work together, that's the only way to defeat anything this strong.",
+										 "The infection is weak to heat based attacks.",
+										 "Defend the inner part of the station, you never know what might make it past the barriers.",
+										 "Target the infection infrastructure, it only gets exponentially stronger the more it creates.",
+										 "We can create equipment to battle the infection if you retrieve parts from monsters it creates. Bring them to the emergency shuttle outpost.",
+										 "The infection only gets stronger the more beacons it destroys, don't let that happen.",
+										 "It's dangerous to travel inside the infection, I'd recommend a mech and strong weaponry.",
+										 "The beacons automatically repair themselves after taking damage.",
+										 "The infection can recycle its own important structures to gain resources, don't leave anything alive.",
+										 "The infection feeds on everything, especially the living, protect your allies to protect yourself."))
+GLOBAL_LIST_EMPTY(infection_beacons)
+GLOBAL_LIST_EMPTY(beacon_spawns)
+
+/obj/effect/landmark/beacon_start
+	name = "beaconstart"
+	icon_state = "beacon_start"
+
+/obj/effect/landmark/beacon_start/Initialize(mapload)
+	..()
+	GLOB.beacon_spawns += src
+
+/obj/effect/landmark/beacon_start/west
+	name = "beaconstartwest"
+	dir = WEST
+
+/obj/effect/landmark/beacon_start/east
+	name = "beaconstarteast"
+	dir = EAST
+
+/obj/effect/landmark/beacon_start/north
+	name = "beaconstartnorth"
+	dir = NORTH
+
+/obj/effect/landmark/beacon_start/south
+	name = "beaconstartsouth"
+	dir = SOUTH
+
 /obj/structure/beacon_generator
 	name = "beacon generator"
 	icon = 'icons/mob/infection.dmi'
@@ -23,7 +60,14 @@
 	for(var/obj/structure/beacon_wall/D in walls)
 		qdel(D)
 	GLOB.infection_beacons -= src
+	for(var/mob/camera/commander/C in GLOB.infection_commanders)
+		C.upgrade_points++
+	if(GLOB.infection_beacons.len > 1)
+		addtimer(CALLBACK(src, .proc/destroyed_announcement), 80)
 	return ..()
+
+/obj/structure/beacon_generator/proc/destroyed_announcement()
+	priority_announce("We've lost a beacon, we only have [GLOB.infection_beacons.len] left. Remember, [pick(GLOB.commander_phrases)]","Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 
 /obj/structure/beacon_generator/process()
 	obj_integrity = min(obj_integrity + 10, max_integrity)
@@ -81,11 +125,12 @@
 			var/obj/structure/beacon_wall/B = new /obj/structure/beacon_wall(firstfound.loc)
 			B.forceMove(firstfound)
 			walls += B
+			playsound(B.loc, 'sound/mecha/mechstep.ogg', 300, 1, 10, pressure_affected = FALSE)
 		if(secondfound)
 			var/obj/structure/beacon_wall/B = new /obj/structure/beacon_wall(secondfound.loc)
 			B.forceMove(secondfound)
 			walls += B
-		playsound(src.loc, 'sound/mecha/mechstep.ogg', 300, 1, 10, pressure_affected = FALSE)
+			playsound(B.loc, 'sound/mecha/mechstep.ogg', 300, 1, 10, pressure_affected = FALSE)
 		sleep(2)
 
 /obj/structure/beacon_generator/singularity_act()
@@ -110,6 +155,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = FLY_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	CanAtmosPass = ATMOS_PASS_NO
 	resistance_flags = INDESTRUCTIBLE
 

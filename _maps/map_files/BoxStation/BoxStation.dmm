@@ -4843,7 +4843,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
-/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ajM" = (
@@ -6629,6 +6628,7 @@
 /area/hallway/primary/fore)
 "anS" = (
 /obj/machinery/holopad,
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "anT" = (
@@ -16816,7 +16816,6 @@
 	codes_txt = "patrol;next_patrol=CHW";
 	location = "Lockers"
 	},
-/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aNk" = (
@@ -23491,7 +23490,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bdU" = (
@@ -23537,6 +23535,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "beb" = (
@@ -29784,6 +29783,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "bta" = (
@@ -32786,6 +32786,7 @@
 /area/hallway/primary/central)
 "bAf" = (
 /obj/machinery/holopad,
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bAg" = (
@@ -42170,6 +42171,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "bXm" = (
@@ -45220,7 +45222,6 @@
 "ceL" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
-/obj/effect/landmark/beacon_start/west,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ceM" = (
@@ -55586,11 +55587,6 @@
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
-"eUn" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/landmark/beacon_start/west,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "eUr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "testlab";
@@ -55964,6 +55960,12 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hos)
+"hvC" = (
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel/chapel{
+	dir = 1
+	},
+/area/chapel/main)
 "hAK" = (
 /obj/structure/table,
 /obj/item/storage/box/disks_nanite,
@@ -56261,13 +56263,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"koo" = (
-/obj/effect/landmark/beacon_start/west,
-/obj/structure/cable{
-	icon_state = "4-8"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "ktw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -56655,10 +56650,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"mUe" = (
-/obj/effect/landmark/beacon_start/west,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "nbv" = (
 /turf/closed/wall,
 /area/science/explab)
@@ -56872,6 +56863,12 @@
 	},
 /turf/closed/wall,
 /area/vacant_room/commissary)
+"oTT" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/central)
 "oUq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 8
@@ -57356,13 +57353,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
-"sSZ" = (
-/obj/structure/cable{
-	icon_state = "1-2"
-	},
-/obj/effect/landmark/beacon_start/west,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "sXy" = (
 /obj/machinery/door/airlock/external{
 	name = "Security External Airlock";
@@ -57505,10 +57495,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
-"tFw" = (
-/obj/effect/landmark/beacon_start/west,
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "tJU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable{
@@ -57858,10 +57844,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"wip" = (
-/obj/effect/landmark/beacon_start/west,
-/turf/open/floor/plasteel,
-/area/quartermaster/office)
 "wkN" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -58019,6 +58001,11 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"xtH" = (
+/obj/machinery/door/firedoor,
+/obj/effect/landmark/beacon_start/west,
+/turf/open/floor/plasteel,
+/area/hallway/primary/port)
 "xEu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
@@ -73887,7 +73874,7 @@ aHz
 aIS
 aKn
 aLF
-aLF
+xtH
 aLF
 aPz
 aQL
@@ -81326,7 +81313,7 @@ aaa
 arP
 asP
 aqR
-tFw
+aqR
 awb
 axt
 ayG
@@ -81399,7 +81386,7 @@ aoV
 aoV
 aoV
 bLv
-koo
+bUs
 bLv
 aaa
 cjJ
@@ -81620,7 +81607,7 @@ bmk
 bbR
 boT
 bbR
-wip
+bbR
 buI
 bbR
 bbR
@@ -81638,7 +81625,7 @@ bCq
 bLu
 bHE
 bHE
-mUe
+bHE
 bHE
 bLv
 aaf
@@ -82889,7 +82876,7 @@ aJq
 aJq
 aJq
 aJq
-aJq
+eZA
 aJq
 aLY
 aJq
@@ -89821,7 +89808,7 @@ aAh
 aAh
 aAh
 aLR
-eZA
+aJq
 aOE
 aJn
 aaa
@@ -89850,7 +89837,7 @@ buY
 buY
 bqH
 aJq
-eZA
+aJq
 aXf
 bCv
 bDP
@@ -90148,7 +90135,7 @@ bOh
 ccw
 cDm
 cjP
-eUn
+ckF
 cDJ
 ckF
 cpE
@@ -92403,7 +92390,7 @@ aPY
 bac
 aJC
 aYV
-aYV
+kIf
 aYV
 bfF
 bhc
@@ -92416,7 +92403,7 @@ bjL
 bpM
 bqT
 bFD
-bJG
+oTT
 bJG
 bvl
 bwE
@@ -99062,7 +99049,7 @@ anf
 apC
 aoQ
 cqM
-sSZ
+asw
 asw
 asw
 aCA
@@ -99085,7 +99072,7 @@ aYQ
 bam
 aYV
 aYV
-kIf
+aYV
 aYV
 beE
 bfS
@@ -104216,7 +104203,7 @@ aMX
 aNW
 aPl
 aQv
-aPl
+hvC
 aTg
 aUI
 aTg
@@ -104225,7 +104212,7 @@ aZf
 aFz
 bbF
 aYV
-aXq
+ktw
 aYV
 bfX
 bhB
@@ -105253,7 +105240,7 @@ aZf
 baA
 bbF
 aYV
-ktw
+aXq
 aYV
 bfX
 bhD

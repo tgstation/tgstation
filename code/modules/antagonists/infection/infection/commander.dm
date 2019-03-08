@@ -2,8 +2,7 @@
 GLOBAL_LIST_EMPTY(infections) //complete list of all infections made.
 GLOBAL_LIST_EMPTY(infection_cores)
 GLOBAL_LIST_EMPTY(infection_nodes)
-GLOBAL_LIST_EMPTY(infection_beacons)
-
+GLOBAL_LIST_EMPTY(infection_commanders)
 
 /mob/camera/commander
 	name = "Infection Commander"
@@ -26,25 +25,53 @@ GLOBAL_LIST_EMPTY(infection_beacons)
 	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
 	var/obj/effect/meteor/infection/meteor = null // The infection's incoming meteor
 	var/infection_points = 0
-	var/max_infection_points = 100000
+	var/max_infection_points = 500
+	var/upgrade_points = 6 // obtained by destroying beacons
 	var/last_attack = 0
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
 	var/base_point_rate = 2 //for blob core placement
-	var/autoplace_time = 100 // a few seconds, just so it isnt sudden at game start
+	var/autoplace_time = 600 // a few seconds, just so it isnt sudden at game start
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ff5800"
 
 /mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
+	GLOB.infection_commanders += src
 	infection_points = starting_points
 	autoplace_time += world.time
 	last_attack = world.time
 	if(infection_core)
 		infection_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
+	addtimer(CALLBACK(src, .proc/generate_announcement), 80)
+	addtimer(CALLBACK(src, .proc/place_beacons), 300)
 	.= ..()
+
+/mob/camera/commander/proc/generate_announcement()
+	priority_announce("This announcement could decide your fate, pay attention like your life depends on it/\n\n\
+					   It seems that an infectious core is headed to your station on an immovable meteor. We've already started diagnostics and are gathering data.\n\
+					   You all must prepare as much as you can for the fight of your lives. Your only hope is to defeat the core or hold out long enough for us to develop a way to fight back.\n\n\
+					   It's against protocol to send any form of evacuation shuttle against this high level of a biohazard due to the risk of contamination.\n\n\
+					   From what we can tell, the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\
+					   Best of luck, I'll be in touch giving advice and sending in aid when I can.\n\n\
+					   Oh, and one more thing, our defensive beacons will land shortly. The infection is unable to cross the barriers these create. Defend them with your lives.",
+					  "Biohazard Containment Commander", 'sound/ai/aimalf.ogg')
+
+/mob/camera/commander/proc/defeated_announcement()
+	priority_announce("You've defeated the infection, congratulations. I have nothing but praise for you.\n\
+					   Now get back to work, Nanotrasen doesn't pay you the minimum wage to sit around and do nothing all day."
+					  "Biohazard Containment Commander", 'sound/misc/notice2.ogg')
+
+/mob/camera/commander/proc/place_beacons()
+	for(var/obj/effect/landmark/beacon_start/B in GLOB.beacon_spawns)
+		var/turf/T = get_turf(B)
+		var/obj/structure/beacon_generator/G = new /obj/structure/beacon_generator(T.loc)
+		G.forceMove(T)
+		G.setDir(B.dir)
+		INVOKE_ASYNC(G, /obj/structure/beacon_generator.proc/generateWalls)
+		sleep(100 / GLOB.beacon_spawns.len)
 
 /mob/camera/commander/Life()
 	if(!infection_core && !meteor)
@@ -55,11 +82,11 @@ GLOBAL_LIST_EMPTY(infection_beacons)
 			qdel(src)
 	else if(!victory_in_progress && !GLOB.infection_beacons.len && !meteor)
 		victory_in_progress = TRUE
-		priority_announce("Security beacons have been destroyed. Station loss is imminent.", "Infection Alert")
+		priority_announce("We've lost, there's nothing else we can do anymore. Spend your last moments as you wish.", "Biohazard Containment Commander")
 		set_security_level("delta")
 		max_infection_points = INFINITY
 		infection_points = INFINITY
-		addtimer(CALLBACK(src, .proc/victory), 450)
+		addtimer(CALLBACK(src, .proc/victory), 250)
 	..()
 
 
@@ -109,6 +136,7 @@ GLOBAL_LIST_EMPTY(infection_beacons)
 	SSticker.force_ending = 1
 
 /mob/camera/commander/Destroy()
+	GLOB.infection_commanders -= src
 	for(var/IN in GLOB.infections)
 		var/obj/structure/infection/I = IN
 		if(I && I.overmind == src)
@@ -121,6 +149,8 @@ GLOBAL_LIST_EMPTY(infection_beacons)
 			I.update_icons()
 
 	SSshuttle.clearHostileEnvironment(src)
+
+	addtimer(CALLBACK(src, .proc/defeated_announcement), 80)
 
 	return ..()
 
@@ -190,7 +220,8 @@ GLOBAL_LIST_EMPTY(infection_beacons)
 		if(infection_core)
 			stat(null, "Core Health: [infection_core.obj_integrity]")
 			stat(null, "Power Stored: [infection_points]/[max_infection_points]")
-			stat(null, "Beacons to Win: [GLOB.infection_beacons.len]")
+			stat(null, "Upgrades Remaining: [upgrade_points]")
+			stat(null, "Beacons Remaining: [GLOB.infection_beacons.len]")
 		if(!placed)
 			stat(null, "Time Before Automatic Placement: [max(round((autoplace_time - world.time)*0.1, 0.1), 0)]")
 

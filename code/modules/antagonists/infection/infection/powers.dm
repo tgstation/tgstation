@@ -1,4 +1,3 @@
-GLOBAL_LIST_EMPTY(beacon_spawns)
 GLOBAL_LIST_EMPTY(infection_spawns)
 
 // Power verbs
@@ -17,13 +16,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	M.pixel_z = 270
 	new /obj/effect/temp_visual/dragon_swoop(M.loc)
 	animate(M, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 10)
-	for(var/obj/effect/landmark/beacon_start/B in GLOB.beacon_spawns)
-		var/turf/T = get_turf(B)
-		var/obj/structure/beacon_generator/G = new /obj/structure/beacon_generator(T.loc)
-		G.forceMove(T)
-		G.setDir(B.dir)
-		INVOKE_ASYNC(G, /obj/structure/beacon_generator.proc/generateWalls)
-		sleep(10 / GLOB.beacon_spawns.len)
 	qdel(M)
 
 /obj/effect/landmark/infection_start
@@ -34,30 +26,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	..()
 	GLOB.infection_spawns += get_turf(src)
 	return INITIALIZE_HINT_QDEL
-
-/obj/effect/landmark/beacon_start
-	name = "beaconstart"
-	icon_state = "beacon_start"
-
-/obj/effect/landmark/beacon_start/Initialize(mapload)
-	..()
-	GLOB.beacon_spawns += src
-
-/obj/effect/landmark/beacon_start/west
-	name = "beaconstartwest"
-	dir = WEST
-
-/obj/effect/landmark/beacon_start/east
-	name = "beaconstarteast"
-	dir = EAST
-
-/obj/effect/landmark/beacon_start/north
-	name = "beaconstartnorth"
-	dir = NORTH
-
-/obj/effect/landmark/beacon_start/south
-	name = "beaconstartsouth"
-	dir = SOUTH
 
 /obj/effect/meteor/infection
 	name = "infectious core"
@@ -191,31 +159,12 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set category = "Infection"
 	set name = "Create Infesternaut (40)"
 	set desc = "Create a powerful infesternaut which is mildly smart and will attack enemies."
-	var/turf/T = get_turf(src)
-	var/obj/structure/infection/factory/I = locate(/obj/structure/infection/factory) in T
-	if(!I)
-		to_chat(src, "<span class='warning'>You must be on a factory infection!</span>")
-		return
-	if(I.naut) //if it already made a blobbernaut, it can't do it again
-		to_chat(src, "<span class='warning'>This factory infection is already sustaining a infesternaut.</span>")
-		return
-	if(I.obj_integrity < I.max_integrity * 0.5)
-		to_chat(src, "<span class='warning'>This factory infection is too damaged to sustain a infesternaut.</span>")
-		return
-	if(!can_buy(40))
-		return
+	var/turf/T = get_turf(infection_core)
 
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a infesternaut?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
 	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
-		I.max_integrity = initial(I.max_integrity) * 0.25 //factories that produced a blobbernaut have much lower health
-		I.obj_integrity = min(I.obj_integrity, I.max_integrity)
-		I.update_icon()
-		I.visible_message("<span class='warning'><b>The infesternaut [pick("rips", "tears", "shreds")] its way out of the factory infection!</b></span>")
-		playsound(I.loc, 'sound/effects/splat.ogg', 50, 1)
-		var/mob/living/simple_animal/hostile/infection/infesternaut/infester = new /mob/living/simple_animal/hostile/infection/infesternaut(get_turf(I))
+		var/mob/living/simple_animal/hostile/infection/infesternaut/infester = new /mob/living/simple_animal/hostile/infection/infesternaut(T.loc)
 		flick("blobbernaut_produce", infester)
-		I.naut = infester
-		infester.factory = I
 		infester.overmind = src
 		infester.update_icons()
 		infester.adjustHealth(infester.maxHealth * 0.5)
@@ -225,18 +174,41 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		SEND_SOUND(infester, sound('sound/effects/blobattack.ogg'))
 		SEND_SOUND(infester, sound('sound/effects/attackblob.ogg'))
 		to_chat(infester, "<b>You are an infesternaut!</b>")
-		to_chat(infester, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='cultlarge'>but will slowly die if not near the infection</span> or if the factory that made you is killed.")
+		to_chat(infester, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='cultlarge'>but will slowly die if not near the infection</span>")
 		to_chat(infester, "You can communicate with other infesternauts and overminds via <b>:b</b>")
+		return TRUE
 	else
-		to_chat(src, "<span class='warning'>You could not conjure a sentience for your infesternaut. Your points have been refunded. Try again later.</span>")
-		add_points(40)
+		to_chat(src, "<span class='warning'>You could not conjure a sentience for your spore. Try again later.</span>")
+		return FALSE
 
 /mob/camera/commander/verb/evolve_menu()
 	set category = "Infection"
 	set name = "Evolution"
-	set desc = "Purchase traits that make you stronger."
-	ui_interact(src)
-	to_chat(src, "To be done.")
+	set desc = "Improve yourself and your army to be unstoppable."
+	if(upgrade_points > 0)
+		var/choice = input(src,"Choose an upgrade.","Infection Commander",null) as null|anything in list("Sentient Spore","Production","Storage","Power")
+		switch(choice)
+			if("Sentient Spore")
+				to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
+				if(create_infesternaut())
+					upgrade_points--
+			if("Production")
+				infection_core.point_rate += 4 // equal to 4 resource nodes
+				upgrade_points--
+				to_chat(src, "Improved point production of core infection.")
+			if("Storage")
+				max_infection_points += 250
+				upgrade_points--
+				to_chat(src, "Improved maximum point storage")
+			if("Power")
+				infection_core.max_integrity += 200
+				infection_core.core_regen += 2
+				infection_points += 250
+				upgrade_points--
+				to_chat(src, "Improved strength of core and increased point count.")
+
+	else
+		to_chat(src, "We lack the necessary resources to upgrade ourself. We must consume the beacons.")
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"
@@ -252,9 +224,6 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		return
 	if(I.point_return < 0)
 		to_chat(src, "<span class='warning'>Unable to remove this infection.</span>")
-		return
-	if(max_infection_points < I.point_return + infection_points)
-		to_chat(src, "<span class='warning'>You have too many resources to remove this infection!</span>")
 		return
 	if(I.point_return)
 		add_points(I.point_return)

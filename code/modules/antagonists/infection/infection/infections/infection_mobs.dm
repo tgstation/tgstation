@@ -206,6 +206,7 @@
 	verb_yell = "bellows"
 	force_threshold = 10
 	pressure_resistance = 50
+	del_on_death = TRUE
 	mob_size = MOB_SIZE_LARGE
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -226,8 +227,6 @@
 			return // strong independent blobbernaut that don't need no blob
 		var/damagesources = 0
 		if(!(locate(/obj/structure/infection) in infection_in_area))
-			damagesources++
-		if(!factory)
 			damagesources++
 		else
 			if(locate(/obj/structure/infection/core) in infection_in_area)
@@ -273,9 +272,6 @@
 
 /mob/living/simple_animal/hostile/infection/infesternaut/death(gibbed)
 	..(gibbed)
-	if(factory)
-		factory.naut = null //remove this naut from its factory
-		factory.max_integrity = initial(factory.max_integrity)
 	flick("blobbernaut_death", src)
 
 /mob/living/simple_animal/hostile/infection/infesternaut/independent
