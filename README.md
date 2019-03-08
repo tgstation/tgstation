@@ -1,6 +1,3 @@
-## /tg/emcolony codebase
-**Discord:** https://discord.gg/EpFNKvK
-
 ## /tg/station codebase
 
 [![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](https://www.krihelinator.xyz/badge/tgstation/tgstation)](https://www.krihelinator.xyz)  
