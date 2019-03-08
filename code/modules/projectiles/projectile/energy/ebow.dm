@@ -1,17 +1,15 @@
 /obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"
 	icon_state = "cbbolt"
-	damage = 15
+	damage = 10
 	damage_type = TOX
 	nodamage = 0
-	stamina = 50
-	eyeblur = 10
-	knockdown = 10
-	slur = 5
+	stamina = 20
 
 /obj/item/projectile/energy/bolt/halloween
 	name = "candy corn"
 	icon_state = "candy_corn"
 
 /obj/item/projectile/energy/bolt/large
-	damage = 40
+	damage = 25
+	stamina = 10

@@ -79,35 +79,37 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
 
-/obj/item/gun/energy/kinetic_accelerator/crossbow
+/obj/item/gun/energy/crossbow
 	name = "mini energy crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
 	item_state = "crossbow"
+	force = 4
+	damtype = TOX
+	attack_verb = list(""poisoned", "jabbed")
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
+	cell_type = /obj/item/stock_parts/cell{charge = 1000; maxcharge = 1000}
+	materials = list(MAT_METAL=4000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
 	obj_flags = 0
-	overheat_time = 20
-	holds_charge = TRUE
-	unique_frequency = TRUE
 	can_flashlight = FALSE
-	max_mod_capacity = 0
+	selfcharge = 1
 
-/obj/item/gun/energy/kinetic_accelerator/crossbow/halloween
+/obj/item/gun/energy/crossbow/halloween
 	name = "candy corn crossbow"
 	desc = "A weapon favored by Syndicate trick-or-treaters."
 	icon_state = "crossbow_halloween"
 	item_state = "crossbow"
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/halloween)
 
-/obj/item/gun/energy/kinetic_accelerator/crossbow/large
+/obj/item/gun/energy/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_NORMAL
+	cell_type = /obj/item/stock_parts/cell{charge = 2000; maxcharge = 2000}
 	materials = list(MAT_METAL=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
