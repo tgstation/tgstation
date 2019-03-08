@@ -291,7 +291,7 @@
 #define GRAB_PIXEL_SHIFT_AGGRESSIVE 12
 #define GRAB_PIXEL_SHIFT_NECK 16
 
-#define PULL_PRONE_SLOWDOWN 0.75
+#define PULL_PRONE_SLOWDOWN 1.5
 #define PULL_PRONE_SLOWDOWN_ID "prone_slowdown"
 
 //Flags that control what things can spawn species (whitelist)
