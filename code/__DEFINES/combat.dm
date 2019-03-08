@@ -18,7 +18,7 @@
 #define OXYLOSS 	            	(1<<3)
 #define SHAME 			            (1<<4)
 #define MANUAL_SUICIDE          	(1<<5)	//suicide_act will do the actual killing.
-#define MANUAL_SUICIDE_NONLETHAL	(1<<6)
+#define MANUAL_SUICIDE_NONLETHAL	(1<<6)  //when the suicide is conditionally lethal
 
 #define EFFECT_STUN			"stun"
 #define EFFECT_KNOCKDOWN	"knockdown"
