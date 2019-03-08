@@ -54259,13 +54259,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
-"fub" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/reflector/box/anchored,
-/turf/open/floor/plating,
-/area/engine/engineering)
 "fuP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -56488,12 +56481,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"kzC" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Cold Loop Bypass"
-	},
-/turf/open/floor/engine,
-/area/engine/engineering)
 "kAa" = (
 /obj/structure/chair{
 	dir = 8
@@ -57956,7 +57943,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "nUq" = (
-/obj/machinery/atmospherics/pipe/layer_manifold{
+/obj/machinery/atmospherics/pipe/layer_manifold/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -57993,12 +57980,6 @@
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
-"nZE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "oag" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -58200,6 +58181,12 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"ovL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 "ovM" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
@@ -59982,6 +59969,13 @@
 	},
 /turf/open/floor/plating,
 /area/security/execution/transfer)
+"sPb" = (
+/obj/structure/lattice/catwalk,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 10
+	},
+/turf/open/space/basic,
+/area/space/nearstation)
 "sQt" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
@@ -60387,19 +60381,18 @@
 	},
 /turf/closed/wall,
 /area/engine/engineering)
+"tQJ" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Cold Loop Bypass"
+	},
+/turf/open/floor/engine,
+/area/engine/engineering)
 "tRc" = (
 /obj/structure/ore_box,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
 /area/maintenance/department/engine)
-"tRK" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 10
-	},
-/turf/open/space/basic,
-/area/space/nearstation)
 "tSK" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
@@ -60480,6 +60473,13 @@
 	},
 /turf/open/space/basic,
 /area/space/nearstation)
+"tYU" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/reflector/box/anchored,
+/turf/open/floor/plating,
+/area/engine/engineering)
 "uah" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
@@ -93569,7 +93569,7 @@ ccf
 ccZ
 ccZ
 ccZ
-fub
+tYU
 cfw
 cfW
 cgw
@@ -94861,7 +94861,7 @@ cgx
 sWU
 sWU
 cBS
-kzC
+tQJ
 ciG
 ciG
 cjt
@@ -97412,7 +97412,7 @@ bLW
 bTJ
 urG
 bUs
-nZE
+ovL
 fuR
 bXt
 bYp
@@ -97941,15 +97941,15 @@ aaa
 aaa
 aaa
 aaa
-tRK
+sPb
 jhq
-tRK
+sPb
 jhq
-tRK
+sPb
 jhq
-tRK
+sPb
 jhq
-tRK
+sPb
 jhq
 aaa
 fon
