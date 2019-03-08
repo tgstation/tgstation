@@ -58181,12 +58181,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"ovL" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "ovM" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
 	dir = 4
@@ -97412,7 +97406,7 @@ bLW
 bTJ
 urG
 bUs
-ovL
+bMf
 fuR
 bXt
 bYp
