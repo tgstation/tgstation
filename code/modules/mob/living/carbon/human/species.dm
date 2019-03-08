@@ -1248,13 +1248,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
-	if(user.resting)
+	if(user.resting || user.IsKnockdown())
+		return FALSE
+	if(user == target)
+		return FALSE
+	if(user.loc == target.loc)
 		return FALSE
 	else
-		if(user == target)
-			return
-		if(user.loc == target.loc)
-			return
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
 		playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 
