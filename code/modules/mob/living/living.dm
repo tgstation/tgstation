@@ -567,7 +567,7 @@
 	var/turf/T = loc
 
 	if(pulling)
-		update_pull_movespeed())
+		update_pull_movespeed()
 
 	. = ..()
 
