@@ -777,8 +777,7 @@
 	M.Jitter(1)
 	..()
 
-/datum/reagent/medicine/
-phrine
+/datum/reagent/medicine/epinephrine
 	name = "Epinephrine"
 	id = "epinephrine"
 	description = "Minor boost to stun resistance. Slowly heals damage if a patient is in critical condition, as well as regulating oxygen loss. Overdose causes weakness and toxin damage."
