@@ -5,11 +5,11 @@
 	icon_screen = "command"
 	var/obj/item/gps/internal
 	var/internal_type = /obj/item/gps/internal/internal_gps
-	time_to_scewdrive = 40
+	time_to_scewdrive = 60
 
 /obj/item/gps/internal/internal_gps
 	icon_state = null
-	gpstag = "Artificial Intelligence Remote Signal"
+	gpstag = "Encrypted Upload Signal"
 	desc = "Signal used to connect remotely with silicons."
 	invisibility = 100
 
