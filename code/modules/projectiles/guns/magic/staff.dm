@@ -107,10 +107,12 @@
 	max_charges = 6
 	recharge_rate = 4
 
+//yes, they don't have sounds. they're admin staves, and their projectiles will play the chaos bolt sound anyway so why bother?
+
 /obj/item/gun/magic/staff/flying
 	name = "staff of flying"
 	desc = "An artefact that spits bolts of graceful magic that can make something fly."
-	fire_sound = 'sound/magic/staff_change.ogg'
+	fire_sound = 'sound/magic/staff_healing.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/flying
 	icon_state = "staffofflight"
 	item_state = "staffofflight"
@@ -123,7 +125,7 @@
 	icon_state = "staffofsapping"
 	item_state = "staffofsapping"
 
-/obj/item/gun/magic/staff/sapping
+/obj/item/gun/magic/staff/necropotence
 	name = "staff of necropotence"
 	desc = "An artefact that spits bolts of death magic that can repurpose the soul."
 	fire_sound = 'sound/magic/staff_change.ogg'

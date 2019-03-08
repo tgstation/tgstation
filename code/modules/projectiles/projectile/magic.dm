@@ -557,7 +557,7 @@
 				return BULLET_ACT_BLOCK
 		to_chat(M, "<span class='warning'>Your mind has been opened to possession!</span>")
 		possession_test(M)
-		return BULLET_ACT_BLOCK
+		return BULLET_ACT_HIT
 
 /obj/item/projectile/magic/wipe/proc/possession_test(var/mob/living/carbon/M)
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
