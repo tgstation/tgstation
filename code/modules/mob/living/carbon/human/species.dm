@@ -1267,6 +1267,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		var/turf/target_shove_turf = get_step(target.loc, shove_dir)
 		var/mob/living/carbon/human/target_collateral_human
 		var/obj/structure/table/target_table
+		var/obj/machinery/disposal/bin/target_disposal_bin
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
 		//Thank you based whoneedsspace
@@ -1277,6 +1278,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			target.Move(target_shove_turf, shove_dir)
 			if(get_turf(target) == target_oldturf)
 				target_table = locate(/obj/structure/table) in target_shove_turf.contents
+				target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
 				shove_blocked = TRUE
 		
 		if(shove_blocked && !target.is_shove_knockdown_blocked())
@@ -1302,14 +1304,19 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] onto \the [target_table]!</span>",
 					"<span class='danger'>You shove [target.name] onto \the [target_table]!</span>", null, COMBAT_MESSAGE_RANGE)
 				target.throw_at(target_table, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a collision check
-				log_combat(user, target, "shoved", "onto [target_table]")
+				log_combat(user, target, "shoved", "onto [target_table] (table)")
 			else if(target_collateral_human)
 				target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
 				target_collateral_human.Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
 				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into [target_collateral_human.name]!</span>",
 					"<span class='danger'>You shove [target.name] into [target_collateral_human.name]!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(user, target, "shoved", "into [target_collateral_human.name]")
-
+			else if(target_disposal_bin)
+				target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
+				target.forceMove(target_disposal_bin)
+				user.visible_message("<span class='danger'>[user.name] shoves [target.name] into \the [target_disposal_bin]!</span>",
+					"<span class='danger'>You shove [target.name] into \the [target_disposal_bin]!</span>", null, COMBAT_MESSAGE_RANGE)
+				log_combat(user, target, "shoved", "into [target_disposal_bin] (disposal bin)")
 		else
 			user.visible_message("<span class='danger'>[user.name] shoves [target.name]!</span>",
 				"<span class='danger'>You shove [target.name]!</span>", null, COMBAT_MESSAGE_RANGE)
