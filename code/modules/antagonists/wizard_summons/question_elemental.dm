@@ -8,9 +8,9 @@
 	response_help  = "puts their hand through"
 	response_disarm = "flails at"
 	response_harm   = "punches"
-	icon = 'icons/mob/mob.dmi'
-	icon_state = "daemon"
-	icon_living = "daemon"
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
+	icon_state = "question_mark"
+	icon_living = "question_mark"
 	mob_biotypes = list(MOB_SPIRIT)
 	speed = 1
 	a_intent = INTENT_HARM
@@ -34,7 +34,8 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	bloodcrawl = BLOODCRAWL_EAT
 	del_on_death = 1
-	var/phased
+	pixel_x = -16
+	var/phased = FALSE
 
 /mob/living/simple_animal/question_elemental/Login()
 	..()
@@ -46,21 +47,20 @@
 	to_chat(src, "<b>I guess asking a question will let you leave the mortal world? Would dragging bodies into the veil when you leave heal you?</b>")
 
 /mob/living/simple_animal/question_elemental/death(gibbed)
-	say(pick("Why me?!", "How did this happen?!", "I'm unwinding?!", "Does this mean i'm dying?!"))
+	say(pick("Why me?!", "How did this happen?!", "I'm unwinding?!", "Does this mean I'm dying?!"))
 	..()
 
 /mob/living/simple_animal/question_elemental/say(message, bubble_type, var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	..()
-	if(!phased)//every message will be treated as a question, so we don't need to check again
+	if(message && !phased)
 		phaseout()
 
 /mob/living/simple_animal/question_elemental/treat_message(message)
 	message = ..(message)
 	//how could a question elemental say something that isn't a question? Does that make any sort of sense to you?
-	var/regex/reg = regex("?")
-	if(!findtext(copytext(message, -1), stun_words))//the last character must be a question mark
+	if(copytext(message, length(message)) != "?")
 		to_chat(src, "<span class='warning'>Are you sure that's a question?</span>")
-		return
+		return //ain't nobody gonna cheat the hangman in my town, give em nothing
 	return message
 
 /mob/living/simple_animal/question_elemental/phasein(turf/T)
@@ -75,6 +75,7 @@
 	forceMove(T)
 	src.client.eye = src
 	src.visible_message("<span class='warning'><B>Do I see [src] rising out of [T]!?</B></span>")
+	src.phased = FALSE
 	exit_blood_effect()
 	qdel(src.holder)
 	src.holder = null
@@ -91,6 +92,7 @@
 /mob/living/simple_animal/question_elemental/phaseout()
 	src.notransform = TRUE
 	spawn(0)
+		phased = TRUE
 		bloodpool_sink()
 		notransform = FALSE
 	return 1
@@ -154,14 +156,17 @@
 	var/ready_to_emerge = FALSE
 
 /obj/effect/proc_holder/spell/targeted/questionwalk/cast(list/targets,mob/living/user = usr)
-	if(istype(user.loc, /obj/effect/dummy/phased_mob/question))
-		to_chat(user, "<span class='warning'>Have you asked a question to go back to questionwalking yet?</span>")
+	if(!istype(user, /mob/living/simple_animal/question_elemental))
+		return
+	var/mob/living/simple_animal/question_elemental/elemental = user
+	if(istype(elemental.loc, /obj/effect/dummy/phased_mob/question))
+		to_chat(elemental, "<span class='warning'>Have you asked a question to go back to questionwalking yet?</span>")
 		return
 	else
 		if(ready_to_emerge)
-			user.phasein(get_turf(user))
+			user.phasein(get_turf(elemental))
 		else
-			to_chat(user, "<span class='warning'>Are you sure someone has asked a question in the last 5 seconds?</span>")
+			to_chat(elemental, "<span class='warning'>Are you sure someone has asked a question in the last 5 seconds?</span>")
 
 /obj/effect/dummy/phased_mob/question
 	name = "anomaly?"
@@ -200,4 +205,3 @@
 
 /obj/effect/dummy/phased_mob/question/singularity_act()
 	return
-
