@@ -15,7 +15,7 @@
 	var/spin_delay = 10
 	var/recent_spin = 0
 
-/obj/item/gun/ballistic/revolver/chamber_round(spin = TRUE)
+/obj/item/gun/ballistic/revolver/chamber_round(keep_bullet, spin = TRUE)
 	if(spin)
 		chambered = magazine.get_round(TRUE)
 	else
@@ -23,7 +23,7 @@
 
 /obj/item/gun/ballistic/revolver/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	..()
-	chamber_round(1)
+	chamber_round(FALSE, TRUE)
 
 /obj/item/gun/ballistic/revolver/AltClick(mob/user)
 	..()
@@ -54,7 +54,7 @@
 	. = istype(C)
 	if(.)
 		C.spin()
-		chamber_round(0)
+		chamber_round(FALSE, FALSE)
 
 /obj/item/gun/ballistic/revolver/get_ammo(countchambered = FALSE, countempties = TRUE)
 	var/boolets = 0 //mature var names for mature people
