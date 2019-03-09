@@ -68,7 +68,27 @@
 			if(W.use_tool(src, user, 40, volume=50))
 				if(!can_dig(user))
 					return TRUE
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
+
+				if(W.tool_behaviour == TOOL_MINING && rand(1,15) == 1) //this may be too often - in testing 20 felt like too rare to be worth exploring
+					to_chat(user, "<span class='warning'>You opened a fissure! A gas is escaping...</span>")
+					icon_state = "fissure"
+					icon_plating = "fissure"
+					environment_type="fissure"
+					switch(rand(1,10)) //This probably needs to be adjusted - picks between different types of fissures
+						if(1,2)
+							initial_gas_mix = "plasma=32;n2=17;TEMP=360"
+						if(4,3,5)
+							initial_gas_mix = "co2=33;n2=7;TEMP=450"
+						if(6)
+							initial_gas_mix = "tritium=24;co2=20;no2=2;TEMP=360"
+						if(7)
+							initial_gas_mix = "nob=12;pluox=7;n2=32;water_vapor=70;TEMP=170"
+						if(8)
+							initial_gas_mix = "pluox=32;stim=13;TEMP=295"
+						if(9,10)
+							initial_gas_mix = "n2o=34;bz=12;TEMP=300"
+				else
+					to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				getDug()
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 				return TRUE
@@ -120,8 +140,6 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
-
-
 
 
 /turf/open/floor/plating/asteroid/airless
