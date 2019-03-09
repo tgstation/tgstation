@@ -69,24 +69,20 @@
 				if(!can_dig(user))
 					return TRUE
 
-				if(W.tool_behaviour == TOOL_MINING && prob(7)) //this may be too often - in testing 20 felt like too rare to be worth exploring
+				if(W.tool_behaviour == TOOL_MINING && prob(20)) //I forgot about better mining tools. Pumped up the probability and making the options more likely to be boring
 					to_chat(user, "<span class='warning'>You opened a fissure! A gas is escaping...</span>")
 					icon_state = "fissure"
 					icon_plating = "fissure"
 					environment_type="fissure"
 					switch(rand(1,10)) //This probably needs to be adjusted - picks between different types of fissures
-						if(1,2)
-							initial_gas_mix = "plasma=32;n2=17;TEMP=360"
-						if(4,3,5)
-							initial_gas_mix = "co2=33;n2=7;TEMP=450"
-						if(6)
-							initial_gas_mix = "tritium=24;co2=20;no2=2;TEMP=360"
-						if(7)
-							initial_gas_mix = "nob=12;pluox=7;n2=32;water_vapor=70;TEMP=170"
+						if(1,2,3)
+							initial_gas_mix = "plasma=18;n2=27;TEMP=390"
+						if(4,5,6,7)
+							initial_gas_mix = "co2=20;n2o=12;bz=18;TEMP=450"
 						if(8)
-							initial_gas_mix = "pluox=32;stim=13;TEMP=295"
+							initial_gas_mix = "tritium=14;co2=30;TEMP=390"
 						if(9,10)
-							initial_gas_mix = "n2o=34;bz=12;TEMP=300"
+							initial_gas_mix = "pluox=14;bz=18;no2=8;water_vapor=70;TEMP=263"
 				else
 					to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				getDug()
