@@ -10,4 +10,4 @@
 /obj/item/ammo_casing/energy/bolt/large
 	projectile_type = /obj/item/projectile/energy/bolt/large
 	select_name = "heavy bolt"
-	e_cost = 200
+	e_cost = 100

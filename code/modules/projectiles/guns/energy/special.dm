@@ -88,7 +88,6 @@
 	damtype = TOX
 	attack_verb = list("poisoned", "jabbed")
 	w_class = WEIGHT_CLASS_SMALL
-	cell_type = /obj/item/stock_parts/cell{charge = 1000; maxcharge = 1000}
 	materials = list(MAT_METAL=4000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
@@ -109,7 +108,6 @@
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_NORMAL
-	cell_type = /obj/item/stock_parts/cell{charge = 2000; maxcharge = 2000}
 	materials = list(MAT_METAL=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
