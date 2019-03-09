@@ -196,8 +196,8 @@ window "infowindow"
 		command = "changelog"
 	elem "rules"
 		type = BUTTON
-		pos = 100,5
-		size = 104x20
+		pos = 120,5
+		size = 100x20
 		anchor1 = 19,0
 		anchor2 = 34,0
 		text-color = #99aab5
@@ -207,8 +207,8 @@ window "infowindow"
 		command = "rules"
 	elem "wiki"
 		type = BUTTON
-		pos = 180,5
-		size = 104x20
+		pos = 220,5
+		size = 100x20
 		anchor1 = 34,0
 		anchor2 = 50,0
 		text-color = #99aab5
@@ -218,8 +218,8 @@ window "infowindow"
 		command = "wiki"
 	elem "forum"
 		type = BUTTON
-		pos = 260,5
-		size = 104x20
+		pos = 320,5
+		size = 100x20
 		anchor1 = 50,0
 		anchor2 = 66,0
 		text-color = #99aab5
@@ -229,8 +229,8 @@ window "infowindow"
 		command = "forum"
 	elem "github"
 		type = BUTTON
-		pos = 340,5
-		size = 104x20
+		pos = 420,5
+		size = 100x20
 		anchor1 = 66,0
 		anchor2 = 81,0
 		text-color = #99aab5
@@ -240,8 +240,8 @@ window "infowindow"
 		command = "github"
 	elem "report-issue"
 		type = BUTTON
-		pos = 420,5
-		size = 104x20
+		pos = 520,5
+		size = 100x20
 		anchor1 = 81,0
 		anchor2 = 97,0
 		text-color = #99aab5
