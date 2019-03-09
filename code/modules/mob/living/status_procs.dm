@@ -374,6 +374,14 @@
 		priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
 
+/////////////////////////////////// STASIS ///////////////////////////////////
+
+/mob/living/proc/IsInStasis()
+	. = has_status_effect(STATUS_EFFECT_STASIS)
+
+/mob/living/proc/SetStasis(apply, updating = TRUE)
+	. = apply ? apply_status_effect(STATUS_EFFECT_STASIS, null, updating) : remove_status_effect(STATUS_EFFECT_STASIS)
+
 /////////////////////////////////// DISABILITIES ////////////////////////////////////
 /mob/living/proc/add_quirk(quirktype, spawn_effects) //separate proc due to the way these ones are handled
 	if(has_trait(quirktype))

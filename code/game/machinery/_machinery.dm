@@ -183,12 +183,15 @@ Class Procs:
 			L.update_mobility()
 	occupant = null
 
+/obj/machinery/proc/can_be_occupant(atom/movable/am)
+	return occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)
+
 /obj/machinery/proc/close_machine(atom/movable/target = null)
 	state_open = FALSE
 	density = TRUE
 	if(!target)
 		for(var/am in loc)
-			if (!(occupant_typecache ? is_type_in_typecache(am, occupant_typecache) : isliving(am)))
+			if (!(can_be_occupant(am)))
 				continue
 			var/atom/movable/AM = am
 			if(AM.has_buckled_mobs())

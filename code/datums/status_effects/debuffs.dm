@@ -82,6 +82,43 @@
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
 
+//STASIS
+/datum/status_effect/incapacitating/stasis
+        id = "stasis"
+        duration = -1
+        tick_interval = 10
+        alert_type = /obj/screen/alert/status_effect/stasis
+        var/last_dead_time
+
+/datum/status_effect/incapacitating/stasis/proc/update_time_of_death()
+        if(last_dead_time)
+                var/delta = world.time - last_dead_time
+                var/new_timeofdeath = owner.timeofdeath + delta
+                owner.timeofdeath = new_timeofdeath
+                owner.tod = station_time_timestamp(wtime=new_timeofdeath)
+                last_dead_time = null
+        if(owner.stat == DEAD)
+                last_dead_time = world.time
+
+/datum/status_effect/incapacitating/stasis/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+        . = ..()
+        update_time_of_death()
+
+/datum/status_effect/incapacitating/stasis/tick()
+        update_time_of_death()
+
+/datum/status_effect/incapacitating/stasis/on_remove()
+        update_time_of_death()
+        return ..()
+
+/datum/status_effect/incapacitating/stasis/be_replaced()
+        update_time_of_death()
+        return ..()
+
+/obj/screen/alert/status_effect/stasis
+        name = "Stasis"
+        desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+        icon_state = "stasis"
 
 //GOLEM GANG
 
