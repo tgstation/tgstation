@@ -430,6 +430,12 @@
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	id = /obj/item/card/id/captains_spare
 
+/datum/outfit/epicgamer/post_equip(mob/living/carbon/human/H)
+	var/obj/item/card/id/captains_spare/W = H.wear_id
+	if(W)
+		W.registered_name = H.real_name
+		W.update_label(H.real_name)
+
 /datum/outfit/debug //Debug objs plus hardsuit
 	name = "Debug outfit"
 	uniform = /obj/item/clothing/under/patriotsuit 
