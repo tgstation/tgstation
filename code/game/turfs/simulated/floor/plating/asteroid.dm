@@ -69,7 +69,7 @@
 				if(!can_dig(user))
 					return TRUE
 
-				if(W.tool_behaviour == TOOL_MINING && rand(1,15) == 1) //this may be too often - in testing 20 felt like too rare to be worth exploring
+				if(W.tool_behaviour == TOOL_MINING && prob(7)) //this may be too often - in testing 20 felt like too rare to be worth exploring
 					to_chat(user, "<span class='warning'>You opened a fissure! A gas is escaping...</span>")
 					icon_state = "fissure"
 					icon_plating = "fissure"
