@@ -9,7 +9,7 @@
     MAP_JOB_CHECK
     total_positions = 300
     spawn_positions = 300
-    supervisors = "<span class='danger'>the Gods</span>."
+    supervisors = "<span class='danger'>the Gods</span>"
 
 MAP_REMOVE_JOB(captain) //job_types/captain.dm
 MAP_REMOVE_JOB(hop) //job_types/cargo_service.dm
