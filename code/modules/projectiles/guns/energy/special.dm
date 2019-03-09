@@ -86,7 +86,7 @@
 	item_state = "crossbow"
 	force = 4
 	damtype = TOX
-	attack_verb = list(""poisoned", "jabbed")
+	attack_verb = list("poisoned", "jabbed")
 	w_class = WEIGHT_CLASS_SMALL
 	cell_type = /obj/item/stock_parts/cell{charge = 1000; maxcharge = 1000}
 	materials = list(MAT_METAL=4000)
