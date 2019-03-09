@@ -529,7 +529,7 @@
 	},
 /area/awaymission/vr/miner)
 "JW" = (
-/obj/item/gun/energy/kinetic_accelerator/crossbow,
+/obj/item/gun/energy/crossbow,
 /turf/open/floor/bronze{
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
