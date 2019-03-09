@@ -21,6 +21,8 @@
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
+	var/infection_level = 1 // upgrade level of infection
+	var/cost_per_level = 50 // multiplied by current level
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -36,6 +38,20 @@
 
 /obj/structure/infection/proc/creation_action() //When it's created by the overmind, do this.
 	return
+
+/obj/structure/infection/proc/show_upgrade_menu(var/mob/camera/commander/C)
+	if(C == overmind)
+		return TRUE
+	return FALSE
+
+/obj/structure/infection/proc/upgrade_self()
+	if(overmind.infection_points >= infection_level * cost_per_level)
+		infection_level++
+		overmind.infection_points -= infection_level * cost_per_level
+		to_chat(overmind, "<span class='warning'>Successfully upgraded structure to level [infection_level].</span>")
+		return TRUE
+	to_chat(overmind, "<span class='warning'>Unable, we require [infection_level * cost_per_level] points.</span>")
+	return FALSE
 
 /obj/structure/infection/Destroy()
 	if(atmosblock)
@@ -99,7 +115,7 @@
 /obj/structure/infection/proc/reset_angles()
 	angles = list(0,15,30,45,60,75,90,105,120,135,150,165,180,195,210,225,240,255,270,285,300,315,330,345) // this is aids but you cant use initial() on lists so :shrug: i'd rather not loop
 
-/obj/structure/infection/proc/Pulse_Area(mob/camera/commander/pulsing_overmind, var/claim_range = 10, var/count = 10)
+/obj/structure/infection/proc/Pulse_Area(mob/camera/commander/pulsing_overmind, var/claim_range = 6, var/count = 6)
 	if(QDELETED(pulsing_overmind))
 		pulsing_overmind = overmind
 	Be_Pulsed()

@@ -16,8 +16,9 @@
 		CtrlClickOn(A)
 		return
 	var/turf/T = get_turf(A)
-	if(T)
-		expand_infection(T)
+	var/obj/structure/infection/I = locate(/obj/structure/infection) in T.contents
+	if(I)
+		I.show_upgrade_menu(src)
 
 /mob/camera/commander/MiddleClickOn(atom/A) //Rally spores
 	var/turf/T = get_turf(A)

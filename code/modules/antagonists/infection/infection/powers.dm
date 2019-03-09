@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set category = "Infection"
 	set name = "Create Node Infection (50)"
 	set desc = "Create a node, which will power nearby factory and resource infections."
-	createSpecial(50, /obj/structure/infection/node, 6, 0)
+	createSpecial(50, /obj/structure/infection/node, 5, 0)
 
 /mob/camera/commander/verb/create_factory()
 	set category = "Infection"
@@ -177,30 +177,42 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		to_chat(infester, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='cultlarge'>but will slowly die if not near the infection</span>")
 		to_chat(infester, "You can communicate with other infesternauts and overminds via <b>:b</b>")
 		return TRUE
-	else
-		to_chat(src, "<span class='warning'>You could not conjure a sentience for your spore. Try again later.</span>")
-		return FALSE
+	to_chat(src, "<span class='warning'>You could not conjure a sentience for your spore. Try again later.</span>")
+	return FALSE
 
 /mob/camera/commander/verb/evolve_menu()
 	set category = "Infection"
 	set name = "Evolution"
 	set desc = "Improve yourself and your army to be unstoppable."
 	if(upgrade_points > 0)
-		var/choice = input(src,"Choose an upgrade.","Infection Commander",null) as null|anything in list("Sentient Spore","Production","Storage","Power")
+		var/list/choices = list(
+			"Sentient Spore" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
+			"Show Infection Resource Upgrades" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
+			"Show Infection Node Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_node_overlay"),
+			"Show Infection Core Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay")
+		)
+		var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
 		switch(choice)
 			if("Sentient Spore")
-				to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
-				if(create_infesternaut())
-					upgrade_points--
-			if("Production")
-				infection_core.point_rate += 4 // equal to 4 resource nodes
 				upgrade_points--
-				to_chat(src, "Improved point production of core infection.")
-			if("Storage")
+				to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
+				if(!create_infesternaut())
+					upgrade_points++
+			if("Show Infection Resource Upgrades")
+				var/list/resource_choices = list(
+					"Increase Resource Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial")
+				)
+				var/resource_choice = show_radial_menu(src, src, resource_choices, tooltips = TRUE)
+				switch(resource_choice)
+					if("Increase Resource Max Level")
+						upgrade_levels["Resource"]++
+						upgrade_points--
+						to_chat(src, "You may now upgrade your resource nodes to level [upgrade_levels["Resource"]].")
+			if("Show Infection Node Upgrades")
 				max_infection_points += 250
 				upgrade_points--
 				to_chat(src, "Improved maximum point storage")
-			if("Power")
+			if("Show Infection Core Upgrades")
 				infection_core.max_integrity += 200
 				infection_core.core_regen += 2
 				infection_points += 250
@@ -208,7 +220,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 				to_chat(src, "Improved strength of core and increased point count.")
 
 	else
-		to_chat(src, "We lack the necessary resources to upgrade ourself. We must consume the beacons.")
+		to_chat(src, "We lack the necessary resources to upgrade ourself. Absorb the beacons to gain their power.")
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"

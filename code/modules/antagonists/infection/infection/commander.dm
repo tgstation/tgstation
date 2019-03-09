@@ -36,6 +36,10 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	var/autoplace_time = 600 // a few seconds, just so it isnt sudden at game start
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ff5800"
+	var/list/upgrade_levels = list("Resource" = 1,
+								   "Node" = 1,
+								   "Factory" = 1,
+								   "Shield" = 1)
 
 /mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
 	GLOB.infection_commanders += src
@@ -50,9 +54,7 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	.= ..()
 
 /mob/camera/commander/proc/generate_announcement()
-	priority_announce("This announcement could decide your fate, pay attention like your life depends on it/\n\n\
-					   It seems that an infectious core is headed to your station on an immovable meteor. We've already started diagnostics and are gathering data.\n\
-					   You all must prepare as much as you can for the fight of your lives. Your only hope is to defeat the core or hold out long enough for us to develop a way to fight back.\n\n\
+	priority_announce("It seems that an infectious core is headed to your station on an immovable meteor.\n\
 					   It's against protocol to send any form of evacuation shuttle against this high level of a biohazard due to the risk of contamination.\n\n\
 					   From what we can tell, the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\
 					   Best of luck, I'll be in touch giving advice and sending in aid when I can.\n\n\
@@ -60,8 +62,8 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 					  "Biohazard Containment Commander", 'sound/ai/aimalf.ogg')
 
 /mob/camera/commander/proc/defeated_announcement()
-	priority_announce("You've defeated the infection, congratulations. I have nothing but praise for you.\n\
-					   Now get back to work, Nanotrasen doesn't pay you the minimum wage to sit around and do nothing all day."
+	priority_announce("You've defeated the infection, congratulations. I have nothing but praise for you.\n\n\
+					   Now get back to work, Nanotrasen doesn't pay you the minimum wage to sit around and do nothing all day.",
 					  "Biohazard Containment Commander", 'sound/misc/notice2.ogg')
 
 /mob/camera/commander/proc/place_beacons()
