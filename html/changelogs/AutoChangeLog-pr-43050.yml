@@ -1,0 +1,4 @@
+author: "Menshin"
+delete-after: True
+changes: 
+  - bugfix: "engineering APCs shouldn't be reset on Grid Check event anymore."
