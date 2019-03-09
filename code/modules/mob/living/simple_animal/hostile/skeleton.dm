@@ -137,15 +137,6 @@
 	GW = new
 	GW.Grant(src)
 
-/mob/living/simple_animal/hostile/skeleton/robust/AttackingTarget()
-	if(istype(target, /obj/vehicle/sealed/car/grave_warden))
-		return
-	. = ..()
-	if(. && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if(H.stat == DEAD)
-			convert(H)
-
 /mob/living/simple_animal/hostile/skeleton/robust/death(gibbed)
 	var/obj/effect/decal/remains/human/skelebones = new (src.loc)
 	..()
@@ -168,18 +159,6 @@
 			to_chat(src, "<span class='notice'>Without your bones, your spirit eases up and ascends.</span>")
 			qdel(src)
 			
-/mob/living/simple_animal/hostile/skeleton/robust/proc/convert(mob/living/carbon/L)
-	if(!L)
-		return
-	visible_message(
-		"<span class='danger'>[src] rips out [L]'s skeleton!</span>",
-		"<span class='userdanger'>You free the skeleton from inside [L]!</span>")
-	var/mob/living/simple_animal/hostile/skeleton/robust/newskele = new (L.loc)
-	newskele.faction = faction.Copy()
-	if(L.mind)
-		L.mind.transfer_to(newskele)
-	L.gib()
-
 /obj/vehicle/sealed/car/grave_warden
 	name = "grave warden"
 	desc = "A pile of skeletons somehow forming one large skeleton."
