@@ -428,6 +428,7 @@
 	name = "Assistant"
 	uniform = /obj/item/clothing/under/color/random
 	shoes = /obj/item/clothing/shoes/sneakers/black
+	id = /obj/item/card/id/captains_spare
 
 /datum/outfit/debug //Debug objs plus hardsuit
 	name = "Debug outfit"
