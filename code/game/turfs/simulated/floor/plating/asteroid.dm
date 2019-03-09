@@ -69,7 +69,7 @@
 				if(!can_dig(user))
 					return TRUE
 
-				if(W.tool_behaviour == TOOL_MINING && prob(20)) //I forgot about better mining tools. Pumped up the probability and making the options more likely to be boring
+				if(W.tool_behaviour == TOOL_MINING && prob(2)) //I forgot about better mining tools. Brought down the probability and making the options more likely to be boring
 					to_chat(user, "<span class='warning'>You opened a fissure! A gas is escaping...</span>")
 					icon_state = "fissure"
 					icon_plating = "fissure"
