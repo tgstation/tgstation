@@ -90,6 +90,12 @@
 	item_state = "blueshift"
 	custom_premium_price = 450
 
+/obj/item/clothing/head/helmet/capspartan
+	name = "captain's ancient helmet"
+	desc = "An armoured helmet that instills power and misplaced confidence in your leadership. It was created as part of a bold initiative by Nanotrasen's marketing department to supplement the gross incompetance of station captains by making them look impressive."
+	icon_state = "capspartan"
+	item_state = "capspartan"
+
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
