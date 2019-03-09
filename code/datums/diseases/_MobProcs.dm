@@ -8,7 +8,7 @@
 
 
 /mob/living/proc/CanContractDisease(datum/disease/D)
-	if(stat == DEAD)
+	if(stat == DEAD && !D.process_dead)
 		return FALSE
 
 	if(D.GetDiseaseID() in disease_resistances)

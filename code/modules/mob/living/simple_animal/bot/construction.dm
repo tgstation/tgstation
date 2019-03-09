@@ -155,25 +155,21 @@
 						build_step++
 
 		if(7)
-			var/newname = ""
 			switch(lasercolor)
 				if("b")
 					if(!istype(W, /obj/item/gun/energy/laser/bluetag))
 						return
-					newname = "bluetag ED-209 assembly"
 				if("r")
 					if(!istype(W, /obj/item/gun/energy/laser/redtag))
 						return
-					newname = "redtag ED-209 assembly"
 				if("")
-					if(!istype(W, /obj/item/gun/energy/e_gun/advtaser))
+					if(!istype(W, /obj/item/gun/energy/e_gun/dragnet))
 						return
-					newname = "taser ED-209 assembly"
 				else
 					return
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
-			name = newname
+			name = "[W.name] ED-209 assembly"
 			to_chat(user, "<span class='notice'>You add [W] to [src].</span>")
 			item_state = "[lasercolor]ed209_taser"
 			icon_state = "[lasercolor]ed209_taser"
@@ -185,7 +181,7 @@
 				to_chat(user, "<span class='notice'>You start attaching the gun to the frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
 					name = "armed [name]"
-					to_chat(user, "<span class='notice'>Taser gun attached.</span>")
+					to_chat(user, "<span class='notice'>The gun is now securely fastened to the frame.</span>")
 					build_step++
 
 		if(9)
@@ -227,41 +223,6 @@
 			name = "incomplete floorbot assembly"
 			icon_state = "[toolbox_color]toolbox_tiles_sensor"
 
-/obj/item/storage/toolbox/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)
-	var/list/allowed_toolbox = list(/obj/item/storage/toolbox/emergency,	//which toolboxes can be made into floorbots
-							/obj/item/storage/toolbox/electrical,
-							/obj/item/storage/toolbox/mechanical,
-							/obj/item/storage/toolbox/artistic,
-							/obj/item/storage/toolbox/syndicate)
-
-	if(!istype(T, /obj/item/stack/tile/plasteel))
-		..()
-		return
-	if(!is_type_in_list(src, allowed_toolbox))
-		return
-	if(contents.len >= 1)
-		to_chat(user, "<span class='warning'>They won't fit in, as there is already stuff inside!</span>")
-		return
-	if(T.use(10))
-		var/obj/item/bot_assembly/floorbot/B = new
-		B.toolbox = type
-		switch(B.toolbox)
-			if(/obj/item/storage/toolbox/emergency)
-				B.toolbox_color = "r"
-			if(/obj/item/storage/toolbox/electrical)
-				B.toolbox_color = "y"
-			if(/obj/item/storage/toolbox/artistic)
-				B.toolbox_color = "g"
-			if(/obj/item/storage/toolbox/syndicate)
-				B.toolbox_color = "s"
-		user.put_in_hands(B)
-		B.update_icon()
-		to_chat(user, "<span class='notice'>You add the tiles into the empty [src.name]. They protrude from the top.</span>")
-		qdel(src)
-	else
-		to_chat(user, "<span class='warning'>You need 10 floor tiles to start building a floorbot!</span>")
-		return
-
 /obj/item/bot_assembly/floorbot/attackby(obj/item/W, mob/user, params)
 	..()
 	switch(build_step)
@@ -302,32 +263,6 @@
 	spawn(5)
 		if(skin)
 			add_overlay("kit_skin_[skin]")
-
-/obj/item/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
-
-	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
-		return ..()
-
-	//Making a medibot!
-	if(contents.len >= 1)
-		to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
-		return
-
-	var/obj/item/bot_assembly/medbot/A = new
-	if(istype(src, /obj/item/storage/firstaid/fire))
-		A.skin = "ointment"
-	else if(istype(src, /obj/item/storage/firstaid/toxin))
-		A.skin = "tox"
-	else if(istype(src, /obj/item/storage/firstaid/o2))
-		A.skin = "o2"
-	else if(istype(src, /obj/item/storage/firstaid/brute))
-		A.skin = "brute"
-	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
-	A.robot_arm = S.type
-	A.firstaid = type
-	qdel(S)
-	qdel(src)
 
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
@@ -525,17 +460,6 @@
 				for(var/IS in 1 to swordamt)
 					new /obj/item/melee/transforming/energy/sword/saber(Tsec)
 
-
-
-// Fire extinguisher + borg arm = firebot assembly
-/obj/item/extinguisher/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/bodypart/l_arm/robot) || istype(O, /obj/item/bodypart/r_arm/robot))
-		to_chat(user, "<span class='notice'>You add [O] to [src].</span>")
-		qdel(O)
-		qdel(src)
-		user.put_in_hands(new /obj/item/bot_assembly/firebot)
-	else
-		..()
 
 //Firebot Assembly
 /obj/item/bot_assembly/firebot

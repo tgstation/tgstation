@@ -1,0 +1,4 @@
+author: "spookydonut"
+delete-after: True
+changes: 
+  - rscadd: "Adds the ability to give shuttles a cooldown timer"
