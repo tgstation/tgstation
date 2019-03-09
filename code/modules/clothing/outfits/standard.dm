@@ -424,6 +424,11 @@
 	mask = /obj/item/clothing/mask/breath
 	suit_store = /obj/item/tank/internals/oxygen
 
+/datum/outfit/epicgamer
+	name = "Assistant"
+	uniform = /obj/item/clothing/under/color/random
+	shoes = /obj/item/clothing/shoes/sneakers/black
+
 /datum/outfit/debug //Debug objs plus hardsuit
 	name = "Debug outfit"
 	uniform = /obj/item/clothing/under/patriotsuit 
