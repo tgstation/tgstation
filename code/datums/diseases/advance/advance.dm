@@ -130,7 +130,7 @@
 
  */
 
-//
+// returns list of all non-neutered symptoms
 /datum/disease/advance/proc/CanNeuter()
 	var/notNeutered=list()
 	for(var/datum/symptom/S in symptoms)
