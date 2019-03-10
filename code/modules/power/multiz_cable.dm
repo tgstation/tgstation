@@ -14,6 +14,7 @@
 		to_chat(user, "<span class='danger'>Powernet connection lost. Attempting to re-establish. Ensure the relays below this one are connected too.</span>")
 		linkdown()
 		addtimer(CALLBACK(src, .proc/start), 20) //Wait a bit so we can find the one below, then get powering
+	return TRUE
 
 /obj/machinery/power/deck_relay/Initialize()
 	. = ..()
