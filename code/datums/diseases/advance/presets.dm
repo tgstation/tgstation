@@ -37,7 +37,6 @@
 		if(chosen_symptom)
 			var/datum/symptom/S = new chosen_symptom
 			symptoms += S
-			activeSymptoms +=S
 	Refresh()
 
 	name = "Sample #[rand(1,10000)]"
