@@ -19,6 +19,10 @@
 	attachment_holes = FALSE
 	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
 	var/dug
+	var/list/fissure_gas_mix = list("plasma=42;n2=32;TEMP=600" = 3,
+		"co2=20;n2o=12;bz=18;TEMP=10000" = 4,
+		"tritium=24;co2=37;TEMP=420" = 1,
+		"pluox=14;bz=18;no2=8;water_vapor=300;TEMP=105.6" = 2)
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
@@ -100,10 +104,6 @@
 	environment_type = "basalt"
 	floor_variance = 15
 	digResult = /obj/item/stack/ore/glass/basalt
-	var/list/fissure_gas_mix = list("plasma=42;n2=32;TEMP=600" = 3,
-		"co2=20;n2o=12;bz=18;TEMP=10000" = 4,
-		"tritium=24;co2=37;TEMP=420" = 1,
-		"pluox=14;bz=18;no2=8;water_vapor=300;TEMP=105.6" = 2)
 
 /turf/open/floor/plating/asteroid/basalt/lava //lava underneath
 	baseturfs = /turf/open/lava/smooth
