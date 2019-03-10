@@ -461,5 +461,5 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set desc = "Change your chat theme"
 	prefs.toggles ^= DARKMODE
 	prefs.save_preferences()
-	to_chat(usr, "Dark theme (YOU MUST RECONNECT TO SEE THIS CHANGE) [(usr.client.prefs.toggles & DARKMODE) ? "Enabled" : "Disabled"]")
+	to_chat(usr, "Dark theme (YOU MUST CLOSE THE GAME AND REJOIN TO SEE THIS CHANGE) [(usr.client.prefs.toggles & DARKMODE) ? "Enabled" : "Disabled"]")
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Dark theme", "[prefs.toggles & DARKMODE ? "Enabled" : "Disabled"]"))

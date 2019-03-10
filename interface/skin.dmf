@@ -80,6 +80,7 @@ window "mainwindow"
 		font-size = 10
 		background-color = #d3b5b5
 		is-default = true
+		border = sunken
 		saved-params = "command"
 	elem "saybutton"
 		type = BUTTON

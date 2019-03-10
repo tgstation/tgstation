@@ -42,7 +42,7 @@ winset(src, "window as appears in skin.dmf after elem", "var to change = current
 	winset(src, "statwindow", "background-color = #272727;background-color = none")
 	winset(src, "statwindow", "text-color = #eaeaea;text-color = #000000")
 	winset(src, "stat", "background-color = #2c2f33;background-color = #FFFFFF")
-	winset(src, "stat", "tab-background-color = #272727;tab-background-color = #FFFFFF")
+	winset(src, "stat", "tab-background-color = #272727;tab-background-color = none")
 	winset(src, "stat", "text-color = #99aab5;text-color = #000000")
 	winset(src, "stat", "tab-text-color = #99aab5;tab-text-color = #000000")
 	//Say, OOC, me Buttons etc.
