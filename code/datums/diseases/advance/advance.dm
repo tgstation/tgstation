@@ -28,6 +28,7 @@
 	// NEW VARS
 	var/list/properties = list()
 	var/list/symptoms = list() // The symptoms of the disease.
+	var/list/activeSymptoms = list() //The symptoms that are not neutered
 	var/id = ""
 	var/processing = FALSE
 	var/mutable = TRUE //set to FALSE to prevent most in-game methods of altering the disease via virology
@@ -47,6 +48,7 @@
  */
 
 /datum/disease/advance/New()
+	activeSymptoms=symptoms.Copy()
 	Refresh()
 
 /datum/disease/advance/Destroy()
@@ -294,7 +296,7 @@
 	if(!mutable && !ignore_mutable)
 		return
 	if(symptoms.len)
-		var/s = safepick(symptoms)
+		var/s = safepick(activeSymptoms)
 		if(s)
 			NeuterSymptom(s)
 			Refresh(TRUE)
@@ -331,19 +333,24 @@
 
 	if(symptoms.len < (VIRUS_SYMPTOM_LIMIT - 1) + rand(-1, 1))
 		symptoms += S
+		activeSymptoms+=S
 	else
 		RemoveSymptom(pick(symptoms))
 		symptoms += S
+		activeSymptoms+=S
 
 // Simply removes the symptom.
 /datum/disease/advance/proc/RemoveSymptom(datum/symptom/S)
 	symptoms -= S
+	if(!S.neutered)
+		activeSymptoms-=S
 
 // Neuter a symptom, so it will only affect stats
 /datum/disease/advance/proc/NeuterSymptom(datum/symptom/S)
 	if(!S.neutered)
 		S.neutered = TRUE
 		S.name += " (neutered)"
+		activeSymptoms-=S
 
 /*
 
