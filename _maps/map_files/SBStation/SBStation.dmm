@@ -20926,8 +20926,7 @@
 /area/engine/atmos)
 "aSG" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -21323,8 +21322,7 @@
 /area/engine/atmos)
 "aTy" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
-	dir = 4;
-	icon_state = "manifold"
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -21371,8 +21369,7 @@
 /area/engine/atmos)
 "aTE" = (
 /obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -23497,8 +23494,7 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
@@ -24031,7 +24027,6 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 2;
-	icon_state = "pump_map";
 	name = "Gas to Chamber"
 	},
 /obj/machinery/button/door{
@@ -24088,8 +24083,7 @@
 /area/engine/atmos)
 "aZb" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
@@ -24133,7 +24127,6 @@
 /area/space/nearstation)
 "aZk" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	icon_state = "intact";
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -26114,8 +26107,7 @@
 /area/hydroponics)
 "bek" = (
 /obj/machinery/atmospherics/pipe/simple/orange/hidden{
-	dir = 6;
-	icon_state = "intact"
+	dir = 6
 	},
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
