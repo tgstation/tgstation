@@ -58,62 +58,61 @@
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
 	switch(current_job)
 		if("Chaplain")
-			O = new /datum/outfit/job/plasmaman/chaplain
+			O = new /datum/outfit/plasmaman/chaplain
 
 		if("Curator")
-			O = new /datum/outfit/job/plasmaman/curator
+			O = new /datum/outfit/plasmaman/curator
 
 		if("Janitor")
-			O = new /datum/outfit/job/plasmaman/janitor
+			O = new /datum/outfit/plasmaman/janitor
 
-		if("Botany")
-			O = new /datum/outfit/job/plasmaman/botany
+		if("Botanist")
+			O = new /datum/outfit/plasmaman/botany
 
 		if("Bartender", "Lawyer")
-			O = new /datum/outfit/job/plasmaman/bar
+			O = new /datum/outfit/plasmaman/bar
 
-		if("Chef")
-			O = new /datum/outfit/job/plasmaman/chef
+		if("Cook")
+			O = new /datum/outfit/plasmaman/chef
 
 		if("Security Officer")
-			O = new /datum/outfit/job/plasmaman/security
+			O = new /datum/outfit/plasmaman/security
 
 		if("Detective")
-			O = new /datum/outfit/job/plasmaman/detective
+			O = new /datum/outfit/plasmaman/detective
 
 		if("Warden")
-			O = new /datum/outfit/job/plasmaman/warden
+			O = new /datum/outfit/plasmaman/warden
 
 		if("Cargo Technician", "Quartermaster")
-			O = new /datum/outfit/job/plasmaman/cargo
+			O = new /datum/outfit/plasmaman/cargo
 
 		if("Shaft Miner")
-			O = new /datum/outfit/job/plasmaman/mining
+			O = new /datum/outfit/plasmaman/mining
 
 		if("Medical Doctor")
-			O = new /datum/outfit/job/plasmaman/medical
+			O = new /datum/outfit/plasmaman/medical
 
 		if("Chemist")
-			O = new /datum/outfit/job/plasmaman/chemist
+			O = new /datum/outfit/plasmaman/chemist
 
 		if("Geneticist")
-			O = new /datum/outfit/job/plasmaman/genetics
+			O = new /datum/outfit/plasmaman/genetics
 
 		if("Roboticist")
-			O = new /datum/outfit/job/plasmaman/robotics
+			O = new /datum/outfit/plasmaman/robotics
 
 		if("Virologist")
-			O = new /datum/outfit/job/plasmaman/viro
+			O = new /datum/outfit/plasmaman/viro
 
 		if("Scientist")
-			O = new /datum/outfit/job/plasmaman/science
+			O = new /datum/outfit/plasmaman/science
 
 		if("Station Engineer")
-			O = new /datum/outfit/job/plasmaman/engineering
+			O = new /datum/outfit/plasmaman/engineering
 
-		if("Atmospherics Technician")
-			O = new /datum/outfit/job/plasmaman/atmospherics
-
+		if("Atmospheric Technician")
+			O = new /datum/outfit/plasmaman/atmospherics
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)

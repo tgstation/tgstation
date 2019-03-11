@@ -1,4 +1,4 @@
-/datum/outfit/job/plasmaman/bar
+/datum/outfit/plasmaman/bar
 	name = "Bartender Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/white
@@ -7,7 +7,7 @@
 	mask = /obj/item/clothing/mask/breath
 
 
-/datum/outfit/job/plasmaman/chef
+/datum/outfit/plasmaman/chef
 	name = "Chef Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/white
@@ -15,7 +15,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/botany
+/datum/outfit/plasmaman/botany
 	name = "Botany Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/botany
@@ -23,7 +23,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/curator
+/datum/outfit/plasmaman/curator
 	name = "Curator Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/curator
@@ -31,7 +31,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/chaplain
+/datum/outfit/plasmaman/chaplain
 	name = "Chaplain Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chaplain
@@ -39,7 +39,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/janitor
+/datum/outfit/plasmaman/janitor
 	name = "Janitor Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/janitor
@@ -47,7 +47,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/security
+/datum/outfit/plasmaman/security
 	name = "Security Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security
@@ -55,7 +55,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/detective
+/datum/outfit/plasmaman/detective
 	name = "Detective Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security
@@ -63,7 +63,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/warden
+/datum/outfit/plasmaman/warden
 	name = "Warden Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/security/warden
@@ -71,7 +71,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/cargo
+/datum/outfit/plasmaman/cargo
 	name = "Cargo Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/cargo
@@ -79,7 +79,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/mining
+/datum/outfit/plasmaman/mining
 	name = "Mining Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/mining
@@ -87,7 +87,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/medical
+/datum/outfit/plasmaman/medical
 	name = "Medical Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/medical
@@ -95,7 +95,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/viro
+/datum/outfit/plasmaman/viro
 	name = "Virology Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/viro
@@ -103,7 +103,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/chemist
+/datum/outfit/plasmaman/chemist
 	name = "Chemist Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/chemist
@@ -111,7 +111,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/genetics
+/datum/outfit/plasmaman/genetics
 	name = "Genetics Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/genetics
@@ -120,7 +120,7 @@
 	mask = /obj/item/clothing/mask/breath
 
 
-/datum/outfit/job/plasmaman/science
+/datum/outfit/plasmaman/science
 	name = "Science Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/science
@@ -128,7 +128,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/robotics
+/datum/outfit/plasmaman/robotics
 	name = "Robotics Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/robotics
@@ -136,7 +136,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/engineering
+/datum/outfit/plasmaman/engineering
 	name = "Engineering Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/engineering
@@ -144,7 +144,7 @@
 	r_hand = /obj/item/tank/internals/plasmaman/belt/full
 	mask = /obj/item/clothing/mask/breath
 
-/datum/outfit/job/plasmaman/atmospherics
+/datum/outfit/plasmaman/atmospherics
 	name = "Atmospherics Plasmaman"
 
 	head = /obj/item/clothing/head/helmet/space/plasmaman/atmospherics
