@@ -1,9 +1,10 @@
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0
+	harmful = FALSE
 	fire_sound = 'sound/weapons/pulse3.ogg'
-	var/obj/item/gun/energy/wormhole_projector/gun = null
 	select_name = "blue"
+	var/obj/item/gun/energy/wormhole_projector/gun = null
 
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
