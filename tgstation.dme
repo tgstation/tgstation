@@ -192,6 +192,7 @@
 #include "code\_onclick\hud\hud.dm"
 #include "code\_onclick\hud\human.dm"
 #include "code\_onclick\hud\infection_commander.dm"
+#include "code\_onclick\hud\infection_spore.dm"
 #include "code\_onclick\hud\monkey.dm"
 #include "code\_onclick\hud\movable_screen_objects.dm"
 #include "code\_onclick\hud\parallax.dm"

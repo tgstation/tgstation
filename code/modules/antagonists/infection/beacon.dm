@@ -62,6 +62,9 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 	GLOB.infection_beacons -= src
 	for(var/mob/camera/commander/C in GLOB.infection_commanders)
 		C.upgrade_points++
+		C.all_upgrade_points++
+		for(var/mob/living/simple_animal/hostile/infection/infectionspore/spore in C.infection_mobs)
+			spore.upgrade_points++
 	if(GLOB.infection_beacons.len > 1)
 		addtimer(CALLBACK(src, .proc/destroyed_announcement), 80)
 	return ..()

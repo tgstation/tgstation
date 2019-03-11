@@ -6,6 +6,9 @@
 	max_integrity = 200
 	health_regen = 1
 	point_return = 25
+	upgrade_type = "Factory"
+	cost_per_level = 40
+	extra_description = "Increases maximum spores by 2."
 	var/list/spores = list()
 	var/max_spores = 3
 	var/spore_delay = 0
@@ -28,7 +31,7 @@
 
 /obj/structure/infection/factory/Life()
 	. = ..()
-	if(spores.len >= max_spores)
+	if(spores.len >= (max_spores + 2 * (infection_level - 1)))
 		return
 	if(spore_delay > world.time)
 		return

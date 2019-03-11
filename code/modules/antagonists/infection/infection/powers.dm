@@ -155,30 +155,27 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set desc = "Create a spore tower that will spawn spores to harass your enemies."
 	createSpecial(60, /obj/structure/infection/factory, 7, 1)
 
-/mob/camera/commander/verb/create_infesternaut()
-	set category = "Infection"
-	set name = "Create Infesternaut (40)"
-	set desc = "Create a powerful infesternaut which is mildly smart and will attack enemies."
+/mob/camera/commander/proc/create_spore()
+	upgrade_points--
+	to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
 	var/turf/T = get_turf(infection_core)
 
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a infesternaut?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
-	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a blobbernaut now.
-		var/mob/living/simple_animal/hostile/infection/infesternaut/infester = new /mob/living/simple_animal/hostile/infection/infesternaut(T.loc)
-		flick("blobbernaut_produce", infester)
-		infester.overmind = src
-		infester.update_icons()
-		infester.adjustHealth(infester.maxHealth * 0.5)
-		infection_mobs += infester
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as a sentient infection spore?", ROLE_INFECTION, null, ROLE_INFECTION, 50) //players must answer rapidly
+	if(LAZYLEN(candidates)) //if we got at least one candidate, they're a sentient spore now.
+		var/mob/living/simple_animal/hostile/infection/infectionspore/spore = new /mob/living/simple_animal/hostile/infection/infectionspore(T.loc)
+		spore.forceMove(T)
+		spore.overmind = src
+		spore.update_icons()
+		spore.adjustHealth(spore.maxHealth * 0.5)
+		infection_mobs += spore
 		var/mob/dead/observer/C = pick(candidates)
-		infester.key = C.key
-		SEND_SOUND(infester, sound('sound/effects/blobattack.ogg'))
-		SEND_SOUND(infester, sound('sound/effects/attackblob.ogg'))
-		to_chat(infester, "<b>You are an infesternaut!</b>")
-		to_chat(infester, "You are powerful, hard to kill, and slowly regenerate near nodes and cores, <span class='cultlarge'>but will slowly die if not near the infection</span>")
-		to_chat(infester, "You can communicate with other infesternauts and overminds via <b>:b</b>")
+		spore.key = C.key
+		SEND_SOUND(spore, sound('sound/effects/blobattack.ogg'))
+		SEND_SOUND(spore, sound('sound/effects/attackblob.ogg'))
+		spore.infection_help()
 		return TRUE
 	to_chat(src, "<span class='warning'>You could not conjure a sentience for your spore. Try again later.</span>")
-	return FALSE
+	upgrade_points++
 
 /mob/camera/commander/verb/evolve_menu()
 	set category = "Infection"
@@ -189,38 +186,63 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 			"Sentient Spore" = image(icon = 'icons/mob/blob.dmi', icon_state = "blobpod"),
 			"Show Infection Resource Upgrades" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial"),
 			"Show Infection Node Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_node_overlay"),
-			"Show Infection Core Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay")
+			"Show Infection Factory Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
+			"Show Infection Shield Upgrades" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_shield_radial")
 		)
 		var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
-		switch(choice)
-			if("Sentient Spore")
-				upgrade_points--
-				to_chat(src, "<span class='warning'>Attempting to create a sentient spore...</span>")
-				if(!create_infesternaut())
-					upgrade_points++
-			if("Show Infection Resource Upgrades")
-				var/list/resource_choices = list(
-					"Increase Resource Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial")
-				)
-				var/resource_choice = show_radial_menu(src, src, resource_choices, tooltips = TRUE)
-				switch(resource_choice)
-					if("Increase Resource Max Level")
-						upgrade_levels["Resource"]++
-						upgrade_points--
-						to_chat(src, "You may now upgrade your resource nodes to level [upgrade_levels["Resource"]].")
-			if("Show Infection Node Upgrades")
-				max_infection_points += 250
-				upgrade_points--
-				to_chat(src, "Improved maximum point storage")
-			if("Show Infection Core Upgrades")
-				infection_core.max_integrity += 200
-				infection_core.core_regen += 2
-				infection_points += 250
-				upgrade_points--
-				to_chat(src, "Improved strength of core and increased point count.")
-
+		if(choice == "Sentient Spore")
+			create_spore()
+		if(choice == "Show Infection Resource Upgrades")
+			upgrade_resource_menu()
+		if(choice == "Show Infection Node Upgrades")
+			upgrade_node_menu()
+		if(choice == "Show Infection Factory Upgrades")
+			upgrade_factory_menu()
+		if(choice == "Show Infection Shield Upgrades")
+			upgrade_shield_menu()
 	else
 		to_chat(src, "We lack the necessary resources to upgrade ourself. Absorb the beacons to gain their power.")
+
+/mob/camera/commander/proc/upgrade(var/stat)
+	if(upgrade_levels[stat] >= max_upgrade_levels[stat])
+		to_chat(src, "You are already at the maximum level for this upgrade.")
+		return FALSE
+	upgrade_levels[stat]++
+	upgrade_points--
+	to_chat(src, "You may now upgrade [stat] infections to level [upgrade_levels[stat]].")
+	return TRUE
+
+/mob/camera/commander/proc/upgrade_resource_menu()
+	var/list/choices = list(
+		"Increase Resource Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial")
+	)
+	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	if(choice == "Increase Resource Max Level")
+		upgrade("Resource")
+
+/mob/camera/commander/proc/upgrade_node_menu()
+	var/list/choices = list(
+		"Increase Node Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_node_overlay")
+	)
+	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	if(choice == "Increase Node Max Level")
+		upgrade("Node")
+
+/mob/camera/commander/proc/upgrade_factory_menu()
+	var/list/choices = list(
+		"Increase Factory Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_resource_glow_radial")
+	)
+	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	if(choice == "Increase Factory Max Level")
+		upgrade("Factory")
+
+/mob/camera/commander/proc/upgrade_shield_menu()
+	var/list/choices = list(
+		"Increase Shield Max Level" = image(icon= 'icons/mob/blob.dmi', icon_state = "blob_shield_radial")
+	)
+	var/choice = show_radial_menu(src, src, choices, tooltips = TRUE)
+	if(choice == "Increase Shield Max Level")
+		upgrade("Shield")
 
 /mob/camera/commander/verb/revert()
 	set category = "Infection"

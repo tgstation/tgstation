@@ -38,16 +38,6 @@
 		var/mob/camera/commander/I = usr
 		I.transport_core()
 
-/obj/screen/infection/Infesternaut
-	icon_state = "ui_blobbernaut"
-	name = "Produce Infesternaut (40)"
-	desc = "Produces a strong, smart infesternaut from a factory infection for 40 resources.<br>The factory infection used will become fragile and unable to produce spores."
-
-/obj/screen/infection/Infesternaut/Click()
-	if(iscommander(usr))
-		var/mob/camera/commander/I = usr
-		I.create_infesternaut()
-
 /obj/screen/infection/ResourceInfection
 	icon_state = "ui_resource"
 	name = "Produce Resource Infection (40)"
@@ -117,7 +107,7 @@
 	using.hud = src
 	static_inventory += using
 
-	using = new /obj/screen/infection/Infesternaut()
+	using = new /obj/screen/infection/Evolve()
 	using.screen_loc = ui_belt
 	static_inventory += using
 
@@ -131,8 +121,4 @@
 
 	using = new /obj/screen/infection/FactoryInfection()
 	using.screen_loc = ui_hand_position(1)
-	static_inventory += using
-
-	using = new /obj/screen/infection/Evolve()
-	using.screen_loc = ui_storage1
 	static_inventory += using

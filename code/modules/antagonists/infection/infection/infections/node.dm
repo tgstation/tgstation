@@ -7,6 +7,9 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 65, "acid" = 90)
 	health_regen = 3
 	point_return = 25
+	upgrade_type = "Node"
+	cost_per_level = 60
+	extra_description = "Doubles current rate of expansion. Nodes become less effective with age."
 
 
 /obj/structure/infection/node/Initialize()
@@ -15,7 +18,12 @@
 	. = ..()
 
 /obj/structure/infection/node/scannerreport()
-	return "Gradually expands and sustains nearby infection spores and infesternauts."
+	return "Gradually expands and sustains nearby infectious structures."
+
+/obj/structure/infection/node/upgrade_self()
+	. = ..()
+	if(.)
+		pulse_cooldown /= 2
 
 /obj/structure/infection/node/update_icon()
 	cut_overlays()

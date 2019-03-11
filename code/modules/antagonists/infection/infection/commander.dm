@@ -26,20 +26,28 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	var/obj/effect/meteor/infection/meteor = null // The infection's incoming meteor
 	var/infection_points = 0
 	var/max_infection_points = 500
-	var/upgrade_points = 6 // obtained by destroying beacons
+	var/upgrade_points = 3 // obtained by destroying beacons
+	var/all_upgrade_points = 3 // all upgrade points earned so far
 	var/last_attack = 0
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()
 	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
 	var/placed = 0
 	var/base_point_rate = 2 //for blob core placement
-	var/autoplace_time = 600 // a few seconds, just so it isnt sudden at game start
+	var/autoplace_time = 100 // a few seconds, just so it isnt sudden at game start
+	var/place_beacons_delay = 50
 	var/victory_in_progress = FALSE
 	var/infection_color = "#ff5800"
-	var/list/upgrade_levels = list("Resource" = 1,
+	var/list/upgrade_levels = list("Base" = 1,
+								   "Resource" = 1,
 								   "Node" = 1,
 								   "Factory" = 1,
 								   "Shield" = 1)
+	var/list/max_upgrade_levels = list("Base" = 1,
+									   "Resource" = 3,
+								  	   "Node" = 3,
+								  	   "Factory" = 3,
+								       "Shield" = 3)
 
 /mob/camera/commander/Initialize(mapload, starting_points = max_infection_points)
 	GLOB.infection_commanders += src
@@ -49,21 +57,21 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	if(infection_core)
 		infection_core.update_icon()
 	SSshuttle.registerHostileEnvironment(src)
-	addtimer(CALLBACK(src, .proc/generate_announcement), 80)
-	addtimer(CALLBACK(src, .proc/place_beacons), 300)
+	addtimer(CALLBACK(src, .proc/generate_announcement), place_beacons_delay / 2)
+	addtimer(CALLBACK(src, .proc/place_beacons), place_beacons_delay)
 	.= ..()
 
 /mob/camera/commander/proc/generate_announcement()
-	priority_announce("It seems that an infectious core is headed to your station on an immovable meteor.\n\
-					   It's against protocol to send any form of evacuation shuttle against this high level of a biohazard due to the risk of contamination.\n\n\
-					   From what we can tell, the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\
-					   Best of luck, I'll be in touch giving advice and sending in aid when I can.\n\n\
-					   Oh, and one more thing, our defensive beacons will land shortly. The infection is unable to cross the barriers these create. Defend them with your lives.",
-					  "Biohazard Containment Commander", 'sound/ai/aimalf.ogg')
+	priority_announce("Unfortunate news, [station_name()]. An infectious core is headed to your station on a meteor.\n\
+					   Infectious cores are almost indestructible beings that consume everything around them in order to replicate themselves. They adapt to almost any environment.\n\
+					   Our calculations estimate the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\
+					   Defensive beacons will be landing soon. Most infectious creatures are unable to pass the barriers these generate. Protect them to the last man if any of you want to live.\n\
+					   If you find any interesting artifacts, bring them to your stations destructive analyzer. You may be able to reverse engineer these to destroy the core of the infection.",
+					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 
 /mob/camera/commander/proc/defeated_announcement()
-	priority_announce("You've defeated the infection, congratulations. I have nothing but praise for you.\n\n\
-					   Now get back to work, Nanotrasen doesn't pay you the minimum wage to sit around and do nothing all day.",
+	priority_announce("You've defeated the infection, congratulations.\n\
+					   I'll be moving onto another station now, good luck on trying to repair the damage to yours.",
 					  "Biohazard Containment Commander", 'sound/misc/notice2.ogg')
 
 /mob/camera/commander/proc/place_beacons()
@@ -170,9 +178,6 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 /mob/camera/commander/update_health_hud()
 	if(infection_core)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(infection_core.obj_integrity)]</font></div>"
-		for(var/mob/living/simple_animal/hostile/infection/infesternaut/I in infection_mobs)
-			if(I.hud_used && I.hud_used.infectionpwrdisplay)
-				I.hud_used.infectionpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(infection_core.obj_integrity)]</font></div>"
 
 /mob/camera/commander/proc/add_points(points)
 	infection_points = CLAMP(infection_points + points, 0, max_infection_points)

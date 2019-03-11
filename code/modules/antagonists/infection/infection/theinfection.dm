@@ -22,7 +22,9 @@
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
 	var/infection_level = 1 // upgrade level of infection
-	var/cost_per_level = 50 // multiplied by current level
+	var/cost_per_level = 0 // multiplied by current level
+	var/upgrade_type = "Base" // stat type of structure upgraded by overmind
+	var/extra_description // extra description about what the upgrade does
 
 /obj/structure/infection/Initialize(mapload, owner_overmind)
 	. = ..()
@@ -40,17 +42,45 @@
 	return
 
 /obj/structure/infection/proc/show_upgrade_menu(var/mob/camera/commander/C)
-	if(C == overmind)
-		return TRUE
-	return FALSE
+	if(C != overmind)
+		return FALSE
+	var/list/choices = list(
+		"Upgrade [upgrade_type] Infection" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
+		"Description of Upgrade" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help")
+	)
+	var/choice = show_radial_menu(overmind, src, choices, require_near = TRUE, tooltips = TRUE)
+	if(choice == "Upgrade [upgrade_type] Infection")
+		upgrade_self()
+	if(choice == "Description of Upgrade")
+		show_description()
+	return TRUE
+
+/obj/structure/infection/proc/show_description()
+	to_chat(overmind, "\n[src] is currently level [infection_level].\nIt will cost [cost_to_upgrade()] points to upgrade.\nYou may upgrade this infection to level [current_max_upgrade()].")
+	if(extra_description)
+		to_chat(overmind, extra_description)
 
 /obj/structure/infection/proc/upgrade_self()
-	if(overmind.infection_points >= infection_level * cost_per_level)
+	if(!can_upgrade())
+		to_chat(overmind, "<span class='warning'>Unable, maximum level must be increased through evolution.</span>")
+		return FALSE
+	if(overmind.infection_points >= cost_to_upgrade())
 		infection_level++
-		overmind.infection_points -= infection_level * cost_per_level
+		overmind.infection_points -= cost_to_upgrade()
 		to_chat(overmind, "<span class='warning'>Successfully upgraded structure to level [infection_level].</span>")
 		return TRUE
-	to_chat(overmind, "<span class='warning'>Unable, we require [infection_level * cost_per_level] points.</span>")
+	to_chat(overmind, "<span class='warning'>Unable, we require [cost_to_upgrade()] points.</span>")
+	return FALSE
+
+/obj/structure/infection/proc/cost_to_upgrade()
+	return infection_level * cost_per_level
+
+/obj/structure/infection/proc/current_max_upgrade()
+	return overmind.upgrade_levels[upgrade_type]
+
+/obj/structure/infection/proc/can_upgrade()
+	if(infection_level < current_max_upgrade())
+		return TRUE
 	return FALSE
 
 /obj/structure/infection/Destroy()
