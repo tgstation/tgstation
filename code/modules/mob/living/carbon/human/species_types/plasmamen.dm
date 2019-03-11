@@ -54,7 +54,66 @@
 	. = ..()
 
 /datum/species/plasmaman/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/current_job = J.title
 	var/datum/outfit/plasmaman/O = new /datum/outfit/plasmaman
+	switch(current_job)
+		if("Chaplain")
+			O = new /datum/outfit/job/plasmaman/chaplain
+
+		if("Curator")
+			O = new /datum/outfit/job/plasmaman/curator
+
+		if("Janitor")
+			O = new /datum/outfit/job/plasmaman/janitor
+
+		if("Botany")
+			O = new /datum/outfit/job/plasmaman/botany
+
+		if("Bartender", "Lawyer")
+			O = new /datum/outfit/job/plasmaman/bar
+
+		if("Chef")
+			O = new /datum/outfit/job/plasmaman/chef
+
+		if("Security Officer")
+			O = new /datum/outfit/job/plasmaman/security
+
+		if("Detective")
+			O = new /datum/outfit/job/plasmaman/detective
+
+		if("Warden")
+			O = new /datum/outfit/job/plasmaman/warden
+
+		if("Cargo Technician", "Quartermaster")
+			O = new /datum/outfit/job/plasmaman/cargo
+
+		if("Shaft Miner")
+			O = new /datum/outfit/job/plasmaman/mining
+
+		if("Medical Doctor")
+			O = new /datum/outfit/job/plasmaman/medical
+
+		if("Chemist")
+			O = new /datum/outfit/job/plasmaman/chemist
+
+		if("Geneticist")
+			O = new /datum/outfit/job/plasmaman/genetics
+
+		if("Roboticist")
+			O = new /datum/outfit/job/plasmaman/robotics
+
+		if("Virologist")
+			O = new /datum/outfit/job/plasmaman/viro
+
+		if("Scientist")
+			O = new /datum/outfit/job/plasmaman/science
+
+		if("Station Engineer")
+			O = new /datum/outfit/job/plasmaman/engineering
+
+		if("Atmospherics Technician")
+			O = new /datum/outfit/job/plasmaman/atmospherics
+
 	H.equipOutfit(O, visualsOnly)
 	H.internal = H.get_item_for_held_index(2)
 	H.update_internals_hud_icon(1)
