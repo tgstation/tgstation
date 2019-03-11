@@ -164,6 +164,8 @@
 	hivemembers = list()
 	calc_size()
 	for(var/power in upgrade_tiers)
+		if(upgrade_tiers[power] == 0)
+			continue
 		owner.RemoveSpell(power)
 
 /datum/antagonist/hivemind/antag_panel_data()
