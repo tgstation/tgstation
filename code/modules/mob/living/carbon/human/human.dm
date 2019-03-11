@@ -823,7 +823,7 @@
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
 	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
-		buckle_mob(target,TRUE,TRUE)
+		piggyback(target)
 
 	if(user != target && can_be_firemanned(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
 		fireman_carry(target)
@@ -840,38 +840,50 @@
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/human/H)
+/mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/C)
+	if(can_be_firemanned(C))
+		visible_message("<span class='notice'>[src] starts lifting [C] onto their back...</span>", 
+			"<span class='notice'>You start lifting [C] onto your back...</span>")
+		if(do_after(C, 15, target = src))
+			if(can_be_firemanned(C))//Second check to make sure they're still valid to be carried
+				if(!incapacitated(FALSE, TRUE))
+					buckle_mob(C, TRUE, TRUE, TRUE)
+		visible_message("<span class='warning'>[src] fails to fireman carry [C]!")
+	else
+		to_chat(src, "<span class='notice'>You can't fireman carry [C] while they're standing!</span>")
 
-/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
+
+/mob/living/carbon/human/proc/piggyback(mob/living/carbon/C)
+	if(can_piggyback(C))
+		visible_message("<span class='notice'>[C] starts to climb onto [src]...</span>")
+		if(do_after(C, 15, target = src))
+			if(can_piggyback(C))
+				if(C.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+					C.visible_message("<span class='warning'>[C] can't hang onto [src]!</span>")
+					return
+				buckle_mob(C, TRUE, TRUE, FALSE)
+		else
+			visible_message("<span class='warning'>[C] fails to climb onto [src]!</span>")
+	else
+		to_chat(C, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
+
+/mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE, lying_buckle = FALSE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(!is_type_in_typecache(M, can_ride_typecache))
 		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
+	buckle_lying = lying_buckle
 	var/datum/component/riding/human/riding_datum = LoadComponent(/datum/component/riding/human)
 	riding_datum.ride_check_rider_incapacitated = TRUE
 	riding_datum.ride_check_rider_restrained = TRUE
-	riding_datum.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4)))
-	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled || (M.stat != CONSCIOUS))
+	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
-	if(can_piggyback(M))
-		riding_datum.ride_check_ridden_incapacitated = TRUE
-		visible_message("<span class='notice'>[M] starts to climb onto [src]...</span>")
-		if(do_after(M, 15, target = src))
-			if(can_piggyback(M))
-				if(M.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
-					M.visible_message("<span class='warning'>[M] can't hang onto [src]!</span>")
-					return
-				if(!riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
-					M.visible_message("<span class='warning'>[M] can't climb onto [src]!</span>")
-					return
-			stop_pulling()
-			. = ..(M, force, check_loc)
-		else
-			visible_message("<span class='warning'>[M] fails to climb onto [src]!</span>")
-	else
-		stop_pulling()
-		. = ..(M,force,check_loc)
+	if(riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+		M.visible_message("<span class='warning'>[M] can't get onto [src]!</span>")
+		return
+	stop_pulling()
+	. = ..(M, force, check_loc)
 
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()
