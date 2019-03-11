@@ -49,7 +49,7 @@ Slimecrossing Items
 	else if(istype(parent, /obj))
 		var/obj/O = parent
 		O.obj_integrity = health
-	rewinds_remaining -= 1
+	rewinds_remaining --
 	if(rewinds_remaining)
 		addtimer(CALLBACK(src, .proc/rewind), DEJAVU_REWIND_INTERVAL)
 	else
