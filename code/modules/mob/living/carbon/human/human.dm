@@ -824,6 +824,9 @@
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
 	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
 		buckle_mob(target,TRUE,TRUE)
+
+	if(user != target && can_be_firemanned(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+		fireman_carry(target)
 	. = ..()
 
 //Can C try to piggyback at all.
@@ -831,6 +834,13 @@
 	if(istype(C) && C.stat == CONSCIOUS)
 		return TRUE
 	return FALSE
+
+/mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/C)
+	if(ishuman(C) && !(C.mobility_flags & MOBILITY_STAND))
+		return TRUE
+	return FALSE
+
+/mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/human/H)
 
 /mob/living/carbon/human/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
