@@ -102,8 +102,8 @@
 /obj/item/clothing/head/helmet/space/plasmaman/science
 	name = "science plasma envirosuit helmet"
 	desc = "A plasmaman envirohelmet designed for scientists."
-	icon_state = "scientist_evirohelm"
-	item_state = "scientist_evirohelm"
+	icon_state = "scientist_envirohelm"
+	item_state = "scientist_envirohelm"
 
 /obj/item/clothing/head/helmet/space/plasmaman/robotics
 	name = "robotics plasma envirosuit helmet"
