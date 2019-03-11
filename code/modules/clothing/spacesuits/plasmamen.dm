@@ -65,8 +65,8 @@
 /obj/item/clothing/head/helmet/space/plasmaman/security
 	name = "security plasma envirosuit helmet"
 	desc = "A plasmaman containment helmet designed for security officers, protecting them from being flashed and burning alive, along-side other undesirables."
-	icon_state = "security_envirohelmet"
-	item_state = "security_envirohelmet"
+	icon_state = "security_envirohelm"
+	item_state = "security_envirohelm"
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 100, "acid" = 75)
 
 /obj/item/clothing/head/helmet/space/plasmaman/security/warden
@@ -153,6 +153,7 @@
 	desc = "A slight modification on a tradiational voidsuit helmet, this helmet was Nano-Trasen's first solution to the *logistical problems* that come with employing plasmamen. Despite their limitations, these helmets still see use by historian and old-styled plasmamen alike."
 	icon_state = "prototype_envirohelm"
 	item_state = "prototype_envirohelm"
+	actions_types = list()
 
 /obj/item/clothing/head/helmet/space/plasmaman/botany
 	name = "botany plasma envirosuit helmet"
