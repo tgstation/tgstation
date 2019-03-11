@@ -98,6 +98,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
 	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
 	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
+	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
 	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
 	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
 	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
