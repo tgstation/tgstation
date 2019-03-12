@@ -8,8 +8,8 @@
 	health_regen = 3
 	point_return = 25
 	upgrade_type = "Node"
-	cost_per_level = 60
-	extra_description = "Doubles current rate of expansion. Nodes become less effective with age."
+	cost_per_level = 30
+	extra_description = "Doubles current rate of expansion (minimum 2 seconds, rate slows with age to a max multiplier of 8 and starts at 2 seconds), increases range of expansion by 2, and increases amount expanded per expansion by 2."
 
 
 /obj/structure/infection/node/Initialize()
@@ -20,10 +20,11 @@
 /obj/structure/infection/node/scannerreport()
 	return "Gradually expands and sustains nearby infectious structures."
 
-/obj/structure/infection/node/upgrade_self()
-	. = ..()
-	if(.)
-		pulse_cooldown /= 2
+/obj/structure/infection/node/do_upgrade()
+	pulse_cooldown /= 2
+
+/obj/structure/infection/node/Pulse_Area(mob/camera/commander/pulsing_overmind, var/claim_range = 6, var/count = 6)
+	..(claim_range = 4 + infection_level * 2, count = 4 + infection_level * 2)
 
 /obj/structure/infection/node/update_icon()
 	cut_overlays()

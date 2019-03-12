@@ -95,9 +95,6 @@ GLOBAL_LIST_EMPTY(beacon_spawns)
 			sleep(4)
 	else
 		playsound(src.loc, 'sound/effects/empulse.ogg', 300, 1, 10, pressure_affected = FALSE)
-		for(var/obj/structure/infection/core/C in GLOB.infection_cores)
-			var/mob/camera/commander/OM = C.overmind
-			OM.playsound_local(OM, 'sound/effects/empulse.ogg', 300, 1)
 
 /obj/structure/beacon_generator/update_icon()
 	vis_contents.Cut()

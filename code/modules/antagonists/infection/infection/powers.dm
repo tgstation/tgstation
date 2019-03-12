@@ -106,12 +106,12 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 		return
 	if(needsNode && nodes_required)
 		if(!(locate(/obj/structure/infection/node) in orange(3, T)) && !(locate(/obj/structure/infection/core) in orange(4, T)))
-			to_chat(src, "<span class='warning'>You need to place this blob closer to a node or core!</span>")
+			to_chat(src, "<span class='warning'>You need to place this infection closer to a node or core!</span>")
 			return //handholdotron 2000
 	if(nearEquals)
 		for(var/obj/structure/infection/L in orange(nearEquals, T))
 			if(L.type == infectionType)
-				to_chat(src, "<span class='warning'>There is a similar blob nearby, move more than [nearEquals] tiles away from it!</span>")
+				to_chat(src, "<span class='warning'>There is a similar infection nearby, move more than [nearEquals] tiles away from it!</span>")
 				return
 	if(!can_buy(price))
 		return
@@ -121,12 +121,12 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 /mob/camera/commander/verb/toggle_node_req()
 	set category = "Infection"
 	set name = "Toggle Node Requirement"
-	set desc = "Toggle requiring nodes to place resource and factory blobs."
+	set desc = "Toggle requiring nodes to place resource and factory infections."
 	nodes_required = !nodes_required
 	if(nodes_required)
-		to_chat(src, "<span class='warning'>You now require a nearby node or core to place factory and resource blobs.</span>")
+		to_chat(src, "<span class='warning'>You now require a nearby node or core to place factory and resource infections.</span>")
 	else
-		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource blobs.</span>")
+		to_chat(src, "<span class='warning'>You no longer require a nearby node or core to place factory and resource infections.</span>")
 
 /mob/camera/commander/verb/create_shield_power()
 	set category = "Infection"
@@ -289,7 +289,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 				attacksuccess = TRUE
 		var/obj/structure/infection/I = locate() in T
 		if(I)
-			if(!attacksuccess) //if we successfully attacked a turf with a blob on it, don't refund shit
+			if(!attacksuccess) //if we successfully attacked a turf with an infection on it, don't refund shit
 				to_chat(src, "<span class='warning'>There is an infection there!</span>")
 				add_points(4) //otherwise, refund all of the cost
 		else
@@ -308,7 +308,7 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	rally_spores(T)
 
 /mob/camera/commander/proc/rally_spores(turf/T)
-	to_chat(src, "You rally your spores.")
+	to_chat(src, "You direct your selected spores.")
 	var/list/surrounding_turfs = block(locate(T.x - 1, T.y - 1, T.z), locate(T.x + 1, T.y + 1, T.z))
 	if(!surrounding_turfs.len)
 		return
@@ -335,16 +335,16 @@ GLOBAL_LIST_EMPTY(infection_spawns)
 	set category = "Infection"
 	set name = "*Infection Help*"
 	set desc = "Help on how to infection."
-	to_chat(src, "<b>As the overmind, you can control the infection!</b>")
-	to_chat(src, "<b>You can expand, which will attack people, damage objects, or place a Normal Infection if the tile is clear.</b>")
+	to_chat(src, "<b>As the commander, you command the nearly impossible to kill infection!</b>")
+	to_chat(src, "<b>Your job is to delegate resources. Upgrade your defenses and create an army of sentient spores. Protect the boss creatures and destroy the beacons to win.</b>")
 	to_chat(src, "<i>Normal Infections</i> will expand your reach and can be upgraded into special infections that perform certain functions.")
 	to_chat(src, "<b>You can upgrade normal infections into the following types of infection:</b>")
-	to_chat(src, "<i>Shield Infections</i> are strong and expensive infections which take more damage. In additon, they are fireproof and can block air, use these to protect yourself from station fires.")
-	to_chat(src, "<i>Resource Infections</i> are infections which produce more resources for you, build as many of these as possible to consume the station. This type of infection must be placed near node infections or your core to work.")
-	to_chat(src, "<i>Factory Infections</i> are infections that spawn infection spores which will attack nearby enemies. This type of infection must be placed near node infections or your core to work.")
-	to_chat(src, "<i>Infesternauts</i> can be produced from factories for a cost, and are hard to kill, powerful, and moderately smart. The factory used to create one will become fragile and briefly unable to produce spores.")
-	to_chat(src, "<i>Node Infections</i> are infections which grow, like the core. Like the core it can activate resource and factory infections.")
+	to_chat(src, "<i>Shield Infections</i> are bulky infections that can take a beating. You can upgrade them to make them resistant to more effects and gain more maximum health.")
+	to_chat(src, "<i>Resource Infections</i> produce 1 resource every couple of seconds for you. They produce 2 more resources for each time they are upgraded.")
+	to_chat(src, "<i>Factory Infections</i> produce mindless spores that obey you and attack intruders. Factories produce 2 more spores for each time they are ugpraded.")
+	to_chat(src, "<i>Sentient Spores</i> are constantly evolving creatures that do not die as long as you live, they simply regenerate themselves from you.")
+	to_chat(src, "<i>Node Infections</i> constantly grow more infections around them. When upgraded they spread faster, though they expand slower as they age. These are the only way you can damage the beacons when they spread on them.")
 	to_chat(src, "<b>In addition to the buttons on your HUD, there are a few click shortcuts to speed up expansion and defense.</b>")
-	to_chat(src, "<b>Shortcuts:</b> Click = Expand Infection <b>|</b> Middle Mouse Click = Rally Spores <b>|</b> Ctrl Click = Create Shield Infection <b>|</b> Alt Click = Remove Infection")
+	to_chat(src, "<b>Shortcuts:</b> Click = Upgrade Infection (Must be near infection) <b>|</b> Middle Mouse Click = Move selected spores <b>|</b> Ctrl Click = Create Shield Infection <b>|</b> Alt Click = Remove Infection")
 	if(!placed && autoplace_time <= world.time)
-		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your blob core in [DisplayTimeText(max(autoplace_time - world.time, 0))].</font></span>")
+		to_chat(src, "<span class='big'><font color=\"#EE4000\">You will automatically place your core in [DisplayTimeText(max(autoplace_time - world.time, 0))].</font></span>")

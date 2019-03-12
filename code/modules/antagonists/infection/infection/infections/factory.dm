@@ -7,7 +7,7 @@
 	health_regen = 1
 	point_return = 25
 	upgrade_type = "Factory"
-	cost_per_level = 40
+	cost_per_level = 30
 	extra_description = "Increases maximum spores by 2."
 	var/list/spores = list()
 	var/max_spores = 3

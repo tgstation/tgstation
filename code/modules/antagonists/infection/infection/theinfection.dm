@@ -1,15 +1,15 @@
-//I will need to recode parts of this but I am way too tired atm //I don't know who left this comment but they never did come back
 /obj/structure/infection
 	name = "infection"
 	icon = 'icons/mob/blob.dmi'
+	light_color = LIGHT_COLOR_FIRE
 	light_range = 2
 	desc = "A thick wall of writhing tendrils."
-	density = FALSE //this being false causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
+	density = TRUE
 	opacity = 0
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
 	CanAtmosPass = ATMOS_PASS_NO
-	var/point_return = 0 //How many points the blob gets back when it removes a blob of that type. If less than 0, blob cannot be removed.
+	var/point_return = 0 //How many points the commander gets back when it removes an infection of that type. If less than 0, structure cannot be removed.
 	max_integrity = 30
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/health_regen = 2 //how much health this blob regens when pulsed
@@ -17,7 +17,7 @@
 	var/pulse_cooldown = 20
 	var/brute_resist = 0.5 //multiplies brute damage by this
 	var/fire_resist = 1 //multiplies burn damage by this
-	var/atmosblock = TRUE //if the blob blocks atmos and heat spread
+	var/atmosblock = TRUE //if the infection blocks atmos and heat spread
 	var/mob/camera/commander/overmind
 	var/list/angles = list() // possible angles for the node to expand on
 	var/timecreated
@@ -30,7 +30,7 @@
 	. = ..()
 	if(owner_overmind)
 		overmind = owner_overmind
-	GLOB.infections += src //Keep track of the blob in the normal list either way
+	GLOB.infections += src //Keep track of the structure in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_icon()
 	if(atmosblock)
@@ -48,7 +48,7 @@
 		"Upgrade [upgrade_type] Infection" = image(icon = 'icons/mob/blob.dmi', icon_state = "blob_core_overlay"),
 		"Description of Upgrade" = image(icon = 'icons/mob/blob.dmi', icon_state = "ui_help")
 	)
-	var/choice = show_radial_menu(overmind, src, choices, require_near = TRUE, tooltips = TRUE)
+	var/choice = show_radial_menu(overmind, src, choices, tooltips = TRUE)
 	if(choice == "Upgrade [upgrade_type] Infection")
 		upgrade_self()
 	if(choice == "Description of Upgrade")
@@ -68,9 +68,13 @@
 		infection_level++
 		overmind.infection_points -= cost_to_upgrade()
 		to_chat(overmind, "<span class='warning'>Successfully upgraded structure to level [infection_level].</span>")
+		do_upgrade()
 		return TRUE
 	to_chat(overmind, "<span class='warning'>Unable, we require [cost_to_upgrade()] points.</span>")
 	return FALSE
+
+/obj/structure/infection/proc/do_upgrade()
+	return
 
 /obj/structure/infection/proc/cost_to_upgrade()
 	return infection_level * cost_per_level
@@ -87,7 +91,7 @@
 	if(atmosblock)
 		atmosblock = FALSE
 		air_update_turf(1)
-	GLOB.infections -= src //it's no longer in the all blobs list either
+	GLOB.infections -= src //it's no longer in the all infections list either
 	return ..()
 
 /obj/structure/infection/blob_act()
@@ -201,15 +205,6 @@
 	infection_attack_animation(T)
 	if(locate(/obj/structure/beacon_wall) in T.contents || locate(/obj/structure/infection) in T.contents)
 		return
-	if(iswallturf(T))
-		T.blob_act(src)
-		if(iswallturf(T))
-			return
-		var/obj/structure/infection/shield/I = new /obj/structure/infection/shield(src.loc, (controller || overmind))
-		I.forceMove(T)
-		I.update_icon()
-		I.ConsumeTile()
-		return I
 	var/obj/structure/infection/I = new /obj/structure/infection/normal(src.loc, (controller || overmind))
 	I.density = TRUE
 	if(T.Enter(I,src))
@@ -260,7 +255,7 @@
 	to_chat(user, "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
 /obj/structure/infection/attack_animal(mob/living/simple_animal/M)
-	if(ROLE_INFECTION in M.faction) //sorry, but you can't kill the blob as a blobbernaut
+	if(ROLE_INFECTION in M.faction) //sorry, but you can't kill the infection as a sentient infection
 		return
 	..()
 
@@ -327,10 +322,13 @@
 	icon_state = "blob"
 	layer = TURF_LAYER
 	light_range = 1
-	obj_integrity = 21 //doesn't start at full health
+	obj_integrity = 25
 	max_integrity = 25
 	health_regen = 1
 	brute_resist = 0.25
+
+/obj/structure/infection/normal/show_upgrade_menu(var/mob/camera/commander/C)
+	return
 
 /obj/structure/infection/normal/CanPass(atom/movable/mover, turf/target)
 	return 1

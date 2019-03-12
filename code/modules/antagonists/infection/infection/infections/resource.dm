@@ -7,7 +7,7 @@
 	point_return = 15
 	upgrade_type = "Resource"
 	cost_per_level = 20
-	extra_description = "Increases the resource added per tick by 1."
+	extra_description = "Increases the resource added per tick by 2."
 	var/resource_delay = 0
 
 /obj/structure/infection/resource/Initialize()
@@ -33,5 +33,5 @@
 		return
 	flick("blob_resource_glow", src)
 	if(overmind)
-		overmind.add_points(infection_level)
+		overmind.add_points(infection_level * 2 - 1)
 	resource_delay = world.time + 40

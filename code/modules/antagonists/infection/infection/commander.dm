@@ -1,4 +1,4 @@
-//Few global vars to track the blob
+//Few global vars to track the infections
 GLOBAL_LIST_EMPTY(infections) //complete list of all infections made.
 GLOBAL_LIST_EMPTY(infection_cores)
 GLOBAL_LIST_EMPTY(infection_nodes)
@@ -25,15 +25,15 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	var/obj/structure/infection/core/infection_core = null // The infection commanders's core
 	var/obj/effect/meteor/infection/meteor = null // The infection's incoming meteor
 	var/infection_points = 0
-	var/max_infection_points = 500
+	var/max_infection_points = 1000
 	var/upgrade_points = 3 // obtained by destroying beacons
 	var/all_upgrade_points = 3 // all upgrade points earned so far
 	var/last_attack = 0
 	var/list/infection_mobs = list()
 	var/list/resource_infection = list()
-	var/nodes_required = 1 //if the blob needs nodes to place resource and factory blobs
+	var/nodes_required = 1 //if the infection needs nodes to place resource and factory blobs
 	var/placed = 0
-	var/base_point_rate = 2 //for blob core placement
+	var/base_point_rate = 2 //for core placement
 	var/autoplace_time = 100 // a few seconds, just so it isnt sudden at game start
 	var/place_beacons_delay = 50
 	var/victory_in_progress = FALSE
@@ -62,10 +62,10 @@ GLOBAL_LIST_EMPTY(infection_commanders)
 	.= ..()
 
 /mob/camera/commander/proc/generate_announcement()
-	priority_announce("Unfortunate news, [station_name()]. An infectious core is headed to your station on a meteor.\n\
-					   Infectious cores are almost indestructible beings that consume everything around them in order to replicate themselves. They adapt to almost any environment.\n\
-					   Our calculations estimate the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\
-					   Defensive beacons will be landing soon. Most infectious creatures are unable to pass the barriers these generate. Protect them to the last man if any of you want to live.\n\
+	priority_announce("Unfortunate news, [station_name()]. An infectious core is headed to your station on a meteor.\n\n\
+					   Infectious cores are almost indestructible beings that consume everything around them in order to replicate themselves. They adapt to almost any environment.\n\n\
+					   Our calculations estimate the infection core will arrive in [(autoplace_time - world.time)/600] minutes.\n\n\
+					   Defensive beacons will be landing soon. Most infectious creatures are unable to pass the barriers these generate. Protect them to the last man if any of you want to live.\n\n\
 					   If you find any interesting artifacts, bring them to your stations destructive analyzer. You may be able to reverse engineer these to destroy the core of the infection.",
 					  "Biohazard Containment Commander", 'sound/misc/notice1.ogg')
 

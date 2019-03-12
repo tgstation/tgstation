@@ -109,7 +109,10 @@
 		overmind.update_health_hud()
 		Pulse_Area(overmind, 20, 20)
 	for(var/obj/structure/infection/normal/I in range(2, src))
-		I.change_to(/obj/structure/infection/shield/core, overmind)
+		var/turf/T = get_turf(I)
+		I.change_to(/obj/structure/infection/shield/reflective/strong, overmind)
+		var/obj/structure/infection/shield/reflective/strong/S = locate(/obj/structure/infection/shield/reflective/strong) in T.contents
+		S.point_return = 0
 	INVOKE_ASYNC(src, .proc/pulseNodes)
 	..()
 

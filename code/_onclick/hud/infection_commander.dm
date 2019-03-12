@@ -21,7 +21,7 @@
 /obj/screen/infection/JumpToNode
 	icon_state = "ui_tonode"
 	name = "Jump to Node"
-	desc = "Moves your camera to a selected blob node."
+	desc = "Moves your camera to a selected node."
 
 /obj/screen/infection/JumpToNode/Click()
 	if(iscommander(usr))
@@ -31,7 +31,7 @@
 /obj/screen/infection/JumpToCore
 	icon_state = "ui_tocore"
 	name = "Jump to Core"
-	desc = "Moves your camera to your blob core."
+	desc = "Moves your camera to your core."
 
 /obj/screen/infection/JumpToCore/Click()
 	if(iscommander(usr))
