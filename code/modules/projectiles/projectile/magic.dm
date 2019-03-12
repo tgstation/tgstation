@@ -3,7 +3,7 @@
 	icon_state = "energy"
 	damage = 0
 	damage_type = OXY
-	nodamage = 1
+	nodamage = TRUE
 	armour_penetration = 100
 	flag = "magic"
 
@@ -25,7 +25,7 @@
 	icon_state = "ion"
 	damage = 0
 	damage_type = OXY
-	nodamage = 1
+	nodamage = TRUE
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
 	. = ..()
@@ -104,7 +104,7 @@
 	icon_state = "energy"
 	damage = 0
 	damage_type = OXY
-	nodamage = 1
+	nodamage = TRUE
 	var/list/door_types = list(/obj/structure/mineral_door/wood, /obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver, /obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium, /obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/plasma, /obj/structure/mineral_door/transparent/diamond)
 
 /obj/item/projectile/magic/door/on_hit(atom/target)
@@ -133,7 +133,7 @@
 	icon_state = "ice_1"
 	damage = 0
 	damage_type = BURN
-	nodamage = 1
+	nodamage = TRUE
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	. = ..()
@@ -292,7 +292,7 @@
 	icon_state = "red_1"
 	damage = 0
 	damage_type = BURN
-	nodamage = 1
+	nodamage = TRUE
 
 /obj/item/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
 	target.animate_atom_living(firer)
@@ -339,7 +339,7 @@
 	damage_type = BURN
 	flag = "magic"
 	dismemberment = 50
-	nodamage = 0
+	nodamage = FALSE
 
 /obj/item/projectile/magic/spellblade/on_hit(target)
 	if(ismob(target))
@@ -355,7 +355,7 @@
 	icon_state = "arcane_barrage"
 	damage = 20
 	damage_type = BURN
-	nodamage = 0
+	nodamage = FALSE
 	armour_penetration = 0
 	flag = "magic"
 	hitsound = 'sound/weapons/barragespellhit.ogg'
@@ -606,7 +606,7 @@
 	icon_state = "tesla_projectile"	//Better sprites are REALLY needed and appreciated!~
 	damage = 15
 	damage_type = BURN
-	nodamage = 0
+	nodamage = FALSE
 	speed = 0.3
 	flag = "magic"
 
@@ -641,7 +641,7 @@
 	icon_state = "fireball"
 	damage = 10
 	damage_type = BRUTE
-	nodamage = 0
+	nodamage = FALSE
 
 	//explosion values
 	var/exp_heavy = 0
@@ -684,7 +684,7 @@
 	icon_state = "ice_2"
 	damage = 0
 	damage_type = BURN
-	nodamage = 1
+	nodamage = TRUE
 	armour_penetration = 100
 	temperature = 50
 	flag = "magic"

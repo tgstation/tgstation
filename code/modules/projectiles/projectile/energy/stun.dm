@@ -2,7 +2,7 @@
 	name = "electrode"
 	icon_state = "spark"
 	color = "#FFFF00"
-	nodamage = 1
+	nodamage = TRUE
 	paralyze = 100
 	stutter = 5
 	jitter = 20
