@@ -824,10 +824,13 @@
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback
 	if(user == target && can_piggyback(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
 		piggyback(target)
-
-	if(user != target && can_be_firemanned(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
+		return
+	//If you dragged them to you and you're aggressively grabbing try to fireman carry them
+	else if(user != target && can_be_firemanned(target) && pulling == target && grab_state >= GRAB_AGGRESSIVE && stat == CONSCIOUS)
 		fireman_carry(target)
-	. = ..()
+		return
+	else
+		return ..()
 
 //Can C try to piggyback at all.
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/C)
@@ -848,6 +851,7 @@
 			if(can_be_firemanned(C))//Second check to make sure they're still valid to be carried
 				if(!incapacitated(FALSE, TRUE))
 					buckle_mob(C, TRUE, TRUE, TRUE)
+					return
 		visible_message("<span class='warning'>[src] fails to fireman carry [C]!")
 	else
 		to_chat(src, "<span class='notice'>You can't fireman carry [C] while they're standing!</span>")
@@ -879,11 +883,12 @@
 	riding_datum.ride_check_rider_restrained = TRUE
 	if(buckled_mobs && ((M in buckled_mobs) || (buckled_mobs.len >= max_buckled_mobs)) || buckled)
 		return
-	if(riding_datum.equip_buckle_inhands(M, 2))	//MAKE SURE THIS IS LAST!!
+	var/equipped_hands = riding_datum.equip_buckle_inhands(M, 2)
+	if(!lying_buckle && !equipped_hands)
 		M.visible_message("<span class='warning'>[M] can't get onto [src]!</span>")
-		return
-	stop_pulling()
-	. = ..(M, force, check_loc)
+	else
+		stop_pulling()
+		. = ..(M, force, check_loc)
 
 /mob/living/carbon/human/do_after_coefficent()
 	. = ..()

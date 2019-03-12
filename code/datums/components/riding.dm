@@ -209,6 +209,8 @@
 /datum/component/riding/human/handle_vehicle_layer()
 	var/atom/movable/AM = parent
 	if(AM.buckled_mobs && AM.buckled_mobs.len)
+		for(var/mob/M in AM.buckled_mobs) //ensure proper layering of piggyback and carry, sometimes weird offsets get applied
+			M.layer = MOB_LAYER
 		if(!AM.buckle_lying)
 			if(AM.dir == SOUTH)
 				AM.layer = ABOVE_MOB_LAYER
@@ -225,7 +227,7 @@
 /datum/component/riding/human/get_offsets(pass_index)
 	var/mob/living/carbon/human/H = parent
 	if(H.buckle_lying)
-		return list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list(0, 4))
+		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(0, 4), TEXT_WEST = list(0, 4))
 	else
 		return list(TEXT_NORTH = list(0, 6), TEXT_SOUTH = list(0, 6), TEXT_EAST = list(-6, 4), TEXT_WEST = list( 6, 4))
 	
