@@ -2474,7 +2474,7 @@
 /turf/open/indestructible,
 /area/awaymission/centcomAway/cafe)
 "Ht" = (
-/obj/structure/mirror,
+/obj/structure/mirror/magic/lesser,
 /turf/closed/wall/mineral/iron,
 /area/awaymission/vr/hub)
 "Hu" = (
