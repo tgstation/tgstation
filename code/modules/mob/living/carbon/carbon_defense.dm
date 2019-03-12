@@ -296,7 +296,7 @@
 			return
 		if(visual)
 			return
-		if(has_trait(TRAIT_BLIND))
+		if(!override_blindness_check && has_trait(TRAIT_BLIND))
 			return
 
 		if (damage == 1)
