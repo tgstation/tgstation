@@ -86,13 +86,13 @@
 			to_chat(owner, "<big><span class='assimilator'>Our true power, the One Mind, is finally within reach.</span></big>")
 
 /datum/antagonist/hivemind/proc/add_track_bonus(datum/antagonist/hivemind/enemy, bonus)
-	if(individual_track_bonus[enemy])
+	if(!individual_track_bonus[enemy])
 		individual_track_bonus[enemy] = bonus
 	else
 		individual_track_bonus[enemy] += bonus
 
 /datum/antagonist/hivemind/proc/get_track_bonus(datum/antagonist/hivemind/enemy)
-	if(individual_track_bonus[enemy])
+	if(!individual_track_bonus[enemy])
 		. = 0
 	else
 		. = individual_track_bonus[enemy]
@@ -153,12 +153,12 @@
 	if(C == real_C) //Mind control check
 		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C, hive_C.get_track_bonus(hive_C2))
 		real_C.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
-		to_chat(real_C, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
+		to_chat(real_C2, "<span class='assimilator'>We detect a surge of psionic energy from a far away vessel before they disappear from the hive. Whatever happened, there's a good chance they're after us now.</span>")
 	if(C2 == real_C2)
 		real_C.apply_status_effect(STATUS_EFFECT_HIVE_TRACKER, real_C2, hive_C2.get_track_bonus(hive_C))
 		real_C2.apply_status_effect(STATUS_EFFECT_HIVE_RADAR)
 		user_warning += " and we've managed to pinpoint their location"
-	to_chat(C2, "<span class='userdanger'>[user_warning]!</span>")
+	to_chat(real_C, "<span class='userdanger'>[user_warning]!</span>")
 
 /datum/antagonist/hivemind/proc/destroy_hive()
 	hivemembers = list()

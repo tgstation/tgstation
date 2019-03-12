@@ -154,7 +154,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/sepia/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] shapes itself into a camera!</span>")
-	new /obj/item/camera/timefreeze(get_turf(user))
+	new /obj/item/camera/rewind(get_turf(user))
 	..()
 
 /obj/item/slimecross/burning/cerulean

@@ -1,0 +1,7 @@
+author: "imsxz"
+delete-after: True
+changes: 
+  - balance: "epinephrine no longer hard caps oxygen damage at ~30"
+  - balance: "epinephrine now gives the no crit damage trait, which makes creatures not take passive oxygen(or brute if you cant breathe) damage while in critical"
+  - tweak: "epinephrine now heals minor oxygen damage at the same health threshold that it currently heals other damage types at."
+  - bugfix: "atropine and epinephrine now check if your health is under your mobs crit threshold instead of using the number 0 before healing"

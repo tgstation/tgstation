@@ -799,8 +799,10 @@
 	name = "\improper magical aura"
 	desc = "Sinister looking aura that distorts the flow of reality around it."
 	icon = 'icons/obj/items_and_weapons.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
-	item_state = null
+	item_state = "disintegrate"
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	throwforce = 0
@@ -928,14 +930,15 @@
 	if(iscultist(owner))
 		if(istype(hitby, /obj/item/projectile))
 			var/obj/item/projectile/P = hitby
-			if(P.damage >= 30)
-				var/turf/T = get_turf(owner)
-				T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
-				new /obj/effect/temp_visual/cult/sparks(T)
-				playsound(T, 'sound/effects/glassbr3.ogg', 100)
-				owner.Paralyze(25)
-				qdel(src)
-				return FALSE
+			if(P.damage_type == BRUTE || P.damage_type == BURN)
+				if(P.damage >= 30)
+					var/turf/T = get_turf(owner)
+					T.visible_message("<span class='warning'>The sheer force from [P] shatters the mirror shield!</span>")
+					new /obj/effect/temp_visual/cult/sparks(T)
+					playsound(T, 'sound/effects/glassbr3.ogg', 100)
+					owner.Paralyze(25)
+					qdel(src)
+					return FALSE
 			if(P.reflectable & REFLECT_NORMAL)
 				return FALSE //To avoid reflection chance double-dipping with block chance
 		. = ..()
